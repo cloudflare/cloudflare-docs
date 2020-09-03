@@ -1,0 +1,4 @@
+dd {margin-bottom: 0.5em}
+dd p {margin: 0}
+dd ul {margin-top: 0.5em}
+dd p + p {margin-top: 0.5em}
