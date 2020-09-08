@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 30
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ### Overview
 
@@ -362,7 +361,7 @@ If you have an existing DNS record with the same name as your load balancer, the
 <p>
 array</p>
    </td>
-   <td>A list of pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool, and so on down the list. 
+   <td>A list of pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool, and so on down the list.
 <p>
 Pools defined here are used by default, or when region_pools are not configured for a given region.
 </p><code>
@@ -535,10 +534,10 @@ Use the Create Load Balancer command to create your new load balancer, as in the
 }
 ```
 
-<Notice type="note">
+<Aside type="note">
 
 Deleting a Load Balancer does not delete associated pools and monitors.  Delete pools and monitors via the respective **Manage Pools** and **Manage Monitors** buttons within the **Load Balancing** tab under the **Traffic** app of the Cloudflare dashboard.
-</Notice>
+</Aside>
 
 ---
 

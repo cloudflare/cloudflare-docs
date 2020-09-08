@@ -9,35 +9,34 @@ weight: 7
 Before you configure Cloudflare Gateway on a mobile device, install the latest version of the 1.1.1.1 app, and take note of your location's unique ID.
 
 #### Download the 1.1.1.1 app
-Make sure you have the 1.1.1.1 app installed. If you don't, you can get it from the [App Store](https://itunes.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) for your iOS devices, and on the [Google Play Store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) for your Android devices. 
+Make sure you have the 1.1.1.1 app installed. If you don't, you can get it from the [App Store](https://itunes.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) for your iOS devices, and on the [Google Play Store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) for your Android devices.
 
 If you already have the app installed, make sure it is updated to the latest version.
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+<Aside>
 
 Note that if you were using 1.1.1.1 for Families in the mobile app, you will at first need to disable 1.1.1.1 for Families. You can disable it by going to `Advanced -> Connection options -> DNS Settings -> 1.1.1.1 for Families -> And select 'None'`.
-</Notice>
+</Aside>
 
 #### Find your location's unique ID
 
 To install Cloudflare Gateway on any mobile device you will need your location's **unique ID**. Follow these instructions on how to retrieve it:
 
-1. Visit your teams dashboard to fetch the unique id from your location.  
+1. Visit your teams dashboard to fetch the unique id from your location.
 
 ![Go to teams dash](../../static/go-to-teams-dashboard.png)
 
-2. Navigate to the **Locations page** to visualize your location.   
-If you have more than one location set up, you will see a list of all your locations.  
+2. Navigate to the **Locations page** to visualize your location.
+If you have more than one location set up, you will see a list of all your locations.
 
 ![Go to locations page](../../static/go-to-locations-page.png)
 
-3. Expand the **location card** for the location you want to associate your mobile device with.   
+3. Expand the **location card** for the location you want to associate your mobile device with.
 
 ![Expand location card](../../static/expand-location-card.png)
 
-4. Get the subdomain of the DNS over HTTPS hostname. This is your **unique ID**. In the example below, the ID is: `fix7p31bzg`.  
+4. Get the subdomain of the DNS over HTTPS hostname. This is your **unique ID**. In the example below, the ID is: `fix7p31bzg`.
 
 ![Get unique subdomain](../../static/unique-gateway-id.png)
 
@@ -45,47 +44,47 @@ If you have more than one location set up, you will see a list of all your locat
 
 ## Setting up Gateway
 
-To setup Cloudflare Gateway for your personal iOS device, follow the instructions for [Manual Setup](#ios-manual).   
+To setup Cloudflare Gateway for your personal iOS device, follow the instructions for [Manual Setup](#ios-manual).
 
 To deploy Gateway to your fleet of corporate iOS devices using your preferred MDM tool, follow the instructions for [MDM Setup](#ios-mdm).
 
-### <a name="ios-manual"></a> Manual Setup  
-  
+### <a name="ios-manual"></a> Manual Setup
+
 1. Open the 1.1.1.1 app.
 
-2. Tap the **Menu** button on the top right corner.  
+2. Tap the **Menu** button on the top right corner.
 
 ![Tap the menu button](../../static/click-on-menu.PNG)
 
-3. Tap **Advanced**.  
+3. Tap **Advanced**.
 
 ![Tap Advanced](../../static/click-on-advanced.PNG)
 
-4. Tap **Connection options** at the bottom of the screen.  
+4. Tap **Connection options** at the bottom of the screen.
 
 ![Tap Connection options](../../static/click-on-connection-options.PNG)
 
-5. Tap **DNS Settings**.  
-This will take you to the screen where you can configure Gateway for your 1.1.1.1 mobile app.  
+5. Tap **DNS Settings**.
+This will take you to the screen where you can configure Gateway for your 1.1.1.1 mobile app.
 
 ![Tap DNS Settings](../../static/click-on-dns-settings.PNG)
 
-6. Enter the **unique ID** from Gateway.   
-You will now need to enter your location's **unique ID** from Gateway.   
-The unique ID is the subdomain of the location you created for your mobile phone. 
+6. Enter the **unique ID** from Gateway.
+You will now need to enter your location's **unique ID** from Gateway.
+The unique ID is the subdomain of the location you created for your mobile phone.
 
-You are now connected to Cloudflare Gateway. 
+You are now connected to Cloudflare Gateway.
 
 ### <a name="ios-mdm"></a> MDM Setup
 
 1. Open the 1.1.1.1 app.
 
 2. Go to **Menu** > **Advanced** > **Comnmection options** > **DNS Settings**.
-3. Enter your **unique ID**.  
+3. Enter your **unique ID**.
 
-![Enter your unique ID](../../static/enter-unique-id.PNG) 
+![Enter your unique ID](../../static/enter-unique-id.PNG)
 
-4. **Modify the configuration file**.  
+4. **Modify the configuration file**.
 Download the configuration file from <a href="./cfteams.mobileconfig" download>here</a>. The contents of the file will look like below:
 
 ```xml
@@ -160,8 +159,8 @@ Download the configuration file from <a href="./cfteams.mobileconfig" download>h
 </plist>
 ```
 
-5. Use a text editor to replace the string `gateway_unique_id` with your unique ID. Please make sure that you don't change any other parts of the file. 
+5. Use a text editor to replace the string `gateway_unique_id` with your unique ID. Please make sure that you don't change any other parts of the file.
 
 6. After you save the file, use your preferred MDM tool to deploy the configuration change to your fleet of corporate mobile devices.
 
-You are now connected to Cloudflare Gateway. 
+You are now connected to Cloudflare Gateway.

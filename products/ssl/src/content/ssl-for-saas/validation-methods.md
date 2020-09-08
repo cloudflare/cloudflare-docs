@@ -3,7 +3,6 @@ title: Certificate Validation Methods
 weight: 40
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ## Recommended
 
@@ -15,12 +14,12 @@ When you POST to the custom_hostnames endpoint and specify `http` as the validat
 
 For example, if you create a new custom hostname for `site.example.com`, the CA might ask us to return the value `ca3-38734555d85e4421beb4a3e6d1645fe6` for a request to `http://site.example.com/.well-known/pki-validation/ca3-39f423f095be4983922ca0365308612d.txt"`. As soon as we receive that value from the CA we make it accessible at our edge and ask the CA to confirm it's there so that they can complete validation and the certificate order.
 
-<Notice>
+<Aside>
 
 Cloudflare is able to serve the random token shown above from our edge due to the fact that site.example.com has a CNAME in place to `$CNAME_TARGET`, which ultimately resolves to Cloudflare IPs. If your customer has not yet added the CNAME, the attempt by the CA to retrieve that token will fail and the process will not complete.
 
 We will attempt to retry this validation check for a finite period before timing out; see the <a href="https://developers.cloudflare.com/ssl/ssl-for-saas/validation-retry/">Validation Retry Schedule</a> for more details.
-</Notice>
+</Aside>
 
 If you would like to complete the issuance process before asking your customer to update their CNAME (or before changing the resolution of your target CNAME to be proxied by Cloudflare), the domain control validation token can be served from *your* origin server, as described below.
 
@@ -202,7 +201,7 @@ $ curl -sXGET -H "X-Auth-Key: $MYAPIKEY" -H "X-Auth-Email: $MYEMAIL" https://api
 }
 ```
 
-You now need to make this token at the path specified in `http_url`. This path should be publicly accessible to anyone on the internet otherwise the CA will not be able to successfully complete validation. 
+You now need to make this token at the path specified in `http_url`. This path should be publicly accessible to anyone on the internet otherwise the CA will not be able to successfully complete validation.
 
 Here is an example NGINX configuration that will return the above token:
 

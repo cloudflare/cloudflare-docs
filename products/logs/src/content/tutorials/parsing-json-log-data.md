@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 85
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 ### Overview
 
@@ -12,10 +11,10 @@ After downloading your Cloudflare Logs data, you can use different tools to pars
 
 In this tutorial, you will learn how to parse your JSON log data using *jq*.  To get started with *jq*, visit the [*jq* official site](https://stedolan.github.io/jq/).
 
-<Notice type="note">
+<Aside type="note">
 
 *jq* is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as *Kibana*.
-</Notice>
+</Aside>
 
 -----
 
@@ -111,10 +110,10 @@ $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 93 macro
 ```
 
-***EdgePathingOp*** indicates how the request was handled. *wl* is a request that passed all checks and went to your origin server. Other possible values are: 
+***EdgePathingOp*** indicates how the request was handled. *wl* is a request that passed all checks and went to your origin server. Other possible values are:
 
 * *errHost* (host header mismatch, DNS errors, etc.)
-* *ban* (blocked by IP address, range, etc.) 
+* *ban* (blocked by IP address, range, etc.)
 * *tempOk* (challenge successfully completed)
 * *chl* (challenge issued)
 
@@ -221,11 +220,11 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 
 ### Understanding response fields
 
-The response status appears in three places in a request: 
+The response status appears in three places in a request:
 
 * *edgeResponse*
 * *cacheResponse*
-* *originResponse* 
+* *originResponse*
 
 In your logs, the edge is what first accepts a visitor's request. The cache then accepts the request and either forwards it to your origin or responds from the cache. It's possible to have a request that has only an *edgeResponse* or a request that has an *edgeResponse* and a  *cacheResponse*, but no *originResponse*.
 

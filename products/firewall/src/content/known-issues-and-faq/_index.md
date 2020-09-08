@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 400
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 * [Known issues](#known-issues)
 * [Frequently asked questions (FAQ)](#frequently-asked-questions-faq)
@@ -40,7 +39,7 @@ There are no known issues to report at this time.
 #### How many rules can I have on my site?
 </div>
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. See [Entitlements](/firewall/cf-firewall-rules/#entitlements) for details on what's allowed per customer plan. 
+You can create a large number of rules. However, the number of active rules at any given time is limited. See [Entitlements](/firewall/cf-firewall-rules/#entitlements) for details on what's allowed per customer plan.
 
 ---------------------
 
@@ -111,10 +110,10 @@ When you create a firewall rule with a *Block*, *Challenge (Captcha)*, or *JS Ch
 
 The table below lists known bots that Firewall Rules currently detects.  When traffic comes from any of these bots, the *cf.client.bot* field is set to true.
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare plans to expand its list of known bots in the near future.
- </Notice>
+ </Aside>
 
 <table style="border: solid 2px darkgrey; width:70%;">
     <thead style="background:#ffeadf;">
@@ -279,18 +278,18 @@ Cloudflare plans to expand its list of known bots in the near future.
 
 </div>
 
-There may be situations in which you want to enforce a blocking or challenging action but make exceptions for specific types of requests.  
+There may be situations in which you want to enforce a blocking or challenging action but make exceptions for specific types of requests.
 
 Cloudflare supports two methods to permit requests through Firewall Rules expressions:
 
 1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
 2. Create an independent firewall rule with an *Allow* action
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare Firewall Rules does not bypass security measures defined in other **Firewall** app features.
 
-</Notice>
+</Aside>
 
 If you wish to permit certain exclusions, the examples below illustrate a few possible approaches.
 

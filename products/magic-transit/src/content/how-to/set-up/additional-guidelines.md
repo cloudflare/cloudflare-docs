@@ -5,7 +5,6 @@ weight: 213
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 When working with Magic Transit, see these topics for additional guidelines and best practices:
 
@@ -76,13 +75,13 @@ These routing changes return any traffic generated within the Cloudflare edge ne
 
 You control the edge router advertisement, which dictates whether Cloudflare’s edge network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the GRE tunnels to your data center(s).
 
-<Notice type="info">
+<Aside type="info">
 
 It is critical that you put the appropriate MSS clamps in place before routing changes are made. Failure to apply an MSS clamp may result in dropped packets and hard-to-debug connectivity issues.
 
 When using [Cloudflare Network Interconnect](/network-interconnect/) with Magic Transit, you must set the MSS clamp size to 1332 bytes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the colocation facility where traffic is ingested (close to the end user) to the facility with the CNI link.
 
-</Notice>
+</Aside>
 
 ## Route prefixes smaller than /24
 

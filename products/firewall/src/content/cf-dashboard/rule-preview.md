@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 210
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ### Overview
 
@@ -12,10 +11,10 @@ Cloudflare Firewall Rules provides a powerful and flexible platform for filterin
 
 To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the **Firewall Rules Expression Editor** so that you can test a rule as you edit it.
 
-<Notice type="note">
+<Aside type="note">
 
 The Rule Preview functionality is available to customers in the Cloudflare Enterprise plan.
-</Notice>
+</Aside>
 
 ---
 

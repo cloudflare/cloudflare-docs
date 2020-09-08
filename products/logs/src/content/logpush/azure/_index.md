@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 62
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You'll need to provide *Write* permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
 
@@ -17,7 +16,7 @@ To enable Logpush to Azure:
 
 3. Provide the SAS URL when prompted by the Logpush API or UI.
 
-<Notice type="note">
+<Aside type="note">
 
 Logpush will stop pushing logs if your SAS token expires, which is why an expiration period of at least 5 years is required. You can always update your Logpush job with a new token if needed.
-</Notice>
+</Aside>

@@ -39,10 +39,10 @@ Before sending your Cloudflare log data to Splunk, make sure that you:
 - Configure [Logpush](/logs/logpush/) or [Logpull](/logs/logpull-api/)
 - Consult the [Splunk documentation](https://splunkbase.splunk.com/app/4501/) for the Cloudflare App
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Splunk.
-</Notice>
+</Aside>
 
 ---
 
@@ -130,12 +130,12 @@ Once installed, you need to configure the application. To do this, a set up page
 
 The Cloudflare App is now installed and the dashboards should be populating with data.
 
-<Notice type="note">
+<Aside type="note">
 
 Some reports contain calculated fields. If you wish to check how values were calculated or to adjust formulas, click **Settings** > **Data Models** > **Cloudflare**. Here, you can view and edit all the available fields.
 ![Splunk data models](../../static/images/splunk/screenshots/splunk-data-models-cloudflare.png)
 ![Splunk Cloudflare data model field](../../static/images/splunk/screenshots/splunk-cloudflare-data-model-calculated-fields.png)
-</Notice>
+</Aside>
 
 **Post Installation Notes**
 
@@ -175,12 +175,12 @@ The following dashboards outlined below are available as part of the Cloudflare 
 
 ##### Cloudflare - Snapshot
 
-_Web Traffic Overview_ and _Web Traffic Types_: Get an overview of the most important metrics from your websites and applications on the Cloudflare network.  
+_Web Traffic Overview_ and _Web Traffic Types_: Get an overview of the most important metrics from your websites and applications on the Cloudflare network.
 ![Splunk dashboard Cloudflare Snapshot](../../static/images/splunk/dashboards/splunk-cloudflare-snapshot-dashboard.png)
 
 ##### Cloudflare - Reliability
 
-_Summary_ and _Detailed_: Get insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.  
+_Summary_ and _Detailed_: Get insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
 ![Splunk dashboard Cloudflare Reliability Summary](../../static/images/splunk/dashboards/splunk-cloudflare-reliability-summary-dashboard.png)
 
 ![Splunk dashboard Cloudflare Reliability Detailed](../../static/images/splunk/dashboards/splunk-cloudflare-reliability-detailed-dashboard.png)

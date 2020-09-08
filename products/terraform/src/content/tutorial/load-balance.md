@@ -3,7 +3,6 @@ title: Step 5 - Sharing the load
 weight: 50
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Thanks to the rate limiting set up in the [previous step](/terraform/tutorial/rate-limit), our login page is protected against credential brute force attacks. Now it's time to focus on performance and reliability. Imagine organic traffic has grown, and is increasingly global. It's time to spread these requests over multiple data centers.
 
@@ -76,7 +75,7 @@ $ git commit -m "Step 5 - Add additional 'www' DNS record for Asia data center."
 $ git checkout master
 Switched to branch 'master'
 
-$ git merge step5-loadbalance 
+$ git merge step5-loadbalance
 Updating e1c38cf..6761a4f
 Fast-forward
  cloudflare.tf | 7 +++++++
@@ -130,10 +129,10 @@ As you can see above, there is no discernible pattern for which origin receives 
 
 ## 3. Switch to using Cloudflare's Load Balancing product
 
-<Notice>
+<Aside>
 
 Before proceeding, make sure that your account is enabled for Load Balancing. If you're on an Enterprise plan, you should ask your Customer Success Manager to do this; otherwise, you can subscribe to Load Balancing within the Cloudflare Dashboard.
-</Notice>
+</Aside>
 
 As described in the [load balancing tutorial](https://support.cloudflare.com/hc/en-us/articles/115000081911-Tutorial-How-to-Set-Up-Load-Balancing-Intelligent-Failover-on-Cloudflare) on the Cloudflare Support site, you will need to do three things:
 
@@ -193,7 +192,7 @@ EOF
 
 ### iii. Define and create the load balancer
 
-Note that when you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://support.cloudflare.com/hc/en-us/articles/115004954407-How-Does-a-Load-Balancer-Interact-with-Existing-DNS-Records-). For example, when we create the "www.example.com" LB below, it will supersede the two www DNS records that you have previously defined. One benefit of  leaving this DNS records in place is that if you temporarily disable load balancing, connections to this hostname will still be possible as shown in Step #2 above. 
+Note that when you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://support.cloudflare.com/hc/en-us/articles/115004954407-How-Does-a-Load-Balancer-Interact-with-Existing-DNS-Records-). For example, when we create the "www.example.com" LB below, it will supersede the two www DNS records that you have previously defined. One benefit of  leaving this DNS records in place is that if you temporarily disable load balancing, connections to this hostname will still be possible as shown in Step #2 above.
 
 ```
 $ cat >> cloudflare.tf <<'EOF'

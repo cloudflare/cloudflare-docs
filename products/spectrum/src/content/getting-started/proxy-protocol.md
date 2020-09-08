@@ -3,16 +3,15 @@ title: Proxy Protocol
 weight: 4
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Because Cloudflare intercepts packets before forwarding them to your server, if you were to look up the client IP, you would see Cloudflare's IP rather than the true client IP.
 
-Some services you run may require knowledge of the true client IP. In those cases, you can use a proxy protocol for Cloudflare to pass on the client IP to your service. Sending proxy information along is dependent on whether TCP or UDP is used. For TCP, Spectrum supports adding [Proxy Protocol v1](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt), which is the human readable version supported by Amazon ELB and [NGINX](https://docs.nginx.com/nginx/admin-guide/load-balancer/using-proxy-protocol/). For UDP applications, Cloudflare has developed a custom proxy protocol called Simple Proxy Protocol. 
+Some services you run may require knowledge of the true client IP. In those cases, you can use a proxy protocol for Cloudflare to pass on the client IP to your service. Sending proxy information along is dependent on whether TCP or UDP is used. For TCP, Spectrum supports adding [Proxy Protocol v1](https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt), which is the human readable version supported by Amazon ELB and [NGINX](https://docs.nginx.com/nginx/admin-guide/load-balancer/using-proxy-protocol/). For UDP applications, Cloudflare has developed a custom proxy protocol called Simple Proxy Protocol.
 
-<Notice>
+<Aside>
 
 This feature requires an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the [Customer Success Team](mailto:success@cloudflare.com).
-</Notice>
+</Aside>
 
 ## Enabling Proxy Protocol v1 for TCP
 To enable PROXY Protocol v1 for a TCP application on Cloudflare, go to the [Spectrum tab in the Cloudflare dashboard](https://dash.cloudflare.com), click the configure icon next to the application you would like to add PROXY Protocol to, and use the Proxy Protocol pull down to select 'PROXY Protocol v1'.
@@ -102,7 +101,7 @@ A PROXY Protocol binary header for a IPv6 incoming address has the format:
 
 ## Enabling Simple Proxy Protocol for UDP
 
-When using UDP (currently an early access feature), the client source IP and port information can be obtained by using Simple Proxy Protocol, a lightweight protocol developed specifically for UDP. 
+When using UDP (currently an early access feature), the client source IP and port information can be obtained by using Simple Proxy Protocol, a lightweight protocol developed specifically for UDP.
 
 To enable it, click configure on a Spectrum application and toggle the setting for Simple Proxy Protocol to 'on'.
 

@@ -5,7 +5,6 @@ weight: 210
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 To ensure smooth integration, Cloudflare Network Interconnect setup uses the onboarding process described in these articles:
 

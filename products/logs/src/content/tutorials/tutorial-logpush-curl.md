@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 87
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 You can manage your Cloudflare Logpush service from the command line using cURL:
 
@@ -16,8 +15,8 @@ You can manage your Cloudflare Logpush service from the command line using cURL:
 
 Before getting started, review:
 
-* [Understanding the Logpush API](/logs/logpush/logpush-configuration-api/understanding-logpush-api)  
-* [Job object JSON schema](/logs/logpush/logpush-configuration-api/job-json-schema)  
+* [Understanding the Logpush API](/logs/logpush/logpush-configuration-api/understanding-logpush-api)
+* [Job object JSON schema](/logs/logpush/logpush-configuration-api/job-json-schema)
 
 ----
 
@@ -54,10 +53,10 @@ A challenge file will be written to the destination, and the filename will be in
 
 You will need to provide the token contained in this file when creating a job in the next step.
 
-<Notice type="note">
+<Aside type="note">
 
 When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
-</Notice>
+</Aside>
 
 <a id="step-2-create-a-job" style="color: inherit">
 
@@ -122,9 +121,9 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/val
     "valid": true
   },
   "success": true
-}    
+}
 ```
-    
+
 ----
 
 <a id="step-3-enable-update-a-job" style="color: inherit">
@@ -290,7 +289,7 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
   "success": true
 }
 ```
-    
+
 Retrieve all jobs for all data sets:
 
 ```bash

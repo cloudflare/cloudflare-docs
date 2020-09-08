@@ -5,7 +5,6 @@ weight: 214
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Your Magic Transit firewall policy has two components:
 
@@ -187,10 +186,10 @@ _ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, 
   * Bit field match (Cloudflare is able to match on any part of an IP packet to apply allow or drop rules)
 
 
-<Notice type="info">
+<Aside type="info">
 
 If you or your end users are using other Cloudflare services (eg. CDN, Spectrum) that proxy traffic:
 * Firewall rules to block traffic based on source IP may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
 * [Cloudflare IPs](https://www.cloudflare.com/ips/) must be allowed.
 
-</Notice>
+</Aside>

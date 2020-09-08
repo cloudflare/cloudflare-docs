@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 99
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using Elastic and Kibana.
 
@@ -40,10 +39,10 @@ Before sending your Cloudflare log data to Elastic, make sure that you:
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
 - Configure [Logpush](https://developers.cloudflare.com/logs/logpush/) or [Logpull](https://developers.cloudflare.com/logs/logpull-api/)
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Elastic.
-</Notice>
+</Aside>
 
 ---
 
@@ -84,10 +83,10 @@ Before getting Cloudflare logs into Elastic:
 
 4. Click **Customize Deployment**. On this page, you can set your Elasticsearch cluster memory and storage.
 
-   - **I/O Optimized Template Configuration**  
+   - **I/O Optimized Template Configuration**
      For this options, we recommend configuring your cluster to have 2 availability zones and 8 GB of RAM.
 
-   - **Hot-Warm Template Configuration**  
+   - **Hot-Warm Template Configuration**
      For this option, we recommend configuring your cluster as:
 
      - _Hot Zone_: 2 availability zones, 8 GB RAM
@@ -234,10 +233,10 @@ All dashboard have a set of filters that you can apply to the entire dashboard, 
 
 ![Cloudflare dashboard filters](../../static/images/elastic/screenshots/cloudflare-dashboards-filters-elastic-kibana.png)
 
-<Notice type="note">
+<Aside type="note">
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
-</Notice>
+</Aside>
 
 The default time interval is set to 24 hours. Note that for correct calculations filter will need to exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
 
@@ -305,10 +304,10 @@ If you see _status: [RED]_, then your cluster isn’t healthy and it’s likely 
 
 It is important to verify the return status of the call to Elasticsearch. Lines starting with _Flushing [N] logs to elasticsearch_ and followed by a response line indicate that everything is working as expected.
 
-<Notice type="note">
+<Aside type="note">
 
 You might see a _WARNING_ message containing text that says _‘y’ year should be replaced…_. You can ignore this message.
-</Notice>
+</Aside>
 
 If you run into any other issues, take note of the exact return message and contact your Cloudflare support team.
 

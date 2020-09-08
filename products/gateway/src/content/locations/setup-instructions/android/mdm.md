@@ -4,19 +4,18 @@ alwaysopen: true
 weight: 2
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+<Aside>
 
-Note that if you were using 1.1.1.1 for Families in the mobile app, you will at first need to disable 1.1.1.1 for Families. 
+Note that if you were using 1.1.1.1 for Families in the mobile app, you will at first need to disable 1.1.1.1 for Families.
 
-You can disable it by going to `Advanced -> Connection options -> DNS Settings -> 1.1.1.1 for Families -> And select 'None'`. 
-</Notice>
+You can disable it by going to `Advanced -> Connection options -> DNS Settings -> 1.1.1.1 for Families -> And select 'None'`.
+</Aside>
 
 You can deploy Gateway to your corporate Android devices in bulk. Use an MDM solution to deploy your Gateway configuration to all corporate devices. If you want to learn how to use Gateway on your personal Android device please use the setup instructions from [this page](../manual/) instead.
 
 ## Unique Gateway Id
-When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone. 
+When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
 
 1. Visit your teams dashboard to fetch the unique id from your location.
 ![Go to teams dash](../../../static/go-to-teams-dashboard.png)
@@ -55,4 +54,4 @@ You can read more about using mdm on Android [here](https://developer.android.co
 
 After you save the file, use your preferred MDM tool to deploy the configuration change to your fleet of corporate mobile devices.
 
-If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now. 
+If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now.

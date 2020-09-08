@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 14
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 - [Endpoints](#endpoints)
 - [Required authentication headers](#required-authentication-headers)
@@ -137,14 +136,14 @@ The following table describes the parameters available:
 </table>
 
 
-<Notice type="note">
+<Aside type="note">
 
 The maximum time range from <em>start</em> to <em>end</em> can't exceed 1 hour. Because <em>start</em> is inclusive and <em>end</em> is exclusive, to get all the data for every minute, starting at 10AM, the proper values are:
 
 `start=2018-05-15T10:00:00Z&end=2018-05-15T10:01:00Z`, then `start=2018-05-15T10:01:00Z&end=2018-05-15T10:02:00Z` and so on.
 
 The overlap will be handled correctly.
-</Notice>
+</Aside>
 
 <a id="example-api-requests-using-curl" style="color: inherit">
 
@@ -169,10 +168,10 @@ curl -s \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/47ff6e2c812d3ccb?timestamps=rfc3339"
 ```
 
-<Notice type="note">
+<Aside type="note">
 
 The IATA code returned as part of the Ray ID does not need to included in the request. For example: if you have a RayID such as `49ddb3e70e665831-DFW` only include `49ddb3e70e665831` in your request.
-</Notice>
+</Aside>
 
 <a id="fields" style="color: inherit">
 

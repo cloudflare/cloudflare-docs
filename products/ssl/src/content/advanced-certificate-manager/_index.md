@@ -6,26 +6,25 @@ hidden: false
 showNew: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Advanced Certificate Manager is a flexible and customizable way to issue and manage certificates in Cloudflare.  Advanced Certificate Manager defines several certificate options:
 
 - Add up to 100 edge certificates per zone.
 - Include the zone apex and less than 50 hosts as covered hostnames.
 - Select the preferred validation method (HTTP, TXT or Email).
-- Choose the certificate validity period (14, 30, 90, or 365 days). 
+- Choose the certificate validity period (14, 30, 90, or 365 days).
 - Choose the Certificate Authority to issue the certificate (Let’s Encrypt or Digicert).
 - Select a custom trust store for origin authentication.
 - Control cipher suites used for TLS.
 
 Use the Advanced Certificate Manager when the Universal certificate does not meet your business requirements but you still want Cloudflare to manage the SSL certificate issuance and renewal. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 
-<Notice type="warning">
+<Aside type="warning">
 
 Selecting Let's Encrypt as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, e.g. example.com, *.example.com).
-</Notice>
+</Aside>
 
-## Order an Advanced Certificate Manager certificate pack 
+## Order an Advanced Certificate Manager certificate pack
 
 Order an Advanced Certificate via [API](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack):
 
@@ -107,10 +106,10 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certifica
 
 ## List Advanced Certificate Manager Certificate Pack
 
-<Notice type="note">
+<Aside type="note">
 
 This API call returns all certificate packs for the zone including Universal, Custom, and Advanced certificates.
-</Notice>
+</Aside>
 
 To list all Advanced Certificates on the zone via [API](https://api.cloudflare.com/#certificate-packs-list-certificate-packs):
 

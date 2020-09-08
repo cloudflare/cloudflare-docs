@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 55
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 Cloudflare uses Amazon Identity and Access Management (IAM) to gain access to your S3 bucket. The Cloudflare IAM user needs *PutObject* permission for the bucket.
 
@@ -41,7 +40,7 @@ To enable Logpush to Amazon S3:
 }
 ```
 
-<Notice type="note">
+<Aside type="note">
 
 Logpush uses multipart upload for S3. Aborted uploads will result in incomplete files remaining in your bucket. To minimize your storage costs, Amazon recommends configuring a lifecycle rule using the `AbortIncompleteMultipartUpload` action. *See [Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config)*.
-</Notice>
+</Aside>

@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 206
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ### Overview
 
@@ -12,10 +11,10 @@ The **Expression Preview** editor is a text-only interface for creating Firewall
 
 For example, only the Expression Preview editor supports grouping symbols. Cloudflare designed the Firewall Rules Language with [Wireshark Display Filters®](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html) in mind, so although there are some subtle differences, Wireshark users should feel right at home with Firewall Rules and be able to easily port their existing rules to Cloudflare.
 
-<Notice>
+<Aside>
 
 Firewall Rules expressions have a 4KB limit. This is approximately 4,000 text characters. This limit applies whether you use the visual **Expression Builder** or edit your expression manually in the **Expression Preview** text box.
-</Notice>
+</Aside>
 
 ---
 

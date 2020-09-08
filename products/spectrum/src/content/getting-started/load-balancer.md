@@ -3,19 +3,18 @@ title: Cloudflare Load Balancer
 weight: 6
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 You can configure Spectrum and Cloudflare's Load Balancing to provide TCP healthchecks, failover, and traffic steering to bring resiliency to your Spectrum Applications.  However, to prevent issues with DNS resolution for a Spectrum application, do not use the same Spectrum hostname as a current Load Balancing hostname.
 
-<Notice>
+<Aside>
 
 This feature requires an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the <a href="mailto:success@cloudflare.com">Customer Success Team</a>.
-</Notice>
+</Aside>
 
 ### TCP Health Checks
 Cloudflare's Load Balancer can be configured to probe any TCP port for an accepted connection. This is in addition to HTTP and HTTPS probing capabilities.
 
-Health Checks are optional within a Load Balancer. However, without one the load balancer will distribute traffic to all the origins in the first pool. With the Health Check enabled, hosts that have gone into an error state will not receive traffic maintaining uptime. This allows you to enable intelligent failover within a pool of hosts or amongst multiple pools. 
+Health Checks are optional within a Load Balancer. However, without one the load balancer will distribute traffic to all the origins in the first pool. With the Health Check enabled, hosts that have gone into an error state will not receive traffic maintaining uptime. This allows you to enable intelligent failover within a pool of hosts or amongst multiple pools.
 
 The below image will configure a TCP health check for an application running on port 2408 with a refresh rate every 30 seconds. This can be configured through the dashboard or through Cloudflare's API.
 
@@ -59,10 +58,10 @@ In this mode, the Cloudflare Load Balancer will fail over amongst pools listed i
 
 ### Example
 
-<Notice>
+<Aside>
 
 You will need to have both Load Balancing and Spectrum Enabled in your account to use this functionality.
-</Notice>
+</Aside>
 
 #### Step 1: Create a Load Balancer
 You will need to create a Load Balancer on your Cloudflare managed zone. You can follow instructions on how to do so by following this [tutorial](https://support.cloudflare.com/hc/en-us/articles/115000081911-Tutorial-How-to-Set-Up-Load-Balancing-Intelligent-Failover-on-Cloudflare).

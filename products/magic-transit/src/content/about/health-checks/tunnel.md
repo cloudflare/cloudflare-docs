@@ -5,7 +5,6 @@ weight: 170
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) tunnels that route traffic from Cloudflare to your origin network. Magic Transit relies on health checks to steer traffic to the best available routes.
 
@@ -19,10 +18,10 @@ Cloudflare encapsulates the ICMP reply packet and transmits the probe across the
 
 Every Cloudflare edge server configured to process your traffic sends a tunnel health check probe every 60 seconds. When a probe attempt fails, each server detecting the failure quickly probes up to 2 more times to obtain an accurate result.
 
-<Notice type="info">
+<Aside type="info">
 
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply (rather than an ICMP echo request). To use echo request packets, please contact your Cloudflare account team.
-</Notice>
+</Aside>
 
 This Wireshark screenshot shows a collection of example health check packets:
 

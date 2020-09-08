@@ -3,7 +3,6 @@ title: Command-line Arguments
 weight: 100
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 * [Tunnel command](#tunnel-command)
   * [Login command](#login-command)
@@ -141,12 +140,12 @@ Syntax: `--no-tls-verify`
 
 Default: `false`
 
-Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted. 
+Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 
-<Notice type="note">
+<Aside type="note">
 
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
-</Notice>
+</Aside>
 
 <div id="origin-ca-pool">
 
@@ -166,7 +165,7 @@ Syntax: `--origin-server-name value`
 
 Environment variable: `TUNNEL_ORIGIN_SERVER_NAME`
 
-Hostname that `cloudflared` should expect from your origin server certificate.   
+Hostname that `cloudflared` should expect from your origin server certificate.
 
 <div id="metrics">
 
@@ -254,7 +253,7 @@ Syntax: `--no-chunked-encoding`
 
 Default: `false`
 
-Disables chunked transfer encoding; useful if you are running a WSGI server. 
+Disables chunked transfer encoding; useful if you are running a WSGI server.
 
 <div id="hello-world">
 

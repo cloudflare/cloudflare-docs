@@ -3,16 +3,15 @@ title: Provider Customization
 weight: 40
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Terraform communicates with cloud and edge provider APIs such as Cloudflare through modules known as "providers". These providers are [installed automatically](/terraform/tutorial/hello-world/#2-initializing-terraform-and-the-cloudflare-provider) when you run `terraform init` in a directory that has a `.tf` file containing a provider. Typically, the only required parameters to the provider are what's requried to authenticate. In many cases, however, it may make sense to customize the provider to your needs. Below we examine some of the [optional settings](https://www.terraform.io/docs/providers/cloudflare/#argument-reference) that can be passed to the Cloudflare Provider.
 
 ## Adjusting the default Cloudflare provider settings
 
-<Notice>
+<Aside>
 
 The examples below build on the <a href="https://developers.cloudflare.com/terraform/tutorial/">Cloudflare Terraform Tutorial</a>.
-</Notice>
+</Aside>
 
 The Cloudflare Terraform provider can be customized through the use of configuration parameters, specified either in your `.tf` configuration files or via environment variables, e.g., `$CLOUDFLARE_RPS`. Using environment variables may make sense when running Terraform from a CI/CD system, or when the change is temporary and doesn't need to be persisted in your configuration history.
 

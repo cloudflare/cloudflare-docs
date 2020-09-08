@@ -3,12 +3,11 @@ title: Upgrading Your Key Server
 weight: 60
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice type="warning">
+<Aside type="warning">
 
 If you are running in a high availability configuration, you should make sure to upgrade one server at a time as new TLS connections will fail to terminate at Cloudflare’s edge without a functioning key server.
-</Notice>
+</Aside>
 
 1. Back up the contents of /etc/keyless.
 2. Update your OS’ package listings, e.g., `apt-get update` or `yum update`

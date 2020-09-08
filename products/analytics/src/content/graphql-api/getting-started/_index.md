@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 10
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 This section describes setting up authentication for _GraphiQL_ and GraphQL Analytics API querying basics.
 
@@ -98,10 +97,10 @@ query {
 }
 ```
 
-<Notice type="note">
+<Aside type="note">
 
 This is only an example. You must specify the <code>zoneTag</code> for your domain. Your Cloudflare dashboard lists your Zone ID (<code>zoneTag</code>) on the <em>Overview</em> page.
-</Notice>
+</Aside>
 
 How can you tell what data sets, metrics, dimensions, operators, and functions are available? One of the great features of a GraphQL API is that it offers "introspection": you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform. _GraphiQL_ users this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `Query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
 

@@ -3,7 +3,6 @@ title: Configuration
 weight: 10
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ## Prerequisites
 
@@ -26,10 +25,10 @@ We strongly recommend that you use an operating system still supported by the ve
 
 ### DNS record created within zone
 
-<Notice>
+<Aside>
 
 Note: You will need to create a public DNS record for your key server. If you are using Cloudflare, this record **cannot yet be orange clouded**. As a security measure, you should obfuscate the hostname of your key server.
-</Notice>
+</Aside>
 
 1. Use `openssl rand 24 -hex` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`
 2. Add this record via your DNS provider’s interface as an 'A' record pointing to the IP address of your Keyless SSL server
@@ -39,7 +38,7 @@ Note: You will need to create a public DNS record for your key server. If you ar
 
 Before your key server(s) can be configured, you must next upload the corresponding SSL certificates to Cloudflare’s edge. During TLS termination, Cloudflare will present these certificates to connecting browsers and then (for non-resumed sessions) communicate with the specified key server to complete the handshake.
 
-It is recommended that you upload certificates to Cloudflare with only SANs that you wish to use with Cloudflare Keyless SSL. All hostnames you wish to use with Keyless SSL must be "orange clouded" (proxied) on Cloudflare. 
+It is recommended that you upload certificates to Cloudflare with only SANs that you wish to use with Cloudflare Keyless SSL. All hostnames you wish to use with Keyless SSL must be "orange clouded" (proxied) on Cloudflare.
 
 For each certificate you wish to use with Keyless SSL:
 

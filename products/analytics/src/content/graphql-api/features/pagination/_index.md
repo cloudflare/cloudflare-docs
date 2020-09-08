@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 14
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Pagination--breaking up your query results into smaller parts--can be done using `limit`, `orderBy`, and filtering parameters. The GraphQL Analytics API does not support cursors for pagination.
 
@@ -27,10 +26,10 @@ firewallEventsAdaptive (limit: 2, orderBy: [datetime_ASC, clientCountryName_ASC]
 }
 ```
 
-<Notice>
+<Aside>
 
 Specifying a sort order by date returns less specific results than specifying a sort order by date and country.
-</Notice>
+</Aside>
 
 **Response**
 

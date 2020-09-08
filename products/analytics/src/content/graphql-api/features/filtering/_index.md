@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 10
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can easily exceed supported bounds, and the data returned can be noisy.
 
@@ -49,10 +48,10 @@ The account filter uses the same structure and rules as the zone filter, except 
 
 You must specify an account filter when making an account-scoped query, and you cannot query multiple accounts simultaneously.
 
-<Notice>
+<Aside>
 
 Network Analytics queries require an Account ID (`accountTag`) filter.
-</Notice>
+</Aside>
 
 #### Table (data set) filter
 

@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 90
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 This tutorial explains how to activate Cloudflare **Bot Management** and view related dashboards in the Elastic, Google Data Studio, Looker, Splunk, and Sumo Logic analytics platforms.
 
@@ -40,10 +39,10 @@ Before getting started, make sure that you:
 - Are familiar with [Cloudflare Bot Management](https://support.cloudflare.com/hc/articles/360027519452)
 - Follow your analytics provider’s guides for getting logs from AWS S3 or Google Cloud Platform into your analytics platform
 
-<Notice type="note">
+<Aside type="note">
 
 You can also refer to our [tutorials for enabling logs and dashboards for several analytics providers](/logs/analytics-integrations/).
-</Notice>
+</Aside>
 
 ---
 
@@ -61,10 +60,10 @@ Before proceeding, make sure that you’ve enabled Cloudflare Bot Management for
    - Cloudflare recommends starting with the action of _Log_ and running it for several days in order to identify which requests fall under the rule above to check if any false positives are registered. You can refine the rule expression further, based on your findings. Once you complete testing, switch the rule action to _Challenge (Captcha)_.
 5. Click **Save**.
 
-<Notice type="npte">
+<Aside type="npte">
 
 You can track bots in Cloudflare logs only when using the action _Challenge (Captcha)_. Cloudflare plans to add support for the _Log_ action in late 2019.
-</Notice>
+</Aside>
 
 ![Create Cloudflare Firewall rule to identify bad bots](/static/images/bot-management/screenshots/create-firewall-rule-for-bots.png)
 
@@ -72,7 +71,7 @@ You can track bots in Cloudflare logs only when using the action _Challenge (Cap
 
 <a id="task2" style="color: inherit">
 
-### Task 2 - View Bot Traffic Dashboards 
+### Task 2 - View Bot Traffic Dashboards
 </a>
 <a id="task2.1" style="color: inherit">
 
@@ -127,10 +126,10 @@ The columns are:
 
 3. Bad Bots - Shows confirmed bad bot requests, which exclude solved CAPTCHAs
 
-<Notice type="note">
+<Aside type="note">
 
 **Limitations**: To identify bot requests correctly, the associated Firewall rules can only be set to the action _Challenge (Captcha)_. If you have more than one rule with this same action (and used for purposes other than bot management), such rule will interfere and you will see overlapping or conflicting metrics without the option to identify which Firewall rule triggered.
-</Notice>
+</Aside>
 
 ##### Example dashboards
 

@@ -5,7 +5,6 @@ weight: 210
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 The Cloudflare Network Interconnect (CNI) onboarding process, from scoping to going live, typically takes 10-15 business days.
 
@@ -35,13 +34,13 @@ _Customer requirements:_ The resulting LOA/service key is provided to you so tha
 * Order cross-connects at the locations the LOA specifies.
 * Verify when the cross-connects are complete.
 
-<Notice type='note'>
+<Aside type='note'>
 
 When using a virtual partner network interconnect, provision cross-connects using the appropriate partner portals.
 
 For more, see the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/#:~:text=Network%20Interconnect%20Partner%20Program&text=Cloudflare%20has%20partnered%20with%20five,over%20high%2Dperformance%20network%20fabrics.).
 
-</Notice>
+</Aside>
 
 Once you have provided verification, Cloudflare assigns IP addresses to use with the cross-connect (assuming you are not using an Internet exchange point for the cross-connect).
 

@@ -3,12 +3,11 @@ title: High Availability
 weight: 20
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice type="warning">
+<Aside type="warning">
 
 It is important that you monitor the uptime and status of your key server, and ensure that it is available at all times, otherwise new TLS connections will not be possible.
-</Notice>
+</Aside>
 
 Cloudflare’s Keyless SSL server runs as a single binary with minimal dependencies, and is designed to be robust and reliable. The network between your key server and Cloudflare may not be however, and we strongly recommend that you run at least two (2) key servers in a high availability ("HA") configuration behind a load balancer.
 

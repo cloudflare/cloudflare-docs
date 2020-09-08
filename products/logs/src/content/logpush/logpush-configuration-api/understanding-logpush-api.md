@@ -17,7 +17,7 @@ weight: 61
 ## Endpoints
 </a>
 
-The table below summarizes the job operations available. 
+The table below summarizes the job operations available.
 
 The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument is the numeric job id. The `<dataset>` argument indicates the log category (either `http_requests` or `spectrum_events`).
 
@@ -66,7 +66,7 @@ The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument 
             <td>Retrieve all default fields for a data set </td>
             <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields/default</em></td>
         </tr>
-        <tr>    
+        <tr>
             <td>PUT</td>
             <td>Update job</td>
             <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em></td>
@@ -147,10 +147,10 @@ A challenge file will be written to the destination, and the filename will be in
 
 You will need to provide the token contained in the file when creating a job.
 
-<Notice type="note">
+<Aside type="note">
 
 When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
-</Notice>
+</Aside>
 
 -------
 
@@ -203,10 +203,10 @@ There can be only 1 job writing to each unique destination. For S3 and GCS, a de
 ## Job object
 </a>
 
-<Notice type="info">
+<Aside type="info">
 
 See a detailed description of the [Logpush object JSON schema](/logs/logpush/logpush-configuration-api/job-json-schema/).
-</Notice>
+</Aside>
 
 -------
 
@@ -215,7 +215,7 @@ See a detailed description of the [Logpush object JSON schema](/logs/logpush/log
 ## Options
 </a>
 
-Logpush repeatedly pulls logs on your behalf and uploads them to your destination. 
+Logpush repeatedly pulls logs on your behalf and uploads them to your destination.
 
 Log options, such fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object schema](/logs/logpush/logpush-configuration-api/job-json-schema/)*). If you're migrating from the Logpull API, `logpull_options` is simply the query  string for the API call. For example, the following query gets data from the Logpull API:
 
@@ -226,7 +226,7 @@ curl -sv \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 
-In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logs/logpull-api/requesting-logs/#parameters)* for more info. 
+In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logs/logpull-api/requesting-logs/#parameters)* for more info.
 
 If you don't change any options, you will receive logs with default fields that are unsampled (i.e., `sample=1`).
 

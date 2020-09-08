@@ -3,14 +3,13 @@ title: Configuration Options
 weight: 3
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Spectrum is a global TCP and UDP proxy running on Cloudflare's edge nodes. It does not terminate the connection. Instead it passes through the packets to the backend server.
 
-<Notice>
+<Aside>
 
 Some of these features require an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the [Customer Success Team](mailto:success@cloudflare.com).
-</Notice>
+</Aside>
 
 
 ### IP Addresses
@@ -70,7 +69,7 @@ For DNS origins:
 }
 ```
 
-**Note**: the number of ports in an origin port range must match the number of ports specified in the `protocol` field. 
+**Note**: the number of ports in an origin port range must match the number of ports specified in the `protocol` field.
 Connections to a port within a port range at the edge will be proxied to the equivalent port offset in the origin range.
 For example, in the configurations above, a connection to `range.example.com:1005` would be proxied to port 3005 on the origin.
 

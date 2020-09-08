@@ -4,11 +4,10 @@ alwaysopen: true
 weight: 45
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 Before enabling **Cloudflare Logpush**, make sure that you have already configured a destination in your cloud service.
 
-<Notice type="info">
+<Aside type="info">
 
 Learn  how to set up a destination for:
 
@@ -17,7 +16,7 @@ Learn  how to set up a destination for:
 * [Microsoft Azure](/logs/logpush/azure/)
 * [Sumo Logic](/logs/logpush/sumo-logic/)
 
-</Notice>
+</Aside>
 
 To enable the Clouflare Logpush service:
 
@@ -33,24 +32,24 @@ To enable the Clouflare Logpush service:
 
 6. Under **Select service**, pick your cloud service provider and click **Next**
 
-<Notice type="note">
+<Aside type="note">
 
 Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then continue to *step 11*
-</Notice>
+</Aside>
 
 7. For **Amazon S3**, enter or select the following:
     * **Bucket path**
     * **Daily subfolders**
     * **Bucket region**
     **Encryption constraint in bucket policy**
-    * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already): 
+    * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
         * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
-        
+
 8. For **Google Cloud Storage**, enter or select the following:
     * **Bucket path**
     * **Daily subfolders**
     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
-        * See *step 2* in [Enable Google Cloud Storage](/logs/logpush/google-cloud-storage/) 
+        * See *step 2* in [Enable Google Cloud Storage](/logs/logpush/google-cloud-storage/)
 
 9. For **Microsoft Azure**, enter or select the following:
     * **SAS URL**
@@ -60,21 +59,21 @@ Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then co
 
 10. For **Sumo Logic**, enter or select the following:
     * **HTTP Source Address**
-        * See [Enable Sumo Logic](/logs/logpush/sumo-logic/) for instructions on getting this address 
+        * See [Enable Sumo Logic](/logs/logpush/sumo-logic/) for instructions on getting this address
 
 11. In the Cloudflare dashboard, click **Validate access**
 
-12. Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership** 
+12. Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership**
 
-<Notice type="note">
+<Aside type="note">
 
 Tips for seeing the token:
 
-* **Amazon S3**: click the **Open** button in the **Overview** tab of the ownership challenge file 
+* **Amazon S3**: click the **Open** button in the **Overview** tab of the ownership challenge file
 * **Microsoft Azure**: use the **Storage Explorer** feature to navigate to and open the file
 * **Sumo Logic**: use the [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) feature to see your log containing the token as soon as it's received
 
-</Notice>
+</Aside>
 
 13. Next in the **Customize log** screen, select the data set in which you're interested (currently `HTTP requests` or `Spectrum events`). You can keep the default fields to include in your log or make changes. You can add or remove fields at a later time by modifying your settings in **Logs** > **Logpush** (select the wrench icon).
 

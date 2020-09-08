@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 335
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 * [Update multiple rules](#update-multiple-rules)
 * [Update a single rule](#update-a-single-rule)
@@ -39,10 +38,10 @@ curl -X PUT \
 ]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
 ```
 
-<Notice type="note">
+<Aside type="note">
 
 **Important** - `PUT` does not update the filter specified. It only looks at the *filter id* to update the rule with a new filter. To update the filter, it's necessary to call the `/filters` API.
-</Notice>
+</Aside>
 
 #### Response
 ```json
@@ -81,10 +80,10 @@ The following fields are required:
 
 All other fields are optional.
 
-<Notice type="note">
+<Aside type="note">
 
-**Important** - `PUT` overwrites fields that aren't explicitly passed in the request. For example, if the request omits `description`, any previously existing `description` value will be erased. To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request and that way, avoid any undesired overwrites. 
-</Notice>
+**Important** - `PUT` overwrites fields that aren't explicitly passed in the request. For example, if the request omits `description`, any previously existing `description` value will be erased. To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request and that way, avoid any undesired overwrites.
+</Aside>
 
 
 

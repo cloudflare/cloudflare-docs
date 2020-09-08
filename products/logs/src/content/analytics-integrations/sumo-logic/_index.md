@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 105
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare).
 
@@ -43,10 +42,10 @@ Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 - Configure [Logpush](/logs/logpush/) or [Logpull](/logs/logpull-api/)
 - Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Sumo Logic.
-</Notice>
+</Aside>
 
 ---
 
@@ -182,10 +181,10 @@ Click the **funnel icon** in the top dashboard menu bar to display a scrollable 
 
 ![Sumo Logic dashboard filtering](../../static/images/sumo-logic/screenshots/filter-sumo-logic.png)
 
-<Notice type="note">
+<Aside type="note">
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
-</Notice>
+</Aside>
 
 Each panel has a set of filters that are applied to the results for that panel only, as shown in the following example. Click the funnel icon in the top panel menu bar to display a list of panel-specific filters.
 

@@ -4,7 +4,6 @@ alwaysopen: false
 weight: 350
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 **Cloudflare Filters** is an API-only component of Firewall Rules for designing complex criteria that rely on boolean operators and other logic to examine incoming HTTP traffic and look for a match.
 
@@ -16,10 +15,10 @@ For example, a filter matching:
 
 may be associated with a firewall rule declaring that the request should be blocked.
 
-<Notice type="note">
+<Aside type="note">
 
 Currently, Cloudflare Filters in an API-only feature and lacks a graphical user interface.
-</Notice>
+</Aside>
 
 Before getting started with the Cloudflare Filters API, make sure you're familiar [fields and expressions](/firewall/cf-firewall-rules/fields-and-expressions/).
 

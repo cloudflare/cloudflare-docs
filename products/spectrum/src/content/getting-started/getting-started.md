@@ -3,14 +3,13 @@ title: "Getting Started"
 weight: 2
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+<Aside>
 
 Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic.
 
 If you have feedback, let us know: [community.cloudflare.com/spectrum](https://community.cloudflare.com/c/security/spectrum). Steps to get started are below.
-</Notice>
+</Aside>
 
 ### Step One: Add your application
 

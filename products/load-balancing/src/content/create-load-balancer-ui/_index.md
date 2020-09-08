@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 20
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ### Overview
 
@@ -39,18 +38,18 @@ To start, we’ll create a load balancer using the **Create a Load Balancer** wi
 
    - To enable **Session Affinity**, select the **By Cloudflare cookie only** radio button and set the toggle switch to the _On_ position.
      ![test](../static/images/creating-a-load-balancer-using-the-traffic-app-2.png)
-     
-     <Notice type="note">
+
+     <Aside type="note">
 
      The orange cloud icon to the right of the hostname indicates that the load balancer will run in proxy mode. In proxy mode, Cloudflare announces Cloudflare IP addresses externally, but masks origin server IP addresses for security. See _[Proxy Modes](/load-balancing/understand-basics/proxy-modes/)_ for more detail.
-     </Notice>
+     </Aside>
 
 1. Click **Next** to continue.
 
-<Notice type="note">
+<Aside type="note">
 
 Deleting a Load Balancer does not delete associated pools and monitors.  Delete pools and monitors via the respective **Manage Pools** and **Manage Monitors** buttons within the **Load Balancing** tab under the **Traffic** app of the Cloudflare dashboard.
-</Notice>
+</Aside>
 
 ---
 

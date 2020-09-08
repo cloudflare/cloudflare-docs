@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 17
 ---
 
-import {Notice} from 'cf-gatsby-theme'
 
 ### Overview
 
@@ -168,12 +167,12 @@ Monitors support a great deal of customization and have the following properties
                 <td class="param-description object-definition-param-description">
                     <div>
                         <p>A case-insensitive sub-string to look for in the response body. If this string is not found, the origin will be marked as unhealthy. This parameter is only valid for HTTP and HTTPS monitors.</p>
-  <Notice type="info">
-  
+  <Aside type="info">
 
-  
+
+
   The sub-string must appear within the first 10KiB of your response body.
-  </Notice>
+  </Aside>
                     </div>
                 </td>
                 <td><div><small class="example-code"><code>"alive"</code></small></div></td>
@@ -271,9 +270,9 @@ Monitors support a great deal of customization and have the following properties
                     <ul class="constraints unstyled">
                         <li>
                             max length:
-                            
+
                             32
-                            
+
                         </li>
                         <li>read only</li>
                     </ul>
@@ -310,7 +309,7 @@ Monitors support a great deal of customization and have the following properties
         </tbody>
     </table>
 </div>
-  
+
 
 ---
 

@@ -4,7 +4,6 @@ alwaysopen: true
 weight: 100
 ---
 
-import {Notice} from 'cf-gatsby-theme';
 
 ### Overview
 
@@ -22,10 +21,10 @@ The following diagram depicts how data flows from Cloudflare Logs through the di
 
 ![Cloudflare Logs data to Google Cloud Platform](../../static/images/cf-logpush-to-google-cloud-platform.png)
 
-<Notice type="info">
+<Aside type="info">
 
 Google Cloud is offering a credit towards a new Google Cloud account to help you get started. To learn more, visit [Google Cloud Platform Partner Credit](https://cloud.google.com/partners/partnercredit/?PCN=a0n60000003kp9MAAQ).
-</Notice>
+</Aside>
 
 ---
 
@@ -183,14 +182,14 @@ To create a report for your log data based on the Cloudflare template:
 9. Next, add a new field to identify and calculate threat. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
    _ For **Field Name**, type *Threats*.
    _ In the **Formula** text box, paste the following code:
-   
+
    ```bash
    CASE
    WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ip" THEN "ip block"
    WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ctry" THEN "country block"
-   WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "zl" THEN "routed by zone lockdown"  
+   WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "zl" THEN "routed by zone lockdown"
     WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "ua" THEN "blocked user agent"
-   WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "rateLimit" THEN "rate-limiting rule"  
+   WHEN EdgePathingSrc = "user" AND EdgePathingOp = "ban" AND EdgePathingStatus = "rateLimit" THEN "rate-limiting rule"
     WHEN EdgePathingSrc = "bic" AND EdgePathingOp = "ban" AND EdgePathingStatus = "unknown" THEN "browser integrity check"
    WHEN EdgePathingSrc = "hot" AND EdgePathingOp = "ban" AND EdgePathingStatus = "unknown" THEN "blocked hotlink"
    WHEN EdgePathingSrc = "macro" AND EdgePathingOp = "chl" AND EdgePathingStatus = "captchaFail" THEN "CAPTCHA challenge failed"
@@ -205,7 +204,7 @@ To create a report for your log data based on the Cloudflare template:
 10. Finally, add another new field for grouping status error codes. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:
     _ For **Field Name**, type *EdgeResponseStatus_Class*.
     _ In the **Formula** text box, paste the following code:
-    
+
     ```bash
     CASE
     WHEN EdgeResponseStatus > 199 AND EdgeResponseStatus < 300 THEN "2xx"
