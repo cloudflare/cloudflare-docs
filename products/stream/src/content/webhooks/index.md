@@ -1,18 +1,16 @@
----
-title: Webhooks
----
+# Webhooks
 
 A tool to notify your service when videos successfully finish processing and are ready to stream.
 
-#### A few things to note:
+## A few things to note
 
 - At this time, webhooks will only be sent after the processing of a video is complete,
   and the body will indicate whether the processing of the video succeeded or failed.
 - Only one webhook subscription is allowed per-account.
 
-# Subscriptions
+## Subscriptions
 
-## Create or Modify the Webhook Subscription
+### Create or Modify the Webhook Subscription
 
 To subscribe to receive webhook notifications on your service, or modify an
 existing subscription, you will need your
@@ -92,7 +90,7 @@ deleted, and the request should be re-tried.
 }
 ```
 
-# Notifications
+## Notifications
 
 When a video on your account finishes processing, you will receive a `POST`
 request notification with information about the video.
@@ -137,7 +135,7 @@ Note the `status` field indicates whether the video processing finished successf
   }
 ```
 
-# Verify webhook authenticity
+## Verify webhook authenticity
 
 Cloudflare Stream will sign the webhook requests it sends to your notification URLs and include the signature of each requrest in the `Webhook-Signature` HTTP header. This allows your application to verify that the webhook requests are sent by Stream.
 

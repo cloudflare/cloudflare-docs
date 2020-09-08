@@ -1,8 +1,4 @@
----
-title: Player API
-weight: 10
----
-
+# Player API
 
 Attributes are added in the `<stream>` tag without quotes, as you can see below:
 
@@ -12,7 +8,7 @@ Multiple attributes can be used together, added one after each other like this:
 
      <stream attribute-1 attribute-2 attribute-3 src="5d5bc37ffcf54c9b82e996823bffbb81"></stream>
 
-### Supported Attributes
+## Supported Attributes
 
 `autoplay`
 
@@ -64,7 +60,7 @@ The video id from the video you've uploaded to Cloudflare Stream should be inclu
 
 The width of the video's display area, in CSS pixels.
 
-### Methods
+## Methods
 
 `play()`
 
@@ -74,7 +70,7 @@ Start video playback.
 
 Pause video playback.
 
-### Properties
+## Properties
 
 `autoplay`
 
@@ -116,9 +112,9 @@ Sets or returns whether the video should be preloaded upon element load.
 
 Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
 
-### Events
+## Events
 
-#### Standard Video Element Events
+### Standard Video Element Events
 
 We support most of the [standardized media element events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events).
 
@@ -206,7 +202,7 @@ Sent when the audio volume changes (both when the volume is set and when the mut
 
 Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
 
-#### Non-standard Events
+### Non-standard Events
 
 Non-standard events are prefixed with `stream-` to distinguish them from standard events.
 

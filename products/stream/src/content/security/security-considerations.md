@@ -1,9 +1,6 @@
----
-title: Security Considerations
-weight: 10
----
+# Security Considerations
 
-### Limiting Where Videos Can Be Embedded
+## Limiting Where Videos Can Be Embedded
 
 By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.
 
@@ -24,7 +21,7 @@ https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/stream/{VIDEO-ID}
 
 ```
 
-#### Signed URLs
+## Signed URLs
 
 Combining [signed URLs](/stream/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
 
@@ -34,7 +31,7 @@ To do so
 1. Make the video private
 1. Restrict the viewing domains to your site
 
-### Content Security Policy (CSP) considerations
+## Content Security Policy (CSP) considerations
 
 Content Security Policy (CSP) is a layer of security that helps to detect and prevent certain types of cross site scripting and data injection attacks. Most common way servers set CSP information is through headers at your origin server.
 

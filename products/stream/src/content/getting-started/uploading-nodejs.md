@@ -1,14 +1,12 @@
----
-title: "Uploading with Node.js"
-weight: 2.5
----
-### What You Will Need
+# Uploading with Node.js
+
+## What You Will Need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
 You will also need a [tus](https://tus.io) client. You can use the [tus-js-client](https://github.com/tus/tus-js-client) package to upload from your Node.js applications.
 
-### Example
+## Example
 
 Install tus-js-client
 

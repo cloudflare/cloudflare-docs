@@ -1,8 +1,4 @@
----
-title: Player & Playback
-alwaysopen: true
-weight: 10
----
+# Player & Playback
 
 Stream comes with a standard web player with a number of features built in:
 

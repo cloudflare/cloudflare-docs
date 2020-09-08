@@ -1,23 +1,18 @@
----
-title: Watermarks
-alwaysopen: true
-weight: 20
-hidden: false
-showNew: false
----
+# Watermarks
 
 You can add watermarks to videos uploaded using the Stream API.
 
 To add watermarks to your videos, first create a Watermark Profile. A watermark profile describes the image you would like to be used as a watermark and the position. Once you have a watermark profile, add an additional property when uploading videos.
 
-#### A few things to note:
+## A few things to note:
 
 * Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
-* Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile. 
+* Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
 * Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
 * The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.
 
-# Quick Start
+## Quick Start
+
 Watermark profile has many customizable options. However, the default parameters generally work for most cases. Please see "Profiles" below for more details.
 
 Step 1: Create a profile
@@ -37,11 +32,14 @@ tus-upload --chunk-size 5242880 \
 Step 3: Done
 ![Watermarked Video](./cat.png)
 
-# Profiles
+## Profiles
+
 To create, list, delete, or get information about the profile, you will need your
 [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
 and your email address.
+
 ### Optional Parameters
+
 | Parameter | Type | Default | Explanation |
 |-|-|-|-|
 | name | string | _Empty String_ | A short description for the profile. For example, "marketing videos." |
@@ -51,7 +49,9 @@ and your email address.
 | position | string | upperRight | Location of the watermark. Valid positions are: "upperRight", "upperLeft", "lowerLeft", "lowerRight", and "center." Note that "center" will ignore the "padding" parameter. |
 
 ## Creating a Watermark Profile
+
 ### Use Case 1: Upload a local image file directly
+
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
 ```bash
 curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
@@ -65,6 +65,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
 ```
 
 ### Use Case 2: Pass a URL to an image
+
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
 ```bash
 curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
@@ -79,7 +80,9 @@ curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
 }' \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
 ```
+
 #### Example Response to Creating a Watermark Profile
+
 ```json
 {
   "result": {
@@ -103,12 +106,15 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
 `downloadedFrom` will be populated if the profile was created via downloading from URL.
 
 ## Using a Watermark Profile on a Video
+
 Once you created a watermark profile, you can now use the profile at upload time for watermarking videos.
 
 ### Simple Uploads
+
 Unfortunately, Stream does not currently support specifying watermark profile at upload time for Simple Uploads.
 
 ### Upload Video With a Link
+
 ```bash
 curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
 -H 'Content-Type: application/json' \
@@ -122,6 +128,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
 ```
 
 #### Example Response to Upload Video With a Link
+
 ```json
 {
   "result": {
@@ -271,6 +278,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks/
 ```
 
 ## Delete a Watermark Profiles
+
 To delete a watermark profiles that you created:
 ```bash
 curl -X DELETE -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \

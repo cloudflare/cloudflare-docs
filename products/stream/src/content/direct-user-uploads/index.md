@@ -1,55 +1,53 @@
----
-title: Direct User Uploads
-hidden: false
----
+# Direct User Uploads
 
-Direct uploads allow users to upload videos without API keys. A common place to 
-use direct uploads is on web apps, client side applications, or on mobile devices 
+Direct uploads allow users to upload videos without API keys. A common place to
+use direct uploads is on web apps, client side applications, or on mobile devices
 where users upload content directly to Stream.
 
 ## Generate a unique one-time upload URL
 
-To enable users the ability to directly upload their videos, first generate and 
+To enable users the ability to directly upload their videos, first generate and
 provide them with a unique one-time upload URL with the following API request.
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
 your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
 ### Upload constraints
+
 There are several constraints you can enforce on your user's uploads through the
 body of the `POST` request:
 
-`maxDurationSeconds` is a required integer field that enforces the maximum 
-duration in seconds for a video the user uploads.  For direct uploads, Stream 
-requires videos are at least 1 second in length, and restricts to a maximum of 6 
+`maxDurationSeconds` is a required integer field that enforces the maximum
+duration in seconds for a video the user uploads.  For direct uploads, Stream
+requires videos are at least 1 second in length, and restricts to a maximum of 6
 hours.  Therefore, this field must be greater than 1 and less than 21,600.
 
-`expiry` is an optional string field that enforces the time after which 
+`expiry` is an optional string field that enforces the time after which
 the unique one-time upload URL is invalid.  The time value must be formatted
-in RFC3339 layout and will be interpretted against UTC time zone.  If an expiry 
-is set, it must be no less than two minutes in the future, and not more than 6 
-hours in the future.  If an expiry is not set, the upload URL will expire 30 
+in RFC3339 layout and will be interpretted against UTC time zone.  If an expiry
+is set, it must be no less than two minutes in the future, and not more than 6
+hours in the future.  If an expiry is not set, the upload URL will expire 30
 minutes after it's creation.
 
 Additionally, you can limit where the video can be embedded through these fields:
 
-`requireSignedURLs` is an optional boolean field that limits the permission to 
-view the video.  This field must be a boolean value.  To learn more about signed 
+`requireSignedURLs` is an optional boolean field that limits the permission to
+view the video.  This field must be a boolean value.  To learn more about signed
 URLs, please visit our [documentation](/stream/security/signed-urls/).
 
-`allowedOrigins` is an optional array of strings field that limits the domains a 
-video can be embedded on.  To learn more about allowed domains, please visit our 
+`allowedOrigins` is an optional array of strings field that limits the domains a
+video can be embedded on.  To learn more about allowed domains, please visit our
 [security considerations](/stream/security/security-considerations/).
 
-`thumbnailTimestampPct` is an optional number field that sets the timestamp 
-location of thumbnail image. To learn more about timestamp, 
+`thumbnailTimestampPct` is an optional number field that sets the timestamp
+location of thumbnail image. To learn more about timestamp,
 please visit our [documentation](/stream/thumbnails/).
 
-`watermark` is an optional field that contains the `uid` of watermark profile. 
-Video uploaded by the link will be watermarked automatically. To learn more about 
+`watermark` is an optional field that contains the `uid` of watermark profile.
+Video uploaded by the link will be watermarked automatically. To learn more about
 watermark profile, please visit our [documentation](/stream/watermarks/).
 
-`meta` is an optional field that allows you to set the video's `name` along with 
+`meta` is an optional field that allows you to set the video's `name` along with
 any other additional arbitrary keys for metadata to be stored.
 
 ### Example request
@@ -111,13 +109,13 @@ An unsuccessful response might look like:
 The `uploadURL` provided in the `result` body of a successful request should be
 passed along to the end-user to make their upload request.
 
-The `uid` references the reserved media object's unique identifier and can be 
+The `uid` references the reserved media object's unique identifier and can be
 kept as a reference to query our [API](/stream/getting-started/searching/).
 
 ## Direct Upload Request from end users
 
 Using the `uploadURL` provided in the previous request, users can upload video
-files.  Uploads are limited to 200 MB in size.  
+files.  Uploads are limited to 200 MB in size.
 
 ```bash
 curl -X POST \
@@ -172,13 +170,13 @@ size, the user will receive a `4xx` response.
 
 ## Tracking user upload progress
 
-After the creation of a unique one-time upload URL, you may wish to retain the 
-`uid` returned in the response to track the progress of a user's upload. 
+After the creation of a unique one-time upload URL, you may wish to retain the
+`uid` returned in the response to track the progress of a user's upload.
 
 You can do that two ways:
 
-1.  You can [query the media API](/stream/getting-started/searching/) with the UID
+1. You can [query the media API](/stream/getting-started/searching/) with the UID
 to understand it's status.
 
-2.  You can [create a webhook subscription](/stream/webhooks/) to receive notifications
+2. You can [create a webhook subscription](/stream/webhooks/) to receive notifications
 regarding the status of videos.  These notifications include the video's UID.

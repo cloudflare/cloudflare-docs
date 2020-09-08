@@ -1,7 +1,4 @@
----
-title: Using the Javascript API
-weight: 20
----
+# Using the Javascript API
 
 Stream Player implements the HTML5 `<video>` element API so you can customize the player using Javascript. Using the standard `<video>` element functions, you can play, pause, mute videos, adjust the player volume and seek throughout the video playhead position.
 You can also add event listeners that will run in response to player events, such as a player state change or a video playback quality change. The stream element supports majority of the [HTML5 Video API](https://www.w3schools.com/tags/ref_av_dom.asp), which contains a wide range of events throughout the player lifecycle.

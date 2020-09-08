@@ -1,7 +1,4 @@
----
-title: Signed URLs
-weight: 20
----
+# Signed URLs
 
 By default, videos on Cloudflare Stream can be viewed by anyone anytime until you delete the video. Users can view the source of the embed code in their browser and get a URL to the video that could be shared with others. To prevent this, use signed URLs.
 
@@ -17,7 +14,7 @@ These steps are detailed below.
 
 You can [revoke a key](#revoking-keys) anytime for any reason.
 
-### Creating a signing key
+## Creating a signing key
 
 Upon creation you will get a RSA private key in PEM and JWK formats. Keys are created, used and deleted independently of videos. Every key can sign any of your videos.
 
@@ -37,8 +34,7 @@ Upon creation you will get a RSA private key in PEM and JWK formats. Keys are cr
 }
 ```
 
-
-### Making a video require signed URLs
+## Making a video require signed URLs
 
 Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/{VIDEO-ID}`, from working.
 
@@ -61,7 +57,7 @@ Restricting viewing can be done by updating the video's metadata.
 
 ```
 
-### Signing unique tokens
+## Signing unique tokens
 
 After creating a key, you can use it to sign unique signed tokens. These tokens can be used in place of video ids in the stream embed code.
 
@@ -71,7 +67,7 @@ You can sign to assert these optional constraints on the token:
 - `nbf` - notBefore; a unix epoch timestamp **before** which the token will not be accepted.
 - `accessRules` - Video Access Control; these allow making the token conditionally accepted on a variety of factors. For more details, see <a href="../access-rules/">their documentation</a>
 
-### Using signed tokens
+## Using signed tokens
 
 Embed codes can be modified to accept signed tokens. A signed token may be substituted for the videoID in the `<stream>` element's `src` attribute.
 
@@ -81,7 +77,8 @@ An example `<stream>` element using a signed token looks like this
 
 Note that the `<script>` tag present in other documentation examples must be present at least once on your page. It does not need to be modified.
 
-#### Get started with a signing utility
+### Get started with a signing utility
+
 *Using this signing utility in production is not recommended.*
 
 We offer a utility at `https://util.cloudflarestream.com/sign` to generate tokens when getting familiar with signed URLs.
@@ -90,10 +87,9 @@ We offer a utility at `https://util.cloudflarestream.com/sign` to generate token
 curl -X POST "https://util.cloudflarestream.com/sign/{VIDEO-ID}" -d '{"id": "{KEY-ID}", "pem": "{PRIVATE-KEY-IN-PEM-FORMAT}","nbf":1537453165,"exp":1537460365}'
 ```
 
-
 This endpoint accepts JSON bodies with the output from [Creating a signing key](#creating-a-signing-key) or any object with `pem` and `kid` attributes. To add a constraint, include it as a property of the body.
 
-#### Signing tokens in production
+### Signing tokens in production
 
 Other offline signing examples are included [below](#other-offline-signing-examples)
 
@@ -235,8 +231,8 @@ func main() {
 
 #### Sign with Cloudflare Workers
 
-The following code snippet does not include the function `addEventListener` on `fetch`. The goal of that snippet is to give you a function that return the JWT. 
-To be noted, the code snippet contain an `accessRules` that allow only UK user to watch the video. 
+The following code snippet does not include the function `addEventListener` on `fetch`. The goal of that snippet is to give you a function that return the JWT.
+To be noted, the code snippet contain an `accessRules` that allow only UK user to watch the video.
 
 ```javascript
 
@@ -246,7 +242,7 @@ const keyID = '{KEY-ID}'
 const videoID = '{video-ID}'
 // expiresTimeInS is the expired time in second of the video
 const expiresTimeInS = 3600
- 
+
 // Main function
 async function streamSignedUrl () {
   const encoder = new TextEncoder()
@@ -273,11 +269,11 @@ async function streamSignedUrl () {
       }
     ]
   }
- 
+
   const token = `${objectToBase64url(headers)}.${objectToBase64url(data)}`
- 
+
   const jwk = JSON.parse(atob(jwkKey))
- 
+
   const key = await crypto.subtle.importKey(
     "jwk", jwk,
     {
@@ -286,17 +282,17 @@ async function streamSignedUrl () {
     },
     false, [ "sign" ]
   )
- 
+
   const signature = await crypto.subtle.sign(
     { name: 'RSASSA-PKCS1-v1_5' }, key,
     encoder.encode(token)
   )
- 
+
   const signedToken = `${token}.${arrayBufferToBase64Url(signature)}`
- 
+
   return signedToken
 }
- 
+
 // Utilities functions
 function arrayBufferToBase64Url(buffer) {
   return btoa(String.fromCharCode(...new Uint8Array(buffer)))
@@ -304,7 +300,7 @@ function arrayBufferToBase64Url(buffer) {
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
 }
- 
+
 function objectToBase64url(payload) {
   return arrayBufferToBase64Url(
     new TextEncoder().encode(JSON.stringify(payload)),

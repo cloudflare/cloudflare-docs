@@ -1,13 +1,10 @@
----
-title: Video Access Control
-weight: 30
----
+# Video Access Control
 
 Video Access Control allow you to define Rules to have finer-grained control over your content than signed URL tokens alone. They are primarily aimed at making tokens conditionally valid based on user information. Access Rules are specified on token payloads as the `accessRules` property containing an array of `Rule` objects.
 
 If you're not already familiar with signed URLs, it's recommended to <a href="/stream/security/signed-urls/">start here.</a>
 
-### Rules
+## Rules
 
 A Rule has two components. The `action` is taken if the conditions associated with the `type` matches. Each `type` has an associated field that should be filled, see the <a href="#schema">schema</a> or <a href="#examples">examples</a> for details.
 
@@ -24,7 +21,7 @@ These Rule actions are available
 
 Access Rules are evaluated first-to-last. If a Rule matches, the associated `action` is applied and no further rules are evaluated.
 
-### Schema
+## Schema
 
 A valid Rule object conforms to this type signature:
 
@@ -45,9 +42,9 @@ A valid Rule object conforms to this type signature:
 
 In the future, Rule types or actions may be added. If you have other types of rules or actions you need for your video application, please contact Cloudflare support.
 
-#### Examples
+### Examples
 
-##### Allow only views from specific CIDRs
+#### Allow only views from specific CIDRs
 
 ```
 ...
@@ -68,7 +65,7 @@ The first rule is an IP rule matching on CIDRs, `93.184.216.0/24` and `2400:cb00
 
 If the first rule doesn't match, the second rule of `any` will match all remaining requests and block those views.
 
-##### Block views from a specific country
+#### Block views from a specific country
 
 ```
 ...
@@ -85,8 +82,7 @@ The first rule matches on country, `US`, `DE`, and `MX` here. When that rule mat
 
 If the first rule doesn't match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.
 
-
-##### Allow only views from specific country or IPs
+#### Allow only views from specific country or IPs
 
 ```
 ...
@@ -114,9 +110,9 @@ The second rule is an IP rule matching on CIDRs, `93.184.216.0/24` and `2400:cb0
 
 If the first two rules don't match, the final rule of `any` will match all remaining requests and block those views.
 
-#### Usage Notes
+## Usage Notes
 
-##### Maximum Rule Count
+### Maximum Rule Count
 
 A token may have at most 5 members in the `accessRules` array.
 
@@ -124,7 +120,7 @@ Note that most Rule types take arrays as arguments. For example, a rule of type 
 
 If you require more than 5 rules, please contact Cloudflare support.
 
-##### ip.src
+### ip.src
 
 It is recommended to include both IPv4 and IPv6 variants in a rule if possible. Having only a single variant in a rule means that rule will ignore the other variant. For example, an IPv4-based rule will never be applicable to a viewer connecting from an IPv6 address.
 

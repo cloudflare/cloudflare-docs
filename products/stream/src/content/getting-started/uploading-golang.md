@@ -1,14 +1,13 @@
----
-title: "Uploading with Golang"
-weight: 2
----
-### What You Will Need
+#Uploading with Golang
+
+## What You Will Need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
 You will also need to import a [tus](https://tus.io) client. You can use the [go-tus](https://github.com/eventials/go-tus) by eventials to upload from your Go applications.
 
-### Example
+## Example
+
 ```go
 package main
 

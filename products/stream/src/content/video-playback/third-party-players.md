@@ -1,7 +1,4 @@
----
-title: Third-Party Players
-weight: 10
----
+# Third-Party Players
 
 There could be cases where you might need more control over the [Stream web player](/stream/video-playback/) for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
 
@@ -15,7 +12,7 @@ Some use cases that might benefit from a third-party player include:
 
 Every video uploaded on Stream has HLS and DASH manifests available to use. These are standard formats for streaming media that have broad support.
 
-The locations of these files can be found in the [Stream API for each video](https://api.cloudflare.com/#stream-videos-video-details). 
+The locations of these files can be found in the [Stream API for each video](https://api.cloudflare.com/#stream-videos-video-details).
 
 The `playback` object contains entries for all available playback methods
 

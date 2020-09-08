@@ -1,7 +1,4 @@
----
-title: Building a Custom UI
-weight: 30
----
+# Building a Custom UI
 
 You can build a custom user interface on top of the Stream player. Here is a simple recipe to build a player with a simple play/pause button overlay and no other controls.
 

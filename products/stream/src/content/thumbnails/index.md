@@ -1,7 +1,4 @@
----
-title: Thumbnails
-alwaysopen: true
----
+# Thumbnails
 
 ## Use Case 1: Generating a thumbnail on-the-fly
 
@@ -54,11 +51,12 @@ curl -X POST \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
 ```
 
-## Use Case 3: Generating animated thumbnails 
+## Use Case 3: Generating animated thumbnails
 
 Stream supports animated GIFs as thumbnails. Views using animated thumbnails do not count in Stream views or watch time for billing or analytics.
 
-#### Animated GIF Thumbnail
+### Animated GIF Thumbnail
+
 ```
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
 ```

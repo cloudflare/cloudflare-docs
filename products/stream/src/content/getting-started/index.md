@@ -1,8 +1,4 @@
----
-title: "Getting Started"
-alwaysopen: true
-weight: 10
----
+# Getting Started
 
 Cloudflare Stream is a video-on-demand platform for developers and content teams building video applications. With Stream, it's one easy API call to upload a video and get an embedable video.
 
