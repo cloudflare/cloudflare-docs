@@ -270,9 +270,7 @@ Monitors support a great deal of customization and have the following properties
                     <ul class="constraints unstyled">
                         <li>
                             max length:
-
                             32
-
                         </li>
                         <li>read only</li>
                     </ul>
