@@ -1,8 +1,4 @@
----
-title: Drawing overlays/watermarks
-alwaysopen: true
-weight: 25
----
+# Drawing overlays/watermarks
 
 You can draw additional images on top of a resized image, with transparency and blending effects. This enables adding of watermarks, logos, signatures, vignettes, and other effects to resized images.
 

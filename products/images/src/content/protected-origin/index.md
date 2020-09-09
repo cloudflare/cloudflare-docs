@@ -1,8 +1,4 @@
----
-title: Controlling origin access
-alwaysopen: true
-weight: 30
----
+# Controlling origin access
 
 You can serve resized images without giving access to the original image. Images can be hosted on another server outside of your zone, and the true source of the image can be entirely hidden. The origin server may require authentication to disclose the original image, without needing visitors to be aware of it. Access to the full-size image may be prevented by making it impossible to manipulate resizing parameters.
 

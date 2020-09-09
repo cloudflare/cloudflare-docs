@@ -1,10 +1,4 @@
----
-title: Resizing with Workers
-alwaysopen: true
-weight: 20
----
-
-import "./worker.css"
+# Resizing with Workers
 
 There are two ways of using image resizing. One is the [default URL scheme](/images/about/), which provides an easy, declarative way of specifying image dimensions and other options.
 The other way is to use a JavaScript API in a [Worker](https://developers.cloudflare.com/workers/about/). Workers give powerful programmatic control over every image request.

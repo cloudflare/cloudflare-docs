@@ -1,12 +1,4 @@
----
-title: Responsive Images
-alwaysopen: true
-weight: 10
-hidden: false
-showNew: false
----
-
-import "./responsive.css"
+# Responsive Images
 
 The [`srcset` feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) allows browsers to automatically choose an image that is best suited for user's screen resolution.
 

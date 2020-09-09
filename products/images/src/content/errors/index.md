@@ -1,10 +1,4 @@
----
-title: Troubleshooting
-alwaysopen: true
-weight: 50
-showNew: false
-hidden: false
----
+# Troubleshooting
 
 ## Requests without resizing enabled
 
