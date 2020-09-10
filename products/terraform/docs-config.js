@@ -1,7 +1,7 @@
 module.exports = {
   product: "Terraform",
   pathPrefix: "/terraform",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
+  productLogoPathD: "M45 23.44L32 31V17l13-7.56v14zM16 8.56v14L3 15V1l13 7.56zm1.5.88l13 7.56v14l-13-7.56v-14zm0 16.06l13 7.56v14l-13-7.56v-14z",
   contentRepo: "adamschwartz/cloudflare-docs",
   externalLinks: [
     {
