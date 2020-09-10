@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Registrar",
+    title: "Cloudflare Registrar docs",
     description: "Welcome to Cloudflare Registrar. The first registrar you can love.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/registrar",

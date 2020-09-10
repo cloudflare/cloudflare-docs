@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Firewall Rules",
+    title: "Cloudflare Firewall Rules docs",
     description: "Create rules that examine incoming HTTP traffic against a set of powerful filters to block, challenge, log, or allow matching requests.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/firewall",

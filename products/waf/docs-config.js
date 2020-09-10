@@ -18,7 +18,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Web Application Firewall (WAF)",
+    title: "Cloudflare Web Application Firewall (WAF) docs",
     description: "Protect against web application vulnerabilities with Cloudflare’s Web Application Firewall (WAF).",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/waf",

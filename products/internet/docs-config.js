@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "The Life of a Cloudflare Request",
+    title: "The Life of a Cloudflare Request docs",
     description: "Undersea cables, peering agreements and TLS handshakes. Follow the life of a request across the internet and see how it all works.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/internet",

@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Image Resizing",
+    title: "Cloudflare Image Resizing docs",
     description: "Run your image optimization logic at the edge.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/images",

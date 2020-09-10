@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Magic Transit",
+    title: "Cloudflare Magic Transit docs",
     description: "Magic Transit delivers network functions at Cloudflare scale—DDoS protection, traffic acceleration, and much more from every Cloudflare data center—for on-premise, cloud-hosted, and hybrid networks.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/magic-transit",

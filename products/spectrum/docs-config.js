@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Spectrum",
+    title: "Cloudflare Spectrum docs",
     description: "DDoS protection for everything.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/spectrum",

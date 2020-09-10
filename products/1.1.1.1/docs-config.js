@@ -18,7 +18,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "1.1.1.1",
+    title: "1.1.1.1 docs",
     description: "A blazing fast DNS resolver built for private browsing.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/1-1-1-1",

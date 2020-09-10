@@ -18,7 +18,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Time Services",
+    title: "Cloudflare Time Services docs",
     description: "Cloudflare’s suite of time services: NTP, NTS, and Roughtime.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/time-services",

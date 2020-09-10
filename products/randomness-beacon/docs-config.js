@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Randomness Beacon",
+    title: "Cloudflare Randomness Beacon docs",
     description: "Explore drand: a distributed service providing public randomness in an application-agnostic, secure, and efficient way.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/randomness-beacon",

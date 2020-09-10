@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Network Interconnect",
+    title: "Cloudflare Network Interconnect docs",
     description: "For a faster, more reliable, and more secure experience than connecting over the Internet.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/network-interconnect",

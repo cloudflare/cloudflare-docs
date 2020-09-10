@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare BYOIP",
+    title: "Cloudflare BYOIP docs",
     description: "With BYOIP, Cloudflare announces your IPs in all our locations. Use your IPs with Magic Transit, Spectrum, or CDN services.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/byoip",

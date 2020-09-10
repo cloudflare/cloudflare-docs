@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Gateway",
+    title: "Cloudflare Gateway docs",
     description: "Cloudflare Gateway protects enterprises, their devices, their networks and their data by securing every connection without compromising performance.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/gateway",

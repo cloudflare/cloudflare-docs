@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare HTTP3",
+    title: "Cloudflare HTTP3 docs",
     description: "HTTP3 is the newest version of the Hypertext Transfer Protocol",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/http3",

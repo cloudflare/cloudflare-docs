@@ -14,7 +14,7 @@ module.exports = {
     apiKey: "",
   },
   siteMetadata: {
-    title: "Cloudflare Distributed Web Gateway",
+    title: "Cloudflare Distributed Web Gateway docs",
     description: "View files stored on the InterPlanetary File System in your browser. Interact with the Ethereum blockchain. Explore the Distributed Web.",
     author: "@cloudflare",
     url: "http://docs.cloudflare.com/distributed-web",
