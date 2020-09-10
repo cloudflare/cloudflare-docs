@@ -5,6 +5,22 @@ module.exports = {
   contentRepo: "adamschwartz/cloudflare-docs",
   externalLinks: [
     {
+      title: "Github @cloudflare/terraform-provider-cloudflare",
+      url: "https://github.com/cloudflare/terraform-provider-cloudflare"
+    },
+    {
+      title: "Cloudflare in the Terraform registry",
+      url: "https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record"
+    },
+    {
+      title: "Hashicorp Cloudflare integration",
+      url: "https://www.hashicorp.com/integrations/cloudflare/terraform"
+    },
+    {
+      title: "Terraform homepage",
+      url: "https://www.terraform.io/"
+    },
+    {
       title: "Cloudflare homepage",
       url: "https://cloudflare.com"
     }
