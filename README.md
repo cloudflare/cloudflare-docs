@@ -39,6 +39,6 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 - [SSL](https://cloudflare-docs-testing.ruthless.design/ssl/ssl-tls) — [Example page](https://cloudflare-docs-testing.ruthless.design/ssl/ssl-tls/supported-browsers)
 - [Stream](https://cloudflare-docs-testing.ruthless.design/stream) — [Example page](https://cloudflare-docs-testing.ruthless.design/stream/faq)
 - [Tenant](https://cloudflare-docs-testing.ruthless.design/tenant) — [Example page](https://cloudflare-docs-testing.ruthless.design/tenant/tutorial/accounts)
-- [Terraform](https://cloudflare-docs-testing.ruthless.design/terraform) — [Example page](https://cloudflare-docs-testing.ruthless.design/terraform/getting-started/installing)
+- [Terraform](https://cloudflare-docs-testing.ruthless.design/terraform) — [Example page](https://cloudflare-docs-testing.ruthless.design/terraform/tutorial/source-control)
 - [Time Services](https://cloudflare-docs-testing.ruthless.design/time-services) — [Example page](https://cloudflare-docs-testing.ruthless.design/time-services/ntp/usage)
 - [Waf](https://cloudflare-docs-testing.ruthless.design/waf) — [Example page](https://cloudflare-docs-testing.ruthless.design/waf/change-log/2019-10-17---emergency-release)
