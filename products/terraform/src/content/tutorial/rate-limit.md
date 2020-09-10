@@ -1,7 +1,9 @@
 ---
-title: Step 4 - Woah, slow down there
-weight: 40
+title: 4 – Woah, slow down there
+order: 4
 ---
+
+# Woah, slow down there
 
 With our zone settings locked down, and our site starting to get some more attention, it's unfortunately begun attracting some of the less scrupulous characters on the internet. Our server access logs show attempts to brute force our login page at https://www.example.com/login. Let's see what we can do with Cloudflare's [rate limiting product](https://www.cloudflare.com/rate-limiting/) to put a stop to these efforts.
 
@@ -210,7 +212,7 @@ Error: Error applying plan:
 * cloudflare_rate_limit.login-limit: error creating rate limit for zone: error from makeRequest: HTTP status 400: content "{\n  \"result\": null,\n  \"success\": false,\n  \"errors\": [\n    {\n      \"code\": 10021,\n      \"message\": \"ratelimit.api.not_entitled.account\"\n    }\n  ],\n  \"messages\": []\n}\n"
 ```
 
-## 3. Update the rule to ban (not just simulate) 
+## 3. Update the rule to ban (not just simulate)
 
 After confirming that the rule is triggering as planned in logs (but not yet enforcing), it's time to switch from `simulate` to `ban`:
 

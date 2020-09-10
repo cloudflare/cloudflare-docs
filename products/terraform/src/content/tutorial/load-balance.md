@@ -1,10 +1,11 @@
 ---
-title: Step 5 - Sharing the load
-weight: 50
+title: 5 – Sharing the load
+order: 5
 ---
 
+# Sharing the load
 
-Thanks to the rate limiting set up in the [previous step](/terraform/tutorial/rate-limit), our login page is protected against credential brute force attacks. Now it's time to focus on performance and reliability. Imagine organic traffic has grown, and is increasingly global. It's time to spread these requests over multiple data centers.
+Thanks to the rate limiting set up in the [previous step](/tutorial/rate-limit), our login page is protected against credential brute force attacks. Now it's time to focus on performance and reliability. Imagine organic traffic has grown, and is increasingly global. It's time to spread these requests over multiple data centers.
 
 In this tutorial step, we'll add a second origin for some basic round robining, and then use the [Cloudflare Load Balancing](https://www.cloudflare.com/load-balancing/) product to fail traffic over as needed. We'll then enhance our load balancing configuration through the use of "geo steering" to serve results from an origin server that is geographically closest to your end users.
 
@@ -12,7 +13,7 @@ In this tutorial step, we'll add a second origin for some basic round robining, 
 
 To get started, we'll add a DNS record for a second web server, which is located in Asia. The IP address for this server is 198.51.100.15.
 
-```
+```sh
 $ git checkout -b step5-loadbalance
 Switched to a new branch 'step5-loadbalance'
 
@@ -33,7 +34,7 @@ Note that while the name of the _resource_ is different as Terraform resources o
 
 Below we'll check the `terraform plan`, merge and apply the changes.
 
-```
+```sh
 $ terraform plan | grep -v "<computed>"
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -86,7 +87,7 @@ Fast-forward
 
 Let's add the second DNS record for www.example.com:
 
-```
+```sh
 $ terraform apply --auto-approve
 cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8668)
 cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
@@ -111,7 +112,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 With the second DNS record in place, let's try making some requests to see where the traffic is served from:
 
-```
+```sh
 $ for curl https://www.example.com
 Hello, this is 203.0.113.10!
 
@@ -144,7 +145,7 @@ As described in the [load balancing tutorial](https://support.cloudflare.com/hc/
 
 To monitor our origins we're going to create a basic health check that makes a GET request to each origin on the URL https://www.example.com. If the origin returns the `200/OK` status code within 5 seconds, we'll consider it healthy. If it fails to do so three (3) times in a row, we'll consider it unhealthy. This health check will be run once per minute  from several regions, and send an email notification to you@example.com if any failures are detected.
 
-```
+```sh
 $ git checkout step5-loadbalance
 Switched to branch 'step5-loadbalance'
 
@@ -169,7 +170,7 @@ We will call our pool "www-servers" and add two origins to it: `www-us` (203.0.1
 
 Note that we reference the monitor we added in the last step. When applying this confirmation, Terraform will figure out that it first needs to create the monitor so that it can look up the ID and provide to the pool we wish to create.
 
-```
+```sh
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer_pool" "www-servers" {
   name = "www-servers"
@@ -194,7 +195,7 @@ EOF
 
 Note that when you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://support.cloudflare.com/hc/en-us/articles/115004954407-How-Does-a-Load-Balancer-Interact-with-Existing-DNS-Records-). For example, when we create the "www.example.com" LB below, it will supersede the two www DNS records that you have previously defined. One benefit of  leaving this DNS records in place is that if you temporarily disable load balancing, connections to this hostname will still be possible as shown in Step #2 above.
 
-```
+```sh
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer" "www-lb" {
   zone = "example.com"
@@ -211,7 +212,7 @@ EOF
 
 As usual, we take a look at the proposed plan before we apply any changes:
 
-```
+```sh
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -296,7 +297,7 @@ can't guarantee that exactly these actions will be performed if
 
 The plan looks good so let's go ahead, merge it in, and apply it.
 
-```
+```sh
 $ git add cloudflare.tf
 $ git commit -m "Step 5 - Create load balancer (LB) monitor, LB pool, and LB."
 [step5-loadbalance bc9aa9a] Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
@@ -367,7 +368,7 @@ Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 With load balancing in place, let's run those `curl` requests again to see where the traffic is served from:
 
-```
+```sh
 $ for i in {1..4}; do curl https://www.example.com && sleep 5; done
 Hello, this is 198.51.100.15!
 

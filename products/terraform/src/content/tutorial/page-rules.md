@@ -1,9 +1,11 @@
 ---
-title: Step 6 - Making some exceptions
-weight: 60
+title: 6 – Making some exceptions
+order: 6
 ---
 
-In [step 3](/terraform/tutorial/zone-settings) we configured zone settings that apply to all of example.com. In this step we're going to add an exception to these settings by using [Page Rules](https://www.cloudflare.com/features-page-rules/). 
+# Making some exceptions
+
+In [step 3](/tutorial/zone-settings) we configured zone settings that apply to all of example.com. In this step we're going to add an exception to these settings by using [Page Rules](https://www.cloudflare.com/features-page-rules/).
 
 Specifically, we're going to turn increase the security level for a URL we know is expensive to render (and cannot be cached): https://www.example.com/expensive-db-call. Additionally, we're going to add a redirect from the previous URL we used to host this page.
 
@@ -11,7 +13,7 @@ Specifically, we're going to turn increase the security level for a URL we know 
 
 As usual we'll create a new branch and append our configuration.
 
-```
+```sh
 $ git checkout -b step6-pagerule
 Switched to a new branch 'step6-pagerule'
 
@@ -44,7 +46,8 @@ EOF
 ## 2. Preview and merge the changes
 
 You know the drill: preview the changes Terraform is going to make and then merge them into the master branch.
-```
+
+```sh
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -115,7 +118,7 @@ $ git commit -m "Step 6 - Add two Page Rules."
 $ git checkout master
 Switched to branch 'master'
 
-$ git merge step6-pagerule 
+$ git merge step6-pagerule
 Updating 7a2ac34..d4fec16
 Fast-forward
  cloudflare.tf | 23 +++++++++++++++++++++++
@@ -125,14 +128,15 @@ Fast-forward
 ## 3. Apply and verify the changes
 
 First we'll test requesting the (now missing) old location of the expensive-to-render page.
-```
+
+```sh
 $ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
 < HTTP/1.1 404 Not Found
 ```
 
 As expected, it can't be found. Let's apply the Page Rules, including the redirect that should fix this error.
 
-```
+```sh
 $ terraform apply --auto-approve
 cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
 cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
@@ -175,7 +179,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 With the Page Rules in place, let's try that call again, along with the I'm Under Attack Mode test:
 
-```
+```sh
 $ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
 < HTTP/1.1 301 Moved Permanently
 < Location: https://www.upinatoms.com/expensive-db-call

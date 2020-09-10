@@ -1,16 +1,19 @@
 ---
-title: Installing Terraform
-alwaysopen: true
-weight: 10
+title: Installing
+order: 1
 ---
 
+# Installing Terraform
+
 The installation process for Terraform is extremely simple as it ships as a single binary file. Official instructions for installing Terraform can be found [here](https://www.terraform.io/intro/getting-started/install.html), with some examples provided below for popular operating systems.
+
+--------------------------------
 
 ## Mac
 
 The easiest way to install Terraform on macOS is with Homebrew:
 
-```
+```sh
 $ brew install terraform
 
 ==> Downloading https://homebrew.bintray.com/bottles/terraform-0.11.6.sierra.bottle.tar.gz
@@ -22,16 +25,18 @@ $ terraform version
 Terraform v0.11.6
 ```
 
+--------------------------------
+
 ## Linux
 
 On Linux, you just need to download and place the binary in your $PATH:
 
-```
+```sh
 $ wget -q https://releases.hashicorp.com/terraform/0.11.6/terraform_0.11.6_linux_amd64.zip
 
 $ unzip terraform_0.11.6_linux_amd64.zip
 Archive:  terraform_0.11.6_linux_amd64.zip
-  inflating: terraform               
+  inflating: terraform
 
 $ sudo mv terraform /usr/local/bin/terraform
 
@@ -39,11 +44,14 @@ $ terraform version
 Terraform v0.11.6
 ```
 
+--------------------------------
+
 ## Windows
 
 1. Download the 32 or 64-bit executable from the [Terraform Download](https://www.terraform.io/downloads.html) page.
 2. Unzip and place terraform.exe somewhere in your path.
 
+--------------------------------
 
 ## Other
 

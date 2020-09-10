@@ -1,7 +1,9 @@
 ---
-title: Step 7 - On final thought, let’s roll some of that back
-weight: 70
+title: 7 – On final thought...
+order: 7
 ---
+
+# On final thought, let’s roll some of that back
 
 We've come a long way! Now it's time to tear it all down. Well, maybe just part of it.
 
@@ -12,7 +14,8 @@ Either way, if you've determined you want to revert your configuration, all you 
 ## 1. Reviewing your configuration history
 
 Before we figure out how far back in time we want to rollback, let's take a look at our (git) versioned history.
-```
+
+```sh
 $ git log
 commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
@@ -68,7 +71,8 @@ Another nice benefit of storing your Cloudflare configuration in git is that you
 ## 2. Examining specific historical changes
 
 To begin with, let's see what the last change we made was.
-```
+
+```sh
 $ git show
 commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
@@ -110,10 +114,11 @@ index 0b39450..ef11d8a 100644
 ```
 
 Now let's look at the past few changes:
-```
+
+```sh
 $ git log -p -3
 
-... 
+...
 // page rule config from above
 ...
 
@@ -190,14 +195,15 @@ index 9f25a0c..b92cb6f 100644
 +}
 ```
 
-
 ## 3. Redeploying the previous configuration
-Imagine that shortly after we deployed the Page Rules from [step 6](/terraform/tutorial/page-rules), we got a call from the Product team that manages this page: "The URL was only being used by one customer and is no longer needed, let's drop the security setting and redirect." 
+
+Imagine that shortly after we deployed the Page Rules from [step 6](/tutorial/page-rules), we got a call from the Product team that manages this page: "The URL was only being used by one customer and is no longer needed, let's drop the security setting and redirect."
 
 While you could always edit the config file directly and delete those entries, it's easier to let `git` do it for us. To begin with, let's ask git to revert the last commit (without rewriting history).
 
 ### i. Revert the branch to the previous commit
-```
+
+```sh
 $ git revert HEAD~1..HEAD
 [master f9a6f7d] Revert "Step 6 - Bug fix."
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -208,7 +214,7 @@ Author: Me
 Date:   Wed Apr 18 23:28:09 2018 -0700
 
     Revert "Step 6 - Add two Page Rules."
-    
+
     This reverts commit d4fec164581bec44684a4d59bb80aec1f1da5a6e.
 
 commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
@@ -222,7 +228,7 @@ Date:   Wed Apr 18 22:04:52 2018 -0700
 
 As expected, Terraform is indicating it will remove the two Page Rules we created in the previous step.
 
-```
+```sh
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -264,7 +270,7 @@ can't guarantee that exactly these actions will be performed if
 
 The changes look good, so let's ask Terraform to roll our Cloudflare configuration back.
 
-```
+```sh
 $ terraform apply --auto-approve
 cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
 cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)

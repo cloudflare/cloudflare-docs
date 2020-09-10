@@ -1,17 +1,19 @@
 ---
-title: Step 1 - Hello World
-weight: 10
+title: 1 – Hello World
+order: 1
 ---
+
+# Hello World
 
 Let's say you have a web server for your domain that’s accessible on 203.0.113.10. You just signed up your domain, example.com, on Cloudflare and want to manage everything in Terraform.
 
-This tutorial step shows you how to get started. Before you do so, make sure you've completed the [Getting Started](/terraform/getting-started/) steps.
+This tutorial step shows you how to get started. Before you do so, make sure you've completed the [Getting Started](/getting-started/) steps.
 
 ## 1. Defining your first Terraform config file
 
 First we'll create a initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As you configuration gets more complex you'll want to split the config into separate files and modules, but for now we'll proceed with a single file:
 
-```bash
+```sh
 $ cat > cloudflare.tf <<'EOF'
 provider "cloudflare" {
   email = "you@example.com"
@@ -36,7 +38,7 @@ EOF
 
 Now that you’ve created your basic configuration in HCL, let’s initialize Terraform and ask it to apply the configuration to Cloudflare.
 
-```
+```sh
 $ terraform init
 
 Initializing provider plugins...
@@ -66,7 +68,7 @@ commands will detect it and remind you to do so if necessary.
 
 When you run terraform init, any plugins required, such as the Cloudflare Terraform provider, are automatically downloaded and saved locally to a .terraform directory:
 
-```
+```sh
 $ find .terraform/
 .terraform/
 .terraform//plugins
@@ -78,7 +80,7 @@ $ find .terraform/
 ## 3. Reviewing the execution plan
 With the Cloudflare provider installed, let’s ask Terraform what changes it’s planning to make to your Cloudflare account so it matches the configuration you previously defined:
 
-```
+```sh
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -124,7 +126,7 @@ As you can see in the above “execution plan”, Terraform is going to create a
 
 The plan command is important, as it allows you to preview the changes for accuracy before actually making them. Once you’re comfortable with the execution plan, it’s time to apply it:
 
-```
+```sh
 $ terraform apply --auto-approve
 cloudflare_record.www: Creating...
   created_on:  "" => "<computed>"
@@ -154,7 +156,7 @@ Logging back into the Cloudflare Dashboard and selecting the DNS tab, I can see 
 
 If you’d like to see the full results returned from the API call (including the default values that you didn’t specify but let Terraform compute), you can run terraform show:
 
-```
+```sh
 $ terraform show
 cloudflare_record.www:
   id = c38d3103767284e7cd14d5dad3ab8668
@@ -176,8 +178,7 @@ cloudflare_record.www:
   zone_id = e2e6391340be87a3726f91fc4148b122
 ```
 
-
-```
+```sh
 $ curl https://www.example.com
 Hello, this is 203.0.113.10!
 ```
