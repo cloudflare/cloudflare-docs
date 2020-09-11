@@ -1,16 +1,14 @@
----
-title: "FTP"
-weight: 7
-parent: Spectrum
----
-
+# FTP
 
 Enabling Spectrum for FTP is not straightforward due to the implementation of the protocol. This guide gives an overview of the intricacies of FTP and under which circumstances you can enable Spectrum for your FTP service.
 
 <Aside>
 
 This feature requires an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the <a href="mailto:success@cloudflare.com">Customer Success Team</a>.
+
 </Aside>
+
+--------------------------------
 
 ## How FTP Operates
 
@@ -22,11 +20,15 @@ In passive mode, the FTP server communicates a port that the client should conne
 
 Alternatively, more modern FTP server software supports [FTP extensions](https://tools.ietf.org/html/rfc2428), which introduces the EPSV command that omits the IP address that the client should connect on. Instead, the client connects to the same IP that it connected to for the control pane.
 
+--------------------------------
+
 ## What Does and Does Not Work
 
 Spectrum is able to protect servers serving FTP traffic in *passive mode only*. Active mode is not supported due to the fact that the origin server sees the Spectrum IP as being the client instead of the actual client IP. When the client issues a PORT command with their own IP, the FTP server rejects because the two addresses do not match.
 
 Passive mode in combination with EPSV works out of the box with no origin-side configuration required. Note that the client must also support EPSV for this to work. Traditional passive mode with PASV is possible with minimal origin-side configuration (see below, Protecting an FTP server with Spectrum)
+
+--------------------------------
 
 ## Protecting an FTP Server with Spectrum
 
@@ -36,7 +38,7 @@ Configuring Spectrum to protect your FTP server requires creating a set of Spect
 
 The control plane runs on port 21 by default. There is nothing special that needs to be configured to protect this part an FTP server. Simply create a Spectrum app for port 21 and point it to the origin:
 
-![Control plane port](../img/ftp/ftp-control-plane-app.png)
+![Control plane port](./img/ftp/ftp-control-plane-app.png)
 
 (Replace 198.51.100.1 with the IP of the origin server).
 
@@ -52,8 +54,10 @@ Some FTP servers also allow dynamic resolving of hostnames. In this case, it is 
 
 Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 
-> /etc/vsftpd.conf
-> ``` Bash
+> ```bash
+> ---
+> filename: /etc/vsftpd.conf
+> ---
 > pasv_min_port=20000
 > pasv_max_port=20020
 >
@@ -63,7 +67,8 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_promiscuous=YES
 > ```
 
+--------------------------------
+
 ## Related
 
--  [IIS configuration](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service)
-
+- [IIS configuration](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service)

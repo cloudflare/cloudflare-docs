@@ -1,9 +1,4 @@
----
-title: "BYOIP"
-weight: 7
-parent: Spectrum
----
-
+# BYOIP
 
 When creating a Spectrum application, Cloudflare normally assigns an arbitrary IP from Cloudflare's IP pool to your application. This may not always be what you want: you may want to be explicit in your network setup, or use your own IP addresses. BYOIP with Spectrum allows you to do just that.
 
@@ -15,39 +10,39 @@ The smallest prefixes that Cloudflare currently supports is /24 for IPv4 and /48
 
 To get onboarded with BYOIP, contact your customer representative.
 
-
 ## How can I assign an IP address in Spectrum?
 
 To use an IP, it must be assigned to a Spectrum app. This will result in the appropriate A (IPv4) or AAAA (IPv6) records being created. This is done by specifying one or more IP addresses when creating an application through the API:
 
-```
-     {
-      "id": "4590376cf2994d72cee36828ec4eff19",
-      "protocol": "tcp/22",
-      "dns": {
-        "type": "ADDRESS",
-        "name": "ssh.example.com"
-      },
-      "origin_direct": [
-        "tcp://192.0.2.1:22"
-      ],
-      "ip_firewall": true,
-      "proxy_protocol": false,
-      "spp": false,
-      "tls": "off",
-      "traffic_type": "direct",
-      "edge_ips": {
-        "type": "static",
-        "ips": [
-          "198.51.100.10",
-          "2001:DB8::1"
-        ]
-      }
-    }
+```json
+{
+  "id": "4590376cf2994d72cee36828ec4eff19",
+  "protocol": "tcp/22",
+  "dns": {
+    "type": "ADDRESS",
+    "name": "ssh.example.com"
+  },
+  "origin_direct": [
+    "tcp://192.0.2.1:22"
+  ],
+  "ip_firewall": true,
+  "proxy_protocol": false,
+  "spp": false,
+  "tls": "off",
+  "traffic_type": "direct",
+  "edge_ips": {
+    "type": "static",
+    "ips": [
+      "198.51.100.10",
+      "2001:DB8::1"
+    ]
+  }
+}
 ```
 
 Full example of creating an application that routes traffic through Cloudflare's HTTP pipeline, including WAF, Workers and CDN functionality:
-```
+
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \
      -H "X-Auth-Email: USER_EMAIL" \
      -H "X-Auth-Key: API_KEY" \

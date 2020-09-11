@@ -1,8 +1,8 @@
 ---
-title: Proxy Protocol
-weight: 4
+order: 4
 ---
 
+# Proxy protocol
 
 Because Cloudflare intercepts packets before forwarding them to your server, if you were to look up the client IP, you would see Cloudflare's IP rather than the true client IP.
 
@@ -11,9 +11,11 @@ Some services you run may require knowledge of the true client IP. In those case
 <Aside>
 
 This feature requires an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the [Customer Success Team](mailto:success@cloudflare.com).
+
 </Aside>
 
 ## Enabling Proxy Protocol v1 for TCP
+
 To enable PROXY Protocol v1 for a TCP application on Cloudflare, go to the [Spectrum tab in the Cloudflare dashboard](https://dash.cloudflare.com), click the configure icon next to the application you would like to add PROXY Protocol to, and use the Proxy Protocol pull down to select 'PROXY Protocol v1'.
 
 When TCP applications are configured to use 'PROXY Protocol v1', Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header (see below).
@@ -33,6 +35,7 @@ An example PROXY Protocol line for an IPv6 address would look like:
     PROXY TCP6 2001:db8:: 2001:db8:ffff:ffff:ffff:ffff:ffff:ffff 42300 443\r\n
 
 ## Enabling Proxy Protocol v2 for TCP/UDP
+
 To enable PROXY Protocol v2 for a TCP or UDP application on Cloudflare, go to the [Spectrum tab in the Cloudflare dashboard](https://dash.cloudflare.com), click the configure icon next to the application you would like to add PROXY Protocol to, and use the Proxy Protocol pull down to select 'PROXY Protocol v2'.
 
 When TCP applications are configured to use 'PROXY Protocol v2', Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
@@ -45,7 +48,7 @@ PROXY Protocol prepends every connection with a header reporting the client IP a
 
 A PROXY Protocol binary header for a IPv4 incoming address has the format:
 
-```
+```txt
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -67,7 +70,7 @@ A PROXY Protocol binary header for a IPv4 incoming address has the format:
 
 A PROXY Protocol binary header for a IPv6 incoming address has the format:
 
-```
+```txt
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -111,7 +114,7 @@ Simple Proxy Protocol dictates that your origin must also prepend packets meant 
 
 The client source IP and port is encoded in a fixed-length, 38-octet long header and prepended to the payload of each proxied UDP datagram in the format described below.
 
-```
+```txt
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -160,7 +163,7 @@ Magic number, addresses, and port numbers are encoded in network byte order.
 
 A corresponding C structure describing the header is:
 
-```C
+```c
 struct {
     uint16_t magic;
     uint8_t  client_addr[16];

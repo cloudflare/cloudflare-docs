@@ -1,21 +1,19 @@
----
-title: "Event Logs"
-weight: 4
-parent: Spectrum
----
-
+# Event logs
 
 ## Overview
 
 Spectrum logs the entire lifecycle of every client that connects through it. These event logs are available through Logpush as a separate category (dataset type `spectrum_events`); they are not part of HTTP log events.
 
-For each connection, Spectrum logs a connect event and either a disconnect or error event. Details on status codes can be found below. 
+For each connection, Spectrum logs a connect event and either a disconnect or error event. Details on status codes can be found below.
 
 ### Configuring Logpush
 
-Spectrum [log events](https://developers.cloudflare.com/logs/log-fields/) can be configured through the [dashboard](https://developers.cloudflare.com/logs/logpush/logpush-dashboard/) and [API](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/). 
+Spectrum [log events](https://developers.cloudflare.com/logs/log-fields/) can be configured through the [dashboard](https://developers.cloudflare.com/logs/logpush/logpush-dashboard/) and [API](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/).
 
 ### Status Codes
+
+<TableWrap>
+
 | Code | Description |
 | --- | -------- |
 | 0	    | Connection was opened successfully. |
@@ -46,3 +44,5 @@ Spectrum [log events](https://developers.cloudflare.com/logs/log-fields/) can be
 | 533	| Internal error while resolving origin to an IP. |
 | 540	| The client/edge TLS handshake failed due to an invalid configuration. |
 | 999	| Unknown connection error. |
+
+</TableWrap>

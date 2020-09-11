@@ -1,8 +1,8 @@
 ---
-title: "Getting Started"
-weight: 2
+order: 1
 ---
 
+# Getting started
 
 <Aside>
 
@@ -11,7 +11,7 @@ Spectrum is available on all paid plans. Pro and Business support selected proto
 If you have feedback, let us know: [community.cloudflare.com/spectrum](https://community.cloudflare.com/c/security/spectrum). Steps to get started are below.
 </Aside>
 
-### Step One: Add your application
+## Step One: Add your application
 
 Login to the Cloudflare dashboard. You will now have a new app in the nav bar called Spectrum. Click on it.
 
@@ -27,6 +27,6 @@ Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to 
 
 Now click Add
 
-### Step Two: Done!
+## Step Two: Done!
 
-You're now ready to proxy traffic through Cloudflare, no further configuration necessary. As you run traffic through Cloudflare, you will see the last minute of traffic in the Spectrum app in the dashboard.
+You’re now ready to proxy traffic through Cloudflare, no further configuration necessary. As you run traffic through Cloudflare, you will see the last minute of traffic in the Spectrum app in the dashboard.
