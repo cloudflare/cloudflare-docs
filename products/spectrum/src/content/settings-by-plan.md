@@ -1,8 +1,16 @@
+---
+type: overview
+---
+
 # Settings by plan
+
+<ContentColumn>
 
 Certain fields in Spectrum request and response bodies require an Enterprise plan.  To upgrade your plan, contact your Customer Success Manager or the [Customer Success Team](mailto:success@cloudflare.com).
 
 Spectrum properties requiring an Enterprise plan:
+
+</ContentColumn>
 
 <TableWrap>
 
@@ -16,4 +24,8 @@ tls            | string       | Type of TLS termination for the application. Opt
 
 </TableWrap>
 
+<ContentColumn>
+
 Review the [Spectrum API documentation](https://api.cloudflare.com/#spectrum-applications-properties) for example API requests.
+
+</ContentColumn>
