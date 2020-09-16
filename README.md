@@ -45,30 +45,30 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 
 ## Migration progress
 
-| Product              | Builds | Icon | In production |
-|----------------------|--------|------|----------------
-| 1.1.1.1              | ✕      |      |               |
-| access               | ✕      | ✕    |               |
-| analytics            | ✕      |      |               |
-| argo-tunnel          | ✕      |      |               |
-| byoip                | ✕      |      |               |
-| distributed-web      | ✕      |      |               |
-| firewall             | ✕      |      |               |
-| gateway              | ✕      |      |               |
-| http3                | ✕      |      |               |
-| images               | ✕      |      |               |
-| internet             | ✕      |      |               |
-| load-balancing       | ✕      |      |               |
-| logs                 | ✕      |      |               |
-| magic-transit        | ✕      |      |               |
-| mobile-sdk           | ✕      |      |               |
-| network-interconnect | ✕      |      |               |
-| randomness-beacon    | ✕      |      |               |
-| registrar            | ✕      | ✕    |               |
-| spectrum             | ✕      | ✕    |               |
-| ssl                  | ✕      | ✕    |               |
-| stream               | ✕      | ✕    |               |
-| tenant               | ✕      |      |               |
-| terraform            | ✕      | ✕    |               |
-| time-services        | ✕      | ✕    |               |
-| waf                  | ✕      | ✕    |               |
+| Product              | Builds | Icon | Prod | Test                                                                                         |
+| :------------------- | :----- | :--- | :--- | :------------------------------------------------------------------------------------------- |
+| 1.1.1.1              | ✕      |      |      | [1.1.1.1](https://cloudflare-docs-testing.ruthless.design/1-1-1-1)                           |
+| access               | ✕      | ✕    |      | [Access](https://cloudflare-docs-testing.ruthless.design/access)                             |
+| analytics            | ✕      |      |      | [Analytics](https://cloudflare-docs-testing.ruthless.design/analytics)                       |
+| argo-tunnel          | ✕      |      |      | [Argo Tunnel](https://cloudflare-docs-testing.ruthless.design/argo-tunnel)                   |
+| byoip                | ✕      |      |      | [BYOIP](https://cloudflare-docs-testing.ruthless.design/byoip)                               |
+| distributed-web      | ✕      |      |      | [Distributed Web Gateway](https://cloudflare-docs-testing.ruthless.design/distributed-web)   |
+| firewall             | ✕      |      |      | [Firewall](https://cloudflare-docs-testing.ruthless.design/firewall)                         |
+| gateway              | ✕      |      |      | [Gateway](https://cloudflare-docs-testing.ruthless.design/gateway)                           |
+| http3                | ✕      |      |      | [HTTP3](https://cloudflare-docs-testing.ruthless.design/http3)                               |
+| images               | ✕      |      |      | [Image Resizing](https://cloudflare-docs-testing.ruthless.design/images)                     |
+| internet             | ✕      |      |      | [Life of a Request](https://cloudflare-docs-testing.ruthless.design/internet)                |
+| load-balancing       | ✕      |      |      | [Load Balancing](https://cloudflare-docs-testing.ruthless.design/load-balancing)             |
+| logs                 | ✕      |      |      | [Logs](https://cloudflare-docs-testing.ruthless.design/logs)                                 |
+| magic-transit        | ✕      |      |      | [Magic Transit](https://cloudflare-docs-testing.ruthless.design/magic-transit)               |
+| mobile-sdk           | ✕      |      |      | [Mobile SDK](https://cloudflare-docs-testing.ruthless.design/mobile-sdk)                     |
+| network-interconnect | ✕      |      |      | [Network Interconnect](https://cloudflare-docs-testing.ruthless.design/network-interconnect) |
+| randomness-beacon    | ✕      |      |      | [Randomness Beacon](https://cloudflare-docs-testing.ruthless.design/randomness-beacon)       |
+| registrar            | ✕      | ✕    |      | [Registrar](https://cloudflare-docs-testing.ruthless.design/registrar)                       |
+| spectrum             | ✕      | ✕    |      | [Spectrum](https://cloudflare-docs-testing.ruthless.design/spectrum)                         |
+| ssl                  | ✕      | ✕    |      | [SSL](https://cloudflare-docs-testing.ruthless.design/ssl/ssl-tls)                           |
+| stream               | ✕      | ✕    |      | [Stream](https://cloudflare-docs-testing.ruthless.design/stream)                             |
+| tenant               | ✕      |      |      | [Tenant](https://cloudflare-docs-testing.ruthless.design/tenant)                             |
+| terraform            | ✕      | ✕    |      | [Terraform](https://cloudflare-docs-testing.ruthless.design/terraform)                       |
+| time-services        | ✕      | ✕    |      | [Time Services](https://cloudflare-docs-testing.ruthless.design/time-services)               |
+| waf                  | ✕      | ✕    |      | [Waf](https://cloudflare-docs-testing.ruthless.design/waf)                                   |
