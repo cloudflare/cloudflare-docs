@@ -42,3 +42,33 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 - [Terraform](https://cloudflare-docs-testing.ruthless.design/terraform) — [Example page](https://cloudflare-docs-testing.ruthless.design/terraform/tutorial/source-control)
 - [Time Services](https://cloudflare-docs-testing.ruthless.design/time-services) — [Example page](https://cloudflare-docs-testing.ruthless.design/time-services/ntp/usage)
 - [Waf](https://cloudflare-docs-testing.ruthless.design/waf) — [Example page](https://cloudflare-docs-testing.ruthless.design/waf/change-log/2019-10-17---emergency-release)
+
+## Migration progress
+
+| Product              | Builds | Icon | In production |
+|----------------------|--------|------|----------------
+| 1.1.1.1              | ✕      |      |               |
+| access               | ✕      | ✕    |               |
+| analytics            | ✕      |      |               |
+| argo-tunnel          | ✕      |      |               |
+| byoip                | ✕      |      |               |
+| distributed-web      | ✕      |      |               |
+| firewall             | ✕      |      |               |
+| gateway              | ✕      |      |               |
+| http3                | ✕      |      |               |
+| images               | ✕      |      |               |
+| internet             | ✕      |      |               |
+| load-balancing       | ✕      |      |               |
+| logs                 | ✕      |      |               |
+| magic-transit        | ✕      |      |               |
+| mobile-sdk           | ✕      |      |               |
+| network-interconnect | ✕      |      |               |
+| randomness-beacon    | ✕      |      |               |
+| registrar            | ✕      | ✕    |               |
+| spectrum             | ✕      | ✕    |               |
+| ssl                  | ✕      | ✕    |               |
+| stream               | ✕      | ✕    |               |
+| tenant               | ✕      |      |               |
+| terraform            | ✕      | ✕    |               |
+| time-services        | ✕      | ✕    |               |
+| waf                  | ✕      | ✕    |               |
