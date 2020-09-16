@@ -45,30 +45,30 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 
 ## Migration progress
 
-| Product              | Builds | Icon | Prod | Test                                                                                         |
-| :------------------- | :----- | :--- | :--- | :------------------------------------------------------------------------------------------- |
-| 1.1.1.1              | ✕      |      |      | [1.1.1.1](https://cloudflare-docs-testing.ruthless.design/1-1-1-1)                           |
-| access               | ✕      | ✕    |      | [Access](https://cloudflare-docs-testing.ruthless.design/access)                             |
-| analytics            | ✕      |      |      | [Analytics](https://cloudflare-docs-testing.ruthless.design/analytics)                       |
-| argo-tunnel          | ✕      |      |      | [Argo Tunnel](https://cloudflare-docs-testing.ruthless.design/argo-tunnel)                   |
-| byoip                | ✕      |      |      | [BYOIP](https://cloudflare-docs-testing.ruthless.design/byoip)                               |
-| distributed-web      | ✕      |      |      | [Distributed Web Gateway](https://cloudflare-docs-testing.ruthless.design/distributed-web)   |
-| firewall             | ✕      |      |      | [Firewall](https://cloudflare-docs-testing.ruthless.design/firewall)                         |
-| gateway              | ✕      |      |      | [Gateway](https://cloudflare-docs-testing.ruthless.design/gateway)                           |
-| http3                | ✕      |      |      | [HTTP3](https://cloudflare-docs-testing.ruthless.design/http3)                               |
-| images               | ✕      |      |      | [Image Resizing](https://cloudflare-docs-testing.ruthless.design/images)                     |
-| internet             | ✕      |      |      | [Life of a Request](https://cloudflare-docs-testing.ruthless.design/internet)                |
-| load-balancing       | ✕      |      |      | [Load Balancing](https://cloudflare-docs-testing.ruthless.design/load-balancing)             |
-| logs                 | ✕      |      |      | [Logs](https://cloudflare-docs-testing.ruthless.design/logs)                                 |
-| magic-transit        | ✕      |      |      | [Magic Transit](https://cloudflare-docs-testing.ruthless.design/magic-transit)               |
-| mobile-sdk           | ✕      |      |      | [Mobile SDK](https://cloudflare-docs-testing.ruthless.design/mobile-sdk)                     |
-| network-interconnect | ✕      |      |      | [Network Interconnect](https://cloudflare-docs-testing.ruthless.design/network-interconnect) |
-| randomness-beacon    | ✕      |      |      | [Randomness Beacon](https://cloudflare-docs-testing.ruthless.design/randomness-beacon)       |
-| registrar            | ✕      | ✕    |      | [Registrar](https://cloudflare-docs-testing.ruthless.design/registrar)                       |
-| spectrum             | ✕      | ✕    |      | [Spectrum](https://cloudflare-docs-testing.ruthless.design/spectrum)                         |
-| ssl                  | ✕      | ✕    |      | [SSL](https://cloudflare-docs-testing.ruthless.design/ssl/ssl-tls)                           |
-| stream               | ✕      | ✕    |      | [Stream](https://cloudflare-docs-testing.ruthless.design/stream)                             |
-| tenant               | ✕      |      |      | [Tenant](https://cloudflare-docs-testing.ruthless.design/tenant)                             |
-| terraform            | ✕      | ✕    |      | [Terraform](https://cloudflare-docs-testing.ruthless.design/terraform)                       |
-| time-services        | ✕      | ✕    |      | [Time Services](https://cloudflare-docs-testing.ruthless.design/time-services)               |
-| waf                  | ✕      | ✕    |      | [Waf](https://cloudflare-docs-testing.ruthless.design/waf)                                   |
+| Product                  | `pathPrefix`         | Builds | Icon | Prod | Test                                                                                         |
+| :----------------------- | :------------------- | :----- | :--- | :--- | :------------------------------------------------------------------------------------------- |
+| 1.1.1.1                  | 1-1-1-1              | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/1-1-1-1)                           |
+| Access                   | access               | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/access)                             |
+| Analytics                | analytics            | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/analytics)                       |
+| Argo Tunnel              | argo-tunnel          | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/argo-tunnel)                   |
+| BYOIP                    | byoip                | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/byoip)                               |
+| Distributed Web Gateway  | distributed-web      | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/distributed-web)   |
+| Firewall                 | firewall             | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/firewall)                         |
+| Gateway                  | gateway              | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/gateway)                           |
+| HTTP3                    | http3                | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/http3)                               |
+| Image Resizing           | images               | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/images)                     |
+| Life of a Request        | internet             | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/internet)                |
+| Load Balancing           | load-balancing       | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/load-balancing)             |
+| Logs                     | logs                 | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/logs)                                 |
+| Magic Transit            | magic-transit        | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/magic-transit)               |
+| Mobile SDK               | mobile-sdk           | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/mobile-sdk)                     |
+| Network Interconnect     | network-interconnect | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/network-interconnect) |
+| Randomness Beacon        | randomness-beacon    | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/randomness-beacon)       |
+| Registrar                | registrar            | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/registrar)                       |
+| Spectrum                 | spectrum             | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/spectrum)                         |
+| SSL                      | ssl                  | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/ssl/ssl-tls)                           |
+| Stream                   | stream               | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/stream)                             |
+| Tenant                   | tenant               | ✕      |      |      | [Test](https://cloudflare-docs-testing.ruthless.design/tenant)                             |
+| Terraform                | terraform            | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/terraform)                       |
+| Time Services            | time-services        | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/time-services)               |
+| WAF                      | waf                  | ✕      | ✕    |      | [Test](https://cloudflare-docs-testing.ruthless.design/waf)                                   |
