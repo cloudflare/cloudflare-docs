@@ -1,7 +1,7 @@
 module.exports = {
   product: "Magic Transit",
   pathPrefix: "/magic-transit",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
+  productLogoPathD: "M17 3h3v3h-3V3zm4 0h3v3h-3V3zm4 0h3v3h-3V3zm-8 4h3v3h-3V7zm4 0h3v3h-3V7zm4 0h3v3h-3V7zm4 0h3v3h-3V7zm-12 4h3v3h-3v-3zm-4 0h3v3h-3v-3zm8 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-16 4h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-24 4h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-20 4h3v3h-3v-3zm-4 0h3v3h-3v-3zm8 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zM9 27h3v3H9v-3zm-4 0h3v3H5v-3zm20 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-16 4h3v3h-3v-3zm-4 0h3v3h-3v-3zm-4 0h3v3H9v-3zm-4 0h3v3H5v-3zm16 0h3v3h-3v-3zm4 0h3v3h-3v-3zm8 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-20 4h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-12 4h3v3h-3v-3zm-4 0h3v3h-3v-3zm-4 0h3v3H9v-3zm12 0h3v3h-3v-3zm4 0h3v3h-3v-3zm-8 4h3v3h-3v-3zm-4 0h3v3h-3v-3zm8 0h3v3h-3v-3z",
   contentRepo: "adamschwartz/cloudflare-docs",
   externalLinks: [
     {
