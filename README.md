@@ -19,14 +19,14 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 
 | Product                 | `pathPrefix`         | Icon | Content | Test                                                                         | Prod |
 | :---------------------- | :------------------- | :--- | :------ | :--------------------------------------------------------------------------- | :--- |
-| 1.1.1.1                 | 1-1-1-1              |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/1-1-1-1)              |      |
-| Access                  | access               |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/access)               |      |
-| Analytics               | analytics            |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/analytics)            |      |
-| Argo Tunnel             | argo-tunnel          |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/argo-tunnel)          |      |
-| BYOIP                   | byoip                |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/byoip)                |      |
-| Distributed Web Gateway | distributed-web      |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/distributed-web)      |      |
-| Firewall                | firewall             |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/firewall)             |      |
-| Gateway                 | gateway              |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/gateway)              |      |
+| 1.1.1.1                 | 1-1-1-1              | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/1-1-1-1)              |      |
+| Access                  | access               | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/access)               |      |
+| Analytics               | analytics            | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/analytics)            |      |
+| Argo Tunnel             | argo-tunnel          | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/argo-tunnel)          |      |
+| BYOIP                   | byoip                | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/byoip)                |      |
+| Distributed Web Gateway | distributed-web      | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/distributed-web)      |      |
+| Firewall                | firewall             | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/firewall)             |      |
+| Gateway                 | gateway              | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/gateway)              |      |
 | HTTP3                   | http3                |      |         | [Test](https://cloudflare-docs-testing.ruthless.design/http3)                |      |
 | Image Resizing          | images               | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/images)               |      |
 | Life of a Request       | internet             | ✕    |         | [Test](https://cloudflare-docs-testing.ruthless.design/internet)             |      |
