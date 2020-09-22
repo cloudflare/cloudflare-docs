@@ -3,6 +3,7 @@ module.exports = {
   pathPrefix: "/terraform",
   productLogoPathD: "M16.5 10.5V23L5 16.5V4l11.5 6.5zm13 7.35v12.5L18 23.85v-12.5l11.5 6.5zm0 14.4v12.5L18 38.25v-12.5l11.5 6.5zm1.5-14.4v12.5l11.5-6.5v-12.5L31 17.85z",
   contentRepo: "adamschwartz/cloudflare-docs",
+  contentRepoFolder: "products/terraform",
   externalLinks: [
     {
       title: "Github @cloudflare/terraform-provider-cloudflare",
