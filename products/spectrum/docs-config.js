@@ -18,7 +18,7 @@ module.exports = {
     title: "Cloudflare Spectrum docs",
     description: "DDoS protection for everything.",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/spectrum",
+    url: "https://developers.cloudflare.com/spectrum",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }

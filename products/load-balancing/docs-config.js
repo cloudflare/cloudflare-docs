@@ -18,7 +18,7 @@ module.exports = {
     title: "Cloudflare Load Balancing docs",
     description: "Balance traffic loads, manage failovers, monitor server and pool health, and apply geographic control with Cloudflare Load Balancing",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/load-balancing",
+    url: "https://developers.cloudflare.com/load-balancing",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }

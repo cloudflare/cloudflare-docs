@@ -22,7 +22,7 @@ module.exports = {
     title: "1.1.1.1 docs",
     description: "A blazing fast DNS resolver built for private browsing.",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/1-1-1-1",
+    url: "https://developers.cloudflare.com/1-1-1-1",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }

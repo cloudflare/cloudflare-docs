@@ -18,7 +18,7 @@ module.exports = {
     title: "Cloudflare HTTP3 docs",
     description: "HTTP3 is the newest version of the Hypertext Transfer Protocol",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/http3",
+    url: "https://developers.cloudflare.com/http3",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }

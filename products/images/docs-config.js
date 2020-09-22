@@ -18,7 +18,7 @@ module.exports = {
     title: "Cloudflare Image Resizing docs",
     description: "Run your image optimization logic at the edge.",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/images",
+    url: "https://developers.cloudflare.com/images",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }

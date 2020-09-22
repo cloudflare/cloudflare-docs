@@ -18,7 +18,7 @@ module.exports = {
     title: "Cloudflare Network Interconnect docs",
     description: "For a faster, more reliable, and more secure experience than connecting over the Internet.",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/network-interconnect",
+    url: "https://developers.cloudflare.com/network-interconnect",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }

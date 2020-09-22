@@ -18,7 +18,7 @@ module.exports = {
     title: "Cloudflare Magic Transit docs",
     description: "Magic Transit delivers network functions at Cloudflare scale—DDoS protection, traffic acceleration, and much more from every Cloudflare data center—for on-premise, cloud-hosted, and hybrid networks.",
     author: "@cloudflare",
-    url: "http://docs.cloudflare.com/magic-transit",
+    url: "https://developers.cloudflare.com/magic-transit",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }
