@@ -22,7 +22,7 @@ jobs:
           mkdir .docs
           npm run bootstrap
           npm run build
-          npm i @cloudflare/wrangler@1.4.0-rc.7 -g
+          npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
@@ -44,7 +44,7 @@ jobs:
           mkdir .docs
           npm run bootstrap
           npm run build
-          npm i @cloudflare/wrangler@1.4.0-rc.7 -g
+          npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
