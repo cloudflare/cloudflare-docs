@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-terraform:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set node version to v14.2.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+
+      - name: Install deps
+        run: npm install
+
+      - name: Bootstrap Docs Engine
+        run: |
+          mkdir .docs
+          npm run bootstrap
+
+      - name: Build
+        run: npm run build
+
+      # TODO: wrangler-action doesn’t appear to work with
+      # jobs.<job>.defaults.run.working-directory set
+
+      # - name: Publish
+      #   uses: cloudflare/wrangler-action@1.2.0
+      #   with:
+      #     apiKey: ${{ secrets.CF_API_KEY }}
+      #     email: ${{ secrets.CF_EMAIL }}
+
+      - name: Install Wrangler
+        run: npm i @cloudflare/wrangler@1.4.0-rc.7 -g
+
+      - name: Deploy
+        run: wrangler publish
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+
