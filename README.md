@@ -44,3 +44,15 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 | Terraform               | terraform            | ✕    | Started | [Test](https://terraform.cloudflare-docs.workers.dev/terraform)                       |      |
 | Time Services           | time-services        | ✕    |         | [Test](https://time-services.cloudflare-docs.workers.dev/time-services)               |      |
 | WAF                     | waf                  | ✕    |         | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   |      |
+
+Test sites deploy to:
+
+```js
+`https://${ pathPrefix }.cloudflare-docs.workers.dev/${ pathPrefix }/`
+```
+
+Production sites deploy to:
+
+```js
+`https://developers.cloudflare.com/${ pathPrefix }/`
+```
