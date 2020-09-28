@@ -47,12 +47,12 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 
 Test sites deploy to:
 
-```js
-`https://${ pathPrefix }.cloudflare-docs.workers.dev/${ pathPrefix }/`
+```txt
+https://[pathPrefix].cloudflare-docs.workers.dev/[pathPrefix]/
 ```
 
 Production sites deploy to:
 
-```js
-`https://developers.cloudflare.com/${ pathPrefix }/`
+```txt
+https://developers.cloudflare.com/[pathPrefix]/
 ```
