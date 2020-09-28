@@ -1,6 +1,8 @@
 # Cloudflare Docs
 
-## Publishing
+## Developing
+
+(Note: Although it works, this process is still a bit of a WIP.)
 
 Clone the engine somewhere and set it up to be NPM linked:
 
@@ -9,10 +11,34 @@ git clone git@github.com:adamschwartz/cloudflare-docs-engine.git
 npm link
 ```
 
+(Note: This will soon be moved to the @cloudflare org.)
+
+Clone this repo.
+
+```bash
+git clone git@github.com:cloudflare/cloudflare-docs.git
+```
+
 For each product, `cd` into `products/$productName` and then run:
 
 ```bash
-npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangler publish
+npm link cloudflare-docs-engine && npm run bootstrap && npm run develop
+```
+
+## Publishing
+
+Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using Github Actions.
+
+Test environment deploys to:
+
+```txt
+https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
+```
+
+Prod environment deploys to:
+
+```txt
+https://developers.cloudflare.com/$pathPrefix/
 ```
 
 ## Migration progress
@@ -44,15 +70,3 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run build && wrangle
 | Terraform               | terraform            | ✕    | Started | [Test](https://terraform.cloudflare-docs.workers.dev/terraform)                       |      |
 | Time Services           | time-services        | ✕    |         | [Test](https://time-services.cloudflare-docs.workers.dev/time-services)               |      |
 | WAF                     | waf                  | ✕    |         | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   |      |
-
-Test sites deploy to:
-
-```txt
-https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
-```
-
-Production sites deploy to:
-
-```txt
-https://developers.cloudflare.com/$pathPrefix/
-```
