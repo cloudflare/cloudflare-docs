@@ -25,8 +25,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-access:
     runs-on: ubuntu-latest
@@ -47,8 +46,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-analytics:
     runs-on: ubuntu-latest
@@ -69,8 +67,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-argo-tunnel:
     runs-on: ubuntu-latest
@@ -91,8 +88,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-byoip:
     runs-on: ubuntu-latest
@@ -113,8 +109,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -135,8 +130,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-firewall:
     runs-on: ubuntu-latest
@@ -157,8 +151,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-gateway:
     runs-on: ubuntu-latest
@@ -179,8 +172,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-http3:
     runs-on: ubuntu-latest
@@ -201,8 +193,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-images:
     runs-on: ubuntu-latest
@@ -223,8 +214,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-internet:
     runs-on: ubuntu-latest
@@ -245,8 +235,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-load-balancing:
     runs-on: ubuntu-latest
@@ -267,8 +256,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-logs:
     runs-on: ubuntu-latest
@@ -289,8 +277,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-magic-transit:
     runs-on: ubuntu-latest
@@ -311,8 +298,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-mobile-sdk:
     runs-on: ubuntu-latest
@@ -333,8 +319,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -355,8 +340,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-randomness-beacon:
     runs-on: ubuntu-latest
@@ -377,8 +361,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-registrar:
     runs-on: ubuntu-latest
@@ -399,8 +382,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-spectrum:
     runs-on: ubuntu-latest
@@ -421,8 +403,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-ssl:
     runs-on: ubuntu-latest
@@ -443,8 +424,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-stream:
     runs-on: ubuntu-latest
@@ -465,8 +445,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-tenant:
     runs-on: ubuntu-latest
@@ -487,8 +466,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-terraform:
     runs-on: ubuntu-latest
@@ -509,8 +487,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-time-services:
     runs-on: ubuntu-latest
@@ -531,8 +508,7 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   deploy-waf:
     runs-on: ubuntu-latest
@@ -553,5 +529,4 @@ jobs:
           npm install -g @cloudflare/wrangler
       - run: wrangler publish
         env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          CF_EMAIL: ${{ secrets.CF_EMAIL }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
