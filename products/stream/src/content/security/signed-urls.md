@@ -215,7 +215,7 @@ func main() {
 	builder = builder.Claims(claims{
 		KeyID:   keyID,
 		VideoID: videoID,
-		Expiry:  jwt.NewNumericDate(time.Now().Add(expiresIn)),
+		Expiry:  *jwt.NewNumericDate(time.Now().Add(expiresIn)),
 	})
 	token, err := builder.CompactSerialize()
 	if err != nil {
