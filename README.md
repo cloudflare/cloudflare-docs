@@ -64,7 +64,7 @@ https://developers.cloudflare.com/$pathPrefix/
 | Randomness Beacon       | randomness-beacon    | ✕    |         | [Test](https://randomness-beacon.cloudflare-docs.workers.dev/randomness-beacon)       |      |
 | Registrar               | registrar            | ✕    |         | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       |      |
 | Spectrum                | spectrum             | ✕    | Started | [Test](https://spectrum.cloudflare-docs.workers.dev/spectrum)                         |      |
-| SSL                     | ssl                  | ✕    |         | [Test](https://ssl/ssl-tls.cloudflare-docs.workers.dev/ssl/ssl-tls)                   |      |
+| SSL                     | ssl                  | ✕    |         | [Test](https://ssl.cloudflare-docs.workers.dev/ssl)                                   |      |
 | Stream                  | stream               | ✕    | Started | [Test](https://stream.cloudflare-docs.workers.dev/stream)                             |      |
 | Tenant                  | tenant               |      |         | [Test](https://tenant.cloudflare-docs.workers.dev/tenant)                             |      |
 | Terraform               | terraform            | ✕    | Started | [Test](https://terraform.cloudflare-docs.workers.dev/terraform)                       |      |
