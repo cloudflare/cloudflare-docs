@@ -530,3 +530,24 @@ jobs:
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
+  deploy-workers:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/workers
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run bootstrap
+          npm run build
+          npm install -g @cloudflare/wrangler
+      - run: wrangler publish
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
