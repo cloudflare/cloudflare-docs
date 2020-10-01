@@ -7,7 +7,7 @@
 Clone the engine somewhere and set it up to be NPM linked:
 
 ```bash
-git clone git@github.com:adamschwartz/cloudflare-docs-engine.git
+git clone git@github.com:cloudflare/cloudflare-docs-engine.git
 npm link
 ```
 
