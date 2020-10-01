@@ -12,12 +12,12 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 1. Create a directory in the root of your project (e.g. `workers-site`) and add configuration to your `wrangler.toml` to point to it. Also add the path to your Worker script (probably `index.js`).
 
-  ```sh
+  ```toml
   ---
   filename: wrangler.toml
   ---
+  # ... (whatever you already have here)
 
-  account_id = "612bef.."
   [site]
   bucket = "./my-dir" # Add the directory with your static assets!
   entry-point = "./workers-site" # JS folder serving your assets
