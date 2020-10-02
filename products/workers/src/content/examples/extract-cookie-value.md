@@ -28,9 +28,10 @@ function getCookie(request, name) {
   if (cookieString) {
     const cookies = cookieString.split(";")
     cookies.forEach(cookie => {
-      const cookieName = cookie.split("=")[0].trim()
+      const cookiePair = cookie.split("=", 2)
+      const cookieName = cookiePair[0].trim()
       if (cookieName === name) {
-        const cookieVal = cookie.split("=")[1]
+        const cookieVal = cookiePair[1]
         result = cookieVal
       }
     })
