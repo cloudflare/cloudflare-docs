@@ -46,7 +46,7 @@ All bindings have the following properties:
 - `type`
   - The type of binding, can be one of:
 
-    - `namespace_id`
+    - `kv_namespace`
     - `secret`
     - `wasm_module`
     - `plain_text`
