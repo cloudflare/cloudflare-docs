@@ -75,7 +75,7 @@ Durable Objects gain access to a [persistent storage API](/runtime-apis/durable-
 ```js
 
 export class DurableObjectExample {
-    constructor(state, env){
+    constructor(state, env) {
         this.storage = state.storage;
     }
 
@@ -96,7 +96,7 @@ Each individual storage operation behaves like a database transaction. More comp
 ```js
 
 export class DurableObjectExample {
-    constructor(state, env){
+    constructor(state, env) {
         this.storage = state.storage;
     }
 
@@ -106,13 +106,13 @@ export class DurableObjectExample {
         let newValue = await request.text();
         let changedValue = false;
         await this.storage.transaction(async txn => {
-          let currentValue = await txn.get(key);
-          if (currentValue != ifMatch && ifMatch != '*') {
-            txn.rollback();
-            return; 
-           }
-          changedValue = true;
-          await txn.put(key, newValue);
+            let currentValue = await txn.get(key);
+            if (currentValue != ifMatch && ifMatch != '*') {
+                txn.rollback();
+                return; 
+            }
+            changedValue = true;
+            await txn.put(key, newValue);
         });
         return new Response("Changed: " + changedValue);
     }
@@ -178,7 +178,7 @@ For the following example, we'll be using this Durable Object class:
 ```js
 // durable-object-example.mjs
 export class DurableObjectExample {
-    constructor(state, env){
+    constructor(state, env) {
         this.state = state;
     }
 
@@ -195,7 +195,7 @@ export class DurableObjectExample {
 // required for the script to be accepted by the API endpoint
 export default {
     async fetch(request, env) {
-        return new Response("Hello World")
+        return new Response("Hello World");
     }
 }
 ```
@@ -310,8 +310,8 @@ When a Worker talks to a Durable Object, it does so through a "stub" object. The
 ```js
 
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
   // Derive an object ID from the URL path. `EXAMPLE_CLASS.idFromName()`
@@ -319,11 +319,11 @@ async function handleRequest(request) {
   // called on the same class), but never the same ID for two different
   // strings (or for different classes). So, in this case, we are creating
   // a new object for each unique path.
-  let id = EXAMPLE_CLASS.idFromName(new URL(request.url).pathname)
+  let id = EXAMPLE_CLASS.idFromName(new URL(request.url).pathname);
 
   // Construct the stub for the Durable Object. A "stub" is a client object
   // used to send messages to the Durable Object.
-  let stub = await EXAMPLE_CLASS.get(id)
+  let stub = await EXAMPLE_CLASS.get(id);
 
   // Forward the request to the Durable Object. Note that `stub.fetch()` has
   // the same signature as the global `fetch()` function, except that the
@@ -393,17 +393,17 @@ We've included complete example code for both the Worker and the Durable Object 
 
 export default {
     async fetch(request, env) {
-        return await handleRequest(request, env)
+        return await handleRequest(request, env);
     }
 }
 
 async function handleRequest(request, env) {
-    let id = env.Counter.idFromName("A")
-    let obj = env.Counter.get(id)
-    let resp = await obj.fetch(request.url)
-    let count = await resp.text()
+    let id = env.Counter.idFromName("A");
+    let obj = env.Counter.get(id);
+    let resp = await obj.fetch(request.url);
+    let count = await resp.text();
 
-    return new Response("Durable Object 'A' count: " + count)
+    return new Response("Durable Object 'A' count: " + count);
 }
 
 // Durable Object
