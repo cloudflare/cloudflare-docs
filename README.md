@@ -51,6 +51,7 @@ https://developers.cloudflare.com/$pathPrefix/
 | Argo Tunnel             | argo-tunnel          | ✕    |         | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   |                                                                |
 | BYOIP                   | byoip                | ✕    |         | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               |                                                                |
 | Distributed Web Gateway | distributed-web      | ✕    |         | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           |                                                                |
+| Docs Engine¹            | docs-engine          | ✕    | ✕       | [Test](https://distributed-web.cloudflare-docs.workers.dev/docs-engine)               | [Prod](https://developers.cloudflare.com/docs-engine)          |
 | Firewall                | firewall             | ✕    |         | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         |                                                                |
 | Gateway                 | gateway              | ✕    |         | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           |                                                                |
 | HTTP3                   | http3                |      |         | [Test](https://http3.cloudflare-docs.workers.dev/http3)                               |                                                                |
@@ -71,3 +72,7 @@ https://developers.cloudflare.com/$pathPrefix/
 | Time Services           | time-services        | ✕    |         | [Test](https://time-services.cloudflare-docs.workers.dev/time-services)               |                                                                |
 | WAF                     | waf                  | ✕    |         | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   |                                                                |
 | Workers                 | workers              | ✕    | ✕       | [Test](https://workers.cloudflare-docs.workers.dev/workers)                           | [Prod](https://developers.cloudflare.com/workers)              |
+
+Notes:
+
+1. Not a Cloudflare “product”, the documentation for the Docs Engine itself.
