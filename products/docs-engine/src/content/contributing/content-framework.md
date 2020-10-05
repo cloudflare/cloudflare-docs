@@ -1,8 +1,8 @@
 ---
-order: 3
+order: 1
 ---
 
-# Contributor’s guide
+# Content framework
 
 This page provides an overview of how best to contribute to Cloudflare’s documentation. This is a living document and will be updated as recommendations change.
 

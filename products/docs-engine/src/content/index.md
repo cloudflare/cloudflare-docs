@@ -4,30 +4,17 @@ type: overview
 order: 0
 ---
 
-# Cloudflare Docs Engine docs
+# Docs Engine docs
 
 <ContentColumn>
 
-<Aside type="warning">
+Documentation for the __Docs Engine__ which powers Cloudflare’s developer docs.
 
-__Warning:__ The process for building a docs site using the Cloudflare Docs Engine is currently in flux. Please hold off on using the Docs Engine until this notice is removed.
+The engine is built with [Gatsby](https://www.gatsbyjs.com/), and makes generous use of custom [MDX components](/markdown).
 
-</Aside>
+It’s __open-source__ and [available on Github](https://github.com/cloudflare/cloudflare-docs-engine).
 
-Documentation for Cloudflare’s open-source Docs Engine which powers Cloudflare’s developer documentation, e.g. the [Cloudflare Workers docs](https://developers.cloudflare.com/workers/).
-
-<Link to="/getting-started" class="Button Button-is-docs-primary">Get started</Link>
-
---------------------------------
-
-## Why a Docs Engine?
-
-Cloudflare has a large number of teams shipping product updates often. Many of [these products have documentation](https://developers.cloudflare.com/docs/). Over time we’ve found that it’s especially difficult to balance two important goals:
-
-- Content is easily managed by the product team that owns it.
-- Docs are consistent across products, providing the best experience for Cloudflare customers who commonly use more than one Cloudflare product together.
-
-The Docs Engine strives to solve these problems by providing [strong defaults](/getting-started) with just the right amount of [configuration](/site-configuration) necessary to give teams the flexibility they need. A wide variety of [composable MDX components](/markdown) provide flexibility while also mainting consistency throughout the ecosystem.
+<p><Link to="/how-it-works" class="Button Button-is-docs-primary">How it works</Link> &nbsp; <Link to="/faq" class="Button Button-is-docs-secondary">FAQ</Link></p>
 
 --------------------------------
 
@@ -35,15 +22,21 @@ The Docs Engine strives to solve these problems by providing [strong defaults](/
 
 <TableWrap>
 
-| Site                                                                        | Github                                                                                         |
-|-----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| [Cloudflare Worker docs](https://developers.cloudflare.com/workers/)        | [@cloudflare/workers-docs-engine](https://github.com/cloudflare/workers-docs-engine)           |
-| [Docs Engine Example](https://docs-engine-example.adam.workers.dev/)        | [@adamschwartz/docs-engine-example](https://github.com/adamschwartz/docs-engine-example)       |
-| [Docs Engine Docs](https://docs-engine-docs.adam.workers.dev/) — This site. | [@adamschwartz/cloudflare-docs-engine](https://github.com/adamschwartz/cloudflare-docs-engine) |
-| More to come...                                                                                                                                                              |
+| Docs site                                                              | Github                                                                                                                        |
+|------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| [Workers](https://developers.cloudflare.com/workers/)                  | [@cloudflare/cloudflare-docs/.../workers](https://github.com/cloudflare/cloudflare-docs/tree/master/products/workers)         |
+| [Docs Engine](https://docs-engine-docs.adam.workers.dev/) — This site. | [@cloudflare/cloudflare-docs/.../docs-engine](https://github.com/cloudflare/cloudflare-docs/tree/master/products/docs-engine) |
+| [Minimal example](https://docs-engine-example.adam.workers.dev/)       | [@adamschwartz/docs-engine-example](https://github.com/adamschwartz/docs-engine-example)                                      |
+| More to come...                                                                                                                                                                                             |
 
 </TableWrap>
 
+--------------------------------
 
+## Migration
+
+Some of Cloudflare’s docs still use an older design. These are currently being migrated to take advantage of the new Docs Engine.
+
+<p><a href="https://github.com/cloudflare/cloudflare-docs#migration-progress" class="Button Button-is-docs-secondary">View migration progress</a></p>
 
 </ContentColumn>
