@@ -2,17 +2,11 @@
 order: 1
 ---
 
-# Getting started
-
-<Aside type="warning">
-
-__Warning:__ The process for building a docs site using the Cloudflare Docs Engine is currently in flux. Please hold off on using the Docs Engine until this notice is removed.
-
-</Aside>
+# How it works
 
 <Aside>
 
-__Note:__ The instructions below assume that you already have a paid [Cloudflare Workers](https://workers.cloudflare.com) account, so you can deploy your docs site using [Workers Sites](https://workers.cloudflare.com/sites). You can theoretically use any static site deploy tool; however only Workers Sites has been tested at this time.
+__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on Github](https://github.com/adamschwartz)). Thanks for your patience.
 
 </Aside>
 
@@ -20,9 +14,15 @@ In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://
 
 --------------------------------
 
+## Requirements
+
+The instructions below assume you already have a paid [Cloudflare Workers](https://workers.cloudflare.com) account so you can deploy your docs site using [Workers Sites](https://workers.cloudflare.com/sites). You can theoretically use any static site deploy tool; however, only Workers Sites has been tested at this time.
+
+--------------------------------
+
 ## Minimal setup
 
-To create a new docs site built with the Cloudflare Docs Engine, you’ll need the following:
+Each docs site built with the engine needs the following structure:
 
 1. A `package.json` with one dependency and some custom scripts configured.
 2. A `docs-config.js` which exports a JavaScript object for configuring a number of strings and a few settings.
@@ -30,9 +30,13 @@ To create a new docs site built with the Cloudflare Docs Engine, you’ll need t
 4. A `.gitignore` file which ignores at least `.docs`, `dist/worker.js`, and `node_modules`.
 5. Content — An `index.md` file in `src/content/` will do.
 
+All of these files can be in the root, as is the case with the [Docs Engine example](https://github.com/adamschwartz/docs-engine-example/tree/c45fa9f0a8affc68baf5d3517f8b890ba0522531).
+
+However, this whole structure can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/master/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
+
 ### 1. package.json
 
-Your `package.json` needs to depend on the Docs Engine (located at @adamschwartz/cloudflare-docs-engine for now), and it needs to include three scripts:
+Your `package.json` needs to depend on the Docs Engine, and it needs to include scripts for bootstrapping the engine, building the project, and local development.
 
 ```json
 ---
@@ -42,7 +46,7 @@ highlight: [4, 7, 8, 9]
 {
   "private": true,
   "dependencies": {
-    "cloudflare-docs-engine": "git+https://github.com/adamschwartz/cloudflare-docs-engine.git"
+    "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git"
   },
   "scripts": {
     "bootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh bootstrap",
@@ -52,11 +56,9 @@ highlight: [4, 7, 8, 9]
 }
 ```
 
-More on this later.
-
 ### 2. docs-config.js
 
-In the root, you’ll also need a `docs-config.js` file, similar to [`gatsby-config.js`](https://www.gatsbyjs.com/docs/api-files-gatsby-config/):
+You’ll also need a `docs-config.js` file, which is used to customize the project’s title, logo, external links menu, and site metadata, which are used to populate fields inside the project’s underlying [`gatsby-config.js`](https://www.gatsbyjs.com/docs/api-files-gatsby-config/):
 
 ```js
 ---
@@ -69,12 +71,8 @@ module.exports = {
   contentRepo: "adamschwartz/docs-engine-example",
   externalLinks: [
     {
-      title: "Adam Schwartz website",
-      url: "https://adamschwartz.co"
-    },
-    {
       title: "Docs Engine on GitHub",
-      url: "https://github.com/adamschwartz/cloudflare-docs-engine"
+      url: "https://github.com/cloudflare/cloudflare-docs-engine"
     },
     {
       title: "example.com",
@@ -87,19 +85,25 @@ module.exports = {
   },
   siteMetadata: {
     title: "Example docs",
-    description: "These docs are an example of of a docs site built with https://github.com/cloudflare/workers-docs-engine.",
+    description: "These docs are an example of of a docs site built with the Cloudflare Docs Engine.",
     author: "@adamschwartz",
-    url: "http://adamschwartz.co/docs-engine-example",
+    url: "https://docs-engine-example.adam.workers.dev/",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",
   },
 }
 ```
 
-Many of these fields are self-explanatory. View the [site configuration docs](/site-configuration) for more information.
+The `search` field is used to add a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, as in the example above. For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/e72247549d20f649786251d0368de19560d1bbb2/products/workers/docs-config.js#L21-L24).
+
+Many of the other fields are self-explanatory. See [Configuration](/reference/configuration) for details.
 
 ### 3. wrangler.toml
 
-Configure the Workers Sites `bucket` and `entry-point` with a `.docs` prefix.
+Each docs site is deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via a [Wrangler Github Action](https://github.com/cloudflare/wrangler-action).
+
+To set this up, you’ll need to [configure your `wrangler.toml`](https://developers.cloudflare.com/workers/cli-wrangler/configuration#keys) file just as you would any other [Workers Sites project](https://developers.cloudflare.com/workers/platform/sites/).
+
+Since the Docs Engine builds your site inside a hidden `.docs` folder, you’ll need to set your `bucket` and `entry-point` appropriately with the `.docs/` prefix.
 
 ```toml
 ---
@@ -145,6 +149,8 @@ Some helpful things to know:
 
 - If you want to create reusable “partials” that don’t generate pages, start the file names with `_`. See [an example in the Workers docs](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/_partials/_tutorials-before-you-start.md). Then you can [import them](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-slackbot/index.md#L6-L10) as you would any other MDX component.
 
+Learn more about the [content framework](/contributing/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
+
 --------------------------------
 
 ## Example site
@@ -167,5 +173,5 @@ __[Open demo](https://docs-engine-example.adam.workers.dev)__ · ([Github](https
 
 ## See also
 
-- [Docs Engine Markdown](/markdown)
-- [Site configuration](/site-configuration)
+- [Markdown reference](/reference/markdown)
+- [Configuration reference](/reference/configuration)
