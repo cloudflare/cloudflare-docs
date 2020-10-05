@@ -2,7 +2,7 @@
 
 Code blocks inside [Docs Engine Markdown](/reference/markdown) offer a variety of custom presentation mechanisms. This page contains practical examples for inspiration.
 
-Learn more about [using code blocks inside Markdown](/reference/markdown#codeblocks).
+Learn more about [using code blocks inside Markdown](/reference/markdown#code-blocks).
 
 --------------------------------
 
