@@ -9,3 +9,15 @@ Cloudflare Stream is a video-on-demand platform for developers and content teams
 In the background, Cloudflare encodes, stores and delivers your videos. Cloudflare takes care of optimizing the right format and bitrate for every device and network connection.
 
 <stream src="31c9291ab41fac05471db4e73aa11717" autoplay loop preload height="270px" width="480px"></stream><script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=31c9291ab41fac05471db4e73aa11717"></script>
+
+<figure data-type="stream">
+  <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
+    <iframe
+      className="AspectRatio--content"
+      src="https://iframe.videodelivery.net/31c9291ab41fac05471db4e73aa11717"
+      title="Stream system diagram"
+      frameBorder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen/>
+  </div>
+</figure>
