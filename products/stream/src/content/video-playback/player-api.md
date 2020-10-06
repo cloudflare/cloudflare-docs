@@ -10,210 +10,230 @@ Multiple attributes can be used together, added one after each other like this:
 
 ## Supported Attributes
 
-`autoplay`
+<Definitions>
 
-Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
+- `autoplay` <Type>boolean</Type>
 
-<Aside>
+  - Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
-To disable video autoplay, the `autoplay` attribute needs to be removed altogether as this attribute. Setting `autoplay="false"` will not work; the video will autoplay if the attribute is there in the `<stream>` tag.
+    <Aside>
 
-In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+    To disable video autoplay, the `autoplay` attribute needs to be removed altogether as this attribute. Setting `autoplay="false"` will not work; the video will autoplay if the attribute is there in the `<stream>` tag.
 
-</Aside>
+    In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
-`controls`
+    </Aside>
 
-Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/recipes/custom-player-ui/)
+- `controls` <Type>boolean</Type>
 
-`height`
+  - Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/recipes/custom-player-ui/)
 
-The height of the video's display area, in CSS pixels.
+- `height` <Type>integer</Type>
 
-`loop`
+  - The height of the video's display area, in CSS pixels.
 
-A Boolean attribute; if included in the HTML tag, player will, automatically seek back to the start upon reaching the end of the video.
+- `loop` <Type>boolean</Type>
 
-`muted`
+  - A Boolean attribute; if included in the HTML tag, player will, automatically seek back to the start upon reaching the end of the video.
 
-A Boolean attribute which indicates the default setting of the audio contained in the video. If set, the audio will be initially silenced.
+- `muted` <Type>boolean</Type>
 
-`preload`
+  - A Boolean attribute which indicates the default setting of the audio contained in the video. If set, the audio will be initially silenced.
 
-This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may choose to include this attribute as a boolean attribute without a value, or you may specify the value `preload="auto"` to preload the beginning of the video. Not including the attribute or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
+- `preload` <Type>string | null</Type>
 
-<Aside>
+  - This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may choose to include this attribute as a boolean attribute without a value, or you may specify the value `preload="auto"` to preload the beginning of the video. Not including the attribute or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
 
-The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligable.
+    <Aside>
 
-</Aside>
+    The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligable.
 
-`poster`
+    </Aside>
 
-A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
+- `poster` <Type>string</Type>
 
-`src`
+  - A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
 
-The video id from the video you've uploaded to Cloudflare Stream should be included here.
+- `src` <Type>string</Type>
 
-`width`
+  - The video id from the video you've uploaded to Cloudflare Stream should be included here.
 
-The width of the video's display area, in CSS pixels.
+- `width` <Type>integer</Type>
+
+  - The width of the video's display area, in CSS pixels.
+
+</Definitions>
 
 ## Methods
 
-`play()`
+<Definitions>
 
-Start video playback.
+- `play()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ Promise">Promise</TypeLink>
 
-`pause()`
+  - Start video playback.
 
-Pause video playback.
+- `pause()` <Type>null</Type>
+
+  - Pause video playback.
+
+</Definitions>
 
 ## Properties
 
-`autoplay`
+<Definitions>
 
-Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
+- `autoplay`
 
-`controls`
+  - Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
 
-Sets or returns whether the video should display controls (like play/pause etc.)
+- `controls`
 
-`currentTime`
+  - Sets or returns whether the video should display controls (like play/pause etc.)
 
-Returns the current playback time in seconds. Setting this value seeks the video to a new time.
+- `currentTime`
 
-`duration` (readonly)
+  - Returns the current playback time in seconds. Setting this value seeks the video to a new time.
 
-Returns the duration of the video in seconds.
+- `duration` <PropMeta>readonly</PropMeta>
 
-`ended` (readonly)
+  - Returns the duration of the video in seconds.
 
-Returns whether the video has ended.
+- `ended` <PropMeta>readonly</PropMeta>
 
-`loop`
+  - Returns whether the video has ended.
 
-Sets or returns whether the video should start over when it reaches the end
+- `loop`
 
-`muted`
+  - Sets or returns whether the video should start over when it reaches the end
 
-Sets or returns whether the audio should be played with the video
+- `muted`
 
-`paused` (readonly)
+  - Sets or returns whether the audio should be played with the video
 
-Returns whether the video is paused
+- `paused` <PropMeta>readonly</PropMeta>
 
-`preload`
+  - Returns whether the video is paused
 
-Sets or returns whether the video should be preloaded upon element load.
+- `preload`
 
-`volume`
+  - Sets or returns whether the video should be preloaded upon element load.
 
-Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
+- `volume`
+
+  - Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
+
+</Definitions>
 
 ## Events
 
 ### Standard Video Element Events
 
-We support most of the [standardized media element events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events).
+<Definitions>
 
-`abort`
+Stream supports most of the [standardized media element events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events).
 
-Sent when playback is aborted; for example, if the media is playing and is restarted from the beginning, this event is sent.
+- `abort`
 
-`canplay`
+  - Sent when playback is aborted; for example, if the media is playing and is restarted from the beginning, this event is sent.
 
-Sent when enough data is available that the media can be played, at least for a couple of frames.
+- `canplay`
 
-`canplaythrough`
+  - Sent when enough data is available that the media can be played, at least for a couple of frames.
 
-Sent when the entire media can be played without interruption, assuming the download rate remains at least at the current level. It will also be fired when playback is toggled between paused and playing. Note: Manually setting the currentTime will eventually fire a canplaythrough event in firefox. Other browsers might not fire this event.
+- `canplaythrough`
 
-`durationchange`
+  - Sent when the entire media can be played without interruption, assuming the download rate remains at least at the current level. It will also be fired when playback is toggled between paused and playing. Note: Manually setting the currentTime will eventually fire a canplaythrough event in firefox. Other browsers might not fire this event.
 
-The metadata has loaded or changed, indicating a change in duration of the media.  This is sent, for example, when the media has loaded enough that the duration is known.
+- `durationchange`
 
-`ended`
+  - The metadata has loaded or changed, indicating a change in duration of the media.  This is sent, for example, when the media has loaded enough that the duration is known.
 
-Sent when playback completes.
+- `ended`
 
-`error`
+  - Sent when playback completes.
 
-Sent when an error occurs. (e.g. the video has not finished encoding yet, or the video fails to load due to an incorrect signed URL)
+- `error`
 
-`loadeddata`
+  - Sent when an error occurs. (e.g. the video has not finished encoding yet, or the video fails to load due to an incorrect signed URL)
 
-The first frame of the media has finished loading.
+- `loadeddata`
 
-`loadedmetadata`
+   - The first frame of the media has finished loading.
 
-The media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
+- `loadedmetadata`
 
-`loadstart`
+  - The media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
 
-Sent when loading of the media begins.
+- `loadstart`
 
-`pause`
+  - Sent when loading of the media begins.
 
-Sent when the playback state is changed to paused (paused property is true).
+- `pause`
 
-`play`
+  - Sent when the playback state is changed to paused (paused property is true).
 
-Sent when the playback state is no longer paused, as a result of the play method, or the autoplay attribute.
+- `play`
 
-`playing`
+  - Sent when the playback state is no longer paused, as a result of the play method, or the autoplay attribute.
 
-Sent when the media has enough data to start playing, after the play event, but also when recovering from being stalled, when looping media restarts, and after seeked, if it was playing before seeking.
+- `playing`
 
-`progress`
+  - Sent when the media has enough data to start playing, after the play event, but also when recovering from being stalled, when looping media restarts, and after seeked, if it was playing before seeking.
 
-Sent periodically to inform interested parties of progress downloading the media. Information about the current amount of the media that has been downloaded is available in the media element's buffered attribute.
+- `progress`
 
-`ratechange`
+  - Sent periodically to inform interested parties of progress downloading the media. Information about the current amount of the media that has been downloaded is available in the media element's buffered attribute.
 
-Sent when the playback speed changes.
+- `ratechange`
 
-`seeked`
+  - Sent when the playback speed changes.
 
-Sent when a seek operation completes.
+- `seeked`
 
-`seeking`
+  - Sent when a seek operation completes.
 
-Sent when a seek operation begins.
+- `seeking`
 
-`stalled`
+  - Sent when a seek operation begins.
 
-Sent when the user agent is trying to fetch media data, but data is unexpectedly not forthcoming.
+- `stalled`
 
-`suspend`
+  - Sent when the user agent is trying to fetch media data, but data is unexpectedly not forthcoming.
 
-Sent when loading of the media is suspended; this may happen either because the download has completed or because it has been paused for any other reason.
+- `suspend`
 
-`timeupdate`
+  - Sent when loading of the media is suspended; this may happen either because the download has completed or because it has been paused for any other reason.
 
-The time indicated by the element's currentTime attribute has changed.
+- `timeupdate`
 
-`volumechange`
+  - The time indicated by the element's currentTime attribute has changed.
 
-Sent when the audio volume changes (both when the volume is set and when the muted attribute is changed).
+- `volumechange`
 
-`waiting`
+  - Sent when the audio volume changes (both when the volume is set and when the muted attribute is changed).
 
-Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
+- `waiting`
+
+  - Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
+
+</Definitions>
 
 ### Non-standard Events
 
 Non-standard events are prefixed with `stream-` to distinguish them from standard events.
 
-`stream-adstart`
+<Definitions>
 
-Fires when `ad-url` attribute is present and the ad begins playback
+- `stream-adstart`
 
-`stream-adend`
+  - Fires when `ad-url` attribute is present and the ad begins playback
 
-Fires when `ad-url` attribute is present and the ad finishes playback
+- `stream-adend`
 
-`stream-adtimeout`
+  - Fires when `ad-url` attribute is present and the ad finishes playback
 
-Fires when `ad-url` attribute is present and the ad took too long to load.
+- `stream-adtimeout`
+
+  - Fires when `ad-url` attribute is present and the ad took too long to load.
+
+</Definitions>
