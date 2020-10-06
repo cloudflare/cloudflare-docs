@@ -21,4 +21,4 @@ To do this, [download](../downloads/) the Mac, Linux or Windows version of Tunne
 
 ## Webhooks In Development Environments
 
-When developing an application that uses webhooks (such as building an app for [Github](https://developer.github.com/webhooks/), [Slack](https://api.slack.com/incoming-webhooks) or [Stripe](https://stripe.com/docs/webhooks)) you can use Tunnel to run a webhook endpoint from your local environment. Once you run Tunnel on your computer, Tunnel will expose a public URL that you can set as your webhook endpoint. Tunnel will forward all requests to that endpoint to your local development environment.
+When developing an application that uses webhooks (such as building an app for [GitHub](https://developer.github.com/webhooks/), [Slack](https://api.slack.com/incoming-webhooks) or [Stripe](https://stripe.com/docs/webhooks)) you can use Tunnel to run a webhook endpoint from your local environment. Once you run Tunnel on your computer, Tunnel will expose a public URL that you can set as your webhook endpoint. Tunnel will forward all requests to that endpoint to your local development environment.

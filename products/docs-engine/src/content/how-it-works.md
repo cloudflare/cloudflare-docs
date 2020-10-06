@@ -6,11 +6,11 @@ order: 1
 
 <Aside>
 
-__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on Github](https://github.com/adamschwartz)). Thanks for your patience.
+__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on GitHub](https://github.com/adamschwartz)). Thanks for your patience.
 
 </Aside>
 
-In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://www.gatsbyjs.com) sites with a bunch of [custom MDX components](/markdown) and a shell UI you that’s consistent across products, all deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via the [Wrangler Github Action](https://github.com/cloudflare/wrangler-action).
+In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://www.gatsbyjs.com) sites with a bunch of [custom MDX components](/markdown) and a shell UI you that’s consistent across products, all deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via the [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action).
 
 --------------------------------
 
@@ -99,7 +99,7 @@ Many of the other fields are self-explanatory. See [Configuration](/reference/co
 
 ### 3. wrangler.toml
 
-Each docs site is deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via a [Wrangler Github Action](https://github.com/cloudflare/wrangler-action).
+Each docs site is deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via a [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action).
 
 To set this up, you’ll need to [configure your `wrangler.toml`](https://developers.cloudflare.com/workers/cli-wrangler/configuration#keys) file just as you would any other [Workers Sites project](https://developers.cloudflare.com/workers/platform/sites/).
 
@@ -167,7 +167,7 @@ Here’s a minimal example site built with Docs Engine:
 `}}/>
 </div></div></div>
 
-__[Open demo](https://docs-engine-example.adam.workers.dev)__ · ([Github](https://github.com/adamschwartz/docs-engine-example))
+__[Open demo](https://docs-engine-example.adam.workers.dev)__ · ([GitHub](https://github.com/adamschwartz/docs-engine-example))
 
 --------------------------------
 

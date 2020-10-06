@@ -24,7 +24,7 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
   - The logo for the docs site, represented as the SVG `<path/>` [`d` attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d) for an inline SVG element with `viewBox="0 0 48 48"`. The example `"M8 8h32v32h-32v-32z"` would draw a solid `32px` square centered inside the `48px` square space.
 
 - `contentRepo` <Type>string</Type> <PropMeta>required</PropMeta>
-  - The Github repo (e.g. `"cloudflare/cloudflare-docs"`) used to for example construct the the “Edit on Github” links displayed in each docs page’s footer.
+  - The GitHub repo (e.g. `"cloudflare/cloudflare-docs"`) used to for example construct the the “Edit on GitHub” links displayed in each docs page’s footer.
 
 - `contentRepoFolder` <Type>string</Type> <PropMeta>optional</PropMeta>
   - By default the engine assumes that a docs site’s structure is placed in the root of a project repo. However, this whole structure can also be placed inside any sub-folder by setting this property. For example, this site’s content is inside the [`products/docs-engine` folder](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/docs-engine) of [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) so its `"products/docs-engine"`.

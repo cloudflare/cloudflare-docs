@@ -27,7 +27,7 @@ npm link cloudflare-docs-engine && npm run bootstrap && npm run develop
 
 ## Publishing
 
-Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using Github Actions.
+Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using GitHub Actions.
 
 Test environment deploys to:
 

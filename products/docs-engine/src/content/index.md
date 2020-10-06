@@ -12,7 +12,7 @@ Documentation for the __Docs Engine__ which powers Cloudflare’s developer docs
 
 The engine is built with [Gatsby](https://www.gatsbyjs.com/), and makes generous use of custom [MDX components](/markdown).
 
-It’s __open-source__ and [available on Github](https://github.com/cloudflare/cloudflare-docs-engine).
+It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/cloudflare-docs-engine).
 
 <p><Link to="/how-it-works" class="Button Button-is-docs-primary">How it works</Link> &nbsp; <Link to="/faq" class="Button Button-is-docs-secondary">FAQ</Link></p>
 
@@ -22,7 +22,7 @@ It’s __open-source__ and [available on Github](https://github.com/cloudflare/c
 
 <TableWrap>
 
-| Docs site                                                              | Github                                                                                                                        |
+| Docs site                                                              | GitHub                                                                                                                        |
 |------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | [Workers](https://developers.cloudflare.com/workers/)                  | [@cloudflare/cloudflare-docs/.../workers](https://github.com/cloudflare/cloudflare-docs/tree/master/products/workers)         |
 | [Docs Engine](https://docs-engine-docs.adam.workers.dev/) — This site. | [@cloudflare/cloudflare-docs/.../docs-engine](https://github.com/cloudflare/cloudflare-docs/tree/master/products/docs-engine) |

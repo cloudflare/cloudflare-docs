@@ -61,6 +61,6 @@ At this point, you can make changes to the Markdown files inside the contect dir
 
 <Aside>
 
-__Note:__ Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes. This is something we’re urgently looking to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279), which also includes a workaround which may help in the interim.
+__Note:__ Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes. This is something we’re urgently looking to fix and can be tracked [in this GitHub issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279), which also includes a workaround which may help in the interim.
 
 </Aside>

@@ -24,7 +24,7 @@ Here’s a minimal example site built with Docs Engine:
 
 __[Open demo](https://docs-engine-example.adam.workers.dev)__
 
-To try it yourself, fork the [example repo on Github](https://github.com/adamschwartz/docs-engine-example), and then [set up a dev environment](/contributing/development-setup).
+To try it yourself, fork the [example repo on GitHub](https://github.com/adamschwartz/docs-engine-example), and then [set up a dev environment](/contributing/development-setup).
 
 --------------------------------
 
