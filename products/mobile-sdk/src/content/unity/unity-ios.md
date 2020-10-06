@@ -6,7 +6,7 @@ title: Getting Started with Unity for iOS
 
 The Neumob Unity plugin implements support for using Neumob, allowing you to accelerate network requests in your Unity-iOS builds.
 
-The Neumob Unity plugin requires Unity 5.0 or newer and iOS 7.0 and up.You can find the plugin on the `Unity Asset store <http://u3d.as/nX8>`_ or you can checkout the Github repository `here <https://github.com/neumob/neumob-unity-ios>`_.
+The Neumob Unity plugin requires Unity 5.0 or newer and iOS 7.0 and up.You can find the plugin on the `Unity Asset store <http://u3d.as/nX8>`_ or you can checkout the GitHub repository `here <https://github.com/neumob/neumob-unity-ios>`_.
 
 ## Installation ##
 

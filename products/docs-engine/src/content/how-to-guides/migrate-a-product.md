@@ -6,17 +6,17 @@ order: 0
 
 <Aside>
 
-__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in with Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on Github](https://github.com/adamschwartz)). Thanks for your patience.
+__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in with Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on GitHub](https://github.com/adamschwartz)). Thanks for your patience.
 
 </Aside>
 
-This document is intended to help __Cloudflare employees__ migrate [existing docs sites](https://developers.cloudflare.com/docs/) to the [`products/` folder](https://github.com/cloudflare/cloudflare-docs/tree/master/products) inside the [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) repo on Github.
+This document is intended to help __Cloudflare employees__ migrate [existing docs sites](https://developers.cloudflare.com/docs/) to the [`products/` folder](https://github.com/cloudflare/cloudflare-docs/tree/master/products) inside the [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) repo on GitHub.
 
 --------------------------------
 
 ## Prerequisites
 
-This document assumes a basic understanding of software development, how Github works, as well as familiarity with the Markdown syntax and YAML frontmatter.
+This document assumes a basic understanding of software development, how GitHub works, as well as familiarity with the Markdown syntax and YAML frontmatter.
 
 It also assumes you have read through [how the Docs Engine works](/how-it-works).
 
@@ -82,7 +82,7 @@ The next thing you’ll want to do is get a local development setup going.
 
 <Aside>
 
-__Note:__ Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes. This is something we’re urgently looking to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279), which also includes a workaround which may help in the interim.
+__Note:__ Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes. This is something we’re urgently looking to fix and can be tracked [in this GitHub issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279), which also includes a workaround which may help in the interim.
 
 </Aside>
 
@@ -99,7 +99,7 @@ In terms of improving/updating the content itself, there are a number of great r
 - [__Workers docs site__ example](https://developers.cloudflare.com/workers) – You can also take a look at the [Workers content](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/workers/src/content) for an example of a well-structured docs site.
 
 
-- Feel free to [@adamschwartz](https://github.com/adamschwartz) in an issue on Github, or DM @afs in chat.
+- Feel free to [@adamschwartz](https://github.com/adamschwartz) in an issue on GitHub, or DM @afs in chat.
 
 
 ## Step 4: Deploy your new site
@@ -108,7 +108,7 @@ This is still being worked out, but in essence, this requires three easy steps (
 
 1. Uncomment a few lines inside your `wrangler.toml` file to enable `[env.production]`.
 
-2. Add a second `wrangler publish` with the new `production` environment in the Github Action [`deploy.yml` file](https://github.com/cloudflare/cloudflare-docs/blob/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/.github/workflows/deploy.yml).
+2. Add a second `wrangler publish` with the new `production` environment in the GitHub Action [`deploy.yml` file](https://github.com/cloudflare/cloudflare-docs/blob/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/.github/workflows/deploy.yml).
 
 3. Make a pull request to remove the corresponding content from inside Bitbucket (`@DOCS/developer-docs/browse/src/content`).
 
