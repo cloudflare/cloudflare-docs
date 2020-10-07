@@ -1,4 +1,4 @@
-# Security Considerations
+# Security considerations
 
 ## Limiting Where Videos Can Be Embedded
 
