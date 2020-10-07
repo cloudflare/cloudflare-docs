@@ -1,3 +1,7 @@
+---
+order: 0
+---
+
 # Analytics
 
 Cloudflare measures the following metrics for every video play:

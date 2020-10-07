@@ -1,3 +1,7 @@
+---
+order: 5
+---
+
 # Direct User Uploads
 
 Direct uploads allow users to upload videos without API keys. A common place to

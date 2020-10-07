@@ -1,3 +1,7 @@
+---
+order: 9
+---
+
 # Thumbnails
 
 ## Use Case 1: Generating a thumbnail on-the-fly
