@@ -125,7 +125,7 @@ This is an example _of an example_.
 
 ## Definitions, Code, Type, ... PropMeta
 
-When writing reference documentation, there are four MDX components that you use `Definitions`, `Code`, `Type`, and `ParamType` in conjunction with each other. All of these components are added to the global scope, so you do not need to import them.
+When writing reference documentation, there are four MDX components that you use `Definitions`, `Code`, `Type`, `ParamType`, and `PropMeta`, in conjunction with each other. All of these components are added to the global scope, so you do not need to import them.
 
 <Aside>
 
