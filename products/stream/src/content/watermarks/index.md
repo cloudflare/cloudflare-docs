@@ -1,3 +1,7 @@
+---
+order: 3
+---
+
 # Watermarks
 
 You can add watermarks to videos uploaded using the Stream API.
