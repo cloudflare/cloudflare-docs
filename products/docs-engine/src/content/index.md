@@ -25,6 +25,7 @@ It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/c
 | Docs site                                                              | GitHub                                                                                                                        |
 |------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | [Workers](https://developers.cloudflare.com/workers/)                  | [@cloudflare/cloudflare-docs/.../workers](https://github.com/cloudflare/cloudflare-docs/tree/master/products/workers)         |
+| [Terraform](https://developers.cloudflare.com/terraform/)              | [@cloudflare/cloudflare-docs/.../terraform](https://github.com/cloudflare/cloudflare-docs/tree/master/products/terraform)     |
 | [Docs Engine](https://docs-engine-docs.adam.workers.dev/) — This site. | [@cloudflare/cloudflare-docs/.../docs-engine](https://github.com/cloudflare/cloudflare-docs/tree/master/products/docs-engine) |
 | [Minimal example](https://docs-engine-example.adam.workers.dev/)       | [@adamschwartz/docs-engine-example](https://github.com/adamschwartz/docs-engine-example)                                      |
 | More to come...                                                                                                                                                                                             |
