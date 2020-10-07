@@ -50,6 +50,7 @@ highlight: [4, 7, 8, 9]
   },
   "scripts": {
     "bootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh bootstrap",
+    "ghactionsbootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh ghactionsbootstrap",
     "build": "node_modules/cloudflare-docs-engine/bin/commands.sh build",
     "develop": "node_modules/cloudflare-docs-engine/bin/commands.sh develop",
     "savechanges": "node_modules/cloudflare-docs-engine/bin/commands.sh savechanges"
