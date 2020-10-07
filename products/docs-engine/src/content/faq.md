@@ -7,7 +7,7 @@ order: 6
 
 <ContentColumn>
 
-<details open><summary>Why a Docs Engine?</summary><div>
+## Why a Docs Engine?
 
 __tl:dr;__ You write good [Markdown (MDX)](/markdown), and the rest is taken care of.
 
@@ -18,20 +18,14 @@ __Details:__ Cloudflare has a large number of teams shipping product updates oft
 
 The Docs Engine strives to solve these problems by providing smart defaults with minimal [configuration](/site-configuration) and a wide variety of [composable MDX components](/markdown).
 
-</div></details>
-
-<details><summary>How does the main navigation work?</summary><div>
+## How does the main navigation work?
 
 The sidebar tree is automatically generated from the file structure inside the content directory (`src/content` by default, configurable with [`contentRepoFolder`](/reference/configuration#properties)).
 
 The link text is automatically determined by [the `title` of the page](/reference/pages#title), which by default comes from the first `h1` inside the document.
 
-</div></details>
-
-<details><summary>How does the table of contents work?</summary><div>
+## How does the table of contents work?
 
 For pages with the [`"document"` type](/reference/pages#title) (the default), their table of contents is automatically generated from the header hierarchy. For this reason it’s critical that each document begin with an `h1` and that for all `N > 1`, all `h{N}` immediately follow an `h{N-1}`. For example an `h3` should never succeed an `h1`.
-
-</div></details>
 
 </ContentColumn>
