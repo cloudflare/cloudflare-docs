@@ -17,7 +17,7 @@ First we'll create a initial Terraform config file. Any files ending in `.tf` wi
 $ cat > cloudflare.tf <<'EOF'
 provider "cloudflare" {
   email = "you@example.com"
-  token = "your-api-key"
+  api_key = "your-api-key"
 }
 
 variable "domain" {
@@ -25,7 +25,7 @@ variable "domain" {
 }
 
 resource "cloudflare_record" "www" {
-  domain  = "${var.domain}"
+  domain  = var.domain
   name    = "www"
   value   = "203.0.113.10"
   type    = "A"
