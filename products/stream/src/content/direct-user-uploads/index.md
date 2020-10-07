@@ -2,7 +2,7 @@
 order: 5
 ---
 
-# Direct User Uploads
+# Direct user uploads
 
 Direct uploads allow users to upload videos without API keys. A common place to
 use direct uploads is on web apps, client side applications, or on mobile devices
