@@ -36,18 +36,15 @@ To define a Durable Object, developers export an ordinary JavaScript class.  Oth
 The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter contains any bindings you have associated with the Worker when you uploaded it.
 
 ```js
-
 export class DurableObjectExample {
     constructor(state, env) {
     }
 }
-
 ```
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
 ```js
-
 export class DurableObjectExample {
     constructor(state, env) {
     }
@@ -57,7 +54,6 @@ export class DurableObjectExample {
     }
 
 }
-
 ```
 
 A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
@@ -73,7 +69,6 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 Durable Objects gain access to a [persistent storage API](/runtime-apis/durable-objects#transactional-storage-api) via the first parameter passed to the Durable Object constructor.  While access to a Durable Object is single-threaded, it's important to remember that request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
 
 ```js
-
 export class DurableObjectExample {
     constructor(state, env) {
         this.storage = state.storage;
@@ -88,13 +83,11 @@ export class DurableObjectExample {
     }
 
 }
-
 ```
 
 Each individual storage operation behaves like a database transaction. More complex use cases can wrap multiple storage statements in a transaction. For example, this actor puts a key if and only if its current value matches the provided "If-Match" header value:
 
 ```js
-
 export class DurableObjectExample {
     constructor(state, env) {
         this.storage = state.storage;
@@ -118,7 +111,6 @@ export class DurableObjectExample {
     }
 
 }
-
 ```
 
 Transactions operate at a [serializable isolation level](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).  This means transactions can fail if they conflict with a concurrent transaction being run by the same Durable Object.  
@@ -138,7 +130,6 @@ Variables in a Durable Object will maintain state as long as your Durable Object
 This is shown in the [Counter example](#example---counter) below, which is partially shown here.
 
 ```js
-
 export class Counter {
     constructor(state, env) {
         this.storage = state.storage;
@@ -218,7 +209,7 @@ In order to upload Workers written with this new syntax, you must first define a
 Now we can upload the script that defines the class, where API_TOKEN is your Workers API Token, ACCOUNT_TAG is your Account ID, and script name is your chosen script name:
 
 ```sh
-curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/scripts/${SCRIPT_NAME}" -X PUT -F "metadata=@durable-object-example.json;type=application/json" -F "script=@durable-object-example.mjs;type=application/javascript+module"
+$ curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/scripts/${SCRIPT_NAME}" -X PUT -F "metadata=@durable-object-example.json;type=application/json" -F "script=@durable-object-example.mjs;type=application/javascript+module"
 ```
 
 <Aside>
@@ -226,13 +217,11 @@ curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/clie
 If you wrote your Durable Object and your Worker in separate files, the endpoint will return an error saying `The uploaded script has no registered event handlers`.  You can get around this by adding a stub event handler to durable-object-example.mjs.
 
 ```js
-
 export default {
     async fetch(request, env) {
         return new Response("Hello World");
     }
 }
-
 ```
 
 </Aside>
@@ -240,7 +229,7 @@ export default {
 Now that the script containing the class exists on Cloudflare's servers, we can tell Cloudflare that this script contains a Durable Object class. Use the API to define a new Durable Object namespace:
 
 ```sh
-curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/durable_objects/namespaces" -X POST --data "{\"name\": \"example-class\", \"script\": \"${SCRIPT_NAME}\", \"class\": \"DurableObjectExample\"}"
+$ curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/durable_objects/namespaces" -X POST --data "{\"name\": \"example-class\", \"script\": \"${SCRIPT_NAME}\", \"class\": \"DurableObjectExample\"}"
 ```
 
 The new namespace's ID will be returned in the response; save this for use below.
@@ -283,7 +272,7 @@ When uploading the worker that needs to call your Durable Object, you will again
 Upload your worker like this, where `CALLING_SCRIPT_NAME` is the name you've chosen for your calling worker:
 
 ```sh
-curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/scripts/${CALLING_SCRIPT_NAME}" -X PUT -F "metadata=@calling-worker.json;type=application/json" -F "script=@calling-worker.js;type=application/javascript+module"
+$ curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/scripts/${CALLING_SCRIPT_NAME}" -X PUT -F "metadata=@calling-worker.json;type=application/json" -F "script=@calling-worker.js;type=application/javascript+module"
 ```
 
 <Aside>
@@ -297,7 +286,7 @@ Lots has changed under the new modules-based syntax; we will be providing more c
 We're done! If you deploy your calling worker and make a request to it, you'll see that your request was stored in the Durable Object.
 
 ```sh
-curl -H "Content-Type: text/plain" https://calling-worker.<your-namespace>.workers.dev/ --data "important data!"
+$ curl -H "Content-Type: text/plain" https://calling-worker.<your-namespace>.workers.dev/ --data "important data!"
 ***.***.***.*** stored important data!
 ```
 
@@ -308,7 +297,6 @@ curl -H "Content-Type: text/plain" https://calling-worker.<your-namespace>.worke
 When a Worker talks to a Durable Object, it does so through a "stub" object. The class binding's `get()` method returns a stub, and the stub's `fetch()` method sends [Requests](/runtime-apis/request) to the Durable Object instance.
 
 ```js
-
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
@@ -339,7 +327,6 @@ async function handleRequest(request) {
   // ways, but in this case we will just return it to the client.
   return response;
 }
-
 ```
 
 Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/runtime-apis/durable-objects).
