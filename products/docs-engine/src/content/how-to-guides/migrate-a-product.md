@@ -37,20 +37,19 @@ You can view its corresponding `Test` column link to see what your project looks
 
 The next thing you’ll want to do is get a local development setup going.
 
-1. Clone [@cloudflare/cloudflare-docs-engine](http://github.com/cloudflare/cloudflare-docs-engine) and [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs):
+1. Ensure you’re running node version `>=12.0.0`, as [specified by Docs Engine](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/package.json#L50).
+
+2. Fork [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs) on Github and clone your fork:
 
   ```sh
-  ~/ $ git clone git@github.com:cloudflare/cloudflare-docs-engine.git
-  ~/ $ git clone git@github.com:cloudflare/cloudflare-docs.git
+  ~/ $ git clone git@github.com:username/cloudflare-docs.git
   ```
 
-2. `cd` into `cloudflare-docs-engine`, run `npm link`, then return to the parent directory.
+  <Aside>
 
-  ```sh
-  ~/ $ cd cloudflare-docs-engine
-  ~/cloudflare-docs-engine $ npm link
-  ~/cloudflare-docs-engine $ cd ..
-  ```
+  __Note:__ If you have write permissions on @cloudflare/cloudflare-docs you can clone that directly.
+
+  </Aside>
 
 3. `cd` into your project’s folder (e.g. `spectrum`) inside `cloudflare-docs`:
 
@@ -58,25 +57,25 @@ The next thing you’ll want to do is get a local development setup going.
   ~/ $ cd cloudflare-docs/products/spectrum
   ```
 
-5. Inside your project’s folder, link the engine:
+4. Run `npm install`:
 
   ```sh
-  ~/cloudflare-docs/products/spectrum $ npm link cloudfare-docs-engine
+  ~/cloudflare-docs/products/spectrum $ npm install
   ```
 
-6. Run the engine’s [`bootstrap` command](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/bin/commands.sh#L19-L39):
+5. Run the engine’s [`bootstrap` command](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/bin/commands.sh#L19-L39):
 
   ```sh
   ~/cloudflare-docs/products/spectrum $ npm run bootstrap
   ```
 
-7. Run the local development server:
+6. Run the local development server:
 
   ```sh
   ~/cloudflare-docs/products/spectrum $ npm run develop
   ```
 
-8. Open up `localhost:8000` in your browser to see your docs site.
+7. Open up `localhost:8000` in your browser to see your docs site.
 
 ## Step 3: Make changes
 

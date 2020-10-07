@@ -16,34 +16,23 @@ The content below is here for completeness, and describes the theoretical way to
 
 The basic steps for setting up a development are as follows.
 
-1. Clone [@cloudflare/cloudflare-docs-engine](http://github.com/cloudflare/cloudflare-docs-engine) and your repo (`@example-username/my-docs-content` below):
+1. Ensure you’re running node version `>=12.0.0`, as [specified by Docs Engine](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/package.json#L50).
+
+2. Clone the docs content repo (`@username/my-docs-content` below):
 
   ```sh
   ~/ $ git clone git@github.com:cloudflare/cloudflare-docs-engine.git
-  ~/ $ git clone git@github.com:example-username/my-docs-content.git
+  ~/ $ git clone git@github.com:username/my-docs-content.git
   ```
 
-2. `cd` into `cloudflare-docs-engine`, run `npm link`, then return to the parent directory.
-
-  ```sh
-  ~/ $ cd cloudflare-docs-engine
-  ~/cloudflare-docs-engine $ npm link
-  ~/cloudflare-docs-engine $ cd ..
-  ```
-
-3. `cd` into `my-docs-content`:
+3. `cd` into `my-docs-content` and run `npm install`:
 
   ```sh
   ~/ $ cd my-docs-content
+  ~/my-docs-content $ npm install
   ```
 
-5. Inside your project’s folder, link the engine:
-
-  ```sh
-  ~/my-docs-content $ npm link cloudfare-docs-engine
-  ```
-
-6. Run the engine’s [`bootstrap` command](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/bin/commands.sh#L19-L39):
+4. Run the engine’s [`bootstrap` command](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/bin/commands.sh#L19-L39):
 
   ```sh
   ~/my-docs-content $ npm run bootstrap
@@ -59,8 +48,12 @@ The basic steps for setting up a development are as follows.
 
 At this point, you can make changes to the Markdown files inside the contect directory (e.g. `my-docs-content/src/content`) to improve your docs site.
 
-<Aside>
+<Aside header="Note">
 
-__Note:__ Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes. This is something we’re urgently looking to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279), which also includes a workaround which may help in the interim.
+Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes.
+
+This is something we’d like to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279).
+
+The workaround (noted in the issue) is to make your changes inside `.docs/src/content` instead. When you’re done you can run `npm run savechanges` (inside the project directory) and that will copy the contents of `.docs/src/content` into `src/content`.
 
 </Aside>
