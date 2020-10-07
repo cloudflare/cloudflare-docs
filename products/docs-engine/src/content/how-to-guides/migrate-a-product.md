@@ -79,9 +79,13 @@ The next thing you’ll want to do is get a local development setup going.
 
 ## Step 3: Make changes
 
-<Aside>
+<Aside header="Note">
 
-__Note:__ Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes. This is something we’re urgently looking to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279), which also includes a workaround which may help in the interim.
+Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes.
+
+This is something we’d like to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279).
+
+The workaround (noted in the issue) is to make your changes inside `.docs/src/content` instead. When you’re done you can run `npm run savechanges` (inside the project directory) and that will copy the contents of `.docs/src/content` into `src/content`.
 
 </Aside>
 
