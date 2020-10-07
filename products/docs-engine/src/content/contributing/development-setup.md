@@ -52,7 +52,7 @@ At this point, you can make changes to the Markdown files inside the contect dir
 
 Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes.
 
-This is something we’d like to fix and can be tracked [in this Github issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279).
+This is something we’d like to fix and can be tracked [in this GitHub issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279).
 
 The workaround (noted in the issue) is to make your changes inside `.docs/src/content` instead. When you’re done you can run `npm run savechanges` (inside the project directory) and that will copy the contents of `.docs/src/content` into `src/content`.
 

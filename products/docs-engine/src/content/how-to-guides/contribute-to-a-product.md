@@ -6,7 +6,7 @@ order: 1
 
 <Aside>
 
-__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in with Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on Github](https://github.com/adamschwartz)). Thanks for your patience.
+__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in with Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on GitHub](https://github.com/adamschwartz)). Thanks for your patience.
 
 </Aside>
 
@@ -18,7 +18,7 @@ A product has been migrated if it is listed in the [migration table](https://git
 
 ## Two ways to contibute
 
-1. For small changes, simply find the `.md` file you want to modify inside the product’s `src/content/` directory. The `Edit on Github` link in the footer of every deployed page will automatically link you there.
+1. For small changes, simply find the `.md` file you want to modify inside the product’s `src/content/` directory. The `Edit on GitHub` link in the footer of every deployed page will automatically link you there.
 
 2. For larger changes, or changes made to multiple files at once, you’ll want to set up a local development environment, which you can do by [following these steps](/how-to-guides/migrate-a-product#step-2-set-up-local-development).
 
