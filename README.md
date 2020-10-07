@@ -1,45 +1,10 @@
 # Cloudflare Docs
 
-## Developing
+__[View the docs →](https://developers.cloudflare.com/docs/)__
 
-(Note: Although it works, this process is still a bit of a WIP.)
+[Contribute to the docs](https://developers.cloudflare.com/docs-engine/how-to-guides/contribute-to-a-product)
 
-Clone the engine somewhere and set it up to be NPM linked:
-
-```bash
-git clone git@github.com:cloudflare/cloudflare-docs-engine.git
-npm link
-```
-
-(Note: This will soon be moved to the @cloudflare org.)
-
-Clone this repo.
-
-```bash
-git clone git@github.com:cloudflare/cloudflare-docs.git
-```
-
-For each product, `cd` into `products/$productName` and then run:
-
-```bash
-npm link cloudflare-docs-engine && npm run bootstrap && npm run develop
-```
-
-## Publishing
-
-Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using Github Actions.
-
-Test environment deploys to:
-
-```txt
-https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
-```
-
-Prod environment deploys to:
-
-```txt
-https://developers.cloudflare.com/$pathPrefix/
-```
+[Set up local development](https://developers.cloudflare.com/docs-engine/how-to-guides/migrate-a-product#step-2-set-up-local-development)
 
 ## Migration progress
 
@@ -76,3 +41,19 @@ https://developers.cloudflare.com/$pathPrefix/
 Notes:
 
 1. Not a Cloudflare “product”, the documentation for the Docs Engine itself.
+
+### Deployment
+
+Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using Github Actions.
+
+Non-migrated products only deploy to the test environment:
+
+```txt
+https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
+```
+
+Migrated products deploy to both the test environment above and the prod environment at:
+
+```txt
+https://developers.cloudflare.com/$pathPrefix/
+```
