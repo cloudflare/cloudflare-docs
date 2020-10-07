@@ -1,4 +1,4 @@
-# Video Access Control
+# Video access control
 
 Video Access Control allow you to define Rules to have finer-grained control over your content than signed URL tokens alone. They are primarily aimed at making tokens conditionally valid based on user information. Access Rules are specified on token payloads as the `accessRules` property containing an array of `Rule` objects.
 

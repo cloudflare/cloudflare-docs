@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Captions and Subtitles
+# Captions and subtitles
 
 Adding captions and subtitles to your video library.
 
