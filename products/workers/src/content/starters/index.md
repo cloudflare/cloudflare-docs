@@ -96,6 +96,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
   description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker"
   repo="cloudflare/workers-aws-template"
 />
+
 --------------------------------
 
 ## Other languages
