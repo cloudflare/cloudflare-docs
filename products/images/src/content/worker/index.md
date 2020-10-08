@@ -39,7 +39,7 @@ The `fetch()` function accepts parameters in the second argument inside ```{cf: 
   <dd>Resizes (shrinks or enlarges) to fill the entire area of <code>width</code> and <code>height</code>. If the image has an aspect ratio different from the ratio of <code>width</code> and <code>height</code>, it will be cropped to fit.</dd>
 
   <dt><code>crop</code></dt>
-  <dd>The image will shrunk and cropped to fit within the area specified by <code>width</code> and <code>height</code>. The image won’t be enlarged. For images smaller than the given dimensions it’s the same as <code>scale-down</code>. For images larger than the given dimensions, it’s the same as <code>cover</code>.</dd>
+  <dd>The image will shrunk and cropped to fit within the area specified by <code>width</code> and <code>height</code>. The image won’t be enlarged. For images smaller than the given dimensions it’s the same as <code>scale-down</code>. For images larger than the given dimensions, it’s the same as <code>cover</code>. See also <code>trim</code>.</dd>
 
   <dt><code>pad</code></dt>
   <dd>Resizes to the maximum size that fits within the given <code>width</code> and <code>height</code>, and then fills the remaining area with a <code>background</code> color (white by default). Use of this mode is not recommended, as the same effect can be more efficiently achieved with the <code>contain</code> mode and the CSS <code>object-fit: contain</code> property.</dd>
@@ -55,6 +55,11 @@ The `fetch()` function accepts parameters in the second argument inside ```{cf: 
 <li><code>"auto"</code>, which selects focal point based on saliency detection (using maximum symmetric surround algorithm),</li>
 <li>An object <code>&#123;x, y&#125;</code> containing focal point coordinates in the original image expressed as <em>fractions</em> ranging from <code>0.0</code> (top or left) to <code>1.0</code> (bottom or right), <code>0.5</code> being the center. <code>&#123;fit: "cover", gravity: &#123;x:0.5, y:0.2&#125;&#125;</code> will crop each side to preserve as much as possible around a point at 20% of the height of the source image.</li>
 </ul>
+</dd>
+
+<dt><code>trim</code></dt>
+<dd>
+<p>An object with four properties <code>{'{left, top, right, bottom}'}</code> that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes <code>dpr</code> into account.</p>
 </dd>
 
 <dt><code>quality</code></dt>
