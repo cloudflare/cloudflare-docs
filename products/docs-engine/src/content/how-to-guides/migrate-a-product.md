@@ -47,7 +47,7 @@ The next thing you’ll want to do is get a local development setup going.
 
   <Aside>
 
-  __Note:__ If you have write permissions on @cloudflare/cloudflare-docs you can clone that directly.
+  __Note:__ If you have write access on @cloudflare/cloudflare-docs you can clone that.
 
   </Aside>
 
