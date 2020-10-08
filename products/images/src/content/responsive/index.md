@@ -84,4 +84,3 @@ If you want to use WebP images, but don't need resizing, you have two options:
 
 1.  You can enable Polish feature with automatic WebP conversion. This will convert all images on the site, or
 2.  Change specific image paths on the site to start with `/cdn-cgi/image/format=auto/` , e.g. `https://example.com/assets/hero.jpg`to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`
-

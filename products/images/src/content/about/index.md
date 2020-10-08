@@ -140,4 +140,3 @@ Polish won't be applied to URLs using image resizing. Resized images already hav
 Resizing causes the original image to be fetched from the origin server and cached (following the usual rules of HTTP caching, `Cache-Control` header, etc.). Requests for multiple different image sizes are likely to reuse the cached original image, without causing extra transfers from the origin server.
 
 Resized images follow the same caching rules as the original image they were resized from (i.e. the `Cache-Control` header is from the original to the resized image). We do not support purging of resized variants individually, but purging of the original image URL will also purge all of its resized variants.
-

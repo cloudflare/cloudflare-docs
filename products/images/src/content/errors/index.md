@@ -41,4 +41,3 @@ Changes to image dimensions or other resizing options should always take effect 
 Responses from Workers are not cached, so purging of *Worker URLs* doesn't do anything. Resized image variants are cached together under their source's URL. When purging, use the (full-size) source image's URL, rather than URLs of the Worker that did resizing.
 
 If the origin server sends an `Etag` HTTP header, the resized images will have an `Etag` HTTP header that has a format `cf-<gibberish>:<etag of original image>`. You can compare the second part with the `Etag` header of the source image URL to check if the resized image is up to date.
-
