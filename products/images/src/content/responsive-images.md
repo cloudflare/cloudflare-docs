@@ -14,7 +14,7 @@ There are two different ways to use `srcset`:
 
 2. Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for "hero" images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
 
-### `srcset` for high-DPI displays
+## `srcset` for high-DPI displays
 
 We’re going to need two versions of every image. One for `1x` density suitable for typical desktop displays (such as HD/1080p monitors, low-end laptops) and one for `2x` high-density displays used by almost all mobile phones, high-end laptops and "4K" desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
 
@@ -31,7 +31,7 @@ Assuming we have an image `product.jpg` in `assets` folder, and we want to displ
 
 Note that it doesn’t make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you use with `srcset` must have high resolution, so that they’re only scaled down for "1x" displays and displayed as-is or also scaled down for "2x" displays.
 
-### `srcset` for responsive images
+## `srcset` for responsive images
 
 When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for visitor’s screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there isn’t a single image size that fits all. With `<img srcset sizes>` you can offer browser several possible sizes and let the browser choose the most appropriate size automatically.
 
@@ -53,7 +53,7 @@ In the previous case the number followed by `x` described *screen* density. In t
 
 If the image isn’t displayed at full width of the screen (or browser window): *If it’s displayed at full width of a fixed-width column, use the first technique that uses one specific image size.* If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add `sizes` attribute as described below.
 
-#### The `sizes` attribute
+### The `sizes` attribute
 
 If the image takes 50% of the screen (or window) width:
 
@@ -78,7 +78,7 @@ The `vw` unit is a percentage of viewport (screen or window) width. If the image
 
 In this example `sizes` says that for screens smaller than 640 pixels the image is displayed at full viewport width, and on all larger screens stays at 640px. Note that one of the options in `srcset` is 1280 pixels large, because an image displayed at 640 CSS pixels may need twice as many image pixels on a high-dpi ("2x") display.
 
-### What about other formats?
+## What about other formats?
 
 `srcset` is useful for pixel-based formats such as PNG, JPEG and WebP. It is unnecessary for vector-based SVG images.
 
