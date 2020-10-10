@@ -153,12 +153,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/docs-engine"
-          environment: "production"
+      # - name: Publish production
+      #   uses: cloudflare/wrangler-action@1.2.0
+      #   with:
+      #     apiToken: ${{ secrets.CF_API_TOKEN }}
+      #     workingDirectory: "products/docs-engine"
+      #     environment: "production"
 
   deploy-firewall:
     runs-on: ubuntu-latest
@@ -244,12 +244,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/images"
-          environment: "production"
+      # - name: Publish production
+      #   uses: cloudflare/wrangler-action@1.2.0
+      #   with:
+      #     apiToken: ${{ secrets.CF_API_TOKEN }}
+      #     workingDirectory: "products/images"
+      #     environment: "production"
 
   deploy-internet:
     runs-on: ubuntu-latest
@@ -524,12 +524,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/terraform"
-          environment: "production"
+      # - name: Publish production
+      #   uses: cloudflare/wrangler-action@1.2.0
+      #   with:
+      #     apiToken: ${{ secrets.CF_API_TOKEN }}
+      #     workingDirectory: "products/terraform"
+      #     environment: "production"
 
   deploy-time-services:
     runs-on: ubuntu-latest
@@ -594,9 +594,9 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/workers"
-          environment: "production"
+      # - name: Publish production
+      #   uses: cloudflare/wrangler-action@1.2.0
+      #   with:
+      #     apiToken: ${{ secrets.CF_API_TOKEN }}
+      #     workingDirectory: "products/workers"
+      #     environment: "production"
