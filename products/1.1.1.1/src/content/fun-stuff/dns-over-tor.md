@@ -27,7 +27,7 @@ __Note:__ the HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
 
 __Protip:__ if you ever forget the dns4torblahblahblah.onion address, you can simply use cURL:
 
-	curl -sI https://tor.cloudflare-dns.com | grep alt-svc
+	curl -sI https://tor.cloudflare-dns.com | grep -i alt-svc
 	alt-svc: h2="dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443"; ma=315360000; persist=1
 
 

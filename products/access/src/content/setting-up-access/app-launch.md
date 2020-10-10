@@ -1,6 +1,7 @@
 ---
 title: "Access App Launch"
 alwaysopen: true
+hidden: true
 ---
 
 import appLaunch from '../static/app-launch/app-launch.gif'

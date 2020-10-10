@@ -1,14 +1,15 @@
 ---
 title: "Set up Cloudflare Access"
 alwaysopen: false
-weight: 4
+weight: 100
+hidden: true
 ---
 
 Step-by-step instructions are available for setting up Cloudflare Access.
 
 |Guide|Description|
 |---|---|
-|[Access Applications](https://developers.cloudflare.com/access/setting-up-access/securing-applications/)|Instructions to keep your server secure and force traffic through Cloudflare Access.|
+|[Access Applications](https://developers.cloudflare.com/access/setting-up-access/access-applications/)|Instructions to keep your server secure and force traffic through Cloudflare Access.|
 |[Creating policies](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/)|Instructions to build Access policies.|
 |[Audit Logs](https://developers.cloudflare.com/access/setting-up-access/audit-logs/)|Guide to audit logs captured by Access and per-request logging.|
 |[Argo Tunnel](https://developers.cloudflare.com/access/setting-up-access/argo-tunnel/)|Instructions to connect servers to Cloudflare with Cloudflare Argo Tunnel.|

@@ -1,6 +1,7 @@
 ---
 title: "SMB File Shares"
 alwaysopen: true
+hidden: true
 ---
 
 The Secure Messaging Block (SMB) protocol allows users to access, read, and write to shared files.

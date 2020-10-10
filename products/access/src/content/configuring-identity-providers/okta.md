@@ -43,7 +43,7 @@ To set up Okta as your IdP:
 
     The **OpenID Connect ID Token** card displays.
 
-    ![OpenID Connect ID Token card](../static/okta/ok-ent6.png)
+    ![OpenID Connect ID Token card](../static/okta/ok-ent6-correct.png)
 
 1. Scroll to the **Groups claim filter** field, switch **Starts with** to **Regex**, and enter  `.*` in the field on the right.
 1. Click **Save**.

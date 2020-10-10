@@ -1,7 +1,8 @@
 ---
 title: Reference
-weight: 1
-alwaysopen: true
+weight: 10
+alwaysopen: false
+hidden: true
 ---
 
 Guides and references for Argo Tunnel and `cloudflared`.

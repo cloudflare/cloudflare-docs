@@ -1,6 +1,7 @@
 ---
 title: "Access Applications"
 alwaysopen: true
+hidden: true
 weight: 1
 ---
 

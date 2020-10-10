@@ -1,5 +1,6 @@
 ---
 title: "Why Cloudflare?"
+hidden: true
 ---
 
 To make infrastructure safer, and web properties faster, Cloudflare built out one of the world’s largest and most sophisticated networks. Cloudflare for Teams builds on that same platform, and all of its unique advantages.

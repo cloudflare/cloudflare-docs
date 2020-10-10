@@ -3,6 +3,7 @@ title: Load Balancing
 weight: 35
 ---
 
+import {Notice} from 'cf-gatsby-theme'
 
 You can create a load balancer within Cloudflare which will direct traffic to
 Argo Tunnels which have been started on multiple machines or even on multiple continents.
@@ -23,10 +24,10 @@ You can name your pool anything you like, we will automatically create it for yo
 This example will connect the local port 8080 to your new load balancer, and connect that load
 balancer to my.example.com.
 
-<Aside>
+<Notice>
 
 A single load balancer pool can contain either Argo Tunnel origins, or non-Argo Tunnel origins, but not both. Mixed pools are not supported.
-</Aside>
+</Notice>
 
 All pools will be created inside a load balancer identified by the hostname specified for your Argo Tunnels.
 You can have a single pool in your load balancer, or create multiple pools to build more complex topologies.

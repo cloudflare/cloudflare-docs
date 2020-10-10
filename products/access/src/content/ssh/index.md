@@ -2,6 +2,7 @@
 title: "SSH"
 alwaysopen: false
 weight: 5
+hidden: true
 ---
 
 Cloudflare Access can secure connections over Secure Shell (SSH)
