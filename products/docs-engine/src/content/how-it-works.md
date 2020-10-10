@@ -10,7 +10,7 @@ __Note for Cloudflare employees:__ The details of this process are still being w
 
 </Aside>
 
-In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://www.gatsbyjs.com) sites with a bunch of [custom MDX components](/markdown) and a shell UI you that’s consistent across products, all deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via the [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action).
+In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://www.gatsbyjs.com) sites with a bunch of [custom MDX components](/reference/markdown) and a shell UI you that’s consistent across products, all deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via the [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action).
 
 --------------------------------
 

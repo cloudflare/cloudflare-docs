@@ -93,10 +93,10 @@ At this point, you can make changes to the Markdown files inside the contect dir
 
 In terms of improving/updating the content itself, there are a number of great resources available to help:
 
-- __[Content framework](/contributing/content-framework)__ – Cloudflare’s new docs sites (e.g. [Workers](https://developers.cloudflare.com/workers/)) are starting to adhere to a content framework which may be helpful when thinking about how to structure your [pages](/reference/pages) (folders and Markdown files) and create logical [side navigation](/reference/sidebar).
+- __[Content framework](/contributing/content-framework)__ – Cloudflare’s new docs sites (e.g. [Workers](https://developers.cloudflare.com/workers/)) are starting to adhere to a content framework which may be helpful when thinking about how to structure your [pages](/reference/pages) (folders and Markdown files) and create logical [side navigation](reference/pages#url-paths).
 
 
-- __[Markdown (MDX) built-in components](/reference/markdown)__ – Migrating to the new Docs Engine means you can take advantage of all of its powerful [built-in components](/reference/markdown). Add an [aside](/reference/markdown), [display code beautifully](/reference/markdown/code-block-examples), [embed a video](/reference/markdown), add a buttons, definition list, and [so much more](/reference/markdown).
+- __[Markdown (MDX) built-in components](/reference/markdown)__ – Migrating to the new Docs Engine means you can take advantage of all of its powerful [built-in components](/reference/markdown). Add an [aside](/reference/markdown#asides), [display code beautifully](reference/markdown#code-blocks), [embed a video](/reference/markdown#youtube), add a buttons, definition list, and [so much more](/reference/markdown).
 
 
 - [__Workers docs site__ example](https://developers.cloudflare.com/workers) – You can also take a look at the [Workers content](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/workers/src/content) for an example of a well-structured docs site.

@@ -56,10 +56,10 @@ The first Cloudflare product to adopt this system was the Cloudflare Workers doc
 
 Within Cloudflare Workers, the division is as as follows:
 
-1. **Tutorials** – The [Tutorials](/tutorials) section.
-2. **How-to guides** – Though a work-in-progress¹, [Examples](/examples) and [Starters](/starters).
-3. **Technical reference** – Three² components: [Platform](/platform), [Runtime APIs](/runtime-apis), and [CLI (Wrangler)](/cli-wrangler).
-4. **Explanation** – The [Learning](/learning) section.
+1. **Tutorials** – The [Tutorials](https://developers.cloudflare.com/workers/tutorials) section.
+2. **How-to guides** – Though a work-in-progress¹, [Examples](https://developers.cloudflare.com/workers/examples) and [Starters](https://developers.cloudflare.com/workers/starters).
+3. **Technical reference** – Three² components: [Platform](https://developers.cloudflare.com/workers/platform), [Runtime APIs](https://developers.cloudflare.com/workers/runtime-apis), and [CLI (Wrangler)](https://developers.cloudflare.com/workers/cli-wrangler).
+4. **Explanation** – The [Learning](https://developers.cloudflare.com/workers/learning) section.
 
 ¹ _[Examples](/examples) certainly do “show how to solve a specific problem”, but as currently written, they don’t always provide a clear “series of steps”, similar to a recipe in a cookbook. This is something we’d like to improve over time._
 
@@ -81,7 +81,7 @@ Cloudflare documentation should be practical and approachable.
 
 ### Writing technical reference
 
-When writing documentation as part of a technical reference (e.g. [runtime API](/runtime-apis) doc), follow these additional guidelines ([from Divio](https://documentation.divio.com/reference/#reference)):
+When writing documentation as part of a technical reference (e.g. [runtime API](https://developers.cloudflare.com/workers/runtime-apis) doc), follow these additional guidelines ([from Divio](https://documentation.divio.com/reference/#reference)):
 
 - **Structure the documentation around the codebase.** When documenting a set of APIs, for example, name and organize the files to match the codebase’s naming and folder structure. This helps ensure consistency when communicating with users, who may see and interact with codebase, and helps maintainers see where documentation is missing or needs to be updated.
 
