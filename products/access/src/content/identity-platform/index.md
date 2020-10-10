@@ -2,7 +2,7 @@
 title: "Identity Platform"
 alwaysopen: false
 weight: 12
-hidden: false
+hidden: true
 ---
 
 Cloudflare Access can be used to aggregate identity from multiple sources.

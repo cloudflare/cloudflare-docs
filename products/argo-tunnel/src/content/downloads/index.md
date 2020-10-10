@@ -1,7 +1,7 @@
 ---
 title: Downloads
-weight: 100
-hidden: false
+weight: 40
+hidden: true
 showNew: false
 alwaysopen: false
 ---

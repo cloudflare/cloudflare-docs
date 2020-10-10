@@ -1,7 +1,8 @@
 ---
 title: "Walkthrough videos"
 alwaysopen: false
-weight: 2
+weight: 100
+hidden: true
 ---
 
 ### Set up Cloudflare

@@ -1,7 +1,9 @@
 ---
-title: FAQ
-weight: 1
+title: Troubleshooting and FAQ
+weight: 200
 ---
+
+## General
 
 #### What causes tunnels to fail to authenticate?
 To start using Argo Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`.
@@ -161,3 +163,23 @@ To log external visitor IPs, you will need to [configure an alternative method](
 
 #### When does the cert.pem generated expire?
 The Argo Tunnel login command generates an origin certificate and a service token. Both are stored in the `cert.pem`. The origin certificate is valid for at least 10 years and the service token is valid until revoked.
+
+## Kubernetes Sidecar Model
+
+#### Did `cloudflared` run?
+
+```bash
+$ kubectl logs -lapp=hello -c tunnel
+```
+
+Returns logs from the cluster in the container, tunnel, where `cloudflared` is running as a sidecar.
+
+#### Did the cluster's deployment fail?
+
+```bash
+$ kubectl describe po -lapp=hello
+```
+
+Returns information about the pod running the containers.
+Errors related to the failure to start the `cloudflared` process can be
+gathered with this command.

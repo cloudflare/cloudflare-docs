@@ -2,6 +2,7 @@
 title: "Service Authentication"
 alwaysopen: false
 weight: 10
+hidden: true
 ---
 
 Automated services can reach applications behind Access using service tokens or mutual TLS authentication.

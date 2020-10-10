@@ -2,6 +2,7 @@
 title: "RDP"
 alwaysopen: false
 weight: 5
+hidden: true
 ---
 
 Cloudflare Access can secure connections over Remote Desktop Protocol (RDP).

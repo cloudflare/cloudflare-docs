@@ -3,6 +3,7 @@ title: Automatically Starting Argo Tunnel
 weight: 30
 ---
 
+import {Notice} from 'cf-gatsby-theme'
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
@@ -76,7 +77,7 @@ When running as a service, Argo Tunnel expects its configuration at `C:\Windows\
 
 If you need to specify a custom config file location, you can do so in the the Windows registry after the service has been installed ([MSDN reference](https://docs.microsoft.com/en-us/dotnet/api/system.serviceprocess.servicebase.onstart?view=netframework-4.7.2)). Open `regedit`, go to the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`, and edit the `ImagePath` value to include `--config <path-to-config>`.
 
-<Aside type="note">
+<Notice type="note">
 
 When running cloudflared as a service on Windows, the certificate path needs to be explicitly specified. This can be done in the config file:
 
@@ -93,19 +94,19 @@ In some cases, forward slashes should be used to set the explicit path to the ce
 ```yaml
 origincert: C:/cert.pem
 ```
-</Aside>
+</Notice>
 
-<Aside type="note">
+<Notice type="note">
 
 Cloudflared will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
-</Aside>
+</Notice>
 
-<Aside type="note">
+<Notice type="note">
 
 Cloudflared does not support loading the system certificate pool in Windows.
 To supply a certificate pool to Cloudflared in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
-</Aside>
+</Notice>
 
 To start the service, go to Service Manager and start the **Argo Tunnel agent** service, or run the following command:
 ```bash

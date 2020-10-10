@@ -1,6 +1,6 @@
 ---
 title: License
-weight: 10
+weight: 100
 ---
 
 # CLOUDFLARED LICENSE
