@@ -10,7 +10,7 @@ order: 0
 
 Documentation for the __Docs Engine__ which powers Cloudflare’s developer docs.
 
-The engine is built with [Gatsby](https://www.gatsbyjs.com/), and makes generous use of custom [MDX components](/markdown).
+The engine is built with [Gatsby](https://www.gatsbyjs.com/), and makes generous use of custom [MDX components](/reference/markdown).
 
 It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/cloudflare-docs-engine).
 
