@@ -5,6 +5,7 @@ on:
 
 jobs:
   changes:
+    name: "Check for docs changes"
     runs-on: ubuntu-latest
     outputs:
       onedot: ${{ steps.filter.outputs.onedot }}
