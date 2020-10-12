@@ -1,9 +1,9 @@
 ---
-title: "CLI"
 alwaysopen: false
-weight: 1
-hidden: false
+order: 1
 ---
+
+# CLI
 
 Cloudflare's `cloudflared` command-line tool allows you to interact with endpoints protected by Cloudflare Access. You can use `cloudflared` to interact with a protected application's API.
 

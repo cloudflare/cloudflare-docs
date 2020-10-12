@@ -1,8 +1,9 @@
 ---
-title: "DNS over HTTPS"
-alwaysopen: true
-weight: 5
+
+order: 5
 ---
+# DNS over HTTPS
+
 You can send DNS queries in an encrypted fashion for 1.1.1.1 for Families. If you have DNS over HTTPS compliant client, use the following URLs to use 1.1.1.1 for Families.
 
 ## Block Malware

@@ -1,10 +1,9 @@
 ---
-title: Policies
-alwaysopen: true
-weight: 3
-hidden: false
-showNew: false
+
+order: 3
 ---
+
+# Policies
 
 Policies let you define who can or cannot access applications secured behind Cloudflare Access, based on a number of attributes. These attributes include User Identity, network attributes, and device posture.
 

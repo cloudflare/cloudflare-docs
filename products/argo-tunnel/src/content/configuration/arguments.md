@@ -1,7 +1,8 @@
 ---
-title: Arguments
-weight: 1
+order: 1
 ---
+
+# Arguments
 
 * [Tunnel commands](#tunnel-commands)
 * [Login command](#login-command)

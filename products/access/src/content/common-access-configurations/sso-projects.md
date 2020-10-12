@@ -1,7 +1,8 @@
 ---
-title: "Application SSO"
-alwaysopen: true
+order: 4
 ---
+
+# Application SSO
 
 Access can replace your virtual private network (VPN) and reduce the need for application-specific passwords. For example, applications can use the JSON web token (JWT) that Access generates to validate the user's identity. Doing so enables a single sign-on experience.
 

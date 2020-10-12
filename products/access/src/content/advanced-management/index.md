@@ -1,8 +1,8 @@
 ---
-title: "Advanced Management"
-hidden: false
-weight: 4
+order: 4
 ---
+
+# Advanced Management
 
 This section will cover:
 

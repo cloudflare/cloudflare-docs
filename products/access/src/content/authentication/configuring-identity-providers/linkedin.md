@@ -1,8 +1,8 @@
 ---
-title: "Linkedin"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# LinkedIn
 
 Cloudflare Access allows your users to use LinkedIn as their identity provider (IdP).
 

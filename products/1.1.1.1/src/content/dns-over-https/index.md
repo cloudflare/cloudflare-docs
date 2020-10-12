@@ -1,7 +1,8 @@
 ---
-title: DNS over HTTPS
-weight: 8
+order: 8
 ---
+
+# DNS over HTTPS
 
 Even if you are visiting a site using HTTPS, your DNS query is sent over an unencrypted connection. That means that even if you are browsing https://cloudflare.com, anyone listening to packets on the network knows you are attempting to visit cloudflare.com.
 

@@ -1,8 +1,8 @@
 ---
-title: "Citrix ADC SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Citrix ADC SAML
 
 import {Notice} from 'cf-gatsby-theme'
 

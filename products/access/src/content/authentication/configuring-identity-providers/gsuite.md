@@ -1,8 +1,8 @@
 ---
-title: "G Suite"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# G Suite
 
 import {Notice} from 'cf-gatsby-theme'
 

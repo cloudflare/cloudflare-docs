@@ -1,8 +1,8 @@
 ---
-title: "Access with MFA"
-hidden: false
-weight: 3
+order: 3
 ---
+
+# Access with MFA
 
 You can use Cloudflare Access to require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key. This feature is only available to teams using the following identity providers:
 * Okta

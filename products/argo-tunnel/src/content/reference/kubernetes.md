@@ -1,7 +1,8 @@
 ---
-title: Kubernetes Ingress Controller 
-weight: 80
+order: 80
 ---
+
+# Kubernetes Ingress Controller
 
 import {Notice} from 'cf-gatsby-theme'
 

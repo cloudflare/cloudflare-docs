@@ -1,8 +1,9 @@
 ---
-title: "Connecting from a CLI"
-alwaysopen: true
-weight: 12
+
+order: 12
 ---
+
+# Connecting from a CLI
 
 These instructions are not meant for configuring a service to run against an API. The token in this example is tailored to user identity and intended only for an end user interacting with an API via a command-line tool.
 

@@ -1,9 +1,9 @@
 ---
-title: Examples
-weight: 50
-showNew: false
+order: 50
 alwaysopen: false
 ---
+
+# Examples
 
 You can find examples of Argo Tunnel deployment models in this [repository](https://github.com/cloudflare/argo-tunnel-examples).
 

@@ -1,8 +1,9 @@
 ---
-title: TryCloudflare
-weight: 1
+order: 1
 hidden: true
 ---
+
+# TryCloudflare
 
 Developers can use the TryCloudflare tool to experiment with Argo Tunnel without adding a site to Cloudflare's DNS. TryCloudflare will launch a process that generates a random subdomain on `trycloudflare.com`. Requests to that subdomain will be proxied through the Cloudflare network to your web server running on localhost.
 

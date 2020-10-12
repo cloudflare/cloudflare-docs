@@ -1,7 +1,8 @@
 ---
-title: Config File
-weight: 1
+order: 1
 ---
+
+# Config File
 
 You can run `cloudflared` with:
 * [Arguments](https://developers.cloudflare.com/argo-tunnel/configuration/arguments) from the command line

@@ -1,8 +1,8 @@
 ---
-title: "Configuring Identity Providers"
-weight: 2
-hidden: false
+order: 2
 ---
+
+# Configuring Identity Providers
 
 You can integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
 

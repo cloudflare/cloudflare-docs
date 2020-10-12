@@ -1,8 +1,8 @@
 ---
-title: "SAML with Active Directory®"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# SAML with Active Directory®
 
 import {Notice} from 'cf-gatsby-theme'
 

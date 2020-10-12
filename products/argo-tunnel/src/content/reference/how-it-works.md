@@ -1,7 +1,8 @@
 ---
-title: How Argo Tunnel Works
-weight: 20
+order: 20
 ---
+
+# How Argo Tunnel Works
 
 Argo Tunnel connects your web server to the Cloudflare network over an encrypted Tunnel. An example request follows these steps:
 

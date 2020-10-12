@@ -1,9 +1,10 @@
 ---
-title: "SSH"
 alwaysopen: false
-weight: 5
+order: 5
 hidden: true
 ---
+
+# SSH
 
 Cloudflare Access can secure connections over Secure Shell (SSH)
 

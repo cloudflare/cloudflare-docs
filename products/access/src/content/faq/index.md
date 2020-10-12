@@ -1,8 +1,8 @@
 ---
-title: "Troubleshooting and FAQ"
-alwaysopen: false
-weight: 100
+order: 100
 ---
+
+# Troubleshooting and FAQ
 
 Answers to common questions about Cloudflare Access.
 

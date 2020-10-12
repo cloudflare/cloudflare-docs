@@ -1,9 +1,10 @@
 ---
-title: "Other Protocols"
 alwaysopen: false
-weight: 7
+order: 7
 hidden: true
 ---
+
+# Other Protocols
 
 Cloudflare Access can secure connections to applications over arbitrary TCP protocols using Argo Tunnel. The feature includes support for commands to specify SMB connections to SMB file shares as well as a command for arbitrary TCP traffic.
 

@@ -1,7 +1,8 @@
 ---
-title: Troubleshooting and FAQ
-weight: 200
+order: 200
 ---
+
+# Troubleshooting and FAQ
 
 ## General
 

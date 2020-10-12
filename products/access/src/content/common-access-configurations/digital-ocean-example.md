@@ -1,7 +1,8 @@
 ---
-title: "DigitalOcean® and virtual infrastructure"
-alwaysopen: true
+order: 2
 ---
+
+# DigitalOcean® and virtual infrastructure
 
 [DigitalOcean](https://cloud.digitalocean.com/login) is a cloud infrastructure provider with a user-friendly UI that creates and manages virtual infrastructure. DigitalOcean refers to the virtual servers provided as _droplets_. This is the general workflow for protecting a DigitalOcean droplet behind Cloudflare Access.
 

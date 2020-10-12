@@ -1,8 +1,9 @@
 ---
-title: "GitHub"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# GitHub
+
 Cloudflare Access allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access

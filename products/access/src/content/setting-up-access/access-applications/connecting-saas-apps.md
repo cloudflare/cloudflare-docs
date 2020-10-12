@@ -1,8 +1,9 @@
 ---
-title: "Connecting SaaS Applications"
-alwaysopen: true
-weight: 1
+
+order: 1
 ---
+
+# Connecting SaaS Applications
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, we ensure that users cannot login to SaaS applications without first meeting the criteria you want to introduce. 
 

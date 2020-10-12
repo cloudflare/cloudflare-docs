@@ -1,8 +1,8 @@
 ---
-title: "Centrify"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Centrify
 
 import {Notice} from 'cf-gatsby-theme'
 

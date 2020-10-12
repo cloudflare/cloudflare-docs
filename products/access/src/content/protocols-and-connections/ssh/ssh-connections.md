@@ -1,8 +1,8 @@
 ---
-title: "SSH Connections"
-hidden: false
-weight: 0
+order: 0
 ---
+
+# SSH Connections
 
 import {Notice} from 'cf-gatsby-theme'
 

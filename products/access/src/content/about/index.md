@@ -1,10 +1,8 @@
 ---
-title: About
-alwaysopen: false
-weight: 0
-hidden: false
-showNew: false
+order: 0
 ---
+
+# About
 
 Cloudflare Access is a Zero Trust platform that secures self-hosted and SaaS applications by aggregating sources of user identity and trust, and enforcing rules on every request or login. When administrators secure an application behind Access, any request to the hostname of that application stops at Cloudflare’s network first. Once there, Cloudflare Access checks the request against the list of users who have permission to reach the application. Cloudflare Access can then apply additional rules to each login or integrate multiple SSO provider types.
 

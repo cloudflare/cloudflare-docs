@@ -1,8 +1,9 @@
 ---
-title: "Connecting Self-Hosted Applications"
-alwaysopen: true
-weight: 1
+
+order: 1
 ---
+
+# Connecting Self-Hosted Applications
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer using your existing identity providers to control who has access to your applications.
 

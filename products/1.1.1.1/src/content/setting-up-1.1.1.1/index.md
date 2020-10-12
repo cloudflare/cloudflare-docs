@@ -1,7 +1,8 @@
 ---
-title: Setting Up 1.1.1.1
-weight: -1
+order: -1
 ---
+
+# Setting Up 1.1.1.1
 
 import fancyColor1111 from '../static/1111-fancycolor.gif'
 

@@ -1,8 +1,8 @@
 ---
-title: "App Launcher"
-weight: 1
-hidden: false
+order: 1
 ---
+
+# App Launcher
 
 With the App Launcher portal, users can easily open all applications that they have access to from a single dashboard.
 

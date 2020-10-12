@@ -1,8 +1,9 @@
 ---
-title: "Configuring Access policies"
-alwaysopen: true
-weight: 2
+
+order: 2
 ---
+
+# Configuring Access policies
 
 Access policies allow you to protect an entire website or a particular URI (the application resource). You can use policies to define users or groups who can or cannot access the application resource.
 

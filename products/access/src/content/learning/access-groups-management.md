@@ -1,8 +1,8 @@
 ---
-title: "Access Groups Management"
-hidden: false
-weight: 6
+order: 6
 ---
+
+# Access Groups Management
 
 This section addresses a few common group configurations and best practices.
 

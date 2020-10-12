@@ -1,10 +1,9 @@
 ---
-title: Set up Cloudflare Access
-alwaysopen: true
-weight: 1
-hidden: false
-showNew: false
+
+order: 1
 ---
+
+# Set up Cloudflare Access
 
 import {Notice} from 'cf-gatsby-theme'
 

@@ -1,7 +1,8 @@
 ---
-title: "GitLab"
-alwaysopen: true
+order: 3
 ---
+
+# GitLab
 
 [GitLab](https://about.gitlab.com/) is a continuous integration and delivery platform that includes Git repository source control, issue tracking, and release and testing tools.
 

@@ -1,7 +1,8 @@
 ---
-title: 1.1.1.1 Public DNS Resolver
-weight: 1
+order: 1
 ---
+
+# 1.1.1.1 Public DNS Resolver
 
 *Last updated September 30, 2020*
 

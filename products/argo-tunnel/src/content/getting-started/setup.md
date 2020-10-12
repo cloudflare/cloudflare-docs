@@ -1,7 +1,8 @@
 ---
-title: Setup
-weight: 1
+order: 1
 ---
+
+# Setup
 
 
 | Before you start |

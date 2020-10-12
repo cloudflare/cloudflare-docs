@@ -1,7 +1,8 @@
 ---
-title: "Revoking user sessions"
-alwaysopen: true
+
 ---
+
+# Revoke user sessions
 
 Access provides two options for revoking user sessions: per-application and per-user.
 

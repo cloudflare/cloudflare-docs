@@ -1,8 +1,8 @@
 ---
-title: TryCloudflare
-weight: 1
+order: 1
 ---
 
+# TryCloudflare
 
 TryCloudflare is a tool that allows developers to experiment with Argo Tunnel without adding a site to Cloudflare's DNS.
 

@@ -1,9 +1,9 @@
 ---
-title: "SMB file shares"
 alwaysopen: false
-weight: 4
-hidden: false
+order: 4
 ---
+
+# SMB file shares
 
 import {Notice} from 'cf-gatsby-theme'
 

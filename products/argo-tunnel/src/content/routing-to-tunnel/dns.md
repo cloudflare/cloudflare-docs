@@ -1,7 +1,8 @@
 ---
-title: DNS Record
-weight: 50
+order: 50
 ---
+
+# DNS Record
 
 | Before you start |
 |---|

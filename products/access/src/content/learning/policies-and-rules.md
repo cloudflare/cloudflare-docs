@@ -1,8 +1,8 @@
 ---
-title: "Policies and Rules"
-hidden: false
-weight: 4
+order: 4
 ---
+
+# Policies and Rules
 
 This section addresses a few common policy configurations and best practices.
 

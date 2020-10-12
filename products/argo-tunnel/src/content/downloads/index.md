@@ -1,10 +1,11 @@
 ---
-title: Downloads
-weight: 40
+order: 40
 hidden: true
 showNew: false
 alwaysopen: false
 ---
+
+# Downloads
 
 # Linux
 

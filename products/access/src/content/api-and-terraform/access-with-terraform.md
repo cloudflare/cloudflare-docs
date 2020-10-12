@@ -1,8 +1,8 @@
 ---
-title: "Build Access with Terraform"
-hidden: false
-weight: 
+order: 3
 ---
+
+# Build Access with Terraform
 
 | Requirements |
 | ------------ |
