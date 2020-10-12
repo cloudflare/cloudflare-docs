@@ -1,7 +1,8 @@
 ---
-title: Command-line Arguments
-weight: 100
+order: 100
 ---
+
+# Command-line Arguments
 
 import {Notice} from 'cf-gatsby-theme'
 

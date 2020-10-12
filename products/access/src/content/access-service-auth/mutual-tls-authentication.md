@@ -1,7 +1,8 @@
 ---
-title: "Mutual TLS Authentication"
-hidden: false
+order: 2
 ---
+
+# Mutual TLS Authentication
 
 import {Notice} from 'cf-gatsby-theme'
 

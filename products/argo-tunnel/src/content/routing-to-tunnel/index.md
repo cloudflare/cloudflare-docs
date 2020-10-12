@@ -1,7 +1,8 @@
 ---
-title: Route to Argo Tunnel
-weight: 10
+order: 10
 ---
+
+# Route to Argo Tunnel
 
 Cloudflare can route traffic to your Argo Tunnel connection using a [DNS record](https://developers.cloudflare.com/argo-tunnel/routing-to-tunnel/dns) or Cloudflare’s [Load Balancer](https://developers.cloudflare.com/argo-tunnel/routing-to-tunnel/lb) product.
 

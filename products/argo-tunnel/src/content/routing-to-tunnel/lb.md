@@ -1,7 +1,8 @@
 ---
-title: Load Balancers
-weight: 50
+order: 50
 ---
+
+# Load Balancers
 
 | Before you start |
 |---|

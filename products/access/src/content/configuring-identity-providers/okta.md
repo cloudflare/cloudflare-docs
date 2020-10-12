@@ -1,8 +1,8 @@
 ---
-title: "Okta"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Okta
 
 Okta provides cloud software that helps companies manage secure user authentication, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate Okta as an IdP.
 

@@ -1,7 +1,9 @@
 ---
-title: Run as a Kubernetes sidecar
-weight: 1
+order: 1
 ---
+
+# Run as a Kubernetes sidecar
+
 import {Notice} from 'cf-gatsby-theme'
 
 <Notice>

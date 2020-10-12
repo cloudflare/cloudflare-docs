@@ -1,7 +1,8 @@
 ---
-title: "SSH Connections"
-alwaysopen: true
+
 ---
+
+# SSH Connections
 
 Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activites like remote command execution.
 

@@ -1,8 +1,8 @@
 ---
-title: "Signed AuthN Requests with SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Signed AuthN Requests with SAML
 
 In a SAML request flow, Cloudflare Access functions as the service provider (SP) to the identity provider (IdP). Cloudflare Access sends a SAML request to your IdP. The signing certificate that you upload from your SAML provider verifies the response.
 

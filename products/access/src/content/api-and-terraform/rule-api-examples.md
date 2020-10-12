@@ -1,8 +1,8 @@
 ---
-title: "Access API Examples"
-hidden: false
-weight: 3
+order: 3
 ---
+
+# Access API Examples
 
 Access users can create policies, including individual rule blocks inside of group or policy bodies. For example, this policy allows all Cloudflare email account users to reach the application with the exception of one account:
 

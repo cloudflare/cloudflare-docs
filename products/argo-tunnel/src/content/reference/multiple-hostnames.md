@@ -1,7 +1,8 @@
 ---
-title: Multiple Hostnames
-weight: 40
+order: 40
 ---
+
+# Multiple Hostnames
 
 Argo Tunnel has a 1-1 relationship of tunnel to hostname. Tunnels can only accept traffic for one hostname for each instance of Tunnel. Typically if you want to run Tunnel for multiple hostnames, such as foo.example.com and bar.example.com, you need to run multiple Tunnel clients side by side.
 

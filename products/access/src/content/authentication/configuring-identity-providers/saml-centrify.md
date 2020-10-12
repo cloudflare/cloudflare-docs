@@ -1,8 +1,8 @@
 ---
-title: "SAML with Centrify"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# SAML with Centrify
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 

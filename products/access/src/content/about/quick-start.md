@@ -1,6 +1,6 @@
 ---
 title: "Quick start"
-weight: 1
+order: 1
 hidden: true
 ---
 

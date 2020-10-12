@@ -1,9 +1,9 @@
 ---
-title: "kubectl"
 alwaysopen: false
-weight: 1
-hidden: false
+order: 1
 ---
+
+# kubectl
 
 import {Notice} from 'cf-gatsby-theme'
 

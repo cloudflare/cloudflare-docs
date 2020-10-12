@@ -1,11 +1,8 @@
 ---
-title: Getting Started
-alwaysopen: false
-weight: 1
-hidden: false
-showNew: false
+order: 1
 ---
 
+# Getting Started
 
 * Read [Access Setup](https://developers.cloudflare.com/access/getting-started/access-setup/) for instructions on how to configure Cloudflare Access.
 

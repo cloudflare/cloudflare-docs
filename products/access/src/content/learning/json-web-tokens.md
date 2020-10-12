@@ -1,8 +1,8 @@
 ---
-title: "Access with JSON Web Tokens"
-hidden: false
-weight: 6
+order: 6
 ---
+
+# Access with JSON Web Tokens
 
 Cloudflare Access uses JSON Web Tokens (JWTs), and their contents, to confirm a user’s identity before allowing or denying access to sensitive resources. Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider. 
 

@@ -1,6 +1,8 @@
 ---
-title: DNS over Tor
+order: 4
 ---
+
+# DNS over Tor
 
 Follow this quick guide to start using the hidden resolver or read about it in
 [this blog post](https://blog.cloudflare.com/welcome-hidden-resolver/)

@@ -1,9 +1,9 @@
 ---
-title: "Configuring identity providers"
-alwaysopen: false
-weight: 3
+order: 3
 hidden: true
 ---
+
+# Configuring identity providers
 
 You can integrate your organization's identity provider with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with [partners or contractors](https://blog.cloudflare.com/multi-sso-and-cloudflare-access-adding-linkedin-and-github-teams/).
 

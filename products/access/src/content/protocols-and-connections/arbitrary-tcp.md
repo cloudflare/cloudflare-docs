@@ -1,9 +1,9 @@
 ---
-title: "Arbitrary TCP"
 alwaysopen: false
-weight: 1
-hidden: false
+order: 1
 ---
+
+# Arbitrary TCP
 
 import {Notice} from 'cf-gatsby-theme'
 

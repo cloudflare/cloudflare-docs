@@ -1,7 +1,8 @@
 ---
-title: Automatically Starting Argo Tunnel
-weight: 30
+order: 30
 ---
+
+# Automatically Starting Argo Tunnel
 
 import {Notice} from 'cf-gatsby-theme'
 

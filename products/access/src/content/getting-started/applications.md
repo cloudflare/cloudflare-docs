@@ -1,10 +1,9 @@
 ---
-title: Applications
-alwaysopen: true
-weight: 2
-hidden: false
-showNew: false
+
+order: 2
 ---
+
+# Applications
 
 With Access, you can protect two types of applications: **SaaS** and **self-hosted**. 
 

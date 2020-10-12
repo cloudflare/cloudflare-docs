@@ -1,8 +1,9 @@
 ---
-title: "Windows Setup Instructions"
-alwaysopen: true
-weight: 3
+
+order: 3
 ---
+
+# Windows Setup Instructions
 
 ## Block Malware
 ### IPv4

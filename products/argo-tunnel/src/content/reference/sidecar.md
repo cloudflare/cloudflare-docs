@@ -1,8 +1,9 @@
 ---
-title: Kubernetes Sidecar Model
-weight: 20
+order: 20
 hidden: true
 ---
+
+# Kubernetes Sidecar Model
 
 import {Notice} from 'cf-gatsby-theme'
 

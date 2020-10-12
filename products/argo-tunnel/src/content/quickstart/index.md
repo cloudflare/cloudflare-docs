@@ -1,8 +1,9 @@
 ---
-title: Getting Started
-weight: 0
+order: 0
 hidden: true
 ---
+
+# Getting Started
 
 import {Notice} from 'cf-gatsby-theme'
 

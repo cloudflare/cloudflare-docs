@@ -1,7 +1,8 @@
 ---
-title: Multi-Level Subdomains
-weight: 50
+order: 50
 ---
+
+# Multi-Level Subdomains
 
 import {Notice} from 'cf-gatsby-theme'
 

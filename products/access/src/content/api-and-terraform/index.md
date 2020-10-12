@@ -1,8 +1,8 @@
 ---
-title: "API and Terraform"
-hidden: false
-weight: 5
+order: 5
 ---
+
+# API and Terraform
 
 This section covers a few common use cases with the API and Terraform to manage Cloudflare Access. For specific API documentation, please see [api.cloudflare.com](api.cloudflare.com).
 

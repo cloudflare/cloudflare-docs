@@ -1,7 +1,8 @@
 ---
-title: Configuration File Format
-weight: 90
+order: 90
 ---
+
+# Configuration File Format
 
 The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Every command-line argument of `cloudflared` can be expressed in YAML.
 

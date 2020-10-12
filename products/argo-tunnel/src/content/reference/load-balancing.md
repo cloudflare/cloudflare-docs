@@ -1,7 +1,8 @@
 ---
-title: Load Balancing
-weight: 35
+order: 35
 ---
+
+# Load Balancing
 
 import {Notice} from 'cf-gatsby-theme'
 

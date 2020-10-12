@@ -1,7 +1,7 @@
 ---
 title: "CLI"
 alwaysopen: false
-weight: 9
+order: 9
 hidden: true
 ---
 

@@ -1,7 +1,8 @@
 ---
-title: "Windows Deployments"
-alwaysopen: true
+
 ---
+
+# Windows Deployments
 
 Cloudflare Access can serve applications that run on Windows systems without requiring administrators to open firewall ports to the Internet.
 

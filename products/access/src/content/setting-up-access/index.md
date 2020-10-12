@@ -1,9 +1,10 @@
 ---
-title: "Set up Cloudflare Access"
 alwaysopen: false
-weight: 100
+order: 100
 hidden: true
 ---
+
+# Set up Cloudflare Access
 
 Step-by-step instructions are available for setting up Cloudflare Access.
 

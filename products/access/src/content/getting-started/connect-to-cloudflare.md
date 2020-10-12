@@ -1,8 +1,8 @@
 ---
-title: "Argo Tunnel"
-hidden: false
-weight: 6
+order: 6
 ---
+
+# Argo Tunnel
 
 Cloudflare Argo Tunnel provides a secure method to connect the origin server of your self-hosted application to Cloudflare without exposing a public IP address or allowing ingress directly to your environment.
 

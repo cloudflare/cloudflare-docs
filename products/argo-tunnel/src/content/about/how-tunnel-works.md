@@ -1,10 +1,10 @@
 ---
-title: How Argo Tunnel Works
-weight: 1
-hidden: false
+order: 1
 showNew: false
 alwaysopen: false
 ---
+
+# How Argo Tunnel Works
 
 Cloudflare secures your origin servers by proxying requests to your DNS records through our anycast network, and to the external IP of your origin. However, if attackers discover those destinations, external IP addresses can still provide them with a path around Cloudflare security.
 

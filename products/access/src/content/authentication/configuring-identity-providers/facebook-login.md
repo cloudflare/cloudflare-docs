@@ -1,8 +1,8 @@
 ---
-title: "Facebook"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Facebook
 
 Cloudflare Access allows your users to use Facebook as their IdP.
 

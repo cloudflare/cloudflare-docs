@@ -1,10 +1,9 @@
 ---
-title: Access Groups
-alwaysopen: true
-weight: 4
-hidden: false
-showNew: false
+
+order: 4
 ---
+
+# Access Groups
 
 import {Notice} from 'cf-gatsby-theme'
 

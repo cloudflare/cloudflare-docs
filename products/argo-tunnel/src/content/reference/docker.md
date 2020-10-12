@@ -1,7 +1,8 @@
 ---
-title: Exposing Docker Containers
-weight: 110
+order: 110
 ---
+
+# Exposing Docker Containers
 
 import {Notice} from 'cf-gatsby-theme'
 

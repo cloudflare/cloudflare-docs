@@ -1,8 +1,8 @@
 ---
-title: "JumpCloud SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# JumpCloud SAML
 
 JumpCloud provides [Directory-as-a-Service®](https://jumpcloud.com/daas-product/) to securely connect user identities to systems, apps, files, and networks. Cloudflare Access integrates with JumpCloud using the SAML protocol. [This documentation from JumpCloud](https://support.jumpcloud.com/customer/en/portal/topics/924865-applications-saml-sso-/articles) can help you configure applications within your JumpCloud deployment.
 

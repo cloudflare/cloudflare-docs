@@ -1,8 +1,9 @@
 ---
-title: "Glossary"
 alwaysopen: false
-weight: 200
+order: 200
 ---
+
+# Glossary
 
 ## [Cloudflare for Teams](https://www.cloudflare.com/teams-home/)
 Cloudflare for Teams brings the power of Cloudflare’s global network to your internal teams and infrastructure. Teams empowers users with secure, fast and seamless access to any device on the Internet.

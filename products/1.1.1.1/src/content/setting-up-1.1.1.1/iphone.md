@@ -1,6 +1,8 @@
 ---
-title: iPhone
+order: 5
 ---
+
+# iPhone
 
 Follow this quick guide to start using 1.1.1.1 on your iPhone.
 

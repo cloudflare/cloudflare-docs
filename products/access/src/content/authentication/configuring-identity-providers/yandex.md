@@ -1,8 +1,9 @@
 ---
-title: "Yandex"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Yandex
+
 Yandex is a web search engine that also offers identity provider (IdP) services.
 
 ## Set up Yandex

@@ -1,7 +1,9 @@
 ---
-title: Router Setup Instructions
-weight: 1
+order: 1
 ---
+
+# Router Setup Instructions
+
 ## Block Malware
 Follow this quick guide to start using 1.1.1.1 for Families on your router.
 

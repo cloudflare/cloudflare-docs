@@ -1,9 +1,10 @@
 ---
-title: "Access Applications"
-alwaysopen: true
-weight: 1
+
+order: 1
 hidden: true
 ---
+
+# Access Applications
 
 Cloudflare Access allows you to securely publish **self-hosted applications** to the Internet by providing an authentication layer using your existing identity providers to control who has access to your applications.
 

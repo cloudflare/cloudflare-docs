@@ -1,6 +1,8 @@
 ---
-title: DNS over email
+order: 2
 ---
+
+# DNS over email
 
 Ah, the classic yet revolutionary DNS over email.
 

@@ -1,7 +1,8 @@
 ---
-title: Installation
-weight: 1
+order: 1
 ---
+
+# Installation
 
 Argo Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 

@@ -1,7 +1,8 @@
 ---
-title: "Bypass policy configurations"
-alwaysopen: true
+order: 1
 ---
+
+# Bypass policy configurations
 
 When an Access policy includes the _Bypass_ decision, requests that satisfy the policy are exempt from evaluation—they  _bypass_ Cloudflare Access. This behavior is useful in cases where you want to expose specific resources to third-party services, such as WordPress and Let's Encrypt in the examples below.
 

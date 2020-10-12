@@ -1,8 +1,9 @@
 ---
-title: What You Can Do With Tunnel
-weight: 1
+order: 1
 hidden: true
 ---
+
+# What You Can Do with Tunnel
 
 ## Replace your corporate VPN
 

@@ -1,8 +1,8 @@
 ---
-title: "PingIdentity® SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# PingIdentity® SAML
 
 import {Notice} from 'cf-gatsby-theme'
 

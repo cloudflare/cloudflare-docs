@@ -1,7 +1,8 @@
 ---
-title: Run as a service
-weight: 30
+order: 30
 ---
+
+# Run as a service
 
 import {Notice} from 'cf-gatsby-theme'
 

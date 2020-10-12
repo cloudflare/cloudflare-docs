@@ -1,8 +1,8 @@
 ---
-title: "Microsoft Azure AD® (Active Directory)"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Microsoft Azure AD® (Active Directory)
 
 import {Notice} from 'cf-gatsby-theme'
 
