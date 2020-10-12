@@ -6,7 +6,7 @@ order: 9
 
 ## Use Case 1: Generating a thumbnail on-the-fly
 
-Using the `poster` attribute in the `<stream>` tag, you can set a thumbnail to any time in your video. If [signed URLs](/stream/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
+Using the `poster` attribute in the `<stream>` tag, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
 
 ```
 poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270"

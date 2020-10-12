@@ -2,7 +2,7 @@
 
 ## Uploading without tus protocol
 
-For most users, [tus protocol](https://tus.io) is the recommended method for uploading content to Cloudflare Stream. You can follow our guides to upload through [the dashboard](/stream/getting-started/uploading-cloudflare-dashboard), with [Golang](/stream/getting-started/uploading-golang), or with the [command line](/stream/getting-started/uploading-command-line). Most popular programming languages have tus client [implementations](https://tus.io/implementations.html).
+For most users, [tus protocol](https://tus.io) is the recommended method for uploading content to Cloudflare Stream. You can follow our guides to upload through [the dashboard](/getting-started/uploading-cloudflare-dashboard), with [Golang](/getting-started/uploading-golang), or with the [command line](/getting-started/uploading-command-line). Most popular programming languages have tus client [implementations](https://tus.io/implementations.html).
 
 > tus is a protocol based on HTTP for resumable file uploads. Resumable means that an upload can be interrupted at any moment and can be resumed without re-uploading the previous data again. An interruption may happen willingly, if the user wants to pause, or by accident in case of an network issue or server outage.
 

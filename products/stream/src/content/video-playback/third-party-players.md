@@ -1,6 +1,6 @@
 # Third-Party Players
 
-There could be cases where you might need more control over the [Stream web player](/stream/video-playback/) for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
+There could be cases where you might need more control over the [Stream web player](/video-playback/) for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
 
 Some use cases that might benefit from a third-party player include:
 
@@ -60,5 +60,5 @@ In this case, a customer is expressing their preference to have their content di
 
 Some features and guarantees are provided only on the Stream web player.
 
-- [Analytics](/stream/analytics/) are not collected by third-party players. This does not affect billing.
+- [Analytics](/analytics/) are not collected by third-party players. This does not affect billing.
 - Error reporting is not integrated by third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.
