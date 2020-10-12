@@ -15,9 +15,9 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 | Key | Value |
 |-------|-------|
 | requiresignedurls | None. If this key is present, it is interpreted as "true." Otherwise, it is interpreted as "false." |
-| allowedorigins | A comma separated strings containing the domains. See ["Security Considerations"](/stream/security/security-considerations) |
-| thumbnailtimestamppct | Specify the default thumbnail timestamp percentage. See ["Changing The Default Timestamp For Still Thumbnail"](/stream/thumbnails) |
-| watermark | The watermark profile UID. See ["Watermarks"](/stream/watermarks) |
+| allowedorigins | A comma separated strings containing the domains. See ["Security Considerations"](/security/security-considerations) |
+| thumbnailtimestamppct | Specify the default thumbnail timestamp percentage. See ["Changing The Default Timestamp For Still Thumbnail"](/thumbnails) |
+| watermark | The watermark profile UID. See ["Watermarks"](/watermarks) |
 
 Note that percentage is a floating point value between 0.0 and 1.0.
 

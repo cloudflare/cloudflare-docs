@@ -23,7 +23,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ## Signed URLs
 
-Combining [signed URLs](/stream/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
+Combining [signed URLs](/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
 
 To do so
 
