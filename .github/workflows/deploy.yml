@@ -6,8 +6,25 @@ on:
       - master
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      1.1.1.1: ${{ steps.filter.outputs.1.1.1.1 }}
+      access: ${{ steps.filter.outputs.access }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            1.1.1.1:
+              - 'products/1.1.1.1/**'
+            access:
+              - 'products/access/**'
+
   deploy-1-1-1-1:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.1.1.1.1 == 'true' }}
     defaults:
       run:
         shell: bash
@@ -29,6 +46,8 @@ jobs:
 
   deploy-access:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.access == 'true' }}
     defaults:
       run:
         shell: bash
