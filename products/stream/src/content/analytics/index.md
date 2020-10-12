@@ -35,7 +35,7 @@ The AND operator is defined using a semicolon (;) or AND keyword surrounded by w
 ## Analytics Request Structure
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId=={video_id}&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
 ```
 
 * `metrics` is one or more metrics (such as count) to compute
@@ -56,9 +56,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytics
 ## Example Analytics Query
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId=={video_id}&since=2018-01-01T16:57:00Z" \
-    -H "X-Auth-Email: {email}" \
-    -H "X-Auth-Key: {api-key}" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z" \
+    -H "X-Auth-Email: $EMAIL" \
+    -H "X-Auth-Key: $APIKEY" \
     -H "Content-Type: application/json"
 ```
 
@@ -97,7 +97,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytic
         "totalImpressions",
         "totalTimeViewedMs"
       ],
-      "filters": "videoId=={video_id}",
+      "filters": "videoId==$VIDEOID",
       "since": "2018-10-10T13:02:00Z",
       "until": "2018-11-27T20:10:00Z",
       "limit": 10000

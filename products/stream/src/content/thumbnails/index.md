@@ -40,9 +40,9 @@ You can change this default value by setting the "thumbnailTimestampPct" value u
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
--d '{"uid": "{video-id}", "thumbnailTimestampPct": <pct>}' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "thumbnailTimestampPct": <pct>}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```
 
  `thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the  `thumbnailTimestampPct` value to 0.5.
@@ -50,9 +50,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
 The example will yield a request:
 ```bash
 curl -X POST \
--H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
--d '{"uid": "{video-id}", "thumbnailTimestampPct": 0.5}' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "thumbnailTimestampPct": 0.5}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```
 
 ## Use Case 3: Generating animated thumbnails

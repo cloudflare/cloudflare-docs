@@ -58,9 +58,9 @@ any other additional arbitrary keys for metadata to be stored.
 
 ```bash
 curl -X POST \
- -H 'X-Auth-Key:{api-key}' \
- -H 'X-Auth-Email:{email}' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
+ -H 'X-Auth-Key:$APIKEY' \
+ -H 'X-Auth-Email:$EMAIL' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
  --data '{
     "maxDurationSeconds": 3600,
     "expiry": "2020-04-06T02:20:00Z",

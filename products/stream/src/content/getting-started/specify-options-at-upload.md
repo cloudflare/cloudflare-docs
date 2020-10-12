@@ -25,13 +25,13 @@ For example, if you are using the `tus-upload` utility, the command will look li
 
 ```bash
 tus-upload --chunk-size 5242880 \
---header X-Auth-Key {api-key} \
---header X-Auth-Email {email} \
+--header X-Auth-Key $APIKEY \
+--header X-Auth-Email $EMAIL \
 --metadata thumbnailtimestamppct 0.4221 \
 --metadata requiresignedurls "" \
 --metadata allowedorigins google.com,twitter.com \
---metadata watermark {watermark-uid} \
-{path-to-video} https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
+--metadata watermark $WATERMARKUID \
+$PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 ## Uploads using a link

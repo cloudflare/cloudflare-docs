@@ -31,8 +31,8 @@ var size = fs.statSync(path).size;
 var options = {
   endpoint: "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream",
   headers: {
-    'X-Auth-Email': '{EMAIL}',
-    'X-Auth-Key': '{API KEY}',
+    'X-Auth-Email': '$EMAIL',
+    'X-Auth-Key': '$APIKEY',
   },
   chunkSize: 5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
   resume: true,
@@ -40,7 +40,7 @@ var options = {
     filename: "test.mp4",
     filetype: "video/mp4"
     defaulttimestamppct: 0.5,
-    watermark: "{watermark-uid}"
+    watermark: "$WATERMARKUID"
   },
   uploadSize: size,
   onError: function (error) {

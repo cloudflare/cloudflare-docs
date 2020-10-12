@@ -15,9 +15,9 @@ You can also control embed limitation programmatically using the Stream API. `ui
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: {API-KEY}" -H "X-Auth-Email: {EMAIL}" \
--d '{"uid": "{VIDEO-ID}", "allowedOrigins": ["example.com"]}' \
-https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/stream/{VIDEO-ID}
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "allowedOrigins": ["example.com"]}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ```
 
