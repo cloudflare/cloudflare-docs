@@ -7,30 +7,107 @@ on:
 
 jobs:
   changes:
+    name: "Check for docs changes"
     runs-on: ubuntu-latest
     outputs:
-      1.1.1.1: ${{ steps.filter.outputs.1.1.1.1 }}
+      onedot: ${{ steps.filter.outputs.onedot }}
       access: ${{ steps.filter.outputs.access }}
+      analytics: ${{ steps.filter.outputs.analytics }}
+      argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
+      byoip: ${{ steps.filter.outputs.byoip }}
+      distributed-web: ${{ steps.filter.outputs.distributed-web }}
+      docs-engine: ${{ steps.filter.outputs.docs-engine }}
+      firewall: ${{ steps.filter.outputs.firewall }}
+      gateway: ${{ steps.filter.outputs.gateway }}
+      http3: ${{ steps.filter.outputs.http3 }}
+      images: ${{ steps.filter.outputs.images }}
+      internet: ${{ steps.filter.outputs.internet }}
+      load-balancing: ${{ steps.filter.outputs.load-balancing }}
+      logs: ${{ steps.filter.outputs.logs }}
+      magic-transit: ${{ steps.filter.outputs.magic-transit }}
+      mobile-sdk: ${{ steps.filter.outputs.mobile-sdk }}
+      network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
+      randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
+      registrar: ${{ steps.filter.outputs.registrar }}
+      spectrum: ${{ steps.filter.outputs.spectrum }}
+      ssl: ${{ steps.filter.outputs.ssl }}
+      stream: ${{ steps.filter.outputs.stream }}
+      tenant: ${{ steps.filter.outputs.tenant }}
+      terraform: ${{ steps.filter.outputs.terraform }}
+      time-services: ${{ steps.filter.outputs.time-services }}
+      waf: ${{ steps.filter.outputs.waf }}
+      workers: ${{ steps.filter.outputs.workers }}
     steps:
-      - uses: dorny/paths-filter@v2
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2.4.2
         id: filter
         with:
           filters: |
-            1.1.1.1:
+            onedot:
               - 'products/1.1.1.1/**'
             access:
               - 'products/access/**'
+            analytics:
+              - 'products/analytics/**'
+            argo-tunnel:
+              - 'products/argo-tunnel/**'
+            byoip:
+              - 'products/byoip/**'
+            distributed-web:
+              - 'products/distributed-web/**'
+            docs-engine:
+              - 'products/docs-engine/**'
+            firewall:
+              - 'products/firewall/**'
+            gateway:
+              - 'products/gateway/**'
+            http3:
+              - 'products/http3/**'
+            images:
+              - 'products/images/**'
+            internet:
+              - 'products/internet/**'
+            load-balancing:
+              - 'products/load-balancing/**'
+            logs:
+              - 'products/logs/**'
+            magic-transit:
+              - 'products/magic-transit/**'
+            mobile-sdk:
+              - 'products/mobile-sdk/**'
+            network-interconnect:
+              - 'products/network-interconnect/**'
+            randomness-beacon:
+              - 'products/randomness-beacon/**'
+            registrar:
+              - 'products/registrar/**'
+            spectrum:
+              - 'products/spectrum/**'
+            ssl:
+              - 'products/ssl/**'
+            stream:
+              - 'products/stream/**'
+            tenant:
+              - 'products/tenant/**'
+            terraform:
+              - 'products/terraform/**'
+            time-services:
+              - 'products/time-services/**'
+            waf:
+              - 'products/waf/**'
+            workers:
+              - 'products/workers/**'
 
   deploy-1-1-1-1:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.1.1.1.1 == 'true' }}
+    if: ${{ needs.changes.outputs.onedot == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/1.1.1.1
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -53,7 +130,7 @@ jobs:
         shell: bash
         working-directory: products/access
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -69,12 +146,14 @@ jobs:
 
   deploy-analytics:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.analytics == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/analytics
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -90,12 +169,14 @@ jobs:
 
   deploy-argo-tunnel:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.argo-tunnel == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/argo-tunnel
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -111,12 +192,14 @@ jobs:
 
   deploy-byoip:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.byoip == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/byoip
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -132,12 +215,14 @@ jobs:
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.distributed-web == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/distributed-web
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -153,12 +238,14 @@ jobs:
 
   deploy-docs-engine:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.docs-engine == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/docs-engine
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -181,12 +268,14 @@ jobs:
 
   deploy-firewall:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.firewall == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/firewall
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -202,12 +291,14 @@ jobs:
 
   deploy-gateway:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.gateway == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/gateway
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -223,12 +314,14 @@ jobs:
 
   deploy-http3:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.http3 == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/http3
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -244,12 +337,14 @@ jobs:
 
   deploy-images:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.images == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/images
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -272,12 +367,14 @@ jobs:
 
   deploy-internet:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.internet == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/internet
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -293,12 +390,14 @@ jobs:
 
   deploy-load-balancing:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.load-balancing == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/load-balancing
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -314,12 +413,14 @@ jobs:
 
   deploy-logs:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.logs == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/logs
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -335,12 +436,14 @@ jobs:
 
   deploy-magic-transit:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.magic-transit == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/magic-transit
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -356,12 +459,14 @@ jobs:
 
   deploy-mobile-sdk:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.mobile-sdk == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/mobile-sdk
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -377,12 +482,14 @@ jobs:
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.network-interconnect == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/network-interconnect
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -398,12 +505,14 @@ jobs:
 
   deploy-randomness-beacon:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.randomness-beacon == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/randomness-beacon
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -419,12 +528,14 @@ jobs:
 
   deploy-registrar:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.registrar == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/registrar
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -440,12 +551,14 @@ jobs:
 
   deploy-spectrum:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.spectrum == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/spectrum
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -461,12 +574,14 @@ jobs:
 
   deploy-ssl:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ssl == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/ssl
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -482,12 +597,14 @@ jobs:
 
   deploy-stream:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.stream == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/stream
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -503,12 +620,14 @@ jobs:
 
   deploy-tenant:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.tenant == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/tenant
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -524,12 +643,14 @@ jobs:
 
   deploy-terraform:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.terraform == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/terraform
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -552,12 +673,14 @@ jobs:
 
   deploy-time-services:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.time-services == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/time-services
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -573,12 +696,14 @@ jobs:
 
   deploy-waf:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.waf == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/waf
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
@@ -594,12 +719,14 @@ jobs:
 
   deploy-workers:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.workers == 'true' }}
     defaults:
       run:
         shell: bash
         working-directory: products/workers
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
