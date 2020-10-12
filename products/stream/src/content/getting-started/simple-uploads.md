@@ -18,10 +18,10 @@ To upload without tus, make an HTTP request with content-type header set to `mul
 
 ```bash
 curl -X POST \
-  -H "X-Auth-Key: {api-key}" \
-  -H "X-Auth-Email: {email}" \
+  -H "X-Auth-Key: $APIKEY" \
+  -H "X-Auth-Email: $EMAIL" \
   -F file=@/Users/kyle/Desktop/skiing.mp4 \
-  https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
+  https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 Note that `-F` flag automatically configures the content-type header and maps `skiing.mp4` to a form input called `file`.
@@ -116,5 +116,5 @@ func main() {
 Save this to a file such as `main.go` and run the server with your Cloudflare credentials:
 
 ```bash
-go run main.go -k <API KEY> -e <EMAIL> -a <ACCOUNT ID>
+go run main.go -k $APIKEY -e $EMAIL -a $ACCOUNT
 ```

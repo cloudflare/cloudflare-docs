@@ -26,7 +26,7 @@ To create or modify a caption on a video, you will need your
 [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
 and your email address.
 
-The `{language}` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers).  For convenience, the most common
+The `$LANGUAGE` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers).  For convenience, the most common
 language codes are provided [at the bottom of this document](#most-common-language-codes).
 If the language you are adding isn't included in the table, you can find the value
 through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes.  To find the
@@ -52,10 +52,10 @@ be created; if sent `de`, the label `Deutsch` will be created.
 
 ```bash
 curl -X PUT \
- -H 'X-Auth-Key:{api-key}' \
- -H 'X-Auth-Email:{email}' \
+ -H 'X-Auth-Key:$APIKEY' \
+ -H 'X-Auth-Email:$EMAIL' \
  -F file=@/Users/mickie/Desktop/example_caption.vtt \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{media_id}/captions/{language}
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/$LANGUAGE
 ```
 
 ### Example Response to Add or Modify a Caption
@@ -77,8 +77,8 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{media_id}/cap
 To view captions associated with a video:
 
 ```bash
-curl -H 'X-Auth-Key:{api-key}' -H 'X-Auth-Email:{email}'
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{media_id}/captions
+curl -H 'X-Auth-Key:$APIKEY' -H 'X-Auth-Email:$EMAIL'
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 ```
 
 ### Example Response to Get the Captions Associated with a Video
@@ -107,9 +107,9 @@ To remove a caption associated with your video:
 
 ```bash
 curl -X DELETE \
- -H 'X-Auth-Key:{api-key}' \
- -H 'X-Auth-Email:{email}' \
- https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{media_id}/captions/{language}
+ -H 'X-Auth-Key:$APIKEY' \
+ -H 'X-Auth-Email:$EMAIL' \
+ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions/$LANGUAGE
 ```
 
 If there is an entry in `errors` response field, the caption has not been

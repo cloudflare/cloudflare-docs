@@ -13,8 +13,8 @@ To make API requests you will need your [Cloudflare API key](https://www.cloudfl
 This example lists media where the name matches `puppy.mp4`.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream?search=puppy.mp4" \
-     -H "X-Auth-Email: {email}" \
-     -H "X-Auth-Key: {api-key}" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?search=puppy.mp4" \
+     -H "X-Auth-Email: $EMAIL" \
+     -H "X-Auth-Key: $APIKEY" \
      -H "Content-Type: application/json"
 ```

@@ -22,8 +22,8 @@ existing subscription, you will need your
 and your email address.
 
 ```bash
-curl -X PUT --header 'X-Auth-Key:{api-key}' --header 'X-Auth-Email:{email}'
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/webhook
+curl -X PUT --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 --data '{"notificationUrl":"{WEBHOOK-NOTIFICATION-URL"}'
 ```
 
@@ -53,8 +53,8 @@ If a subscription is created, the `modified` timestamp will equal
 To view a webhook subscription associated with your account:
 
 ```bash
-curl --header 'X-Auth-Key:{api-key}' --header 'X-Auth-Email:{email}'
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/webhook
+curl --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 ```
 
 #### Example Response to Get the Webhook Subscription
@@ -76,8 +76,8 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/webhook
 To delete a webhook subscription associated with your account:
 
 ```bash
-curl -X DELETE --header 'X-Auth-Key:{api-key}' --header 'X-Auth-Email:{email}'
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/webhook
+curl -X DELETE --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 ```
 
 If there is an entry in `errors` response field, the webhook has not been
