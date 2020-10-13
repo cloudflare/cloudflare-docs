@@ -13,7 +13,7 @@ order: 50
 | 5. [Create an Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel) |
 | 6. [Create a Load Balancer pool in Cloudflare](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui) |
 
-### Route traffic from the Cloudflare dashboard via a Load Balancer
+### Route traffic from the dashboard
 
 When you create an Argo Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created Tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
 
@@ -26,12 +26,14 @@ To add an Argo Tunnel connection to a Cloudflare Load Balancer pool:
 3. Click `Save`.
 
 
-### Route traffic from `cloudflared` via a Load Balancer
+### Route traffic from the command line
 
 You can add Argo Tunnel to an existing load Balancer pool directly from `cloudflared`. The result is the same as creation from the dashboard above.
 
 To do so, run the following command:
 
-`cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load balancer pool>`
+```bash
+cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load balancer pool>
+```
 
 **Note**: this command requires the `cert.pem` file.

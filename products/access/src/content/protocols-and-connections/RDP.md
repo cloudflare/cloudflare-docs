@@ -5,10 +5,7 @@ order: 4
 
 # RDP
 
-
-
 <Aside>
-
 
 <b>Requirements</b>
 
@@ -31,9 +28,9 @@ This section will cover:
 
 **NOTE**: If you have an origin that serves both RDP and HTTP requests, you need to place those services on separate domains or subdomains. Otherwise, errors occur when attempting to access the machine over different protocols. For example, requests made in a web browser will route over RDP and fail.
 
-# <a id="remote-desktop"></a> Connect the remote desktop to Cloudflare
+## Connect the remote desktop to Cloudflare
 
-## 1. Install cloudflared On The Remote Machine
+### 1. Install cloudflared On The Remote Machine
 
 `cloudflared` will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. RDP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/).
 1. Download and install `cloudflared` on the machine hosting the file share. If you need help, you can find the relevant instructions for your OS here.
@@ -64,7 +61,7 @@ mkdir C:\Windows\System32\config\systemprofile\.cloudflared
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
 </Aside>
 
-## 2. Authenticate `cloudflared`
+### 2. Authenticate `cloudflared`
 
   1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
@@ -109,7 +106,7 @@ logfile: C:\Windows\System32\config\systemprofile\.cloudflared\tunnel.log
 C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`
 ```
 
-## 3. Secure The Subdomain With Cloudflare Access
+### 3. Secure The Subdomain With Cloudflare Access
 
 1. Create an [Access application](/getting-started/applications/) for the subdomain of your RDP.
 
@@ -117,7 +114,7 @@ For example, if you share the desktop at `rdp.site.com`, that is the subdomain y
 
 2. Build a [policy](/getting-started/policies/) to restrict user access to that subdomain.
 
-## 4. Connect The Remote Desktop To Cloudflare
+### 4. Connect The Remote Desktop To Cloudflare
 
 1. Confirm which port your remote desktop protocol uses.
 
@@ -145,7 +142,7 @@ In both operations, `cloudflared` will confirm that the connection has been esta
 
 If the process is killed, end users will not be able to connect.
 
-## 5. Bastion or jump host Models (optional)
+### 5. Bastion or jump host Models (optional)
 
 Instead of deploying `cloudflared` on each target machine, you can deploy it once in a private subnet in the bastion or jump host model.
 
@@ -164,24 +161,20 @@ $ cloudflared tunnel --hostname rdp.site.com --bastion
 
 <Aside>
 
-
 Ensure that the Access policy is in place before creating this connection as the connection will allow lateral traffic within the subnet.
 The command above will allow traffic to be proxied through cloudflared and to one of many target desktops in your network. End users will need to specify the destination of the specific desktop, which is documented below.
 </Aside>
 
-<Aside>
-
 This command will allow everything that can be routed from cloudflared to be reachable through the Tunnel. Ensure your network is properly segmented to avoid issues.
-</Aside>
 
-# <a id="client-machine"></a> Connect from a client machine
+## Connect from a client machine
 
-## 1. Install cloudflared On The Client Machine
+### 1. Install cloudflared On The Client Machine
 
 Follow steps 1 through 3 above to download and install cloudflared on the client desktop that will connect to the remote desktop.
 cloudflared will need to be installed on each user device that will connect.
 
-## 2. Connect To The Remote Desktop
+### 2. Connect To The Remote Desktop
 
 1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
@@ -196,7 +189,7 @@ This command can be wrapped as a desktop shortcut so that end users do not need 
 
 3. When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
-## 3. Bastion or Jump Host Model (optional)
+### 3. Bastion or Jump Host Model (optional)
 
 If you are deploying Cloudflare Access for RDP in a bastion or jump host model:
 
@@ -210,9 +203,9 @@ If you are deploying Cloudflare Access for RDP in a bastion or jump host model:
 
 3. Point it to `localhost:2244` and initiate the connection.
 
-# <a id="desktop-shortcuts"></a> Configuring A Desktop Shortcut
+## Configuring A Desktop Shortcut
 
-## Windows
+### Windows
 
 You can help end users connect without requiring the command line by providing them with a shortcut that can be launched from the desktop.
 
@@ -229,13 +222,13 @@ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 
 At this point the shortcut will appear on the desktop, and users can launch with a double-click. The shortcut can then be distributed to end users along with `cloudflared`.
 
-### Common issues
+## Common issues
 
 * You may get a warning indicating that the `.exe` (`cloudflared.exe`) is unknown. This can be skipped by clicking `More Info` in the dialog box and then clicking **Run Anyway**. This will only appear one time.
 
 * Ensure that RDP is enabled on the target Windows machine. If not, you may encounter an error: `No connection could be made because the target machine actively refused it`.
 
-## MacOS
+### MacOS
 
 MacOS users can save a command shortcut that will launch the RDP flow.
 
@@ -273,9 +266,9 @@ The default behavior in MacOS is for the Terminal window to stay open. You can c
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
 </Aside>
 
-##
+## Video Guides
 
-**Video Guide**. In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
+In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
 
 <stream src="2a3073fb7881b4fcba4b9e3709dfaacf" controls></stream>
 

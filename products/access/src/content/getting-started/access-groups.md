@@ -4,7 +4,7 @@ order: 4
 
 # Access Groups
 
-
+## Managing Groups
 
 Access Groups define a set of rules that can be defined once and then quickly applied across many applications. You can select an Access Group as an attribute in any Policy rule, and all the criteria from the selected Access Group will apply to that application. 
 

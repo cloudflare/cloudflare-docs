@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 2
 ---
 
 # Getting Started

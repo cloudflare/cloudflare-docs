@@ -4,7 +4,7 @@ order: 101
 
 # Copyrights
 
-The cloudflared client is produced using licensed software:
+The `cloudflared` client is produced using licensed software:
 
 ---
 
