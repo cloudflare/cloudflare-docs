@@ -30,7 +30,7 @@ The instructions below provide options for locking down the infrastructure secur
 
 1. **Set up Argo Tunnel**. To defend against attackers addressing IPs directly, Argo Tunnel can help secure the interface and force outbound requests through Cloudflare Access. With Argo Tunnel, and firewall rules preventing inbound traffic, no request can reach those IPs without first hitting Cloudflare, where Access can evaluate the request for authentication. For details see _[Getting started](https://developers.cloudflare.com/argo-tunnel/quickstart/)_ in the Argo Tunnel developers documentation.
 
-2. **Validate JSON web tokens (JWTs)**. You can use the JWT created by Cloudflare Access to validate requests on your origin. For more, see [_Validating JSON web tokens_](https://developers.cloudflare.com/access/setting-up-access/validate-jwt-tokens/).  
+2. **Validate JSON web tokens (JWTs)**. You can use the JWT created by Cloudflare Access to validate requests on your origin. For more, see [_Validating JSON web tokens_](/setting-up-access/validate-jwt-tokens/).
 
 
 3. **Restrict inbound ingress so that only connections from [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are allowed**. This should be done in conjunction with validating the tokens sent by Cloudflare Access. This is not sufficient alone without JWT validation.
@@ -46,7 +46,7 @@ The way Access provides a standard proof of identity is by generating a JWT for 
 
 ## Secure Grafana and other web applications
 
-Just getting started? Learn how to set up Cloudflare Access to secure the popular database dashboard Grafana, with an approach that can be used to protect and provide remote access to many different applications. 
+Just getting started? Learn how to set up Cloudflare Access to secure the popular database dashboard Grafana, with an approach that can be used to protect and provide remote access to many different applications.
 
 <stream src="31a370fb4aac62a4f59a4b70b5aa3355" controls></stream>
 <script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=31a370fb4aac62a4f59a4b70b5aa3355"></script>

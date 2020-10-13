@@ -36,7 +36,7 @@ On the server, administrators save their public key as a `TrustedUserCAKeys` fil
 
 ### How can it be configured?
 #### 1. Secure a Server behind Cloudflare Access
-To protect a resource behind Cloudflare Access, first follow the instructions [here](https://developers.cloudflare.com/access/ssh/ssh-guide/) to secure the server.
+To protect a resource behind Cloudflare Access, first follow the instructions [here](/ssh/ssh-guide/) to secure the server.
 
 #### 2. Generate a Short-Lived Certificate Public Key
 In the Access section of the Cloudflare for Teams dashboard, navigate to the **Service Auth** row. In the drop-down, choose the application that represents the resource you secured in Step 1.
@@ -119,7 +119,7 @@ $ sudo systemctl restart ssh
 ```
 
 #### 7. Configure your Client SSH Config
-On the client side, follow the instructions [here](https://developers.cloudflare.com/access/ssh/ssh-guide/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
+On the client side, follow the instructions [here](/ssh/ssh-guide/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 ```bash
 Host vm.example.com

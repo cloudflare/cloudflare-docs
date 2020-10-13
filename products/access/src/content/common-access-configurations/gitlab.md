@@ -33,7 +33,7 @@ An example policy is provided below.
 
 ![Access Policy](../static/gitlab/gitlab-web.png)
 
-These names are just examples; any name can be used for the subdomain. You can learn more about creating Access policies [here](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/).
+These names are just examples; any name can be used for the subdomain. You can learn more about creating Access policies [here](/setting-up-access/configuring-access-policies/).
 
 ## Connect GitLab to Cloudflare with Argo Tunnel
 

@@ -13,7 +13,7 @@ order: 4
 <b>Requirements</b>
 
 * A Cloudflare account
-* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
+* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare
 * The `cloudflared` daemon installed on client machines
 
 </Aside>
@@ -66,13 +66,13 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 ## 2. Authenticate `cloudflared`
 
-  1. Run the following command to authenticate `cloudflared` into your Cloudflare account. 
+  1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
 ```bash
 C:\Cloudflared\bin\cloudflared.exe login
 ```
 
-  2. `cloudflared` will open a browser window where you will be asked to login to your Cloudflare account.  
+  2. `cloudflared` will open a browser window where you will be asked to login to your Cloudflare account.
 
   If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
@@ -90,12 +90,12 @@ C:\Cloudflared\bin\cloudflared.exe login
 copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
 ```
 
-  6. Once selected, `cloudflared` will download a wildcard certificate for the site.  
+  6. Once selected, `cloudflared` will download a wildcard certificate for the site.
 
   This certificate allows `cloudflared` to create a DNS record for a subdomain of the site.
 
- 7. Finally, `cloudflared` will use a YML file for configuration. Run `Notepad.exe` as an administrator.  
-  
+ 7. Finally, `cloudflared` will use a YML file for configuration. Run `Notepad.exe` as an administrator.
+
   Make sure you do so as an administrator, as this file will be saved to the system directory.
 
 ```bash
@@ -111,11 +111,11 @@ C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`
 
 ## 3. Secure The Subdomain With Cloudflare Access
 
-1. Create an [Access application](https://developers.cloudflare.com/access/getting-started/applications/) for the subdomain of your RDP.
+1. Create an [Access application](/getting-started/applications/) for the subdomain of your RDP.
 
 For example, if you share the desktop at `rdp.site.com`, that is the subdomain you will configure for the application).
 
-2. Build a [policy](https://developers.cloudflare.com/access/getting-started/policies/) to restrict user access to that subdomain. 
+2. Build a [policy](/getting-started/policies/) to restrict user access to that subdomain.
 
 ## 4. Connect The Remote Desktop To Cloudflare
 
@@ -156,7 +156,7 @@ To do so:
 ```bash
 $ cloudflared tunnel --hostname rdp.site.com --bastion
 ```
-2. Use this configuration when establishing the tunnel: 
+2. Use this configuration when establishing the tunnel:
 
 ```bash
 $ cloudflared tunnel --hostname rdp.site.com --bastion
@@ -242,8 +242,8 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 1. The command below can be saved as a `.command` file that can be launched on login:
 
 ```bash
-var=/Applications/CF-RDP-Tunnel.command && 
-echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var && 
+var=/Applications/CF-RDP-Tunnel.command &&
+echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var &&
 chmod +x $var
 ```
 
@@ -273,7 +273,7 @@ The default behavior in MacOS is for the Terminal window to stay open. You can c
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
 </Aside>
 
-## 
+##
 
 **Video Guide**. In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
 

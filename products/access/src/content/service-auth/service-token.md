@@ -11,21 +11,21 @@ Cloudflare Access also supports service tokens for applications that service aut
 
 ## Create a service token
 
-1. In the Cloudflare for Teams dashboard, navigate to the **Access** > **Service Auth**.   
+1. In the Cloudflare for Teams dashboard, navigate to the **Access** > **Service Auth**.
 
 1. Click the `Create Service Token` button.
 
   ![Access Service Token card](../static/service-tokens/service-token-home.png)
 
-1. Next, name the service token.  
- The name allows you to easily identify events related to the token in the logs and to revoke the token individually. 
+1. Next, name the service token.
+ The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
 
   ![Access Service Token card](../static/service-tokens/name-service-token.png)
 
-1. Click `Generate token`.  
+1. Click `Generate token`.
 The next page will display the generated `Client ID` and `Client Secret` for the service token.
 
-1. Copy the `Client Secret` in this view. 
+1. Copy the `Client Secret` in this view.
 
   ![Access Service Token card](../static/service-tokens/service-token-detail.png)
 
@@ -33,7 +33,7 @@ The next page will display the generated `Client ID` and `Client Secret` for the
 This is the only time Cloudflare Access will display the <b>Client Secret</b>. If you lose the <b>Client Secret</b>, you must generate a new service token.
 </div>
 
-  You can now use the service token in [non-identity policies](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/).
+  You can now use the service token in [non-identity policies](/setting-up-access/configuring-access-policies/).
 
 
 ## Renew a service token
@@ -70,8 +70,8 @@ As long as the Client ID and Client Secret are still valid, they can be exchange
 
 ## FAQ
 
-* **Where can a service find the `CF-Access-Client-ID` which was used to generate a JWT from a Cloudflare Access service token?**  
-The information is captured in the JWT payload.  
+* **Where can a service find the `CF-Access-Client-ID` which was used to generate a JWT from a Cloudflare Access service token?**
+The information is captured in the JWT payload.
 The ID of the service token is stored in the `common_name` field of the JWT.
 
 ```json
@@ -85,6 +85,6 @@ The ID of the service token is stored in the `common_name` field of the JWT.
 }
 ```
 
-* **I created a new service token, but when I try to use it in my policies, it doesn't work.**  
+* **I created a new service token, but when I try to use it in my policies, it doesn't work.**
 
-Sometimes it takes a few minutes for a newly created token to activate. If you experience any issues in using service tokens right after you have created them, wait a few minutes and try again. 
+Sometimes it takes a few minutes for a newly created token to activate. If you experience any issues in using service tokens right after you have created them, wait a few minutes and try again.

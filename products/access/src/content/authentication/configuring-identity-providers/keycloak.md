@@ -19,14 +19,14 @@ Keycloak is an open source identity and access management solution built by JBos
     ![SAML Client](../../static/keycloak/configure-client.png)
 
     Set the Client AD as the Access callback URL. The format will resemble the following URL; replace the `<auth_domain>` value with your organization's authentication domain.
-    
+
     `https://<auth_domain>.cloudflareaccess.com/cdn-cgi/access/callback`
 
     Next, set the valid redirect URI to the Keycloak domain that you are using. For example, `https://<keycloak_domain>/auth/realms/master/protocol/saml`.
 
     Set the Master SAML Processing URL using the same Keycloak domain: `https://<keycloak_domain>/auth/realms/master/protocol/saml`.
 
-    Finally, if you wish to enable client signatures, you will need to [configure](https://developers.cloudflare.com/access/configuring-identity-providers/signed_authn/) signing in the Cloudflare Access dashboard.
+    Finally, if you wish to enable client signatures, you will need to [configure](/configuring-identity-providers/signed_authn/) signing in the Cloudflare Access dashboard.
 
 1. Email property
 
@@ -52,7 +52,7 @@ Keycloak is an open source identity and access management solution built by JBos
 
 ## Optional: Custom SAML Attributes
 
-Keycloak can be configured to pass on custom SAML attributes for consumption by Access Policy. For example, role-based access policy. 
+Keycloak can be configured to pass on custom SAML attributes for consumption by Access Policy. For example, role-based access policy.
 
 1. Roles
 
@@ -81,7 +81,7 @@ Keycloak can be configured to pass on custom SAML attributes for consumption by 
 Solution: Disable "Client Signature Required " in Client Settings
 
 **Access Test: Response uses a certificate that is not configured.**
-Solution: Use the X509 Certificate in the Realm Settings  rather than from Client Setting. 
+Solution: Use the X509 Certificate in the Realm Settings  rather than from Client Setting.
 
 **Access Test: Successful bu email property is empty**
 

@@ -19,7 +19,7 @@ Access group membership rules determine whether a user is a member of a particul
 
 ![Access Groups](../static/groups/group-creation.png)
 
-Rules for Access Groups follow the same [logic](http://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) as rules for Access Policies.
+Rules for Access Groups follow the same [logic](/setting-up-access/configuring-access-policies/) as rules for Access Policies.
 
 Membership rule types help define whether to include or exclude a team member from an Access group. Here are some membership types and examples:
 

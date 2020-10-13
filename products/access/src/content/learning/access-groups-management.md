@@ -6,14 +6,14 @@ order: 6
 
 This section addresses a few common group configurations and best practices.
 
-For a basic overview of how to create and edit Groups on the dashboard, please see the [Access Groups](https://developers.cloudflare.com/access/getting-started/access-groups/) page in the Setup section.
+For a basic overview of how to create and edit Groups on the dashboard, please see the [Access Groups](/getting-started/access-groups/) page in the Setup section.
 
 
 ## Criteria for Group Rules
 
-Access Group rules determine whether or not a user is a member of a particular group. 
+Access Group rules determine whether or not a user is a member of a particular group.
 
-Group Rules follow the same [logic](https://developers.cloudflare.com/access/getting-started/policies/) as rules for Access Policies.
+Group Rules follow the same [logic](/getting-started/policies/) as rules for Access Policies.
 
 Group rule criteria help define whether to include or exclude a team member from an Access group.
 Here is a list of membership types and examples:

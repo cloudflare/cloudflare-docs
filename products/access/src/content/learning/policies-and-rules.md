@@ -6,13 +6,13 @@ order: 4
 
 This section addresses a few common policy configurations and best practices.
 
-For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies](https://developers.cloudflare.com/access/getting-started/policies/) page in the Setup section.
+For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies](/getting-started/policies/) page in the Setup section.
 
 ## Combining Policy Actions and Rules
 
 ### Allow
 
-All rule actions must have at least one Include. For example, an Allow action with an Include rule defined as `Emails Ending In: @example.com` lets any user with an `@example.com` email address, as validated against an IdP, reach the application. Exception and Require rules enforce more granular control in Allow actions. 
+All rule actions must have at least one Include. For example, an Allow action with an Include rule defined as `Emails Ending In: @example.com` lets any user with an `@example.com` email address, as validated against an IdP, reach the application. Exception and Require rules enforce more granular control in Allow actions.
 
 Add a Require rule in the same policy action to enforce additional checks. When the Require rule defines a set of IP ranges, a user must be a member of `@example.com` and their request must originate from the defined IP range.
 
@@ -28,7 +28,7 @@ For example, a Block action that contains an Include decision defined as “Ever
 
 ### Bypass
 
-Use this rule action to bypass Access for a specific path of the application, a subset of users or for the entire application. The bypass rule action disables any Access enforcement for traffic that meets the defined rule criteria. 
+Use this rule action to bypass Access for a specific path of the application, a subset of users or for the entire application. The bypass rule action disables any Access enforcement for traffic that meets the defined rule criteria.
 
 Let’s take an example website secured with Access with a third-party service that needs access to a specific endpoint. You can configure traffic to bypass Access and access that endpoint. You can also whitelist a range of IP addresses to bypass Access or allow all traffic by setting the rule to include everyone.
 
@@ -38,7 +38,7 @@ If the service does not publish its IP range or it changes periodically, you can
 
 ***Note***. When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If *Always use HTTPS* is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
 
-### Service Auth 
+### Service Auth
 Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
 
 ## Rule ordering
@@ -74,9 +74,9 @@ You can secure any subdomain of the apex domain in Cloudflare Access by using a 
 When using wildcards in rules, keep in mind that:
 
 * **Using a wildcard in the *Subdomain* field does not cover the apex domain.** That is, a wildcard rule that controls access using the format, `*.example.com`, covers `alpha.example`.com and `beta.example.com`, but not `example.com`. You must create separate rules for the apex domain.
- 
-* **Using a wildcard in the *Subdomain* field does not cover multi-level subdomains**. For instance, a wildcard rule like `*.example.com` would cover `test.example.com` but not `test.beta.example.com`. 
- 
+
+* **Using a wildcard in the *Subdomain* field does not cover multi-level subdomains**. For instance, a wildcard rule like `*.example.com` would cover `test.example.com` but not `test.beta.example.com`.
+
 ## Enforcing MFA
 
 You can build rules into policies that require users to authenticate with certain types of MFA methods (if supported by your IdP). When added, Cloudflare Access will reject user logins that did not use the required MFA method.
@@ -89,7 +89,7 @@ To add an MFA requirement to your application, follow the instructions below.
 
  The rule must contain an Include rule which defines an identity. For example, the Include rule should allow for users who are part of an email domain, identity provider group, or Access Group.
 
-3. In the rule builder, add a *Require* action. 
+3. In the rule builder, add a *Require* action.
 
 4. Select *Authentication Method* and choose `mfa - multiple-factor authentication`.
 

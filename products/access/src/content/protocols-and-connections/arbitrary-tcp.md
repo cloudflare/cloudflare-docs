@@ -13,7 +13,7 @@ order: 1
 <b>Requirements</b>
 
 * A Cloudflare account
-* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
+* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare
 * The `cloudflared` daemon installed on both the client machine and the target server
 
 </Aside>
@@ -53,7 +53,7 @@ If you are working on a machine that does not have a browser, or a browser windo
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/getting-started/policies) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/getting-started/policies) to build a new policy to control who can connect to the resource.
 
 For example, if you share the resource at `tcp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 

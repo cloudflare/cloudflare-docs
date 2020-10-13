@@ -28,9 +28,9 @@ The Include action is similar to an OR logical operator. In case more than one I
 The Exclude rule works like a NOT logical operator. A user meeting any Exclude criteria won’t be allowed access to the application.
 #### Require
 The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access.
- 
+
 ### Criteria for Policy Rules
-Rule criteria help define whether to include or exclude a team member from being influenced by a rule.  
+Rule criteria help define whether to include or exclude a team member from being influenced by a rule.
 These are the criteria you can assign to a rule:
 * **Emails** — `you@company.com`
 * **Emails ending in** — `@company.com`
@@ -44,12 +44,12 @@ These are the criteria you can assign to a rule:
 * **Service Token** - the request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 
-<!-- To learn more about policy rules and how to combine policy actions and rules, read the [Policy Management](https://developers.cloudflare.com/access/learning-and-examples/policy-management/) section. -->
- 
+<!-- To learn more about policy rules and how to combine policy actions and rules, read the [Policy Management](/learning-and-examples/policy-management/) section. -->
+
 ## Adding, editing, and deleting policies
 Policies are properties of applications. Creating the first policy for an application is part of the set up process for that application.
 
-You can then choose to edit or delete that first policy after completing the application setup, or you can decide to add new policies to the application, all from the Applications section of the Teams dashboard. 
+You can then choose to edit or delete that first policy after completing the application setup, or you can decide to add new policies to the application, all from the Applications section of the Teams dashboard.
 
 There is no limit to the number of policies you can set up for your applications.
 
@@ -70,7 +70,7 @@ To make any changes to an application’s policies:
 
 
 
-<!-- 
+<!--
 
 <Aside>
 

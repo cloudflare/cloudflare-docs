@@ -16,4 +16,4 @@ You can [follow these instructions](https://developers.cloudflare.com/argo-tunne
 
 ## Validating JSON Web Tokens
 
-If you do not use Argo Tunnel, you must secure your origin by [validating the JSON Web Token](https://developers.cloudflare.com/access/advanced-management/validating-json/) issued by Cloudflare Access. If you build an Access policy for an application that is available at a public IP address, any user who discovers that IP address can bypass Cloudflare. Validating the JSON Web Token ensures that the request arriving at your origin server first authenticated through Cloudflare Access.
+If you do not use Argo Tunnel, you must secure your origin by [validating the JSON Web Token](/advanced-management/validating-json/) issued by Cloudflare Access. If you build an Access policy for an application that is available at a public IP address, any user who discovers that IP address can bypass Cloudflare. Validating the JSON Web Token ensures that the request arriving at your origin server first authenticated through Cloudflare Access.

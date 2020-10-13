@@ -39,7 +39,7 @@ Once selected, `cloudflared` will download a wildcard certificate for the site. 
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the resource at `tcp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
