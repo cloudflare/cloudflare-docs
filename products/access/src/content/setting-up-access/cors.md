@@ -1,7 +1,8 @@
 ---
-title: "Cross-Origin Resource Sharing (CORS)"
-alwaysopen: true
+
 ---
+
+# Cross-Origin Resource Sharing (CORS)
 
 Cross-Origin Resource Sharing ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)) is a mechanism that uses HTTP headers to grant a web application running on one origin permission to reach selected resources in a different origin. The web application executes a cross-origin HTTP request when it requests a resource that has a different origin from its own, including domain, protocol, or port.
 

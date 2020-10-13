@@ -1,8 +1,8 @@
 ---
-title: "Setup Instructions"
-alwaysopen: true
-weight: 1
+
+order: 1
 ---
+# Setup Instructions
 
 [Router Setup Instructions](./setup-instructions/router/)
 See how you can send DNS queries to 1.1.1.1 for Families from a router.

@@ -1,19 +1,21 @@
 ---
-title: Kubernetes Ingress Controller
-weight: 80
+order: 80
 ---
 
+# Kubernetes Ingress Controller
 
-<Aside>
+import {Notice} from 'cf-gatsby-theme'
 
-Cloudflare will end support for our Kubernetes Ingress Controller at the end of 2019.
+<Notice> 
+
+Cloudflare will end support for our Kubernetes Ingress Controller at the end of 2019. 
 The project is open source and we will continue to make it available in our GitHub repository. More information can be found <a href="https://github.com/cloudflare/cloudflare-ingress-controller/issues/172#issuecomment-541230988">here</a>.
 
-We still believe that using Argo Tunnel and k8s together is a strong combination, but have
-learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster
+We still believe that using Argo Tunnel and k8s together is a strong combination, but have 
+learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster 
 approach. You can find more information about running Argo tunnel in a sidecar model <a href="https://developers.cloudflare.com/argo-tunnel/reference/sidecar/">here</a>.
 
-</Aside>
+</Notice>
 
 Playing around with the Argo Tunnel Ingress Controller is easy, and can be done on any Kubernetes
 cluster ([Google GKE][k8s-google-gke], [Amazon EKS][k8s-amazon-eks], [Microsoft AKS][k8s-microsoft-aks]).

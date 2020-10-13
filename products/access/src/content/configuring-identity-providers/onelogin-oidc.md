@@ -1,8 +1,9 @@
 ---
-title: "OneLogin OIDC"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# OneLogin OIDC
+
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC IdP.
 
 ## Set up OneLogin OIDC as your IdP

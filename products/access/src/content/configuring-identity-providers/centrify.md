@@ -1,9 +1,10 @@
 ---
-title: "Centrify"
-alwaysopen: true
-weight: 12
+order: 12
 ---
 
+# Centrify
+
+import {Notice} from 'cf-gatsby-theme'
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 
@@ -44,10 +45,10 @@ These steps help you set up Centrify as your identity provider (IdP).
 
 14. Copy the Client ID, Client Secret, and OpenID Connect Issuer URL.
 
-    <Aside>
-
+    <Notice>
+    
     Do not use the forward slash from the <strong>Settings</strong> tab.
-    </Aside>
+    </Notice>
 
 15. Copy the Application ID from the Settings tab in the Centrify dashboard, and paste them into the Cloudflare Access.
 16. Navigate to the **User Access** tab.

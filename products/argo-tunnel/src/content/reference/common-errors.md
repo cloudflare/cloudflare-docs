@@ -1,7 +1,8 @@
 ---
-title: Common Errors
-weight: 110
+order: 110
 ---
+
+# Common Errors
 
 ## HTTP 502
 

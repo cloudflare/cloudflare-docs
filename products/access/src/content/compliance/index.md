@@ -1,8 +1,8 @@
 ---
-title: "Compliance"
-alwaysopen: false
-weight: 100
+order: 400
 ---
+
+# Compliance
 
 import whitepaper from "../static/compliance/pci-whitepaper.pdf"
 

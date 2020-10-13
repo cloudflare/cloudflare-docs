@@ -1,7 +1,8 @@
 ---
-title: DNS over TLS
-weight: 9
+order: 9
 ---
+
+# DNS over TLS
 
 By default, DNS is sent over a plaintext connection. DNS over TLS is one way to send DNS queries over an encrypted connection. Cloudflare supports DNS over TLS on standard port 853 and is compliant with [RFC7858](https://tools.ietf.org/html/rfc7858).
 

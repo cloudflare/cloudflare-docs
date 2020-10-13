@@ -1,7 +1,8 @@
 ---
-title: Configure your browser to use DNS over HTTPS
-weight: 10
+order: 10
 ---
+
+# Configure your browser to use DNS over HTTPS
 
 There are several browsers compatible with DNS over HTTPS (DoH) that you can use to connect to 1.1.1.1 in order to protect your DNS queries from privacy intrusions and tampering.
 

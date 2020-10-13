@@ -1,7 +1,8 @@
 ---
-title: "Validating JSON Web Tokens"
-alwaysopen: true
+
 ---
+
+# Validating JSON Web Tokens
 
 Cloudflare signs a JSON Web Token (JWT) when users or services authenticate through Cloudflare Access. Two tokens are generated:
 

@@ -1,9 +1,9 @@
 ---
-title: "Example Configurations"
 alwaysopen: false
-weight: 12
-hidden: false
+order: 12
 ---
+
+# Example Configurations
 
 Cloudflare Access can be configured to support a number of common use cases as your organization migrates from a VPN to Cloudflare’s zero-trust model. This section provides examples for common scenarios.
 

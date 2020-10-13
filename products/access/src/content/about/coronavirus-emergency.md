@@ -1,8 +1,9 @@
 ---
-title: "Free Program"
 hidden: true
-weight: 100
+order: 100
 ---
+
+# Free Program
 
 We know that organizations and individuals around the world depend on Cloudflare and our network.
 

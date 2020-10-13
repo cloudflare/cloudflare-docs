@@ -1,8 +1,10 @@
 ---
-title: "Access Applications"
-alwaysopen: true
-weight: 1
+
+hidden: true
+order: 1
 ---
+
+# Access Applications
 
 Cloudflare Access evaluates every request to the hostname of your application or resource.
 

@@ -1,7 +1,8 @@
 ---
-title: "Migrate from Zone Lockdown"
-alwaysopen: true
+order: 5
 ---
+
+# Migrate from Zone Lockdown
 
 Some teams use Cloudflare's Zone Lockdown feature alongside their Virtual Private Network deployment to only allow IP ranges in that VPN to connect to applications. This model relies on IP ranges, rather than identity, to control who can reach sensitive applications.
 

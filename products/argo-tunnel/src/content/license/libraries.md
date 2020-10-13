@@ -1,6 +1,7 @@
 ---
-title: Copyrights
 ---
+
+# Copyrights
 
 The cloudflared client is produced using licensed software:
 

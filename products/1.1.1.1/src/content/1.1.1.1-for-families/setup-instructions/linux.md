@@ -1,8 +1,9 @@
 ---
-title: "Linux Setup Instructions"
-alwaysopen: true
-weight: 4
+
+order: 4
 ---
+
+# Linux Setup Instructions
 
 # Block Malware
 ## Ubuntu

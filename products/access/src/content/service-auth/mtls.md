@@ -1,7 +1,8 @@
 ---
-title: "Mutual TLS authentication"
-alwaysopen: true
+
 ---
+
+# Mutual TLS authentication
 
 <div class="notices info">
 Cloudflare Access can add mTLS to your application, but it requires a Cloudflare enterprise plan. To enforce mTLS in your application with Access, please contact your Cloudflare Customer Success Manager.
