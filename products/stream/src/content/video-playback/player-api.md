@@ -8,7 +8,7 @@ Multiple attributes can be used together, added one after each other like this:
 
      <stream attribute-1 attribute-2 attribute-3 src="5d5bc37ffcf54c9b82e996823bffbb81"></stream>
 
-## Supported Attributes
+## Supported attributes
 
 <Definitions>
 
@@ -26,7 +26,7 @@ Multiple attributes can be used together, added one after each other like this:
 
 - `controls` <Type>boolean</Type>
 
-  - Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/recipes/custom-player-ui/)
+  - Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/recipes/custom-player-ui/)
 
 - `height` <Type>integer</Type>
 
@@ -126,7 +126,7 @@ Multiple attributes can be used together, added one after each other like this:
 
 ## Events
 
-### Standard Video Element Events
+### Standard video element events
 
 <Definitions>
 
@@ -218,7 +218,7 @@ Stream supports most of the [standardized media element events](https://develope
 
 </Definitions>
 
-### Non-standard Events
+### Non-standard events
 
 Non-standard events are prefixed with `stream-` to distinguish them from standard events.
 

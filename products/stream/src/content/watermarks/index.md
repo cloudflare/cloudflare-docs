@@ -15,23 +15,23 @@ To add watermarks to your videos, first create a Watermark Profile. A watermark 
 * Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
 * The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.
 
-## Quick Start
+## Quick start
 
 Watermark profile has many customizable options. However, the default parameters generally work for most cases. Please see "Profiles" below for more details.
 
 Step 1: Create a profile
 ```bash
-curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
+curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -F file=@/Users/rchen/cloudflare.png \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ```
 Step 2: Specify the profile UID at upload
 ```bash
 tus-upload --chunk-size 5242880 \
---header X-Auth-Key {api-key} \
---header X-Auth-Email {email} \
---metadata watermark {watermark-uid} \
-/Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
+--header X-Auth-Key $APIKEY \
+--header X-Auth-Email $EMAIL \
+--metadata watermark $WATERMARKUID \
+/Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 Step 3: Done
 ![Watermarked Video](./cat.png)
@@ -42,7 +42,7 @@ To create, list, delete, or get information about the profile, you will need you
 [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
 and your email address.
 
-### Optional Parameters
+### Optional parameters
 
 | Parameter | Type | Default | Explanation |
 |-|-|-|-|
@@ -52,27 +52,27 @@ and your email address.
 | scale | percentage | 0.15 | The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.<br/><br/>The algorithm will make sure that the watermark will look about the same size across videos with different dimensions. |
 | position | string | upperRight | Location of the watermark. Valid positions are: "upperRight", "upperLeft", "lowerLeft", "lowerRight", and "center." Note that "center" will ignore the "padding" parameter. |
 
-## Creating a Watermark Profile
+## Creating a Watermark profile
 
 ### Use Case 1: Upload a local image file directly
 
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
 ```bash
-curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
+curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -F file=@{path-to-image-locally} \
 -F name='marketing videos' \
 -F opacity=1.0 \
 -F padding=0.05 \
 -F scale=0.15 \
 -F position=upperRight \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ```
 
 ### Use Case 2: Pass a URL to an image
 
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
 ```bash
-curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
+curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -H 'Content-Type: application/json' \
 -d '{
   "url": "{url-to-image}",
@@ -82,10 +82,10 @@ curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
   "scale": 0.15,
   "position": "upperRight"
 }' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ```
 
-#### Example Response to Creating a Watermark Profile
+#### Example response to creating a watermark profile
 
 ```json
 {
@@ -109,29 +109,29 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks
 ```
 `downloadedFrom` will be populated if the profile was created via downloading from URL.
 
-## Using a Watermark Profile on a Video
+## Using a watermark profile on a video
 
 Once you created a watermark profile, you can now use the profile at upload time for watermarking videos.
 
-### Simple Uploads
+### Simple uploads
 
 Unfortunately, Stream does not currently support specifying watermark profile at upload time for Simple Uploads.
 
-### Upload Video With a Link
+### Upload video with a link
 
 ```bash
-curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
+curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -H 'Content-Type: application/json' \
 -d '{
   "url": "{url-to-video}",
   "watermark": {
-    "uid": "{watermark-uid}"
+    "uid": "$WATERMARKUID"
   }
 }' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 ```
 
-#### Example Response to Upload Video With a Link
+#### Example response to upload video with a link
 
 ```json
 {
@@ -160,29 +160,29 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
 }
 ```
 
-### Upload Video With TUS
+### Upload video with TUS
 ```bash
 tus-upload --chunk-size 5242880 \
---header X-Auth-Key {api-key} \
---header X-Auth-Email {email} \
---metadata watermark {watermark-uid} \
-{path-to-video} https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
+--header X-Auth-Key $APIKEY \
+--header X-Auth-Email $EMAIL \
+--metadata watermark $WATERMARKUID \
+$PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
-### Direct User Uploads
+### Direct user uploads
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
 ```bash
-curl -X POST -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
+curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -H 'Content-Type: application/json' \
 -d '{
   "maxDurationSeconds": 3600,
   "watermark": {
-    "uid": "{watermark-uid}"
+    "uid": "$WATERMARKUID"
   }
 }' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 ```
-#### Example Response to Direct User Uploads
+#### Example response to direct user uploads
 ```json
 {
   "result": {
@@ -210,13 +210,13 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload
 `watermark` will be `null` if no watermark was specified.
 
 
-## Get a Watermark Profile
+## Get a watermark profile
 To view a watermark profile that you created:
 ```bash
-curl -X GET -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks/{watermark-uid}
+curl -X GET -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
 ```
-#### Example Response to Get a Watermark Profile
+#### Example response to get a watermark profile
 ```json
 {
   "result": {
@@ -238,13 +238,13 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks/{wa
 }
 ```
 
-## List Watermark Profiles
+## List watermark profiles
 To list watermark profiles that you created:
 ```bash
-curl -X GET -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks/
+curl -X GET -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 ```
-#### Example Response to List Watermark Profiles
+#### Example response to list watermark profiles
 ```json
 {
   "result": [
@@ -281,12 +281,12 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks/
 }
 ```
 
-## Delete a Watermark Profiles
+## Delete a  watermark profile
 
-To delete a watermark profiles that you created:
+To delete a watermark profile that you created:
 ```bash
-curl -X DELETE -H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/watermarks/{watermark-uid}
+curl -X DELETE -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
 ```
 If the operation was successful, it will return a success response:
 ```json

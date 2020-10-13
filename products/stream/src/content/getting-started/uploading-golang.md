@@ -1,6 +1,6 @@
 # Uploading with Golang
 
-## What You Will Need
+## What you will need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
@@ -30,8 +30,8 @@ func main() {
 	defer f.Close()
 
 	headers := make(http.Header)
-	headers.Add("X-Auth-Email", "{EMAIL}")
-	headers.Add("X-Auth-Key", "{API KEY}")
+	headers.Add("X-Auth-Email", "$EMAIL")
+	headers.Add("X-Auth-Key", "$APIKEY")
 
 	config := &tus.Config{
 		ChunkSize:           5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.

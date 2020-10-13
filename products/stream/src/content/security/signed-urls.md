@@ -19,12 +19,12 @@ You can [revoke a key](#revoking-keys) anytime for any reason.
 Upon creation you will get a RSA private key in PEM and JWK formats. Keys are created, used and deleted independently of videos. Every key can sign any of your videos.
 
 ```javascript
-// curl -X POST -H "X-Auth-Email: ${EMAIL}" -H "X-Auth-Key: ${API-KEY}"  "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/keys"
+// curl -X POST -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $APIKEY"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys"
 
 {
   "result": {
-    "id": "{KEY-ID}",
-    "pem": "{PRIVATE-KEY-IN-PEM-FORMAT}",
+    "id": "$KEYID",
+    "pem": "$PRIVATE_KEY_IN_PEM_FORMAT",
     "jwk": "{PRIVATE-KEY-IN-JWK-FORMAT}",
     "created": "{TIMESTAMP}"
   },
@@ -36,17 +36,17 @@ Upon creation you will get a RSA private key in PEM and JWK formats. Keys are cr
 
 ## Making a video require signed URLs
 
-Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/{VIDEO-ID}`, from working.
+Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/$VIDEOID`, from working.
 
 Restricting viewing can be done by updating the video's metadata.
 
 ```javascript
 
-// curl -X POST -H "X-Auth-Email: ${EMAIL}" -H "X-Auth-Key: ${API-KEY}"  "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{VIDEO-ID}" -H "Content-Type: application/json" -d '{"uid": "{VIDEO-ID}", "requireSignedURLs": true }'
+// curl -X POST -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $APIKEY"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d '{"uid": "$VIDEOID", "requireSignedURLs": true }'
 
 {
   "result": {
-    "uid": "<{VIDEO-ID}>",
+    "uid": "$VIDEOID",
     ...
     "requireSignedURLS": true
   },
@@ -84,7 +84,7 @@ Note that the `<script>` tag present in other documentation examples must be pre
 We offer a utility at `https://util.cloudflarestream.com/sign` to generate tokens when getting familiar with signed URLs.
 
 ```javascript
-curl -X POST "https://util.cloudflarestream.com/sign/{VIDEO-ID}" -d '{"id": "{KEY-ID}", "pem": "{PRIVATE-KEY-IN-PEM-FORMAT}","nbf":1537453165,"exp":1537460365}'
+curl -X POST "https://util.cloudflarestream.com/sign/$VIDEOID" -d '{"id": "$KEYID", "pem": "$PRIVATE_KEY_IN_PEM_FORMAT","nbf":1537453165,"exp":1537460365}'
 ```
 
 This endpoint accepts JSON bodies with the output from [Creating a signing key](#creating-a-signing-key) or any object with `pem` and `kid` attributes. To add a constraint, include it as a property of the body.
@@ -100,10 +100,10 @@ var jwt = require('jsonwebtoken');
 
 var token = jwt.sign(
 
-  { kid: "{KEY-ID}",
-    sub: "{VIDEO-ID}",
+  { kid: "$KEYID",
+    sub: "$VIDEOID",
   },
-  Buffer.from("{PRIVATE-KEY-IN-PEM-FORMAT}",'base64'),
+  Buffer.from("$PRIVATE_KEY_IN_PEM_FORMAT",'base64'),
   {
     expiresIn: '1h', // or preferred expiry time. Note that this should be longer than the duration of the video
     algorithm: 'RS256',
@@ -115,7 +115,7 @@ var token = jwt.sign(
 console.log(token)
 ```
 
-### Debugging Signed Tokens
+### Debugging signed tokens
 
 If your token is not behaving as expected when tested against our server, some information is surfaced which is a good place to start.
 
@@ -137,7 +137,7 @@ You can create up to 1,000 keys and rotate them at your convenience.
 Once revoked all tokens created with that key will be invalidated.
 
 ```javascript
-// curl -X DELETE -H "X-Auth-Email: ${EMAIL}" -H "X-Auth-Key: ${API-KEY}"  "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/keys/{KEY-ID}"
+// curl -X DELETE -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $APIKEY"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys/$KEYID"
 
 {
   "result": "Revoked",
@@ -177,9 +177,9 @@ type claims struct {
 	NotBefore jwt.NumericDate `json:"nbf,omitempty"`
 }
 
-const videoID = "{VIDEO-ID}"
-const keyID = "{KEY-ID}"
-const privateKey = "{PRIVATE-KEY-IN-PEM-FORMAT}"
+const videoID = "$VIDEOID"
+const keyID = "$KEYID"
+const privateKey = "$PRIVATE_KEY_IN_PEM_FORMAT"
 const expiresIn = time.Hour
 
 func main() {
@@ -238,8 +238,8 @@ To be noted, the code snippet contain an `accessRules` that allow only UK user t
 
 // Global variables
 const jwkKey = '{PRIVATE-KEY-IN-JWK-FORMAT}'
-const keyID = '{KEY-ID}'
-const videoID = '{video-ID}'
+const keyID = '$KEYID'
+const videoID = '$VIDEOID'
 // expiresTimeInS is the expired time in second of the video
 const expiresTimeInS = 3600
 

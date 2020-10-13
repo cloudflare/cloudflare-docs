@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Player & Playback
+# Player and playback
 
 Stream comes with a standard web player with a number of features built in:
 
@@ -22,7 +22,7 @@ Stream comes with a standard web player with a number of features built in:
 
 You can have your videos autoplay without any controls displayed, by modifying the HTML tag attributes.
 
-[Learn more](/stream/video-playback/player-api/) about `<stream>` element attributes.
+[Learn more](/video-playback/player-api/) about `<stream>` element attributes.
 
     <stream src="5d5bc37ffcf54c9b82e996823bffbb81" autoplay muted preload height="240px" width="480px"></stream>
     <script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=5d5bc37ffcf54c9b82e996823bffbb81"></script>
@@ -33,13 +33,13 @@ You can have your videos autoplay without any controls displayed, by modifying t
 
 Stream player comes with a standards-compliant Javascript API. You can use the API to interact with the player using Javascript in the browser. Stream player supports calls such as `player.play();` and `player.currentTime = 120;`.
 
-[Learn more](/stream/recipes/javascript-api/) about the Javascript API.
+[Learn more](/recipes/javascript-api/) about the Javascript API.
 
 ## Building a custom user interface
 
 You can build any custom user interface on top of the Stream player. Below is a simple player with a simple play/pause button overlay and no other controls.
 
-[Learn more](/stream/recipes/custom-player-ui/) about how to create a custom player UI.
+[Learn more](/recipes/custom-player-ui/) about how to create a custom player UI.
 
 <div dangerouslyInsertInnerHTML={{__html: `<div id="player-wrapper">
    <stream src="5d5bc37ffcf54c9b82e996823bffbb81" preload height="270px" width="480px"></stream>
