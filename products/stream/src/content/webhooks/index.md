@@ -57,7 +57,7 @@ curl --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 ```
 
-#### Example response to get the webhook subscription
+### Example response to get the webhook subscription
 
 ```bash
 {
@@ -83,7 +83,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 If there is an entry in `errors` response field, the webhook has not been
 deleted, and the request should be re-tried.
 
-#### Example response to delete the webhook subscription
+### Example response to delete the webhook subscription
 
 ```bash
 {
@@ -101,7 +101,7 @@ request notification with information about the video.
 
 Note the `status` field indicates whether the video processing finished successfully.
 
-#### Example POST request body sent in response to successful encoding
+### Example POST request body sent in response to successful encoding
 
 ```bash
 {
