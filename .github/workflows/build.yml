@@ -114,7 +114,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-access:
     runs-on: ubuntu-latest
@@ -134,7 +133,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-analytics:
     runs-on: ubuntu-latest
@@ -154,7 +152,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-argo-tunnel:
     runs-on: ubuntu-latest
@@ -174,7 +171,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-byoip:
     runs-on: ubuntu-latest
@@ -194,7 +190,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-distributed-web:
     runs-on: ubuntu-latest
@@ -214,7 +209,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-docs-engine:
     runs-on: ubuntu-latest
@@ -253,7 +247,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-gateway:
     runs-on: ubuntu-latest
@@ -273,7 +266,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-http3:
     runs-on: ubuntu-latest
@@ -293,7 +285,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-images:
     runs-on: ubuntu-latest
@@ -332,7 +323,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-load-balancing:
     runs-on: ubuntu-latest
@@ -352,7 +342,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-logs:
     runs-on: ubuntu-latest
@@ -372,7 +361,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-magic-transit:
     runs-on: ubuntu-latest
@@ -392,7 +380,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-mobile-sdk:
     runs-on: ubuntu-latest
@@ -412,7 +399,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-network-interconnect:
     runs-on: ubuntu-latest
@@ -432,7 +418,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-randomness-beacon:
     runs-on: ubuntu-latest
@@ -452,7 +437,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-registrar:
     runs-on: ubuntu-latest
@@ -472,7 +456,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-spectrum:
     runs-on: ubuntu-latest
@@ -492,7 +475,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-ssl:
     runs-on: ubuntu-latest
@@ -512,7 +494,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-stream:
     runs-on: ubuntu-latest
@@ -532,7 +513,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-tenant:
     runs-on: ubuntu-latest
@@ -552,7 +532,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
 
   build-terraform:
     runs-on: ubuntu-latest
@@ -591,10 +570,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   build-waf:
     runs-on: ubuntu-latest
@@ -614,10 +589,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
   build-workers:
     runs-on: ubuntu-latest
