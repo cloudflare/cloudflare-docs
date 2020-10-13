@@ -1,5 +1,5 @@
 ---
-weight: 100
+order: 100
 ---
 
 # License
