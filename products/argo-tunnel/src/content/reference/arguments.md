@@ -144,7 +144,7 @@ Default: `false`
 
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted. 
 
-<Notice type="note">
+<Aside>
 
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
 </Aside>
