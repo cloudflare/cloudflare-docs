@@ -1,6 +1,7 @@
 ---
 title: "Quick start"
-weight: 1
+order: 1
+hidden: true
 ---
 
 import appLaunchGIF from '../static/app-launch/app-launch.gif'

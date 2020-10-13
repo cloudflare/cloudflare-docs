@@ -1,8 +1,10 @@
 ---
-title: "Audit Logs"
-alwaysopen: true
-weight: 12
+
+order: 12
 ---
+
+# Audit Logs
+
 Cloudflare Access generates two types of audit logs:
 
 * **Authentication audit logs** maintain a record of authentication events.

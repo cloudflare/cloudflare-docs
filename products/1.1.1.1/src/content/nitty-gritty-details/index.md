@@ -1,7 +1,8 @@
 ---
-title: The Nitty Gritty
-weight: 8
+order: 8
 ---
+
+# The Nitty Gritty
 
 ## ANY
 

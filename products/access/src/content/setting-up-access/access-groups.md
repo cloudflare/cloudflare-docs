@@ -1,8 +1,9 @@
 ---
-title: "Access Groups"
-alwaysopen: true
+
 hidden: true
 ---
+
+# Access Groups
 
 Access Groups define a set of users that can be added to an Access policy. You can reuse Access Groups to quickly create policies and apply them to the same set of users.
 

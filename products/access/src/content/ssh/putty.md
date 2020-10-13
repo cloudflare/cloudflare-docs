@@ -1,8 +1,9 @@
 ---
-title: "Connecting from a PuTTY Client"
-alwaysopen: true
-weight: 12
+
+order: 12
 ---
+
+# Connecting from a PuTTY Client
 
 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) is a free implementation of SSH for Windows and Unix platforms. You can configure your machine to use PuTTy to connect to an SSH host secured with Cloudflare Access.
 

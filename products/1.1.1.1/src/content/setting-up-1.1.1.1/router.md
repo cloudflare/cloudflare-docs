@@ -1,6 +1,8 @@
 ---
-title: Router
+order: 8
 ---
+
+# Router
 
 Follow this quick guide to start using 1.1.1.1 on your router.
 

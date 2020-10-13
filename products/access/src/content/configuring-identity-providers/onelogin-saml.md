@@ -1,8 +1,9 @@
 ---
-title: "OneLogin SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# OneLogin SAML
+
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML IdP.
 
 ## Set up OneLogin SAML as your IdP

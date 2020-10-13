@@ -1,7 +1,8 @@
 ---
-title: "JSON Web Tokens (JWT)"
-alwaysopen: true
+
 ---
+
+# JSON Web Tokens (JWT)
 
 JSON Web Tokens (JWTs) are an open standard for securely sharing user information in the form of JSON objects. JWTs are digitally signed using a secret, so the information can be verified and trusted.
 

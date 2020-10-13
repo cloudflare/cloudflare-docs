@@ -1,8 +1,10 @@
 ---
-title: "Walkthrough videos"
 alwaysopen: false
-weight: 2
+order: 100
+hidden: true
 ---
+
+# Walkthrough videos
 
 ### Set up Cloudflare
 [Video tutorials](/access/videos/using-cloudflare/) for adding a site to Cloudflare which can be used for Cloudflare Access.

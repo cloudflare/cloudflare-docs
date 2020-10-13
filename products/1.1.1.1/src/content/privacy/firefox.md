@@ -1,7 +1,8 @@
 ---
-title: Cloudflare Resolver for Firefox
-weight: 2
+order: 2
 ---
+
+# Cloudflare Resolver for Firefox
 
 ## FREQUENTLY ASKED QUESTIONS ABOUT THE CLOUDFLARE RESOLVER FOR FIREFOX
 

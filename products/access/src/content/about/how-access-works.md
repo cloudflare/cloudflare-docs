@@ -1,35 +1,40 @@
 ---
-title: "How Access works"
+order:2
 ---
 
-Cloudflare Access evaluates requests to your application and determines whether visitors are authorized based on policies you define.
+# How Access Workers
+
+Cloudflare Access evaluates requests to internal and SaaS applications and determines whether visitors are granted access based on pre-defined rules.
 
 ![Access Generic](../static/summary/network-diagram.png)
 
-Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead of placing internal tools on a private network, teams deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
+Instead of placing internal tools on private networks (VPNs), teams deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s Edge network. Unlike VPNs, deploying Access does not require exposing new holes in corporate firewalls.
 
-Administrators build rules to decide who should be able to reach the tools protected by Access. In turn, when users need to connect to those tools, they are prompted to authenticate with their team’s identity provider. Cloudflare Access checks their login against the configured policy rules of allowed users and, if permitted, allows the request to proceed.
+Once apps are secured behind the Edge, administrators build rules in Access to decide who should be able to reach them. When users need to connect to those apps, they are prompted to authenticate with any configured identity providers. Cloudflare Access checks their login against established rules of allowed users and, if permitted, allows the request to proceed.
 
-Deploying Access does not require exposing new holes in corporate firewalls. Teams connect resources to Cloudflare through a secure outbound connection, Argo Tunnel, which runs in your infrastructure to connect the applications and machines to Cloudflare. That tunnel makes outbound-only calls to the Cloudflare network and organizations can replace complex firewall rules with just one: disable all inbound connections.
+Access also supports other common connections and protocols, including SSH and RDP. To prevent attackers addressing IPs directly, Access seamlessly integrates with Cloudflare Argo Tunnel, which runs in your infrastructure to connect the applications and machines to Cloudflare. Argo Tunnel makes outbound-only calls to the Cloudflare network—this enables organizations to replace complex firewall rules with just one: disable all inbound connections.
+With all login activity tracked through Cloudflare, all events are logged, allowing administrators to see rich information about who attempted to reach applications.
 
-To defend against attackers addressing IPs directly, Argo Tunnel can help secure the resource and force outbound requests through Cloudflare Access. With Argo Tunnel and firewall rules preventing inbound traffic, no request can reach those IPs without first hitting Cloudflare, where Access can evaluate the request for authentication.
+## How Access Works With Self-Hosted Applications
 
-<stream src="16c1aae7bf7f50c648fec8afa6b7f6fa" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=16c1aae7bf7f50c648fec8afa6b7f6fa"></script>
+Access connects teams to their internal applications through a secure outbound connection, Argo Tunnel, which runs in your infrastructure and connects the applications and machines to Cloudflare. Tunnel makes outbound-only calls to the Cloudflare network, which allows organizations to replace complex firewall rules with just one: disable all inbound connections.
 
-## Access login flow
+Administrators then build rules to decide who should authenticate to and reach the tools protected by Access. Whether those resources are virtual machines powering business operations or internal web applications, like Jira or iManage, when a user needs to connect, they pass through Cloudflare first.
 
-When users connect to an application, Cloudflare Access checks their request for authentication in the form of a JSON Web Token (JWT) that Cloudflare generates and signs. The token is either stored as a cookie in the browser called `CF_AUTHORIZATION` or sent as a request header.
+When users request access to an internal application behind Cloudflare Access, they are prompted to authenticate with their team’s SSO. If the request is valid, the user instantly connects to the application. Access integrates with popular identity providers, like GSuite and Okta, so that you don’t have to manage a new set of credentials.
 
-If the user does not yet have a token, Cloudflare Access redirects them to the identity provider configured for their organization. The user can login and will be redirected to Cloudflare, where a token will be issued. Cloudflare Access then checks the identity in that token against the rules configured to determine if the user can proceed.
+Every request made to those internal tools hits Cloudflare first, where we enforce identity-based policies. Access evaluates and logs every request to those apps for identity, giving administrators more visibility and security than a traditional VPN.
 
-## Secure your origin server
+## How Access Works With SaaS Applications
 
-To secure your application with Access's edge-based control, it is important that no one can access your origin server directly. When using Access, secure your origin server as follows:
+![Access Generic](../static/summary/saas-app.png)
 
-1. **Force all requests to your origin server through Cloudflare's network** using one of the  methods below:
-    * **Set up Argo Tunnel**. Argo Tunnel offers an easy way to securely expose web servers to the Internet without opening firewall ports and configuring access control lists. For details see [_Getting started_](https://developers.cloudflare.com/argo-tunnel/quickstart/) in the Argo Tunnel developers documentation.
-    
-    * **Limit connections to the origin** so that only connections from [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are allowed.
+Many applications rely on a popular standard, SAML, to securely exchange identity data and user attributes between two systems. Cloudflare Access uses that relationship to force SaaS logins through Cloudflare’s network by acting as the SAML identity provider.
 
-1. **Validate JSON web tokens (JWTs).** Validating the header alone is not sufficient. You must also confirm the JWT and signature to avoid identity spoofing. For more, see [_Validating JSON web tokens_](https://developers.cloudflare.com/access/setting-up-access/validate-jwt-tokens/).
+When users attempt to log in to the application, the application sends the user to log in with Cloudflare Access. Access then redirects the user to the identity provider, in the same way that it does when users request a site that uses Cloudflare’s reverse proxy. This way, Access can apply the additional contextual rules and log the event.
+
+The way Access provides a standard proof of identity is by generating a JWT for every login. The JWT is then converted through Cloudflare Workers into a SAML assertion that is sent to the SaaS application. The application receiving the SAML assertion will then treat Access as the identity provider, even though it is aggregating identity signals from the user’s SSO provider and other sources into the JWT, and sending that summary to the app via SAML.
+ 
+
+ 
+

@@ -1,7 +1,8 @@
 ---
-title: Supporting IPv6-only Networks  
-weight: 9
+order: 9
 ---
+
+# Supporting IPv6-only Networks  
 
 IPv4 addresses are going away but networks still need to support them alongside IPv6 addresses. Networks usually deploy something called a dual-stack network to manage this transition. In dual-stack networks, the network expects only IPv6 addresses but still have a way to translate IPv4 addresses if it sees one. One of the components of a dual-stack network is DNS64. DNS64 allows configuring a DNS resolver to synthesize IPv6 addresses from IPv4 answers. DNS64 only does that when an AAAA record does not exist for a domain. 
 

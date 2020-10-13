@@ -1,15 +1,18 @@
 ---
-title: Kubernetes Sidecar Model
-weight: 20
+order: 20
+hidden: true
 ---
 
+# Kubernetes Sidecar Model
 
-<Aside>
+import {Notice} from 'cf-gatsby-theme'
+
+<Notice>
 
 Running Argo Tunnel in a sidecar model is meant as an
 alternative to the Argo Tunnel Ingress Controller. The two should not be used
 simultaneously.
-</Aside>
+</Notice>
 
 ### sidecar model background
 A Kubernetes [pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/) consists of
@@ -78,15 +81,11 @@ deployment of a Pod to a given cluster. In the sidecar model,
 configuration file must include the arguments used to start Argo Tunnel,
 as well as the reference to the generated secret.
 
-Additionally, you will need to use the flag `--no-auto-update` to ensure that the
-`cloudflared` update process does not cause the container to crash on launch. In
-some cases, the auto-update flow can cause the container to launch a new process
+Additionally, you will need to use the flag `--no-auto-update` to ensure that the 
+`cloudflared` update process does not cause the container to crash on launch. In 
+some cases, the auto-update flow can cause the container to launch a new process 
 as PID 1, which causes the container to crash.
 
-<!-- TODO: uncomment -->
-<!-- Something about the formatting here was breaking the build. -->
-
-<!--
 ```yaml
 ---
 apiVersion: v1
@@ -187,7 +186,6 @@ spec:
           secretName: example.com
 ---
 ```
--->
 
 The example file above defines the deployment of "hello" as both a
 container and a service that will serve requests on port 8080. Below those

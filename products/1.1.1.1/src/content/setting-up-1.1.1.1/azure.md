@@ -1,6 +1,8 @@
 ---
-title: Azure
+order: 2
 ---
+
+# Azure
 
 Follow this quick guide to start using 1.1.1.1 on Microsoft  Azure.
 

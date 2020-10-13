@@ -1,7 +1,8 @@
 ---
-title: "Remote Desktop Protocol"
-alwaysopen: true
+
 ---
+
+# Remote Desktop Protocol
 
 The Remote Desktop Protocol (RDP) allows end users to connect to a desktop from a different machine.
 
