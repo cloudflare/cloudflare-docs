@@ -1,6 +1,5 @@
 ---
-
-order: 5.5
+order: 6
 ---
 
 # Endpoint Integration
