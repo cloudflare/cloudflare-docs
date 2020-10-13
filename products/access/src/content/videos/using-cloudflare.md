@@ -1,6 +1,5 @@
 ---
-
-order: 1
+order: 2
 ---
 
 # Set up Cloudflare
