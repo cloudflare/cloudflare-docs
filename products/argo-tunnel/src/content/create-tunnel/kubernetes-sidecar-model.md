@@ -86,9 +86,6 @@ Additionally, you will need to use the flag `--no-auto-update` to ensure that th
 some cases, the auto-update flow can cause the container to launch a new process
 as PID 1, which causes the container to crash.
 
-<!-- Temporarily comment out to fix the build @TownLake -->
-
-<!--
 ```yaml
 ---
 apiVersion: v1
@@ -189,12 +186,9 @@ spec:
           secretName: example.com
 ---
 ```
--->
 
 The example file above defines the deployment of "hello" as both a
 container and a service that will serve requests on port 8080. Below those
 definitions, the file sets arguments for `cloudflared`
 `--url` specifies the destination of proxied requests
 `--hostname` specifies the DNS hostname exposed to the public internet
-
-
