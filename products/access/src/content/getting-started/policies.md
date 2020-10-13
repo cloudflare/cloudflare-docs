@@ -70,11 +70,11 @@ To make any changes to an application’s policies:
 
 
 
-<!-- import {Notice} from 'cf-gatsby-theme'
+<!-- 
 
-<Notice>
+<Aside>
 
 If you configure one policy for an application, and then decide to delete that one policy, Access will block everyone from reaching that application, by default. When clicking Delete on the only policy you have configured for an application, you will be asked to confirm that you wish to save the application without policies.
-</Notice> -->
+</Aside> -->
 
 

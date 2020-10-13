@@ -4,17 +4,17 @@ order: 4
 
 # Access Groups
 
-import {Notice} from 'cf-gatsby-theme'
+
 
 Access Groups define a set of rules that can be defined once and then quickly applied across many applications. You can select an Access Group as an attribute in any Policy rule, and all the criteria from the selected Access Group will apply to that application. 
 
 Imagine you want to grant access to your applications to your team based in Lisbon, Portugal. In order to avoid building the same set of rules over and over across your applications, you can create an Access Group called `lisbon-team`, which comprises an Include rule granting access to everyone in Portugal, and a Require rule restricting access to users whose email ends in `@team.com`.
 
-<Notice>
+<Aside>
 
 Access Groups are distinct from groups in your identity provider, like Okta groups. Access Groups can contain a mix of individual users, groups from identity providers, and service authentication options like service tokens.
 
-</Notice>
+</Aside>
 
 ![Access Groups](../static/summary/access-groups.png)
 

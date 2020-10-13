@@ -4,12 +4,12 @@ order: 110
 
 # Exposing Docker Containers
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 Argo Tunnel support for Docker is in Beta.
-</Notice>
+</Aside>
 
 You can use Argo Tunnel to expose applications running in Docker containers through Cloudflare's
 edge, just like any other origin. Since this requires running 2 services in one container (your

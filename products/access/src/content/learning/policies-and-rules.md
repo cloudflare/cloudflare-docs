@@ -98,12 +98,12 @@ To add an MFA requirement to your application, follow the instructions below.
 5. Save the rule.
 
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 **What happens if the user fails to present the required MFA method?**
 
 Cloudflare Access will reject the user, even if they successfully login to the identity provider with an alternative method.
-</Notice>
+</Aside>
 

@@ -72,9 +72,9 @@ Before you begin using your application through Access, your last step is to int
 
 ## Connecting Self-Hosted Applications
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Before you start</b>
@@ -82,7 +82,7 @@ import {Notice} from 'cf-gatsby-theme'
 * **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">Add a website to Cloudflare</a>**   
 * **<a href="https://support.cloudflare.com/hc/articles/205195708">Change your domain nameservers to Cloudflare</a>**  
 
-</Notice>
+</Aside>
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet, by providing an authentication layer using your existing identity providers to control who has access to your applications.
 
