@@ -4,10 +4,7 @@ order: 1
 
 # Set up Cloudflare Access
 
-
-
 <Aside>
-
 
 <b>Before you start</b>
 
@@ -15,8 +12,6 @@ order: 1
 * **<a href="https://support.cloudflare.com/hc/articles/205195708">Change your domain nameservers to Cloudflare</a>**  
 
 </Aside>
-
-## Setup
 
 Follow these steps to set up Cloudflare Access.
 1. Navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com/).

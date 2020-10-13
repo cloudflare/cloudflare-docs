@@ -14,7 +14,7 @@ Self-hosted apps include your internal tools and applications, such as Jira or G
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
 
-### 1. Add And Configure Your App
+### 1. Add Your App
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to the **Applications** tab.
 2. Click **Add an application**.
@@ -46,7 +46,7 @@ You can either:
 
 9. Click **Next**.
 
-### 2. Add a policy for your app
+### 2. Add a policy
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies section](/getting-started/policies/).
@@ -72,10 +72,7 @@ Before you begin using your application through Access, your last step is to int
 
 ## Connecting Self-Hosted Applications
 
-
-
 <Aside>
-
 
 <b>Before you start</b>
 
@@ -90,7 +87,7 @@ Before you begin setting up your self-hosted application, you will need an activ
 
 Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Cloudflare Argo Tunnel](/learning/access-tunnel/). If you do not wish to use Cloudflare Argo Tunnel, you must [validate the token](/learning/json-web-tokens/) issued by Cloudflare on your origin.
 
-### 1. Add And Configure Your App
+### 1. Add Your App
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to the **Applications** tab.
 2. Click **Add an application**.
 3. Select **Self-hosted**.
@@ -117,7 +114,7 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 
 9. Click **Next**.
 
-### 2. Add a policy for your app
+### 2. Add a policy
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies section](/getting-started/policies/).

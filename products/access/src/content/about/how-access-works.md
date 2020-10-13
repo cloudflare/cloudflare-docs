@@ -15,7 +15,7 @@ Once apps are secured behind the Edge, administrators build rules in Access to d
 Access also supports other common connections and protocols, including SSH and RDP. To prevent attackers addressing IPs directly, Access seamlessly integrates with Cloudflare Argo Tunnel, which runs in your infrastructure to connect the applications and machines to Cloudflare. Argo Tunnel makes outbound-only calls to the Cloudflare network—this enables organizations to replace complex firewall rules with just one: disable all inbound connections.
 With all login activity tracked through Cloudflare, all events are logged, allowing administrators to see rich information about who attempted to reach applications.
 
-## How Access Works With Self-Hosted Applications
+## Self-Hosted Applications
 
 Access connects teams to their internal applications through a secure outbound connection, Argo Tunnel, which runs in your infrastructure and connects the applications and machines to Cloudflare. Tunnel makes outbound-only calls to the Cloudflare network, which allows organizations to replace complex firewall rules with just one: disable all inbound connections.
 
@@ -25,7 +25,7 @@ When users request access to an internal application behind Cloudflare Access, t
 
 Every request made to those internal tools hits Cloudflare first, where we enforce identity-based policies. Access evaluates and logs every request to those apps for identity, giving administrators more visibility and security than a traditional VPN.
 
-## How Access Works With SaaS Applications
+## SaaS Applications
 
 ![Access Generic](../static/summary/saas-app.png)
 
