@@ -5,14 +5,14 @@ hidden: true
 
 # Kubernetes Sidecar Model
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 Running Argo Tunnel in a sidecar model is meant as an
 alternative to the Argo Tunnel Ingress Controller. The two should not be used
 simultaneously.
-</Notice>
+</Aside>
 
 ### sidecar model background
 A Kubernetes [pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/) consists of

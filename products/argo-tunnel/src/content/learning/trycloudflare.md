@@ -35,12 +35,12 @@ With TryCloudflare, you can:
 
 #### Why does Cloudflare provide this service for free?
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 Free tunnels are meant to be used for testing and development, not for deploying a production website. We don’t guarantee any SLA or uptime of TryCloudflare.
-</Notice>
+</Aside>
 
 * With TryCloudflare, we hope you experience the speed and security improvements of Argo Tunnel (and Argo Smart Routing) and decide to add it to your production sites.
 

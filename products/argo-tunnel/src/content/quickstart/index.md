@@ -5,7 +5,7 @@ hidden: true
 
 # Getting Started
 
-import {Notice} from 'cf-gatsby-theme'
+
 
 Argo Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Argo Tunnel also ensures requests route through Cloudflare before reaching the web server so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation and authenticated with Access if you've enabled those features for your account.
 
@@ -27,10 +27,10 @@ Argo Tunnel uses Argo Smart Routing technology to route traffic over the fastest
 
 To begin using Argo Smart Routing, navigate to the <a href="https://dash.cloudflare.com/?zone=traffic" target="_blank">Traffic tab of the Cloudflare dashboard</a>, click the 'Enable' button, and follow the steps on the screen for setting up usage-based billing. 
 
-<Notice>
+<Aside>
 
 Enterprise customers who have enabled Argo will need to contact their Cloudflare representative to have Argo Smart Routing enabled for their account.
-</Notice>
+</Aside>
 
 ### Step 2: Install cloudflared
 `cloudflared` is the software that runs Argo Tunnel. `cloudflared` is available for amd64, x86, and ARMv6 machines in Binary, .deb, and .rpm types. The code for the `cloudflared` client is available on GitHub [here](https://github.com/cloudflare/cloudflared).
@@ -60,10 +60,10 @@ _If the browser fails to open automatically, copy and paste the URL into your br
 
 Once you login, you will see a list of domains associated with your account. Argo Tunnel connects your machine to the Cloudflare network by associating it with a hostname in your Cloudflare account. Locate the domain you wish to use to represent your server and select its name in the table. Once you select the domain, `cloudflared` will automatically install a certificate to authenticate your machine to the Cloudflare network for the specific hostname. Once `cloudflared` installs the certificate, you'll see a "Success" message in your browser, and you can start using `cloudflared` and Argo Tunnel.
 
-<Notice>
+<Aside>
 
 The certificate consists of three components bundled into a single PEM file. One of those components consists of the API key from the user who authenticated. If this user leaves the Cloudflare account or their permissions change, that API key will be invalidated and the tunnel will fail to authenticate. A new certificate will need to be generated.
-</Notice>
+</Aside>
 
 Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem`. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `.cloudflared` directory on your system.
 ```bash

@@ -4,12 +4,12 @@ order: 2
 
 # Mutual TLS Authentication
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 Cloudflare Access can add mTLS to your application, but it requires a Cloudflare enterprise plan. To enforce mTLS in your application with Access, please contact your Cloudflare Customer Success Manager.
-</Notice>
+</Aside>
 
 
 Mutual TLS (mTLS) authentication ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
@@ -194,10 +194,10 @@ The instructions here cover usage with a computer running MacOS.
 
 1. In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
 
-<Notice>
+<Aside>
 
 Warning: this will add the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
-</Notice>
+</Aside>
 
 ```bash
 $ open client.pem
@@ -342,10 +342,10 @@ The instructions here cover usage with a computer running MacOS.
 1. In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
 
 
-<Notice>
+<Aside>
 
 Warning: this will add the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
-</Notice>
+</Aside>
 
 ```bash
 $ open client.pem

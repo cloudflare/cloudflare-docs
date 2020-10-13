@@ -4,14 +4,14 @@ order: 12
 
 # Microsoft Azure AD® (Active Directory)
 
-import {Notice} from 'cf-gatsby-theme'
+
 
 These steps help you set up Azure AD as your identity provider (IdP).
 
-<Notice>
+<Aside>
 
 Azure AD integrates with the Office365 identity service as well as other SaaS applications.
-</Notice>
+</Aside>
 
 1. Sign in to [the Azure dashboard](https://portal.azure.com/).
 2. Click **Azure Active Directory** in the Azure Services section.

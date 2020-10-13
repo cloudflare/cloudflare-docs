@@ -4,9 +4,9 @@ order: 0
 
 # SSH Connections
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Requirements</b>
@@ -15,7 +15,7 @@ import {Notice} from 'cf-gatsby-theme'
 * An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
 * The `cloudflared` daemon installed on both the client machine and the target server
 
-</Notice>
+</Aside>
 
 Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activities like remote command execution.  
 

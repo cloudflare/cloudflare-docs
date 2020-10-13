@@ -1,7 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "cf-gatsby-theme": "^0.3.10",
     "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git"
   },
   "scripts": {
