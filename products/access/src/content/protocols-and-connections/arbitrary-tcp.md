@@ -5,9 +5,9 @@ order: 1
 
 # Arbitrary TCP
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Requirements</b>
@@ -16,7 +16,7 @@ import {Notice} from 'cf-gatsby-theme'
 * An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
 * The `cloudflared` daemon installed on both the client machine and the target server
 
-</Notice>
+</Aside>
 
 Cloudflare Access provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to resources over arbitrary TCP without being on a virtual private network (VPN).
 
@@ -89,8 +89,8 @@ Point the client application to the selected port.
 
 When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
-<Notice>
+<Aside>
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
-</Notice>
+</Aside>
 

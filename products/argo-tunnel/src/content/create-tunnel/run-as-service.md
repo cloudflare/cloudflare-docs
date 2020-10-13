@@ -4,12 +4,12 @@ order: 30
 
 # Run as a service
 
-import {Notice} from 'cf-gatsby-theme'
+
 
 <Notice type="note">
 
 Running `cloudflared` as a service is not yet compatible with creating a Tunnel with a name. Instead, follow the instructions below
-</Notice>
+</Aside>
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
@@ -132,16 +132,16 @@ In some cases, forward slashes should be used to set the explicit path to the ce
 ```yaml
 origincert: C:/cert.pem
 ```
-</Notice>
+</Aside>
 
 <Notice type="note">
 
 Cloudflared will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
-</Notice>
+</Aside>
 
 <Notice type="note">
 
 Cloudflared does not support loading the system certificate pool in Windows.
 To supply a certificate pool to Cloudflared in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
-</Notice>
+</Aside>

@@ -126,12 +126,12 @@ The instructions here cover usage with a computer running MacOS.
 
 1. In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 Warning: this will add the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
-</Notice>
+</Aside>
 
 ```bash
 $ open client.pem
