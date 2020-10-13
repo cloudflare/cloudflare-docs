@@ -20,12 +20,12 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 You are now ready to start configuring your app.
 
-4. Choose an **application name** and set a **session duration**.  
+4. Choose an **application name** and set a **session duration**.
 The session duration will determine the minimum frequency a user will be prompted to authenticate with the configured provider.
 
 ![Set application name](../../static/summary/application-name.png)
 
-5. From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account. 
+5. From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
 6. Scroll down to the **Application logo** card to configure your application logo.
 To add a custom logo, click **Custom** and input a link to your desired image.
@@ -36,7 +36,7 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 
 ![Select identity providers](../../static/summary/idps-saas.png)
 
-9. Click **Next**. 
+9. Click **Next**.
 
 ## 2. Add rules for your app
 
@@ -57,12 +57,12 @@ The **Add rules** step lets you configure rules to control who can access your a
 
 ## 3. Configure advanced settings
 
-The **Setup section** allows you to configure CORS settings. To learn more about CORS, read our [Cross-Origin Resource Sharing (CORS) section](https://developers.cloudflare.com/access/setting-up-access/cors/).
- 
+The **Setup section** allows you to configure CORS settings. To learn more about CORS, read our [Cross-Origin Resource Sharing (CORS) section](/setting-up-access/cors/).
+
  ![Advanced settings](../../static/summary/advanced-settings.png)
 
  Click **Add application**.
 
-Your application is now connected to Access, and will appear in your Applications list. 
+Your application is now connected to Access, and will appear in your Applications list.
 
 

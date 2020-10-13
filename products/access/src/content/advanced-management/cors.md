@@ -27,4 +27,4 @@ To handle CORS headers for the policy protecting the path that requires CORS, na
 * **Access-Control-Allow-Methods** allows you to permit all method types (for example, POST or GET requests).
 * **Access-Control-Allow Headers** allow you to permit all HTTP headers or HTTP headers you define that meet the criteria defined in the **Access-Control-Allow-Origins** or **Access-Control-Allow-Methods** sections.
 
-If you are experiencing issues with Access and CORS, see our [Troubleshooting and FAQ](https://developers.cloudflare.com/access/faq) page.
+If you are experiencing issues with Access and CORS, see our [Troubleshooting and FAQ](/faq) page.

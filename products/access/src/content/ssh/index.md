@@ -14,8 +14,8 @@ Establishing an SSH connection to an Access-protected server requires installing
 
 |Guide|Description|
 |---|---|
-|[SSH Connection](https://developers.cloudflare.com/access/ssh/ssh-guide/)|Guide to connecting a machine to Cloudflare and connecting as an end user over SSH.|
-|[Short-lived certificates](https://developers.cloudflare.com/access/ssh/short-live-cert-server/)|Guide to replacing SSH keys with short-lived certificates from Cloudflare.|
-|[PuTTY Clients](https://developers.cloudflare.com/access/ssh/putty/)|Guide to using a PuTTY client to connect over SSH through Cloudflare Access.|
+|[SSH Connection](/ssh/ssh-guide/)|Guide to connecting a machine to Cloudflare and connecting as an end user over SSH.|
+|[Short-lived certificates](/ssh/short-live-cert-server/)|Guide to replacing SSH keys with short-lived certificates from Cloudflare.|
+|[PuTTY Clients](/ssh/putty/)|Guide to using a PuTTY client to connect over SSH through Cloudflare Access.|
 
-A video guide is [also available](https://developers.cloudflare.com/access/videos/configuring-access/).
+A video guide is [also available](/videos/configuring-access/).

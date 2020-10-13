@@ -11,7 +11,7 @@ You can use Cloudflare Access to require that users log in to certain applicatio
 
 ## Adding authentication methods into the JWT
 
-When users authenticate with their identity provider, the identity provider shares their username with Cloudflare Access. Cloudflare Access writes that value into the [JSON Web Token](https://developers.cloudflare.com/access/setting-up-access/json-web-token/) (JWT) generated for the user.
+When users authenticate with their identity provider, the identity provider shares their username with Cloudflare Access. Cloudflare Access writes that value into the [JSON Web Token](/setting-up-access/json-web-token/) (JWT) generated for the user.
 
 Certain identity providers can also share the multifactor authentication (MFA) method presented by the user to login. Cloudflare Access can add these values into the JWT and force. For example, if the user authenticated with their password and a physical hard key, the identity provider can send a confirmation to Cloudflare Access. Cloudflare Access then stores that method into the same JWT issued to the user.
 

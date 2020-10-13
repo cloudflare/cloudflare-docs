@@ -13,7 +13,7 @@ order: 1
 <b>Requirements</b>
 
 * A Cloudflare account
-* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
+* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare
 * The `cloudflared` daemon installed on client machines
 
 </Aside>
@@ -40,7 +40,7 @@ Follow these instructions to download and install cloudflared in a location that
 cloudflared tunnel login
 ```
 
-`cloudflared` will open a browser window and prompt you to login to your Cloudflare account.  
+`cloudflared` will open a browser window and prompt you to login to your Cloudflare account.
 If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
 2. Once you login, Cloudflare will display the sites that you added to your account.
@@ -51,7 +51,7 @@ If you are working on a machine that does not have a browser, or a browser windo
 
 ## 3. Secure The Subdomain With Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the cluster API server at `cluster.site.com`, build a policy to only allow your team members to connect to that subdomain.
 

@@ -12,12 +12,12 @@ order: 0
 <b>Requirements</b>
 
 * A Cloudflare account
-* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
+* An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare
 * The `cloudflared` daemon installed on both the client machine and the target server
 
 </Aside>
 
-Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activities like remote command execution.  
+Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activities like remote command execution.
 
 This section will cover:
 * Connecting your remote server to Cloudflare
@@ -37,14 +37,14 @@ cloudflared tunnel login
 
 2. Once you login, Cloudflare will display the sites that you added to your account.
 
-3. Select the site you will create a subdomain to represent the machine or server.  
+3. Select the site you will create a subdomain to represent the machine or server.
 For example, if you plan to share the machine at `ssh.site.com` select `site.com` from the list.
 
 4. Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow `cloudflared` to create a DNS record for a subdomain of the site.
 
 ## 2. Secure The Subdomain With Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
 For example, if you share the machine at `ssh.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
 ## 3. Connect The Remote Machine To Cloudflare
@@ -59,7 +59,7 @@ ssh.site.com --url ssh://localhost:22
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
 
-**Common issues**  
+**Common issues**
 Ensure that the machine's firewall permits egress on ports `22`, `80`, `443`, otherwise cloudflared will return an error.
 
 # Connect from a client machine
@@ -75,7 +75,7 @@ cloudflared access ssh-config
 ```
 
 The command will print SSH configuration details in the following format:
- 
+
 ```bash
 Host [your hostname]
 	ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
@@ -122,7 +122,7 @@ Cloudflare Access does not replace SSH key exchange with a Git repository.
 
 ### Service tokens
 
-[Service tokens](https://developers.cloudflare.com/access/access-service-auth/service-tokens/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
+[Service tokens](/access-service-auth/service-tokens/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
 
 ### Securing your connection with Argo Tunnel
 

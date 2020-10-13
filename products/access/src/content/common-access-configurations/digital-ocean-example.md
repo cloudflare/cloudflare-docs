@@ -46,7 +46,7 @@ Now, let's set up an Access policy.
 
 ## Create an Access policy
 
-Cloudflare Access controls who reaches your resource by evaluating every request made to that destination for authentication in the form of a JSON Web Token (JWT). Cloudflare generates this token based on a login event with the [configured IdP](https://developers.cloudflare.com/access/configuring-identity-providers/).
+Cloudflare Access controls who reaches your resource by evaluating every request made to that destination for authentication in the form of a JSON Web Token (JWT). Cloudflare generates this token based on a login event with the [configured IdP](/configuring-identity-providers/).
 
 To use Access, you must have at least one registered domain using its authoritative Domain Name System (DNS) on Cloudflare. You can then generate subdomains to represent the resources protected by Access. We use the domain `widgetcorp.tech` in our example; the subdomain `droplet.widgetcorp.tech` represents the DigitalOcean droplet. You don’t need to configure DNS for that subdomain at this time.
 
@@ -91,7 +91,7 @@ This public key is now always available on this page.
 
 Cloudflare Access takes the identity from a token and short-lived certificates to authorize the user. Access matches rely on the identity that precedes an email domain. For example, if the user identity in your Okta or GSuite IdP is `jdoe@example.com`, Access attempts to match that identity to the Unix user `jdoe`.
 
-Return to the SSH session with your droplet to complete this step. Our example user is `srhea@cloudflare.com`, which matches the Access policy because the identity belongs to the `@cloudflare.com` domain.  
+Return to the SSH session with your droplet to complete this step. Our example user is `srhea@cloudflare.com`, which matches the Access policy because the identity belongs to the `@cloudflare.com` domain.
 
 In a terminal window, issue the following command to ensure that a corresponding Unix user exists:
 
@@ -208,7 +208,7 @@ You can confirm that the DNS record was created by visiting the DNS page in the 
 
 ## Configure your Client SSH connection
 
-On the client side, follow the instructions in [_Connecting over SSH_](https://developers.cloudflare.com/access/ssh/connect-ssh/) to configure the device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, include the following settings in the SSH configuration file:
+On the client side, follow the instructions in [_Connecting over SSH_](/ssh/connect-ssh/) to configure the device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, include the following settings in the SSH configuration file:
 
 ```json
 Host vm.example.com ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-vm.example.com >&2 <&1' Host cfpipe-vm.example.com HostName vm.example.com ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h IdentityFile ~/.cloudflared/vm.example.com-cf_key CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub

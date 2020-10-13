@@ -53,7 +53,7 @@ When configuring a Bypass policy to allow requests to a specific page while prot
 
 ### Non-identity
 
-Non-identity policies enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and [mutual TLS](https://developers.cloudflare.com/access/service-auth/mtls/).
+Non-identity policies enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and [mutual TLS](/service-auth/mtls/).
 
 ## Types of rule decisions
 

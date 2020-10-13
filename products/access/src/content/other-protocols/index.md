@@ -14,6 +14,6 @@ Establishing an arbitrary TCP or SMB connection to an Access-protected server re
 
 |Guide|Description|
 |---|---|
-|[SMB](https://developers.cloudflare.com/access/other-protocols/smb-guide/)|Guide to securing SMB file shares.|
-|[Arbitrary TCP](https://developers.cloudflare.com/access/other-protocols/tcp-guide/)|Guide to proxying arbitrary TCP.|
-|[kubectl](https://developers.cloudflare.com/access/other-protocols/kubectl/)|Guide to protecting Kubernetes API servers.|
+|[SMB](/other-protocols/smb-guide/)|Guide to securing SMB file shares.|
+|[Arbitrary TCP](/other-protocols/tcp-guide/)|Guide to proxying arbitrary TCP.|
+|[kubectl](/other-protocols/kubectl/)|Guide to protecting Kubernetes API servers.|

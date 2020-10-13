@@ -30,17 +30,17 @@ To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.clo
 
 3. Paste the content of the `ca.pem` file in the Certificate content field.
 
-4. Assign the Root CA a name and add the fully-qualified domain names (FQDN) that will use this certificate.   
+4. Assign the Root CA a name and add the fully-qualified domain names (FQDN) that will use this certificate.
 
 These FQDNs will be the hostnames used for the resources being protected in the Access policy. You must associate the Root CA with the FQDN that the application being protected uses.
 
-5. Click **Save**.  
+5. Click **Save**.
 
 If your zone is using an intermediate certificate in addition to the root certificate, upload the entire chain.
 
 6. Once saved, navigate to the application you would like to enforce mTLS on.
 
-7. Create a new (or amend an existing) policy that will enforce mTLS authentication.   
+7. Create a new (or amend an existing) policy that will enforce mTLS authentication.
 
 The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
 
@@ -51,7 +51,7 @@ The policy must be built with a hostname that was associated in the certificate 
 |-|-|
 |**Common Name**|Only client certificates with a specific common name will be allowed to proceed.|
 |**Valid Certificate**|Any client certificate that can authenticate with the Root CA will be allowed to proceed.|
- 
+
 
 ## Test using cURL
 
@@ -76,9 +76,9 @@ You can use Cloudflare's open source tools for private key infrastructure (PKI) 
 
 ## Installing dependencies
 
-The process requires two packages from Cloudflare's PKI toolkit:  
-`cf-ssl`  
-`cfssljson`  
+The process requires two packages from Cloudflare's PKI toolkit:
+`cf-ssl`
+`cfssljson`
 
 You can install these packages from the [Cloudflare SSL GitHub repository](https://github.com/cloudflare/cfssl). You will need a working installation of Go, version 1.12 or later. Alternatively, you can [download the packages](https://github.com/cloudflare/cfssl) directly.
 Use the instructions under Installation to install the toolkit, and ensure that you install all of the utility programs in the toolkit.
@@ -223,9 +223,9 @@ You can use Cloudflare's open source tools for private key infrastructure (PKI) 
 
 ## Installing dependencies
 
-The process requires two packages from Cloudflare's PKI toolkit:  
-`cf-ssl`  
-`cfssljson`  
+The process requires two packages from Cloudflare's PKI toolkit:
+`cf-ssl`
+`cfssljson`
 
 You can install these packages from the [Cloudflare SSL GitHub repository](https://github.com/cloudflare/cfssl). You will need a working installation of Go, version 1.12 or later. Alternatively, you can [download the packages](https://github.com/cloudflare/cfssl) directly.
 Use the instructions under Installation to install the toolkit, and ensure that you install all of the utility programs in the toolkit.

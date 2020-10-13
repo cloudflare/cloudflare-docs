@@ -13,7 +13,7 @@ Cloudflare Access can integrate with endpoint protection providers to check requ
 
 # <a id="tanium"></a>Tanium
 
-Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource. 
+Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource.
 
 ## Tanium Configuration
 
@@ -77,8 +77,8 @@ With Tanium integrated, you can build policies that enforce decisions using sign
 | Managed | Boolean | Validates that the device is managed in your organization's Tanium account. |
 
 1. On the Teams dashboard, navigate to **Access > Applications**.
-2. [Create a new Application](https://developers.cloudflare.com/access/getting-started/applications/) or edit an existing application.
-3. [Build a policy](https://developers.cloudflare.com/access/getting-started/policies/) that contains a rule with an Allow action that includes identity.
+2. [Create a new Application](/getting-started/applications/) or edit an existing application.
+3. [Build a policy](/getting-started/policies/) that contains a rule with an Allow action that includes identity.
 
  For example, a rule that allows users to connect if they are members of your team's email domain.
 
@@ -92,7 +92,7 @@ The rule above will only allow users who are part of your team's email domain an
 
 # <a id="azure-ad"></a>Azure AD
 
-Cloudflare Access can integrate with Azure AD's Conditional Access feature to require that users connect to certain applications from managed devices. To enable, you must integrate Azure AD with Cloudflare Access as a cloud app that requires managed device connections. You can use Cloudflare Access' [per-app IdP feature](https://developers.cloudflare.com/access/configuring-identity-providers/#configuring-applications-to-specific-identity-providers) to segment which Access applications require Azure AD with managed devices and which only require Azure AD.
+Cloudflare Access can integrate with Azure AD's Conditional Access feature to require that users connect to certain applications from managed devices. To enable, you must integrate Azure AD with Cloudflare Access as a cloud app that requires managed device connections. You can use Cloudflare Access' [per-app IdP feature](/configuring-identity-providers/#configuring-applications-to-specific-identity-providers) to segment which Access applications require Azure AD with managed devices and which only require Azure AD.
 
 ## Azure AD Configuration
 
@@ -102,9 +102,9 @@ If you want to allow users to reach certain applications with only Azure AD logi
 
 You can configure which applications secured by Cloudflare Access use which integration in the steps below.
 
-1. Follow the [instructions](https://developers.cloudflare.com/access/configuring-identity-providers/azuread/) to integrate Cloudflare Access as a cloud app with Azure AD.
+1. Follow the [instructions](/configuring-identity-providers/azuread/) to integrate Cloudflare Access as a cloud app with Azure AD.
 
-2. Repeat this step a second time if you want to maintain an integration that does not require Azure AD device management. We recommend giving each a distinct name that will be used in the steps below. 
+2. Repeat this step a second time if you want to maintain an integration that does not require Azure AD device management. We recommend giving each a distinct name that will be used in the steps below.
 
     <!-- ![Name Providers](../../static/azuread-device/name-providers.png) -->
 

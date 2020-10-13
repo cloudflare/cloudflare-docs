@@ -27,7 +27,7 @@ For details see _[Getting started](https://developers.cloudflare.com/argo-tunnel
 
 You can use the JWT created by Cloudflare Access to validate requests on your origin.
 
-For more, see [_Validating JSON web tokens_](https://developers.cloudflare.com/access/setting-up-access/validate-jwt-tokens/).
+For more, see [_Validating JSON web tokens_](/setting-up-access/validate-jwt-tokens/).
 
 Restrict inbound ingress so that only connections from [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are allowed. This should be done in conjunction with validating the tokens sent by Cloudflare Access. This is not sufficient alone without JWT validation.
 
@@ -38,7 +38,7 @@ Adding a CNAME record within your account that points to the protected hostname 
 
 Cloudflare Access secures applications using rules built around the application's hostname. For example, you can deploy self-managed GitLab as a subdomain of a hostname that you control, `gitlab.hostname.com` and build rules to control who can reach the subdomain. You can also build broad rules by protecting any subdomain of a hostname you control, or more specific rules that protect specific paths.
 
-To use Cloudflare Access, you must have at least one registered domain name using Cloudflare's authoritative DNS. Domains can be added in Cloudflare's infrastructure dashboard. A [guided walk-through](https://developers.cloudflare.com/access/videos/using-cloudflare/) is available.
+To use Cloudflare Access, you must have at least one registered domain name using Cloudflare's authoritative DNS. Domains can be added in Cloudflare's infrastructure dashboard. A [guided walk-through](/videos/using-cloudflare/) is available.
 
 Once a hostname has been added, you can begin to deploy applications as subdomains of that hostname and create Cloudflare Access policies to secure them.
 
@@ -64,7 +64,7 @@ Once a hostname has been added, you can begin to deploy applications as subdomai
 
 1. In the configuration section, determine the users or services that will be able to meet the rule action defined above. For example, if the rule action is `Allow`, and you include emails ending in `@team.com`, only users who authenticate as `team.com` will reach the application.
 
-    You can build exceptions to these rules, as well as requirements that can force additional checks. For example, if you want to include users in `team.com` and require that they also use a trusted device. More detailed information on rule structure is available in the [Configuring Access policies page](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/).
+    You can build exceptions to these rules, as well as requirements that can force additional checks. For example, if you want to include users in `team.com` and require that they also use a trusted device. More detailed information on rule structure is available in the [Configuring Access policies page](/setting-up-access/configuring-access-policies/).
 
 1. You can build multiple policies within an application. Cloudflare Access will enforce these in the order they appear in the UI, starting with the top-most policy. The only exception are bypass policies, which are enforced first.
 
@@ -74,7 +74,7 @@ Once a hostname has been added, you can begin to deploy applications as subdomai
 
 ## Secure Grafana and other web applications
 
-Just getting started? Learn how to set up Cloudflare Access to secure the popular database dashboard Grafana, with an approach that can be used to protect and provide remote access to many different applications. 
+Just getting started? Learn how to set up Cloudflare Access to secure the popular database dashboard Grafana, with an approach that can be used to protect and provide remote access to many different applications.
 
 <stream src="31a370fb4aac62a4f59a4b70b5aa3355" controls></stream>
 <script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=31a370fb4aac62a4f59a4b70b5aa3355"></script>

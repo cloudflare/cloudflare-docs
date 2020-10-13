@@ -23,7 +23,7 @@ The name allows you to easily identify events related to the token in the logs a
 
   ![Access Service Token card](../static/service-tokens/name-service-token.png)
 
-4. Click **Generate token**.  
+4. Click **Generate token**.
 The next page will display the generated `Client ID` and `Client Secret` for the service token.
 
 5. Copy the `Client Secret` in this view.
@@ -32,13 +32,13 @@ The next page will display the generated `Client ID` and `Client Secret` for the
 
 **This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.**
 
-You can now use the service token when you create [service auth policies](https://developers.cloudflare.com/access/getting-started/policies/#service-auth). 
+You can now use the service token when you create [service auth policies](/getting-started/policies/#service-auth).
 
 ## Connect your Service to Access
-Cloudflare Access expects both values as headers in any request sent to the applications behind Access. Add the following to the headers of any requests and name them as follows:  
+Cloudflare Access expects both values as headers in any request sent to the applications behind Access. Add the following to the headers of any requests and name them as follows:
 
-`CF-Access-Client-Id: <Client ID>`  
-`CF-Access-Client-Secret: <Client Secret>`  
+`CF-Access-Client-Id: <Client ID>`
+`CF-Access-Client-Secret: <Client Secret>`
 
 When a request is made to an application behind our network, the request will submit them both to Access. If the service token is valid, Cloudflare Access generates a JWT scoped to the application. All subsequent requests with that JWT will succeed until the expiration of that JWT.
 

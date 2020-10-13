@@ -8,5 +8,5 @@ Cloudflare Access can integrate with endpoint protection providers to check requ
 
 |Guide|Description|
 |---|---|
-|[Tanium™](https://developers.cloudflare.com/access/device-posture/tanium/)|Guide to integrating Tanium™ Endpoint Identity.|
-|[Azure AD®](https://developers.cloudflare.com/access/device-posture/azure-ad/)|Guide to integrating Azure AD® managed device requirements.|
+|[Tanium™](/device-posture/tanium/)|Guide to integrating Tanium™ Endpoint Identity.|
+|[Azure AD®](/device-posture/azure-ad/)|Guide to integrating Azure AD® managed device requirements.|
