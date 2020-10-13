@@ -86,7 +86,7 @@ Additionally, you will need to use the flag `--no-auto-update` to ensure that th
 some cases, the auto-update flow can cause the container to launch a new process
 as PID 1, which causes the container to crash.
 
-<!-- Temporarilly comment out to fix the build @TownLake -->
+<!-- Temporarily comment out to fix the build @TownLake -->
 
 <!--
 ```yaml
