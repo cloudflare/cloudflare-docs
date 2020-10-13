@@ -5,9 +5,9 @@ order: 4
 
 # RDP
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Requirements</b>
@@ -16,7 +16,7 @@ import {Notice} from 'cf-gatsby-theme'
 * An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
 * The `cloudflared` daemon installed on client machines
 
-</Notice>
+</Aside>
 
 The Remote Desktop Protocol (RDP) allows end users to connect to a desktop from a different machine.
 
@@ -59,10 +59,10 @@ By default, the agent will run as a Local Account service and will look for the 
 ```bash
 mkdir C:\Windows\System32\config\systemprofile\.cloudflared
 ```
-<Notice>
+<Aside>
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
-</Notice>
+</Aside>
 
 ## 2. Authenticate `cloudflared`
 
@@ -162,17 +162,17 @@ $ cloudflared tunnel --hostname rdp.site.com --bastion
 $ cloudflared tunnel --hostname rdp.site.com --bastion
 ```
 
-<Notice>
+<Aside>
 
 
 Ensure that the Access policy is in place before creating this connection as the connection will allow lateral traffic within the subnet.
 The command above will allow traffic to be proxied through cloudflared and to one of many target desktops in your network. End users will need to specify the destination of the specific desktop, which is documented below.
-</Notice>
+</Aside>
 
-<Notice>
+<Aside>
 
 This command will allow everything that can be routed from cloudflared to be reachable through the Tunnel. Ensure your network is properly segmented to avoid issues.
-</Notice>
+</Aside>
 
 # <a id="client-machine"></a> Connect from a client machine
 
@@ -268,10 +268,10 @@ The command from Step 1 can then be configured to run at device login by navigat
 
 The default behavior in MacOS is for the Terminal window to stay open. You can configure it to close automatically.
 
-<Notice>
+<Aside>
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
-</Notice>
+</Aside>
 
 ## 
 

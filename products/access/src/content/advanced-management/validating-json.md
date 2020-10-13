@@ -24,16 +24,16 @@ You can use the JWT created by Cloudflare Access to validate requests on your or
 
 ## Manual verification
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Before you start</b>
 
 Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.github.io/jq/download/).
 
-</Notice>
+</Aside>
 
 1. Run this command:
 
@@ -56,7 +56,7 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
 ## Programmatic verification
 
-<Notice>
+<Aside>
 
 
 <b>Before you start</b>
@@ -67,7 +67,7 @@ Click the **Settings** button to copy the AUD tag from your **Access** app on yo
 
  JWT Issuer: `https://<Your Authentication Domain>`
 
-</Notice>
+</Aside>
 
 ### Golang example
 

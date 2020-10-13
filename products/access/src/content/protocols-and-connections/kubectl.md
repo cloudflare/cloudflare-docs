@@ -5,9 +5,9 @@ order: 1
 
 # kubectl
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Requirements</b>
@@ -16,7 +16,7 @@ import {Notice} from 'cf-gatsby-theme'
 * An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
 * The `cloudflared` daemon installed on client machines
 
-</Notice>
+</Aside>
 
 [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is the Kuberentes command-line tool. Users can run commands against Kubernetes clusters using `kubectl` to connect to a Kubernetes cluster's API server.
 

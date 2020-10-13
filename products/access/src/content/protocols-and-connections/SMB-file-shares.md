@@ -5,9 +5,9 @@ order: 4
 
 # SMB file shares
 
-import {Notice} from 'cf-gatsby-theme'
 
-<Notice>
+
+<Aside>
 
 
 <b>Requirements</b>
@@ -16,7 +16,7 @@ import {Notice} from 'cf-gatsby-theme'
 * An **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">active zone</a>**  on Cloudflare    
 * The `cloudflared` daemon installed on the host and client machines
 
-</Notice>
+</Aside>
 
 The Secure Messaging Block (SMB) protocol allows users to access, read, and write to shared files.
 
@@ -106,7 +106,7 @@ The Windows Server service supports share actions over a network like file, prin
 
 On the Windows machine, locate the Server process, likely called `Server` and running as `services.msc`. Terminate this service in the Run dialog box and ensure it is disabled on boot. Next, follow the same steps for the `TCP/IP NetBIOS Helper` service.
 
-<Notice>
+<Aside>
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
-</Notice>
+</Aside>

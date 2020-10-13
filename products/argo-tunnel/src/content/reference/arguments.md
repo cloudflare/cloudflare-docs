@@ -4,7 +4,7 @@ order: 100
 
 # Command-line Arguments
 
-import {Notice} from 'cf-gatsby-theme'
+
 
 * [Tunnel command](#tunnel-command)
   * [Login command](#login-command)
@@ -147,7 +147,7 @@ Disables TLS verification of the certificate presented by your origin. Will allo
 <Notice type="note">
 
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
-</Notice>
+</Aside>
 
 <div id="origin-ca-pool">
 
