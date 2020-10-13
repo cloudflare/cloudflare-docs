@@ -115,6 +115,10 @@ This is still being worked out, but in essence, this requires three easy steps (
 
 3. Make a pull request to remove the corresponding content from inside Bitbucket (`@DOCS/developer-docs/browse/src/content`).
 
+## Step 5: Prepare for the future
+
+Add the appropriate maintainer for your docs in the [CODEOWNERS](https://github.com/cloudflare/cloudflare-docs/blob/master/CODEOWNERS) file in the root of @cloudflare/cloudflare-docs.
+
 --------------------------------
 
 ## Get help
