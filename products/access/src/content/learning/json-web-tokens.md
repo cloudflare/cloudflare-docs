@@ -4,15 +4,19 @@ order: 6
 
 # Access with JSON Web Tokens
 
-Cloudflare Access uses JSON Web Tokens (JWTs), and their contents, to confirm a user’s identity before allowing or denying access to sensitive resources. Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider. 
+Cloudflare Access uses JSON Web Tokens (JWTs), and their contents, to confirm a user’s identity before allowing or denying access to sensitive resources. Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
 
 When users authenticate, Cloudflare signs two distinct JWTs.
 
- 
+
+<TableWrap>
+
 | Type | Cookie location | Purpose |
 | -- | -- | -- |
 | **Organization Token** | The authentication domain; for example, `https://company.cloudflareacess.com` | The Organization Token contains the user identity and relevant user group membership. The token removes the need for users to redundantly login to their identity provider when connecting to multiple applications. |
 | **App Token** | The application's domain; for example, `https://jira.company.com` | The Application Token contains the user identity and, optionally, SAML attributes for the user that can be consumed by the application. The Application Token is unique to each application accessed. |
+
+</TableWrap>
 
 The content in the JWT is available for teams to validate independently, as well.
 
