@@ -1,14 +1,14 @@
 # Simple uploads
 
-## Uploading without tus protocol
+## Uploading without TUS protocol
 
-For most users, [tus protocol](https://tus.io) is the recommended method for uploading content to Cloudflare Stream. You can follow our guides to upload through [the dashboard](/stream/getting-started/uploading-cloudflare-dashboard), with [Golang](/stream/getting-started/uploading-golang), or with the [command line](/stream/getting-started/uploading-command-line). Most popular programming languages have tus client [implementations](https://tus.io/implementations.html).
+For most users, [tus protocol](https://tus.io) is the recommended method for uploading content to Cloudflare Stream. You can follow our guides to upload through [the dashboard](/getting-started/uploading-cloudflare-dashboard), with [Golang](/getting-started/uploading-golang), or with the [command line](/getting-started/uploading-command-line). Most popular programming languages have tus client [implementations](https://tus.io/implementations.html).
 
 > tus is a protocol based on HTTP for resumable file uploads. Resumable means that an upload can be interrupted at any moment and can be resumed without re-uploading the previous data again. An interruption may happen willingly, if the user wants to pause, or by accident in case of an network issue or server outage.
 
 For files smaller than 200MB you can use simple form based uploads. This is an easier way to upload but does not support resumable downloads like tus.
 
-## What You Will Need
+## What you will need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
@@ -18,10 +18,10 @@ To upload without tus, make an HTTP request with content-type header set to `mul
 
 ```bash
 curl -X POST \
-  -H "X-Auth-Key: {api-key}" \
-  -H "X-Auth-Email: {email}" \
+  -H "X-Auth-Key: $APIKEY" \
+  -H "X-Auth-Email: $EMAIL" \
   -F file=@/Users/kyle/Desktop/skiing.mp4 \
-  https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
+  https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 Note that `-F` flag automatically configures the content-type header and maps `skiing.mp4` to a form input called `file`.
@@ -116,5 +116,5 @@ func main() {
 Save this to a file such as `main.go` and run the server with your Cloudflare credentials:
 
 ```bash
-go run main.go -k <API KEY> -e <EMAIL> -a <ACCOUNT ID>
+go run main.go -k $APIKEY -e $EMAIL -a $ACCOUNT
 ```

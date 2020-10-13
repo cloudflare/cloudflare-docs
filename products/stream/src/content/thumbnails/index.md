@@ -6,7 +6,7 @@ order: 9
 
 ## Use Case 1: Generating a thumbnail on-the-fly
 
-Using the `poster` attribute in the `<stream>` tag, you can set a thumbnail to any time in your video. If [signed URLs](/stream/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
+Using the `poster` attribute in the `<stream>` tag, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
 
 ```
 poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270"
@@ -40,9 +40,9 @@ You can change this default value by setting the "thumbnailTimestampPct" value u
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
--d '{"uid": "{video-id}", "thumbnailTimestampPct": <pct>}' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "thumbnailTimestampPct": <pct>}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```
 
  `thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the  `thumbnailTimestampPct` value to 0.5.
@@ -50,16 +50,16 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
 The example will yield a request:
 ```bash
 curl -X POST \
--H "X-Auth-Key: {api-key}" -H "X-Auth-Email: {email}" \
--d '{"uid": "{video-id}", "thumbnailTimestampPct": 0.5}' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "thumbnailTimestampPct": 0.5}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```
 
 ## Use Case 3: Generating animated thumbnails
 
 Stream supports animated GIFs as thumbnails. Views using animated thumbnails do not count in Stream views or watch time for billing or analytics.
 
-### Animated GIF Thumbnail
+### Animated GIF thumbnails
 
 ```
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s

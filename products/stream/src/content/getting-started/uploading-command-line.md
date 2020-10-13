@@ -1,6 +1,6 @@
 # Uploading with command line
 
-## What You Will Need
+## What you will need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
@@ -18,7 +18,7 @@ The X-Auth-Key and X-Auth-Email you see below are your Cloudflare API key and Cl
 The account ID corresponds to the Cloudflare account you’d like to upload your video to. You can find the acccount ID for any domain in the [overview tab of the Cloudflare dashboard.](https://www.cloudflare.com/a/overview/)
 
 ```bash
-tus-upload --chunk-size 5242880 --header X-Auth-Key {api-key} --header X-Auth-Email {email} {path-to-video} https://api.cloudflare.com/client/v4/accounts/{account_id}/stream
+tus-upload --chunk-size 5242880 --header X-Auth-Key $APIKEY --header X-Auth-Email $EMAIL $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -32,7 +32,7 @@ The file size limit for video upload is 5GB.
 Alternatively, you may also upload videos with a link using a cURL `POST` command:
 
 ```bash
-curl -X POST -d '{"url":"<video_url>","meta":{"name":"<video_name>"}}' -H "X-Auth-Key: <api-key>" -H "X-Auth-Email: {email}" https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
+curl -X POST -d '{"url":"<video_url>","meta":{"name":"<video_name>"}}' -H "X-Auth-Key: <api-key>" -H "X-Auth-Email: $EMAIL" https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 ```
 
 ## Track the video as it gets encoded
@@ -40,9 +40,9 @@ curl -X POST -d '{"url":"<video_url>","meta":{"name":"<video_name>"}}' -H "X-Aut
 Your next step is to check for when the video is done encoding. You will use the endpoint with the video id you received in the previous step.
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}' \
-    -H 'X-Auth-Email: {email}' \
-    -H 'X-Auth-Key: {api-key}' \
+curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID' \
+    -H 'X-Auth-Email: $EMAIL' \
+    -H 'X-Auth-Key: $APIKEY' \
     -H 'Content-Type: application/json'
 ```
 
@@ -101,9 +101,9 @@ after some time:
 Once readyToStream is true, you are now ready to embed your video. First get your embed code:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/{video-id}/embed" \
-    -H 'X-Auth-Email: {email}' \
-    -H 'X-Auth-Key: {api-key}' \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/embed" \
+    -H 'X-Auth-Email: $EMAIL' \
+    -H 'X-Auth-Key: $APIKEY' \
     -H 'Content-Type: application/json'
 ```
 
