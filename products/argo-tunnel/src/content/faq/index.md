@@ -165,8 +165,6 @@ To log external visitor IPs, you will need to [configure an alternative method](
 #### When does the cert.pem generated expire?
 The Argo Tunnel login command generates an origin certificate and a service token. Both are stored in the `cert.pem`. The origin certificate is valid for at least 10 years and the service token is valid until revoked.
 
-## Kubernetes Sidecar Model
-
 #### Did `cloudflared` run?
 
 ```bash

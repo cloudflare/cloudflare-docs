@@ -51,12 +51,8 @@ The selector options are<sup>[[1](#source)]</sup>:
 
 See [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) for specific behaviors of these options.
 
-
-
 ## When not to use SameSite
 * If you have additional sites or applications that rely on a specific application’s authorization cookie.
-
-
 
 #### References
 

@@ -24,6 +24,7 @@ This command will create a Tunnel with the name provided and associate it with a
 
 Creating a Tunnel generates a credentials file for that specific Tunnel. This file is distinct from the cert.pem file. To run the Tunnel without managing DNS from `cloudflared`, you only need the credentials file.
 
+<TableWrap>
 
 | Action | `cert.pem` | Credentials file |
 |---|---|---|
@@ -33,6 +34,8 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 | Create DNS records from `cloudflared` | Required | - |
 | Connect to load balancer pools from `cloudflared` | Required | - |
 | Route traffic to a running Tunnel from the Cloudflare dashboard | Available | Available |
+
+</TableWrap>
 
 ## Run a Tunnel
 

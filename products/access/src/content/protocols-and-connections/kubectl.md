@@ -5,10 +5,7 @@ order: 1
 
 # kubectl
 
-
-
 <Aside>
-
 
 <b>Requirements</b>
 
@@ -24,15 +21,15 @@ You can use Cloudflare Access, in combination with Cloudflare Argo Tunnel, to co
 
 ![kubectl](../static/kubectl.png)
 
-# Connect the cluster to Cloudflare
+## Connect the cluster to Cloudflare
 
-## 1. Install The Cloudflare Daemon On The Host Machine
+### 1. Install The Cloudflare Daemon On The Host Machine
 
 The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/).
 
 Follow these instructions to download and install cloudflared in a location that can address the Kubernetes cluster's API server.
 
-## 2. Authenticate The Cloudflare Daemon
+### 2. Authenticate The Cloudflare Daemon
 
 1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
@@ -49,13 +46,13 @@ If you are working on a machine that does not have a browser, or a browser windo
 
 4. Once selected, cloudflared will download a wildcard certificate for the site. This certificate will allow cloudflared to create a DNS record for a subdomain of the site.
 
-## 3. Secure The Subdomain With Cloudflare Access
+### 3. Secure The Subdomain With Cloudflare Access
 
 Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the cluster API server at `cluster.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
-## 4. Connect the resource to Cloudflare
+### 4. Connect the resource to Cloudflare
 
 `cloudflared` can proxy connections to nonstandard ports.
 
@@ -69,13 +66,13 @@ The proxy allows your local kubectl tool to connect to `cloudflared` via a SOCKS
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
-# **Connect from a client machine**
+## **Connect from a client machine**
 
-## 1. Install the Cloudflare daemon on the client machine
+### 1. Install the Cloudflare daemon on the client machine
 
 Follow the same steps above to download and install `cloudflared` on the client desktop that will connect to the resource. `cloudflared` will need to be installed on each user device that will connect.
 
-## 2. Connect to the resource
+### 2. Connect to the resource
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 

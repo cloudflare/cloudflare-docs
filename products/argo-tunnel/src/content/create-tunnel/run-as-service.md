@@ -4,8 +4,6 @@ order: 30
 
 # Run as a service
 
-
-
 <Aside>
 
 Running `cloudflared` as a service is not yet compatible with creating a Tunnel with a name. Instead, follow the instructions below
@@ -98,14 +96,15 @@ You can copy your local configuration from:
 
  `%UserProfile%\.cloudflared\config.yml`.
 
-#### Specify a custom location for the config file
+### Specify a custom location for the config file
+
 If you need to specify a custom config file location, you can do so in the the Windows registry after the service has been installed ([MSDN reference](https://docs.microsoft.com/en-us/dotnet/api/system.serviceprocess.servicebase.onstart?view=netframework-4.7.2)):
 
 1. Open `regedit`. 
 2. Go to the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`. 
 3. Edit the `ImagePath` value to include `--config <path-to-config>`.
 
-#### Start the service
+### Start the service
 
 To start the service, go to Service Manager and start the **Argo Tunnel agent** service, or run the following command:
 ```bash
