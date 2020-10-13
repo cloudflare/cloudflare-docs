@@ -9,7 +9,7 @@ order: 1
 * [Service commands](#service-commands)
 * [Update command](#update-command)
 
-## <a name="tunnel-commands"></a>Tunnel commands
+## Tunnel commands
 
 All tunnel-related commands are prefixed with `tunnel`. For example:
 
@@ -45,7 +45,7 @@ All tunnel-related commands are prefixed with `tunnel`. For example:
 * [--version, -v](#version)
 
 
-### <a name="config"></a>`--config`
+### --config`
 
 | Syntax | Default |
 |--|--|
@@ -53,7 +53,7 @@ All tunnel-related commands are prefixed with `tunnel`. For example:
 
 Specifies a config file in YAML format.
 
-### <a name="url"></a>`--url`
+### --url`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -61,7 +61,7 @@ Specifies a config file in YAML format.
 
 Connects to the local webserver at `URL`.
 
-### <a name="hostname"></a>`--hostname`
+### --hostname`
 
 | Syntax | Environment Variable |
 |--|--|
@@ -69,7 +69,7 @@ Connects to the local webserver at `URL`.
 
 Sets a hostname on a Cloudflare zone to route traffic through this tunnel.
 
-### <a name="lb-pool"></a>`--lb-pool`
+### --lb-pool`
 
 | Syntax |
 |--|
@@ -77,7 +77,7 @@ Sets a hostname on a Cloudflare zone to route traffic through this tunnel.
 
 Add this tunnel to a Load Balancer pool. If it doesn’t already exist a load balancer will be created for the hostname of your tunnel, and a pool will be created with the pool name you specify. Traffic destined to that pool will be load balanced across this tunnel and any other tunnels which share its pool name.
 
-### <a name="autoupdate-freq"></a> `--autoupdate-freq`
+### --autoupdate-freq`
 
 | Syntax | Default |
 |--|--|
@@ -85,7 +85,7 @@ Add this tunnel to a Load Balancer pool. If it doesn’t already exist a load ba
 
 Autoupdate frequency. See also [`--no-autoupdate`](#no-autoupdate).
 
-### <a name="no-autoupdate"></a> `--no-autoupdate`
+### --no-autoupdate`
 
 | Syntax | Default |
 |--|--|
@@ -93,7 +93,7 @@ Autoupdate frequency. See also [`--no-autoupdate`](#no-autoupdate).
 
 Disables periodic check for updates, restarting the server with the new version. See also [`--autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare edge. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
-### <a name="origincert"></a>`--origincert`
+### --origincert`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -101,7 +101,7 @@ Disables periodic check for updates, restarting the server with the new version.
 
 Specifies the Tunnel certificate for one of your zones, authorizing the client to serve as an origin for that zone. A certificate is required to use Argo Tunnel. You can obtain a certificate by using the login command or by visiting `https://dash.cloudflare.com/argotunnel`.
 
-### <a name="no-tls-verify"></a>`--no-tls-verify`
+### --no-tls-verify`
 
 | Syntax | Default |
 |--|--|
@@ -110,7 +110,7 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
 
-### <a name="origin-ca-pool"></a>`--origin-ca-pool`
+### --origin-ca-pool`
 
 | Syntax |
 |--|
@@ -119,14 +119,14 @@ The connection from your machine to Cloudflare's Edge is still encrypted and ver
 Path to the CA for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
 
 
-### <a name="origin-server-name"></a>`--origin-server-name`
+### --origin-server-name`
 
 | Syntax | Environment Variable |
 |--|--|
 | `--origin-server-name value` | `TUNNEL_ORIGIN_SERVER_NAME` |
 
 
-### <a name="metrics"></a>`--metrics`
+### --metrics`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -135,7 +135,7 @@ Path to the CA for the certificate of your origin. This option should be used on
 Address to query for usage metrics.
 
 
-### <a name="metrics-update-freq"></a>`--metrics-update-freq`
+### --metrics-update-freq`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -143,7 +143,7 @@ Address to query for usage metrics.
 
 Frequency to update tunnel metrics.
 
-### <a name="tag"></a>`--tag`
+### --tag`
 
 | Syntax | Environment Variable |
 |--|--|
@@ -151,7 +151,7 @@ Frequency to update tunnel metrics.
 
 Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags may be specified by delimiting them with commas e.g. `KEY1=VALUE1`,`KEY2=VALUE2`.
 
-### <a name="loglevel"></a>`--loglevel`
+### --loglevel`
 
 **Syntax**: `--loglevel (panic|fatal|error|warn|info|debug)`   
 **Default**: `info`  
@@ -160,7 +160,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production.
 
 
-### <a name="proto-loglevel"></a>`--proto-loglevel`
+### --proto-loglevel`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -168,7 +168,7 @@ Specifies the verbosity of logging. The default `info` is not noisy, but you may
 
 Specifies the verbosity of the HTTP/2 protocol logging. Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks.
 
-### <a name="retries"></a>`--retries`
+### --retries`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -177,7 +177,7 @@ Specifies the verbosity of the HTTP/2 protocol logging. Any value below `warn` i
 Maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default) so increasing this value significantly is not recommended.
 
 
-### <a name="no-chunked-encoding"></a>`--no-chunked-encoding`
+### --no-chunked-encoding`
 
 | Syntax | Default |
 |--|--|
@@ -185,7 +185,7 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 
 Disables chunked transfer encoding; useful if you are running a WSGI server.
 
-### <a name="hello-world"></a>`--hello-world`
+### --hello-world`
 
 | Syntax | Environment Variable |
 |--|--|
@@ -193,7 +193,7 @@ Disables chunked transfer encoding; useful if you are running a WSGI server.
 
 Use the established tunnel to expose a `Hello world` HTTP server for testing Argo Tunnel. Mutually exclusive with the `--url argument`.
 
-### <a name="pidfile"></a>`--pidfile`
+### --pidfile`
 
 | Syntax | Environment Variable |
 |--|--|
@@ -201,7 +201,7 @@ Use the established tunnel to expose a `Hello world` HTTP server for testing Arg
 
 Write the application's PID to this file after the first successful connection. Mainly useful for scripting and service integration.
 
-### <a name="logfile"></a>`--logfile`
+### --logfile`
 
 | Syntax | Environment Variable |
 |--|--|
@@ -209,7 +209,7 @@ Write the application's PID to this file after the first successful connection. 
 
 Save application log to this file. Mainly useful for reporting issues.
 
-### <a name="proxy-connect-timeout"></a>`--proxy-connect-timeout`
+### --proxy-connect-timeout`
 
 | Syntax | Default |
 |--|--|
@@ -217,7 +217,7 @@ Save application log to this file. Mainly useful for reporting issues.
 
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to establish TLS, which is controlled by [--proxy-tls-timeout](#proxy-tls-timeout).
 
-### <a name="proxy-tls-timeout"></a> `--proxy-tls-timeout`
+### --proxy-tls-timeout`
 
 | Syntax | Default |
 |--|--|
@@ -225,7 +225,7 @@ Timeout for establishing a new TCP connection to your origin server. This exclud
 
 Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server.
 
-### <a name="proxy-tcp-keepalive"></a>`--proxy-tcp-keepalive`
+### --proxy-tcp-keepalive`
 
 | Syntax | Default |
 |--|--|
@@ -233,7 +233,7 @@ Timeout for completing a TLS handshake to your origin server, if you have chosen
 
 The timeout after which a TCP keepalive packet is sent on a connection between Tunnel and the origin server.
 
-### <a name="proxy-no-happy-eyeballs"></a>`--proxy-no-happy-eyeballs`
+### --proxy-no-happy-eyeballs`
 
 | Syntax |
 |--|
@@ -241,7 +241,7 @@ The timeout after which a TCP keepalive packet is sent on a connection between T
 
 Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local network has misconfigured one of the protocols.
 
-### <a name="proxy-keepalive-connections"></a>`--proxy-keepalive-connections`
+### --proxy-keepalive-connections`
 
 | Syntax | Default |
 |--|--|
@@ -249,7 +249,7 @@ Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local netw
 
 Maximum number of idle keepalive connections between Tunnel and your origin. This does not restrict the total number of concurrent connections.
 
-### <a name="proxy-keepalive-timeout"></a>`--proxy-keepalive-timeout`
+### --proxy-keepalive-timeout`
 
 | Syntax | Default |
 |--|--|
@@ -257,7 +257,7 @@ Maximum number of idle keepalive connections between Tunnel and your origin. Thi
 
 Timeout after which an idle keepalive connection can be discarded.
 
-### <a name="help"></a>`--help`
+### --help`
 
 | Syntax |
 |--|
@@ -265,7 +265,7 @@ Timeout after which an idle keepalive connection can be discarded.
 
 Shows help text.
 
-### <a name="version"></a>`--version`
+### --version`
 
 | Syntax |
 |--|
@@ -273,7 +273,7 @@ Shows help text.
 
 Prints the version number and build date.
 
-## <a name="login-command"></a>Login command
+## Login command
 
 `cloudflared tunnel login`
 
@@ -283,7 +283,7 @@ It should open your browser automatically and prompt you to log in to your Cloud
 After logging in, a list of your zones will appear. Select the zone you want to use Argo Tunnel with. After confirming your authorization, the certificate should be sent to the Tunnel client and saved to `.cloudflared/cert.pem` in your user folder. If this process fails for any reason, the certificate will instead be downloaded by your browser and you will have to copy the file manually to that location.
 You can also obtain a Tunnel certificate independently of this command by visiting `https://dash.cloudflare.com/argotunnel`.
 
-## <a name="service-commands"></a>Service commands
+## Service commands
 
 `cloudflared service install`  
 `cloudflared service uninstall`
@@ -291,7 +291,7 @@ You can also obtain a Tunnel certificate independently of this command by visiti
 Install or uninstall cloudflared as a system service. The details of service installation depend on the OS you are using.
 
 
-## <a name="update-command"></a>Update command
+## Update command
 
 `cloudflared update`
 

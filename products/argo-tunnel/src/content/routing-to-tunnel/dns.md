@@ -12,7 +12,7 @@ order: 50
 | 4. [Install `cloudflared` and authenticate the software](https://developers.cloudflare.com/argo-tunnel/getting-started) |
 | 5. [Create an Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel) |
 
-### Route traffic from the Cloudflare dashboard via a DNS record
+## Route traffic from the dashboard
 
 When you create an Argo Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created Tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
 
@@ -31,7 +31,7 @@ The DNS record is distinct from the state of the Tunnel. You can create DNS reco
 Additionally, you can create multiple DNS records that point to the same Tunnel subdomain.
 
 
-### Route traffic from `cloudflared` via a DNS record
+## Route traffic from the command line
 
 You can create DNS records from `cloudflared`, which will provision a CNAME record that points to the subdomain of a specific Tunnel. The result is the same as creation from the dashboard above.
 

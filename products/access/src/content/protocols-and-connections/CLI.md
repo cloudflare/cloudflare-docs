@@ -29,7 +29,7 @@ cloudflared access login https://example.com
 
   The token is valid for the session duration configured by the Access administrator.
 
-### Access your API
+## Access your API
 
 Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named _token_. You can invoke the wrapper as follows:
 
@@ -41,9 +41,9 @@ It is possible also to use the `put` command with `cloudflared` for any Unix too
 
 Read on for other available commands.
 
-### Available commands
+## Available commands
 
-#### login
+### login
 
 The `login` command initiates the login flow for an application behind Access.
 
@@ -51,7 +51,7 @@ The `login` command initiates the login flow for an application behind Access.
 cloudflared access login http://example.com
 ```
 
-#### curl
+### curl
 
 The `curl` command invokes the client wrapper and includes the token in the request automatically.
 
@@ -59,7 +59,7 @@ The `curl` command invokes the client wrapper and includes the token in the requ
 cloudflared access curl http://example.com
 ```
 
-#### token
+### token
 
 The `token` command retrieves the token scoped to that specific application for use in other command-line tools.
 
@@ -67,7 +67,7 @@ The `token` command retrieves the token scoped to that specific application for 
 $cloudflared access token -app=http://example.com
 ```
 
-### Using the token as an environment variable
+## Using the token as an environment variable
 
 It is possible to save the token as an environment variable for convenience and concision in scripts that access a protected application.
 

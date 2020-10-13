@@ -1,5 +1,4 @@
 ---
-
 order: 3
 ---
 
@@ -13,25 +12,26 @@ You can define the scope of a policy by configuring **policy actions** and **pol
 Policy actions dictate how a user is routed based on a defined set of policy rules. You can select four types of policy actions:
 ### Allow
 Grants permission to reach the application to a user or group. Allow will always require authentication through an identity provider.
-#### Block
+### Block
 Explicitly prevents users from reaching an application behind Access.
-#### Bypass
+### Bypass
 Disables any Access enforcement on the given path.
-#### Service Auth
+### Service Auth
 Enforces authentication flows that do not require an identity provider IdP login, such as service tokens and mutual TLS.
 
 ## Policy Rules
 Policy rules provide the criteria for how a policy actions are applied. There are three types of rules you can configure:
-#### Include
+### Include
 The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria.
-#### Exclude
+### Exclude
 The Exclude rule works like a NOT logical operator. A user meeting any Exclude criteria won’t be allowed access to the application.
-#### Require
+### Require
 The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access.
 
-### Criteria for Policy Rules
+## Criteria
 Rule criteria help define whether to include or exclude a team member from being influenced by a rule.
 These are the criteria you can assign to a rule:
+
 * **Emails** — `you@company.com`
 * **Emails ending in** — `@company.com`
 * **Access groups** — `example-team`
@@ -46,7 +46,7 @@ These are the criteria you can assign to a rule:
 
 <!-- To learn more about policy rules and how to combine policy actions and rules, read the [Policy Management](/learning-and-examples/policy-management/) section. -->
 
-## Adding, editing, and deleting policies
+## Managing policies
 Policies are properties of applications. Creating the first policy for an application is part of the set up process for that application.
 
 You can then choose to edit or delete that first policy after completing the application setup, or you can decide to add new policies to the application, all from the Applications section of the Teams dashboard.

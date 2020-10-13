@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 1
 ---
 
 # About
@@ -9,6 +9,3 @@ Cloudflare Access is a Zero Trust platform that secures self-hosted and SaaS app
 Authentication checks are performed at our edge network of 200 data centers. This is much faster than, for instance, a VPN backhauling traffic to a home office.
  
 Instead of configuring complex and error-prone network rules, IT teams build rules that enforce authentication using their identity provider. Security leaders can control who can reach internal applications in a single pane of glass and audit comprehensive logs from one source.
-
-![Access logo](../static/summary/access.png)
-

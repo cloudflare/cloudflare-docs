@@ -8,7 +8,6 @@ Cloudflare Access uses JSON Web Tokens (JWTs), and their contents, to confirm a 
 
 When users authenticate, Cloudflare signs two distinct JWTs.
 
-
 <TableWrap>
 
 | Type | Cookie location | Purpose |
@@ -20,8 +19,7 @@ When users authenticate, Cloudflare signs two distinct JWTs.
 
 The content in the JWT is available for teams to validate independently, as well.
 
-
-# JWT Contents
+## JWT Contents
 
 JWTs contain three Base64-URL, separated by dots:
 * Header
@@ -39,7 +37,7 @@ Cloudflare uses the RSA Signature with `SHA-256` (`RS256`) to sign the JWT using
 
 For example, if the application URL is example.com, then the certificate URL is: `https://example.<strong>cloudflareaccess</strong>.com/cdn-cgi/access/certs`.
 
-## Header
+### Header
 
 ```json
 {
@@ -50,7 +48,7 @@ For example, if the application URL is example.com, then the certificate URL is:
 ```
 The header contains the encoding algorithm. kid identifies the key used to sign tokens. Typ designates the token format.
 
-## Payload
+### Payload
 
 ```json
 {
@@ -74,7 +72,7 @@ The payload contains the actual claim and user information to pass to the applic
 * `identity_nonce` is available in the Application Token and can be used to query all group membership for a given user.
 * `custom` contains SAML attributes in the Application Token specified by an administrator in the identity provider configuration.
 
-## Signature
+### Signature
 
 To generate the signature, the encoded header, encoded payload, and the algorithm specified in the header are signed using the Cloudflare Access private key. Users validate the token using the public key.
 
@@ -84,7 +82,7 @@ Cloudflare includes the JWT with all authenticated requests in two places:
 
 Visit [jwt.io](https://jwt.io/) for more information on JWTs.
 
-## User Identity
+### User Identity
 
 After a visitor authenticates to Cloudflare Access, all subsequent requests to the application server contain a `Cf-Access-Authenticated-User-Email` header with the authenticated user. Our example uses `user@example.com`.
 

@@ -6,7 +6,7 @@ order: 100
 
 Answers to common questions about Cloudflare Access.
 
-### Authentication
+## Authentication
 
 * **How does Cloudflare Access evaluate tokens?**
 
