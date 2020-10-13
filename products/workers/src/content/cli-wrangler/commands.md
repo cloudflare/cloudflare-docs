@@ -184,7 +184,7 @@ If you would like to be able to publish your code to multiple places, please see
 
 ## dev
 
-`wrangler dev` starts a server on `localhost` that executes your Worker on incoming HTTP requests. It can forward the requests to Cloudflare's servers, one of your zones, or any host you specify. This is a great way to easily test you Worker while developing.
+`wrangler dev` starts a server on `localhost` that executes your Worker on incoming HTTP requests. It can forward the requests to Cloudflare's servers, one of your zones, or any host you specify. This is a great way to easily test your Worker while developing.
 
 ```sh
 $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
