@@ -115,7 +115,7 @@ var token = jwt.sign(
 console.log(token)
 ```
 
-### Debugging Signed Tokens
+### Debugging signed tokens
 
 If your token is not behaving as expected when tested against our server, some information is surfaced which is a good place to start.
 

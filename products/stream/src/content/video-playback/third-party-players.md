@@ -1,4 +1,4 @@
-# Third-Party Players
+# Third-party players
 
 There could be cases where you might need more control over the [Stream web player](/video-playback/) for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
 
@@ -8,7 +8,7 @@ Some use cases that might benefit from a third-party player include:
 - Features the Stream player does not support
 - Specific UI needs such as branding
 
-## Manifest Files
+## Manifest files
 
 Every video uploaded on Stream has HLS and DASH manifests available to use. These are standard formats for streaming media that have broad support.
 
@@ -33,7 +33,7 @@ If both manifest formats are compatible, prefer DASH as it has smaller manifests
 
 Playback in the Apple ecosystem, especially iOS, likely requires using HLS.
 
-### Customization with Hints
+### Customization with hints
 
 Manifests may be customized using hints. These are query parameters included on the manifest request that indicate a preference. When possible, these will be respected.
 

@@ -1,4 +1,4 @@
-# Uploading with Dashboard
+# Uploading with the dashboard
 
 Stream is a video-on-demand platform for developers and content teams building video applications. With Stream, it's easy and fast to upload a video and get an embed code. In the background, Cloudflare encodes it, stores it, delivers it, and takes care of optimizing the right format and bitrate for every device and network connection.
 
@@ -18,10 +18,10 @@ Use the drag-n-drop field to upload your video.
 
 ![dashboard while video is processing](./media/dashboard-processing.png)
 
-## Get The Embed Code
+## Get the embed code
 
 ![dashboard while video is finished processing](./media/dashboard-done.png)
 
-## Embed Your Video
+## Embed your video
 
 Embed your video! Your embed code will work on domains both on and off Cloudflare.

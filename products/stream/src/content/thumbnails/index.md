@@ -59,7 +59,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 Stream supports animated GIFs as thumbnails. Views using animated thumbnails do not count in Stream views or watch time for billing or analytics.
 
-### Animated GIF Thumbnail
+### Animated GIF thumbnails
 
 ```
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s

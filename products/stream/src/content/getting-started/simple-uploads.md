@@ -1,6 +1,6 @@
 # Simple uploads
 
-## Uploading without tus protocol
+## Uploading without TUS protocol
 
 For most users, [tus protocol](https://tus.io) is the recommended method for uploading content to Cloudflare Stream. You can follow our guides to upload through [the dashboard](/getting-started/uploading-cloudflare-dashboard), with [Golang](/getting-started/uploading-golang), or with the [command line](/getting-started/uploading-command-line). Most popular programming languages have tus client [implementations](https://tus.io/implementations.html).
 
@@ -8,7 +8,7 @@ For most users, [tus protocol](https://tus.io) is the recommended method for upl
 
 For files smaller than 200MB you can use simple form based uploads. This is an easier way to upload but does not support resumable downloads like tus.
 
-## What You Will Need
+## What you will need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 

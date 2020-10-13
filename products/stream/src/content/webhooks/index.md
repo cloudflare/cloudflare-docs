@@ -14,7 +14,7 @@ A tool to notify your service when videos successfully finish processing and are
 
 ## Subscriptions
 
-### Create or Modify the Webhook Subscription
+### Create or modify the webhook subscription
 
 To subscribe to receive webhook notifications on your service, or modify an
 existing subscription, you will need your
@@ -30,7 +30,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 The `{webhook-notification-url}` must include the protocol. Only `http://`
 or `https://` is supported.
 
-#### Example Response to Create or Modify the Webhook Subscription
+#### Example response to create or modify the webhook subscription
 
 ```bash
 {
@@ -48,7 +48,7 @@ or `https://` is supported.
 If a subscription is created, the `modified` timestamp will equal
 "0001-01-01T00:00:00.0000000Z"
 
-## Get the Webhook Subscription
+## Get the webhook subscription
 
 To view a webhook subscription associated with your account:
 
@@ -57,7 +57,7 @@ curl --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 ```
 
-#### Example Response to Get the Webhook Subscription
+#### Example response to get the webhook subscription
 
 ```bash
 {
@@ -71,7 +71,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 }
 ```
 
-## Delete the Webhook Subscription
+## Delete the webhook subscription
 
 To delete a webhook subscription associated with your account:
 
@@ -83,7 +83,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 If there is an entry in `errors` response field, the webhook has not been
 deleted, and the request should be re-tried.
 
-#### Example Response to Delete the Webhook Subscription
+#### Example response to delete the webhook subscription
 
 ```bash
 {
@@ -120,7 +120,7 @@ Note the `status` field indicates whether the video processing finished successf
   }
 ```
 
-### Example POST request body sent in response to failed encoding.
+### Example POST request body sent in response to failed encoding
 
 ```bash
 {

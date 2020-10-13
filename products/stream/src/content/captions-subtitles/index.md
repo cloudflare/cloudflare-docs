@@ -20,7 +20,7 @@ Adding captions and subtitles to your video library.
 - Each caption file is limited to 10 MB in size. Please contact [support](support@cloudflare.com)
   if you need to upload a larger file.
 
-## Add or Modify a Caption
+## Add or modify a caption
 
 To create or modify a caption on a video, you will need your
 [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
@@ -72,7 +72,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/
 }
 ```
 
-## List the Captions Associated with a Video
+## List the captions associated with a video
 
 To view captions associated with a video:
 
@@ -81,7 +81,7 @@ curl -H 'X-Auth-Key:$APIKEY' -H 'X-Auth-Email:$EMAIL'
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 ```
 
-### Example Response to Get the Captions Associated with a Video
+### Example response to get the captions associated with a video
 
 ```bash
 {
@@ -101,7 +101,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 }
 ```
 
-## Delete the Captions
+## Delete the captions
 
 To remove a caption associated with your video:
 
@@ -115,7 +115,7 @@ curl -X DELETE \
 If there is an entry in `errors` response field, the caption has not been
 deleted.
 
-### Example Response to Delete the Caption
+### Example response to delete the caption
 
 ```bash
 {
@@ -126,7 +126,7 @@ deleted.
 }
 ```
 
-## Most Common Language Codes
+## Most common language codes
 
 | Language Code |     Language     |
 |---------------|------------------|
