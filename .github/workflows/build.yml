@@ -8,7 +8,7 @@ jobs:
     name: "Check for docs changes"
     runs-on: ubuntu-latest
     outputs:
-      onedot: ${{ steps.filter.outputs.onedot }}
+      1-1-1-1: ${{ steps.filter.outputs.1-1-1-1 }}
       access: ${{ steps.filter.outputs.access }}
       analytics: ${{ steps.filter.outputs.analytics }}
       argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
@@ -41,7 +41,7 @@ jobs:
         id: filter
         with:
           filters: |
-            onedot:
+            1-1-1-1:
               - 'products/1.1.1.1/**'
             access:
               - 'products/access/**'
@@ -99,7 +99,7 @@ jobs:
   build-1-1-1-1:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.onedot == 'true' }}
+    if: ${{ needs.changes.outputs.1-1-1-1 == 'true' }}
     defaults:
       run:
         shell: bash
