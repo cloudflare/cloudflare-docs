@@ -21,7 +21,7 @@ To set up PingIdentity as your IdP:
 
 1. In the **SAML attribute configuration** dialog select **Email attribute > urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress**.
 
-    <Notice type="note">
+    <Aside>
 
     There is an additional setting for PingFederate prior to 9.0.
     </Aside>
@@ -40,7 +40,7 @@ To set up PingIdentity as your IdP:
 5. Navigate to **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML icon.**
 6. Upload the metadata file in the **Add a SAML identity provider**.
 
-    <Notice type="note">
+    <Aside>
 
     If you are using a self-hosted deployment of PingFederate and a separate IdP or directory service, change the auto-populated value in the <strong>IdP Entity ID</strong> field. The metadata file sets it to a domain that you control.
     </Aside>
