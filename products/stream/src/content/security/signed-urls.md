@@ -2,7 +2,7 @@
 
 By default, videos on Cloudflare Stream can be viewed by anyone anytime until you delete the video. Users can view the source of the embed code in their browser and get a URL to the video that could be shared with others. To prevent this, use signed URLs.
 
-Signed URLs are controlled by you and and can be set to expire after a set time period. This allows you to control the time window you allow your users to watch videos. [Other viewing constraints can also be applied.](#signing-unique-tokens)
+Signed URLs are controlled by you and can be set to expire after a set time period. This allows you to control the time window you allow your users to watch videos. [Other viewing constraints can also be applied.](#signing-unique-tokens)
 
 To implement signed URLs
 
