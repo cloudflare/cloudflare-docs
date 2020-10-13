@@ -1,6 +1,6 @@
 # Security considerations
 
-## Limiting Where Videos Can Be Embedded
+## Limiting where videos can be embedded
 
 By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.
 

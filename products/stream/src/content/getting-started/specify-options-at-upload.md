@@ -1,12 +1,12 @@
-# Specifying Options at Upload
+# Specifying options at upload
 
 Instead of changing the settings (such as `requireSignedURLs`) after the videos have been uploaded, you can specify these options at upload time.
 
-## Simple Uploads
+## Simple uploads
 
 Unfortunately, Stream does not currently support specifying options at upload time for Simple Uploads.
 
-## TUS Uploads
+## TUS uploads
 
 The tus protocol allows you to add optional parameters [in the `Upload-Metadata` header](https://tus.io/protocols/resumable-upload.html#upload-metadata).
 

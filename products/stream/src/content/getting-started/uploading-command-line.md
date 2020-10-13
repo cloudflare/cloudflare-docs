@@ -1,6 +1,6 @@
 # Uploading with command line
 
-## What You Will Need
+## What you will need
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 

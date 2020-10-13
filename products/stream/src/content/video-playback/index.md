@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Player & Playback
+# Player and playback
 
 Stream comes with a standard web player with a number of features built in:
 

@@ -32,7 +32,7 @@ Filters can be combined using OR and AND boolean logic. AND takes precedence ove
 The OR operator is defined using a comma (,) or OR keyword surrounded by whitespace.
 The AND operator is defined using a semicolon (;) or AND keyword surrounded by whitespace.
 
-## Analytics Request Structure
+## Analytics request structure
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
@@ -53,7 +53,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vie
   * `day`
   * `hour`
 
-## Example Analytics Query
+## Example analytics query
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z" \
@@ -62,7 +62,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vi
     -H "Content-Type: application/json"
 ```
 
-## Example Analytics Response
+## Example analytics response
 
 ```bash
 {
