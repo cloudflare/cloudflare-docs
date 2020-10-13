@@ -33,8 +33,6 @@ You can have your videos autoplay without any controls displayed, by modifying t
 
 Stream player comes with a standards-compliant Javascript API. You can use the API to interact with the player using Javascript in the browser. Stream player supports calls such as `player.play();` and `player.currentTime = 120;`.
 
-[Learn more](/recipes/javascript-api/) about the Javascript API.
-
 ## Building a custom user interface
 
 You can build any custom user interface on top of the Stream player. Below is a simple player with a simple play/pause button overlay and no other controls.
