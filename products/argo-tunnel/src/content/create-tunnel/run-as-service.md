@@ -6,7 +6,7 @@ order: 30
 
 
 
-<Notice type="note">
+<Aside>
 
 Running `cloudflared` as a service is not yet compatible with creating a Tunnel with a name. Instead, follow the instructions below
 </Aside>
@@ -115,7 +115,7 @@ If you are a Powershell user, run this command instead:
 ```bash
 PS C:> Start-Service cloudflared
 ```
-<Notice type="note">
+<Aside>
 
 When running cloudflared as a service on Windows, the certificate path needs to be explicitly specified. This can be done in the config file:
 
@@ -134,13 +134,13 @@ origincert: C:/cert.pem
 ```
 </Aside>
 
-<Notice type="note">
+<Aside>
 
 Cloudflared will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
 </Aside>
 
-<Notice type="note">
+<Aside>
 
 Cloudflared does not support loading the system certificate pool in Windows.
 To supply a certificate pool to Cloudflared in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.

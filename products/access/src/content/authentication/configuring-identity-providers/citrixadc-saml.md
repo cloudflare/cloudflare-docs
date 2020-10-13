@@ -13,7 +13,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
 1. Configure 2 SAML certificates:
    * A certificate to terminate TLS at the vServer.
 
-        <Notice type="note">
+        <Aside>
 
         Ensure that the certificate is issued by a publicly trusted CA.
         </Aside>
