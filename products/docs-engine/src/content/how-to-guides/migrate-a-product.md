@@ -117,7 +117,7 @@ This is still being worked out, but in essence, this requires three easy steps (
 
 ## Step 5: Prepare for the future
 
-Add the appropriate maintainer for your docs in the [CODEOWNERS](https://github.com/cloudflare/cloudflare-docs/blob/master/CODEOWNERS) file in the root of @cloudflare/cloudflare-docs.
+Add the appropriate maintainer for your docs in the [CODEOWNERS file](https://github.com/cloudflare/cloudflare-docs/blob/master/.github/CODEOWNERS).
 
 --------------------------------
 
