@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Player API
 
 Attributes are added in the `<stream>` tag without quotes, as you can see below:
