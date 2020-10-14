@@ -1,8 +1,8 @@
 ---
-title: "Troubleshooting Policies"
-alwaysopen: true
-weight: 6
+order: 6
 ---
+
+# Troubleshooting Policies
 
 ### You added a domain to the block list but you can still resolve it
 

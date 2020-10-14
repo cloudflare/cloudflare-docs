@@ -1,8 +1,8 @@
 ---
-title: "Blocking Domains By Category"
-alwaysopen: true
-weight: 3
+order: 3
 ---
+
+# Blocking Domains by Category
 
 You can block domains by selecting a category or multiple categories. When the requested domain mathces the category you are blocking, Gateway will block that domain. 
 

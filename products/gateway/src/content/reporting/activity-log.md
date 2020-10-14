@@ -1,8 +1,8 @@
 ---
-title: "Activity Log"
-alwaysopen: true
-weight: 2
+order: 2
 ---
+
+# Activity Log
 
 The Activity log allows you to see individual DNS queries made from your locations. You can use the Activity log to investigate anomalies in your network. You can search by the DNS query and investigate each query by clicking on a row.
 
@@ -19,7 +19,7 @@ When you click on the row, you can see information related to the identity that 
 The name of the domain that was queried.
 
 ### Request type
-The DNS query type. [This page](https://en.wikipedia.org/wiki/List_of_DNS_record_types) contains list of all the DNS query types.
+The DNS query type. [This page](https://en.wikipedia.org/wiki/List_of_DNS_record_types) contains a list of all the DNS query types.
 
 ### Action
 What Action Gateway applied. For example: Allowed, Blocked etc.
@@ -44,5 +44,3 @@ The name of the policy if it applies to the DNS request.
 
 ### Categories
 Category or categories associated with the DNS request.
-
-Activity Log is not available in the Gateway - Free tier.
