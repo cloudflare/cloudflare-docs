@@ -52,7 +52,7 @@ Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from
 </a>
 Before getting Cloudflare logs into Elastic:
 
-1. Install an AWS Lambda function, available in the file _cloudflare-elastic-lambda.zip_ from Github at this location: [https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.3-7.x](https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.3-7.x).
+1. Install an AWS Lambda function, available in the file _cloudflare-elastic-lambda.zip_ from GitHub at this location: [https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.3-7.x](https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.3-7.x).
 
 2. Upload the _cloudflare-elastic-lambda.zip_ file to an S3 bucket.
 
