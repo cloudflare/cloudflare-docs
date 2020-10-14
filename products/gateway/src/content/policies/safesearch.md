@@ -1,8 +1,9 @@
 ---
-title: "Enabling SafeSearch"
-alwaysopen: true
-weight: 6
+order: 6
 ---
+
+# Enable SafeSearch
+
 SafeSearch is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
 You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo.

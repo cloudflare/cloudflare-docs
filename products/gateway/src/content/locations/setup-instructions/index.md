@@ -1,8 +1,8 @@
 ---
-title: "Setup Instructions"
-alwaysopen: true
-weight: 1
+order: 1
 ---
+
+# Setup Instructions
 
 [Router Setup Instructions](/gateway/locations/setup-instructions/router)
 See how you can send DNS queries to Gateway from a router.

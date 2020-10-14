@@ -1,9 +1,10 @@
 ---
-title: "Mac Setup Instructions"
-alwaysopen: true
-weight: 2
+order: 2
 ---
-# IPv4
+
+# Mac Setup Instructions
+
+## IPv4
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
 * Click Advanced.
@@ -13,7 +14,7 @@ weight: 2
 * Click OK.
 * Click Apply.
 
-# IPv6
+## IPv6
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
 * Click Advanced.

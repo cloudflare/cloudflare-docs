@@ -1,8 +1,9 @@
 ---
-title: "Overview"
-alwaysopen: true
-weight: 1
+order: 1
 ---
+
+# Overview Page
+
 You can use the Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or a time.
 
 - [Filter analytics by time](#filter-analytics-by-time)
@@ -13,7 +14,8 @@ You can use the Overview page to see the top allowed and blocked requests across
 ![Overview analytics](../static/gateway-dash-overview-page.png)
 
 ### Filter analytics by time
-You can filter the overview page by time. You can make analytics queries up to `Last 30 days` using Gateway's Free tier.
+You can filter the overview page by time. You can view analytics for the last 24 hours using Gateway's Free tier.
+
 ![Overview filter by time](../static/gateway-dash-filter-by-time.png)
 
 ### Filter analytics by location

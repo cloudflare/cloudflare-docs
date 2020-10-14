@@ -1,10 +1,10 @@
 ---
-title: "Router Setup Instructions"
-alwaysopen: true
-weight: 1
+order: 1
 ---
 
-# IPv4
+# Router Setup Instructions
+
+## IPv4
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
 * Click on Change Adapter Settings.
@@ -17,7 +17,7 @@ weight: 1
     * **172.64.36.2**
 * Click OK.
 
-# IPv6
+## IPv6
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
 * Click on Change Adapter Settings.
