@@ -38,8 +38,6 @@ __[View the docs →](https://developers.cloudflare.com/docs/)__
 | WAF                     | waf                  | ✕    |         | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   |                                                                |
 | Workers                 | workers              | ✕    | ✕       | [Test](https://workers.cloudflare-docs.workers.dev/workers)                           | [Prod](https://developers.cloudflare.com/workers)              |
 
-Notes:
-
 ¹ The documentation for the Docs Engine itself.
 
 ### Deployment
