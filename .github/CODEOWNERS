@@ -6,3 +6,18 @@ products/workers/ @cloudflare/workers-docs
 
 # Stream
 products/stream/ @renandincer
+
+# Access
+products/stream/ @abracchi-tw
+
+# Argo Tunnel
+products/argo-tunnel/ @abracchi-tw
+
+# 1.1.1.1
+products/1.1.1.1/
+
+# Gateway
+products/gateway/
+
+# Warp Client
+products/warp-client/
