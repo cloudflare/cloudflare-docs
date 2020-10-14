@@ -1,13 +1,15 @@
 ---
-title: Step 1 - Provisioning Resources
-weight: 10
+title: "1: Provisioning resources"
+order: 0
 ---
+
+# Step 1: Provisioning resources
 
 All the API calls described in this tutorial use the Cloudflare client v4 interface at `https://api.cloudflare.com/client/v4`. API requests are authenticated in the same manner using a Cloudflare user's email and API key as the `x-auth-email` and `x-auth-key` headers. Your Cloudflare user must be active, verified, and enabled by Cloudflare to use these provisioning specific endpoints.
 
 More details about making Cloudflare API calls can be found in our general api docs [here](https://api.cloudflare.com/#getting-started-endpoints).
 
-# Creating an Account
+## Creating an account
 
 Each customer or team that uses Cloudflare should have their own account. This ensures proper security and access of resources. Each account acts as a container of zones and other resources. Depending on your needs you may even provision multiple accounts for a single customer or team.
 
@@ -42,7 +44,7 @@ A successful request will return with an HTTP status of 200 and the following re
 }
 ```
 
-# Fetching Accounts
+## Fetching accounts
 
 You own the account lifecycle from creation, ongoing management, and finally deletion. To see the newly created account, make a `GET /accounts` request:
 
@@ -85,7 +87,7 @@ You will get back a list of all the accounts you have created plus any accounts 
 
 Now that we have created an account, in the next step we will give another person access to the account.
 
-## (Optional) Deleting Accounts
+### (Optional) Deleting accounts
 
 If for any reason you need to delete an account you created, then call `DELETE /accounts/:account_id`.
 
@@ -108,3 +110,10 @@ A successful request will return the id to confirm the operation:
 }
 ```
 
+--------------------------------
+
+## Continue the tutorial
+
+Learn how to manage how external customers access Cloudflare.
+
+<p><Link to="/tutorial/user-access" className="Button Button-is-docs-primary">Step 2: User access</Link></p>
