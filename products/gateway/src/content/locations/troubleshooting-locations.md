@@ -1,8 +1,8 @@
 ---
-title: "Troubleshooting Locations"
-alwaysopen: true
-weight: 3
+order: 3
 ---
+
+# Troubleshooting Locations
 
 ### Your source IPv4 address is taken
 ![Source IP taken](../static/source-ip-taken.png)

@@ -1,8 +1,9 @@
 ---
-title: "How does Gateway determine the location of a DNS query?"
-alwaysopen: true
-weight: 3
+order: 3
 ---
+
+# Determining a location
+
 Gateway uses different ways to match a DNS query to [locations](/gateway/locations) depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
 ![Determine location](../static/gateway-determine-location-dns.png)

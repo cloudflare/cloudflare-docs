@@ -1,8 +1,9 @@
 ---
-title: "Blocking A Domain"
-alwaysopen: true
-weight: 2
+order: 2
 ---
+
+# Blocking a Domain
+
 Follow the steps below to block a domain:
 
 1. Go to ‘Policies’

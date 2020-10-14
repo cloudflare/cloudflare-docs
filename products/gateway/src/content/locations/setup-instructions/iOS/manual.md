@@ -1,9 +1,8 @@
 ---
-title: "iOS Setup Instructions (Manual)"
-alwaysopen: true
-weight: 1
+order: 1
 ---
 
+# iOS Setup Instructions (Manual)
 
 <Aside>
 
@@ -11,7 +10,7 @@ Note that if you were using 1.1.1.1 for Families in the mobile app, you will at 
 </Aside>
 
 ## Install the 1.1.1.1 mobile app
-Install the 1.1.1.1 mobile app by visiting the [app store](https://itunes.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) on your iOS device.
+Install the 1.1.1.1 mobile app by visiting the [app store](https://itunes.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) on your iOS device. 
 
 If you already have the app on your phone, make sure you have the latest version of the app and then skip to the next step.
 
@@ -34,7 +33,7 @@ Click on 'DNS Settings'. This will take you to the screen where you can configur
 ![Click on DNS Settings](../../../static/click-on-dns-settings.PNG)
 
 ## Enter unique id from Gateway
-When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
+When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone. 
 
 1. Visit your teams dashboard to fetch the unique id from your location.
 ![Go to teams dash](../../../static/go-to-teams-dashboard.png)
@@ -51,4 +50,4 @@ When you are on this screen on your phone, you will need to enter the unique sub
 5. Enter the subdomain inside the field **GATEWAY UNIQUE ID**
 ![Enter unique id](../../../static/enter-unique-id.PNG)
 
-If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now.
+If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now. 
