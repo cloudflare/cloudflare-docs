@@ -40,7 +40,7 @@ __[View the docs →](https://developers.cloudflare.com/docs/)__
 
 Notes:
 
-1. Not a Cloudflare “product”, the documentation for the Docs Engine itself.
+¹ The documentation for the Docs Engine itself.
 
 ### Deployment
 
