@@ -1,8 +1,9 @@
 ---
-title: "SAML with Active Directory®"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# SAML with Active Directory®
+
 
 
 Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language (SAML).
@@ -48,7 +49,7 @@ To create a Relying Party Trust:
 
     Use an easily recognizable name. Include any information regarding this connection in the **Notes** field.
 
-7. Click **Next**.
+7. Click **Next**.  
 
     The **Choose Profile** step displays.
 
@@ -116,7 +117,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 Now you create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create _Access Policies_.
 
-<Aside type="note">
+<Aside>
 
 If you closed the Add Relying Trust wizard, use Explorer to find the <strong>Relying Party Trusts</strong> folder, select the newly created RPT file, and click <strong>Edit Claim Rules</strong> the <strong>Action\*/</strong> sidebar.
 </Aside>

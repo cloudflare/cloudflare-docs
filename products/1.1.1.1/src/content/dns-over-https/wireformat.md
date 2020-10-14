@@ -1,6 +1,8 @@
 ---
-title: Using DNS Wireformat
+order: 11
 ---
+
+# Using DNS Wireformat
 
 Cloudflare respects DNS wireformat as is defined in RFC1035.
 

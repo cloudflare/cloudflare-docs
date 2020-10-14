@@ -1,6 +1,7 @@
 ---
 title: "Quick start"
-weight: 1
+order: 1
+hidden: true
 ---
 
 import appLaunchGIF from '../static/app-launch/app-launch.gif'
@@ -20,10 +21,10 @@ Cloudflare Access is one-half of Cloudflare for Teams, a security platform that 
 Access supports providers that are maintained by your team, like Okta, G Suite, and AzureAD, in addition to publicly available providers like LinkedIN and GitHub.
 * Access [supports multiple providers](https://blog.cloudflare.com/multi-sso-and-cloudflare-access-adding-linkedin-and-github-teams/) simultaneously, including providers of the same type.
 * When users connect to an application protected by Access, they will be prompted to login with the identity provider configured.
-* As part of enabling Access in Step 1, you can begin configuring your identity provider right away. [Follow these instructions](https://developers.cloudflare.com/access/configuring-identity-providers/) to begin integrating your team’s login method.
+* As part of enabling Access in Step 1, you can begin configuring your identity provider right away. [Follow these instructions](/configuring-identity-providers/) to begin integrating your team’s login method.
 
 ## 3. Build your first Access policy
-* [Cloudflare Access policies](http://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) allow you to protect an entire website or a particular URI (the application resource). You can use policies to define users or groups who can or cannot access the application resource.
+* [Cloudflare Access policies](/setting-up-access/configuring-access-policies/) allow you to protect an entire website or a particular URI (the application resource). You can use policies to define users or groups who can or cannot access the application resource.
 * You can configure an access policy for an apex domain, a particular subdomain, or all subdomains using a wildcard policy. Similarly, you can apply an access policy to an entire website or protect a specific path.
 
 ![Access Generic](../static/apps/build-rule.png)
@@ -36,7 +37,7 @@ Access supports providers that are maintained by your team, like Okta, G Suite, 
 ## 5. Enable the Access App Launch for your organization
 * Cloudflare Access includes a feature, the [Access App Launch](https://blog.cloudflare.com/announcing-the-cloudflare-access-app-launch/), that serves as a single dashboard for your end users to view and launch the applications they can reach.
 * The Access App Launch reduces end user friction when migrating to a new system; they only need one URL and they can begin connecting to the tools they need.
-You can enable this for your organization now with these [instructions](https://developers.cloudflare.com/access/setting-up-access/app-launch/).
+You can enable this for your organization now with these [instructions](/setting-up-access/app-launch/).
 
 <img src={appLaunchGIF} alt="gif" />
 

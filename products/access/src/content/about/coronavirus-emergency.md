@@ -1,8 +1,9 @@
 ---
-title: "Free Program"
 hidden: true
-weight: 100
+order: 100
 ---
+
+# Free Program
 
 We know that organizations and individuals around the world depend on Cloudflare and our network.
 
@@ -14,10 +15,10 @@ If you are already a Cloudflare for Teams customer, we have removed the caps on 
 
 **1) Follow the quick start guide**
 
-* You can start using Access immediately using [this guide](https://developers.cloudflare.com/access/about/quick-start/).
-* All accounts have had the seat limit removed. No additional action is necessary to sign up. 
+* You can start using Access immediately using [this guide](/about/quick-start/).
+* All accounts have had the seat limit removed. No additional action is necessary to sign up.
 When you choose a plan, pick the 5 free seat plan to ensure you are not charged. You can then use more than 5 seats when users authenticate. Do not pick a plan over 5 seats.
-* Argo Tunnel is included in the program. To use Argo Tunnel for free, [start Argo Tunnel](https://developers.cloudflare.com/access/setting-up-access/argo-tunnel/) from the command-line tool, `cloudflared`, with these instructions. Do not enable it for your account as Argo Smart Routing in the Cloudflare dashboard.
+* Argo Tunnel is included in the program. To use Argo Tunnel for free, [start Argo Tunnel](/setting-up-access/argo-tunnel/) from the command-line tool, `cloudflared`, with these instructions. Do not enable it for your account as Argo Smart Routing in the Cloudflare dashboard.
 
 **2) Sign up for the onboarding session**
 

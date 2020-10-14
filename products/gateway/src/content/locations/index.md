@@ -1,9 +1,9 @@
 ---
-title: "Locations"
-alwaysopen: true
-weight: 2
+order: 2
 hidden: true
 ---
+
+# Locations
 
 Locations are usually physical entities like offices, homes, retail stores, movie theatres or a data centers. The fastest way to start sending DNS queries from a location and protect it from security threats is by changing the DNS resolvers at the router to the dedicated IPv6 addresses for those locations. 
 

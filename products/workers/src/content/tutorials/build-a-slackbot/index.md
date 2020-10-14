@@ -303,14 +303,14 @@ export const parseGhIssueString = text => {
   return match ? match.groups : null
 }
 
-export const fetchGithubIssue = (owner, repo, issue_number) => {
+export const fetchGitHubIssue = (owner, repo, issue_number) => {
   const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issue_number}`
   const headers = { "User-Agent": "simple-worker-slack-bot" }
   return fetch(url, { headers })
 }
 ```
 
-Back in `src/handlers/lookup.js`, use `fetchGithubIssue` to make a request to GitHub’s API, and parse the response:
+Back in `src/handlers/lookup.js`, use `fetchGitHubIssue` to make a request to GitHub’s API, and parse the response:
 
 ```js
 ---
@@ -319,7 +319,7 @@ highlight: [3, 11, 12]
 ---
 import qs from "qs"
 
-import { fetchGithubIssue, parseGhIssueString } from "../utils/github"
+import { fetchGitHubIssue, parseGhIssueString } from "../utils/github"
 
 export default async request => {
   const body = await request.text()
@@ -327,7 +327,7 @@ export default async request => {
   const text = params["text"].trim()
   const { owner, repo, issue_number } = parseGhIssueString(text)
 
-  const response = await fetchGithubIssue(owner, repo, issue_number)
+  const response = await fetchGitHubIssue(owner, repo, issue_number)
   const issue = await response.json()
 }
 ```
@@ -422,7 +422,7 @@ highlight: [4, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 ---
 import qs from "qs"
 
-import { fetchGithubIssue, parseGhIssueString } from "../utils/github"
+import { fetchGitHubIssue, parseGhIssueString } from "../utils/github"
 import { constructGhIssueSlackMessage } from "../utils/slack"
 
 export default async request => {
@@ -431,7 +431,7 @@ export default async request => {
   const text = params["text"].trim()
   const { owner, repo, issue_number } = parseGhIssueString(text)
 
-  const response = await fetchGithubIssue(owner, repo, issue_number)
+  const response = await fetchGitHubIssue(owner, repo, issue_number)
   const issue = await response.json()
 
   const blocks = constructGhIssueSlackMessage(issue, text)
@@ -459,7 +459,7 @@ highlight: [7, 25, 26, 27, 28, 29]
 ---
 import qs from "qs"
 
-import { fetchGithubIssue, parseGhIssueString } from "../utils/github"
+import { fetchGitHubIssue, parseGhIssueString } from "../utils/github"
 import { constructGhIssueSlackMessage } from "../utils/slack"
 
 export default async request => {
@@ -469,7 +469,7 @@ export default async request => {
     const text = params["text"].trim()
     const { owner, repo, issue_number } = parseGhIssueString(text)
 
-    const response = await fetchGithubIssue(owner, repo, issue_number)
+    const response = await fetchGitHubIssue(owner, repo, issue_number)
     const issue = await response.json()
 
     const blocks = constructGhIssueSlackMessage(issue, text)

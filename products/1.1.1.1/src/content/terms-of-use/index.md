@@ -1,7 +1,8 @@
 ---
-title: Terms Of Use
-weight: 10
+order: 10
 ---
+
+# Terms of Use
 
 1.1.1.1 Public DNS Resolver & 1.1.1.1 for Families Terms of Use
 

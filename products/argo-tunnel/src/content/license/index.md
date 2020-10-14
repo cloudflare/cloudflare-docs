@@ -1,9 +1,10 @@
 ---
-title: License
-weight: 10
+order: 100
 ---
 
-# CLOUDFLARED LICENSE
+# License
+
+**CLOUDFLARED LICENSE**
 
 Your installation of cloudflared software constitutes a symbol of your signature indicating that you accept the terms of this cloudflared License (this "*Agreement*").  This Agreement is a binding legal agreement between you and Cloudflare, Inc. ("*Cloudflare*") for the cloudflared services being provided to you by Cloudflare or its authorized representative (the "*cloudflared Services*"), including any computer software and any associated media, printed materials, and "online" or electronic documentation provided in connection with the cloudflared Services (the "*cloudflared Software*" and together with the cloudflared Services, hereinafter collectively referred to as the "*Solution*").  If you are not accepting this Agreement as an individual, then "you" means your company, its officers, members, employees, agents, representatives, successors and assigns.
 

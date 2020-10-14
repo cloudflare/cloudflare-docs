@@ -1,7 +1,8 @@
 ---
-title: "Configure Cloudflare Access"
-alwaysopen: true
+order: 1
 ---
+
+# Configuring Cloudflare Access
 
 ## Cloudflare for Teams Introduction
 

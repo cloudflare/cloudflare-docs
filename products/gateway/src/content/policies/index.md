@@ -1,15 +1,18 @@
 ---
-title: "Policies"
-alwaysopen: true
-weight: 3
+order: 3
 hidden: true
 ---
+
+# Policies
 
 import gatewayCreatePolicy from '../static/gateway-create-policy.gif'
 
 Cloudflare Gateway's policy engine allows you to block domains by categories, manually block domains and override domains to allow them even if those domains are getting blocked by a category. You can assign a policy to one or multiple locations. 
 
 <img src={gatewayCreatePolicy} alt="create gateway policy" />
+
+[Creating L7 policies](/gateway/policies/l7-firewall)
+Follow instructions to create HTTP filtering policies in Cloudflare Gateway.
 
 [Blocking a domain](/gateway/policies/blocking-a-domain)
 See how you can block a domain using the policy engine.

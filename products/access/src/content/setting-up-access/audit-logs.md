@@ -1,8 +1,9 @@
 ---
-title: "Audit Logs"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Audit Logs
+
 Cloudflare Access generates two types of audit logs:
 
 * **Authentication audit logs** maintain a record of authentication events.
@@ -46,7 +47,7 @@ Access authentication logs contain the following fields:
 
 Users who have authenticated through the Access gateway have access to authorized URL paths for the duration of their session. Cloudflare provides several ways to audit these requests.
 
-A video guide is [also available](https://developers.cloudflare.com/access/videos/configuring-access/).
+A video guide is [also available](/videos/configuring-access/).
 
 ### Cloudflare logging
 
@@ -74,7 +75,7 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
    "RayID": "5y1250bcjd621y99"
    "RequestHeaders":{"cf-access-user":"srhea"},
 }
- 
+
 {
    "ClientIP": "198.51.100.206",
    "ClientRequestHost": "jira.widgetcorp.tech",

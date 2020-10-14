@@ -1,7 +1,9 @@
 ---
-title: "Access App Launch"
-alwaysopen: true
+order: 9
+hidden: true
 ---
+
+# Access App Launch
 
 import appLaunch from '../static/app-launch/app-launch.gif'
 

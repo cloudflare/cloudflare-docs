@@ -1,7 +1,9 @@
 ---
-title: "Service tokens"
-alwaysopen: true
+order: 8
+hidden: true
 ---
+
+# Service Tokens
 
 Cloudflare Access secures your application by evaluating each request for authentication. A great many users authenticate using an identity provider (IdP). For these users, Cloudflare generates a JSON Web Token (JWT) that is scoped to the applications they are authorized to access.
 
@@ -9,19 +11,30 @@ Cloudflare Access also supports service tokens for applications that service aut
 
 ## Create a service token
 
-1. Navigate to the **Service Auth** row in the **Access** section of the Cloudflare for Teams dashboard. Click the `Create Service Token` button.
+1. In the Cloudflare for Teams dashboard, navigate to the **Access** > **Service Auth**.
+
+1. Click the `Create Service Token` button.
 
   ![Access Service Token card](../static/service-tokens/service-token-home.png)
 
-1. In the next page, name the service token. The name allows you to easily identify events related to the token in the logs and to revoke the token individually. Click the `Generate token` button to proceed.
+1. Next, name the service token.
+ The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
 
   ![Access Service Token card](../static/service-tokens/name-service-token.png)
 
-1. The next page will display the generated `Client ID` and `Client Secret` for the service token. You must copy the `Client Secret` in this view; this is the only time Cloudflare Access will display the `Client Secret`. If you lose the `Client Secret`, you must generate a new service token.
+1. Click `Generate token`.
+The next page will display the generated `Client ID` and `Client Secret` for the service token.
+
+1. Copy the `Client Secret` in this view.
 
   ![Access Service Token card](../static/service-tokens/service-token-detail.png)
 
-  You can now use the service token in [non-identity policies](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/).
+<div class="notices info">
+This is the only time Cloudflare Access will display the <b>Client Secret</b>. If you lose the <b>Client Secret</b>, you must generate a new service token.
+</div>
+
+  You can now use the service token in [non-identity policies](/setting-up-access/configuring-access-policies/).
+
 
 ## Renew a service token
 
@@ -42,7 +55,9 @@ Cloudflare Access expects both values as headers in the request sent to the appl
 
 By default, Cloudflare Access service tokens expire one year after they’re created. If you need to revoke access earlier, simply delete the token.
 
-To revoke a service token immediately, navigate to the **Service Tokens** page of the **Access** section of the Cloudflare for Teams dashboard. Click `Delete` for the token you need to revoke and delete.
+To revoke a service token immediately:
+1. Navigate to the **Service Tokens** page of the **Access** section of the Cloudflare for Teams dashboard.
+1. Click `Delete` for the token you need to revoke and delete.
 
 ![Access Service Token card](../static/service-tokens/service-token-home.png)
 
@@ -53,13 +68,11 @@ When revoking service tokens, keep in mind:
 
 As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must _delete_ the service token.
 
-## Common questions
+## FAQ
 
 * **Where can a service find the `CF-Access-Client-ID` which was used to generate a JWT from a Cloudflare Access service token?**
-
-  The information is captured in the JWT payload.
-
-  The ID of the service token is stored in the `common_name` field of the JWT.
+The information is captured in the JWT payload.
+The ID of the service token is stored in the `common_name` field of the JWT.
 
 ```json
 {
@@ -71,3 +84,7 @@ As long as the Client ID and Client Secret are still valid, they can be exchange
   "sub": ""
 }
 ```
+
+* **I created a new service token, but when I try to use it in my policies, it doesn't work.**
+
+Sometimes it takes a few minutes for a newly created token to activate. If you experience any issues in using service tokens right after you have created them, wait a few minutes and try again.

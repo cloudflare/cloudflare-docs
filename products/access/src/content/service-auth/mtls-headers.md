@@ -1,10 +1,10 @@
 ---
-title: "Mutual TLS client headers"
-alwaysopen: true
-weight: 15
+order: 15
 ---
 
-Cloudflare makes client certificate details available to be passed as request headers to your origin. To begin, configure your policy for mTLS enforcement using the instructions provided in [_Adding mTLS authentication to your Access configuration_](https://developers.cloudflare.com/access/service-auth/mtls/).
+# Mutual TLS client headers
+
+Cloudflare makes client certificate details available to be passed as request headers to your origin. To begin, configure your policy for mTLS enforcement using the instructions provided in [_Adding mTLS authentication to your Access configuration_](/service-auth/mtls/).
 
 ## Valid variables
 

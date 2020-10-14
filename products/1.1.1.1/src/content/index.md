@@ -4,4 +4,4 @@ order: 0
 
 # Welcome
 
-TODO...
+A blazing fast DNS resolver built for private browsing.

@@ -1,7 +1,9 @@
 ---
-title: Load Balancing
-weight: 35
+order: 35
 ---
+
+# Load Balancing
+
 
 
 You can create a load balancer within Cloudflare which will direct traffic to

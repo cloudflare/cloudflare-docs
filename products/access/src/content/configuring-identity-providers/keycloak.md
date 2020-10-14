@@ -1,8 +1,8 @@
 ---
-title: "Keycloak SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Keycloak SAML
 
 Keycloak is an open source identity and access management solution built by JBoss. Need a Keycloak lab environment for testing? An example is available [here](https://github.com/mw866/tunnel-keycloak).
 

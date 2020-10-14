@@ -21,9 +21,9 @@ Visit [example.com](https://example.com).
 ```markdown
 Visit [example.com](https://example.com).
 
-View the [Tutorials](/tutorials) tutorials.
+View the [How it Works](/how-it-works) page.
 
-Learn how [V8:Isolates power Workers](/how-workers-works#isolates).
+Learn how to use [`<Asides/>`](/reference/markdown#asides).
 ```
 
 - __Internal links__ will use [Gatsby’s `<Link/>` component](https://www.gatsbyjs.org/docs/gatsby-link/), which means they will be routed through `@reach/router` using `pushState`.
@@ -32,14 +32,14 @@ Learn how [V8:Isolates power Workers](/how-workers-works#isolates).
 If you need to take advantage of Gatsby’s routing but you want control over the presentation of the link yourself, you can use `<Link/>` directly.
 
 ```markdown
-<Link to="/examples" className="Button Button-is-secondary">
-  View examples
+<Link to="/how-it-works" className="Button Button-is-secondary">
+  How it Works
 </Link>
 ```
 
 <Example>
-<Link to="/examples" className="Button Button-is-secondary">
-  View examples
+<Link to="/how-it-works" className="Button Button-is-secondary">
+  How it Works
 </Link>
 </Example>
 
@@ -125,7 +125,7 @@ This is an example _of an example_.
 
 ## Definitions, Code, Type, ... PropMeta
 
-When writing reference documentation, there are four MDX components that you use `Definitions`, `Code`, `Type`, and `ParamType` in conjunction with each other. All of these components are added to the global scope, so you do not need to import them.
+When writing reference documentation, there are four MDX components that you use `Definitions`, `Code`, `Type`, `ParamType`, and `PropMeta`, in conjunction with each other. All of these components are added to the global scope, so you do not need to import them.
 
 <Aside>
 
