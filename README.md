@@ -10,12 +10,12 @@ __[View the docs →](https://developers.cloudflare.com/docs/)__
 
 | Product                 | `pathPrefix`         | Icon | Content | Test                                                                                  | Prod                                                           |
 | :---------------------- | :------------------- | :--- | :------ | :------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
-| 1.1.1.1                 | 1-1-1-1              | ✕    |         | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1-1-1-1)                           |                                                                |
+| 1.1.1.1                 | 1-1-1-1              | ✕    | x       | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1-1-1-1)                           |                                                                |
 | Access                  | access               | ✕    | ✕       | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)               |
 | Analytics               | analytics            | ✕    |         | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       |                                                                |
-| Argo Tunnel             | argo-tunnel          | ✕    |         | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   |                                                                |
+| Argo Tunnel             | argo-tunnel          | ✕    | x       | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   |                                                                |
 | BYOIP                   | byoip                | ✕    |         | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               |                                                                |
-| Distributed Web Gateway | distributed-web      | ✕    |         | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           |                                                                |
+| Distributed Web Gateway | distributed-web      | ✕    | x       | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           |                                                                |
 | Docs Engine¹            | docs-engine          | ✕    | ✕       | [Test](https://docs-engine.cloudflare-docs.workers.dev/docs-engine)                   | [Prod](https://developers.cloudflare.com/docs-engine)          |
 | Firewall                | firewall             | ✕    |         | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         |                                                                |
 | Gateway                 | gateway              | ✕    |         | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           |                                                                |
