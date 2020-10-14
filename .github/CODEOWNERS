@@ -14,10 +14,10 @@ products/stream/ @abracchi-tw
 products/argo-tunnel/ @abracchi-tw
 
 # 1.1.1.1
-products/1.1.1.1/
+products/1.1.1.1/ @abracchi-tw
 
 # Gateway
-products/gateway/
+products/gateway/ @abracchi-tw
 
 # Warp Client
-products/warp-client/
+products/warp-client/ @abracchi-tw
