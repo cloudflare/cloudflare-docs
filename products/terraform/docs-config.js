@@ -6,7 +6,7 @@ module.exports = {
   contentRepoFolder: "products/terraform",
   externalLinks: [
     {
-      title: "Github @cloudflare/terraform-provider-cloudflare",
+      title: "GitHub @cloudflare/terraform-provider-cloudflare",
       url: "https://github.com/cloudflare/terraform-provider-cloudflare"
     },
     {

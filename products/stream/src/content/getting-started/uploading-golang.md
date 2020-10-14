@@ -63,4 +63,4 @@ upload.Progress()
 upload.Finished()
 ```
 
-Please see [go-tus](https://github.com/eventials/go-tus) on Github for functionality such as resuming uploads and getting more details about the progress of the upload.
+Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functionality such as resuming uploads and getting more details about the progress of the upload.
