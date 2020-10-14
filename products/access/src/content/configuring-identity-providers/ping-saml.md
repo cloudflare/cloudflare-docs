@@ -1,8 +1,9 @@
 ---
-title: "PingIdentity® SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# PingIdentity® SAML
+
 
 
 The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html)  documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
@@ -20,7 +21,7 @@ To set up PingIdentity as your IdP:
 
 1. In the **SAML attribute configuration** dialog select **Email attribute > urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress**.
 
-    <Aside type="note">
+    <Aside>
 
     There is an additional setting for PingFederate prior to 9.0.
     </Aside>
@@ -39,7 +40,7 @@ To set up PingIdentity as your IdP:
 5. Navigate to **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML icon.**
 6. Upload the metadata file in the **Add a SAML identity provider**.
 
-    <Aside type="note">
+    <Aside>
 
     If you are using a self-hosted deployment of PingFederate and a separate IdP or directory service, change the auto-populated value in the <strong>IdP Entity ID</strong> field. The metadata file sets it to a domain that you control.
     </Aside>

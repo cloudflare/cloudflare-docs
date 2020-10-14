@@ -1,8 +1,9 @@
 ---
-title: "Google"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Google
+
 Cloudflare Access can integrate with Google as an IdP. Use these steps to configure Google as your IdP.
 
 ## Configure Google as your IdP

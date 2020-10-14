@@ -1,6 +1,8 @@
 ---
-title: Linux
+order: 6
 ---
+
+# Linux
 
 Follow this quick guide to start using 1.1.1.1 on your Linux device.
 

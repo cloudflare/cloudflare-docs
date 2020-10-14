@@ -1,6 +1,6 @@
-# Security Considerations
+# Security considerations
 
-## Limiting Where Videos Can Be Embedded
+## Limiting where videos can be embedded
 
 By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.
 
@@ -15,15 +15,15 @@ You can also control embed limitation programmatically using the Stream API. `ui
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: {API-KEY}" -H "X-Auth-Email: {EMAIL}" \
--d '{"uid": "{VIDEO-ID}", "allowedOrigins": ["example.com"]}' \
-https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/stream/{VIDEO-ID}
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "allowedOrigins": ["example.com"]}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ```
 
 ## Signed URLs
 
-Combining [signed URLs](/stream/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
+Combining [signed URLs](/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
 
 To do so
 

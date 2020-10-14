@@ -1,8 +1,10 @@
 ---
-title: "RDP"
 alwaysopen: false
-weight: 5
+order: 5
+hidden: true
 ---
+
+# RDP
 
 Cloudflare Access can secure connections over Remote Desktop Protocol (RDP).
 
@@ -10,4 +12,4 @@ Doing so requires configuring your Access-protected server to use Argo Tunnel fo
 
 Establishing an RDP connection to an Access-protected server requires installing Cloudflare's `cloudflared` command-line tool on the client machine so that it can connect over Argo Tunnel.
 
-To begin, follow [these steps](https://developers.cloudflare.com/access/rdp/rdp-guide/). A video guide is [also available](https://developers.cloudflare.com/access/videos/configuring-access/).
+To begin, follow [these steps](/rdp/rdp-guide/). A video guide is [also available](/videos/configuring-access/).

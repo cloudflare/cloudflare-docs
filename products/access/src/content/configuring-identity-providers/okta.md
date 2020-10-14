@@ -1,8 +1,8 @@
 ---
-title: "Okta"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Okta
 
 Okta provides cloud software that helps companies manage secure user authentication, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate Okta as an IdP.
 
@@ -43,7 +43,7 @@ To set up Okta as your IdP:
 
     The **OpenID Connect ID Token** card displays.
 
-    ![OpenID Connect ID Token card](../static/okta/ok-ent6.png)
+    ![OpenID Connect ID Token card](../static/okta/ok-ent6-correct.png)
 
 1. Scroll to the **Groups claim filter** field, switch **Starts with** to **Regex**, and enter  `.*` in the field on the right.
 1. Click **Save**.

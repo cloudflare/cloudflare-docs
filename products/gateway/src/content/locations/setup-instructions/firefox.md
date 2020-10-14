@@ -1,8 +1,9 @@
 ---
-title: "Firefox Setup Instructions"
-alwaysopen: true
-weight: 2
+order: 2
 ---
+
+# Firefox Setup Instructions
+
 With Firefox, you can send DNS queries using the DNS over HTTPS protocol.  
 
 * Open Preferences and scroll to the bottom.

@@ -1,6 +1,8 @@
 ---
-title: Gaming Consoles
+order: 3
 ---
+
+# Gaming Consoles
 
 Faster access to online games? ✌️✌️.
 

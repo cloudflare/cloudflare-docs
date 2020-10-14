@@ -1,7 +1,8 @@
 ---
-title: Privacy
-weight: 10
+order: 10
 ---
+
+# Privacy
 
 - [1.1.1.1 Public DNS Resolver](./privacy/public-dns-resolver/): This document provides details on our collection, use, and disclosure of the information processed by the 1.1.1.1 public DNS resolver. The 1.1.1.1 public DNS resolver service is governed by our [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 

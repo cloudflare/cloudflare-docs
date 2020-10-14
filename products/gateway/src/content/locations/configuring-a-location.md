@@ -1,8 +1,8 @@
 ---
-title: "Configuring A Location"
-alwaysopen: true
-weight: 1
+order: 1
 ---
+
+# Configure a Location
 
 import gatewayCreateLocation from '../static/gateway-create-location.gif'
 

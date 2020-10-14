@@ -1,7 +1,8 @@
 ---
-title: What is 1.1.1.1?
-weight: 2
+order: 2
 ---
+
+# What is 1.1.1.1?
 
 ## What is a DNS resolver
 

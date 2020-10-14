@@ -1,8 +1,8 @@
 ---
-title: "Order Of Operations When Applying A Policy"
-alwaysopen: true
-weight: 6
+order: 6
 ---
+
+# Order of Operations
 
 When Gateway receives a DNS query and the query matches with a policy, the policy follows the order outlined below:
 

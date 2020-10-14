@@ -1,10 +1,10 @@
 ---
-title: "Windows Setup Instructions"
-alwaysopen: true
-weight: 3
+order: 3
 ---
 
-# IPv4
+# Windows Setup Instructions
+
+## IPv4
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
 * Click on Change Adapter Settings.
@@ -17,7 +17,7 @@ weight: 3
     * **172.64.36.2**
 * Click OK.
 
-# IPv6
+## IPv6
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
 * Click on Change Adapter Settings.

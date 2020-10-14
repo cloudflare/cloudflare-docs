@@ -1,8 +1,8 @@
 ---
-title: "Cloudflare Argo Tunnel"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Cloudflare Argo Tunnel
 
 Access lets you control who can reach your website. Cloudflare handles the requests based on your Access policies to evaluate user credentials. To ensure that Cloudflare proxies all traffic, lock down your origin to only accept Cloudflare IPs. 
 

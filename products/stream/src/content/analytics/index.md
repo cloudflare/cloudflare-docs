@@ -1,37 +1,53 @@
+---
+order: 2
+---
+
 # Analytics
 
 Cloudflare measures the following metrics for every video play:
 
-Metric                    | Name                            | Example                  | Unit
---------------------------|---------------------------------|--------------------------|--------------------------
-totalTimeViewedMs         | Total Time Viewed               | 1000                     | Time in milliseconds
-totalImpressions          | Total Views                     | 50                       | Impressions
+<TableWrap>
+
+Metric            | Name              | Example | Unit
+------------------|-------------------|---------|---------------------
+totalTimeViewedMs | Total time viewed | 1000    | Time in milliseconds
+totalImpressions  | Total views       | 50      | Impressions
+
+</TableWrap>
 
 You can slice and dice your analytics by the following dimensions:
 
-Dimension                 | Name                            | Example
---------------------------|---------------------------------|--------------------------
-videoId                   | Video ID                        | 40d67c87c6cd4b889a4fd57805225e85
+<TableWrap>
+
+Dimension | Name     | Example
+----------|----------|---------------------------------
+videoId   | Video ID | 40d67c87c6cd4b889a4fd57805225e85
+
+</TableWrap>
 
 You can also filter the data using the following operators:
 
-Operator                  | Name                            | URL Encoded
---------------------------|---------------------------------|--------------------------
-==                        | Equals                          | %3D%3D
-!=                        | Does not equals                 | !%3D
-\>                        | Greater Than                    | %3E
-<                         | Less Than                       | %3C
-\>=                       | Greater than or equal to        | %3E%3D
-<=                        | Less than or equal to           | %3C%3D
+<TableWrap>
+
+Operator | Name                     | URL Encoded
+---------|--------------------------|------------
+==       | Equals                   | %3D%3D
+!=       | Does not equals          | !%3D
+\>       | Greater Than             | %3E
+<        | Less Than                | %3C
+\>=      | Greater than or equal to | %3E%3D
+<=       | Less than or equal to    | %3C%3D
+
+</TableWrap>
 
 Filters can be combined using OR and AND boolean logic. AND takes precedence over OR in all the expressions.
 The OR operator is defined using a comma (,) or OR keyword surrounded by whitespace.
 The AND operator is defined using a semicolon (;) or AND keyword surrounded by whitespace.
 
-## Analytics Request Structure
+## Analytics request structure
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId=={video_id}&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics={metrics}&dimensions={dimensions}&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z&sort={sort}&until={to-timestamp}&limit={limit}
 ```
 
 * `metrics` is one or more metrics (such as count) to compute
@@ -49,16 +65,16 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytics
   * `day`
   * `hour`
 
-## Example Analytics Query
+## Example analytics query
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId=={video_id}&since=2018-01-01T16:57:00Z" \
-    -H "X-Auth-Email: {email}" \
-    -H "X-Auth-Key: {api-key}" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/views?metrics=totalImpressions,totalTimeViewedMs&dimensions=videoId&filters=videoId==$VIDEOID&since=2018-01-01T16:57:00Z" \
+    -H "X-Auth-Email: $EMAIL" \
+    -H "X-Auth-Key: $APIKEY" \
     -H "Content-Type: application/json"
 ```
 
-## Example Analytics Response
+## Example analytics response
 
 ```bash
 {
@@ -93,7 +109,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/analytic
         "totalImpressions",
         "totalTimeViewedMs"
       ],
-      "filters": "videoId=={video_id}",
+      "filters": "videoId==$VIDEOID",
       "since": "2018-10-10T13:02:00Z",
       "until": "2018-11-27T20:10:00Z",
       "limit": 10000

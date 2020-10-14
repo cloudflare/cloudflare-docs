@@ -1,7 +1,8 @@
 ---
-title: "SSH Connections"
-alwaysopen: true
+order: 16
 ---
+
+# SSH Connections
 
 Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activites like remote command execution.
 
@@ -42,7 +43,7 @@ Once selected, `cloudflared` will download a wildcard certificate for the site. 
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
 
 For example, if you share the machine at `ssh.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
@@ -124,7 +125,7 @@ Cloudflare Access does not replace SSH key exchange with a Git repository.
 
 ### Service tokens
 
-[Service tokens](https://developers.cloudflare.com/access/service-auth/service-token/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
+[Service tokens](/service-auth/service-token/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
 
 ## Video guide
 
@@ -135,4 +136,4 @@ In this video, you’ll learn how to use Cloudflare Access to protect an SSH con
 
 
 
-A video guide is [also available](https://developers.cloudflare.com/access/videos/configuring-access/).
+A video guide is [also available](/videos/configuring-access/).

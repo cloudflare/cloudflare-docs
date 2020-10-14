@@ -1,52 +1,17 @@
 # Cloudflare Docs
 
-## Developing
+__[View the docs →](https://developers.cloudflare.com/docs/)__
 
-(Note: Although it works, this process is still a bit of a WIP.)
+[Contribute to the docs](https://developers.cloudflare.com/docs-engine/how-to-guides/contribute-to-a-product)
 
-Clone the engine somewhere and set it up to be NPM linked:
-
-```bash
-git clone git@github.com:cloudflare/cloudflare-docs-engine.git
-npm link
-```
-
-(Note: This will soon be moved to the @cloudflare org.)
-
-Clone this repo.
-
-```bash
-git clone git@github.com:cloudflare/cloudflare-docs.git
-```
-
-For each product, `cd` into `products/$productName` and then run:
-
-```bash
-npm link cloudflare-docs-engine && npm run bootstrap && npm run develop
-```
-
-## Publishing
-
-Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using GitHub Actions.
-
-Test environment deploys to:
-
-```txt
-https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
-```
-
-Prod environment deploys to:
-
-```txt
-https://developers.cloudflare.com/$pathPrefix/
-```
+[Set up local development](https://developers.cloudflare.com/docs-engine/how-to-guides/migrate-a-product#step-2-set-up-local-development)
 
 ## Migration progress
 
 | Product                 | `pathPrefix`         | Icon | Content | Test                                                                                  | Prod                                                           |
 | :---------------------- | :------------------- | :--- | :------ | :------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
 | 1.1.1.1                 | 1-1-1-1              | ✕    |         | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1-1-1-1)                           |                                                                |
-| Access                  | access               | ✕    |         | [Test](https://access.cloudflare-docs.workers.dev/access)                             |                                                                |
+| Access                  | access               | ✕    | ✕       | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)               |
 | Analytics               | analytics            | ✕    |         | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       |                                                                |
 | Argo Tunnel             | argo-tunnel          | ✕    |         | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   |                                                                |
 | BYOIP                   | byoip                | ✕    |         | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               |                                                                |
@@ -55,7 +20,7 @@ https://developers.cloudflare.com/$pathPrefix/
 | Firewall                | firewall             | ✕    |         | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         |                                                                |
 | Gateway                 | gateway              | ✕    |         | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           |                                                                |
 | HTTP3                   | http3                |      |         | [Test](https://http3.cloudflare-docs.workers.dev/http3)                               |                                                                |
-| Image Resizing          | images               | ✕    |         | [Test](https://images.cloudflare-docs.workers.dev/images)                             |                                                                |
+| Image Resizing          | images               | ✕    | ✕       | [Test](https://images.cloudflare-docs.workers.dev/images)                             | [Prod](https://developers.cloudflare.com/images)               |
 | Life of a Request       | internet             | ✕    |         | [Test](https://internet.cloudflare-docs.workers.dev/internet)                         |                                                                |
 | Load Balancing          | load-balancing       | ✕    |         | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             |                                                                |
 | Logs                    | logs                 | ✕    |         | [Test](https://logs.cloudflare-docs.workers.dev/logs)                                 |                                                                |
@@ -66,7 +31,7 @@ https://developers.cloudflare.com/$pathPrefix/
 | Registrar               | registrar            | ✕    |         | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       |                                                                |
 | Spectrum                | spectrum             | ✕    | Started | [Test](https://spectrum.cloudflare-docs.workers.dev/spectrum)                         |                                                                |
 | SSL                     | ssl                  | ✕    |         | [Test](https://ssl.cloudflare-docs.workers.dev/ssl)                                   |                                                                |
-| Stream                  | stream               | ✕    | Started | [Test](https://stream.cloudflare-docs.workers.dev/stream)                             |                                                                |
+| Stream                  | stream               | ✕    | ✕       | [Test](https://stream.cloudflare-docs.workers.dev/stream)                             | [Prod](https://developers.cloudflare.com/stream)               |
 | Tenant                  | tenant               |      |         | [Test](https://tenant.cloudflare-docs.workers.dev/tenant)                             |                                                                |
 | Terraform               | terraform            | ✕    | ✕       | [Test](https://terraform.cloudflare-docs.workers.dev/terraform)                       | [Prod](https://developers.cloudflare.com/terraform)            |
 | Time Services           | time-services        | ✕    |         | [Test](https://time-services.cloudflare-docs.workers.dev/time-services)               |                                                                |
@@ -76,3 +41,19 @@ https://developers.cloudflare.com/$pathPrefix/
 Notes:
 
 1. Not a Cloudflare “product”, the documentation for the Docs Engine itself.
+
+### Deployment
+
+Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using Github Actions.
+
+Non-migrated products only deploy to the test environment:
+
+```txt
+https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
+```
+
+Migrated products deploy to both the test environment above and the prod environment at:
+
+```txt
+https://developers.cloudflare.com/$pathPrefix/
+```

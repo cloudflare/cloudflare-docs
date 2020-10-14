@@ -1,8 +1,8 @@
 ---
-title: "Configuring Access policies"
-alwaysopen: true
-weight: 2
+order: 2
 ---
+
+# Configuring Access policies
 
 Access policies allow you to protect an entire website or a particular URI (the application resource). You can use policies to define users or groups who can or cannot access the application resource.
 
@@ -53,7 +53,7 @@ When configuring a Bypass policy to allow requests to a specific page while prot
 
 ### Non-identity
 
-Non-identity policies enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and [mutual TLS](https://developers.cloudflare.com/access/service-auth/mtls/).
+Non-identity policies enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and [mutual TLS](/service-auth/mtls/).
 
 ## Types of rule decisions
 

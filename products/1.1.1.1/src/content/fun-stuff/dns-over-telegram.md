@@ -1,6 +1,8 @@
 ---
-title: DNS over Telegram
+order: 3
 ---
+
+# DNS over Telegram
 
 To perform DNS over Telegram, you will need the Telegram app. For the unfamiliar, Telegram is an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
 

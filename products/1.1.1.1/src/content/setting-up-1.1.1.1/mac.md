@@ -1,6 +1,8 @@
 ---
-title: macOS
+order: 7
 ---
+
+# macOS
 
 Follow this quick guide to start using 1.1.1.1 on your Mac.
 

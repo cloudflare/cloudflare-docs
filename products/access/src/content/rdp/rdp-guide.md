@@ -1,7 +1,8 @@
 ---
-title: "Remote Desktop Protocol"
-alwaysopen: true
+order: 400
 ---
+
+# Remote Desktop Protocol
 
 The Remote Desktop Protocol (RDP) allows end users to connect to a desktop from a different machine.
 
@@ -84,7 +85,7 @@ C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the desktop.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the desktop.
 
 For example, if you share the desktop at `rdp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
@@ -188,8 +189,8 @@ At this point the shortcut will now be on the desktop; users can launch with a d
 MacOS users can save a command shortcut that will launch the RDP flow. The command below can be saved as a `.command` file that can be launched on login.
 
 ```bash
-var=/Applications/CF-RDP-Tunnel.command && 
-echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var && 
+var=/Applications/CF-RDP-Tunnel.command &&
+echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var &&
 chmod +x $var
 ```
 

@@ -1,8 +1,8 @@
 ---
-title: "Set up Cloudflare"
-alwaysopen: true
-weight: 1
+order: 2
 ---
+
+# Set up Cloudflare
 
 ## Getting started with Cloudflare
 

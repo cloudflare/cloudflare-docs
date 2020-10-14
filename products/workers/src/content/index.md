@@ -51,6 +51,6 @@ async function handleRequest(request) {
 
 --------------------------------
 
-These docs are built with the [Cloudflare Docs engine](/docs-engine).
+These docs are built with the [Cloudflare Docs Engine](https://developers.cloudflare.com/docs-engine/).
 
 </ContentColumn>

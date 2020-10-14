@@ -1,6 +1,8 @@
 ---
-title: DNS in Google Sheets
+order: 1
 ---
+
+# DNS in Google Sheets
 
 They thought we wouldn't go there, but they thought wrong.
 

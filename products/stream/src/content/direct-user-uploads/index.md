@@ -1,4 +1,8 @@
-# Direct User Uploads
+---
+order: 5
+---
+
+# Direct user uploads
 
 Direct uploads allow users to upload videos without API keys. A common place to
 use direct uploads is on web apps, client side applications, or on mobile devices
@@ -33,19 +37,19 @@ Additionally, you can limit where the video can be embedded through these fields
 
 `requireSignedURLs` is an optional boolean field that limits the permission to
 view the video.  This field must be a boolean value.  To learn more about signed
-URLs, please visit our [documentation](/stream/security/signed-urls/).
+URLs, please visit our [documentation](/security/signed-urls/).
 
 `allowedOrigins` is an optional array of strings field that limits the domains a
 video can be embedded on.  To learn more about allowed domains, please visit our
-[security considerations](/stream/security/security-considerations/).
+[security considerations](/security/security-considerations/).
 
 `thumbnailTimestampPct` is an optional number field that sets the timestamp
 location of thumbnail image. To learn more about timestamp,
-please visit our [documentation](/stream/thumbnails/).
+please visit our [documentation](/thumbnails/).
 
 `watermark` is an optional field that contains the `uid` of watermark profile.
 Video uploaded by the link will be watermarked automatically. To learn more about
-watermark profile, please visit our [documentation](/stream/watermarks/).
+watermark profile, please visit our [documentation](/watermarks/).
 
 `meta` is an optional field that allows you to set the video's `name` along with
 any other additional arbitrary keys for metadata to be stored.
@@ -54,9 +58,9 @@ any other additional arbitrary keys for metadata to be stored.
 
 ```bash
 curl -X POST \
- -H 'X-Auth-Key:{api-key}' \
- -H 'X-Auth-Email:{email}' \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
+ -H 'X-Auth-Key:$APIKEY' \
+ -H 'X-Auth-Email:$EMAIL' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
  --data '{
     "maxDurationSeconds": 3600,
     "expiry": "2020-04-06T02:20:00Z",
@@ -110,7 +114,7 @@ The `uploadURL` provided in the `result` body of a successful request should be
 passed along to the end-user to make their upload request.
 
 The `uid` references the reserved media object's unique identifier and can be
-kept as a reference to query our [API](/stream/getting-started/searching/).
+kept as a reference to query our [API](/getting-started/searching/).
 
 ## Direct Upload Request from end users
 
@@ -175,8 +179,8 @@ After the creation of a unique one-time upload URL, you may wish to retain the
 
 You can do that two ways:
 
-1. You can [query the media API](/stream/getting-started/searching/) with the UID
+1. You can [query the media API](/getting-started/searching/) with the UID
 to understand it's status.
 
-2. You can [create a webhook subscription](/stream/webhooks/) to receive notifications
+2. You can [create a webhook subscription](/webhooks/) to receive notifications
 regarding the status of videos.  These notifications include the video's UID.

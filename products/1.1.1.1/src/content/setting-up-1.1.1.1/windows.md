@@ -1,6 +1,8 @@
 ---
-title: Windows
+order:8
 ---
+
+# Windows
 
 Follow this quick guide to start using 1.1.1.1 on your Windows computer.
 
