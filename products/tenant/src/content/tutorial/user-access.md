@@ -1,7 +1,9 @@
 ---
-title: Step 2 - User Access
-weight: 20
+title: "2: User access"
+order: 1
 ---
+
+# Step 2: User access
 
 There are two ways to manage how external customers access Cloudflare.
 
@@ -10,7 +12,7 @@ There are two ways to manage how external customers access Cloudflare.
 
 The first method gives customers control over all aspects of Cloudflare, while the latter allows you to integrate your customer's Cloudflare experience into a dashboard you control and they may already be familiar with.
 
-# 1. Direct Cloudflare dashboard access
+## 1. Direct Cloudflare dashboard access
 
 If you want to give customers access to their individual accounts then its no different then if you were inviting a teammate to help manage your account. This can be done in our dashboard through the members tab in the account management area or by making the below API call.
 
@@ -22,7 +24,7 @@ In most cases the user-role to use is that of the `Administrator` role which is 
 
 Once the invite is sent, the user will receive an invite to gain access to the account. If they don't already have a Cloudflare user then we will take them through the process to create one. Once created they will be given access to the acecount and any zones already created.
 
-# 2. Build an interface for customers to use
+## 2. Build an interface for customers to use
 
 If you want to have greater control over how customers use Cloudflare or integrate the experience into an existing dashboard of yours that customers use then you can integrate with our API directly to build this experience. In general this will mean that you will be making all the API calls to Cloudflare on behalf of customers. In this case it is still recommended to create accounts and users that match 1:1 with your customers. This means changes made by customer A will go through user A and changes made by customer B will go through user B. This helps to avoid hitting rate limits across all customers if one user is particularly busy.
 
@@ -62,6 +64,10 @@ An example response for a successful creation:
 }
 ```
 
-# Moving on
+--------------------------------
+
+## Continue the tutorial
+
 Now that the customer has access to the account in the next step we will look at how to enable paid services for customers.
 
+<p><Link to="/tutorial/enabling-services" className="Button Button-is-docs-primary">Step 3: Enabling services</Link></p>
