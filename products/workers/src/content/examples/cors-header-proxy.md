@@ -135,7 +135,7 @@ function handleOptions(request) {
       ...corsHeaders,
     // Allow all future content Request headers to go back to browser
     // such as Authorization (Bearer) or X-Client-Name-Version
-      "Access-Control-Allow-Headers": request.get("Access-Control-Request-Headers"),
+      "Access-Control-Allow-Headers": request.headers.get("Access-Control-Request-Headers"),
     }
 
     return new Response(null, {
