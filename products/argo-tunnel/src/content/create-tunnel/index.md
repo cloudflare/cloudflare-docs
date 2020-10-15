@@ -39,7 +39,7 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 
 ## Run a Tunnel
 
-Once created, you can use Argo Tunnel to proxy traffic from the Tunnel to a locally available URL in your environment. You can specify configuration details for your tunnel in a (configuration file).
+Once created, you can use Argo Tunnel to proxy traffic from the Tunnel to a locally available URL in your environment. You can specify configuration details for your tunnel in a configuration file.
 
 If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
 
@@ -57,7 +57,7 @@ You can also run the Tunnel without a configuration file by appending the flags 
 
 ![Run tunnels](../static/img/create-tunnel/rt1.png)
 
-Once run, this command will create an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
+Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
 
 ### 
 

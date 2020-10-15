@@ -124,8 +124,8 @@ origincert: C:\ABSOLUTE\PATH\TO\cert.pem
 
 In some cases, forward slashes should be used to set the explicit path to the certificate.
 
-* In "Raw" YAML scalars, the backslash should be used direct. For example, `C:\cert.pem`.
-* In single-quoted scalars, the backslash should be used direct. For example, `'C:\cert.pem'`.
+* In "Raw" YAML scalars, the backslash should be used directly. For example, `C:\cert.pem`.
+* In single-quoted scalars, the backslash should be used directly. For example, `'C:\cert.pem'`.
 * In double-quoted scalars, a forward slash should be used or the backslash should be escaped. For example, `"C:\\cert.pem"`.
 
 ```yaml
@@ -135,12 +135,12 @@ origincert: C:/cert.pem
 
 <Aside>
 
-Cloudflared will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
+`cloudflared` will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
 </Aside>
 
 <Aside>
 
-Cloudflared does not support loading the system certificate pool in Windows.
-To supply a certificate pool to Cloudflared in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
+`cloudflared` does not support loading the system certificate pool in Windows.
+To supply a certificate pool to `cloudflared` in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
 </Aside>

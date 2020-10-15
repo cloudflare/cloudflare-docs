@@ -48,7 +48,7 @@ Cloudflare WARP (Known in the store as 1.1.1.1: Faster & Safer Internet) is depl
 If you plan to direct your users to manually download and configure the Cloudflare WARP client application, they can do so from two places in the UI:
 
 #### Manually configure a Gateway DoH Subdomain
-If your organization uses Teams Gateway then you will need to instruct your users to configure the Gateway DoH Subdomain field. You can <a href="https://developers.cloudflare.com/gateway/getting-started/configuring-clients/browser/">click here to find this value</a> for your Teams Gateway configuration. Then complete the following steps:
+If your organization uses Teams Gateway then you will need to instruct your users to configure the Gateway DoH Subdomain field. You can <a href="https://developers.cloudflare.com/gateway/connecting-to-gateway/with-client">click here to find this value</a> for your Teams Gateway configuration. Then complete the following steps:
 1. Fine the **1.1.1.1** application and tap to launch.
 1. Tap the **menu bar icon** (3 lines) in the upper right.
 1. Tap **Advanced**.
