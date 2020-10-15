@@ -28,10 +28,10 @@ Gateway currently supports DNS over HTTPS (DoH), and will also support DNS over 
 The DNS over HTTPS client encrypts the DNS request and sends it to the closest Cloudflare’s data center. Upon receiving the encrypted DNS request, it will decrypt it and send it to Cloudflare Gateway. Cloudflare Gateway will log the request, apply the required security policies, and return the response to our edge. Our edge will encrypt the response and send it back to the DNS over HTTPS client.
 
 By encrypting your DNS queries you will make sure that ISPs cannot snoop on your DNS queries, and at the same time you will be able to filter DNS requests that are malicious.
- 
+
 ## L7 Cloud Firewall
 
-Cloudflare Gateway includes a Layer 7 (L7) firewall that allows our customers to apply security and content policies to HTTP traffic. Users connect to Gateway with the Cloudflare for Teams client, which sends all internet-bound traffic from a user’s device to the Cloudflare Gateway. Administrators configure both DNS and HTTP policies--DNS policies are enforced at the Gateway DNS filtering service within the recursive resolver, and HTTP policies are enforced at the L7 firewall within the HTTP forward proxy. 
+Cloudflare Gateway includes a Layer 7 (L7) firewall that allows our customers to apply security and content policies to HTTP traffic. Users connect to Gateway with the Cloudflare for Teams client, which sends all internet-bound traffic from a user’s device to the Cloudflare Gateway. Administrators configure both DNS and HTTP policies--DNS policies are enforced at the Gateway DNS filtering service within the recursive resolver, and HTTP policies are enforced at the L7 firewall within the HTTP forward proxy.
 
 This provides administrators the ability to enforce policies across all applications at the DNS layer but also at a more granular level within HTTP sessions. It also gives our administrators greater control over where their data resides. By building policies, customers can specify whether to allow or block a request based on file type, on whether the request was to upload or download a file, or on whether the destination is an approved cloud storage provider for the organization.
 
