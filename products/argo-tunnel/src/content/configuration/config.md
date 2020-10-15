@@ -6,7 +6,7 @@ order: 1
 
 You can run `cloudflared` with:
 * [Arguments](https://developers.cloudflare.com/argo-tunnel/configuration/arguments) from the command line
-* The configuration file.
+* a configuration file.
 
 The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Every command-line argument of cloudflared can be expressed in YAML.
 

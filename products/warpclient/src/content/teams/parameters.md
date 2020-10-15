@@ -29,7 +29,7 @@ Each client supports the following set of parameters as part of their deployment
         <td>no</td>
         <td>string</td>
         <td>fix7p31bzg</td>
-        <td>Your Gateway DoH subdomain. <a href="https://developers.cloudflare.com/gateway/getting-started/configuring-clients/browser/">Click here to find this value</a>
+        <td>Your Gateway DoH subdomain. <a href="https://developers.cloudflare.com/gateway/connecting-to-gateway/with-client">Click here to find this value</a>
         </td>
     </tr>
     <tr>

@@ -44,7 +44,7 @@ RUN mkdir -p /etc/supervisor/conf.d/
 COPY supervisord.conf /etc/supervisord.conf 
 ```
 
-This will also create the appropriate directories for Supervisord, and copy the config file into the correct location. Now, add the following to install Cloudflared in the Docker image:
+This will also create the appropriate directories for Supervisord, and copy the config file into the correct location. Now, add the following to install `cloudflared` in the Docker image:
 
 ```docker 
 RUN apt-get install -y wget 
@@ -54,7 +54,7 @@ COPY cert.pem /etc/cloudflared/
 COPY config.yaml /etc/cloudflared/ 
 ```
 
-Note that you will need a `config.yaml` and a `cert.pem` for Cloudflared in the directory that you are working in. The instructions on how to install cloudflared and generate a certificate can be found [here](https://developers.cloudflare.com/argo-tunnel/quickstart/). For more info on how to setup a Cloudflared config, see the [configuration
+Note that you will need a `config.yaml` and a `cert.pem` for `cloudflared` in the directory that you are working in. The instructions on how to install cloudflared and generate a certificate can be found [here](https://developers.cloudflare.com/argo-tunnel/quickstart/). For more info on how to setup a `cloudflared` config, see the [configuration
 page](https://developers.cloudflare.com/argo-tunnel/reference/config/).
 
 Now, we'll install Python and it's dependencies for our example app. This step may be different for
@@ -110,7 +110,7 @@ stdout_logfile=/dev/stdout
 stdout_logfile_maxbytes=0 
 ```
 
-This defines 2 services (Cloudflared and Flask) and configures some options for them like
+This defines 2 services (`cloudflared` and Flask) and configures some options for them like
 autorestarting and logging to `stdout`. And that's it! This is what the full Dockerfile should look
 like:
 
@@ -146,5 +146,5 @@ RUN pip3 install flask
 CMD ["/usr/bin/supervisord"] 
 ```
 
-You should be able to build and run the container, and have Cloudflared create a tunnel from inside
+You should be able to build and run the container, and have `cloudflared` create a tunnel from inside
 your container as defined in the `config.yaml`.

@@ -4,8 +4,6 @@ order: 100
 
 # Command-line Arguments
 
-
-
 * [Tunnel command](#tunnel-command)
   * [Login command](#login-command)
 * [Service command](#service-command)
@@ -22,34 +20,6 @@ All tunnel-related commands are prefixed with 'tunnel'. For example:
 cloudflared tunnel --url localhost:5555 --hostname x.example.com
 ```
 
-* [--config](#config)
-* [--url](#url)
-* [--hostname](#hostname)
-* [--lb-pool](#lb-pool)
-* [--autoupdate-freq](#autoupdate-freq)
-* [--no-autoupdate](#no-autoupdate)
-* [--origincert](#origincert)
-* [--no-tls-verify](#no-tls-verify)
-* [--origin-ca-pool](#origin-ca-pool)
-* [--origin-server-name](#origin-server-name)
-* [--metrics](#metrics)
-* [--metrics-update-freq](#metrics-update-freq)
-* [--tag](#tag)
-* [--loglevel](#loglevel)
-* [--proto-loglevel](#proto-loglevel)
-* [--retries](#retries)
-* [--no-chunked-encoding](#no-chunked-encoding)
-* [--hello-world](#hello-world)
-* [--pidfile](#pidfile)
-* [--logfile](#logfile)
-* [--proxy-connect-timeout](#proxy-connect-timeout)
-* [--proxy-tls-timeout](#proxy-tls-timeout)
-* [--proxy-tcp-keepalive](#proxy-tcp-keepalive)
-* [--proxy-no-happy-eyeballs](#proxy-no-happy-eyeballs)
-* [--proxy-keepalive-connections](#proxy-keepalive-connections)
-* [--proxy-keepalive-timeout](#proxy-keepalive-timeout)
-* [--help, -h](#help)
-* [--version, -v](#version)
 
 <div id="config">
 

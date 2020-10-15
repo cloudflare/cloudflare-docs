@@ -29,7 +29,7 @@ Controller will be usable without Load Balancing.
 In this example, we're going to expose a private version of the `echoserver` through Argo Tunnel.
 This example assumes you have a Kubernetes cluster running on one of the platforms mentioned above.
 
-# Step One: Download Cloudflared & Generate a Certificate
+# Step One: Download `cloudflared` & Generate a Certificate
 Download and install `cloudflared` [here][cflare-tunnel-daemon].
 
 Then, run `cloudflared login` and select a domain to generate and download a certificate. Make sure the certificate is placed into `~/.cloudflared/cert.pem`
