@@ -9,7 +9,7 @@ order: 3
 1.1.1.1 for Families has two default options: one that blocks malware and the other that blocks malware and adult content. You choose which setting you want depending on which IP address you configure.
 
 ### Protect your home against Malware
-Using the following DNS resolvers will block malicioius content:
+Using the following DNS resolvers will block malicious content:
 
 * **1.1.1.2**
 * **1.0.0.2**
