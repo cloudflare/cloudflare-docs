@@ -4,7 +4,7 @@ order: 8
 
 # kubectl
 
-[kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is the Kuberentes command-line tool. Users can run commands against Kubernetes clusters using `kubectl` to connect to a Kubernetes cluster's API server.
+[kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is the Kubernetes command-line tool. Users can run commands against Kubernetes clusters using `kubectl` to connect to a Kubernetes cluster's API server.
 
 You can use Cloudflare Access, in combination with Cloudflare Argo Tunnel, to connect to Kubernetes clusters and run `kubectl` commands without a VPN.
 
