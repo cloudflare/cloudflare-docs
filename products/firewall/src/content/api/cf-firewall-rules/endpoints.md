@@ -1,6 +1,5 @@
 ---
 title: Endpoints
-alwaysopen: true
 weight: 320
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Setting Up a Server
-alwaysopen: true
 weight: 2
 ---
 

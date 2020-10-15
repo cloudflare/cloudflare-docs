@@ -1,6 +1,5 @@
 ---
 title: Kill Switches
-alwaysopen: true
 weight: 5
 ---
 

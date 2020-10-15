@@ -1,8 +1,6 @@
 ---
 title: Health checks
-alwaysopen: true
 weight: 150
-hidden: false
 ---
 
 Magic Transit health checks monitor network status and the health of specific network components. To accurately and precisely monitor the health of a specific route, each Cloudflare edge server associated with your network asynchronously emits health check probes every 60 seconds.

@@ -1,6 +1,5 @@
 ---
-title: Operator Guide   
-alwaysopen: true
+title: Operator Guide
 weight: 40
 ---
 

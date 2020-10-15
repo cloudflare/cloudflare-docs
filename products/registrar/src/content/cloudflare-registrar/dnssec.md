@@ -1,6 +1,5 @@
 ---
 title: Enabling DNSSEC
-alwaysopen: true
 weight: 10
 ---
 The domain name system (DNS) translates domain names into numeric Internet addresses. However, DNS is a fundamentally insecure protocol. It does not guarantee where DNS records come from and accepts any requests given to it.

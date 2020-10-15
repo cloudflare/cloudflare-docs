@@ -1,6 +1,5 @@
 ---
 title: Load Balancing logs
-alwaysopen: true
 weight: 18
 ---
 ### Overview
@@ -120,7 +119,7 @@ Click the expansion arrow at the far right of the event to expose more detail, i
 
 #### Commands
 
-To list health check events, use the List Health Check Events API endpoint: 
+To list health check events, use the List Health Check Events API endpoint:
 
 ```shell
 GET user/load_balancing_analytics/events

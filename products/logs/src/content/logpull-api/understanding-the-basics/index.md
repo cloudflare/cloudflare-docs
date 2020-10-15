@@ -1,6 +1,5 @@
 ---
 title: Understanding the basics
-alwaysopen: true
 weight: 12
 ---
 
@@ -19,11 +18,11 @@ You can query for logs starting from 1 minute in the past (relative to the actua
 
 ### Access pattern
 </a>
-The basic access pattern is *give me all the logs for zone Z for minute M* where the minute *M* refers to the time the log entries were written to disk in Cloudflare's log aggregation system. 
+The basic access pattern is *give me all the logs for zone Z for minute M* where the minute *M* refers to the time the log entries were written to disk in Cloudflare's log aggregation system.
 
-Try running your query every minute to start. If responses are too small, go up to 5 minutes as this will be appropriate for most zones. If the responses are too large, trying going down to 15 seconds. 
+Try running your query every minute to start. If responses are too small, go up to 5 minutes as this will be appropriate for most zones. If the responses are too large, trying going down to 15 seconds.
 
-If your zone has so many logs that it takes longer than 1 minute to read 1 minute worth of logs, run 2 workers staggered, each requesting 1 minute worth of logs every 2 minutes. 
+If your zone has so many logs that it takes longer than 1 minute to read 1 minute worth of logs, run 2 workers staggered, each requesting 1 minute worth of logs every 2 minutes.
 
 Data returned by the API will not change on repeat calls. The order of messages in the response may be different, but the number and content of the messages will always be the same for a given query as long as the response code is 200 and there is no error reading the response body.
 
@@ -33,7 +32,7 @@ Because our log processing system ingests data in batches, most zones with less 
 
 ### Order of the data returned
 </a>
-The `logs/received` API endpoint exposes data by time received, which is the time the event was written to disk in the Cloudflare Logs aggregation system. 
+The `logs/received` API endpoint exposes data by time received, which is the time the event was written to disk in the Cloudflare Logs aggregation system.
 
 Ordering by log aggregation time instead of log generation time results in lower (faster) log pipeline latency and deterministic log pulls. Functionally, it is similar to tailing a log file or reading from *rsyslog* (albeit in chunks).
 

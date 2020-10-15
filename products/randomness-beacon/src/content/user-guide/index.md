@@ -1,7 +1,6 @@
 ---
 
 title: User Guide
-alwaysopen: true
 weight: 40
 ---
 

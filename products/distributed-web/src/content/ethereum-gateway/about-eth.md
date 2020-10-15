@@ -1,6 +1,5 @@
 ---
 title: About Ethereum
-alwaysopen: true
 weight: 2
 ---
 

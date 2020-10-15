@@ -1,8 +1,6 @@
 ---
 title: Configuration data
-alwaysopen: true
 weight: 212
-hidden: false
 ---
 
 For details on the configuration data required for Cloudflare to set up Magic Transit for your organization, see these topics:

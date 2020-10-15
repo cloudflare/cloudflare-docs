@@ -1,8 +1,6 @@
 ---
 title: Additional guidelines
-alwaysopen: true
 weight: 213
-hidden: false
 ---
 
 

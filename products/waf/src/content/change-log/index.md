@@ -1,6 +1,5 @@
 ---
 title: Change log for Managed Rulesets
-alwaysopen: true
 weight: 100
 ---
 

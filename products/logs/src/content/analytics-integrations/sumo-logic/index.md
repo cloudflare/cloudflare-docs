@@ -1,6 +1,5 @@
 ---
 title: Sumo Logic
-alwaysopen: true
 weight: 105
 ---
 

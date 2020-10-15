@@ -1,6 +1,5 @@
 ---
 title: IPFS Gateway
-alwaysopen: true
 weight: 2
 ---
 

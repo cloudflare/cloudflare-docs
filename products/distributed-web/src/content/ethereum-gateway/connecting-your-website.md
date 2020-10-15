@@ -1,6 +1,5 @@
 ---
 title: Connecting your Website
-alwaysopen: true
 weight: 3
 ---
 

@@ -1,5 +1,4 @@
 ---
-alwaysopen: false
 order: 1
 ---
 
@@ -21,7 +20,7 @@ cloudflared access login https://example.com
 
   With this command, `cloudflared` launches a browser window containing the same Access login page found when attempting to access a web application.
 
-2. Select your identity provider and log in. 
+2. Select your identity provider and log in.
 
   If the browser window does not launch, you can use the unique URL that is automatically printed to the command line.
 

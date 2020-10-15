@@ -1,29 +1,28 @@
 ---
 
 title: Setup Phase
-alwaysopen: true
 
 
 ---
 
-In the drand setup phase, you create a collective private and public key pair shared among _𝑛_ participants. This is done through a `𝑡-of-𝑛` Distributed Key Generation (DKG) process and results in each participant recieving a copy of the collective public key plus a private key share of the collective private key &mdash; no individual node knows the collective **private** key. Each private key share can then be used to perform cryptographic threshold computations, such as generating threshold signatures, where at least `𝑡` contributions produced using the individual private key shares are required to successfully finish the collective operation. 
+In the drand setup phase, you create a collective private and public key pair shared among _𝑛_ participants. This is done through a `𝑡-of-𝑛` Distributed Key Generation (DKG) process and results in each participant recieving a copy of the collective public key plus a private key share of the collective private key &mdash; no individual node knows the collective **private** key. Each private key share can then be used to perform cryptographic threshold computations, such as generating threshold signatures, where at least `𝑡` contributions produced using the individual private key shares are required to successfully finish the collective operation.
 
 A DKG is performed in a fully distributed manner, avoiding any single points of failure. This is an overview of the different sub-components of the drand DKG implementation.
 
 
 
 
-## 
+##
 Secret Sharing
 
 
-Secret sharing is an important technique many advanced threshold cryptography mechanisms rely on. 
+Secret sharing is an important technique many advanced threshold cryptography mechanisms rely on.
 
 Secret sharing allows you to split a secret value `𝑠` into `𝑛` shares `𝑠1,…,𝑠𝑛` so that `𝑠` can only be reconstructed if a threshold of `𝑡` shares is available.
 
 
-### 
-Shamir’s Secret Sharing (SSS) 
+###
+Shamir’s Secret Sharing (SSS)
 
 The SSS scheme is one of the most well-known and widely used secret sharing approaches, and a core component of drand. SSS works over an arbitrary finite field, but a simplistic approach uses the integers modulo `𝑝`, denoted by `ℤ𝑝`. Let `𝑠∈ℤ𝑝` denote the secret to share.
 
@@ -36,11 +35,11 @@ To share `𝑠`, a dealer first creates a polynomial, `𝑞(𝑥)=𝑎0+𝑎1�
 
 **Secret Reconstruction**
 
-To recover the secret `𝑠`, collect at least `𝑡` shares, then uniquely reconstruct `𝑞(𝑥)` using Lagrange interpolation and obtain `𝑠` as `𝑠=𝑎0=𝑞(0)`. 
+To recover the secret `𝑠`, collect at least `𝑡` shares, then uniquely reconstruct `𝑞(𝑥)` using Lagrange interpolation and obtain `𝑠` as `𝑠=𝑎0=𝑞(0)`.
 
 Note that you can use any subset of `𝑡-of-𝑛` shares to perform Lagrange interpolation and uniquely determine `𝑠`; however, having a subset of less than `𝑡` shares does not allow to learn anything about `𝑠`.
 
-### 
+###
 
 Verifiable Secret Sharing
 
@@ -87,7 +86,7 @@ Individual participants, `𝑖`, create a (random) secret, `𝑠𝑖∈ℤ𝑝`,
 
 **Share Finalization**
 
-At the end of the protocol, the final share of `𝑖` is `𝑠𝑖=∑𝑗𝑠𝑗,𝑖` for all valid participants `𝑗` , that is, for all `𝑗`s not excluded during the verification phase. 
+At the end of the protocol, the final share of `𝑖` is `𝑠𝑖=∑𝑗𝑠𝑗,𝑖` for all valid participants `𝑗` , that is, for all `𝑗`s not excluded during the verification phase.
 
 The collective public key associated with the valid shares can be computed as `𝑆=∑𝑗𝐴𝑗,0` for all valid `𝑗`s.
 
@@ -96,7 +95,7 @@ The collective public key associated with the valid shares can be computed as `�
 Note:** Even though the secret created using Pedersen’s DKG can be biased, it is safe to use for threshold signing as shown by Rabin et al.
 
 
-In this section, we describe how to use this collective key pair to generate publicly-verifiable, unbiasable, and unpredictable randomness in a distributed manner. 
+In this section, we describe how to use this collective key pair to generate publicly-verifiable, unbiasable, and unpredictable randomness in a distributed manner.
 
 First, we explain pairing-based cryptography (PBC), which has become quite popular, and is used in many modern consensus protocols or zero-knowledge proofs, such as zk-SNARKs. We'll then show how drand uses PBC for the randomness beacon generation phase for threshold Boneh-Lynn-Shacham (BLS) signatures. Finally, we'll discuss how drand links the generated threshold BLS signatures into a randomness chain.
 
@@ -107,7 +106,7 @@ First, we explain pairing-based cryptography (PBC), which has become quite popul
 
 Pairing-based cryptography is based on bilinear groups `(𝔾1,𝔾2,𝔾𝑡)`, where `𝔾1`, `𝔾2`, and `𝔾𝑡` are cyclic groups of prime order `𝑝` with generators `𝑔1`, `𝑔2`, and `𝑔𝑡`, respectively, and a pairing operation `𝑒:𝔾1×𝔾2→𝔾𝑡` with these properties:
 
-- **Bilinearity:** `∀𝑎,𝑏∈ℤ∗𝑝,∀𝑃∈𝔾1,∀𝑄∈𝔾2,` we have `𝑒(𝑎𝑃,𝑏𝑄)=𝑒(𝑃,𝑄)𝑎𝑏` 
+- **Bilinearity:** `∀𝑎,𝑏∈ℤ∗𝑝,∀𝑃∈𝔾1,∀𝑄∈𝔾2,` we have `𝑒(𝑎𝑃,𝑏𝑄)=𝑒(𝑃,𝑄)𝑎𝑏`
 
 - **Non-degeneracy:** `𝑒≠1`
 - **Computability:** There exists an efficient algorithm to compute `𝑒`.
@@ -123,17 +122,17 @@ To generate publicly-verifiable, unbiasable, distributed randomness, drand utili
 
 
 
-BLS signatures are short signatures that rely on bilinear pairings and consist only of a single element in `𝔾1`. They are deterministic in the sense they depend only on the message and the signer’s key, unlike other signature schemes, such as ECDSA, that require a fresh random value for each signed message to be secure. Put differently, any two BLS signatures on a given message produced with the same key are identical. In drand, we utilize this property to achieve unbiasability for randomness generation. 
+BLS signatures are short signatures that rely on bilinear pairings and consist only of a single element in `𝔾1`. They are deterministic in the sense they depend only on the message and the signer’s key, unlike other signature schemes, such as ECDSA, that require a fresh random value for each signed message to be secure. Put differently, any two BLS signatures on a given message produced with the same key are identical. In drand, we utilize this property to achieve unbiasability for randomness generation.
 
 The BLS signature scheme consists of the these sub-procedures.
 
-**Key Generation** 
+**Key Generation**
 
 To generate a key pair, a signer first chooses a private key, `𝑥∈ℤ∗𝑝`, at random, and then computes the corresponding public key as `𝑋=𝑔𝑥2∈𝔾2`.
 
 
 
-**Signature Generation** 
+**Signature Generation**
 
 Let `𝐻:{0,1}∗→𝔾1` denote a cryptographic hash function that maps arbitrary bit strings to elements of `𝔾1`. To compute a BLS signature `𝜎` on a message `𝑚`, the signer simply computes `𝜎=𝑥𝐻(𝑚)∈𝔾1`.
 
@@ -141,7 +140,7 @@ Let `𝐻:{0,1}∗→𝔾1` denote a cryptographic hash function that maps arbit
 
 **Signature Verification**
 
-To verify that a BLS signature `𝜎` on a message `𝑚` is valid, the verifier checks if `𝑒(𝐻(𝑚),𝑋)=𝑒(𝜎,𝑔2)` holds using the signer’s public key `𝑋`. 
+To verify that a BLS signature `𝜎` on a message `𝑚` is valid, the verifier checks if `𝑒(𝐻(𝑚),𝑋)=𝑒(𝜎,𝑔2)` holds using the signer’s public key `𝑋`.
 
 It's easy to see that this equation holds for valid signatures since `𝑒(𝐻(𝑚),𝑋)=𝑒(𝐻(𝑚),𝑔𝑥2)=𝑒(𝐻(𝑚),𝑔2)𝑥=𝑒(𝑥𝐻(𝑚),𝑔2)=𝑒(𝜎,𝑔2)`.
 
@@ -179,7 +178,7 @@ To verify a collective BLS signature, `𝜎`, a verifier simply checks that `�
 
 
 
-Thanks to the properties of Lagrange interpolation, the value of `𝜎` is independent of the subset of `𝑡` valid partial signatures, `𝜎𝑖`, chosen during signature reconstruction. Additionally, Lagrange interpolation also guarantees that no set of less than `𝑡` signers can predict or bias `𝜎`. 
+Thanks to the properties of Lagrange interpolation, the value of `𝜎` is independent of the subset of `𝑡` valid partial signatures, `𝜎𝑖`, chosen during signature reconstruction. Additionally, Lagrange interpolation also guarantees that no set of less than `𝑡` signers can predict or bias `𝜎`.
 
 In summary, a threshold BLS signature, `𝜎`, exhibits all properties required for publicly-verifiable, unbiasable, unpredictable, and distributed randomness.
 
@@ -188,8 +187,8 @@ In summary, a threshold BLS signature, `𝜎`, exhibits all properties required 
 ## Chained Randomness
 
 
-The drand randomness beacon operates in discrete rounds, `𝑟`. In every round, drand producess a new random value using threshold BLS signatures linked together into a chain of randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟∥𝜎𝑟−1)` where, `𝜎𝑟−1` denotes the (full) BLS threshold signature from round `𝑟−1` and `𝐻`, a cryptographic hash function. 
+The drand randomness beacon operates in discrete rounds, `𝑟`. In every round, drand producess a new random value using threshold BLS signatures linked together into a chain of randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟∥𝜎𝑟−1)` where, `𝜎𝑟−1` denotes the (full) BLS threshold signature from round `𝑟−1` and `𝐻`, a cryptographic hash function.
 
-Once at least `𝑡` participants have broadcasted their partial signatures, `𝜎𝑟𝑖`, on `𝑚`, anyone can recover the full BLS threshold signature, `𝜎𝑟` that corresponds to the random value of round `𝑟`. After this, drand nodes move to round `𝑟+1` and reiterate the process. 
+Once at least `𝑡` participants have broadcasted their partial signatures, `𝜎𝑟𝑖`, on `𝑚`, anyone can recover the full BLS threshold signature, `𝜎𝑟` that corresponds to the random value of round `𝑟`. After this, drand nodes move to round `𝑟+1` and reiterate the process.
 
 For round `𝑟=0`, drand participants sign a seed fixed during drand setup. This process ensures that every new random value depends on all previously generated signatures. Since the signature is deterministic, there is also no possibility for an adversary forking the chain and presenting two distinct signatures `𝜎𝑟` and `𝜎′𝑟` in a given round `𝑟` to generate inconsistencies in the systems relying on public randomness.

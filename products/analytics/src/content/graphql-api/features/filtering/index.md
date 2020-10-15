@@ -1,6 +1,5 @@
 ---
 title: Filtering
-alwaysopen: true
 weight: 10
 ---
 

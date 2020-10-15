@@ -1,13 +1,12 @@
 ---
 title: POST example
-alwaysopen: true
 weight: 365
 ---
 ```bash
 POST /filters
 ```
 
-Creates one or more filters. 
+Creates one or more filters.
 
 ### Request
 ```bash

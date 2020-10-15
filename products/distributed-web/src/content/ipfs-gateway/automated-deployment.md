@@ -1,6 +1,5 @@
 ---
 title: Automated Deployment
-alwaysopen: true
 weight: 4
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Order and priority
-alwaysopen: true
 weight: 115
 ---
 

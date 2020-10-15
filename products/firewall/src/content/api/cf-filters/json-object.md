@@ -1,6 +1,5 @@
 ---
 title: JSON object
-alwaysopen: true
 weight: 355
 ---
 ### Filters object structure and properties

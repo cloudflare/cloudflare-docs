@@ -1,9 +1,6 @@
 ---
 title: Ethereum Gateway
-alwaysopen: true
 weight: 3
-hidden: false
-showNew: false
 ---
 
 Cloudflare's Ethereum Gateway lets you interact with the Ethereum network

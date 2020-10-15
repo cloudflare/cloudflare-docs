@@ -1,6 +1,5 @@
 ---
 title: Updating IRR Records
-alwaysopen: true
 weight: 4
 ---
 ### Where to Update IRR Records

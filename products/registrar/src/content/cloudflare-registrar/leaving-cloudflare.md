@@ -1,6 +1,5 @@
 ---
 title: Transfer Out from Cloudflare
-alwaysopen: true
 weight: 10
 ---
 

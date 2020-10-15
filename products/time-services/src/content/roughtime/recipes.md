@@ -1,6 +1,5 @@
 ---
 title: How to use it
-alwaysopen: true
 weight: 2
 ---
 

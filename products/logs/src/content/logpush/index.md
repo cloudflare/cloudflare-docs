@@ -1,6 +1,5 @@
 ---
 title: Logpush Service
-alwaysopen: true
 weight: 40
 ---
 

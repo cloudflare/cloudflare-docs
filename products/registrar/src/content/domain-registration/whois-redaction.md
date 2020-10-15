@@ -1,6 +1,5 @@
 ---
 title: WHOIS Redaction
-alwaysopen: true
 weight: 10
 ---
 Cloudflare Registrar provides personal data redaction on WHOIS information for all registered domains.

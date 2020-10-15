@@ -1,6 +1,5 @@
 ---
 title: GraphQL Analytics API
-alwaysopen: true
 weight: 1
 ---
 

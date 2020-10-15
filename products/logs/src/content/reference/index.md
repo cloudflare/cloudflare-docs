@@ -1,6 +1,5 @@
 ---
 title: Reference
-alwaysopen: true
 weight: 120
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: GET examples
-alwaysopen: true
 weight: 370
 ---
 * [Get all filters](#get-all-filters)

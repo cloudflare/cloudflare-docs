@@ -1,6 +1,5 @@
 ---
 title: Logpush job object schema
-alwaysopen: true
 weight: 62
 ---
 

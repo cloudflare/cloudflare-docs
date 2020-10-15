@@ -1,6 +1,5 @@
 ---
 title: Troubleshooting
-alwaysopen: true
 weight: 10
 ---
 

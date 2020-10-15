@@ -1,6 +1,5 @@
 ---
 title: Updating your Website for IPFS
-alwaysopen: true
 weight: 3
 ---
 

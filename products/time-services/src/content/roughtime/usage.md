@@ -1,6 +1,5 @@
 ---
 title: Cloudflare-Roughtime
-alwaysopen: true
 weight: 10
 ---
 Our service can be reached at `roughtime.cloudflare.com:2002`. The domain

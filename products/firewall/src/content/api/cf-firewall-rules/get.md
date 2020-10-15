@@ -1,6 +1,5 @@
 ---
 title: GET examples
-alwaysopen: true
 weight: 330
 ---
 * [Get all rules](#get-all-rules)

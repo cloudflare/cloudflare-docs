@@ -1,6 +1,5 @@
 ---
 title: Universal SSL
-alwaysopen: true
 weight: 100
 ---
 

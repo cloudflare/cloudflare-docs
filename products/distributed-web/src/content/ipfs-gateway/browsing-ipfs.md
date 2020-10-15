@@ -1,6 +1,5 @@
 ---
 title: Browsing Content on IPFS
-alwaysopen: true
 weight: 1
 ---
 

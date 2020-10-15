@@ -1,6 +1,5 @@
 ---
 title: Domain Management
-alwaysopen: true
 weight: 10
 ---
 You can manage your domain with Cloudflare Registrar in the Zone Overview page of the dashboard.
@@ -16,6 +15,6 @@ You can edit the contact information for all domains in your account. To do so, 
 ### Disabling AutoRenew
 Cloudflare Registrar enrolls your domain to AutoRenew by default. Unlike other registrars, your domain will only renew at the list price set by the registry.
 
-If you decide you no longer need the domain, you can disable AutoRenew for your account. Once disabled, your domain will not renew upon expiration. 
+If you decide you no longer need the domain, you can disable AutoRenew for your account. Once disabled, your domain will not renew upon expiration.
 
 You can continue to keep your domain registered with Cloudflare for the time remaining on the expiration. If you decide you want to keep the domain, you can enable AutoRenew at any time prior to your expiration.

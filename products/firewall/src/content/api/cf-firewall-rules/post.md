@@ -1,13 +1,12 @@
 ---
 title: POST example
-alwaysopen: true
 weight: 325
 ---
 ```bash
 POST /firewall/rules
 ```
 
-Creates one or more firewall rules. 
+Creates one or more firewall rules.
 
 ### Request
 ```bash

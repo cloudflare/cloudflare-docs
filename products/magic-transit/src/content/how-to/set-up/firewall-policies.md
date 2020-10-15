@@ -1,8 +1,6 @@
 ---
 title: Firewall policies
-alwaysopen: true
 weight: 214
-hidden: false
 ---
 
 

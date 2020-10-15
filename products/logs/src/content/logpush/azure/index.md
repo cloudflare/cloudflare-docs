@@ -1,6 +1,5 @@
 ---
 title: Enable Microsoft Azure
-alwaysopen: true
 weight: 62
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: 'LOA Template'
-alwaysopen: true
 weight: 2
 ---
 
