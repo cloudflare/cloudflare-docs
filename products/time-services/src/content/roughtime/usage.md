@@ -1,7 +1,10 @@
 ---
-title: Cloudflare-Roughtime
-weight: 10
+title: User Guide
+order: 1
 ---
+
+# Using Cloudflare's Roughtime Service
+
 Our service can be reached at `roughtime.cloudflare.com:2002`. The domain
 resolves to an IP address in our [anycast IP
 range](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/).  You

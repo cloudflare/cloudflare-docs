@@ -1,7 +1,8 @@
 ---
-title: Getting started
-weight: 1
+order: 1
 ---
+
+# Getting started
 
 Cloudflare's Ethereum Gateway is part of the wider Distributed Web Gateway
 offering, specifically providing access to the Ethereum network. In particular,

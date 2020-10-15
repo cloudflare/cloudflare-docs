@@ -1,7 +1,8 @@
 ---
-title: IPFS Gateway
-weight: 2
+order: 2
 ---
+
+# IPFS Gateway
 
 Cloudflare's read-only Distributed Web Gateway lets you access content stored on
 the InterPlanetary File System \(IPFS\) quickly and easily, without downloading

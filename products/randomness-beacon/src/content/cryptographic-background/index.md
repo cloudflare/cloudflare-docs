@@ -1,7 +1,8 @@
 ---
-title: Cryptographic Background
-weight: 30
+order: 2
 ---
+
+# Cryptographic Background
 
 drand is an efficient randomness beacon daemon that utilizes pairing-based cryptography, `𝑡-of-𝑛` distributed key generation, and threshold BLS signatures to generate publicly-verifiable, unbiasable, unpredictable, distributed randomness.
 

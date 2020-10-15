@@ -1,9 +1,9 @@
 ---
 title: Future of Drand
-weight: 10
+order: 2
 ---
 
-## What do you see as the future of this project?
+# What do you see as the future of this project?
 
 As of spring 2020, the drand network is production-ready, and we believe that it can now be considered foundational Internet infrastructure, much like DNS or BGP. 
 

@@ -1,9 +1,10 @@
 ---
-title: Kill Switches
-weight: 5
+order: 5
 ---
 
-### DAO example: Kill Switches
+# Kill Switches
+
+## DAO example: Kill Switches
 
 When writing contracts, be especially careful to write secure code and include a
 kill switch to ensure that if any bugs do reside in the code, they can be
@@ -27,7 +28,7 @@ investors funds. However, not everyone agreed with the chain, with those who
 disagreed rejecting the irregular block and forming the Ethereum Classic
 network, each blockchain grew independently.
 
-### Be-all end-all solution?
+## Be-all end-all solution?
 
 Hardly. Kill switches can cause their own problems. Like if a contract that's a
 library has its kill switch flipped. All contracts relying on this contract

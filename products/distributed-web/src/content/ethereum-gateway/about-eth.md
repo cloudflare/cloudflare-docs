@@ -1,7 +1,8 @@
 ---
-title: About Ethereum
-weight: 2
+order: 2
 ---
+
+# About Ethereum
 
 The Ethereum network is a distributed consensus platform that allows users to
 write and compute smart contracts in a distributed manner. Smart contracts are
@@ -10,7 +11,7 @@ the network. When the smart contract is run as part of a transaction, the result
 and the current state of the contract are stored in a verifiable consensus that
 is agreed upon by the entire network of nodes.
 
-### Smart contracts
+## Smart contracts
 
 When a user wants to run a smart contract on some desired inputs, they provide
 currency known as ETH with their command. This currency is allocated to a
@@ -22,7 +23,7 @@ in the network then this is also recorded in the consensus. As such, this
 consensus represents the current state of the network along with exactly how
 much Ethereum currency is owned by each individual.
 
-### Addressing
+## Addressing
 
 All transactions on the network are stored in 'blocks' that make up the entire
 consensus. In brief, the consensus is a single sequence of blocks with
@@ -38,7 +39,7 @@ block, this update is sent around the entire network and anyone can read the
 nature of the transaction that took place. This makes the entire state of the
 network accountable.
 
-### Reading & writing content
+## Reading & writing content
 
 To read content, a user needs to interact with a working Ethereum node. Such
 nodes can be run locally on a user's machine as daemons (such as:
@@ -56,15 +57,15 @@ sent to the wider network and added to the consensus.
 
 Reading and writing content to the Ethereum network can be done using
 Cloudflare's Gateway. To learn more about how to do this see [Interacting with
-the Ethereum network](../interacting-with-the-eth-gateway).
+the Ethereum network](./interacting-with-the-eth-gateway).
 
-### Connect your website to the gateway
+## Connect your website to the gateway
 
 If you want to be able to access the Ethereum network accessible from a custom
 domain name, you can do that using Cloudflare’s Ethereum Gateway. To
-learn how, check out [Connecting your Website](../connecting-your-website).
+learn how, check out [Connecting your Website](./connecting-your-website).
 
-### Going Further
+## Going Further
 
 If you’re interested in learning more, you can read the official [RPC
 documentation](https://github.com/ethereum/wiki/wiki/JSON-RPC), along with the

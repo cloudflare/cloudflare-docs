@@ -1,7 +1,8 @@
 ---
-title: The protocol
-weight: 1
+order: 0
 ---
+
+# Roughtime Protocol
 
 Endpoints on the Internet often synchronize their clocks using the Network Time
 Protocol ([NTP](https://en.wikipedia.org/wiki/Network_Time_Protocol)). NTP
