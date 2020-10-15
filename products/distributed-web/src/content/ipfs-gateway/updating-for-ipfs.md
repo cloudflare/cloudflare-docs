@@ -1,8 +1,8 @@
 ---
-title: Updating your Website for IPFS
-alwaysopen: true
-weight: 3
+order: 3
 ---
+
+# Updating your Website for IPFS
 
 It's not required, but it is strongly recommended that websites hosted on IPFS
 use only relative links, unless linking to a different domain. This is because

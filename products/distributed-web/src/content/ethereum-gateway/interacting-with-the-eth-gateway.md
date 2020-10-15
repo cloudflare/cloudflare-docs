@@ -1,14 +1,13 @@
 ---
-title: Interacting with Ethereum
-alwaysopen: true
-weight: 4
+order: 4
 ---
 
+# Interacting with Ethereum
 
 Interacting with the network via the Cloudflare Distributed Web Gateway is as
 simple as specifying the correct JSON blob for your query!
 
-### Reading from the network
+## Reading from the network
 
 The Cloudflare Ethereum Gateway allows HTTP requests where the body of the
 request is set to be the JSON body of the request you would like to make. For
@@ -85,7 +84,7 @@ The response in both cases will be a JSON blob of the form:
 For a full list of possible queries, along with examples see the official [RPC
 documentation](https://github.com/ethereum/wiki/wiki/JSON-RPC#json-rpc-api-reference).
 
-### Writing to the network
+## Writing to the network
 
 Currently the Ethereum Gateway allows you to write to the network using the
 `eth_sendRawTransaction` RPC method. This creates a new message call transaction
@@ -132,7 +131,7 @@ await fetch(new Request("https://cloudflare-eth.com", {
 _(The actual command above will not work, you need to provide your own signed
 transaction!)_
 
-### Cloudflare supported API
+## Cloudflare supported API
 
 The full list of API methods that are supported by the Distributed Web Gateway
 is given below. The Gateway returns a `403` if a method is specified that is not

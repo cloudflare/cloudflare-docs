@@ -1,9 +1,9 @@
 ---
-title: Connecting Your Website
-alwaysopen: true
-weight: 3
+order: 3
 hidden: true
 ---
+
+# Connecting Your Website
 
 Cloudflare's gateway allows you to host your website on IPFS and still have it
 accessible from a custom domain name. This allows an end user to access your

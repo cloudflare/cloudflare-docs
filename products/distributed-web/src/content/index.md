@@ -1,7 +1,11 @@
 ---
+title: Welcome
 order: 0
+type: overview
 ---
 
-# Welcome
+# Simple, secure access to the Distributed Web
 
-TODO...
+View files stored on the InterPlanetary File System in your browser. Interact with the Ethereum blockchain. Explore the Distributed Web.
+
+<Link to="/ipfs-gateway/" className="Button Button-is-docs-primary">IPFS Gateway</Link> &nbsp; <Link to="/ethereum-gateway/" className="Button Button-is-docs-primary">Ethereum Gateway</Link>

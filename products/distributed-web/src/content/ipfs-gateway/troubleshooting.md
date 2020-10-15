@@ -1,8 +1,8 @@
 ---
-title: Troubleshooting
-alwaysopen: true
-weight: 10
+order: 10
 ---
+
+# Troubleshooting
 
 IPFS is still a developing protocol and content is often unavailable or slow to
 load for reasons outside of Cloudflare's control. Usually, this happens for one

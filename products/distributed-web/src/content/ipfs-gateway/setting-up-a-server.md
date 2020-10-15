@@ -1,8 +1,8 @@
 ---
-title: Setting Up a Server
-alwaysopen: true
-weight: 2
+order: 2
 ---
+
+# Setting Up a Server
 
 While all IPFS nodes are created equal, some are better suited for different
 purposes depending on their setup. An IPFS node running on your laptop, for
