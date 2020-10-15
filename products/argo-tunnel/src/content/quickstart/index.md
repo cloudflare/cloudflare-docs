@@ -16,7 +16,7 @@ Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing 
 
 ### Requirements
 * A <a href="http://dash.cloudflare.com/" target="_blank">Cloudflare account</a>
-* The <a href="/argo-tunnel/downloads/" target="_blank">cloudflared</a> daemon
+* The [`cloudflared`](/downloads/) daemon
 * An <a href="https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-Cloudflare-account-and-add-a-website">active zone on Cloudflare</a>
 * An active subscription to <a href="https://dash.cloudflare.com/?zone=traffic">Argo</a> which you can enable in the Cloudflare dashboard in the Traffic tab
 
@@ -33,7 +33,7 @@ Enterprise customers who have enabled Argo will need to contact their Cloudflare
 ### Step 2: Install cloudflared
 `cloudflared` is the software that runs Argo Tunnel. `cloudflared` is available for amd64, x86, and ARMv6 machines in Binary, .deb, and .rpm types. The code for the `cloudflared` client is available on GitHub [here](https://github.com/cloudflare/cloudflared).
 
-**<a href="/argo-tunnel/downloads/" target="_blank">Follow these instructions to install cloudflared</a>**
+[Follow these instructions to install `cloudflared`](/downloads/)
 
 Once installed, verify `cloudflared` has installed properly by checking the version.
 ```bash
@@ -133,5 +133,5 @@ If the connection succeeds, you should see content served from your local webser
 ### Next steps
 The steps above can be sufficient for local dev environments. For a production environment, we recommend a few additional settings be configured:
 
-* [Automatically starting Argo Tunnel](/argo-tunnel/reference/service)
-* [Configuration file format](/argo-tunnel/reference/config)
+* [Automatically starting Argo Tunnel](/reference/service)
+* [Configuration file format](/reference/config)

@@ -5,7 +5,7 @@ order: 1
 # Config File
 
 You can run `cloudflared` with:
-* [Arguments](https://developers.cloudflare.com/argo-tunnel/configuration/arguments) from the command line
+* [Arguments](/configuration/arguments) from the command line
 * a configuration file.
 
 The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Every command-line argument of cloudflared can be expressed in YAML.
@@ -37,4 +37,4 @@ Flags that don't expect any value (such as `--hello-world`) should be specified 
 hello-world: true
 ```
 
-See the full set of [command-line arguments](https://developers.cloudflare.com/argo-tunnel/configuration/arguments).
+See the full set of [command-line arguments](/configuration/arguments).

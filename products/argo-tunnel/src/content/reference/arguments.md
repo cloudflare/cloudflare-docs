@@ -62,7 +62,7 @@ Set a hostname on a Cloudflare zone to route traffic through this tunnel.
 
 Syntax : `--lb-pool POOL_NAME`
 
-Add this tunnel to a [Load Balancer pool](https://developers.cloudflare.com/argo-tunnel/reference/load-balancing/). If it doesn’t already exist a load balancer will be created
+Add this tunnel to a [Load Balancer pool](/reference/load-balancing/). If it doesn’t already exist a load balancer will be created
 for the hostname of your tunnel, and a pool will be created with the pool name you specify. Traffic destined to that
 pool will be load balanced across this tunnel and any other tunnels which share its pool name.
 

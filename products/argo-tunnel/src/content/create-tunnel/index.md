@@ -9,7 +9,7 @@ order: 1
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
 | 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
-| 4. [Install `cloudflared` and authenticate the software](https://developers.cloudflare.com/argo-tunnel/getting-started) |
+| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
 
 ## Create a Tunnel
 Run the following command to create a Tunnel.
@@ -62,8 +62,8 @@ Once run, this command will establish an outbound-only connection to Cloudflareâ
 ### 
 
 You can also:
-* [Run a tunnel as a Kubernetes sidecar](https://developers.cloudflare.com/argo-tunnel/create-tunnel/kubernetes-sidecar-model/)
-* [Run a tunnel as a service](https://developers.cloudflare.com/argo-tunnel/create-tunnel/run-as-service)
+* [Run a tunnel as a Kubernetes sidecar](/create-tunnel/kubernetes-sidecar-model/)
+* [Run a tunnel as a service](/create-tunnel/run-as-service)
 
 ## List available Tunnels
 

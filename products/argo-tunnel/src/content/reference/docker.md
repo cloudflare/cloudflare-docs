@@ -54,8 +54,8 @@ COPY cert.pem /etc/cloudflared/
 COPY config.yaml /etc/cloudflared/ 
 ```
 
-Note that you will need a `config.yaml` and a `cert.pem` for `cloudflared` in the directory that you are working in. The instructions on how to install cloudflared and generate a certificate can be found [here](https://developers.cloudflare.com/argo-tunnel/quickstart/). For more info on how to setup a `cloudflared` config, see the [configuration
-page](https://developers.cloudflare.com/argo-tunnel/reference/config/).
+Note that you will need a `config.yaml` and a `cert.pem` for `cloudflared` in the directory that you are working in. The instructions on how to install cloudflared and generate a certificate can be found [here](/quickstart/). For more info on how to setup a `cloudflared` config, see the [configuration
+page](/reference/config/).
 
 Now, we'll install Python and it's dependencies for our example app. This step may be different for
 you depending on the application you want to expose securely with Argo Tunnel.
