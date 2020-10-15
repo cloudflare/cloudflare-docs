@@ -10,7 +10,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 
-1. Navigate to the **Policies** tab. If you don't have a policy, create one following [these instructions](/gateway/getting-startedfiguring-dns-policy).
+1. Navigate to the **Policies** tab. If you don't have a policy, create one following [these instructions](/getting-startedfiguring-dns-policy).
 
 2. Navigate to the **Overview** tab.
 

@@ -25,7 +25,7 @@ To start using Cloudflare for Teams, ensure you perform the following steps prio
 
 1. Your organization has a DoH subdomain for the entire account. You can create additional subdomains for specific locations or groups, if needed.
 
-[Obtain a location DoH subdomain (previously known as a unique id)](/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
+[Obtain a location DoH subdomain (previously known as a unique id)](/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
 
 ### Obtain your Cloudflare for Teams auth domain
 
@@ -57,6 +57,6 @@ Cloudflare for Teams has three available modes that can be used with the client.
 |DNS with WARP+|DoH-based filtering with encrypted WARP+ traffic|Yes|No|
 |HTTP filtering|DoH-based filtering, HTTP filtering, and encrypted WARP+ traffic|Yes|Yes|
 
-[Configure DNS in the client](/gateway/connecting-to-gateway/with-client/DNS)
+[Configure DNS in the client](/connecting-to-gateway/with-client/DNS)
 
-[Configure clients to send HTTP traffic to Gateway](/gateway/connecting-to-gateway/with-client/HTTP):
+[Configure clients to send HTTP traffic to Gateway](/connecting-to-gateway/with-client/HTTP):

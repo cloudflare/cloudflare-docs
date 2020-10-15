@@ -2,10 +2,11 @@
 order: 2
 ---
 
-# Configure an HTTP Policy
+# Configure an HTTP policy
 
 ## Before you start
-The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. 
+
+The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device.
 
 ## Setup your first HTTP policy
 
@@ -20,14 +21,14 @@ The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS
 ![Gateway first http policy](../static/http-add-rule.png)
 
 4. Configure the **Selector**, **Operator**, and **Value(s)** to match against.
-5. Select an **Action** to perform if the expression matches HTTP traffic. 
+5. Select an **Action** to perform if the expression matches HTTP traffic.
 6. Select **Create Rule**.
 
-The rule is inserted at the bottom of the list of rules when more than one rule is present. Rules are enabled by default and take effect as soon as the rule is created.  
+The rule is inserted at the bottom of the list of rules when more than one rule is present. Rules are enabled by default and take effect as soon as the rule is created.
 
-Administrators are able to create up to 50 rules in their HTTP policy. 
+Administrators are able to create up to 50 rules in their HTTP policy.
 
-Check out the [L7 firewall reference section](/gateway/reference/policy/#l7-firewall) for more information about configuring rules and supported filtering criteria.
+Check out the [L7 firewall reference section](/reference/policy/#l7-firewall) for more information about configuring rules and supported filtering criteria.
 
 ## Enable L7 filtering
 

@@ -6,11 +6,11 @@ order: 0
 
 ## Firefox
 
-With Firefox, you can send DNS queries using the DNS over HTTPS protocol.  
+With Firefox, you can send DNS queries using the DNS over HTTPS protocol.
 
 ### Find a location's DoH subdomain
 
-[Obtain a location DoH subdomain (previously known as a unique id)](/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
+[Obtain a location DoH subdomain (previously known as a unique id)](/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
 
 ### Set up Gateway on Firefox
 
