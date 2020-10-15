@@ -12,7 +12,7 @@ simultaneously.
 
 </Aside>
 
-## sidecar model background
+## Sidecar model background
 
 A Kubernetes [pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/) consists of
 one or more containers that share storage and network. Pods are defined by a
@@ -41,6 +41,7 @@ Once built, the image will need to be pushed to a container registry that the
 Kubernetes cluster can reach (whether a private registry or a public one like Docker Hub or Google Container Registry).
 
 ## Secret generation
+
 Even though Kubernetes will grab the `cloudflared` image from a container
 registry, the sidecar model still needs a mechanism for authentication.
 Argo Tunnel authenticates machines to a hostname using a certificate
@@ -56,25 +57,26 @@ To generate a Kubernetes secret:
 
 2. Identify the path where the certificate was downloaded and convert it into a Kubernetes secret with the following command:
 
-```bash
+```sh
 $ kubectl create secret generic example.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
 
 3. Ensure the secret was generated successfully with the following command:
 
-```bash
+```sh
 $ kubectl get secret
 ```
 
 4. The output will list the secret and its details in the following format:
 
-```bash
+```txt
 NAME                TYPE         DATA AGE
 ----                ----         ---- ---
 example.com         opaque       3    42s
 ```
 
 ## Pod configuration
+
 Kubernetes can use YAML files to configure the settings for the
 deployment of a Pod to a given cluster. In the sidecar model,
 `cloudflared` must be defined as a "kind: Deployment" section. The

@@ -14,17 +14,17 @@ The client will launch a browser window and prompt the user to select a hostname
 2. The private key of the origin certificate for that domain
 3. A token that is unique to Argo Tunnel
 
-Those three components are bundled into a single PEM file that is downloaded one time 
-during that login flow. The host certificate is valid for the root domain and any subdomain 
-one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to 
+Those three components are bundled into a single PEM file that is downloaded one time
+during that login flow. The host certificate is valid for the root domain and any subdomain
+one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to
 create DNS records for your domain in Cloudflare.
 
-The third componenent, the token, consists of the zone ID (for the selected domain) and 
-an API token scoped to the user who first authenticated with the login command. When user 
-permissions change (if that user is removed from the account or becomes an admin of another 
-account, for example), Cloudflare rolls the user's API key. However, the certificate file 
-downloaded through `cloudflared` retains the older API key and can cause authentication 
-failures. The user will need to login once more through `cloudflared` to regenerate the 
+The third componenent, the token, consists of the zone ID (for the selected domain) and
+an API token scoped to the user who first authenticated with the login command. When user
+permissions change (if that user is removed from the account or becomes an admin of another
+account, for example), Cloudflare rolls the user's API key. However, the certificate file
+downloaded through `cloudflared` retains the older API key and can cause authentication
+failures. The user will need to login once more through `cloudflared` to regenerate the
 certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
 #### What are the ports and IPs used by `cloudflared`?
@@ -167,7 +167,7 @@ The Argo Tunnel login command generates an origin certificate and a service toke
 
 #### Did `cloudflared` run?
 
-```bash
+```sh
 $ kubectl logs -lapp=hello -c tunnel
 ```
 
@@ -175,7 +175,7 @@ Returns logs from the cluster in the container, tunnel, where `cloudflared` is r
 
 #### Did the cluster's deployment fail?
 
-```bash
+```sh
 $ kubectl describe po -lapp=hello
 ```
 

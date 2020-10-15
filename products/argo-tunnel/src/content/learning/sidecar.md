@@ -54,19 +54,19 @@ to authenticate the tool with the corresponding Cloudflare account.
 Identify the path where the certificate was downloaded and convert it
 into a Kubernetes secret with the following command:
 
-```bash
+```sh
 $ kubectl create secret generic example.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
 
 Ensure the secret was generated successfully with the following command:
 
-```bash
+```sh
 $ kubectl get secret
 ```
 
 The output will list the secret and its details in the following format
 
-```bash
+```txt
 NAME                TYPE         DATA AGE
 ----                ----         ---- ---
 example.com         opaque       3    42s
@@ -79,9 +79,9 @@ deployment of a Pod to a given cluster. In the sidecar model,
 configuration file must include the arguments used to start Argo Tunnel,
 as well as the reference to the generated secret.
 
-Additionally, you will need to use the flag `--no-auto-update` to ensure that the 
-`cloudflared` update process does not cause the container to crash on launch. In 
-some cases, the auto-update flow can cause the container to launch a new process 
+Additionally, you will need to use the flag `--no-auto-update` to ensure that the
+`cloudflared` update process does not cause the container to crash on launch. In
+some cases, the auto-update flow can cause the container to launch a new process
 as PID 1, which causes the container to crash.
 
 ```yaml
@@ -195,7 +195,7 @@ definitions, the file sets arguments for `cloudflared`
 
 #### Did `cloudflared` run?
 
-```bash
+```sh
 $ kubectl logs -lapp=hello -c tunnel
 ```
 
@@ -203,7 +203,7 @@ Returns logs from the cluster in the container, tunnel, where `cloudflared` is r
 
 #### Did the cluster's deployment fail?
 
-```bash
+```sh
 $ kubectl describe po -lapp=hello
 ```
 

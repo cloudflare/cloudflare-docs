@@ -17,7 +17,7 @@ is counted as one origin.
 
 Next, start your tunnel with the `--lb-pool` flag:
 
-```bash
+```sh
 $ cloudflared tunnel --hostname my.example.com --url http://localhost:8080 --lb-pool my-pool-name-goes-here
 ```
 
