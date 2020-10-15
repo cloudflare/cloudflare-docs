@@ -2,9 +2,7 @@
 order: 30
 ---
 
-# Automatically Starting Argo Tunnel
-
-
+# Automatically starting Argo Tunnel
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
