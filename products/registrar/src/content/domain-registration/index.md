@@ -1,6 +1,5 @@
 ---
 title: Domain Registration
-alwaysopen: true
 weight: 10
 ---
 

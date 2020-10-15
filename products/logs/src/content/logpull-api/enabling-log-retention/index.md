@@ -1,6 +1,5 @@
 ---
 title: Enabling log retention
-alwaysopen: true
 weight: 11
 ---
 

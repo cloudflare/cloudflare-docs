@@ -1,7 +1,6 @@
 ---
 title: "2020-03-02 - Emergency Release"
 date: 2020-03-02
-alwaysopen: true
 weight: 981
 ---
 

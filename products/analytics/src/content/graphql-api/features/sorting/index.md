@@ -1,6 +1,5 @@
 ---
 title: Sorting
-alwaysopen: true
 weight: 12
 ---
 

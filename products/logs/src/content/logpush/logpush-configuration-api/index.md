@@ -1,6 +1,5 @@
 ---
 title: Manage via the Logpush API
-alwaysopen: true
 weight: 50
 ---
 

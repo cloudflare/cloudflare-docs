@@ -1,11 +1,7 @@
 ---
 title: Advanced Certificate Manager
-alwaysopen: false
 weight: 65
-hidden: false
-showNew: false
 ---
-
 
 Advanced Certificate Manager is a flexible and customizable way to issue and manage certificates in Cloudflare.  Advanced Certificate Manager defines several certificate options:
 

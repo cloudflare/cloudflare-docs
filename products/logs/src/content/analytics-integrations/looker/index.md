@@ -1,6 +1,5 @@
 ---
 title: Looker
-alwaysopen: true
 weight: 101
 ---
 

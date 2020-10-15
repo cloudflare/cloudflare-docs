@@ -1,6 +1,5 @@
 ---
 title: Parse Cloudflare Logs JSON data
-alwaysopen: true
 weight: 85
 ---
 

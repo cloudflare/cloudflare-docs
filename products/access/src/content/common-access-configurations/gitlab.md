@@ -78,7 +78,7 @@ For SSH connections, the end user needs to install `cloudflared`. Users can foll
 
 Once installed, end users can then run the following command to print settings that will need to be added to their SSH configuration file.
 
-```bash
+```sh
 $ cloudflared access ssh-config --hostname gitlab-ssh.site.com
 ```
 

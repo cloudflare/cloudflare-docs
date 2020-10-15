@@ -1,6 +1,5 @@
 ---
 title: PUT examples
-alwaysopen: true
 weight: 375
 ---
 * [Update multiple filters](#update-multiple-filters)

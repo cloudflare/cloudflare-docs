@@ -1,6 +1,5 @@
 ---
 title: Google Cloud
-alwaysopen: true
 weight: 100
 ---
 

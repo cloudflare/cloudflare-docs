@@ -1,6 +1,5 @@
 ---
 title: Session affinity
-alwaysopen: true
 weight: 16
 ---
 
@@ -14,18 +13,18 @@ When enabled, Cloudflare Session Affinity does the following:
 - **Subsequent requests by the same client are forwarded to that origin** for the duration of the cookie and as long as the origin server remains healthy.
 - **If the cookie expires or the origin server is unhealthy**, Cloudflare sets a new cookie encoding the appropriate failover origin.
 
-All sessions default to 23 hours unless a custom session TTL is specified (in seconds) between 30 minutes and 7 days.  A Session Affinity Cookie is required to honor the TTL.  The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled.  Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.  
+All sessions default to 23 hours unless a custom session TTL is specified (in seconds) between 30 minutes and 7 days.  A Session Affinity Cookie is required to honor the TTL.  The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled.  Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
 
 ---
 
 ### Enabling Session Affinity from the Load Balancing dashboard
 
-To enable Session Affinity, use the **Session Affinity** panel in the Load Balancing dashboard. 
-Session Affinity with **Client IP fallback** is not officially supported for grey-clouded Load Balancers. 
+To enable Session Affinity, use the **Session Affinity** panel in the Load Balancing dashboard.
+Session Affinity with **Client IP fallback** is not officially supported for grey-clouded Load Balancers.
 
 #### Configuring Session Affinity for a new load balancer
 
-You can enable the **Session Affinity** option during the first stage of the **Create a Load Balancer** wizard, as shown below. Select the **By Cloudflare cookie only** radio button and set the toggle switch to the _On_ position to enable session affinity. The **Client IP fallback** option behaves the same as the cookie option except client IP address is used as a fallback if no Session Affinity Cookie is provided. 
+You can enable the **Session Affinity** option during the first stage of the **Create a Load Balancer** wizard, as shown below. Select the **By Cloudflare cookie only** radio button and set the toggle switch to the _On_ position to enable session affinity. The **Client IP fallback** option behaves the same as the cookie option except client IP address is used as a fallback if no Session Affinity Cookie is provided.
 
 ![](../static/images/session-affinity-1.png)
 

@@ -1,6 +1,5 @@
 ---
 title: Data Sets (tables)
-alwaysopen: true
 weight: 2
 ---
 

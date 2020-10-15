@@ -1,9 +1,7 @@
 ---
 title: Cloudflare Filters API
-alwaysopen: false
 weight: 350
 ---
-
 
 **Cloudflare Filters** is an API-only component of Firewall Rules for designing complex criteria that rely on boolean operators and other logic to examine incoming HTTP traffic and look for a match.
 

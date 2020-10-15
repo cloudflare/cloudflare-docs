@@ -1,6 +1,5 @@
 ---
 title: Common use cases
-alwaysopen: true
 weight: 350
 ---
 
@@ -223,7 +222,7 @@ This example uses the `cf.bot_management.score `field to target requests likely 
 -----
 
 ### Stop spam and R.U.D.Y attacks ###
-Imagine that you run an online forum and you want to ensure that the form that creates comments only receives requests that have a valid authenticated session cookie.  
+Imagine that you run an online forum and you want to ensure that the form that creates comments only receives requests that have a valid authenticated session cookie.
 
 This recipe shows how you can stop spam and protect against *R-U-Deat-Yet* (R.U.D.Y.) attacks with one single rule.
 
@@ -254,7 +253,7 @@ In the expression above, we're using a pre-defined authenticated session format 
 
 **And**
 
-**Ensure the request is sent via a POST call** 
+**Ensure the request is sent via a POST call**
 
 ```
 http.request.method eq "POST"

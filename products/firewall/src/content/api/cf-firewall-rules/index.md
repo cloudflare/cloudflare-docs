@@ -1,6 +1,5 @@
 ---
 title: Firewall Rules API
-alwaysopen: false
 weight: 310
 ---
 

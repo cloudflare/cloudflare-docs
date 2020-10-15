@@ -1,9 +1,6 @@
 ---
 title: The Internet
-alwaysopen: true
 weight: 10
-hidden: false
-showNew: false
 ---
 
 The internet is an amazing place. And somehow you're using it! How exactly? Read along and you will see.

@@ -1,6 +1,5 @@
 ---
 title: Pools
-alwaysopen: true
 weight: 13
 ---
 
@@ -89,7 +88,7 @@ Cloudflare Pool objects have the following properties:
 <p />
 <em>boolean</em>
    </td>
-   <td>Set to <code>true</code> to enable the pool; <code>false</code>, to disable. 
+   <td>Set to <code>true</code> to enable the pool; <code>false</code>, to disable.
 <p /><p />
 Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers associated with the pool to failover to the next pool (if any).
 <p />

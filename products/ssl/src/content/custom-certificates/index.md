@@ -1,6 +1,5 @@
 ---
 title: Custom Certificates
-alwaysopen: false
 weight: 10
 ---
 

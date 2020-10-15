@@ -1,8 +1,8 @@
 ---
 title:  What is a filter?
-alwaysopen: false
 weight: 351
 ---
+
 A filter is a way of saying:
 
  `if (traffic matches certain criteria) then...`

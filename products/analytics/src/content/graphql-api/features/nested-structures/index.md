@@ -1,6 +1,5 @@
 ---
 title: Nested Structures
-alwaysopen: true
 weight: 16
 ---
 
@@ -60,7 +59,7 @@ The results would be:
 
 Maps behave like arrays, but can be grouped using the `sum` function. They are used in aggregated data sets, such as `httpRequest1dGroups`.
 
-Example maps: 
+Example maps:
 ````javascript
 type URLStatsMapElem {
     url: String!
@@ -75,7 +74,7 @@ type Request {
 }
 ````
 
-Query: 
+Query:
 ````javascript
 {
     requests {

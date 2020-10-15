@@ -1,5 +1,4 @@
 ---
-alwaysopen: true
 date: '2020-08-24'
 title: Scheduled Changes
 weight: 1

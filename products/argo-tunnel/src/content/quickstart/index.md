@@ -1,15 +1,15 @@
 ---
-order: 0
+order: 100
 hidden: true
 ---
 
-# Getting Started
+# Quickstart
 
 Argo Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Argo Tunnel also ensures requests route through Cloudflare before reaching the web server, so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation, and authenticated with Access if you've enabled those features for your account.
 
 Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. You can lock down the web server to external requests. Instead, Argo Tunnel will connect out to Cloudflare from your origin.
 
-### How much does Argo Tunnel cost?
+## How much does Argo Tunnel cost?
 Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing can be purchased [in the Cloudflare dashboard](https://dash.cloudflare.com/?zone=traffic) and costs $5/month plus 10 cents per GB. Cloudflare only charges for Argo routing; there is no charge for the count of tunnels used.
 
 ## Setup
@@ -23,7 +23,7 @@ Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing 
 ### Step 1: Enable Argo
 Argo Tunnel uses Argo Smart Routing technology to route traffic over the fastest path within the Cloudflare network between the user and the data centers closest to your origin.
 
-To begin using Argo Smart Routing, navigate to the <a href="https://dash.cloudflare.com/?zone=traffic" target="_blank">Traffic tab of the Cloudflare dashboard</a>, click the 'Enable' button, and follow the steps on the screen for setting up usage-based billing. 
+To begin using Argo Smart Routing, navigate to the <a href="https://dash.cloudflare.com/?zone=traffic" target="_blank">Traffic tab of the Cloudflare dashboard</a>, click the 'Enable' button, and follow the steps on the screen for setting up usage-based billing.
 
 <Aside>
 
@@ -36,7 +36,8 @@ Enterprise customers who have enabled Argo will need to contact their Cloudflare
 [Follow these instructions to install `cloudflared`](/downloads/)
 
 Once installed, verify `cloudflared` has installed properly by checking the version.
-```bash
+
+```sh
 $ cloudflared --version
 cloudflared version 2019.2.1 (built 2019-02-28-0010 UTC)
 ```
@@ -47,7 +48,8 @@ Not working? If you installed a .deb or .rpm package (Linux) or used Homebrew (m
 Next, login to your Cloudflare account from `cloudflared`. You will use the same username and password that you use to login to the Cloudflare dashboard.
 
 Run the following command and a login page should open in your browser:
-```bash
+
+```sh
 $ cloudflared tunnel login
 A browser window should have opened at the following URL:
 
@@ -64,34 +66,35 @@ The certificate consists of three components bundled into a single PEM file. One
 </Aside>
 
 Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem`. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `.cloudflared` directory on your system.
-```bash
+
+```sh
 $ mv cert.pem ~/.cloudflared/cert.pem
 ```
 
 ### Step 4: (Optional) Hello Tunnel
-Argo Tunnel runs a virtual, encrypted tunnel from a local web server to the Cloudflare network. If you do not have a web server running locally and want to test Tunnel, you can try a hello world installation with the built-in web server. 
+Argo Tunnel runs a virtual, encrypted tunnel from a local web server to the Cloudflare network. If you do not have a web server running locally and want to test Tunnel, you can try a hello world installation with the built-in web server.
 
 To do so, pass the flag --hello-world and replace [hostname] with a hostname in your Cloudflare account. Because Tunnel automatically creates DNS records for you, you can choose a subdomain that is not otherwise in use.
 
-```bash
- cloudflared --hostname test.warptunnels.org --hello-world
-INFO[0000] Build info: {GoOS:darwin GoVersion:go1.11.1 GoArch:amd64} 
-INFO[0000] Version 2019.2.1                             
-INFO[0000] Flags map[hostname:test.warptunnels.org no-autoupdate:true grace-period:10s hello-world:true] 
-INFO[0000] cloudflared will not automatically update when run from the shell. To enable auto-updates, run cloudflared as a service: https://developers.cloudflare.com/argo-tunnel/reference/service/ 
+```sh
+$ cloudflared --hostname test.warptunnels.org --hello-world
+INFO[0000] Build info: {GoOS:darwin GoVersion:go1.11.1 GoArch:amd64}
+INFO[0000] Version 2019.2.1
+INFO[0000] Flags map[hostname:test.warptunnels.org no-autoupdate:true grace-period:10s hello-world:true]
+INFO[0000] cloudflared will not automatically update when run from the shell. To enable auto-updates, run cloudflared as a service: https://developers.cloudflare.com/argo-tunnel/reference/service/
 INFO[0000] Starting metrics server                       addr="127.0.0.1:51245"
-INFO[0000] Starting Hello World server at 127.0.0.1:51246 
-INFO[0000] Proxying tunnel requests to https://127.0.0.1:51246 
-INFO[0009] Connected to LAX                             
-INFO[0009] Each HA connection's tunnel IDs: map[0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0] 
-INFO[0009] Route propagating, it may take up to 1 minute for your new route to become functional 
-INFO[0020] Connected to SFO-DOG                         
-INFO[0020] Connected to LAX                             
-INFO[0020] Each HA connection's tunnel IDs: map[0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 1:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0] 
-INFO[0020] Route propagating, it may take up to 1 minute for your new route to become functional 
-INFO[0020] Each HA connection's tunnel IDs: map[0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 1:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 2:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0] 
-INFO[0020] Route propagating, it may take up to 1 minute for your new route to become functional 
-INFO[0020] Connected to SFO-DOG                         
+INFO[0000] Starting Hello World server at 127.0.0.1:51246
+INFO[0000] Proxying tunnel requests to https://127.0.0.1:51246
+INFO[0009] Connected to LAX
+INFO[0009] Each HA connection's tunnel IDs: map[0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0]
+INFO[0009] Route propagating, it may take up to 1 minute for your new route to become functional
+INFO[0020] Connected to SFO-DOG
+INFO[0020] Connected to LAX
+INFO[0020] Each HA connection's tunnel IDs: map[0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 1:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0]
+INFO[0020] Route propagating, it may take up to 1 minute for your new route to become functional
+INFO[0020] Each HA connection's tunnel IDs: map[0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 1:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 2:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0]
+INFO[0020] Route propagating, it may take up to 1 minute for your new route to become functional
+INFO[0020] Connected to SFO-DOG
 INFO[0020] Each HA connection's tunnel IDs: map[3:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r3vvlffz9ek4gi0 0:n1ud0l8y47d5755vsqxuvaa3tf7rp4dp643a6r...
 ```
 
@@ -101,7 +104,7 @@ When the messages above conclude, Argo Tunnel has succesfully created a connecti
 
 If you go visit the domain name at which you created the tunnel (e.g. tunnel.example.com) you will see the request logs directly in the `cloudflared` output with debug level enabled. We call this Tunnel Vision.
 
-```bash
+```txt
 INFO[0615] GET https://127.0.0.1:62627/ HTTP/1.1         CF-RAY=4067701b598e8184-LAX
 INFO[0615] 200 OK                                        CF-RAY=4067701b598e8184-LAX
 ```
@@ -110,13 +113,14 @@ INFO[0615] 200 OK                                        CF-RAY=4067701b598e8184
 With your credentials saved to disk, you can now start Argo Tunnel for your production service. Replace [hostname] with the hostname you want associated with your server; this must be the domain or subdomain of a zone added to your Cloudflare account.
 
 The localhost address should point to a locally running web server.
-```bash
+
+```sh
 $ cloudflared tunnel --hostname [hostname] http://localhost:8000
 INFO[0000] Proxying tunnel requests to https://127.0.0.1:8000
 INFO[0000] Starting metrics server                       addr="127.0.0.1:62634"
-INFO[0001] Connected to LAX                             
-INFO[0020] Connected to LAX                             
-INFO[0019] Connected to SFO                         
+INFO[0001] Connected to LAX
+INFO[0020] Connected to LAX
+INFO[0019] Connected to SFO
 INFO[0021] Connected to SFO
 ```
 

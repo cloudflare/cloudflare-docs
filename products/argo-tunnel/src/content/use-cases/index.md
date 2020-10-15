@@ -1,9 +1,10 @@
 ---
-order: 1
 hidden: true
+title: Use cases
+order: 100
 ---
 
-# What You Can Do with Tunnel
+# What you can do with Argo Tunnel
 
 ## Replace your corporate VPN
 
@@ -15,12 +16,12 @@ Now you can start a tunnel on the web server to expose the application through t
 
 Lastly, if your application runs legacy programs, you can block common exploits by turning on the Web Application Firewall in the [Firewall tab of the Cloudflare dashboard](https://dash.cloudflare.com/?zone=firewall).
 
-## Exposing A Local Development Environment From Your Computer
+## Exposing a local development environment from your computer
 
 While you are developing applications it can be useful to share a link with collaborators or for testing on other screens and devices.
 
 To do this, [download](../downloads/) the Mac, Linux or Windows version of Tunnel and start a tunnel from your laptop pointed at the local address of your development environment.
 
-## Webhooks In Development Environments
+## Webhooks in development environments
 
 When developing an application that uses webhooks (such as building an app for [GitHub](https://developer.github.com/webhooks/), [Slack](https://api.slack.com/incoming-webhooks) or [Stripe](https://stripe.com/docs/webhooks)) you can use Tunnel to run a webhook endpoint from your local environment. Once you run Tunnel on your computer, Tunnel will expose a public URL that you can set as your webhook endpoint. Tunnel will forward all requests to that endpoint to your local development environment.

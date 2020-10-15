@@ -1,8 +1,6 @@
 ---
 title: Onboarding
-alwaysopen: true
 weight: 210
-hidden: false
 ---
 
 

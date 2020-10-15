@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Config File
+# Config file
 
 You can run `cloudflared` with:
 * [Arguments](/configuration/arguments) from the command line
@@ -18,7 +18,7 @@ hostname: [hostname]
 
 You can use `--config` to point to a non-standard YAML file location:
 
-```bash
+```sh
 $ cloudflared tunnel --config tunnels/config.yml
 ```
 

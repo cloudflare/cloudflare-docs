@@ -1,10 +1,9 @@
 ---
 title: IRR Records
-alwaysopen: true
 weight: 2
 ---
 
-The Internet Route Registry (IRR) is a globally distributed database of routing information. The IRR is made up of many individual datasources, some managed by regional entities such as RIPE, APNIC, and ARIN. 
+The Internet Route Registry (IRR) is a globally distributed database of routing information. The IRR is made up of many individual datasources, some managed by regional entities such as RIPE, APNIC, and ARIN.
 
 Each datasource contains routing information about particular prefixes and which ASNs are authorized to announce them. All routing information is compiled across these different sources and used to inform backbone router configuration.
 

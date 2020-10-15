@@ -1,6 +1,5 @@
 ---
 title: Endpoints
-alwaysopen: true
 weight: 360
 ---
 To invoke a Cloudflare Filters API operation, append the endpoint to the Cloudflare API base URL (`https://api.cloudflare.com/client/v4/zones/{zone_id}`). For authentication instructions, consult the standard Cloudflare API documentation.

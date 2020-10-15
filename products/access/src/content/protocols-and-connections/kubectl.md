@@ -1,5 +1,4 @@
 ---
-alwaysopen: false
 order: 1
 ---
 
@@ -76,7 +75,7 @@ Follow the same steps above to download and install `cloudflared` on the client 
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```bash
+```sh
 $ cloudflared access tcp --hostname cluster.site.com --url 127.0.0.1:1234
 ```
 
@@ -84,6 +83,6 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 
 `kubeconfig` does not support proxy command configurations at this time, though the community has submitted plans to do so. In the interim, users can alias the cluster's API server to save time.
 
-```bash
+```sh
 $ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
 ```

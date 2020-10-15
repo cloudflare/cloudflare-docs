@@ -1,6 +1,5 @@
 ---
 title: Weighted load balancing
-alwaysopen: true
 weight: 14
 ---
 

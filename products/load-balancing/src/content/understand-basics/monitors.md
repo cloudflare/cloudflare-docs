@@ -1,6 +1,5 @@
 ---
 title: Monitors
-alwaysopen: true
 weight: 17
 ---
 

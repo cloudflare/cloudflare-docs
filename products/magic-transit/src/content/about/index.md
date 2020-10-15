@@ -1,8 +1,6 @@
 ---
 title: About Magic Transit
-alwaysopen: true
 weight: 100
-hidden: false
 ---
 
 

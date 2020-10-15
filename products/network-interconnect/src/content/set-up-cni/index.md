@@ -1,10 +1,7 @@
 ---
 title: Set up Cloudflare Network Interconnect
-alwaysopen: true
 weight: 210
-hidden: false
 ---
-
 
 To ensure smooth integration, Cloudflare Network Interconnect setup uses the onboarding process described in these articles:
 

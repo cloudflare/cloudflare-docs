@@ -1,8 +1,6 @@
 ---
 title: Onboarding
-alwaysopen: true
 weight: 211
-hidden: false
 ---
 
 ![Onboarding timeline](../../static/mt-onboarding-timeline.png)
@@ -45,7 +43,7 @@ To ensure that the integration is ready to go live the following week, complete 
 *Duration:* ~4 business days
 
 ## Configure edge network
-  
+
 Once Cloudflare's pre-flight checks have passed and a date to complete the change has been verified by your account team, engineering will start the process of onboarding your prefixes to Cloudflare's edge network.
 
 To configure the edge network, Cloudflare does the following:

@@ -1,9 +1,6 @@
 ---
 title: Overview
-alwaysopen: true
 weight: 10
-hidden: false
-showNew: false
 ---
 
 The Hypertext Transfer Protocol (HTTP) is used by clients (web browsers) to talk to web servers in order to load websites. The performance of HTTP is an important factor in it comes to loading web pages quickly and efficiently.

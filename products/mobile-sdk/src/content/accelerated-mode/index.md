@@ -1,22 +1,20 @@
 ---
 title: "Acceleration Mode"
 weight: 3
-alwaysopen: false
 hidden: true
-showNew: false
 ---
 
-Cloudflare Mobile SDK is an App Acceleration framework for a Mobile-First World. Our simple 2-line SDK speeds up app performance on networks around the world. 
+Cloudflare Mobile SDK is an App Acceleration framework for a Mobile-First World. Our simple 2-line SDK speeds up app performance on networks around the world.
 
-With Cloudflare's Mobile SDK you can: 
+With Cloudflare's Mobile SDK you can:
 
 * **Improve Performance**: Cloudflare's Mobile SDK improves in-app performance by 30%-300% using a custom protocol.
 
 * **Reduce Errors**: Reduce networks errors up to 90% by smartly routing around network congestion and latency when connecting to the nearest Cloudflare data center.
 
-Improved performance coupled with reduced errors lead to *higher conversions* for application owners. 
+Improved performance coupled with reduced errors lead to *higher conversions* for application owners.
 
-Your app accelerated by Cloudflare's Mobile SDK receives the speed and security of the world's most peered CDN with 130+ data centers around the world. 
+Your app accelerated by Cloudflare's Mobile SDK receives the speed and security of the world's most peered CDN with 130+ data centers around the world.
 
 ![Network Map](../images/network-map.png)
 
@@ -26,7 +24,7 @@ The Cloudflare Mobile SDK is very easy to integrate with your existing app. Once
 ```swift
 func application(_ application: UIApplication,
                   didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    
+
     //Cloudflare Mobile SDK Setup
     CFMobile.initialize("CLOUDFLARE_CLIENT_KEY");// Substitute this line with: [CFMobile initialize:@"CLOUDFLARE_CLIENT_KEY"]; if you are using Objective C
     ..........

@@ -101,7 +101,7 @@ If you are not using a configuration file, you can run the following command to 
 
 If you are using an internal DNS and the target machine is running on a hostname, you will need to modify the command to start the Tunnel without TLS verification to avoid certificate mismatches. For example, if the remote desktop server is available at `rdp.internal.com`, the following command can be run.
 
-```bash
+```sh
 $ cloudflared tunnel --hostname rdp.site.com --no-tls-verify --origin-server-name rdp.internal.com --url rdp://localhost:433
 ```
 
@@ -117,7 +117,7 @@ In both operations, `cloudflared` will confirm that the connection has been esta
 
 Instead of deploying `cloudflared` on each target machine, you can deploy it once in a private subnet in bastion or jump host model. To do so, follow steps 1 through 3 above and then use the configuration below. Ensure that the Access policy is in place before creating this connection as the connection will allow lateral traffic within the subnet.
 
-```bash
+```sh
 $ cloudflared tunnel --hostname rdp.site.com --bastion
 ```
 
@@ -196,13 +196,13 @@ chmod +x $var
 
 You can confirm this is successful with the following command.
 
-```bash
+```sh
 $ lsof -nP -iTCP:2244 | grep LISTEN
 ```
 
 The following command can be used to kill the process.
 
-```bash
+```sh
 $ sudo kill -9 [process id]
 ```
 

@@ -1,6 +1,5 @@
 ---
 title: DELETE examples
-alwaysopen: true
 weight: 340
 ---
 * [Delete multiple rules](#delete-multiple-rules)

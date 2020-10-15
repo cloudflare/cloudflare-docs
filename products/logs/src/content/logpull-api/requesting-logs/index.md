@@ -1,6 +1,5 @@
 ---
 title: Requesting logs
-alwaysopen: true
 weight: 14
 ---
 
