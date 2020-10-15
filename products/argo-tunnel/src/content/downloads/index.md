@@ -1,8 +1,6 @@
 ---
-order: 40
+order: 100
 hidden: true
-showNew: false
-alwaysopen: false
 ---
 
 # Downloads
