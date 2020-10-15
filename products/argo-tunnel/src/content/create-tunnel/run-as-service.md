@@ -11,7 +11,7 @@ Running `cloudflared` as a service is not yet compatible with creating a Tunnel 
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
-By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](https://developers.cloudflare.com/argo-tunnel/configuration/config/), but at a minimum you should set `hostname` and `url`.
+By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/configuration/config/), but at a minimum you should set `hostname` and `url`.
 
 ## Linux
 

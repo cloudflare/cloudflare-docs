@@ -20,7 +20,7 @@ A 503 error means either that the tunnel has been unregistered, or that there is
 
 If you are pointing `cloudflared` to a locally-available URL that is different from your hostname, you may get TLS errors. To tell `cloudflared` to ignore those errors, you can include the **no-tls-verify** flag.
 
-Find more information on the **no-tls-verify** flag [here](https://developers.cloudflare.com/argo-tunnel/reference/arguments/#no-tls-verify).
+Find more information on the **no-tls-verify** flag [here](/reference/arguments/#no-tls-verify).
 
 ### <a name="invalid-tls"></a> Invalid TLS certificate
 If the TLS certificate used by the webserver is not valid, you may get a 502 Error.   

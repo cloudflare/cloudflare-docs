@@ -13,7 +13,7 @@ The project is open source and we will continue to make it available in our GitH
 
 We still believe that using Argo Tunnel and k8s together is a strong combination, but have 
 learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster 
-approach. You can find more information about running Argo tunnel in a sidecar model <a href="https://developers.cloudflare.com/argo-tunnel/reference/sidecar/">here</a>.
+approach. You can find more information about running Argo tunnel in a sidecar model [here](/argo-tunnel[/reference/sidecar/).
 
 </Aside>
 

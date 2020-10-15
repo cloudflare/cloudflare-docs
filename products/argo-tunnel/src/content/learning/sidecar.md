@@ -5,8 +5,6 @@ hidden: true
 
 # Kubernetes Sidecar Model
 
-
-
 <Aside>
 
 Running Argo Tunnel in a sidecar model is meant as an
