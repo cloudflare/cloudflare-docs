@@ -9,7 +9,7 @@ order: 1
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
 | 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
-| 4. [Install `cloudflared` and authenticate the software](https://developers.cloudflare.com/argo-tunnel/getting-started) |
+| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
 
 ## Create a Tunnel
 Run the following command to create a Tunnel.
@@ -39,7 +39,7 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 
 ## Run a Tunnel
 
-Once created, you can use Argo Tunnel to proxy traffic from the Tunnel to a locally available URL in your environment. You can specify configuration details for your tunnel in a (configuration file).
+Once created, you can use Argo Tunnel to proxy traffic from the Tunnel to a locally available URL in your environment. You can specify configuration details for your tunnel in a configuration file.
 
 If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
 
@@ -57,13 +57,13 @@ You can also run the Tunnel without a configuration file by appending the flags 
 
 ![Run tunnels](../static/img/create-tunnel/rt1.png)
 
-Once run, this command will create an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
+Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
 
 ### 
 
 You can also:
-* [Run a tunnel as a Kubernetes sidecar](https://developers.cloudflare.com/argo-tunnel/create-tunnel/kubernetes-sidecar-model/)
-* [Run a tunnel as a service](https://developers.cloudflare.com/argo-tunnel/create-tunnel/run-as-service)
+* [Run a tunnel as a Kubernetes sidecar](/create-tunnel/kubernetes-sidecar-model/)
+* [Run a tunnel as a service](/create-tunnel/run-as-service)
 
 ## List available Tunnels
 
