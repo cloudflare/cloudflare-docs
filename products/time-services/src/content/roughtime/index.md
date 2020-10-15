@@ -1,8 +1,8 @@
 ---
-title: Roughtime
-alwaysopen: true
-weight: 60
+order: 3
 ---
+
+# Roughtime
 
 [Roughtime](https://roughtime.googlesource.com/roughtime) is a simple, flexible,
 and secure authenticated time protocol developed by Google. This page introduces
