@@ -1,7 +1,8 @@
 ---
-title: How to use it
-weight: 2
+order: 2
 ---
+
+# Advanced Usage
 
 This section describes a few ways you can use Roughtime to keep your clock in
 sync. These recipes will use Cloudflare's Go package, which is available on

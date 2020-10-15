@@ -1,7 +1,11 @@
 ---
+title: Welcome
 order: 0
+type: overview
 ---
 
-# Welcome
+# Decentralized Verifiable Randomness Beacon
 
-TODO...
+Explore drand: a distributed service providing public randomness in an application-agnostic, secure, and efficient way
+
+<Link to="/about/" className="Button Button-is-docs-primary">Get started</Link>
