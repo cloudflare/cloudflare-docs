@@ -1,6 +1,5 @@
 ---
 title: Firewall Rules language
-alwaysopen: true
 weight: 150
 ---
 
@@ -663,8 +662,8 @@ You can nest expressions grouped by parentheses inside other groups to create ve
 ```bash
 (
  (http.host eq "api.example.com" and http.request.uri.path eq "/api/v2/auth") or
- (http.host matches "^(www|store|blog)\.example.com" and http.request.uri.path contains "wp-login.php") or 
- ip.geoip.country in {"CN" "TH" "US" "ID" "KR" "MY" "IT" "SG" "GB"} or 
+ (http.host matches "^(www|store|blog)\.example.com" and http.request.uri.path contains "wp-login.php") or
+ ip.geoip.country in {"CN" "TH" "US" "ID" "KR" "MY" "IT" "SG" "GB"} or
  ip.geoip.asnum in {12345 54321 11111}
 ) and not ip.src in {11.22.33.0/24}
 ```

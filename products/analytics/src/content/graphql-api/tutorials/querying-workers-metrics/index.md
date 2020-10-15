@@ -1,6 +1,5 @@
 ---
 title: Querying Workers Metrics with GraphQL
-alwaysopen: true
 weight: 50
 ---
 

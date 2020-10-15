@@ -1,6 +1,5 @@
 ---
 title: Zone Analytics to GraphQL Analytics
-alwaysopen: true
 weight: 11
 ---
 
@@ -248,7 +247,7 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https:
 }`}
 </code>
 </details>
-    
+
 As you can see from the response, Zone Analytics returns metrics along many dimensions and doesn't give you the option to control what you receive. With GraphQL Analytics, you can ask for only the data that you need. However, if you wanted to get exactly the same metrics and dimensions as you would from Zone Analytics, here is the query you would make:
 
 ```bash
@@ -306,7 +305,7 @@ As you can see from the response, Zone Analytics returns metrics along many dime
       }
     }
   }
-}    
+}
 ```
 
 <details>

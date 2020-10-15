@@ -1,6 +1,5 @@
 ---
 title: Enable Amazon S3
-alwaysopen: true
 weight: 55
 ---
 

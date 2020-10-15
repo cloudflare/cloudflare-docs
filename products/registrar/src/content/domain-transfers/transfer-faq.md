@@ -1,6 +1,5 @@
 ---
 title: Domain Transfer FAQ
-alwaysopen: true
 weight: 10
 ---
 

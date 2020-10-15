@@ -1,6 +1,5 @@
 ---
-title: Region Mapping API 
-alwaysopen: true
+title: Region Mapping API
 weight: 19
 ---
 
@@ -18,7 +17,7 @@ There are two main optional parameters for the Region Mapping API:
 For additional details and examples on using the Region Mapping API, see [Cloudflare’s API documentation](https://api.cloudflare.com/#load-balancer-region-country-mapping-list-regions).
 
 ## List of Load Balancer Regions
- 
+
 |Region Code | Region Name|
 |---|---|
 |EEU | Eastern Europe|

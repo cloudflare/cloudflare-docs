@@ -1,9 +1,6 @@
 ---
 title: Error responses
-alwaysopen: true
 weight: 25
-hidden: false
-showNew: false
 ---
 
 The GraphQL Analytics API is a RESTful API based on HTTPS requests and JSON responses and will return familiar HTTP status codes (e.g., `404`, `500`, `504`). However, in contrast to the common REST approach, a `200` response can contain an error, conforming to the [GraphQL specification](https://graphql.github.io/graphql-spec/June2018/#sec-Errors).
@@ -51,7 +48,7 @@ Indicate that the query exceeds what's allowed for the particular data set under
 Sample error messages:
 
 - "error parsing args..."
-- "scalar fields must have not selections" 
+- "scalar fields must have not selections"
 
 Indicate that the query can't be processed because it's malformed.
 

@@ -1,6 +1,5 @@
 ---
 title: Actions
-alwaysopen: true
 weight: 105
 ---
 

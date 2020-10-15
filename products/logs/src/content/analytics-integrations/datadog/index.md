@@ -1,6 +1,5 @@
 ---
 title: Datadog
-alwaysopen: true
 weight: 97
 ---
 

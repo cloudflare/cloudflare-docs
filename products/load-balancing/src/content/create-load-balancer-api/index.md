@@ -1,6 +1,5 @@
 ---
 title: Create a load balancer (API)
-alwaysopen: true
 weight: 30
 ---
 

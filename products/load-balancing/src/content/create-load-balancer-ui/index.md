@@ -1,6 +1,5 @@
 ---
 title: Create a load balancer (UI)
-alwaysopen: true
 weight: 20
 ---
 

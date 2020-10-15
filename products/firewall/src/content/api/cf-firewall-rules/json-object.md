@@ -1,6 +1,5 @@
 ---
 title: JSON object
-alwaysopen: true
 weight: 315
 ---
 ### Firewall rule object structure and properties
@@ -118,7 +117,7 @@ With Cloudflare Filters, it is possible to construct conflicting rules such as:
 
 Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, the Firewall Rules follow a strict ordering depending on action and priority.
 
-Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action using the following order of precedence: 
+Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action using the following order of precedence:
 
 1. log
 2. bypass

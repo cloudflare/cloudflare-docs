@@ -1,6 +1,5 @@
 ---
 title: Elastic
-alwaysopen: true
 weight: 99
 ---
 

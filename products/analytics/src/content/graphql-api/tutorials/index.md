@@ -1,6 +1,5 @@
 ---
 title: Tutorials
-alwaysopen: true
 weight: 50
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Features
-alwaysopen: true
 weight: 20
 ---
 

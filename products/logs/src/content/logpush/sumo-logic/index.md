@@ -1,6 +1,5 @@
 ---
 title: Enable Sumo Logic
-alwaysopen: true
 weight: 65
 ---
 

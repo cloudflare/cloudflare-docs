@@ -1,6 +1,5 @@
 ---
 title: Splunk
-alwaysopen: true
 weight: 103
 ---
 

@@ -1,8 +1,6 @@
 ---
 title: Set up Magic Transit
-alwaysopen: true
 weight: 210
-hidden: false
 ---
 
 Magic Transit setup is straightforward but involves significant configuration of critical network infrastructure. To ensure smooth integration with Magic Transit, Cloudflare uses the onboarding process described in these articles:

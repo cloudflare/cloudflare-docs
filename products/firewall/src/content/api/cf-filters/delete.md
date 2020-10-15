@@ -1,6 +1,5 @@
 ---
 title: DELETE examples
-alwaysopen: true
 weight: 380
 ---
 * [Delete multiple filters](#delete-multiple-filters)

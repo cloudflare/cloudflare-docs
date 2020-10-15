@@ -1,6 +1,5 @@
 ---
 title: Troubleshoot a Stalled Transfer
-alwaysopen: true
 weight: 10
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Proxy modes
-alwaysopen: true
 weight: 15
 ---
 

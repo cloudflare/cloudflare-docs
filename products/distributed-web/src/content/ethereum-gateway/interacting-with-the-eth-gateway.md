@@ -1,6 +1,5 @@
 ---
 title: Interacting with Ethereum
-alwaysopen: true
 weight: 4
 ---
 

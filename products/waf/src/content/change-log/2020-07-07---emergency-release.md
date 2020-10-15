@@ -1,5 +1,4 @@
 ---
-alwaysopen: true
 date: '2020-07-07'
 title: 2020-07-07 - Emergency Release
 weight: 966

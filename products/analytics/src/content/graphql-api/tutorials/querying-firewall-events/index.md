@@ -1,6 +1,5 @@
 ---
 title: Querying Firewall Events with GraphQL
-alwaysopen: true
 weight: 50
 ---
 

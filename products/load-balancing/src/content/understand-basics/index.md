@@ -1,6 +1,5 @@
 ---
 title: Understand the basics
-alwaysopen: true
 weight: 10
 ---
 

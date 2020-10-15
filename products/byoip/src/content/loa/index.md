@@ -1,6 +1,5 @@
 ---
 title: "Letter of Authorization (LOA)"
-alwaysopen: true
 weight: 10
 ---
 A letter of authorization (LOA) is a document that authorizes Cloudflare to announce a prefix(es) on behalf of another entity. Some backbone and transit providers require that Cloudflare provide them with an LOA whenever Cloudflare starts to announce a customer prefix.

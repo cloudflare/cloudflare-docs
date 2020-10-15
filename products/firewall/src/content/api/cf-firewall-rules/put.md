@@ -1,6 +1,5 @@
 ---
 title: PUT examples
-alwaysopen: true
 weight: 335
 ---
 

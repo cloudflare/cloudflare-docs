@@ -1,6 +1,5 @@
 ---
 title: The protocol
-alwaysopen: true
 weight: 1
 ---
 

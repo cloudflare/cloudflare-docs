@@ -1,9 +1,6 @@
 ---
 title: About Cloudflare Load Balancing
-alwaysopen: true
 weight: 1
-hidden: false
-showNew: false
 ---
 
 Overused or geographically distant servers add unnecessary latency and degrade the user experience. Unreliable or misconfigured servers can drop user requests completely, preventing access to websites, web apps, and APIs. Poor user experiences like these have a direct impact on revenue, reputation, and customer loyalty.

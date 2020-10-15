@@ -1,6 +1,5 @@
 ---
 title: FAQs
-alwaysopen: true
 weight: 130
 ---
 

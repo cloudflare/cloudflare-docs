@@ -1,7 +1,6 @@
 ---
 title: "2019-11-07 - Emergency Release"
 date: 2019-11-07
-alwaysopen: true
 weight: 990
 ---
 

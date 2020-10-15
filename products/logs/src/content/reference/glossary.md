@@ -1,6 +1,5 @@
 ---
 title: Glossary
-alwaysopen: true
 weight: 121
 ---
 

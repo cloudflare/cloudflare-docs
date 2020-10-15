@@ -1,6 +1,5 @@
 ---
 title: TLDs Supported
-alwaysopen: true
 weight: 10
 ---
 Cloudflare supports over 200 top-level domains (TLDs). The full list can be found [here](https://www.cloudflare.com/tld-policies/).

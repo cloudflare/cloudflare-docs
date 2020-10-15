@@ -1,6 +1,5 @@
 ---
 title: Understanding the Logpush API
-alwaysopen: true
 weight: 61
 ---
 

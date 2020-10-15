@@ -1,6 +1,5 @@
 ---
 title: 1&1
-alwaysopen: true
 weight: 10
 ---
 You can follow the instructions below to transfer your domain from 1&1 to Cloudflare.

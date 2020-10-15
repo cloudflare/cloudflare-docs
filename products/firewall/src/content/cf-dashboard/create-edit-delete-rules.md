@@ -1,6 +1,5 @@
 ---
 title: Create, edit, and delete rules
-alwaysopen: true
 weight: 205
 ---
 

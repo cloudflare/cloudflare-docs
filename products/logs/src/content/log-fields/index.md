@@ -1,6 +1,5 @@
 ---
 title: Log fields
-alwaysopen: true
 weight: 50
 ---
 
