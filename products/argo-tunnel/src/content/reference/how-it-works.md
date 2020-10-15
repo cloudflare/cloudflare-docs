@@ -11,13 +11,13 @@ Argo Tunnel connects your web server to the Cloudflare network over an encrypted
 * The visitor connects to the closest Cloudflare edge PoP via Anycast.
 * Cloudflare routes the visitor through a special PoP to PoP route called [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/) to reach a Cloudflare edge PoP that has an established persistent connection with the Argo Tunnel agent `cloudflared` running on your web server.
 * The request is routed to the `cloudflared` instance running on your server.
-* The Tunnel client forwards the request to your web server.
+* The Tunnel client forwards the request to your web service.
 
 In more detail:
 
 Argo Tunnel allows you to host any web-based application on the internet, even those that run in a NAT’ed environment.
 
-When the `cloudflared` process begins, the `cloudflared` client will then make an outbound HTTP request to the two closest Cloudflare data centers. Which data centers are closest is determined by iterating through the SRV DNS record and standard Anycast routing. Simultaneously, a DNS entry is created. Tunnels that use Cloudflare's Load Balancer will create a CNAME record; all other Tunnels will create a AAAA record for your specified hostname. Because the request is initiated from the client, Tunnel is able to expose applications to the internet that are behind a NAT or a firewall without any further port forwarding or configuration.
+When the `cloudflared` process starts, the `cloudflared` client will establish an outbound HTTP connection with the two closest Cloudflare data centers. Which data centers are closest is determined by iterating through the SRV DNS record and standard Anycast routing. Simultaneously, a DNS entry is created. Tunnels that use Cloudflare's Load Balancer will create a CNAME record; all other Tunnels will create a AAAA record for your specified hostname. Because the request is initiated from the client, Tunnel is able to expose applications to the internet that are behind a NAT or a firewall without any further port forwarding or configuration.
 
 The connection between `cloudflared` and the Cloudflare edge is a long-lived persistent HTTP2 connection encrypted with TLS. To keep the connection alive, `cloudflared` sends a heartbeat to the edge in the form of a ping frame over HTTP2. If the connection is dropped, the `cloudflared` client re-establishes the connection with Cloudflare. `cloudflared` connects to Cloudflare on port 7844.
 

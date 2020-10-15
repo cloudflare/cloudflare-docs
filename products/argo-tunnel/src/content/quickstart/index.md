@@ -5,11 +5,9 @@ hidden: true
 
 # Getting Started
 
+Argo Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Argo Tunnel also ensures requests route through Cloudflare before reaching the web server, so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation, and authenticated with Access if you've enabled those features for your account.
 
-
-Argo Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Argo Tunnel also ensures requests route through Cloudflare before reaching the web server so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation and authenticated with Access if you've enabled those features for your account.
-
-Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. Once the daemon is running and the Tunnel has been configured, you can lock down the web server to external requests to only allow connections from Cloudflare.
+Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. You can lock down the web server to external requests. Instead, Argo Tunnel will connect out to Cloudflare from your origin.
 
 ### How much does Argo Tunnel cost?
 Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing can be purchased [in the Cloudflare dashboard](https://dash.cloudflare.com/?zone=traffic) and costs $5/month plus 10 cents per GB. Cloudflare only charges for Argo routing; there is no charge for the count of tunnels used.
@@ -18,7 +16,7 @@ Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing 
 
 ### Requirements
 * A <a href="http://dash.cloudflare.com/" target="_blank">Cloudflare account</a>
-* The <a href="/argo-tunnel/downloads/" target="_blank">cloudflared</a> daemon
+* The [`cloudflared`](/downloads/) daemon
 * An <a href="https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-Cloudflare-account-and-add-a-website">active zone on Cloudflare</a>
 * An active subscription to <a href="https://dash.cloudflare.com/?zone=traffic">Argo</a> which you can enable in the Cloudflare dashboard in the Traffic tab
 
@@ -35,7 +33,7 @@ Enterprise customers who have enabled Argo will need to contact their Cloudflare
 ### Step 2: Install cloudflared
 `cloudflared` is the software that runs Argo Tunnel. `cloudflared` is available for amd64, x86, and ARMv6 machines in Binary, .deb, and .rpm types. The code for the `cloudflared` client is available on GitHub [here](https://github.com/cloudflare/cloudflared).
 
-**<a href="/argo-tunnel/downloads/" target="_blank">Follow these instructions to install cloudflared</a>**
+[Follow these instructions to install `cloudflared`](/downloads/)
 
 Once installed, verify `cloudflared` has installed properly by checking the version.
 ```bash
@@ -135,5 +133,5 @@ If the connection succeeds, you should see content served from your local webser
 ### Next steps
 The steps above can be sufficient for local dev environments. For a production environment, we recommend a few additional settings be configured:
 
-* [Automatically starting Argo Tunnel](/argo-tunnel/reference/service)
-* [Configuration file format](/argo-tunnel/reference/config)
+* [Automatically starting Argo Tunnel](/reference/service)
+* [Configuration file format](/reference/config)

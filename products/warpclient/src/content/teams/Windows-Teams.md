@@ -67,7 +67,7 @@ Congratulations! Intune is now configured to deploy the Cloudflare WARP client.
 If you plan to direct your users to manually download and configure the Cloudflare WARP client application, they can do so from two places in the UI:
 
 #### Manually configure a Gateway DoH Subdomain
-If your organization uses Teams Gateway DNS filtering then you will need to instruct your users to configure the Gateway DoH Subdomain field. You can <a href="https://developers.cloudflare.com/gateway/getting-started/configuring-clients/browser/">click here to find this value</a> for your Teams Gateway configuration. Then complete the following steps:
+If your organization uses Teams Gateway DNS filtering then you will need to instruct your users to configure the Gateway DoH Subdomain field. You can <a href="https://developers.cloudflare.com/gateway/connecting-to-gateway/with-client">click here to find this value</a> for your Teams Gateway configuration. Then complete the following steps:
 1. Click on the Cloudflare Logo in the System Tray.
 1. Select the gear icon and then choose **Preferences**.
 1. Select the **Connection** tab.

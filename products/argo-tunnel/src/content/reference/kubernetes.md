@@ -13,7 +13,7 @@ The project is open source and we will continue to make it available in our GitH
 
 We still believe that using Argo Tunnel and k8s together is a strong combination, but have 
 learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster 
-approach. You can find more information about running Argo tunnel in a sidecar model <a href="https://developers.cloudflare.com/argo-tunnel/reference/sidecar/">here</a>.
+approach. You can find more information about running Argo tunnel in a sidecar model [here](/argo-tunnel[/reference/sidecar/).
 
 </Aside>
 
@@ -29,7 +29,7 @@ Controller will be usable without Load Balancing.
 In this example, we're going to expose a private version of the `echoserver` through Argo Tunnel.
 This example assumes you have a Kubernetes cluster running on one of the platforms mentioned above.
 
-# Step One: Download Cloudflared & Generate a Certificate
+# Step One: Download `cloudflared` & Generate a Certificate
 Download and install `cloudflared` [here][cflare-tunnel-daemon].
 
 Then, run `cloudflared login` and select a domain to generate and download a certificate. Make sure the certificate is placed into `~/.cloudflared/cert.pem`
