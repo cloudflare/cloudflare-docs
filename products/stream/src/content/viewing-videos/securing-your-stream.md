@@ -307,3 +307,179 @@ function objectToBase64url(payload) {
   )
 }
 ```
+
+# Security considerations
+
+## Limiting where videos can be embedded
+
+By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.
+
+In the dashboard, you will see a text box by each video labeled `Enter allowed origin domains separated by commas`. If you click on it, you can list the domains that the Stream embed code should be able to be used on.
+
+  * `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and badtortilla.com
+  * `example.com` does not cover www.example.com or any subdomain of example.com
+  * `localhost` covers localhost at any port
+  * There's no path support - `example.com` covers example.com/*
+
+You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
+
+```bash
+curl -X POST \
+-H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-d '{"uid": "$VIDEOID", "allowedOrigins": ["example.com"]}' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
+
+```
+
+## Signed URLs
+
+Combining [signed URLs](/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
+
+To do so
+
+1. Sign a token and use it in an embed code on your site
+1. Make the video private
+1. Restrict the viewing domains to your site
+
+## Content Security Policy (CSP) considerations
+
+Content Security Policy (CSP) is a layer of security that helps to detect and prevent certain types of cross site scripting and data injection attacks. Most common way servers set CSP information is through headers at your origin server.
+
+If you are using CSP, you will need to add all subdomains of `cloudflarestream.com` and `videodelivery.net` to your CSP policy in order for Stream to work.
+
+    Content-Security-Policy: default-src 'self' *.cloudflarestream.com *.videodelivery.net
+
+If CSP is misconfigured your videos might not play or you might see an error similar to the one below in your browser's javascript console.
+
+    Refused to load the script 'https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js' because it violates the following Content Security Policy directive: ...
+
+Read more about Content Security Policy at [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+
+
+# Video access control
+
+Video Access Control allow you to define Rules to have finer-grained control over your content than signed URL tokens alone. They are primarily aimed at making tokens conditionally valid based on user information. Access Rules are specified on token payloads as the `accessRules` property containing an array of `Rule` objects.
+
+If you're not already familiar with signed URLs, it's recommended to <a href="/stream/security/signed-urls/">start here.</a>
+
+## Rules
+
+A Rule has two components. The `action` is taken if the conditions associated with the `type` matches. Each `type` has an associated field that should be filled, see the <a href="#schema">schema</a> or <a href="#examples">examples</a> for details.
+
+These Rule types are available
+
+- `any` - Match all requests. May be used as a wildcard to apply a default action after other rules.
+- `ip.src` - Match specific IPv4 or IPV6 addresses or CIDRs.
+- `ip.geoip.country` - Match specific 2-letter country codes in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search) format.
+
+These Rule actions are available
+
+- `allow` - View is considered valid.
+- `block` - View is considered invalid and a 401 or 403 is returned.
+
+Access Rules are evaluated first-to-last. If a Rule matches, the associated `action` is applied and no further rules are evaluated.
+
+## Schema
+
+A valid Rule object conforms to this type signature:
+
+```
+{
+	action: "allow" | "block";
+	type: "any";
+} | {
+	action: "allow" | "block";
+	type: "ip.src";
+	ip: (IPv4CidrRange | IPv6CidrRange | IPv4 | IPv6)[];
+} | {
+	action: "allow" | "block";
+	type: "ip.geoip.country";
+	country: string[];
+}
+```
+
+In the future, Rule types or actions may be added. If you have other types of rules or actions you need for your video application, please contact Cloudflare support.
+
+### Examples
+
+#### Allow only views from specific CIDRs
+
+```
+...
+"accessRules": [
+	{
+		"type": "ip.src",
+		"action": "allow",
+		"ip": ["93.184.216.0/24", "2400:cb00::/32"],
+	},
+	{
+		"type": "any",
+		"action": "block",
+	}
+]
+```
+
+The first rule is an IP rule matching on CIDRs, `93.184.216.0/24` and `2400:cb00::/32`. When that rule matches, the `allow` action will abort rule evaluation and consider the view valid.
+
+If the first rule doesn't match, the second rule of `any` will match all remaining requests and block those views.
+
+#### Block views from a specific country
+
+```
+...
+"accessRules": [
+	{
+		"type": "ip.geoip.country",
+		"action": "block",
+		"country": ["US", "DE", "MX"],
+	},
+]
+```
+
+The first rule matches on country, `US`, `DE`, and `MX` here. When that rule matches, the `block` action will have the token considered invalid.
+
+If the first rule doesn't match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.
+
+#### Allow only views from specific country or IPs
+
+```
+...
+"accessRules": [
+	{
+		"type": "ip.geoip.country",
+		"country": ["US", "MX"],
+		"action": "allow",
+	},
+	{
+		"type": "ip.src",
+		"ip": ["93.184.216.0/24", "2400:cb00::/32"],
+		"action": "allow",
+	},
+	{
+		"type": "any",
+		"action": "block",
+	},
+]
+```
+
+The first rule matches on country, `US` and `MX` here. When that rule matches, the `allow` action will have the token considered valid. If it doesn't match we continue evaluating rules
+
+The second rule is an IP rule matching on CIDRs, `93.184.216.0/24` and `2400:cb00::/32`. When that rule matches, the `allow` action will consider the rule valid.
+
+If the first two rules don't match, the final rule of `any` will match all remaining requests and block those views.
+
+## Usage Notes
+
+### Maximum Rule Count
+
+A token may have at most 5 members in the `accessRules` array.
+
+Note that most Rule types take arrays as arguments. For example, a rule of type `ip.src` can specify multiple IP addresses or CIDRs.
+
+If you require more than 5 rules, please contact Cloudflare support.
+
+### ip.src
+
+It is recommended to include both IPv4 and IPv6 variants in a rule if possible. Having only a single variant in a rule means that rule will ignore the other variant. For example, an IPv4-based rule will never be applicable to a viewer connecting from an IPv6 address.
+
+CIDRs should be preferred over specific IP addresses. Some devices, such as mobile, may change their IP over the course of a view. Video Access Control are evaluated continuously while a video is being viewed. As a result, overly strict IP rules may disrupt playback.

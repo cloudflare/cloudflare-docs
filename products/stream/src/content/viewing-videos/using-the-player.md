@@ -1,9 +1,4 @@
----
-title: Player Embed
-weight: 1
----
-
-# Embedding the Stream player
+# Using the player
 
 The Stream player is served in an iframe with the video UID (or [signed URL](/security/signed-urls/)) replacing `$VIDEOID` in the example below.
 

@@ -2,7 +2,7 @@
 order: 9
 ---
 
-# Thumbnails
+# Displaying thumbnails
 
 ## Use Case 1: Generating a thumbnail on-the-fly
 

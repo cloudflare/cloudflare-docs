@@ -1,4 +1,4 @@
-# Player SDK
+# Using the player API
 
 The SDK provides an API for programatically controlling the player and listening for player events.
 

@@ -1,4 +1,4 @@
-# Third-party players
+# Using own player
 
 There could be cases where you might need more control over the [Stream web player](/video-playback/) for your use case. Stream is compatible with third-party players that support HLS and DASH manifests with no additional charge.
 

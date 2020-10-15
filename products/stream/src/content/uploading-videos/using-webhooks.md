@@ -2,7 +2,7 @@
 order: 10
 ---
 
-# Webhooks
+# Using webhooks
 
 A tool to notify your service when videos successfully finish processing and are ready to stream.
 
