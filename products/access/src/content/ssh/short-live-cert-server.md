@@ -56,20 +56,20 @@ For example, if the user's identity in your Okta or GSuite provider is "jdoe@exa
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
-```bash
+```sh
 $ sudo adduser jdoe
 ```
 
 #### 4. Save your Public Key
 Save the public key generated from the dashboard in Step 2 as a new `.pub` file in your system. Use the following command to change directories to the SSH configuration directory on the machine.
 
-```bash
+```sh
 $ cd /etc/ssh
 ```
 
 Once there, you can use the following command to both generate the file and open a text editor to input the public key.
 
-```bash
+```sh
 $ vim ca.pub
 ```
 
@@ -85,7 +85,7 @@ Cloudflare Access requires two changes to the `SSHD` config file used on the tar
 
 While staying within the "/etc/ssh" directory, open the ``"sshd_config"`` file.
 
-```bash
+```sh
 $ vim /etc/ssh/sshd_config
 ```
 
@@ -113,7 +113,7 @@ The change above will tell your SSH configuration to use the public key saved in
 #### 6. Restart your SSH Server
 Once you have modified your `SSHD` configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running `systemd`, as well. You can execute both.
 
-```bash
+```sh
 $ sudo service ssh restart
 $ sudo systemctl restart ssh
 ```
@@ -134,6 +134,6 @@ Host cfpipe-vm.example.com
 
 You can save time by printing the configuration required for your specific instance with the following `cloudflared` command.
 
-```bash
+```sh
 $ cloudflared access ssh-config --hostname vm.example.com --short-lived-cert
 ```
