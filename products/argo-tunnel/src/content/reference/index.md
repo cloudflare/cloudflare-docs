@@ -1,6 +1,5 @@
 ---
-order: 10
-alwaysopen: false
+order: 100
 hidden: true
 ---
 

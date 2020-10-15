@@ -1,7 +1,5 @@
 ---
-order: 1
-showNew: false
-alwaysopen: false
+order: 0
 ---
 
 # How Argo Tunnel works

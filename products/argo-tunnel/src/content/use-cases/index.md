@@ -1,6 +1,7 @@
 ---
-title: Use cases
 hidden: true
+title: Use cases
+order: 100
 ---
 
 # What you can do with Argo Tunnel

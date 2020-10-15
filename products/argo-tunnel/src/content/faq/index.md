@@ -1,5 +1,5 @@
 ---
-order: 200
+order: 60
 ---
 
 # Troubleshooting and FAQ
