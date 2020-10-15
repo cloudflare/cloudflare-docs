@@ -1,6 +1,5 @@
 ---
 title: Transfer to Cloudflare
-alwaysopen: true
 weight: 10
 ---
 
@@ -9,7 +8,7 @@ Domain transfers tell your registry that a different registrar can now set those
 Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some steps at both your new registrar and the one you are leaving. Each registrar handles transfers a bit differently, but in general they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
 
 ### Unlock your domain
-Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers: registrar lock. You might also see it written as domain lock. When enabled, the lock prevents any other registrar from attempting to initiate a transfer. 
+Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers: registrar lock. You might also see it written as domain lock. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
 
 Only the registrant can enable or disable this lock, typically through the administration interface of the registrar. To proceed with a transfer, you will need to remove this lock if it is enabled.
 

@@ -1,8 +1,6 @@
 ---
 title: Configuration data
-alwaysopen: true
 weight: 211
-hidden: false
 ---
 
 

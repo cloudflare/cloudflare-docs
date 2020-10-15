@@ -1,6 +1,5 @@
 ---
 title: Tutorials and examples
-alwaysopen: true
 weight: 80
 ---
 

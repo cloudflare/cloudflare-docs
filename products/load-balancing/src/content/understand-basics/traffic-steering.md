@@ -1,6 +1,5 @@
 ---
 title: Traffic steering
-alwaysopen: true
 weight: 12
 ---
 
@@ -42,7 +41,7 @@ The diagram below shows how Cloudflare would route traffic to the pool with the 
 
 ---
 
-### Geo Steering 
+### Geo Steering
 
 Geo Steering directs traffic to pools based on the client’s region or PoP. Only domains on Enterprise plans can perform Geo Steering by PoP. Users specify the pools to which the load balancer should direct traffic for a given geographical region or PoP. You can assign multiple pools to the same region, and the load balancer will use them in failover order. If there is no configuration for a region or pool, the load balancer will use the default failover order.
 

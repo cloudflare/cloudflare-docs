@@ -1,7 +1,6 @@
 ---
 title: "2020-01-16 - Emergency Release"
 date: 2020-01-16
-alwaysopen: true
 weight: 986
 ---
 

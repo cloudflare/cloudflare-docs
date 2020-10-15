@@ -1,13 +1,13 @@
 ---
-order: 40
+order: 100
 hidden: true
-showNew: false
-alwaysopen: false
 ---
 
 # Downloads
 
-# Linux
+--------------------------------
+
+## Linux
 
 Downloads are available for amd64, x86 and ARMv6 in several forms:
 
@@ -21,21 +21,26 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 .deb   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.deb) | - |
 .rpm   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.rpm) | - |
 
-# macOS
+--------------------------------
+
+## macOS
 
 Argo Tunnel can also be installed via [Homebrew](https://brew.sh):
 
-```bash
+```sh
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
 Install via Terminal:
 
-```bash
+```sh
 $ curl https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-darwin-amd64.tgz | tar xzC /usr/local/bin
 ```
 
-# Windows
+--------------------------------
+
+## Windows
+
 Downloads are available in ZIP format for [32-bit](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-386.zip) and [64-bit](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-amd64.zip) versions.
 
 Go to Downloads folder, right-click on the zip folder and select "Extract All" to extract the executable.
@@ -86,7 +91,9 @@ If the browser failed to open, open it yourself and visit the URL above.
 
 If the browser fails to open, right-click the login URL and navigate to it in the browser.
 
-# New Releases
+--------------------------------
+
+## New releases
 
 Cloudflare frequently updates `cloudflared` with new features and
 bug fixes. All releases and release notes are in the GitHub repository for the project.

@@ -1,6 +1,5 @@
 ---
 title: Manage rules in the Cloudflare UI
-alwaysopen: true
 weight: 200
 ---
 

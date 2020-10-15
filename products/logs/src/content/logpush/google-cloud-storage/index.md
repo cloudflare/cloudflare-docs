@@ -1,6 +1,5 @@
 ---
 title: Enable Google Cloud Storage
-alwaysopen: true
 weight: 60
 ---
 

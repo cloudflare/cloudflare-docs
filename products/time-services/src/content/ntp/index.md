@@ -8,3 +8,4 @@ order: 1
 
  NTP works by having a client send a query packet out to an NTP server that then responds with its clock time. The client then computes an estimate of the difference between its clock and the remote clock and attempts to compensate for network delay in this. NTP client queries multiple servers and implements algorithms to select the best estimate, and rejects clearly wrong answers.
 
+NTP works by having a client send a query packet out to an NTP server that then responds with its clock time. The client then computes an estimate of the difference between its clock and the remote clock and attempts to compensate for network delay in this. NTP client queries multiple servers and implements algorithms to select the best estimate, and rejects clearly wrong answers.

@@ -1,6 +1,5 @@
 ---
 title: Preview rules
-alwaysopen: true
 weight: 210
 ---
 

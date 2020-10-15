@@ -1,5 +1,4 @@
 ---
-alwaysopen: false
 order: 1
 ---
 
@@ -91,4 +90,3 @@ When the client launches, `cloudflared` will launch a browser window and prompt 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
 
 </Aside>
-

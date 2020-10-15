@@ -1,6 +1,5 @@
 ---
 title: Best practices
-alwaysopen: true
 weight: 40
 ---
 

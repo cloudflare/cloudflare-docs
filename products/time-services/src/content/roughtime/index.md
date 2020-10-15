@@ -23,5 +23,5 @@ ping response: 2018-09-12 16:59:39.141 -0700 PDT ±1s (in 10ms)
 
 That's it---authenticated time! So why is this interesting? And what is it about
 this protocol that makes it "rough"?  Proceed to learn more about Roughtime and
-its security features. For a more in-depth look, check out our [blog post](https://blog.cloudflare.com/roughtime/) 
+its security features. For a more in-depth look, check out our [blog post](https://blog.cloudflare.com/roughtime/)
 about the launch of Cloudflare-Roughtime.

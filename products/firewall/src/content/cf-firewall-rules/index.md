@@ -1,6 +1,5 @@
 ---
 title: About Cloudflare Firewall Rules
-alwaysopen: true
 weight: 100
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Transfer Costs
-alwaysopen: true
 weight: 10
 ---
 ICANN requires that any transfer also extend the expiration date of your domain by at least one year. That’s one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2018, but it expires on March 10, 2019, your new expiration date will be March 10, 2020.

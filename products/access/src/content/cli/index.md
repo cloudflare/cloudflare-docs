@@ -1,6 +1,5 @@
 ---
 title: "CLI"
-alwaysopen: false
 order: 9
 hidden: true
 ---

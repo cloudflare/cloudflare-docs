@@ -1,8 +1,6 @@
 ---
 title: Tunnel health checks
-alwaysopen: true
 weight: 170
-hidden: false
 ---
 
 

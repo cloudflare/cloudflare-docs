@@ -1,6 +1,5 @@
 ---
 title: Sampling
-alwaysopen: true
 weight: 40
 ---
 

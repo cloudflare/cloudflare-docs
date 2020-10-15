@@ -1,6 +1,5 @@
 ---
 title: Generic
-alwaysopen: true
 weight: 10
 ---
 You can follow the instructions below to transfer your domain from any registrar to Cloudflare.

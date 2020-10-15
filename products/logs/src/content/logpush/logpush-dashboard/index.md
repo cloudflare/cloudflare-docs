@@ -1,6 +1,5 @@
 ---
 title: Manage via the Cloudflare UI
-alwaysopen: true
 weight: 45
 ---
 

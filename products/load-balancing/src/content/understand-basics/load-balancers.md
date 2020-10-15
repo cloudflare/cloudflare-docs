@@ -1,6 +1,5 @@
 ---
 title: Load balancers
-alwaysopen: true
 weight: 11
 ---
 
@@ -92,7 +91,7 @@ Cloudflare Load Balancer objects have the following properties:
 <p />
 <em>array</em>
    </td>
-   <td>A list of Pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool and so on down the list. 
+   <td>A list of Pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool and so on down the list.
 <p />
 Pools defined here are used by default, or when <code>region_pools</code> is not configured for a given region.
 <p />
@@ -201,7 +200,7 @@ If you have an existing DNS record with the same name as your load balancer, the
 <code>
 {`{`}
 <p />
-  "LAX": 
+  "LAX":
 <p />
 [
     "de90f38ced07c2e2f4df50b1f61d4194",
@@ -279,12 +278,12 @@ Valid values: (<code>true,false</code>)
 <p />
 <em>string</em>
    </td>
-   <td>Specifies the type of session affinity the load balancer should use. The default value is <code>""</code>, which disables session affinity (as does <code>"none"</code>).  
+   <td>Specifies the type of session affinity the load balancer should use. The default value is <code>""</code>, which disables session affinity (as does <code>"none"</code>).
 <p /><p />The supported session affinity types are <code>"cookie"</code> and <code>"ip_cookie"</code>.
 <p />
-When set to <code>"cookie"</code>, the first request to a proxied load balancer generates a cookie encoding the origin to which the request will be forwarded. 
+When set to <code>"cookie"</code>, the first request to a proxied load balancer generates a cookie encoding the origin to which the request will be forwarded.
 <p />
-Subsequent requests by the same client to the same load balancer will be sent to the origin server encoded by the cookie. 
+Subsequent requests by the same client to the same load balancer will be sent to the origin server encoded by the cookie.
 <p />
 If the cookie has expired or the origin server is unhealthy, a new origin server is identified and a new cookie generated. The <code>"ip_cookie"</code> option behaves the same as <code>"cookie",</code> except the initial origin selection is stable and based on the client’s IP address.
 
@@ -299,12 +298,12 @@ Valid values: <code>none</code>, <code>cookie</code>, <code>ip_cookie</code>, <c
 <p />
 <em>number</em>
    </td>
-   <td>Sets the time to live for this load balancer’s session affinity cookies. 
+   <td>Sets the time to live for this load balancer’s session affinity cookies.
 <p />
 <p />
-This parameter is ignored unless a supported session affinity policy is set. 
+This parameter is ignored unless a supported session affinity policy is set.
 <p />
-The current default of 23 hours will be used unless <code>session_affinity_ttl</code> is explicitly set. 
+The current default of 23 hours will be used unless <code>session_affinity_ttl</code> is explicitly set.
 <p />
 The accepted range of values is between 1800 and 604800. Once the expiry time has been reached, subsequent requests may get sent to a different origin server.
    </td>
@@ -383,7 +382,7 @@ The Cloudflare API supports the following commands for load balancers. (Examples
    </td>
   </tr>
   <tr>
-   <td>Delete Load Balancer 
+   <td>Delete Load Balancer
    </td>
    <td><code>DELETE</code>
    </td>

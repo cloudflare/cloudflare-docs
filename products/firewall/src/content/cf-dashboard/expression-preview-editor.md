@@ -1,6 +1,5 @@
 ---
 title: Edit rule expressions
-alwaysopen: true
 weight: 206
 ---
 

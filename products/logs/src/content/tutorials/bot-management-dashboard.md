@@ -1,6 +1,5 @@
 ---
 title: Bot Management Dashboard
-alwaysopen: true
 weight: 90
 ---
 

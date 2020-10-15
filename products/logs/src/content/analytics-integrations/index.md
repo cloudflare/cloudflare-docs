@@ -1,8 +1,5 @@
 ---
 title: Analytics Integrations
-
-alwaysopen: true
-
 weight: 100
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Cloudflare Custom Domain Protection
-alwaysopen: true
 weight: 10
 ---
 Cloudflare offers [Custom Domain Protection](https://www.cloudflare.com/products/registrar/custom-domain-protection/) to customers with high-profile domains who need the highest level of security against domain hijacking.

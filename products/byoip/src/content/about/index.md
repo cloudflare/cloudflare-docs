@@ -1,9 +1,6 @@
 ---
 title: Getting Started
-alwaysopen: true
 weight: 1
-showNew: false
-hidden: false
 ---
 
 ## Bringing Your Own IPs to Cloudflare

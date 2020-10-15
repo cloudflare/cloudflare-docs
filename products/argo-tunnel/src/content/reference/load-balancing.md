@@ -2,9 +2,7 @@
 order: 35
 ---
 
-# Load Balancing
-
-
+# Load balancing
 
 You can create a load balancer within Cloudflare which will direct traffic to
 Argo Tunnels which have been started on multiple machines or even on multiple continents.
@@ -17,7 +15,7 @@ is counted as one origin.
 
 Next, start your tunnel with the `--lb-pool` flag:
 
-```bash
+```sh
 $ cloudflared tunnel --hostname my.example.com --url http://localhost:8080 --lb-pool my-pool-name-goes-here
 ```
 

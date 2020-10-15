@@ -1,6 +1,5 @@
 ---
 title: Mutual Authentication
-alwaysopen: true
 weight: 40
 ---
 

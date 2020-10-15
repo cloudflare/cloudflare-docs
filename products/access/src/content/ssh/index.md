@@ -1,5 +1,4 @@
 ---
-alwaysopen: false
 order: 5
 hidden: true
 ---

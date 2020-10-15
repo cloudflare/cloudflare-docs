@@ -1,6 +1,5 @@
 ---
 title: Logpush using Python (example)
-alwaysopen: true
 weight: 88
 ---
 

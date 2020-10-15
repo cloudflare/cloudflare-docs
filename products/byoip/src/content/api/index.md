@@ -1,6 +1,5 @@
 ---
 title: Dynamic Advertisement
-alwaysopen: true
 weight: 3
 ---
 
@@ -15,7 +14,7 @@ A successful response from the API means our service registered the request, the
 
 Finally, the API/UI support adding 'delegations' to your prefixes. Delegations allow other Cloudflare accounts interact with your prefix. The effect of a 'delegation' is service specific, so please see the ##delegations## section to learn more.
 
-To toggle advertisement status from the UI simple click into the IP Prefixes product - located on the account home page, and click 'edit' on an invdividual prefix. 
+To toggle advertisement status from the UI simple click into the IP Prefixes product - located on the account home page, and click 'edit' on an invdividual prefix.
 
 
 ![Advertisement status ui](

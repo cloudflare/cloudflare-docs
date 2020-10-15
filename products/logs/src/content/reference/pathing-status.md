@@ -1,6 +1,5 @@
 ---
 title: Pathing status
-alwaysopen: true
 weight: 122
 ---
 

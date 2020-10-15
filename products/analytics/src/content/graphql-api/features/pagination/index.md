@@ -1,6 +1,5 @@
 ---
 title: Pagination
-alwaysopen: true
 weight: 14
 ---
 

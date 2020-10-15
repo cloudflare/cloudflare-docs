@@ -1,6 +1,5 @@
 ---
 title: Graylog
-alwaysopen: true
 weight: 101
 ---
 

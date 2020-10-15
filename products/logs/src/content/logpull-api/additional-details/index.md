@@ -1,6 +1,5 @@
 ---
 title: Additional details
-alwaysopen: true
 weight: 18
 ---
 
@@ -42,7 +41,7 @@ To get a good estimate of daily traffic, it is best to get at least 30 log lines
 Responses are compressed by default (gzip). `cURL` decompresses responses transparently, unless called with:
 
 `-H "accept-encoding: gzip"`
- 
+
  In that case, the output remains gzipped. Compressed data is approximately 5-10% of its uncompressed size. This means that a 1GB uncompressed response gets compressed down to 50-100MB.
 
 <a id="service-expectations" style="color: inherit">
@@ -52,7 +51,7 @@ Responses are compressed by default (gzip). `cURL` decompresses responses transp
 
 #### Successful requests
 
-If the response or timeout limit is exceeded or there is any problem fetching the response, a `200` status will be returned and the response will end with the non-JSON text line “Error streaming data.” Because responses are streamed, there is no way to identify the error ahead of time. A response is successful if it does not end with the “Error streaming data" text line. 
+If the response or timeout limit is exceeded or there is any problem fetching the response, a `200` status will be returned and the response will end with the non-JSON text line “Error streaming data.” Because responses are streamed, there is no way to identify the error ahead of time. A response is successful if it does not end with the “Error streaming data" text line.
 
 Once you receive a successful response for a given zone and time range, the following is true for all subsequent requests:
 
@@ -63,8 +62,8 @@ Once you receive a successful response for a given zone and time range, the foll
 
 Regarding the inclusion of the *fields* parameter:
 
-* When fields are explicitly included in the request URL, the fields returned will not change  
-* When not specified in the URL, the default fields are returned  
+* When fields are explicitly included in the request URL, the fields returned will not change
+* When not specified in the URL, the default fields are returned
 * The default fields may change at any time
 
 #### Limits
@@ -77,8 +76,7 @@ The following usage restrictions apply:
 * **Time range:** the maximum difference between the *start* and *end* parameters can be 1 hour
 * **Response size:** the maximum response size is 10GiB per request, which is equivalent to about 15M records when about 55 fields are selected (more records can be retrieved when less fields are selected because the per record size will be smaller)
 * **Timeout:** the response will fail with a terminated connection after 10 minutes
-* **Stream Timeout:** the request will be terminated with a `408` error response if the connection is idle for 30s. This timeout usually means that the request is probably too exhaustive (frequent timeouts (> 12/hr) will result in subsequent queries 
+* **Stream Timeout:** the request will be terminated with a `408` error response if the connection is idle for 30s. This timeout usually means that the request is probably too exhaustive (frequent timeouts (> 12/hr) will result in subsequent queries
 to be blocked with status code 429 for 1hr) and so:
     * try requesting records using lesser number of fields
     * try with smaller **start** and **end** parameters
-     

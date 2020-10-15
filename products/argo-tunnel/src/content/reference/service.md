@@ -2,9 +2,7 @@
 order: 30
 ---
 
-# Automatically Starting Argo Tunnel
-
-
+# Automatically starting Argo Tunnel
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
@@ -14,7 +12,7 @@ By default, Argo Tunnel expects all of the configuration to exist in the `cloudf
 
 Run the following command:
 
-```bash
+```sh
 $ sudo cloudflared service install
 ```
 
@@ -27,7 +25,8 @@ logfile: /var/log/cloudflared.log
 ```
 
 Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem` after you login. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `~/.cloudflared` directory on your system.
-```bash
+
+```sh
 $ mv cert.pem ~/.cloudflared/cert.pem
 ```
 
@@ -35,7 +34,7 @@ $ mv cert.pem ~/.cloudflared/cert.pem
 
 To run at login, open a Terminal and run the following command:
 
-```bash
+```sh
 $ cloudflared service install
 ```
 
@@ -43,7 +42,7 @@ Argo Tunnel will be installed as a launch agent, and start whenever you log in, 
 
 You can manually start the service by running:
 
-```bash
+```sh
 $ launchctl start com.cloudflare.cloudflared
 ```
 
@@ -52,7 +51,7 @@ Output will be logged to `~/Library/Logs/com.cloudflare.cloudflared.err.log` and
 
 If you wish to run at boot, open a Terminal and run the following command:
 
-```bash
+```sh
 $ sudo cloudflared service install
 ```
 
@@ -60,7 +59,7 @@ Argo Tunnel will be installed as a launch daemon, and start whenever your system
 
 You can manually start the service by running:
 
-```bash
+```sh
 $ sudo launchctl start com.cloudflare.cloudflared
 ```
 
@@ -110,10 +109,13 @@ To supply a certificate pool to `cloudflared` in Windows, encode the pool into a
 </Aside>
 
 To start the service, go to Service Manager and start the **Argo Tunnel agent** service, or run the following command:
+
 ```bash
 C:\> sc start cloudflared
 ```
+
 If you are a Powershell user, run this command instead:
+
 ```bash
 PS C:> Start-Service cloudflared
 ```

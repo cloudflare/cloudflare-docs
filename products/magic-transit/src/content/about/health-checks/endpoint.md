@@ -1,8 +1,6 @@
 ---
 title: Endpoint health checks
-alwaysopen: true
 weight: 160
-hidden: false
 ---
 
 Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Designed to provide a broad picture of Internet health, endpoint probes flow over available tunnels and do not inform tunnel selection or steering logic.

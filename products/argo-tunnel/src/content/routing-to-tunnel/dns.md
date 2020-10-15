@@ -2,17 +2,17 @@
 order: 50
 ---
 
-# DNS Record
+# DNS record
 
 | Before you start |
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) | 
+| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
 | 4. [Install `cloudflared` and authenticate the software](/getting-started) |
 | 5. [Create an Argo Tunnel](/create-tunnel) |
 
-## Route traffic from the dashboard
+## Route traffic from the Cloudflare dashboard
 
 When you create an Argo Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created Tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
 

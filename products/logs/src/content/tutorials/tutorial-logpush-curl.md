@@ -1,6 +1,5 @@
 ---
 title: Manage Logpush with cURL
-alwaysopen: true
 weight: 87
 ---
 

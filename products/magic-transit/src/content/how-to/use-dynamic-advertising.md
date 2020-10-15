@@ -1,8 +1,6 @@
 ---
 title: Use Magic Transit On Demand
-alwaysopen: true
 weight: 220
-hidden: false
 ---
 
 

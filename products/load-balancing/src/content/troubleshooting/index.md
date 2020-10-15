@@ -1,6 +1,5 @@
 ---
 title: Troubleshooting
-alwaysopen: true
 weight: 50
 ---
 
@@ -217,7 +216,7 @@ Ensure the origin web server responds to requests and that no applications have 
 ### DNS Unknown Host
 
 #### Cause
-The origin web server hostname does not exist.  
+The origin web server hostname does not exist.
 
 #### Solution
 Confirm the origin web server resolves to an IP address.
@@ -259,7 +258,7 @@ Cloudflare does not allow use of an origin web server hostname that is proxied b
 #### Cause
 If the failure cannot be classified as any other type of failure mentioned above.
 
-#### Solution 
+#### Solution
 _[Contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
 
 ---

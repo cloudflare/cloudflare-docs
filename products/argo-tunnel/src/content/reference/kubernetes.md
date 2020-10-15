@@ -4,15 +4,13 @@ order: 80
 
 # Kubernetes Ingress Controller
 
+<Aside>
 
-
-<Aside> 
-
-Cloudflare will end support for our Kubernetes Ingress Controller at the end of 2019. 
+Cloudflare will end support for our Kubernetes Ingress Controller at the end of 2019.
 The project is open source and we will continue to make it available in our GitHub repository. More information can be found <a href="https://github.com/cloudflare/cloudflare-ingress-controller/issues/172#issuecomment-541230988">here</a>.
 
-We still believe that using Argo Tunnel and k8s together is a strong combination, but have 
-learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster 
+We still believe that using Argo Tunnel and k8s together is a strong combination, but have
+learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster
 approach. You can find more information about running Argo tunnel in a sidecar model [here](/argo-tunnel[/reference/sidecar/).
 
 </Aside>

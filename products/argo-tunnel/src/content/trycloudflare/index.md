@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 100
 hidden: true
 ---
 
@@ -12,13 +12,13 @@ Developers can use the TryCloudflare tool to experiment with Argo Tunnel without
 2. Launch a web server that is available over localhost to `cloudflared`.
 3. Run the following terminal command to start a free tunnel.
 
-```bash
+```sh
 $ cloudflared tunnel
 ```
 
 The command above will default to port 8080; you can specify an alternate port with the --url flag.
 
-```bash
+```sh
 $ cloudflared tunnel --url http://localhost:7000
 ```
 

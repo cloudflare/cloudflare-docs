@@ -1,6 +1,5 @@
 ---
 title: Known issues and FAQ
-alwaysopen: true
 weight: 400
 ---
 

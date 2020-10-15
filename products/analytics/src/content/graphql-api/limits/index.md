@@ -1,6 +1,5 @@
 ---
 title: Limits
-alwaysopen: true
 weight: 30
 ---
 

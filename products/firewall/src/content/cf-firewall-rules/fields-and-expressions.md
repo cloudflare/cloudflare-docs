@@ -1,6 +1,5 @@
 ---
 title: Expressions
-alwaysopen: true
 weight: 110
 ---
 
@@ -69,7 +68,7 @@ This table lists supported comparison operators. Since some operators only suppo
    <td colspan="2" ><strong>Operator
 Notation</strong>
    </td>
-   <td colspan="3" ><strong>Data Types 
+   <td colspan="3" ><strong>Data Types
 Supported</strong>
    </td>
    <td rowspan="2" ><strong>Example (operator in bold)</strong>

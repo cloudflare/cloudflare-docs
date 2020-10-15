@@ -1,6 +1,5 @@
 ---
 title: Migration guides
-alwaysopen: true
 weight: 10
 ---
 
