@@ -2,7 +2,7 @@
 order:2
 ---
 
-# How Access Workers
+# How Access works
 
 Cloudflare Access evaluates requests to internal and SaaS applications and determines whether visitors are granted access based on pre-defined rules.
 
@@ -34,7 +34,3 @@ Many applications rely on a popular standard, SAML, to securely exchange identit
 When users attempt to log in to the application, the application sends the user to log in with Cloudflare Access. Access then redirects the user to the identity provider, in the same way that it does when users request a site that uses Cloudflare’s reverse proxy. This way, Access can apply the additional contextual rules and log the event.
 
 The way Access provides a standard proof of identity is by generating a JWT for every login. The JWT is then converted through Cloudflare Workers into a SAML assertion that is sent to the SaaS application. The application receiving the SAML assertion will then treat Access as the identity provider, even though it is aggregating identity signals from the user’s SSO provider and other sources into the JWT, and sending that summary to the app via SAML.
- 
-
- 
-
