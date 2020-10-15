@@ -31,9 +31,9 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 | Create a new Tunnel | Required | - |
 | Delete a Tunnel | Required | - |
 | Run a Tunnel | Available | Required |
-| Create DNS records from `cloudflared` | Required | - |
-| Connect to load balancer pools from `cloudflared` | Required | - |
-| Route traffic to a running Tunnel from the Cloudflare dashboard | Available | Available |
+| Create DNS records<br/>from `cloudflared` | Required | - |
+| Connect to load balancer<br/>pools from `cloudflared` | Required | - |
+| Route traffic to a running Tunnel<br/>from the Cloudflare dashboard | Available | Available |
 
 </TableWrap>
 
@@ -58,8 +58,6 @@ You can also run the Tunnel without a configuration file by appending the flags 
 ![Run tunnels](../static/img/create-tunnel/rt1.png)
 
 Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
-
-### 
 
 You can also:
 * [Run a tunnel as a Kubernetes sidecar](/create-tunnel/kubernetes-sidecar-model/)

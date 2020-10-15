@@ -24,7 +24,7 @@ In order to include more hostnames, you can bring your own TLS certificate. Belo
 1. Install `cloudflared` on your machine
 2. Run the following command when the browser window opens and select the domain in Cloudflare that will be used. The login flow will download a certificate to your origin server.
 
-```bash
+```sh
 $ cloudflared tunnel login
 ```
 
