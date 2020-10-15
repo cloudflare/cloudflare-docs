@@ -6,11 +6,11 @@ module.exports = {
   contentRepoFolder: "products/argo-tunnel",
   externalLinks: [
     {
-      title: "Argo Tunnel home page",
+      title: "Argo Tunnel home",
       url: "https://www.cloudflare.com/products/argo-tunnel/"
     },
     {
-      title: "@clouflare/cloudflared on GitHub",
+      title: "cloudflared on GitHub",
       url: "https://github.com/cloudflare/cloudflared"
     }
   ],
