@@ -17,19 +17,19 @@ once, and gives the most flexibility to the user. The exact method for switching
 to relative links, if you don't use them already, depends on the framework you
 use.
 
-### Angular, React, Vue
+## Angular, React, Vue
 
 These popular javascript frameworks are covered in a [blog
 post](https://medium.com/pinata/how-to-easily-host-a-website-on-ipfs-9d842b5d6a01)
 from [Pinata](https://pinata.cloud/). They're fixed with minor config changes.
 
-### Gatsby
+## Gatsby
 
 Gatsby is a javascript framework based on React. There is a
 [plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-ipfs/) for it that
 ensures links are relative.
 
-### Jekyll
+## Jekyll
 
 Add a file `_includes/base.html` with the contents:
 
@@ -53,7 +53,7 @@ the top:
 and prefixing any links with `{{base}}`. So for example, we'd change
 `href="/css/main.css"` to be `href="{{base}}/css/main.css"`
 
-### Generic
+## Generic
 
 For other frameworks, or if a framework was not used, there's a script called
 [make-relative](https://github.com/tmcw/make-relative) that will parse the HTML
