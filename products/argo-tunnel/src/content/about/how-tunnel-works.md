@@ -4,13 +4,13 @@ showNew: false
 alwaysopen: false
 ---
 
-# How Argo Tunnel Works
+# How Argo Tunnel works
 
 Cloudflare secures your origin servers by proxying requests to your DNS records through our anycast network, and to the external IP of your origin. However, if attackers discover those destinations, external IP addresses can still provide them with a path around Cloudflare security.
 
 Argo Tunnel provides a secure way to connect your origin to Cloudflare without a publicly routable IP address.
 
-With Tunnel, you don’t expose an external IP from your infrastructure to the Internet. Instead, a lightweight daemon runs in your infrastructure and creates outbound-only connections to Cloudflare’s edge. This allows you to quickly deploy infrastructure in a Zero Trust model by ensuring all requests to your resources pass through Cloudflare’s security filters. 
+With Tunnel, you don’t expose an external IP from your infrastructure to the Internet. Instead, a lightweight daemon runs in your infrastructure and creates outbound-only connections to Cloudflare’s edge. This allows you to quickly deploy infrastructure in a Zero Trust model by ensuring all requests to your resources pass through Cloudflare’s security filters.
 
 Argo Tunnel connects your web server to the Cloudflare network over an encrypted Tunnel. An example request follows these steps:
 
@@ -26,7 +26,7 @@ Argo Tunnel connects your web server to the Cloudflare network over an encrypted
 
 * The Tunnel client forwards the request to your web service.
 
-## In more detail:
+## In more detail
 
 When the `cloudflared` process starts, the `cloudflared` client will establish an outbound HTTP connection with the two closest Cloudflare data centers. Which data centers are closest is determined by iterating through the SRV DNS record and standard Anycast routing.
 

@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Create and Run a Tunnel
+# Create and run a Tunnel
 
 | Before you start |
 |---|
@@ -12,6 +12,7 @@ order: 1
 | 4. [Install `cloudflared` and authenticate the software](/getting-started) |
 
 ## Create a Tunnel
+
 Run the following command to create a Tunnel.
 
  `cloudflared tunnel create <NAME>`

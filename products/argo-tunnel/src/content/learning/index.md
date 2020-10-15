@@ -1,6 +1,5 @@
 ---
 order: 50
-alwaysopen: false
 ---
 
 # Learning
