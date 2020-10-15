@@ -6,6 +6,10 @@ type: overview
 
 # Decentralized Verifiable Randomness Beacon
 
+<ContentColumn>
+
 Explore drand: a distributed service providing public randomness in an application-agnostic, secure, and efficient way
 
-<Link to="/about/" className="Button Button-is-docs-primary">Get started</Link>
+<p><Link to="/about/" className="Button Button-is-docs-primary">Get started</Link></p>
+
+</ContentColumn>
