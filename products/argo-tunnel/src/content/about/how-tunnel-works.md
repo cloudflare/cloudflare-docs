@@ -14,17 +14,17 @@ With Tunnel, you don’t expose an external IP from your infrastructure to the I
 
 Argo Tunnel connects your web server to the Cloudflare network over an encrypted Tunnel. An example request follows these steps:
 
-* A visitor makes a request to `tunnel.yourdomain.com`.
+- A visitor makes a request to `tunnel.yourdomain.com`.
 
-* The DNS lookup resolves to a Cloudflare network address.
+- The DNS lookup resolves to a Cloudflare network address.
 
-* The visitor connects to the closest Cloudflare edge PoP via Anycast.
+- The visitor connects to the closest Cloudflare edge PoP via Anycast.
 
-* Cloudflare routes the visitor through a special PoP-to-PoP route called [Argo Smart Routing](https://www.cloudflare.com/en-gb/products/argo-smart-routing/) and connects them to a Cloudflare edge PoP that has an established persistent connection to the daemon (`cloudflared`) running on the visitor's web server.
+- Cloudflare routes the visitor through a special PoP-to-PoP route called [Argo Smart Routing](https://www.cloudflare.com/en-gb/products/argo-smart-routing/) and connects them to a Cloudflare edge PoP that has an established persistent connection to the daemon (`cloudflared`) running on the visitor's web server.
 
-* The request is routed to the `cloudflared` instance running on your server.
+- The request is routed to the `cloudflared` instance running on your server.
 
-* The Tunnel client forwards the request to your web service.
+- The Tunnel client forwards the request to your web service.
 
 ## In more detail
 
