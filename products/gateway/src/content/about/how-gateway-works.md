@@ -39,14 +39,13 @@ Enterprises protect their users’ internet traffic wherever they are by connect
 
 In addition to DNS filtering, Cloudflare Gateway now supports HTTP traffic filtering based on a variety of criteria including:
 
-| Criteria                          | Example           
+| Criteria                          | Example
 | -------------                     |:-------------:
 | URL, path, and/or query string    | https://www.myurl.com/path?query
-| HTTP method                       | GET, POST, etc.   
+| HTTP method                       | GET, POST, etc.
 | HTTP response code                | 500
 | File type and file name           | myfilename.zip
 | MIME type                         | application/zip
 | URL security or content category  | Malware, phishing, adult themes
 
-For more information on types, see the [references section.](/gateway/reference/)
-      
+For more information on types, see the [references section.](/reference/)
