@@ -23,10 +23,10 @@ products/gateway/ @abracchi-tw
 products/warpclient/ @abracchi-tw
 
 # Randomness Beacon
-products/randomness-beacon/ @ltv511 @armfazh
+products/randomness-beacon/ @lukevalenta @armfazh
 
 # Distributed Web
-products/distributed-web/ @ltv511 @thibmeu @jhoyla @Lekensteyn
+products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn
 
 # Time Services
-products/time-services/ @ltv511 @wbl @armfazh
+products/time-services/ @lukevalenta @wbl @armfazh
