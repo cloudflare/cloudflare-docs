@@ -1,7 +1,8 @@
 ---
-title: Prefix Delegations
-weight: 3
+order: 3
 ---
+
+# Prefix Delegations
 
 BYOIP supports prefix delegations. A prefix delegation is when the prefix owner account (Account A), allows use of part or all of the prefix to another account (Account B).
 
@@ -15,7 +16,7 @@ Example: Account A is the primary owner of prefix 1.2.3.4/24. Account A delegate
 
 API calls for delegations can be found at [Prefix Delegations](https://api.cloudflare.com/#ip-address-management-prefix-delegation-properties).
 
-In the UI, once you click in to 'Edit' a prefix - you will see the option to create a delegation towards the bottom of the screen. Other accounts your user is a part of will auto-load when you create the delegation. Afterwards just click 'save' and you're all set.
+In the UI, once you click in to ‘Edit’ a prefix — you will see the option to create a delegation towards the bottom of the screen. Other accounts your user is a part of will auto-load when you create the delegation. Afterwards just click ‘save’ and you’re all set.
 
 ![prefix delegation](../static/prefix_delegations.png)
 

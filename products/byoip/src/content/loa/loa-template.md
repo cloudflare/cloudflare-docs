@@ -1,7 +1,8 @@
 ---
-title: 'LOA Template'
-weight: 2
+order: 2
 ---
+
+# LOA Template
 
 You may use the below template when creating an LOA document.
 
