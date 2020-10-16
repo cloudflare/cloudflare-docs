@@ -1,5 +1,5 @@
 ---
-title: 2020-07-07
+title: "2020-07-07 – Emergency"
 type: table
 order: 966
 ---

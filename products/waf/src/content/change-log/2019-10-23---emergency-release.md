@@ -1,5 +1,5 @@
 ---
-title: 2019-10-23
+title: "2019-10-23 – Emergency"
 type: table
 order: 993
 ---
