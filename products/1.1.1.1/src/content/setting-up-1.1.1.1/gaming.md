@@ -32,14 +32,16 @@ Step 10: Set Secondary DNS to: `1.0.0.1`
 
 Step 11: If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 12: Set MTU Settings to Automatic
 
 Step 13: Set Proxy Server to Do Not Use
 
-##  Xbox One
+## Xbox One
 
 Step 1: Open the Network screen by pressing the Xbox button (looks like the Xbox logo) and then selecting Settings > Network > Network Settings.
 
@@ -55,12 +57,14 @@ Step 6: Set Secondary DNS to: `1.0.0.1`
 
 Step 7: If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 8: When you are done, you will be shown a confirmation screen. Press the B button to save.
 
-## Nintendo  
+## Nintendo
 
 The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Nintendo 2DS XL, Nintendo 3DS, Nintendo 3DS XL, and Nintendo 2DS.
 
@@ -82,7 +86,9 @@ Step 8: Set Secondary DNS to: `1.0.0.1`
 
 Step 9: If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 10: Click Save then OK

@@ -17,10 +17,12 @@ Step 3: Click Advanced.
 
 Step 4: Select the DNS tab. Remove any IP addresses that may be already listed and in their place add:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 5: Click OK.
 
