@@ -1,7 +1,9 @@
 ---
 title: Additional details
-weight: 18
+order: 18
 ---
+
+# Additional details
 
 - [Estimating daily data volume](#estimating-daily-data-volume)
 - [Compression](#compression)

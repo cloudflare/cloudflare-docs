@@ -1,7 +1,9 @@
 ---
 title: Pathing status
-weight: 122
+order: 122
 ---
+
+# Pathing status
 
 Cloudflare issues the following **Edge Pathing Statuses**:
 

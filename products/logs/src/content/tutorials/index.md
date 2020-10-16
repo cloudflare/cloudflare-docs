@@ -1,7 +1,9 @@
 ---
 title: Tutorials and examples
-weight: 80
+order: 80
 ---
+
+# Tutorials and examples
 
 Learn to manage and analyze your Cloudflare Logs with the following resources.
 

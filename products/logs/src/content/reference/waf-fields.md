@@ -1,7 +1,9 @@
 ---
 title: WAF fields
-weight: 123
+order: 123
 ---
+
+# WAF fields
 
 The Web Application Firewall (WAF) contains rules managed by Cloudflare to block requests that contain malicious content.
 

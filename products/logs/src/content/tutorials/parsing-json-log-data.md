@@ -1,7 +1,9 @@
 ---
 title: Parse Cloudflare Logs JSON data
-weight: 85
+order: 85
 ---
+
+# Parse Cloudflare Logs JSON data
 
 
 ### Overview

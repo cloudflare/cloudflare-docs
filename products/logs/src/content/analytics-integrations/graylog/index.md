@@ -1,7 +1,9 @@
 ---
 title: Graylog
-weight: 101
+order: 101
 ---
+
+# Graylog
 
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using [Graylog](https://go.graylog.com/cloudflare).

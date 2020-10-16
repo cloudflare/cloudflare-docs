@@ -1,7 +1,9 @@
 ---
 title: Logpush Service
-weight: 40
+order: 40
 ---
+
+# Logpush Service
 
 Have logs of your HTTP requests or Spectrum events pushed to your cloud service provider every 5 minutes using the **Cloudflare Logpush** service.
 

@@ -1,7 +1,9 @@
 ---
 title: Requesting logs
-weight: 14
+order: 14
 ---
+
+# Requesting logs
 
 
 - [Endpoints](#endpoints)

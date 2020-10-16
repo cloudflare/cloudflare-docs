@@ -1,7 +1,9 @@
 ---
 title: Logpush using Python (example)
-weight: 88
+order: 88
 ---
+
+# Logpush using Python (example)
 
 ```python
 import json

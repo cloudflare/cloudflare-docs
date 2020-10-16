@@ -1,7 +1,9 @@
 ---
 title: FAQs
-weight: 130
+order: 130
 ---
+
+# FAQs
 
 - **General**
   - [Once a request has passed through the Cloudflare network, how soon are the logs available?](#once-a-request-has-passed-through-the-cloudflare-network-how-soon-are-the-logs-available)

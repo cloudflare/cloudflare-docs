@@ -1,7 +1,9 @@
 ---
 title: Analytics Integrations
-weight: 100
+order: 100
 ---
+
+# Analytics Integrations
 
 You can analyze Cloudflare Logs data with the following analytics platforms:
 

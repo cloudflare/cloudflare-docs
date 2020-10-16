@@ -1,7 +1,9 @@
 ---
 title: Glossary
-weight: 121
+order: 121
 ---
+
+# Glossary
 
 ### Terminology categories
 

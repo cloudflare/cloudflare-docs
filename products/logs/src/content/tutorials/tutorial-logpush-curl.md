@@ -1,7 +1,9 @@
 ---
 title: Manage Logpush with cURL
-weight: 87
+order: 87
 ---
+
+# Manage Logpush with cURL
 
 
 You can manage your Cloudflare Logpush service from the command line using cURL:

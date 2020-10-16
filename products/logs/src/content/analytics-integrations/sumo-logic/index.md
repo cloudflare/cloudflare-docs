@@ -1,7 +1,9 @@
 ---
 title: Sumo Logic
-weight: 105
+order: 105
 ---
+
+# Sumo Logic
 
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare).

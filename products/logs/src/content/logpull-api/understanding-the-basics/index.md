@@ -1,7 +1,9 @@
 ---
 title: Understanding the basics
-weight: 12
+order: 12
 ---
+
+# Understanding the basics
 
 - [Data retention period](#data-retention-period)
 - [Access pattern](#access-pattern)

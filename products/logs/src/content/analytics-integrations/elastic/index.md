@@ -1,7 +1,9 @@
 ---
 title: Elastic
-weight: 99
+order: 99
 ---
+
+# Elastic
 
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using Elastic and Kibana.

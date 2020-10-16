@@ -1,7 +1,9 @@
 ---
 title: Understanding the Logpush API
-weight: 61
+order: 61
 ---
+
+# Understanding the Logpush API
 
 - [Endpoints](#endpoints)
 - [Connecting](#connecting)

@@ -1,7 +1,9 @@
 ---
 title: Manage via the Logpush API
-weight: 50
+order: 50
 ---
+
+# Manage via the Logpush API
 
 The **Cloudflare Logpush API** allows you to configure and manage jobs via create, retrieve, update, and delete operations (CRUD).
 

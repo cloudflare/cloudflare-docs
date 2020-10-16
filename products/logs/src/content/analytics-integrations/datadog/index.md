@@ -1,7 +1,9 @@
 ---
 title: Datadog
-weight: 97
+order: 97
 ---
+
+# Datadog
 
 This tutorial explains how to analyze Cloudflare metrics using the [Cloudflare Integration tile for Datadog](https://docs.datadoghq.com/integrations/cloudflare/).
 

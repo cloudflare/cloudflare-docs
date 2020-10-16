@@ -1,7 +1,9 @@
 ---
 title: Enable Amazon S3
-weight: 55
+order: 55
 ---
+
+# Enable Amazon S3
 
 
 Cloudflare uses Amazon Identity and Access Management (IAM) to gain access to your S3 bucket. The Cloudflare IAM user needs *PutObject* permission for the bucket.
