@@ -2,11 +2,14 @@
 title: Welcome
 order: 0
 ---
-## Bringing Your Own IPs to Cloudflare documentation
+
+# Bringing Your Own IPs to Cloudflare
 
 With __Bringing Your Own IPs__ (BYOIP), Cloudflare announces your IPs in all our locations. Use your IPs with Magic Transit, Spectrum, or CDN services.
 
 BYOIP is compatible with Magic Transit, Spectrum, and CDN services.
+
+## Getting started
 
 To bring your own IPs, you must go through an onboarding process. Work with your account team to understand everything you need to ensure a smooth transition.
 
