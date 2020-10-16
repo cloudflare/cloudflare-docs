@@ -4,11 +4,11 @@ date: 2019-09-15
 weight: 1001
 summary: Changes that were completed before the change log was made publicly available
 aliases:
-    - /change-log/historic
+  - /change-log/historic
 ---
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
+<table>
+    <thead>
         <tr>
             <th>Rule ID</th>
             <th>Description</th>

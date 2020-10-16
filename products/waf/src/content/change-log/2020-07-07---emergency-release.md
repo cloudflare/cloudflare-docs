@@ -1,11 +1,11 @@
 ---
 date: '2020-07-07'
 title: 2020-07-07 - Emergency Release
-weight: 966
+order: 966
 ---
 
-<table style="border: solid 2px darkgrey;">
-    <thead style="background:#ffeadf;">
+<table>
+    <thead>
         <tr>
             <th>
                 Ruleset
