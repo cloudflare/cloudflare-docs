@@ -1,6 +1,5 @@
 ---
 order: 4
-type: reference
 ---
 
 # Verify IRR Entries
