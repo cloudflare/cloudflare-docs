@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Prefix Delegations
+# Prefix delegations
 
 BYOIP supports prefix delegations. A prefix delegation is when the prefix owner account (Account A), allows use of part or all of the prefix to another account (Account B).
 
@@ -20,4 +20,8 @@ In the UI, once you click in to ‘Edit’ a prefix — you will see the option 
 
 ![prefix delegation](../static/prefix_delegations.png)
 
-**NOTE** The UI only supports delegation of an entire prefix. If you want to delegate less than the entire prefix, please use the api.
+<Aside>
+
+__Note:__ The UI only supports delegation of an entire prefix. If you want to delegate less than the entire prefix, please use the api.
+
+</Aside>

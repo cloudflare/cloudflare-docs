@@ -2,29 +2,27 @@
 order: 4
 ---
 
-# Verify IRR Entries
+# Verify IRR entries
 
 Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefixes Cloudflare advertises for you match the correct autonomous system numbers (ASNs).
 
 Each IRR entry record must include the following information:
 
-* **Route:** each IP prefix that Cloudflare advertises for you.
-* **Origin AS:** your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
-* **Source:** the name of the routing registry—for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
+- **Route:** each IP prefix that Cloudflare advertises for you.
+- **Origin AS:** your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
+- **Source:** the name of the routing registry—for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
 
-[Add or update IRR entries](/irr/best-practices-for-irr-entry-updates) when they meet any of these criteria:
+[Add or update IRR entries](/irr-records/best-practices-for-irr-entry-updates) when they meet any of these criteria:
 
-* The entry is missing.
-* The entry is incomplete or inaccurate—for example, when the route object does not show the correct origin.
-* The entry is complete but requires updating—for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
-
---------
+- The entry is missing.
+- The entry is incomplete or inaccurate—for example, when the route object does not show the correct origin.
+- The entry is complete but requires updating—for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
 
 ## IRR entry verification methods
 
 To verify your prefix and ASN route, use the tools and methods outlined in this table:
 
-<table>
+<TableWrap><table>
   <thead>
     <tr>
       <th>Data to verify</th>
@@ -33,7 +31,7 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
       <th>Output</th>
     </tr>
   </thead>
-  <tbody style="vertical-align:top">
+  <tbody>
     <tr>
       <td>Subnet prefix IP for the ASN</td>
       <td><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></td>
@@ -42,9 +40,9 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
     </tr>
     <tr>
       <td>ASN for the subnet prefix</td>
-      <td><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></td>
-      <td>Search for the ASN, for example AS209242.</td>
-      <td>List of prefixes, source, and any associated errors.</td>
+      <td><span style="white-space: nowrap"><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
+      <td><span style="white-space: nowrap">Search for the ASN, for example AS209242.</span></td>
+      <td><span style="white-space: nowrap">List of prefixes, source, and any associated errors.</span></td>
     </tr>
     <tr>
       <td>Your origin ASN and routing data</td>
@@ -57,7 +55,7 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
       <td>IRR route, origin, and source information.</td>
     </tr>
   </tbody>
-</table>
+</table></TableWrap>
 
 ### WHOIS output example
 
@@ -89,8 +87,8 @@ source:         APNIC
 
 <Aside>
 
-WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
+__Note:__ WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
-For more, see [_Best Practices for IRR entry updates_](/irr/best-practices-for-irr-entry-updates).
+For more, see [_best practices for IRR entry updates_](/irr-records/best-practices-for-irr-entry-updates).
 
 </Aside>

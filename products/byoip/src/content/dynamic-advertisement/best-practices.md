@@ -6,7 +6,7 @@ order: 2
 
 --------
 
-## Verify User Roles & Obtain Prefix IDs
+## Verify user roles & obtain prefix IDs
 
 To ensure smooth operation in general and simplify the advertisement process during an attack scenario, complete the following tasks:
 
@@ -14,7 +14,7 @@ To ensure smooth operation in general and simplify the advertisement process dur
 
 * **Get a list of the Prefix IDs you want to manage.** Maintaining a list of Cloudflare IDs for each prefix simplifies management via the Cloudflare API, since most dynamic advertisement operations require them.
 
-  To obtain Prefix IDs, go your Cloudflare account home page and review [_Get Prefix IDs_](/api/configure-prefixes#get-prefix-ids), or use the [List Prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
+  To obtain Prefix IDs, go your Cloudflare account home page and review [_Get prefix IDs_](/dynamic-advertisement/configure-dynamic-advertisement#get-prefix-ids), or use the [List Prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
 
 --------
 
@@ -30,8 +30,8 @@ Withdrawing the advertisement from your data center without first enabling it wi
 
 To avoid latency and the possibility of dropped routes, enable prefix advertisement from Cloudflare **before** you withdraw the advertisement from your data center, as outlined in these steps:
 
-1. To enable prefix advertisement, [use the IP Prefixes page](/api/configure-prefixes#use-the-ip-prefixes-page-to-configure-dynamic-advertisement) in your Cloudflare account home or use the [Update Prefix Dynamic Advertisement Status](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-get-advertisement-status) operation in the Cloudflare API. This operation requires your Account ID, Prefix IDs, and API key. (For instructions, see [_Get Prefix IDs_](/api/configure-prefixes#get-prefix-ids).)
-  
+1. To enable prefix advertisement, [use the IP Prefixes page](/dynamic-advertisement/configure-dynamic-advertisement#use-the-ip-prefixes-page-to-configure-dynamic-advertisement) in your Cloudflare account home or use the [Update Prefix Dynamic Advertisement Status](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-get-advertisement-status) operation in the Cloudflare API. This operation requires your Account ID, Prefix IDs, and API key. (For instructions, see [_Get prefix IDs_](/dynamic-advertisement/configure-dynamic-advertisement#get-prefix-ids).)
+
   Enablement takes 2–7 minutes.
 
 2. Verify the advertisement using looking glass of your choice—[Hurricane Electric Internet Services](https://lg.he.net/), for example. Use the Cloudflare ASN (13335) to track the advertisement route.
@@ -48,6 +48,6 @@ To disable (withdraw) prefix advertisement, reverse the steps you used to enable
 
 2. [Optional] Verify the advertisement using a looking glass of your choice—[Hurricane Electric Internet Services](https://lg.he.net/), for example.
 
-3. To disable prefix advertisement at Cloudflare’s edge, see the [IP Prefixes page](/api/configure-prefixes#use-the-ip-prefixes-page-to-configure-dynamic-advertisement) in your Cloudflare account home or use the [Update Prefix Dynamic Advertisement Status](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-get-advertisement-status) operation in the Cloudflare API. This operation requires your Account ID, Prefix IDs, and API key. (For instructions, see [_Get Prefix IDs_](/api/configure-prefixes#get-prefix-ids)
+3. To disable prefix advertisement at Cloudflare’s edge, see the [IP Prefixes page](/dynamic-advertisement/configure-dynamic-advertisement#use-the-ip-prefixes-page-to-configure-dynamic-advertisement) in your Cloudflare account home or use the [Update Prefix Dynamic Advertisement Status](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-get-advertisement-status) operation in the Cloudflare API. This operation requires your Account ID, Prefix IDs, and API key. (For instructions, see [_Get prefix IDs_](/dynamic-advertisement/configure-dynamic-advertisement#get-prefix-ids).
 
 Disablement takes approximately 15 minutes.
