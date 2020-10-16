@@ -1,7 +1,10 @@
 ---
+title: Welcome
 order: 0
 ---
 
-# Welcome
+# Cloudflare Web Application Firewall change log
 
 The Cloudflare Web Application Firewall (WAF) provides both automatic protection from vulnerabilities and the flexibility to create custom WAF rules.
+
+<p><Link to="/change-log" className="Button Button-is-docs-primary">View change log</Link></p>
