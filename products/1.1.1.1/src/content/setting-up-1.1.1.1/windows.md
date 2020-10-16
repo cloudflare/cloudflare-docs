@@ -29,8 +29,10 @@ Step 8: Click Use The Following DNS Server Addresses.
 
 Step 9: Remove any IP addresses that may be already listed and in their place add:
 
-    1.1.1.1  
-    1.0.0.1
+```txt
+1.1.1.1
+1.0.0.1
+```
 
 Step 10: Click OK.
 
@@ -42,7 +44,9 @@ Step 13: Click Use The Following DNS Server Addresses.
 
 Step 14: Remove any IP addresses that may be already listed and in their place add:
 
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 15: Click Close.

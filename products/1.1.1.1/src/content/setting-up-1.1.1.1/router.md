@@ -19,10 +19,12 @@ Step 3: Find the place in the admin console where DNS settings are set.
 
 Step 4: Replace the existing addresses with:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 5: Save and exit.
 
@@ -49,10 +51,12 @@ Step 6: Scroll to where it says DHCP Name Server. If Auto is selected, select Ma
 
 Step 7: In the boxes called DNS Server 1, 2, 3, etc. put:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 8: Click Save.
 
@@ -66,10 +70,12 @@ Step 3: Click on Advanced networking then click on DNS
 
 Step 4: Remove any IP addresses that may be already listed and in their place enter:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 5: Click Save.
 
@@ -83,7 +89,9 @@ Step 2: Under Advanced Settings, click on WAN
 
 Step 3: In the Internet Connection tab, under WAN DNS Setting, in DNS servers, add:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```

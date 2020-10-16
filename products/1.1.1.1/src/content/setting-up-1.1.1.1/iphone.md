@@ -23,10 +23,12 @@ Step 6: Click Add Server.
 
 Step 7: Remove any IP addresses that may be already listed and in their place add:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 8: Click Save.
 
