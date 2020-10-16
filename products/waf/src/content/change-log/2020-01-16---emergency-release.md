@@ -6,7 +6,7 @@ order: 986
 
 # 2020-01-16 – Emergency release
 
-<TableWrap><table>
+<TableWrap><table style="width: 100%">
     <thead>
         <tr>
             <th>Ruleset</th>

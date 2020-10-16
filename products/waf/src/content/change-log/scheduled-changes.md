@@ -5,7 +5,7 @@ order: 1
 
 # Scheduled changes
 
-<TableWrap><table>
+<TableWrap><table style="width: 100%">
     <thead>
         <tr>
             <th>

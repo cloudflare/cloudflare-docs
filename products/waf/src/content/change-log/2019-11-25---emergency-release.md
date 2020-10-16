@@ -6,7 +6,7 @@ order: 988
 
 # 2019-11-25 – Emergency release
 
-<TableWrap><table>
+<TableWrap><table style="width: 100%">
     <thead>
         <tr>
             <th>Ruleset</th>
