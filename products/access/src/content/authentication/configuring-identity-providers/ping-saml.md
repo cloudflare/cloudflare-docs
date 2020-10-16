@@ -4,8 +4,6 @@ order: 12
 
 # PingIdentity® SAML
 
-
-
 The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html)  documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
 
 ## Set up PingIdentity as your IdP
@@ -49,7 +47,7 @@ To set up PingIdentity as your IdP:
 
     Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path:
 
-    ```shell
+    ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
@@ -68,7 +66,7 @@ To get your Cloudflare metadata file:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

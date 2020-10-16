@@ -124,7 +124,7 @@ To get your Cloudflare metadata file:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

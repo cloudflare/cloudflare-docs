@@ -49,7 +49,7 @@ To create a Relying Party Trust:
 
     Use an easily recognizable name. Include any information regarding this connection in the **Notes** field.
 
-7. Click **Next**.  
+7. Click **Next**.
 
     The **Choose Profile** step displays.
 
@@ -76,7 +76,7 @@ To create a Relying Party Trust:
 
     Replace “your-domain” in this example with the authentication domain listed in Cloudflare Access, and include the callback in the path:
 
-    ```shell
+    ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
@@ -200,8 +200,8 @@ To export the certificate:
 
 To ensure that ADFS signs the full response when communicating with Cloudflare, open your local **Powershell** and enter the following command:
 
-```shell
-    Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
+```bash
+Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
 ```
 
 ## Configure Cloudflare Access
@@ -219,7 +219,7 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 2. Enter an IdP **Provider Name**.
 3. Under **Single Sign On URL** enter:
 
-    ```shell
+    ```txt
     https://hostnameOfADFS/adfs/ls/
     ```
 
@@ -229,7 +229,7 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 
     You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above, for example:
 
-    ```shell
+    ```txt
     https://YourDomain/cdn-cgi/access/callback
     ```
 
@@ -251,7 +251,7 @@ To get your Cloudflare metadata file:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

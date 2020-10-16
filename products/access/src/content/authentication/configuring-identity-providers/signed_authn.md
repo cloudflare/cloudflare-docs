@@ -26,7 +26,7 @@ To set up Signed AuthN requests:
 
 1. Go to this URL to find the certificate:
 
-    ```shell
+    ```txt
     https://{access-domian}/cdn-cgi/access/public-cert
     ```
 
@@ -47,6 +47,6 @@ To set up Signed AuthN requests:
 
     This is an example format:
 
-    ```shell
-     https://example.cloudflareaccess.com/cdn-cgi/access/public-cert
+    ```txt
+    https://example.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```

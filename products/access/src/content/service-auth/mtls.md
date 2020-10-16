@@ -33,7 +33,7 @@ To enforce mTLS authentication from the Cloudflare dashboard:
 ![mTLS Policy](../static/mtls-test/mtls-rule.png)
 
 |Option|Result|
-|---|---|  
+|---|---|
 |Common Name|Only client certificates with a specific common name will be allowed to proceed.|
 |Valid Certificate|Any client certificate that can authenticate with the Root CA will be allowed to proceed.|
 
@@ -43,16 +43,16 @@ To enforce mTLS authentication from the Cloudflare dashboard:
 
     This `curl` command example is for the site `example.com` that has an Access policy set for `https://auth.example.com`:
 
-    ```shell
-    curl -sv https://auth.example.com
+    ```sh
+    $ curl -sv https://auth.example.com
     ```
 
    Without a client certificate in the request, a “403 forbidden” response displays and the site cannot be accessed.
 
 1. Add your client certificate information to the request:
 
-    ```shell
-    curl -sv https://auth.example.com --cert example.pem --key key.pem
+    ```sh
+    $ curl -sv https://auth.example.com --cert example.pem --key key.pem
     ```
 
     When the authentication process completes successfully, a `CF_Authorization Set-Cookie` header returns in the response.

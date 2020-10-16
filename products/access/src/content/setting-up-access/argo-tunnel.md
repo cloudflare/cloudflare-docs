@@ -4,7 +4,7 @@ order: 12
 
 # Cloudflare Argo Tunnel
 
-Access lets you control who can reach your website. Cloudflare handles the requests based on your Access policies to evaluate user credentials. To ensure that Cloudflare proxies all traffic, lock down your origin to only accept Cloudflare IPs. 
+Access lets you control who can reach your website. Cloudflare handles the requests based on your Access policies to evaluate user credentials. To ensure that Cloudflare proxies all traffic, lock down your origin to only accept Cloudflare IPs.
 
 ![Access Generic](../static/summary/network-diagram.png)
 
@@ -42,7 +42,7 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
 1. Type this command in a terminal window to check the `cloudflared` version:
 
-    ```shell
+    ```sh
     $ cloudflared --version
     cloudflared version 2019.2.1 (built 2019-02-28-0010 UTC)
     ```
@@ -55,13 +55,13 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
 1. Run the following command to open a login page in your browser:
 
-    ```shell
-    cloudflared tunnel login
+    ```sh
+    $ cloudflared tunnel login
     ```
 
     A browser window opens at the following URL:
 
-    ```shell
+    ```txt
     https://dash.cloudflare.com/argotunnel?callback=https%3A%2F%2Flogin.cloudflarewarp.com%2FA5XXPKA6S5N5YWMTOXRKVWPRPE7BHG3MFRCDZES7UBZU7SWQFF4KA4PWMGL5GXJ
     ```
 
@@ -79,8 +79,8 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
     **Tip:** Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser downloads the certificate as a file named `cert.pem`, and displays in your browser’s download window. Move that `cert.pem` file from your designated downloads folder to the `~/.cloudflared folder`. In a terminal window, copy and paste the following command to move the certificate to the `.cloudflared` directory on your system:
 
-    ```shell
-    mv cert.pem ~/.cloudflared/cert.pem
+    ```sh
+    $ mv cert.pem ~/.cloudflared/cert.pem
     ```
 
 1. Test the configuration by typing the selected hostname in your browser address bar.

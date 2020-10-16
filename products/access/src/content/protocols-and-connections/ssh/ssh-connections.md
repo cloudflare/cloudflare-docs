@@ -30,8 +30,8 @@ This section will cover:
 ## 1. Authenticate The Cloudflare Daemon
 1. Run the following command to authenticate cloudflared into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
@@ -52,8 +52,8 @@ For example, if you share the machine at `ssh.site.com`, build a policy to only 
 By default, the SSH protocol listens on port `22`. Confirm which port your infrastructure uses. You can use nonstandard ports, as well.
 Run the following command to connect the machine to Cloudflare, replacing the `ssh.site.com` and 22 values with your site and port.
 
-```bash
-cloudflared tunnel --hostname
+```sh
+$ cloudflared tunnel --hostname
 ssh.site.com --url ssh://localhost:22
 ```
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -70,8 +70,8 @@ Cloudflare Access does not require any unique commands or SSH wrappers. The only
 
 1. To generate generic configuration settings, run the following command:
 
-```bash
-cloudflared access ssh-config
+```sh
+$ cloudflared access ssh-config
 ```
 
 The command will print SSH configuration details in the following format:
@@ -85,8 +85,8 @@ Host [your hostname]
 
 2. Optionally, if you know the hostname, you can run the following command to generate the exact SSH configuration details.
 
-```bash
-cloudflared access ssh-config --hostname ssh.site.com
+```sh
+$ cloudflared access ssh-config --hostname ssh.site.com
 ```
 
  Replace `ssh.site.com` with your remote machine's hostname.
@@ -100,8 +100,9 @@ Host ssh.site.com
 ## 2. Connect Over SSH To The Remote Machine
 
 1. Run the following command to create a connection from the device to Cloudflare.
-```bash
-ssh username@ssh.site.com
+
+```sh
+$ ssh username@ssh.site.com
 ```
 
 Replace `username` with your unix username.
@@ -113,8 +114,9 @@ Note that Access matches based on the identity that precedes an email domain. **
 
 If you use SSH to reach a Git repository, you can continue to use the `git` command without any wrapper. You will still need to update your SSH configuration file using the instructions above.
 Once configured, you can run the following command to test the connection:
-```bash
-git clone ssh -T username@git.site.com
+
+```sh
+$ git clone ssh -T username@git.site.com
 ```
 Replace `username` with your unix username.
 

@@ -49,7 +49,7 @@ Cloudflare Access can integrate with Google as an IdP. Use these steps to config
 
 1. Under **Authorized redirect URIs**, enter your authorization domain and add this to the end of the path:
 
-    ```shell
+    ```txt
     /cdn-cgi/access/callback
     ```
 

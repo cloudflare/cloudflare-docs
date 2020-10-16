@@ -107,8 +107,8 @@ $ cloudflared tunnel --hostname rdp.site.com --no-tls-verify --origin-server-nam
 
 If you are using the configuration file created in Step 2 above, you can start the service from the Windows services panel or run:
 
-```bash
-sc start cloudflared
+```sh
+$ sc start cloudflared
 ```
 
 In both operations, `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -169,8 +169,8 @@ You can help end users connect without requiring the command line by providing t
 2. Right-click on the Windows desktop and select `New -> Shortcut`.
 3. In the wizard that appears, paste in the following command with the hostname your team uses:
 
-```bash
-cloudflared access rdp --hostname monday.example.com --url localhost:2244
+```sh
+$ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
 
 4. Click `Next` and complete the wizard

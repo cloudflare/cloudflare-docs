@@ -31,8 +31,8 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -53,8 +53,8 @@ By default, the SSH protocol listens on port 22. Confirm which port your infrast
 
 Run the following command to connect the machine to Cloudflare, replacing the `ssh.site.com` and `22` values with your site and port.
 
-```bash
-cloudflared tunnel --hostname ssh.site.com --url ssh://localhost:22
+```sh
+$ cloudflared tunnel --hostname ssh.site.com --url ssh://localhost:22
 ```
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -75,8 +75,8 @@ Cloudflare Access does not require any unique commands or SSH wrappers. The only
 
 To generate generic configuration settings, run the following command:
 
-```bash
-cloudflared access ssh-config
+```sh
+$ cloudflared access ssh-config
 ```
 
 The command will print SSH configuration details in the following format:
@@ -90,8 +90,8 @@ Replace the `[your hostname]` value with the hostname configured for the remote 
 
 Optionally, if you know the hostname, you can run the following command to generate the exact SSH configuration details. Replace `ssh.site.com` with your remote machine's hostname.
 
-```bash
-cloudflared access ssh-config --hostname ssh.site.com
+```sh
+$ cloudflared access ssh-config --hostname ssh.site.com
 ```
 
 The command will print the following details:
@@ -105,8 +105,8 @@ Host ssh.site.com
 
 Run the following command to create a connection from the device to Cloudflare.
 
-```bash
-ssh username@ssh.site.com
+```sh
+$ ssh username@ssh.site.com
 ```
 
 `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
@@ -117,8 +117,8 @@ If you use SSH to reach a Git repository, you can continue to use the `git` comm
 
 Once configured, you can run the following command to test the connection:
 
-```bash
-git clone ssh -T username@git.site.com
+```sh
+$ git clone ssh -T username@git.site.com
 ```
 
 Cloudflare Access does not replace SSH key exchange with a Git repository.

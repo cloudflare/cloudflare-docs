@@ -14,10 +14,10 @@ order: 2
 
 ## 1. Establish A Cloudflared Connection To The Host Machine
 
-With the Host Machine hostname, run the following command: 
+With the Host Machine hostname, run the following command:
 
-```shell
-cloudflared.exe access ssh --hostname <the hostname of the SSH server> --url localhost:<unused port>
+```sh
+$ cloudflared.exe access ssh --hostname <the hostname of the SSH server> --url localhost:<unused port>
 ```
 This launches a browser window that prompts you to authenticate your identity credentials.
 

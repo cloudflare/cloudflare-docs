@@ -30,7 +30,7 @@ This is the workflow for your guest user:
 
 ## Example API Config
 
-```shell
+```json
 {
     "config": {},
     "type": "onetimepin",
