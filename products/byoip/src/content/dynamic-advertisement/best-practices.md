@@ -1,8 +1,11 @@
 ---
+title: Best practices
 order: 2
 ---
 
-# Best practices
+# Best practices for dynamic advertisement
+
+Best practices when managing dynamic advertisement.
 
 --------
 
