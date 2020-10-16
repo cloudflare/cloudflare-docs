@@ -7,7 +7,7 @@ order: 2
 
 Best practices when managing dynamic advertisement.
 
---------
+--------------------------------
 
 ## Verify user roles & obtain prefix IDs
 
@@ -19,7 +19,7 @@ To ensure smooth operation in general and simplify the advertisement process dur
 
   To obtain Prefix IDs, go your Cloudflare account home page and review [_Get prefix IDs_](/dynamic-advertisement/configure-dynamic-advertisement#get-prefix-ids), or use the [List Prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
 
---------
+--------------------------------
 
 ## Enable prefix advertisement
 
@@ -41,7 +41,7 @@ To avoid latency and the possibility of dropped routes, enable prefix advertisem
 
 3. Remove the prefix advertisement that originates from your data center.
 
---------
+--------------------------------
 
 ## Disable prefix advertisement
 

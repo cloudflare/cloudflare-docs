@@ -9,7 +9,7 @@ To add or update an IRR entry, use one of the routing registries listed in the [
 
 Suggested registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
 
---------
+--------------------------------
 
 ## Best practices
 

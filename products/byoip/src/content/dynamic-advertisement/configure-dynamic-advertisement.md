@@ -11,7 +11,7 @@ To ensure smooth operation in general and simplify the advertisement process dur
 
 </Aside>
 
---------
+--------------------------------
 
 ## Use the IP Prefixes page to configure dynamic advertisement
 
@@ -39,7 +39,7 @@ To configure IP prefix assignment from your Cloudflare account home, use the **S
 
 Once you have committed your changes, it takes 2–7 minutes to enable advertisement and approximately 15 minutes to disable (withdraw) advertisement.
 
---------
+--------------------------------
 
 ## Use the Cloudflare API to configure dynamic advertisement
 
@@ -47,7 +47,7 @@ To configure prefix advertisement with the Cloudflare API, use the [IP Address M
 
 Most dynamic advertisement operations require that you supply the Cloudflare ID for any prefix you want to access with the Cloudflare API. The following section outlines how to obtain Prefix IDs.
 
---------
+--------------------------------
 
 ## Get prefix IDs
 
