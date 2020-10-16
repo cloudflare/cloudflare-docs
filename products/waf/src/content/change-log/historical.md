@@ -7,7 +7,7 @@ summary: Changes that were completed before the change log was made publicly ava
 
 # Historical
 
-<TableWrap><table>
+<TableWrap><table style="width: 100%">
     <thead>
         <tr>
             <th>Rule ID</th>
