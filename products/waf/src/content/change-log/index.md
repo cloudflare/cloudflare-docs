@@ -13,5 +13,6 @@ Cloudflare is very proactive in responding to new vulnerabilities, which may nee
 
 If you do notice a new or updated rule generating an increased volume of Firewall Events, you can disable or change the rule from its "Default" action. Once a rule is changed from a "Default" state, Cloudflare is not able to override this.
 
-- [Scheduled changes](/waf/change-log/scheduled-changes)
-- [RSS feed](/waf/change-log/index.xml)
+<p><Link to="/change-log/scheduled-changes" className="Button Button-is-docs-primary">View scheduled changes</Link></p>
+
+<!-- TODO: add back RSS feed (was `/waf/change-log/index.xml` before) -->
