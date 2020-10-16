@@ -214,8 +214,8 @@ You can help end users connect without requiring the command line by providing t
 
 3. In the wizard that appears, paste in the following command with the hostname your team uses:
 
-```bash
-cloudflared access rdp --hostname monday.example.com --url localhost:2244
+```sh
+$ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
 4. Click **Next** and complete the wizard.
 

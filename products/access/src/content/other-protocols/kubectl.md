@@ -31,8 +31,8 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -53,8 +53,8 @@ For example, if you share the cluster API server at `cluster.site.com`, build a 
 
 Run the following command to connect the resource to Cloudflare, replacing the `cluster.site.com` and `tcp://kubernetes.docker.internal:6443` values with your site and port.
 
-```bash
-cloudflared tunnel --hostname cluster.site.com --url tcp://kubernetes.internal:6443 --socks5=true
+```sh
+$ cloudflared tunnel --hostname cluster.site.com --url tcp://kubernetes.internal:6443 --socks5=true
 ```
 
 The proxy allows your local kubectl tool to connect to `cloudflared` via a SOCKS5 proxy, which helps avoid issues with TLS handshakes to the cluster itself. In this model, TLS verification can still be exchanged with the `kubectl` API server without disabling or modifying that flow for end users.

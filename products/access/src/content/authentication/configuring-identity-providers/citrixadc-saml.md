@@ -19,7 +19,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
         </Aside>
 
    * A certificate for signing SAML assertions. If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
-  
+
      1. Navigate to **Traffic Management > SSL**.
      2. Select **Create and Install a Server Test Certificate**.
 
@@ -39,7 +39,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
    * **Name:** This is the IdP certificate name you defined in Step 1.
    * **Assertion Consumer Service URL:**
 
-    ```shell
+    ```txt
     https://example.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 

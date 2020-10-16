@@ -41,15 +41,15 @@ Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this 
 
 Argo Tunnel can be installed on the machine with the following commands.
 
-```bash
-sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+```sh
+$ sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
+$ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
 ```
 
 Once installed, you will need to authenticate `cloudflared`. The following command will print a URL that can be visited in another machine with a browser.
 
-```bash
-cloudflared login
+```sh
+$ cloudflared login
 ```
 
 Login with your Cloudflare credentials and select the hostname you intend to use. Cloudflare will then issue a certificate to the instance of `cloudflared` that can be used to create the subdomains required.
@@ -58,14 +58,14 @@ You will need to create two Tunnels: one for the web application and other for S
 
 The following commands will initiate the connections, but these will terminate if the machine restarts or is otherwise disrupted. For long-term use, these should be run as `systemd` services.
 
-```bash
-cloudflared tunnel --hostname gitlab.site.com --url localhost:80
+```sh
+$ cloudflared tunnel --hostname gitlab.site.com --url localhost:80
 ```
 
 Will establish the Tunnel for the web application.
 
-```bash
-cloudflared tunnel --hostname gitlab-ssh.site.com --url ssh://localhost:22
+```sh
+$ cloudflared tunnel --hostname gitlab-ssh.site.com --url ssh://localhost:22
 ```
 
 Will establish the Tunnel for SSH connections.

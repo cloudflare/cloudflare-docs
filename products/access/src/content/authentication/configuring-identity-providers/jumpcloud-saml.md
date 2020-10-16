@@ -18,7 +18,7 @@ To set up JumpCloud SAML as your IdP in Access:
 
     If you do not have a certificate, this command generates one using OpenSSL:
 
-    ```shell
+    ```sh
     $ openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
     Generating RSA private key, 2048 bit long modulus
     .................................................................................+++++
@@ -28,7 +28,7 @@ To set up JumpCloud SAML as your IdP in Access:
 
     When asked to enter a Distinguished Name or a DN to incorporate into your certificate request there are a lot of fields. You can leave some of these fields blank. Some fields have a default value. Enter a dot (`.`) in the field to leave it blank. For example:
 
-    ```shell
+    ```bash
     -----
     Country Name (2 letter code) [AU]:.
     State or Province Name (full name) [Some-State]:.
@@ -60,7 +60,7 @@ To set up JumpCloud SAML as your IdP in Access:
 9. Under **SAML SUBJECT NAMEID** choose **email**.
 10. Set the **SAML SUBJECT NAMEID FORMAT** to:
 
-    ```shell
+    ```txt
     urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
     ```
 

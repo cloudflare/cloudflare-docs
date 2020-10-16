@@ -33,8 +33,8 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to log in to your Cloudflare account.
@@ -59,8 +59,8 @@ For example, if you share the resource at `tcp.site.com`, build a policy to only
 
 Run the following command to connect the resource to Cloudflare, replacing the `tcp.site.com` and `7870` values with your site and port.
 
-```bash
-cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
+```sh
+$ cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
 ```
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -75,8 +75,8 @@ Follow the same steps above to download and install `cloudflared` on the client 
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```bash
-cloudflared access tcp --hostname tcp.site.com --url localhost:9210
+```sh
+$ cloudflared access tcp --hostname tcp.site.com --url localhost:9210
 ```
 
 This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.

@@ -38,7 +38,7 @@ Use these steps to set up G Suite as your IdP.
     ![Enable admin API](../../static/gsuite/gsuite-admin-sdk.png)
 
 1. Return to the APIs overview page. Select **Credentials** in the left menu pane.
-  
+
     ![GCP dashboard APIs card](../../static/gsuite/gsuite-credentials.png)
 
    The **Credentials** page displays.
@@ -87,7 +87,7 @@ Use these steps to set up G Suite as your IdP.
 1. Enter your copied Client ID in the **Client Name** field.
 1. Paste these URLs in the **One or More API Scopes** field:
 
-    ```shell
+    ```txt
     https://www.googleapis.com/auth/admin.directory.group.member.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
     ```
 
