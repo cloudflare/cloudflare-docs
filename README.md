@@ -6,6 +6,10 @@ __[View the docs →](https://developers.cloudflare.com/docs/)__
 
 [Set up local development](https://developers.cloudflare.com/docs-engine/how-to-guides/migrate-a-product#step-2-set-up-local-development)
 
+## For Cloudflare employees
+
+To get write access to this repo, please reach out to the __Developer Docs__ room in chat.
+
 ## Migration progress
 
 | Product                 | `pathPrefix`         | Icon | Content | Test                                                                                  | Prod                                                        |
