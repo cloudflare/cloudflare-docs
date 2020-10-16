@@ -30,7 +30,7 @@ MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, Qu
 
 ## What frame rates (FPS) are supported?
 
-Cloudflare Stream supports video file uploads for any FPS, however videos will be re-encoded for 30 FPS playback. If the original video file has a frame rate lower than 30 FPS, we will re-encode at the original frame rate.
+Cloudflare Stream supports video file uploads for any FPS, however videos will be re-encoded for 30 FPS playback. If the original video file has a frame rate lower than 30 FPS, Stream will re-encode at the original frame rate.
 
 If the frame rate is variable we will drop frames (e.g. if there are more than 1 frames within 1/30 seconds, we will drop the extra frames within that period).
 
@@ -53,3 +53,24 @@ UC Browser on Android | Supported on version 11.8+
 Samsung Internet | Supported on 5+
 iOS               | Supported on iOS 8+
 Windows           | Supported on Windows Phone 8+
+
+## What are the recommended upload settings for video uploads?
+
+If you're producing a brand new file for Cloudflare Stream, we recommend you use the following settings:
+
+ - MP4 containers, AAC audio codec, H264 video codec, 30 or below frames per second
+ - moov atom should be at the front of the file (Fast Start)
+ - H264 progressive scan (no interlacing)
+ - H264 high profile
+ - Closed GOP
+ - Content should be encoded and uploaded in the same frame rate it was recorded
+ - Mono or Stereo audio (Stream does not support audio tracks with more than 2 channels)
+
+Below are bitrate reccomendations for encoding new videos for Stream:
+
+Resolution  |  Recommended bitrate
+------------|---------
+1080p  |	8 Mbps
+720p  |	4.8 Mbps
+480p  |	2.4 Mbps
+360p | 1 Mbps

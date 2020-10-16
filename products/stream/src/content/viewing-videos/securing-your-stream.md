@@ -1,4 +1,10 @@
-# Signed URLs
+---
+order: 3
+---
+
+# Securing your Stream
+
+## Signed URLs / Tokens
 
 By default, videos on Cloudflare Stream can be viewed by anyone anytime until you delete the video. Users can view the source of the embed code in their browser and get a URL to the video that could be shared with others. To prevent this, use signed URLs.
 
@@ -14,7 +20,7 @@ These steps are detailed below.
 
 You can [revoke a key](#revoking-keys) anytime for any reason.
 
-## Creating a signing key
+### Creating a signing key
 
 Upon creation you will get a RSA private key in PEM and JWK formats. Keys are created, used and deleted independently of videos. Every key can sign any of your videos.
 
@@ -34,7 +40,7 @@ Upon creation you will get a RSA private key in PEM and JWK formats. Keys are cr
 }
 ```
 
-## Making a video require signed URLs
+### Making a video require signed URLs
 
 Since video ids are effectively public within signed URLs, you will need to turn on `requireSignedURLs` on for your videos. This option will prevent any public links, such as `watch.cloudflarestream.com/$VIDEOID`, from working.
 
@@ -57,7 +63,7 @@ Restricting viewing can be done by updating the video's metadata.
 
 ```
 
-## Signing unique tokens
+### Signing unique tokens
 
 After creating a key, you can use it to sign unique signed tokens. These tokens can be used in place of video ids in the stream embed code.
 
@@ -67,17 +73,22 @@ You can sign to assert these optional constraints on the token:
 - `nbf` - notBefore; a unix epoch timestamp **before** which the token will not be accepted.
 - `accessRules` - Video Access Control; these allow making the token conditionally accepted on a variety of factors. For more details, see <a href="../access-rules/">their documentation</a>
 
-## Using signed tokens
+### Playback using signed tokens
 
-Embed codes can be modified to accept signed tokens. A signed token may be substituted for the videoID in the `<stream>` element's `src` attribute.
+Replace the video ID with the signed token to use it.
 
-An example `<stream>` element using a signed token looks like this
+```html
+<iframe
+  src="https://iframe.videodelivery.net/$SIGNEDTOKEN"
+  style="border: none;"
+  height="720"
+  width="1280"
+  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+  allowfullscreen="true"
+></iframe>
+```
 
-    <stream src="<{SIGNED-TOKEN}>" controls></stream>
-
-Note that the `<script>` tag present in other documentation examples must be present at least once on your page. It does not need to be modified.
-
-### Get started with a signing utility
+#### Get started with a signing utility
 
 *Using this signing utility in production is not recommended.*
 
@@ -89,7 +100,7 @@ curl -X POST "https://util.cloudflarestream.com/sign/$VIDEOID" -d '{"id": "$KEYI
 
 This endpoint accepts JSON bodies with the output from [Creating a signing key](#creating-a-signing-key) or any object with `pem` and `kid` attributes. To add a constraint, include it as a property of the body.
 
-### Signing tokens in production
+#### Signing tokens in production
 
 Other offline signing examples are included [below](#other-offline-signing-examples)
 
@@ -115,7 +126,7 @@ var token = jwt.sign(
 console.log(token)
 ```
 
-### Debugging signed tokens
+#### Debugging signed tokens
 
 If your token is not behaving as expected when tested against our server, some information is surfaced which is a good place to start.
 
@@ -131,7 +142,7 @@ A malformed token will contain the top-level field that is malformed:
 
 		401 unauthorized malformed token: check fields ["accessRules"]
 
-### Revoking keys
+#### Revoking keys
 
 You can create up to 1,000 keys and rotate them at your convenience.
 Once revoked all tokens created with that key will be invalidated.
@@ -148,9 +159,9 @@ Once revoked all tokens created with that key will be invalidated.
 ```
 
 
-### Other offline signing examples
+#### Other offline signing examples
 
-#### Sign in go using go-jose
+##### Sign in go using go-jose
 
 Use: `go run sign.go`
 
@@ -229,7 +240,7 @@ func main() {
 
 ```
 
-#### Sign with Cloudflare Workers
+##### Sign with Cloudflare Workers
 
 The following code snippet does not include the function `addEventListener` on `fetch`. The goal of that snippet is to give you a function that return the JWT.
 To be noted, the code snippet contain an `accessRules` that allow only UK user to watch the video.
@@ -308,9 +319,9 @@ function objectToBase64url(payload) {
 }
 ```
 
-# Security considerations
+## Security considerations
 
-## Limiting where videos can be embedded
+### Limiting where videos can be embedded
 
 By default, Stream embed codes can be used on any domain. If needed, you can limit the domains a video can be embedded on from the Stream dashboard.
 
@@ -331,7 +342,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ```
 
-## Signed URLs
+### Signed URLs
 
 Combining [signed URLs](/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
 
@@ -341,7 +352,7 @@ To do so
 1. Make the video private
 1. Restrict the viewing domains to your site
 
-## Content Security Policy (CSP) considerations
+### Content Security Policy (CSP) considerations
 
 Content Security Policy (CSP) is a layer of security that helps to detect and prevent certain types of cross site scripting and data injection attacks. Most common way servers set CSP information is through headers at your origin server.
 
@@ -356,13 +367,13 @@ If CSP is misconfigured your videos might not play or you might see an error sim
 Read more about Content Security Policy at [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 
 
-# Video access control
+## Video access control
 
 Video Access Control allow you to define Rules to have finer-grained control over your content than signed URL tokens alone. They are primarily aimed at making tokens conditionally valid based on user information. Access Rules are specified on token payloads as the `accessRules` property containing an array of `Rule` objects.
 
 If you're not already familiar with signed URLs, it's recommended to <a href="/stream/security/signed-urls/">start here.</a>
 
-## Rules
+### Rules
 
 A Rule has two components. The `action` is taken if the conditions associated with the `type` matches. Each `type` has an associated field that should be filled, see the <a href="#schema">schema</a> or <a href="#examples">examples</a> for details.
 
@@ -379,7 +390,7 @@ These Rule actions are available
 
 Access Rules are evaluated first-to-last. If a Rule matches, the associated `action` is applied and no further rules are evaluated.
 
-## Schema
+### Schema
 
 A valid Rule object conforms to this type signature:
 
@@ -400,9 +411,9 @@ A valid Rule object conforms to this type signature:
 
 In the future, Rule types or actions may be added. If you have other types of rules or actions you need for your video application, please contact Cloudflare support.
 
-### Examples
+#### Examples
 
-#### Allow only views from specific CIDRs
+##### Allow only views from specific CIDRs
 
 ```
 ...
@@ -423,7 +434,7 @@ The first rule is an IP rule matching on CIDRs, `93.184.216.0/24` and `2400:cb00
 
 If the first rule doesn't match, the second rule of `any` will match all remaining requests and block those views.
 
-#### Block views from a specific country
+##### Block views from a specific country
 
 ```
 ...
@@ -440,7 +451,7 @@ The first rule matches on country, `US`, `DE`, and `MX` here. When that rule mat
 
 If the first rule doesn't match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.
 
-#### Allow only views from specific country or IPs
+##### Allow only views from specific country or IPs
 
 ```
 ...
@@ -468,9 +479,9 @@ The second rule is an IP rule matching on CIDRs, `93.184.216.0/24` and `2400:cb0
 
 If the first two rules don't match, the final rule of `any` will match all remaining requests and block those views.
 
-## Usage Notes
+### Usage Notes
 
-### Maximum Rule Count
+#### Maximum Rule Count
 
 A token may have at most 5 members in the `accessRules` array.
 
@@ -478,7 +489,7 @@ Note that most Rule types take arrays as arguments. For example, a rule of type 
 
 If you require more than 5 rules, please contact Cloudflare support.
 
-### ip.src
+#### ip.src
 
 It is recommended to include both IPv4 and IPv6 variants in a rule if possible. Having only a single variant in a rule means that rule will ignore the other variant. For example, an IPv4-based rule will never be applicable to a viewer connecting from an IPv6 address.
 

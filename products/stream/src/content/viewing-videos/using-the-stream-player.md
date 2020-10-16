@@ -1,6 +1,10 @@
-# Using the player
+---
+order: 0
+---
 
-The Stream player is served in an iframe with the video UID (or [signed URL](/security/signed-urls/)) replacing `$VIDEOID` in the example below.
+# Using the Stream player
+
+The Stream player can be placed on a web page in an iframe elemetn with the video UID (or [signed URL](/security/signed-urls/)) replacing `$VIDEOID` in the example below.
 
 ```html
 <iframe
@@ -12,6 +16,8 @@ The Stream player is served in an iframe with the video UID (or [signed URL](/se
   allowfullscreen="true"
 ></iframe>
 ```
+
+Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) components
 
 ## Player Size
 

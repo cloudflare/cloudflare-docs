@@ -1,14 +1,139 @@
 ---
-title: Welcome
 order: 0
+title: Getting started
 ---
 
-# Cloudflare Stream documentation
+# Cloudflare Stream
 
-Cloudflare Stream is a video-on-demand platform for developers and content teams building video applications. With Stream, it's one easy API call to upload a video and get an embedable video.
+Cloudflare Stream provides end-to-end video infrastructure at scale. Stream handles storage, encoding and adaptive bitrate playback for you so you can focus your core idea.
 
-In the background, Cloudflare encodes, stores and delivers your videos. Cloudflare takes care of optimizing the right format and bitrate for every device and network connection.
+To get started with Stream, simply visit the Stream Dashboard in your Cloudflare account or [sign up](https://dash.cloudflare.com/sign-up/stream). Your stream videos are not attached to an domain in your Cloudflare account and you don't need a domain on Cloudflare to use Stream.
 
-<p><Link to="/getting-started" className="Button Button-is-docs-primary">Get started</Link></p>
+<Link to="https://dash.cloudflare.com/?to=/:account/stream" className="Button Button-is-docs-secondary">Visit the Stream dashboard</Link> &nbsp;&nbsp; <Link to="https://api.cloudflare.com/#stream-videos-properties" className="Button Button-is-docs-secondary">View API reference</Link>
 
-<StreamVideo id="31c9291ab41fac05471db4e73aa11717" params="?autoplay=true&mute=true&loop=true"/>
+----------
+
+# Getting started
+
+## Make your first API request
+
+To make your first request to the Stream API, you must obtain three pieces of information:
+
+1. Your Cloudflare Account ID
+2. Email address associated with the account
+3. Your Cloudflare Account API Token
+
+Alternatively, you can also use [bearer tokens](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys).
+
+### Step 1: Uploading your first video
+Stream provides multiple ways to upload videos. For this example, we will upload an MP4 file that is stored in a storage bucket onto Stream. The MP4 file can be found here: 
+
+To make your first request, simply take the cURL command below and replace the API Key, email and account id placeholders with your credentials. 
+
+```bash
+curl \
+-X POST \
+-d '{"url":"","meta":{"name":"My First Stream Video"}}' \
+-H "X-Auth-Key: $API_KEY" \
+-H "X-Auth-Email: $EMAIL" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/copy
+```
+
+This cURL command tells the Stream API to download the MP4 file and make it available for streaming. When executed, you will see a response similar to this:
+
+```json
+{
+  "result": {
+    "uid": "4544715edbe00808d89aec0a3a765c40",
+    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
+    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+    "readyToStream": false,
+    "status": {
+      "state": "downloading"
+    },
+    "meta": {
+      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
+      "name": "My First Stream Video"
+    },
+    "created": "2020-10-16T20:20:17.872170843Z",
+    "size": 9032701,
+   //...
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+### Step 2: Wait until the video is ready to stream
+
+Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/uploading-videos/using-webhooks) to be notified when a video is ready for streaming.
+
+Use the video UID from the first step to poll the video:
+
+```bash
+curl \
+-H "X-Auth-Key: $API_KEY" \
+-H "X-Auth-Email: $EMAIL" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/$VIDEO_UID
+```
+
+```json
+---
+highlight: [6]
+---
+{
+  "result": {
+    "uid": "4544715edbe00808d89aec0a3a765c40",
+    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
+    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+    "readyToStream": true,
+    "status": {
+      "state": "ready"
+    },
+    "meta": {
+      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
+      "name": "My First Stream Video"
+    },
+    "created": "2020-10-16T20:20:17.872170843Z",
+    "size": 9032701,
+   //...
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+
+### Step 3: Stream the video!
+
+The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/viewing-videos/using-the-stream-player).
+
+```html
+<iframe
+  src="https://iframe.videodelivery.net/$VIDEO_UID"
+  title="Example Stream video"
+  frameBorder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen>
+</iframe>
+```
+
+Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) components.
+
+<!--
+Update to Stream component once available
+https://github.com/cloudflare/cloudflare-docs-engine/issues/281
+-->
+<figure data-type="stream">
+  <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
+    <iframe
+      className="AspectRatio--content"
+      src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?muted=true"
+      title="Example Stream video"
+      frameBorder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen></iframe>
+  </div>
+</figure>
