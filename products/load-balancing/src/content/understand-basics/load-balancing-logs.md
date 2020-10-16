@@ -121,7 +121,7 @@ Click the expansion arrow at the far right of the event to expose more detail, i
 
 To list health check events, use the List Health Check Events API endpoint:
 
-```shell
+```bash
 GET user/load_balancing_analytics/events
 ```
 
