@@ -7,8 +7,8 @@ aliases:
   - /change-log/historic
 ---
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
+<table>
+    <thead>
         <tr>
             <th>Rule ID</th>
             <th>Description</th>

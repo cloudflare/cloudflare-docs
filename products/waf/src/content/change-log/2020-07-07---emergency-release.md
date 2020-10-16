@@ -4,8 +4,8 @@ title: 2020-07-07 - Emergency Release
 order: 966
 ---
 
-<table style="border: solid 2px darkgrey;">
-    <thead style="background:#ffeadf;">
+<table>
+    <thead>
         <tr>
             <th>
                 Ruleset

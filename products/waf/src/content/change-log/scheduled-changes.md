@@ -4,8 +4,8 @@ title: Scheduled Changes
 order: 1
 ---
 
-<table style="border: solid 2px darkgrey;">
-    <thead style="background:#ffeadf;">
+<table>
+    <thead>
         <tr>
             <th>
                 Announcement Date
