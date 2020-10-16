@@ -1,10 +1,12 @@
 ---
-date: '2020-07-07'
-title: 2020-07-07 - Emergency Release
+title: 2020-07-07
+type: table
 order: 966
 ---
 
-<table>
+# 2020-07-07 – Emergency release
+
+<TableWrap><table>
     <thead>
         <tr>
             <th>
@@ -43,4 +45,4 @@ order: 966
             </td>
         </tr>
     </tbody>
-</table>
+</table></TableWrap>

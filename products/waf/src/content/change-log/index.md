@@ -1,9 +1,9 @@
 ---
-title: Change log for Managed Rulesets
-weight: 100
+title: Change log
+order: 1
 ---
 
-# Change Log
+# Change log for managed rulesets
 
 Cloudflare has a very regular cadence of releasing updates and new rules to our Managed Rulesets. The updates either improve a rule's accuracy, lower false positives rates or increase the protection due to a change in the threat landscape.
 

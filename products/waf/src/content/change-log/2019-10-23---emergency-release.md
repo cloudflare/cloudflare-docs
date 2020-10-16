@@ -1,10 +1,12 @@
 ---
-title: "2019-10-23 - Emergency Release"
-date: 2019-10-23
-weight: 993
+title: 2019-10-23
+type: table
+order: 993
 ---
 
-<table>
+# 2019-10-23 – Emergency release
+
+<TableWrap><table>
     <thead>
         <tr>
             <th>Ruleset</th>
@@ -23,4 +25,4 @@ weight: 993
             <td>Block</td>
         </tr>
     </tbody>
-</table>
+</table></TableWrap>

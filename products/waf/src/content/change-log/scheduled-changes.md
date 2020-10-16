@@ -1,10 +1,11 @@
 ---
-date: '2020-08-24'
-title: Scheduled Changes
+type: table
 order: 1
 ---
 
-<table>
+# Scheduled changes
+
+<TableWrap><table>
     <thead>
         <tr>
             <th>
@@ -55,4 +56,4 @@ order: 1
             </td>
         </tr>
     </tbody>
-</table>
+</table></TableWrap>
