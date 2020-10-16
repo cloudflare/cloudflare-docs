@@ -1,4 +1,5 @@
 ---
+title: Configure
 order: 3
 ---
 
@@ -6,7 +7,7 @@ order: 3
 
 <Aside>
 
-To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [_Best practices_](/api/best-practices) when managing dynamic advertisement.
+To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [_Best practices_](/dynamic-advertisement/best-practices) when managing dynamic advertisement.
 
 </Aside>
 
@@ -48,7 +49,7 @@ Most dynamic advertisement operations require that you supply the Cloudflare ID 
 
 --------
 
-## Get Prefix IDs
+## Get prefix IDs
 
 You can obtain Prefix IDs from the **IP Prefixes** page in your Cloudflare account home or via the [List Prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.
 

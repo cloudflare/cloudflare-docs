@@ -1,4 +1,5 @@
 ---
+title: Best practices
 order: 6
 ---
 
@@ -23,14 +24,14 @@ When updating IRR entries, use these best practices:
 
 Each routing registry has its own set of IRR entry instructions. This table provides links to those instructions:
 
-<table>
+<TableWrap><table>
 <thead>
     <tr>
       <th>Route registry</th>
       <th>URL</th>
      </tr>
   </thead>
-  <tbody style="vertical-align:top">
+  <tbody>
     <tr>
       <td>AFRINIC</td>
       <td><a href="https://afrinic.net/internet-routing-registry#guide">https://afrinic.net/internet-routing-registry#guide</a></td>
@@ -56,4 +57,4 @@ Each routing registry has its own set of IRR entry instructions. This table prov
       <td><a href="https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr">https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr</a></td>
     </tr>
   </tbody>
-</table>
+</table></TableWrap>

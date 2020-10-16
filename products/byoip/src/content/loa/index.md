@@ -1,4 +1,5 @@
 ---
+title: Letter of Authorization
 order: 10
 ---
 
