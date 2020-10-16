@@ -5,18 +5,7 @@ order: 61
 
 # Understanding the Logpush API
 
-- [Endpoints](#endpoints)
-- [Connecting](#connecting)
-- [Ownership](#ownership)
-- [Destination](#destination)
-- [Job Object](#job-object)
-- [Options](#options)
-- [Audit](#audit)
-
-<a id="endpoints" style="color: inherit">
-
 ## Endpoints
-</a>
 
 The table below summarizes the job operations available.
 
@@ -100,14 +89,11 @@ The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument 
 	</tbody>
 </table>
 
-For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/tutorials/tutorial-logpush-curl/).
+For concrete examples, see the tutorial [Manage Logpush with cURL](/tutorials/tutorial-logpush-curl/).
 
 -------
 
-<a id="connecting" style="color: inherit">
-
 ## Connecting
-</a>
 
 The Logpush API requires credentials like any other Cloudflare API.
 
@@ -118,10 +104,7 @@ $ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" \
 
 -------
 
-<a id="ownership" style="color: inherit">
-
 ## Ownership
-</a>
 
 Before creating a new job, ownership of the destination must be proven.
 
@@ -155,10 +138,7 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 
 -------
 
-<a id="destination" style="color: inherit">
-
 ## Destination
-</a>
 
 You can specify your cloud service provider destination via the required `destination_conf` parameter.
 
@@ -182,7 +162,7 @@ To check if a destination is already in use:
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
 ```
 
-##### Response
+### Response
 
 ```bash
 {
@@ -199,26 +179,20 @@ There can be only 1 job writing to each unique destination. For S3 and GCS, a de
 
 -------
 
-<a id="job-object" style="color: inherit">
-
 ## Job object
-</a>
 
 <Aside type="info">
 
-See a detailed description of the [Logpush object JSON schema](/logs/logpush/logpush-configuration-api/job-json-schema/).
+See a detailed description of the [Logpush object JSON schema](/logpush/logpush-configuration-api/job-json-schema/).
 </Aside>
 
 -------
 
-<a id="options" style="color: inherit">
-
 ## Options
-</a>
 
 Logpush repeatedly pulls logs on your behalf and uploads them to your destination.
 
-Log options, such fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object schema](/logs/logpush/logpush-configuration-api/job-json-schema/)*). If you're migrating from the Logpull API, `logpull_options` is simply the query  string for the API call. For example, the following query gets data from the Logpull API:
+Log options, such fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object schema](/logpush/logpush-configuration-api/job-json-schema/)*). If you're migrating from the Logpull API, `logpull_options` is simply the query  string for the API call. For example, the following query gets data from the Logpull API:
 
 ```bash
 curl -sv \
@@ -227,13 +201,13 @@ curl -sv \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 
-In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logs/logpull-api/requesting-logs/#parameters)* for more info.
+In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logpull-api/requesting-logs/#parameters)* for more info.
 
 If you don't change any options, you will receive logs with default fields that are unsampled (i.e., `sample=1`).
 
 The three options that you can customize are:
 
-1. Fields; *see [Log fields](/logs/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
+1. Fields; *see [Log fields](/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
 2. Sampling rate; value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
 3. Timestamp format; the format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
 
@@ -243,7 +217,7 @@ To check if `logpull_options` is valid:
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339","dataset": "http_requests"}' | jq .
 ```
 
-##### Response
+### Response
 
 ```bash
 {
@@ -259,9 +233,6 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/va
 
 -------
 
-<a id="audit" style="color: inherit">
-
 ## Audit
-</a>
 
 The following actions are recorded in **Cloudflare Audit Logs**: create, update, and delete job.

@@ -5,18 +5,9 @@ order: 121
 
 # Glossary
 
-### Terminology categories
-
-- [General](#general-terms)
-- [Threat related](#threat-related-terms)
-- [Traffic related](#traffic-related-terms)
-
----
-
-<a id="general-terms" style="color: inherit">
+## Terminology categories
 
 ### General Terms
-</a>
 
 #### Request
 
@@ -72,10 +63,7 @@ HTTP response code sent from the origin server to Cloudflare
 
 ---
 
-<a id="threat-related-terms" style="color: inherit">
-
 ### Threat related terms
-</a>
 
 #### Threat
 
@@ -146,10 +134,7 @@ Challenge based on user configurations set for visitor’s IP in either the **We
 
 ---
 
-<a id="traffic-related-terms" style="color: inherit">
-
 ### Traffic related terms
-</a>
 
 #### NoRecord
 

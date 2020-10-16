@@ -5,17 +5,7 @@ order: 14
 
 # Requesting logs
 
-
-- [Endpoints](#endpoints)
-- [Required authentication headers](#required-authentication-headers)
-- [Parameters](#parameters)
-- [Example API requests using cURL](#example-api-requests-using-curl)
-- [Fields](#fields)
-
-<a id="endpoints" style="color: inherit">
-
-### Endpoints
-</a>
+## Endpoints
 
 The three endpoints the Logpull API supports are:
 
@@ -23,20 +13,14 @@ The three endpoints the Logpull API supports are:
 * `GET /logs/received/fields` - returns the list of all available log fields
 * `GET /logs/rayids/<rayid>` - returns HTTP request log data matching `<rayid>`
 
-<a id="required-authentication-headers" style="color: inherit">
-
-### Required authentication headers
-</a>
+## Required authentication headers
 
 The following headers are required for all endpoint calls:
 
 * `X-Auth-Email` - the Cloudflare account email address associated with the domain
 * `X-Auth-Key` - the Cloudflare API key
 
-<a id="parameters" style="color: inherit">
-
-### Parameters
-</a>
+## Parameters
 
 The API expects endpoint parameters in the GET request query string.  See the example formats below.
 
@@ -146,10 +130,7 @@ The maximum time range from <em>start</em> to <em>end</em> can't exceed 1 hour. 
 The overlap will be handled correctly.
 </Aside>
 
-<a id="example-api-requests-using-curl" style="color: inherit">
-
-### Example API requests using cURL
-</a>
+## Example API requests using cURL
 
 `logs/received`
 
@@ -174,10 +155,7 @@ curl -s \
 The IATA code returned as part of the Ray ID does not need to included in the request. For example: if you have a RayID such as `49ddb3e70e665831-DFW` only include `49ddb3e70e665831` in your request.
 </Aside>
 
-<a id="fields" style="color: inherit">
-
-### Fields
-</a>
+## Fields
 
 Unless specified in the <em>fields parameter</em>, the API returns a limited set of log fields. This default field set may change at any time. The list of all available fields is at:
 
@@ -194,4 +172,4 @@ curl -s \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
-*See [HTTP request fields](/logs/log-fields/#http-requests)* for the currently available fields.
+*See [HTTP request fields](/log-fields/#http-requests)* for the currently available fields.

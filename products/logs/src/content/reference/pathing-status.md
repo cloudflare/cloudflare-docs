@@ -13,25 +13,7 @@ Cloudflare issues the following **Edge Pathing Statuses**:
 
 The information stored is broken down based on the following categories (click for details below):
 
-- [Errors](#errors)
-- [User-based actions](#user-based-actions)
-- [Firewall Rules](#firewall-rules)
-- [Zone Lockdown](#zone-lockdown)
-- [Firewall User-Agent Block](#firewall-user-agent-block)
-- [Browser Integrity Check](#browser-integrity-check)
-- [Hot Linking](#hot-linking)
-- [L7-to-L7 DDoS mitigation](#l7-to-l7-ddos-mitigation)
-- [IP Reputation (MACRO)](#ip-reputation-macro)
-- [Rate Limiting](#rate-limiting)
-- [Special cases](#special-cases)
-- [Javascript and Captcha Challenge](#javascript-and-captcha-challenge)
-
----
-
-<a id="errors" style="color: inherit">
-
-### Errors
-</a>
+## Errors
 
 These occur for requests that didn't pass any of the sanity checks performed by the Cloudflare network. Example cases include:
 
@@ -97,10 +79,7 @@ These occur for requests that didn't pass any of the sanity checks performed by 
 
 ---
 
-<a id="user-based-actions" style="color: inherit">
-
-### User-based actions
-</a>
+## User-based actions
 
 These occur for actions triggered from users based on the configuration for a specific IP (or IP range).
 
@@ -177,10 +156,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="firewall-rules" style="color: inherit">
-
-### Firewall Rules
-</a>
+## Firewall Rules
 
 The Cloudflare **Firewall Rules** app triggers actions based on matching customer-defined rules.
 
@@ -216,10 +192,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="zone-lockdown" style="color: inherit">
-
-### Zone Lockdown
-</a>
+## Zone Lockdown
 
 _Zone Lockdown_ blocks visitors to particular URIs where the visitor's IP is not allowlisted.
 
@@ -248,10 +221,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="firewall-user-agent-block" style="color: inherit">
-
-### Firewall User-Agent Block
-</a>
+## Firewall User-Agent Block
 
 Challenge (Captcha or JavaScript) or block visitors who use a browser for which the User-Agent name matches a specific string
 
@@ -280,10 +250,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="browser-integrity-check" style="color: inherit">
-
-### Browser Integrity Check
-</a>
+## Browser Integrity Check
 
 Assert whether the source of the request is illegitimate or the request itself is malicious
 
@@ -312,10 +279,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="hot-linking" style="color: inherit">
-
-### Hot Linking
-</a>
+## Hot Linking
 
 Prevent hot linking from other sites
 
@@ -344,10 +308,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="l7-to-l7-ddos-mitigation" style="color: inherit">
-
-### L7-to-L7 DDoS mitigation
-</a>
+## L7-to-L7 DDoS mitigation
 
 Drop DDoS attacks through L7 mitigation
 
@@ -376,10 +337,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 ---
 
-<a id="ip-reputation-macro" style="color: inherit">
-
-### IP Reputation (MACRO)
-</a>
+## IP Reputation (MACRO)
 
 The macro stage is comprised of many different paths. They are categorized by the reputation of the visitor IP.
 
@@ -478,10 +436,7 @@ All other paths in the MACRO stage issue a challenge. Possible scenarios include
 
 ---
 
-<a id="rate-limiting" style="color: inherit">
-
-### Rate Limiting
-</a>
+## Rate Limiting
 
 <table style="border: solid 2px darkgrey; width: 100%;">
 <thead style="background: #ffeadf;">
@@ -514,10 +469,8 @@ All other paths in the MACRO stage issue a challenge. Possible scenarios include
 To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ---
-<a id="special-cases" style="color: inherit">
 
-### Special cases
-</a>
+## Special cases
 
 <table style="border: solid 2px darkgrey; width: 100%;">
 <thead style="background: #ffeadf;">
@@ -556,10 +509,8 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 </table>
 
 ---
-<a id="javascript-and-captcha-challenge" style="color: inherit">
 
-### Javascript and Captcha Challenge
-</a>
+## Javascript and Captcha Challenge
 
 <table style="border: solid 2px darkgrey; width: 100%;">
 <thead style="background: #ffeadf;">

@@ -14,10 +14,8 @@ The tables below describe the fields available by log category. The list of fiel
 
 ---
 
-<a id="http-requests" style="color: inherit">
 
 ### HTTP requests
-</a>
 
 <table style="border: solid 2px darkgrey; width: 75%;">
     <thead style="background: #ffeadf;">
@@ -364,10 +362,9 @@ The tables below describe the fields available by log category. The list of fiel
 
 ----
 
-<a id="spectrum-events" style="color: inherit">
+----
 
 ### Spectrum events
-</a>
 
 <table style="border: solid 2px darkgrey; width: 75%;">
     <thead style="background: #ffeadf;">
@@ -566,10 +563,7 @@ The tables below describe the fields available by log category. The list of fiel
 
 ----
 
-<a id="firewall-events" style="color: inherit">
-
 ### Firewall events
-</a>
 
 <table style="border: solid 2px darkgrey; width: 75%;">
     <thead style="background: #ffeadf;">
