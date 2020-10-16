@@ -1,6 +1,9 @@
 # Documentation Engine
 products/docs-engine/ @adamschwartz
 
+# WAF
+products/waf/ @cloudflare/firewall
+
 # Workers
 products/workers/ @cloudflare/workers-docs
 
