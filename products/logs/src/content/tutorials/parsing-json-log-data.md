@@ -146,76 +146,27 @@ $ jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
 
 Certain combinations of pathing have been labeled in the Cloudflare **Threat Analytics** feature (in the **Analytics** app in the Cloudflare dashboard). The mapping is as follows:
 
-<table style="border: solid 2px darkgrey; width: 80%;">
-    <thead style="background: #ffeadf;">
-        <tr>
-            <th>Pathing</th>
-            <th>Label</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>bic.ban.unknown</td>
-            <td>Bad browser</td>
-        </tr>
-        <tr>
-            <td>hot.ban.unknown</td>
-            <td>Blocked hotlink</td>
-        </tr>
-        <tr>
-            <td>hot.ban.ip</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>macro.ban.ip</td>
-            <td>Bad IP</td>
-        </tr>
-        <tr>
-            <td>user.ban.ctry</td>
-            <td>Country block</td>
-        </tr>
-        <tr>
-            <td>user.ban.ip</td>
-            <td>IP block (user)</td>
-        </tr>
-        <tr>
-            <td>user.ban.ipr16</td>
-            <td>IP range block (/16)</td>
-        </tr>
-        <tr>
-            <td>user.ban.ipr24</td>
-            <td>&nbsp;IP range block (/24)</td>
-        </tr>
-        <tr>
-            <td>macro.chl.captchaErr</td>
-            <td>Captcha Error</td>
-        </tr>
-        <tr>
-            <td>macro.chl.captchaFail</td>
-            <td>Human Challenged</td>
-        </tr>
-        <tr>
-            <td>macro.chl.captchaNew</td>
-            <td>New CAPTCHA (CF)</td>
-        </tr>
-        <tr>
-            <td>macro.chl.jschlFail</td>
-            <td>Browser Challenged</td>
-        </tr>
-        <tr>
-            <td>macro.chl.jschlNew</td>
-            <td>Challenged threat</td>
-        </tr>
-        <tr>
-            <td>macro.chl.jschlErr</td>
-            <td>Bot request</td>
-        </tr>
-        <tr>
-            <td>user.chl.captchaNew</td>
-            <td>&nbsp;New CAPTCHA (user)</td>
-        </tr>
-    </tbody>
-</table>
+<TableWrap>
+
+| Pathing | Label |
+|---|---|
+| bic.ban.unknown | Bad browser |
+| hot.ban.unknown | Blocked hotlink |
+| hot.ban.ip | |
+| macro.ban.ip | Bad IP |
+| user.ban.ctry | Country block |
+| user.ban.ip | IP block (user) |
+| user.ban.ipr16 | IP range block (/16) |
+| user.ban.ipr24 | IP range block (/24) |
+| macro.chl.captchaErr | Captcha Error |
+| macro.chl.captchaFail | Human Challenged |
+| macro.chl.captchaNew | New CAPTCHA (CF) |
+| macro.chl.jschlFail | Browser Challenged |
+| macro.chl.jschlNew | Challenged threat |
+| macro.chl.jschlErr | Bot request |
+| user.chl.captchaNew | New CAPTCHA (user) |
+
+</TableWrap>
 
 -----
 

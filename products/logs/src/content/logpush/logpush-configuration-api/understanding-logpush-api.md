@@ -11,83 +11,24 @@ The table below summarizes the job operations available.
 
 The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument is the numeric job id. The `<dataset>` argument indicates the log category (either `http_requests` or `spectrum_events`).
 
-<table style="border: solid 2px darkgrey; width:100%;">
-    <thead style="background:#ffeadf;">
-        <tr>
-            <th>
-                Operation
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                URL
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>POST</td>
-            <td>Create job</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em></td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>Retrieve job</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em></td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>Retrieve all jobs for all data sets</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em></td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>Retrieve all jobs for a data set </td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/jobs</em></td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>Retrieve all available fields for a data set </td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields</em></td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>Retrieve all default fields for a data set </td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields/default</em></td>
-        </tr>
-        <tr>
-            <td>PUT</td>
-            <td>Update job</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em></td>
-        </tr>
-        <tr>
-            <td>DELETE</td>
-            <td>Delete job</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em></td>
-        </tr>
-        <tr>
-            <td>POST</td>
-            <td>Check whether destination exists</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/destination/exists</em></td>
-        </tr>
-        <tr>
-            <td>POST</td>
-            <td>Get ownership challenge</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership</em></td>
-        </tr>
-        <tr>
-            <td>POST</td>
-            <td>Validate ownership challenge</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership/validate</em></td>
-        </tr>
-        <tr>
-            <td>POST</td>
-            <td>Validate log options</td>
-            <td><em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/origin</em></td>
-        </tr>
-	</tbody>
-</table>
+<TableWrap>
+
+| Operation | Description | URL |
+|---|---|---|
+| POST | Create job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em> |
+| GET | Retrieve job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
+| GET | Retrieve all jobs for all data sets | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em> |
+| GET | Retrieve all jobs for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/jobs</em> |
+| GET | Retrieve all available fields for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields</em> |
+| GET | Retrieve all default fields for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields/default</em> |
+| PUT | Update job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
+| DELETE | Delete job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
+| POST | Check whether destination exists | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/destination/exists</em> |
+| POST | Get ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership</em> |
+| POST | Validate ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership/validate</em> |
+| POST | Validate log options | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/origin</em> |
+
+</TableWrap>
 
 For concrete examples, see the tutorial [Manage Logpush with cURL](/tutorials/tutorial-logpush-curl/).
 
