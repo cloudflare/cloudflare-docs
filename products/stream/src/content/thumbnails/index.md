@@ -86,4 +86,3 @@ Supported URL attributes for animated thumbnails are:
   - **`fill`** preserve the entire frame and fill the rest of the requested size with black background
 - **`duration`** (default `5s`)
 - **`fps`** (default `8`)
-
