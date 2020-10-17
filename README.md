@@ -14,7 +14,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 
 | Product                 | `pathPrefix`         | Icon | Content | Test                                                                                  | Prod                                                        |
 | :---------------------- | :------------------- | :--- | :------ | :------------------------------------------------------------------------------------ | :---------------------------------------------------------- |
-| 1.1.1.1                 | 1-1-1-1              | ✕    | Started | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1-1-1-1)                           |                                                             |
+| 1.1.1.1                 | 1.1.1.1              | ✕    | Started | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1.1.1.1)                           |                                                             |
 | Access                  | access               | ✕    | ✕       | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)            |
 | Analytics               | analytics            | ✕    |         | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       |                                                             |
 | Argo Tunnel             | argo-tunnel          | ✕    | ✕       | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   | [Prod](https://developers.cloudflare.com/argo-tunnel)       |
