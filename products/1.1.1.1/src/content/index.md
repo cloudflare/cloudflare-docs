@@ -7,8 +7,8 @@ type: overview
 import fancyColor1111 from "./static/1111-fancycolor.gif"
 
 <h1>
-  <span is-visually-hidden="">1.1.1.1</span>
-  <img src={fancyColor1111} alt="1.1.1.1" style="max-width: 40%" />
+  <span is-visually-hidden="true">1.1.1.1</span>
+  <img src={fancyColor1111} alt="1.1.1.1" style="max-width: 40%"/>
 </h1>
 
 <ContentColumn>
