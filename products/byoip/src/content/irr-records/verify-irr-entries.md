@@ -89,6 +89,6 @@ source:         APNIC
 
 __Note:__ WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
-For more, see [_best practices for IRR entry updates_](/irr-records/best-practices-for-irr-entry-updates).
+For more, see [best practices for IRR entry updates](/irr-records/best-practices-for-irr-entry-updates).
 
 </Aside>
