@@ -35,3 +35,7 @@ Here is a list of membership types and examples:
 We recommend using Access groups to define any IP address-based rules you configure in policies. Keeping IP addresses in one place allows you to modify or remove addresses once, rather than in each policy, and reduces the potential for mistakes.
 
 **Note**: If adding more than one IP address or range to an access group, it’s best to use an Include rule. If you don’t use the Include rule, the policy using that Access group attempts to require traffic to originate from all ranges.
+
+## Using Groups for Country Requirements
+
+You can create an Access Group that consists of countries to allow or block. The Access Group will treat the countries in the `Include` policy with an `OR` operator. You can use this Access Group inside of a `Require` rule to require at least one of the countries inside of the group.
