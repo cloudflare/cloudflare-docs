@@ -1,7 +1,8 @@
 ---
-title: "Microsoft Edge"
-weight: 3
+order: 2
 ---
+
+# Microsoft Edge
 
 Microsoft Edge Preview (based on Chromium) has begun supporting HTTP/3 in Canary Channel builds. Canary Channel is an official experimental channel that provides binaries to allow you to test new features such as HTTP/3. Canary Channel builds may have some stability issues that you should keep in mind when testing.
 
@@ -15,16 +16,16 @@ Only Edge Canary currently support HTTP/3. To install the latest, [download](htt
 
 If installed in the default location, starting Edge Canary with the correct flags is done by running the following commands in a command prompt:
 
-```
+```txt
 "C:\Users\$USER\AppData\Local\Microsoft\Edge SxS\Application\msedge.exe" --enable-quic --quic-version=h3-27
 ```
-(replace $USER with the name of your account on Windows)
 
+(Replace $USER with the name of your account on Windows.)
 
 ## Running on MacOS X
 
 If installed in the default location, starting Edge Canary with the correct flags is done by running the following command in a terminal:
 
-```
+```txt
 /Applications/Microsoft\ Edge\ Canary.app/Contents/MacOS/Microsoft\ Edge\ Canary --enable-quic --quic-version=h3-27
 ```

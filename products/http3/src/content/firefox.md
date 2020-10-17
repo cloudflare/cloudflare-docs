@@ -1,7 +1,8 @@
 ---
-title: "Mozilla Firefox"
-weight: 3
+order: 3
 ---
+
+# Mozilla Firefox
 
 Firefox has begun supporting HTTP/3 in nightly builds. Firefox nightly is an official experimental channel that provides binaries to allow you to test new features such as HTTP/3. **Nightly builds may have some stability issues that you should keep in mind when testing**.
 

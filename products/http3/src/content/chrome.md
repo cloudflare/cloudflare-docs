@@ -1,7 +1,8 @@
 ---
-title: "Google Chrome"
-weight: 3
+order: 1
 ---
+
+# Google Chrome
 
 Google has begun supporting HTTP/3 in nightly builds. Chrome Canary is an official experimental channel that provides binaries to allow you to test new features such as HTTP/3. Nightly builds may have some stability issues that you should keep in mind when testing.
 
@@ -15,17 +16,17 @@ Only Chrome canaries currently support HTTP/3. To install the latest, [download]
 
 If installed in the default location, starting Chrome with the correct flags is done by running the following commands in a command prompt:
 
-```
+```txt
 cd C:\Users\$USER\AppData\Local\Google\Chrome SxS\Application
 chrome.exe --enable-quic --quic-version=h3-27
 ```
-(replace $USER with the name of your account on Windows)
 
+(Replace $USER with the name of your account on Windows.)
 
 ## Running on MacOS X
 
 If installed in the default location, starting Chrome with the correct flags is done by running the following command in a terminal:
 
-`/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --enable-quic --quic-version=h3-27`
-
-
+```txt
+/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --enable-quic --quic-version=h3-27
+```
