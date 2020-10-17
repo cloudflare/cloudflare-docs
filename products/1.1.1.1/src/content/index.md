@@ -8,7 +8,12 @@ import fancyColor1111 from "./static/1111-fancycolor.gif"
 
 <h1>
   <span is-visually-hidden="">1.1.1.1</span>
-  <img src={fancyColor1111} alt="1.1.1.1" style="max-width: 30%; margin-bottom: 1em"/>
+  <div style="width: 33%; margin-bottom:1em">
+    <!-- Dimensions of the gif are 1989x589 -->
+    <div class="AspectRatio" style="--aspect-ratio: calc(1989 / 589)">
+      <img class="AspectRatio--content" src={fancyColor1111} alt="1.1.1.1"/>
+    </div>
+  </div>
 </h1>
 
 <ContentColumn>
