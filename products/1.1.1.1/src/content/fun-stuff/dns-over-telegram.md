@@ -24,19 +24,21 @@ Example:
 
 Or you can send a record type followed by a domain name. The record types supported are:
 
-    A
-    AAAA
-    CAA
-    CNAME
-    DS
-    DNSKEY
-    MX
-    NS
-    NSEC
-    NSEC3
-    RRSIG
-    SOA
-    TXT
+```txt
+A
+AAAA
+CAA
+CNAME
+DS
+DNSKEY
+MX
+NS
+NSEC
+NSEC3
+RRSIG
+SOA
+TXT
+```
 
 Example:
 

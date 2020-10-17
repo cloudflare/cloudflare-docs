@@ -2,9 +2,9 @@
 order: 4
 ---
 
-# Linux Setup Instructions
+# Linux setup instructions
 
-## Block Malware
+## Block malware
 
 ### Ubuntu
 

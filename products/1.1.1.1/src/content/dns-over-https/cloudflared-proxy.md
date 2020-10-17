@@ -2,7 +2,7 @@
 order: 10
 ---
 
-# Running a DNS over HTTPS Client
+# Running a DNS over HTTPS client
 
 There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1 in order to protect your DNS queries from privacy intrusions and tampering.
 

@@ -6,8 +6,8 @@ order: 1
 
 ## Android 9 Pie
 
-Android Pie supports Private DNS, which uses DNS over TLS to secure your queries. 
-If your device runs Android 9, this is the recommended method to set up 1.1.1.1 because unlike previous versions 
+Android Pie supports Private DNS, which uses DNS over TLS to secure your queries.
+If your device runs Android 9, this is the recommended method to set up 1.1.1.1 because unlike previous versions
 of Android, it does not need to be configured for each new WiFi network.
 
 Follow these steps to configure your device to use 1.1.1.1.
@@ -20,8 +20,7 @@ Step 3: Enter `one.one.one.one` or `1dot1dot1dot1.cloudflare-dns.com` and hit Sa
 
 Step 4: Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is enabled.
 
-
-## Previous Versions
+## Previous versions
 
 Follow this quick guide to start using 1.1.1.1 on your Android.
 

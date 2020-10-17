@@ -4,7 +4,7 @@ order: 2
 
 # What is 1.1.1.1?
 
-## What is a DNS resolver
+## What is a DNS resolver?
 
 When you request to visit an application like cloudflare.com, your computer needs to know which server to connect you to so that it can load the application. Computers don’t know how to do this name to address translation, so they ask a specialized server to do it for them.
 
@@ -12,7 +12,7 @@ This specialized server is called a DNS recursive resolver. The resolver’s job
 
 Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you’re on your home or wireless internet, and by your network administrator if you’re connected to the office internet. You can also change the configured DNS resolver your computer talks to yourself.
 
-## What do DNS resolvers do
+## What do DNS resolvers do?
 
 How do resolvers know how to find the address of a domain name? They work backwards from the top.
 
