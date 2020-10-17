@@ -3,9 +3,10 @@
 order: 3
 ---
 
-# Windows Setup Instructions
+# Windows setup instructions
 
-## Block Malware
+## Block malware
+
 ### IPv4
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
@@ -33,7 +34,8 @@ order: 3
     * **2606:4700:4700::1002**
 * Click OK.
 
-## Block Malware and Adult Content
+## Block malware and adult content
+
 ### IPv4
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.

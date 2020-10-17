@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Gaming Consoles
+# Gaming consoles
 
 Faster access to online games? ✌️✌️.
 

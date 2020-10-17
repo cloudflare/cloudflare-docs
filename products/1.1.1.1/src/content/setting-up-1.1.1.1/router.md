@@ -8,10 +8,10 @@ Follow this quick guide to start using 1.1.1.1 on your router.
 
 Step 1: Go to the IP address used to access your router's admin console in your browser.
 
-  * Linksys and Asus routers typically use [http://192.168.1.1](http://192.168.1.1)
-  * Netgear routers typically use [http://192.168.0.1](http://192.168.0.1) or [http://192.168.1.1](http://192.168.1.1)
-  * D-Link routers typically use [http://192.168.0.1](http://192.168.0.1)
-  * Ubiquiti routers typically use [http://unifi.ubnt.com](http://unifi.ubnt.com)
+- Linksys and Asus routers typically use [http://192.168.1.1](http://192.168.1.1)
+- Netgear routers typically use [http://192.168.0.1](http://192.168.0.1) or [http://192.168.1.1](http://192.168.1.1)
+- D-Link routers typically use [http://192.168.0.1](http://192.168.0.1)
+- Ubiquiti routers typically use [http://unifi.ubnt.com](http://unifi.ubnt.com)
 
 Step 2: Enter the router password.
 
