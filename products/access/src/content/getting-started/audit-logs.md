@@ -54,17 +54,7 @@ Users who have authenticated through Access have access to authorized URL paths 
 
 A video guide is also available:
 
-<stream src="19987899aa95453b6bbdb7e6b4431223" controls></stream>
-
-<div>{React.useEffect(() => {
-  setTimeout(() => {
-    const tag = document.createElement('script');
-    tag.async = false;
-    tag.src = "https://embed.videodelivery.net/embed/3f8m.fla9.latest.js";
-    const body = document.getElementsByTagName('body')[0];
-    body.appendChild(tag);
-  }, 500)
-  })}</div>
+<StreamVideo id="19987899aa95453b6bbdb7e6b4431223"/>
 
 ### Cloudflare logging
 

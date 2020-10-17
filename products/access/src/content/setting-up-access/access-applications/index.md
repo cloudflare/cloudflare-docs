@@ -43,10 +43,8 @@ When users attempt to log in to the application, the application sends the user 
 
 The way Access provides a standard proof of identity is by generating a JWT for every login. The JWT is then converted through Cloudflare Workers into a SAML assertion that is sent to the SaaS application. The application receiving the SAML assertion will then treat Access as the identity provider, even though it is aggregating identity signals from the user’s SSO provider and other sources into the JWT, and sending that summary to the app via SAML.
 
-
 ## Secure Grafana and other web applications
 
 Just getting started? Learn how to set up Cloudflare Access to secure the popular database dashboard Grafana, with an approach that can be used to protect and provide remote access to many different applications.
 
-<stream src="31a370fb4aac62a4f59a4b70b5aa3355" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=31a370fb4aac62a4f59a4b70b5aa3355"></script>
+<StreamVideo id="31a370fb4aac62a4f59a4b70b5aa3355"/>

@@ -76,5 +76,4 @@ Once a hostname has been added, you can begin to deploy applications as subdomai
 
 Just getting started? Learn how to set up Cloudflare Access to secure the popular database dashboard Grafana, with an approach that can be used to protect and provide remote access to many different applications.
 
-<stream src="31a370fb4aac62a4f59a4b70b5aa3355" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=31a370fb4aac62a4f59a4b70b5aa3355"></script>
+<StreamVideo id="31a370fb4aac62a4f59a4b70b5aa3355"/>

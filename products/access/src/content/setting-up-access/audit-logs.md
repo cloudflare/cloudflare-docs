@@ -111,5 +111,4 @@ For more on exporting per-request Access logs, see [_Understanding the Logpush A
 
 Use Logpush to automatically export logs from Cloudflare Access to cloud providers like Google Cloud and Microsoft Azure, and SIEMs like Sumo Logic.
 
-<stream src="19987899aa95453b6bbdb7e6b4431223" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=19987899aa95453b6bbdb7e6b4431223"></script>
+<StreamVideo id="19987899aa95453b6bbdb7e6b4431223"/>
