@@ -35,14 +35,15 @@ These are the criteria you can assign to a rule:
 * **Emails** — `you@company.com`
 * **Emails ending in** — `@company.com`
 * **Access groups** — `example-team`
-* **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6)
+* **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
 * **Everyone** — allows, denies, or bypasses access to everyone.
-* **Country** – uses the IP address to determine country
-* **Valid Certificate** - the request will need to present any valid client certificate
-* **Common Name** - the request will need to present a valid certificate with an expected common name
-* **Any Access Service Token** - the request will need to present the headers for any service token created for this account
+* **Country** – uses the IP address to determine country.
+* **Valid Certificate** - the request will need to present any valid client certificate.
+* **Common Name** - the request will need to present a valid certificate with an expected common name.
+* **Any Access Service Token** - the request will need to present the headers for any [service token](/access-service-auth/service-tokens) created for this account.
 * **Service Token** - the request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
+* **Authentication Method** - checks the [multifactor authentication](/learning/mfa-requirements) method used by the user, if supported by the identity provider.
 
 <!-- To learn more about policy rules and how to combine policy actions and rules, read the [Policy Management](/learning-and-examples/policy-management/) section. -->
 
