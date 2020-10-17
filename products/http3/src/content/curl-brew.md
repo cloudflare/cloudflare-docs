@@ -1,23 +1,27 @@
 ---
-title: "Curl + Quiche"
-weight: 3
+order: 4
 ---
+
+# Curl + Quiche
 
 Homebrew formula for curl + quiche to easily build and test HTTP/3 on MacOS.
 
-### Requirement
-Install homebrew from https://brew.sh/
+## Requirements
 
-### Build
+Install homebrew from [brew.sh](https://brew.sh).
+
+## Build
+
 This will replace your current curl installation.
 Run the following commands to install required dependencies and to build curl with quiche support.
 
-* Uninstall curl if you already have:
+- Uninstall curl if you already have:
 
   ```sh
   $ brew remove -f curl
   ```
-* Build curl with quiche:
+
+- Build curl with quiche:
 
   ```sh
   $ brew install -s https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
@@ -30,8 +34,8 @@ Check if curl with H3 support is built properly:
 
 ```sh
 $ curl --help | egrep 'alt-svc|http3'
-     --alt-svc <file name> Enable alt-svc with this cache file
-     --http3         Use HTTP v3
+    --alt-svc <file name> Enable alt-svc with this cache file
+    --http3         Use HTTP v3
 ```
 
 Now, you can try curl on any H3 enabled sites.
