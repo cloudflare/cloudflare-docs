@@ -8,11 +8,11 @@ Cloudflare WARP supports the following operational modes. You can choose to have
 
 ## WARP Modes
 
-* **1.1.1.1** Since nearly everything you do on the Internet starts with a DNS request, choosing the fastest DNS directory across all your devices will accelerate almost everything you do online. Speed isn’t  everything though, and while the connection between your application and a website may be encrypted, DNS lookups for that website were not. This allowed anyone, even your Internet Service Provider, to potentially snoop (and sell) on where you are going on the Internet. 
+* **1.1.1.1** Since nearly everything you do on the Internet starts with a DNS request, choosing the fastest DNS directory across all your devices will accelerate almost everything you do online. Speed isn’t  everything though, and while the connection between your application and a website may be encrypted, DNS lookups for that website were not. This allowed anyone, even your Internet Service Provider, to potentially snoop (and sell) on where you are going on the Internet.
 
     Cloudflare will never snoop or sell your data that way. And if you use DNS-over-HTTPS or DNS-over-TLS to our 1.1.1.1 resolver, your DNS lookup request will be sent over a secure channel. This means that if you use the 1.1.1.1 resolver then in addition to our privacy guarantees an eavesdropper can’t see your DNS requests. We will never look at what you’re doing. Don’t take our word for it though, earlier this year we published the results of a 3rd party audit, something we’ll keep doing and wish others would do as well.
 
-    Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, privacy-first consumer DNS service](https://blog.cloudflare.com/announcing-1111//) and [Introducing 1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/)
+    Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, privacy-first consumer DNS service](https://blog.cloudflare.com/announcing-1111/) and [Introducing 1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/)
 
 
 * **WARP** WARP was built on the philosophy that even people who don’t know what [V.P.N.](https://www.cloudflare.com/learning/access-management/what-is-a-vpn/) stands for should be able to still easily get the protection one offers. For those of us unfortunately very familiar with traditional corporate VPN’s, something better was needed. Enter our own Wireguard implementation called [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/).
