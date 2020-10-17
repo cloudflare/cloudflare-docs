@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# HTTP/3 client
+# Quiche HTTP/3 client
 
 Quiche is Cloudflare's own implementation of the QUIC transport protocol and HTTP/3 as specified by the IETF. It contains a simple HTTP/3 client developed and supported by us, and is the easiest way to experiment with our edge QUIC implementation.
 
