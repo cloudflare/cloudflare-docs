@@ -97,5 +97,4 @@ Once saved, the user can run any SSH commands directed to the GitLab instance. C
 
 ## Example video
 
-<stream src="d0fafb9d43ba50f533127805f3ffee67" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=d0fafb9d43ba50f533127805f3ffee67"></script>
+<StreamVideo id="d0fafb9d43ba50f533127805f3ffee67"/>

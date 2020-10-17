@@ -8,8 +8,7 @@ Follow this quick guide to start using 1.1.1.1 on your Windows computer.
 
 ## Windows 10
 
-<stream src="92b27227d737a866adc8b0572cf0db89" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=92b27227d737a866adc8b0572cf0db89"></script>
+<StreamVideo id="92b27227d737a866adc8b0572cf0db89"/>
 
 Step 1: Click on the Start menu, then click on Control Panel.
 

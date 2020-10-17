@@ -24,8 +24,7 @@ Step 4: Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is ena
 
 Follow this quick guide to start using 1.1.1.1 on your Android.
 
-<stream src="62dceb0d5905f0c98a895d21409d6247" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=62dceb0d5905f0c98a895d21409d6247"></script>
+<StreamVideo id="62dceb0d5905f0c98a895d21409d6247"/>
 
 Step 1: Open up Settings.
 

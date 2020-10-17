@@ -6,8 +6,7 @@ order: 5
 
 Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
-<stream src="ddf07732bc76fc854d4b1879eea2c517" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=ddf07732bc76fc854d4b1879eea2c517"></script>
+<StreamVideo id="ddf07732bc76fc854d4b1879eea2c517"/>
 
 Step 1: Go to Settings.
 
@@ -36,8 +35,7 @@ Step 8: Click Save.
 
 You can also use a handy iOS app called DNS Override (paid app, costs $1.99) that automatically configures 1.1.1.1 for you on any network you connect to. To use it:
 
-<stream src="da4eefaa9315767842737eb793c9b63d" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=da4eefaa9315767842737eb793c9b63d"></script>
+<StreamVideo id="da4eefaa9315767842737eb793c9b63d"/>
 
 Step 1: [Download DNS Override from the app store](https://itunes.apple.com/us/app/dns-override/id1060830093?mt=8).
 

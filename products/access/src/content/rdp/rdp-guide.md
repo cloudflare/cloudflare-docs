@@ -224,5 +224,4 @@ The default behavior in MacOS is for the Terminal window to stay open. This can 
 
 In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
 
-<stream src="2a3073fb7881b4fcba4b9e3709dfaacf" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=2a3073fb7881b4fcba4b9e3709dfaacf"></script>
+<StreamVideo id="2a3073fb7881b4fcba4b9e3709dfaacf"/>

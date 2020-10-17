@@ -6,8 +6,7 @@ order: 7
 
 Follow this quick guide to start using 1.1.1.1 on your Mac.
 
-<stream src="b95943849d53350130ba22d039fa6faf" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=b95943849d53350130ba22d039fa6faf"></script>
+<StreamVideo id="b95943849d53350130ba22d039fa6faf"/>
 
 Step 1: Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 

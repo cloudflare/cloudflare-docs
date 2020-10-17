@@ -269,14 +269,4 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `224
 
 In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
 
-<stream src="2a3073fb7881b4fcba4b9e3709dfaacf" controls></stream>
-
-<div>{React.useEffect(() => {
-  setTimeout(() => {
-    const tag = document.createElement('script');
-    tag.async = false;
-    tag.src = "https://embed.videodelivery.net/embed/3f8m.fla9.latest.js";
-    const body = document.getElementsByTagName('body')[0];
-    body.appendChild(tag);
-  }, 500)
-  })}</div>
+<StreamVideo id="2a3073fb7881b4fcba4b9e3709dfaacf"/>

@@ -34,8 +34,7 @@ It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if
 
 ## Ubiquiti UniFi Controller
 
-<stream src="510f09dad9812cd7ac009ebcab75068e" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=510f09dad9812cd7ac009ebcab75068e"></script>
+<StreamVideo id="510f09dad9812cd7ac009ebcab75068e"/>
 
 Step 1: Go to [http://unifi.ubnt.com](http://unifi.ubnt.com) and enter your email and password.
 

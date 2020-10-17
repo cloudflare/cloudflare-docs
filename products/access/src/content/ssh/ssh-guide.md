@@ -131,9 +131,6 @@ Cloudflare Access does not replace SSH key exchange with a Git repository.
 
 In this video, you’ll learn how to use Cloudflare Access to protect an SSH connection by setting up a secure link with Argo Tunnel.
 
-<stream src="2379b6b85ee22866c4b45571bdb5fe35" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=2379b6b85ee22866c4b45571bdb5fe35"></script>
-
-
+<StreamVideo id="2379b6b85ee22866c4b45571bdb5fe35"/>
 
 A video guide is [also available](/videos/configuring-access/).
