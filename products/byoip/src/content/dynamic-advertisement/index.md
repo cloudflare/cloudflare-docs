@@ -6,7 +6,7 @@ order: 2
 
 <Aside>
 
-To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [_Best practices_](/dynamic-advertisement/best-practices) when managing dynamic advertisement.
+To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [best practices](/dynamic-advertisement/best-practices) when managing dynamic advertisement.
 
 </Aside>
 
