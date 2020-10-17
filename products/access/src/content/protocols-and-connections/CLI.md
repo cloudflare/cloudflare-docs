@@ -33,7 +33,7 @@ $ cloudflared access login https://example.com
 Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named _token_. You can invoke the wrapper as follows:
 
 ```sh
-% $ cloudflared access curl http://example.com
+$ cloudflared access curl http://example.com
 ```
 
 It is possible also to use the `put` command with `cloudflared` for any Unix tool to include the token in the request.
