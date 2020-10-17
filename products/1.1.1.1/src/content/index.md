@@ -11,6 +11,8 @@ import fancyColor1111 from "./static/1111-fancycolor.gif"
   <img src={fancyColor1111} alt="1.1.1.1" style="max-width: 40%" />
 </h1>
 
+<ContentColumn>
+
 1.1.1.1 is a fast and private way to browse the internet. It is a DNS resolver - kind of like Google Maps for your computer, it translates places (like cloudflare.com) into addresses (like 2400:cb00:2048:1::c629:d7a2). 1.1.1.1 is deployed in 150+ cities worldwide, and has access to the addresses of 7M+ domain names on the same servers it runs on so [it’s the fastest resolver out there](https://www.dnsperf.com/#!dns-resolvers).
 
 The addresses of 1.1.1.1 are:
@@ -25,3 +27,5 @@ Moreover, you can access 1.1.1.1 as a Tor hidden service at this address:
 - [dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion](./fun-stuff/dns-over-tor/).
 
 <p><Link to="/setting-up-1.1.1.1" className="Button Button-is-docs-primary">Set up 1.1.1.1</Link> &nbsp; <Link to="/what-is-1.1.1.1" class="Button Button-is-docs-secondary">Learn more</Link></p>
+
+</ContentColumn>
