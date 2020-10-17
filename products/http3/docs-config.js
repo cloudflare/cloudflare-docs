@@ -12,7 +12,7 @@ module.exports = {
     {
       title: "HTTP/3 vs. HTTP/3 performance",
       url: "https://blog.cloudflare.com/http-3-vs-http-2/"
-    }
+    },
     {
       title: "Cloudflare homepage",
       url: "https://cloudflare.com"
