@@ -1,5 +1,4 @@
 ---
-title: Actions
 order: 220
 ---
 

@@ -1,5 +1,4 @@
 ---
-title: Functions
 order: 640
 ---
 

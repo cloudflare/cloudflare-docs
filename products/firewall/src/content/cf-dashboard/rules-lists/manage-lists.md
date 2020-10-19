@@ -1,5 +1,4 @@
 ---
-title: Manage lists
 order: 350
 ---
 

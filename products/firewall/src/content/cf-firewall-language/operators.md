@@ -1,5 +1,4 @@
 ---
-title: Operators
 order: 610
 ---
 
