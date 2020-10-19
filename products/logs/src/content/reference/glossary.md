@@ -61,8 +61,6 @@ HTTP response code sent from Cloudflare to the client (end user). The Cloudflare
 
 HTTP response code sent from the origin server to Cloudflare
 
----
-
 ### Threat related terms
 
 #### Threat
@@ -131,8 +129,6 @@ Requests made by a bot that failed to pass the Captcha challenge.
 #### New Captcha (user)
 
 Challenge based on user configurations set for visitor’s IP in either the **Web Application Firewall (WAF)** or the **Firewall** app
-
----
 
 ### Traffic related terms
 

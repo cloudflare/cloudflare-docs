@@ -6,7 +6,7 @@ order: 85
 # Parse Cloudflare Logs JSON data
 
 
-### Overview
+## Overview
 
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
 
@@ -17,9 +17,7 @@ In this tutorial, you will learn how to parse your JSON log data using *jq*.  To
 *jq* is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as *Kibana*.
 </Aside>
 
------
-
-### Aggregating fields
+## Aggregating fields
 
 To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several *jq* commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
 
@@ -59,9 +57,7 @@ $ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 77 null
 ```
 
------
-
-### Filtering fields
+## Filtering fields
 
 Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like *Which URLs saw the most 502 errors?*. For example:
 
@@ -82,9 +78,7 @@ $ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c
 1 127.0.0.1
 ```
 
------
-
-### Understanding pathing
+## Understanding pathing
 
 The three pathing fields stored in Cloudflare Logs are:
 
@@ -140,9 +134,7 @@ $ jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
 92 nr
 ```
 
------
-
-### How does pathing map to Threat Analytics?
+## How does pathing map to Threat Analytics?
 
 Certain combinations of pathing have been labeled in the Cloudflare **Threat Analytics** feature (in the **Analytics** app in the Cloudflare dashboard). The mapping is as follows:
 
@@ -168,9 +160,7 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 
 </TableWrap>
 
------
-
-### Understanding response fields
+## Understanding response fields
 
 The response status appears in three places in a request:
 
@@ -191,9 +181,7 @@ $ jq -r 'select(.OriginResponseStatus == null) | select(.CacheResponseStatus == 
 1 409 / err / dnsErr / errHost
 ```
 
------
-
-### Showing cached requests
+## Showing cached requests
 
 To see your cache ratios, try the following query:
 
@@ -207,9 +195,7 @@ $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 81 unknown
 ```
 
------
-
-### Showing TLS versions
+## Showing TLS versions
 
 To see what TLS versions your visitors are using &mdash; for example, to decide if you can disable TLS versions that are older than 1.2 &mdash; use the following query:
 

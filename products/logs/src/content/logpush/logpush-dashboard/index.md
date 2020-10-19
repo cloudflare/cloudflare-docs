@@ -5,7 +5,6 @@ order: 45
 
 # Manage via the Cloudflare UI
 
-
 Before enabling **Cloudflare Logpush**, make sure that you have already configured a destination in your cloud service.
 
 <Aside type="info" header="Info">

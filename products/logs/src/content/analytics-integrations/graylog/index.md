@@ -7,13 +7,13 @@ order: 101
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using [Graylog](https://go.graylog.com/cloudflare).
 
-## Overview:
+## Overview
 
 If you haven't used Cloudflare Logs before, visit our [Logs documentation](/) for
 more details. Contact your Cloudflare Customer Account Team to enable logs for
 your account.
 
-### Prerequisites:
+### Prerequisites
 
 Before sending your Cloudflare log data to Graylog, make sure that you:
 

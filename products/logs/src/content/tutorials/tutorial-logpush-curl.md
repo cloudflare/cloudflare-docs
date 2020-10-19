@@ -12,8 +12,6 @@ Before getting started, review:
 * [Understanding the Logpush API](/logpush/logpush-configuration-api/understanding-logpush-api)
 * [Job object JSON schema](/logpush/logpush-configuration-api/job-json-schema)
 
-----
-
 ## Step 1 - Get ownership challenge
 
 ```bash
@@ -111,8 +109,6 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/val
   "success": true
 }
 ```
-
-----
 
 ## Step 3 - Enable (update) a job
 
@@ -214,8 +210,6 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>logpush/jobs/146 | jq .
 }
 ```
 
-----
-
 ## Step 4 - Delete a job
 
 ```bash
@@ -235,8 +229,6 @@ Be careful when deleting a job because this action cannot be reversed.
   "success": true
 }
 ```
-
-----
 
 ## Step 5 - Retrieve your job
 

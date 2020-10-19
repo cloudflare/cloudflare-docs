@@ -32,8 +32,6 @@ The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument 
 
 For concrete examples, see the tutorial [Manage Logpush with cURL](/tutorials/tutorial-logpush-curl/).
 
--------
-
 ## Connecting
 
 The Logpush API requires credentials like any other Cloudflare API.
@@ -42,8 +40,6 @@ The Logpush API requires credentials like any other Cloudflare API.
 $ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" \
     'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 ```
-
--------
 
 ## Ownership
 
@@ -76,8 +72,6 @@ You will need to provide the token contained in the file when creating a job.
 
 When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
 </Aside>
-
--------
 
 ## Destination
 
@@ -118,16 +112,12 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/va
 
 There can be only 1 job writing to each unique destination. For S3 and GCS, a destination is defined as bucket + path. This means two jobs can write to the same bucket, but must write to different subdirectories in that bucket.
 
--------
-
 ## Job object
 
 <Aside type="info" header="Info">
 
 See a detailed description of the [Logpush object JSON schema](/logpush/logpush-configuration-api/job-json-schema/).
 </Aside>
-
--------
 
 ## Options
 
@@ -171,8 +161,6 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/va
   "success": true
 }
 ```
-
--------
 
 ## Audit
 

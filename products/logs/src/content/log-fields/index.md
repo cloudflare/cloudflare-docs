@@ -8,14 +8,7 @@ order: 50
 The tables below describe the fields available by log category. The list of fields is also accessible directly from the API:
 `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`, where the `dataset` argument indicates the log category (either `http_requests`, `spectrum_events`, or `firewall_events`).
 
-- [HTTP requests](#http-requests)
-- [Spectrum events](#spectrum-events)
-- [Firewall events](#firewall-events)
-
----
-
-
-### HTTP requests
+## HTTP requests
 
 <TableWrap>
 
@@ -87,9 +80,7 @@ The tables below describe the fields available by log category. The list of fiel
 </TableWrap>
 
 
-----
-
-### Spectrum events
+## Spectrum events
 
 <TableWrap>
 
@@ -130,9 +121,7 @@ The tables below describe the fields available by log category. The list of fiel
 </TableWrap>
 
 
-----
-
-### Firewall events
+## Firewall events
 
 <TableWrap>
 

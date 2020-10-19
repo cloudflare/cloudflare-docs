@@ -29,8 +29,6 @@ Before getting started, make sure that you:
 You can also refer to our [tutorials for enabling logs and dashboards for several analytics providers](/analytics-integrations/).
 </Aside>
 
----
-
 ## Task 1 - Configure Cloudflare to Detect Bot Traffic
 
 Before proceeding, make sure that you’ve enabled Cloudflare Bot Management for your Enterprise account. To start:
@@ -49,8 +47,6 @@ You can track bots in Cloudflare logs only when using the action _Challenge (Cap
 </Aside>
 
 ![Create Cloudflare Firewall rule to identify bad bots](/static/images/bot-management/screenshots/create-firewall-rule-for-bots.png)
-
----
 
 ## Task 2 - View Bot Traffic Dashboards
 

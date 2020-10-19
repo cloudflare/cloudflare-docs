@@ -7,7 +7,7 @@ order: 123
 
 The Web Application Firewall (WAF) contains rules managed by Cloudflare to block requests that contain malicious content.
 
-### WAFAction
+## WAFAction
 
 <TableWrap>
 
@@ -23,12 +23,9 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 
 </TableWrap>
 
-### Deprecated fields for internal Cloudflare use
+## Deprecated fields for internal Cloudflare use
 
 The values of these fields are subject to change by Cloudflare at any time and are irrelevant for customer data analysis:
 
 - WAFFlags
 - WAFMatchedVar
-
----
-
