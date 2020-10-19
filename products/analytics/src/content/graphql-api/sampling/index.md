@@ -1,7 +1,9 @@
 ---
 title: Sampling
-weight: 40
+order: 40
 ---
+
+# Sampling
 
 ### Overview
 

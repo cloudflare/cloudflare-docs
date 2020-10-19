@@ -1,7 +1,9 @@
 ---
 title: Getting started
-weight: 10
+order: 10
 ---
+
+# Getting started
 
 
 This section describes setting up authentication for _GraphiQL_ and GraphQL Analytics API querying basics.

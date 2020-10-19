@@ -1,7 +1,9 @@
 ---
 title: GraphQL Analytics API
-weight: 1
+order: 1
 ---
+
+# GraphQL Analytics API
 
 The GraphQL Analytics API provides data regarding HTTP requests passing through Cloudflare’s network, as well as data from specific products, such as Firewall or Load Balancing. Network Analytics users also have access to packet-level data. Use the GraphQL Analytics API to select specific data sets and metrics of interest, filter and aggregate the data along various dimensions, and integrate the results with other applications.
 

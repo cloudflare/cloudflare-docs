@@ -1,7 +1,9 @@
 ---
 title: Build your own Analytics dashboard
-weight: 40
+order: 40
 ---
+
+# Build your own Analytics dashboard
 
 import graphqlRecipeCacheVisual from '../static/graphQL-recipe-cacheVisual.gif';
 

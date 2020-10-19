@@ -1,7 +1,9 @@
 ---
 title: Data Sets (tables)
-weight: 2
+order: 2
 ---
+
+# Data Sets (tables)
 
 Cloudflare Analytics offers a range of data sets, including both general and product-specific data sets. Data sets use a consistent naming scheme that explicitly identifies the type of data they return:
 

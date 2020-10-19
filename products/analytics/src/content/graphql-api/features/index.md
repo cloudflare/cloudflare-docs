@@ -1,7 +1,9 @@
 ---
 title: Features
-weight: 20
+order: 20
 ---
+
+# Features
 
 The GraphQL Analytics API offers the following features:
 

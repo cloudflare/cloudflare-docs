@@ -1,7 +1,9 @@
 ---
 title: Limits
-weight: 30
+order: 30
 ---
+
+# Limits
 
 
 ### Data accessibility

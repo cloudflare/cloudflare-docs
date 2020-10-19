@@ -1,7 +1,9 @@
 ---
 title: Nested Structures
-weight: 16
+order: 16
 ---
+
+# Nested Structures
 
 Two kinds of nested structures that behave in special ways are supported: **arrays** and **maps**. Fields of either of these types are arrays; when they're part part of query result, which is already an array of objects, they become nested arrays.
 

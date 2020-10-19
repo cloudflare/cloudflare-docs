@@ -1,7 +1,9 @@
 ---
 title: Querying Firewall Events with GraphQL
-weight: 50
+order: 50
 ---
+
+# Querying Firewall Events with GraphQL
 
 In this example, we're going to use the GraphQL Analytics API to query for Firewall Events over a specified time period.
 
