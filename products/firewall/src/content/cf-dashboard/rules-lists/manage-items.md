@@ -1,5 +1,4 @@
 ---
-title: Manage list items (IP addresses)
 order: 360
 ---
 

@@ -1,5 +1,4 @@
 ---
-title: Create an API Shield™ rule
 order: 380
 ---
 

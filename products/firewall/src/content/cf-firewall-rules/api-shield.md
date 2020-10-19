@@ -1,5 +1,4 @@
 ---
-title: API Shield™
 order: 250
 ---
 

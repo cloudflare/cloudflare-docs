@@ -1,5 +1,4 @@
 ---
-title: Known issues and FAQ
 weight: 700
 ---
 

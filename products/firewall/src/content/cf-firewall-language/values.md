@@ -1,5 +1,4 @@
 ---
-title: Values
 order: 630
 ---
 

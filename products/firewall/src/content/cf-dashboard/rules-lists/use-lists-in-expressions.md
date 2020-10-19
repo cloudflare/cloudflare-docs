@@ -1,5 +1,4 @@
 ---
-title: Use lists in expressions
 order: 370
 ---
 

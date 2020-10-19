@@ -1,5 +1,4 @@
 ---
-title: Firewall Rules language
 order: 600
 ---
 

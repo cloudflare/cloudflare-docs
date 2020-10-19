@@ -1,5 +1,4 @@
 ---
-title: PUT examples
 order: 430
 ---
 

@@ -1,5 +1,4 @@
 ---
-title: Common use cases
 order: 500
 ---
 

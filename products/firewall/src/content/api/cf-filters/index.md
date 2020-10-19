@@ -1,5 +1,4 @@
 ---
-title: Cloudflare Filters API
 order: 440
 ---
 
