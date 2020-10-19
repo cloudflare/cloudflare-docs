@@ -1,20 +1,13 @@
 ---
 title: Datadog
-weight: 97
+order: 97
 ---
+
+# Datadog
 
 This tutorial explains how to analyze Cloudflare metrics using the [Cloudflare Integration tile for Datadog](https://docs.datadoghq.com/integrations/cloudflare/).
 
-- [Overview](#overview)
-- [Task 1 - Install the Cloudflare App](#task1)
-- [Task 2 - View the dashboard](#task2)
-
----
-
-<a id="overview" style="color: inherit">
-
-### Overview
-</a>
+## Overview
 
 Before viewing the Cloudflare dashboard in Datadog, note that this integration:
 
@@ -23,12 +16,8 @@ Before viewing the Cloudflare dashboard in Datadog, note that this integration:
 - Provides Cloudflare web traffic and DNS metrics only
 - Does not feature data coming from request logs stored in Cloudflare Logs
 
----
+## Task 1 - Install the Cloudflare App
 
-<a id="task1" style="color: inherit">
-
-### Task 1 - Install the Cloudflare App
-</a>
 To install the Cloudflare App for Datadog:
 
 1. Log in to **Datadog**.
@@ -53,12 +42,8 @@ To install the Cloudflare App for Datadog:
 
 The Cloudflare App for Datadog should be installed now and you can view the dashaboard.
 
----
+## Task 2 - View the dashboard
 
-<a id="task2"  style="color: inherit">
-
-### Task 2 - View the dashboard
-</a>
 By default, the dashboard displays metrics for all sites in your Cloudflare account. Use the dashboard filters see metrics for a specific domain.
 
 The dashboard displays the following metrics:

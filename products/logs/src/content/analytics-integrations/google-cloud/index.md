@@ -1,14 +1,15 @@
 ---
 title: Google Cloud
-weight: 100
+order: 100
 ---
 
+# Google Cloud
 
-### Overview
+## Overview
 
 This tutorial covers how to configure certain Google Cloud Platform (GCP) components so that you can analyze your Cloudflare Logs data.
 
-Before proceeding, you need to enable [Cloudflare Logpush in Google Cloud Storage](/logs/logpush/google-cloud-storage/) to ensure your log data is available for analyzing.
+Before proceeding, you need to enable [Cloudflare Logpush in Google Cloud Storage](/logpush/google-cloud-storage/) to ensure your log data is available for analyzing.
 
 The components we'll use in this tutorial include:
 
@@ -20,14 +21,12 @@ The following diagram depicts how data flows from Cloudflare Logs through the di
 
 ![Cloudflare Logs data to Google Cloud Platform](../../static/images/cf-logpush-to-google-cloud-platform.png)
 
-<Aside type="info">
+<Aside type="info" header="Info">
 
 Google Cloud is offering a credit towards a new Google Cloud account to help you get started. To learn more, visit [Google Cloud Platform Partner Credit](https://cloud.google.com/partners/partnercredit/?PCN=a0n60000003kp9MAAQ).
 </Aside>
 
----
-
-### Task 1 - Use Google Cloud Function to import log data into Google BigQuery
+## Task 1 - Use Google Cloud Function to import log data into Google BigQuery
 
 After you configured Cloudflare Logpush to send your logs to a Google Cloud Storage bucket, your log data updates every five minutes by default.
 
@@ -35,7 +34,7 @@ Google BigQuery makes data available for both querying using Structured Query La
 
 Importing data from Google Cloud Storage into Google BigQuery requires creating a function using Google Cloud Function and running it in the Google Cloud Shell. This function triggers every time new Cloudflare log data is uploaded to your Google Cloud Storage bucket.
 
-#### Clone and deploy a Google Cloud Function
+### Clone and deploy a Google Cloud Function
 
 To a create a cloud function to import data from Google Cloud Storage into Google BigQuery, you will need the following GitHub repository from Cloudflare: https://github.com/cloudflare/GCS-To-Big-Query.
 
@@ -77,15 +76,13 @@ Also, verify that the data now appears in your table in **BigQuery** by navigati
 
 If everything is configured correctly, you can now query any request or visualize data with Google Data Studio or any other analytics tool that supports BigQuery as an input source.
 
----
-
-### Task 2 - Analyze log data with Google Data Studio
+## Task 2 - Analyze log data with Google Data Studio
 
 To analyze and visualize logs, you can use **Google Data Studio** or any other 3rd party services that supports Google BigQuery as an input source.
 
 With Google Data Studio, you can generate graphs and charts from a Google BigQuery table. You can also refresh the data in your reports and get real-time analytics.
 
-#### About the Cloudflare Logs Insights Template
+### About the Cloudflare Logs Insights Template
 
 Cloudflare has published a [Logs Insights Template](https://datastudio.google.com/u/0/reporting/1ez3m7Yf8AZLfM6aYRjfgF0pPpRvOwhTh/page/mAzI/preview) in the **Google Data Studio Report Gallery**.
 
@@ -103,7 +100,7 @@ The following dashboards are included in the Insights template:
 
 - **Reliability**: Provides insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
 
-#### Create a report based on the Insights Template
+### Create a report based on the Insights Template
 
 To create a report for your log data based on the Cloudflare template:
 
@@ -219,11 +216,11 @@ To create a report for your log data based on the Cloudflare template:
 
 11. To finish, click **Add to Report** in the upper right.
 
-#### Refreshing fields and filters manually
+### Refreshing fields and filters manually
 
 After you've added your report, you will notice that not all report components render successfully. To fix this, you need to resolve any errors related to invalid dimensions, metrics, or filters that appear in the affected report components.
 
-##### Fix invalid metric or dimension errors
+#### Fix invalid metric or dimension errors
 
 The following table summarizes which specific components require to be fixed:
 
@@ -278,7 +275,7 @@ For each of the report components listed above:
 
 The component should now render correctly.
 
-##### Update data filters
+#### Update data filters
 
 This fix applies to report page: **3 Reliability Cloudflare**, for the following scorecard components in the report:
 

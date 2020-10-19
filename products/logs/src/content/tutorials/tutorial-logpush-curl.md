@@ -1,28 +1,18 @@
 ---
 title: Manage Logpush with cURL
-weight: 87
+order: 87
 ---
 
+# Manage Logpush with cURL
 
-You can manage your Cloudflare Logpush service from the command line using cURL:
-
-* [Step 1 - Get ownership challenge](#step-1-get-ownership-challenge)
-* [Step 2 - Create a job](#step-2-create-a-job)
-* [Step 3 - Enable (update) a job](#step-3-enable-update-a-job)
-* [Step 4 - Delete a job](#step-4-delete-a-job)
-* [Step 5 - Retrieve your job](#step-5-retrieve-your-job)
+You can manage your Cloudflare Logpush service from the command line using cURL.
 
 Before getting started, review:
 
-* [Understanding the Logpush API](/logs/logpush/logpush-configuration-api/understanding-logpush-api)
-* [Job object JSON schema](/logs/logpush/logpush-configuration-api/job-json-schema)
+* [Understanding the Logpush API](/logpush/logpush-configuration-api/understanding-logpush-api)
+* [Job object JSON schema](/logpush/logpush-configuration-api/job-json-schema)
 
-----
-
-<a id="step-1-get-ownership-challenge" style="color: inherit">
-
-#### Step 1 - Get ownership challenge
-</a>
+## Step 1 - Get ownership challenge
 
 ```bash
 curl -s -X POST \
@@ -30,10 +20,10 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
 -d '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
-###### Parameters
-* *destination_conf* - see [Destination](/logs/logpush/logpush-configuration-api/understanding-logpush-api/#destination) for details
+### Parameters
+* *destination_conf* - see [Destination](/logpush/logpush-configuration-api/understanding-logpush-api/#destination) for details
 
-##### Response
+### Response
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path if appropriate for your destination). For example:
 
@@ -52,15 +42,12 @@ A challenge file will be written to the destination, and the filename will be in
 
 You will need to provide the token contained in this file when creating a job in the next step.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
 </Aside>
 
-<a id="step-2-create-a-job" style="color: inherit">
-
-#### Step 2 - Create a job
-</a>
+## Step 2 - Create a job
 
 ```bash
 curl -s -X POST \
@@ -68,19 +55,19 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -d'{"name":"<DOMAIN_NAME>", "destination_conf":"s3://<BUCKET_PATH>?region=us-west-2", "dataset": "http_requests", "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "ownership_challenge":"00000000000000000000"}' | jq .
 ```
 
-###### Parameters
+### Parameters
 
 * *name* (optional) - we suggest using your domain name as the job name; cannot be changed after the job is created
-* *destination_conf* - see [Destination](/logs/logpush/logpush-configuration-api/understanding-logpush-api/#destination) for details
+* *destination_conf* - see [Destination](/logpush/logpush-configuration-api/understanding-logpush-api/#destination) for details
 * *dataset* - the category of logs you want to receive; either  `http_requests` (default) or `spectrum_events`; cannot be changed after the job is created
-* *logpull_options* (optional) - see [Options](/logs/logpush/logpush-configuration-api/understanding-logpush-api/#options)
+* *logpull_options* (optional) - see [Options](/logpush/logpush-configuration-api/understanding-logpush-api/#options)
     * Typically includes the desired fields and timestamp format
     * Set the timestamp format to RFC 3339 (`&timestamps=rfc3339`) for:
       * Google BigQuery usage
       * Automated timestamp parsing within Sumo Logic; *see [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details*
 * *ownership_challenge* - challenge token required to prove destination ownership
 
-##### Response
+### Response
 
 In the response, you get a newly-created job ID. For example:
 
@@ -109,7 +96,7 @@ Note that you can validate the `logpull_options` parameter before including it i
 curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options": "fields=EdgeStartTimestamp,RayID,CacheCacheStatus&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
-##### Response
+### Response
 
 ```json
 {
@@ -123,12 +110,7 @@ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/val
 }
 ```
 
-----
-
-<a id="step-3-enable-update-a-job" style="color: inherit">
-
-#### Step 3 - Enable (update) a job
-</a>
+## Step 3 - Enable (update) a job
 
 Start by retrieving information about a specific job, using a job ID:
 
@@ -137,7 +119,7 @@ curl -s -X GET \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 ```
 
-##### Response
+### Response
 
 ```json
 {
@@ -174,7 +156,7 @@ curl -s -X PUT \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabled":true}' | jq .
 ```
 
-##### Response
+### Response
 
 ```json
 {
@@ -201,14 +183,14 @@ In addition to modifying *enabled*, you can also update the value for *logpull_o
 
 Once a job has been enabled and has started executing, the *last_complete* field will show the time when the last batch of logs was successfully sent to the destination:
 
-##### Request to get job by ID and see *last_complete* info
+### Request to get job by ID and see *last_complete* info
 
 ```bash
 curl -s -X GET \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>logpush/jobs/146 | jq .
 ```
 
-##### Response
+### Response
 
 ```json
 {"errors": [],
@@ -228,12 +210,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>logpush/jobs/146 | jq .
 }
 ```
 
-----
-
-<a id="step-4-delete-a-job" style="color: inherit">
-
-#### Step 4 - Delete a job
-</a>
+## Step 4 - Delete a job
 
 ```bash
 curl -s -X DELETE \
@@ -242,7 +219,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 
 Be careful when deleting a job because this action cannot be reversed.
 
-##### Response
+### Response
 
 ```json
 {
@@ -253,12 +230,7 @@ Be careful when deleting a job because this action cannot be reversed.
 }
 ```
 
-----
-
-<a id="step-5-retrieve-your-job" style="color: inherit">
-
-#### Step 5 - Retrieve your job
-</a>
+## Step 5 - Retrieve your job
 
 Retrieve a specific job, using the job ID:
 
@@ -266,7 +238,7 @@ Retrieve a specific job, using the job ID:
 curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 ```
 
-##### Response
+### Response
 
 ```json
 {
@@ -295,7 +267,7 @@ Retrieve all jobs for all data sets:
 curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs | jq .
 ```
 
-##### Response
+### Response
 
 ```json
 {

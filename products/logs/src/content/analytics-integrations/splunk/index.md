@@ -1,56 +1,35 @@
 ---
 title: Splunk
-weight: 103
+order: 103
 ---
+
+# Splunk
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/).
 
-- [Overview](#overview)
-  - [Prerequisites](#prerequisites)
-- [Task 1 - Connect AWS S3 to Splunk](#task1)
-- [Task 2 - Install and Configure the Cloudflare App for Splunk](#task2)
-- [Task 3 - View the Dashboards](#task3)
-  - [About the Dashboards](#about-the-dashboards)
-  - [Filters](#filters)
-- [Debugging tips](#debugging-tips)
-  - [Incomplete dashboards](#incomplete-dashboards)
+## Overview
 
----
+If you haven’t used Cloudflare Logs before, visit our [Logs documentation](/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
-<a id="overview" style="color: inherit">
+This tutorial describes how to get Cloudflare logs from Amazon S3 into Splunk using the [Splunk Add-on for Amazon Web Services](https://splunkbase.splunk.com/app/1876/). To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](/logpush/). Alternatively, you can use [Logpull](/logpull-api/) to get logs to your [Splunk HTTP Event Collector](http://dev.splunk.com/view/event-collector/SP-CAAAE6M) directly and skip Task 1.
 
-### Overview
-</a>
-
-If you haven’t used Cloudflare Logs before, visit our [logs documentation](/logs/about/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
-
-This tutorial describes how to get Cloudflare logs from Amazon S3 into Splunk using the [Splunk Add-on for Amazon Web Services](https://splunkbase.splunk.com/app/1876/). To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](/logs/logpush/). Alternatively, you can use [Logpull](/logs/logpull-api/) to get logs to your [Splunk HTTP Event Collector](http://dev.splunk.com/view/event-collector/SP-CAAAE6M) directly and skip Task 1.
-
-<a id="prerequisites" style="color: inherit">
-
-#### Prerequisites
-</a>
+### Prerequisites
 
 Before sending your Cloudflare log data to Splunk, make sure that you:
 
 - Have an existing Splunk Enterprise or Cloud account
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](/logs/logpush/) or [Logpull](/logs/logpull-api/)
+- Configure [Logpush](/logpush/) or [Logpull](/logpull-api/)
 - Consult the [Splunk documentation](https://splunkbase.splunk.com/app/4501/) for the Cloudflare App
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Splunk.
 </Aside>
 
----
+## Task 1 - Connect AWS S3 to Splunk
 
-<a id="task1" style="color: inherit">
-
-### Task 1 - Connect AWS S3 to Splunk
-</a>
-
-Before completing this task, make sure you’ve enabled [Cloudflare Logpush on AWS S3](/logs/logpush/aws-s3/).
+Before completing this task, make sure you’ve enabled [Cloudflare Logpush on AWS S3](/logpush/aws-s3/).
 
 To start receiving Cloudflare log data, you need to connect AWS S3 to Splunk as follows:
 
@@ -105,12 +84,8 @@ If everything is configured correctly, you should be able to see Cloudflare logs
 
 ![Splunk add-on search](../../static/images/splunk/screenshots/splunk-cloudflare-app-for-splunk-search-logs.png)
 
----
+## Task 2 - Install and Configure the Cloudflare App for Splunk
 
-<a id="task2" style="color: inherit">
-
-### Task 2 - Install and Configure the Cloudflare App for Splunk
-</a>
 To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/):
 
 1. Login to your Splunk instance.
@@ -129,7 +104,7 @@ Once installed, you need to configure the application. To do this, a set up page
 
 The Cloudflare App is now installed and the dashboards should be populating with data.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Some reports contain calculated fields. If you wish to check how values were calculated or to adjust formulas, click **Settings** > **Data Models** > **Cloudflare**. Here, you can view and edit all the available fields.
 ![Splunk data models](../../static/images/splunk/screenshots/splunk-data-models-cloudflare.png)
@@ -154,37 +129,29 @@ You can enable or disable acceleration after the initial configuration by access
 
 You can also manually configure Data Models by going to **Settings** > **Data models**. Learn more about data model acceleration [here](https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Acceleratedatamodels).
 
----
-
-<a id="task3" style="color: inherit">
-
-#### Task 3 - View the Dashboards
-</a>
+## Task 3 - View the Dashboards
 
 You can analyze Cloudflare logs with the thirteen (13) dashboards listed below.
 
 You can use filters within these dashboards to help narrow the analysis by date and time, device type, country, user agent, client IP, hostname, and more to further help with debugging and tracing.
 
-<a id="about-the-dashboards" style="color: inherit">
-
-#### About the Dashboards
-</a>
+### About the Dashboards
 
 The following dashboards outlined below are available as part of the Cloudflare App for Splunk.
 
-##### Cloudflare - Snapshot
+#### Cloudflare - Snapshot
 
 _Web Traffic Overview_ and _Web Traffic Types_: Get an overview of the most important metrics from your websites and applications on the Cloudflare network.
 ![Splunk dashboard Cloudflare Snapshot](../../static/images/splunk/dashboards/splunk-cloudflare-snapshot-dashboard.png)
 
-##### Cloudflare - Reliability
+#### Cloudflare - Reliability
 
 _Summary_ and _Detailed_: Get insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
 ![Splunk dashboard Cloudflare Reliability Summary](../../static/images/splunk/dashboards/splunk-cloudflare-reliability-summary-dashboard.png)
 
 ![Splunk dashboard Cloudflare Reliability Detailed](../../static/images/splunk/dashboards/splunk-cloudflare-reliability-detailed-dashboard.png)
 
-##### Cloudflare - Security
+#### Cloudflare - Security
 
 _Overview_: Get insights on threats to your websites and applications, including number of threats stopped, threats over time, top threat countries, and more.
 ![Splunk dashboard Cloudflare Security Overview](../../static/images/splunk/dashboards/splunk-cloudflare-security-overview.png)
@@ -200,7 +167,7 @@ _Bots Summary_ and _Bots Detailed_: Investigate bot activity on your website to 
 
 ![Splunk dashboard Cloudflare Security Bots Detailed](../../static/images/splunk/dashboards/splunk-cloudflare-security-bots-detailed-dashboard.png)
 
-##### Cloudflare - Performance
+#### Cloudflare - Performance
 
 _Requests and Cache_ and _Bandwidth_: Identify and address performance issues and caching misconfigurations. Metrics include total vs. cached bandwidth, saved bandwidth, total requests, cache ratio, top uncached requests, and more.
 ![Splunk dashboard Cloudflare Performance Requests and Cache](../../static/images/splunk/dashboards/splunk-cloudflare-performance-requests-and-cache-dashboard.png)
@@ -214,10 +181,7 @@ _Hostname, Content Type, Request Methods, Connection Type_: Get insights into yo
 _Static vs. Dynamic Content_: Get insights into the performance of your static and dynamic content, including slowest URLs.
 ![Splunk dashboard Cloudflare Performance Static vs. Dynamic Content](../../static/images/splunk/dashboards/splunk-cloudflare-performance-static-vs-dynamic-dashboard.png)
 
-<a id="filters" style="color: inherit">
-
-#### Filters
-</a>
+### Filters
 
 All dashboard have a set of filters that you can apply to the entire dashboard, as shown in the following example. Filters are applied across the entire dashboard.
 
@@ -255,17 +219,9 @@ Available Filters:
 
 - Client Request Method
 
----
+## Debugging tips
 
-<a id="debugging-tips" style="color: inherit">
-
-### Debugging tips
-</a>
-
-<a id="incomplete-dashboards" style="color: inherit">
-
-#### Incomplete dashboards
-</a>
+### Incomplete dashboards
 
 The Splunk Cloudflare App relies on data from the Cloudflare Enterprise Logs fields outlined below. Depending on which fields you have enabled, certain dashboards might not populate fully.
 

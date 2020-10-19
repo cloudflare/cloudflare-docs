@@ -1,19 +1,20 @@
 ---
 title: Manage via the Cloudflare UI
-weight: 45
+order: 45
 ---
 
+# Manage via the Cloudflare UI
 
 Before enabling **Cloudflare Logpush**, make sure that you have already configured a destination in your cloud service.
 
-<Aside type="info">
+<Aside type="info" header="Info">
 
 Learn  how to set up a destination for:
 
-* [Amazon S3](/logs/logpush/aws-s3/)
-* [Google Cloud Storage](/logs/logpush/google-cloud-storage/)
-* [Microsoft Azure](/logs/logpush/azure/)
-* [Sumo Logic](/logs/logpush/sumo-logic/)
+* [Amazon S3](/logpush/aws-s3/)
+* [Google Cloud Storage](/logpush/google-cloud-storage/)
+* [Microsoft Azure](/logpush/azure/)
+* [Sumo Logic](/logpush/sumo-logic/)
 
 </Aside>
 
@@ -31,7 +32,7 @@ To enable the Clouflare Logpush service:
 
 6. Under **Select service**, pick your cloud service provider and click **Next**
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then continue to *step 11*
 </Aside>
@@ -48,23 +49,23 @@ Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then co
     * **Bucket path**
     * **Daily subfolders**
     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
-        * See *step 2* in [Enable Google Cloud Storage](/logs/logpush/google-cloud-storage/)
+        * See *step 2* in [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
 
 9. For **Microsoft Azure**, enter or select the following:
     * **SAS URL**
-        * See [Enable Microsoft Azure](/logs/logpush/azure/) for instructions on creating this URL
+        * See [Enable Microsoft Azure](/logpush/azure/) for instructions on creating this URL
     * **Blob container subpath (optional)**
     * **Daily subfolders**
 
 10. For **Sumo Logic**, enter or select the following:
     * **HTTP Source Address**
-        * See [Enable Sumo Logic](/logs/logpush/sumo-logic/) for instructions on getting this address
+        * See [Enable Sumo Logic](/logpush/sumo-logic/) for instructions on getting this address
 
 11. In the Cloudflare dashboard, click **Validate access**
 
 12. Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership**
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Tips for seeing the token:
 
