@@ -24,25 +24,25 @@ Cloudflare Registrar does not currently support email forwarding. If you require
 
 --------
 
-## Step 1 — Login to 1&1
+## Step 1: Login to 1&1
 Login to the 1&1 account where the domain is registered. Navigate to the **Manage domains** page and select the domain you plan to transfer.
 
 --------
 
-## Step 2 — Unlock the domain
+## Step 2: Unlock the domain
 Select the **Registration & Transfer** tab. In the section “Domain transfer lock” toggle the button to remove the registrar lock.
 
 --------
 
-## Step 3 — Request authorization code
+## Step 3: Request authorization code
 Below the “Domain transfer lock” section will be a row listed as “Change provider”. Click “Show Authorization Code”. The 1&1 dashboard will launch a pop-up with the code.
 
 --------
 
-## Step 4 — Transfer to Cloudflare
+## Step 4: Transfer to Cloudflare
 In the Cloudflare transfer screen, input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
 
 --------
 
-## Step 5 — Approve the transfer
+## Step 5: Approve the transfer
 Once Cloudflare processes your transfer, 1&1 will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically approve within 5 days.
