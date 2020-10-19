@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Domain Registration
+# Domain registration
 
 ![Domain Registration Overview](../static/domain-registry-process.png)
 

@@ -2,7 +2,7 @@
 order: 5
 ---
 
-# Troubleshoot a Stalled Transfer
+# Troubleshoot a stalled transfer
 
 Your previous registrar has five days to release the domain after a successful transfer request. If your transfer has not completed within that timeframe, something has likely gone wrong. To resolve, we recommend you check the following settings and restart the transfer
 
@@ -25,7 +25,7 @@ Your auth code has since changed or been deprecated and we cannot complete the t
 
 --------
 
-## WHOIS Guard / Privacy Protection
+## WHOIS Guard / privacy protection
 Some registrars, including GoDaddy and NameCheap, can prohibit transfer requests if you have WHOIS privacy services enabled. You will need to first disable those services at your current registrar.
 
 --------

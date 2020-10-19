@@ -2,20 +2,20 @@
 order: 3
 ---
 
-# Transfer Costs
+# Transfer costs
 
 ICANN requires that any transfer also extend the expiration date of your domain by at least one year. That’s one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2018, but it expires on March 10, 2019, your new expiration date will be March 10, 2020.
 
 --------
 
-## Domain Expiration
+## Domain expiration
 Whenever a domain is first registered, the registrant purchases control of that domain for some number of years. For example, a domain registered on October 8, 2010 will have an expiration of October 8th on some year between 2011 and 2020.
 
 Transferring a domain adds time to the current expiration date. **Time purchased is never lost.** When you transfer your domain to Cloudflare, you are purchasing an additional year of registration on top of your current expiration.
 
 --------
 
-## Transfer Fees
+## Transfer fees
 Transferring a domain adds at least one year to the registration and the registry bills for that year. For nearly all top-level domains (TLDs), the registry bills the same rate as a renewal or new registration. For example, Verisign charges $7.85 for one year purchased through new registrations, renewals, and transfers.
 
 ICANN fees also apply to transfers. For every year added to the expiration as part of a transfer, ICANN adds $0.18 to the total.

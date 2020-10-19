@@ -19,7 +19,7 @@ If it is listed as available for transfer in the Cloudflare dashboard, these res
 
 --------
 
-## Email Forwarding
+## Email forwarding
 Cloudflare Registrar does not currently support email forwarding. If you require email forwarding from your registrar, you will need to use a third-party forwarding service and configure your MX record in the Cloudflare DNS setting for the domain.
 
 --------

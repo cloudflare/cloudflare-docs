@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# WHOIS Redaction
+# WHOIS redaction
 
 Cloudflare Registrar provides personal data redaction on WHOIS information for all registered domains.
 
@@ -29,5 +29,5 @@ As part of the ICANN guidelines, registrars must make available a method for thi
 
 --------
 
-## TLDs without WHOIS Redaction
+## TLDs without WHOIS redaction
 Some registries do not allow domains to be registered with WHOIS Redaction or WHOIS Privacy. Many of these are country TLDs (ccTLDs) like .uk. Cloudflare does not yet support TLDs that prohibit WHOIS redaction, but we will in the near future.
