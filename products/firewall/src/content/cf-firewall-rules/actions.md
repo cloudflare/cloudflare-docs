@@ -150,4 +150,4 @@ Choosing an action in the Cloudflare Expression Builder is simple. After naming 
 
 ![](../images/firewall-rules-actions-1.png)
 
-For more on building firewall rules in the Firewall App, see _[Create, edit, and delete rules](/firewall/cf-dashboard/create-edit-delete-rules/)_.
+For more on building firewall rules in the Firewall App, see _[Create, edit, and delete rules](/cf-dashboard/create-edit-delete-rules/)_.

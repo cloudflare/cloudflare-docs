@@ -28,7 +28,7 @@ The **Create new list** page displays.
 The **Add items to list** page displays.
 ![Add items to list](../../images/lists-add-items-page.png)
 
-To populate your list, see [_Use Rules Lists: Add items to a list_](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
+To populate your list, see [_Use Rules Lists: Add items to a list_](/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
 
 ## Delete a list
 
@@ -58,4 +58,4 @@ The **Lists** card displays the updated collection of lists.
 
 You can add and remove items from a list, but you cannot change the list name or type.
 
-For more, see [_Use Rules Lists: Manage list items (IP addresses)_](/firewall/cf-dashboard/rules-lists/manage-items/#delete-items-from-a-list).
+For more, see [_Use Rules Lists: Manage list items (IP addresses)_](/cf-dashboard/rules-lists/manage-items/#delete-items-from-a-list).

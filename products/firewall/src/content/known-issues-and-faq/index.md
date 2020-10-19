@@ -12,11 +12,11 @@ There are no known issues to report at this time.
 
 ### How many rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. See [Entitlements](/firewall/cf-firewall-rules/#entitlements) for details on what's allowed per customer plan.
+You can create a large number of rules. However, the number of active rules at any given time is limited. See [Entitlements](/cf-firewall-rules/#entitlements) for details on what's allowed per customer plan.
 
 ### Can I purchase additional active rules?
 
-No. The number of active rules is fixed based on customer plan. _See [Entitlements](/firewall/cf-firewall-rules/#entitlements)_.
+No. The number of active rules is fixed based on customer plan. _See [Entitlements](/cf-firewall-rules/#entitlements)_.
 
 ### How are certain special and escaped characters handled?
 

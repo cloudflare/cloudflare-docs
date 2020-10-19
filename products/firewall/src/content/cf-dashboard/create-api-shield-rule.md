@@ -4,7 +4,7 @@ order: 380
 
 # Create an API Shield™ rule
 
-Use the [API Shield](/firewall/cf-firewall-rules/api-shield) interface in the Cloudflare dashboard to create a firewall rule that requires requests to your API or web application to present a valid client certificate.
+Use the [API Shield](/cf-firewall-rules/api-shield) interface in the Cloudflare dashboard to create a firewall rule that requires requests to your API or web application to present a valid client certificate.
 
 Before you can create an API Shield rule, you must do the following:
 
@@ -69,10 +69,10 @@ The **Edit Firewall Rule** dialog displays, and the Expression Builder's visual 
 
 ![Edit Firewall Rule dialog with example API Shield rule](../images/firewall-rules-edit-firewall-rule-api-shield.png)
 
-Aside the **Expression Preview**. Your API Shield rule includes a [compound expression](/firewall/cf-firewall-rules/fields-and-expressions/compound-expressions) formed from 2 [simple expressions](/firewall/cf-firewall-rules/fields-and-expressions/#simple-expressions) joined by the `and` operator.
+Aside the **Expression Preview**. Your API Shield rule includes a [compound expression](/cf-firewall-rules/fields-and-expressions/compound-expressions) formed from 2 [simple expressions](/cf-firewall-rules/fields-and-expressions/#simple-expressions) joined by the `and` operator.
 
 The first expression uses the `http.host` field, combined with the `in` operator, to capture the hosts your API Shield rule applies to.
 
 The second expression—`not cf.tls_client_auth.cert_verified`—returns `true` when a request to access your API or web application does _not_ present a valid client certificate.
 
-Because the [action](/firewall/cf-firewall-rules/actions) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
+Because the [action](/cf-firewall-rules/actions) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.

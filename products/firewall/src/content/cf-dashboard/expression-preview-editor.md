@@ -52,4 +52,4 @@ Cloudflare validates all expressions before saving them, so if your expression i
 
 ![](../images/firewall-rules-expressions-editor-6.png)
 
-The Expression Editor editor supports the entire Firewall Rules Language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see _[Firewall Rules language](/firewall/cf-firewall-language/)_.
+The Expression Editor editor supports the entire Firewall Rules Language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see _[Firewall Rules language](/cf-firewall-language/)_.

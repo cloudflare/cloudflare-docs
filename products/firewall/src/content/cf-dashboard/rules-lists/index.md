@@ -4,7 +4,7 @@ order: 340
 
 # Use Rules Lists
 
-Rules Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [_About Clouflare Firewall Rules: Rules Lists_](/firewall/cf-firewall-rules/rules-lists/)
+Rules Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [_About Clouflare Firewall Rules: Rules Lists_](/cf-firewall-rules/rules-lists/)
 
 ## Access the Lists interface
 
@@ -24,9 +24,9 @@ The **Lists** user interface displays.
 
 Creating a Rules Lists involves 2 steps:
 
-1. [Create a Firewall Rules list](/firewall/cf-dashboard/rules-lists/manage-lists/#create-a-firewall-rules-list).
-1. [Add IP addresses to the list](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
+1. [Create a Firewall Rules list](/cf-dashboard/rules-lists/manage-lists/#create-a-firewall-rules-list).
+1. [Add IP addresses to the list](/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
 
 ## Use Rules Lists in expressions
 
-To use Rules Lists in the Cloudflare dashboard, see [_Use lists in expressions_](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions).
+To use Rules Lists in the Cloudflare dashboard, see [_Use lists in expressions_](/cf-dashboard/rules-lists/use-lists-in-expressions).

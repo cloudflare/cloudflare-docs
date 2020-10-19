@@ -10,7 +10,7 @@ When enabled, Cloudflare Hotlink Protection blocks all HTTP referrers that are n
 
 However, with Firewall Rules you can maintain hotlink protection while allowing inline links from your partners.
 
-This example uses the [`http.referer` field](/firewall/cf-firewall-language/fields/#standard-fields) to target HTTP referrals from partner sites.
+This example uses the [`http.referer` field](/cf-firewall-language/fields/#standard-fields) to target HTTP referrals from partner sites.
 
 The `not` operator matches HTTP referrals that are not from partner sites, and the action blocks them.
 

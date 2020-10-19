@@ -49,7 +49,7 @@ In general, the syntax for a simple expression is:
 
     <field> <comparison operator> <value>
 
-For more on creating firewall rules using Cloudflare’s visual builder, see _[Expression Builder](/firewall/cf-dashboard/expression-preview-editor/)_.
+For more on creating firewall rules using Cloudflare’s visual builder, see _[Expression Builder](/cf-dashboard/expression-preview-editor/)_.
 
 ### Supported comparison operators
 
@@ -191,7 +191,7 @@ Compound expressions are easier to scan when displayed in the Expression Builder
 
 ![](../images/firewall-rules-expressions-explained-2.png)
 
-For more on writing advanced expressions, see _[Firewall Rules language](/firewall/cf-firewall-language/)_.
+For more on writing advanced expressions, see _[Firewall Rules language](/cf-firewall-language/)_.
 
 ### Supported logical operators
 

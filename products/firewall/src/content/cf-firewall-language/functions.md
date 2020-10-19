@@ -292,7 +292,7 @@ http.host = "download.example.com"
 AND not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-To review examples of firewall rules that use HMAC validation, see [_Common use cases_](/firewall/recipes/).
+To review examples of firewall rules that use HMAC validation, see [_Common use cases_](/recipes/).
 
 ### MessageMAC
 
