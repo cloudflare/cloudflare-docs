@@ -24,27 +24,27 @@ Cloudflare Registrar does not currently support email forwarding. If you require
 
 --------
 
-## Step 1 — Login to Enom
+## Step 1: Login to Enom
 Login to the Enom account where the domain is registered. Navigate to **My Domains** from **Domains** in the navigation bar.
 
 --------
 
-## Step 2 — Unlock the domain
+## Step 2: Unlock the domain
 In the **Manage Domain** menu, select **General Settings**. The settings will include a row, “Registrar-Lock” with two options: Enable and Disable. Set the Registrar-Lock to Disable.
 
 --------
 
-## Step 3 — Request authorization code
+## Step 3: Request authorization code
 Below Registrar-Lock and Auto Renew, there will be a row for “Auth Info / EPP Key”. Select “Email Auth Info to Registrant”. Enom will email your authorization code to the registrant email address.
 
 If you do not receive the code, please check the registrant email address listed in the domain contact information for the given domain. It might be different than your Enom account email.
 
 --------
 
-## Step 4 — Transfer to Cloudflare
+## Step 4: Transfer to Cloudflare
 In the Cloudflare transfer screen, input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
 
 --------
 
-## Step 5 — Approve the transfer
+## Step 5: Approve the transfer
 Once Cloudflare processes your transfer, Enom will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically approve within 5 days.

@@ -24,27 +24,27 @@ Cloudflare Registrar does not currently support email forwarding. If you require
 
 --------
 
-## Step 1 — Login to your Registrar account
+## Step 1: Login to your Registrar account
 Login to the registrar account where the domain is currently registered.
 
 --------
 
-## Step 2 — Unlock the domain
+## Step 2: Unlock the domain
 Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers: registrar lock. You might also see it written as domain lock. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
 
 Only the registrant can enable or disable this lock, typically through the administration interface of the registrar. To proceed with a transfer, you will need to remove this lock if it is enabled.
 
 --------
 
-## Step 3 — Request authorization code
+## Step 3: Request authorization code
 Next, your new registrar needs to confirm with your old registrar that the transfer flow is authorized. To do that, your old registrar will provide an authorization code to you. You will need to input that code to complete your transfer to Cloudflare. Cloudflare will use it to confirm the transfer is authentic.
 
 --------
 
-## Step 4 — Transfer to Cloudflare
+## Step 4: Transfer to Cloudflare
 In the Cloudflare transfer screen, input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
 
 --------
 
-## Step 5 — Approve the transfer
+## Step 5: Approve the transfer
 Your previous registrar will email you to confirm your request to transfer away. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare.

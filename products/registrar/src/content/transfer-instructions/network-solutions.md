@@ -24,12 +24,12 @@ Cloudflare Registrar does not currently support email forwarding. If you require
 
 --------
 
-## Step 1 — Login to Network Solutions
+## Step 1: Login to Network Solutions
 Login to the Network Solutions account where the domain is registered. Navigate to the **Account Settings** page.
 
 --------
 
-## Step 2 — Unlock the domain and request authorization code
+## Step 2: Unlock the domain and request authorization code
 In the **Details** section, select “Turn Off or Request Authorization Code” next to **Transfer Lock**. Once you hit “Continue”, you will need to acknowledge the Network Solutions’ transfer terms.
 
 After confirming the terms, you may be asked to complete survey questions. Once completed, click “Request Authorization Code”. You will need to select “Leave Domain Protect off” and then check the “Request Atuhorization Code” box. Once checked, click save.
@@ -40,10 +40,10 @@ If you do not receive the code, please check the registrant email address listed
 
 --------
 
-## Step 3 — Transfer to Cloudflare
+## Step 3: Transfer to Cloudflare
 In the Cloudflare transfer screen, input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
 
 --------
 
-## Step 4 — Approve the transfer
+## Step 4: Approve the transfer
 Once Cloudflare processes your transfer, Network Solutions will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically approve within 5 days.
