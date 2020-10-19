@@ -6,6 +6,10 @@ module.exports = {
   contentRepoFolder: "products/internet",
   externalLinks: [
     {
+      title: "How does Cloudflare work?",
+      url: "https://support.cloudflare.com/hc/en-us/articles/205177068-How-does-Cloudflare-work-"
+    }
+    {
       title: "Cloudflare homepage",
       url: "https://cloudflare.com"
     }

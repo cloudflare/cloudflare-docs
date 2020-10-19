@@ -1,7 +1,8 @@
 ---
-title: Local Networks
-weight: 30
+order: 30
 ---
+
+# Local networks
 
 The local network described here is a home network, but this could apply to any local network, such as the network internal to a data center.
 
