@@ -73,7 +73,7 @@ If you need to replace the entire contents of a list, format the data as an arra
 
 When uploading a CSV file containing a list of IP addresses and optional descriptions, be sure that each item is on its own line, as in this example:
 
-```shell
+```txt
 IP-address,description
 IP-address
 ```
