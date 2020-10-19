@@ -1,18 +1,12 @@
 ---
 title: Additional details
-weight: 18
+order: 18
 ---
 
-- [Estimating daily data volume](#estimating-daily-data-volume)
-- [Compression](#compression)
-- [Service expectations](#service-expectations)
+# Additional details
 
+## Estimating daily data volume
 
-<a id="estimating-daily-data-volume" style="color: inherit">
-
-### Estimating daily data volume
-
-</a>
 To estimate the amount of data for a zone per day (the number of log lines and the amount of bytes they take up), request a 1% or 10% sample of data for a 1-hour period (use 10% if your volume is low). Note that `start=2018-12-15T00:00:00Z` and `end=2018-12-15T01:00:00Z` span a 1-hour period, and `sample=0.1`.
 
 ```bash
@@ -33,10 +27,7 @@ Based on this information, the approximate number of messages/day is 19,920 (83*
 
 To get a good estimate of daily traffic, it is best to get at least 30 log lines in your hourly sample. If the response size is too small (or too large), adjust the sample value, not the time range.
 
-<a id="compression" style="color: inherit">
-
-### Compression
-</a>
+## Compression
 
 Responses are compressed by default (gzip). `cURL` decompresses responses transparently, unless called with:
 
@@ -44,12 +35,9 @@ Responses are compressed by default (gzip). `cURL` decompresses responses transp
 
  In that case, the output remains gzipped. Compressed data is approximately 5-10% of its uncompressed size. This means that a 1GB uncompressed response gets compressed down to 50-100MB.
 
-<a id="service-expectations" style="color: inherit">
+## Service expectations
 
-### Service expectations
-</a>
-
-#### Successful requests
+### Successful requests
 
 If the response or timeout limit is exceeded or there is any problem fetching the response, a `200` status will be returned and the response will end with the non-JSON text line “Error streaming data.” Because responses are streamed, there is no way to identify the error ahead of time. A response is successful if it does not end with the “Error streaming data" text line.
 
@@ -58,7 +46,7 @@ Once you receive a successful response for a given zone and time range, the foll
 * The number and content of returned records will be same
 * The order of records returned may (and is likely to) be different
 
-#### Response fields
+### Response fields
 
 Regarding the inclusion of the *fields* parameter:
 
@@ -66,7 +54,7 @@ Regarding the inclusion of the *fields* parameter:
 * When not specified in the URL, the default fields are returned
 * The default fields may change at any time
 
-#### Limits
+### Limits
 
 The following usage restrictions apply:
 

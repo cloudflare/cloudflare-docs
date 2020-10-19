@@ -1,54 +1,31 @@
 ---
 title: Elastic
-weight: 99
+order: 99
 ---
 
+# Elastic
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using Elastic and Kibana.
 
-- [Overview](#overview)
-  - [Prerequisites](#prerequisites)
-- [Task 1 - Preparation](#task1)
-- [Task 2 - Create Elasticsearch deployment on Elastic Cloud](#task2)
-- [Task 3 - Configure the deployment](#task3)
-- [Task 4 - Create the Lambda function in AWS](#task4)
-- [Task 5 - View the Dashboards in Kibana](#task5)
-  - [About the Dashboards](#about-the-dashboards)
-  - [Filters](#filters)
-- [Debugging tips](#debugging-tips)
-  - [Debug the AWS Lambda function](#debug-aws-lambda)
-
----
-
-<a id="overview" style="color: inherit">
-
 ## Overview
-</a>
 
-If you haven’t used Cloudflare Logs before, visit our [logs documentation](/logs/about/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you haven’t used Cloudflare Logs before, visit our [Logs documentation](/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
-<a id="prerequisites" style="color: inherit">
-
-#### Prerequisites
-</a>
+### Prerequisites
 
 Before sending your Cloudflare log data to Elastic, make sure that you:
 
 - Have an existing Elastic instance (versions 6.x and 7.x supported)
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](https://developers.cloudflare.com/logs/logpush/) or [Logpull](https://developers.cloudflare.com/logs/logpull-api/)
+- Configure [Logpush](/logpush/) or [Logpull](/logpull-api/)
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Elastic.
 </Aside>
 
----
+## Task 1 - Preparation
 
-<a id="task1"  style="color: inherit">
-
-### Task 1 - Preparation
-</a>
 Before getting Cloudflare logs into Elastic:
 
 1. Install an AWS Lambda function, available in the file _cloudflare-elastic-lambda.zip_ from GitHub at this location: [https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.3-7.x](https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.3-7.x).
@@ -57,10 +34,7 @@ Before getting Cloudflare logs into Elastic:
 
    ![Amazon S3 bucket](../../static/images/elastic/screenshots/cloudflare-elastic-lambda-zip-s3-bucket.png)
 
-<a id="task2" style="color: inherit">
-
-### Task 2 - Create Elasticsearch deployment on Elastic Cloud
-</a>
+## Task 2 - Create Elasticsearch deployment on Elastic Cloud
 
 1. Create an account on [Elastic Cloud](https://cloud.elastic.co) and log in.
 
@@ -102,12 +76,8 @@ Before getting Cloudflare logs into Elastic:
 
 ![Elastic generated user details](../../static/images/elastic/screenshots/generated-user-details-elastic-deployment.png)
 
----
+## Task 3 - Configure the deployment
 
-<a id="task3" style="color: inherit">
-
-### Task 3 - Configure the deployment
-</a>
 Next, to configure your deployment:
 
 1.  From [https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.1](https://github.com/cloudflare/cloudflare-elastic/releases/tag/v0.1) download the following files:
@@ -134,12 +104,8 @@ Next, to configure your deployment:
 
 ![Elastic Kibana saved objects import](../../static/images/elastic/screenshots/kibana-saved-objects-import-dashboards.png)
 
----
+## Task 4 - Create the Lambda function in AWS
 
-<a id="task4" style="color: inherit">
-
-### Task 4 - Create the Lambda function in AWS
-</a>
 To create the Lambda function:
 
 1. Install the function: create the Lambda, which will read Cloudflare logs from S3 and import them into your Elastic cluster.
@@ -172,28 +138,20 @@ To create the Lambda function:
 
 10. Finally, save the Lambda configuration. Once it is saved, the Cloudflare logs will start showing up in Kibana on your Elastic Cloud deployment.
 
----
-
-<a id="task5" style="color: inherit">
-
-### Task 5 - View the Dashboards in Kibana
-</a>
+## Task 5 - View the Dashboards in Kibana
 
 Once Successfully imported, you can find all Cloudflare dashboards under **Kibana** > **Dashboard**.
 
-<a id="about-the-dashboards"  style="color: inherit">
-
-#### About the dashboards
-</a>
+### About the dashboards
 
 There are nine dashboards to help you analyze Cloudflare logs. You can also use filters within the dashboards to help narrow the analysis by date and time, device type, country, user agent, client IP, hostname, and more. Filtering can further help you with debugging and tracing.
 
-##### Snapshot
+#### Snapshot
 
 This is a quick overview of the most important metrics from your Cloudflare Logs, including the total number of requests, top visitors by geography, IP, user agent, traffic type, the total number of threats, and bandwidth usage.
 ![Cloudflare dashboard - snapshot](../../static/images/elastic/dashboards/elastic-snapshot.png)
 
-##### Security
+#### Security
 
 _Cloudflare - Security (Overview)_ - Get insights on threats to your websites and applications, including the number of threats stopped, threats over time, top threat countries, and more.
 ![Cloudflare dashboard - security overview](../../static/images/elastic/dashboards/elastic-security.png)
@@ -207,7 +165,7 @@ _Cloudflare - Security (Rate Limiting)_ - Get insights on rate limiting protecti
 _Cloudflare - Security (Bot Management)_ - Reliably detects and mitigates bad bots to prevent credential stuffing, spam registration, content scraping, click fraud, inventory hoarding, and other malicious activities.
 ![Cloudflare dashboard - bot management](../../static/images/elastic/dashboards/elastic-bot-management.png)
 
-##### Performance
+#### Performance
 
 _Cloudflare - Performance (Requests, Bandwidth, Cache)_ - Identify and address performance issues and caching misconfigurations. Metrics include total vs. cached bandwidth, saved bandwidth, total requests, cache ratio, top uncached requests, and more.
 ![Cloudflare dashboard - performance (requests, bandwidth, cache)](../../static/images/elastic/dashboards/elastic-performance.png)
@@ -218,28 +176,25 @@ _Cloudflare - Performance (Hostname, Content Type, Request Methods, Connection T
 _Cloudflare - Performance (Static vs. Dynamic Content)_ - Get insights into the performance of your static and dynamic content, including slowest URLs.
 ![Cloudflare dashboard - performance (static vs. dynamic content)](../../static/images/elastic/dashboards/elastic-performance-static-vs-dynamic-content.png)
 
-##### Reliability
+#### Reliability
 
 Get insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
 ![Cloudflare dashboard - reliability](../../static/images/elastic/dashboards/elastic-reliability.png)
 
-<a id="filters"  style="color: inherit">
-
-#### Filters
-</a>
+### Filters
 
 All dashboard have a set of filters that you can apply to the entire dashboard, as shown in the following example. Filters are applied across the entire dashboard.
 
 ![Cloudflare dashboard filters](../../static/images/elastic/screenshots/cloudflare-dashboards-filters-elastic-kibana.png)
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
 </Aside>
 
 The default time interval is set to 24 hours. Note that for correct calculations filter will need to exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
 
-##### Available Filters
+#### Available Filters
 
 - Date (EdgeStartTimestamp)
 
@@ -267,19 +222,11 @@ The default time interval is set to 24 hours. Note that for correct calculations
 
 - Client Request Method
 
----
+## Debugging tips
 
-<a id="debugging-tips" style="color: inherit">
+### Debug the AWS Lambda function
 
-### Debugging tips
-</a>
-
-<a id="debug-aws-lambda" style="color: inherit">
-
-#### Debug the AWS Lambda function
-</a>
-
-##### Review the Lambda function logs in AWS
+#### Review the Lambda function logs in AWS
 
 If you detect issues with your AWS Lambda function in Elastic, you can review the AWS CloudWatch logs that are generated automatically for tht specific Lambda function.
 
@@ -303,14 +250,14 @@ If you see _status: [RED]_, then your cluster isn’t healthy and it’s likely 
 
 It is important to verify the return status of the call to Elasticsearch. Lines starting with _Flushing [N] logs to elasticsearch_ and followed by a response line indicate that everything is working as expected.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 You might see a _WARNING_ message containing text that says _‘y’ year should be replaced…_. You can ignore this message.
 </Aside>
 
 If you run into any other issues, take note of the exact return message and contact your Cloudflare support team.
 
-##### Review the AWS Lambda function health status from the Kibana console in Elastic Cloud
+#### Review the AWS Lambda function health status from the Kibana console in Elastic Cloud
 
 To analyze the health status of the Lambda function from Kibana:
 

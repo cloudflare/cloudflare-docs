@@ -1,20 +1,13 @@
 ---
 title: Glossary
-weight: 121
+order: 121
 ---
 
-### Terminology categories
+# Glossary
 
-- [General](#general-terms)
-- [Threat related](#threat-related-terms)
-- [Traffic related](#traffic-related-terms)
-
----
-
-<a id="general-terms" style="color: inherit">
+## Terminology categories
 
 ### General Terms
-</a>
 
 #### Request
 
@@ -68,12 +61,7 @@ HTTP response code sent from Cloudflare to the client (end user). The Cloudflare
 
 HTTP response code sent from the origin server to Cloudflare
 
----
-
-<a id="threat-related-terms" style="color: inherit">
-
 ### Threat related terms
-</a>
 
 #### Threat
 
@@ -142,12 +130,7 @@ Requests made by a bot that failed to pass the Captcha challenge.
 
 Challenge based on user configurations set for visitor’s IP in either the **Web Application Firewall (WAF)** or the **Firewall** app
 
----
-
-<a id="traffic-related-terms" style="color: inherit">
-
 ### Traffic related terms
-</a>
 
 #### NoRecord
 

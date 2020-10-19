@@ -1,7 +1,9 @@
 ---
 title: Logpush job object schema
-weight: 62
+order: 62
 ---
+
+# Logpush job object schema
 
 Below is the JSON schema for a Logpush job object.
 
