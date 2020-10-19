@@ -22,7 +22,7 @@ Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 - Configure [Logpush](/logpush/) or [Logpull](/logpull-api/)
 - Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Sumo Logic.
 </Aside>
@@ -131,7 +131,7 @@ Click the **funnel icon** in the top dashboard menu bar to display a scrollable 
 
 ![Sumo Logic dashboard filtering](../../static/images/sumo-logic/screenshots/filter-sumo-logic.png)
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
 </Aside>

@@ -19,7 +19,7 @@ Before sending your Cloudflare log data to Elastic, make sure that you:
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
 - Configure [Logpush](/logpush/) or [Logpull](/logpull-api/)
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Elastic.
 </Aside>
@@ -187,7 +187,7 @@ All dashboard have a set of filters that you can apply to the entire dashboard, 
 
 ![Cloudflare dashboard filters](../../static/images/elastic/screenshots/cloudflare-dashboards-filters-elastic-kibana.png)
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
 </Aside>
@@ -250,7 +250,7 @@ If you see _status: [RED]_, then your cluster isn’t healthy and it’s likely 
 
 It is important to verify the return status of the call to Elasticsearch. Lines starting with _Flushing [N] logs to elasticsearch_ and followed by a response line indicate that everything is working as expected.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 You might see a _WARNING_ message containing text that says _‘y’ year should be replaced…_. You can ignore this message.
 </Aside>

@@ -44,7 +44,7 @@ A challenge file will be written to the destination, and the filename will be in
 
 You will need to provide the token contained in this file when creating a job in the next step.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
 </Aside>

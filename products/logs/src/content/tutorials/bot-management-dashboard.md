@@ -24,7 +24,7 @@ Before getting started, make sure that you:
 - Are familiar with [Cloudflare Bot Management](https://support.cloudflare.com/hc/articles/360027519452)
 - Follow your analytics provider’s guides for getting logs from AWS S3 or Google Cloud Platform into your analytics platform
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 You can also refer to our [tutorials for enabling logs and dashboards for several analytics providers](/analytics-integrations/).
 </Aside>
@@ -43,7 +43,7 @@ Before proceeding, make sure that you’ve enabled Cloudflare Bot Management for
    - Cloudflare recommends starting with the action of _Log_ and running it for several days in order to identify which requests fall under the rule above to check if any false positives are registered. You can refine the rule expression further, based on your findings. Once you complete testing, switch the rule action to _Challenge (Captcha)_.
 5. Click **Save**.
 
-<Aside type="npte">
+<Aside type="note" header="Note">
 
 You can track bots in Cloudflare logs only when using the action _Challenge (Captcha)_. Cloudflare plans to add support for the _Log_ action in late 2019.
 </Aside>
@@ -100,7 +100,7 @@ The columns are:
 
 3. Bad Bots - Shows confirmed bad bot requests, which exclude solved CAPTCHAs
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 **Limitations**: To identify bot requests correctly, the associated Firewall rules can only be set to the action _Challenge (Captcha)_. If you have more than one rule with this same action (and used for purposes other than bot management), such rule will interfere and you will see overlapping or conflicting metrics without the option to identify which Firewall rule triggered.
 </Aside>

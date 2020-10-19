@@ -21,7 +21,7 @@ Before sending your Cloudflare log data to Graylog, make sure that you:
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
 - Configure [Logpush](https://developers.cloudflare.com/logs/logpush/)
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 195+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. All timestamp formats are supported by Graylog.
 </Aside>
@@ -91,7 +91,7 @@ Once decompressed, the integration package includes:
 
 7.  If your Graylog cluster is located within a VPC, you will need to [configure your Lambda function to access resources in a VPC](https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html). You may also need to create a [VPC endpoint for the AWS S3 service](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html#create-vpc-endpoint). This allows the Lambda function to access S3 directly when running in a VPC.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 By default, all log messages are sent over TCPt. TLS encryption between the
 Lambda function and Graylog is not currently supported. We recommend taking
@@ -183,7 +183,7 @@ Use this dashboard to:
 
 Use this dashboard to detect and mitigate bad bots so that you can prevent credential stuffing, spam registration, content scraping, click fraud, inventory hoarding, and other malicious activities.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 To get bot requests identified correctly, use only one Cloudflare
 Firewall Rule, configured with the action _Challenge (Captcha)_. To lear more, consult the [Cloudflare Firewall Rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/).

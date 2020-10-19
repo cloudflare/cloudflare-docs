@@ -8,7 +8,7 @@ order: 45
 
 Before enabling **Cloudflare Logpush**, make sure that you have already configured a destination in your cloud service.
 
-<Aside type="info">
+<Aside type="info" header="Info">
 
 Learn  how to set up a destination for:
 
@@ -33,7 +33,7 @@ To enable the Clouflare Logpush service:
 
 6. Under **Select service**, pick your cloud service provider and click **Next**
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then continue to *step 11*
 </Aside>
@@ -66,7 +66,7 @@ Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then co
 
 12. Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership**
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Tips for seeing the token:
 

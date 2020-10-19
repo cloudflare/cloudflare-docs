@@ -22,7 +22,7 @@ Before sending your Cloudflare log data to Splunk, make sure that you:
 - Configure [Logpush](/logpush/) or [Logpull](/logpull-api/)
 - Consult the [Splunk documentation](https://splunkbase.splunk.com/app/4501/) for the Cloudflare App
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Splunk.
 </Aside>
@@ -104,7 +104,7 @@ Once installed, you need to configure the application. To do this, a set up page
 
 The Cloudflare App is now installed and the dashboards should be populating with data.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 Some reports contain calculated fields. If you wish to check how values were calculated or to adjust formulas, click **Settings** > **Data Models** > **Cloudflare**. Here, you can view and edit all the available fields.
 ![Splunk data models](../../static/images/splunk/screenshots/splunk-data-models-cloudflare.png)
