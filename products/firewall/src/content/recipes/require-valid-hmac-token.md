@@ -14,7 +14,7 @@ This example uses HMCAC token authentication to protect a static private asset h
 
 The `http.request.uri` for this example is
 
-```shell
+```txt
 /download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
 ```
 
@@ -44,7 +44,7 @@ The `is_timed_hmac_valid()` function compares the value of a MAC generated using
 
 If the MAC values match and
 
-```shell
+```txt
 http.request.timestamp.sec < (timestamp-issued + 10800)
 ```
 

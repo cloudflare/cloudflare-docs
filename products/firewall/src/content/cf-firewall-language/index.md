@@ -15,13 +15,13 @@ The Firewall Rules language supports two kinds of expression—simple and compou
 
 **Simple expressions** compare a value from an HTTP request to a value defined in the expression. For example, this simple expression matches Microsoft Exchange Autodiscover requests:
 
-```shell
+```txt
 http.request.uri.path matches "/autodiscover\.(xml|src)$"
 ```
 
 Simple expressions have the syntax
 
-```shell
+```txt
 <field> <comparison-operator> <value>
 ```
 
@@ -39,13 +39,13 @@ where
 
 For example, this expression uses the `and` operator to target requests to www.example.com that are not on ports 80 or 443:
 
-```shell
+```txt
 host eq www.example.com and not cf.edge.server_port in {80 443}
 ```
 
 Compound expressions have the following general syntax:
 
-```shell
+```txt
 <expression> <logical-operator> <expression>
 ```
 

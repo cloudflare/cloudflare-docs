@@ -6,19 +6,19 @@ This example combines three expressions to target HTTP POST requests that do not
 
 The first expression uses the `http.request.uri.path` [field](/firewall/cf-firewall-language/fields/#standard-fields) to target the paths to secure from R.U.D.Y.:
 
-```shell
+```txt
 http.request.uri.path matches "(comment|conversation|event|poll)/create"
 ```
 
 The second uses a regular expression to match the format of a legitimate `auth_session` cookie. The `not` operator targets requests where that cookie is not formatted correctly:
 
-```shell
+```txt
 not http.cookie matches "auth_session=[0-9a-zA-Z]{32}-[0-9]{10}-[0-9a-z]{6}"
 ```
 
 The third expression targets HTTP POST requests:
 
-```shell
+```txt
 http.request.method eq "POST"
 ```
 

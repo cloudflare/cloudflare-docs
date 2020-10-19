@@ -22,7 +22,8 @@ To use a Rules List in the [Expression Editor](/firewall/cf-dashboard/expression
 
 This expression filters requests from IP addresses that are in a Rules List named _office_network_:
 
-```shell
+```txt
+
 (ip.src in $office_network)
 ```
 

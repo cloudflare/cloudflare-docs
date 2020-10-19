@@ -35,7 +35,7 @@ Cloudflare Business and Enterprise customer plans have access to the `matches` [
 
 Simple expressions using boolean fields do not require operator notations or values. You only need to insert the field on its own, as shown in the `ssl` example below.
 
-```shell
+```txt
 ssl
 ```
 
@@ -43,7 +43,7 @@ This simple expression matches requests where the value of the `ssl` field is `t
 
 To match requests where `ssl` is `false`, use the boolean `not` operator :
 
-```shell
+```txt
 not ssl
 ```
 
@@ -53,7 +53,7 @@ not ssl
 
 To use a Rules List in a firewall rules expression, specify the `in` [operator](/firewall/cf-firewall-language/operators) and use _\$<list_name>_ to reference the name of the list. For example, this expression filters requests from IP addresses that are in a Rules List named _office_network_:
 
-```shell
+```txt
 (ip.src in $office_network)
 ```
 
