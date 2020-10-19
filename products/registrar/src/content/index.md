@@ -1,7 +1,10 @@
 ---
-order: 0
+title: Welcome
+order: 1
 ---
 
-# Welcome
+# Cloudflare Registrar Documentation
 
-TODO...
+Cloudflare Registrar will only ever charge you what we pay to the registry for your domain. No markup. No surprise fees.
+
+![Registrar Logo](./static/registrar-color-logo.png)
