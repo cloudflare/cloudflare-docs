@@ -1,6 +1,4 @@
----
-title: Require specific HTTP headers
----
+# Require specific HTTP headers
 
 <Aside type='note'>
 

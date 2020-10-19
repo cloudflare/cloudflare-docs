@@ -1,6 +1,4 @@
----
-title: Challenge bad bots
----
+# Challenge bad bots
 
 <Aside type='note'>
 

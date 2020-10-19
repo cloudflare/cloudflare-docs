@@ -1,6 +1,4 @@
----
-title: Site administration—Require known IP addresses
----
+# Site administration—Require known IP addresses
 
 If an attack compromises the administrative area of your website, the consequences can be severe. With Firewall Rules, you can protect your site’s administrative area by blocking requests for access to administrative paths that do not come from a known IP address.
 

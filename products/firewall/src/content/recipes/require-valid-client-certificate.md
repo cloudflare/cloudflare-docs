@@ -1,6 +1,4 @@
----
-title: Require a valid client certificate
----
+# Require a valid client certificate
 
 Use Cloudflare [API Shield™](/firewall/cf-firewall-rules/api-shield) to protect your API or web application with client-certificate-based encryption.
 
