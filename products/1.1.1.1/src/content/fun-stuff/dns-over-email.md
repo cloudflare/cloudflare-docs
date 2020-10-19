@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 ---
 
 # DNS over email
@@ -46,4 +46,4 @@ AAAA example.com
 
 Returns:
 
-![DNS-over-email](https://developers.cloudflare.com/1.1.1.1/img/dns-over-email.png)
+![DNS-over-email](../static/dns-over-email.png)
