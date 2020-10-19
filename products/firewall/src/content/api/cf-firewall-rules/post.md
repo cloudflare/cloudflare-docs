@@ -1,14 +1,18 @@
 ---
 title: POST example
-weight: 325
+order: 420
 ---
+
+# POST example
+
 ```bash
-POST /firewall/rules
+POST zones/{zone_id}/firewall/rules
 ```
 
 Creates one or more firewall rules.
 
-### Request
+## Request
+
 ```bash
 curl -X POST \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -46,7 +50,7 @@ curl -X POST \
 ]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
 ```
 
-### Response
+## Response
 
 ```json
 {

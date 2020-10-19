@@ -1,85 +1,74 @@
 ---
 title: Endpoints
-weight: 320
+order: 415
 ---
 
-To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL (`https://api.cloudflare.com/client/v4/zones/{zone_id}`). For authentication instructions, consult the standard [Cloudflare API documentation](https://api.cloudflare.com/#getting-started-requests).
+# Endpoints
 
-The Cloudflare Firewall Rules API endpoints are:
+To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL:
 
-<div dangerouslyInsertInnerHTML={{__html: `
+`https://api.cloudflare.com/client/v4/`
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
-        <tr>
-            <th style="width:30%;">
-                Method + URL stub
-            </th>
-            <th>
-                Description
-            </th>
-            <th style="width:40%;">
-                Notes
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>POST /firewall/rules</td>
-            <td>- Create one or more rules
-                <br/> - See <a href="/api/cf-firewall-rules/post/">POST example call</a></td>
-            <td>- Handled as a single transaction
-                <br/> - If one fails, then all fail</td>
-        </tr>
-        <tr>
-            <td>GET /firewall/rules</td>
-            <td>- Fetch rules
-                <br/> - See <a href="/api/cf-firewall-rules/get/#get-all-rules">GET example call</a></td>
-            <td>- Query on (case-insensitive):
-                <br/> &nbsp;&nbsp;&nbsp;- Exact match for one or more <em>id</em>
-                <br/> &nbsp;&nbsp;&nbsp;- Text in the description value
-                <br/> &nbsp;&nbsp;&nbsp;- Exact match on one or more <em>ref</em>
-                <br/>
-                <br/> - Results paginated (25-item default)<sup>*</sup>
-                <br/>
-                <br/> - No query returns all active and paused rules</td>
-        </tr>
-        <tr>
-            <td>GET /firewall/rules/{id}</td>
-            <td>- Fetch a rule by ID
-                <br/> - See <a href="/api/cf-firewall-rules/get/#get-by-rule-id">GET example call</a></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>PUT /firewall/rules</td>
-            <td>- Update rules
-                <br/> - See <a href="/api/cf-firewall-rules/put/#update-multiple-rules">PUT example call</a></td>
-            <td>- Handled as a single transaction
-                <br/> - All rules must exist
-                <br/> - If one fails, all updates fail</td>
-        </tr>
-        <tr>
-            <td>PUT /firewall/rules/{id}</td>
-            <td>- Update a rule by ID
-                <br/> - See <a href="/api/cf-firewall-rules/put/#update-a-single-rule">PUT example call</a></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>DELETE /firewall/rules</td>
-            <td>- Delete rules
-                <br/> - See <a href="/api/cf-firewall-rules/delete/#delete-all-rules">DELETE example calls</a></td>
-            <td>- Must be specified with list of identifiers returned by GET
-                <br/> - Empty input results in no deletion
-                <br/> - Returns <em>200</em> if rule does not exist</td>
-        </tr>
-        <tr>
-            <td>DELETE /firewall/rules/{id}</td>
-            <td>- Delete a rule by ID
-                <br/> - See <a href="/api/cf-firewall-rules/delete/#delete-a-single-rule">DELETE example call</a></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>`}}></div>
+For authentication instructions, see [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
+For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-* To learn how to page through results, see *Requests > Pagination* in [Cloudflare API Getting Started](https://api.cloudflare.com/#getting-started-endpoints).
+<Aside type='note'>
+
+The Firewall Rules API endpoints require a value for _{zone_id}_.
+
+To retrieve a list of zones associated with your account, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation and note the Zone ID associated with the domain whose firewall rules you want to manage.
+
+</Aside>
+
+The Cloudflare Firewall Rules API supports the operations outlined below. Visit the associated links for examples.
+
+<TableWrap><table style="width: 100%;">
+
+  <thead>
+      <tr>
+          <th>Operation</th>
+          <th>Method & Endpoint</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/post/'>Create firewall rules</a></td>
+        <td><code>POST&nbsp;zones/{'{zone_id}'}/firewall/rules</code></td>
+        <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
+      </tr>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/get/#get-all-rules'>List firewall rules</a></td>
+        <td><code>GET&nbsp;zones/{'{zone_id}'}/firewall/rules</code></td>
+        <td>Lists all current firewall rules. Results return paginated with 25 items per page by default. Use optional parameters to narrow results. </td>
+      </tr>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/get/#get-rule-by-id'>Get firewall rule by ID</a></td>
+        <td><code>GET&nbsp;zones/{'{zone_id}'}/firewall/rules/{'{id}'}</code></td>
+        <td>Retrieve a single firewall rule by ID.</td>
+      </tr>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/put/#update-multiple-rules'>Update firewall rules</a></td>
+        <td><code>PUT&nbsp;zones/{'{zone_id}'}/firewall/rules</code></td>
+        <td>Handled as a single transaction. All rules must exist for operation to succeed. If there is an error, the entire operation fails.</td>
+      </tr>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/put/#update-a-single-rule'>Update a firewall rule by ID</a></td>
+        <td><code>PUT&nbsp;zones/{'{zone_id}'}/firewall/rules/{'{id}'}</code></td>
+        <td>Update a single firewall rule by ID.</td>
+      </tr>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/delete/#delete-all-rules'>Delete firewall rules</a></td>
+        <td><code>DELETE&nbsp;zones/{'{zone_id}'}/firewall/rules</code></td>
+        <td><p>Delete existing firewall rules. Must specify list of firewall rule IDs.</p>
+        <p>Empty requests result in no deletion. Returns HTTP status code 200 if a specified rule does not exist.</p>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='/firewall/api/cf-firewall-rules/delete/#delete-a-single-rule'>Delete firewall rule by ID</a></td>
+        <td><code>DELETE&nbsp;zones/{'{zone_id}'}/firewall/rules/{'{id}'}</code></td>
+        <td><p>Delete a firewall rule by ID.</p></td>
+      </tr>
+  </tbody>
+</table></TableWrap>

@@ -1,8 +1,12 @@
 ---
 title: JSON object
-weight: 355
+order: 450
 ---
-### Filters object structure and properties
+
+# JSON object
+
+## Filters object structure and properties
+
 A filter JSON object has the following structure:
 
 ```json
@@ -17,8 +21,9 @@ A filter JSON object has the following structure:
 
 The table below summarizes the JSON object properties.
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
+<TableWrap>
+  <table style="width: 100%;">
+    <thead>
         <tr>
             <th>Property</th>
             <th style="width:30%">Description</th>
@@ -72,4 +77,5 @@ The table below summarizes the JSON object properties.
             <td>- Useful for identifying a filter if Cloudflare ID is unknown</td>
         </tr>
     </tbody>
-</table>
+  </table>
+</TableWrap>

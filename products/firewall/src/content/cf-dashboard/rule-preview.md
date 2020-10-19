@@ -1,10 +1,11 @@
 ---
 title: Preview rules
-weight: 210
+order: 330
 ---
 
+# Preview rules
 
-### Overview
+## Overview
 
 Cloudflare Firewall Rules provides a powerful and flexible platform for filtering HTTP requests and protecting your site amid an evolving threat landscape. However, the same power and flexibility that allows you to tailor Firewall Rules to your specific application and environment can also introduce complexity. In these cases, it is critical that you have a way to test a firewall rule before deploying it so that you can ensure the rule will behave the way you expect.
 
@@ -13,11 +14,10 @@ To help customers understand the potential impact of a rule, Cloudflare has buil
 <Aside type="note">
 
 The Rule Preview functionality is available to customers in the Cloudflare Enterprise plan.
+
 </Aside>
 
----
-
-### Use Rule Preview
+## Use Rule Preview
 
 To test a firewall rule with Rule Preview:
 
@@ -28,9 +28,7 @@ To test a firewall rule with Rule Preview:
 
 The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression. In the screenshot below, a rule created to match all User-Agents that contained the string “Mozilla,” would block about 8% of requests to the zone.
 
----
-
-### Important Notes
+## Important Notes
 
 **Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 
@@ -38,351 +36,207 @@ The results of the test are displayed in a plot that simulates how many of the t
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 
-<table>
-<thead>
-  <tr>
-   <td>
-   </td>
-   <td><strong>Equal</strong>
-   </td>
-   <td><strong>Not equal</strong>
-   </td>
-   <td><strong>Greater than</strong>
-   </td>
-   <td><strong>Less than</strong>
-   </td>
-   <td><strong>Greater than or equal</strong>
-   </td>
-   <td><strong>Less than or equal</strong>
-   </td>
-   <td><strong>In</strong>
-   </td>
-   <td><strong>Contains</strong>
-   </td>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td><strong>AS Number</strong>
-<p />
-<strong><code>ip.geoip.asnum</code></strong>
-   </td>
-   <td>✔
-</td>
-   <td>
-   ✔
-</td>
-  <td>✔
-</td>
-  <td>✔
-</td>
-  <td>✔
-</td>
-  <td>✔
-</td>
-  <td>✔
-</td>
-   <td>
-   ❌
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Country
-   <p />
-<code>ip.geoip.country</code></strong>
-   </td>
-     <td>✔
-</td>
-     <td>✔
-</td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Hostname
-   <p />
-<code>http.host</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-  </tr>
-  <tr>
-   <td><strong>IP Address
-   <p />
-<code>ip.src</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Referer
-   <p />
-<code>http.referer</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Request method
-   <p />
-<code>Http.request.
-method</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-  </tr>
-  <tr>
-   <td><strong>SSL
-   <p />
-<code>ssl</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-  </tr>
-  <tr>
-   <td><strong>URI
-   <p />
-<code>http.request.uri</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-  </tr>
-  <tr>
-   <td><strong>URI path
-   <p />
-<code>http.request.uri.path</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-  </tr>
-  <tr>
-   <td><strong>URI query string
-   <p />
-<code>http.request.uri.query</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-  </tr>
-  <tr>
-   <td><strong>User agent
-   <p />
-<code>http.user_agent</code></strong>
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ✔
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ❌
-   </td>
-   <td>
-   ✔
-   </td>
-  </tr>
-  </tbody>
-</table>
+<TableWrap><table style="width: 100%">
+
+   <thead>
+      <tr>
+        <td></td>
+        <td><strong>Equal</strong></td>
+        <td><strong>Not equal</strong></td>
+        <td><strong>Greater than</strong></td>
+        <td><strong>Less than</strong></td>
+        <td><strong>Greater than or equal</strong></td>
+        <td><strong>Less than or equal</strong></td>
+        <td><strong>In</strong></td>
+        <td><strong>Contains</strong></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong>AS Number</strong>
+          <p />
+          <strong><code>ip.geoip.asnum</code></strong>
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >Country
+            <p />
+            <code>ip.geoip.country</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >Hostname
+            <p />
+            <code>http.host</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >IP Address
+            <p />
+            <code>ip.src</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td></td>
+        <td>✔</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >Referer
+            <p />
+            <code>http.referer</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >Request method
+            <p />
+            <code>Http.request. method</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >SSL
+            <p />
+            <code>ssl</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >URI
+            <p />
+            <code>http.request.uri</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >URI path
+            <p />
+            <code>http.request.uri.path</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >URI query string
+            <p />
+            <code>http.request.uri.query</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td>
+          <strong
+            >User agent
+            <p />
+            <code>http.user_agent</code></strong
+          >
+        </td>
+        <td>✔</td>
+        <td>✔</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>✔</td>
+      </tr>
+    </tbody>
+  </table>
+</TableWrap>
