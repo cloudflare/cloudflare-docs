@@ -41,7 +41,7 @@ content and keep it there as long as you pay your bill, or you can run your own
 IPFS node.
 
 If you opt to pay someone else, there are pinning services like
-[eternum.io](https://eternum.io) and [ipfsstore.it](https://ipfstore.it) which charge a few
+[eternum.io](https://eternum.io) and [ipfsstore.it](https://ipfsstore.it) which charge a few
 cents per month per gigabyte of storage and have a simple UI for uploading your
 content. These services are arguably the simplest option, but they don’t give
 you much flexibility.
