@@ -1,13 +1,15 @@
 ---
-title:  What is a filter?
-weight: 351
+title: What is a filter?
+order: 445
 ---
+
+# What is a filter?
 
 A filter is a way of saying:
 
- `if (traffic matches certain criteria) then...`
+`if (traffic matches certain criteria) then...`
 
-A filter contains an expression that would return *true* or *false* when evaluated against traffic passing through Cloudflare.
+A filter contains an expression that would return _true_ or _false_ when evaluated against traffic passing through Cloudflare.
 
 Filter expressions are human and machine readable, and you can compose complex logic to precisely match the traffic that you are interested in detecting and acting upon.
 

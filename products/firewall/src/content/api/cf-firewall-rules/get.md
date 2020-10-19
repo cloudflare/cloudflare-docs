@@ -1,16 +1,21 @@
 ---
 title: GET examples
-weight: 330
+order: 425
 ---
-* [Get all rules](#get-all-rules)
-* [Get rule by ID](#get-by-rule-id)
 
-### Get all rules
+# GET examples
+
+- [Get all rules](#get-all-rules)
+- [Get rule by ID](#get-by-rule-id)
+
+## Get all rules
+
 ```bash
-GET /firewall/rules
+GET zones/{zone_id}/firewall/rules
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X GET \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -18,7 +23,8 @@ curl -X GET \
      "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": [
@@ -88,12 +94,14 @@ curl -X GET \
 }
 ```
 
-### Get by rule ID
+## Get by rule ID
+
 ```bash
-GET /firewall/rules/{id}
+GET zones/{zone_id}/firewall/rules/{id}
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X GET \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -101,7 +109,8 @@ curl -X GET \
   "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules/f2d427378e7542acb295380d352e2ebd"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": {

@@ -1,17 +1,21 @@
 ---
 title: PUT examples
-weight: 375
+order: 470
 ---
-* [Update multiple filters](#update-multiple-filters)
-* [Update a single filter](#update-a-single-filter)
 
-### Update multiple filters
+# PUT examples
+
+- [Update multiple filters](#update-multiple-filters)
+- [Update a single filter](#update-a-single-filter)
+
+## Update multiple filters
 
 ```bash
-PUT /filters
+PUT zones/{zone_id}/filters
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X PUT \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -27,7 +31,8 @@ curl -X PUT \
 ]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": [
@@ -44,12 +49,14 @@ curl -X PUT \
 }
 ```
 
-### Update a single filter
+## Update a single filter
+
 ```bash
-PUT /filters/{id}
+PUT zones/{zone_id}/filters/{id}
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X PUT \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -63,7 +70,8 @@ curl -X PUT \
 }' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters/b7ff25282d394be7b945e23c7106ce8a"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": {

@@ -1,7 +1,7 @@
 ---
-order: 0
+order: 100
 ---
 
 # Welcome
 
-TODO...
+Firewall Rules allow users to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
