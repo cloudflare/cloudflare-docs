@@ -38,7 +38,7 @@ var options = {
   resume: true,
   metadata: {
     filename: "test.mp4",
-    filetype: "video/mp4"
+    filetype: "video/mp4",
     defaulttimestamppct: 0.5,
     watermark: "$WATERMARKUID"
   },
