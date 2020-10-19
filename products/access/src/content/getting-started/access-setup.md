@@ -20,7 +20,7 @@ Follow these steps to set up Cloudflare Access.
 
 3. Click on **Begin setup**.
 
-4. Choose an authentication domain. The authentication domain will represent you Cloudflare for Teams and the URL will serve as the launch page for end users.
+4. Choose an authentication domain. The authentication domain will represent your Cloudflare for Teams account across Access and Gateway. The URL will also serve as the launch page for end users.
 
 ![Onboarding Auth Domain](../static/summary/onboarding-auth-domain.png)
 
