@@ -30,7 +30,7 @@ The following clients support HTTP/3 through feature flags:
 - [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/en-us/) - [Instructions](/edge)
 - [Mozilla Firefox Nightly](https://www.mozilla.org/firefox/channel/desktop/#nightly) - [Instructions](/firefox)
 - [cURL](https://curl.haxx.se) + quiche - [Instructions](/curl-brew)
-- [Cloudflare http3-client](https://github.com/cloudflare/quiche) - [Instructions](/http3-client)
+- [Cloudflare http3-client](https://github.com/cloudflare/quiche) - [Instructions](/quiche-http3-client)
 
 <Aside>
 
