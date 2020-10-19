@@ -1,6 +1,4 @@
----
-title: Require a valid HMAC token
----
+# Require a valid HMAC token
 
 <Aside type='note'>
 

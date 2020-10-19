@@ -1,6 +1,4 @@
----
-title: Block Microsoft Exchange Autodiscover requests
----
+# Block Microsoft Exchange Autodiscover requests
 
 In some cases, Microsoft Exchange Autodiscover service requests can be “noisy,” triggering large numbers of 404 errors.
 

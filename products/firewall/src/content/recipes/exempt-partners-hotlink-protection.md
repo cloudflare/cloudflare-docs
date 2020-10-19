@@ -1,6 +1,4 @@
----
-title: Exempt partners from Hotlink Protection
----
+# Exempt partners from Hotlink Protection
 
 <Aside type='tip'>
 

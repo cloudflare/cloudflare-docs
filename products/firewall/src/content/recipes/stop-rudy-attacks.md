@@ -1,6 +1,4 @@
----
-title: Stop R-U-Dead-Yet? (R.U.D.Y.) attacks
----
+# Stop R-U-Dead-Yet? (R.U.D.Y.) attacks
 
 R-U-Dead-Yet (R.U.D.Y.) attacks accomplish denial of service (DoS) by submitting long form fields. Use Firewall Rules to stop these attacks by blocking requests that do not have a legitimate session cookie.
 
