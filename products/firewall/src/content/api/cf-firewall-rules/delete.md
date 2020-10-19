@@ -1,16 +1,21 @@
 ---
 title: DELETE examples
-weight: 340
+order: 435
 ---
-* [Delete multiple rules](#delete-multiple-rules)
-* [Delete a single rule](#delete-a-single-rule)
 
-### Delete multiple rules
+# DELETE examples
+
+- [Delete multiple rules](#delete-multiple-rules)
+- [Delete a single rule](#delete-a-single-rule)
+
+## Delete multiple rules
+
 ```bash
-DELETE /firewall/rules
+DELETE zones/{zone_id}/firewall/rules
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X DELETE \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -20,7 +25,8 @@ curl -X DELETE \
 
 **Important note**: `DELETE` does not delete any filter related to the firewall rule. To delete the filter, it's necessary to call the `/filters` API.
 
-#### Response
+### Response
+
 ```json
 {
   "result": [],
@@ -30,12 +36,14 @@ curl -X DELETE \
 }
 ```
 
-### Delete a single rule
+## Delete a single rule
+
 ```bash
-DELETE /firewall/rules/{id}
+DELETE zones/{zone_id}/firewall/rules/{id}
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X DELETE \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -43,7 +51,8 @@ curl -X DELETE \
      "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules/cbf4b7a5a2a24e59a03044d6d44ceb09"
 ```
 
-#### Response
+### Response
+
 ```bash
 {
   "result": null,

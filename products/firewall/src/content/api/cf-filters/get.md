@@ -1,17 +1,21 @@
 ---
 title: GET examples
-weight: 370
+order: 465
 ---
-* [Get all filters](#get-all-filters)
-* [Get rule by ID](#get-by-filter-id)
 
-### Get all filters
+# GET examples
+
+- [Get all filters](#get-all-filters)
+- [Get rule by ID](#get-by-filter-id)
+
+## Get all filters
 
 ```bash
-GET /filters
+GET zones/{zone_id}/filters
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X GET \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -19,7 +23,8 @@ curl -X GET \
      "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": [
@@ -66,12 +71,14 @@ curl -X GET \
 }
 ```
 
-### Get by filter ID
+## Get by filter ID
+
 ```bash
-GET /filters/{id}
+GET zones/{zone_id}/filters/{id}
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X GET \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -79,7 +86,8 @@ curl -X GET \
 "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters/b7ff25282d394be7b945e23c7106ce8a"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": {

@@ -1,12 +1,15 @@
 ---
 title: Expression validation
-weight: 385
+order: 480
 ---
+
+# Expression validation
 
 The Cloudflare Filters API supports an endpoint for validating expressions.
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
+<TableWrap>
+  <table style="width: 100%;">
+    <thead>
         <tr>
             <th style="width:30%;">
                 Method + URL
@@ -31,20 +34,23 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
             <td>Allows testing and validating expressions without changing anything</td>
         </tr>
     </tbody>
-</table>
+  </table>
+</TableWrap>
 
+## Example calls
 
-### Example calls
 ```bash
 GET /filters/validate-expr
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X GET -H "X-Auth-Email: user@cloudflare.com" -H "X-Auth-Key: REDACTED" 'https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.src==34'
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": null,
@@ -72,7 +78,8 @@ Which is correct as `34` is not an IP address.
 POST /filters/validate-expr
 ```
 
-#### Request
+### Request
+
 ```bash
 curl -X POST \
     -H "X-Auth-Email: user@cloudflare.com" \
@@ -83,7 +90,8 @@ curl -X POST \
 }' "https://api.cloudflare.com/client/v4/filters/validate-expr"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": null,
@@ -98,6 +106,7 @@ curl -X POST \
 ```
 
 Which is:
+
 ```bash
 Filter parsing error:
 `ip.src in {2400:cb00::/32 2405:8100::/2000 2405:b500::/32 2606:4700::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29}`

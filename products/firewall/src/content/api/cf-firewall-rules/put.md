@@ -1,20 +1,23 @@
 ---
 title: PUT examples
-weight: 335
+order: 430
 ---
 
+# PUT examples
 
-* [Update multiple rules](#update-multiple-rules)
-* [Update a single rule](#update-a-single-rule)
+- [Update multiple rules](#update-multiple-rules)
+- [Update a single rule](#update-a-single-rule)
 
-### Update multiple rules
+## Update multiple rules
+
 ```bash
-PUT /firewall/rules
+PUT zones/{zone_id}/firewall/rules
 ```
 
-You can include up to 25 rules in the JSON object array (*-d* flag) to update as a batch. The batch is handled as a transaction.
+You can include up to 25 rules in the JSON object array (_-d_ flag) to update as a batch. The batch is handled as a transaction.
 
-#### Request
+### Request
+
 ```bash
 curl -X PUT \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -39,10 +42,14 @@ curl -X PUT \
 
 <Aside type="note">
 
-**Important** - `PUT` does not update the filter specified. It only looks at the *filter id* to update the rule with a new filter. To update the filter, it's necessary to call the `/filters` API.
+`PUT` does not update the filter specified. It only looks at the _filter id_ to update the rule with a new filter.
+
+To update the filter, it is necessary to use the [Filters API](/firewall/api/cf-filters/).
+
 </Aside>
 
-#### Response
+### Response
+
 ```json
 {
   "result": [
@@ -66,27 +73,32 @@ curl -X PUT \
 }
 ```
 
-### Update a single rule
+## Update a single rule
+
 ```bash
-PUT /firewall/rules/{id}
+PUT zones/{zone_id}/firewall/rules/{id}
 ```
 
-The following fields are required:
+These fields are required:
 
-  * *id*
-  * *action*
-  * *filter.id*
+- _id_
+- _action_
+- _filter.id_
 
 All other fields are optional.
 
 <Aside type="note">
 
-**Important** - `PUT` overwrites fields that aren't explicitly passed in the request. For example, if the request omits `description`, any previously existing `description` value will be erased. To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request and that way, avoid any undesired overwrites.
+`PUT` overwrites fields that aren't explicitly passed in the request.
+
+For example, if the request omits `description`, any previously existing `description` value will be erased.
+
+To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request and avoid undesired overwrites.
+
 </Aside>
 
+### Request
 
-
-#### Request
 ```bash
 curl -X PUT \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -107,7 +119,8 @@ curl -X PUT \
 }' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules/f2d427378e7542acb295380d352e2ebd"
 ```
 
-#### Response
+### Response
+
 ```json
 {
   "result": {

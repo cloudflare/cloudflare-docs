@@ -1,14 +1,18 @@
 ---
 title: POST example
-weight: 365
+order: 460
 ---
+
+# POST example
+
 ```bash
-POST /filters
+POST zones/{zone_id}/filters
 ```
 
 Creates one or more filters.
 
-### Request
+## Request
+
 ```bash
 curl -X POST \
      -H "X-Auth-Email: user@cloudflare.com" \
@@ -23,7 +27,8 @@ curl -X POST \
 ]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters"
 ```
 
-### Response
+## Response
+
 ```json
 {
   "result": [

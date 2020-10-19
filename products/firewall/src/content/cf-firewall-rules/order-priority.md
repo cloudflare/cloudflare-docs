@@ -1,12 +1,14 @@
 ---
 title: Order and priority
-weight: 115
+order: 230
 ---
+
+# Order and priority
 
 import firewallRulesOrderAndPriority2 from '../images/firewall-rules-order-and-priority-2.gif'
 import firewallRulesOrderAndPriority3 from '../images/firewall-rules-order-and-priority-3.gif'
 
-### Overview
+## Overview
 
 Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below (click the image to view a larger version). For example, Firewall Rules only evaluates requests that first clear IP Access Rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
 
@@ -16,9 +18,7 @@ By default, Cloudflare evaluates firewall rules in **list order**, where rules a
 
 When **priority ordering** is enabled, Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. If a request matches two rules with the same priority, action precedence is used to resolve the tie. Priority ordering makes it a lot easier to manage large numbers of firewall rules, and once the number of rules passes 200, Cloudflare requires it.
 
----
-
-### Managing rule evaluation by list order
+## Managing rule evaluation by list order
 
 Users with relatively small numbers of firewall rules (no more than 200) will find that list ordering is enabled by default. When list ordering is enabled, the **Rules List** allows you to drag and drop firewall rules into position, as shown below:
 
@@ -26,9 +26,7 @@ Users with relatively small numbers of firewall rules (no more than 200) will fi
 
 Once there are more than 200 total rules, including inactive rules, you must manage evaluation using priority ordering. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering.
 
----
-
-### Managing rule evaluation by priority order
+## Managing rule evaluation by priority order
 
 Although priority ordering is enabled automatically when the number of active and inactive firewall rules exceeds 200, you can manually enable priority ordering at any time from the **Rules List**. To manually enable priority ordering, click **Ordering** and then select the **Priority Numbers** radio button, as shown below:
 
@@ -50,9 +48,7 @@ The **Priority** column displays the priority value for each rule.
 
 Note that Firewall Rules does not impose default priorities, and you are not required to set a priority for every rule.
 
----
-
-### Working with priority ordering
+## Working with priority ordering
 
 Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update Firewall Rules command to set the `priority` property. See _[Cloudflare API v4 Documentation: Firewall Rules](https://api.cloudflare.com/#firewall-rules-properties)_ for details.
 

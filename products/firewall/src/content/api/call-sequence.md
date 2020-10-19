@@ -1,19 +1,21 @@
 ---
 title: Call sequence
-weight: 399
+order: 497
 ---
+
+# Call sequence
 
 The API call examples in this site illustrate the **recommended sequence** of calling the two APIs (`/filters` and `/firewall/rules`).
 
-The image below depicts this sequence, which can be applied for creating and editing rules.  The reverse would apply for delete operations.
+The image below depicts this sequence, which can be applied for creating and editing rules. The reverse would apply for delete operations.
 
 ![Recommended flow](../images/recommended-flow.png)
 
-Cloudflare recommends this sequence because it facilitates filter reusability and allows working with either API independently.  Thanks to the standalone nature of Cloudflare Filters, the same filter can be shared in multiple firewall rules as well as in other future Cloudflare products and features.
+Cloudflare recommends this sequence because it facilitates filter reusability and allows working with either API independently. Thanks to the standalone nature of Cloudflare Filters, the same filter can be shared in multiple firewall rules as well as in other future Cloudflare products and features.
 
-For example, a filter that matches all traffic for your API (i.e.,  `http.request.uri.path matches "^/api/.*$"`) may disable caching, disable human CAPTCHAs, configure JSON custom errors, and appear in a firewall rule. With the recommended sequence above, you would just repeat steps 3-6 for every Cloudflare feature to configure against the same filter created in steps 1-2.
+For example, a filter that matches all traffic for your API (i.e., `http.request.uri.path matches "^/api/.*$"`) may disable caching, disable human CAPTCHAs, configure JSON custom errors, and appear in a firewall rule. With the recommended sequence above, you would just repeat steps 3-6 for every Cloudflare feature to configure against the same filter created in steps 1-2.
 
-However for a POST operation, the **simplified sequence** -- shown below -- allows you to create both a filter and rule in the same call.  In this case, the filter and rule only refer to each other.
+However for a POST operation, the **simplified sequence** -- shown below -- allows you to create both a filter and rule in the same call. In this case, the filter and rule only refer to each other.
 
 ![Simple flow](../images/simple-flow.png)
 
@@ -58,8 +60,8 @@ curl -X POST \
 
 However, this approach has some disadvantages:
 
-* The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
-* To protect against accidentally modifying or deleting filters used by other Cloudflare features, the PUT or DELETE operations are not allowed.
+- The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
+- To protect against accidentally modifying or deleting filters used by other Cloudflare features, the PUT or DELETE operations are not allowed.
 
 By default if either the filter or rule is invalid, neither will be created.
 
