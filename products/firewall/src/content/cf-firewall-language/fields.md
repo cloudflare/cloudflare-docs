@@ -3,8 +3,6 @@ title: Fields
 order: 610
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Fields
 
 The Cloudflare Firewall Rules language supports a range of field types:
@@ -269,11 +267,11 @@ The Cloudflare Firewall Rules language supports these standard fields:
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-<Notice type='info'>
+<Aside type='note'>
 
 Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan.
 
-</Notice>
+</Aside>
 
 The Cloudflare Firewall Rules language supports these dynamic fields:
 
@@ -510,10 +508,11 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
 
 ## HTTP body fields
 
-<Notice type='info'>
+<Aside type='note'>
 
 Access to HTTP body fields requires a Cloudflare Enterprise plan.
-</Notice>
+
+</Aside>
 
 The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
 

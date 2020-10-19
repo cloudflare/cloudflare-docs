@@ -3,8 +3,6 @@ title: Endpoints
 order: 415
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Endpoints
 
 To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL:
@@ -15,13 +13,13 @@ For authentication instructions, see [_Getting Started: Requests_](https://api.c
 
 For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-<Notice type='info'>
+<Aside type='note'>
 
 The Firewall Rules API endpoints require a value for _{zone_id}_.
 
 To retrieve a list of zones associated with your account, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation and note the Zone ID associated with the domain whose firewall rules you want to manage.
 
-</Notice>
+</Aside>
 
 The Cloudflare Firewall Rules API supports the operations outlined below. Visit the associated links for examples.
 

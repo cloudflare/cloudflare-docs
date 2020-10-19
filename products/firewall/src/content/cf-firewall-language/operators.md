@@ -3,8 +3,6 @@ title: Operators
 order: 610
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Operators
 
 The Cloudflare Firewall Rules language supports comparison and logical operators:
@@ -17,10 +15,11 @@ The Cloudflare Firewall Rules language supports comparison and logical operators
 
 The Firewall Rules language supports the following comparison operators. Since some operators only support specific data types, the list is organized by data type.
 
-<Notice type='info'>
+<Aside type='note'>
 
 Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
-</Notice>
+
+</Aside>
 
 The Cloudflare Firewall Rules language supports these comparison operators:
 
@@ -213,10 +212,11 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
 
 ### Order of precedence
 
-<Notice type='info'>
+<Aside type='note'>
 
 To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
-</Notice>
+
+</Aside>
 
 When writing compound expressions, it is important to be aware of the precedence of logical operators so that your expression is evaluated the way you expect.
 
@@ -235,10 +235,11 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 ## Grouping symbols
 
-<Notice type='info'>
+<Aside type='note'>
 
 Only the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/) does not.
-</Notice>
+
+</Aside>
 
 The Firewall Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 

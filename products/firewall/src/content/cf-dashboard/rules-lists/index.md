@@ -3,8 +3,6 @@ title: Use Rules Lists
 order: 340
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Use Rules Lists
 
 Rules Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [_About Clouflare Firewall Rules: Rules Lists_](/firewall/cf-firewall-rules/rules-lists/)

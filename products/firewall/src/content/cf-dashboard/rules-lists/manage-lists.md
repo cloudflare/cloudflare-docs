@@ -3,8 +3,6 @@ title: Manage lists
 order: 350
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Manage lists
 
 ## Create a Firewall Rules list
@@ -35,11 +33,11 @@ To populate your list, see [_Use Rules Lists: Add items to a list_](/firewall/cf
 
 ## Delete a list
 
-<Notice type="info">
+<Aside type="note">
 
 You can only delete a list when there are no firewall rules (enabled or disabled) that reference the list.
 
-</Notice>
+</Aside>
 
 To delete a Firewall Rules list, follow these steps:
 

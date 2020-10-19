@@ -3,8 +3,6 @@ title: Endpoints
 order: 495
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Endpoints
 
 To invoke a [Cloudflare Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) operation, append the endpoint to the Cloudflare API base URL:
@@ -15,13 +13,13 @@ For authentication instructions, see [_Getting Started: Requests_](https://api.c
 
 For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-<Notice type='info'>
+<Aside type='note'>
 
 The Rules Lists endpoints require a value for _{account_id}_.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
-</Notice>
+</Aside>
 
 The Cloudflare Rules Lists API supports the operations outlined below. Visit the associated links for examples.
 

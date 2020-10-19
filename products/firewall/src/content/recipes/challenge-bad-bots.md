@@ -2,12 +2,11 @@
 title: Challenge bad bots
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
-<Notice type='info'>
+<Aside type='note'>
 
 Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan.
-</Notice>
+
+</Aside>
 
 Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
 

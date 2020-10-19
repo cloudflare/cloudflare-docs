@@ -2,12 +2,11 @@
 title: Exempt partners from Hotlink Protection
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
-<Notice type='tip'>
+<Aside type='tip'>
 
 If you use this technique, disable Hotlink Protection within the **Scrape Shield** app so that partner referrals are not blocked by that feature.
-</Notice>
+
+</Aside>
 
 When enabled, Cloudflare Hotlink Protection blocks all HTTP referrers that are not part of your domain or zone. That presents a problem if you allow partners to use inline links to your assets.
 

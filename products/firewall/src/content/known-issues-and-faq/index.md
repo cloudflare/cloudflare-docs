@@ -3,8 +3,6 @@ title: Known issues and FAQ
 weight: 700
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Known issues and FAQ
 
 ## Known issues
@@ -61,10 +59,11 @@ _See [How do I create an exception to exclude certain requests from being blocke
 
 The table below lists known bots that Firewall Rules currently detects. When traffic comes from any of these bots, the _cf.client.bot_ field is set to true.
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare plans to expand its list of known bots in the near future.
-</Notice>
+
+</Aside>
 
 <TableWrap>
 <table style="width: 100%">
@@ -232,11 +231,11 @@ Cloudflare supports two methods to permit requests through Firewall Rules expres
 1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
 2. Create an independent firewall rule with an _Allow_ action
 
-<Notice type="note">
+<Aside type="note">
 
 Cloudflare Firewall Rules does not bypass security measures defined in other **Firewall** app features.
 
-</Notice>
+</Aside>
 
 If you wish to permit certain exclusions, the examples below illustrate a few possible approaches.
 

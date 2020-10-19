@@ -2,12 +2,11 @@
 title: Require specific HTTP headers
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
-<Notice type='info'>
+<Aside type='note'>
 
 Access to HTTP header and body fields require a Cloudflare Enterprise plan.
-</Notice>
+
+</Aside>
 
 Many organizations qualify traffic based on the presence of specific HTTP request headers.
 

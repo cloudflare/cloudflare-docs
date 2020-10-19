@@ -2,12 +2,11 @@
 title: Require a valid HMAC token
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
-<Notice type='info'>
+<Aside type='note'>
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
-</Notice>
+
+</Aside>
 
 ## HMAC token validation
 
@@ -66,13 +65,13 @@ then the token is valid and the function returns `true`.
 
 Since the expression in this example uses the `not` operator, it only matches when the HMAC token is _not_ valid. When the token is not valid, the Cloudflare triggers the action and blocks the request.
 
-<Notice type='info'>
+<Aside type='note'>
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more, see [_Functions: HMAC Validation_](/firewall/cf-firewall-language/functions/#hmac-validation).
 
-</Notice>
+</Aside>
 
 ## Use the same secret key to protect multiple paths
 

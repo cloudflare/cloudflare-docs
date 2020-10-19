@@ -5,8 +5,6 @@ order: 250
 
 # API Shield™
 
-import {Notice} from 'cf-gatsby-theme'
-
 Cloudflare API Shield makes it easy to secure APIs with strong client-certificate-based encryption. Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
 
 ## A positive security model for APIs
@@ -31,10 +29,10 @@ To protect your application with API Shield, use this workflow:
 
 1. [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
 
-<Notice type='info'>
+<Aside type='note'>
 
 API Shield requires Cloudflare-issued certificates. You can use API Shield with any fully managed certificate authority (CA) where Cloudflare issues the client certificates.
 
 If you need to use certificates issued by another (CA), please reach out to a Cloudflare Customer Success Manager.
 
-</Notice>
+</Aside>

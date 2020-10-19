@@ -3,8 +3,6 @@ title: Functions
 order: 640
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Functions
 
 The Cloudflare Firewall Rules language provides functions for manipulating and validating values in an expression:
@@ -182,11 +180,11 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 ## HMAC validation
 
-<Notice>
+<Aside>
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 
-</Notice>
+</Aside>
 
 ### Overview
 
@@ -347,13 +345,13 @@ For details on generating a MessageMAC, see [_Implement token creation_](https:/
 
 ### Validation function examples
 
-<Notice type='info'>
+<Aside type='note'>
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more, see [HMAC Validation: Overview](#overview).
 
-</Notice>
+</Aside>
 
 #### Simple case
 

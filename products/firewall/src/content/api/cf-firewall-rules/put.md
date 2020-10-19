@@ -5,8 +5,6 @@ order: 430
 
 # PUT examples
 
-import {Notice} from 'cf-gatsby-theme'
-
 - [Update multiple rules](#update-multiple-rules)
 - [Update a single rule](#update-a-single-rule)
 
@@ -42,13 +40,13 @@ curl -X PUT \
 ]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
 ```
 
-<Notice type="info">
+<Aside type="note">
 
 `PUT` does not update the filter specified. It only looks at the _filter id_ to update the rule with a new filter.
 
 To update the filter, it is necessary to use the [Filters API](/firewall/api/cf-filters/).
 
-</Notice>
+</Aside>
 
 ### Response
 
@@ -89,7 +87,7 @@ These fields are required:
 
 All other fields are optional.
 
-<Notice type="info">
+<Aside type="note">
 
 `PUT` overwrites fields that aren't explicitly passed in the request.
 
@@ -97,7 +95,7 @@ For example, if the request omits `description`, any previously existing `descri
 
 To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request and avoid undesired overwrites.
 
-</Notice>
+</Aside>
 
 ### Request
 

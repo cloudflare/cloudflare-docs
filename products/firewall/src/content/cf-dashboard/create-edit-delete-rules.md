@@ -3,8 +3,6 @@ title: Create, edit, and delete rules
 order: 310
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 import firewallRulesExpressionBuilder10 from '../images/firewall-rules-expression-builder-10.gif'
 
 # Create, edit, and delete rules
@@ -21,10 +19,11 @@ For more about expressions and actions, see [_Expressions_](https://developers.c
 
 ## Expression Builder and Editor
 
-<Notice>
+<Aside>
 
 Firewall Rules expressions have a 4KB limit (approximately 4,000 text characters).
-</Notice>
+
+</Aside>
 
 The Firewall app in the Cloudflare dashboard offers two options for editing expressions.
 
@@ -40,10 +39,11 @@ Both interfaces are available in the **Create Firewall Rule** page. This article
 
 ## Create a firewall rule
 
-<Notice type="tip">
+<Aside type="tip">
 
 Create a **Firewall Rule** based on the filters and exclusions you select within firewall analytics by clicking **Create firewall rule** within the **Overview** tab of the **Firewall** app.
-</Notice>
+
+</Aside>
 
 To create a new firewall rule:
 

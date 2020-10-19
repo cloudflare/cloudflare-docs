@@ -3,8 +3,6 @@ title: Manage list items (IP addresses)
 order: 360
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Manage list items (IP addresses)
 
 ## View items in a Firewall Rules list
@@ -19,11 +17,11 @@ The list of items displays sorted by IP address, ascending:
 
 ![View items in  a list](../../images/lists-view-items-in-list.png)
 
-<Notice type='note'>
+<Aside type='note'>
 
 You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation in the [Lists API](/firewall/api/cf-firewall-rules/#manage-the-items-in-a-list) to fetch them.
 
-</Notice>
+</Aside>
 
 ## Add items to a list
 
@@ -63,13 +61,13 @@ To [add items in CSV format](/firewall/cf-dashboard/rules-lists/manage-items/#ad
 
 ### Add items in CSV format
 
-<Notice type='info'>
+<Aside type='note'>
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
 If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/firewall/api/cf-lists/endpoints).
 
-</Notice>
+</Aside>
 
 #### Use valid CSV file format
 
@@ -103,14 +101,14 @@ The **Add items to list** page updates to include the items from the CSV file:
 
    The updated list displays.
 
-<Notice type='note'>
+<Aside type='note'>
 
 When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 - IP addresses that were already in the list are updated with the description from the CSV file.
 - IP addresses in the CSV file that were not already in the list are added to the list.
 
-</Notice>
+</Aside>
 
 ## Delete items from a list
 

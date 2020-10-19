@@ -3,8 +3,6 @@ title: Values
 order: 630
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 # Values
 
 When an HTTP request reaches Cloudflare’s edge, Cloudflare creates a table of field–value pairs against which to match expressions. This table exists for as long as the current request is being processed.

@@ -2,8 +2,6 @@
 title: Require a valid client certificate
 ---
 
-import {Notice} from 'cf-gatsby-theme'
-
 Use Cloudflare [API Shield™](/firewall/cf-firewall-rules/api-shield) to protect your API or web application with client-certificate-based encryption.
 
 Before you can use API Shield to protect your API or web application, you must do the following:
@@ -12,13 +10,13 @@ Before you can use API Shield to protect your API or web application, you must d
 - [Create a client certificate](/ssl/client-certificates/create-client-certificate).
 - [Configure your mobile app or Internet-of-things device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use the client certificate.
 
-<Notice>
+<Aside>
 
 You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
 If you need to use a different CA, contact a Cloudflare customer success manager.
 
-</Notice>
+</Aside>
 
 This example creates a firewall rule that requires API calls to present a valid client certificate. When the client certificate cannot be verified, the rule triggers the _Block_ action.
 
