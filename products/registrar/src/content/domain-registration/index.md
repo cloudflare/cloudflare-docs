@@ -1,7 +1,8 @@
 ---
-title: Domain Registration
-weight: 10
+order: 1
 ---
+
+# Domain registration
 
 ![Domain Registration Overview](../static/domain-registry-process.png)
 
