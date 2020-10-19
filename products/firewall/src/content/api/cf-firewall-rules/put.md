@@ -43,7 +43,7 @@ curl -X PUT \
 
 `PUT` does not update the filter specified. It only looks at the _filter id_ to update the rule with a new filter.
 
-To update the filter, it is necessary to use the [Filters API](/firewall/api/cf-filters/).
+To update the filter, it is necessary to use the [Filters API](/api/cf-filters/).
 
 </Aside>
 

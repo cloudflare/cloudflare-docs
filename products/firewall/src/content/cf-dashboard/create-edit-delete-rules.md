@@ -107,7 +107,7 @@ By default, Cloudflare evaluates firewall rules in **list order**, where rules a
 
 <img src={firewallRulesExpressionBuilder10} alt="order rules" />
 
-Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, see _[Order and Priority](/firewall/cf-firewall-rules/order-priority/)_.
+Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, see _[Order and Priority](/cf-firewall-rules/order-priority/)_.
 
 ### Enable and disable rules
 
@@ -117,4 +117,4 @@ Use the toggle switch associated with a firewall rule to enable or disable it.
 
 ## Test firewall rules with Rule Preview
 
-To help customers in the Enterprise plan understand the potential impact of a new firewall rule, Cloudflare built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample of requests drawn from the last 72 hours of traffic. Rule Preview is built into the **Create Firewall Rule** and **Edit Firewall Rule** panels so that you can test a rule as you edit it. For more, see _[Preview rules](/firewall/cf-dashboard/rule-preview/)_.
+To help customers in the Enterprise plan understand the potential impact of a new firewall rule, Cloudflare built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample of requests drawn from the last 72 hours of traffic. Rule Preview is built into the **Create Firewall Rule** and **Edit Firewall Rule** panels so that you can test a rule as you edit it. For more, see _[Preview rules](/cf-dashboard/rule-preview/)_.

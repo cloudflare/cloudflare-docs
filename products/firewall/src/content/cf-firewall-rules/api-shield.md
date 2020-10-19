@@ -24,7 +24,7 @@ To protect your application with API Shield, use this workflow:
 
 1. Use Cloudflare's fully hosted public key infrastructure (PKI) to [create a client certificate in the Cloudflare dashboard](/ssl/client-certificates/create-client-certificate).
 
-1. Create Cloudflare firewall rules that [require API requests to present a valid client certificate](/firewall/recipes/require-valid-client-certificate). The **Firewall** app in the Cloudflare dashboard provides a dedicated interface where you can [create API Shield rules](/firewall/cf-dashboard/create-api-shield-rule).
+1. Create Cloudflare firewall rules that [require API requests to present a valid client certificate](/recipes/require-valid-client-certificate). The **Firewall** app in the Cloudflare dashboard provides a dedicated interface where you can [create API Shield rules](/cf-dashboard/create-api-shield-rule).
 
 1. [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
 

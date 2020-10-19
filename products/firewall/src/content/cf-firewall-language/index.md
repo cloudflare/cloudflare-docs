@@ -26,15 +26,15 @@ Simple expressions have the syntax
 
 where
 
-- [Fields](/firewall/cf-firewall-language/fields/#fields) specify properties associated with an HTTP request.
+- [Fields](/cf-firewall-language/fields/#fields) specify properties associated with an HTTP request.
 
-- [Comparison operators](/firewall/cf-firewall-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
+- [Comparison operators](/cf-firewall-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
 
-- [Values](/firewall/cf-firewall-language/values/#values) represent the data associated with fields. When evaluating a firewall rule, Cloudflare compares these values with the actual data obtained from the request.
+- [Values](/cf-firewall-language/values/#values) represent the data associated with fields. When evaluating a firewall rule, Cloudflare compares these values with the actual data obtained from the request.
 
 ## Compound expressions
 
-**Compound expressions** use [logical operators](/firewall/cf-firewall-language/operators/#logical-operators) such as `and` to combine 2 or more expressions into a single expression.
+**Compound expressions** use [logical operators](/cf-firewall-language/operators/#logical-operators) such as `and` to combine 2 or more expressions into a single expression.
 
 For example, this expression uses the `and` operator to target requests to www.example.com that are not on ports 80 or 443:
 
@@ -54,6 +54,6 @@ Compound expressions allow you to generate sophisticated, highly targeted firewa
 
 The Firewall Rules language includes support for grouping symbols and functions. Each of these expand the power and flexibility of the language:
 
-- [Grouping symbols](/firewall/cf-firewall-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
+- [Grouping symbols](/cf-firewall-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
 
-- [Functions](/firewall/cf-firewall-language/functions/#functions) allow you to manipulate and validate values in expressions.
+- [Functions](/cf-firewall-language/functions/#functions) allow you to manipulate and validate values in expressions.

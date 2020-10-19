@@ -85,4 +85,4 @@ Cloudflare Firewall Rules is available to all customers. Keep in mind that the n
 
 ## Get started
 
-Unless you are already an advanced user, we recommend you first learn about the _[Expressions](/firewall/cf-firewall-rules/fields-and-expressions/)_ and _[Actions](/firewall/cf-firewall-rules/actions/)_ topics and then move on to the _[Create, edit, and delete rules](/firewall/cf-dashboard/create-edit-delete-rules/)_ topic. Those eager to dive straight into the technical details should see _[Firewall Rules language](/firewall/cf-firewall-language/)_.
+Unless you are already an advanced user, we recommend you first learn about the _[Expressions](/cf-firewall-rules/fields-and-expressions/)_ and _[Actions](/cf-firewall-rules/actions/)_ topics and then move on to the _[Create, edit, and delete rules](/cf-dashboard/create-edit-delete-rules/)_ topic. Those eager to dive straight into the technical details should see _[Firewall Rules language](/cf-firewall-language/)_.

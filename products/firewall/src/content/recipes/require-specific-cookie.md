@@ -2,7 +2,7 @@
 
 To secure a sensitive area such as a development area, you can share a cookie with trusted individuals and then filter requests so that only users with that cookie can access your site.
 
-Use `http.cookie` [field](/firewall/cf-firewall-language/fields/#standard-fields) to target requests based on the presence of a specific cookie.
+Use `http.cookie` [field](/cf-firewall-language/fields/#standard-fields) to target requests based on the presence of a specific cookie.
 
 This example comprises two rules:
 

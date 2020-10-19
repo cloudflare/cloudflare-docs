@@ -28,7 +28,7 @@ Note in this example that the first and last `"` characters in `"token-type=\"JW
 
 Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/firewall/cf-firewall-language/operators/#comparison-operators), which supports [Google RE2 regular expressions](https://support.google.com/a/answer/1371417?hl=en) so that you can capture multiple variants of a value with a single expression.
+Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/cf-firewall-language/operators/#comparison-operators), which supports [Google RE2 regular expressions](https://support.google.com/a/answer/1371417?hl=en) so that you can capture multiple variants of a value with a single expression.
 
 ## Boolean values
 
@@ -48,12 +48,12 @@ not ssl
 
 ## Rules Lists
 
-[Rules Lists](/firewall/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
+[Rules Lists](/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
 
-To use a Rules List in a firewall rules expression, specify the `in` [operator](/firewall/cf-firewall-language/operators) and use _\$<list_name>_ to reference the name of the list. For example, this expression filters requests from IP addresses that are in a Rules List named _office_network_:
+To use a Rules List in a firewall rules expression, specify the `in` [operator](/cf-firewall-language/operators) and use _\$<list_name>_ to reference the name of the list. For example, this expression filters requests from IP addresses that are in a Rules List named _office_network_:
 
 ```txt
 (ip.src in $office_network)
 ```
 
-Note that names for Rules Lists can only include lowercase letters, numbers and the underscore (`_`) character. For guidance on creating and managing lists, see [_Use Rules Lists: Manage Lists_](/firewall/cf-dashboard/rules-lists/manage-lists)
+Note that names for Rules Lists can only include lowercase letters, numbers and the underscore (`_`) character. For guidance on creating and managing lists, see [_Use Rules Lists: Manage Lists_](/cf-dashboard/rules-lists/manage-lists)

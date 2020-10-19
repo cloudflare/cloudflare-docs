@@ -20,7 +20,7 @@ Currently, Cloudflare Filters in an API-only feature and lacks a graphical user 
 
 </Aside>
 
-Before getting started with the Cloudflare Filters API, familiarize yourself with Firewall Rules [expressions](/firewall/cf-firewall-rules/fields-and-expressions/). For a complete reference, see [_Firewall Rules language_](/firewall/cf-firewall-language).
+Before getting started with the Cloudflare Filters API, familiarize yourself with Firewall Rules [expressions](/cf-firewall-rules/fields-and-expressions/). For a complete reference, see [_Firewall Rules language_](/cf-firewall-language).
 
 ## Differences from other Cloudflare APIs
 
@@ -31,4 +31,4 @@ The Firewall Rules API behaves differently from most Cloudflare APIs in two ways
 
 ## Get started!
 
-To get started, review [What is a filter?](/firewall/api/cf-filters/what-is-a-filter/), followed by the Cloudflare Filters [JSON object](/firewall/api/cf-firewall-rules/json-object/) and [Endpoints](/firewall/api/cf-firewall-rules/endpoints/).
+To get started, review [What is a filter?](/api/cf-filters/what-is-a-filter/), followed by the Cloudflare Filters [JSON object](/api/cf-firewall-rules/json-object/) and [Endpoints](/api/cf-firewall-rules/endpoints/).

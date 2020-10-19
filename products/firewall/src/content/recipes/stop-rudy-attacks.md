@@ -4,7 +4,7 @@ R-U-Dead-Yet (R.U.D.Y.) attacks accomplish denial of service (DoS) by submitting
 
 This example combines three expressions to target HTTP POST requests that do not contain a legitimate authenticated session cookie.
 
-The first expression uses the `http.request.uri.path` [field](/firewall/cf-firewall-language/fields/#standard-fields) to target the paths to secure from R.U.D.Y.:
+The first expression uses the `http.request.uri.path` [field](/cf-firewall-language/fields/#standard-fields) to target the paths to secure from R.U.D.Y.:
 
 ```txt
 http.request.uri.path matches "(comment|conversation|event|poll)/create"

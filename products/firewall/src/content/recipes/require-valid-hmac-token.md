@@ -8,7 +8,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 ## HMAC token validation
 
-Use the Firewall Rules [HMAC validation function](/firewall/cf-firewall-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression.
+Use the Firewall Rules [HMAC validation function](/cf-firewall-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression.
 
 This example uses HMCAC token authentication to protect a static private asset hosted by `example.com`.
 
@@ -30,7 +30,7 @@ where
 
 The firewall rule below blocks requests to `example.com` that do not include a valid HMAC.
 
-The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](/firewall/cf-firewall-language/functions/#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](/firewall/cf-firewall-language/functions/#messagemac).
+The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](/cf-firewall-language/functions/#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](/cf-firewall-language/functions/#messagemac).
 
 <TableWrap>
 
@@ -56,7 +56,7 @@ Since the expression in this example uses the `not` operator, it only matches wh
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
-For more, see [_Functions: HMAC Validation_](/firewall/cf-firewall-language/functions/#hmac-validation).
+For more, see [_Functions: HMAC Validation_](/cf-firewall-language/functions/#hmac-validation).
 
 </Aside>
 
