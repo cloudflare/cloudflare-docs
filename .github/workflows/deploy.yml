@@ -116,10 +116,17 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/1.1.1.1"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/1.1.1.1"
+          environment: "production"
 
   deploy-access:
     runs-on: ubuntu-latest
@@ -222,10 +229,17 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/byoip"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/byoip"
+          environment: "production"
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -358,10 +372,17 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/http3"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/http3"
+          environment: "production"
 
   deploy-images:
     runs-on: ubuntu-latest
@@ -775,10 +796,17 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/waf"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/waf"
+          environment: "production"
 
   deploy-workers:
     runs-on: ubuntu-latest
