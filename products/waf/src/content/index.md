@@ -13,3 +13,4 @@ The Cloudflare Web Application Firewall (WAF) provides both automatic protection
 <p><Link to="/change-log" className="Button Button-is-docs-primary">View change log</Link></p>
 
 </ContentColumn>
+
