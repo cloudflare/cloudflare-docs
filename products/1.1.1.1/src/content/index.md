@@ -33,3 +33,4 @@ Moreover, you can access 1.1.1.1 as a Tor hidden service at this address:
 <p><Link to="/setting-up-1.1.1.1" className="Button Button-is-docs-primary">Set up 1.1.1.1</Link> &nbsp; <Link to="/what-is-1.1.1.1" class="Button Button-is-docs-secondary">Learn more</Link></p>
 
 </ContentColumn>
+
