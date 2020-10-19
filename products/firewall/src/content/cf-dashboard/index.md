@@ -1,5 +1,5 @@
 ---
-title: Manage rules in the Cloudflare dashboard
+title: Manage in the dashboard
 order: 300
 ---
 
