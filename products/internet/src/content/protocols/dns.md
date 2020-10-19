@@ -1,7 +1,8 @@
 ---
-title: DNS
-weight: 71
+order: 71
 ---
+
+# DNS
 
 Before you can open a connection with any application, you first need to know where to find that application - aka its IP address. The following description of DNS is lifted from [Nick's](https://twitter.com/grittygrease) blog post: [DNSSEC: An Introduction](https://blog.cloudflare.com/dnssec-an-introduction/).
 
@@ -23,8 +24,10 @@ The response for our raw DNS request is shown in Listing 2. This response comes 
 
 Raw DNS request:
 
-    0x0000: 5ad4 0100 0001 0000 0000 0000 0765 7861 ‘............exa
-    0x0010: 6d70 6c65 0363 6f6d 0000 0100 01        mple.com.....
+```txt
+0x0000: 5ad4 0100 0001 0000 0000 0000 0765 7861 ‘............exa
+0x0010: 6d70 6c65 0363 6f6d 0000 0100 01        mple.com.....
+```
 
 Wireshark’s interpretation:
 
@@ -32,9 +35,11 @@ Wireshark’s interpretation:
 
 Raw DNS Response:
 
-    0x0000: 51d4 8180 0001 0001 0000 0000 0765 7861 ‘............exa
-    0x0010: 6d70 6c65 0363 6f6d 0000 0100 01c0 0c00 mple.com........
-    0x0020: 0100 0100 0031 f500 045d b8d8 77 .....1...]..w
+```txt
+0x0000: 51d4 8180 0001 0001 0000 0000 0765 7861 ‘............exa
+0x0010: 6d70 6c65 0363 6f6d 0000 0100 01c0 0c00 mple.com........
+0x0020: 0100 0100 0031 f500 045d b8d8 77 .....1...]..w
+```
 
 Wireshark’s interpretation:
 
@@ -121,8 +126,10 @@ A DNSKEY record is a cryptographic public key, DNSKEYs can be classified into tw
 
 For a given domain name and question, there are a set of answers. For example, if you ask for the A record for cloudflare.com, you get a set of A records as the answer:
 
-    cloudflare.com.            285    IN    A    198.41.212.157
-    cloudflare.com.            285    IN    A    198.41.213.157
+```txt
+cloudflare.com.            285    IN    A    198.41.212.157
+cloudflare.com.            285    IN    A    198.41.213.157
+```
 
 The set of all records of a given type for a domain is called an RRset. An RRSIG (Resource Record SIGnature) is essentially a digital signature for an RRset. Each RRSIG is associated with a DNSKEY. The RRset of DNSKEYs are signed with the key signing key (KSK). All others are signed with the zone signing key (ZSK). Trust is conferred from the DNSKEY to the record though the RRSIG: if you trust a DNSKEY, then you can trust the records that are correctly signed by that key.
 
@@ -147,11 +154,15 @@ For example:
 
 Question:
 
-    tustee.ietf.org/A
+```txt
+tustee.ietf.org/A
+```
 
 Answer:
 
-    trustee.ietf.org.        1683        IN        NSEC        www.ietf.org. A MX AAAA RRSIG NSEC
+```txt
+trustee.ietf.org.        1683        IN        NSEC        www.ietf.org. A MX AAAA RRSIG NSEC
+```
 
 This means that there are no names the zone in between trustee.ietf.org and www.ietf.org, when sorted alphabetically, effectively proving that tustee.ietf.org does not exist.
 

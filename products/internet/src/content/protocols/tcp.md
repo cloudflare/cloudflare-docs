@@ -1,7 +1,8 @@
 ---
-title: TCP
-weight: 72
+order: 72
 ---
+
+# TCP
 
 Once you know where the server is located (using DNS) you need to establish a connection with the server (using TCP). The following is taken from a series of blog posts by [JGC](https://twitter.com/jgrahamc) and [Matthew](https://twitter.com/eastdakota). ([Optimizing TLS over TCP to reduce latency](https://blog.cloudflare.com/optimizing-tls-over-tcp-to-reduce-latency/), [Mobile Web Performance: Optimizing TCP Congestion Control Algorithms](https://blog.cloudflare.com/mobile-web-performance-optimizing-tcp-congest/), [Why mobile performance is difficult](https://blog.cloudflare.com/why-mobile-performance-is-difficult/), [The bandwidth of a Boeing 747 and its impact on web browsing](https://blog.cloudflare.com/the-bandwidth-of-a-boeing-747-and-its-impact/)).
 
