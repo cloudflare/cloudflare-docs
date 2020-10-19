@@ -37,4 +37,3 @@ The following clients support HTTP/3 through feature flags:
 __Note:__ The HTTP/3 specification has not been finalized yet. In order to successfully use a client, make sure the client supports a draft version as mentioned in the [release notes](/release).
 
 </Aside>
-
