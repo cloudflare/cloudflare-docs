@@ -1,9 +1,9 @@
 ---
-title: About Cloudflare Firewall Rules
+title: About
 order: 200
 ---
 
-# Cloudflare Firewall Rules
+# About Cloudflare Firewall Rules
 
 ## Flexibility and control
 
