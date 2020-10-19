@@ -13,30 +13,11 @@ This example comprises two rules:
 
 Since the _Allow_ action has precedence over _Block_, Cloudflare grants access to requests that satisfy Rule 1 and blocks all other requests to dev.www.example.com.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Execution order</strong></td>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td>1</td>
-        <td valign="top">
-            <pre><code>(http.cookie contains "devaccess=james" or http.cookie contains "devaccess=matt" or http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com")</code></pre>
-        </td>
-        <td><em>Allow</em></td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td valign="top">
-            <pre><code>http.host eq "dev.www.example.com"</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Execution Order | Expression                                                                                                                                                              | Action |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| 1               | `(http.cookie contains "devaccess=james" or http.cookie contains "devaccess=matt" or http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com")` | Allow  |
+| 2               | `http.host eq "dev.www.example.com"`                                                                                                                                    | Block  |
+
 </TableWrap>

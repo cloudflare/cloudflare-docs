@@ -10,21 +10,10 @@ Use the `in` [comparison operator](/firewall/cf-firewall-language/operators/#com
 
 This example blocks requests to www.example.com that are not on ports 80 or 443.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>host eq "www.example.com" and not cf.edge.server_port in {'{80 443}'}</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                                              | Action |
+| ----------------------------------------------------------------------- | ------ |
+| `host eq "www.example.com" and not cf.edge.server_port in {'{80 443}'}` | Block  |
+
 </TableWrap>

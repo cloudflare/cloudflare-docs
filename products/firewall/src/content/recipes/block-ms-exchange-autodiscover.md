@@ -6,21 +6,10 @@ In some cases, Microsoft Exchange Autodiscover service requests can be “noisy,
 
 This example uses the `matches` [comparison operator](/firewall/cf-firewall-language/operators/#comparison-operators) and a regular expression to block `autodiscover.xml` and `autodiscover.src` requests.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>http.request.uri.path matches "/autodiscover\.(xml|src)$"</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                          | Action   |
+| --------------------------------------------------- | -------- |
+| `http.request.uri.path matches "/autodiscover\.(xml | src)\$"` | Block |
+
 </TableWrap>

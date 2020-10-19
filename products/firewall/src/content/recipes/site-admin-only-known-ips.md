@@ -8,21 +8,10 @@ The example below limits access to the WordPress administrative area, `/wp-admin
 
 To prevent attackers from successfully using a permutation of `/wp-admin/` such as `/wP-AdMiN/`, use the `lower()` [transformation function](/firewall/cf-firewall-language/functions/#transformation-functions) to convert the URI path segment to lowercase.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>not (ip.src in {'{10.20.30.40 192.168.1.0/24}'} and lower(http.request.uri.path) contains "/wp-admin")</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                                                                               | Action |
+| -------------------------------------------------------------------------------------------------------- | ------ |
+| `not (ip.src in {'{10.20.30.40 192.168.1.0/24}'} and lower(http.request.uri.path) contains "/wp-admin")` | Block  |
+
 </TableWrap>

@@ -16,21 +16,10 @@ This example uses the [`http.referer` field](/firewall/cf-firewall-language/fiel
 
 The `not` operator matches HTTP referrals that are not from partner sites, and the action blocks them.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>not (http.referer contains "example.com" or http.referer eq "www.example.net" or http.referer eq "www.cloudflare.com")</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                                                                                               | Action |
+| ------------------------------------------------------------------------------------------------------------------------ | ------ |
+| `not (http.referer contains "example.com" or http.referer eq "www.example.net" or http.referer eq "www.cloudflare.com")` | Block  |
+
 </TableWrap>

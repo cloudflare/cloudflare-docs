@@ -28,23 +28,12 @@ The second expression—`not cf.tls_client_auth.cert_verified`—returns `true` 
 
 Because the [action](/firewall/cf-firewall-rules/actions) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>(http.host in {'{'}"orangeclouded.com" "api.orangeclouded.com"{'}'} and not cf.tls_client_auth.cert_verified)</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                                                                                      | Action |
+| --------------------------------------------------------------------------------------------------------------- | ------ |
+| `(http.host in {'{'}"orangeclouded.com" "api.orangeclouded.com"{'}'} and not cf.tls_client_auth.cert_verified)` | Block  |
+
 </TableWrap>
 
 To create an API Shield rule that requires a valid client certificate in the Cloudflare dashboard, [use the API Shield Rule interface](/firewall/cf-dashboard/create-api-shield-rule/#use-the-api-shield-rule-interface) in the **Firewall** app.

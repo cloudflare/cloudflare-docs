@@ -16,21 +16,10 @@ This example uses the `cf.bot_management.score` [dynamic field](/firewall/cf-fir
 
 When a request for `login` has a Bot Management score less than 30 and is _not_ on the list of known good bots, Cloudflare issues a CAPTCHA challenge.
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>(cf.bot_management.score lt 30) and (http.request.uri.path eq "/login") and not (cf.bot_management.verified_bot)</code></pre>
-        </td>
-        <td><em>Challenge</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                                                                                          | Action |
+| ------------------------------------------------------------------------------------------------------------------- | ------ |
+| `(cf.bot_management.score lt 30) and (http.request.uri.path eq "/login") and not (cf.bot_management.verified_bot) ` | Block  |
+
 </TableWrap>

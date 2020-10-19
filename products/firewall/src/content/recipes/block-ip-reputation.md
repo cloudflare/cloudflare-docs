@@ -8,21 +8,10 @@ This example blocks requests from IP addresses that score greater than 0. This i
 
 This example also blocks requests based on country code ([ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format).
 
-<TableWrap><table style="width: 100%;">
+<TableWrap>
 
-  <thead>
-    <tr>
-        <td><strong>Expression</strong></td>
-        <td><strong>Action</strong></td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td valign="top">
-            <pre><code>(ip.geoip.country in {'{"CN" "TW" "US" "GB"}'}) or cf.threat_score > 0</code></pre>
-        </td>
-        <td><em>Block</em></td>
-    </tr>
-  </tbody>
-</table>
+| Expression                                                           | Action  |
+| -------------------------------------------------------------------- | ------- |
+| `(ip.geoip.country in {"CN" "TW" "US" "GB"}) or cf.threat_score > 0` | _Block_ |
+
 </TableWrap>
