@@ -27,7 +27,7 @@ firewallEventsAdaptive (limit: 2, orderBy: [datetime_ASC, clientCountryName_ASC]
 }
 ```
 
-<Aside>
+<Aside type="info" header="Info">
 
 Specifying a sort order by date returns less specific results than specifying a sort order by date and country.
 </Aside>

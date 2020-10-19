@@ -49,7 +49,7 @@ The account filter uses the same structure and rules as the zone filter, except 
 
 You must specify an account filter when making an account-scoped query, and you cannot query multiple accounts simultaneously.
 
-<Aside>
+<Aside type="info" header="Info">
 
 Network Analytics queries require an Account ID (`accountTag`) filter.
 </Aside>
