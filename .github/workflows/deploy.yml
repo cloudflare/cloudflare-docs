@@ -614,10 +614,17 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          npm install -g @cloudflare/wrangler
-      - run: wrangler publish
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/registrar"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/registrar"
+          environment: "production"
 
   deploy-spectrum:
     runs-on: ubuntu-latest
