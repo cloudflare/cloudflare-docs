@@ -6,8 +6,12 @@ module.exports = {
   contentRepoFolder: "products/warp-client",
   externalLinks: [
     {
-      title: "Cloudflare homepage",
-      url: "https://cloudflare.com"
+      title: "Blog announcement",
+      url: "https://blog.cloudflare.com/warp-for-desktop/"
+    },
+    {
+      title: "1.1.1.1 homepage",
+      url: "https://1.1.1.1"
     }
   ],
   search: {
