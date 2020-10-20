@@ -1,5 +1,6 @@
 ---
-order: 3
+title: For Everyone
+order: 2
 ---
 
 # WARP for Everyone
