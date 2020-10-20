@@ -1,8 +1,10 @@
 ---
-title: Using Proguard
+title: Proguard
 ---
 
-To use ``Proguard`` with the Cloudflare SDK, please add 
+# Using Proguard
+
+To use ``Proguard`` with the Cloudflare SDK, please add
 
     -dontwarn com.cloudflare.**
     -dontnote com.cloudflare.**
@@ -12,7 +14,7 @@ to your ``proguard-rules.pro`` file.
 When you use Android SDK 3.0.0 and later, you may need the following
 proguard configuration depending on libraries you are using.
 
-### okhttp3 and picasso
+## okhttp3 and picasso
 
     -dontwarn com.squareup.okhttp.**
     -dontwarn com.squareup.picasso.**
@@ -41,7 +43,7 @@ proguard configuration depending on libraries you are using.
     # OkHttp platform used only on JVM and when Conscrypt dependency is available.
     -dontwarn okhttp3.internal.platform.ConscryptPlatform
 
-### retrofit
+## retrofit
 
     # https://github.com/krschultz/android-proguard-snippets/blob/master/libraries/proguard-square-retrofit2.pro
 

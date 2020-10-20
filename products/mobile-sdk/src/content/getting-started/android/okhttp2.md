@@ -1,8 +1,10 @@
 ---
-title: OkHttp 2.2.x Integration
+title: OkHttp 2.2.x
 ---
 
-## OkHttpClient ##
+# OkHttp 2.2.x integration
+
+## OkHttpClient
 
 The Cloudflare SDK 2.x supports ``OkHttp v2.2`` and above. To use ``OkHttp2`` with the Cloudflare SDK, use ``Cloudflare.createOkHttpClient()`` method. To create an instance of OkHttpClient, use
 
@@ -17,7 +19,7 @@ OkHttpClient client = new com.squareup.okhttp.OkHttpClient();
 
 Note that OkHttp 2.2.x is not supported in Android SDK 3.0.0 and above.
 
-## OkHttp UrlConnection ##
+## OkHttp UrlConnection
 
 To use Cloudflare SDK with OkHttp UrlConnection, use ``CFOkUrlFactory`` to open a connection to an URL.
 Example:

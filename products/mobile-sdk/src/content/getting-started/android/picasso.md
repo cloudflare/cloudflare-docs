@@ -1,10 +1,12 @@
 ---
-title: Picasso Integration
+title: Picasso
 ---
+
+# Picasso integration
 
 If your app is using a custom ``Picasso`` singleton, you must initialize the ``Downloader`` object using an ``OkHttpClient`` instance created through the Cloudflare OkHttp API. Please see Cloudflare's OkHttp integration guide for [OkHttp](https://developers.cloudflare.com/mobile-sdk/getting_started/android/okhttp2/) and [OkHttp3](https://developers.cloudflare.com/mobile-sdk/getting_started/android/okhttp3/) for more details.
 
-``Picasso.setSingletonInstance`` must be called before initializing Cloudflare. 
+``Picasso.setSingletonInstance`` must be called before initializing Cloudflare.
 
 OkHttp2 sample code:
 

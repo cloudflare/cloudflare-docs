@@ -2,8 +2,6 @@
 order: 2
 ---
 
-import dragAndDrop from '../../images/drag-and-drop.gif'
-
 # iOS
 
 ## Requirements
@@ -18,9 +16,8 @@ import dragAndDrop from '../../images/drag-and-drop.gif'
 There is both bitcode enabled and bitcode disabled versions of Cloudflare Mobile SDK. To distinguish whether a version of SDK has bitcode enabled,
 check the last digit of the release version.
 
->
-+ x.x.x.1 -> Bitcode Enabled = No
-+ x.x.x.2 -> Bitcode Enabled = Yes
+- `x.x.x.1` → Bitcode Enabled = No
+- `x.x.x.2` → Bitcode Enabled = Yes
 
 To determine whether your application has bitcode enabled, navigate to your project and check the **Enable Bitcode** property in your **Build Settings**
 under **Build Options**.
@@ -31,7 +28,7 @@ If you are unsure whether you should use bitcode enabled or disabled SDK, go ahe
 
 Download and unzip appropriate bitcode enabled/disabled Cloudflare Mobile iOS SDK from portal. You can find the download link under your App settings in portal.
 
-<img src={dragAndDrop} alt="Drag and drop" />
+![Drag and drop](../../images/drag-and-drop.gif)
 
 1. Drag **CloudflareMobileSDK.framework** into your Xcode project. Ensure that "Copy items if needed" checkbox is selected when prompted by Xcode.
 2. Link following iOS frameworks in your project:

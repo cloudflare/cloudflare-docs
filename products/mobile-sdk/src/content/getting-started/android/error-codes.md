@@ -1,8 +1,10 @@
 ---
-title: Error Codes
+title: Error codes
 ---
 
-### Android Error Codes
+# Android error codes
+
+<TableWrap>
 
 Code | Description
 -----|------------
@@ -55,3 +57,5 @@ Code | Description
 219 | STREAM_CORRUPTED
 220 | UNMAPPABLE_CHARACTER
 221 | WRITE_ABORTED
+
+</TableWrap>

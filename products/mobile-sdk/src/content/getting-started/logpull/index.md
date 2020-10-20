@@ -24,6 +24,9 @@ The following headers are required for all endpoint calls:
 Please note that the __Email Address__ is one that registered in __Cloudflare Dashboard (dash.cloudflare.com)__, not Cloudflare Mobile SDK Portal (mobilesdk.cloudflare.com). The __Global API Key__ can also be obtained from Profile page of __Cloudflare Dashboard__.
 
 ### Parameters
+
+<TableWrap>
+
 Parameter | Description | Required
 ----------|-------------|---------
 start | - Inclusive<br />- Accept either RFC3339 (2019-01-01T00:00:00Z) or unix time (1546300800, in seconds)<br />- Must be no more than 7 days earlier than now | yes
@@ -31,6 +34,8 @@ end | - Exclusive <br />- Accept either RFC3339 (2019-01-01T00:00:00Z) or unix t
 clientKey | - Your App's Client Key (can be obtained from the Mobile SDK Portal) | yes
 count | - Return up to that many records<br />- Do not include if returning all records | no
 timestamps | - Format in which timestamp fields will be returned<br />- Value options are: unixnano (default), unix, rfc3339, rfc3339nano<br />- Timestamps retuned as integers for unix and unixnano and as strings for rfc3339 | no
+
+</TableWrap>
 
 ### Example
 
