@@ -208,7 +208,7 @@ You can confirm that the DNS record was created by visiting the DNS page in the 
 
 ## Configure your Client SSH connection
 
-On the client side, follow the instructions in [_Connecting over SSH_](/ssh/connect-ssh/) to configure the device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, include the following settings in the SSH configuration file:
+On the client side, follow the instructions in [_Connecting over SSH_](/protocols-and-connections/ssh) to configure the device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, include the following settings in the SSH configuration file:
 
 ```json
 Host vm.example.com ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-vm.example.com >&2 <&1' Host cfpipe-vm.example.com HostName vm.example.com ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h IdentityFile ~/.cloudflared/vm.example.com-cf_key CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub
