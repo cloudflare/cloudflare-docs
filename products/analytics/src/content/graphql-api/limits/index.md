@@ -19,6 +19,8 @@ Use the table below to identify which data nodes are included in your customer p
 Access to Network Analytics <b>ipFlows</b> nodes is only available to Enterprise customers using Cloudflare <a href="https://www.cloudflare.com/magic-transit/">Magic Transit</a> or <a href="https://developers.cloudflare.com/spectrum/getting-started/byoip/">BYOIP for Spectrum</a>
 </Aside>
 
+<TableWrap>
+
 | Data node                            |     Free |      Pro | Business | Enterprise |
 | :----------------------------------- | -------: | -------: | -------: | ---------: |
 | `browserPerf1mGroups`                | 24 hours |   7 days |  30 days |    30 days |
@@ -41,11 +43,15 @@ Access to Network Analytics <b>ipFlows</b> nodes is only available to Enterprise
 | `loadBalancingRequests`              |      n/a |   3 days |  30 days |    30 days |
 | `synAvgPps1mGroups`                  |      n/a |      n/a |      n/a |     7 days |
 
+</TableWrap>
+
 ### Query settings for account limits
 
 To obtain specific information regarding account limits for a particular data node, use the `settings` node.
 
 The example query below demonstrates how to retrieve account limits for the `browserPerf1mGroups` data node. The example queries the following fields:
+
+<TableWrap>
 
 | Field               | Description                                                                                            |
 | :------------------ | :----------------------------------------------------------------------------------------------------- |
@@ -54,6 +60,8 @@ The example query below demonstrates how to retrieve account limits for the `bro
 | `maxNumberOfFields` | Defines the maximum number of fields that can be requested in one query (varies by data node).         |
 | `maxPageSize`       | Defines the maximum number of records that can be returned in one query (varies by data node).         |
 | `notOlderThan`      | Limits how far back in the record a query can search (in seconds, varies by data set and plan).        |
+
+</TableWrap>
 
 ### Example query
 

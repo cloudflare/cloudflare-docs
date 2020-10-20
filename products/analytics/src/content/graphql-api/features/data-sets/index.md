@@ -21,6 +21,8 @@ Detailed descriptions of nodes, their structure, and supported queries are avail
 
 The following data sets (and associated nodes) are available in Cloudflare Analytics:
 
+<TableWrap>
+
 | Data set (product)          | Node                                                                                                                           |
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
 | Browser Insights            | `browserPerf1mGroups`                                                                                                          |
@@ -34,18 +36,26 @@ The following data sets (and associated nodes) are available in Cloudflare Analy
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
 
+</TableWrap>
+
 ## Beta data sets
 
 Beta data sets are available to Enterprise customers for testing and exploration. Do not rely on beta data nodes, since they are subject to change or removal without notice.
+
+<TableWrap>
 
 | Data set (product) | Node                                                                                            |
 | :----------------- | :---------------------------------------------------------------------------------------------- |
 | Cache Analytics    | `httpRequestsCacheGroups`                                                                       |
 | Browser Insights   | `browserPageRequests` `browserPerfGroups` `browserResourcePerfGroups` `browserResourceRequests` |
 
+</TableWrap>
+
 ## Deprecated data nodes
 
 The following data nodes are deprecated. To avoid disruption, migrate to replacement nodes before the sunset date.
+
+<TableWrap>
 
 | Node                         | Replacement node                     | Sunset date |
 | ---------------------------- | ------------------------------------ | ----------- |
@@ -53,6 +63,8 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 | `firewallEventsGroups`       | `firewallEventsAdaptiveGroups`       | Oct 26, 2020 |
 | `firewallEventsByTimeGroups` | `firewallEventsByTimeGroupsAdaptive` | Oct 26, 2020 |
 | `firewallRulePreviewGroups`  | `httpRequestAdaptiveGroups`          | Oct 26, 2020 |
+
+</TableWrap>
 
 ## Working with data sets
 
