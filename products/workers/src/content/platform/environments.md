@@ -261,6 +261,12 @@ kv_namespaces = [
 vars = {FOO = "some text"}
 ```
 
+<Aside type="warning">
+
+\* __Warning:__ We do not recommend using text variables to store secrets. If possible use the [`wrangler secret put`](/cli-wrangler/commands#secret) command instead.
+
+</Aside>
+
 <Aside>
 
 __Note:__ Secret variables can only be assigned to specific environments by passing the `-e/--env <environment_name>` flag while using the [`wrangler secret put`](/cli-wrangler/commands#secret) command.
