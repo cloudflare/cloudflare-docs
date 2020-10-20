@@ -6,7 +6,7 @@ order: 5
 
 <Aside>
 
-Before you get started please visit [Android Mobile Client](/warpclient/setting-up/android/) to review the system requirements and find a link to the App Store.
+Before you get started please visit [Android Mobile Client](/setting-up/android/) to review the system requirements and find a link to the App Store.
 
 Once you are ready, choose how you are going to deploy the client in your organization:
 * [Automated](#automated-install) (Intune, Endpoint Manager, etc.)
@@ -20,9 +20,9 @@ Once you are ready, choose how you are going to deploy the client in your organi
 ---------------------
 </div>
 
-The Cloudflare WARP Android client (Known in the store as 1.1.1.1: Faster & Safer Internet) allows for an automated install via tools like Intune, Google Endpoint Manager and others. 
+The Cloudflare WARP Android client (Known in the store as 1.1.1.1: Faster & Safer Internet) allows for an automated install via tools like Intune, Google Endpoint Manager and others.
 
-Accepted configuration values are as follows (for a description of each key and what it means, see [Deployment parameters](/warpclient/teams/parameters/))
+Accepted configuration values are as follows (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/))
 
 ```xml
 <key>organization</key>
@@ -37,7 +37,7 @@ Accepted configuration values are as follows (for a description of each key and 
 <string>https://support.example.com</string>
 ```
 
-Cloudflare WARP (Known in the store as 1.1.1.1: Faster & Safer Internet) is deployed 
+Cloudflare WARP (Known in the store as 1.1.1.1: Faster & Safer Internet) is deployed
 
 <div id="manual-configuration">
 

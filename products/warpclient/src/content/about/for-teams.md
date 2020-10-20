@@ -27,9 +27,9 @@ If you are unfamiliar with Teams, visit our [Cloudflare for Teams](https://www.c
 1. [Setup Cloudflare Gateway](https://developers.cloudflare.com/gateway/getting-startedoarding-gateway/) policies for your organization
     * Make a note of the DoH Subdomain unique ID created with your policy
 1. Create a Device Registration policy to determine which users can log into teams and register a device.
-1. Verify your devices meet the Cloudflare WARP [installations requirements](/warpclient/setting-up/requirements)
+1. Verify your devices meet the Cloudflare WARP [installations requirements](/setting-up/requirements)
 1. Follow the instructions for deployment:
-    * [Windows](/warpclient/teams/Windows-Teams/)
-    * [macOS](/warpclient/teams/macOS-Teams/)
-    * [iOS](/warpclient/teams/iOS-Teams/)
-    * [Android](/warpclient/teams/android-Teams/)
+    * [Windows](/teams/Windows-Teams/)
+    * [macOS](/teams/macOS-Teams/)
+    * [iOS](/teams/iOS-Teams/)
+    * [Android](/teams/android-Teams/)

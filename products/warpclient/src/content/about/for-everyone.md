@@ -27,10 +27,10 @@ Cloudflare WARP supports the following operational modes. You can choose to have
     * **WARP Unlimited** is our monthly subscription offering for WARP+. Note WARP Unlimited can only be purchased via your iOS and Android device for the time being.
 
 ## Next Steps
-1. Verify your device meets the [installations requirements](/warpclient/setting-up/requirements)
+1. Verify your device meets the [installations requirements](/setting-up/requirements)
 1. Follow the instructions for your device:
-    * [Windows](/warpclient/setting-up/windows/)
-    * [macOS](/warpclient/setting-up/macOS/)
-    * [iOS](/warpclient/setting-up/iOS/)
-    * [Android](/warpclient/setting-up/android/)
+    * [Windows](/setting-up/windows/)
+    * [macOS](/setting-up/macOS/)
+    * [iOS](/setting-up/iOS/)
+    * [Android](/setting-up/android/)
 
