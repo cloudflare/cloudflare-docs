@@ -121,6 +121,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/1.1.1.1"
@@ -151,6 +153,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/access"
@@ -181,6 +185,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
@@ -211,6 +217,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/argo-tunnel"
@@ -241,6 +249,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/byoip"
@@ -271,6 +281,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
@@ -301,6 +313,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
@@ -331,6 +345,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
@@ -361,6 +377,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/gateway"
@@ -391,6 +409,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
@@ -421,6 +441,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
@@ -451,6 +473,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/internet"
@@ -483,6 +507,7 @@ jobs:
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          WORKERS_ENV: development
 
   deploy-logs:
     runs-on: ubuntu-latest
@@ -504,6 +529,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
@@ -536,6 +563,7 @@ jobs:
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          WORKERS_ENV: development
 
   deploy-mobile-sdk:
     runs-on: ubuntu-latest
@@ -559,6 +587,7 @@ jobs:
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          WORKERS_ENV: development
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -580,6 +609,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
@@ -610,6 +641,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
@@ -640,6 +673,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
@@ -670,6 +705,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
@@ -702,6 +739,7 @@ jobs:
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          WORKERS_ENV: development
 
   deploy-stream:
     runs-on: ubuntu-latest
@@ -723,6 +761,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
@@ -753,6 +793,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
@@ -783,6 +825,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
@@ -813,6 +857,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
@@ -843,6 +889,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
@@ -873,6 +921,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
@@ -903,6 +953,8 @@ jobs:
           npm run build
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        env:
+          WORKERS_ENV: development
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
