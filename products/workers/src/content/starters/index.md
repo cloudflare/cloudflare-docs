@@ -134,6 +134,12 @@ Other languages may require you to install additional tools beyond wrangler. See
 />
 
 <WorkerStarter
+  title="Hello World (FSharp)"
+  description="A bare-bones starter in FSharp/Fable."
+  repo="fable-compiler/cfworker-hello-world"
+/>
+
+<WorkerStarter
   title="Hello World (Dart)"
   description="A bare-bones starter in Dart."
   repo="cloudflare/dart-worker-hello-world"
