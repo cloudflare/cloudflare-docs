@@ -17,7 +17,7 @@ Cloudflare's Mobile SDK is free for you to use. You don't need a Cloudflare acco
 
 Existing mobile app analytics platforms give you visibility into your in-app performance but has no knowledge about outgoing network calls. The dashboard gives you actionable insights into what you can do to improve your app’s network performance.
 
-![Actionable Insights](../images/insights.png)
+![Actionable Insights](./images/insights.png)
 
 In this scenario, `/media/JfLdlahamXQ10/200.gif` is taking more than 11 seconds to load. It is probably a good idea to cache this endpoint using a CDN.
 
