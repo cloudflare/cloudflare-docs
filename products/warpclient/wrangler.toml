@@ -6,7 +6,7 @@ workers_dev = true
 [env.production]
 workers_dev = false
 account_id = "b54f07a6c269ecca2fa60f1ae4920c99"
-zone_id = "351cf9fc6605231warpclient87714fa772ad5ca49"
+zone_id = "351cf9fc660523187714fa772ad5ca49"
 route = "https://developers.cloudflare.com/warpclient*"
 
 [site]
