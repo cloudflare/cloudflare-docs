@@ -177,7 +177,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabl
 }
 ```
 
-Once the job is enabled, you will start receiving logs within a few minutes and then every 5 minutes until you disable the job. For zones with very high request volume, it may take several hours before you start receiving logs for the first time.
+Once the job is enabled, you will start receiving logs within a few minutes and then in batches as soon as possible until you disable the job. For zones with very high request volume, it may take several hours before you start receiving logs for the first time.
 
 In addition to modifying *enabled*, you can also update the value for *logpull_options*. To modify *destination_conf*, you will need to request an ownership challenge and provide the associated token with your update request. You can also delete your current job and create a new one.
 
