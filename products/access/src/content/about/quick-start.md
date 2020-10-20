@@ -4,7 +4,6 @@ order: 1
 hidden: true
 ---
 
-import appLaunchGIF from '../static/app-launch/app-launch.gif'
 
 Cloudflare Access is one-half of Cloudflare for Teams, a security platform that runs on Cloudflare’s network and focuses on keeping users, devices, and data safe without compromising experience or performance. Cloudflare Access can secure web apps, SSH connections, as well as remote desktops.
 
@@ -39,7 +38,7 @@ Access supports providers that are maintained by your team, like Okta, G Suite, 
 * The Access App Launch reduces end user friction when migrating to a new system; they only need one URL and they can begin connecting to the tools they need.
 You can enable this for your organization now with these [instructions](/setting-up-access/app-launch/).
 
-<img src={appLaunchGIF} alt="gif" />
+![App launch](../static/app-launch/app-launch.gif)
 
 ## Other materials
 You can learn more about Cloudflare for Teams:
