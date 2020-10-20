@@ -53,8 +53,11 @@ You own the account lifecycle from creation, ongoing management, and finally del
 ```bash
 curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
 ```
+<Aside type="note">
 
-Note: This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
+__Note:__ This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
+
+</Aside>
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to:
 
