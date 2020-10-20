@@ -34,6 +34,7 @@ jobs:
       terraform: ${{ steps.filter.outputs.terraform }}
       time-services: ${{ steps.filter.outputs.time-services }}
       waf: ${{ steps.filter.outputs.waf }}
+      warpclient: ${{ steps.filter.outputs.warpclient }}
       workers: ${{ steps.filter.outputs.workers }}
     steps:
       - uses: actions/checkout@v2
@@ -93,6 +94,8 @@ jobs:
               - 'products/time-services/**'
             waf:
               - 'products/waf/**'
+            warpclient:
+              - 'products/warpclient/**'
             workers:
               - 'products/workers/**'
 
@@ -579,6 +582,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/waf
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-warpclient:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.warpclient == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/warpclient
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
