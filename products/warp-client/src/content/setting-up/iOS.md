@@ -7,10 +7,12 @@ order: 4
 
 ## Installation requirements
 <table>
-  <tr>
-    <td><strong>OS Ver</strong></td>
-    <td>iOS 11+</td>
-  </tr>
+  <tbody>
+    <tr>
+      <td><strong>OS Ver</strong></td>
+      <td>iOS 11+</td>
+    </tr>
+  </tbody>
 </table>
 
 ## Steps to download

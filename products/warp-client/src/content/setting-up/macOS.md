@@ -7,26 +7,28 @@ order: 3
 
 ## Installation requirements
 <table>
-  <tr>
-    <td><strong>OS Ver</strong></td>
-    <td>High Sierra, Catalina</td>
-  </tr>
-  <tr>
-    <td><strong>OS Type</strong></td>
-    <td>64bit only</td>
-  </tr>
-  <tr>
-    <td><strong>HD Space</strong></td>
-    <td>75MB</td>
-  </tr>
-      <tr>
-    <td><strong>Memory</strong></td>
-    <td>35MB</td>
-  </tr>
-  <tr>
-    <td><strong>Network Types</strong></td>
-    <td>WIFI or LAN</td>
-  </tr>
+  <tbody>
+    <tr>
+      <td><strong>OS Ver</strong></td>
+      <td>High Sierra, Catalina</td>
+    </tr>
+    <tr>
+      <td><strong>OS Type</strong></td>
+      <td>64bit only</td>
+    </tr>
+    <tr>
+      <td><strong>HD Space</strong></td>
+      <td>75MB</td>
+    </tr>
+        <tr>
+      <td><strong>Memory</strong></td>
+      <td>35MB</td>
+    </tr>
+    <tr>
+      <td><strong>Network Types</strong></td>
+      <td>WIFI or LAN</td>
+    </tr>
+  </tbody>
 </table>
 
 ## Steps to download
