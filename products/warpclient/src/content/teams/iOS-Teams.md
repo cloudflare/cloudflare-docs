@@ -6,7 +6,7 @@ order: 4
 
 <Aside>
 
-Before you get started please visit [iOS Mobile Client](/warpclient/setting-up/iOS/) to review the system requirements and find a link to the App Store.
+Before you get started please visit [iOS Mobile Client](/setting-up/iOS/) to review the system requirements and find a link to the App Store.
 
 Once you are ready, choose how you are going to deploy the client in your organization:
 * [Automated](#automated-install) (Jamf, Intune, SimpleMDM, etc.)
@@ -20,9 +20,9 @@ Once you are ready, choose how you are going to deploy the client in your organi
 ---------------------
 </div>
 
-The Cloudflare WARP iOS client (Known in the store as 1.1.1.1: Faster Internet) allows for an automated install via tools like Jamf, Intune, SimpleMDM. 
+The Cloudflare WARP iOS client (Known in the store as 1.1.1.1: Faster Internet) allows for an automated install via tools like Jamf, Intune, SimpleMDM.
 
-Accepted plist configuration values are as follows (for a description of each key and what it means, see [Deployment parameters](/warpclient/teams/parameters/))
+Accepted plist configuration values are as follows (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/))
 
 ```xml
 <key>organization</key>
@@ -38,7 +38,7 @@ Accepted plist configuration values are as follows (for a description of each ke
 ```
 
 ### Example Configuration in Jamf
-Cloudflare WARP (Known in the store as 1.1.1.1: Faster Internet) is deployed in one step as part of Jamf. Below you will find the minimum required steps to deploy the client via Jamf. 
+Cloudflare WARP (Known in the store as 1.1.1.1: Faster Internet) is deployed in one step as part of Jamf. Below you will find the minimum required steps to deploy the client via Jamf.
 
 #### Upload the package
 1. Login to your jamfcloud.com account.

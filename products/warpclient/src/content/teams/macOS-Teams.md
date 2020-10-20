@@ -6,7 +6,7 @@ order: 3
 
 <Aside>
 
-Before you get started please visit [macOS Desktop Client](/warpclient/setting-up/macOS/) to review the system requirements and download the macOS installer.
+Before you get started please visit [macOS Desktop Client](/setting-up/macOS/) to review the system requirements and download the macOS installer.
 
 Once you are ready, choose how you are going to deploy the client in your organization:
 * [Automated](#automated-install) (Jamf, Intune, Scripting, etc.)
@@ -20,9 +20,9 @@ Once you are ready, choose how you are going to deploy the client in your organi
 ---------------------
 </div>
 
-The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. 
+The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device.
 
-Accepted plist values are as follows (for a description of each key and what it means, see [Deployment parameters](/warpclient/teams/parameters/))
+Accepted plist values are as follows (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/))
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,7 +42,7 @@ Accepted plist values are as follows (for a description of each key and what it 
 </dict>
 </plist>
 ```
-[Click here](/warpclient/static/com.cloudflare.warp.plist) to download the example plist from above
+[Click here](/static/com.cloudflare.warp.plist) to download the example plist from above
 
 Note if you manually plan to download the plist file and place it in `/Library/Managed Preferences` it must first be converted into binary format. To do that drop out to a terminal window and run the following command:
 ```shell
@@ -50,7 +50,7 @@ Note if you manually plan to download the plist file and place it in `/Library/M
 ```
 
 ### Example Configuration in Jamf
-Cloudflare WARP is deployed in two distinct steps as part of Jamf. The first step is to create a policy that deploys the Cloudflare WARP Client pkf file. The second step is to create a configuration profile with the settings you want pushed down. Below you will find the minimum required steps to deploy the client via Jamf. 
+Cloudflare WARP is deployed in two distinct steps as part of Jamf. The first step is to create a policy that deploys the Cloudflare WARP Client pkf file. The second step is to create a configuration profile with the settings you want pushed down. Below you will find the minimum required steps to deploy the client via Jamf.
 
 #### Upload the package
 1. Login to your jamfcloud.com account.
@@ -65,7 +65,7 @@ Cloudflare WARP is deployed in two distinct steps as part of Jamf. The first ste
 #### Create the policy
 1. Select **Computers** > **Policies** on the menu to your left.
 1. Click  **+ New**.
-1. Enter a Display name such as "Cloudflare WARP Client". 
+1. Enter a Display name such as "Cloudflare WARP Client".
     - For Triggers our recommendation is to select "Startup", "Login", "Enrollment Complete" and "Recurring Check-in", but you can select whatever works best for your organization.
 1. Navigate to **Packages** on the left.
 1. Click **Configure**.
@@ -79,7 +79,7 @@ Cloudflare WARP is deployed in two distinct steps as part of Jamf. The first ste
 1. Scroll down the options list and click on **Application & Custom Settings**.
 1. Click **Configure**.
 1. Upload a valid plist file. Start with our example above and modify for your organization.
-    - [Click here](/warpclient/static/com.cloudflare.warp.plist) to download the example plist from above.
+    - [Click here](/static/com.cloudflare.warp.plist) to download the example plist from above.
 1. Click **Save**.
 1. Navigate to Scope configure which devices in your organization should receive this profile.
 1. Click **Save**

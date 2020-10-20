@@ -6,7 +6,7 @@ order: 2
 
 <Aside>
 
-Before you get started please visit [Windows Desktop Client](/warpclient/setting-up/windows/) to review the system requirements and download the Windows installer.
+Before you get started please visit [Windows Desktop Client](/setting-up/windows/) to review the system requirements and download the Windows installer.
 
 Once you are ready, choose how you are going to deploy the client in your organization:
 * [Automated](#automated-install) (Intune, AD, Scripting, etc.)
@@ -20,9 +20,9 @@ Once you are ready, choose how you are going to deploy the client in your organi
 ---------------------
 </div>
 
-The Cloudflare WARP Windows client allows for an automated install via tools like Intune, AD or any script or management tool that can execute a .msi file. 
+The Cloudflare WARP Windows client allows for an automated install via tools like Intune, AD or any script or management tool that can execute a .msi file.
 
-Example command line (for a description of each key and what it means, see [Deployment parameters](/warpclient/teams/parameters/)):
+Example command line (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/)):
 
 An Example command line to install the product
 ```shell
