@@ -3,11 +3,11 @@ title: About
 order: 1
 ---
 
-# About CNI
+# About Cloudflare Network Interconnect
 
 ## Advantages
 
-CNI provides faster, more reliable, and more private connectivity between your infrastructure and Cloudflare.
+Cloudflare Network Interconnect (CNI) provides faster, more reliable, and more private connectivity between your infrastructure and Cloudflare.
 
 This table outlines some of the benefits CNI provides across the Cloudflare product suite:
 
