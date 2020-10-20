@@ -23,7 +23,7 @@ products/1.1.1.1/ @abracchi-tw
 products/gateway/ @abracchi-tw
 
 # Warp Client
-products/warpclient/ @abracchi-tw
+products/warp-client/ @abracchi-tw
 
 # Randomness Beacon
 products/randomness-beacon/ @lukevalenta @armfazh
