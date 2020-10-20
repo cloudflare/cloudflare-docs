@@ -263,7 +263,7 @@ vars = {FOO = "some text"}
 
 <Aside type="warning">
 
-\* __Warning:__ Do **not** use text varibales to hold secrets like API keys, tokens etcetra, use the [`wrangler secret put`](/cli-wrangler/commands#secret) command instead.
+\* __Warning:__ We do not recommend using text variables to store secrets. If possible use the `wrangler secret put` command instead.
 
 </Aside>
 
