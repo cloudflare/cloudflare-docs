@@ -1,15 +1,17 @@
 ---
-title: About Cloudflare Network Interconnect
-weight: 100
+title: About
+order: 1
 ---
 
-Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare rather than using the public Internet.
+# About CNI
 
 ## Advantages
 
 CNI provides faster, more reliable, and more private connectivity between your infrastructure and Cloudflare.
 
 This table outlines some of the benefits CNI provides across the Cloudflare product suite:
+
+<TableWrap>
 
 <table>
   <thead>
@@ -19,29 +21,31 @@ This table outlines some of the benefits CNI provides across the Cloudflare prod
       <th>With CNI</th>
     </tr>
   </thead>
-  <tbody style="vertical-align:top">
+  <tbody>
     <tr>
-      <td><a href="https://www.cloudflare.com/teams-access/">Access</a></td>
+      <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/teams-access/">Access</a></span></td>
       <td><p>Replaces corporate VPNs with the Cloudflare network.</p></td>
       <td><p>Bring your Multiprotocol Label Switching (MPLS) network to meet Cloudflare's so your employees can connect to your network securely no matter where they are.</p></td>
     </tr>
     <tr>
-      <td><a href="https://www.cloudflare.com/cdn/">CDN</a></td>
+      <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/cdn/">CDN</a></span></td>
       <td><p>Places content closer to visitors, improving site performance.</p></td>
       <td><p>Adding CNI improves cache fill performance and reduces cost.</p></td>
     </tr>
     <tr>
-      <td><a href='https://www.cloudflare.com/magic-transit/'>Magic Transit</a></td>
+      <td><span style="white-space: nowrap"><a href='https://www.cloudflare.com/magic-transit/'>Magic Transit</a></span></td>
       <td><p>Protects data center and branch networks from unwanted and malicious traffic.</p></td>
       <td><p>Decreases jitter, drives throughput improvements, and hardens infrastructure to attack.</p></td>
     </tr>
     <tr>
-      <td><a href='https://workers.cloudflare.com/'>Workers</a></td>
+      <td><span style="white-space: nowrap"><a href='https://workers.cloudflare.com/'>Workers</a></span></td>
       <td><p>Serverless compute platform.</p></td>
       <td><p>Provides a secure connection to serverless cloud compute that does not traverse the public Internet.</p></td>
     </tr>
   </tbody>
 </table>
+
+</TableWrap>
 
 For more detail on how CNI delivers these benefits, see [_Introducing Cloudflare Network Interconnect_](https://blog.cloudflare.com/cloudflare-network-interconnect/#:~:text=Today%20we're%20excited%20to,to%20their%20physical%20network%20edge.).
 
@@ -72,10 +76,6 @@ Depending on your organization's traffic volume, you can interconnect with Cloud
 Choose an IXP interconnect when you are already peered an IXP or when you want to interconnect at a location where an interconnection platform is not present.
 
 To interconnect using an IXP, follow the exchange's instructions to establish the interconnect, and Cloudflare will enable its side.
-
-## Setting up CNI
-
-For more on onboarding and configuration requirements, see [_Set up Cloudflare Network Interconnect_](/network-interconnect/set-up-cni).
 
 ## Limitations
 
