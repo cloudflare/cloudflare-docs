@@ -5,7 +5,6 @@ hidden: true
 
 # Access App Launch
 
-import appLaunch from '../static/app-launch/app-launch.gif'
 
 The Access App Launch portal provides end users with a single dashboard from which they can open applications secured by Access.
 
@@ -17,7 +16,7 @@ Users log in using one of the identity providers configured for the account. Onc
 
 Tiles have a one-to-one relationship to the policies you create in Access. If you create one policy for general access to your Jira deployment and a separate policy that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. The tile names displayed in the Access App Launch portal correspond to the application names list in the **Access Policies** card.
 
-<img src={appLaunch} alt="App Launch Gif" />
+![App launch](../static/app-launch/app-launch.gif)
 
 ## Enable the App Launch Portal
 
