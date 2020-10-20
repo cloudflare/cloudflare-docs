@@ -1,8 +1,9 @@
 ---
-order: 400
+title: Known issues & FAQ
+order: 6
 ---
 
-# Known Issues and FAQ
+# Known issues & FAQ
 
 <Aside>
 

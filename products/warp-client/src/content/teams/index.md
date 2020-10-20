@@ -1,10 +1,10 @@
 ---
-order: 3
+order: 4
 ---
 
-# Teams Deployment
+# Teams deployment
 
-## Getting Started
+## Getting started
 Deploying the Cloudflare WARP client to support your Cloudflare for Teams configuration supports manual installs, simple deployment scripts, or advanced enterprise management tools, such as Microsoft Intune or Jamf.
 
 ### If you already have Cloudflare for Teams configured
