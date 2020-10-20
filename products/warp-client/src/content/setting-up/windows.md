@@ -1,10 +1,11 @@
 ---
+title: Windows
 order: 2
 ---
 
-# Windows Desktop Client
+# Windows desktop client
 
-## Installation Requirements
+## Installation requirements
 <table>
   <tr>
     <td><strong>OS Ver</strong></td>
