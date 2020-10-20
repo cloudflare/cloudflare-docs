@@ -1,9 +1,9 @@
 ---
-title: "Quick start"
 order: 1
 hidden: true
 ---
 
+# Quick start
 
 Cloudflare Access is one-half of Cloudflare for Teams, a security platform that runs on Cloudflare’s network and focuses on keeping users, devices, and data safe without compromising experience or performance. Cloudflare Access can secure web apps, SSH connections, as well as remote desktops.
 

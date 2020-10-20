@@ -3,8 +3,7 @@ order: 9
 hidden: true
 ---
 
-# Access App Launch
-
+# Access app launch
 
 The Access App Launch portal provides end users with a single dashboard from which they can open applications secured by Access.
 
@@ -12,7 +11,7 @@ The Access App Launch portal is available at an authentication domain that is un
 
 Users log in using one of the identity providers configured for the account. Once Access authenticates the user, the App Launch portal displays applications they are authorized to use, represented by tiles. Clicking on a tile launches the application’s hostname, sending the user to that tool as part of their single sign-on flow.
 
-![App Launch Create](../static/app-launch/app-launch-tiles.png)
+![App launch create](../static/app-launch/app-launch-tiles.png)
 
 Tiles have a one-to-one relationship to the policies you create in Access. If you create one policy for general access to your Jira deployment and a separate policy that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. The tile names displayed in the Access App Launch portal correspond to the application names list in the **Access Policies** card.
 
@@ -28,19 +27,19 @@ To enable the Access App Launch, follow the instructions below.
 
 1. Navigate to the **Authentication** row in the **Access** section of the Cloudflare for Teams sidebar. Select the **App Launch** tab.
 
-![App Launch Create](../static/app-launch/setup-app-launch.png)
+![App launch create](../static/app-launch/setup-app-launch.png)
 
 2. In the **Edit Access App Launch** dialog, select a rule type from the **Include** drop-down list and then configure the rule on the right.
 
-![App Launch Edit](../static/app-launch/configure-app-launch.png)
+![App launch edit](../static/app-launch/configure-app-launch.png)
 
 3. Click **Save**.
 
 Once you save the policy, users can access the App Launch portal at the URL listed on the **Access App Launch** card. You can return to this page to edit the App Launch.
 
-![App Launch Create](../static/app-launch/app-launch-enabled.png)
+![App launch create](../static/app-launch/app-launch-enabled.png)
 
-## Access App Launch Portal
+## Access App Launch portal
 
 When a user visits the Access App Launch portal, they are prompted to log in via an identity provider you have configured for their account. Once the user has successfully authenticated, Access generates a JWT (JSON Web Token) scoped to their identity and to the Access account. The JWT is identical to the token created when users authenticate directly to an application.
 
