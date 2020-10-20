@@ -1,14 +1,18 @@
 ---
-title: Logpull API
-weight: 1
+order: 1
 ---
 
-## Logpull API
+# Logpull API
+
 Cloudflare Mobile SDK Logpull is a REST API providing raw logs.
 
-__! NOTE !__ Logpull API is not enabled by default, please contact Cloudflare Support to activate (requires Cloudflare dashboard user, other than Mobile SDK Portal user, to activate)
+<Aside type="note">
 
-## Requesting Logs
+__Note:__ Logpull API is not enabled by default, please contact Cloudflare Support to activate (requires Cloudflare dashboard user, other than Mobile SDK Portal user, to activate).
+
+</Aside>
+
+## Requesting logs
 
 ### Endpoint(s)
 - `GET /mobilesdk/logs/logpull` - returns Mobile SDK metrics log data based on specified parameters
@@ -29,7 +33,8 @@ count | - Return up to that many records<br />- Do not include if returning all 
 timestamps | - Format in which timestamp fields will be returned<br />- Value options are: unixnano (default), unix, rfc3339, rfc3339nano<br />- Timestamps retuned as integers for unix and unixnano and as strings for rfc3339 | no
 
 ### Example
-```
+
+```bash
 curl -s \
     -H 'X-Auth-Email: <REDACTED>' \
     -H 'X-Auth-Key: <REDACTED>' \
@@ -38,6 +43,9 @@ curl -s \
 - Add `-H 'Accept-Encoding: gzip'` for gzip compressed response
 
 ### Fields
+
+<TableWrap>
+
 Field | Value | Type
 ------|-------|-----
 timestamp | unix / unixnano (int) or rfc3339 / rfc3339nano (string) format timestamp | timestamp
@@ -51,7 +59,7 @@ sdkVer | Cloudflare Mobile SDK version | string
 netOp | Client network operator (Carrier) | string
 netType | mobile \| wifi \| unknown | string
 netSubType | unknown \| gprs \| edge \| umts \| cdma \| evdo_0 \| evdo_a \| 1xrtt \| hsdpa \| hsupa \| hspa \| iden \| evdo_b \| lte \| ehrpd \| hspap \| gsm  \| wcdma | string
-sdkErrorCode | Detailed Mobile SDK Error Code, 0 (no error) \| other_values (error)<br />for details, See [iOS Error Codes](/mobile-sdk/getting_started/ios/error-codes) / [Android Error Codes](/mobile-sdk/getting_started/android/error-codes)  | int
+sdkErrorCode | Detailed Mobile SDK Error Code, 0 (no error) \| other_values (error)<br />for details, See [iOS Error Codes](/getting_started/ios/error-codes) / [Android Error Codes](/getting_started/android/error-codes)  | int
 https | http \| https | string
 rayId | ID of the request | string
 coloName | Cloudflare edge colo name (airport code) | string
@@ -69,6 +77,8 @@ asNum | Client AS number | int
 viewName | View controller name | string
 isAccelerated | accelerated_fallback \| accelerated_tcp \| accelerated_asap \| not_accelerated \| error | string
 isError | error \| empty_string (no error) | string
+
+</TableWrap>
 
 ### Tips for stats
 - Performance

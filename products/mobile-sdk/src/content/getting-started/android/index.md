@@ -1,9 +1,10 @@
 ---
-title: Android
-weight: 3
+order: 3
 ---
 
-## Requirements ##
+# Android
+
+## Requirements
 
 Minimum version is Android 4.0 (Ice Cream Sandwich). Full feature support only available for 4.3+ (Jelly Bean MR2).
 
@@ -13,7 +14,7 @@ The Cloudflare Mobile SDK is available through **EITHER** of the two ways below.
 
 Please choose between the options provided.
 
-#### Setup Permission ####
+### Setup permission
 
 Add the following permission to your ``AndroidManifest.xml`` file:
 
@@ -23,7 +24,7 @@ Add the following permission to your ``AndroidManifest.xml`` file:
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
-#### Installation via Gradle ####
+### Installation via Gradle
 
 Add the following code between *ADD START* and *ADD END* to your root-level build.gradle file:
 
@@ -57,28 +58,28 @@ dependencies {
 }
 ```
 
-#### Installation via JAR ####
+### Installation via JAR
 
-Download the `JAR` [here](https://storage.googleapis.com/cf-neumob-storage/cloudflare-mobile-sdk-2.1.0.jar).
+[Download the `JAR`](https://storage.googleapis.com/cf-neumob-storage/cloudflare-mobile-sdk-2.1.0.jar)
 
 In Android Studio,
 
-1. Download the Cloudflare Mobile SDK JAR file on the portal page. You can find under a download 
+1. Download the Cloudflare Mobile SDK JAR file on the portal page. You can find under a download
 link under your App settings.
 
 2. Copy the Cloudflare JAR file to your libs folder
 
 3. Right click the JAR file and click **Add as library**.
 
-## Third Party Library Support
+## Third party library support
 
-If you are using `OkHttp` you'll need to follow the integration setup documents below. For other libraries, please see the `Compatibility` section at the bottom. 3rd party library support is available through **EITHER** of the 2 ways below. 
+If you are using `OkHttp` you'll need to follow the integration setup documents below. For other libraries, please see the `Compatibility` section at the bottom. 3rd party library support is available through **EITHER** of the 2 ways below.
 
 You can instrument 3rd party objects through APIs available in the Cloudflare SDK **OR** use the `cfandroid` gradle plugin.
 
 The Cloudflare gradle plugin is currently a **beta** product. It is designed to instrument networking libraries. In addition to convenience, another advantage of using the gradle plugin is visibility over requests from 3rd party dependencies using OkHttp. Using the gradle plugin results in a slight increase in build time dependent on the size of your application.
 
-#### Instrumentation via APIs ####
+### Instrumentation via APIs
 
 To manually connect Cloudflare with the below 3rd party libraries, please follow the documents below.
 
@@ -87,7 +88,7 @@ To manually connect Cloudflare with the below 3rd party libraries, please follow
 - [retrofit](retrofit/)
 - [picasso](picasso/)
 
-#### Instrumentation via Gradle (BETA) ####
+### Instrumentation via Gradle (BETA)
 
 Add the following code between *ADD START* and *ADD END* to your root-level build.gradle file:
 
@@ -113,7 +114,7 @@ buildscript {
 
 In your module Gradle file (ex. app/build.gradle), add *apply plugin* line to the bottom of the file:
 
- ```java
+```java
 apply plugin: "com.android.application"
 
 android {
@@ -133,10 +134,10 @@ Clean the project, then build!
 
 ## Initializing Cloudflare
 
-Initialization is the process of modifying your application in order to 
-communicate with Cloudflare. Initialize Cloudflare Mobile SDK only once on the main thread 
+Initialization is the process of modifying your application in order to
+communicate with Cloudflare. Initialize Cloudflare Mobile SDK only once on the main thread
 at the beginning of your ``onCreate`` activity.
- 
+
 ```java
 CFMobile.initialize(getApplicationContext(),“CLOUDFLARE_CLIENT_KEY");
 ```
@@ -147,26 +148,26 @@ If you are adding the Cloudflare import manually, use
 import com.cloudflare.api.CFMobile;
 ```
 
-Cloudflare is now integrated with your Android application! The **State** for the app version will be ``ON`` and this can be changed by clicking the
+Cloudflare is now integrated with your Android application! The **State** for the app version will be `ON` and this can be changed by clicking the
 settings button under **Action**, toggling the switch in the upper right corner of the
 following screen, and then the **Apply** button at the bottom.
 
 <!-- #### Cloudflare takes about 2 days to learn, customize, and then accelerate your network calls. #### -->
 
-## Verifying Integration ##
+## Verifying integration
 
-To check that Cloudflare is **initialized** you can add a Runnable parameter that will execute after ``initialize`` is completed.
+To check that Cloudflare is **initialized** you can add a Runnable parameter that will execute after `initialize` is completed.
 
-``isInitialized`` returns a boolean indicating Cloudflare is enabled.
+`isInitialized` returns a boolean indicating Cloudflare is enabled.
 
 <!-- You may configure whether or not Cloudflare is accelerated by adjusting the % accelerated slider through the portal (click the **settings** button for the app version on your app details page). If you plan to A / B test accelerated vs unaccelerated Cloudflare users, we recommend using the ``isAccelerated`` API in the ``Runnable``. Please note that ``isAccelerated`` is **sticky**- meaning a user who is **accelerated** will remain accelerated until the % accelerated slider value is changed. -->
 
 <!-- The ``isAccelerated`` boolean value can be used to populate a property or dimension within your mobile analytics platform. -->
 
-#### Here's an example of how you might verify Cloudflare initialization ####
+### Here’s an example of how you might verify Cloudflare initialization
 
 ```java
-CFMobile.initialize(getApplicationContext(),“CLOUDFLARE_CLIENT_KEY", new Runnable() {
+CFMobile.initialize(getApplicationContext(),"CLOUDFLARE_CLIENT_KEY", new Runnable() {
     @Override
     public void run() {
         if (CFMobile.isInitialized()) {
@@ -182,14 +183,14 @@ CFMobile.initialize(getApplicationContext(),“CLOUDFLARE_CLIENT_KEY", new Runna
 
 We do not recommend executing your own initialization code inside the runnable block. Also note that the runnable is not executed on the UI thread.
 
-## Disabling Cloudflare ##
+## Disabling Cloudflare
 
-If for any reason you are looking to disable Cloudflare, navigate to the portal 
-to your app settings and select the combination of application versions 
-and/or Cloudflare SDK versions that should be enabled. Once disabled, Cloudflare will 
+If for any reason you are looking to disable Cloudflare, navigate to the portal
+to your app settings and select the combination of application versions
+and/or Cloudflare SDK versions that should be enabled. Once disabled, Cloudflare will
 not initialize on the client device.
 
-## Compatibility ##
+## Compatibility
 
 The Cloudflare Android SDK has been verified with the following Android libraries:
 
@@ -207,14 +208,14 @@ The Cloudflare Android SDK does not currently support:
 - React Native
 - Cordova
 
-## Considerations ##
+## Considerations
 
-1. For applications using `proguard`, please follow the instructions [here](proguard/).
+1. For applications using `proguard`, please [follow the instructions](proguard/).
 
 2. The Cloudflare Android SDK does not currently support webviews.
 
-3. The Cloudflare Android SDK will not initialize on certain architectures like mips. This does not prevent an application from running normally on devices of those architectures despite possible warnings about platform limitations. Support for architectures include arm64-v8a, armeabi, armeabi-v7a, x86, x86_64 (fallback to x86). See hardware stats [here](https://web.archive.org/web/20171113032047/https://hwstats.unity3d.com/mobile/cpu-android.html).
+3. The Cloudflare Android SDK will not initialize on certain architectures like mips. This does not prevent an application from running normally on devices of those architectures despite possible warnings about platform limitations. Support for architectures include arm64-v8a, armeabi, armeabi-v7a, x86, x86_64 (fallback to x86). [See hardware stats](https://web.archive.org/web/20171113032047/https://hwstats.unity3d.com/mobile/cpu-android.html).
 
-## Contact ##
+## Contact
 
 Please reach out to [support@cloudflare.com](mailto:support@cloudflare.com) for any questions, comments, or concerns.

@@ -1,7 +1,8 @@
 ---
-title: Portal
-weight: 1
+order: 1
 ---
+
+# Portal
 
 You can log in to the portal by visiting https://mobilesdk.cloudflare.com/.
 
@@ -15,7 +16,7 @@ Once you click on that button, the portal will prompt you to fill out the name o
 
 ![Register Your App](../images/register-your-app.png)
 
-Once you fill out your App Name and App Store Link (optional) you can click on next to take you to the next step. 
+Once you fill out your App Name and App Store Link (optional) you can click on next to take you to the next step.
 
 ![Install SDK](../images/install-the-sdk.png)
 
@@ -23,12 +24,12 @@ Copy the Client Key for your SDK. You will need this to initialize your mobile a
 
 ![Download SDK](../images/download-the-sdk.png)
 
-If you have copied the Client Key and downloaded the SDK, you are now ready to integrate Cloudflare's Mobile SDK with your App. 
+If you have copied the Client Key and downloaded the SDK, you are now ready to integrate Cloudflare's Mobile SDK with your App.
 
 Before, you can verify that the SDK has installed, you need to integrate the SDK to your app. Use the platform specific guides to integrate the SDK:
 
-* [iOS](/mobile-sdk/getting_started/ios)
-* [Android](/mobile-sdk/getting_started/android)
+* [iOS](/getting_started/ios)
+* [Android](/getting_started/android)
 
 Once you have completed the above steps, run your app (simulator is fine). Click on the following button to verify that you have successfully installed the Cloudflare Mobile SDK.
 

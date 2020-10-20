@@ -1,13 +1,14 @@
 ---
-title: Getting Started
-weight: 2
+order: 2
 ---
+
+# Getting started
 
 import sdkInstallationGif from '../images/sdk-installation-gif.gif'
 
-You can easily integrate Cloudflare's Mobile SDK by going through the following steps. 
+You can easily integrate Cloudflare's Mobile SDK by going through the following steps.
 
-<img src={sdkInstallationGif} alt="SDK Installation" />
+![SDK Installation]({sdkInstallationGif})
 
 ## Install SDK
 Use the platform specific guides to integrate the SDKs:
