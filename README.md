@@ -40,7 +40,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Terraform               | terraform            |   ✕   |    ✕    | [Test](https://terraform.cloudflare-docs.workers.dev/terraform)                       | [Prod](https://developers.cloudflare.com/terraform)         |
 | Time Services           | time-services        |   ✕   |    ✕    | [Test](https://time-services.cloudflare-docs.workers.dev/time-services)               | [Prod](https://developers.cloudflare.com/time-services)     |
 | WAF                     | waf                  |   ✕   |    ✕    | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   | [Prod](https://developers.cloudflare.com/waf)               |
-| WARP Client             | warp-client          |   ✕   |         | [Test](https://warp-client.cloudflare-docs.workers.dev/warp-client)                   |                                                             |
+| WARP Client             | warp-client          |   ✕   | Started | [Test](https://warp-client.cloudflare-docs.workers.dev/warp-client)                   |                                                             |
 | Workers                 | workers              |   ✕   |    ✕    | [Test](https://workers.cloudflare-docs.workers.dev/workers)                           | [Prod](https://developers.cloudflare.com/workers)           |
 
 ¹ The documentation for the Docs Engine itself.
