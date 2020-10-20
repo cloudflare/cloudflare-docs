@@ -1,11 +1,13 @@
 ---
 title: Nested Structures
-weight: 16
+order: 16
 ---
+
+# Nested Structures
 
 Two kinds of nested structures that behave in special ways are supported: **arrays** and **maps**. Fields of either of these types are arrays; when they're part part of query result, which is already an array of objects, they become nested arrays.
 
-### Arrays
+## Arrays
 
 Arrays behave as a special kind of single value. There is no way to paginate through, filter, filter by, group, or group by the array.
 
@@ -55,7 +57,7 @@ The results would be:
 }
 ````
 
-### Maps
+## Maps
 
 Maps behave like arrays, but can be grouped using the `sum` function. They are used in aggregated data sets, such as `httpRequest1dGroups`.
 
@@ -120,7 +122,7 @@ Response:
 }
 ````
 
-### Examples
+## Examples
 
 Query array fields in raw data sets:
 ````javascript

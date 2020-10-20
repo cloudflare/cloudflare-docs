@@ -1,7 +1,9 @@
 ---
 title: Filtering
-weight: 10
+order: 10
 ---
+
+# Filtering
 
 
 Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can easily exceed supported bounds, and the data returned can be noisy.
@@ -47,7 +49,7 @@ The account filter uses the same structure and rules as the zone filter, except 
 
 You must specify an account filter when making an account-scoped query, and you cannot query multiple accounts simultaneously.
 
-<Aside>
+<Aside type="info" header="Info">
 
 Network Analytics queries require an Account ID (`accountTag`) filter.
 </Aside>

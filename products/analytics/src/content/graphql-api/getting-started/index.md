@@ -1,16 +1,13 @@
 ---
 title: Getting started
-weight: 10
+order: 10
 ---
 
+# Getting started
 
 This section describes setting up authentication for _GraphiQL_ and GraphQL Analytics API querying basics.
 
-- [Authentication](#setting-up-authentication-in-GraphiQL)
-- [Querying basics](#querying-basics)
-- [Helpful resources](#helpful-resources)
-
-#### Setting up authentication in _GraphiQL_
+## Setting up authentication in _GraphiQL_
 
 To ensure that the GraphQL Analytics API authenticates your queries, retrieve your Cloudflare Global API Key.
 
@@ -46,7 +43,7 @@ The right-side response pane is empty if you entered your information correctly.
 
 That's it! You’re ready to run queries using _GraphiQL_.
 
-#### Querying basics
+## Querying basics
 
 GraphQL structures data as a graph. You can explore the edges of the graph (using queries) to get the data you need. This is an example query format:
 
@@ -96,24 +93,24 @@ query {
 }
 ```
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 This is only an example. You must specify the <code>zoneTag</code> for your domain. Your Cloudflare dashboard lists your Zone ID (<code>zoneTag</code>) on the <em>Overview</em> page.
 </Aside>
 
 How can you tell what data sets, metrics, dimensions, operators, and functions are available? One of the great features of a GraphQL API is that it offers "introspection": you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform. _GraphiQL_ users this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `Query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
 
-### Helpful Resources
+## Helpful Resources
 
 Handy links for setting up the GraphQL Analytics API and learning about GraphQL.
 
-#### Cloudflare specifc
+### Cloudflare specifc
 
 - [Understanding the Cloudflare Dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard) (explains where to find your Zone ID and API Key)
 
 - [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
 
-#### General info on the GraphQL framework
+### General info on the GraphQL framework
 
 - [How to use GraphQL (tutorials)](https://www.howtographql.com/)
 
