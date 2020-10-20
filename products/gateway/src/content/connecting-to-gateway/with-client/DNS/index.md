@@ -10,6 +10,6 @@ The DNS filtering policy configured for that location will be applied to WARP cl
 
 ![DNS only filtering](../../../static/client-dns-filtering-only.png)
 
-When DNS filtering is enabled, all other traffic will be sent directly to the Internet. Entering a DoH subdomain for an organization triggers WARP into Teams mode 
+When DNS filtering is enabled, all other traffic will be sent directly to the Internet. Entering a DoH subdomain for an organization triggers WARP into Teams mode
 
-Learn more about configuring the DoH subdomain within the WARP client for your operating system [here](https://developers.cloudflare.com/warpclient/teams).
+Learn more about configuring the DoH subdomain within the WARP client for your operating system [here](https://developers.cloudflare.com/warp-client/teams).

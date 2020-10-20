@@ -35,7 +35,7 @@ jobs:
       tenant: ${{ steps.filter.outputs.tenant }}
       terraform: ${{ steps.filter.outputs.terraform }}
       time-services: ${{ steps.filter.outputs.time-services }}
-      warpclient: ${{ steps.filter.outputs.warpclient }}
+      warp-client: ${{ steps.filter.outputs.warp-client }}
       waf: ${{ steps.filter.outputs.waf }}
       workers: ${{ steps.filter.outputs.workers }}
     steps:
@@ -96,8 +96,8 @@ jobs:
               - 'products/time-services/**'
             waf:
               - 'products/waf/**'
-            warpclient:
-              - 'products/warpclient/**'
+            warp-client:
+              - 'products/warp-client/**'
             workers:
               - 'products/workers/**'
 
@@ -839,14 +839,14 @@ jobs:
           workingDirectory: "products/waf"
           environment: "production"
 
-  deploy-warpclient:
+  deploy-warp-client:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.warpclient == 'true' }}
+    if: ${{ needs.changes.outputs.warp-client == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/warpclient
+        working-directory: products/warp-client
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

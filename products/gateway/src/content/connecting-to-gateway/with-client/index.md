@@ -45,7 +45,7 @@ If your organization plans to inspect HTTP traffic, you must download the Cloudf
 
 ### Install the WARP client and log in with Cloudflare for Teams
 
-1. Follow [these instructions](https://developers.cloudflare.com/warpclient/teams) to install and configure the Cloudflare WARP client.
+1. Follow [these instructions](https://developers.cloudflare.com/warp-client/teams) to install and configure the Cloudflare WARP client.
 
 ### Configure clients to protect DNS and HTTP traffic
 

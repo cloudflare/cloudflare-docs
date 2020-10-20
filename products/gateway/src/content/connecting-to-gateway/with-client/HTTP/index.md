@@ -10,4 +10,4 @@ In L7 firewall model, all traffic leaving a user's device connects to Cloudflare
 
 ![HTTP filtering](../../../static/client-http-filtering.png)
 
-Learn more about configuring the WARP client for your operating system [here](https://developers.cloudflare.com/warpclient/teams).
+Learn more about configuring the WARP client for your operating system [here](https://developers.cloudflare.com/warp-client/teams).
