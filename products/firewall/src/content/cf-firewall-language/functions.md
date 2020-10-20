@@ -344,7 +344,7 @@ For details on generating a MessageMAC, see [_Implement token creation_](https:/
 
 ### Validation function examples
 
-<Aside type='note'>
+<Aside type='warning'>
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 

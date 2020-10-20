@@ -1,6 +1,6 @@
 # Require a valid HMAC token
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -52,7 +52,7 @@ then the token is valid and the function returns `true`.
 
 Since the expression in this example uses the `not` operator, it only matches when the HMAC token is _not_ valid. When the token is not valid, the Cloudflare triggers the action and blocks the request.
 
-<Aside type='note'>
+<Aside type='warning'>
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 

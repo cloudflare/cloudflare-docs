@@ -28,7 +28,7 @@ To protect your application with API Shield, use this workflow:
 
 1. [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
 
-<Aside type='note'>
+<Aside type='warning'>
 
 API Shield requires Cloudflare-issued certificates. You can use API Shield with any fully managed certificate authority (CA) where Cloudflare issues the client certificates.
 

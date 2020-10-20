@@ -1,6 +1,6 @@
 # Require specific HTTP headers
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Access to HTTP header and body fields require a Cloudflare Enterprise plan.
 

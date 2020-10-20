@@ -16,7 +16,7 @@ The list of items displays sorted by IP address, ascending:
 
 ![View items in  a list](../../images/lists-view-items-in-list.png)
 
-<Aside type='note'>
+<Aside type='warning'>
 
 You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation in the [Lists API](/api/cf-firewall-rules/#manage-the-items-in-a-list) to fetch them.
 
@@ -60,7 +60,7 @@ To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-i
 
 ### Add items in CSV format
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
@@ -100,7 +100,7 @@ The **Add items to list** page updates to include the items from the CSV file:
 
    The updated list displays.
 
-<Aside type='note'>
+<Aside type='warning'>
 
 When uploading CSV data, keep in mind that duplicate data is treated as follows:
 

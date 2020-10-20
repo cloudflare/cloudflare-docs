@@ -14,7 +14,7 @@ The Cloudflare Firewall Rules language supports comparison and logical operators
 
 The Firewall Rules language supports the following comparison operators. Since some operators only support specific data types, the list is organized by data type.
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
 
@@ -211,7 +211,7 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
 
 ### Order of precedence
 
-<Aside type='note'>
+<Aside type='warning'>
 
 To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
 
@@ -234,7 +234,7 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 ## Grouping symbols
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/cf-dashboard/create-edit-delete-rules/) does not.
 

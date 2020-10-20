@@ -246,7 +246,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
 <table style="width: 100%">
   <tbody>
     <tr>
-      <td style="background: #ebedef" colspan="2">
+      <td colspan="2">
         <strong>Basic rule, with no <em>exclusion</em></strong>
       </td>
     </tr>
@@ -259,7 +259,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td><em>(http.host eq "example.com" and cf.threat_score &gt; 5)</em></td>
     </tr>
     <tr>
-      <td style="background: #ebedef" colspan="2">
+      <td colspan="2">
         <strong
           >Rule that excludes IP addresses from being blocked/challenged</strong
         >
@@ -279,7 +279,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       </td>
     </tr>
     <tr>
-      <td style="background: #ebedef" colspan="2">
+      <td colspan="2">
         <strong>Two rules to allow exceptions and block the rest</strong>
       </td>
     </tr>
@@ -310,7 +310,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 <table style="width: 100%">
   <tbody>
     <tr>
-      <td style="background: #ebedef" colspan="2">
+      <td colspan="2">
         <strong>Basic rule, with no <em>exclusion</em></strong>
       </td>
     </tr>
@@ -323,7 +323,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
       <td><em>(ip.geoip.asnum in {'{7224 15169}'})</em></td>
     </tr>
     <tr>
-      <td style="background: #ebedef" colspan="2">
+      <td colspan="2">
         <strong>Rule that excludes known bots that Cloudflare validates</strong>
       </td>
     </tr>
@@ -338,7 +338,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
       </td>
     </tr>
     <tr>
-      <td style="background: #ebedef" colspan="2">
+      <td colspan="2">
         <strong
           ><strong
             >Two rules to allow exceptions and block the rest</strong
