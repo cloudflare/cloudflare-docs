@@ -6,8 +6,8 @@ This example uses the `matches` [comparison operator](/cf-firewall-language/oper
 
 <TableWrap>
 
-| Expression                                          | Action   |
-| --------------------------------------------------- | -------- |
-| `http.request.uri.path matches "/autodiscover\.(xml | src)\$"` | Block |
+| Expression                                                      | Action |
+| --------------------------------------------------------------- | ------ |
+| `http.request.uri.path matches "/autodiscover\.(xml \| src)\$"` | Block  |
 
 </TableWrap>

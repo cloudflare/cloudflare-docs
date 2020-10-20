@@ -1,6 +1,6 @@
 # Challenge bad bots
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan.
 
