@@ -1,5 +1,6 @@
 ---
-order: 2
+title: For Teams
+order: 1
 ---
 
 # Cloudflare for Teams

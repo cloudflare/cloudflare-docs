@@ -1,8 +1,8 @@
 ---
-order: 2
+order: 3
 ---
 
-# Getting Started
+# Installation
 
 Review [Installation Requirements](/setting-up/requirements/) to ensure your device meets the minimum requirements for our application.
 
