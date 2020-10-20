@@ -1,15 +1,16 @@
 ---
-title: Third Party Libraries and Licenses
-weight: 2
+title: Third party licenses
+order: 2
 ---
 
-The following is the list of third party libraries and the licenses under which they are used in Cloudflare Mobile SDK.
+# Third party libraries & licenses
 
+The following is the list of third party libraries and the licenses under which they are used in Cloudflare Mobile SDK.
 
 `mbed TLS <https://tls.mbed.org>`
 
 An open source, portable, easy to use, readable and flexible SSL library.
-Licenses: 
+Licenses:
 
 * `Apache 2.0 License: https://github.com/ARMmbed/mbedtls/blob/development/apache-2.0.txt`
 
@@ -30,7 +31,7 @@ Redistribution and use in source and binary forms, with or without modification,
   2. Redistributions in binary form must reproduce the above copyright notice,
     this list of conditions and the following disclaimer in the documentation
     and/or other materials provided with the distribution.
-    
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE

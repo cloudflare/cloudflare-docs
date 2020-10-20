@@ -1,8 +1,9 @@
 ---
-title: "Acceleration Mode"
-weight: 3
+order: 3
 hidden: true
 ---
+
+# Acceleration mode
 
 Cloudflare Mobile SDK is an App Acceleration framework for a Mobile-First World. Our simple 2-line SDK speeds up app performance on networks around the world.
 
@@ -18,9 +19,10 @@ Your app accelerated by Cloudflare's Mobile SDK receives the speed and security 
 
 ![Network Map](../images/network-map.png)
 
-### Integration
+## Integration
 
 The Cloudflare Mobile SDK is very easy to integrate with your existing app. Once you have imported the SDK, it's a single line change in your AppDelegate file inside `didFinishLaunchingWithOptions`.
+
 ```swift
 func application(_ application: UIApplication,
                   didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -35,6 +37,7 @@ func application(_ application: UIApplication,
 ```
 
 Similarly, on Android, once you have imported the library, initialize Cloudflare mobile SDK only once on the main thread at the beginning of your `onCreate` activity:
+
 ```java
 public void onCreate() {
     super.onCreate();
@@ -46,13 +49,15 @@ public void onCreate() {
 
 To learn more about how you can integrate the Cloudflare Mobile SDK with your iOS application checkout the platform specific docs:
 
-* [iOS](../getting_started/ios)
-* [Android](../getting_started/android)
+- [iOS](../getting_started/ios)
+- [Android](../getting_started/android)
 
 ## Configure Portal
+
 This is your control panel from where you will control the knobs and switches of accelerating your app. The portal allows you to set the percentage of users around the world that needs to be accelerated. This is also the place where you can observe how well your app is doing in terms of performance by reducing latency and errors.
 
-![Network Map](../images/default-config.png)
+![Network map](../images/default-config.png)
 
 ### Get started today
+
 Cloudflare Mobile SDK is still in early access. Please [reach out to us](https://www.cloudflare.com/neumob/) if you are interested in accelerating your mobile app by joining our early acess program.
