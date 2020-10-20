@@ -12,4 +12,4 @@ You will learn about:
 * [Possible combinations of Policies and Rules](/learning/policies-and-rules/)
 * [How Access works with JSON Web Tokens](/learning/json-web-tokens/)
 * [Access Groups Management](/learning/access-groups-management/)
-* [How Access works with Argo Tunnel](/learning/access-tunnel/)
+* [How Access works with Argo Tunnel](/getting-started/connect-to-cloudflare)
