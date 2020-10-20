@@ -1,8 +1,8 @@
 ---
-title: Configuration data
-weight: 211
+order: 2
 ---
 
+# Configuration data
 
 The following sections outline customer configuration data required for Cloudflare to set up Cloudflare Network Interconnect for your organization.
 
@@ -40,7 +40,7 @@ You must choose locations that our [Network Interconnect Partner Program](https:
 
 | Location      | Link size | VLANs | Rate limit |
 |---------------|-----------|-------|------------|
-| GVA | 1G       | 300   | 0          |
+| GVA           | 1G        | 300   | 0          |
 
 ## Internet exchange point
 
@@ -50,6 +50,6 @@ Provide Cloudflare with a list of the IXPs at which you want to interconnect.
 
 ### Example IXP configuration data
 
-| Location |
-|----|
+| Location         |
+|------------------|
 | EdgeIX Australia |
