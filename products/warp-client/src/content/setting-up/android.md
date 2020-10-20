@@ -1,10 +1,11 @@
 ---
+title: Android
 order: 5
 ---
 
-# Android Mobile Client
+# Android mobile client
 
-## Installation Requirements
+## Installation requirements
 <table>
   <tr>
     <td><strong>OS Ver</strong></td>

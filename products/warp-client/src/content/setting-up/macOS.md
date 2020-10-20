@@ -1,10 +1,11 @@
 ---
+title: macOS
 order: 3
 ---
 
-# macOS Desktop Client
+# macOS desktop client
 
-## Installation Requirements
+## Installation requirements
 <table>
   <tr>
     <td><strong>OS Ver</strong></td>
