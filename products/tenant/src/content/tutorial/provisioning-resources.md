@@ -16,8 +16,10 @@ Each customer or team that uses Cloudflare should have their own account. This e
 To create an account, make a `POST` API request to the `/accounts` endpoint.
 
 Required values:
-name: the name of the account that is displayed in the Cloudflare dashboard
-type: for self-serve (free, pro, business) the type parameter does not have to be specified. For Enterprise, set the type to "enterprise".
+
+Name (string): The name of the account that is displayed in the Cloudflare dashboard
+
+Type (enum): Valid values are `standard` (default) and `enterprise`. For self-serve customers, use `standard`. For enterprise customers, use `enterprise`.
 
 Example:
 ```bash
@@ -51,6 +53,11 @@ You own the account lifecycle from creation, ongoing management, and finally del
 ```bash
 curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
 ```
+<Aside type="note">
+
+__Note:__ This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
+
+</Aside>
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to:
 
