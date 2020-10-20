@@ -119,10 +119,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/1.1.1.1"
@@ -151,10 +151,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/access"
@@ -183,10 +183,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
@@ -215,10 +215,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/argo-tunnel"
@@ -247,10 +247,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/byoip"
@@ -279,10 +279,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
@@ -311,10 +311,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
@@ -343,10 +343,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
@@ -375,10 +375,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/gateway"
@@ -407,10 +407,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
@@ -439,10 +439,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
@@ -471,10 +471,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/internet"
@@ -504,10 +504,11 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
           npm install -g @cloudflare/wrangler
+        env:
+          WORKERS_ENV: development
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          WORKERS_ENV: development
 
   deploy-logs:
     runs-on: ubuntu-latest
@@ -527,10 +528,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
@@ -560,10 +561,11 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
           npm install -g @cloudflare/wrangler
+        env:
+          WORKERS_ENV: development
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          WORKERS_ENV: development
 
   deploy-mobile-sdk:
     runs-on: ubuntu-latest
@@ -584,10 +586,11 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
           npm install -g @cloudflare/wrangler
+        env:
+          WORKERS_ENV: development
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          WORKERS_ENV: development
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -607,10 +610,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
@@ -639,10 +642,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
@@ -671,10 +674,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
@@ -703,10 +706,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
@@ -736,10 +739,11 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
           npm install -g @cloudflare/wrangler
+        env:
+          WORKERS_ENV: development
       - run: wrangler publish
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          WORKERS_ENV: development
 
   deploy-stream:
     runs-on: ubuntu-latest
@@ -759,10 +763,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
@@ -791,10 +795,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
@@ -823,10 +827,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
@@ -855,10 +859,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
@@ -887,10 +891,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
@@ -919,10 +923,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
@@ -951,10 +955,10 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
         env:
           WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
