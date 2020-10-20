@@ -135,7 +135,7 @@ When generating an ID randomly, you need to store the ID somewhere in order to b
 
 Unique IDs are unguessable, therefore they can be used in URL-based access control, sometimes known as "anyone with the link can access."
 
-To store the ID in external storage, use its `.toString()` method to convert it into a hex string, and `OBJECT_NAMESPACE.idFromString()` to convert the sting back into an ID later.
+To store the ID in external storage, use its `.toString()` method to convert it into a hex string, and `OBJECT_NAMESPACE.idFromString()` to convert the string back into an ID later.
 
 <Aside header="Unique IDs perform best">
 
