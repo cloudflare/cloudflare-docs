@@ -13,7 +13,7 @@ For authentication instructions, see [_Getting Started: Requests_](https://api.c
 
 For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-<Aside type='note'>
+<Aside type='warning'>
 
 The Filters API endpoints require a value for _{zone_id}_.
 

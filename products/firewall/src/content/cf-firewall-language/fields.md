@@ -266,7 +266,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan.
 
@@ -507,7 +507,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
 
 ## HTTP body fields
 
-<Aside type='note'>
+<Aside type='warning'>
 
 Access to HTTP body fields requires a Cloudflare Enterprise plan.
 
