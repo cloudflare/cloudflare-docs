@@ -1,0 +1,294 @@
+:root {
+  --template-figure-padding: 16px;
+  --template-snippet-background: #fdf8f4;
+  --template-grey-background: #f7f7f8;
+  --template-snippet-font-color: #b98a64;
+  --template-snippet-border-color: #e9a468;
+  --template-boilerplate-color: #5f6264;
+}
+.gallery {
+  padding-bottom: 20px;
+}
+
+section.template-wrapper {
+  display: grid;
+  grid-template-columns: 100%;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 47.2em) {
+  section.template-wrapper {
+    grid-template-columns: 50% 50%;
+    grid-auto-rows: max-content;
+    grid-gap: 16px;
+  }
+}
+@media (min-width: 47.2em) {
+  section.template-wrapper.snippet {
+    grid-auto-rows: 30rem;
+  }
+}
+
+figure.template-card {
+  border: 1px solid #ccc;
+  border-top-width: 3px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px #eaebeb;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin: 0;
+  padding: 0 16px 16px 16px;
+}
+figure.template-card > a {
+  margin: 0 0 0.5em 0;
+  display: flex;
+  align-content: center;
+}
+figure.template-card h2 {
+  margin: 0 0.5em 0 0;
+  font-size: 22px;
+  display: inline;
+  color: black;
+}
+figure.template-card h2:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+.headline {
+  padding-bottom: 2em;
+}
+.tag-group {
+  margin: 0.5em 0 0.5em 0;
+}
+
+.tag-group > button {
+  border-radius: 100px;
+  font-family: 'Open Sans';
+  line-height: 16px;
+  padding: 2px 10px 2px 10px;
+  font-size: small;
+}
+.tag-group > button.Enterprise {
+  color: #bf223c;
+  background: #fcf0f2;
+}
+.tag-group > button.Originless {
+  color: #398557;
+  background: #eff8f3;
+}
+.tag-group > button.Middleware {
+  color: #6373b6;
+  background: #f1f3f8;
+}
+.tag-group > button.Wasm {
+  color: #bf223c;
+  background: #fcf0f2;
+}
+.tooltip.Originless .tooltiptext:before {
+  content: 'Does not require a backend server';
+}
+.tooltip.Wasm .tooltiptext:before {
+  content: 'Uses WebAssembly';
+}
+.tooltip.Middleware .tooltiptext:before {
+  content: 'Modifies behavior of a backend server';
+}
+.tooltip.Enterprise .tooltiptext:before {
+  content: 'Some content restricted to Enterprise plans';
+}
+.tooltip.Business .tooltiptext:before {
+  content: 'Some content restricted Business plans or above';
+}
+
+.copy-group {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.copy-step {
+  padding-bottom: 0.5rem;
+  flex: none;
+  align-items: center;
+  font-weight: bold;
+  display: flex;
+}
+.copy-step img {
+  /* Need to override theme */
+  flex: 1 !important;
+  width: 1.25rem !important;
+  margin: 0 0.3em 0 0 !important;
+}
+.copy-step span {
+  font-size: 14px;
+  flex: 30;
+}
+.copy-group .copy code {
+  display: block;
+  overflow: auto;
+  padding: 16px;
+  margin: 8px 0 0 0;
+}
+.copy-group .help {
+  color: #4d5257;
+  font-size: 0.7rem;
+  text-align: right;
+}
+.copy-group .help:hover {
+  opacity: 0.7;
+  cursor: pointer;
+  color: #f4a15d;
+}
+
+figure.template-card.snippet {
+  border-top-color: var(--template-snippet-border-color);
+}
+figure.template-card.boilerplate {
+  border-top-color: var(--template-boilerplate-color);
+}
+.boilerplate .copy a {
+  color: white;
+}
+.boilerplate .copy code {
+  background: var(--template-boilerplate-color);
+  color: white;
+}
+
+.snippet .copy {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.snippet .copy code {
+  white-space: pre;
+  background: var(--template-snippet-background);
+  margin: 0 calc(var(--template-figure-padding) * -1);
+  border-left: 2px solid var(--template-snippet-border-color);
+  color: var(--template-snippet-font-color);
+  width: calc(100% + var(--template-snippet-border-color));
+}
+.copy-trigger:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* Template Pages */
+
+.grey.copy-group {
+  background: var(--template-grey-background);
+}
+.grey img.copy-trigger {
+  padding: 8px 8px 0 0 !important;
+  margin: 0 0 0 auto !important;
+}
+
+.grey code.copy {
+  white-space: pre;
+  margin-right: 30px;
+  background: inherit;
+  margin-top: -20px;
+}
+
+.black.copy-block {
+  margin-top: 0.5em;
+  background: var(--template-grey-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  max-width: max-content;
+  padding: 16px;
+}
+.black .copy-group {
+  background: var(--template-boilerplate-color);
+  border-radius: 5px;
+  padding: 10px;
+  flex-direction: row;
+  justify-content: stretch;
+  max-width: max-content;
+}
+.black .copy-group span {
+  color: white;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: scroll;
+  font-family: monaco, courier, monospace;
+  margin-right: 10px;
+  max-width: 300px;
+  font-size: 14px;
+}
+.black .copy-group img {
+  min-width: 0.8rem;
+}
+.black.copy-block > span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  padding-top: 8px;
+}
+figure.template-page {
+  width: 97%;
+}
+/* back arrow */
+.template-page .back {
+  display: inline-block;
+}
+#body .template-page .back img {
+  margin-right: 0.8em;
+}
+
+#body img {
+  margin: 0 0.3em 0 0;
+  display: inline-block;
+}
+/* Crazy selector is to override specificity of gridflex */
+[class*='grid-'][class*='-noBottom'] > .col-4.demo {
+  margin-top: auto;
+  padding: 0 6px 0 6px;
+}
+[class*='grid-'] .col-4.links {
+  max-width: min-content;
+}
+.demo a {
+  border: 1px solid #eaebeb;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 6px rgba(200, 205, 229, 0.25);
+  border-radius: 5px;
+  padding: 0.3em 0.4em 0.3em 0.4em;
+  margin: 0 0 0.5rem 0;
+  display: inline-block;
+}
+.demo span {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #4e5255;
+}
+.col-4 > .github {
+  background: #ffffff;
+  border: 1px solid #eaebeb;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 0.5em 0.75em 0.5em 0.75em;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.col-4 > .github a {
+  display: flex;
+  align-content: center;
+}
+.col-4 > .github a div {
+  padding-left: 0.5em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.col-4 > .github .date {
+  font-size: 12px;
+  color: #62676a;
+  align-self: flex-end;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
