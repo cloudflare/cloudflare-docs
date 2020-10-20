@@ -51,7 +51,7 @@ A video guide is [also available](/videos/configuring-access/).
 
 ### Cloudflare logging
 
-Enterprise customers have access to detailed logs of HTTP requests. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (see [_Cloudflare Logs_](https://developers.cloudflare.com/logs/about/)).
+Enterprise customers have access to detailed logs of HTTP requests. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (see [_Cloudflare Logs_](https://developers.cloudflare.com/logs/)).
 
 Cloudflare secures both external-facing sites and internal resources by triaging each request in our network before we ever send it to your origin. Products like our WAF enforce rules to protect your site from attacks like SQL injection or cross-site scripting. Likewise, Access identifies the principal behind each request by evaluating each connection that passes through the gateway.
 
