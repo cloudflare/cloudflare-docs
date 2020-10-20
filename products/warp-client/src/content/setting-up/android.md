@@ -7,10 +7,12 @@ order: 5
 
 ## Installation requirements
 <table>
-  <tr>
-    <td><strong>OS Ver</strong></td>
-    <td>5.0+</td>
-  </tr>
+  <tbody>
+    <tr>
+      <td><strong>OS Ver</strong></td>
+      <td>5.0+</td>
+    </tr>
+  </tbody>
 </table>
 
 ## Steps to download
