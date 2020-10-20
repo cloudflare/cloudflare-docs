@@ -1,7 +1,9 @@
 ---
 title: Zone Analytics to GraphQL Analytics
-weight: 11
+order: 11
 ---
+
+# Zone Analytics to GraphQL Analytics
 
 The [Zone Analytics API](https://api.cloudflare.com/#zone-analytics-properties) allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
 
@@ -495,6 +497,6 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 </code>
 </details>
 
-Notice that you can specify the request time period using a data set filter (_see [Filtering](/analytics/graphql-api/features/filtering/)_). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it's available.
+Notice that you can specify the request time period using a data set filter (_see [Filtering](/graphql-api/features/filtering/)_). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it's available.
 
 Also, if you want to get the totals for a particular period, rather than a breakdown by time period, simply remove the `datetimeMinute` field under `dimensions`.
