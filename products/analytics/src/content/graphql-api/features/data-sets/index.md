@@ -13,7 +13,7 @@ Cloudflare Analytics offers a range of data sets, including both general and pro
 
 - **Raw data.** Raw data nodes, such as `loadBalancingRequests`, are not aggregated and so do not incorporate the `Groups` suffix. Raw data returns in arrays containing objects of the relevant data type. For example, a query to `loadBalancingRequests` returns an array of _LoadBalancingRequest_ objects.
 
-- **Adaptive Sampling.** Nodes that represent data acquired using adaptive sampling incorporate the `Adaptive` suffix. (For details, see _[Sampling](/analytics/graphql-api/sampling/)_).
+- **Adaptive Sampling.** Nodes that represent data acquired using adaptive sampling incorporate the `Adaptive` suffix. (For details, see _[Sampling](/graphql-api/sampling/)_).
 
 Detailed descriptions of nodes, their structure, and supported queries are available directly from the GraphQL Analytics API via **introspection** (see _[Getting started: Querying basics](https://developers.cloudflare.com/analytics/graphql-api/getting-started/#querying-basics)_). For more on using introspection to ask a GraphQL schema for information about the queries it supports, see the [GraphQL documentation](https://graphql.org/learn/introspection/).
 

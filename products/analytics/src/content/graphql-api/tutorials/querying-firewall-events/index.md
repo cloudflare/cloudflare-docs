@@ -9,7 +9,7 @@ In this example, we're going to use the GraphQL Analytics API to query for Firew
 
 The following API call will request Firewall Events over a one hour period, and output the requested fields. Be sure to replace CLOUDFLARE_ZONE_ID, CLOUDFLARE_EMAIL, and CLOUDFLARE_API_KEY with your zone tag and API credentials, and adjust the datetime_geg and datetime_leq values to your liking.
 
-### API Call
+## API Call
 
 ```
 PAYLOAD='{ "query":

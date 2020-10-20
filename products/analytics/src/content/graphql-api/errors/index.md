@@ -13,7 +13,7 @@ All responses contain an `errors` array, which will be `null` if there are no er
 - `path`: the nodes associated with the error, starting from the root. Note that the number included in the path array, e.g., `0` or `1`, specifies to which zone the error applies; `0` indicates the first zone in the list (or only zone, if only one is being queried).
 - `timestamp`: UTC datetime when the error occurred
 
-#### Example:
+## Example
 ```json
 {
   "data": null,
@@ -34,18 +34,18 @@ All responses contain an `errors` array, which will be `null` if there are no er
 }
 ```
 
-### Common error types
+## Common error types
 
-#### Data set accessibility limits (entitlements) exceeded
+### Data set accessibility limits (entitlements) exceeded
 
 Sample error messages:
 
 - "cannot request data older than..."
 - "number of fields can't be more than..."
 
-Indicate that the query exceeds what's allowed for the particular data set under your plan. _See [Data set accessibility](/analytics/graphql-api/limits/#data-set-accessibility)_ for details.
+Indicate that the query exceeds what's allowed for the particular data set under your plan. _See [Data set accessibility](/graphql-api/limits/#data-set-accessibility)_ for details.
 
-#### Parsing issues
+### Parsing issues
 
 Sample error messages:
 
@@ -54,7 +54,7 @@ Sample error messages:
 
 Indicate that the query can't be processed because it's malformed.
 
-#### Rate limits exceeded
+### Rate limits exceeded
 
 Sample error messages:
 

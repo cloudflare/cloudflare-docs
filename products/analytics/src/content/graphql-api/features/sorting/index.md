@@ -15,9 +15,9 @@ The default order for an aggregated data set is by the fields on which the aggre
 Ordering within nested structures is not supported.
 </Aside>
 
-### Examples
+## Examples
 
-#### Raw data sorting
+### Raw data sorting
 
 ```javascript
 
@@ -26,7 +26,7 @@ firewallEventsAdaptive (orderBy: [clientCountryName_ASC]) {
 }
 ```
 
-#### Raw data sorting using multiple fields
+### Raw data sorting using multiple fields
 
 ```javascript
 
@@ -36,7 +36,7 @@ firewallEventsAdaptive (orderBy: [clientCountryName_ASC, datetime_DESC]) {
 }
 ```
 
-#### Group sorting by aggregation function
+### Group sorting by aggregation function
 
 ```javascript
 

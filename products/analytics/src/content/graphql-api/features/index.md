@@ -7,8 +7,8 @@ order: 20
 
 The GraphQL Analytics API offers the following features:
 
-- [Data Sets (tables)](./features/data-sets/)
-- [Filtering](./features/filtering/)
-- [Sorting](./features/sorting/)
-- [Pagination](./features/pagination/)
-- [Nested Structures](./features/nested-structures/)
+- [Data Sets (tables)](/graphql-api/features/data-sets/)
+- [Filtering](/graphql-api/features/filtering/)
+- [Sorting](/graphql-api/features/sorting/)
+- [Pagination](/graphql-api/features/pagination/)
+- [Nested Structures](/graphql-api/features/nested-structures/)

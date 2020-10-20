@@ -13,7 +13,7 @@ In this example, we're going to see how to use the GraphQL Analytics API to buil
 
 The following code will build a page with all the requirement to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button.
 
-### Code
+## Code
 
 ```html
 <!DOCTYPE html>

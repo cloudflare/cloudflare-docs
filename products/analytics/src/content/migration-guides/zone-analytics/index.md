@@ -497,6 +497,6 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 </code>
 </details>
 
-Notice that you can specify the request time period using a data set filter (_see [Filtering](/analytics/graphql-api/features/filtering/)_). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it's available.
+Notice that you can specify the request time period using a data set filter (_see [Filtering](/graphql-api/features/filtering/)_). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it's available.
 
 Also, if you want to get the totals for a particular period, rather than a breakdown by time period, simply remove the `datetimeMinute` field under `dimensions`.
