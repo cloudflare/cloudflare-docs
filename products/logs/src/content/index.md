@@ -1,8 +1,9 @@
 ---
+title: Welcome
 order: 0
 ---
 
-# Welcome
+# Cloudflare Logs documentation
 
 Cloudflare Enterprise customers have access to detailed logs of HTTP requests or Spectrum events. These logs are helpful for debugging, identifying configuration adjustments, and creating analytics, especially when combined with logs from other sources, such as your application server.
 
