@@ -1,0 +1,80 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+a.quick-start {
+  display: block;
+  background-color: #e06d10;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  float: right;
+  margin: -8px 0 0 16px;
+  padding: 10px 16px;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  background-color: #555;
+  bottom: 125%;
+  border-radius: 6px;
+  color: #fff;
+  left: 50%;
+  min-width: 142px;
+  margin-left: -71px;
+  padding: 5px 5px;
+  position: absolute;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 0.3s;
+  visibility: hidden;
+  white-space: normal;
+  z-index: 9999999999;
+}
+
+/* Bottom carrot of the tooltip */
+.tooltip .tooltiptext::after {
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  content: '';
+  left: 50%;
+  margin-left: -5px;
+  position: absolute;
+  top: 100%;
+}
+
+.tooltip:hover .tooltiptext {
+  opacity: 1;
+  visibility: visible;
+}
+
+.new-badge {
+  background: #ebf8ff;
+  border-radius: 12px;
+  color: #3182ce;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 3px;
+  padding: 2px 8px !important;
+}
+
+#sidebar a:hover > .new-badge,
+#sidebar li.active > a > .new-badge {
+  background: rgba(255, 116, 0, 0.15);
+  color: #f38020;
+}
+
+.github-edit {
+  float: right;
+  display: flex;
+  align-items: center;
+  color: #5f6264;
+}
+.github-edit span {
+  padding-left: 0.4em;
+}

@@ -1,0 +1,40 @@
+ul.tutorial-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 100%;
+  max-width: inherit;
+}
+
+@media (min-width: 47.2em) {
+  ul.tutorial-list {
+    grid-template-columns: 33% 33% 33%;
+    grid-gap: 16px;
+  }
+}
+
+li.tutorial-item {
+  display: block;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+@media (min-width: 47.2em) {
+  li.tutorial-item {
+    margin-bottom: 0;
+    text-align: left;
+  }
+}
+
+#body li.tutorial-item img {
+  display: block;
+  margin: 8px 0 16px 0;
+  max-height: 200px;
+}
+
+li.tutorial-item > a {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 4px;
+}
