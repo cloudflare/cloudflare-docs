@@ -5,13 +5,13 @@ order: 1
 
 # Cloudflare Mobile SDK
 
-Cloudflare Mobile SDK let's mobile app developers understand how poor network performance on mobile apps can affect end-user engagement. With our Metrics Mode dashboard, developers can identify what carriers, networks and APIs are suffering the most and take actions based on that.
+Cloudflare Mobile SDK let’s mobile app developers understand how poor network performance on mobile apps can affect end-user engagement. With our Metrics Mode dashboard, developers can identify what carriers, networks and APIs are suffering the most and take actions based on that.
 
-Using Mobile NX Metrics, you can identify top N requests, slow requests, and requests most likely to fail. You're also able to understand all the third party calls your app is making through included libraries. You always suspected that ad network you're calling out to kills performance. Now you know.
+Using Mobile NX Metrics, you can identify top N requests, slow requests, and requests most likely to fail. You’re also able to understand all the third party calls your app is making through included libraries. You always suspected that ad network you’re calling out to kills performance. Now you know.
 
 ## Free (as in 🍻) to use
 
-Cloudflare's Mobile SDK is free for you to use. You don't need a Cloudflare account to sign up for the Mobile SDK. Log in to the portal, download the SDK and integrate it with your app.
+Cloudflare’s Mobile SDK is free for you to use. You don’t need a Cloudflare account to sign up for the Mobile SDK. Log in to the portal, download the SDK and integrate it with your app.
 
 ## Gives you actionable insights
 
@@ -23,7 +23,7 @@ In this scenario, `/media/JfLdlahamXQ10/200.gif` is taking more than 11 seconds 
 
 ## Easy to install
 
-The Cloudflare Mobile SDK is very easy to integrate with your existing app. Once you have imported the SDK, it's a single line change in your AppDelegate file inside `didFinishLaunchingWithOptions`.
+The Cloudflare Mobile SDK is very easy to integrate with your existing app. Once you have imported the SDK, it’s a single line change in your AppDelegate file inside `didFinishLaunchingWithOptions`.
 
 ```swift
 func application(_ application: UIApplication,
@@ -54,7 +54,7 @@ To learn more about how you can integrate the Cloudflare Mobile SDK with your mo
 - [iOS](/getting_started/ios)
 - [Android](/getting_started/android)
 
-## Get started today
+## Get started
 
 [Sign up](https://mobilesdk.cloudflare.com) for the free Metrics Mode.
 
