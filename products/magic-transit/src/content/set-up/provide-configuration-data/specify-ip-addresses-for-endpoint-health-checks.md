@@ -1,9 +1,11 @@
 ---
 title: Specify IP addresses for endpoint health checks
 alwaysopen: true
-weight: 275
+order: 4
 hidden: false
 ---
+
+## Specify IP addresses for endpoint health checks
 
 Magic Transit uses endpoint health checks to determine the overall health of your inter-network connections. Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network, beyond the tunnel-terminating border router. These “long distance” probes are purely diagnostic.
 

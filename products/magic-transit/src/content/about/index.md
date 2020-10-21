@@ -1,10 +1,11 @@
 ---
 title: About Magic Transit
 alwaysopen: true
-weight: 100
+order: 1
 hidden: false
 ---
 
+# About Magic Transit
 
 ![Magic Transit deployment diagram](../static/magic-transit-architecture.png)
 

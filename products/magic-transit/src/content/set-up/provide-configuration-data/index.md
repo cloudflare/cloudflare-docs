@@ -1,7 +1,7 @@
 ---
 title: Provide configuration data
 alwaysopen: true
-weight: 270
+order: 2
 hidden: false
 ---
 

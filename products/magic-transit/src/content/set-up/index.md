@@ -1,9 +1,11 @@
 ---
 title: Set up Magic Transit
 alwaysopen: true
-weight: 200
+order: 2
 hidden: false
 ---
+
+# Set up Magic Transit
 
 Magic Transit setup is straightforward but involves significant configuration of critical network infrastructure. To ensure smooth integration with Magic Transit, Cloudflare uses the process described in these articles:
 

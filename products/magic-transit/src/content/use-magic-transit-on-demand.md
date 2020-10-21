@@ -1,11 +1,11 @@
 ---
 title: Use Magic Transit on demand
 alwaysopen: true
-weight: 500
+order: 5
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
+# Use Magic Transit on demand
 
 Customers with access to the Magic Transit on-demand option can [configure prefix advertisement](/byoip/api/configure-prefixes) from the **IP Prefixes** page in their Cloudflare account home or via the [Cloudflare API](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-properties).
 
@@ -13,10 +13,10 @@ A common workflow is to enable prefix advertisement during an attack so that you
 
 To ensure smooth operation in general and simplify the advertisement process during an attack scenario, see [_Dynamic advertisement: Best practices_](/byoip/api/best-practices).
 
-<Notice type='info'>
+<Aside>
 
 Once you have set up Magic Transit, all Cloudflare traffic to your prefixes uses GRE tunnels to reach your origin. This is true even when you disable dynamic advertising.
 
 As a result, you may see traffic at the tunnel endpoint even when dynamic advertisement is disabled — traffic from other Cloudflare products that you or your end users are using, for example.
 
-</Notice>
+</Aside>

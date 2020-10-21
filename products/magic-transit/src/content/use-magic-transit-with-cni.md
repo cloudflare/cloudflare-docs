@@ -1,9 +1,11 @@
 ---
 title: Use Cloudflare Network Interconnect
 alwaysopen: true
-weight: 400
+order: 4
 hidden: false
 ---
+
+# Use Cloudflare Network Interconnect
 
 ## Onboarding
 

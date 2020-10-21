@@ -1,11 +1,11 @@
 ---
 title: Specify prefixes to advertise
 alwaysopen: true
-weight: 271
+order: 0
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
+## Specify prefixes to advertise
 
 List all prefixes and the ASNs from which you want them to originate.
 
@@ -45,10 +45,10 @@ For an example prefix configuration, refer to this table:
   </tbody>
 </table>
 
-<Notice type="info">
+<Aside>
 
 When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP AS_PATH. For example, if the customer ASN is AS64496, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
 
-</Notice>
+</Aside>

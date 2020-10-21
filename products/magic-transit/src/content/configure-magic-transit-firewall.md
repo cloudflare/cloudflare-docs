@@ -1,11 +1,11 @@
 ---
 title: Configure Magic Transit firewall
 alwaysopen: true
-weight: 300
+order: 3
 hidden: false
 ---
 
-import {Notice} from 'cf-gatsby-theme'
+# Configure Magic Transit firewall
 
 Cloudflare's Magic Transit firewall ruleset includes two components:
 
@@ -186,11 +186,11 @@ _ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, 
   * Packet length
   * Bit field match (Cloudflare is able to match on any part of an IP packet to apply, allow, or drop rules)
 
-<Notice type="info">
+<Aside>
 
 When you or your end users are using other Cloudflare services (eg. CDN, Spectrum) that proxy traffic, be aware of the following:
 
 * Firewall rules that block traffic based on source IP address may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
 * You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
 
-</Notice>
+</Aside>
