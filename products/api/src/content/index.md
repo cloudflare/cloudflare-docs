@@ -21,7 +21,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/cd7d0123e3012345da9420df
 
 The above example is just that, an example. Never send anyone or store you API Token secret in plaintext. Also be sure not to check it into code repositories especially public ones like on github.
 
-## Using Cloudflare's APIs
+## Using Cloudflare’s APIs
 
 For specific guidance on making API calls, see the following:
 
