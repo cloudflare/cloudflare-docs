@@ -388,12 +388,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/events"
-      # - name: Publish production
-      #   uses: cloudflare/wrangler-action@1.2.0
-      #   with:
-      #     apiToken: ${{ secrets.CF_API_TOKEN }}
-      #     workingDirectory: "products/events"
-      #     environment: "production"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/events"
+          environment: "production"
 
   deploy-firewall:
     runs-on: ubuntu-latest
