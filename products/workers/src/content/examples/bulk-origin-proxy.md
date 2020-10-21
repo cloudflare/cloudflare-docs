@@ -20,7 +20,7 @@ tags:
 const ORIGINS = {
   "starwarsapi.yourdomain.com": "swapi.dev",
   "google.yourdomain.com": "www.google.com",
-};
+}
 
 async function handleRequest(request) {
   const url = new URL(request.url)
