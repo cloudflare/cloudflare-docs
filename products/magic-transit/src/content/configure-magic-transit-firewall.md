@@ -1,17 +1,20 @@
 ---
-title: Firewall policies
-weight: 214
+title: Configure Magic Transit firewall
+alwaysopen: true
+order: 3
+hidden: false
 ---
 
+# Configure Magic Transit firewall
 
-Your Magic Transit firewall policy has two components:
+Cloudflare's Magic Transit firewall ruleset includes two components:
 
-* recommended rules that reflect common amplification attack vectors
-* custom rules requested by you
+* Recommended rules that reflect common amplification attack vectors
+* Custom rules requested by you
 
 ## Recommended firewall rules
 
-Cloudflare recommends these 11 firewall rules, which reflect known amplification attack vectors. They operate in addition to the distributed denial-of-service protection that Magic Transit provides.
+Cloudflare recommends these 11 firewall rules, which reflect known amplification attack vectors. They operate in addition to the distributed denial-of-service (DDoS) protection that Magic Transit provides.
 
 <table>
   <thead>
@@ -19,11 +22,11 @@ Cloudflare recommends these 11 firewall rules, which reflect known amplification
       <td colspan="5" ><strong>Recommended Firewall Rules</strong></td>
     </tr>
     <tr>
-      <td><strong>Rule ID</strong></td>
-      <td><strong>Source Port</strong></td>
-      <td><strong>Destination Port</strong></td>
-      <td><strong>Protocol</strong></td>
-      <td><strong>Action</strong></td>
+      <th>Rule ID</th>
+      <th>Source Port</th>
+      <th>Destination Port</th>
+      <th>Protocol</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -181,13 +184,13 @@ _ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, 
   * Destination port
   * Protocol
   * Packet length
-  * Bit field match (Cloudflare is able to match on any part of an IP packet to apply allow or drop rules)
+  * Bit field match (Cloudflare is able to match on any part of an IP packet to apply, allow, or drop rules)
 
+<Aside>
 
-<Aside type="info">
+When you or your end users are using other Cloudflare services (eg. CDN, Spectrum) that proxy traffic, be aware of the following:
 
-If you or your end users are using other Cloudflare services (eg. CDN, Spectrum) that proxy traffic:
-* Firewall rules to block traffic based on source IP may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
-* [Cloudflare IPs](https://www.cloudflare.com/ips/) must be allowed.
+* Firewall rules that block traffic based on source IP address may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
+* You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
 
 </Aside>
