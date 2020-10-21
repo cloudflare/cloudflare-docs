@@ -17,11 +17,12 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | 1.1.1.1                 | 1.1.1.1              |   ✕   |    ✕    | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1.1.1.1)                           | [Prod](https://developers.cloudflare.com/1.1.1.1)              |
 | Access                  | access               |   ✕   |    ✕    | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)               |
 | Analytics               | analytics            |   ✕   |    ✕    | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       | [Prod](https://developers.cloudflare.com/analytics)            |
-| API                     | api                  |       |    ✕    | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/api)                           | [Prod](https://developers.cloudflare.com/api)                  |
+| API                     | api                  |       |    ✕    | [Test](https://api.cloudflare-docs.workers.dev/api)                                   | [Prod](https://developers.cloudflare.com/api)                  |
 | Argo Tunnel             | argo-tunnel          |   ✕   |    ✕    | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   | [Prod](https://developers.cloudflare.com/argo-tunnel)          |
 | BYOIP                   | byoip                |   ✕   |    ✕    | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               | [Prod](https://developers.cloudflare.com/byoip)                |
 | Distributed Web Gateway | distributed-web      |   ✕   |    ✕    | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           | [Prod](https://developers.cloudflare.com/distributed-web)      |
-| Docs Engine¹            | docs-engine          |   ✕   |    ✕    | [Test](https://docs-engine.cloudflare-docs.workers.dev/docs-engine)                   | [Prod](https://developers.cloudflare.com/docs-engine)          |
+| Docs Engine             | docs-engine          |   ✕   |    ✕    | [Test](https://docs-engine.cloudflare-docs.workers.dev/docs-engine)                   | [Prod](https://developers.cloudflare.com/docs-engine)          |
+| Events                  | events               |   ✕   |    ✕    | [Test](https://events.cloudflare-docs.workers.dev/events)                             | [Prod](https://developers.cloudflare.com/events)               |
 | Firewall                | firewall             |   ✕   |    ✕    | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         | [Prod](https://developers.cloudflare.com/firewall)             |
 | Gateway                 | gateway              |   ✕   |    ✕    | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           | [Prod](https://developers.cloudflare.com/gateway)              |
 | HTTP/3                  | http3                |       |    ✕    | [Test](https://http3.cloudflare-docs.workers.dev/http3)                               | [Prod](https://developers.cloudflare.com/http3)                |
@@ -43,8 +44,6 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | WAF                     | waf                  |   ✕   |    ✕    | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   | [Prod](https://developers.cloudflare.com/waf)                  |
 | WARP Client             | warp-client          |   ✕   |    ✕    | [Test](https://warp-client.cloudflare-docs.workers.dev/warp-client)                   | [Prod](https://developers.cloudflare.com/warp-client)          |
 | Workers                 | workers              |   ✕   |    ✕    | [Test](https://workers.cloudflare-docs.workers.dev/workers)                           | [Prod](https://developers.cloudflare.com/workers)              |
-
-¹ The documentation for the Docs Engine itself.
 
 ### Deployment
 
