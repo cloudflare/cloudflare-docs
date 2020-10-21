@@ -17,7 +17,7 @@ Cloudflare for Teams organizations are able to use the client to enforce policie
 
 * **L7 Firewall and user based policies** Allows your organization to enforce device authentication to your Teams account enabling you to build user specific policies and force all traffic through the firewall.
 
-typ* **Device and User auditing**  Administrators can audit specific user and device traffic. Used in conjunction with logpush, this will allow your organization to do detailed level tracing in case of a breach or audit. (Available with Enterprise Teams plan only)
+* **Device and User auditing**  Administrators can audit specific user and device traffic. Used in conjunction with logpush, this will allow your organization to do detailed level tracing in case of a breach or audit. (Available with Enterprise Teams plan only)
 
 If you are unfamiliar with Teams, visit our [Cloudflare for Teams](https://www.cloudflare.com/teams/) page to learn more.
 
