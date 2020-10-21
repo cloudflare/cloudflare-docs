@@ -1,12 +1,19 @@
 ---
 order: 10
+type: table
 ---
 
 # API tokens permissions
 
+<ContentColumn>
+
 Below is a list of all the Token Permissions that are available to use. The current list can be [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups) at any time.
 
+</ContentColumn>
+
 ## User permissions
+
+<TableWrap>
 
 |Name|ID|Description|Applicable Scope|
 |---|---|---|---|
@@ -17,7 +24,11 @@ Below is a list of all the Token Permissions that are available to use. The curr
 |User Details Read|8acbe5bb0d54464ab867149d7f7cf8ac|Grants read access to user details|com.cloudflare.api.user|
 |User Details Write|55a5e17cc99e4a3fa1f3432d262f2e55|Grants write access to user details|com.cloudflare.api.user|
 
+</TableWrap>
+
 ## Account permissions
+
+<TableWrap>
 
 |Name|ID|Description|Applicable Scope|
 |---|---|---|---|
@@ -68,7 +79,11 @@ Below is a list of all the Token Permissions that are available to use. The curr
 |Zone Settings Write|3030687196b94b638145a3953da2b699|Grants write access to zone settings|com.cloudflare.api.account.zone|
 |Zone Write|e6d2666161e84845a636613608cee8d5|Grants write access to zone management|com.cloudflare.api.account.zone|
 
-**Zone Permissions**
+</TableWrap>
+
+## Zone permissions
+
+<TableWrap>
 
 |Name|ID|Description|Applicable Scope|
 |---|---|---|---|
@@ -95,3 +110,5 @@ Below is a list of all the Token Permissions that are available to use. The curr
 |Zone Settings Read|517b21aee92c4d89936c976ba6e4be55|Grants read access to zone settings|com.cloudflare.api.account.zone|
 |Zone Settings Write|3030687196b94b638145a3953da2b699|Grants write access to zone settings|com.cloudflare.api.account.zone|
 |Zone Write|e6d2666161e84845a636613608cee8d5|Grants write access to zone management|com.cloudflare.api.account.zone|
+
+</TableWrap>
