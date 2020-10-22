@@ -19,11 +19,11 @@ Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit 
 
 ## Draft Letter of Authorization
 
-Draft a [Letter of Authorization (LOA)](/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. See this [LOA template](/byoip/loa/example-template/) for an example.
+Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. See this [LOA template](https://developers.cloudflare.com/byoip/loa/loa-template) for an example.
 
 ## Verify Internet Routing Registry entries
 
-To ensure that Magic Transit routes traffic to the correct autonomous systems (AS), verify that your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs). For guidance, see [_Verify IRR entries_](/byoip/irr/verify-irr-entries).
+To ensure that Magic Transit routes traffic to the correct autonomous systems (AS), verify that your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs). For guidance, see [_Verify IRR entries_](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
 
 ## Set maximum segment size
 
