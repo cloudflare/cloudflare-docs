@@ -80,16 +80,10 @@ Cloudflare Load Balancer objects have the following properties:
   </thead>
   <tbody>
   <tr>
-   <td valign="top"><strong>created_on</strong>
-<br/>
-<Type>string</Type> <PropMeta>(date-time)</PropMeta>
+   <td valign="top"><strong>created_on</strong><br/><Type>string</Type> <PropMeta>(date-time)</PropMeta>
    </td>
-   <td>The creation timestamp for the load balancer
-<br/>
-<Code>"2014-01-01T05:20:00.12345Z"</Code>
-   </td>
-   <td valign="top">Read only
-   </td>
+   <td>The creation timestamp for the load balancer.<br/><br/><Code>"2014-01-01T05:20:00.12345Z"</Code></td>
+   <td valign="top">Read-only</td>
   </tr>
   <tr>
    <td valign="top"><strong>default_pools</strong>
@@ -97,9 +91,9 @@ Cloudflare Load Balancer objects have the following properties:
 <Type>array</Type>
    </td>
    <td>A list of Pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool and so on down the list.
-<br/>
+<br/><br/>
 Pools defined here are used by default, or when <Code>region_pools</Code> is not configured for a given region.
-<br/>
+<br/><br/>
 <div>
 
 ```json
@@ -152,7 +146,7 @@ Valid values: (<Code>true,false</Code>)
    </td>
    <td valign="top">Max. length: <Code>32</Code>
 <br/>
-Read only
+Read-only
    </td>
   </tr>
   <tr>
@@ -166,7 +160,7 @@ Read only
    </td>
    <td>Max. length: <Code>32</Code>
 <br/>
-Read only
+Read-only
    </td>
   </tr>
   <tr>
@@ -178,7 +172,7 @@ Read only
 <br/>
 <Code>"2014-01-01T05:20:00.12345Z"</Code>
    </td>
-   <td valign="top">Read only
+   <td valign="top">Read-only
    </td>
   </tr>
   <tr>
@@ -186,10 +180,10 @@ Read only
 <br/>
 <Type>string</Type>
    </td>
-   <td>The public DNS hostname of your Cloudflare load balancer
-<br/>
+   <td>The public DNS hostname of your Cloudflare load balancer.
+<br/><br/>
 If you have an existing DNS record with the same name as your load balancer, the load balancer will have precedence. The pre-existing DNS record is not used unless you delete the Cloudflare load balancer.
-<br/>
+<br/><br/>
 <Code>"www.example.com"</Code>
    </td>
    <td>
@@ -201,7 +195,7 @@ If you have an existing DNS record with the same name as your load balancer, the
 <Type>object</Type>
    </td>
    <td>A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using <Code>default_pools</Code>.
-<br/>
+<br/><br/>
 <div>
 
 ```json
@@ -245,7 +239,7 @@ Valid values: (<Code>true,false</Code>)
 <Type>object</Type>
    </td>
    <td>A mapping of region/country codes to a list of Pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using <Code>default_pools</Code>.
-<br/>
+<br/><br/>
 <div>
 
 ```json
@@ -272,11 +266,11 @@ Valid values: (<Code>true,false</Code>)
    </td>
    <td>Specifies the type of session affinity the load balancer should use. The default value is <Code>""</Code>, which disables session affinity (as does <Code>"none"</Code>).
 <br/>The supported session affinity types are <Code>"cookie"</Code> and <Code>"ip_cookie"</Code>.
-<br/>
+<br/><br/>
 When set to <Code>"cookie"</Code>, the first request to a proxied load balancer generates a cookie encoding the origin to which the request will be forwarded.
-<br/>
+<br/><br/>
 Subsequent requests by the same client to the same load balancer will be sent to the origin server encoded by the cookie.
-<br/>
+<br/><br/>
 If the cookie has expired or the origin server is unhealthy, a new origin server is identified and a new cookie generated. The <Code>"ip_cookie"</Code> option behaves the same as <Code>"cookie",</Code> except the initial origin selection is stable and based on the client’s IP address.
 
    </td>
@@ -291,12 +285,11 @@ Valid values: <Code>none</Code>, <Code>cookie</Code>, <Code>ip_cookie</Code>, <C
 <Type>number</Type>
    </td>
    <td>Sets the time to live for this load balancer’s session affinity cookies.
-<br/>
-<br/>
+<br/><br/>
 This parameter is ignored unless a supported session affinity policy is set.
-<br/>
+<br/><br/>
 The current default of 23 hours will be used unless <Code>session_affinity_ttl</Code> is explicitly set.
-<br/>
+<br/><br/>
 The accepted range of values is between 1800 and 604800. Once the expiry time has been reached, subsequent requests may get sent to a different origin server.
    </td>
    <td>
@@ -327,7 +320,7 @@ Valid values: <Code>off</Code>,<Code> geo</Code>,<Code> random</Code>,<Code> dyn
 <Type>number</Type>
    </td>
    <td>The time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to load balancers where the proxy mode is DNS-only.
-<br/>
+<br/><br/>
 <Code>30</Code>
    </td>
    <td>
