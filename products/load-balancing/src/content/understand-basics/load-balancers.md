@@ -65,15 +65,19 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 Cloudflare Load Balancer objects have the following properties:
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Name / type</strong>
-   </td>
-   <td><strong>Description / example</strong>
-   </td>
-   <td><strong>Constraints</strong>
-   </td>
+   <th><strong>Name / type</strong>
+   </th>
+   <th><strong>Description / example</strong>
+   </th>
+   <th><strong>Constraints</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td valign="top"><strong>created_on</strong>
@@ -82,7 +86,7 @@ Cloudflare Load Balancer objects have the following properties:
    </td>
    <td>The creation timestamp for the load balancer
 <p />
-<code>"2014-01-01T05:20:00.12345Z"</code>
+<code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code>
    </td>
    <td valign="top">Read only
    </td>
@@ -94,9 +98,9 @@ Cloudflare Load Balancer objects have the following properties:
    </td>
    <td>A list of Pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool and so on down the list.
 <p />
-Pools defined here are used by default, or when <code>region_pools</code> is not configured for a given region.
+Pools defined here are used by default, or when <code class="InlineCode">region_pools</code> is not configured for a given region.
 <p />
-<code>
+<code class="InlineCode">
 [
 <p />
 "17b5962d775c646f3f9725cbc7a53df4",
@@ -118,7 +122,7 @@ Pools defined here are used by default, or when <code>region_pools</code> is not
    </td>
    <td>A user-supplied description of the load balancer
 <p />
-<code>"Load Balancer for www.example.com"</code>
+<code class="InlineCode">"Load Balancer for www.example.com"</code>
    </td>
    <td>
    </td>
@@ -130,11 +134,11 @@ Pools defined here are used by default, or when <code>region_pools</code> is not
    </td>
    <td>Enables the load balancer when set to
 <p />
-<code>true</code>
+<code class="InlineCode">true</code>
    </td>
-   <td>Default value: <code>true</code>
+   <td>Default value: <code class="InlineCode">true</code>
 <p />
-Valid values: (<code>true,false</code>)
+Valid values: (<code class="InlineCode">true,false</code>)
    </td>
   </tr>
   <tr>
@@ -144,9 +148,9 @@ Valid values: (<code>true,false</code>)
    </td>
    <td>The Pool ID for the “pool of last resort,” the pool the load balancer should direct traffic to if all other pools are unhealthy. In most configurations, this is the secondary/passive pool.
 <p />
-<code>"17b5962d775c646f3f9725cbc7a53df4"</code>
+<code class="InlineCode">"17b5962d775c646f3f9725cbc7a53df4"</code>
    </td>
-   <td valign="top">Max. length: <code>32</code>
+   <td valign="top">Max. length: <code class="InlineCode">32</code>
 <p />
 Read only
    </td>
@@ -158,9 +162,9 @@ Read only
    </td>
    <td>The load balancer ID
 <p />
-<code>"699d98642c564d2e855e9661899b7252"</code>
+<code class="InlineCode">"699d98642c564d2e855e9661899b7252"</code>
    </td>
-   <td>Max. length: <code>32</code>
+   <td>Max. length: <code class="InlineCode">32</code>
 <p />
 Read only
    </td>
@@ -172,7 +176,7 @@ Read only
    </td>
    <td>Timestamp of the last modification to the load balancer configuration
 <p />
-<code>"2014-01-01T05:20:00.12345Z"</code>
+<code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code>
    </td>
    <td valign="top">Read only
    </td>
@@ -186,7 +190,7 @@ Read only
 <p />
 If you have an existing DNS record with the same name as your load balancer, the load balancer will have precedence. The pre-existing DNS record is not used unless you delete the Cloudflare load balancer.
 <p />
-<code>"www.example.com"</code>
+<code class="InlineCode">"www.example.com"</code>
    </td>
    <td>
    </td>
@@ -196,9 +200,9 @@ If you have an existing DNS record with the same name as your load balancer, the
 <p />
 <em>object</em>
    </td>
-   <td>A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using <code>default_pools</code>.
+   <td>A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using <code class="InlineCode">default_pools</code>.
 <p />
-<code>
+<code class="InlineCode">
 {`{`}
 <p />
   "LAX":
@@ -237,11 +241,11 @@ If you have an existing DNS record with the same name as your load balancer, the
    </td>
    <td>When set to true, HTTP Proxy mode is enabled; when false, DNS-only mode.
 <p />
-<code>true</code>
+<code class="InlineCode">true</code>
    </td>
-   <td>Default value: <code>false</code>
+   <td>Default value: <code class="InlineCode">false</code>
 <p />
-Valid values: (<code>true,false</code>)
+Valid values: (<code class="InlineCode">true,false</code>)
    </td>
   </tr>
   <tr>
@@ -249,9 +253,9 @@ Valid values: (<code>true,false</code>)
 <p />
 <em>object</em>
    </td>
-   <td>A mapping of region/country codes to a list of Pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using <code>default_pools</code>.
+   <td>A mapping of region/country codes to a list of Pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using <code class="InlineCode">default_pools</code>.
 <p />
-<code>
+<code class="InlineCode">
 {`{`}
 <p />
   "WNAM": [
@@ -279,19 +283,19 @@ Valid values: (<code>true,false</code>)
 <p />
 <em>string</em>
    </td>
-   <td>Specifies the type of session affinity the load balancer should use. The default value is <code>""</code>, which disables session affinity (as does <code>"none"</code>).
-<p /><p />The supported session affinity types are <code>"cookie"</code> and <code>"ip_cookie"</code>.
+   <td>Specifies the type of session affinity the load balancer should use. The default value is <code class="InlineCode">""</code>, which disables session affinity (as does <code class="InlineCode">"none"</code>).
+<p /><p />The supported session affinity types are <code class="InlineCode">"cookie"</code> and <code class="InlineCode">"ip_cookie"</code>.
 <p />
-When set to <code>"cookie"</code>, the first request to a proxied load balancer generates a cookie encoding the origin to which the request will be forwarded.
+When set to <code class="InlineCode">"cookie"</code>, the first request to a proxied load balancer generates a cookie encoding the origin to which the request will be forwarded.
 <p />
 Subsequent requests by the same client to the same load balancer will be sent to the origin server encoded by the cookie.
 <p />
-If the cookie has expired or the origin server is unhealthy, a new origin server is identified and a new cookie generated. The <code>"ip_cookie"</code> option behaves the same as <code>"cookie",</code> except the initial origin selection is stable and based on the client’s IP address.
+If the cookie has expired or the origin server is unhealthy, a new origin server is identified and a new cookie generated. The <code class="InlineCode">"ip_cookie"</code> option behaves the same as <code class="InlineCode">"cookie",</code> except the initial origin selection is stable and based on the client’s IP address.
 
    </td>
-   <td valign="top">Default value: <code>""</code>
+   <td valign="top">Default value: <code class="InlineCode">""</code>
 <p />
-Valid values: <code>none</code>, <code>cookie</code>, <code>ip_cookie</code>, <code>""</code>
+Valid values: <code class="InlineCode">none</code>, <code class="InlineCode">cookie</code>, <code class="InlineCode">ip_cookie</code>, <code class="InlineCode">""</code>
    </td>
   </tr>
   <tr>
@@ -304,7 +308,7 @@ Valid values: <code>none</code>, <code>cookie</code>, <code>ip_cookie</code>, <c
 <p />
 This parameter is ignored unless a supported session affinity policy is set.
 <p />
-The current default of 23 hours will be used unless <code>session_affinity_ttl</code> is explicitly set.
+The current default of 23 hours will be used unless <code class="InlineCode">session_affinity_ttl</code> is explicitly set.
 <p />
 The accepted range of values is between 1800 and 604800. Once the expiry time has been reached, subsequent requests may get sent to a different origin server.
    </td>
@@ -320,17 +324,17 @@ The accepted range of values is between 1800 and 604800. Once the expiry time ha
 <p />
 The constraint values have the following effect on traffic steering:
 <ul>
-<li><code>"off"</code>: enables standard failover</li>
-<li><code>"geo"</code>: enables Geo Steering</li>
-<li><code>"random"</code>: selects an available pool at random on failover</li>
-<li><code>"dynamic_latency"</code>: enables Dynamic Steering</li>
-<li><code>""</code>: enables Geo Steering if <code>region_pools</code> and/or <code>pop_pools</code> is configured; otherwise uses standard failover
+<li><code class="InlineCode">"off"</code>: enables standard failover</li>
+<li><code class="InlineCode">"geo"</code>: enables Geo Steering</li>
+<li><code class="InlineCode">"random"</code>: selects an available pool at random on failover</li>
+<li><code class="InlineCode">"dynamic_latency"</code>: enables Dynamic Steering</li>
+<li><code class="InlineCode">""</code>: enables Geo Steering if <code class="InlineCode">region_pools</code> and/or <code class="InlineCode">pop_pools</code> is configured; otherwise uses standard failover
 </li>
 </ul>
    </td>
-   <td valign="top">Default value: <code>""</code>
+   <td valign="top">Default value: <code class="InlineCode">""</code>
 <p />
-Valid values: <code>off</code>,<code> geo</code>,<code> random</code>,<code> dynamic_latency</code>,<code> ""</code>
+Valid values: <code class="InlineCode">off</code>,<code class="InlineCode"> geo</code>,<code class="InlineCode"> random</code>,<code class="InlineCode"> dynamic_latency</code>,<code class="InlineCode"> ""</code>
    </td>
   </tr>
   <tr>
@@ -340,13 +344,15 @@ Valid values: <code>off</code>,<code> geo</code>,<code> random</code>,<code> dyn
    </td>
    <td>The time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to load balancers where the proxy mode is DNS-only.
 <p />
-<code>30</code>
+<code class="InlineCode">30</code>
    </td>
    <td>
    </td>
   </tr>
   </tbody>
 </table>
+
+</TableWrap>
 
 ---
 
@@ -364,55 +370,61 @@ zones/:identifier/load_balancers
 
 The Cloudflare API supports the following commands for load balancers. (Examples are given for the user-level endpoint but apply to the account-level endpoint as well.) For detailed instruction, see _[Cloudflare API v4: Load Balancers](https://api.cloudflare.com/#load-balancers-properties)_.
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Command</strong>
-   </td>
-   <td><strong>Method</strong>
-   </td>
-   <td><strong>Endpoint</strong>
-   </td>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td>Create Load Balancer
    </td>
-   <td><code>GET</code>
+   <td><code class="InlineCode">GET</code>
    </td>
-   <td><code>/zones/:identifier/load_balancers</code>
+   <td><code class="InlineCode">/zones/:identifier/load_balancers</code>
    </td>
   </tr>
   <tr>
    <td>Delete Load Balancer
    </td>
-   <td><code>DELETE</code>
+   <td><code class="InlineCode">DELETE</code>
    </td>
-   <td><code>/zones/:identifier/load_balancers/:identifier</code>
+   <td><code class="InlineCode">/zones/:identifier/load_balancers/:identifier</code>
    </td>
   </tr>
   <tr>
    <td>List Load Balancers
    </td>
-   <td><code>GET</code>
+   <td><code class="InlineCode">GET</code>
    </td>
-   <td><code>/zones/:identifier/load_balancers</code>
+   <td><code class="InlineCode">/zones/:identifier/load_balancers</code>
    </td>
   </tr>
   <tr>
    <td>Load Balancer Details
    </td>
-   <td><code>POST</code>
+   <td><code class="InlineCode">POST</code>
    </td>
-   <td><code>/zones/:identifier/load_balancers/:identifier</code>
+   <td><code class="InlineCode">/zones/:identifier/load_balancers/:identifier</code>
    </td>
   </tr>
   <tr>
    <td>Update Load Balancer
    </td>
-   <td><code>PUT</code>
+   <td><code class="InlineCode">PUT</code>
    </td>
-   <td><code>/zones/:identifier/load_balancers/:identifier</code>
+   <td><code class="InlineCode">/zones/:identifier/load_balancers/:identifier</code>
    </td>
   </tr>
   </tbody>
 </table>
+
+</TableWrap>
