@@ -1,8 +1,6 @@
 ---
 title: Tunnel health checks
-alwaysopen: true
 order: 1
-hidden: false
 ---
 
 # Tunnel health checks

@@ -1,8 +1,6 @@
 ---
 title: Endpoint health checks
-alwaysopen: true
 order: 2
-hidden: false
 ---
 
 # Endpoint health checks

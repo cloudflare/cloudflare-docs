@@ -1,8 +1,6 @@
 ---
 title: Configure Magic Transit firewall
-alwaysopen: true
 order: 3
-hidden: false
 ---
 
 # Configure Magic Transit firewall

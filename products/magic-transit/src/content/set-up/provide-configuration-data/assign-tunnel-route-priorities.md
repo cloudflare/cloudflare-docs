@@ -1,8 +1,6 @@
 ---
 title: Assign tunnel route priorities
-alwaysopen: true
 order: 2
-hidden: false
 ---
 
 ## Assign tunnel route priorities

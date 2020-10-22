@@ -1,8 +1,6 @@
 ---
 title: Tunnels and encapsulation
-alwaysopen: true
 order: 3
-hidden: false
 ---
 
 # Tunnels and encapsulation

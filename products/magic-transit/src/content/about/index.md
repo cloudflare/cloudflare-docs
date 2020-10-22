@@ -1,8 +1,6 @@
 ---
 title: About Magic Transit
-alwaysopen: true
 order: 1
-hidden: false
 ---
 
 # About Magic Transit
