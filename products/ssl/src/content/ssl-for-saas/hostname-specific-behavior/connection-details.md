@@ -6,13 +6,9 @@ order: 2
 
 When forwarding connections to your origin server, Cloudflare will set request parameters according to the following:
 
---------
-
 ## Host header
 
-Cloudflare will not alter the Host header by default, and will forward exactly as sent by the client. If you wish to change the value of the Host header you can utilise Page-Rules or Workers using the steps outlined in [Hostname Specific Behaviour](/ssl-for-saas/hostname-specific/)
-
---------
+Cloudflare will not alter the Host header by default, and will forward exactly as sent by the client. If you wish to change the value of the Host header you can utilise Page-Rules or Workers using the steps outlined in [Hostname Specific Behaviour](/ssl-for-saas/hostname-specific-behavior).
 
 ## SNI
 
