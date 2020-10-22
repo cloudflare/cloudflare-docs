@@ -11,4 +11,4 @@ Using Cloudflare Gateway, you can protect users wherever they are from security 
 **Anyone and everyone can use Cloudflare Gateway**. All you need is a Cloudflare Account to get started. If you need help creating a Cloudflare Account, head to our [Help Center article](https://support.cloudflare.com/hc/articles/360027989951).
 
 
-Start using Cloudflare Gateway today by visiting our [Teams dashboard](https://dash.teams.cloudflare.com/).
+Start using Cloudflare Gateway today by visiting our [Teams dashboard](https://dash.teams.cloudflare.com).

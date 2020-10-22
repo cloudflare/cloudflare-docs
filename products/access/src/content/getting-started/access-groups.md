@@ -6,7 +6,7 @@ order: 4
 
 ## Managing Groups
 
-Access Groups define a set of rules that can be defined once and then quickly applied across many applications. You can select an Access Group as an attribute in any Policy rule, and all the criteria from the selected Access Group will apply to that application. 
+Access Groups define a set of rules that can be defined once and then quickly applied across many applications. You can select an Access Group as an attribute in any Policy rule, and all the criteria from the selected Access Group will apply to that application.
 
 Imagine you want to grant access to your applications to your team based in Lisbon, Portugal. In order to avoid building the same set of rules over and over across your applications, you can create an Access Group called `lisbon-team`, which comprises an Include rule granting access to everyone in Portugal, and a Require rule restricting access to users whose email ends in `@team.com`.
 
@@ -24,7 +24,7 @@ Once the group is set up, you can use it to configure rules within your applicat
 
 To create and manage Access Groups:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to the **My Teams** section.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **My Teams** section.
 1. Open the Groups tab.
 1. Click **Add a Group**.
 1. Enter a name for the group.
@@ -49,7 +49,7 @@ To migrate from Legacy groups:
 
 1. Replace Legacy groups with identity provider groups.
 
-1. Replace the policy rules using Legacy groups by adding a new, mirrored rule that pulls groups from your identity provider.  
+1. Replace the policy rules using Legacy groups by adding a new, mirrored rule that pulls groups from your identity provider.
 For example, if you have a Legacy group that allows “Engineers,” and that Legacy group maps to the same membership of an Okta® group, add a new rule based on Okta groups to allow “Engineers.”
 
 1. Remove the Legacy group rule.
