@@ -18,9 +18,6 @@ For an example edge routing configuration, refer to this table:
 <table>
   <thead>
     <tr>
-      <td colspan="3"><strong>Example routing configuration</strong></td>
-    </tr>
-    <tr>
       <th><strong>GRE tunnel</strong></th>
       <th><strong>Subnet</strong></th>
       <th><strong>Priority</strong></th>

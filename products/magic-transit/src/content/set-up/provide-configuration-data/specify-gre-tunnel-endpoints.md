@@ -35,12 +35,12 @@ For an example GRE tunnel configuration, refer to this table:
 <table>
   <thead>
     <tr>
-      <th>GRE tunnel</th>
-      <th>Customer edge IP</th>
-      <th>Cloudflare Anycast IP</th>
-      <th>Private subnet</th>
-      <th>Customer private IP</th>
-      <th>Cloudflare private IP</th>
+      <th><span style="white-space: nowrap">GRE tunnel</span></th>
+      <th><span style="white-space: nowrap">Customer edge IP</span></th>
+      <th><span style="white-space: nowrap">Cloudflare Anycast IP</span></th>
+      <th><span style="white-space: nowrap">Private subnet</span></th>
+      <th><span style="white-space: nowrap">Customer private IP</span></th>
+      <th><span style="white-space: nowrap">Cloudflare private IP</span></th>
     </tr>
   </thead>
   <tbody>
