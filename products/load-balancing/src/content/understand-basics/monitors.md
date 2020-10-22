@@ -360,7 +360,7 @@ The Cloudflare API supports the following commands for monitors. (Examples are g
 
 ---
 
-## Health Check integration with PagerDuty
+## Health check integration with PagerDuty
 
 To integrate Cloudflare Health Check notifications with PagerDuty, follow the steps outlined in PagerDuty’s _[Email Integration Guide](https://www.pagerduty.com/docs/guides/email-integration-guide/)_. If you do not have a PagerDuty account, you will first need to set that up.
 

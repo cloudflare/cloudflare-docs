@@ -23,7 +23,7 @@ Setting the load balancer to HTTP Proxy mode offers the following benefits:
 
 ---
 
-## DNS-Only mode
+## DNS-only mode
 
 In DNS-Only mode, you can configure load balancers to set a TTL from 30 seconds to 10 minutes. Cloudflare will serve the addresses of the (healthy) origin servers directly but relies on DNS resolvers respecting the short TTL to re-query Cloudflare's DNS for an updated list of healthy addresses.
 
