@@ -10,7 +10,7 @@ Cloudflare will end support for our Kubernetes Ingress Controller at the end of 
 The project is open source and we will continue to make it available in our GitHub repository. More information can be found <a href="https://github.com/cloudflare/cloudflare-ingress-controller/issues/172#issuecomment-541230988">here</a>.
 
 We still believe that using Argo Tunnel and k8s together is a strong combination, but have
-learned that running <code>cloudflared</code> as a sidecar is generally a more reliable and faster
+learned that running `cloudflared` as a sidecar is generally a more reliable and faster
 approach. You can find more information about running Argo tunnel in a sidecar model [here](/argo-tunnel[/reference/sidecar/).
 
 </Aside>
@@ -27,25 +27,26 @@ Controller will be usable without Load Balancing.
 In this example, we're going to expose a private version of the `echoserver` through Argo Tunnel.
 This example assumes you have a Kubernetes cluster running on one of the platforms mentioned above.
 
-# Step One: Download `cloudflared` & Generate a Certificate
+## Step One: Download `cloudflared` & Generate a Certificate
 Download and install `cloudflared` [here][cflare-tunnel-daemon].
 
 Then, run `cloudflared login` and select a domain to generate and download a certificate. Make sure the certificate is placed into `~/.cloudflared/cert.pem`
 
-# Step Two: Install the Ingress Controller with Helm
- [Helm][helm] is a package manager for kubernetes which defines an application as a set
- of templates. This makes it easy to install and update applications in a kubernetes cluster.
+## Step Two: Install the Ingress Controller with Helm
+[Helm][help] is a package manager for kubernetes which defines an application as a set of templates. This makes it easy to install and update applications in a kubernetes cluster.
 
 Add the repository that holds the Helm chart:
- ```console
- helm repo add cloudflare https://cloudflare.github.io/helm-charts
- helm repo update
- ```
+
+```sh
+$ helm repo add cloudflare https://cloudflare.github.io/helm-charts
+$ helm repo update
+```
 
 The Helm chart that describes all the components is found [here][cflare-github-helm].
 
 Install the Controller with Helm:
-```console
+
+```sh
 $ helm install --name anydomain --namespace default \
     --set rbac.create=true \
     --set controller.ingressClass=argo-tunnel \
@@ -54,10 +55,11 @@ $ helm install --name anydomain --namespace default \
 ```
 > **Note**: the controller watches all namespaces.
 
-# Step Three: Deploy a Service into a Kubernetes Cluster
+## Step Three: Deploy a Service into a Kubernetes Cluster
 The `echoserver` image starts a http listener that simply mimics the request as its response.
 
 Create a manifest called echo.yaml:
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -107,19 +109,21 @@ spec:
 ```
 
 Deploy `echoserver` into your Kubernetes cluster:
-```console
-kubectl apply -f echo.yaml`
+
+```sh
+$ kubectl apply -f echo.yaml`
 ```
 > **Tip**: `-n` sets the namespace for deployment.
 
-# Step Four: Create a Tunnel Secret
+## Step Four: Create a Tunnel Secret
 Convert the domain certificate into a tunnel secret:
-```console
+
+```sh
 $ kubectl create secret generic mydomain.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
 > **Tip**: `-n` sets the namespace for deployment.
 
-# Step Five: Create an Ingress Definition
+## Step Five: Create an Ingress Definition
 The Kubernetes Ingress is a spec for external connectivity to a Kubernetes service. Typically,
 an ingress will contain an annotation, `kubernetes.io/ingress.class`, to identify the controller
 that should handle the ingress.
@@ -160,18 +164,18 @@ spec:
 - the `host` must belong the domain certificate (tunnel secret)
 
 Deploy the Ingress:
-```console
+```sh
 $ kubectl apply -f echo-tunnel.yaml
 ```
 > **Tip**: `-n` sets the namespace for deployment.
 
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
 
-# Step Six: Use the Tunnel
+## Step Six: Use the Tunnel
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
 
 Curl the tunnel:
-```console
+```sh
 $ curl http://echo.mydomain.com
 ```
 
