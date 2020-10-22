@@ -1,11 +1,8 @@
 ---
 order: 0
-type: table
 ---
 
 # Specify prefixes to advertise
-
-<ContentColumn>
 
 List all prefixes and the ASNs from which you want them to originate.
 
@@ -19,35 +16,17 @@ When specifying prefixes, observe these guidelines:
 
 For an example prefix configuration, refer to this table:
 
-</ContentColumn>
+<Example>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="2">List of prefixes to advertise</th>
-    </tr>
-    <tr>
-      <th>Prefix</th>
-      <th>Originating AS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>103.21.244.0/23</td>
-      <td>AS209242</td>
-    </tr>
-    <tr>
-      <td>131.0.72.0/22</td>
-      <td>AS395747</td>
-    </tr>
-    <tr>
-      <td>103.21.245.0/24</td>
-      <td>AS395747</td>
-    </tr>
-  </tbody>
-</table>
+__Example list of prefixes to advertise__
 
-<ContentColumn>
+| Prefix          | Originating AS |
+| --------------: | :------------- |
+| 103.21.244.0/23 | AS209242       |
+| 131.0.72.0/22   | AS395747       |
+| 103.21.245.0/24 | AS395747       |
+
+</Example>
 
 <Aside>
 
@@ -56,5 +35,3 @@ When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
 
 </Aside>
-
-</ContentColumn>
