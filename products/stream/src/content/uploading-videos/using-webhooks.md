@@ -1,16 +1,10 @@
 ---
-order: 10
+order: 6
 ---
 
-# Webhooks
+# Using webhooks
 
 A tool to notify your service when videos successfully finish processing and are ready to stream.
-
-## A few things to note
-
-- At this time, webhooks will only be sent after the processing of a video is complete,
-  and the body will indicate whether the processing of the video succeeded or failed.
-- Only one webhook subscription is allowed per-account.
 
 ## Subscriptions
 
@@ -24,10 +18,10 @@ and your email address.
 ```bash
 curl -X PUT --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
---data '{"notificationUrl":"{WEBHOOK-NOTIFICATION-URL"}'
+--data '{"notificationUrl":"$WEBHOOK_NOTIFICATION_URL}'
 ```
 
-The `{webhook-notification-url}` must include the protocol. Only `http://`
+The webhook notification URL must include the protocol. Only `http://`
 or `https://` is supported.
 
 #### Example response to create or modify the webhook subscription
@@ -45,55 +39,6 @@ or `https://` is supported.
 }
 ```
 
-If a subscription is created, the `modified` timestamp will equal
-"0001-01-01T00:00:00.0000000Z"
-
-## Get the webhook subscription
-
-To view a webhook subscription associated with your account:
-
-```bash
-curl --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
-```
-
-### Example response to get the webhook subscription
-
-```bash
-{
-  "result": {
-    "notificationUrl": "http://www.your-service-webhook-handler.com",
-    "modified": "0001-01-01T00:00:00.0000000Z",
-  }
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-## Delete the webhook subscription
-
-To delete a webhook subscription associated with your account:
-
-```bash
-curl -X DELETE --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
-```
-
-If there is an entry in `errors` response field, the webhook has not been
-deleted, and the request should be re-tried.
-
-### Example response to delete the webhook subscription
-
-```bash
-{
-  "result": "",
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
 ## Notifications
 
 When a video on your account finishes processing, you will receive a `POST`
@@ -103,41 +48,20 @@ Note the `status` field indicates whether the video processing finished successf
 
 ### Example POST request body sent in response to successful encoding
 
-```bash
+```javascript
 {
     "uid": "dd5d531a12de0c724bd1275a3b2bc9c6",
-    "thumbnail": "https://cloudflarestream.com/dd5d531a12de0c724bd1275a3b2bc9c6/thumbnails/thumb.png",
     "readyToStream": true,
     "status": {
       "state": "ready"
     },
     "meta": {},
-    "labels": [],
     "created": "2019-01-01T01:00:00.474936Z",
     "modified": "2019-01-01T01:02:21.076571Z",
-    "size": 62335189,
-    "preview": "https://watch.cloudflarestream.com/dd5d531a12de0c724bd1275a3b2bc9c6"
+    // ...
   }
 ```
 
-### Example POST request body sent in response to failed encoding
-
-```bash
-{
-    "uid": "dd5d531a12de0c724bd1275a3b2bc9c6",
-    "thumbnail": "https://cloudflarestream.com/dd5d531a12de0c724bd1275a3b2bc9c6/thumbnails/thumb.png",
-    "readyToStream": false,
-    "status": {
-      "state": "error"
-    },
-    "meta": {},
-    "labels": [],
-    "created": "2019-01-01T01:00:00.474936Z",
-    "modified": "2019-01-01T01:02:21.076571Z",
-    "size": 62335189,
-    "preview": "https://watch.cloudflarestream.com/dd5d531a12de0c724bd1275a3b2bc9c6"
-  }
-```
 
 ## Verify webhook authenticity
 
@@ -185,9 +109,16 @@ Compare the signature in the request header to the expected signature. Preferabl
 
 If the signatures match, you can trust that the webhook was sent by Cloudflare.
 
-#### Examples
+## Limitations 
 
-For golang using [crypto/hmac](https://golang.org/pkg/crypto/hmac/#pkg-overview):
+- Webhooks will only be sent after the processing of a video is complete,
+  and the body will indicate whether the processing of the video succeeded or failed.
+- Only one webhook subscription is allowed per-account.
+
+## Examples
+
+### Golang
+Using [crypto/hmac](https://golang.org/pkg/crypto/hmac/#pkg-overview):
 
 ```
 package main
@@ -213,7 +144,7 @@ func main() {
 
 ```
 
-In Node.js:
+### Node.js
 
 ```
 var crypto = require('crypto');
@@ -226,7 +157,7 @@ var hash = crypto.createHmac('sha256', key).update(message);
 hash.digest('hex');
 ```
 
-In Ruby:
+### Ruby
 
 ```
 require 'openssl'

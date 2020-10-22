@@ -1,25 +1,36 @@
 ---
-order: 9
+order: 4
 ---
 
-# Thumbnails
+# Displaying thumbnails
 
 ## Use Case 1: Generating a thumbnail on-the-fly
 
-Using the `poster` attribute in the `<stream>` tag, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
+A thumbnail from your video can be generated using a special link where you speicify the time from the video you'd like to get the thumbnail from.
+
+<Example>
 
 ```
-poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270"
+https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
 ```
+
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" />
 
-Here's an example using a thumbnail:
+</Example>
+
+
+Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
 
 ```html
-<stream src="5d5bc37ffcf54c9b82e996823bffbb81" poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" controls preload height="270px" width="480px"></stream><script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=5d5bc37ffcf54c9b82e996823bffbb81"></script>
+<iframe
+  src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?poster=https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270"
+  style="border: none;"
+  height="720"
+  width="1280"
+  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+  allowfullscreen="true"
+></iframe>
 ```
-
-<stream src="5d5bc37ffcf54c9b82e996823bffbb81" poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" controls preload height="270px" width="480px"></stream><script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=5d5bc37ffcf54c9b82e996823bffbb81"></script>
 
 Supported URL attributes are:
 
@@ -65,14 +76,6 @@ Stream supports animated GIFs as thumbnails. Views using animated thumbnails do 
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
 ```
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" />
-
-Here's an example using an animated thumbnail:
-
-```html
-<stream src="5d5bc37ffcf54c9b82e996823bffbb81" poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" controls preload height="270px" width="480px"></stream><script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=5d5bc37ffcf54c9b82e996823bffbb81"></script>
-```
-
-<stream src="5d5bc37ffcf54c9b82e996823bffbb81" poster="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" controls preload height="270px" width="480px"></stream><script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=5d5bc37ffcf54c9b82e996823bffbb81"></script>
 
 Supported URL attributes for animated thumbnails are:
 

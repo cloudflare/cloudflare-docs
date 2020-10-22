@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Analytics
+# Fetching per-video analytics
 
 Cloudflare measures the following metrics for every video play:
 
