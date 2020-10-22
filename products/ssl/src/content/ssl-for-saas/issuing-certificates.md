@@ -1,7 +1,8 @@
 ---
-title: Issuing Certificates
-weight: 20
+order: 2
 ---
+
+# Issuing certificates
 
 Cloudflare issues two certificates for each Custom Hostname that you request issuance for (and none for those that you provide your own certificate, as described in the Certificate Upload section).
 
@@ -19,10 +20,13 @@ After validation has completed, Cloudflare will issue two certificates for each 
 
 Full API details on the the Custom Hostname (SSL for SaaS) endpoint can be found at: https://api.cloudflare.com/#custom-hostname-for-a-zone-properties.
 
-## Monitoring the certificate's status
+--------
+
+## Monitoring the certificate’s status
+
 Once a certificate has been ordered or uploaded, you can make API calls to check on the status, or review properties, of the certificate.
 
-```
+```bash
 $ curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}"\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"\
@@ -32,17 +36,19 @@ This call will return information about a Custom Hostname, including whether the
 
 Alternatively, if you have not stored the hostname identifier, you can look the certificate up by hostname:
 
-```
+```bash
 $ curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=app.example.com"\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"
 ```
 
+--------
+
 ## Viewing the newly issued certificate
 
-You can view the certificate that was deployed to Cloudflare's edge using `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge (provided [validation](/ssl/ssl-for-saas/validation-methods) was completed).
+You can view the certificate that was deployed to Cloudflare’s edge using `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/validation-methods)).
 
-```
+```txt
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
 ```
 
