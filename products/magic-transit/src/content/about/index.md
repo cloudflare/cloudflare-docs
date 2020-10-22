@@ -1,5 +1,5 @@
 ---
-title: About Magic Transit
+title: About
 order: 1
 ---
 

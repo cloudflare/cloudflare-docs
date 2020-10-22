@@ -1,5 +1,5 @@
 ---
-title: Set up Magic Transit
+title: Set up
 order: 2
 ---
 

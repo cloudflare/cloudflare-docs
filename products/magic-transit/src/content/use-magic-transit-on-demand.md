@@ -1,8 +1,6 @@
 ---
-title: Use Magic Transit on demand
-alwaysopen: true
+title: Use on demand
 order: 5
-hidden: false
 ---
 
 # Use Magic Transit on demand

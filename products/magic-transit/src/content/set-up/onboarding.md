@@ -3,7 +3,7 @@ title: Onboarding
 order: 1
 ---
 
-# Magic Transit
+# Magic Transit onboarding
 
 ![Onboarding timeline](../static/mt-onboarding-timeline.png)
 

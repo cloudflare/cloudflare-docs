@@ -1,5 +1,4 @@
 ---
-title: Traffic steering
 order: 2
 ---
 

@@ -1,5 +1,4 @@
 ---
-title: Tunnels and encapsulation
 order: 3
 ---
 
