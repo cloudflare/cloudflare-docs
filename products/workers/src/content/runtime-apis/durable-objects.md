@@ -55,35 +55,35 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 <Definitions>
 
-- <code>get(key<ParamType>string</ParamType>)</code> <Type>Promise&lt;any></Type>
+- <Code>get(key<ParamType>string</ParamType>)</Code> <Type>Promise&lt;any></Type>
 
   - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-- <code>get(keys<ParamType>Array&lt;String></ParamType>)</code> <Type>Promise&lt;Map&lt;string, any>></Type>
+- <Code>get(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
 
-- <code>put(key<ParamType>string</ParamType>, value<ParamType>any</ParamType>) <Type>Promise</Type></code>
+- <Code>put(key<ParamType>string</ParamType>, value<ParamType>any</ParamType>) <Type>Promise</Type></Code>
 
   - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 32 KiB (32768 bytes).
 
-- <code>put(entries<ParamType>Object</ParamType>) <Type>Promise</Type></code>
+- <Code>put(entries<ParamType>Object</ParamType>) <Type>Promise</Type></Code>
 
   - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a max size of 2048 bytes and each value is limited to 32 KiB (32768 bytes).
 
-- <code>delete(key<ParamType>string</ParamType>) <Type>Promise&lt;boolean></Type></code>
+- <Code>delete(key<ParamType>string</ParamType>) <Type>Promise&lt;boolean></Type></Code>
 
   - Deletes the key and associated value. Returns true if the key existed or false if it didn't.
 
-- <code>delete(keys<ParamType>Array&lt;String></ParamType>) <Type>Promise&lt;number></Type></code>
+- <Code>delete(keys<ParamType>Array&lt;String></ParamType>) <Type>Promise&lt;number></Type></Code>
 
   - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
 
-- <code>list() <Type>Promise&lt;Map&lt;string, any>></Type></code>
+- <Code>list() <Type>Promise&lt;Map&lt;string, any>></Type></Code>
 
   - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your actor before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
 
-- <code>list(options<ParamType>Object</ParamType>) <Type>Promise&lt;Map&lt;string, any>></Type></code>
+- <Code>list(options<ParamType>Object</ParamType>) <Type>Promise&lt;Map&lt;string, any>></Type></Code>
 
   - Returns keys associated with the current Durable Object according to the parameters in the provided options object.
 
@@ -98,7 +98,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     - <Code>limit<ParamType>number</ParamType></Code>
       - Maximum number of key-value pairs to return.
 
-- <code>transaction(closure <ParamType>Function(txn)</ParamType>) <Type>Promise</Type></code>
+- <Code>transaction(closure <ParamType>Function(txn)</ParamType>) <Type>Promise</Type></Code>
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts. Failed transactions are retried automatically.  Non-storage operations that affect external state, like calling `fetch`, may execute more than once if the transaction is retried.
 

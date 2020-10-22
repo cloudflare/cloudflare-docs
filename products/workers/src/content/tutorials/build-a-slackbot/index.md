@@ -146,7 +146,9 @@ There are two `POST` routes to handle: `/lookup` and `/webhook`. These new route
 Once your routes are set up, you need to actually handle the incoming request, which is available under the variable `request`. The `route` function on the router takes in a `request` argument, and returns a `response`.
 
 <Aside>
-Note that you’re able to use great JS features like async/await inside of your Workers application, thanks to Workers’ V8 runtime: since <code>r.route</code> returns a Promise, you can write <code>await r.route(request)</code> to set <code>response</code> to the result of the resolved Promise.
+
+Note that you’re able to use great JS features like async/await inside of your Workers application, thanks to Workers’ V8 runtime: since `r.route` returns a Promise, you can write `await r.route(request)` to set `response` to the result of the resolved Promise.
+
 </Aside>
 
 If there is no matching route (for instance, if someone requests the path `/admin`), the function should return a response with a status code of 404. `handleRequest` checks to see if `response` is `undefined`, and if it is, it sets `response` to a new `Response` with the body text “Not found”, and a status code of 404.
