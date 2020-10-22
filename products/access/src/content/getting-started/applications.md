@@ -16,7 +16,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 ### 1. Add Your App
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to the **Applications** tab.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 2. Click **Add an application**.
 3. Select **SaaS**.
 
@@ -88,7 +88,7 @@ Before you begin setting up your self-hosted application, you will need an activ
 Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Cloudflare Argo Tunnel](/learning/access-tunnel/). If you do not wish to use Cloudflare Argo Tunnel, you must [validate the token](/learning/json-web-tokens/) issued by Cloudflare on your origin.
 
 ### 1. Add Your App
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to the **Applications** tab.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 2. Click **Add an application**.
 3. Select **Self-hosted**.
 

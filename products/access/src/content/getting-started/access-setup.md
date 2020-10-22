@@ -8,13 +8,13 @@ order: 1
 
 <b>Before you start</b>
 
-* **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">Add a website to Cloudflare</a>**   
-* **<a href="https://support.cloudflare.com/hc/articles/205195708">Change your domain nameservers to Cloudflare</a>**  
+* **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">Add a website to Cloudflare</a>**
+* **<a href="https://support.cloudflare.com/hc/articles/205195708">Change your domain nameservers to Cloudflare</a>**
 
 </Aside>
 
 Follow these steps to set up Cloudflare Access.
-1. Navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com/).
+1. Navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com).
 
 2. Navigate to **Access > Applications**.
 
@@ -34,18 +34,18 @@ Provide a name and input the subdomain where your application will be served. Th
 
 Provide a name and then specify an *Include* rule for the policy.
 
-The *Include* rule will determine which users will be allowed to access the application.  
+The *Include* rule will determine which users will be allowed to access the application.
 You can either select:
-  * *Emails* - this option restricts access to users whose email addresses match the ones you define. 
+  * *Emails* - this option restricts access to users whose email addresses match the ones you define.
   * *Emails ending in* - this option restricts access to users whose email addresses end with the email endings you define.
 
 You can return to edit the policy with more complex rules like identity provider groups or hard key requirements.
 
 8. Click **Next**.
 
-9. You have now successfully configured Cloudflare Access.  
+9. You have now successfully configured Cloudflare Access.
 
-  → To view your application on the *Teams dashboard*, click **View your application**.  
+  → To view your application on the *Teams dashboard*, click **View your application**.
   → To explore the dashboard, click **Proceed to Teams dashboard**.
 
 ![Onboarding App Secured](../static/summary/onboarding-app-secured.png)

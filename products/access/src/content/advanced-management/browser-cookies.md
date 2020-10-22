@@ -12,9 +12,9 @@ Cloudflare Access provides optional security settings that can be added to the b
 
 All three settings can be enabled in an Application’s settings menu.
 
-To reach the settings menu: 
+To reach the settings menu:
 
-1. Navigate to the [Teams Dashboard](https://dash.teams.cloudflare.com/).
+1. Navigate to the [Teams Dashboard](https://dash.teams.cloudflare.com).
 2. Select **Applications**.
 3. Locate the application for which you would like to enable these settings.
 4. Click **Edit**.
@@ -35,14 +35,14 @@ Do not enable HttpOnly if:
 
 ## Enable Binding Cookie
 
-The Binding Cookie is an additional cookie created when a user successfully authenticates, shared with Cloudflare to verify identity, and then stripped before it reaches the origin server. The Binding Cookie associates the browser with the Access token; the association protects against compromised authorization tokens because the origin webapp would never see this binding cookie. This protects against session hijack style attacks. 
+The Binding Cookie is an additional cookie created when a user successfully authenticates, shared with Cloudflare to verify identity, and then stripped before it reaches the origin server. The Binding Cookie associates the browser with the Access token; the association protects against compromised authorization tokens because the origin webapp would never see this binding cookie. This protects against session hijack style attacks.
 
 ### When not to use the Binding Cookie
-* Do not use the Binding Cookie for non-browser based Access applications that rely on protocols like SSH, RDP, etc. 
+* Do not use the Binding Cookie for non-browser based Access applications that rely on protocols like SSH, RDP, etc.
 
 ## SameSite Attribute
 
-The [SameSite](https://web.dev/samesite-cookies-explained/) Attribute selector is a cookie attribute that restricts the cookie to only being sent if the cookie’s defined site matches the site being requested in the browser. This adds protection against CSRF attacks. 
+The [SameSite](https://web.dev/samesite-cookies-explained/) Attribute selector is a cookie attribute that restricts the cookie to only being sent if the cookie’s defined site matches the site being requested in the browser. This adds protection against CSRF attacks.
 
 The selector options are<sup>[[1](#source)]</sup>:
 * **None** - Cookies will be sent in all contexts, i.e sending cross-origin is allowed.
