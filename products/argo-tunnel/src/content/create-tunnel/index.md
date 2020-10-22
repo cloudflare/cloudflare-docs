@@ -52,6 +52,10 @@ If you have deleted the `cert.pem` file, you must specify the UUID instead of th
 
 `cloudflared tunnel --config path/config.yaml run <UUID>`
 
+You can also specify the Tunnel name or UUID inside of the configuration file, in which case the command below will invoke the `run` command for that Tunnel.
+
+`cloudflared tunnel --config path/config.yaml`
+
 You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID.
 
 `cloudflared tunnel run --url localhost:3000 <NAME or UUID>`

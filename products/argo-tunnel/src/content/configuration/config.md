@@ -16,6 +16,16 @@ For example, the `--hostname [hostname]` argument is written in the config file 
 hostname: [hostname]
 ```
 
+## Default behavior
+
+You can specify a particular Tunnel in the config file by name or ID. When the following stanza is present in the file, the command `cloudflaredtunnl run` will be treated as if `cloudflared tunnel run NAME-OR-ID` was run.
+
+```yml
+tunnel: NAME-OR-ID
+```
+
+## File location
+
 You can use `--config` to point to a non-standard YAML file location:
 
 ```sh
@@ -27,7 +37,7 @@ An example `config.yml` for the above command could look like:
 
 ```yml
 hostname: tunnel.yourdomain.com
-url: https://localhost:8000
+url: http://localhost:8000
 logfile: /var/log/cloudflared.log
 ```
 
