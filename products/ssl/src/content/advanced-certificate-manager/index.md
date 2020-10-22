@@ -1,7 +1,8 @@
 ---
-title: Advanced Certificate Manager
-weight: 65
+order: 1
 ---
+
+# Advanced Certificate Manager
 
 Advanced Certificate Manager is a flexible and customizable way to issue and manage certificates in Cloudflare.  Advanced Certificate Manager defines several certificate options:
 
@@ -17,14 +18,17 @@ Use the Advanced Certificate Manager when the Universal certificate does not mee
 
 <Aside type="warning">
 
-Selecting Let's Encrypt as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, e.g. example.com, *.example.com).
+Selecting Let’s Encrypt as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, e.g. example.com, *.example.com).
+
 </Aside>
+
+--------
 
 ## Order an Advanced Certificate Manager certificate pack
 
-Order an Advanced Certificate via [API](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack):
+[Order an Advanced Certificate via API](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack):
 
-```
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs/order" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
 -H "Content-Type: application/json" \
@@ -51,11 +55,13 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate
 }
 ```
 
+--------
+
 ## Restart validation for an Advanced Certificate Manager certificate pack
 
-Restart the validation period of an Advanced certificate via [API](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack):
+[Restart the validation period of an Advanced certificate via API](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack):
 
-```
+```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs/3822ff90-ea29-44df-9e55-21300bb9419b" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
 -H "Content-Type: application/json"
@@ -81,11 +87,13 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificat
 }
 ```
 
-## Delete Advanced Certificate Manager Certificate Pack
+--------
 
-Delete an Advanced Certificate via the [API](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack):
+## Delete Advanced Certificate Manager certificate pack
 
-```
+[Delete an Advanced Certificate via the API](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack):
+
+```bash
 curl -X DELETE "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs/3822ff90-ea29-44df-9e55-21300bb9419b" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
 -H "Content-Type: application/json"
@@ -100,47 +108,55 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certifica
 }
 ```
 
-## List Advanced Certificate Manager Certificate Pack
+--------
+
+## List Advanced Certificate Manager certificate pack
 
 <Aside type="note">
 
 This API call returns all certificate packs for the zone including Universal, Custom, and Advanced certificates.
 </Aside>
 
-To list all Advanced Certificates on the zone via [API](https://api.cloudflare.com/#certificate-packs-list-certificate-packs):
+To [list all Advanced Certificates on the zone via API](https://api.cloudflare.com/#certificate-packs-list-certificate-packs):
 
-```
+```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs?status=all" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
 -H "Content-Type: application/json"
 ```
 
+--------
+
 ## Change Ciphers Suite settings
 
-To change the Cipher Suite Settings on the zone via the [API](https://api.cloudflare.com/#zone-settings-change-ciphers-setting):
+To [change the Cipher Suite Settings on the zone via the API](https://api.cloudflare.com/#zone-settings-change-ciphers-setting):
 
-```
+```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/settings/ciphers" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
 -H "Content-Type: application/json" \
 --data '{"value":["ECDHE-RSA-AES128-GCM-SHA256","AES128-SHA"]}'
 ```
 
+--------
+
 ## List Ciphers Suite settings
 
-To list the Cipher Suite Settings on the zone via the [API](https://api.cloudflare.com/#zone-settings-get-ciphers-setting):
+To [list the Cipher Suite Settings on the zone via the API](https://api.cloudflare.com/#zone-settings-get-ciphers-setting):
 
-```
+```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/:zoneid/settings/ciphers" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
 -H "Content-Type: application/json"
 ```
 
+--------
+
 ## Restore Default Ciphers Suite settings
 
 To change the Cipher Suite Settings on the zone via the API:
 
-```
+```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/settings/ciphers" \
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
 -H "Content-Type: application/json" \
