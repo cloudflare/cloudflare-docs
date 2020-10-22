@@ -1,8 +1,11 @@
 ---
 order: 1
+type: table
 ---
 
 # Specify tunnel endpoints
+
+<ContentColumn>
 
 ## Anycast edge IP addresses
 
@@ -23,20 +26,21 @@ To configure the GRE tunnel(s) between Cloudflare and your data center(s), you m
 
 For an example GRE tunnel configuration, refer to this table:
 
+### Example GRE tunnel IPs
+
+</ContentColumn>
+
+<TableWrap>
+
 <table>
   <thead>
     <tr>
-      <td colspan="6" ><strong>Example GRE Tunnel IPs</strong></td>
-    </tr>
-    <tr>
-      <td rowspan="2" ><strong>GRE tunnel</strong></td>
-      <td rowspan="2" ><strong>Customer edge IP</strong></td>
-      <td rowspan="2" ><strong>Cloudflare Anycast IP</strong></td>
-      <td rowspan="2" ><strong>Private subnet</strong></td>
-    </tr>
-    <tr>
-      <td><strong>Customer private IP</strong></td>
-      <td><strong>Cloudflare private IP</strong></td>
+      <th>GRE tunnel</th>
+      <th>Customer edge IP</th>
+      <th>Cloudflare Anycast IP</th>
+      <th>Private subnet</th>
+      <th>Customer private IP</th>
+      <th>Cloudflare private IP</th>
     </tr>
   </thead>
   <tbody>
@@ -74,3 +78,5 @@ For an example GRE tunnel configuration, refer to this table:
     </tr>
   </tbody>
 </table>
+
+</TableWrap>
