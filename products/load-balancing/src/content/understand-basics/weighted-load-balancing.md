@@ -60,7 +60,7 @@ The example below uses the Update Pools command—`POST /user/load_balancers/poo
 
 **Request (curl)**
 
-```
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/user/load_balancers/pools" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
@@ -93,7 +93,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/user/load_balancers/pools" \
 
 **Response**
 
-```
+```json
 {
   "success": true,
   "errors": [],
