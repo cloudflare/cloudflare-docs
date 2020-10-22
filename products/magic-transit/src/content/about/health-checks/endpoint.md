@@ -1,5 +1,4 @@
 ---
-title: Endpoint health checks
 order: 2
 ---
 

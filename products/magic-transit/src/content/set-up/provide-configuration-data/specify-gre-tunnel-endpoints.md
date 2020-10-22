@@ -1,9 +1,8 @@
 ---
-title: Specify tunnel endpoints
-alwaysopen: true
 order: 1
-hidden: false
 ---
+
+# Specify tunnel endpoints
 
 ## Anycast edge IP addresses
 

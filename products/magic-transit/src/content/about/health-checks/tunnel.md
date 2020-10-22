@@ -1,5 +1,4 @@
 ---
-title: Tunnel health checks
 order: 1
 ---
 
