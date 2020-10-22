@@ -16,17 +16,11 @@ When specifying prefixes, observe these guidelines:
 
 For an example prefix configuration, refer to this table:
 
-<Example>
-
-__Example list of prefixes to advertise__
-
 | Prefix          | Originating AS |
-| --------------: | :------------- |
+| ----------------| -------------- |
 | 103.21.244.0/23 | AS209242       |
 | 131.0.72.0/22   | AS395747       |
 | 103.21.245.0/24 | AS395747       |
-
-</Example>
 
 <Aside>
 
