@@ -13,9 +13,9 @@ Cloudflare requires that you meet the following Magic Transit onboarding require
 
 Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare's edge to your origin network. To ensure compatibility with Magic Transit, the routers at your GRE tunnel endpoints must meet these requirements:
 
-* Support GRE tunneling.
-* Allow configuration of at least 1 tunnel per Internet service provider (ISP).
-* Support maximum segment size (MSS) clamping.
+- Support GRE tunneling.
+- Allow configuration of at least 1 tunnel per Internet service provider (ISP).
+- Support maximum segment size (MSS) clamping.
 
 ## Draft Letter of Authorization
 
@@ -35,40 +35,40 @@ Cloudflare uses GRE tunnels to deliver packets from our edge to your data center
 
 To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your physical egress interfaces** (not the GRE tunnel interfaces):
 
-<table style='border:none'>
- <thead>
-	<tr>
-		<th></th>
-		<th>Standard Internet routable MTU</th>
-		<th style='text-align:right'>1500 bytes</th>
-	</tr>
-</thead>
-	<tr>
-		<th>&#45;</th>
-		<th>Original IP header</th>
-		<td style='text-align:right'>20 bytes</td>
-	</tr>
-	<tr>
-		<th>&#45;</th>
-		<th>Original protocol header (TCP)</th>
-		<td style='text-align:right'>20 bytes</td>
-	</tr>
-	<tr>
-		<th>&#45;</th>
-		<th>New IP header</th>
-		<td style='text-align:right'>20 bytes</td>
-	</tr>
-	<tr>
-		<th>&#45;</th>
-		<th>New protocol header (GRE)</th>
-		<td style='text-align:right'>4 bytes</td>
-	</tr>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Standard Internet routable MTU</th>
+      <th align="right">1500 bytes</th>
+    </tr>
+  </thead>
   <tbody>
-	<tr>
-		<th>&#61;</th>
-		<th>Maximum segment size (MSS)</th>
-		<td style='text-align:right'>1436 bytes</td>
-	</tr>
+    <tr>
+      <td>&#45;</td>
+      <td>Original IP header</td>
+      <td align="right">20 bytes</td>
+    </tr>
+    <tr>
+      <td>&#45;</td>
+      <td>Original protocol header (TCP)</td>
+      <td align="right">20 bytes</td>
+    </tr>
+    <tr>
+      <td>&#45;</td>
+      <td>New IP header</td>
+      <td align="right">20 bytes</td>
+    </tr>
+    <tr>
+      <td>&#45;</td>
+      <td>New protocol header (GRE)</td>
+      <td align="right">4 bytes</td>
+    </tr>
+    <tr>
+      <td>&#61;</td>
+      <td>Maximum segment size (MSS)</td>
+      <td align="right">1436 bytes</td>
+    </tr>
   </tbody>
 </table>
 
@@ -80,46 +80,23 @@ Instructions to adjust MSS by applying MSS clamps vary depending on the vendor o
 
 The following table lists several commonly used router vendors with links to MSS clamping instructions:
 
-<table>
- <thead>
-  <tr>
-   <th>Router device</th>
-   <th>URL</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td>Cisco
-   </td>
-   <td><a href="https://www.cisco.com/en/US/docs/ios-xml/ios/ipapp/command/ip_tcp_adjust-mss_through_ip_wccp_web-cache_accelerated.html#GUID-68044D35-A53E-42C1-A7AB-9236333DA8C4">TC IP Adjust MSS</a>
-   </td>
-  </tr>
-  <tr>
-   <td>Juniper
-   </td>
-   <td><a href="https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/tcp-mss-edit-system.html">TCP MSS - Edit System</a>
-   </td>
-  </tr>
-  <tr>
-   <td>Oracle
-   </td>
-   <td><a href="https://docs.cloud.oracle.com/en-us/iaas/Content/Network/Reference/ciscoasaCPEpolicybased.htm#:~:text=You%20can%20configure%20the%20Cisco,value%20to%20the%20configured%20value">TCP MSS adjustment</a>
-   </td>
-  </tr>
-  </tbody>
-</table>
+| Router device | URL                                                                                                                                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cisco         | [TC IP Adjust MSS](https://www.cisco.com/en/US/docs/ios-xml/ios/ipapp/command/ip_tcp_adjust-mss_through_ip_wccp_web-cache_accelerated.html#GUID-68044D35-A53E-42C1-A7AB-9236333DA8C4)                 |
+| Juniper       | [TCP MSS – Edit System](https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/tcp-mss-edit-system.html)                                                          |
+| Oracle        | [TCP MSS adjustment](https://docs.cloud.oracle.com/en-us/iaas/Content/Network/Reference/ciscoasaCPEpolicybased.htm#:~:text=You%20can%20configure%20the%20Cisco,value%20to%20the%20configured%20value) |
 
 ### Verify MSS settings at your origin
 
 To verify that your routers have the correct MSS setting (1436 bytes) at your origin, run the following command on the servers egressing the prefixes you want to add to Magic Transit:
 
-```
-curl 167.71.125.57:8080
+```sh
+$ curl 167.71.125.57:8080
 ```
 
 You should see the following result:
 
-```
+```txt
 Local: 167.71.125.57:8080
 Remote: 172.68.141.62:44108
 Local MSS: 1436

@@ -46,8 +46,8 @@ To configure the edge network, Cloudflare does the following:
 
 These routing changes return any traffic generated within the Cloudflare edge network to the GRE tunnels set up for Magic Transit. This can happen under the following 2 conditions:
 
-* An IP within your Magic Transit prefix accesses a web property proxied by Cloudflare.
-* You have a proxied zone set up on Cloudflare with a target IP within a Magic Transit prefix range.
+- An IP within your Magic Transit prefix accesses a web property proxied by Cloudflare.
+- You have a proxied zone set up on Cloudflare with a target IP within a Magic Transit prefix range.
 
 You control the edge router advertisement, which dictates whether Cloudflare’s edge network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the GRE tunnels to your data center(s).
 

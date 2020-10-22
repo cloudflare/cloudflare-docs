@@ -1,32 +1,15 @@
 ---
-title: Map routes for prefixes smaller than /24
 order: 3
 ---
 
-## Map route prefixes smaller than /24
+# Map route prefixes smaller than /24
 
 In order for Cloudflare to route your traffic from the edge to your data center(s) via GRE tunnels, you must provide your prefixes and the tunnels to which they should be mapped, similar to the example in the table below.
 
-<table>
- <thead>
-  <tr>
-   <th>Prefix</th>
-   <th>GRE Tunnel</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td>103.21.244.0/29</td>
-   <td>GRE_1_IAD</td>
-  </tr>
-  <tr>
-   <td>103.21.244.8/29
-   </td>
-   <td>GRE_2_ATL
-   </td>
-  </tr>
-</tbody>
-</table>
+| Prefix          | GRE Tunnel |
+| --------------- | ---------- |
+| 103.21.244.0/29 | GRE_1_IAD  |
+| 103.21.244.8/29 | GRE_2_ATL  |
 
 The minimum advertising prefix is /24. However, since we use GRE tunnels as an outer wrapper for your traffic, we can route prefixes within that /24 to different tunnel end points.
 
