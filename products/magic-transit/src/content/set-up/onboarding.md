@@ -11,12 +11,6 @@ The onboarding process, from scoping to going live, typically takes about 10 bus
 
 Throughout the onboarding process, Cloudflare partners closely with your organization to accomplish the following tasks:
 
-* [Scope your configuration](#scope-your-configuration)
-* [Configure tunnels](#configure-tunnels)
-* [Run pre-flight checks](#run-pre-flight-checks)
-* [Configure edge network](#configure-edge-network)
-* [Go live and announce prefixes](#go-live-and-announce-prefixes)
-
 ## Scope your configuration
 
 Starting with an initial kickoff call, Cloudflare engages with your organization to confirm the scope and timeline for setting up Magic Transit.
