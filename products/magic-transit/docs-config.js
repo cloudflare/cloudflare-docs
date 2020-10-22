@@ -6,6 +6,18 @@ module.exports = {
   contentRepoFolder: "products/magic-transit",
   externalLinks: [
     {
+      title: "Magic Transit home",
+      url: "https://www.cloudflare.com/magic-transit/"
+    },
+    {
+      title: "Magic Transit: DDoS Protection for Service Providers",
+      url: "https://www.cloudflare.com/magic-transit/service-providers/"
+    },
+    {
+      title: "Blog: Magic Transit",
+      url: "https://blog.cloudflare.com/magic-transit/"
+    },
+    {
       title: "Cloudflare homepage",
       url: "https://cloudflare.com"
     }
