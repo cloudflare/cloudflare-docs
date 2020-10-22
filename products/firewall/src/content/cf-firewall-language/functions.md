@@ -46,7 +46,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
   <tbody>
     <tr>
       <td>
-         <code>any()</code>
+         <code class="InlineCode">any()</code>
       </td>
       <td>
          Array&lt;Boolean&gt;
@@ -55,16 +55,16 @@ The Cloudflare Firewall Rules language supports these transformation functions:
          Boolean
       </td>
       <td colspan="2" >
-         <p>Returns <code>true</code> if the comparison operator in the argument returns <code>true</code> for <strong><em>any</em></strong> of the values in the array. Returns <code>false</code> otherwise.
+         <p>Returns <code class="InlineCode">true</code> if the comparison operator in the argument returns <code class="InlineCode">true</code> for <strong><em>any</em></strong> of the values in the array. Returns <code class="InlineCode">false</code> otherwise.
          </p>
          <p>Example:
-         <br /><code>any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
+         <br /><code class="InlineCode">any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
          </p>
       </td>
     </tr>
     <tr>
       <td>
-         <code>all()</code>
+         <code class="InlineCode">all()</code>
       </td>
       <td>
          Array&lt;Boolean>
@@ -73,16 +73,16 @@ The Cloudflare Firewall Rules language supports these transformation functions:
          Boolean
       </td>
       <td colspan="2" >
-         <p>Returns <code>true</code> if the comparison operator in the argument returns <code>true</code> for <strong><em>all</em></strong> of the values in the array. Returns <code>false</code> otherwise.
+         <p>Returns <code class="InlineCode">true</code> if the comparison operator in the argument returns <code class="InlineCode">true</code> for <strong><em>all</em></strong> of the values in the array. Returns <code class="InlineCode">false</code> otherwise.
          </p>
          <p>Example:
-         <br /><code>all(http.request.headers['content-type'][*] == "application/json")</code>
+         <br /><code class="InlineCode">all(http.request.headers['content-type'][*] == "application/json")</code>
          </p>
       </td>
     </tr>
     <tr>
       <td>
-         <code>concat(<em>comma-separated arguments</em>)</code>
+         <code class="InlineCode">concat(<em>comma-separated arguments</em>)</code>
       </td>
       <td>
          String, Integer, bytes, elements from arrays
@@ -94,13 +94,13 @@ The Cloudflare Firewall Rules language supports these transformation functions:
          <p>Concatenates a comma-separated list of arguments into a single String.
          </p>
          <p>Example:
-         <br /><code>concat("String1"," ","String",2) == "String1 String2"</code>
+         <br /><code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
          </p>
       </td>
     </tr>
     <tr>
       <td>
-         <code>len()</code>
+         <code class="InlineCode">len()</code>
       </td>
       <td>
          String, Bytes
@@ -112,13 +112,13 @@ The Cloudflare Firewall Rules language supports these transformation functions:
          <p>Returns the byte length of a String or Bytes field.
          </p>
          <p>Example:
-         <br /><code>len(http.host)</code>
+         <br /><code class="InlineCode">len(http.host)</code>
          </p>
       </td>
     </tr>
     <tr>
       <td>
-         <code>lower()</code>
+         <code class="InlineCode">lower()</code>
       </td>
       <td>
          String
@@ -130,13 +130,13 @@ The Cloudflare Firewall Rules language supports these transformation functions:
          <p>Converts a string field to lowercase. Only uppercase ASCII bytes are converted; all other bytes are unaffected.
          </p>
          <p>Example:
-         <br /><code>lower(http.host) == "www.cloudflare.com"</code>
+         <br /><code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
          </p>
       </td>
     </tr>
     <tr>
       <td>
-         <code>upper()</code>
+         <code class="InlineCode">upper()</code>
       </td>
       <td>
          String
@@ -147,12 +147,12 @@ The Cloudflare Firewall Rules language supports these transformation functions:
       <td colspan="2" >
          <p>Converts a string field to uppercase. Only lowercase ASCII bytes are converted; all other bytes are unaffected.</p>
          <p>Example:
-         <br /><code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code></p>
+         <br /><code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code></p>
       </td>
     </tr>
     <tr>
       <td>
-          <code>url_decode()</code>
+          <code class="InlineCode">url_decode()</code>
       </td>
       <td>
           String
@@ -163,13 +163,13 @@ The Cloudflare Firewall Rules language supports these transformation functions:
       <td colspan="2" >
         <p>Decodes a URL formatted string, as in the following:
           <ul>
-              <li><code>%20</code> and <code>+</code> decode  to <code> </code> (space characters)</li>
-              <li><code>%E4%BD%A</code> decodes to  <code>你</code></li>
+              <li><code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode  to <code class="InlineCode"> </code> (space characters)</li>
+              <li><code class="InlineCode">%E4%BD%A</code> decodes to  <code class="InlineCode">你</code></li>
           </ul>
         </p>
         <p>Example:
           <br />
-          <code>any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
+          <code class="InlineCode">any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
         </p>
       </td>
     </tr>
@@ -315,26 +315,26 @@ and is composed of these parentheses-delimited expressions:
   </thead>
   <tbody>
     <tr>
-      <td><code>(.+)</code></td>
+      <td><code class="InlineCode">(.+)</code></td>
       <td>The <em>message</em> to validate</td>
-      <td><code>/download/cat.jpg</code></td>
+      <td><code class="InlineCode">/download/cat.jpg</code></td>
     </tr>
     <tr>
-      <td><code>(.*)</code></td>
+      <td><code class="InlineCode">(.*)</code></td>
       <td>The <em>separator</em> between message and timestamp, commonly a parameter name</td>
-      <td><code>&verify=</code></td>
+      <td><code class="InlineCode">&verify=</code></td>
     </tr>
     <tr>
-      <td><code>(\d{'{10}'})</code></td>
+      <td><code class="InlineCode">(\d{'{10}'})</code></td>
       <td>The 10-digit Unix <em>timestamp</em> when the MAC was issued, expressed in seconds</td>
-      <td><code>1484063137</code></td>
+      <td><code class="InlineCode">1484063137</code></td>
     </tr>
     <tr>
-      <td><code>(.{'{43,}'})</code></td>
-      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code>s</code>, you must URL encode the base64 value for <em>mac</em>.</p>
+      <td><code class="InlineCode">(.{'{43,}'})</code></td>
+      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">s</code>, you must URL encode the base64 value for <em>mac</em>.</p>
       <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em>contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p>
 </td>
-      <td><code>IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
+      <td><code class="InlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
     </tr>
   </tbody>
 </table>

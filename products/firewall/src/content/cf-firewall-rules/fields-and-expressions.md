@@ -31,9 +31,9 @@ Simple expressions are composed of 3 elements:
 
 1. A **field** that represents a property of an HTTP request.
 2. A representative **value** for that field, which Firewall Rules will compare with the actual value from the request.
-3. A **comparison operator**, which specifies how the value defined in the expression must relate to the actual value from the request for the operator to return <code><em>true</em></code>.
+3. A **comparison operator**, which specifies how the value defined in the expression must relate to the actual value from the request for the operator to return `true`.
 
-If the comparison operator returns <code>true</code>, the request matches the expression.
+If the comparison operator returns `true`, the request matches the expression.
 
 The Expression Builder screenshot below shows an expression for matching requests that do not originate in the United Kingdom.
 

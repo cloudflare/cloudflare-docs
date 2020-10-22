@@ -36,13 +36,13 @@ The rules list JSON object properties are defined as follows:
     </thead>
     <tbody style="vertical-align:top">
         <tr>
-            <td><code>id</code></td>
+            <td><code class="InlineCode">id</code></td>
             <td>Unique ID of the list.</td>
             <td>String</td>
             <td>UUID 32 characters, read-only</td>
         </tr>
         <tr>
-            <td><code>name</code></td>
+            <td><code class="InlineCode">name</code></td>
             <td>The name of the list.</td>
             <td>
                 String
@@ -50,41 +50,41 @@ The rules list JSON object properties are defined as follows:
             <td>
               <p>Required. Maximum length is 50 characters.</p>
               <p>Only alphanumeric characters and underscore (`_`) are valid.</p>
-              <p>A valid name satisfies this regular expression: <code>^[a-zA-Z0-9_]+$</code>.</p>
+              <p>A valid name satisfies this regular expression: <code class="InlineCode">^[a-zA-Z0-9_]+$</code>.</p>
             </td>
         </tr>
         <tr>
-            <td><code>description</code></td>
+            <td><code class="InlineCode">description</code></td>
             <td>Description of list.</td>
             <td>String</td>
             <td>Optional, 500-character limit</td>
         </tr>
         <tr>
-            <td><code>kind</code></td>
+            <td><code class="InlineCode">kind</code></td>
             <td>The type of data in the list.</td>
             <td>String</td>
-            <td>Required, valid values: <code>ip</code></td>
+            <td>Required, valid values: <code class="InlineCode">ip</code></td>
         </tr>
         <tr>
-            <td><code>num_items</code></td>
+            <td><code class="InlineCode">num_items</code></td>
             <td>Number of items in the list</td>
             <td>Number</td>
             <td>Read-only</td>
         </tr>
         <tr>
-            <td><code>num_referencing_filters</code></td>
+            <td><code class="InlineCode">num_referencing_filters</code></td>
             <td>The number of filters that reference this List</td>
             <td>Number</td>
             <td>Read-only</td>
         </tr>
         <tr>
-            <td><code>created_on</code></td>
+            <td><code class="InlineCode">created_on</code></td>
             <td>The RFC 3339 timestamp the list was created</td>
             <td>String</td>
             <td>Read-only</td>
         </tr>
         <tr>
-            <td><code>modified_on</code></td>
+            <td><code class="InlineCode">modified_on</code></td>
             <td>The RFC 3339 timestamp the list was last modified</td>
             <td>String</td>
             <td>Read-only</td>
@@ -121,13 +121,13 @@ The JSON object properties for a rules list item are defined as follows:
     </thead>
     <tbody style="vertical-align:top">
         <tr>
-            <td><code>id</code></td>
+            <td><code class="InlineCode">id</code></td>
             <td>Cloudflare-generated list identifier</td>
             <td>String</td>
             <td>Read-only, 32-character <a href="https://tools.ietf.org/html/rfc4122">UUIDv4</a></td>
         </tr>
         <tr>
-            <td><code>ip</code></td>
+            <td><code class="InlineCode">ip</code></td>
             <td>IP address or CIDR range</td>
             <td>String</td>
             <td>
@@ -142,19 +142,19 @@ The JSON object properties for a rules list item are defined as follows:
             </td>
         </tr>
         <tr>
-            <td><code>comment</code></td>
+            <td><code class="InlineCode">comment</code></td>
             <td>Description of list item.</td>
             <td>String</td>
             <td>Optional, 500-character limit</td>
         </tr>
         <tr>
-            <td><code>created_on</code></td>
+            <td><code class="InlineCode">created_on</code></td>
             <td>The RFC 3339 timestamp the list was created.</td>
             <td>String</td>
             <td>Read only</td>
         </tr>
         <tr>
-            <td><code>modified_on</code></td>
+            <td><code class="InlineCode">modified_on</code></td>
             <td>The RFC 3339 timestamp the item was last modified.</td>
             <td>String</td>
             <td>Read only</td>

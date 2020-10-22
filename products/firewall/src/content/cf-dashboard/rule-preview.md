@@ -56,7 +56,7 @@ The results of the test are displayed in a plot that simulates how many of the t
         <td>
           <strong>AS Number</strong>
           <p />
-          <strong><code>ip.geoip.asnum</code></strong>
+          <strong><code class="InlineCode">ip.geoip.asnum</code></strong>
         </td>
         <td>✔</td>
         <td>✔</td>
@@ -72,7 +72,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >Country
             <p />
-            <code>ip.geoip.country</code></strong
+            <code class="InlineCode">ip.geoip.country</code></strong
           >
         </td>
         <td>✔</td>
@@ -89,7 +89,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >Hostname
             <p />
-            <code>http.host</code></strong
+            <code class="InlineCode">http.host</code></strong
           >
         </td>
         <td>✔</td>
@@ -106,7 +106,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >IP Address
             <p />
-            <code>ip.src</code></strong
+            <code class="InlineCode">ip.src</code></strong
           >
         </td>
         <td>✔</td>
@@ -123,7 +123,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >Referer
             <p />
-            <code>http.referer</code></strong
+            <code class="InlineCode">http.referer</code></strong
           >
         </td>
         <td>✔</td>
@@ -140,7 +140,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >Request method
             <p />
-            <code>Http.request. method</code></strong
+            <code class="InlineCode">Http.request. method</code></strong
           >
         </td>
         <td>✔</td>
@@ -157,7 +157,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >SSL
             <p />
-            <code>ssl</code></strong
+            <code class="InlineCode">ssl</code></strong
           >
         </td>
         <td>✔</td>
@@ -174,7 +174,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >URI
             <p />
-            <code>http.request.uri</code></strong
+            <code class="InlineCode">http.request.uri</code></strong
           >
         </td>
         <td>✔</td>
@@ -191,7 +191,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >URI path
             <p />
-            <code>http.request.uri.path</code></strong
+            <code class="InlineCode">http.request.uri.path</code></strong
           >
         </td>
         <td>✔</td>
@@ -208,7 +208,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >URI query string
             <p />
-            <code>http.request.uri.query</code></strong
+            <code class="InlineCode">http.request.uri.query</code></strong
           >
         </td>
         <td>✔</td>
@@ -225,7 +225,7 @@ The results of the test are displayed in a plot that simulates how many of the t
           <strong
             >User agent
             <p />
-            <code>http.user_agent</code></strong
+            <code class="InlineCode">http.user_agent</code></strong
           >
         </td>
         <td>✔</td>
