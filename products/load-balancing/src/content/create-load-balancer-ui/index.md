@@ -3,7 +3,7 @@ title: Create via UI
 order: 20
 ---
 
-# Create a load balancer (UI)
+# Create a load balancer via the UI
 
 ## Overview
 

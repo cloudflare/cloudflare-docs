@@ -50,7 +50,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>Port number to connect to for the health check. Required for TCP checks. HTTP and HTTPS checks should only define the port when using a non-standard port (HTTP: default 80, HTTPS: default 443).</p>
                     </div>
-                    <div><small class="example-code"><code>8080</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">8080</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -65,7 +65,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The method to use for the health check. This defaults to 'GET' for HTTP/HTTPS based checks and 'connection_established' for TCP based health checks.</p>
                     </div>
-                    <div><small class="example-code"><code>"GET"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"GET"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -80,7 +80,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The timeout (in seconds) before marking the health check as failed</p>
                     </div>
-                    <div><small class="example-code"><code>3</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">3</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -95,7 +95,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The endpoint path to health check against. This parameter is only valid for HTTP and HTTPS monitors.</p>
                     </div>
-                    <div><small class="example-code"><code>"/health"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"/health"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -110,7 +110,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The interval between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
                     </div>
-                    <div><small class="example-code"><code>90</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">90</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -125,7 +125,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The number of retries to attempt in case of a timeout before marking the origin as unhealthy. Retries are attempted immediately.</p>
                     </div>
-                    <div><small class="example-code"><code>0</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">0</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -140,7 +140,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>Follow redirects if returned by the origin. This parameter is only valid for HTTP and HTTPS monitors.</p>
                     </div>
-                    <div><small class="example-code"><code>true</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">true</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -174,7 +174,7 @@ Monitors support a great deal of customization and have the following properties
   </Aside>
                     </div>
                 </td>
-                <td><div><small class="example-code"><code>"alive"</code></small></div></td>
+                <td><div><small class="example-code"><code class="InlineCode">"alive"</code></small></div></td>
               </tr>
               <tr>
               <td class="param-name"><strong>header</strong>
@@ -185,7 +185,7 @@ Monitors support a great deal of customization and have the following properties
                 </div>
                 </td>
                 <td>
-                <div><small class="example-code"><code>{`{
+                <div><small class="example-code"><code class="InlineCode">{`{
                 "Host": [
                   "example.com"
                 ],
@@ -202,7 +202,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTP and HTTPS monitors.</p>
                     </div>
-                    <div><small class="example-code"><code>true</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">true</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -218,7 +218,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>Last modification time</p>
                     </div>
-                    <div><small class="example-code"><code>"2014-01-01T05:20:00.12345Z"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -233,7 +233,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>Creation time</p>
                     </div>
-                    <div><small class="example-code"><code>"2014-01-01T05:20:00.12345Z"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -248,7 +248,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The protocol to use for the health check. Currently supported protocols are 'HTTP','HTTPS' and 'TCP'.</p>
                     </div>
-                    <div><small class="example-code"><code>"https"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"https"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -263,7 +263,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>API item identifier tag</p>
                     </div>
-                    <div><small class="example-code"><code>"f1aba936b94213e5b8dca0c0dbf1f9cc"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"f1aba936b94213e5b8dca0c0dbf1f9cc"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -282,7 +282,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>Object description</p>
                     </div>
-                    <div><small class="example-code"><code>"Login page monitor"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"Login page monitor"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled"></ul>
@@ -295,7 +295,7 @@ Monitors support a great deal of customization and have the following properties
                     <div>
                         <p>The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS monitors.</p>
                     </div>
-                    <div><small class="example-code"><code>"2xx"</code></small></div>
+                    <div><small class="example-code"><code class="InlineCode">"2xx"</code></small></div>
                 </td>
                 <td class="param-constraints">
                     <ul class="constraints unstyled">
@@ -333,28 +333,28 @@ The Cloudflare API supports the following commands for monitors. (Examples are g
   <tbody>
   <tr>
    <td>Create Monitor</td>
-   <td><code>POST</code></td>
-   <td><code>user/load_balancers/monitors</code></td>
+   <td><code class="InlineCode">POST</code></td>
+   <td><code class="InlineCode">user/load_balancers/monitors</code></td>
   </tr>
   <tr>
    <td>Delete Monitor</td>
-   <td><code>DELETE</code></td>
-   <td><code>user/load_balancers/monitors</code></td>
+   <td><code class="InlineCode">DELETE</code></td>
+   <td><code class="InlineCode">user/load_balancers/monitors</code></td>
   </tr>
   <tr>
    <td>List Monitors</td>
-   <td><code>GET</code></td>
-   <td><code>user/load_balancers/monitors</code></td>
+   <td><code class="InlineCode">GET</code></td>
+   <td><code class="InlineCode">user/load_balancers/monitors</code></td>
   </tr>
   <tr>
    <td>Monitor Details</td>
-   <td><code>GET</code></td>
-   <td><code>user/load_balancers/monitors/:identifier</code></td>
+   <td><code class="InlineCode">GET</code></td>
+   <td><code class="InlineCode">user/load_balancers/monitors/:identifier</code></td>
   </tr>
   <tr>
    <td>Update Monitor</td>
-   <td><code>PUT</code></td>
-   <td><code>user/load_balancers/monitors</code></td>
+   <td><code class="InlineCode">PUT</code></td>
+   <td><code class="InlineCode">user/load_balancers/monitors</code></td>
   </tr>
   </tbody>
 </table>

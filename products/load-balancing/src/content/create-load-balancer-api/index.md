@@ -1,9 +1,9 @@
 ---
-title: Create via the API
+title: Create via API
 order: 30
 ---
 
-# Create a load balancer (API)
+# Create a load balancer via the API
 
 ## Overview
 
@@ -338,9 +338,9 @@ The following load balancer properties are important for this step. (See _[Load 
 
 | Property | Description | Constraints |
 | -------- | ----------- | ----------- |
-| `name`<br/><Type>string</Type> | The public DNS hostname of your Cloudflare load balancer.<br/><br/>If you have an existing DNS record with the same name as your load balancer, the load balancer will have precedence. The pre-existing DNS record is not used unless you delete the Cloudflare Load Balancer.<br/><br/>`"www.example.com"` | |
-| `default_pools`<br/><Type>array</Type> | A list of pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool, and so on down the list.<br/><br/>Pools defined here are used by default, or when region_pools are not configured for a given region.<br/><br/>`["17b5962d775c646f3f9725cbc7a53df4",  "9290f38c5d07c2e2f4df57b1f61d4196", "00920f38ce07c2e2f4df50b1f61d4194"]` | |
-| `fallback_pool`<br/><Type>string</Type> | The pool ID for the “pool of last resort,” the pool the load balancer should direct traffic to if all other pools are unhealthy. In most configurations, this is the secondary/passive pool.<br/><br/>`"17b5962d775c646f3f9725cbc7a53df4"` | <PropMeta>max-length: 32</PropMeta><br/><br/><PropMeta>read-only</PropMeta> |
+| <strong>`name`</strong><br/><Type>string</Type> | The public DNS hostname of your Cloudflare load balancer.<br/><br/>If you have an existing DNS record with the same name as your load balancer, the load balancer will have precedence. The pre-existing DNS record is not used unless you delete the Cloudflare Load Balancer.<br/><br/>`"www.example.com"` | |
+| <strong>`default_pools`</strong><br/><Type>array</Type> | A list of pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool, and so on down the list.<br/><br/>Pools defined here are used by default, or when region_pools are not configured for a given region.<br/><br/>`["17b5962d775c646f3f9725cbc7a53df4",  "9290f38c5d07c2e2f4df57b1f61d4196", "00920f38ce07c2e2f4df50b1f61d4194"]` | |
+| <strong>`fallback_pool`</strong><br/><Type>string</Type> | The pool ID for the “pool of last resort,” the pool the load balancer should direct traffic to if all other pools are unhealthy. In most configurations, this is the secondary/passive pool.<br/><br/>`"17b5962d775c646f3f9725cbc7a53df4"` | <span style="white-space: nowrap"><PropMeta>max-length: 32</PropMeta></span><br/><PropMeta>read-only</PropMeta> |
 
 </TableWrap>
 
@@ -348,7 +348,7 @@ The following load balancer properties are important for this step. (See _[Load 
 
 Notice that the Create Load Balancer command requires a `zone_id`:
 
-```
+```txt
 POST /zones/:zone_id/load_balancers
 ```
 
