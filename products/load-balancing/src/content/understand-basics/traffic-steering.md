@@ -1,9 +1,10 @@
 ---
-title: Traffic steering
-weight: 12
+order: 12
 ---
 
-### Overview
+# Traffic steering
+
+## Overview
 
 Load Balancing provides several traffic steering modes, which allow customers to optimize how load balancers route traffic. You can configure Traffic Steering from the Load Balancing dashboard, in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel. You can also configure Traffic Steering via the Cloudflare API. Available steering options include standard failover (steering disabled), Dynamic Steering, and Geo Steering.
 
@@ -11,7 +12,7 @@ Load Balancing provides several traffic steering modes, which allow customers to
 
 ---
 
-### Standard failover
+## Standard failover
 
 Standard failover directs traffic from unhealthy pools to the next healthy pool in the configuration.
 
@@ -19,13 +20,13 @@ Standard failover uses the pool order to determine failover priority (the failov
 
 If all pools are marked unhealthy, Load Balancing will direct traffic to the fallback pool. The default fallback pool is the last pool listed in the Load Balancing configuration.
 
-To nominate a specific fallback pool via the Cloudflare API, use the Update Load Balancers command and set the `fallback_pool` parameter. See _[Load Balancers](/load-balancing/understand-basics/load-balancers/)_ for details.
+To nominate a specific fallback pool via the Cloudflare API, use the Update Load Balancers command and set the `fallback_pool` parameter. See _[Load Balancers](/understand-basics/load-balancers/)_ for details.
 
 If no monitors are attached to the load balancer, it will direct traffic to the primary pool exclusively.
 
 ---
 
-### Dynamic Steering
+## Dynamic Steering
 
 Dynamic Steering uses health check data to identify the fastest pool for a given Cloudflare Region or point of presence.
 
@@ -41,7 +42,7 @@ The diagram below shows how Cloudflare would route traffic to the pool with the 
 
 ---
 
-### Geo Steering
+## Geo Steering
 
 Geo Steering directs traffic to pools based on the client’s region or PoP. Only domains on Enterprise plans can perform Geo Steering by PoP. Users specify the pools to which the load balancer should direct traffic for a given geographical region or PoP. You can assign multiple pools to the same region, and the load balancer will use them in failover order. If there is no configuration for a region or pool, the load balancer will use the default failover order.
 

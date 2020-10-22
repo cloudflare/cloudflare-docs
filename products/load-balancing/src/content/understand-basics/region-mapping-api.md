@@ -1,9 +1,11 @@
 ---
-title: Region Mapping API
-weight: 19
+order: 19
 ---
 
+# Region Mapping API
+
 ## Overview
+
 Cloudflare’s Region Mapping API has several uses:
 - Identify which countries/areas (states/provinces in the case of the U.S. and Canada) are part of a specific Cloudflare Load Balancer region.
 - Identify the Cloudflare Load Balancer region for a particular country/area (states/provinces in the case of the U.S. and Canada).
@@ -18,9 +20,9 @@ For additional details and examples on using the Region Mapping API, see [Cloudf
 
 ## List of Load Balancer Regions
 
-|Region Code | Region Name|
+|Region Code|Region Name|
 |---|---|
-|EEU | Eastern Europe|
+|EEU|Eastern Europe|
 |ENAM|Eastern North America|
 |ME|Middle East|
 |NAF|Northern Africa|
@@ -33,4 +35,3 @@ For additional details and examples on using the Region Mapping API, see [Cloudf
 |SSAM|Southern South America|
 |WEU|Western Europe|
 |WNAM|Western North America|
-
