@@ -27,11 +27,9 @@ It’s also helpful to understand how [Gatsby handles Markdown](https://www.gats
 
 ## Step 1: Verify migration status
 
-The first thing you’ll want to do is make sure you know the current migration status of your product. The source of truth for this is the [migration table](https://github.com/cloudflare/cloudflare-docs#migration-progress).
+The first thing you’ll want to do is make sure you know the current migration status of your product. The source of truth for this is the [__Products__ table](https://github.com/cloudflare/cloudflare-docs#products).
 
-Most likely your project will be listed in the left-column of the table, but the `Content` column and `Prod` columns will be blank. This is good. It means your ready is ready to begin migration.
-
-You can view its corresponding `Test` column link to see what your project looks like now.
+If you don’t see your project listed in this table, then you’ll want to copy one of the directories inside `products/` and use it as the basis for your migration.
 
 ## Step 2: Set up local development
 

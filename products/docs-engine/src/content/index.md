@@ -31,16 +31,8 @@ It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/c
 | [Stream](https://developers.cloudflare.com/stream)                    | [@cloudflare/cloudflare-docs/.../stream](https://github.com/cloudflare/cloudflare-docs/tree/master/products/stream)           |
 | [Terraform](https://developers.cloudflare.com/terraform)              | [@cloudflare/cloudflare-docs/.../terraform](https://github.com/cloudflare/cloudflare-docs/tree/master/products/terraform)     |
 | [Workers](https://developers.cloudflare.com/workers)                  | [@cloudflare/cloudflare-docs/.../workers](https://github.com/cloudflare/cloudflare-docs/tree/master/products/workers)         |
-| More to come...                                                                                                                                                                                       |
+| [View the full list...](https://github.com/cloudflare/cloudflare-docs#products)...                                                                                                                    |
 
 </TableWrap>
-
---------------------------------
-
-## Migration
-
-Some of Cloudflare’s docs still use an older design. These are currently being migrated to take advantage of the new Docs Engine.
-
-<p><a href="https://github.com/cloudflare/cloudflare-docs#migration-progress" class="Button Button-is-docs-secondary">View migration progress</a></p>
 
 </ContentColumn>
