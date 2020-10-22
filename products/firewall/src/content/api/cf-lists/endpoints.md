@@ -13,7 +13,7 @@ For authentication instructions, see [_Getting Started: Requests_](https://api.c
 
 For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 The Rules Lists endpoints require a value for _{account_id}_.
 
@@ -26,42 +26,42 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
 ## Manage lists
 
 <TableWrap>
-  <table style="width: 100%;">
+  <table style="table-layout:fixed; width:100%;">
     <thead>
         <tr>
-            <th>Operation</th>
-            <th>Method & Endpoint</th>
-            <th>Notes</th>
+            <th style='width:25%'>Operation</th>
+            <th style='width:50%'>Method & Endpoint</th>
+            <th style='width:25%'>Notes</th>
         </tr>
     </thead>
     <tbody>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-create-list'>Create List</a></td>
-            <td><code class="InlineCode">POST accounts/{'{account_id}'}/rules/lists</code></td>
-            <td>Creates an empty list.</td>
+          <td><code class="InlineCode">POST accounts/{'{account_id}'}/rules/lists</code></td>
+          <td style='width:25%; word-wrap:break-word; white-space:normal'>Creates an empty list.</td>
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-list-lists'>List Lists</a></td>
-            <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists</code></td>
-            <td>Fetch all lists for the account. (This request does not fetch the items in the lists.)</td>
+          <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists</code></td>
+          <td style='width:25%; word-wrap:break-word; white-space:normal'>Fetch all lists for the account. (This request does not fetch the items in the lists.)</td>
         </tr>
         <tr>
-	        <td><a href='https://api.cloudflare.com/#rules-lists-get-list'>Get List</a></td>
-            <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
-            <td>Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the items in the list.)</td>
+          <td><a href='https://api.cloudflare.com/#rules-lists-get-list'>Get List</a></td>
+          <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
+          <td style='width:25%; word-wrap:break-word; white-space:normal'>Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the items in the list.)</td>
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-update-list'>Update List</a></td>
-            <td><code class="InlineCode">PUT accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
-            <td>
-                <p>Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.</p>
-                <p>To update an item in a list, use the <a href='https://api.cloudflare.com/#rules-lists-replace-list-items'>Replace List Items</a> operation.</p>
-            </td>
+          <td><code class="InlineCode">PUT accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
+          <td style='width:25%; word-wrap:break-word; white-space:normal'>
+              <p>Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.</p>
+              <p>To update an item in a list, use the <a href='https://api.cloudflare.com/#rules-lists-replace-list-items'>Replace List Items</a> operation.</p>
+          </td>
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-delete-list'>Delete List</a></td>
-            <td><code class="InlineCode">DELETE accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
-            <td>Deletes the list, but only when no filters reference it. </td>
+          <td><code class="InlineCode">DELETE accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
+          <td style='width:25%; word-wrap:break-word; white-space:normal'>Deletes the list, but only when no filters reference it. </td>
         </tr>
     </tbody>
   </table>
@@ -76,7 +76,7 @@ Asynchronous Rules Lists operations return an `operation_id`, which you can use 
 When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an HTTP 201 status code.
 
 <TableWrap>
-  <table style="width: 100%;">
+  <table style="table-layout:fixed; width:100%;">
     <thead>
         <tr>
             <th>Operation</th>

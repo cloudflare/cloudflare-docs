@@ -1,5 +1,6 @@
 ---
 order: 610
+type: table
 ---
 
 # Operators
@@ -7,14 +8,13 @@ order: 610
 The Cloudflare Firewall Rules language supports comparison and logical operators:
 
 - [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
-- The `in` operator checks whether an IP address is in a named list of IPs.
 - [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an evaluation is evaluated.
 
 ## Comparison operators
 
 The Firewall Rules language supports the following comparison operators. Since some operators only support specific data types, the list is organized by data type.
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
 
@@ -22,97 +22,96 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
 
 The Cloudflare Firewall Rules language supports these comparison operators:
 
-<TableWrap>
-<table style="width: 100%;">
+<table style='table-layout:fixed; width:100%; white-space:normal'>
   <thead>
    <tr>
       <td></td>
-      <td colspan="2" style="text-align:center"><strong>Operator Notation</strong></td>
-      <td colspan="3" ><strong>Supported Data Types</strong></td>
-      <td></td>
+      <th colspan="2" style="text-align:center">Operator Notation</th>
+      <th colspan="3" style="text-align:center">Supported Data Types</th>
+      <th></th>
    </tr>
    <tr>
-      <td></td>
-      <td><strong>English</strong></td>
-      <td><strong>C-like</strong></td>
-      <td><strong>String</strong></td>
-      <td><strong>IP </strong></td>
-      <td><strong>Number</strong></td>
-      <td><strong>Example (operator in bold)</strong></td>
+      <td style='width:25%'></td>
+      <th style='width:20%'>English</th>
+      <th>C-like</th>
+      <th>String</th>
+      <th>IP</th>
+      <th>Number</th>
+      <th style="width:50%">Example (operator in bold)</th>
    </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Equal</strong></td>
+      <td>Equal</td>
       <td><code class="InlineCode">eq</code></td>
       <td><code class="InlineCode">==</code></td>
-      <td>&#10004;</td>
-      <td>&#10004;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
+      <td>&#x2705;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">http.request.uri.path <strong>eq</strong> "/articles/2008/"</code>
       </td>
      </tr>
     <tr>
-      <td><strong>Not equal</strong></td>
+      <td>Not equal</td>
       <td><code class="InlineCode">ne</code></td>
       <td><code class="InlineCode">!=</code></td>
-      <td>&#10004;</td>
-      <td>&#10004;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
+      <td>&#x2705;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">ip.src <strong>ne</strong> 93.184.216.0</code>
       </td>
     </tr>
     <tr>
-      <td><strong>Less than</strong></td>
+      <td>Less than</td>
       <td><code class="InlineCode">lt</code></td>
       <td><code class="InlineCode">&lt;</code></td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">cf.threat_score <strong>lt</strong> 10</code>
       </td>
    </tr>
    <tr>
-      <td><strong>Less than or equal</strong></td>
+      <td>Less than or equal</td>
       <td><code class="InlineCode">le</code></td>
       <td><code class="InlineCode">&lt;=</code></td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">cf.threat_score <strong>le</strong> 20</code>
       </td>
     </tr>
     <tr>
-      <td><strong>Greater than</strong></td>
+      <td>Greater than</td>
       <td><code class="InlineCode">gt</code></td>
       <td><code class="InlineCode">></code></td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">cf.threat_score <strong>gt</strong> 25</code>
       </td>
     </tr>
     <tr>
-      <td><strong>Greater than or equal</strong></td>
+      <td>Greater than or equal</td>
       <td><code class="InlineCode">ge</code></td>
       <td><code class="InlineCode">&gt;=</code></td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>&#10060;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">cf.threat_score <strong>ge</strong> 60</code>
       </td>
     </tr>
     <tr>
-      <td><strong>Exactly contains</strong></td>
+      <td>Exactly contains</td>
       <td><code class="InlineCode">contains</code></td>
       <td></td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
@@ -120,10 +119,10 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td><strong>Matches Google re2 regular expression</strong></td>
+      <td>Matches RE2 regex</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
@@ -131,46 +130,44 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td><strong>Value is in set of values</strong></td>
+      <td>Value is in set of values</td>
       <td><code class="InlineCode">in</code></td>
       <td></td>
-      <td>&#10004;</td>
-      <td>&#10004;</td>
-      <td>&#10004;</td>
+      <td>&#x2705;</td>
+      <td>&#x2705;</td>
+      <td>&#x2705;</td>
       <td>
          <code class="InlineCode">ip.src <strong>in</strong> {'{ 93.184.216.0 93.184.216.1 }'}</code>
       </td>
     </tr>
   </tbody>
 </table>
-</TableWrap>
 
 ## Logical operators
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
 
-```perl
+```sh
 <expression> <logical operator> <expression>
 ```
 
 ### Supported logical operators
 
-Each logical operator is associate with an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence.
+Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence.
 
-<TableWrap>
-<table style="width: 100%;">
-  <thead>
+<table>
+  <thead style='table-layout:fixed; width:100%; white-space:normal'>
    <tr>
       <td></td>
-      <td><strong>English Notation</strong></td>
-      <td><strong>C-like Notation</strong></td>
-      <td><strong>Example</strong></td>
-      <td><strong>Order of Precedence</strong></td>
+      <th>English<br />Notation</th>
+      <th>C-like<br />Notation</th>
+      <th>Example</th>
+      <th>Order of Precedence</th>
    </tr>
   </thead>
   <tbody>
    <tr>
-      <td><strong>Logical NOT</strong></td>
+      <td>Logical NOT</td>
       <td><code class="InlineCode">not</code></td>
       <td><code class="InlineCode">!</code></td>
       <td>
@@ -179,7 +176,7 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
       <td>1</td>
    </tr>
    <tr>
-      <td><strong>Logical AND</strong></td>
+      <td>Logical AND</td>
       <td><code class="InlineCode">and</code></td>
       <td><code class="InlineCode">&amp;&amp;</code></td>
       <td>
@@ -188,7 +185,7 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
       <td>2</td>
    </tr>
    <tr>
-      <td><strong>Logical XOR (exclusive OR)</strong></td>
+      <td>Logical XOR (exclusive OR)</td>
       <td><code class="InlineCode">xor</code></td>
       <td><code class="InlineCode">^^</code></td>
       <td>
@@ -197,7 +194,7 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
       <td>3</td>
    </tr>
    <tr>
-      <td><strong>Logical OR</strong></td>
+      <td>Logical OR</td>
       <td><code class="InlineCode">or</code></td>
       <td><code class="InlineCode">||</code></td>
       <td>
@@ -207,11 +204,10 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
    </tr>
   </tbody>
 </table>
-</TableWrap>
 
 ### Order of precedence
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
 
@@ -234,9 +230,9 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 ## Grouping symbols
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
-Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/cf-dashboard/create-edit-delete-rules/) does not.
+Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](cf-dashboard/create-edit-delete-rules/) does not.
 
 </Aside>
 
@@ -250,7 +246,7 @@ Use parentheses to explicitly group expressions that should be evaluated togethe
 (Expression1 and Expression2) or Expression3
 ```
 
-Because grouping symbols are so explicit, you are less likely to make errors if you use them when writing compound expressions.
+Because grouping symbols are so explicit, you are less likely to make errors when you use them to write compound expressions.
 
 ### Enforce precedence
 

@@ -14,7 +14,7 @@ For example, a filter matching:
 
 may be associated with a firewall rule declaring that the request should be blocked.
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 Currently, Cloudflare Filters in an API-only feature and lacks a graphical user interface.
 

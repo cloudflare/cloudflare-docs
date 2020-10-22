@@ -11,7 +11,7 @@ Before getting started with the Firewall Rules API, make sure you're familiar wi
 - [Actions](/cf-firewall-rules/actions/)
 - [Expressions](/cf-firewall-rules/fields-and-expressions/)
 - [Firewall Rules language](/cf-firewall-language/)
-- [Cloudflare Filters](/api/cf-filters/)
+- [Cloudflare Filters](/firewall/api/cf-filters/)
 
 You can use lists within Firewall Rules to allow, block, or challenge a request, based on its IP address. Refer to the [Rules List API](/api/cf-lists/) for more information.
 

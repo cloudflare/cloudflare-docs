@@ -27,7 +27,7 @@ A fully populated firewall rule JSON object has the following structure:
 }
 ```
 
-The table below summarizes the JSON object properties. See also, [Avoiding priority conflicts](#avoiding-priority-conflicts).
+The table below summarizes the JSON object properties. See also, [_Avoiding priority conflicts_](#avoiding-priority-conflicts).
 
 <TableWrap>
   <table style="width: 100%;">
@@ -56,7 +56,7 @@ The table below summarizes the JSON object properties. See also, [Avoiding prior
         <td>
           <em
             >See
-            <a href="/firewall/api/cf-filters/"
+            <a href="/api/cf-filters/"
               >the Cloudflare Filters guide</a
             ></em
           >

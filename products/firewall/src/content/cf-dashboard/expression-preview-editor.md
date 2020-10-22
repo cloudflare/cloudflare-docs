@@ -10,7 +10,7 @@ The **Expression Editor** editor is a text-only interface for creating Firewall 
 
 For example, only the Expression Editor editor supports grouping symbols. Cloudflare designed the Firewall Rules Language with [Wireshark Display Filters®](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html) in mind, so although there are some subtle differences, Wireshark users should feel right at home with Firewall Rules and be able to easily port their existing rules to Cloudflare.
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 Firewall Rules expressions have a 4KB limit. This is approximately 4,000 text characters. This limit applies whether you use the visual **Expression Builder** or edit your expression manually in the **Expression Editor** text box.
 
@@ -52,4 +52,4 @@ Cloudflare validates all expressions before saving them, so if your expression i
 
 ![](../images/firewall-rules-expressions-editor-6.png)
 
-The Expression Editor editor supports the entire Firewall Rules Language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see _[Firewall Rules language](/cf-firewall-language/)_.
+The Expression Editor editor supports the entire Firewall Rules Language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see [_Firewall Rules language_](https://developers.cloudflare.com/firewall/cf-firewall-language/).

@@ -11,26 +11,26 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
   <table style="width: 100%;">
     <thead>
         <tr>
-            <th style="width:30%;">
-                Method + URL
+            <th style='width:25%'>
+                Operation
             </th>
-            <th>
-                Description
+            <th style="width:50%;">
+                Method + Endpoint
             </th>
-            <th style="width:40%;">
+            <th style="width:25%;">
                 Notes
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>GET https://api.cloudflare.com/client/v4/filters/validate-expr</td>
-            <td>Validate via a query string (<em>?expression=</em>) </td>
+            <td style='width:25%; word-wrap:break-word; white-space:normal'>Validate expression via query string (<em>?expression=</em>) </td>
+            <td><code>GET /filters/validate-expr</code></td>
             <td>Allows testing and validating expressions without changing anything</td>
         </tr>
         <tr>
-            <td>POST https://api.cloudflare.com/client/v4/filters/validate-expr</td>
-            <td>Validate via a JSON object</td>
+            <td style='width:25%; word-wrap:break-word; white-space:normal'>Validate expression via a JSON object</td>
+            <td><code>POST /filters/validate-expr</code></td>
             <td>Allows testing and validating expressions without changing anything</td>
         </tr>
     </tbody>
