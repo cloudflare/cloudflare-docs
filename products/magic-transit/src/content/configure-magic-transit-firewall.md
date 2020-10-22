@@ -16,7 +16,7 @@ Cloudflare recommends these 11 firewall rules, which reflect known amplification
 
 <TableWrap>
 
-<table>
+<table style="width: 100%">
   <thead>
     <tr>
       <th>Rule ID</th>
@@ -117,7 +117,9 @@ To preserve flexibility, Cloudflare recommends that you restrict custom firewall
 
 The policy defined in the _Example Custom Firewall Rules_ table allows TCP, GRE, ICMP, IPSEC (ESP and AH), and PIM protocol packets. Packets that use any other protocols are dropped.
 
-<table>
+<TableWrap>
+
+<table style="width: 100%">
   <thead>
     <tr>
       <th>Rule ID</th>
@@ -163,6 +165,8 @@ The policy defined in the _Example Custom Firewall Rules_ table allows TCP, GRE,
     </tr>
   </tbody>
 </table>
+
+</TableWrap>
 
 ### Firewall rule guidelines
 
