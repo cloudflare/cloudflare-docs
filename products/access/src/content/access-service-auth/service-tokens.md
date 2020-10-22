@@ -11,7 +11,7 @@ This section covers how to create, renew, and revoke a service token.
 
 ## Create a Service Token
 
-1. In the [Teams dashboard](https://https://dash.teams.cloudflare.com/), navigate to **Access > Service Auth**.
+1. In the [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **Access > Service Auth**.
 
 2. Click **Create Service Token**.
 
