@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Tunnels and encapsulation
+# Tunnels & encapsulation
 
 Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) tunnels to transmit packets from Cloudflare’s edge to your origin network. Cloudflare sets up GRE tunnel endpoints on edge servers (inside your network namespace), and you [set up tunnel endpoints](/set-up/provide-configuration-data/specify-gre-tunnel-endpoints) on routers at your data center.
 

@@ -7,18 +7,17 @@ order: 3
 
 Cloudflare’s Magic Transit firewall ruleset includes two components:
 
-* Recommended rules that reflect common amplification attack vectors
-* Custom rules requested by you
+- Recommended rules that reflect common amplification attack vectors
+- Custom rules requested by you
 
 ## Recommended firewall rules
 
 Cloudflare recommends these 11 firewall rules, which reflect known amplification attack vectors. They operate in addition to the distributed denial-of-service (DDoS) protection that Magic Transit provides.
 
+<TableWrap>
+
 <table>
   <thead>
-    <tr>
-      <td colspan="5" ><strong>Recommended Firewall Rules</strong></td>
-    </tr>
     <tr>
       <th>Rule ID</th>
       <th>Source Port</th>
@@ -108,6 +107,8 @@ Cloudflare recommends these 11 firewall rules, which reflect known amplification
   </tbody>
 </table>
 
+</TableWrap>
+
 ## Custom firewall rules
 
 To preserve flexibility, Cloudflare recommends that you restrict custom firewall rules to protocol filters that use the _Allow_ or _Deny_ action.
@@ -119,12 +120,9 @@ The policy defined in the _Example Custom Firewall Rules_ table allows TCP, GRE,
 <table>
   <thead>
     <tr>
-      <td colspan="3" ><strong>Example custom firewall rules</strong></td>
-    </tr>
-    <tr>
-      <td><strong>Rule ID</strong></td>
-      <td><strong>Protocol</strong></td>
-      <td><strong>Action</strong></td>
+      <th>Rule ID</th>
+      <th>Protocol</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -170,25 +168,25 @@ The policy defined in the _Example Custom Firewall Rules_ table allows TCP, GRE,
 
 When specifying Magic Transit firewall rules, consider these guidelines:
 
-* Cloudflare executes firewall rules in order of first match, so lists of rules are order sensitive.
+- Cloudflare executes firewall rules in order of first match, so lists of rules are order sensitive.
 
-* You can specify any of these protocols:
+- You can specify any of these protocols:
 _ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, hopopt, icmp, idpr-cmtp, idrp, igmp, igp, ip, ipcomp, ipencap, ipip, ipv6, ipv6-frag, ipv6-icmp, ipv6-nonxt, ipv6-opts, ipv6-route, isis, iso-tp4, l2tp, manet, mobility-header, mpls-in-ip, ospf, pim, pup, rdp, rohc, rspf, rsvp, sctp, shim6, skip, st, tcp, udp, udplite, vmtp, vrrp, wesp, xns-idp, xtp_
 
-* To use any of the following parameters in a firewall rule, contact your account team:
-  * Source IP/prefix
-  * Destination IP/prefix
-  * Source port
-  * Destination port
-  * Protocol
-  * Packet length
-  * Bit field match (Cloudflare is able to match on any part of an IP packet to apply, allow, or drop rules)
+- To use any of the following parameters in a firewall rule, contact your account team:
+  - Source IP/prefix
+  - Destination IP/prefix
+  - Source port
+  - Destination port
+  - Protocol
+  - Packet length
+  - Bit field match (Cloudflare is able to match on any part of an IP packet to apply, allow, or drop rules)
 
 <Aside>
 
 When you or your end users are using other Cloudflare services (eg. CDN, Spectrum) that proxy traffic, be aware of the following:
 
-* Firewall rules that block traffic based on source IP address may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
-* You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
+- Firewall rules that block traffic based on source IP address may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
+- You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
 
 </Aside>
