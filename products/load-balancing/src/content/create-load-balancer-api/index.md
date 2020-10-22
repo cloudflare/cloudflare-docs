@@ -493,7 +493,7 @@ Notice that the response includes data not only for example.com but also for eac
 
 Use the List Zones command to retrieve the zone for the DNS hostname you want to use to create a load balancer. Review the response and record the zone’s ID`.`
 
-## Create your load balancer
+### Create your load balancer
 
 Use the Create Load Balancer command to create your new load balancer, as in the example below. Remember to set `zone_id` to the value you found in the previous section.
 
