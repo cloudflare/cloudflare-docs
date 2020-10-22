@@ -8,8 +8,6 @@ Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.
 
 This diagram illustrates the flow of traffic with Magic Transit:
 
-<br />
-
 ![GRE tunnel flow](../static/mt-gre-tunnel-flow.png)
 
 <Aside>
@@ -23,8 +21,6 @@ Egress packets are routed by your ISP interface, not Cloudflare.
 Magic Transit encapsulates IP packets destined for your network and transmits them across the GRE tunnels to your tunnel endpoint router, which decapsulates the packets and sends them to your internal network.
 
 This diagram illustrates how Magic Transit encapsulates packets at the Cloudflare edge and transmits them to a customer's tunnel endpoint router (Acme in this example):
-
-<br />
 
 ![Encapsulation diagram](../static/magic-transit-anycast-1.png)
 
@@ -45,7 +41,5 @@ Magic Transit uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/an
 This works because the GRE protocol is stateless—each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. While the tunnel endpoint is technically bound to an _IP address_, it need not be bound to a specific _device_. Any device that can strip off the outer headers and then route the inner packet can handle any GRE packet sent over the tunnel.
 
 The result is that Cloudflare's Anycast GRE architecture provides a conduit to your GRE tunnel for every server in every data center on Cloudflare's global edge network, as illustrated in this diagram:
-
-<br />
 
 ![Cloudflare Anycast GRE](../static/magic-transit-anycast-2.png)
