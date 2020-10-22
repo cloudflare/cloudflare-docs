@@ -10,7 +10,7 @@ type: overview
 
 Welcome to Spectrum: security and acceleration for any TCP or UDP based application. That means you can route MQTT, email, file transfer, version control, games, anything over TCP or UDP through Cloudflare to mask the origin and protect it from DDoS. Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic.  Look at [our pricing details](https://support.cloudflare.com/hc/articles/360041721872) for an in-depth breakdown.
 
-We have a short demo you can watch below, and if you're eager to get started, [check out our guide](https://developers.cloudflare.com/spectrum/getting-started/getting-started/).
+We have a short demo you can watch below, and if you're eager to get started, [check out our guide](/getting-started).
 
 <p><Link to="/getting-started" className="Button Button-is-docs-primary">Get started</Link></p>
 
