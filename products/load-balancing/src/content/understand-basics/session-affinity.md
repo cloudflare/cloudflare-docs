@@ -1,9 +1,10 @@
 ---
-title: Session affinity
-weight: 16
+order: 16
 ---
 
-### Overview
+# Session affinity
+
+## Overview
 
 Loading a website usually requires fetching multiple assets from a web server. Cloudflare Session Affinity minimizes redundant network requests by automatically directing requests from the same client to the same origin web server. Cloudflare sets a cookie on the initial response to the client. Using the cookie in subsequent client requests ensures those requests are sent to the same origin, unless the origin is unavailable.
 
@@ -17,24 +18,24 @@ All sessions default to 23 hours unless a custom session TTL is specified (in se
 
 ---
 
-### Enabling Session Affinity from the Load Balancing dashboard
+## Enabling Session Affinity from the Load Balancing dashboard
 
 To enable Session Affinity, use the **Session Affinity** panel in the Load Balancing dashboard.
 Session Affinity with **Client IP fallback** is not officially supported for grey-clouded Load Balancers.
 
-#### Configuring Session Affinity for a new load balancer
+### Configuring Session Affinity for a new load balancer
 
 You can enable the **Session Affinity** option during the first stage of the **Create a Load Balancer** wizard, as shown below. Select the **By Cloudflare cookie only** radio button and set the toggle switch to the _On_ position to enable session affinity. The **Client IP fallback** option behaves the same as the cookie option except client IP address is used as a fallback if no Session Affinity Cookie is provided.
 
 ![](../static/images/session-affinity-1.png)
 
-#### Configuring Session Affinity for an existing load balancer
+### Configuring Session Affinity for an existing load balancer
 
 You can configure session affinity for an existing load balancer from the Load Balancing dashboard. Click the **Edit** button associated with the load balancer to open the **Edit Load Balancer** view and access the **Session Affinity** option.
 
 ![](../static/images/session-affinity-2.png)
 
-#### Origin Drain
+### Origin Drain
 
 Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. Enable Origin Drain by entering a value in the **Origin drain duration TTL** field, after enabling Session Affinity. **Origin drain duration TTL** is the time (in seconds) it takes to drain all active connections. Traffic drains from any disabled origin or from all origins within a disabled pool.
 
@@ -50,23 +51,25 @@ When a drain is **Complete**, there are no longer any connections to that origin
 
 ---
 
-### Enabling Session Affinity via the Cloudflare API
+## Enabling Session Affinity via the Cloudflare API
 
-Session affinity is a property of load balancers. Use the following endpoint to configure Session Affinity (see _[Create a load balancer with the API](/load-balancing/create-load-balancer-api/)_):
+Session affinity is a property of load balancers. Use the following endpoint to configure Session Affinity (see _[Create a load balancer with the API](/create-load-balancer-api/)_):
 
-    zones/:identifier/load_balancers
+```txt
+zones/:identifier/load_balancers
+```
 
 Set the `session_affinity` parameter to configure the feature. The default value is an empty string, which indicates that Session Affinity is disabled. To enable it, use the value “cookie” in your request.
 
 Set the `session_affinity_ttl` parameter to configure the duration of session affinity cookies. Values are in seconds and must be in the range 1800–604800 (30 minutes to seven days). Unless `session_affinity` is explicitly set, the default value of 23 hours is used. This parameter is ignored when Session Affinity is disabled.
 
-#### Configuring Session Affinity for a new load balancer
+### Configuring Session Affinity for a new load balancer
 
 You can configure session affinity as part of your request to the Create Load Balancer command.
 
 **Request example (_curl_)**
 
-```
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e9661899b7252/load_balancers" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
@@ -111,7 +114,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e966
 
 **Response**
 
-```
+```json
 {
   "success": true,
   "errors": [],
@@ -160,17 +163,17 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e966
 }
 ```
 
-#### Configuring Session Affinity for an existing load balancer
+### Configuring Session Affinity for an existing load balancer
 
 Use the Update Load Balancer endpoint to configure session affinity for an existing load balancer:
 
-```
+```txt
 PUT zones/:identifier/load_balancers/:identifier
 ```
 
 **Request example (curl)**
 
-```
+```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e9661899b7252/load_balancers" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
@@ -187,7 +190,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e9661
 
 **Response**
 
-```
+```json
 {
   "success": true,
   "errors": [],

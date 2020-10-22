@@ -1,10 +1,10 @@
 ---
-title: Monitors
-weight: 17
+order: 17
 ---
 
+# Monitors
 
-### Overview
+## Overview
 
 Cloudflare health checks track the health of pools. They are configured through monitors, which define what type of health check to run and how frequently to run them. Cloudflare monitors your servers from each of our data centers.
 
@@ -12,7 +12,7 @@ Health checks that result in a status change for an origin server are recorded a
 
 ---
 
-### Important notes
+## Important notes
 
 - **Availability monitoring checks the health of origin servers every 15 seconds**. It reports results via email notifications and the Cloudflare API.
 - **The default retry rate is 5 retries/second** and is completely configurable. We do not recommend increasing the retry rate significantly. Retries use exponential backoff (1, 2, 4, 8, 16 seconds by default).
@@ -25,7 +25,7 @@ Health checks that result in a status change for an origin server are recorded a
 
 ---
 
-### Properties
+## Properties
 
 Monitors support a great deal of customization and have the following properties:
 
@@ -310,17 +310,17 @@ Monitors support a great deal of customization and have the following properties
 
 ---
 
-### Managing monitors via the Load Balancing dashboard
+## Managing monitors via the Load Balancing dashboard
 
-Use the **Create Load Balancer** or **Edit Load Balancer** panels in the Load Balancing dashboard to manage health check monitors. For step-by-step guidance, see _[Create, attach, and configuring health checks](/load-balancing/create-load-balancer-ui#create-attach-and-configure-health-checks)_.
+Use the **Create Load Balancer** or **Edit Load Balancer** panels in the Load Balancing dashboard to manage health check monitors. For step-by-step guidance, see _[Create, attach, and configuring health checks](/create-load-balancer-ui#create-attach-and-configure-health-checks)_.
 
 ---
 
-### Managing monitors via the Cloudflare API
+## Managing monitors via the Cloudflare API
 
 Use the `load_balancers/monitors` endpoint to manage monitors via the Cloudflare API.
 
-#### Commands
+### Commands
 
 The Cloudflare API supports the following commands for monitors. (Examples are given for user-level endpoint but apply to the account-level endpoint as well.) For more detail, see _[Cloudflare API: Load Balancer Monitors](https://api.cloudflare.com/#load-balancer-monitors-properties)_.
 
@@ -359,11 +359,9 @@ The Cloudflare API supports the following commands for monitors. (Examples are g
   </tbody>
 </table>
 
-
-
 ---
 
-### Health Check integration with PagerDuty
+## Health Check integration with PagerDuty
 
 To integrate Cloudflare Health Check notifications with PagerDuty, follow the steps outlined in PagerDuty’s _[Email Integration Guide](https://www.pagerduty.com/docs/guides/email-integration-guide/)_. If you do not have a PagerDuty account, you will first need to set that up.
 

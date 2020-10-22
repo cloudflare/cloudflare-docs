@@ -1,19 +1,20 @@
 ---
-title: Load balancers
-weight: 11
+order: 11
 ---
 
-### Overview
+# Load balancers
+
+## Overview
 
 A Cloudflare load balancer is identified by the DNS hostname whose traffic you want to balance (www.example.com, for example). The load balancer defines which origin server pools to use, the order in which they should be used, and how to geographically distribute traffic among pools.
 
 ---
 
-### Important notes
+## Important notes
 
 When working with load balancers, note the following:
 
-#### Load balancing and existing DNS records
+### Load balancing and existing DNS records
 
 **When you create a load balancer on Cloudflare**, you can either:
 
@@ -28,19 +29,19 @@ When working with load balancers, note the following:
 
 **If a Load Balancer is manually disabled**, traffic is not served to the associated origins or the fallback.  If all pools in a Load Balancer are manually disabled, the fallback origin is used unless the fallback is also disabled.  If the fallback is also disabled, the SOA record is served.  Otherwise, if there is one pool in the Load Balancer and the pool is unhealthy, Cloudflare sends traffic to the fallback pool regardless of the fallback pool's health.
 
-### HTTP keep-alive (persistent HTTP connection)
+## HTTP keep-alive (persistent HTTP connection)
 
 Cloudflare maintains keep-alive connections to improve performance and reduce cost of recurring TCP connects in the request transaction as Cloudflare proxies customer traffic from its edge network to the site's origin.
 
 Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses open TCP connections for up to 15 minutes (900 seconds) after the last HTTP request. Origin web servers close TCP connections if too many are open. HTTP Keep-Alive helps avoid premature reset of connections for requests proxied by Cloudflare.
 
-#### Session cookies
+### Session cookies
 
 **When using HTTP cookies to track and bind user sessions to a specific server**, configure Session Affinity to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
 
 **For example, F5 BIG-IP load balancers set a session cookie at the beginning of a TCP connection** (if none exists) and then ignore all cookies from subsequent HTTP requests on the same TCP connection. This tends to break session affinity because Cloudflare sends multiple HTTP sessions on the same TCP connection. Configuring the load balancer to parse HTTP requests by cookie headers avoids this issue.
 
-#### Railgun (wide area network optimization)
+### Railgun (wide area network optimization)
 
 **Railgun is a web proxy system built for Cloudflare**, that allows dynamic content for a website to be cached while also allowing changes to the site to take effect almost instantly. Railgun is currently available to customers with a Business or Enterprise plan, or via one of Cloudflare’s Optimised Partners.
 
@@ -60,7 +61,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ---
 
-### Properties
+## Properties
 
 Cloudflare Load Balancer objects have the following properties:
 
@@ -349,17 +350,17 @@ Valid values: <code>off</code>,<code> geo</code>,<code> random</code>,<code> dyn
 
 ---
 
-### Managing load balancers via the Cloudflare API
+## Managing load balancers via the Cloudflare API
 
-#### Endpoint
+### Endpoint
 
 The endpoint for managing load balancers is
 
-```
+```txt
 zones/:identifier/load_balancers
 ```
 
-#### Commands
+### Commands
 
 The Cloudflare API supports the following commands for load balancers. (Examples are given for the user-level endpoint but apply to the account-level endpoint as well.) For detailed instruction, see _[Cloudflare API v4: Load Balancers](https://api.cloudflare.com/#load-balancers-properties)_.
 

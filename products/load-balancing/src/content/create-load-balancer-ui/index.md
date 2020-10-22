@@ -1,16 +1,17 @@
 ---
-title: Create a load balancer (UI)
-weight: 20
+title: Create via UI
+order: 20
 ---
 
+# Create a load balancer (UI)
 
-### Overview
+## Overview
 
 In this walkthrough, you will use the Load Balancing interface in the **Traffic** app of the Cloudflare dashboard to create a load balancer in **active-passive failover** configuration. An active-passive failover configuration sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, Cloudflare then redirects traffic to the passive pool.
 
 ---
 
-#### Before you begin
+## Before you begin
 
 Be sure that you have the following:
 
@@ -24,7 +25,7 @@ Be sure that you have the following:
 
 ---
 
-### Create a load balancer
+## Create a load balancer
 
 To start, we’ll create a load balancer using the **Create a Load Balancer** wizard in the Cloudflare Traffic app:
 
@@ -40,7 +41,7 @@ To start, we’ll create a load balancer using the **Create a Load Balancer** wi
 
      <Aside type="note">
 
-     The orange cloud icon to the right of the hostname indicates that the load balancer will run in proxy mode. In proxy mode, Cloudflare announces Cloudflare IP addresses externally, but masks origin server IP addresses for security. See _[Proxy Modes](/load-balancing/understand-basics/proxy-modes/)_ for more detail.
+     The orange cloud icon to the right of the hostname indicates that the load balancer will run in proxy mode. In proxy mode, Cloudflare announces Cloudflare IP addresses externally, but masks origin server IP addresses for security. See _[Proxy Modes](/understand-basics/proxy-modes/)_ for more detail.
      </Aside>
 
 1. Click **Next** to continue.
@@ -48,11 +49,12 @@ To start, we’ll create a load balancer using the **Create a Load Balancer** wi
 <Aside type="note">
 
 Deleting a Load Balancer does not delete associated pools and monitors.  Delete pools and monitors via the respective **Manage Pools** and **Manage Monitors** buttons within the **Load Balancing** tab under the **Traffic** app of the Cloudflare dashboard.
+
 </Aside>
 
 ---
 
-### Create and add origin pools
+## Create and add origin pools
 
 In this example, we are going to create two pools: The primary pool, and a secondary, backup pool that will serve traffic if the primary fails. (To set up an **active-active failover** configuration, where all servers receive traffic at once, we would create only a single pool.)
 
@@ -74,7 +76,7 @@ In this example, we are going to create two pools: The primary pool, and a secon
 
 ---
 
-### Create, attach, and configure health checks
+## Create, attach, and configure health checks
 
 Now you will create monitors to run health checks that track the status of your origin servers.
 
@@ -98,27 +100,27 @@ Monitors support authenticated origin pulls by entering the appropriate zone in 
 
 1.  Repeat Steps 1–4 to attach a health check to your secondary pool. The status of your health check will be _unknown_ until the results of the first check are available.
 
-    Cloudflare polls for health status every 60 seconds. A green indicator represents a healthy status; red indicates a failed health check. Move the mouse over the indicator to display a tooltip with the reason for the failure (see _[Troubleshooting](/load-balancing/troubleshooting/)_).
+    Cloudflare polls for health status every 60 seconds. A green indicator represents a healthy status; red indicates a failed health check. Move the mouse over the indicator to display a tooltip with the reason for the failure (see _[Troubleshooting](/troubleshooting/)_).
 
 1.  Click **Next** to configure **Geo Routing**.
 
-Monitors are highly configurable. For more detail and a complete list of properties, see _[Monitors](/load-balancing/understand-basics/monitors)_.
+Monitors are highly configurable. For more detail and a complete list of properties, see _[Monitors](/understand-basics/monitors)_.
 
 ---
 
-### Configure Geo Routing
+## Configure Geo Routing
 
 Use Geo Routing to configure traffic policies and failover priority by geographic region. This is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
 ![](../static/images/creating-a-load-balancer-using-the-traffic-app-10.png)
 
-For this exercise, don’t add new regions. For more on Geo Routing, see _[Traffic steering](/load-balancing/understand-basics/traffic-steering/)_.
+For this exercise, don’t add new regions. For more on Geo Routing, see _[Traffic steering](/understand-basics/traffic-steering/)_.
 
 Click **Next** to continue to the final step, **Reviewing the Load Balancing configuration**.
 
 ---
 
-### Review you load balancing configuration
+## Review you load balancing configuration
 
 Before creating your load balancer, the creation wizard presents your a summary of your configuration so that you can review and make changes.
 
@@ -134,7 +136,7 @@ You can monitor your load balancers on the **Load Balancing** dashboard. The das
 
 ---
 
-### Share you load balancer with other sites
+## Share you load balancer with other sites
 
 You can share your load balancer with other sites in your account by creating a canonical name (CNAME) record in the Cloudflare DNS app. This is useful for sharing configurations with multiple other domains, and you don’t have to create new load balancers for each site.
 

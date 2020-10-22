@@ -1,15 +1,16 @@
 ---
-title: Pools
-weight: 13
+order: 13
 ---
 
-### Overview
+# Pools
+
+## Overview
 
 A Cloudflare Load Balancing pool represents a group of origin servers, each identified by their IP address or hostname. You can configure multiple pools, as well as failover priority (Pool A-> Pool B-> Pool C). If you're familiar with DNS terminology, think of a pool as a “record set,” except we only return addresses that are considered healthy. You can attach health checks to individual pools to tailor monitoring for collections of origin servers.
 
 ---
 
-### Important notes
+## Important notes
 
 When working with pools, note the following:
 
@@ -25,7 +26,7 @@ When working with pools, note the following:
 
 ---
 
-### Properties
+## Properties
 
 Cloudflare Pool objects have the following properties:
 
@@ -208,16 +209,16 @@ Read only
 
 ---
 
-### Managing pools via the Cloudflare API
+## Managing pools via the Cloudflare API
 
-#### Endpoints
+### Endpoints
 
 Pool endpoints are available in the Cloudflare API at both the user and account level, respectively:
 
 - `user/load_balancers/pools`
 - `accounts/:account_identifier/load_balancers/pools`
 
-#### Commands
+### Commands
 
 The Cloudflare API supports the following commands. For more detail, see _[Cloudflare API: Load Balancer Pools](https://api.cloudflare.com/#load-balancer-pools-properties)_.
 

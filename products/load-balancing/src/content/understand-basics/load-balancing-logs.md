@@ -1,15 +1,17 @@
 ---
-title: Load Balancing logs
-weight: 18
+order: 18
 ---
-### Overview
+# Load Balancing logs
+
+## Overview
+
 Load Balancing logs provide a historical view of status changes to your origins and how those status changes affect pool health.
 
 Load Balancing only logs events that represent a status change for an origin, from healthy to unhealthy or vice versa.
 
 ---
 
-### Properties
+## Properties
 
 Health check event objects have the following properties:
 
@@ -107,7 +109,7 @@ Health check event objects have the following properties:
 
 ---
 
-### Accessing Load Balancing Logs from the Cloudflare dashboard
+## Accessing Load Balancing Logs from the Cloudflare dashboard
 
 Load Balancing Logs are available from the **Traffic** app of the Cloudflare dashboard within the **Load Balancing Analytics** tab under the **Logs** submenu. You can filter the logs by Date, Pool Health, Pool, Origin Health, and/or Origin.
 
@@ -115,9 +117,9 @@ Click the expansion arrow at the far right of the event to expose more detail, i
 
 ---
 
-### Accessing Load Balancing Logs via the Cloudflare API
+## Accessing Load Balancing Logs via the Cloudflare API
 
-#### Commands
+### Commands
 
 To list health check events, use the List Health Check Events API endpoint:
 
