@@ -48,9 +48,9 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
       <td>Your origin ASN and routing data</td>
       <td>WHOIS lookup</td>
       <td>
-        <p>In a terminal, use this <code>whois</code> command, substituting your network prefix for <em>network-prefix</em>:</p>
-        <p><code>whois -h rr.ntt.net network-prefix</code></p>
-        <p>The host <code>rr.ntt.net</code> is the primary server for the Global IP network.</p>
+        <p>In a terminal, use this <code class="InlineCode">whois</code> command, substituting your network prefix for <em>network-prefix</em>:</p>
+        <p><code class="InlineCode">whois -h rr.ntt.net network-prefix</code></p>
+        <p>The host <code class="InlineCode">rr.ntt.net</code> is the primary server for the Global IP network.</p>
       </td>
       <td>IRR route, origin, and source information.</td>
     </tr>
