@@ -4,9 +4,9 @@ order: 2
 
 # Traffic steering
 
-Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/about/tunnels-and-encapsulation) from Cloudflare's edge to your data center(s).
+Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare's edge to your data center(s).
 
-Magic Transit steers traffic along GRE tunnel routes based on priorities you define. You [assign tunnel route priorities](/magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the Magic Transit [onboarding process](/magic-transit/set-up/onboarding/).
+Magic Transit steers traffic along GRE tunnel routes based on priorities you define. You [assign tunnel route priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the Magic Transit [onboarding process](/set-up/onboarding/).
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority—Tunnel 3 is secondary.
 

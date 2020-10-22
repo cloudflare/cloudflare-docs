@@ -8,4 +8,4 @@ Endpoint health checks evaluate connectivity from Cloudflare distributed data ce
 
 Cloudflare edge servers issue endpoint health checks outside of customer network namespaces and typically target endpoints beyond the tunnel-terminating border router.
 
-Cloudflare configures health checks with endpoint IP addresses you supply during the onboarding process. For more on endpoint health check configuration, see _[Specify IP addresses for endpoint health checks](/magic-transit/set-up/provide-configuration-data/specify-ip-addresses-for-endpoint-health-checks/)_.
+Cloudflare configures health checks with endpoint IP addresses you supply during the onboarding process. For more on endpoint health check configuration, see _[Specify IP addresses for endpoint health checks](/set-up/provide-configuration-data/specify-ip-addresses-for-endpoint-health-checks/)_.
