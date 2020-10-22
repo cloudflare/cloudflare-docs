@@ -82,7 +82,7 @@ Cloudflare Load Balancer objects have the following properties:
   <tr>
    <td valign="top"><strong>created_on</strong>
 <br/>
-<Type>string</Type><PropMeta>(date-time)</PropMeta>
+<Type>string</Type> <PropMeta>(date-time)</PropMeta>
    </td>
    <td>The creation timestamp for the load balancer
 <br/>
@@ -172,7 +172,7 @@ Read only
   <tr>
    <td valign="top"><strong>modified_on</strong>
 <br/>
-<Type>string</Type><PropMeta>(date-time)</PropMeta>
+<Type>string</Type> <PropMeta>(date-time)</PropMeta>
    </td>
    <td>Timestamp of the last modification to the load balancer configuration
 <br/>
