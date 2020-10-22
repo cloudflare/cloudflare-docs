@@ -33,24 +33,24 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
   </thead>
   <tbody>
     <tr>
-      <td>Subnet prefix IP for the ASN</td>
+      <td>Subnet prefix IP<br/>for the ASN</td>
       <td><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></td>
       <td>Search for the subnet prefix IP, for example, 162.211.156.0/24.</td>
       <td>List of ASN numbers, source (route registry), and any associated errors.</td>
     </tr>
     <tr>
-      <td>ASN for the subnet prefix</td>
+      <td>ASN for the<br/>subnet prefix</td>
       <td><span style="white-space: nowrap"><a href=" http://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
       <td><span style="white-space: nowrap">Search for the ASN, for example AS209242.</span></td>
       <td><span style="white-space: nowrap">List of prefixes, source, and any associated errors.</span></td>
     </tr>
     <tr>
-      <td>Your origin ASN and routing data</td>
+      <td>Your origin ASN<br/>and routing data</td>
       <td>WHOIS lookup</td>
       <td>
-        <p>In a terminal, use this <code class="InlineCode">whois</code> command, substituting your network prefix for <em>network-prefix</em>:</p>
-        <p><code class="InlineCode">whois -h rr.ntt.net network-prefix</code></p>
-        <p>The host <code class="InlineCode">rr.ntt.net</code> is the primary server for the Global IP network.</p>
+        <p>In a terminal, use this <Code>whois</Code> command, substituting your network prefix for <em>network-prefix</em>:</p>
+        <p><Code>whois -h rr.ntt.net network-prefix</Code></p>
+        <p>The host <Code>rr.ntt.net</Code> is the primary server for the Global IP network.</p>
       </td>
       <td>IRR route, origin, and source information.</td>
     </tr>
