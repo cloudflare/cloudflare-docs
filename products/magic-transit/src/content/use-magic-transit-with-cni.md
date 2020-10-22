@@ -7,7 +7,7 @@ order: 4
 
 ## Onboarding
 
-When setting up Magic Transit to work with [Cloudflare Network Interconnect (CNI)](/network-interconnect/about/), the onboarding process includes the following additional steps:
+When setting up Magic Transit to work with [Cloudflare Network Interconnect (CNI)](https://developers.cloudflare.com/network-interconnect), the onboarding process includes the following additional steps:
 
 1. Cloudflare generates Letters of Authorization (LOAs) for your CNI cross-connects and sends them to your organization.
 
@@ -22,7 +22,7 @@ When setting up Magic Transit to work with [Cloudflare Network Interconnect (CNI
 
 Each of these steps can take 2–7 business days.
 
-For more details on the CNI onboarding process, see [_Set up Cloudflare Network Interconnect: Onboarding_](/network-interconnect/set-up-cni/onboarding).
+For more details on the CNI onboarding process, see [_Set up Cloudflare Network Interconnect: Onboarding_](https://developers.cloudflare.com/network-interconnect/set-up-cni/onboarding).
 
 ## Guidelines
 
