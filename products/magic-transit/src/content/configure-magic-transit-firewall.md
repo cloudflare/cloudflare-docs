@@ -1,11 +1,11 @@
 ---
-title: Configure Magic Transit firewall
+title: Magic Transit firewall
 order: 3
 ---
 
 # Configure Magic Transit firewall
 
-Cloudflare's Magic Transit firewall ruleset includes two components:
+Cloudflare’s Magic Transit firewall ruleset includes two components:
 
 * Recommended rules that reflect common amplification attack vectors
 * Custom rules requested by you

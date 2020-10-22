@@ -4,7 +4,7 @@ order: 2
 
 # Assign tunnel route priorities
 
-Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare's edge to your data center(s).
+Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data center(s).
 
 You must assign a route priority to each GRE tunnel–subnet pair in your GRE configuration, as follows:
 
