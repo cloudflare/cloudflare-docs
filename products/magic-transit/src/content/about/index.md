@@ -15,8 +15,6 @@ Once packets hit Cloudflare's network, traffic is inspected for attacks, filtere
 
 For more on how Magic Transit works, see these articles:
 
-* [_Tunnels and encapsulation_](/about/tunnels-and-encapsulation)
-* [_Traffic steering_](/about/traffic-steering)
-* [_Health checks_](/about/health-checks)
+<DirectoryListing path="/about"/>
 
 For a guide to the Magic Transit onboarding process, requirements, and configuration data, see [_Set up Magic Transit_](/set-up).
