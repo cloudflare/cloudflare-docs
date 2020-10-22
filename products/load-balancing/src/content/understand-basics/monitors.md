@@ -276,40 +276,42 @@ The Cloudflare API supports the following commands for monitors. (Examples are g
 
 <table>
   <thead>
-  <tr>
-   <td><strong><Code>Command</Code></strong></td>
-   <td><strong><Code>Method</Code></strong></td>
-   <td><strong><Code>Endpoint</Code></strong></td>
-  </tr>
+    <tr>
+      <th><Code>Command</Code></th>
+      <th><Code>Method</Code></th>
+      <th><Code>Endpoint</Code></th>
+    </tr>
   </thead>
   <tbody>
-  <tr>
-   <td>Create Monitor</td>
-   <td><Code>POST</Code></td>
-   <td><Code>user/load_balancers/monitors</Code></td>
-  </tr>
-  <tr>
-   <td>Delete Monitor</td>
-   <td><Code>DELETE</Code></td>
-   <td><Code>user/load_balancers/monitors</Code></td>
-  </tr>
-  <tr>
-   <td>List Monitors</td>
-   <td><Code>GET</Code></td>
-   <td><Code>user/load_balancers/monitors</Code></td>
-  </tr>
-  <tr>
-   <td>Monitor Details</td>
-   <td><Code>GET</Code></td>
-   <td><Code>user/load_balancers/monitors/:identifier</Code></td>
-  </tr>
-  <tr>
-   <td>Update Monitor</td>
-   <td><Code>PUT</Code></td>
-   <td><Code>user/load_balancers/monitors</Code></td>
-  </tr>
+    <tr>
+      <td>Create Monitor</td>
+      <td><Code>POST</Code></td>
+      <td><Code>user/load_balancers/monitors</Code></td>
+    </tr>
+    <tr>
+      <td>Delete Monitor</td>
+      <td><Code>DELETE</Code></td>
+      <td><Code>user/load_balancers/monitors</Code></td>
+    </tr>
+    <tr>
+      <td>List Monitors</td>
+      <td><Code>GET</Code></td>
+      <td><Code>user/load_balancers/monitors</Code></td>
+    </tr>
+    <tr>
+      <td>Monitor Details</td>
+      <td><Code>GET</Code></td>
+      <td><Code>user/load_balancers/monitors/:identifier</Code></td>
+    </tr>
+    <tr>
+      <td>Update Monitor</td>
+      <td><Code>PUT</Code></td>
+      <td><Code>user/load_balancers/monitors</Code></td>
+    </tr>
   </tbody>
 </table>
+
+</TableWrap>
 
 ---
 
