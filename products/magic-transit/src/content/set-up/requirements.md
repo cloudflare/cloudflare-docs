@@ -29,7 +29,7 @@ To ensure that Magic Transit routes traffic to the correct autonomous systems (A
 
 ![Packet flow diagram](../static/mss-values-and-packet.png)
 
-The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.  
+The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
 Cloudflare uses GRE tunnels to deliver packets from our edge to your data center(s), while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
 
@@ -76,7 +76,7 @@ Unless you apply these MSS settings at the origin, client machines do not know t
 
 ### Follow router vendor guidelines
 
-Instructions to adjust MSS by applying MSS clamps vary depending on the vendor of your router.  
+Instructions to adjust MSS by applying MSS clamps vary depending on the vendor of your router.
 
 The following table lists several commonly used router vendors with links to MSS clamping instructions:
 
