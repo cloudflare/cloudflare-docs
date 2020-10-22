@@ -55,7 +55,7 @@ The `Refresh` operation will extend the token's lifetime by one year from the da
 By default, Cloudflare Access service tokens expire one year after they’re created. If you need to revoke access earlier, simply delete the token.
 
 To revoke a service token immediately:
-1. On the [Teams dashboard](https://https://dash.teams.cloudflare.com/), navigate to **Access > Service Auth > Service Tokens**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth > Service Tokens**.
 
 2. Click **Delete** for the token you need to revoke and delete.
 
