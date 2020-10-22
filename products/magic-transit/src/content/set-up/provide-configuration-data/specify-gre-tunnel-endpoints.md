@@ -6,7 +6,7 @@ order: 1
 
 ## Anycast edge IP addresses
 
-Cloudflare will assign 2 Anycast IP addresses shortly after the [onboarding kickoff call](/magic-transit/set-up/onboarding). Use these Anycast edge IPs as the GRE tunnel destinations on your data center routers/endpoints.
+Cloudflare will assign 2 Anycast IP addresses shortly after the [onboarding kickoff call](/set-up/onboarding). Use these Anycast edge IPs as the GRE tunnel destinations on your data center routers/endpoints.
 
 ## Generic Routing Encapsulation (GRE)
 

@@ -23,7 +23,7 @@ Starting with an initial kickoff call, Cloudflare engages with your organization
 
 *Duration:* Less than 1 business day
 
-*Customer requirements:* See _[Requirements](/magic-transit/set-up/requirements/)_
+*Customer requirements:* See _[Requirements](/set-up/requirements/)_
 
 ## Configure tunnels
 
@@ -31,7 +31,7 @@ Cloudflare sets up Anycast tunnels for Magic Transit based on configuration deta
 
 *Duration:* ~4 business days
 
-*Customer requirements:* Supply information specified in _[Specify GRE Tunnel Endpoints](/magic-transit/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/)_ so that Cloudflare can set up your tunnels.
+*Customer requirements:* Supply information specified in _[Specify GRE Tunnel Endpoints](/set-up/provide-configuration-data/specify-gre-tunnel-endpoints/)_ so that Cloudflare can set up your tunnels.
 
 ## Run pre-flight checks
 
@@ -42,7 +42,7 @@ To ensure that the integration is ready to go live the following week, complete 
 *Duration:* ~4 business days
 
 ## Configure edge network
-  
+
 Once Cloudflare's pre-flight checks have passed and a date to complete the change has been verified by your account team, engineering will start the process of onboarding your prefixes to Cloudflare's edge network.
 
 To configure the edge network, Cloudflare does the following:

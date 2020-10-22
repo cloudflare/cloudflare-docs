@@ -6,7 +6,7 @@ order: 1
 
 Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) tunnels that route traffic from Cloudflare to your origin network. Magic Transit relies on health checks to steer traffic to the best available routes.
 
-Tunnel probes originate from Cloudflare's edge network and target the GRE tunnel endpoints you supply during the Magic Transit [onboarding process](/magic-transit/set-up/onboarding/).
+Tunnel probes originate from Cloudflare's edge network and target the GRE tunnel endpoints you supply during the Magic Transit [onboarding process](/set-up/onboarding/).
 
 ## Probe construction
 
@@ -19,6 +19,7 @@ Every Cloudflare edge server configured to process your traffic sends a tunnel h
 <Aside>
 
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply (rather than an ICMP echo request). To use echo request packets, please contact your Cloudflare account team.
+
 </Aside>
 
 This Wireshark screenshot shows a collection of example health check packets:
@@ -35,7 +36,7 @@ Magic Transit uses tunnel health check packets to prioritize and steer traffic a
 
 There are three tunnel health states: **_Healthy_** tunnels are preferred to **_Degraded_** tunnels, and _Degraded_ tunnels are preferred to those that are **_Down_**.
 
-Magic Transit steers traffic to tunnels based on priorities you set when you [assign-tunnel-route-priorities](/magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the [onboarding process](/magic-transit/set-up/onboarding).
+Magic Transit steers traffic to tunnels based on priorities you set when you [assign-tunnel-route-priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the [onboarding process](/set-up/onboarding).
 
 Tunnel routes with lower values have priority over those with higher values.
 
@@ -60,7 +61,7 @@ When Magic Transit identifies a route that is not healthy, it applies the these 
 * _Degraded_: Add 500,000 to priority.
 * _Down_: Add 1,000,000 to priority.
 
-The values for failure penalties are designed to be extreme so that they always exceed the priority values you assign in the [routing configuration](/magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities).
+The values for failure penalties are designed to be extreme so that they always exceed the priority values you assign in the [routing configuration](/set-up/provide-configuration-data/assign-tunnel-route-priorities).
 
 Applying a penalty rather than removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. It also supports the case when multiple tunnels are unhealthy.
 

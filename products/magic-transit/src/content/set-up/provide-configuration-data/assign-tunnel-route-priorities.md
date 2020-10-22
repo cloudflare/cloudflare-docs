@@ -4,7 +4,7 @@ order: 2
 
 # Assign tunnel route priorities
 
-Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/about/tunnels-and-encapsulation) from Cloudflare's edge to your data center(s).
+Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare's edge to your data center(s).
 
 You must assign a route priority to each GRE tunnel–subnet pair in your GRE configuration, as follows:
 
@@ -12,7 +12,7 @@ You must assign a route priority to each GRE tunnel–subnet pair in your GRE co
 
 * When the priority values for prefix entries match—as illustrated by the 103.21.244.0/24 subnet in the example routing configuration (in boldface)—Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic.
 
-For more on how Cloudflare uses ECMP packet forwarding, see [_Traffic steering_](/magic-transit/about/traffic-steering).
+For more on how Cloudflare uses ECMP packet forwarding, see [_Traffic steering_](/about/traffic-steering).
 
 For an example edge routing configuration, refer to this table:
 
