@@ -1,4 +1,5 @@
 ---
+title: Endpoint
 order: 2
 ---
 
