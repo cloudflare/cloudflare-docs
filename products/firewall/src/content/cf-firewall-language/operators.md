@@ -44,101 +44,101 @@ The Cloudflare Firewall Rules language supports these comparison operators:
   <tbody>
     <tr>
       <td><strong>Equal</strong></td>
-      <td><code>eq</code></td>
-      <td><code>==</code></td>
+      <td><code class="InlineCode">eq</code></td>
+      <td><code class="InlineCode">==</code></td>
       <td>&#10004;</td>
       <td>&#10004;</td>
       <td>&#10004;</td>
       <td>
-         <code>http.request.uri.path <strong>eq</strong> "/articles/2008/"</code>
+         <code class="InlineCode">http.request.uri.path <strong>eq</strong> "/articles/2008/"</code>
       </td>
      </tr>
     <tr>
       <td><strong>Not equal</strong></td>
-      <td><code>ne</code></td>
-      <td><code>!=</code></td>
+      <td><code class="InlineCode">ne</code></td>
+      <td><code class="InlineCode">!=</code></td>
       <td>&#10004;</td>
       <td>&#10004;</td>
       <td>&#10004;</td>
       <td>
-         <code>ip.src <strong>ne</strong> 93.184.216.0</code>
+         <code class="InlineCode">ip.src <strong>ne</strong> 93.184.216.0</code>
       </td>
     </tr>
     <tr>
       <td><strong>Less than</strong></td>
-      <td><code>lt</code></td>
-      <td><code>&lt;</code></td>
+      <td><code class="InlineCode">lt</code></td>
+      <td><code class="InlineCode">&lt;</code></td>
       <td>&#10004;</td>
       <td>&#10060;</td>
       <td>&#10004;</td>
       <td>
-         <code>cf.threat_score <strong>lt</strong> 10</code>
+         <code class="InlineCode">cf.threat_score <strong>lt</strong> 10</code>
       </td>
    </tr>
    <tr>
       <td><strong>Less than or equal</strong></td>
-      <td><code>le</code></td>
-      <td><code>&lt;=</code></td>
+      <td><code class="InlineCode">le</code></td>
+      <td><code class="InlineCode">&lt;=</code></td>
       <td>&#10004;</td>
       <td>&#10060;</td>
       <td>&#10004;</td>
       <td>
-         <code>cf.threat_score <strong>le</strong> 20</code>
+         <code class="InlineCode">cf.threat_score <strong>le</strong> 20</code>
       </td>
     </tr>
     <tr>
       <td><strong>Greater than</strong></td>
-      <td><code>gt</code></td>
-      <td><code>></code></td>
+      <td><code class="InlineCode">gt</code></td>
+      <td><code class="InlineCode">></code></td>
       <td>&#10004;</td>
       <td>&#10060;</td>
       <td>&#10004;</td>
       <td>
-         <code>cf.threat_score <strong>gt</strong> 25</code>
+         <code class="InlineCode">cf.threat_score <strong>gt</strong> 25</code>
       </td>
     </tr>
     <tr>
       <td><strong>Greater than or equal</strong></td>
-      <td><code>ge</code></td>
-      <td><code>&gt;=</code></td>
+      <td><code class="InlineCode">ge</code></td>
+      <td><code class="InlineCode">&gt;=</code></td>
       <td>&#10004;</td>
       <td>&#10060;</td>
       <td>&#10004;</td>
       <td>
-         <code>cf.threat_score <strong>ge</strong> 60</code>
+         <code class="InlineCode">cf.threat_score <strong>ge</strong> 60</code>
       </td>
     </tr>
     <tr>
       <td><strong>Exactly contains</strong></td>
-      <td><code>contains</code></td>
+      <td><code class="InlineCode">contains</code></td>
       <td></td>
       <td>&#10004;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
-         <code>http.request.uri.path <strong>contains</strong> "/articles/"</code>
+         <code class="InlineCode">http.request.uri.path <strong>contains</strong> "/articles/"</code>
       </td>
     </tr>
     <tr>
       <td><strong>Matches Google re2 regular expression</strong></td>
-      <td><code>matches</code></td>
-      <td><code>~</code></td>
+      <td><code class="InlineCode">matches</code></td>
+      <td><code class="InlineCode">~</code></td>
       <td>&#10004;</td>
       <td>&#10060;</td>
       <td>&#10060;</td>
       <td>
-         <code>http.request.uri.path <strong>matches</strong> "^/articles/200[7-8]/$"</code>
+         <code class="InlineCode">http.request.uri.path <strong>matches</strong> "^/articles/200[7-8]/$"</code>
       </td>
     </tr>
     <tr>
       <td><strong>Value is in set of values</strong></td>
-      <td><code>in</code></td>
+      <td><code class="InlineCode">in</code></td>
       <td></td>
       <td>&#10004;</td>
       <td>&#10004;</td>
       <td>&#10004;</td>
       <td>
-         <code>ip.src <strong>in</strong> {'{ 93.184.216.0 93.184.216.1 }'}</code>
+         <code class="InlineCode">ip.src <strong>in</strong> {'{ 93.184.216.0 93.184.216.1 }'}</code>
       </td>
     </tr>
   </tbody>
@@ -171,37 +171,37 @@ Each logical operator is associate with an [order of precedence](#order-of-prece
   <tbody>
    <tr>
       <td><strong>Logical NOT</strong></td>
-      <td><code>not</code></td>
-      <td><code>!</code></td>
+      <td><code class="InlineCode">not</code></td>
+      <td><code class="InlineCode">!</code></td>
       <td>
-         <code><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in 93.184.216.0/24 )</code>
+         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in 93.184.216.0/24 )</code>
       </td>
       <td>1</td>
    </tr>
    <tr>
       <td><strong>Logical AND</strong></td>
-      <td><code>and</code></td>
-      <td><code>&amp;&amp;</code></td>
+      <td><code class="InlineCode">and</code></td>
+      <td><code class="InlineCode">&amp;&amp;</code></td>
       <td>
-         <code>http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in 93.184.216.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in 93.184.216.0/24</code>
       </td>
       <td>2</td>
    </tr>
    <tr>
       <td><strong>Logical XOR (exclusive OR)</strong></td>
-      <td><code>xor</code></td>
-      <td><code>^^</code></td>
+      <td><code class="InlineCode">xor</code></td>
+      <td><code class="InlineCode">^^</code></td>
       <td>
-         <code>http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in 93.184.216.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in 93.184.216.0/24</code>
       </td>
       <td>3</td>
    </tr>
    <tr>
       <td><strong>Logical OR</strong></td>
-      <td><code>or</code></td>
-      <td><code>||</code></td>
+      <td><code class="InlineCode">or</code></td>
+      <td><code class="InlineCode">||</code></td>
       <td>
-         <code>http.host eq "www.cloudflare.com" <strong>or</strong> ip.src in 93.184.216.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>or</strong> ip.src in 93.184.216.0/24</code>
       </td>
       <td>4</td>
    </tr>

@@ -35,38 +35,38 @@ The Cloudflare Filters API supports the operations outlined below. Visit the ass
     <tbody>
         <tr>
             <td><a href='/firewall/api/cf-filters/post/'>Create filters</a></td>
-            <td><code>POST&nbsp;zones/{'{zone_id}'}/filters</code></td>
+            <td><code class="InlineCode">POST&nbsp;zones/{'{zone_id}'}/filters</code></td>
             <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
         </tr>
         <tr>
             <td><a href='/firewall/api/cf-filters/get/#get-all-filters'>Fetch all filters</a></td>
-            <td><code>GET&nbsp;zones/{'{zone_id}'}/filters</code></td>
+            <td><code class="InlineCode">GET&nbsp;zones/{'{zone_id}'}/filters</code></td>
             <td>Lists all current filters. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.</td>
         </tr>
         <tr>
             <td><a href='/firewall/api/cf-filters/get/#get-by-filter-id'>Fetch a filter by ID</a></td>
-            <td><code>GET&nbsp;zones/{'{zone_id}'}/filters/{'{id}'}</code></td>
+            <td><code class="InlineCode">GET&nbsp;zones/{'{zone_id}'}/filters/{'{id}'}</code></td>
             <td>Retrieve a single filter by ID.</td>
         </tr>
         <tr>
             <td><a href='/firewall/api/cf-filters/put/#update-multiple-filters'>Update multiple filters</a></td>
-            <td><code>PUT&nbsp;zones/{'{zone_id}'}/filters</code></td>
+            <td><code class="InlineCode">PUT&nbsp;zones/{'{zone_id}'}/filters</code></td>
             <td>Handled as a single transaction. All filters must exist for operation to succeed. If there is an error, the entire operation fails.</td>
         </tr>
         <tr>
             <td><a href='/firewall/api/cf-filters/put/#update-a-single-filter'>Update a single filter by ID</a></td>
-            <td><code>PUT&nbsp;zones/{'{zone_id}'}/filters/{'{id}'}</code></td>
+            <td><code class="InlineCode">PUT&nbsp;zones/{'{zone_id}'}/filters/{'{id}'}</code></td>
             <td>Update a single filter by ID.</td>
         </tr>
         <tr>
             <td><a href='/firewall/api/cf-filters/delete/#delete-multiple-filters'>Delete multiple filters</a></td>
-            <td><code>DELETE&nbsp;zones/{'{zone_id}'}/filters</code></td>
+            <td><code class="InlineCode">DELETE&nbsp;zones/{'{zone_id}'}/filters</code></td>
             <td><p>Delete existing filters. Must specify list of filter IDs.</p>
             <p>Empty requests result in no deletion. Returns HTTP status code 200 if a specified filter does not exist.</p></td>
         </tr>
         <tr>
             <td><a href='/firewall/api/cf-filters/delete/#delete-a-single-filter'>Delete a single filter by ID</a></td>
-            <td><code>DELETE&nbsp;zones/{'{zone_id}'}/filters/{'{id}'}</code></td>
+            <td><code class="InlineCode">DELETE&nbsp;zones/{'{zone_id}'}/filters/{'{id}'}</code></td>
             <td>Delete a filter by ID.</td>
         </tr>
     </tbody>
