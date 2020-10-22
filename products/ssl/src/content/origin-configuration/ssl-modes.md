@@ -28,7 +28,7 @@ Connections to the origin will be made using the scheme requested by the visitor
 The certificate presented by the origin must meet the following criteria:
 
 1. Unexpired, i.e., the certificate notBeforeDate < now() < notAfterDate
-2. Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/origin/origin-ca)
+2. Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/origin-configuration/origin-ca)
 2. Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname
 
 If the certificate does not meet all of the above criteria, the SSL/TLS handshake will be aborted and a [526 error will be returned to your visitors](https://support.cloudflare.com/hc/en-us/articles/200721975-Error-526-Invalid-SSL-certificate).

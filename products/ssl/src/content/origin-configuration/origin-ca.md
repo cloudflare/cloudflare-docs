@@ -4,7 +4,7 @@ order: 3
 
 # Origin CA
 
-Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS. Once deployed, they are [compatible with the Strict SSL mode](/origin/ssl-modes#strict).  
+Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS. Once deployed, they are [compatible with the Strict SSL mode](/origin-configuration/ssl-modes#strict).
 
 Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click on a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
 
