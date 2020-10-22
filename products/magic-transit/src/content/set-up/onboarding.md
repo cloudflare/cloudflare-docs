@@ -37,11 +37,11 @@ To ensure that the integration is ready to go live the following week, complete 
 
 ## Configure edge network
 
-Once Cloudflare's pre-flight checks have passed and a date to complete the change has been verified by your account team, engineering will start the process of onboarding your prefixes to Cloudflare's edge network.
+Once Cloudflare’s pre-flight checks have passed and a date to complete the change has been verified by your account team, engineering will start the process of onboarding your prefixes to Cloudflare’s edge network.
 
 To configure the edge network, Cloudflare does the following:
 
-1. Route traffic sourced from Cloudflare's network.
+1. Route traffic sourced from Cloudflare’s network.
 1. Attract traffic from the broader Internet by advertising your customer-owned prefixes.
 
 These routing changes return any traffic generated within the Cloudflare edge network to the GRE tunnels set up for Magic Transit. This can happen under the following 2 conditions:

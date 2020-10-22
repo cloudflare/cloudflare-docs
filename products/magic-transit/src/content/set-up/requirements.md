@@ -11,7 +11,7 @@ Cloudflare requires that you meet the following Magic Transit onboarding require
 
 ## Use compatible tunnel endpoint routers
 
-Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare's edge to your origin network. To ensure compatibility with Magic Transit, the routers at your GRE tunnel endpoints must meet these requirements:
+Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. To ensure compatibility with Magic Transit, the routers at your GRE tunnel endpoints must meet these requirements:
 
 - Support GRE tunneling.
 - Allow configuration of at least 1 tunnel per Internet service provider (ISP).

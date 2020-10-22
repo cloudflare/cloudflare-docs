@@ -7,7 +7,7 @@ order: 1
 
 Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) tunnels that route traffic from Cloudflare to your origin network. Magic Transit relies on health checks to steer traffic to the best available routes.
 
-Tunnel probes originate from Cloudflare's edge network and target the GRE tunnel endpoints you supply during the Magic Transit [onboarding process](/set-up/onboarding/).
+Tunnel probes originate from Cloudflare’s edge network and target the GRE tunnel endpoints you supply during the Magic Transit [onboarding process](/set-up/onboarding/).
 
 ## Probe construction
 
@@ -72,7 +72,7 @@ Once a tunnel is in the _Down_ state, edge servers continue to emit probes every
 
 Tunnels in a _Degraded_ state transition to _Healthy_ when the failure rate for the previous 30 probes is less than 5%. This transition may take up to 30 minutes.
 
-Magic Transit's tunnel health check system allows a tunnel to transition quickly from _Healthy_ to _Degraded_ or _Down_ but only slowly from _Degraded_ or _Down_ to _Healthy_. This [hysteresis](https://en.wikipedia.org/wiki/Hysteresis) dampens changes to tunnel routing caused by flapping and other intermittent network failures.
+Magic Transit’s tunnel health check system allows a tunnel to transition quickly from _Healthy_ to _Degraded_ or _Down_ but only slowly from _Degraded_ or _Down_ to _Healthy_. This [hysteresis](https://en.wikipedia.org/wiki/Hysteresis) dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority, even when all configured tunnels are in an unhealthy state.
 
@@ -97,4 +97,4 @@ Suppose the connectivity issue that had set Tunnel 1 health to _Down_ is now res
 
 When all three probes return successfully, Magic Transit transitions the tunnel from _Down_ to _Degraded_. As part of this transition, Cloudflare reduces the priority penalty for that route so that its priority is 500,100.  Since Tunnel 2 has a priority of 200, traffic continues to flow over Tunnel 2.
 
-Edge servers continue probing Tunnel 1. When the health check failure rate drops below 0.1% for a 5-minute period, Magic Transit sets tunnel status to _Healthy_. Tunnel 1's routing priority is fully restored to 100, and traffic steering returns the data flow to Tunnel 1.
+Edge servers continue probing Tunnel 1. When the health check failure rate drops below 0.1% for a 5-minute period, Magic Transit sets tunnel status to _Healthy_. Tunnel 1’s routing priority is fully restored to 100, and traffic steering returns the data flow to Tunnel 1.
