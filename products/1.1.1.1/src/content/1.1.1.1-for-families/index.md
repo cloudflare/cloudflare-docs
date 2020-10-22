@@ -34,6 +34,6 @@ Ready to set it up? You’ll find an easy guide for every device in the [setup i
 
 Customers can decide to block certain categories, like “Gambling” or “Sports”, in addition to security threats like malware and phishing. However, in some cases, a domain can be miscategorized. For example, a social media site might be categorized as “Shopping & Auctions”.
 
-If you are using Gateway or 1.1.1.1 for Families and see a domain that you believe is miscategorized, fill in this [form](https://report.teams.cloudflare.com/) to bring it to our attention. Your submission will remain anonymous.
+If you are using Gateway or 1.1.1.1 for Families and see a domain that you believe is miscategorized, fill in this [form](https://radar.cloudflare.com/categorization-feedback/) to bring it to our attention. Your submission will remain anonymous.
 
 We review these submissions to improve Cloudflare’s categorization.
