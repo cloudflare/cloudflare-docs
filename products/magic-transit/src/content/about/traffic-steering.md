@@ -1,8 +1,6 @@
 ---
 title: Traffic steering
-alwaysopen: true
 order: 2
-hidden: false
 ---
 
 # Traffic steering

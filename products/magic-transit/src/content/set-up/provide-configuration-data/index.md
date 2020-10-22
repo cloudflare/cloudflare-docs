@@ -1,8 +1,6 @@
 ---
 title: Provide configuration data
-alwaysopen: true
 order: 2
-hidden: false
 ---
 
 For details on the configuration data required for Cloudflare to set up Magic Transit for your organization, see these articles:

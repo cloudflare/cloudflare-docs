@@ -1,8 +1,6 @@
 ---
 title: Map routes for prefixes smaller than /24
-alwaysopen: true
 order: 3
-hidden: false
 ---
 
 ## Map route prefixes smaller than /24

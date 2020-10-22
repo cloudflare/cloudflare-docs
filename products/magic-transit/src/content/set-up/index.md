@@ -1,8 +1,6 @@
 ---
 title: Set up Magic Transit
-alwaysopen: true
 order: 2
-hidden: false
 ---
 
 # Set up Magic Transit

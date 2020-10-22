@@ -1,8 +1,6 @@
 ---
 title: Onboarding
-alwaysopen: true
 order: 1
-hidden: false
 ---
 
 # Magic Transit
