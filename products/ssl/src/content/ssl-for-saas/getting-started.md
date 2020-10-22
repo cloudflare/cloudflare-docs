@@ -59,7 +59,7 @@ Additionally you can retrieve a list of user’s zones and their associated IDs 
 
 Once your account has been provisioned, you are ready to issue certificates. The call below will provision a request for certificates to be issued for `app.customer.com`, which represents your end customer.
 
-In this example, HTTP based validation is used ("method":"http") to issue this certificate. This requires HTTP traffic to be proxied through Cloudflare’s edge already, i.e., the CNAME from `app.customer.com` must be in place to your zone. If the CNAME is not yet in place, Cloudflare will ask its CA partner to retry until the request can be completed; see the [Validation Backoff Schedule](/ssl-for-saas/validation-retry/) for specific timings.
+In this example, HTTP based validation is used ("method":"http") to issue this certificate. This requires HTTP traffic to be proxied through Cloudflare’s edge already, i.e., the CNAME from `app.customer.com` must be in place to your zone. If the CNAME is not yet in place, Cloudflare will ask its CA partner to retry until the request can be completed; see the [Validation Backoff Schedule](/ssl-for-saas/validation-backoff-schedule/) for specific timings.
 
 ```bash
 $ curl -XPOST "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames"\
