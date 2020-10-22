@@ -30,15 +30,19 @@ When working with pools, note the following:
 
 Cloudflare Pool objects have the following properties:
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Name / type</strong>
-   </td>
-   <td><strong>Description / example</strong>
-   </td>
-   <td><strong>Constraints</strong>
-   </td>
+   <th><strong>Name / type</strong>
+   </th>
+   <th><strong>Description / example</strong>
+   </th>
+   <th><strong>Constraints</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td valign="top"><strong>check_regions</strong>
@@ -207,6 +211,8 @@ Read only
   </tbody>
 </table>
 
+</TableWrap>
+
 ---
 
 ## Managing pools via the Cloudflare API
@@ -222,15 +228,19 @@ Pool endpoints are available in the Cloudflare API at both the user and account 
 
 The Cloudflare API supports the following commands. For more detail, see _[Cloudflare API: Load Balancer Pools](https://api.cloudflare.com/#load-balancer-pools-properties)_.
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Command</strong>
-   </td>
-   <td><strong>Method</strong>
-   </td>
-   <td><strong>Endpoint</strong>
-   </td>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td>Create Pool
@@ -282,3 +292,5 @@ The Cloudflare API supports the following commands. For more detail, see _[Cloud
   </tr>
   </tbody>
 </table>
+
+</TableWrap>

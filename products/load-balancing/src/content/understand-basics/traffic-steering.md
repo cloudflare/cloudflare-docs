@@ -49,12 +49,14 @@ Geo Steering directs traffic to pools based on the client’s region or PoP. Onl
 Cloudflare has 13 geographic regions that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query. These regions are listed below, along with their region codes.
 
 <table>
+  <thead>
   <tr>
-   <td><strong>Region Code</strong>
-   </td>
-   <td><strong>Region</strong>
-   </td>
+   <th>Region Code
+   </th>
+   <th>Region
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td><strong>WNAM</strong>
