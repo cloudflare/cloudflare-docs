@@ -30,276 +30,229 @@ Health checks that result in a status change for an origin server are recorded a
 Monitors support a great deal of customization and have the following properties:
 
 <TableWrap>
-    <table>
-        <thead>
-            <tr>
-                <th>Name <Type>/type</Type></th>
-                <th>Description <Type>/example</Type></th>
-                <th>Constraints</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong><Code>port</Code></strong>
-                    <br /><Type>integer</Type></td>
-                <td>
-                    <div>
-                        <p>Port number to connect to for the health check. Required for TCP checks. HTTP and HTTPS checks should only define the port when using a non-standard port (HTTP: default 80, HTTPS: default 443).</p>
-                    </div>
-                    <div><Code>8080</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: 0</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>method</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>The method to use for the health check. This defaults to 'GET' for HTTP/HTTPS based checks and 'connection_established' for TCP based health checks.</p>
-                    </div>
-                    <div><Code>"GET"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: GET</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>timeout</Code></strong>
-                    <br /><Type>integer</Type></td>
-                <td>
-                    <div>
-                        <p>The timeout (in seconds) before marking the health check as failed</p>
-                    </div>
-                    <div><Code>3</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: 5</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>path</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>The endpoint path to health check against. This parameter is only valid for HTTP and HTTPS monitors.</p>
-                    </div>
-                    <div><Code>"/health"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: /</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>interval</Code></strong>
-                    <br /><Type>integer</Type></td>
-                <td>
-                    <div>
-                        <p>The interval between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
-                    </div>
-                    <div><Code>90</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: 60</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>retries</Code></strong>
-                    <br /><Type>integer</Type></td>
-                <td>
-                    <div>
-                        <p>The number of retries to attempt in case of a timeout before marking the origin as unhealthy. Retries are attempted immediately.</p>
-                    </div>
-                    <div><Code>0</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: 2</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>follow_redirects</Code></strong>
-                    <br /><Type>boolean</Type></td>
-                <td>
-                    <div>
-                        <p>Follow redirects if returned by the origin. This parameter is only valid for HTTP and HTTPS monitors.</p>
-                    </div>
-                    <div><Code>true</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: false</li>
-                        <li>valid values: (true,false)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>probe_zone</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>(known as Simulate Zone in the UI) pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration.  It allows you to emulate the specified zone while probing.</p>
-                    </div>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>expected_body</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>A case-insensitive sub-string to look for in the response body. If this string is not found, the origin will be marked as unhealthy. This parameter is only valid for HTTP and HTTPS monitors.</p>
-  <Aside type="info">
+  <table>
+    <thead>
+      <tr>
+        <th>Name <Type>/type</Type></th>
+        <th>Description <Type>/example</Type></th>
+        <th>Constraints</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong><Code>port</Code></strong><br/><Type>integer</Type></td>
+        <td>
+          <p>Port number to connect to for the health check. Required for TCP checks. HTTP and HTTPS checks should only define the port when using a non-standard port (HTTP: default 80, HTTPS: default 443).</p>
+          <div><Code>8080</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 0</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>method</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>The method to use for the health check. This defaults to 'GET' for HTTP/HTTPS based checks and 'connection_established' for TCP based health checks.</p>
+          <div><Code>"GET"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: GET</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>timeout</Code></strong><br/><Type>integer</Type></td>
+        <td>
+          <p>The timeout (in seconds) before marking the health check as failed</p>
+          <div><Code>3</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 5</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>path</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>The endpoint path to health check against. This parameter is only valid for HTTP and HTTPS monitors.</p>
+          <div><Code>"/health"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: /</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>interval</Code></strong><br/><Type>integer</Type></td>
+        <td>
+          <p>The interval between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
+          <div><Code>90</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 60</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>retries</Code></strong><br/><Type>integer</Type></td>
+        <td>
+          <p>The number of retries to attempt in case of a timeout before marking the origin as unhealthy. Retries are attempted immediately.</p>
+          <div><Code>0</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 2</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>follow_redirects</Code></strong><br/><Type>boolean</Type></td>
+        <td>
+          <p>Follow redirects if returned by the origin. This parameter is only valid for HTTP and HTTPS monitors.</p>
+          <div><Code>true</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: false</li>
+            <li>valid values: (true,false)</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>probe_zone</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>(known as Simulate Zone in the UI) pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration.  It allows you to emulate the specified zone while probing.</p>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>expected_body</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>A case-insensitive sub-string to look for in the response body. If this string is not found, the origin will be marked as unhealthy. This parameter is only valid for HTTP and HTTPS monitors.</p>
+<Aside type="info">
 
-  The sub-string must appear within the first 10KiB of your response body.
+The sub-string must appear within the first 10KiB of your response body.
 
-  </Aside>
-                    </div>
-                </td>
-                <td><div><Code>"alive"</Code></div></td>
-              </tr>
-              <tr>
-              <td><strong><Code>header</Code></strong>
-                <br /><Type>object</Type></td>
-              <td>
-                <div>
-                    <p>The HTTP request headers to send in the health check. It is recommended you set a Host header by default. The User-Agent header cannot be overridden. This parameter is only valid for HTTP and HTTPS monitors.</p>
-                </div>
-                </td>
-                <td>
-                <div><Code>{`{
-                "Host": [
-                  "example.com"
-                ],
-                "X-App-ID": [
-                  "abc123"
-                ]
-              }`}</Code></div>
-              </td>
-            </tr>
-            <tr>
-                <td><strong><Code>allow_insecure</Code></strong>
-                    <br /><Type>boolean</Type></td>
-                <td>
-                    <div>
-                        <p>Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTP and HTTPS monitors.</p>
-                    </div>
-                    <div><Code>true</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: false</li>
-                        <li>valid values: (true,false)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>modified_on</Code></strong>
-                    <br /><Type>string (date-time)</Type></td>
-                <td>
-                    <div>
-                        <p>Last modification time</p>
-                    </div>
-                    <div><Code>"2014-01-01T05:20:00.12345Z"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>read only</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>created_on</Code></strong>
-                    <br /><Type>string (date-time)</Type></td>
-                <td>
-                    <div>
-                        <p>Creation time</p>
-                    </div>
-                    <div><Code>"2014-01-01T05:20:00.12345Z"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>read only</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>type</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>The protocol to use for the health check. Currently supported protocols are 'HTTP','HTTPS' and 'TCP'.</p>
-                    </div>
-                    <div><Code>"https"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: http</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>id</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>API item identifier tag</p>
-                    </div>
-                    <div><Code>"f1aba936b94213e5b8dca0c0dbf1f9cc"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>
-                            max length:
-                            32
-                        </li>
-                        <li>read only</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>description</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>Object description</p>
-                    </div>
-                    <div><Code>"Login page monitor"</Code></div>
-                </td>
-                <td>
-                    <ul></ul>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><Code>expected_codes</Code></strong>
-                    <br /><Type>string</Type></td>
-                <td>
-                    <div>
-                        <p>The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS monitors.</p>
-                    </div>
-                    <div><Code>"2xx"</Code></div>
-                </td>
-                <td>
-                    <ul>
-                        <li>default value: 200</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+</Aside>
+        </td>
+        <td><div><Code>"alive"</Code></div></td>
+      </tr>
+      <tr>
+        <td><strong><Code>header</Code></strong><br/><Type>object</Type></td>
+        <td>
+          <p>The HTTP request headers to send in the health check. It is recommended you set a Host header by default. The User-Agent header cannot be overridden. This parameter is only valid for HTTP and HTTPS monitors.</p>
+        </td>
+        <td><div>
+
+```json
+{
+  "Host": [
+    "example.com"
+  ],
+  "X-App-ID": [
+    "abc123"
+  ]
+}
+```
+
+</div></td>
+      </tr>
+      <tr>
+        <td><strong><Code>allow_insecure</Code></strong><br/><Type>boolean</Type></td>
+        <td>
+          <p>Do not validate the certificate when monitor use HTTPS. This parameter is currently only valid for HTTP and HTTPS monitors.</p>
+          <div><Code>true</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: false</li>
+            <li>valid values: (true,false)</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>modified_on</Code></strong><br/><Type>string (date-time)</Type></td>
+        <td>
+          <p>Last modification time</p>
+          <div><Code>"2014-01-01T05:20:00.12345Z"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>read only</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>created_on</Code></strong><br/><Type>string (date-time)</Type></td>
+        <td>
+          <p>Creation time</p>
+          <div><Code>"2014-01-01T05:20:00.12345Z"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>read only</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>type</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>The protocol to use for the health check. Currently supported protocols are 'HTTP','HTTPS' and 'TCP'.</p>
+          <div><Code>"https"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: http</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>id</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>API item identifier tag</p>
+          <div><Code>"f1aba936b94213e5b8dca0c0dbf1f9cc"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>
+              max length:
+              32
+            </li>
+            <li>read only</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>description</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>Object description</p>
+          <div><Code>"Login page monitor"</Code></div>
+        </td>
+        <td>
+          <ul></ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>expected_codes</Code></strong><br/><Type>string</Type></td>
+        <td>
+          <p>The expected HTTP response code or code range of the health check. This parameter is only valid for HTTP and HTTPS monitors.</p>
+          <div><Code>"2xx"</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 200</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </TableWrap>
 
 
