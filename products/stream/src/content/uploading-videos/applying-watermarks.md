@@ -1,31 +1,28 @@
 ---
-order: 3
+order: 5
 ---
 
-# Watermarks
+# Applying watermarks
 
 You can add watermarks to videos uploaded using the Stream API.
 
-To add watermarks to your videos, first create a Watermark Profile. A watermark profile describes the image you would like to be used as a watermark and the position. Once you have a watermark profile, add an additional property when uploading videos.
+To add watermarks to your videos, first create a watermark profile. A watermark profile describes the image you would like to be used as a watermark and the position of that image. Once you have a watermark profile, you can use it as an option when uploading videos.
 
-## A few things to note:
-
-* Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
-* Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
-* Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
-* The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.
 
 ## Quick start
 
 Watermark profile has many customizable options. However, the default parameters generally work for most cases. Please see "Profiles" below for more details.
 
-Step 1: Create a profile
+### Step 1: Create a profile
+
 ```bash
 curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -F file=@/Users/rchen/cloudflare.png \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ```
-Step 2: Specify the profile UID at upload
+
+### Step 2: Specify the profile UID at upload
+
 ```bash
 tus-upload --chunk-size 5242880 \
 --header X-Auth-Key $APIKEY \
@@ -33,7 +30,8 @@ tus-upload --chunk-size 5242880 \
 --metadata watermark $WATERMARKUID \
 /Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
-Step 3: Done
+
+### Step 3: Done
 ![Watermarked Video](./cat.png)
 
 ## Profiles
@@ -44,13 +42,39 @@ and your email address.
 
 ### Optional parameters
 
-| Parameter | Type | Default | Explanation |
-|-|-|-|-|
-| name | string | _Empty String_ | A short description for the profile. For example, "marketing videos." |
-| opacity | percentage | 1.0 | Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque. |
-| padding | percentage | 0.05 | Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length, determined by the algorithm. <br/><br/>The algorithm will make sure that the watermark will be at about the same position across videos with different dimensions. |
-| scale | percentage | 0.15 | The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.<br/><br/>The algorithm will make sure that the watermark will look about the same size across videos with different dimensions. |
-| position | string | upperRight | Location of the watermark. Valid positions are: "upperRight", "upperLeft", "lowerLeft", "lowerRight", and "center." Note that "center" will ignore the "padding" parameter. |
+<Definitions>
+
+  - `name` <Type>string</Type> <PropMeta>default: _empty string_</PropMeta>
+
+    - A short description for the profile. For example, "marketing videos."
+
+  - `opacity` <Type>float</Type> <PropMeta>default: 1.0</PropMeta>
+
+    - Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque.
+
+  - `padding` <Type>float</Type> <PropMeta>default: 0.05</PropMeta>
+
+    - Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
+    
+    - Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
+
+  - `scale` <Type>float</Type> <PropMeta>default: 0.15 </PropMeta>
+
+    - The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.
+
+    - The algorithm will make sure that the watermark will look about the same size across videos with different dimensions.
+
+  - `position` <Type>string (enum)</Type> <PropMeta>default: "upperRight"</PropMeta>
+
+    - Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
+
+      <Aside>
+
+        Note that `center` will ignore the `padding` parameter.
+  
+      </Aside>
+  
+</Definitions>
 
 ## Creating a Watermark profile
 
@@ -134,11 +158,14 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 #### Example response to upload video with a link
 
 ```json
+---
+highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
+---
 {
   "result": {
     "uid": "8d3a5b80e7437047a0fb2761e0f7a645",
     "thumbnail": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/thumbnails/thumbnail.jpg",
-    ...
+
     "playback": {
       "hls": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.m3u8",
       "dash": "https://videodelivery.net/8d3a5b80e7437047a0fb2761e0f7a645/manifest/video.mpd"
@@ -156,11 +183,12 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
       "scale": 0.15,
       "position": "upperRight"
     }
-    ...
+
 }
 ```
 
-### Upload video with TUS
+### Upload video with tus
+
 ```bash
 tus-upload --chunk-size 5242880 \
 --header X-Auth-Key $APIKEY \
@@ -169,8 +197,9 @@ tus-upload --chunk-size 5242880 \
 $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
-### Direct user uploads
+### Direct creator uploads
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
+
 ```bash
 curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 -H 'Content-Type: application/json' \
@@ -182,7 +211,9 @@ curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 }' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 ```
+
 #### Example response to direct user uploads
+
 ```json
 {
   "result": {
@@ -207,16 +238,20 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
   "messages": []
 }
 ```
+
 `watermark` will be `null` if no watermark was specified.
 
 
 ## Get a watermark profile
 To view a watermark profile that you created:
+
 ```bash
 curl -X GET -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
 ```
-#### Example response to get a watermark profile
+
+### Example response to get a watermark profile
+
 ```json
 {
   "result": {
@@ -239,12 +274,16 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERM
 ```
 
 ## List watermark profiles
+
 To list watermark profiles that you created:
+
 ```bash
 curl -X GET -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 ```
-#### Example response to list watermark profiles
+
+### Example response to list watermark profiles
+
 ```json
 {
   "result": [
@@ -284,11 +323,14 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 ## Delete a  watermark profile
 
 To delete a watermark profile that you created:
+
 ```bash
 curl -X DELETE -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
 ```
+
 If the operation was successful, it will return a success response:
+
 ```json
 {
   "result": "",
@@ -297,3 +339,10 @@ If the operation was successful, it will return a success response:
   "messages": []
 }
 ```
+
+## Limitations
+
+* Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
+* Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
+* Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
+* The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.

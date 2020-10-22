@@ -2,23 +2,9 @@
 order: 4
 ---
 
-# Captions and subtitles
+# Adding captions
 
 Adding captions and subtitles to your video library.
-
-## A few things to note
-
-- A video must be uploaded before a caption can be attached to it. In the following
-  example URLs, the video's ID is referenced as `media_id`.
-- Stream only supports [WebVTT](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
-  formatted caption files. If you have a differently formatted caption file, please
-  use [a tool to convert your file to WebVTT](https://subtitletools.com/convert-to-vtt-online)
-  prior to uploading it.
-- Videos may include several language captions, but each language must be unique.
-  For example, a video may have English, French, and German captions associated
-  with it, but it cannot have two French captions.
-- Each caption file is limited to 10 MB in size. Please contact [support](support@cloudflare.com)
-  if you need to upload a larger file.
 
 ## Add or modify a caption
 
@@ -125,6 +111,20 @@ deleted.
   "messages": []
 }
 ```
+
+## Limitations
+
+- A video must be uploaded before a caption can be attached to it. In the following
+  example URLs, the video's ID is referenced as `media_id`.
+- Stream only supports [WebVTT](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+  formatted caption files. If you have a differently formatted caption file, please
+  use [a tool to convert your file to WebVTT](https://subtitletools.com/convert-to-vtt-online)
+  prior to uploading it.
+- Videos may include several language captions, but each language must be unique.
+  For example, a video may have English, French, and German captions associated
+  with it, but it cannot have two French captions.
+- Each caption file is limited to 10 MB in size. Please contact [support](support@cloudflare.com)
+  if you need to upload a larger file.
 
 ## Most common language codes
 

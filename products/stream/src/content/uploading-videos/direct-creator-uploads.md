@@ -1,16 +1,16 @@
 ---
-order: 5
+order: 3
 ---
 
-# Direct user uploads
+# Direct creator uploads
 
-Direct uploads allow users to upload videos without API keys. A common place to
-use direct uploads is on web apps, client side applications, or on mobile devices
+Direct creator uploads allow users to upload videos without API keys. A common place to
+use Direct creator uploads is on web apps, client side applications, or on mobile apps
 where users upload content directly to Stream.
 
 ## Generate a unique one-time upload URL
 
-To enable users the ability to directly upload their videos, first generate and
+To give users the ability to directly upload their videos, first generate and
 provide them with a unique one-time upload URL with the following API request.
 
 To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
@@ -68,7 +68,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
     "allowedOrigins": ["example.com"],
     "thumbnailTimestampPct": 0.568427,
     "watermark": {
-        "uid": "{watermark_uid}"
+        "uid": "$watermark_uid"
     }
  }'
 ```
@@ -116,7 +116,7 @@ passed along to the end-user to make their upload request.
 The `uid` references the reserved media object's unique identifier and can be
 kept as a reference to query our [API](/getting-started/searching/).
 
-## Direct Upload Request from end users
+## Direct creator upload request from end users
 
 Using the `uploadURL` provided in the previous request, users can upload video
 files.  Uploads are limited to 200 MB in size.
@@ -131,7 +131,9 @@ A successful upload will receive a `200` response.  If the upload does not meet
 the upload constraints defined at time of creation or is larger than 200 MB in
 size, the user will receive a `4xx` response.
 
-### Using the uploadURL from within a browser
+### Example
+
+<Example>
 
 ```html
 <!DOCTYPE html>
@@ -172,6 +174,8 @@ size, the user will receive a `4xx` response.
 </html>
 ```
 
+</Example>
+
 ## Tracking user upload progress
 
 After the creation of a unique one-time upload URL, you may wish to retain the
@@ -179,8 +183,8 @@ After the creation of a unique one-time upload URL, you may wish to retain the
 
 You can do that two ways:
 
-1. You can [query the media API](/getting-started/searching/) with the UID
+1. You can [query the media API](/uploading-videos/searching/) with the UID
 to understand it's status.
 
-2. You can [create a webhook subscription](/webhooks/) to receive notifications
+2. You can [create a webhook subscription](/uploading-videos/using-webhooks/) to receive notifications
 regarding the status of videos.  These notifications include the video's UID.

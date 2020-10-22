@@ -1,6 +1,4 @@
-# Searching
-
-## Searching videos
+# Searching over videos
 
 You can search for videos by name through the Stream API by adding a `search` query parameter to the [list media files](https://api.cloudflare.com/#stream-videos-list-videos) endpoint.
 
@@ -13,7 +11,7 @@ To make API requests you will need your [Cloudflare API key](https://www.cloudfl
 This example lists media where the name matches `puppy.mp4`.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?search=puppy.mp4" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?search=puppy" \
      -H "X-Auth-Email: $EMAIL" \
      -H "X-Auth-Key: $APIKEY" \
      -H "Content-Type: application/json"
