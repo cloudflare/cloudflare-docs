@@ -8,7 +8,7 @@ order: 10
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 
-To install the Cloudflare root certificate, follow the steps [found here](/install-cloudflare-cert.md).
+To install the Cloudflare root certificate, follow the steps [found here](/connecting-to-gateway/install-cloudflare-cert).
 
 ### Even though I installed the Cloudflare certificate on my system, mobile applications warn of an invalid certificate.
 
