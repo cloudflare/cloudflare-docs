@@ -33,7 +33,7 @@ To make your first request, simply take the cURL command below and replace the A
 ```bash
 curl \
 -X POST \
--d '{"url":"","meta":{"name":"My First Stream Video"}}' \
+-d '{"url":"https://storage.googleapis.com/stream-example-bucket/video.mp4","meta":{"name":"My First Stream Video"}}' \
 -H "X-Auth-Key: $API_KEY" \
 -H "X-Auth-Email: $EMAIL" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/copy
@@ -44,15 +44,15 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 ```json
 {
   "result": {
-    "uid": "4544715edbe00808d89aec0a3a765c40",
-    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
-    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+    "uid": "8d717d9d1b0920ea247a4eebd747b1fd",
+    "preview": "https://watch.cloudflarestream.com/8d717d9d1b0920ea247a4eebd747b1fd",
+    "thumbnail": "https://videodelivery.net/8d717d9d1b0920ea247a4eebd747b1fd/thumbnails/thumbnail.jpg",
     "readyToStream": false,
     "status": {
       "state": "downloading"
     },
     "meta": {
-      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
+      "downloaded-from": "https://storage.googleapis.com/stream-example-bucket/video.mp4",
       "name": "My First Stream Video"
     },
     "created": "2020-10-16T20:20:17.872170843Z",
@@ -84,15 +84,15 @@ highlight: [6]
 ---
 {
   "result": {
-    "uid": "4544715edbe00808d89aec0a3a765c40",
-    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
-    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
+    "uid": "8d717d9d1b0920ea247a4eebd747b1fd",
+    "preview": "https://watch.cloudflarestream.com/8d717d9d1b0920ea247a4eebd747b1fd",
+    "thumbnail": "https://videodelivery.net/8d717d9d1b0920ea247a4eebd747b1fd/thumbnails/thumbnail.jpg",
     "readyToStream": true,
     "status": {
       "state": "ready"
     },
     "meta": {
-      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
+      "downloaded-from": "https://storage.googleapis.com/stream-example-bucket/video.mp4",
       "name": "My First Stream Video"
     },
     "created": "2020-10-16T20:20:17.872170843Z",
