@@ -50,7 +50,7 @@ Currently, the following hints are available:
   - `clientBandwidthHint` <Type>float</Type>
     - Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
 
-</Definition>
+</Definitions>
 
 #### Examples
 
