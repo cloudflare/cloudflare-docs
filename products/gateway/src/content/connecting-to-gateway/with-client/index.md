@@ -35,13 +35,11 @@ To start using Cloudflare for Teams, ensure you perform the following steps prio
 
 2. Configure a unique Auth Domain for your account. This domain will be used as your Gateway organization name in the WARP client during user and device enrollment. The Auth Domain represents your organization's Teams account and is used across both Access and Gateway.
 
-### Generate the certificate and install it on the device
+## Download the Cloudflare root certificate and install it on the device
 
 If your organization plans to inspect HTTP traffic, you must download the Cloudflare for Teams certificate on any device being enrolled.
 
-1. Navigate to the Account section, under the Settings selector, in the Teams dashboard.
-
-2. At the bottom, click the `Download certificate` button and follow [the instructions to install the certificate](https://developers.cloudflare.com/gateway/policies/configure-block-page/#add-certificate-to-your-system) on the device.
+To install the Cloudflare root certificate, follow the steps [found here](/connecting-to-gateway/install-cloudflare-cert).
 
 ### Install the WARP client and log in with Cloudflare for Teams
 
