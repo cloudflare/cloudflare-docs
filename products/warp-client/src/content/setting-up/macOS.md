@@ -32,8 +32,8 @@ order: 3
 </table>
 
 ## Steps to download
-1. [Download __Cloudflare WARP.zip__](https://1.1.1.1/Cloudflare%20WARP.zip).
-1. Navigate to the downloads folder and double-click on `Cloudflare WARP.zip`.
+1. [Download __Cloudflare_WARP.zip__](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
+1. Navigate to the downloads folder and double-click on `Cloudflare_WARP.zip`.
 1. Double click on the `Cloudflare_WARP.pkg` file that is extracted.
 1. Follow instructions in the installer to complete installation.
    * Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.

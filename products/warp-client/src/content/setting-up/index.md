@@ -12,7 +12,7 @@ Review [Installation Requirements](/setting-up/requirements/) to ensure your dev
 * [Teams Deployment for Windows](/teams/Windows-Teams/)
 
 ## macOS
-* [Download macOS Installer](https://www.cloudflarewarp.com/Cloudflare%20WARP.zip)
+* [Download macOS Installer](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)
 * [macOS Installation Instruction](/setting-up/macOS/)
 * [Teams Deployment for macOS](/teams/macOS-Teams/)
 
