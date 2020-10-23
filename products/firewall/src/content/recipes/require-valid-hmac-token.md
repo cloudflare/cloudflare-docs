@@ -10,7 +10,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 Use the Firewall Rules [HMAC validation function](/cf-firewall-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression.
 
-This example uses HMCAC token authentication to protect a static private asset hosted by `example.com`.
+This example uses HMAC token authentication to protect a static private asset hosted by `example.com`.
 
 The `http.request.uri` for this example is
 
