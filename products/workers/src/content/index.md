@@ -26,7 +26,7 @@ $ npm install -g @cloudflare/wrangler
 
 ## Playground
 
-View this “Hello World” example in the Workers playground:
+View this __Hello World__ example in the Workers playground:
 
 ```javascript
 addEventListener("fetch", event => {
