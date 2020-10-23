@@ -10,13 +10,9 @@ By default, Argo Tunnel expects all of the configuration to exist in the `cloudf
 
 |Argument|Description|
 |---|---|
-|`url`|The destination for proxied traffic in your environment|
-|`tunnel`|The name or UUID of your Tunnel
+|`url`|The destination for proxied traffic in your environment if your origin is not listening on localhost:8080|
+|`tunnel`|The UUID of your Tunnel
 |`credentials-file`|The location of the credentials file for your Tunnel|
-
-<Aside>
-The arguments above are required for pre-configured Argo Tunnel deployments. If you are using legacy Argo Tunnel, without names, you can append the `--legacy` flag when running cloudflared tunnel install command.
-</Aside>
 
 ## Linux
 
@@ -29,6 +25,10 @@ $ sudo cloudflared service install
 If you have already logged in and have a configuration file in `~/.cloudflared/`, these will be copied to `/etc/cloudflared/`.
 
 If you do not have a configuration file, you will need to create a config.yml file with fields listed above. You can pass a custom file by running `cloudflared --config CONFIG-FILE service install`.
+
+<Aside>
+The above arguments are required for pre-configured Argo Tunnel deployments. If you are using legacy Argo Tunnel, without names, you can append the `--legacy` flag when running cloudflared tunnel install command.
+</Aside>
 
 ## macOS
 
@@ -78,8 +78,8 @@ To run as a service on Windows, you must specify four arguments in the configura
 
 |Argument|Description|
 |---|---|
-|`url`|The destination for proxied traffic in your environment|
-|`tunnel`|The name or UUID of your Tunnel
+|`url`|The destination for proxied traffic in your environment if your origin is not listening on localhost:8080|
+|`tunnel`|The UUID of your Tunnel
 |`credentials-file`|The location of the credentials file for your Tunnel|
 |`logfile`|The location to store `cloudflared` logs`
 
