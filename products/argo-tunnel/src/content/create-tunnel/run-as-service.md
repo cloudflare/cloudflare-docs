@@ -4,14 +4,15 @@ order: 30
 
 # Run as a service
 
-<Aside>
-
-Running `cloudflared` as a service is not yet compatible with creating a Tunnel with a name. Instead, follow the instructions below
-</Aside>
-
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
-By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/configuration/config/), but at a minimum you should set `hostname` and `url`.
+By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/configuration/config/), but at a minimum you must specify the following arguments to run as a service:
+
+|Argument|Description|
+|---|---|
+|`url`|The destination for proxied traffic in your environment if your origin is not listening on localhost:8080|
+|`tunnel`|The UUID of your Tunnel
+|`credentials-file`|The location of the credentials file for your Tunnel|
 
 ## Linux
 
@@ -21,21 +22,15 @@ Run the following command:
 $ sudo cloudflared service install
 ```
 
- If you have already logged in and have a certificate and (optionally) configuration file in `~/.cloudflared/`, these will be copied to `/etc/cloudflared/`.
+If you have already logged in and have a configuration file in `~/.cloudflared/`, these will be copied to `/etc/cloudflared/`.
 
- If you do not have a configuration file, you will need to create a `config.yml` file in the `etc/cloudflared` directory. The file must contain at least the following arguments:
+If you do not have a configuration file, you will need to create a config.yml file with fields listed above. You can pass a custom file by running `cloudflared --config CONFIG-FILE service install`.
 
-```yml
-hostname: tunnel.yourdomain.com
-url: https://localhost:8000
-logfile: /var/log/cloudflared.log
-```
+<Aside>
 
-Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem` after you login. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `~/.cloudflared` directory on your system.
+The above arguments are required for pre-configured Argo Tunnel deployments. If you are using legacy Argo Tunnel, without names, you can append the `--legacy` flag when running cloudflared tunnel install command.
 
-```sh
-$ mv cert.pem ~/.cloudflared/cert.pem
-```
+</Aside>
 
 ## macOS
 
@@ -61,7 +56,7 @@ Output will be logged to `~/Library/Logs/com.cloudflare.cloudflared.err.log` and
 
 ### Run at boot
 
-Open a Terminal and run the following command:
+Run the following command:
 
 ```sh
 $ sudo cloudflared service install
@@ -81,6 +76,16 @@ Output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and 
 
 ## Windows
 
+To run as a service on Windows, you must specify four arguments in the configuration file.
+
+|Argument|Description|
+|---|---|
+|`url`|The destination for proxied traffic in your environment if your origin is not listening on localhost:8080|
+|`tunnel`|The UUID of your Tunnel
+|`credentials-file`|The location of the credentials file for your Tunnel|
+|`logfile`|The location to store `cloudflared` logs`
+
+
 1. Open a Command Prompt with Administrator privileges.
 
 2. Type the following command:
@@ -99,11 +104,13 @@ You can copy your local configuration from:
 
 ### Specify a custom location for the config file
 
-If you need to specify a custom config file location, you can do so in the the Windows registry after the service has been installed ([MSDN reference](https://docs.microsoft.com/en-us/dotnet/api/system.serviceprocess.servicebase.onstart?view=netframework-4.7.2)):
+By default, the Windows service runs in “access” client mode. If you need to specify a custom config file location, you can do so in the Windows registry after the service has been installed ([MSDN reference](https://docs.microsoft.com/en-us/dotnet/api/system.serviceprocess.servicebase.onstart?view=netframework-4.7.2)):
 
 1. Open `regedit`.
 2. Go to the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`.
 3. Edit the `ImagePath` value to include `--config <path-to-config>`.
+
+Additionally, you will need to add `tunnel run` arguments and, in some cases, a pointer to the config file. For example: `.../cloudflared.exe tunnel [--config FILE] run`.
 
 ### Start the service
 
@@ -121,33 +128,22 @@ PS C:> Start-Service cloudflared
 
 <Aside>
 
-When running cloudflared as a service on Windows, the certificate path needs to be explicitly specified. This can be done in the config file:
+When running cloudflared as a service on Windows, the  path to the credentials file needs to be explicitly specified. This can be done in the config file:
 
 ```yaml
-origincert: C:\ABSOLUTE\PATH\TO\cert.pem
+credentials-file: C:\ABSOLUTE\PATH\TO\UUID.json
 ```
 
-In some cases, forward slashes should be used to set the explicit path to the certificate.
+In some cases, forward slashes should be used to set the explicit path to the credentials file.
 
-* In "Raw" YAML scalars, the backslash should be used directly. For example, `C:\cert.pem`.
-* In single-quoted scalars, the backslash should be used directly. For example, `'C:\cert.pem'`.
-* In double-quoted scalars, a forward slash should be used or the backslash should be escaped. For example, `"C:\\cert.pem"`.
+* In "Raw" YAML scalars, the backslash should be used directly. For example, `C:\UUID.json`.
+* In single-quoted scalars, the backslash should be used directly. For example, `'C:\UUID.json'`.
+* In double-quoted scalars, a forward slash should be used or the backslash should be escaped. For example, `"C:\\UUID.json"`.
 
 ```yaml
-origincert: C:/cert.pem
+credentials-file: C:/UUID.json
 ```
 
 </Aside>
-
-<Aside>
 
 `cloudflared` will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
-
-</Aside>
-
-<Aside>
-
-`cloudflared` does not support loading the system certificate pool in Windows.
-To supply a certificate pool to `cloudflared` in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
-
-</Aside>
