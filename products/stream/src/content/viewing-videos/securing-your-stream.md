@@ -25,7 +25,7 @@ You can [revoke a key](#revoking-keys) anytime for any reason.
 Upon creation you will get a RSA private key in PEM and JWK formats. Keys are created, used and deleted independently of videos. Every key can sign any of your videos.
 
 ```javascript
-// curl -X POST -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $APIKEY"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys"
+// curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys"
 
 {
   "result": {
@@ -48,7 +48,7 @@ Restricting viewing can be done by updating the video's metadata.
 
 ```javascript
 
-// curl -X POST -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $APIKEY"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d '{"uid": "$VIDEOID", "requireSignedURLs": true }'
+// curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d '{"uid": "$VIDEOID", "requireSignedURLs": true }'
 
 {
   "result": {
@@ -148,7 +148,7 @@ You can create up to 1,000 keys and rotate them at your convenience.
 Once revoked all tokens created with that key will be invalidated.
 
 ```javascript
-// curl -X DELETE -H "X-Auth-Email: $EMAIL" -H "X-Auth-Key: $APIKEY"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys/$KEYID"
+// curl -X DELETE -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys/$KEYID"
 
 {
   "result": "Revoked",
@@ -336,7 +336,7 @@ You can also control embed limitation programmatically using the Stream API. `ui
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-H "Authorization: Bearer $TOKEN" \
 -d '{"uid": "$VIDEOID", "allowedOrigins": ["example.com"]}' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 

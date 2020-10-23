@@ -10,19 +10,15 @@ A tool to notify your service when videos successfully finish processing and are
 
 ### Create or modify the webhook subscription
 
-To subscribe to receive webhook notifications on your service, or modify an
-existing subscription, you will need your
-[Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
-and your email address.
+To subscribe to receive webhook notifications on your service, or modify an existing subscription, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
 
 ```bash
-curl -X PUT --header 'X-Auth-Key:$APIKEY' --header 'X-Auth-Email:$EMAIL'
+curl -X PUT --header 'Authorization: Bearer $TOKEN'
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/webhook
 --data '{"notificationUrl":"$WEBHOOK_NOTIFICATION_URL}'
 ```
 
-The webhook notification URL must include the protocol. Only `http://`
-or `https://` is supported.
+The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
 
 #### Example response to create or modify the webhook subscription
 
@@ -41,8 +37,7 @@ or `https://` is supported.
 
 ## Notifications
 
-When a video on your account finishes processing, you will receive a `POST`
-request notification with information about the video.
+When a video on your account finishes processing, you will receive a `POST` request notification with information about the video.
 
 Note the `status` field indicates whether the video processing finished successfully.
 

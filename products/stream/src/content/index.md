@@ -17,25 +17,21 @@ To get started with Stream, simply visit the Stream Dashboard in your Cloudflare
 
 ## Make your first API request
 
-To make your first request to the Stream API, you must obtain three pieces of information:
+To make your first request to the Stream API, you must obtain these pieces of information:
 
 1. Your Cloudflare Account ID
-2. Email address associated with the account
-3. Your Cloudflare Account API Token
-
-Alternatively, you can also use [bearer tokens](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys).
+1. A Cloudflare Account API Token
 
 ### Step 1: Uploading your first video
 Stream provides multiple ways to upload videos. For this example, we will upload an MP4 file that is stored in a storage bucket onto Stream. The MP4 file can be found here: 
 
-To make your first request, simply take the cURL command below and replace the API Key, email and account id placeholders with your credentials. 
+To make your first request, simply take the cURL command below and replace the API token, and account id placeholders with your credentials.
 
 ```bash
 curl \
 -X POST \
 -d '{"url":"https://storage.googleapis.com/stream-example-bucket/video.mp4","meta":{"name":"My First Stream Video"}}' \
--H "X-Auth-Key: $API_KEY" \
--H "X-Auth-Email: $EMAIL" \
+-H "Authorization: Bearer $TOKEN" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/copy
 ```
 
@@ -73,8 +69,7 @@ Use the video UID from the first step to poll the video:
 
 ```bash
 curl \
--H "X-Auth-Key: $API_KEY" \
--H "X-Auth-Email: $EMAIL" \
+-H "Authorization: Bearer $TOKEN" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/$VIDEO_UID
 ```
 
@@ -137,3 +132,10 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
       allowFullScreen></iframe>
   </div>
 </figure>
+
+### Next steps
+
+ - [Securing your Stream](/viewing-videos/securing-your-stream)
+ - [Displaying thumbnails to your video](/viewing-videos/securing-your-stream)
+ - [Programatically controling the video player](/viewing-videos/using-the-player-api)
+ - [Uploading without a API token](/uploading-videos/direct-creator-uploads)

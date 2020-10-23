@@ -14,8 +14,7 @@ Make an HTTP request with content-type header set to `multipart/form-data` and i
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: $APIKEY" \
--H "X-Auth-Email: $EMAIL" \
+-H "Authorization: Bearer $TOKEN" \
 -F file=@/Users/kyle/Desktop/video.mp4 \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
@@ -79,7 +78,7 @@ pip install -U tus.py
 ```
 
 ```bash
-tus-upload --chunk-size 5242880 --header X-Auth-Key $APIKEY --header X-Auth-Email $EMAIL $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+tus-upload --chunk-size 5242880 --header Authorization "Bearer $TOKEN" $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -119,8 +118,7 @@ func main() {
 	defer f.Close()
 
 	headers := make(http.Header)
-	headers.Add("X-Auth-Email", "$EMAIL")
-	headers.Add("X-Auth-Key", "$APIKEY")
+	headers.Add("Authorization", "Bearer $TOKEN")
 
 	config := &tus.Config{
 		ChunkSize:           5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
@@ -170,7 +168,7 @@ npm install tus-js-client
 Set up an index.js and configure:
 
 * API endpoint with your Cloudflare Account ID
-* Request headers to include your Cloudflare Email and API Key
+* Request headers to include a API token
 
 ```javascript
 var fs = require("fs");
@@ -184,8 +182,7 @@ var size = fs.statSync(path).size;
 var options = {
   endpoint: "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream",
   headers: {
-    'X-Auth-Email': '$EMAIL',
-    'X-Auth-Key': '$APIKEY',
+    'Authorization': 'Bearer $TOKEN',
   },
   chunkSize: 5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
   resume: true,

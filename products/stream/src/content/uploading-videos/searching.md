@@ -4,7 +4,7 @@ You can search for videos by name through the Stream API by adding a `search` qu
 
 ## What you will need
 
-To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account), your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
+To make API requests you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account) and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
 ## cURL example
 
@@ -12,7 +12,6 @@ This example lists media where the name matches `puppy.mp4`.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?search=puppy" \
-     -H "X-Auth-Email: $EMAIL" \
-     -H "X-Auth-Key: $APIKEY" \
+     -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json"
 ```
