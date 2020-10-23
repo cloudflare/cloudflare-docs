@@ -14,10 +14,14 @@ The Cloudflare certificate can be downloaded [from this location](../static/Clou
 To verify your download, check that the certificates thumbprint matches:
 
 #### SHA1
-`BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C`
+```txt
+BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
+```
 
 #### SHA256
-`F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF`
+```txt
+F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
+```
 
 ## Add certificate to your system
 

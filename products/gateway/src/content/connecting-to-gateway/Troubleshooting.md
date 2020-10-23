@@ -74,6 +74,8 @@ In order to accomodate applications that take advantage of certificate pinning, 
 
 Some common applications that make use of certificate pinning include:
 
+<TableWrap>
+
 | Application     | FQDN               | Bypass Rules                                                                           |
 |-----------------|--------------------|----------------------------------------------------------------------------------------|
 | Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |
@@ -82,3 +84,5 @@ Some common applications that make use of certificate pinning include:
 | Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |
 | Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |
 | USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |
+
+</TableWrap>
