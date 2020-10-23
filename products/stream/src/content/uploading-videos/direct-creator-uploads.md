@@ -21,38 +21,36 @@ your email address and your Cloudflare [account ID](https://www.cloudflare.com/a
 There are several constraints you can enforce on your user's uploads through the
 body of the `POST` request:
 
-`maxDurationSeconds` is a required integer field that enforces the maximum
-duration in seconds for a video the user uploads.  For direct uploads, Stream
-requires videos are at least 1 second in length, and restricts to a maximum of 6
-hours.  Therefore, this field must be greater than 1 and less than 21,600.
+<Definitions>
 
-`expiry` is an optional string field that enforces the time after which
-the unique one-time upload URL is invalid.  The time value must be formatted
-in RFC3339 layout and will be interpretted against UTC time zone.  If an expiry
-is set, it must be no less than two minutes in the future, and not more than 6
-hours in the future.  If an expiry is not set, the upload URL will expire 30
-minutes after it's creation.
+  - `maxDurationSeconds` <Type>integer</Type> <PropMeta>required</PropMeta>   
+    - Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
 
-Additionally, you can limit where the video can be embedded through these fields:
+  - `expiry` <Type>string (date)</Type> <PropMeta>default: now + 6 hours</PropMeta> 
+    - Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpretted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
 
-`requireSignedURLs` is an optional boolean field that limits the permission to
-view the video.  This field must be a boolean value.  To learn more about signed
-URLs, please visit our [documentation](/security/signed-urls/).
+</Definitions>
 
-`allowedOrigins` is an optional array of strings field that limits the domains a
-video can be embedded on.  To learn more about allowed domains, please visit our
-[security considerations](/security/security-considerations/).
+Additionally, you can control securiy features through these fields:
 
-`thumbnailTimestampPct` is an optional number field that sets the timestamp
-location of thumbnail image. To learn more about timestamp,
-please visit our [documentation](/thumbnails/).
+<Definitions>
 
-`watermark` is an optional field that contains the `uid` of watermark profile.
-Video uploaded by the link will be watermarked automatically. To learn more about
-watermark profile, please visit our [documentation](/watermarks/).
+  - `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta> 
+    - Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
 
-`meta` is an optional field that allows you to set the video's `name` along with
-any other additional arbitrary keys for metadata to be stored.
+  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>  
+    - Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
+
+  - `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta> 
+      - Sets the timestamp location of [thumbnail](/viewing-videos/displaying-thumbnails) image to a percentage location of the video from 0 to 1.
+
+  - `watermark` <Type>string</Type> <PropMeta>default: _none_</PropMeta>
+    - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/uploading-videos/applying-watermarks) automatically.
+
+  - `meta` <Type>json map</Type> <PropMeta>default: _none_</PropMeta>
+    - Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
+
+</Definitions>
 
 ### Example request
 
