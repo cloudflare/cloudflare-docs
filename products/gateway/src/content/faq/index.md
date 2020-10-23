@@ -4,6 +4,17 @@ order: 12
 
 # FAQ
 
+## I have a dynamic IP address assigned to me by my ISP. How can I still use Gateway?
+There are two ways to connect to Cloudflare Gateway: with the Cloudflare WARP client and without the client. 
+
+You can filter DNS traffic without using the client by registering the source IP of your network and configuring Gateway as your upstream DNS resolver; however, if your IP address changes then Gateway will not know which policy to apply to your queries. This can be solved by using the DoH subdomain associated with the location for which you've configured a policy. When queries reach Gateway over DoH, only the DoH subdomain is used to determine which organization and policy to apply to the query--the source IP of the query is not considered. There are a several of DoH clients available for a variety of operating systems, and we recommend using cloudflared to send queries to Gateway via DoH if not using the Cloudflare WARP client. Simply install cloudflared and configure the DoH subdomain for a chosen location as the upstream resolver in cloudflared. 
+
+[Install and configure cloudflared](https://developers.cloudflare.com/1.1.1.1/dns-over-https/cloudflared-proxy)
+
+Connecting to Gateway with the Cloudflare WARP client creates a secure connection to the Cloudflare edge and also affords you the ability to send queries to Gateway over DoH. Using the Cloudflare WARP client allows you to apply security for your users wherever they are regardless of location or source IP address. 
+
+[Learn more about the Cloudflare WARP client](https://developers.cloudflare.com/warpclient/)
+
 ## How can I check if Gateway is blocking a domain?
 After you blocked a domain using a policy, you can use either `dig` or `nslookup` to see if it's working.
 

@@ -1,37 +1,14 @@
 ---
-order: 6
+order: 10
 ---
 
 # Troubleshooting
 
 ### I receive an untrusted certificate warnings for every page and I am unable to browse the internet.
 
-#### Download and install the Cloudflare root certificate on a user's device
-1. Navigate to the **Settings** tab on your [Teams dashboard](https://dash.teams.cloudflare.com).
-2. Click on **Account**.
-3. Scroll down to find the **Certificates** card.
-4. Click on **Download**. 
+Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 
-![Download certificate](../static/update-certificates-page.png)
-
-You will now need to add the certificate to your system to ensure your web browser will use this certificate to establish HTTPS connections.
-
-#### Add certificate to your system
-
-1. If you are on a Mac, **double-click** on the .pem file.
-2. The certificate is now listed in the **Keychain Access** application.
-
-![Keychain](../static/listed-in-keychain.png)
-
-3. Double-click on the certificate and then click on **Trust**.
-
-![Keychain](../static/cert-click-on-trust.png)
-
-4. Select **Always Trust** from the drop-down menu for **When using this certificate**.
-
-![Always trust](../static/cert-select-always-trust.png)
-
-5. Close the menu.
+To install the Cloudflare root certificate, follow the steps [found here](/install-cloudflare-cert.md).
 
 ### Even though I installed the Cloudflare certificate on my system, mobile applications warn of an invalid certificate.
 
@@ -54,7 +31,7 @@ Cloudflare Gateway is designed to protect users by default. In the event this pa
 
 We present an HTTP error page in the following cases:
 
-### An untrusted certificate is presented from the origin to Gateway
+#### An untrusted certificate is presented from the origin to Gateway.
 
 Gateway will consider a certificate is untrusted if any of these three conditions are true:
 
@@ -62,16 +39,50 @@ Gateway will consider a certificate is untrusted if any of these three condition
 * The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
 * There is at least one expired certificate in the certificate chain for the server certificate
 
-### Common certificate errors
+#### Common certificate errors
 
 For example in the event of a certificate common name mismatch.
 
-
-### Insecure cipher suite
+#### Insecure cipher suite
 
 When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc.)
 
 We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future. 
 
+#### I created a bypass rule or disabled TLS interception completely and inspection seems to still be occuring.
 
+Disabling TLS interception for a previously inspected hostname requires the HTTP connection to be restarted (i.e., closing the browser) for the bypass to take effect.
 
+### Does Cloudflare have a global policy to allow, block, or bypass anything in addition to what I've configured?
+
+Cloudflare provides organizations the tools to protect themselves from advanced threats in the simpliest way possible. However, we won't configure any rules without the knowledge of our customers--we'd rather make it easy for you to do so. A customer's rules are always evaluated first (and exclusively) with one exception: We have a single global rule to ensure that the Cloudflare WARP client can connect to the Cloudflare edge even in the event that the Cloudflare root certificate was not installed:
+
+```
+Selector: hostname
+Operator: is
+Value: cloudflareclient.com
+Action: bypass
+```
+
+This allows the WARP client to connect to Cloudflare and determine if the Cloudflare certificate is not present and trusted on the local device; and if not, then the client will alert the user. 
+
+### I'm using a common application and it seems unable to connect when I inspect HTTP traffic or presents an untrusted certificate error. 
+
+The application may use certificate pinning. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application. This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in oder to decrypt the traffic. Unfortunately, this is exactly what TLS interception in a Secure Web Gateway does although for the purposes of securing a user's web traffic. 
+
+In order to accomodate applications that take advantage of certificate pinning, a bypass for the hostnames associated with the application must be configured in the Gateway L7 firewall. In the future, Gateway will provide the ability for organizations to simply select the name or type of application in order to configure rules. 
+
+Some common applications that make use of certificate pinning include:
+
+<TableWrap>
+
+| Application     | FQDN               | Bypass Rules                                                                           |
+|-----------------|--------------------|----------------------------------------------------------------------------------------|
+| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |
+| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |
+| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |
+| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |
+| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |
+| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |
+
+</TableWrap>
