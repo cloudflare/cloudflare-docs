@@ -62,7 +62,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `autoplay` <PropMeta>default: `false`</PropMeta>
 
-  Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
+  - Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
     <Notice>
 
@@ -72,19 +72,19 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `controls` <PropMeta>default: `true`</PropMeta>
 
-  Shows video controls such as buttons for play/pause, volume controls.
+  - Shows video controls such as buttons for play/pause, volume controls.
 
 - `loop` <PropMeta>default: `false`</PropMeta>
 
-  If enabled the player will automatically seek back to the start upon reaching the end of the video.
+  - If enabled the player will automatically seek back to the start upon reaching the end of the video.
 
 - `muted` <PropMeta>default: `false`</PropMeta>
 
-  If set, the audio will be initially silenced.
+  - If set, the audio will be initially silenced.
 
 - `preload` <PropMeta>default: `none`</PropMeta>
 
-  This enumerated option is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may specify the value `preload="auto"` to preload the beginning of the video. Not including the option or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
+  - This enumerated option is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may specify the value `preload="auto"` to preload the beginning of the video. Not including the option or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
 
     <Notice>
 
@@ -94,10 +94,10 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `poster` <PropMeta>defaults to the first frame of the video</PropMeta>
 
-  A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
+  - A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
 
 - `src`
 
-  The video id from the video you've uploaded to Cloudflare Stream should be included here.
+  - The video id from the video you've uploaded to Cloudflare Stream should be included here.
 
 </Definitions>
