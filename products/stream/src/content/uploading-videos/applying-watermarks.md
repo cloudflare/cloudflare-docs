@@ -16,7 +16,7 @@ Watermark profile has many customizable options. However, the default parameters
 ### Step 1: Create a profile
 
 ```bash
-curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -X POST -H 'Authorization: Bearer $TOKEN' \
 -F file=@/Users/rchen/cloudflare.png \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ```
@@ -25,8 +25,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 
 ```bash
 tus-upload --chunk-size 5242880 \
---header X-Auth-Key $APIKEY \
---header X-Auth-Email $EMAIL \
+--header Authentication 'Bearer $TOKEN' \
 --metadata watermark $WATERMARKUID \
 /Users/rchen/cat.mp4 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
@@ -37,8 +36,7 @@ tus-upload --chunk-size 5242880 \
 ## Profiles
 
 To create, list, delete, or get information about the profile, you will need your
-[Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
-and your email address.
+[Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
 
 ### Optional parameters
 
@@ -82,7 +80,7 @@ and your email address.
 
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
 ```bash
-curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -X POST -H "Authorization: Bearer $TOKEN" \
 -F file=@{path-to-image-locally} \
 -F name='marketing videos' \
 -F opacity=1.0 \
@@ -96,7 +94,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
 ```bash
-curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -X POST -H "Authorization: Bearer $TOKEN" \
 -H 'Content-Type: application/json' \
 -d '{
   "url": "{url-to-image}",
@@ -144,7 +142,7 @@ Unfortunately, Stream does not currently support specifying watermark profile at
 ### Upload video with a link
 
 ```bash
-curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -X POST -H "Authorization: Bearer $TOKEN" \
 -H 'Content-Type: application/json' \
 -d '{
   "url": "{url-to-video}",
@@ -191,8 +189,7 @@ highlight: [10,11,12,13,14,15,16,17,18,19,20,21,22]
 
 ```bash
 tus-upload --chunk-size 5242880 \
---header X-Auth-Key $APIKEY \
---header X-Auth-Email $EMAIL \
+--header Authentication 'Bearer $TOKEN' \
 --metadata watermark $WATERMARKUID \
 $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
@@ -201,7 +198,7 @@ $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
 
 ```bash
-curl -X POST -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -X POST -H "Authorization: Bearer $TOKEN" \
 -H 'Content-Type: application/json' \
 -d '{
   "maxDurationSeconds": 3600,
@@ -246,7 +243,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 To view a watermark profile that you created:
 
 ```bash
-curl -X GET -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -H "Authorization: Bearer $TOKEN" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
 ```
 
@@ -278,7 +275,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERM
 To list watermark profiles that you created:
 
 ```bash
-curl -X GET -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -H "Authorization: Bearer $TOKEN" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 ```
 
@@ -325,7 +322,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/
 To delete a watermark profile that you created:
 
 ```bash
-curl -X DELETE -H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+curl -X DELETE -H 'Authorization: Bearer $TOKEN' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks/$WATERMARKUID
 ```
 
