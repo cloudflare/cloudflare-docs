@@ -35,7 +35,7 @@ If the query is in this step, it means that the DNS query is using IPv6. Gateway
 ## IPv4
 Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log the DNS requests. When you go through onboarding, or in our location tab, the dashboard automatically identifies the public source IP address.
 
-If you are using Cloudflare Gateway as part of a paid plan, you can manually enter the IP address and netmask of your location. The IP address for the location from which you are interfacing with the Teams dashboard will populate the IP address field. Use this as a quick reference for the location or type in the public IP address and CIDR notation for the new location.
+If you are using Cloudflare Gateway as part of a Teams Gateway Enterprise or Teams Enterprise subscription, you can manually enter the IP address and netmask of your location. The IP address for the location from which you are interfacing with the Teams dashboard will populate the IP address field. Use this as a quick reference for the location or type in the public IP address and CIDR notation for the new location.
 
 On your router or if you are using a device or a daemon, forward DNS queries to the following IP addresses:
 
