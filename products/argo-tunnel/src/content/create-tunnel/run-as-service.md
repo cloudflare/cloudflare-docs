@@ -27,7 +27,9 @@ If you have already logged in and have a configuration file in `~/.cloudflared/`
 If you do not have a configuration file, you will need to create a config.yml file with fields listed above. You can pass a custom file by running `cloudflared --config CONFIG-FILE service install`.
 
 <Aside>
+
 The above arguments are required for pre-configured Argo Tunnel deployments. If you are using legacy Argo Tunnel, without names, you can append the `--legacy` flag when running cloudflared tunnel install command.
+
 </Aside>
 
 ## macOS
