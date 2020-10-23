@@ -51,7 +51,7 @@ You can change this default value by setting the "thumbnailTimestampPct" value u
 
 ```bash
 curl -X POST \
--H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-H "Authorization: Bearer $TOKEN" \
 -d '{"uid": "$VIDEOID", "thumbnailTimestampPct": <pct>}' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```
@@ -61,7 +61,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 The example will yield a request:
 ```bash
 curl -X POST \
--H "X-Auth-Key: $APIKEY" -H "X-Auth-Email: $EMAIL" \
+-H "Authorization: Bearer $TOKEN" \
 -d '{"uid": "$VIDEOID", "thumbnailTimestampPct": 0.5}' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```

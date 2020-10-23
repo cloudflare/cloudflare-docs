@@ -4,7 +4,7 @@ order: 3
 
 # Direct creator uploads
 
-Direct creator uploads allow users to upload videos without API keys. A common place to
+Direct creator uploads allow users to upload videos without API tokens. A common place to
 use Direct creator uploads is on web apps, client side applications, or on mobile apps
 where users upload content directly to Stream.
 
@@ -13,8 +13,7 @@ where users upload content directly to Stream.
 To give users the ability to directly upload their videos, first generate and
 provide them with a unique one-time upload URL with the following API request.
 
-To make API requests you will need your [Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
-your email address and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
+To make API requests you will need your [Cloudflare API token](https://www.cloudflare.com/a/account/my-account) and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/).
 
 ### Upload constraints
 
@@ -56,8 +55,7 @@ Additionally, you can control securiy features through these fields:
 
 ```bash
 curl -X POST \
- -H 'X-Auth-Key:$APIKEY' \
- -H 'X-Auth-Email:$EMAIL' \
+ -H 'Authorization: Bearer $TOKEN' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
  --data '{
     "maxDurationSeconds": 3600,

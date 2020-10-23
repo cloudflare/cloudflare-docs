@@ -40,7 +40,7 @@ Please refer to [Cloudflare GraphQL analytics for HTTP requests](https://develop
 Here is how you would get the view count and minutes viewed for the videos in your Stream account:
 
 1. Make a query to https://api.cloudflare.com/client/v4/graphql
-1. Include your Cloudflare email and key in the headers (see cURL example included on this page)
+1. Include your Cloudflare API token in the headers (see cURL example included on this page)
 1. It is important that you change the $ACCOUNT_ID with your account ID and the date range
 1. The body of the query should contain the following GraphQL Query:
 
@@ -78,8 +78,7 @@ Here is the exact cURL request:
 curl --request POST \
 --url https://api.cloudflare.com/client/v4/graphql \
 --header 'content-type: application/json' \
---header 'x-auth-email: $EMAIL' \
---header 'x-auth-key: $CF_KEY' \
+--header 'Authorization: Bearer $TOKEN' \
 --data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
 ```
 

@@ -8,9 +8,7 @@ Adding captions and subtitles to your video library.
 
 ## Add or modify a caption
 
-To create or modify a caption on a video, you will need your
-[Cloudflare API key](https://www.cloudflare.com/a/account/my-account)
-and your email address.
+To create or modify a caption on a video a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account) is required.
 
 The `$LANGUAGE` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers).  For convenience, the most common
 language codes are provided [at the bottom of this document](#most-common-language-codes).
@@ -38,8 +36,7 @@ be created; if sent `de`, the label `Deutsch` will be created.
 
 ```bash
 curl -X PUT \
- -H 'X-Auth-Key:$APIKEY' \
- -H 'X-Auth-Email:$EMAIL' \
+ -H 'Authorization: Bearer $TOKEN' \
  -F file=@/Users/mickie/Desktop/example_caption.vtt \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/$LANGUAGE
 ```
@@ -63,7 +60,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/
 To view captions associated with a video:
 
 ```bash
-curl -H 'X-Auth-Key:$APIKEY' -H 'X-Auth-Email:$EMAIL'
+curl -H 'Authorization: Bearer $TOKEN' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 ```
 
@@ -93,8 +90,7 @@ To remove a caption associated with your video:
 
 ```bash
 curl -X DELETE \
- -H 'X-Auth-Key:$APIKEY' \
- -H 'X-Auth-Email:$EMAIL' \
+ -H 'Authorization: Bearer $TOKEN' \
  https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions/$LANGUAGE
 ```
 
