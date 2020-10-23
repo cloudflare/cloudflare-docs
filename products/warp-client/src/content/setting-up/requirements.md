@@ -31,7 +31,7 @@ order: 1
   </tbody>
 </table>
 
-__[Download Cloudflare_WARP_Release-x64.msi](https://1.1.1.1/Cloudflare_WARP_Release-x64.msi)__
+__[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi)__
 
 ## macOS
 <table>
@@ -59,7 +59,7 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://1.1.1.1/Cloudflare_WARP_Rel
   </tbody>
 </table>
 
-__[Download Cloudflare WARP.zip](https://1.1.1.1/Cloudflare%20WARP.zip)__
+__[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)__
 
 ## iOS
 <table>

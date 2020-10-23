@@ -32,7 +32,7 @@ order: 2
 </table>
 
 ## Steps to download
-1. [Download __Cloudflare_WARP_Release-x64.msi__](https://1.1.1.1/Cloudflare_WARP_Release-x64.msi).
+1. [Download __Cloudflare_WARP_Release-x64.msi__](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi).
 1. Navigate to Downloads folder and double-click on `Cloudflare_WARP_Release-x64.msi`.
 1. Follow the instructions in the installer to complete installation.
   - Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
