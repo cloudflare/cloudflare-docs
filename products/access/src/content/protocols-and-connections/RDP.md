@@ -188,7 +188,7 @@ This command can be wrapped as a desktop shortcut so that end users do not need 
 
 3. When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
-### 3. Bastion or Jump Host Model (optional)
+### 3. Bastion or Jump Host Model (optional)
 
 If you are deploying Cloudflare Access for RDP in a bastion or jump host model:
 
