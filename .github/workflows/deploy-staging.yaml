@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - staging
 
 jobs:
   changes:
@@ -132,12 +132,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/1.1.1.1"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/1.1.1.1"
-          environment: "production"
 
   deploy-access:
     runs-on: ubuntu-latest
@@ -164,12 +158,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/access"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/access"
-          environment: "production"
 
   deploy-analytics:
     runs-on: ubuntu-latest
@@ -196,12 +184,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/analytics"
-          environment: "production"
 
   deploy-api:
     runs-on: ubuntu-latest
@@ -228,12 +210,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/api"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api"
-          environment: "production"
 
   deploy-argo-tunnel:
     runs-on: ubuntu-latest
@@ -260,12 +236,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/argo-tunnel"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/argo-tunnel"
-          environment: "production"
 
   deploy-byoip:
     runs-on: ubuntu-latest
@@ -292,12 +262,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/byoip"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/byoip"
-          environment: "production"
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -324,12 +288,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/distributed-web"
-          environment: "production"
 
   deploy-docs-engine:
     runs-on: ubuntu-latest
@@ -356,12 +314,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/docs-engine"
-          environment: "production"
 
   deploy-events:
     runs-on: ubuntu-latest
@@ -388,12 +340,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/events"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/events"
-          environment: "production"
 
   deploy-firewall:
     runs-on: ubuntu-latest
@@ -420,12 +366,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/firewall"
-          environment: "production"
 
   deploy-gateway:
     runs-on: ubuntu-latest
@@ -452,12 +392,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/gateway"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/gateway"
-          environment: "production"
 
   deploy-http3:
     runs-on: ubuntu-latest
@@ -484,12 +418,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/http3"
-          environment: "production"
 
   deploy-images:
     runs-on: ubuntu-latest
@@ -516,12 +444,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/images"
-          environment: "production"
 
   deploy-internet:
     runs-on: ubuntu-latest
@@ -548,12 +470,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/internet"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/internet"
-          environment: "production"
 
   deploy-load-balancing:
     runs-on: ubuntu-latest
@@ -580,12 +496,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/load-balancing"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/load-balancing"
-          environment: "production"
 
   deploy-logs:
     runs-on: ubuntu-latest
@@ -612,12 +522,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/logs"
-          environment: "production"
 
   deploy-magic-transit:
     runs-on: ubuntu-latest
@@ -644,12 +548,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-transit"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/magic-transit"
-          environment: "production"
 
   deploy-mobile-sdk:
     runs-on: ubuntu-latest
@@ -676,12 +574,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/mobile-sdk"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/mobile-sdk"
-          environment: "production"
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -708,12 +600,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/network-interconnect"
-          environment: "production"
 
   deploy-randomness-beacon:
     runs-on: ubuntu-latest
@@ -740,12 +626,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/randomness-beacon"
-          environment: "production"
 
   deploy-registrar:
     runs-on: ubuntu-latest
@@ -772,12 +652,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/registrar"
-          environment: "production"
 
   deploy-spectrum:
     runs-on: ubuntu-latest
@@ -804,12 +678,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/spectrum"
-          environment: "production"
 
   deploy-ssl:
     runs-on: ubuntu-latest
@@ -836,12 +704,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ssl"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/ssl"
-          environment: "production"
 
   deploy-stream:
     runs-on: ubuntu-latest
@@ -868,12 +730,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/stream"
-          environment: "production"
 
   deploy-tenant:
     runs-on: ubuntu-latest
@@ -900,12 +756,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/tenant"
-          environment: "production"
 
   deploy-terraform:
     runs-on: ubuntu-latest
@@ -932,12 +782,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/terraform"
-          environment: "production"
 
   deploy-time-services:
     runs-on: ubuntu-latest
@@ -964,12 +808,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/time-services"
-          environment: "production"
 
   deploy-waf:
     runs-on: ubuntu-latest
@@ -996,12 +834,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/waf"
-          environment: "production"
 
   deploy-warp-client:
     runs-on: ubuntu-latest
@@ -1028,12 +860,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/warp-client"
-          environment: "production"
 
   deploy-workers:
     runs-on: ubuntu-latest
@@ -1060,9 +886,3 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/workers"
-          environment: "production"
