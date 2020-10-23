@@ -20,7 +20,7 @@ The locations of these files can be found in the [Stream API for each video](htt
 
 The `playback` object contains entries for all available playback methods
 
-```javascript
+```json
 //...
 "playback": {
     "hls": "https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8",
@@ -45,8 +45,12 @@ If a hint or combination of hints would cause an invalid manifest to be served, 
 
 Currently, the following hints are available:
 
-- `clientBandwidthHint` - Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
+<Definitions>
 
+  - `clientBandwidthHint` <Type>float</Type>
+    - Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
+
+</Definitions>
 
 #### Examples
 
@@ -60,9 +64,7 @@ This removes all video representations with a bitrate less than 1.8Mbps from the
 
 In this case, a customer is expressing their preference to have their content display at a higher minimum quality.
 
-## Caveats
+## Limitations
 
-Some features and guarantees are provided only on the Stream web player.
-
-- [Analytics](/analytics/) are not collected by third-party players. This does not affect billing.
-- Error reporting is not integrated by third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.
+- [Analytics](/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard. 
+- Automatic error reporting is not available to third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.
