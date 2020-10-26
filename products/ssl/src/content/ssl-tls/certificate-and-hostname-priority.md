@@ -19,11 +19,11 @@ For any given hostname, Cloudflare uses the following logical order to determine
 
 | Priority | Certificate Type|
 | --- | --- |
-| 1 | [Custom Legacy](https://developers.cloudflare.com/ssl/custom-certificates/)|
-| 2 | [Custom SNI-Only](https://developers.cloudflare.com/ssl/custom-certificates/)|
-| 3 | [Custom Hostname (SSL for SaaS)](https://developers.cloudflare.com/ssl/ssl-for-saas/)|
+| 1 | [Custom Legacy](/custom-certificates/)|
+| 2 | [Custom SNI-Only](/custom-certificates/)|
+| 3 | [Custom Hostname (SSL for SaaS)](/ssl-for-saas/)|
 | 4 | [Dedicated](https://support.cloudflare.com/hc/articles/228009108) or Advanced|
-| 5 | [Universal](https://developers.cloudflare.com/ssl/universal-ssl/)|
+| 5 | [Universal](/universal-ssl/)|
 
 --------
 
@@ -35,6 +35,7 @@ Cloudflare uses the following logical order to determine the certificate and set
 - If no SNI is presented, Cloudflare determines the certificate based on the IP address if support for TLS handshakes made without SNI is enabled for the zone.
 
 ### Hostname priority
+
 Hostname matching at Cloudflare’s edge follows DNS convention: a hostname always matches an exact resource record (RR) before a wildcard RR. This means that for a zone file for a Cloudflare zone that contains a RR that is an exact hostname match and a RR that is a wildcard match, Cloudflare’s edge will always apply the zone settings and origin for the exact match.
 
 Additionally, a Cloudflare zone using the SSL for SaaS product (a SaaS provider) may create Custom Hostnames. These are hostnames not belonging to the zone configured to use the SSL for SaaS product. For example, a zone, *saasprovider.com*, is configured to use the SSL for SaaS product and creates a Custom Hostname for *example.com*. Custom Hostnames allow a SaaS provider to order certificates and manage some settings for the Custom Hostname, whose content is ultimately provided and served by the SaaS provider.
@@ -55,7 +56,7 @@ DNS hostnames are created under the DNS section.  Traffic is proxied to Cloudfla
 
 Legacy Custom hostnames are created under the SSL/TLS — Custom Hostname, those hostnames proxy traffic when the owner of the custom hostname CNAMEs to the Cloudflare zone.
 
-New Custom Hostnames are created under SSL/TLS — Custom Hostname, those hostnames proxy traffic when [hostname verification](https://developers.cloudflare.com/ssl/ssl-for-saas/hostname-verification/) is completed and the custom hostname is marked active.
+New Custom Hostnames are created under SSL/TLS — Custom Hostname, those hostnames proxy traffic when [hostname verification](/ssl-for-saas/hostname-verification/) is completed and the custom hostname is marked active.
 
 New Custom Hostnames that are successfully completed take priority over any other hostname routing the traffic to the Cloudflare zone where the new custom hostname is created.
 

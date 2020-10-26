@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Custom CSRs
+# Custom Certificate Signing Requests (CSRs)
 
 --------
 

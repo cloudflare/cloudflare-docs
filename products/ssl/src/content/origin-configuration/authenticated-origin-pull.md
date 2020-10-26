@@ -9,7 +9,7 @@ Authenticated Origin Pulls let origin web servers validate that a web request ca
 Authenticated Origin Pulls is important when taking advantage of the Cloudflare Web Application Firewall (WAF).
 Once your origin web server enforces Authenticated Origin Pulls, any HTTPS requests outside of Cloudflare are blocked from reaching your origin
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 Requests to gray-clouded records within Cloudflare DNS are also blocked.
 
@@ -25,7 +25,7 @@ Authenticated Origin Pull is configured via one of the following options:
 - Zone-Level Authenticated Origin Pull using customer certificates
 - Per-Hostname Authenticated Origin Pull using customer certificates
 
-<Aside type="warning">
+<Aside type='warning' header='Important'>
 
 Authenticated Origin Pull is incompatible with Railgun.
 
@@ -244,7 +244,7 @@ To upload a client certificate in Cloudflare:
   }
   ```
 
-  <Aside type="note">
+  <Aside type='note' header='Note'>
 
   Save the certificate ID “id” since it is required for the next step.
   </Aside>
@@ -306,7 +306,7 @@ For global:
 
 2. Upload multiple certificates following the steps in [Per-Hostname Authenticated Origin Pull](#per-hostname)
 
-  <Aside type="note">
+  <Aside type='note' header='Note'>
 
   Hostname certificates take precedence over zone certificates.
 
