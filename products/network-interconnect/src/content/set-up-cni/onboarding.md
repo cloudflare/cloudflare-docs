@@ -1,10 +1,8 @@
 ---
-title: Onboarding
-alwaysopen: true
-weight: 210
-hidden: false
+order: 0
 ---
 
+# Onboarding
 
 The Cloudflare Network Interconnect (CNI) onboarding process, from scoping to going live, typically takes 10-15 business days.
 

@@ -21,8 +21,6 @@ We support all cron expressions, including special characters, that evaluate to 
 - Minimum interval is 1 minute
 - Maximum interval is 12 months
 
-![workers-cron-diagram](./media/workers-cron-diagram.png)
-
 ### Examples
 
 Here are some common time intervals that may be useful for setting up your Cron Trigger.
@@ -35,8 +33,11 @@ Here are some common time intervals that may be useful for setting up your Cron 
 - `*/30 * * * *`
   - Every 30 minutes
 
-- `0 17 * * fri`
-  - 5PM on Friday
+- `0 17 * * sun` or `0 17 * * 1`
+  - 5PM on Sunday
+
+- `10 7 * * mon-fri` or `10 7 * * 2-6`
+  - 7:10AM on weekdays
 
 - `0 15 1 * *`
   - 3PM on first day of the month

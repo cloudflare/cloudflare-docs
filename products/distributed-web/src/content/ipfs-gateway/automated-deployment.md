@@ -1,8 +1,8 @@
 ---
-title: Automated Deployment
-alwaysopen: true
-weight: 4
+order: 4
 ---
+
+# Automated Deployment
 
 Static sites are pretty easy to deploy automatically. The code of the site is
 usually kept in a Git repository and deployed by pushing the latest commit to a

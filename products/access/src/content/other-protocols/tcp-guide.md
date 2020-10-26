@@ -1,7 +1,8 @@
 ---
-title: "Arbitrary TCP"
-alwaysopen: true
+order: 10
 ---
+
+# Arbitrary TCP
 
 Cloudflare Access provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to resources over arbitrary TCP without being on a virtual private network (VPN).
 
@@ -26,8 +27,8 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -38,7 +39,7 @@ Once selected, `cloudflared` will download a wildcard certificate for the site. 
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the resource at `tcp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
@@ -48,8 +49,8 @@ For example, if you share the resource at `tcp.site.com`, build a policy to only
 
 Run the following command to connect the resource to Cloudflare, replacing the `tcp.site.com` and `7870` values with your site and port.
 
-```bash
-cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
+```sh
+$ cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
 ```
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -64,8 +65,8 @@ Follow the same steps above to download and install `cloudflared` on the client 
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```bash
-cloudflared access tcp --hostname tcp.site.com --url localhost:9210
+```sh
+$ cloudflared access tcp --hostname tcp.site.com --url localhost:9210
 ```
 
 This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.

@@ -1,7 +1,8 @@
 ---
-title: Configuration File Format
-weight: 90
+order: 90
 ---
+
+# Configuration File Format
 
 The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Every command-line argument of `cloudflared` can be expressed in YAML.
 
@@ -13,7 +14,7 @@ hostname: [hostname]
 
 You can use `--config` to point to a non-standard YAML file location:
 
-```bash
+```sh
 $ cloudflared tunnel --config tunnels/config.yml
 ```
 
@@ -32,4 +33,4 @@ Flags that don't expect any value (such as `--hello-world`) should be specified 
 hello-world: true
 ```
 
-See the [full set of command-line arguments](/argo-tunnel/reference/arguments)
+See the [full set of command-line arguments](/reference/arguments)

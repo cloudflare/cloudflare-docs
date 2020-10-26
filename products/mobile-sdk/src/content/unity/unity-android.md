@@ -6,7 +6,7 @@ title: Getting Started with Unity for Android
 
 The Neumob Unity plugin implements support for using Neumob, allowing you to accelerate network requests in your Unity-Android builds.
 
-The Neumob Unity plugin requires Unity 5.0 or newer and API 14 and up. You can find the plugin on the `Unity Asset store <http://u3d.as/nYw>`_ or you can checkout the Github repository `here <https://github.com/neumob/neumob-unity-android>`_.
+The Neumob Unity plugin requires Unity 5.0 or newer and API 14 and up. You can find the plugin on the `Unity Asset store <http://u3d.as/nYw>`_ or you can checkout the GitHub repository `here <https://github.com/neumob/neumob-unity-android>`_.
 
 ## Installation ##
 

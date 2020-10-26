@@ -6,6 +6,14 @@ module.exports = {
   contentRepoFolder: "products/network-interconnect",
   externalLinks: [
     {
+      title: "Blog announcement",
+      url: "https://blog.cloudflare.com/cloudflare-network-interconnect/"
+    },
+    {
+      title: "CNI Partnerships",
+      url: "https://www.cloudflare.com/network-interconnect-partnerships/"
+    },
+    {
       title: "Cloudflare homepage",
       url: "https://cloudflare.com"
     }

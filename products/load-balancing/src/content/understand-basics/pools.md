@@ -1,16 +1,16 @@
 ---
-title: Pools
-alwaysopen: true
-weight: 13
+order: 13
 ---
 
-### Overview
+# Pools
+
+## Overview
 
 A Cloudflare Load Balancing pool represents a group of origin servers, each identified by their IP address or hostname. You can configure multiple pools, as well as failover priority (Pool A-> Pool B-> Pool C). If you're familiar with DNS terminology, think of a pool as a “record set,” except we only return addresses that are considered healthy. You can attach health checks to individual pools to tailor monitoring for collections of origin servers.
 
 ---
 
-### Important notes
+## Important notes
 
 When working with pools, note the following:
 
@@ -18,7 +18,7 @@ When working with pools, note the following:
 
 **The order of pools in the load balancer determines the standard failover priority**. When the number of healthy origins in a pool drops below the configured threshold, Load Balancing routes traffic to the next available pool.
 
-**By default, pools are ordered by date created**. You can reorder them from the Load Balancing dashboard and via Cloudflare API (use the Update Pools command to set a new <code>origins<strong> </strong></code>array).
+**By default, pools are ordered by date created**. You can reorder them from the Load Balancing dashboard and via Cloudflare API (use the Update Pools command to set a new `origins` array).
 
 **Dynamic Steering uses Round Trip Time (RTT) profiles to determine pool priority**. If there is no RTT data for a pool in a region or colocation center, Load Balancing will use pool order to determine failover priority.
 
@@ -26,19 +26,23 @@ When working with pools, note the following:
 
 ---
 
-### Properties
+## Properties
 
 Cloudflare Pool objects have the following properties:
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Name / type</strong>
-   </td>
-   <td><strong>Description / example</strong>
-   </td>
-   <td><strong>Constraints</strong>
-   </td>
+   <th><strong>Name / type</strong>
+   </th>
+   <th><strong>Description / example</strong>
+   </th>
+   <th><strong>Constraints</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td valign="top"><strong>check_regions</strong>
@@ -47,7 +51,7 @@ Cloudflare Pool objects have the following properties:
    </td>
    <td>A list of regions from which to run health checks. Null means every Cloudflare data center.
 <p />
-<code>
+<code class="InlineCode">
 [
 <p />
   "WEU",
@@ -67,7 +71,7 @@ Cloudflare Pool objects have the following properties:
    </td>
    <td>Creation time
 <p />
-<code>"2014-01-01T05:20:00.12345Z"</code>
+<code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code>
    </td>
    <td valign="top">Read only
    </td>
@@ -79,7 +83,7 @@ Cloudflare Pool objects have the following properties:
    </td>
    <td valign="top">A human-readable description of the pool
 <p />
-<code>"This pool is for example.com"</code>
+<code class="InlineCode">"This pool is for example.com"</code>
    </td>
    <td>
    </td>
@@ -89,15 +93,15 @@ Cloudflare Pool objects have the following properties:
 <p />
 <em>boolean</em>
    </td>
-   <td>Set to <code>true</code> to enable the pool; <code>false</code>, to disable. 
+   <td>Set to <code class="InlineCode">true</code> to enable the pool; <code class="InlineCode">false</code>, to disable.
 <p /><p />
 Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers associated with the pool to failover to the next pool (if any).
 <p />
-<code>true</code>
+<code class="InlineCode">true</code>
    </td>
-   <td>Default value: <code>true</code>
+   <td>Default value: <code class="InlineCode">true</code>
 <p />
-Valid values: <code>true</code>, <code>false</code>
+Valid values: <code class="InlineCode">true</code>, <code class="InlineCode">false</code>
    </td>
   </tr>
   <tr>
@@ -107,7 +111,7 @@ Valid values: <code>true</code>, <code>false</code>
    </td>
    <td valign="top">API item identifier tag for the pool
 <p />
-<code>"17b5962d775c646f3f9725cbc7a53df4"</code>
+<code class="InlineCode">"17b5962d775c646f3f9725cbc7a53df4"</code>
    </td>
    <td>Max. length: 32 bytes
 <p />
@@ -121,7 +125,7 @@ Read only
    </td>
    <td>The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and the load balancer will failover to the next available pool.
 <p />
-<code>2</code>
+<code class="InlineCode">2</code>
    </td>
    <td>
    </td>
@@ -133,7 +137,7 @@ Read only
    </td>
    <td valign="top">Last modification time
 <p />
-<code>"2014-01-01T05:20:00.12345Z"</code>
+<code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code>
    </td>
    <td>Read only
    </td>
@@ -145,7 +149,7 @@ Read only
    </td>
    <td valign="top">The ID of the monitor to use for health checking origins within this pool
 <p />
-<code>"f1aba936b94213e5b8dca0c0dbf1f9cc"</code>
+<code class="InlineCode">"f1aba936b94213e5b8dca0c0dbf1f9cc"</code>
    </td>
    <td valign="top">Max. length: 32 bytes
 <p />
@@ -159,7 +163,7 @@ Read only
    </td>
    <td>A short name (tag) for the pool. Only alphanumeric characters, hyphens and underscores are allowed.
 <p />
-<code>"primary-dc-1"</code>
+<code class="InlineCode">"primary-dc-1"</code>
    </td>
    <td>
    </td>
@@ -171,7 +175,7 @@ Read only
    </td>
    <td>The email address to which health status notifications are sent. This can be an individual mailbox or a mailing list.
 <p />
-<code>"someone@example.com"</code>
+<code class="InlineCode">"someone@example.com"</code>
    </td>
    <td>
    </td>
@@ -183,7 +187,7 @@ Read only
    </td>
    <td>The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy.
 <p />
-<code>
+<code class="InlineCode">
 [
 <p />
   {`{`}
@@ -207,78 +211,86 @@ Read only
   </tbody>
 </table>
 
+</TableWrap>
+
 ---
 
-### Managing pools via the Cloudflare API
+## Managing pools via the Cloudflare API
 
-#### Endpoints
+### Endpoints
 
 Pool endpoints are available in the Cloudflare API at both the user and account level, respectively:
 
 - `user/load_balancers/pools`
 - `accounts/:account_identifier/load_balancers/pools`
 
-#### Commands
+### Commands
 
 The Cloudflare API supports the following commands. For more detail, see _[Cloudflare API: Load Balancer Pools](https://api.cloudflare.com/#load-balancer-pools-properties)_.
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Command</strong>
-   </td>
-   <td><strong>Method</strong>
-   </td>
-   <td><strong>Endpoint</strong>
-   </td>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td>Create Pool
    </td>
-   <td><code>POST</code>
+   <td><code class="InlineCode">POST</code>
    </td>
-   <td><code>user/load_balancers/pools</code>
+   <td><code class="InlineCode">user/load_balancers/pools</code>
    </td>
   </tr>
   <tr>
    <td>Delete Pool
    </td>
-   <td><code>DELETE</code>
+   <td><code class="InlineCode">DELETE</code>
    </td>
-   <td><code>user/load_balancers/pools/:identifier</code>
+   <td><code class="InlineCode">user/load_balancers/pools/:identifier</code>
    </td>
   </tr>
   <tr>
    <td>List Pools
    </td>
-   <td><code>GET</code>
+   <td><code class="InlineCode">GET</code>
    </td>
-   <td><code>user/load_balancers/pools</code>
+   <td><code class="InlineCode">user/load_balancers/pools</code>
    </td>
   </tr>
   <tr>
    <td>Pool Details
    </td>
-   <td><code>GET</code>
+   <td><code class="InlineCode">GET</code>
    </td>
-   <td><code>user/load_balancers/pools/:identifier</code>
+   <td><code class="InlineCode">user/load_balancers/pools/:identifier</code>
    </td>
   </tr>
   <tr>
    <td>Pool Health Details
    </td>
-   <td><code>GET</code>
+   <td><code class="InlineCode">GET</code>
    </td>
-   <td><code>user/load_balancers/pools/:identifier/health</code>
+   <td><code class="InlineCode">user/load_balancers/pools/:identifier/health</code>
    </td>
   </tr>
   <tr>
    <td>Update Pool
    </td>
-   <td><code>PUT</code>
+   <td><code class="InlineCode">PUT</code>
    </td>
-   <td><code>user/load_balancers/pools/:identifier</code>
+   <td><code class="InlineCode">user/load_balancers/pools/:identifier</code>
    </td>
   </tr>
   </tbody>
 </table>
+
+</TableWrap>

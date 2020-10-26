@@ -1,7 +1,8 @@
 ---
-title: "SSH Connections"
-alwaysopen: true
+order: 16
 ---
+
+# SSH Connections
 
 Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activites like remote command execution.
 
@@ -30,8 +31,8 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -42,7 +43,7 @@ Once selected, `cloudflared` will download a wildcard certificate for the site. 
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
 
 For example, if you share the machine at `ssh.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
@@ -52,8 +53,8 @@ By default, the SSH protocol listens on port 22. Confirm which port your infrast
 
 Run the following command to connect the machine to Cloudflare, replacing the `ssh.site.com` and `22` values with your site and port.
 
-```bash
-cloudflared tunnel --hostname ssh.site.com --url ssh://localhost:22
+```sh
+$ cloudflared tunnel --hostname ssh.site.com --url ssh://localhost:22
 ```
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -74,8 +75,8 @@ Cloudflare Access does not require any unique commands or SSH wrappers. The only
 
 To generate generic configuration settings, run the following command:
 
-```bash
-cloudflared access ssh-config
+```sh
+$ cloudflared access ssh-config
 ```
 
 The command will print SSH configuration details in the following format:
@@ -89,8 +90,8 @@ Replace the `[your hostname]` value with the hostname configured for the remote 
 
 Optionally, if you know the hostname, you can run the following command to generate the exact SSH configuration details. Replace `ssh.site.com` with your remote machine's hostname.
 
-```bash
-cloudflared access ssh-config --hostname ssh.site.com
+```sh
+$ cloudflared access ssh-config --hostname ssh.site.com
 ```
 
 The command will print the following details:
@@ -104,8 +105,8 @@ Host ssh.site.com
 
 Run the following command to create a connection from the device to Cloudflare.
 
-```bash
-ssh username@ssh.site.com
+```sh
+$ ssh username@ssh.site.com
 ```
 
 `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
@@ -116,23 +117,20 @@ If you use SSH to reach a Git repository, you can continue to use the `git` comm
 
 Once configured, you can run the following command to test the connection:
 
-```bash
-git clone ssh -T username@git.site.com
+```sh
+$ git clone ssh -T username@git.site.com
 ```
 
 Cloudflare Access does not replace SSH key exchange with a Git repository.
 
 ### Service tokens
 
-[Service tokens](https://developers.cloudflare.com/access/service-auth/service-token/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
+[Service tokens](/service-auth/service-token/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
 
 ## Video guide
 
 In this video, you’ll learn how to use Cloudflare Access to protect an SSH connection by setting up a secure link with Argo Tunnel.
 
-<stream src="2379b6b85ee22866c4b45571bdb5fe35" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=2379b6b85ee22866c4b45571bdb5fe35"></script>
+<StreamVideo id="2379b6b85ee22866c4b45571bdb5fe35"/>
 
-
-
-A video guide is [also available](https://developers.cloudflare.com/access/videos/configuring-access/).
+A video guide is [also available](/videos/configuring-access/).

@@ -1,9 +1,9 @@
 ---
-title: Connecting Your Website
-alwaysopen: true
-weight: 3
+order: 3
 hidden: true
 ---
+
+# Connecting Your Website
 
 Cloudflare's gateway allows you to host your website on IPFS and still have it
 accessible from a custom domain name. This allows an end user to access your
@@ -41,7 +41,7 @@ content and keep it there as long as you pay your bill, or you can run your own
 IPFS node.
 
 If you opt to pay someone else, there are pinning services like
-[eternum.io](https://eternum.io) and [ipfsstore.it](https://ipfstore.it) which charge a few
+[eternum.io](https://eternum.io) and [ipfsstore.it](https://ipfsstore.it) which charge a few
 cents per month per gigabyte of storage and have a simple UI for uploading your
 content. These services are arguably the simplest option, but they don’t give
 you much flexibility.

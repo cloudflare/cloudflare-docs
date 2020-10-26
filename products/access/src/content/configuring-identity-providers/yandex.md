@@ -1,8 +1,9 @@
 ---
-title: "Yandex"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Yandex
+
 Yandex is a web search engine that also offers identity provider (IdP) services.
 
 ## Set up Yandex
@@ -26,7 +27,7 @@ To set up Yandex for Cloudflare Access:
 
     Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path:
 
-    ```shell
+    ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
@@ -45,7 +46,7 @@ To set up Yandex for Cloudflare Access:
 
     ![Cloudflare Access Login Methods](../static/yandex/yandex-5.png)
 
-    The **Add a Yandex identity provider** dialog displays.  
+    The **Add a Yandex identity provider** dialog displays.
 
 1. Paste the ID and password in the appropriate fields.
 
@@ -57,7 +58,7 @@ To set up Yandex for Cloudflare Access:
 
 1. In the Callback URI #1 field, input your authorization domain.
 
-    ```shell
+    ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 

@@ -1,12 +1,12 @@
 ---
-alwaysopen: true
-date: '2020-08-24'
-title: Scheduled Changes
-weight: 1
+type: table
+order: 1
 ---
 
-<table style="border: solid 2px darkgrey;">
-    <thead style="background:#ffeadf;">
+# Scheduled changes
+
+<TableWrap><table style="width: 100%">
+    <thead>
         <tr>
             <th>
                 Announcement Date
@@ -32,74 +32,5 @@ weight: 1
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                2020-09-01
-            </td>
-            <td>
-                2020-09-07
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                100173
-            </td>
-            <td>
-                Improve XSS detection.
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2020-09-01
-            </td>
-            <td>
-                2020-09-07
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                100304
-            </td>
-            <td>
-                Improve performance.
-            </td>
-            <td>
-                Disabled
-            </td>
-            <td>
-                Disabled
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2020-09-01
-            </td>
-            <td>
-                2020-09-07
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                100455
-            </td>
-            <td>
-                XSS - Catch Injection.
-            </td>
-            <td>
-                N/A
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
     </tbody>
-</table>
+</table></TableWrap>

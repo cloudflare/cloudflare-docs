@@ -1,9 +1,10 @@
 ---
-title: Wi-Fi
-weight: 20
+order: 20
 ---
 
-Wifi is radio signal transmitted over the air that your phone can intercept and encode because it contains a network interface card that specializes in doing this translation. The network interface card also helps identify the device to the router because it establishes and contains the MAC address. In some systems (like in gogo inflight wifi), MAC addresses are used as sources of truth to identify a device, but MAC addresses are just a configuration value and easy to spoof, so newer systems do not use that for identity.
+# Wi-Fi
+
+Wi-Fi is radio signal transmitted over the air that your phone can intercept and encode because it contains a network interface card that specializes in doing this translation. The network interface card also helps identify the device to the router because it establishes and contains the MAC address. In some systems (like in gogo inflight wifi), MAC addresses are used as sources of truth to identify a device, but MAC addresses are just a configuration value and easy to spoof, so newer systems do not use that for identity.
 
 The radio transmission signal comes from your router.
 

@@ -1,7 +1,8 @@
 ---
-title: Protocols
-weight: 20
+order: 2
 ---
+
+# Protocols
 
 Cloudflare supports the following TLS protocols:
 

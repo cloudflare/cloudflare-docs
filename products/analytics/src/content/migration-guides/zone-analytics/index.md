@@ -1,8 +1,9 @@
 ---
 title: Zone Analytics to GraphQL Analytics
-alwaysopen: true
-weight: 11
+order: 11
 ---
+
+# Zone Analytics to GraphQL Analytics
 
 The [Zone Analytics API](https://api.cloudflare.com/#zone-analytics-properties) allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
 
@@ -12,9 +13,11 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https:
 ```
 
 <details>
-<summary>**Response** (click arrow to expand)</summary>
-<code>
-{`{
+<summary>Response</summary>
+<div>
+
+```json
+{
   "success": true,
   "query": {
     "since": "2019-09-08T20:00:00Z",
@@ -245,13 +248,15 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https:
       }
     }
   }
-}`}
-</code>
+}
+```
+
+</div>
 </details>
-    
+
 As you can see from the response, Zone Analytics returns metrics along many dimensions and doesn't give you the option to control what you receive. With GraphQL Analytics, you can ask for only the data that you need. However, if you wanted to get exactly the same metrics and dimensions as you would from Zone Analytics, here is the query you would make:
 
-```bash
+```txt
 {
   viewer {
     zones(filter: {zoneTag: <ZONE_ID>}) {
@@ -306,14 +311,15 @@ As you can see from the response, Zone Analytics returns metrics along many dime
       }
     }
   }
-}    
+}
 ```
 
 <details>
-<summary>**Response** (click arrow to expand)</summary>
+<summary>Response</summary>
+<div>
 
-<code>
-{`{
+```json
+{
   "data": {
     "viewer": {
       "zones": [
@@ -492,10 +498,12 @@ As you can see from the response, Zone Analytics returns metrics along many dime
     }
   },
   "errors": null
-}`}
-</code>
+}
+```
+
+</div>
 </details>
 
-Notice that you can specify the request time period using a data set filter (_see [Filtering](/analytics/graphql-api/features/filtering/)_). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it's available.
+Notice that you can specify the request time period using a data set filter (_see [Filtering](/graphql-api/features/filtering/)_). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it's available.
 
 Also, if you want to get the totals for a particular period, rather than a breakdown by time period, simply remove the `datetimeMinute` field under `dimensions`.

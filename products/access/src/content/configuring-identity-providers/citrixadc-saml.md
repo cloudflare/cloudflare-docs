@@ -1,8 +1,9 @@
 ---
-title: "Citrix ADC SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Citrix ADC SAML
+
 
 
 Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Access.
@@ -12,7 +13,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
 1. Configure 2 SAML certificates:
    * A certificate to terminate TLS at the vServer.
 
-        <Aside type="note">
+        <Aside>
 
         Ensure that the certificate is issued by a publicly trusted CA.
         </Aside>
@@ -38,7 +39,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
    * **Name:** This is the IdP certificate name you defined in Step 1.
    * **Assertion Consumer Service URL:**
 
-    ```shell
+    ```txt
     https://example.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 

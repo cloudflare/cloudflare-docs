@@ -8,7 +8,7 @@ Workers is now free to enable for all, and are subject to some limits.
 
 ## Bundled
 
-To avoid the limits and enable KV, you can subscribe to the Workers Bundled plan for **$5 USD per month for an account**.
+To avoid the limits and enable KV, you can subscribe to the Workers Bundled plan for **$5 USD per month for an account**. This plan includes 10 million requests per month.
 
 With the Workers Bundled plan, requests beyond the included quota will be charged at **$0.50/million requests**.
 

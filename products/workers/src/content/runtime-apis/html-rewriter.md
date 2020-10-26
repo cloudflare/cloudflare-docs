@@ -365,7 +365,7 @@ This is what selectors are and what they are used for.
   - `E[foo*="bar"]`
     - an E element whose foo attribute value contains the substring bar
 
-  - <code>E[foo&#124;="en"]</code>
+  - <Code>E[foo&#124;="en"]</Code>
 
     - an E element whose foo attribute value is a hyphen-separated list of values beginning with en
 

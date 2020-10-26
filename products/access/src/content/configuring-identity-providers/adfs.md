@@ -1,8 +1,9 @@
 ---
-title: "SAML with Active Directory®"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# SAML with Active Directory®
+
 
 
 Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language (SAML).
@@ -75,7 +76,7 @@ To create a Relying Party Trust:
 
     Replace “your-domain” in this example with the authentication domain listed in Cloudflare Access, and include the callback in the path:
 
-    ```shell
+    ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
@@ -116,7 +117,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 Now you create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create _Access Policies_.
 
-<Aside type="note">
+<Aside>
 
 If you closed the Add Relying Trust wizard, use Explorer to find the <strong>Relying Party Trusts</strong> folder, select the newly created RPT file, and click <strong>Edit Claim Rules</strong> the <strong>Action\*/</strong> sidebar.
 </Aside>
@@ -199,8 +200,8 @@ To export the certificate:
 
 To ensure that ADFS signs the full response when communicating with Cloudflare, open your local **Powershell** and enter the following command:
 
-```shell
-    Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
+```bash
+Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
 ```
 
 ## Configure Cloudflare Access
@@ -218,7 +219,7 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 2. Enter an IdP **Provider Name**.
 3. Under **Single Sign On URL** enter:
 
-    ```shell
+    ```txt
     https://hostnameOfADFS/adfs/ls/
     ```
 
@@ -228,7 +229,7 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 
     You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above, for example:
 
-    ```shell
+    ```txt
     https://YourDomain/cdn-cgi/access/callback
     ```
 
@@ -250,7 +251,7 @@ To get your Cloudflare metadata file:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

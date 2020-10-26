@@ -1,7 +1,8 @@
 ---
-title: "GitLab"
-alwaysopen: true
+order: 3
 ---
+
+# GitLab
 
 [GitLab](https://about.gitlab.com/) is a continuous integration and delivery platform that includes Git repository source control, issue tracking, and release and testing tools.
 
@@ -32,7 +33,7 @@ An example policy is provided below.
 
 ![Access Policy](../static/gitlab/gitlab-web.png)
 
-These names are just examples; any name can be used for the subdomain. You can learn more about creating Access policies [here](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/).
+These names are just examples; any name can be used for the subdomain. You can learn more about creating Access policies [here](/setting-up-access/configuring-access-policies/).
 
 ## Connect GitLab to Cloudflare with Argo Tunnel
 
@@ -40,15 +41,15 @@ Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this 
 
 Argo Tunnel can be installed on the machine with the following commands.
 
-```bash
-sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+```sh
+$ sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
+$ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
 ```
 
 Once installed, you will need to authenticate `cloudflared`. The following command will print a URL that can be visited in another machine with a browser.
 
-```bash
-cloudflared login
+```sh
+$ cloudflared login
 ```
 
 Login with your Cloudflare credentials and select the hostname you intend to use. Cloudflare will then issue a certificate to the instance of `cloudflared` that can be used to create the subdomains required.
@@ -57,14 +58,14 @@ You will need to create two Tunnels: one for the web application and other for S
 
 The following commands will initiate the connections, but these will terminate if the machine restarts or is otherwise disrupted. For long-term use, these should be run as `systemd` services.
 
-```bash
-cloudflared tunnel --hostname gitlab.site.com --url localhost:80
+```sh
+$ cloudflared tunnel --hostname gitlab.site.com --url localhost:80
 ```
 
 Will establish the Tunnel for the web application.
 
-```bash
-cloudflared tunnel --hostname gitlab-ssh.site.com --url ssh://localhost:22
+```sh
+$ cloudflared tunnel --hostname gitlab-ssh.site.com --url ssh://localhost:22
 ```
 
 Will establish the Tunnel for SSH connections.
@@ -77,7 +78,7 @@ For SSH connections, the end user needs to install `cloudflared`. Users can foll
 
 Once installed, end users can then run the following command to print settings that will need to be added to their SSH configuration file.
 
-```bash
+```sh
 $ cloudflared access ssh-config --hostname gitlab-ssh.site.com
 ```
 
@@ -96,5 +97,4 @@ Once saved, the user can run any SSH commands directed to the GitLab instance. C
 
 ## Example video
 
-<stream src="d0fafb9d43ba50f533127805f3ffee67" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=d0fafb9d43ba50f533127805f3ffee67"></script>
+<StreamVideo id="d0fafb9d43ba50f533127805f3ffee67"/>

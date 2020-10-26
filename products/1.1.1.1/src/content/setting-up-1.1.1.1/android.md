@@ -1,11 +1,13 @@
 ---
-title: Android
+order: 1
 ---
+
+# Android
 
 ## Android 9 Pie
 
-Android Pie supports Private DNS, which uses DNS over TLS to secure your queries. 
-If your device runs Android 9, this is the recommended method to set up 1.1.1.1 because unlike previous versions 
+Android Pie supports Private DNS, which uses DNS over TLS to secure your queries.
+If your device runs Android 9, this is the recommended method to set up 1.1.1.1 because unlike previous versions
 of Android, it does not need to be configured for each new WiFi network.
 
 Follow these steps to configure your device to use 1.1.1.1.
@@ -18,13 +20,11 @@ Step 3: Enter `one.one.one.one` or `1dot1dot1dot1.cloudflare-dns.com` and hit Sa
 
 Step 4: Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is enabled.
 
-
-## Previous Versions
+## Previous versions
 
 Follow this quick guide to start using 1.1.1.1 on your Android.
 
-<stream src="62dceb0d5905f0c98a895d21409d6247" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=62dceb0d5905f0c98a895d21409d6247"></script>
+<StreamVideo id="62dceb0d5905f0c98a895d21409d6247"/>
 
 Step 1: Open up Settings.
 
@@ -40,9 +40,11 @@ Step 6: Change the IP Settings to the option called Static.
 
 Step 7: Remove any IP addresses that may be already listed and in their place add:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 8: Click Save. You may need to disconnect from the Wi-Fi and reconnect for the changes to take place.

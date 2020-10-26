@@ -1,8 +1,8 @@
 ---
-title: Automatically Starting Argo Tunnel
-weight: 30
+order: 30
 ---
 
+# Automatically starting Argo Tunnel
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
@@ -12,7 +12,7 @@ By default, Argo Tunnel expects all of the configuration to exist in the `cloudf
 
 Run the following command:
 
-```bash
+```sh
 $ sudo cloudflared service install
 ```
 
@@ -25,7 +25,8 @@ logfile: /var/log/cloudflared.log
 ```
 
 Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem` after you login. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `~/.cloudflared` directory on your system.
-```bash
+
+```sh
 $ mv cert.pem ~/.cloudflared/cert.pem
 ```
 
@@ -33,7 +34,7 @@ $ mv cert.pem ~/.cloudflared/cert.pem
 
 To run at login, open a Terminal and run the following command:
 
-```bash
+```sh
 $ cloudflared service install
 ```
 
@@ -41,7 +42,7 @@ Argo Tunnel will be installed as a launch agent, and start whenever you log in, 
 
 You can manually start the service by running:
 
-```bash
+```sh
 $ launchctl start com.cloudflare.cloudflared
 ```
 
@@ -50,7 +51,7 @@ Output will be logged to `~/Library/Logs/com.cloudflare.cloudflared.err.log` and
 
 If you wish to run at boot, open a Terminal and run the following command:
 
-```bash
+```sh
 $ sudo cloudflared service install
 ```
 
@@ -58,7 +59,7 @@ Argo Tunnel will be installed as a launch daemon, and start whenever your system
 
 You can manually start the service by running:
 
-```bash
+```sh
 $ sudo launchctl start com.cloudflare.cloudflared
 ```
 
@@ -76,7 +77,7 @@ When running as a service, Argo Tunnel expects its configuration at `C:\Windows\
 
 If you need to specify a custom config file location, you can do so in the the Windows registry after the service has been installed ([MSDN reference](https://docs.microsoft.com/en-us/dotnet/api/system.serviceprocess.servicebase.onstart?view=netframework-4.7.2)). Open `regedit`, go to the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`, and edit the `ImagePath` value to include `--config <path-to-config>`.
 
-<Aside type="note">
+<Aside>
 
 When running cloudflared as a service on Windows, the certificate path needs to be explicitly specified. This can be done in the config file:
 
@@ -86,8 +87,8 @@ origincert: C:\ABSOLUTE\PATH\TO\cert.pem
 
 In some cases, forward slashes should be used to set the explicit path to the certificate.
 
-* In "Raw" YAML scalars, the backslash should be used direct. For example, `C:\cert.pem`.
-* In single-quoted scalars, the backslash should be used direct. For example, `'C:\cert.pem'`.
+* In "Raw" YAML scalars, the backslash should be used directly. For example, `C:\cert.pem`.
+* In single-quoted scalars, the backslash should be used directly. For example, `'C:\cert.pem'`.
 * In double-quoted scalars, a forward slash should be used or the backslash should be escaped. For example, `"C:\\cert.pem"`.
 
 ```yaml
@@ -95,23 +96,26 @@ origincert: C:/cert.pem
 ```
 </Aside>
 
-<Aside type="note">
+<Aside>
 
-Cloudflared will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
+`cloudflared` will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
 </Aside>
 
-<Aside type="note">
+<Aside>
 
-Cloudflared does not support loading the system certificate pool in Windows.
-To supply a certificate pool to Cloudflared in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
+`cloudflared` does not support loading the system certificate pool in Windows.
+To supply a certificate pool to `cloudflared` in Windows, encode the pool into a PEM file and supply it through the `--origin-ca-pool` flag.
 </Aside>
 
 To start the service, go to Service Manager and start the **Argo Tunnel agent** service, or run the following command:
+
 ```bash
 C:\> sc start cloudflared
 ```
+
 If you are a Powershell user, run this command instead:
+
 ```bash
 PS C:> Start-Service cloudflared
 ```

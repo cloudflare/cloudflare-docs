@@ -1,14 +1,13 @@
 ---
-title: Connecting your Website
-alwaysopen: true
-weight: 3
+order: 3
 ---
 
+# Connecting your Website
 
 You can connect your own domain name to <https://cloudflare-eth.com> to allow
 Ethereum network access from your own domain. This means that anyone can send
 the HTTP (JSON RPC) queries as given in [Interacting with the Ethereum
-Gateway](https://developers.cloudflare.com/distributed-web/ethereum-gateway/interacting-with-the-eth-gateway/)
+Gateway](./interacting-with-the-eth-gateway/)
 to your own domain. To do this, you should replace `https://cloudflare-eth.com`
 with your domain, e.g. `myethereumgateway.xyz`, as the target of the HTTP
 query.
@@ -20,7 +19,7 @@ you need to:
 1. Go to your DNS settings for your domain. If your website is on Cloudflare,
    the DNS settings are accessible from your dashboard. If your website is not
 on Cloudflare, and you need help finding the DNS records, you can use
-[DomaninTools](https://whois.domaintools.com/) to identify your registrar.
+[DomainTools](https://whois.domaintools.com/) to identify your registrar.
 2. Add a CNAME record from your domain (e.g. www.example.com) to
 cloudflare-eth.com. Note: if your website is on Cloudflare, the little cloud
 next to this record will automatically turn grey. Because you’ve CNAME’d to

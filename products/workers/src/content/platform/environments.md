@@ -258,8 +258,14 @@ kv_namespaces = [
 kv_namespaces = [
   { binding = "KV", id = "bd46d6484b665e6bd134b0496ad97760" }
 ]
-vars = {FOO = "some text"}
+vars = {FOO = "some text"} # Creates & Sets Environment Variable FOO to "some text"
 ```
+
+<Aside type="warning">
+
+\* __Warning:__ We do not recommend using text variables to store secrets. If possible use the [`wrangler secret put`](/cli-wrangler/commands#secret) command instead.
+
+</Aside>
 
 <Aside>
 

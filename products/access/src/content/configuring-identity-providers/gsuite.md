@@ -1,13 +1,14 @@
 ---
-title: "G Suite"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# G Suite
+
 
 
 G Suite provides OpenID Connect (OIDC) Identity Provider support that you can use with many SaaS apps in the G Suite Marketplace, and adds support for SAML 2.0 (Security Assertion Markup Language) for more than 15 popular SaaS providers. Cloudflare Access supports G Suite as an IdP.
 
-<Aside type="note">
+<Aside>
 
 You must be an administrator for the G Suite organization you are connecting in order to connect your G Suite account to Cloudflare.
 </Aside>
@@ -86,7 +87,7 @@ Use these steps to set up G Suite as your IdP.
 1. Enter your copied Client ID in the **Client Name** field.
 1. Paste these URLs in the **One or More API Scopes** field:
 
-    ```shell
+    ```txt
     https://www.googleapis.com/auth/admin.directory.group.member.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
     ```
 

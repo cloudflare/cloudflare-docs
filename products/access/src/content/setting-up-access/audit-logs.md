@@ -1,8 +1,9 @@
 ---
-title: "Audit Logs"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Audit Logs
+
 Cloudflare Access generates two types of audit logs:
 
 * **Authentication audit logs** maintain a record of authentication events.
@@ -46,11 +47,11 @@ Access authentication logs contain the following fields:
 
 Users who have authenticated through the Access gateway have access to authorized URL paths for the duration of their session. Cloudflare provides several ways to audit these requests.
 
-A video guide is [also available](https://developers.cloudflare.com/access/videos/configuring-access/).
+A video guide is [also available](/videos/configuring-access/).
 
 ### Cloudflare logging
 
-Enterprise customers have access to detailed logs of HTTP requests. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (see [_Cloudflare Logs_](https://developers.cloudflare.com/logs/about/)).
+Enterprise customers have access to detailed logs of HTTP requests. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (see [_Cloudflare Logs_](https://developers.cloudflare.com/logs/)).
 
 Cloudflare secures both external-facing sites and internal resources by triaging each request in our network before we ever send it to your origin. Products like our WAF enforce rules to protect your site from attacks like SQL injection or cross-site scripting. Likewise, Access identifies the principal behind each request by evaluating each connection that passes through the gateway.
 
@@ -74,7 +75,7 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
    "RayID": "5y1250bcjd621y99"
    "RequestHeaders":{"cf-access-user":"srhea"},
 }
- 
+
 {
    "ClientIP": "198.51.100.206",
    "ClientRequestHost": "jira.widgetcorp.tech",
@@ -110,5 +111,4 @@ For more on exporting per-request Access logs, see [_Understanding the Logpush A
 
 Use Logpush to automatically export logs from Cloudflare Access to cloud providers like Google Cloud and Microsoft Azure, and SIEMs like Sumo Logic.
 
-<stream src="19987899aa95453b6bbdb7e6b4431223" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=19987899aa95453b6bbdb7e6b4431223"></script>
+<StreamVideo id="19987899aa95453b6bbdb7e6b4431223"/>

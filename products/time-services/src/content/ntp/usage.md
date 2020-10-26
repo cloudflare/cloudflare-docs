@@ -1,7 +1,9 @@
 ---
-title: Cloudflare's Time Service
-weight: 10
+title: User Guide
+order: 0
 ---
+
+# Using Cloudflare's Time Service
 
 Cloudflare offers a free public time service that allows you to use our anycast network of 180+ locations to synchronize time from our closest server. To use our NTP server, change the time configuration in your device to point to ```time.cloudflare.com```.
 

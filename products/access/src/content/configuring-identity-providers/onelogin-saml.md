@@ -1,8 +1,9 @@
 ---
-title: "OneLogin SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# OneLogin SAML
+
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML IdP.
 
 ## Set up OneLogin SAML as your IdP
@@ -80,7 +81,7 @@ To add a metadata file to your OneLogin SAML configuration:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

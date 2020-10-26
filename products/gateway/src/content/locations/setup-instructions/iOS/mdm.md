@@ -1,9 +1,8 @@
 ---
-title: "iOS Setup Instructions (MDM)"
-alwaysopen: true
-weight: 2
+order: 2
 ---
 
+# iOS Setup Instructions (MDM)
 
 <Aside>
 
@@ -12,7 +11,7 @@ Note that if you were using 1.1.1.1 for Families in the mobile app, you will at 
 You can disable it by going to `Advanced -> Connection options -> DNS Settings -> 1.1.1.1 for Families -> And select 'None'`.
 </Aside>
 
-You can deploy Gateway to your corporate iOS devices in bulk. Use an MDM solution to deploy your Gateway configuration to all corporate devices. If you want to learn how to use Gateway on your personal iOS device please use the setup instructions from [this page](/gateway/locations/setup-instructions/ios/manual/) instead.
+You can deploy Gateway to your corporate iOS devices in bulk. Use an MDM solution to deploy your Gateway configuration to all corporate devices. If you want to learn how to use Gateway on your personal iOS device please use the setup instructions from [this page](/locations/setup-instructions/ios/manual/) instead.
 
 ## Unique Gateway Id
 When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.

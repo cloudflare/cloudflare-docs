@@ -1,28 +1,33 @@
 ---
-title: Load Balancing logs
-alwaysopen: true
-weight: 18
+order: 18
 ---
-### Overview
+# Load Balancing logs
+
+## Overview
+
 Load Balancing logs provide a historical view of status changes to your origins and how those status changes affect pool health.
 
 Load Balancing only logs events that represent a status change for an origin, from healthy to unhealthy or vice versa.
 
 ---
 
-### Properties
+## Properties
 
 Health check event objects have the following properties:
 
+<TableWrap>
+
 <table>
+  <thead>
   <tr>
-   <td><strong>Name / type</strong>
-   </td>
-   <td><strong>Description / example</strong>
-   </td>
-   <td><strong>Constraints</strong>
-   </td>
+   <th><strong>Name / type</strong>
+   </th>
+   <th><strong>Description / example</strong>
+   </th>
+   <th><strong>Constraints</strong>
+   </th>
   </tr>
+  </thead>
   <tbody>
   <tr>
    <td valign="top"><strong>id</strong>
@@ -31,9 +36,9 @@ Health check event objects have the following properties:
    </td>
    <td>Integer identifier that uniquely represents the health check event.
 <p />
-<code>2</code>
+<code class="InlineCode">2</code>
    </td>
-   <td valign="top">Default value: <code>1</code>
+   <td valign="top">Default value: <code class="InlineCode">1</code>
    </td>
   </tr>
   <tr>
@@ -42,27 +47,27 @@ Health check event objects have the following properties:
 <em>array</em>
    </td>
    <td>An array of objects representing the origin servers associated with the pool.
-<p /><code>[</code>
+<p /><code class="InlineCode">[</code>
 <p />
-<code>{`{`}</code>
+<code class="InlineCode">{`{`}</code>
 <p />
-<code>"name": "some-origin",</code>
+<code class="InlineCode">"name": "some-origin",</code>
 <p />
-<code>"address": "198.51.100.4",</code>
+<code class="InlineCode">"address": "198.51.100.4",</code>
 <p />
-<code>"ip": "198.51.100.4",</code>
+<code class="InlineCode">"ip": "198.51.100.4",</code>
 <p />
-<code>"enabled": true,</code>
+<code class="InlineCode">"enabled": true,</code>
 <p />
-<code>"healthy": true,</code>
+<code class="InlineCode">"healthy": true,</code>
 <p />
-<code>"failure_reason": "No failures",</code>
+<code class="InlineCode">"failure_reason": "No failures",</code>
 <p />
-<code>"changed": true</code>
+<code class="InlineCode">"changed": true</code>
 <p />
-<code>{`}`}</code>
+<code class="InlineCode">{`}`}</code>
 <p />
-<code>]</code>
+<code class="InlineCode">]</code>
    </td>
    <td>
    </td>
@@ -74,19 +79,19 @@ Health check event objects have the following properties:
    </td>
    <td>An object that represents the pool for which the health check event was generated.
 <p />
-<code>{`{`}</code>
+<code class="InlineCode">{`{`}</code>
 <p />
-<code>"id": "74bc6a8b9b0dda3d651707a2928bad0c",</code>
+<code class="InlineCode">"id": "74bc6a8b9b0dda3d651707a2928bad0c",</code>
 <p />
-<code>"name": "some-pool",</code>
+<code class="InlineCode">"name": "some-pool",</code>
 <p />
-<code>"healthy": true,</code>
+<code class="InlineCode">"healthy": true,</code>
 <p />
-<code>"changed": true,</code>
+<code class="InlineCode">"changed": true,</code>
 <p />
-<code>"minimum_origins": 1</code>
+<code class="InlineCode">"minimum_origins": 1</code>
 <p />
-<code>{`}`}</code>
+<code class="InlineCode">{`}`}</code>
    </td>
    <td>
    </td>
@@ -98,7 +103,7 @@ Health check event objects have the following properties:
    </td>
    <td valign="top">The time at which the event was recorded
 <p />
-<code>"2014-01-01T05:20:00.12345Z"</code>
+<code class="InlineCode">"2014-01-01T05:20:00.12345Z"</code>
    </td>
    <td>
    </td>
@@ -106,9 +111,11 @@ Health check event objects have the following properties:
   </tbody>
 </table>
 
+</TableWrap>
+
 ---
 
-### Accessing Load Balancing Logs from the Cloudflare dashboard
+## Accessing Load Balancing Logs from the Cloudflare dashboard
 
 Load Balancing Logs are available from the **Traffic** app of the Cloudflare dashboard within the **Load Balancing Analytics** tab under the **Logs** submenu. You can filter the logs by Date, Pool Health, Pool, Origin Health, and/or Origin.
 
@@ -116,13 +123,13 @@ Click the expansion arrow at the far right of the event to expose more detail, i
 
 ---
 
-### Accessing Load Balancing Logs via the Cloudflare API
+## Accessing Load Balancing Logs via the Cloudflare API
 
-#### Commands
+### Commands
 
-To list health check events, use the List Health Check Events API endpoint: 
+To list health check events, use the List Health Check Events API endpoint:
 
-```shell
+```bash
 GET user/load_balancing_analytics/events
 ```
 

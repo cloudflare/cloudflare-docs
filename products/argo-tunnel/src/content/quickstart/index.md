@@ -1,21 +1,22 @@
 ---
-title: Getting Started
-weight: -1
+order: 100
+hidden: true
 ---
 
+# Quickstart
 
-Argo Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Argo Tunnel also ensures requests route through Cloudflare before reaching the web server so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation and authenticated with Access if you've enabled those features for your account.
+Argo Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Argo Tunnel also ensures requests route through Cloudflare before reaching the web server, so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation, and authenticated with Access if you've enabled those features for your account.
 
-Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. Once the daemon is running and the Tunnel has been configured, you can lock down the web server to external requests to only allow connections from Cloudflare.
+Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. You can lock down the web server to external requests. Instead, Argo Tunnel will connect out to Cloudflare from your origin.
 
-### How much does Argo Tunnel cost?
+## How much does Argo Tunnel cost?
 Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing can be purchased [in the Cloudflare dashboard](https://dash.cloudflare.com/?zone=traffic) and costs $5/month plus 10 cents per GB. Cloudflare only charges for Argo routing; there is no charge for the count of tunnels used.
 
 ## Setup
 
 ### Requirements
 * A <a href="http://dash.cloudflare.com/" target="_blank">Cloudflare account</a>
-* The <a href="/argo-tunnel/downloads/" target="_blank">cloudflared</a> daemon
+* The [`cloudflared`](/downloads/) daemon
 * An <a href="https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-Cloudflare-account-and-add-a-website">active zone on Cloudflare</a>
 * An active subscription to <a href="https://dash.cloudflare.com/?zone=traffic">Argo</a> which you can enable in the Cloudflare dashboard in the Traffic tab
 
@@ -32,10 +33,11 @@ Enterprise customers who have enabled Argo will need to contact their Cloudflare
 ### Step 2: Install cloudflared
 `cloudflared` is the software that runs Argo Tunnel. `cloudflared` is available for amd64, x86, and ARMv6 machines in Binary, .deb, and .rpm types. The code for the `cloudflared` client is available on GitHub [here](https://github.com/cloudflare/cloudflared).
 
-**<a href="/argo-tunnel/downloads/" target="_blank">Follow these instructions to install cloudflared</a>**
+[Follow these instructions to install `cloudflared`](/downloads/)
 
 Once installed, verify `cloudflared` has installed properly by checking the version.
-```bash
+
+```sh
 $ cloudflared --version
 cloudflared version 2019.2.1 (built 2019-02-28-0010 UTC)
 ```
@@ -46,7 +48,8 @@ Not working? If you installed a .deb or .rpm package (Linux) or used Homebrew (m
 Next, login to your Cloudflare account from `cloudflared`. You will use the same username and password that you use to login to the Cloudflare dashboard.
 
 Run the following command and a login page should open in your browser:
-```bash
+
+```sh
 $ cloudflared tunnel login
 A browser window should have opened at the following URL:
 
@@ -63,7 +66,8 @@ The certificate consists of three components bundled into a single PEM file. One
 </Aside>
 
 Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem`. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `.cloudflared` directory on your system.
-```bash
+
+```sh
 $ mv cert.pem ~/.cloudflared/cert.pem
 ```
 
@@ -72,8 +76,8 @@ Argo Tunnel runs a virtual, encrypted tunnel from a local web server to the Clou
 
 To do so, pass the flag --hello-world and replace [hostname] with a hostname in your Cloudflare account. Because Tunnel automatically creates DNS records for you, you can choose a subdomain that is not otherwise in use.
 
-```bash
- cloudflared --hostname test.warptunnels.org --hello-world
+```sh
+$ cloudflared --hostname test.warptunnels.org --hello-world
 INFO[0000] Build info: {GoOS:darwin GoVersion:go1.11.1 GoArch:amd64}
 INFO[0000] Version 2019.2.1
 INFO[0000] Flags map[hostname:test.warptunnels.org no-autoupdate:true grace-period:10s hello-world:true]
@@ -100,7 +104,7 @@ When the messages above conclude, Argo Tunnel has succesfully created a connecti
 
 If you go visit the domain name at which you created the tunnel (e.g. tunnel.example.com) you will see the request logs directly in the `cloudflared` output with debug level enabled. We call this Tunnel Vision.
 
-```bash
+```txt
 INFO[0615] GET https://127.0.0.1:62627/ HTTP/1.1         CF-RAY=4067701b598e8184-LAX
 INFO[0615] 200 OK                                        CF-RAY=4067701b598e8184-LAX
 ```
@@ -109,7 +113,8 @@ INFO[0615] 200 OK                                        CF-RAY=4067701b598e8184
 With your credentials saved to disk, you can now start Argo Tunnel for your production service. Replace [hostname] with the hostname you want associated with your server; this must be the domain or subdomain of a zone added to your Cloudflare account.
 
 The localhost address should point to a locally running web server.
-```bash
+
+```sh
 $ cloudflared tunnel --hostname [hostname] http://localhost:8000
 INFO[0000] Proxying tunnel requests to https://127.0.0.1:8000
 INFO[0000] Starting metrics server                       addr="127.0.0.1:62634"
@@ -132,5 +137,5 @@ If the connection succeeds, you should see content served from your local webser
 ### Next steps
 The steps above can be sufficient for local dev environments. For a production environment, we recommend a few additional settings be configured:
 
-* [Automatically starting Argo Tunnel](/argo-tunnel/reference/service)
-* [Configuration file format](/argo-tunnel/reference/config)
+* [Automatically starting Argo Tunnel](/reference/service)
+* [Configuration file format](/reference/config)

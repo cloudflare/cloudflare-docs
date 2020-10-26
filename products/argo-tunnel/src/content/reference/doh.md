@@ -1,7 +1,8 @@
 ---
-title: DNS over HTTPS
-weight: 60
+order: 60
 ---
+
+# DNS over HTTPS
 
 The `cloudflared` client also supports doing DNS over an encrypted HTTPS connection instead of using the default DNS resolver configured for your server/container/VM/environment.
 

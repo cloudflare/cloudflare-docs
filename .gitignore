@@ -1,4 +1,6 @@
 .docs
 node_modules
+package-lock.json
 dist/worker.js
 products/*/dist/worker.js
+products/*/package-lock.json

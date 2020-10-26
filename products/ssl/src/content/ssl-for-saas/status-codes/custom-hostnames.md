@@ -1,9 +1,12 @@
 ---
-title: Custom Hostnames
-weight: 10
+order: 1
 ---
 
-## Success Codes
+# Custom hostnames
+
+--------
+
+## Success codes
 
 | Endpoint                                                  | Method | Code         |
 | --------------------------------------------------------- | ------ | ------------ |
@@ -13,7 +16,9 @@ weight: 10
 | `/v4/zones/:zone_id/custom_hostnames/:custom_hostname_id` | DELETE | 200 OK       |
 | `/v4/zones/:zone_id/custom_hostnames/:custom_hostname_id` | PATCH  | 202 Accepted |
 
-## Error Codes
+--------
+
+## Error codes
 | HTTP Status Code | API Error Code | Error Message                                                                                                                                                                                                                                                                                                                                                        |
 | ---------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 400              | 1400           | Unable to decode the JSON request body. Please check your input and try again.                                                                                                                                                                                                                                                                                       |
@@ -70,6 +75,6 @@ weight: 10
 | 403              | 1404           | No quota has been allocated for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/.                                   |
 | 403              | 1405           | Quota exceeded. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/.                                                              |
 | 403              | 1413           | No custom metadata access has been allocated for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/.                  |
-| 403              | 1414           | Access to setting a custom origin server has not been granted for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/" |
+| 403              | 1414           | Access to setting a custom origin server has not been granted for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/ |
 | 409              | 1406           | Duplicate custom hostname found.                                                                                                                                                                                                                                                                                                                                     |
 | 500              | 1500           | Internal Server Error                                                                                                                                                                                                                                                                                                                                                |

@@ -1,6 +1,8 @@
 ---
-title: DNS over Telegram
+order: 4
 ---
+
+# DNS over Telegram
 
 To perform DNS over Telegram, you will need the Telegram app. For the unfamiliar, Telegram is an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
 
@@ -22,19 +24,21 @@ Example:
 
 Or you can send a record type followed by a domain name. The record types supported are:
 
-    A
-    AAAA
-    CAA
-    CNAME
-    DS
-    DNSKEY
-    MX
-    NS
-    NSEC
-    NSEC3
-    RRSIG
-    SOA
-    TXT
+```txt
+A
+AAAA
+CAA
+CNAME
+DS
+DNSKEY
+MX
+NS
+NSEC
+NSEC3
+RRSIG
+SOA
+TXT
+```
 
 Example:
 
