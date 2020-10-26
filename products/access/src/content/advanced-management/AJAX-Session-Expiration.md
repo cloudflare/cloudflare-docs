@@ -1,13 +1,16 @@
 ---
 order: 3
+title: AJAX session expiration
 ---
 
-# AJAX Session Expiration Handling
+# AJAX session expiration handling
 
-Pages that rely heavily on AJAX or single page applications can block sub-requests due to an expired Access token without prompting the user to re-authenticate.
+Pages that rely heavily on AJAX or single-page applications can block sub-requests due to an expired Access token without prompting the user to re-authenticate.
 
-You can configure Access to provide a 401 response on sub-requests with an expired session token. We recommend using this response code to either force a page refresh or display a message to the user that their session has expired.
+You can configure Access to provide a `401` response on sub-requests with an expired session token. We recommend using this response code to either force a page refresh or to display a message to the user that their session has expired.
 
-In order to receive a 401 for an expired session, add the following header to all AJAX requests:
+In order to receive a `401` for expired session, add the following header to all AJAX requests:
 
-`X-Requested-With: XMLHttpRequest`
+```txt
+X-Requested-With: XMLHttpRequest
+```
