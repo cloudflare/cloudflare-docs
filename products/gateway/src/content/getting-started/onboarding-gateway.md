@@ -19,19 +19,19 @@ To start using Gateway, set up your first **location** and your DNS resolvers.
 
 ![Gateway Begin Setup](../static/begin-setup.png)
 
-2. Click **Next**.
+5. Click **Next**.
 
-3. You can now input a name for your first location. You will be able to change this name at any time.
+6. You can now input a name for your first location. You will be able to change this name at any time.
 
 ![Gateway First Location](../static/setup-first-location.png)
 
-4. Click **Next**.
+7. Click **Next**.
 
-5. Follow the instructions on how to setup your DNS resolvers.
+8. Follow the instructions on how to setup your DNS resolvers.
 
 ![Gateway Setup DNS](../static/setup-dns.png)
 
-6. Click **Finish setup**.
+9. Click **Finish setup**.
 
   This will take you to the [Teams dashboard](https://dash.teams.cloudflare.com), where you can start customizing your location, or you can add your first [DNS](https://developers.cloudflare.com/gateway/getting-started/configuring-dns-policy) or [HTTP policy](https://developers.cloudflare.com/gateway/getting-started/configuring-http-policy). 
 
