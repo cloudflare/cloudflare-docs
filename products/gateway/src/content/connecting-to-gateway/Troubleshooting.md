@@ -85,5 +85,6 @@ Some common applications that make use of certificate pinning include:
 | Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |
 | USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |
 | Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |
+| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |
 
 </TableWrap>
