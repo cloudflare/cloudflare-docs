@@ -12,9 +12,9 @@ A Cloudflare load balancer is identified by the DNS hostname whose traffic you w
 
 ## Important notes
 
-When working with load balancers, note the following:
-
 ### Load balancing and existing DNS records
+
+**Adding a Load Balancer does not create a DNS record or SSL certificate.**  To generate an SSL certificate, create a proxied DNS record for the Load Balancer. The Load Balancer record takes precedence over a DNS record for the same host name.
 
 **When you create a load balancer on Cloudflare**, you can either:
 
