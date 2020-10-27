@@ -79,7 +79,7 @@ webpack_config = "webpack.development.js"
 
 [env.staging]
 name = "my-worker-staging"
-webpack_config = "webpack.production.js"
+webpack_config = "webpack.staging.js"
 
 [env.production]
 name = "my-worker-production"

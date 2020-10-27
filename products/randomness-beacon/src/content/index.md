@@ -1,7 +1,15 @@
 ---
+title: Welcome
 order: 0
+type: overview
 ---
 
-# Welcome
+# Cloudflare Randomness Beacon docs
 
-TODO...
+<ContentColumn>
+
+Explore drand: a distributed service providing public randomness in an application-agnostic, secure, and efficient way.
+
+<p><Link to="/about" className="Button Button-is-docs-primary">Get started</Link></p>
+
+</ContentColumn>

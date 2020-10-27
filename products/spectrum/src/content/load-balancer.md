@@ -14,7 +14,7 @@ This feature requires an Enterprise plan.  If you would like to upgrade, please 
 
 --------------------------------
 
-## TCP Health Checks
+## TCP health checks
 
 Cloudflare's Load Balancer can be configured to probe any TCP port for an accepted connection. This is in addition to HTTP and HTTPS probing capabilities.
 
@@ -62,7 +62,7 @@ For further information on weighted steering, see the [knowledge base article](h
 
 --------------------------------
 
-## Steering Modes
+## Steering modes
 
 All steering modes are available for transport load balancing through Spectrum: You can choose standard failover, dynamic steering, or geo steering:
 
@@ -70,7 +70,7 @@ All steering modes are available for transport load balancing through Spectrum: 
 
 In this mode, the Cloudflare Load Balancer will fail over amongst pools listed in a given load balancer configuration as they are marked down by health checks. If all pools are marked down, Cloudflare will send traffic to the fallback pool. The fallback pool is the last pool in the list in the dashboard or specifically nominated via a parameter in the API. If no health checks are configured, Cloudflare will send to the primary pool exclusively.
 
-#### Dynamic Steering
+#### Dynamic steering
 
 [Dynamic steering](https://blog.cloudflare.com/i-wanna-go-fast-load-balancing-dynamic-steering/) is a way of directing traffic to the fastest pool for a given user. In this mode, the Cloudflare load balancer will select the fastest pool for the given Cloudflare Region or PoP (Enterprise only) through health check data. If there is no health check data for a given colo or region, the load balancer will select a pool in failover order. It is important to note that with TCP health checks, latency calculated may not be representative of true latency to origin if you are terminating TCP at a cloud provider edge location.
 

@@ -1,8 +1,8 @@
 ---
-title: "Android Setup Instructions"
-alwaysopen: true
-weight: 3
+order: 3
 ---
 
-* [Setup Gateway on Android](/gateway/locations/setup-instructions/android/manual)
-* [Setup Gateway on Android using an MDM](/gateway/locations/setup-instructions/android/mdm)
+# Android Setup Instructions
+
+* [Setup Gateway on Android](/locations/setup-instructions/android/manual)
+* [Setup Gateway on Android using an MDM](/locations/setup-instructions/android/mdm)

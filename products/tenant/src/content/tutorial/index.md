@@ -1,31 +1,32 @@
 ---
-title: Tutorial
-alwaysopen: true
-weight: 15
+order: 1
 ---
 
-Having access to Cloudflare's provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following tutorial will get you started making API calls to provision accounts, users, and services.
+# Tutorial
 
+Having access to Cloudflare’s provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following tutorial will get you started making API calls to provision accounts, users, and services.
 
+<p><Link to="/tutorial/provisioning-resources" className="Button Button-is-docs-primary">Start</Link></p>
 
-### [Step 1 - Provisioning Resources](/tenant/tutorial/accounts/)
+--------------------------------
 
-* Creating accounts
-* Creating zones
+## [Step 1: Provisioning resources](/tutorial/provisioning-resources)
 
-### [Step 2 - User Access](/tenant/tutorial/user-access/)
+- Creating accounts
+- Creating zones
 
-* Determining how users will access Cloudflare resources
-* Creating users
-* Inviting users to provisioned accounts
+## [Step 2: User access](/tutorial/user-access)
 
-### [Step 3 - Enabling Services](/tenant/tutorial/subscriptions/)
+- Determining how users will access Cloudflare resources
+- Creating users
+- Inviting users to provisioned accounts
 
-* Creating services
-* Modifying an account's service
-* Removing services
+## [Step 3: Enabling services](/tutorial/enabling-services)
 
-### [Step 4 - Service Configuration](/tenant/tutorial/client-actions/)
+- Creating services
+- Modifying an account’s service
+- Removing services
 
-* Modifying zone settings and other services
+## [Step 4: Service configuration](/tutorial/service-configuration)
 
+- Modifying zone settings and other services

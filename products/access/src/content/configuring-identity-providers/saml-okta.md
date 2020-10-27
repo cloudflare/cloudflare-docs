@@ -1,8 +1,8 @@
 ---
-title: "SAML with Okta"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# SAML with Okta
 
 Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate SAML with Okta as an IdP.
 
@@ -124,7 +124,7 @@ To get your Cloudflare metadata file:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

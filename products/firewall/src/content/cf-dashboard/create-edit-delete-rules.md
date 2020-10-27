@@ -1,11 +1,11 @@
 ---
 title: Create, edit, and delete rules
-alwaysopen: true
-weight: 205
+order: 310
 ---
 
-
 import firewallRulesExpressionBuilder10 from '../images/firewall-rules-expression-builder-10.gif'
+
+# Create, edit, and delete rules
 
 The **Create Firewall Rule** page in the Firewall app is a good guide to the parts of a firewall rule. When an incoming HTTP request matches the **expression** in a firewall rule, the specified **action** is triggered:
 
@@ -15,13 +15,14 @@ Note that a simple expression has the following syntax:
 
     <field> <comparison operator> <value>
 
-For more about expressions and actions, see [_About Cloudflare Firewall Rules_](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/).
+For more about expressions and actions, see [_Expressions_](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/) and [_Actions_](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/).
 
 ## Expression Builder and Editor
 
 <Aside>
 
 Firewall Rules expressions have a 4KB limit (approximately 4,000 text characters).
+
 </Aside>
 
 The Firewall app in the Cloudflare dashboard offers two options for editing expressions.
@@ -41,6 +42,7 @@ Both interfaces are available in the **Create Firewall Rule** page. This article
 <Aside type="tip">
 
 Create a **Firewall Rule** based on the filters and exclusions you select within firewall analytics by clicking **Create firewall rule** within the **Overview** tab of the **Firewall** app.
+
 </Aside>
 
 To create a new firewall rule:
@@ -49,31 +51,31 @@ To create a new firewall rule:
 1. Select the **Websites** tab and choose the site for which you want to create a new firewall rule.
 1. To open Firewall Rules from the Cloudflare dashboard, click the **Firewall** tile in the app bar, and then click the **Firewall Rules** tab.
 
-    ![firewall rules tab](../images/firewall-rules-expression-builder-2.png)
+   ![firewall rules tab](../images/firewall-rules-expression-builder-2.png)
 
 1. Click **Create a Firewall Rule**.
 
 1. In the **Create Firewall Rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
 
-    ![create firewall rule](../images/create-firewall-rule-1.png)
+   ![create firewall rule](../images/create-firewall-rule-1.png)
 
 1. Under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
-    ![select field](../images/firewall-rules-expression-builder-3.png)
+   ![select field](../images/firewall-rules-expression-builder-3.png)
 
 1. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
 
-    ![select operator](../images/firewall-rules-expression-builder-4.png)
+   ![select operator](../images/firewall-rules-expression-builder-4.png)
 
-    In the screenshot above, note that the **Expression Preview** area displays a text-only version of your expression. For more on Expression Preview and the Expression Editor, see [_Edit rule expressions_](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/).
+   In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, see [_Edit rule expressions_](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/).
 
 1. Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 
-    ![select value](../images/firewall-rules-expression-builder-value.png)
+   ![select value](../images/firewall-rules-expression-builder-value.png)
 
 1. To set an action for your rule, use the **Action** drop-down list. In this example the _Block_ action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
 
-    ![select action](../images/firewall-rules-expression-builder-5.png)
+   ![select action](../images/firewall-rules-expression-builder-5.png)
 
 1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
 
@@ -105,15 +107,14 @@ By default, Cloudflare evaluates firewall rules in **list order**, where rules a
 
 <img src={firewallRulesExpressionBuilder10} alt="order rules" />
 
-Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, see _[Order and Priority](/firewall/cf-firewall-rules/order-priority/)_.
+Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, see _[Order and Priority](/cf-firewall-rules/order-priority/)_.
 
 ### Enable and disable rules
 
 Use the toggle switch associated with a firewall rule to enable or disable it.
 
-![enable/disable rules](
-    ../images/firewall-rules-expression-builder-9.png)
+![enable/disable rules](../images/firewall-rules-expression-builder-9.png)
 
 ## Test firewall rules with Rule Preview
 
-To help customers in the Enterprise plan understand the potential impact of a new firewall rule, Cloudflare built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample of requests drawn from the last 72 hours of traffic. Rule Preview is built into the **Create Firewall Rule** and **Edit Firewall Rule** panels so that you can test a rule as you edit it. For more, see _[Preview rules](/firewall/cf-dashboard/rule-preview/)_.
+To help customers in the Enterprise plan understand the potential impact of a new firewall rule, Cloudflare built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample of requests drawn from the last 72 hours of traffic. Rule Preview is built into the **Create Firewall Rule** and **Edit Firewall Rule** panels so that you can test a rule as you edit it. For more, see _[Preview rules](/cf-dashboard/rule-preview/)_.

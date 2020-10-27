@@ -1,7 +1,8 @@
 ---
-title: Configure your browser to use DNS over HTTPS
-weight: 10
+order: 10
 ---
+
+# Configure your browser to use DNS over HTTPS
 
 There are several browsers compatible with DNS over HTTPS (DoH) that you can use to connect to 1.1.1.1 in order to protect your DNS queries from privacy intrusions and tampering.
 
@@ -21,7 +22,7 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 As of today, Safari does not support DNS over HTTPS.
 
-## How to check if my browser is configured correctly
+## How to check if my browser is configured correctly?
 
 1. Visit [1.1.1.1 help page](https://1.1.1.1/help)
 2. Verify that `Using DNS over HTTPS (DoH)` is `Yes`

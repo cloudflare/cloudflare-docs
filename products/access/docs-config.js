@@ -6,8 +6,16 @@ module.exports = {
   contentRepoFolder: "products/access",
   externalLinks: [
     {
-      title: "Cloudflare homepage",
-      url: "https://cloudflare.com"
+      title: "Cloudflare for Teams: Access home",
+      url: "https://www.cloudflare.com/teams/access/"
+    },
+    {
+      title: "Cloudflare for Teams home",
+      url: "https://www.cloudflare.com/teams/"
+    },
+    {
+      title: "Cloudflare for Teams pricing",
+      url: "https://www.cloudflare.com/teams-pricing/"
     }
   ],
   search: {

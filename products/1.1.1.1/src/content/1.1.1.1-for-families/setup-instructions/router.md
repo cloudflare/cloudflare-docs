@@ -1,8 +1,11 @@
 ---
-title: Router Setup Instructions
-weight: 1
+order: 1
 ---
-## Block Malware
+
+# Router setup instructions
+
+## Block malware
+
 Follow this quick guide to start using 1.1.1.1 for Families on your router.
 
 Step 1: Go to the IP address used to access your router's admin console in your browser.
@@ -18,10 +21,12 @@ Step 3: Find the place in the admin console where DNS settings are set.
 
 Step 4: Replace the existing addresses with:
 
-    1.1.1.2
-    1.0.0.2
-    2606:4700:4700::1112
-    2606:4700:4700::1002
+```txt
+1.1.1.2
+1.0.0.2
+2606:4700:4700::1112
+2606:4700:4700::1002
+```
 
 Step 5: Save and exit.
 
@@ -29,10 +34,9 @@ Step 5: Save and exit.
 
 It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if it is running OpenWRT. For more details, see our blog post on the topic: [Adding DNS-Over-TLS support to OpenWRT (LEDE) with Unbound](https://blog.cloudflare.com/dns-over-tls-for-openwrt/)
 
-### Ubiquiti UniFi Controller
+### Ubiquiti UniFi controller
 
-<stream src="510f09dad9812cd7ac009ebcab75068e" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=510f09dad9812cd7ac009ebcab75068e"></script>
+<StreamVideo id="510f09dad9812cd7ac009ebcab75068e"/>
 
 Step 1: Go to [http://unifi.ubnt.com](http://unifi.ubnt.com) and enter your email and password.
 
@@ -48,10 +52,12 @@ Step 6: Scroll to where it says DHCP Name Server. If Auto is selected, select Ma
 
 Step 7: In the boxes called DNS Server 1, 2, 3, etc. put:
 
-    1.1.1.2
-    1.0.0.2
-    2606:4700:4700::1112
-    2606:4700:4700::1002
+```txt
+1.1.1.2
+1.0.0.2
+2606:4700:4700::1112
+2606:4700:4700::1002
+```
 
 Step 8: Click Save.
 
@@ -65,10 +71,12 @@ Step 3: Click on Advanced networking then click on DNS
 
 Step 4: Remove any IP addresses that may be already listed and in their place enter:
 
-    1.1.1.2
-    1.0.0.2
-    2606:4700:4700::1112
-    2606:4700:4700::1002
+```txt
+1.1.1.2
+1.0.0.2
+2606:4700:4700::1112
+2606:4700:4700::1002
+```
 
 Step 5: Click Save.
 
@@ -82,10 +90,12 @@ Step 2: Under Advanced Settings, click on WAN
 
 Step 3: In the Internet Connection tab, under WAN DNS Setting, in DNS servers, add:
 
-    1.1.1.2
-    1.0.0.2
-    2606:4700:4700::1112
-    2606:4700:4700::1002
+```txt
+1.1.1.2
+1.0.0.2
+2606:4700:4700::1112
+2606:4700:4700::1002
+```
 
 ## Block Malware and Adult Content
 Follow this quick guide to start using 1.1.1.1 for Families on your router.
@@ -103,17 +113,18 @@ Step 3: Find the place in the admin console where DNS settings are set.
 
 Step 4: Replace the existing addresses with:
 
-    1.1.1.3
-    1.0.0.3
-    2606:4700:4700::1113
-    2606:4700:4700::1003
+```txt
+1.1.1.3
+1.0.0.3
+2606:4700:4700::1113
+2606:4700:4700::1003
+```
 
 Step 5: Save and exit.
 
 ### Ubiquiti UniFi Controller
 
-<stream src="510f09dad9812cd7ac009ebcab75068e" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=510f09dad9812cd7ac009ebcab75068e"></script>
+<StreamVideo id="510f09dad9812cd7ac009ebcab75068e"/>
 
 Step 1: Go to [http://unifi.ubnt.com](http://unifi.ubnt.com) and enter your email and password.
 
@@ -129,10 +140,12 @@ Step 6: Scroll to where it says DHCP Name Server. If Auto is selected, select Ma
 
 Step 7: In the boxes called DNS Server 1, 2, 3, etc. put:
 
-    1.1.1.3
-    1.0.0.3
-    2606:4700:4700::1113
-    2606:4700:4700::1003
+```txt
+1.1.1.3
+1.0.0.3
+2606:4700:4700::1113
+2606:4700:4700::1003
+```
 
 Step 8: Click Save.
 
@@ -146,10 +159,12 @@ Step 3: Click on Advanced networking then click on DNS
 
 Step 4: Remove any IP addresses that may be already listed and in their place enter:
 
-    1.1.1.3
-    1.0.0.3
-    2606:4700:4700::1113
-    2606:4700:4700::1003
+```txt
+1.1.1.3
+1.0.0.3
+2606:4700:4700::1113
+2606:4700:4700::1003
+```
 
 Step 5: Click Save.
 
@@ -163,7 +178,9 @@ Step 2: Under Advanced Settings, click on WAN
 
 Step 3: In the Internet Connection tab, under WAN DNS Setting, in DNS servers, add:
 
-    1.1.1.3
-    1.0.0.3
-    2606:4700:4700::1113
-    2606:4700:4700::1003
+```txt
+1.1.1.3
+1.0.0.3
+2606:4700:4700::1113
+2606:4700:4700::1003
+```

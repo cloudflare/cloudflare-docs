@@ -32,7 +32,7 @@ const HTML = `
 
 async function handleRequest(request) {
   // If request is for test.css, serve the raw CSS
-  if (/test.css$/.test(request.url)) {
+  if (/test\.css$/.test(request.url)) {
     return new Response(CSS, {
       headers: {
         "content-type": "text/css",

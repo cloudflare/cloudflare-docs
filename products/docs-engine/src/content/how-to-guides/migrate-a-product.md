@@ -27,11 +27,9 @@ It’s also helpful to understand how [Gatsby handles Markdown](https://www.gats
 
 ## Step 1: Verify migration status
 
-The first thing you’ll want to do is make sure you know the current migration status of your product. The source of truth for this is the [migration table](https://github.com/cloudflare/cloudflare-docs#migration-progress).
+The first thing you’ll want to do is make sure you know the current migration status of your product. The source of truth for this is the [__Products__ table](https://github.com/cloudflare/cloudflare-docs#products).
 
-Most likely your project will be listed in the left-column of the table, but the `Content` column and `Prod` columns will be blank. This is good. It means your ready is ready to begin migration.
-
-You can view its corresponding `Test` column link to see what your project looks like now.
+If you don’t see your project listed in this table, then you’ll want to copy one of the directories inside `products/` and use it as the basis for your migration.
 
 ## Step 2: Set up local development
 
@@ -93,10 +91,10 @@ At this point, you can make changes to the Markdown files inside the contect dir
 
 In terms of improving/updating the content itself, there are a number of great resources available to help:
 
-- __[Content framework](/contributing/content-framework)__ – Cloudflare’s new docs sites (e.g. [Workers](https://developers.cloudflare.com/workers/)) are starting to adhere to a content framework which may be helpful when thinking about how to structure your [pages](/reference/pages) (folders and Markdown files) and create logical [side navigation](/reference/sidebar).
+- __[Content framework](/contributing/content-framework)__ – Cloudflare’s new docs sites (e.g. [Workers](https://developers.cloudflare.com/workers/)) are starting to adhere to a content framework which may be helpful when thinking about how to structure your [pages](/reference/pages) (folders and Markdown files) and create logical [side navigation](reference/pages#url-paths).
 
 
-- __[Markdown (MDX) built-in components](/reference/markdown)__ – Migrating to the new Docs Engine means you can take advantage of all of its powerful [built-in components](/reference/markdown). Add an [aside](/reference/markdown), [display code beautifully](/reference/markdown/code-block-examples), [embed a video](/reference/markdown), add a buttons, definition list, and [so much more](/reference/markdown).
+- __[Markdown (MDX) built-in components](/reference/markdown)__ – Migrating to the new Docs Engine means you can take advantage of all of its powerful [built-in components](/reference/markdown). Add an [aside](/reference/markdown#asides), [display code beautifully](reference/markdown#code-blocks), [embed a video](/reference/markdown#youtube), add a buttons, definition list, and [so much more](/reference/markdown).
 
 
 - [__Workers docs site__ example](https://developers.cloudflare.com/workers) – You can also take a look at the [Workers content](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/workers/src/content) for an example of a well-structured docs site.
@@ -114,6 +112,10 @@ This is still being worked out, but in essence, this requires three easy steps (
 2. Add a second `wrangler publish` with the new `production` environment in the GitHub Action [`deploy.yml` file](https://github.com/cloudflare/cloudflare-docs/blob/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/.github/workflows/deploy.yml).
 
 3. Make a pull request to remove the corresponding content from inside Bitbucket (`@DOCS/developer-docs/browse/src/content`).
+
+## Step 5: Prepare for the future
+
+Add the appropriate maintainer for your docs in the [CODEOWNERS file](https://github.com/cloudflare/cloudflare-docs/blob/master/.github/CODEOWNERS).
 
 --------------------------------
 

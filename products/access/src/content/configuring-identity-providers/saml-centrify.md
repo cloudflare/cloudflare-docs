@@ -1,8 +1,8 @@
 ---
-title: "SAML with Centrify"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# SAML with Centrify
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 
@@ -76,7 +76,7 @@ To set up SAML with Centrify as your identity provider (IdP):
 
     ![Cloudflare Access Add IdP](../static/saml-centrify/saml-centrify-11.png)
 
-    The **Add a SAML identity provider** dialog displays.  
+    The **Add a SAML identity provider** dialog displays.
 
 1. Click to browse and select or drag the metadata file into the file upload box.
 
@@ -118,7 +118,7 @@ To get your Cloudflare metadata file:
 
 1. Download your unique SAML metadata file at the following URL:
 
-    ```shell
+    ```txt
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 

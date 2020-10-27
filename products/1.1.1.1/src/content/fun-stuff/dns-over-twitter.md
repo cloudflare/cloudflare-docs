@@ -1,6 +1,8 @@
 ---
-title: DNS over Twitter
+order: 6
 ---
+
+# DNS over Twitter
 
 Meet [@1111Resolver](https://twitter.com/1111Resolver), your DNS over Twitter client.
 

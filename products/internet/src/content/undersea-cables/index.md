@@ -1,7 +1,8 @@
 ---
-title: Undersea Cables
-weight: 50
+order: 50
 ---
+
+# Undersea cables
 
 The physical internet is a series of cables that connect the different continents so that a packet can route around the Earth. This allows, for example, a person in Dubai to reach a server in Frankfurt. At the time of writing (April 2018), there are 393 cables that connect the planet. You can see them all at [submarinecablemap.com](http://submarinecablemap.com).
 

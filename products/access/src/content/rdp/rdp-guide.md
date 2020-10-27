@@ -1,7 +1,8 @@
 ---
-title: "Remote Desktop Protocol"
-alwaysopen: true
+order: 400
 ---
+
+# Remote Desktop Protocol
 
 The Remote Desktop Protocol (RDP) allows end users to connect to a desktop from a different machine.
 
@@ -84,7 +85,7 @@ C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the desktop.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the desktop.
 
 For example, if you share the desktop at `rdp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
@@ -100,14 +101,14 @@ If you are not using a configuration file, you can run the following command to 
 
 If you are using an internal DNS and the target machine is running on a hostname, you will need to modify the command to start the Tunnel without TLS verification to avoid certificate mismatches. For example, if the remote desktop server is available at `rdp.internal.com`, the following command can be run.
 
-```bash
+```sh
 $ cloudflared tunnel --hostname rdp.site.com --no-tls-verify --origin-server-name rdp.internal.com --url rdp://localhost:433
 ```
 
 If you are using the configuration file created in Step 2 above, you can start the service from the Windows services panel or run:
 
-```bash
-sc start cloudflared
+```sh
+$ sc start cloudflared
 ```
 
 In both operations, `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
@@ -116,7 +117,7 @@ In both operations, `cloudflared` will confirm that the connection has been esta
 
 Instead of deploying `cloudflared` on each target machine, you can deploy it once in a private subnet in bastion or jump host model. To do so, follow steps 1 through 3 above and then use the configuration below. Ensure that the Access policy is in place before creating this connection as the connection will allow lateral traffic within the subnet.
 
-```bash
+```sh
 $ cloudflared tunnel --hostname rdp.site.com --bastion
 ```
 
@@ -168,8 +169,8 @@ You can help end users connect without requiring the command line by providing t
 2. Right-click on the Windows desktop and select `New -> Shortcut`.
 3. In the wizard that appears, paste in the following command with the hostname your team uses:
 
-```bash
-cloudflared access rdp --hostname monday.example.com --url localhost:2244
+```sh
+$ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
 
 4. Click `Next` and complete the wizard
@@ -188,20 +189,20 @@ At this point the shortcut will now be on the desktop; users can launch with a d
 MacOS users can save a command shortcut that will launch the RDP flow. The command below can be saved as a `.command` file that can be launched on login.
 
 ```bash
-var=/Applications/CF-RDP-Tunnel.command && 
-echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var && 
+var=/Applications/CF-RDP-Tunnel.command &&
+echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var &&
 chmod +x $var
 ```
 
 You can confirm this is successful with the following command.
 
-```bash
+```sh
 $ lsof -nP -iTCP:2244 | grep LISTEN
 ```
 
 The following command can be used to kill the process.
 
-```bash
+```sh
 $ sudo kill -9 [process id]
 ```
 
@@ -223,5 +224,4 @@ The default behavior in MacOS is for the Terminal window to stay open. This can 
 
 In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
 
-<stream src="2a3073fb7881b4fcba4b9e3709dfaacf" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=2a3073fb7881b4fcba4b9e3709dfaacf"></script>
+<StreamVideo id="2a3073fb7881b4fcba4b9e3709dfaacf"/>

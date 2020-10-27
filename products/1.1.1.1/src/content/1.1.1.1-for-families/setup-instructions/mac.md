@@ -1,9 +1,11 @@
 ---
-title: "Mac Setup Instructions"
-alwaysopen: true
-weight: 2
+order: 2
 ---
-## Block Malware
+
+# Mac setup instructions
+
+## Block malware
+
 ### IPv4
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
@@ -24,7 +26,8 @@ weight: 2
 * Click OK.
 * Click Apply.
 
-## Block Malware and Adult Content
+## Block malware and adult content
+
 ### IPv4
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.

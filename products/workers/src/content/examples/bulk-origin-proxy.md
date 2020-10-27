@@ -18,8 +18,8 @@ tags:
  * @param {Object} ORIGINS
  */
 const ORIGINS = {
-  "starwarsapi.yourdomain.com": "swapi.co",
-  "google.yourdomain.com": "google.com",
+  "starwarsapi.yourdomain.com": "swapi.dev",
+  "google.yourdomain.com": "www.google.com",
 }
 
 async function handleRequest(request) {
@@ -29,11 +29,11 @@ async function handleRequest(request) {
     const target = ORIGINS[url.hostname]
     url.hostname = target
     // If it is, proxy request to that third party origin
-    return fetch(url.toString(), request)
+    return await fetch(url.toString(), request)
   }
 
   // Otherwise, process request as normal
-  return fetch(request)
+  return await fetch(request)
 }
 
 addEventListener("fetch", event => {

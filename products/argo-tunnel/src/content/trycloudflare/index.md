@@ -1,22 +1,24 @@
 ---
-title: TryCloudflare
-weight: 1
+order: 100
+hidden: true
 ---
 
-Developers can use the TryCloudflare tool to experiment with Argo Tunnel without adding a site to Cloudflare's DNS. TryCloudflare will launch a process that generates a random subdomain on trycloudflare.com. Requests to that subdomain will be be proxied through the Cloudflare network to your web server running on localhost.
+# TryCloudflare
+
+Developers can use the TryCloudflare tool to experiment with Argo Tunnel without adding a site to Cloudflare's DNS. TryCloudflare will launch a process that generates a random subdomain on `trycloudflare.com`. Requests to that subdomain will be proxied through the Cloudflare network to your web server running on localhost.
 
 ### Using TryCloudflare
-1. Follow the instructions [here](https://developers.cloudflare.com/argo-tunnel/downloads/) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
+1. Follow the instructions [here](/argo-tunnel/downloads/) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
 2. Launch a web server that is available over localhost to `cloudflared`.
 3. Run the following terminal command to start a free tunnel.
 
-```bash
+```sh
 $ cloudflared tunnel
 ```
 
 The command above will default to port 8080; you can specify an alternate port with the --url flag.
 
-```bash
+```sh
 $ cloudflared tunnel --url http://localhost:7000
 ```
 

@@ -1,7 +1,8 @@
 ---
-title: "Scoped API Tokens"
-alwaysopen: true
+order: 21
 ---
+
+# Scoped API Tokens
 
 The administrators managing policies and groups in Cloudflare Access might be different from the users responsible for configuring firewall rules or other Cloudflare for Infrastructure settings. Cloudflare Access supports [scoped API tokens](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys) so that team members and automated systems can manage settings specific to Access without having permission to modify other configurations in Cloudflare.
 

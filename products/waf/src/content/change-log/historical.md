@@ -1,15 +1,14 @@
 ---
-title: "Historical"
 date: 2019-09-15
-alwaysopen: true
-weight: 1001
-summary: Changes that were completed before the change log was made publicly available
-aliases:
-    - /change-log/historic
+type: table
+order: 1001
+summary: Changes that were completed before the change log was made publicly available.
 ---
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
+# Historical
+
+<TableWrap><table style="width: 100%">
+    <thead>
         <tr>
             <th>Rule ID</th>
             <th>Description</th>
@@ -2421,4 +2420,4 @@ aliases:
             <td>Block</td>
         </tr>
     </tbody>
-</table>
+</table></TableWrap>

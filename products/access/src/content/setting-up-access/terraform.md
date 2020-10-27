@@ -1,8 +1,9 @@
 ---
-title: "Configuring Access with Terraform"
-alwaysopen: true
-weight: 2
+
+order: 2
 ---
+
+# Configuring Access with Terraform
 
 [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure and provides components and documentation for building [Cloudflare resources](https://www.terraform.io/docs/providers/cloudflare/). Listed below are examples to help you get started with building Access with Terraform. For a more detailed guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
 

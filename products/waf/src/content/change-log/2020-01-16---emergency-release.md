@@ -1,12 +1,13 @@
 ---
-title: "2020-01-16 - Emergency Release"
-date: 2020-01-16
-alwaysopen: true
-weight: 986
+title: "2020-01-16 – Emergency"
+type: table
+order: 986
 ---
 
-<table style="border: solid 2px darkgrey; width:70%;">
-    <thead style="background:#ffeadf;">
+# 2020-01-16 – Emergency release
+
+<TableWrap><table style="width: 100%">
+    <thead>
         <tr>
             <th>Ruleset</th>
             <th>Rule</th>
@@ -24,4 +25,4 @@ weight: 986
             <td>Block</td>
         </tr>
     </tbody>
-</table>
+</table></TableWrap>

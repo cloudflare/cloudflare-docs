@@ -1,9 +1,10 @@
 ---
-title: "kubectl"
-alwaysopen: true
+order: 8
 ---
 
-[kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is the Kuberentes command-line tool. Users can run commands against Kubernetes clusters using `kubectl` to connect to a Kubernetes cluster's API server.
+# kubectl
+
+[kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) is the Kubernetes command-line tool. Users can run commands against Kubernetes clusters using `kubectl` to connect to a Kubernetes cluster's API server.
 
 You can use Cloudflare Access, in combination with Cloudflare Argo Tunnel, to connect to Kubernetes clusters and run `kubectl` commands without a VPN.
 
@@ -30,8 +31,8 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-cloudflared tunnel login
+```sh
+$ cloudflared tunnel login
 ```
 
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -42,7 +43,7 @@ Once selected, `cloudflared` will download a wildcard certificate for the site. 
 
 ## 3. Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](https://developers.cloudflare.com/access/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the cluster API server at `cluster.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
@@ -52,8 +53,8 @@ For example, if you share the cluster API server at `cluster.site.com`, build a 
 
 Run the following command to connect the resource to Cloudflare, replacing the `cluster.site.com` and `tcp://kubernetes.docker.internal:6443` values with your site and port.
 
-```bash
-cloudflared tunnel --hostname cluster.site.com --url tcp://kubernetes.internal:6443 --socks5=true
+```sh
+$ cloudflared tunnel --hostname cluster.site.com --url tcp://kubernetes.internal:6443 --socks5=true
 ```
 
 The proxy allows your local kubectl tool to connect to `cloudflared` via a SOCKS5 proxy, which helps avoid issues with TLS handshakes to the cluster itself. In this model, TLS verification can still be exchanged with the `kubectl` API server without disabling or modifying that flow for end users.
@@ -70,7 +71,7 @@ Follow the same steps above to download and install `cloudflared` on the client 
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```bash
+```sh
 $ cloudflared access tcp --hostname cluster.site.com --url 127.0.0.1:1234
 ```
 
@@ -78,6 +79,6 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 
 `kubeconfig` does not support proxy command configurations at this time, though the community has submitted plans to do so. In the interim, users can alias the cluster's API server to save time.
 
-```bash
+```sh
 $ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
 ```

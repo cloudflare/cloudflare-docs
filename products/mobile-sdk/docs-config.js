@@ -6,6 +6,14 @@ module.exports = {
   contentRepoFolder: "products/mobile-sdk",
   externalLinks: [
     {
+      title: "Mobile SDK Sign Up",
+      url: "https://mobilesdk.cloudflare.com"
+    },
+    {
+      title: "Blog: Data-driven development with Cloudflare Mobile SDK",
+      url: "https://blog.cloudflare.com/mobile-sdk-metrics/"
+    },
+    {
       title: "Cloudflare homepage",
       url: "https://cloudflare.com"
     }

@@ -1,8 +1,9 @@
 ---
-title: "Configuring A Block Page"
-alwaysopen: true
-weight: 3
+order: 3
 ---
+
+# Configure a Block Page
+
 - [Enable a block page](#enable-a-block-page)
 - [Download certificate](#download-certificate)
 - [Add certificate to your system](#add-certificate-to-your-system)

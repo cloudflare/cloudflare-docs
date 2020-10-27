@@ -1,11 +1,11 @@
 ---
-title: Create a load balancer (API)
-alwaysopen: true
-weight: 30
+title: Create via API
+order: 30
 ---
 
+# Create a load balancer via the API
 
-### Overview
+## Overview
 
 In this walkthrough, you will use the Cloudflare API to set up an active-passive failover configuration for your load balancer. An active-passive failover configuration sends traffic to the servers in your active pool until a failure threshold (configurable) occurs. At the point of failure, Cloudflare then redirects traffic to the passive pool.
 
@@ -19,7 +19,7 @@ We will walk through the following steps to create and configure your load balan
 
 ---
 
-### Using the Cloudflare API
+## Using the Cloudflare API
 
 The Cloudflare API provides a standardized programmatic interface for accessing Cloudflare applications and resources, including Load Balancing. The Cloudflare API is implemented as a RESTful service using HTTPS requests and JSON responses.
 
@@ -32,27 +32,29 @@ A valid request includes the following, which define what command to execute:
 - An **HTTP** **header** that specifies authorization details and the content type for request and response bodies
 - An optional **payload** for specifying parameters and values
 
-#### Request URL
+### Request URL
 
 The request URL is composed of a **base path** and an **endpoint**. The stable base URL for Version 4 of the Cloudflare API is:
 
-```
+```txt
 https://api.cloudflare.com/client/v4
 ```
 
 The endpoint is a URI that represents the path to a given resource, such as a Cloudflare load balancer. For example, the Cloudflare API endpoint for load balancers is:
 
-    `/zones/:identifier/load_balancers/:identifier`
+```txt
+/zones/:identifier/load_balancers/:identifier
+```
 
 When an endpoint specifies an `:identifier` term, the identifier must be replaced with the Cloudflare ID for an instance of the resource type that precedes it. The load balancer example above requires two Cloudflare IDs: one to identify the zone and one to identify a specific load balancer, respectively. Cloudflare IDs are represented by 32-byte strings.
 
 To form a request URL, append the endpoint to the base path, as in the example below:
 
-```
-    https://api.cloudflare.com/client/v4/zones/cd7d0123e3012345da9420df9514dad0/load_balancers/699d98642c564d2e855e9661899b7252
+```txt
+https://api.cloudflare.com/client/v4/zones/cd7d0123e3012345da9420df9514dad0/load_balancers/699d98642c564d2e855e9661899b7252
 ```
 
-#### HTTP methods
+### HTTP methods
 
 Cloudflare API endpoints accept one or more of the following HTTP methods, which typically behave as outlined:
 
@@ -62,7 +64,7 @@ Cloudflare API endpoints accept one or more of the following HTTP methods, which
 - `PATCH` **partially updates an existing resource**.
 - `DELETE` **removes an existing resource**.
 
-#### HTTP header
+### HTTP header
 
 The Cloudflare API requires that headers include the following:
 
@@ -71,7 +73,7 @@ The Cloudflare API requires that headers include the following:
   - When authorizing via **API Key**, both `"X-Auth-Key: <API key>"` and `"X-Auth-Email:<account_email>"` are required.
 - **Content Type**—The Cloudflare API supports JSON-formatted request and response bodies only. Set `"Content-Type:application/json"`in request headers.
 
-#### API documentation conventions
+### API documentation conventions
 
 Throughout this guide, API references will omit the base path for simplicity.
 
@@ -79,7 +81,7 @@ See _[Cloudflare API Documentation v4](https://api.cloudflare.com)_ for a comple
 
 ---
 
-### Before you begin
+## Before you begin
 
 Be sure that you have the following:
 
@@ -92,13 +94,13 @@ Be sure that you have the following:
 
 ---
 
-### Step 1: Create a monitor
+## Step 1: Create a monitor
 
 Monitors are configurations that describe how to run health checks on your origin servers. When a monitor is attached to a pool, Cloudflare will run health checks on that pool’s origin servers from our data centers around the world. Because monitors exist independently, you can attach them to multiple pools. This way you can make a change to a single monitor and automatically update the health check policy for every pool that uses it.
 
-Use the Create Monitor command to create a new monitor, as in the example below. If you are using virtual hosting, it is important to define a `host` value for the `header` property so that your web server knows which virtual host to serve. In most cases, this will be the same hostname as the one you intend the load balancer to manage—the same one you will use to name the load balancer. (See _[Monitors](/load-balancing/understand-basics/monitors/)_ for a full list of monitor properties and available commands.)
+Use the Create Monitor command to create a new monitor, as in the example below. If you are using virtual hosting, it is important to define a `host` value for the `header` property so that your web server knows which virtual host to serve. In most cases, this will be the same hostname as the one you intend the load balancer to manage—the same one you will use to name the load balancer. (See _[Monitors](/understand-basics/monitors/)_ for a full list of monitor properties and available commands.)
 
-#### **Request example**
+**Request example**
 
 ```json
 # POST https://api.cloudflare.com/client/v4/user/load_balancers/monitors
@@ -126,7 +128,7 @@ Use the Create Monitor command to create a new monitor, as in the example below.
 }
 ```
 
-#### **Response**
+**Response**
 
 ```json
 {
@@ -165,7 +167,7 @@ Use the Create Monitor command to create a new monitor, as in the example below.
 
 ---
 
-### Step 2: Create pools
+## Step 2: Create pools
 
 A Cloudflare pool represents a group of origin servers, each identified by their IP address or hostname. If you're familiar with DNS terminology, think of a pool as a _record set_, except we only return addresses that are considered healthy.
 
@@ -175,16 +177,16 @@ Before you continue, gather the following:
 - The ID of the monitor you just created. (Use the List Monitors command, `GET /load_balancers/monitors`, to fetch the Monitor ID.)
 - An email address for receiving health check notifications
 
-#### Create Pool 1
+### Create Pool 1
 
-Use the Create Pool command on the Cloudflare API to create a new pool, as in the example below. Set the `origins` array to supply a list of origin server objects. In this example, use the two origin servers you reserved for this exercise. (See _[Pools](/load-balancing/understand-basics/pools/)_ for a list of pool properties and available commands.)
+Use the Create Pool command on the Cloudflare API to create a new pool, as in the example below. Set the `origins` array to supply a list of origin server objects. In this example, use the two origin servers you reserved for this exercise. (See _[Pools](/understand-basics/pools/)_ for a list of pool properties and available commands.)
 
 Setting the pool’s `monitor` property will attach your monitor to the pool and enable health checks. For this example, use the Monitor ID you generated in the previous step.
 
-##### **Request**
+**Request**
 
-```bash
-# POST https://api.cloudflare.com/client/v4/user/load_balancers/pools
+```js
+// POST https://api.cloudflare.com/client/v4/user/load_balancers/pools
 {
   "name": "primary-dc-1",
   "description": "Primary data center - Provider XYZ",
@@ -204,7 +206,7 @@ Setting the pool’s `monitor` property will attach your monitor to the pool and
 }
 ```
 
-##### **Response**
+**Response**
 
 ```json
 {
@@ -239,14 +241,14 @@ Setting the pool’s `monitor` property will attach your monitor to the pool and
 
 If the response is an error, check the error message for a suggestion. If you’re using _curl_ to make requests, check that any shell escaping isn’t breaking your JSON request body.
 
-#### Create Pool 2
+### Create Pool 2
 
 To create a second pool, use the same command you did to create Pool 1, but give Pool 2 a different `name`.
 
-##### **Request**
+**Request**
 
-```bash
-# POST https://api.cloudflare.com/client/v4/user/load_balancers/pools
+```js
+// POST https://api.cloudflare.com/client/v4/user/load_balancers/pools"
 {
   "name": "secondary-dc-1",
   "description": "Secondary data center - Provider QRS",
@@ -265,11 +267,11 @@ To create a second pool, use the same command you did to create Pool 1, but give
 }
 ```
 
-##### **Response**
+**Response**
 
 The response will be similar as for Pool 1, but the ID and timestamps will be different.
 
-Now that you’ve created your pools and attached a monitor, Cloudflare will initiate health checks from each of our data centers. (See _[Monitors](/load-balancing/understand-basics/monitors/)_ for more on how health checks work.)
+Now that you’ve created your pools and attached a monitor, Cloudflare will initiate health checks from each of our data centers. (See _[Monitors](/understand-basics/monitors/)_ for more on how health checks work.)
 
 ---
 
@@ -277,20 +279,20 @@ Now that you’ve created your pools and attached a monitor, Cloudflare will ini
 
 Use the List Pools command to verify you have configured your monitor and pools correctly. The value for the `healthy` property should be `true`, indicating that health checks are configured and the pool is available.
 
-#### **Request**
+**Request**
 
-```bash
-# GET /load_balancers/pools *OR* GET /load_balancers/pools/:pool_id
+```js
+// /load_balancers/pools *OR* GET /load_balancers/pools/:pool_id
 {
-  ...
+  // ...
   "healthy": true
-  ...
+  // ...
 }
 ```
 
-#### **Response**
+**Response**
 
-```json
+```js
 {
   "result": {
     "pool_id": "ff02c959d17f7bb2b1184a202e3c0af7",
@@ -306,11 +308,11 @@ Use the List Pools command to verify you have configured your monitor and pools 
               "response_code": 200
             }
           },
-          # Each origin will appear in this array
+          // Each origin will appear in this array
         ]
       }
     },
-    # Each Cloudflare Point-of-Presence will be listed here.
+    // Each Cloudflare Point-of-Presence will be listed here.
   },
   "success": true,
   "errors": [],
@@ -324,80 +326,31 @@ For most use cases, using the List Pools command—`GET /load_balancers/pools`�
 
 ---
 
-### Step 4: Create a load balancer
+## Step 4: Create a load balancer
 
 To start delivering traffic to your pools, you must attach them to a load balancer. Load balancers are identified by the DNS hostname whose traffic you want to balance (_www.example.com_, for example). The load balancer defines which origin server pools to use, the order in which they should be used, and how to geographically distribute traffic among them.
 
-#### Important load balancer properties
+### Important load balancer properties
 
-The following load balancer properties are important for this step. (See _[Load Balancers](/load-balancing/understand-basics/load-balancers/)_ for a complete list of properties.)
+The following load balancer properties are important for this step. (See _[Load Balancers](/understand-basics/load-balancers)_ for a complete list of properties.)
 
-<table>
-  <tr>
-   <td><strong>Property</strong>
-   </td>
-   <td><strong>Description</strong>
-   </td>
-   <td><strong>Constraints</strong>
-   </td>
-  </tr>
-  <tbody>
-  <tr>
-   <td valign="top"><strong> name</strong>
-<p>
-string</p>
-   </td>
-   <td>The public DNS hostname of your Cloudflare load balancer
-<p>
-If you have an existing DNS record with the same name as your load balancer, the load balancer will have precedence. The pre-existing DNS record is not used unless you delete the Cloudflare Load Balancer.
-</p>
-<code>"www.example.com"</code>
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td valign="top"><strong>default_pools</strong>
-<p>
-array</p>
-   </td>
-   <td>A list of pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool, and so on down the list.
-<p>
-Pools defined here are used by default, or when region_pools are not configured for a given region.
-</p><code>
-["17b5962d775c646f3f9725cbc7a53df4",  "9290f38c5d07c2e2f4df57b1f61d4196",
-"00920f38ce07c2e2f4df50b1f61d4194"
-]
-</code>
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td valign="top"><strong>fallback_pool</strong>
-<p>
-string</p>
-   </td>
-   <td>The pool ID for the “pool of last resort,” the pool the load balancer should direct traffic to if all other pools are unhealthy. In most configurations, this is the secondary/passive pool.
-<p>
-<code>"17b5962d775c646f3f9725cbc7a53df4"</code>
-   </p>
-   </td>
-   <td valign="top">Max length: 32
+<TableWrap>
 
-read only
-   </td>
-  </tr>
-  </tbody>
-</table>
+| Property | Description | Constraints |
+| -------- | ----------- | ----------- |
+| <strong>`name`</strong><br/><Type>string</Type> | The public DNS hostname of your Cloudflare load balancer.<br/><br/>If you have an existing DNS record with the same name as your load balancer, the load balancer will have precedence. The pre-existing DNS record is not used unless you delete the Cloudflare Load Balancer.<br/><br/>`"www.example.com"` | |
+| <strong>`default_pools`</strong><br/><Type>array</Type> | A list of pool IDs ordered by failover priority. Cloudflare steers traffic to the first pool in the list, failing over to the next healthy pool, and so on down the list.<br/><br/>Pools defined here are used by default, or when region_pools are not configured for a given region.<br/><br/>`["17b5962d775c646f3f9725cbc7a53df4",  "9290f38c5d07c2e2f4df57b1f61d4196", "00920f38ce07c2e2f4df50b1f61d4194"]` | |
+| <strong>`fallback_pool`</strong><br/><Type>string</Type> | The pool ID for the “pool of last resort,” the pool the load balancer should direct traffic to if all other pools are unhealthy. In most configurations, this is the secondary/passive pool.<br/><br/>`"17b5962d775c646f3f9725cbc7a53df4"` | <span style="white-space: nowrap"><PropMeta>max-length: 32</PropMeta></span><br/><PropMeta>read-only</PropMeta> |
 
+</TableWrap>
 
-
-#### Cloudflare Zone IDs
+### Cloudflare Zone IDs
 
 Notice that the Create Load Balancer command requires a `zone_id`:
 
-    POST /zones/:zone_id/load_balancers
+```txt
+POST /zones/:zone_id/load_balancers
+```
 
 This represents the Cloudflare ID of the DNS zone associated with your load balancer.
 
@@ -405,11 +358,13 @@ A DNS zone is a portion of the DNS namespace that is managed by a specific organ
 
 You can get the Cloudflare Zone ID for your hostname by using the List Zones command:
 
-    GET /zones
+```txt
+GET /zones
+```
 
 This command returns a list of zones, each with an associated hostname and Cloudflare Zone ID. You can filter the list by setting values for properties, as in the following _curl_ example, which queries for the zone associated with the hostname _example.com_.
 
-#### **Request example (curl)**
+**Request example (curl)**
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones?name=example.com&status=active&account.id=01a7362d577a6c3019a474fd6f485823&account.name=Demo Account&page=1&per_page=20&order=status&direction=desc&match=all" \
@@ -419,7 +374,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones?name=example.com&status=
 
 ```
 
-#### **Response**
+**Response**
 
 Notice that the response includes data not only for example.com but also for each of its subdomains:
 
@@ -493,10 +448,10 @@ Use the List Zones command to retrieve the zone for the DNS hostname you want to
 
 Use the Create Load Balancer command to create your new load balancer, as in the example below. Remember to set `zone_id` to the value you found in the previous section.
 
-##### **Request example**
+**Request example**
 
-```bash
- # POST /zones/:zone_id/load_balancers
+```js
+// POST /zones/:zone_id/load_balancers
 {
   "description": "Load Balancer for www.example.com",
   "name": "www.example.com",
@@ -508,7 +463,7 @@ Use the Create Load Balancer command to create your new load balancer, as in the
 }
 ```
 
-##### **Response**
+**Response**
 
 ```json
 {
@@ -537,11 +492,12 @@ Use the Create Load Balancer command to create your new load balancer, as in the
 <Aside type="note">
 
 Deleting a Load Balancer does not delete associated pools and monitors.  Delete pools and monitors via the respective **Manage Pools** and **Manage Monitors** buttons within the **Load Balancing** tab under the **Traffic** app of the Cloudflare dashboard.
+
 </Aside>
 
 ---
 
-### Step 5: Configuring Geo Steering (optional)
+## Step 5: Configuring Geo Steering (optional)
 
 If you have servers in different geographic regions, you may want to steer traffic to pools based on the region from which visitors are connecting. For example, your European visitors should land on your European pool first, and then on your US pool if the European pool is down. Your North American users would have the reverse configuration.
 
@@ -553,10 +509,10 @@ Cloudflare Geo Steering directs traffic to pools based on the client’s region 
 
 Use the regions_pool property of the Update Load Balancers command—`PUT /zones/:zone_id/load_balancers`— to specify an array of regions. Specify each region using the appropriate region code followed by a list of origin servers to use for that region. In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
-#### **Request example**
+**Request example**
 
-```bash
- # PUT /zones/:zone_id/load_balancers
+```js
+// PUT /zones/:zone_id/load_balancers
 {
   "description": "Load Balancer for www.example.com",
   "name": "www.example.com",

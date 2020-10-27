@@ -1,8 +1,8 @@
 ---
-title: "Tanium"
-alwaysopen: true
-weight: 10
+order: 10
 ---
+
+# Tanium
 
 Cloudflare Access can use endpoint data from Tanium™ to determine if a request should be allowed to reach a protected resource. You will need an active Tanium™ Core Platform deployment that runs version 7.2 or later.
 

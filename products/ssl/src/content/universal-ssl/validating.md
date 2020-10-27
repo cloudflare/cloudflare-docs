@@ -1,12 +1,13 @@
 ---
-title: Validating
-weight: 10
+order: 2
 ---
 
-## Authoritative Zones
+# Validating
 
-DCV is automatically handled for authoritative ("full") zones by adding the requisite DNS challenge records to the zone.
+## Authoritative zones
 
-## Non-Authoritative Zones
+DCV is automatically handled for authoritative (“full”) zones by adding the requisite DNS challenge records to the zone.
 
-Non-authoritative ("partial") zones must manually add DNS CNAME records as provided in the Cloudflare Dashboard.
+## Non-Authoritative zones
+
+Non-authoritative (“partial”) zones must manually add DNS CNAME records as provided in the Cloudflare Dashboard.

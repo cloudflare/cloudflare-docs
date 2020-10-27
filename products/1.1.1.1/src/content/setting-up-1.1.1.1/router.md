@@ -1,15 +1,17 @@
 ---
-title: Router
+order: 8
 ---
+
+# Router
 
 Follow this quick guide to start using 1.1.1.1 on your router.
 
 Step 1: Go to the IP address used to access your router's admin console in your browser.
 
-  * Linksys and Asus routers typically use [http://192.168.1.1](http://192.168.1.1)
-  * Netgear routers typically use [http://192.168.0.1](http://192.168.0.1) or [http://192.168.1.1](http://192.168.1.1)
-  * D-Link routers typically use [http://192.168.0.1](http://192.168.0.1)
-  * Ubiquiti routers typically use [http://unifi.ubnt.com](http://unifi.ubnt.com)
+- Linksys and Asus routers typically use [http://192.168.1.1](http://192.168.1.1)
+- Netgear routers typically use [http://192.168.0.1](http://192.168.0.1) or [http://192.168.1.1](http://192.168.1.1)
+- D-Link routers typically use [http://192.168.0.1](http://192.168.0.1)
+- Ubiquiti routers typically use [http://unifi.ubnt.com](http://unifi.ubnt.com)
 
 Step 2: Enter the router password.
 
@@ -17,10 +19,12 @@ Step 3: Find the place in the admin console where DNS settings are set.
 
 Step 4: Replace the existing addresses with:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 5: Save and exit.
 
@@ -30,8 +34,7 @@ It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if
 
 ## Ubiquiti UniFi Controller
 
-<stream src="510f09dad9812cd7ac009ebcab75068e" site="cloudflare.com" controls></stream>
-<script data-cfasync="false" defer type="text/javascript" src="https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js?video=510f09dad9812cd7ac009ebcab75068e"></script>
+<StreamVideo id="510f09dad9812cd7ac009ebcab75068e"/>
 
 Step 1: Go to [http://unifi.ubnt.com](http://unifi.ubnt.com) and enter your email and password.
 
@@ -47,10 +50,12 @@ Step 6: Scroll to where it says DHCP Name Server. If Auto is selected, select Ma
 
 Step 7: In the boxes called DNS Server 1, 2, 3, etc. put:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 8: Click Save.
 
@@ -64,10 +69,12 @@ Step 3: Click on Advanced networking then click on DNS
 
 Step 4: Remove any IP addresses that may be already listed and in their place enter:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```
 
 Step 5: Click Save.
 
@@ -81,7 +88,9 @@ Step 2: Under Advanced Settings, click on WAN
 
 Step 3: In the Internet Connection tab, under WAN DNS Setting, in DNS servers, add:
 
-    1.1.1.1
-    1.0.0.1
-    2606:4700:4700::1111
-    2606:4700:4700::1001
+```txt
+1.1.1.1
+1.0.0.1
+2606:4700:4700::1111
+2606:4700:4700::1001
+```

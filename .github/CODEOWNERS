@@ -1,0 +1,35 @@
+# Documentation Engine
+products/docs-engine/ @adamschwartz
+
+# WAF
+products/waf/ @cloudflare/firewall
+
+# Workers
+products/workers/ @cloudflare/workers-docs
+
+# Stream
+products/stream/ @renandincer
+
+# Access
+products/access/ @cloudflare/access-docs
+
+# Argo Tunnel
+products/argo-tunnel/ @abracchi-tw
+
+# 1.1.1.1
+products/1.1.1.1/ @abracchi-tw
+
+# Gateway
+products/gateway/ @abracchi-tw
+
+# Warp Client
+products/warp-client/ @abracchi-tw
+
+# Randomness Beacon
+products/randomness-beacon/ @lukevalenta @armfazh
+
+# Distributed Web
+products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn
+
+# Time Services
+products/time-services/ @lukevalenta @wbl @armfazh

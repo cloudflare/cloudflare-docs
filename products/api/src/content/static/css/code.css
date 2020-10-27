@@ -1,0 +1,17 @@
+/* for code block with line numbers */
+table.hljs-ln {
+  border: 0px;
+  background-color: inherit;
+}
+.hljs-ln-numbers {
+  text-align: center;
+  color: #ccc;
+  vertical-align: top;
+  padding-right: 5px;
+  border: 0px;
+}
+
+tr > td.hljs-ln-code {
+  border: 0px;
+  padding-left: 10px;
+}

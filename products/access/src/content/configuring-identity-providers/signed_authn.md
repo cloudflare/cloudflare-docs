@@ -1,8 +1,8 @@
 ---
-title: "Signed AuthN Requests with SAML"
-alwaysopen: true
-weight: 12
+order: 12
 ---
+
+# Signed AuthN Requests with SAML
 
 In a SAML request flow, Cloudflare Access functions as the service provider (SP) to the identity provider (IdP). Cloudflare Access sends a SAML request to your IdP. The signing certificate that you upload from your SAML provider verifies the response.
 
@@ -26,7 +26,7 @@ To set up Signed AuthN requests:
 
 1. Go to this URL to find the certificate:
 
-    ```shell
+    ```txt
     https://{access-domian}/cdn-cgi/access/public-cert
     ```
 
@@ -47,6 +47,6 @@ To set up Signed AuthN requests:
 
     This is an example format:
 
-    ```shell
-     https://example.cloudflareaccess.com/cdn-cgi/access/public-cert
+    ```txt
+    https://example.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```

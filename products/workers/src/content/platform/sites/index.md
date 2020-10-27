@@ -2,7 +2,7 @@
 
 <Aside>
 
-__Note:__ Workers Sites requires the Workers [Bundled plan](https://workers.cloudflare.com/sites#plans). As Workers Sites use Workers and Workers KV, their is taken into account when calculating your monthly bill.
+__Note:__ Workers Sites requires the Workers [Bundled plan](https://workers.cloudflare.com/sites#plans). As Workers Sites depend on both Workers and Workers KV, their usage is taken into account when calculating your monthly bill.
 
 </Aside>
 
