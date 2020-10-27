@@ -4,7 +4,7 @@ order: 0
 
 # How Cloudflare Gateway Works
 
-![How Gateway Works](../static/how-does-gateway-work-dns.png)
+![How Gateway Works](../static/how-does-gw-work-background.png)
 
 ## Secure DNS
 
