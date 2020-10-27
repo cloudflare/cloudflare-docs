@@ -34,4 +34,3 @@ Cloudflare WARP supports the following operational modes. You can choose to have
     * [macOS](/setting-up/macOS/)
     * [iOS](/setting-up/iOS/)
     * [Android](/setting-up/android/)
-
