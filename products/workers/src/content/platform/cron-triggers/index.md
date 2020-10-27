@@ -16,10 +16,19 @@ Cron Triggers can be added to scripts with the Cloudflare API or in the dashboar
 
 ## Supported cron expressions
 
-We support all cron expressions, including special characters, that evaluate to the supported time specification below:
-- Intervals (single executions not supported)
-- Minimum interval is 1 minute
-- Maximum interval is 12 months
+We support cron expressions with 5 fields, along with most "Quartz scheduler"-like cron syntax extensions:
+
+<TableWrap>
+
+Field         | Values  | Characters
+--------------|---------|------------
+Minute        | 0-59    | * , - /
+Hours         | 0-23    | * , - /
+Days of Month | 1-31    | * , - / L W
+Months        | 1-12, case-insensitive 3-letter abreviations ("JAN", "aug", etc.) | * , - /
+Weekdays      | 1-7, case-insensitive 3-letter abreviations ("MON", "fri", etc.)  | * , - / L #
+
+</TableWrap>
 
 ### Examples
 
@@ -42,6 +51,12 @@ Here are some common time intervals that may be useful for setting up your Cron 
 - `0 15 1 * *`
   - 3PM on first day of the month
 
+- `0 18 * * 6L` or `0 18 * * friL`
+  - 6PM on the last Friday of the month
+
+- `23 59 LW * *`
+  - 11:59PM on the last weekday of the month
+
 </Definitions>
 
 ## Viewing past events
@@ -50,6 +65,6 @@ Users can view the execution history of their Cron Triggers on the Past Events s
 
 ![workers-past-events](./media/workers-past-events.png)
 
-It's important to call out that it can take up to 30 minutes before events are displayed in Past Events when creating a new Worker or changing a Worker's name.
+Note: it can take up to 30 minutes before events are displayed in Past Events when creating a new Worker or changing a Worker's name.
 
 See [Metrics and Analytics](/learning/metrics-and-analytics) for more information.
