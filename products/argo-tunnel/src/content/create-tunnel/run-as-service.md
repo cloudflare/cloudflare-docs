@@ -14,6 +14,10 @@ By default, Argo Tunnel expects all of the configuration to exist in the `cloudf
 |`tunnel`|The UUID of your Tunnel
 |`credentials-file`|The location of the credentials file for your Tunnel|
 
+You must [create the Tunnel](/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
+
+If you do not want to create the tunnel in advance, you must install `cloudflared` with the `--legacy` flag.
+
 ## Linux
 
 Run the following command:
