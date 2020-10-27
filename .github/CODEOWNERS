@@ -11,7 +11,7 @@ products/workers/ @cloudflare/workers-docs
 products/stream/ @renandincer
 
 # Access
-products/stream/ @abracchi-tw
+products/access/ @cloudflare/access-docs
 
 # Argo Tunnel
 products/argo-tunnel/ @abracchi-tw
