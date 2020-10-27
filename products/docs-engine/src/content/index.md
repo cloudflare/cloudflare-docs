@@ -31,7 +31,7 @@ It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/c
 | [Stream](https://developers.cloudflare.com/stream)                    | [@cloudflare/cloudflare-docs/.../stream](https://github.com/cloudflare/cloudflare-docs/tree/master/products/stream)           |
 | [Terraform](https://developers.cloudflare.com/terraform)              | [@cloudflare/cloudflare-docs/.../terraform](https://github.com/cloudflare/cloudflare-docs/tree/master/products/terraform)     |
 | [Workers](https://developers.cloudflare.com/workers)                  | [@cloudflare/cloudflare-docs/.../workers](https://github.com/cloudflare/cloudflare-docs/tree/master/products/workers)         |
-| [View the full list...](https://github.com/cloudflare/cloudflare-docs#products)...                                                                                                                    |
+| [View the full list](https://github.com/cloudflare/cloudflare-docs#products) ...                                                                                                                      |
 
 </TableWrap>
 
