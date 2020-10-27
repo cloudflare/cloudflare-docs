@@ -1,6 +1,9 @@
 # Documentation Engine
 products/docs-engine/ @adamschwartz
 
+# Image Resizing
+products/images/ @kornel
+
 # WAF
 products/waf/ @cloudflare/firewall
 
