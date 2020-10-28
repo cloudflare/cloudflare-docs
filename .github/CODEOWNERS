@@ -1,38 +1,89 @@
-# Documentation Engine
-products/docs-engine/ @adamschwartz
-
-# Image Resizing
-products/images/ @kornel
-
-# WAF
-products/waf/ @cloudflare/firewall
-
-# Workers
-products/workers/ @cloudflare/workers-docs
-
-# Stream
-products/stream/ @renandincer
+# 1.1.1.1
+products/1.1.1.1/ @abracchi-tw
 
 # Access
 products/access/ @cloudflare/access-docs
 
+# Analytics
+products/analytics/ @soheiokamoto @jherre
+
+# API
+products/api/ @cloudflare/sdk
+
 # Argo Tunnel
 products/argo-tunnel/ @abracchi-tw
 
-# 1.1.1.1
-products/1.1.1.1/ @abracchi-tw
-
-# Gateway
-products/gateway/ @abracchi-tw
-
-# Warp Client
-products/warp-client/ @abracchi-tw
-
-# Randomness Beacon
-products/randomness-beacon/ @lukevalenta @armfazh
+# BYOIP
+products/byoip/ @ConzorKingKong
 
 # Distributed Web
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn
 
+# Documentation Engine
+products/docs-engine/ @adamschwartz
+
+# Events
+products/events/ @ConzorKingKong
+
+# Firewall Rules
+products/firewall/ @cloudflare/firewall
+
+# Gateway
+products/gateway/ @abracchi-tw
+
+# HTTP/3
+products/http3/ @ConzorKingKong
+
+# Image Resizing
+products/images/ @kornel
+
+# The Life of a Request
+products/internet/ @ConzorKingKong
+
+# Load Balancing
+products/load-balancing/ @ConzorKingKong
+
+# Logs
+products/logs/ @soheiokamoto @jherre
+
+# Magic Transit
+products/magic-transit/ @annikagarbers
+
+# Mobile SDK
+products/mobile-sdk/ @cloudflare/sdk @lalkaka
+
+# Network Interconnect
+products/network-interconnect @ConzorKingKong
+
+# Randomness Beacon
+products/randomness-beacon/ @lukevalenta @armfazh
+
+# Registrar
+products/registrar/ @TownLake
+
+# Spectrum
+products/spectrum/ @ConzorKingKong
+
+# SSL
+products/ssl/ @ConzorKingKong
+
+# Stream
+products/stream/ @renandincer @third774
+
+# Tenant
+products/tenant/ @garrettgalow
+
+# Terraform
+products/terraform/ @ConzorKingKong
+
 # Time Services
 products/time-services/ @lukevalenta @wbl @armfazh
+
+# WAF
+products/waf/ @cloudflare/firewall
+
+# Warp Client
+products/warp-client/ @abracchi-tw
+
+# Workers
+products/workers/ @cloudflare/workers-docs
