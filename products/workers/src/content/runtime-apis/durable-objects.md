@@ -83,10 +83,13 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     - <Code>start<ParamType>string</ParamType></Code>
       - Key at which the list results should start, inclusive.
+
     - <Code>end<ParamType>string</ParamType></Code>
       - Key at which the list results should end, exclusive.
+
     - <Code>reverse<ParamType>boolean</ParamType></Code>
       - If true, return results in descending lexicographic order instead of the default ascending order.
+
     - <Code>limit<ParamType>number</ParamType></Code>
       - Maximum number of key-value pairs to return.
 
