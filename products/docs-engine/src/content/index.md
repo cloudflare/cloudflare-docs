@@ -8,7 +8,7 @@ order: 0
 
 <ContentColumn>
 
-Documentation for the __Docs Engine__ which powers Cloudflare’s developer docs.
+Documentation for the engine which powers [Cloudflare’s docs](https://github.com/cloudflare/cloudflare-docs).
 
 The engine uses [Gatsby](https://www.gatsbyjs.com/), and includes many [built-in MDX components](/reference/markdown).
 

@@ -4,12 +4,6 @@ order: 1
 
 # How it works
 
-<Aside>
-
-__Note for Cloudflare employees:__ The details of this process are still being worked out. For the time being, please do not migrate any Cloudflare products without first checking in Adam ([afs@cloudflare.com](mailto:afs@cloudflare.com), [@adamschwartz on GitHub](https://github.com/adamschwartz)). Thanks for your patience.
-
-</Aside>
-
 In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://www.gatsbyjs.com) sites with a bunch of [custom MDX components](/reference/markdown) and a shell UI you that’s consistent across products, all deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via the [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action).
 
 --------------------------------
@@ -24,24 +18,23 @@ The instructions below assume you already have a paid [Cloudflare Workers](https
 
 Each docs site built with the engine needs the following structure:
 
-1. A `package.json` with one dependency and some custom scripts configured.
-2. A `docs-config.js` which exports a JavaScript object for configuring a number of strings and a few settings.
+1. A `package.json` with the engine dependency and some custom scripts configured.
+2. A `docs-config.js` config which exports a JavaScript object.
 3. A `wrangler.toml` with the correct `[site]` configured.
-4. A `.gitignore` file which ignores at least `.docs`, `dist/worker.js`, and `node_modules`.
-5. Content — An `index.md` file in `src/content/` will do.
+4. A `.gitignore` which ignores at least `.docs`, `dist/worker.js`, and `node_modules`.
+5. Content in `src/content/` — A single `index.md` will do.
 
-All of these files can be in the root, as is the case with the [Docs Engine example](https://github.com/adamschwartz/docs-engine-example/tree/c45fa9f0a8affc68baf5d3517f8b890ba0522531).
+For a repo holding a single docs site, everything but the content should be in the root, as is the case with the [Docs Engine minimal example](https://github.com/adamschwartz/docs-engine-example/tree/c45fa9f0a8affc68baf5d3517f8b890ba0522531).
 
-However, this whole structure can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/master/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
+However, these files can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/master/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
 
 ### 1. package.json
 
-Your `package.json` needs to depend on the Docs Engine, and it needs to include scripts for bootstrapping the engine, building the project, and local development.
+Your `package.json` needs to depend on the Docs Engine, and it needs to include scripts for bootstrapping the engine, building the project, local development, and deployment.
 
 ```json
 ---
 filename: package.json
-highlight: [4, 7, 8, 9]
 ---
 {
   "private": true,
@@ -50,10 +43,11 @@ highlight: [4, 7, 8, 9]
   },
   "scripts": {
     "bootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh bootstrap",
-    "ghactionsbootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh ghactionsbootstrap",
     "build": "node_modules/cloudflare-docs-engine/bin/commands.sh build",
     "develop": "node_modules/cloudflare-docs-engine/bin/commands.sh develop",
-    "savechanges": "node_modules/cloudflare-docs-engine/bin/commands.sh savechanges"
+    "ghactionsbootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh ghactionsbootstrap",
+    "savechanges": "node_modules/cloudflare-docs-engine/bin/commands.sh savechanges",
+    "serve": "node_modules/cloudflare-docs-engine/bin/commands.sh serve"
   }
 }
 ```
