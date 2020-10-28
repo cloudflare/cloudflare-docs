@@ -18,7 +18,7 @@ Visit [example.com](https://example.com).
 
 </Example>
 
-```markdown
+```md
 Visit [example.com](https://example.com).
 
 View the [How it Works](/how-it-works) page.
@@ -31,7 +31,7 @@ Learn how to use [`<Asides/>`](/reference/markdown#asides).
 
 If you need to take advantage of Gatsby’s routing but you want control over the presentation of the link yourself, you can use `<Link/>` directly.
 
-```markdown
+```md
 <Link to="/how-it-works" className="Button Button-is-secondary">
   How it Works
 </Link>
@@ -49,7 +49,7 @@ If you need to take advantage of Gatsby’s routing but you want control over th
 
 Images are added by simply using the Markdown syntax.
 
-```markdown
+```md
 ![Wall of entropy](./wall-of-entropy.jpg)
 ```
 
@@ -67,7 +67,7 @@ __Note:__ This is a note.
 
 </Aside>
 
-```markdown
+```md
 <Aside>
 
 __Note:__ This is a note.
@@ -87,7 +87,7 @@ This is a warning.
 
 </Aside>
 
-```markdown
+```md
 <Aside type="warning" header="Warning">
 
 This is a warning.
@@ -113,7 +113,7 @@ This is an example _of an example_.
 
 </Example>
 
-```markdown
+```md
 <Example>
 
 This is an example _of an example_.
@@ -165,7 +165,7 @@ Here are some self-exemplifying definitions:
 
 Here’s the code for this set of definitions.
 
-```markdown
+```md
 <Definitions>
 
 - `<Definitions/>` <Type>MDXComponent</Type>
@@ -199,7 +199,7 @@ Instructions for composing reference documentation:
 
 1. First wrap everything inside of `<Definitions>`. Note that MDX requires that you include a new line before and after each block-style MDX tag.
 
-  ```markup
+  ```html
   ---
   highlight: [1,3]
   ---
@@ -215,14 +215,14 @@ Instructions for composing reference documentation:
 
       - For property definitions, you can use two backticks.
 
-        ```markdown
+        ```md
           - `property`
             - ...
         ```
 
       - For method definitions in which you need to specify a param type inside the inline code block, use the `<Code/>` component with child `<ParamType/>` components.
 
-        ```markdown
+        ```md
           - <Code>method(param<ParamType>type</ParamType>)</Code>
             - ...
         ```
@@ -232,7 +232,7 @@ Instructions for composing reference documentation:
       - For methods, this represents the type of the return value.
       - For style, you may optionally leave these off if the types are clear from context or `null`ish for the entire set of methods.
 
-      ```markdown
+      ```md
         - `property` <Type>type</Type>
           - ...
       ```
@@ -269,7 +269,7 @@ Use blockquotes when quoting someone. For example, here’s a translation of a q
 
 > A goal without a plan is just a wish.
 
-```markdown
+```md
 > A goal without a plan is just a wish.
 ```
 
@@ -283,7 +283,7 @@ Use blockquotes when quoting someone. For example, here’s a translation of a q
 >
 > <cite>Adam Schwartz</cite>
 
-```markdown
+```md
 > If you want to get fancy with it you can use
 > [links](https://example.com) and `<code/>`, and
 > really just about any another inline Markdown.
@@ -498,7 +498,7 @@ This is particularly useful on so-called “overview” pages, the top level pag
 
 If within one of these pages, you need some portion of that page’s content to be constrained to the column width normally reserved for “document”-type pages, use the `<ContentColumn/>` MDX component.
 
-```markdown
+```md
 <ContentColumn>
 
 This content will wrap to the column width of a standard “document”-type docs page.
@@ -544,7 +544,7 @@ Use `<sub/>` for mathematical bases or in chemical formulas.
 
 </Example>
 
-```markdown
+```md
 <center>1111 = 10001010111<sub>2</sub></center>
 ```
 
@@ -554,7 +554,7 @@ Don’t consume too much C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>.
 
 </Example>
 
-```markdown
+```md
 Don’t consume too much C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>.
 ```
 
@@ -566,7 +566,7 @@ You can use `<var/>` and `<sup/>` to construct an equations.
 
 </Example>
 
-```markup
+```html
 <center><var>a</var><sup>2</sup> + <var>b</var><sup>2</sup> = <var>c</var><sup>2</sup></center>
 ```
 
@@ -597,7 +597,7 @@ search for text within this document.
 
 </Example>
 
-```markdown
+```md
 Press <kbd>⌘</kbd> <kbd>F</kbd> (Command-F) to
 search for text within this document.
 ```
@@ -610,7 +610,7 @@ When you want to provide additional information in context, but you don’t want
 
 To ensure proper layout and styling, wrap all contains of the `<details/>` element, except the `<summary/>` element, in a single `<div/>`:
 
-``````markdown
+``````md
 <details>
 <summary>Details</summary>
 <div>
