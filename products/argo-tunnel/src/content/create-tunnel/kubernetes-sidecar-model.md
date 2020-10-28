@@ -1,5 +1,6 @@
 ---
 order: 1
+hidden: true
 ---
 
 # Run as a Kubernetes sidecar
