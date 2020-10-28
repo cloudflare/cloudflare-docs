@@ -1,10 +1,12 @@
 ---
-order: 1
+order: 0
 ---
 
 # Content framework
 
-This page provides an overview of how best to contribute to Cloudflare’s documentation. This is a living document and will be updated as recommendations change.
+This page provides an overview of how best to contribute to Cloudflare’s documentation.
+
+--------------------------------
 
 ## Information architecture
 
@@ -93,83 +95,6 @@ When writing documentation as part of a technical reference (e.g. [runtime API](
 
 --------------------------------
 
-## Typography
+## See also
 
-As the medium of communication, typography is critical to writing great documentation.
-
-When contributing to Cloudflare docs, make sure to follow best practices for good typography. [Butterick’s Practical Typography](https://practicaltypography.com) is a great resource for technical writers, and especially the [“type composition“](https://practicaltypography.com/type-composition.html) guidelines should be followed for these docs.
-
-Specifically, please make sure to:
-
-- **Use curly quotes and apostrophes.**
-  - Use [curly quotes](https://practicaltypography.com/straight-and-curly-quotes.html) in regular text (but straight quotes for strings in code).
-  - For possessives and contractions, [use a closing single quote](https://practicaltypography.com/apostrophes.html) as an apostrophe.
-
-- **Use an [em dash](https://practicaltypography.com/hyphens-and-dashes.html) (not a hyphen) to make a break between parts of a sentence.**
-  - Never use two hyphens (--) in place of an em dash (—).
-
-- **Always use one space between sentences.** ([Reference](https://practicaltypography.com/one-space-between-sentences.html))
-
---------------------------------
-
-## General formatting
-
-- **Use sentence casing for headlines.**
-
-- **For longer pages, use a separator between h2 sections.** Written as an `<hr/>` in Markdown (`--------`):
-
-  ```markdown
-  ## Some heading
-
-  Imagine several paragraphs of text here.
-
-  --------------------------------
-
-  ## Some other heading
-
-  <!-- ... -->
-  ```
-
-- **Always add a language hint to code blocks.** If you don’t want any syntax highlighting, explicitly use `txt`:
-
-  ``````markdown
-  ```txt
-  https://example.com
-  ```
-  ``````
-
-- **When using an ellipsis (`...`) in a code block, make sure to place it in a comment for the appropriate language.**
-
-  ``````markdown
-  Here’s an example:
-
-  ```js
-  let foo = "bar"
-
-  // ...
-
-  console.log(foo)
-  ```
-  ``````
-
---------------------------------
-
-## Accessibility guidelines
-
-<Aside>
-
-Contributions are welcome.
-
-</Aside>
-
-- **Use descriptive link text.** Don’t say “Learn more [here](https://example.com).” Instead say “[Learn more about examples at example.com](https://example.com).”
-
-- **Use descriptive alt text and file names for images.** Don’t write `![screenshot](image.png)`. Instead write `![Workers dashboard screenshot](workers-dashboard-screenshot.png)`.
-
-- **Use an `sh` code block over a screenshot of a terminal output.** This also helps ensure a consistent display.
-
---------------------------------
-
-## Next steps
-
-Now that you’re generally familiar with the guidelines for contributing to these docs, check out [Docs-flavored Markdown](/reference/markdown) page to learn about all of the specific frontmatter properties and MDX components you can use in your Markdown `*.md` pages.
+- [Writing style](/contributing/content/writing-style)

@@ -2,9 +2,9 @@
 
 __[View the docs →](https://developers.cloudflare.com/docs/)__
 
-[Contribute to the docs](https://developers.cloudflare.com/docs-engine/how-to-guides/contribute-to-a-product)
+[Contribute to the docs](https://developers.cloudflare.com/docs-engine/contributing/to-cloudflare-docs)
 
-[Set up local development](https://developers.cloudflare.com/docs-engine/how-to-guides/migrate-a-product#step-2-set-up-local-development)
+[Set up local development](https://developers.cloudflare.com/docs-engine/contributing/development-setup)
 
 ## For Cloudflare employees
 
