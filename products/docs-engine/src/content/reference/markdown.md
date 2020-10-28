@@ -479,6 +479,22 @@ This content will wrap to the column width of a standard “document”-type doc
 
 --------------------------------
 
+## TableWrap
+
+To make a table responsive, wrap it with the `<TableWrap/>` component.
+
+```markdown
+<TableWrap>
+
+Column 1 | Column 2
+---------|----------
+Row 1 | This text is used for illustrative purposes. It’s meant to demonstrate how a large string of text is treated inside of a table wrapped with the `<TableWrap/>` component.
+
+</TableWrap>
+```
+
+--------------------------------
+
 ## Subscript, superscript, variables
 
 Just use `<sub/>`, `<sup/>`, and `<var/>` as expected.
