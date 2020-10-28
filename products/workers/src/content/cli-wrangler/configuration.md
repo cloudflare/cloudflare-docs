@@ -68,7 +68,7 @@ Keys to configure per project in your `wrangler.toml`.
 - `kv_namespaces` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
   - These specify any [Workers KV](#kv_namespaces) Namespaces you want to access from inside your Worker.
 
-- `site` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
+- `site` <Type>inherited</Type> <PropMeta>optional</PropMeta>
   - Determines the local folder to upload and serve from a Worker
 
 - `dev` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
