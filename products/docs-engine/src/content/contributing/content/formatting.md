@@ -73,4 +73,4 @@ Specifically, please make sure to:
 
 ## See also
 
-- [Writing style](/contributing/content/accessibility)
+- [Accessibility](/contributing/content/accessibility)
