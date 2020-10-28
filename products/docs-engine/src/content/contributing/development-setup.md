@@ -17,16 +17,16 @@ The basic steps for setting up a development are as follows.
 
 3. `cd` into `my-docs-site` and run `npm install`:
 
-  ```sh
-  ~/ $ cd my-docs-site
-  ~/my-docs-site $ npm install
-  ```
-
   <Aside header="Note for Cloudflare employees">
 
   When contributing to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs) specifically, you’ll need to `cd` into a sub-folder for your product (`products/[productName]` inside the repo).
 
   </Aside>
+
+  ```sh
+  ~/ $ cd my-docs-site
+  ~/my-docs-site $ npm install
+  ```
 
 4. Run the engine’s [`bootstrap` command](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/bin/commands.sh#L19-L39):
 
