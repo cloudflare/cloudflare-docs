@@ -29,16 +29,18 @@ export class DurableObject {
   }
 }
 ```
-
 <Definitions>
 
 - `state`
+
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
 - `state.storage`
+
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
 - `env`
+
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
 </Definitions>
@@ -54,59 +56,56 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 <Definitions>
 
 - <Code>get(key<ParamType>string</ParamType>)</Code> <Type>Promise&lt;any></Type>
+
   - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
 - <Code>get(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
+
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
 
 - <Code>put(key<ParamType>string</ParamType>, value<ParamType>any</ParamType>)</Code> <Type>Promise</Type>
+
   - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 32 KiB (32768 bytes).
 
 - <Code>put(entries<ParamType>Object</ParamType>)</Code> <Type>Promise</Type>
+
   - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a max size of 2048 bytes and each value is limited to 32 KiB (32768 bytes).
 
 - <Code>delete(key<ParamType>string</ParamType>)</Code> <Type>Promise&lt;boolean></Type>
+
   - Deletes the key and associated value. Returns true if the key existed or false if it didn't.
 
 - <Code>delete(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;number></Type>
+
   - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
 
 - <Code>list()</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
+
   - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your actor before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
 
 - <Code>list(options<ParamType>Object</ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
+
   - Returns keys associated with the current Durable Object according to the parameters in the provided options object.
 
     __Supported options:__
 
-    <Definitions>
-
     - <Code>start<ParamType>string</ParamType></Code>
       - Key at which the list results should start, inclusive.
-
     - <Code>end<ParamType>string</ParamType></Code>
       - Key at which the list results should end, exclusive.
-
     - <Code>reverse<ParamType>boolean</ParamType></Code>
       - If true, return results in descending lexicographic order instead of the default ascending order.
-
     - <Code>limit<ParamType>number</ParamType></Code>
       - Maximum number of key-value pairs to return.
 
-    </Definitions>
-
 - <Code>transaction(closure <ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
+
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts. Failed transactions are retried automatically.  Non-storage operations that affect external state, like calling `fetch`, may execute more than once if the transaction is retried.
 
-    <Definitions>
+  - `txn`
 
-    - `txn`
-
-      - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.
-
-        Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
-
-    </Definitions>
+    - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.
+    - Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
 </Definitions>
 
