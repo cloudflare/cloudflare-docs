@@ -145,26 +145,26 @@ If the process is killed, end users will not be able to connect.
 
 Instead of deploying `cloudflared` on each target machine, you can deploy it once in a private subnet in the bastion or jump host model.
 
+<Aside>
+
+Ensure that an Access policy is in place before creating this connection, as the connection will allow lateral traffic within the subnet.
+</Aside>
+
 To do so:
 
-1. Follow steps 1 through 3 above to configure the target bastion/jump host machine
+1. Follow steps 1 through 3 above to configure the target bastion/jump host machine.
 
-```sh
-$ cloudflared tunnel --hostname rdp.site.com --bastion
-```
 2. Use this configuration when establishing the tunnel:
 
 ```sh
 $ cloudflared tunnel --hostname rdp.site.com --bastion
 ```
 
-<Aside>
+This command will allow everything that can be routed from cloudflared to be reachable through the Tunnel. Ensure your network is properly segmented to avoid issues.
 
-Ensure that the Access policy is in place before creating this connection as the connection will allow lateral traffic within the subnet.
+<Aside>
 The command above will allow traffic to be proxied through cloudflared and to one of many target desktops in your network. End users will need to specify the destination of the specific desktop, which is documented below.
 </Aside>
-
-This command will allow everything that can be routed from cloudflared to be reachable through the Tunnel. Ensure your network is properly segmented to avoid issues.
 
 ## Connect from a client machine
 
