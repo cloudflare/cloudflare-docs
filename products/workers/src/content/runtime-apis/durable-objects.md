@@ -29,18 +29,16 @@ export class DurableObject {
   }
 }
 ```
+
 <Definitions>
 
 - `state`
-
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
 - `state.storage`
-
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
 - `env`
-
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
 </Definitions>
@@ -89,23 +87,40 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     __Supported options:__
 
+    <Definitions>
+
     - <Code>start<ParamType>string</ParamType></Code>
+
       - Key at which the list results should start, inclusive.
+
     - <Code>end<ParamType>string</ParamType></Code>
+
       - Key at which the list results should end, exclusive.
+
     - <Code>reverse<ParamType>boolean</ParamType></Code>
+
       - If true, return results in descending lexicographic order instead of the default ascending order.
+
     - <Code>limit<ParamType>number</ParamType></Code>
+
       - Maximum number of key-value pairs to return.
 
-- <Code>transaction(closure <ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
+    </Definitions>
+
+
+- <Code>transaction(closure<ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts. Failed transactions are retried automatically.  Non-storage operations that affect external state, like calling `fetch`, may execute more than once if the transaction is retried.
 
-  - `txn`
+    <Definitions>
 
-    - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.
-    - Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
+    - `txn`
+
+      - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.
+
+        Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
+
+    </Definitions>
 
 </Definitions>
 
