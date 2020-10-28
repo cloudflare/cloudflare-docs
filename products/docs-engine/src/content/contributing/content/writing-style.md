@@ -30,4 +30,4 @@ When writing documentation as part of a technical reference (e.g. [runtime API](
 
 ## See also
 
-- [Writing style](/contributing/content/formatting)
+- [Formatting](/contributing/content/formatting)
