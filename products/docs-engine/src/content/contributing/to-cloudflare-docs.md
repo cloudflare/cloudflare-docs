@@ -23,7 +23,7 @@ GitHub will then guide you through making a commit and ultimately a pull request
 
 <Aside header="Note for Cloudflare employees">
 
-Contact the __Developer Docs__ room if you’d like to be given write access to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs). Otherwise, you can fork the repo on GitHub just as can anyone else.
+Contact the __Developer Docs__ room if you’d like to be given write access to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs). Otherwise you can fork the repo on GitHub.
 
 </Aside>
 
