@@ -44,3 +44,7 @@ Once `cloudflared` is installed:
 ` PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version`
 
 The command above should output the version of `cloudflared` if successfully installed.
+
+<Aside>
+Instances of `cloudflared` do not automatically update on Windows. You will need to perform manual updates.
+</Aside>
