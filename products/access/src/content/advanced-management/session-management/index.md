@@ -25,7 +25,7 @@ When users log in to an application protected by Access, Access generates two se
 
 You can configure the duration of both tokens on the dashboard. When users log in, the global session token will default to the duration of the application token. You can configure the duration of the global session token to be shorter or longer than the application’s session token.
 
-You can modify the duration of the global session token to extend longer than the application token.
+![Global session](../../static/global-session.png)
 
 * If the global session duration is **shorter** than an application’s session length, users will be required to re-authenticate each time the global session time elapses.
  
@@ -53,7 +53,7 @@ To reach the settings menu:
 4. Click **Edit**.
 5. Select **Settings**.
 
-![Settings menu](../static/browser-cookies.png)
+![Settings menu](../../static/browser-cookies.png)
 
 
 ## HTTP Only
