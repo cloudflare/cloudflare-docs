@@ -22,7 +22,7 @@ For an example prefix configuration, refer to this table:
 | 131.0.72.0/22   | AS395747       |
 | 103.21.245.0/24 | AS395747       |
 
-<Aside>
+<Aside type='note' header='Note'>
 
 When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP AS_PATH. For example, if the customer ASN is AS64496, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
