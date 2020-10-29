@@ -4,16 +4,10 @@ order: -2
 type: overview
 ---
 
-import fancyColor1111 from "./static/1111-fancycolor.gif"
+import h1gif from "./static/1111-fancycolor.gif"
+import IndexH1 from "./index-h1.js"
 
-<h1>
-  <span is-visually-hidden="">1.1.1.1</span>
-  <div style="width: 33%; margin-bottom:1em">
-    <div class="AspectRatio" style="--aspect-ratio: calc(1989 / 589)">
-      <img class="AspectRatio--content" src={fancyColor1111} alt="1.1.1.1"/>
-    </div>
-  </div>
-</h1>
+# <IndexH1 gif={h1gif} />
 
 <ContentColumn>
 
