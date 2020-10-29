@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Validate JSON Web Tokens
+# JSON Web Tokens
 
 To fully secure your application, you must ensure that no one can access your origin server directly and bypass the zero trust security checks Cloudflare Access enforces for the hostname. For example, if someone discovers an exposed external IP they can bypass Cloudflare and attack the origin directly.
 
