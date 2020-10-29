@@ -1,5 +1,6 @@
 ---
 order: 6
+hidden: true
 ---
 
 # Endpoint Integration
