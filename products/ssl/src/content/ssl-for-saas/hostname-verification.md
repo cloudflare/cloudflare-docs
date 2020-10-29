@@ -88,61 +88,26 @@ Cloudflare sends GET requests to the *http_url* using *User-Agent: Cloudflare Cu
 Various hostname verification errors include:
 
 <TableWrap>
-<table>
-<thead>
-<th>Error Message</th>
-<th>Cause</th>
-</thead>
-<tbody>
-<tr>
-<td>Zone does not have a fallback origin set</td>
-<td>Fallback is not active</td>
-</tr>
-<tr>
-<td>Fallback origin is initializing, pending_deployment, pending_deletion, or deleted</td>
-<td>Fallback is not active</td>
-</tr>
-<tr>
-<td>Custom hostname does not CNAME to this zone</td>
-<td>Zone does not have apex proxying entitlement and custom hostname doesn’t CNAME to zone</td>
-</tr>
-<tr>
-<td>None of the A or AAAA records are owned by</td>
-<td>Account has apex proxying enabled but custom</td>
-</tr>
-<tr>
-<td>This account and the pre-generated ownership verification token was not found</td>
-<td>Hostname doesn’t CNAME to zone or none of the A/AAAA records match reserved IPs for zone</td>
-</tr>
-</tbody>
-</table>
+
+| Error Message                                | Cause                   |
+|----------------------------------------------|-------------------------|
+| Zone does not have a fallback origin set     | Fallback is not active  |
+| Fallback origin is initializing, pending_deployment,<br/>pending_deletion, or deleted | Fallback is not active  |
+| Custom hostname does not CNAME to this zone  | Zone does not have apex proxying entitlement and custom hostname doesn’t CNAME to zone  |
+| None of the A or AAAA records are owned by this<br/>account and the pre-generated ownership verification<br/>token was not found  | Account has apex proxying enabled but custom hostname is not pointing to account IPs  |
+| This account and the pre-generated ownership<br/>verification token was not found  | Hostname doesn’t CNAME to zone or none of the A/AAAA records match reserved IPs for zone  |
+
 </TableWrap>
 
 Applicable hostname verification status includes:
 
 <TableWrap>
-<table>
-<thead>
-<th>Verification Status Messages</th>
-<th>Description</th>
-</thead>
-<tbody>
-<tr>
-<td>Pending</td>
-<td>Custom Hostname is pending hostname verification</td>
-</tr>
-<tr>
-<td>Active</td>
-<td>Custom Hostname has completed hostname verification and is active</td>
-</tr>
-<tr>
-<td>Moved</td>
-<td>Custom Hostname is not active after Pending for the entirety of the Validation Backoff Schedule</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td>Custom Hostname was deleted from the zone.  Occurs if status is Moved for more than 7 days</td>
-</tr>
-</tbody>
-</table>
+
+| Verification Status Messages   | Description                                                                                       |
+|--------------------------------|---------------------------------------------------------------------------------------------------|
+| Pending                        | Custom Hostname is pending hostname verification                                                  |
+| Active                         | Custom Hostname has completed hostname verification and is active                                 |
+| Moved                          | Custom Hostname is not active after Pending for the entirety of the Validation Backoff Schedule   |
+| Delete                         | Custom Hostname was deleted from the zone.  Occurs if status is Moved for more than 7 days        |
+
 </TableWrap>
