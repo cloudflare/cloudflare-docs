@@ -166,6 +166,19 @@ This command will allow everything that can be routed from cloudflared to be rea
 The command above will allow traffic to be proxied through cloudflared and to one of many target desktops in your network. End users will need to specify the destination of the specific desktop, which is documented below.
 </Aside>
 
+3. Use this command to start an RDP listener on the client machine:
+
+```sh
+cloudflared access rdp --hostname YOURDOMAIN.domain.com --url localhost:2244 --destination rdpserver:3389
+```
+`rdpserver:3389` is a default value and could differ based on what was configured in your instance.
+
+4. Now run the RDP client with the server set to `localhost:2244`:
+
+![kubectl](../static/rdp/rdp.png)
+
+You will then be prompted for an access login in the browser.
+
 ## Connect from a client machine
 
 ### 1. Install cloudflared On The Client Machine
