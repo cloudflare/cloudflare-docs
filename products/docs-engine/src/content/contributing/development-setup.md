@@ -8,10 +8,15 @@ The basic steps for setting up a development are as follows.
 
 1. Ensure you’re running node version `>=12.0.0`, as [specified by Docs Engine](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/package.json#L50).
 
-2. Clone the docs content repo (`@username/my-docs-site` below):
+2. Clone the docs site repo (`@username/my-docs-site` below):
+
+  <Aside header="Note for Cloudflare employees">
+
+  This would be `git@github.com:cloudflare/cloudflare-docs`.
+
+  </Aside>
 
   ```sh
-  ~/ $ git clone git@github.com:cloudflare/cloudflare-docs-engine.git
   ~/ $ git clone git@github.com:username/my-docs-site.git
   ```
 
