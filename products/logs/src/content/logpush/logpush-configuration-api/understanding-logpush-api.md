@@ -9,7 +9,7 @@ order: 61
 
 The table below summarizes the job operations available.
 
-The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument is the numeric job id. The `<dataset>` argument indicates the log category (either `http_requests` or `spectrum_events`).
+The `<zone>` argument is the zone id (hexadecimal string). The `<job>` argument is the numeric job id. The `<dataset>` argument indicates the log category (either `http_requests`, `spectrum_events`, or `firewall_events`).
 
 <TableWrap>
 
