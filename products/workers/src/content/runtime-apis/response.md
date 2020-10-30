@@ -49,7 +49,7 @@ Valid options for the `options` object include:
 - `bodyUsed` <Type>boolean</Type>
   - A boolean indicating if the body was used in the response.
 - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
-  - The headers for the request.
+  - The headers for the response.
 - `ok` <Type>boolean</Type>
   - A boolean indicating if the response was successful (status in the range 200-299).
 - `redirected` <Type>boolean</Type>
