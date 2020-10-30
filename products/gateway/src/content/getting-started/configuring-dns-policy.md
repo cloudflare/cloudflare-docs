@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Configure a DNS Policy
+# Configure a DNS policy
 
 ## Setup your first policy
 

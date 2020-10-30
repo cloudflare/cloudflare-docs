@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Reference
+# Learning
 
 This section expands on the concepts of **location** and **policy**, and how Cloudflare Gateway works.
 
