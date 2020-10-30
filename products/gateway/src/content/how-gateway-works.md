@@ -5,9 +5,7 @@ order: 1
 
 # How Gateway works
 
-<DirectoryListing path="/how-gateway-works"/>
-
-![How Gateway Works](../static/how-does-gw-work-background.png)
+![How Gateway Works](../content/static/how-does-gw-work-background.png)
 
 ## Secure DNS
 
@@ -26,7 +24,7 @@ For example, if you are using Cloudflare Gateway, and send a DNS query to `examp
 
 Gateway currently supports DNS over HTTPS (DoH), and will also support DNS over TLS in the future. You can use **cloudflared** to setup your device and start sending DNS queries to Gateway in an encrypted fashion. It will also support other DNS over HTTPS clients, as long as you can change the hostname in your preferred DNS over HTTPS client. Here’s how DNS over HTTPS for Cloudflare Gateway works:
 
-![How Encrypted DNS Works](../static/encrypted-dns-gateway.png)
+![How Encrypted DNS Works](../content/static/encrypted-dns-gateway.png)
 
 The DNS over HTTPS client encrypts the DNS request and sends it to the closest Cloudflare’s data center. Upon receiving the encrypted DNS request, it will decrypt it and send it to Cloudflare Gateway. Cloudflare Gateway will log the request, apply the required security policies, and return the response to our edge. Our edge will encrypt the response and send it back to the DNS over HTTPS client.
 
