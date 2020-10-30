@@ -164,15 +164,9 @@ After subscription to a Workers Bundled plan, KV is enabled. Workers KV supports
 - Unlimited writes per second, if they are to different keys
 - Up to one write per second to any particular key
 
-Workers KV read performance is determined by the amount of read-volume a
-given key receives. Maximum performance for a key is not reached unless that
-key is being read at least a couple times per minute in any given data
-center.
+Workers KV read performance is determined by the amount of read-volume a given key receives. Maximum performance for a key is not reached unless that key is being read at least a couple times per minute in any given data center.
 
-Workers KV is an eventually consistent system, meaning that reads will
-sometimes reflect an older state of the system. While writes will often be
-visible globally immediately, it can take up to 60 seconds before reads in
-all edge locations are guaranteed to see the new value.
+Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds before reads in all edge locations are guaranteed to see the new value.
 
 --------------------------------
 
