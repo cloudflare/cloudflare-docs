@@ -2,7 +2,7 @@
 order: 12
 ---
 
-# FAQ
+# Troubleshooting and FAQ
 
 ## I have a dynamic IP address assigned to me by my ISP. How can I still use Gateway?
 There are two ways to connect to Cloudflare Gateway: with the Cloudflare WARP client and without the client. 
