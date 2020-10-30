@@ -5,7 +5,7 @@ products/1.1.1.1/ @abracchi-tw
 products/access/ @cloudflare/access-docs
 
 # Analytics
-products/analytics/ @soheiokamoto @jherre
+products/analytics/ @soheiokamoto @jherre @tlozoot
 
 # API
 products/api/ @cloudflare/sdk
@@ -44,7 +44,7 @@ products/internet/ @ConzorKingKong
 products/load-balancing/ @ConzorKingKong
 
 # Logs
-products/logs/ @soheiokamoto @jherre
+products/logs/ @soheiokamoto @jherre @tlozoot
 
 # Magic Transit
 products/magic-transit/ @annikagarbers
