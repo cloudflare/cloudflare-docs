@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Configure Additional Locations
+# Configure additional locations
 
 1. On the Teams dashboard, navigate to the **Locations** tab.  
 You will see the location you set up during your Gateway onboarding listed there.
