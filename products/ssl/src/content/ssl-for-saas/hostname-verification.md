@@ -94,7 +94,7 @@ Various hostname verification errors include:
 | Zone does not have a fallback origin set     | Fallback is not active  |
 | Fallback origin is initializing, pending_deployment,<br/>pending_deletion, or deleted | Fallback is not active  |
 | Custom hostname does not CNAME to this zone  | Zone does not have apex proxying entitlement and custom hostname doesn’t CNAME to zone  |
-| None of the A or AAAA records are owned by this<br/>account and the pre-generated ownership verification<br/>token was not found  | Account has apex proxying enabled but custom hostname is not pointing to account IPs  |
+| None of the A or AAAA records are owned by this<br/>account and the pre-generated ownership verification<br/>token was not found  | Account has apex proxying enabled but custom hostname is not pointing to reserved IPs for zone  |
 | This account and the pre-generated ownership<br/>verification token was not found  | Hostname doesn’t CNAME to zone or none of the A/AAAA records match reserved IPs for zone  |
 
 </TableWrap>
