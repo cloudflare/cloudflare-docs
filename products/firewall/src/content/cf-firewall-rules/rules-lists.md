@@ -52,13 +52,13 @@ The number of Rules Lists you can create depends on the Cloudflare plans associa
 
 ## Managing lists
 
-- To manage and edit lists from your Cloudflare account interface, see [_Use Rules Lists_](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists).
-- To manage and edit lists using the Cloudflare API, see [_Rules Lists API_](https://developers.cloudflare.com/firewall/api/cf-lists/).
+- To manage and edit lists from your Cloudflare account interface, see [_Use Rules Lists_](/cf-dashboard/rules-lists).
+- To manage and edit lists using the Cloudflare API, see [_Rules Lists API_](/api/cf-lists/).
 
 ## Using lists in expressions
 
 Both the Cloudflare dashboard and the Cloudflare API support Rules Lists.
 
-To use Rules Lists in an expression from the Cloudflare dashboard, see [_Use lists in expressions_](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/use-lists-in-expressions).
+To use Rules Lists in an expression from the Cloudflare dashboard, see [_Use lists in expressions_](/cf-dashboard/rules-lists/use-lists-in-expressions).
 
-To use them with the Cloudflare API, see [_Values: Rules Lists_](https://developers.cloudflare.com/firewall/cf-firewall-language/values#rules-lists) in the Firewall Rules language reference.
+To refer to a rules list in a Cloudflare Filters API expression, see [_Values: Rules Lists_](/cf-firewall-language/values#rules-lists) in the Firewall Rules language reference.

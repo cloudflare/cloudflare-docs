@@ -1,13 +1,17 @@
 ---
-title: Endpoints
+type: table
 order: 415
 ---
 
 # Endpoints
 
+<ContentColumn>
+
 To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL:
 
-`https://api.cloudflare.com/client/v4/`
+```html
+https://api.cloudflare.com/client/v4/
+```
 
 For authentication instructions, see [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
@@ -23,7 +27,10 @@ To retrieve a list of zones associated with your account, use the [List Zones](h
 
 The Cloudflare Firewall Rules API supports the operations outlined below. Visit the associated links for examples.
 
-<TableWrap><table style="table-layout:fixed; width:100%;">
+</ContentColumn>
+
+<TableWrap style='width:100%'>
+<table style='table-layout:fixed; width:100%'>
   <thead>
       <tr>
           <th>Operation</th>
@@ -33,7 +40,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
   </thead>
   <tbody>
       <tr>
-        <td style='width:20%; word-wrap:break-word; white-space:normal'><a href='/api/cf-firewall-rules/post/'>Create firewall rules</a></td>
+        <td><a href='/api/cf-firewall-rules/post/'>Create firewall rules</a></td>
         <td><code class="InlineCode">POST&nbsp;zones/{'{zone_id}'}/firewall/rules</code></td>
         <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
       </tr>
@@ -70,4 +77,5 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         <td><p>Delete a firewall rule by ID.</p></td>
       </tr>
   </tbody>
-</table></TableWrap>
+</table>
+</TableWrap>

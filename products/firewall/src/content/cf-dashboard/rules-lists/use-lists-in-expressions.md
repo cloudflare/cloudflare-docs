@@ -6,7 +6,7 @@ order: 370
 
 ## Expression Builder
 
-To use a Rules List in the [Expression Builder](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/):
+To use a Rules List in the [Expression Builder](/cf-dashboard/create-edit-delete-rules/):
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
@@ -18,15 +18,15 @@ To use a Rules List in the [Expression Builder](https://developers.cloudflare.co
 
 ## Expression Editor
 
-To use a Rules List in the [Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor) specify the `in` operator and use _\$<list_name>_ to specify the name of the list.
+To use a Rules List in the [Expression Editor](/cf-dashboard/expression-preview-editor) specify the `in` operator and use _\$<list_name>_ to specify the name of the list.
 
 This expression filters requests from IP addresses that are in a Rules List named _office_network_:
 
-```txt
+```sql
 
 (ip.src in $office_network)
 ```
 
 Note that names for Rules Lists can only include lowercase letters, numbers, and the underscore (`_`) character.
 
-For more on creating lists, see [_Use Rules Lists: Manage lists_](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).
+For more on creating lists, see [_Use Rules Lists: Manage lists_](/cf-dashboard/rules-lists/manage-lists).

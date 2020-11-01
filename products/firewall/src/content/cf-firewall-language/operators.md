@@ -3,16 +3,26 @@ order: 610
 type: table
 ---
 
-# Operators
+# Operators & grouping symbols
 
 The Cloudflare Firewall Rules language supports comparison and logical operators:
 
 - [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
 - [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an evaluation is evaluated.
 
+[Grouping symbols](/cf-firewall-language/operators/#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
+
 ## Comparison operators
 
-The Firewall Rules language supports the following comparison operators. Since some operators only support specific data types, the list is organized by data type.
+Comparison operators return `true` a value from an HTTP request matches a value defined in an expression.
+
+This is the general pattern for using comparison operators:
+
+```sql
+<field> <comparison operator> <value>
+```
+
+The Cloudflare Firewall Rules language supports these comparison operators:
 
 <Aside type='warning' header='Important'>
 
@@ -20,24 +30,23 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these comparison operators:
-
-<table style='table-layout:fixed; width:100%; white-space:normal'>
+<TableWrap style='width:100%'>
+<table style='width:100%'>
   <thead>
    <tr>
-      <td></td>
+      <th>Name</th>
       <th colspan="2" style="text-align:center">Operator Notation</th>
       <th colspan="3" style="text-align:center">Supported Data Types</th>
       <th></th>
    </tr>
    <tr>
-      <td style='width:25%'></td>
-      <th style='width:20%'>English</th>
+      <td></td>
+      <th>English</th>
       <th>C-like</th>
       <th>String</th>
       <th>IP</th>
       <th>Number</th>
-      <th style="width:50%">Example (operator in bold)</th>
+      <th>Example (operator in bold)</th>
    </tr>
   </thead>
   <tbody>
@@ -75,7 +84,7 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
    </tr>
    <tr>
-      <td>Less than or equal</td>
+      <td>Less than<br />or equal</td>
       <td><code class="InlineCode">le</code></td>
       <td><code class="InlineCode">&lt;=</code></td>
       <td>&#x2705;</td>
@@ -97,7 +106,7 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td>Greater than or equal</td>
+      <td>Greater than<br />or equal</td>
       <td><code class="InlineCode">ge</code></td>
       <td><code class="InlineCode">&gt;=</code></td>
       <td>&#x2705;</td>
@@ -108,7 +117,7 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td>Exactly contains</td>
+      <td>Exactly<br />contains</td>
       <td><code class="InlineCode">contains</code></td>
       <td></td>
       <td>&#x2705;</td>
@@ -119,7 +128,7 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td>Matches RE2 regex</td>
+      <td>Matches<br />RE2 regex</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
       <td>&#x2705;</td>
@@ -130,7 +139,7 @@ The Cloudflare Firewall Rules language supports these comparison operators:
       </td>
     </tr>
     <tr>
-      <td>Value is in set of values</td>
+      <td>Value is in <br />a set of values</td>
       <td><code class="InlineCode">in</code></td>
       <td></td>
       <td>&#x2705;</td>
@@ -142,12 +151,13 @@ The Cloudflare Firewall Rules language supports these comparison operators:
     </tr>
   </tbody>
 </table>
+</TableWrap>
 
 ## Logical operators
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
 
-```sh
+```sql
 <expression> <logical operator> <expression>
 ```
 
@@ -155,10 +165,11 @@ Logical operators combine two or more expressions into a single compound express
 
 Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence.
 
-<table>
-  <thead style='table-layout:fixed; width:100%; white-space:normal'>
+<TableWrap>
+<table style='width:100%'>
+  <thead>
    <tr>
-      <td></td>
+      <th>Name</th>
       <th>English<br />Notation</th>
       <th>C-like<br />Notation</th>
       <th>Example</th>
@@ -185,7 +196,8 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td>2</td>
    </tr>
    <tr>
-      <td>Logical XOR (exclusive OR)</td>
+      <td>Logical XOR<br />
+        (exclusive OR)</td>
       <td><code class="InlineCode">xor</code></td>
       <td><code class="InlineCode">^^</code></td>
       <td>
@@ -204,6 +216,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
    </tr>
   </tbody>
 </table>
+</TableWrap>
 
 ### Order of precedence
 

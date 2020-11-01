@@ -36,13 +36,13 @@ Once priority ordering is enabled, you can set a priority number for each firewa
 
 To set the priority number for a firewall rule, follow these steps:
 
-1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).   
+1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).
 
    The **Edit Firewall Rule** panel will open.
 
 1. Locate the **Priority** field and enter a positive integer value.
 
-   ![Edit Firewall Rule page](../images/firewall-rules-order-and-priority-4.png)
+![Edit Firewall Rule page](../images/firewall-rules-order-and-priority-4.png)
 
 1. Click **Save** to commit your changes and return to the **Rules List**.
 

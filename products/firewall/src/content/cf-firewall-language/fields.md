@@ -29,8 +29,8 @@ The Cloudflare Firewall Rules language supports these standard fields:
 <table>
   <thead>
     <tr>
-      <td style="width:50%"><strong>Field</strong></td>
-      <td><strong>Description</strong></td>
+      <th style="width:50%">Field</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>

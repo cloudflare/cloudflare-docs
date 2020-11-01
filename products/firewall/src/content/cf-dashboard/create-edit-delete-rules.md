@@ -15,7 +15,7 @@ Note that a simple expression has the following syntax:
 
     <field> <comparison operator> <value>
 
-For more about expressions and actions, see [_Expressions_](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/) and [_Actions_](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/).
+For more, see [_Expressions_](/cf-firewall-rules/fields-and-expressions/) and [_Actions_](/cf-firewall-rules/actions/).
 
 ## Expression Builder and Editor
 
@@ -35,7 +35,7 @@ The **Expression Editor** is a text-only interface that supports advanced featur
 
 ![expression editor](../images/firewall-rules-expression-editor-0.png)
 
-Both interfaces are available in the **Create Firewall Rule** page. This article focuses on using the Expression Builder. For more on using the advanced Expression Editor, see [_Edit rule expressions_](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/).
+Both interfaces are available in the **Create Firewall Rule** page. This article focuses on using the Expression Builder. For more on using the advanced Expression Editor, see [_Edit rule expressions_](/cf-dashboard/expression-preview-editor/).
 
 ## Create a firewall rule
 
@@ -67,7 +67,7 @@ To create a new firewall rule:
 
    ![select operator](../images/firewall-rules-expression-builder-4.png)
 
-   In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, see [_Edit rule expressions_](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/).
+   In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, see [_Edit rule expressions_](/cf-dashboard/expression-preview-editor/).
 
 1. Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 
@@ -107,7 +107,7 @@ By default, Cloudflare evaluates firewall rules in **list order**, where rules a
 
 <img src={firewallRulesExpressionBuilder10} alt="order rules" />
 
-Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, see [_Order and Priority_](https://developers.cloudflare.com/firewall/cf-firewall-rules/order-priority/).
+Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, see [_Order and Priority_](/cf-firewall-rules/order-priority).
 
 ### Enable and disable rules
 
@@ -117,4 +117,4 @@ Use the toggle switch associated with a firewall rule to enable or disable it.
 
 ## Test firewall rules with Rule Preview
 
-To help customers in the Enterprise plan understand the potential impact of a new firewall rule, Cloudflare built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample of requests drawn from the last 72 hours of traffic. Rule Preview is built into the **Create Firewall Rule** and **Edit Firewall Rule** panels so that you can test a rule as you edit it. For more, see [_Preview rules_](https://developers.cloudflare.com/firewall/cf-dashboard/rule-preview/).
+To help customers in the Enterprise plan understand the potential impact of a new firewall rule, Cloudflare built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample of requests drawn from the last 72 hours of traffic. Rule Preview is built into the **Create Firewall Rule** and **Edit Firewall Rule** panels so that you can test a rule as you edit it. For more, see [_Preview rules_](/cf-dashboard/rule-preview/).

@@ -114,7 +114,7 @@ is_timed_hmac_valid_v0(
 ) -> <Bool as result>
 ```
 
-and these parameter definitions:
+The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 <Definitions>
 

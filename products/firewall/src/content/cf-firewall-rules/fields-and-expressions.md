@@ -18,7 +18,7 @@ The Expression Builder’s visual interface allows you to build expressions with
 
 By comparison, the Expression Editor is text only, but it supports advanced features not available in the builder. You can find both in the **Firewall Rules** tab.
 
-The [_Cloudflare Filters API_](https://developers.cloudflare.com/firewall/api/cf-filters) provides an interface for programmatically managing expressions. Use [_Firewall Rules API_](https://developers.cloudflare.com/firewall/api/cf-firewall-rules) to combine a filter with an action and deploy a new firewall rule.
+The [_Cloudflare Filters API_](/api/cf-filters) provides an interface for programmatically managing expressions. Use [_Firewall Rules API_](/api/cf-firewall-rules) to combine a filter with an action and deploy a new firewall rule.
 
 ## Simple and compound expressions
 
@@ -45,7 +45,7 @@ This Expression Builder screenshot shows an expression for matching requests tha
 
 Notice how the **Expression Preview** displays the expression in text:
 
-```txt
+```sql
 ip.geoip.country ne "GB"
 ```
 
@@ -53,13 +53,13 @@ In this example, `ip.geoip.country` represents the country associated with the r
 
 Simple expressions use this pattern:
 
-```txt
+```sql
 <field> <comparison operator> <value>
 ```
 
-For more on creating firewall rules using Cloudflare’s visual builder, see [_Expression Builder_](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/).
+For more on creating firewall rules using Cloudflare’s visual builder, see [_Create, edit, and delete rules_](/cf-dashboard/create-edit-delete-rules).
 
-For a list of supported fields and comparison operators, see [_Firewall Rules language_](https://developers.cloudflare.com/firewall/cf-firewall-language/).
+For a list of supported fields and comparison operators, see [_Firewall Rules language_](/cf-firewall-language/).
 
 ### Compound expressions
 
@@ -67,7 +67,7 @@ A **compound expression** uses a **logical operator** (_and_, _or_, for example)
 
 For example, suppose you want to stop other sites from direct linking to your website’s content. To do that, you can build an expression that matches requests to access your content URI, as in this example:
 
-```txt
+```sql
 http.request.uri.path eq "/content/"
 ```
 
@@ -75,7 +75,7 @@ While this expression will match requests for content, it does not discriminate 
 
 To match only external requests for content, use the `and` operator, as in this example:
 
-```txt
+```sql
 http.referer ne ".example.com" and http.request.uri.path eq "/content/"
 ```
 
@@ -83,7 +83,7 @@ Compound expressions only matches requests that satisfy each of the simple expre
 
 In general, compound expressions use this pattern:
 
-```txt
+```sql
 <expression> <logical operator> <expression>
 ```
 
@@ -93,4 +93,4 @@ Compound expressions are easier to scan when displayed in the Expression Builder
 
 ![Expression Builder with compound expression](../images/firewall-rules-expressions-explained-2.png)
 
-For a list of supported logical operators, see [_Firewall Rules language: Operators_](https://developers.cloudflare.com/firewall/cf-firewall-language/operators).
+For a list of supported logical operators, see [_Firewall Rules language: Operators_](/cf-firewall-language/operators).

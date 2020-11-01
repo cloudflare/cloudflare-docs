@@ -17,9 +17,9 @@ It is a simple concept, but like the Wireshark Display Filter language that insp
 
 ## Working with Firewall Rules
 
-To configure Firewall Rules from the the Cloudflare dashboard, use the **Firewall Rules** tab in the **Firewall** app. For more, see [_Manage rules in the Cloudflare dashboard_](https://developers.cloudflare.com/firewall/cf-dashboard).
+To configure Firewall Rules from the the Cloudflare dashboard, use the **Firewall Rules** tab in the **Firewall** app. For more, see [_Manage rules in the Cloudflare dashboard_](/cf-dashboard).
 
-To configure Firewall Rules with the Cloudflare API, use the Firewall Rules API. Use the Cloudflare Filters API to manage expressions. For more, see [_Manage rules via the APIs_](https://developers.cloudflare.com/firewall/api).
+To configure Firewall Rules with the Cloudflare API, use the Firewall Rules API. Use the Cloudflare Filters API to manage expressions. For more, see [_Manage rules via the APIs_](/api).
 
 You can also manage Firewall Rules through Terraform. For more, see [_Getting Started with Terraform_](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
 
@@ -47,7 +47,9 @@ Power users, particularly those who develop large numbers of firewall rules, can
 
 ## Entitlements
 
-Cloudflare Firewall Rules is available to all customers. Keep in mind that the number of firewall rules you can have active on your account is based on your type of plan, as is support for the _Log_ action and support for regular expressions. The table below outlines the entitlements and features available with each customer plan.
+Cloudflare Firewall Rules is available to all customers. Keep in mind that the number of firewall rules you can have active on your account is based on your type of plan, as is support for the _Log_ action and support for regular expressions. 
+
+This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
 <TableWrap>
 <table>
@@ -99,9 +101,9 @@ Cloudflare Firewall Rules is available to all customers. Keep in mind that the n
 
 ## Get started
 
-Unless you are already an advanced user, we recommend you first learn about [expressions](/cf-firewall-rules/fields-and-expressions/) and [actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/), the foundation of Firewall Rules.
+Unless you are already an advanced user, review [expressions](/cf-firewall-rules/fields-and-expressions/) and [actions](/cf-firewall-rules/actions/), which form the foundation of Firewall Rules.
 
-To get started building your own firewall rules, see [_Manage Firewall Rules in the dashboard_](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/).
+To get started building your own firewall rules, see [_Manage Firewall Rules in the dashboard_](/cf-dashboard/create-edit-delete-rules/).
 
 Those eager to dive straight into the technical details can refer to these topics:
 
