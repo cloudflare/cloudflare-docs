@@ -74,6 +74,9 @@ Keys to configure per project in your `wrangler.toml`.
 - `dev` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
   - Arguments for `wrangler dev`, configure local server
 
+- `triggers` <Type>inherited</Type> <PropMeta>optional</PropMeta>
+  - Configures cron triggers for executing a Worker on a schedule
+
 </Definitions>
 
 ### vars
@@ -228,6 +231,20 @@ You can learn more about the standard patterns used for include and exclude in t
 #### Customizing your Build
 
 Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+
+### triggers
+
+A set of cron triggers used to call a Worker on a schedule.
+
+Usage:
+
+```toml
+[triggers]
+crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
+```
+
+- `crons` optional
+  - A set of cron expressions, where each expression is a separate schedule to run the Worker on.
 
 ### dev
 
