@@ -152,11 +152,11 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 
 ### `--loglevel`
 
-**Syntax**: `--loglevel (panic|fatal|error|warn|info|debug)`
-**Default**: `info`
-**Environment Variable**: `TUNNEL_LOGLEVEL`
+| Syntax | Default | Environment Variable |
+|--|--|--|
+| `--loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
 
-Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production.
+Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available options: `panic` `fatal` `error` `warn` `info` `debug`
 
 
 ### `--proto-loglevel`
