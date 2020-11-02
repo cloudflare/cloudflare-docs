@@ -8,7 +8,7 @@ Use [Rules Lists](/cf-firewall-rules/rules-lists/) to create a group of IP addre
 
 The [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) provides an interface for programmatically managing lists.
 
-To use a Rules List in an expression, see [_Values: Rules Lists_](/api/cf-firewall-language/values/#rules-lists) in the Firewall Rules language documentation.
+To use a Rules List in an expression, see [_Values: Rules Lists_](/cf-firewall-language/values/#rules-lists) in the Firewall Rules language documentation.
 
 ## Get started
 
