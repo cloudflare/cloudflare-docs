@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Arguments <!-- omit in toc -->
+# Arguments
 
 ## Tunnel commands
 
