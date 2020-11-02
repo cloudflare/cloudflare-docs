@@ -78,7 +78,7 @@ curl \
                     "tunnelState": 1
                   },
                   "dimensions": {
-                    "edgeColoName": "MEL",
+                    "edgeColoName": "mel01",
                     "tunnelName": "tunnel_01",
                     "tunnelState": 0.5
                   }
@@ -89,7 +89,7 @@ curl \
                   },
                   "count": 310,
                   "dimensions": {
-                    "edgeColoName": "MEL",
+                    "edgeColoName": "mel01",
                     "tunnelName": "tunnel_02",
                     "tunnelState": 0.5
                   }
