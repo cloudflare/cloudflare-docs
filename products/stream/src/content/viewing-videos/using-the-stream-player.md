@@ -4,7 +4,7 @@ order: 0
 
 # Using the Stream player
 
-The Stream player can be placed on a web page in an iframe elemetn with the video UID (or [signed URL](/security/signed-urls/)) replacing `$VIDEOID` in the example below.
+The Stream player can be placed on a web page in an iframe element with the video UID (or [signed URL](/security/signed-urls/)) replacing `$VIDEOID` in the example below.
 
 ```html
 <iframe
