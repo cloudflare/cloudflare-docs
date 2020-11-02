@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Arguments
+# Arguments <!-- omit in toc -->
 
 ## Tunnel commands
 
@@ -10,34 +10,39 @@ All tunnel-related commands are prefixed with `tunnel`. For example:
 
 `cloudflared tunnel --url localhost:5555 --hostname x.example.com`
 
-- [--config](#--config)
-- [--url](#--url)
-- [--hostname](#--hostname)
-- [--lb-pool](#--lb-pool)
-- [--autoupdate-freq](#--autoupdate-freq)
-- [--no-autoupdate](#--no-autoupdate)
-- [--origincert](#--origincert)
-- [--no-tls-verify](#--no-tls-verify)
-- [--origin-ca-pool](#--origin-ca-pool)
-- [--origin-server-name](#--origin-server-name)
-- [--metrics](#--metrics)
-- [--metrics-update-freq](#--metrics-update-freq)
-- [--tag](#--tag)
-- [--loglevel](#--loglevel)
-- [--proto-loglevel](#--proto-loglevel)
-- [--retries](#--retries)
-- [--no-chunked-encoding](#--no-chunked-encoding)
-- [--hello-world](#--hello-world)
-- [--pidfile](#--pidfile)
-- [--logfile](#--logfile)
-- [--proxy-connect-timeout](#--proxy-connect-timeout)
-- [--proxy-tls-timeout](#--proxy-tls-timeout)
-- [--proxy-tcp-keepalive](#--proxy-tcp-keepalive)
-- [--proxy-no-happy-eyeballs](#--proxy-no-happy-eyeballs)
-- [--proxy-keepalive-connections](#--proxy-keepalive-connections)
-- [--proxy-keepalive-timeout](#--proxy-keepalive-timeout)
-- [--help, -h](#--help)
-- [--version, -v](#--version)
+- [Tunnel commands](#tunnel-commands)
+  - [`--config`](#--config)
+  - [`--url`](#--url)
+  - [`--hostname`](#--hostname)
+  - [`--lb-pool`](#--lb-pool)
+  - [`--autoupdate-freq`](#--autoupdate-freq)
+  - [`--no-autoupdate`](#--no-autoupdate)
+  - [`--origincert`](#--origincert)
+  - [`--no-tls-verify`](#--no-tls-verify)
+  - [`--origin-ca-pool`](#--origin-ca-pool)
+  - [`--origin-server-name`](#--origin-server-name)
+  - [`--metrics`](#--metrics)
+  - [`--metrics-update-freq`](#--metrics-update-freq)
+  - [`--tag`](#--tag)
+  - [`--loglevel`](#--loglevel)
+  - [`--proto-loglevel`](#--proto-loglevel)
+  - [`--retries`](#--retries)
+  - [`--no-chunked-encoding`](#--no-chunked-encoding)
+  - [`--hello-world`](#--hello-world)
+  - [`--pidfile`](#--pidfile)
+  - [`--logfile`](#--logfile)
+  - [`--proxy-connect-timeout`](#--proxy-connect-timeout)
+  - [`--proxy-tls-timeout`](#--proxy-tls-timeout)
+  - [`--proxy-tcp-keepalive`](#--proxy-tcp-keepalive)
+  - [`--proxy-no-happy-eyeballs`](#--proxy-no-happy-eyeballs)
+  - [`--proxy-keepalive-connections`](#--proxy-keepalive-connections)
+  - [`--proxy-keepalive-timeout`](#--proxy-keepalive-timeout)
+  - [`--socks5`](#--socks5)
+  - [`--help`](#--help)
+  - [`--version`](#--version)
+- [Login command](#login-command)
+- [Service commands](#service-commands)
+- [Update command](#update-command)
 
 ### `--config`
 
@@ -250,6 +255,14 @@ Maximum number of idle keepalive connections between Tunnel and your origin. Thi
 | `--proxy-keepalive-timeout value` | `1m30s` |
 
 Timeout after which an idle keepalive connection can be discarded.
+
+### `--socks5`
+
+| Syntax | Default |
+|--|--|
+| `--socks5 value` | `true|false` |
+
+Use of `socks5`. See  [kubectl](https://developers.cloudflare.com/access/other-protocols/kubectl) for example usage.
 
 ### `--help`
 
