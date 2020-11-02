@@ -12,24 +12,25 @@ There are no known issues to report at this time.
 
 ### How many rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. See [Entitlements](/cf-firewall-rules/#entitlements) for details on what's allowed per customer plan.
+You can create a large number of rules. However, the number of active rules at any given time is limited. See [_Entitlements_](/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
 
 ### Can I purchase additional active rules?
 
-No. The number of active rules is fixed based on customer plan. _See [Entitlements](/cf-firewall-rules/#entitlements)_.
+No. The number of active rules is fixed based on customer plan. See [_Entitlements_](/cf-firewall-rules/#entitlements).
 
 ### How are certain special and escaped characters handled?
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
-An expression built using the **Visual Expression Editor** in the **Firewall Rules** UI doesn't require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+An expression built using the **Visual Expression Editor** in the **Firewall Rules** UI does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
+
 ![Escaped characters](../images/cf-firewall-rules-character-escaping-ann.png)
 
 ### Why isn't my regular expression pattern matching working?
 
-If you’re using a regular expression, we recommend you test it against an _RE2_ testing tool like [Regular Expressions 101](https://regex101.com).
+If you are using a regular expression, we recommend you test it against an _RE2_ testing tool like [Regular Expressions 101](https://regex101.com).
 
 Also, note that _http.request.method_ fields requires all-caps for method names.
 
@@ -52,13 +53,13 @@ Enabling a high threat score for sensitive areas, like comment form pages or log
 
 When you create a firewall rule with a _Block_, _Challenge (Captcha)_, or _JS Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
-_See [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged)_
+See [_How do I create an exception to exclude certain requests from being blocked or challenged?_](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged)
 
 #### Bots currently detected
 
 The table below lists known bots that Firewall Rules currently detects. When traffic comes from any of these bots, the _cf.client.bot_ field is set to true.
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 Cloudflare plans to expand its list of known bots in the near future.
 
@@ -230,7 +231,7 @@ Cloudflare supports two methods to permit requests through Firewall Rules expres
 1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
 2. Create an independent firewall rule with an _Allow_ action
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 Cloudflare Firewall Rules does not bypass security measures defined in other **Firewall** app features.
 

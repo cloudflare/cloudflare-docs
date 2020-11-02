@@ -11,6 +11,7 @@ To create a list, follow these steps:
 1. In the **Lists** interface, click **Create new list**.
 
   The **Create new list** page displays.
+
   ![Create new list](../../images/lists-create-new.png)
 
 1. Enter a name for your list, observing the following guidelines:
@@ -23,6 +24,7 @@ To create a list, follow these steps:
    - Use a descriptive name for your list so that the list is informative in the context of a firewall rule expression.
 
 1. Enter a description (optional). The maximum length for the description is 500 characters. There are no character constraints for the description field.
+
 1. Click **Create**.
 
 The **Add items to list** page displays.
@@ -32,7 +34,7 @@ To populate your list, see [_Use Rules Lists: Add items to a list_](/cf-dashboar
 
 ## Delete a list
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 You can only delete a list when there are no firewall rules (enabled or disabled) that reference the list.
 
@@ -41,6 +43,7 @@ You can only delete a list when there are no firewall rules (enabled or disabled
 To delete a Firewall Rules list, follow these steps:
 
 1. Navigate to the **Configurations > Lists** page for your Cloudflare account.
+
 1. Hover your pointer over the **Delete** button associated with the list you want to delete.
 
    - When the list is used in a firewall rule, a tooltip displays with notification that you cannot delete the list:
@@ -50,6 +53,7 @@ To delete a Firewall Rules list, follow these steps:
    - When the list is not used in a firewall rule, **Delete** link highlights, indicating you can delete the list.
 
 1. Click **Delete**.
+
 1. In the confirmation dialog, click **Delete** to confirm the operation.
 
 The **Lists** card displays the updated collection of lists.

@@ -28,13 +28,13 @@ Note in this example that the first and last `"` characters in `"token-type=\"JW
 
 Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/cf-firewall-language/operators/#comparison-operators), which supports [Google RE2 regular expressions](https://support.google.com/a/answer/1371417?hl=en) so that you can capture multiple variants of a value with a single expression.
+Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](https://developers.cloudflare.com/firewall/cf-firewall-language/operators/#comparison-operators), which supports [Google RE2 regular expressions](https://support.google.com/a/answer/1371417?hl=en) so that you can capture multiple variants of a value with a single expression.
 
 ## Boolean values
 
 Simple expressions using boolean fields do not require operator notations or values. You only need to insert the field on its own, as shown in the `ssl` example below.
 
-```txt
+```sql
 ssl
 ```
 
@@ -42,7 +42,7 @@ This simple expression matches requests where the value of the `ssl` field is `t
 
 To match requests where `ssl` is `false`, use the boolean `not` operator :
 
-```txt
+```sql
 not ssl
 ```
 
@@ -50,10 +50,10 @@ not ssl
 
 [Rules Lists](/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
 
-To use a Rules List in a firewall rules expression, specify the `in` [operator](/cf-firewall-language/operators) and use _\$<list_name>_ to reference the name of the list. For example, this expression filters requests from IP addresses that are in a Rules List named _office_network_:
+To refer to a Rules List in a firewall rules expression, use _$<list_name>_ and specify the `in` [operator](/cf-firewall-language/operators). This example expression filters requests from IP addresses that are in a Rules List named _office_network_:
 
-```txt
+```sql
 (ip.src in $office_network)
 ```
 
-Note that names for Rules Lists can only include lowercase letters, numbers and the underscore (`_`) character. For guidance on creating and managing lists, see [_Use Rules Lists: Manage Lists_](/cf-dashboard/rules-lists/manage-lists)
+Note that names for Rules Lists can only include lowercase letters, numbers and the underscore (`_`) character. For guidance on creating and managing lists, see [_Use Rules Lists: Manage Lists_](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).

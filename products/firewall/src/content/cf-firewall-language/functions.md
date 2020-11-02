@@ -25,161 +25,75 @@ Transformation functions that take arrays as an argument type require the `[*]` 
 
 The Cloudflare Firewall Rules language supports these transformation functions:
 
-<TableWrap>
-  <table style="width: 100%;">
-  <thead>
-    <tr>
-      <td>
-         <strong>Name</strong>
-      </td>
-      <td>
-         <strong>Argument Type</strong>
-      </td>
-      <td>
-         <strong>Return Type</strong>
-      </td>
-      <td colspan="2" >
-         <strong>Notes</strong>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-         <code class="InlineCode">any()</code>
-      </td>
-      <td>
-         Array&lt;Boolean&gt;
-      </td>
-      <td>
-         Boolean
-      </td>
-      <td colspan="2" >
-         <p>Returns <code class="InlineCode">true</code> if the comparison operator in the argument returns <code class="InlineCode">true</code> for <strong><em>any</em></strong> of the values in the array. Returns <code class="InlineCode">false</code> otherwise.
-         </p>
-         <p>Example:
-         <br /><code class="InlineCode">any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <code class="InlineCode">all()</code>
-      </td>
-      <td>
-         Array&lt;Boolean>
-      </td>
-      <td>
-         Boolean
-      </td>
-      <td colspan="2" >
-         <p>Returns <code class="InlineCode">true</code> if the comparison operator in the argument returns <code class="InlineCode">true</code> for <strong><em>all</em></strong> of the values in the array. Returns <code class="InlineCode">false</code> otherwise.
-         </p>
-         <p>Example:
-         <br /><code class="InlineCode">all(http.request.headers['content-type'][*] == "application/json")</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <code class="InlineCode">concat(<em>comma-separated arguments</em>)</code>
-      </td>
-      <td>
-         String, Integer, bytes, elements from arrays
-      </td>
-      <td>
-         String
-      </td>
-      <td colspan="2" >
-         <p>Concatenates a comma-separated list of arguments into a single String.
-         </p>
-         <p>Example:
-         <br /><code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <code class="InlineCode">len()</code>
-      </td>
-      <td>
-         String, Bytes
-      </td>
-      <td>
-         Integer
-      </td>
-      <td colspan="2" >
-         <p>Returns the byte length of a String or Bytes field.
-         </p>
-         <p>Example:
-         <br /><code class="InlineCode">len(http.host)</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <code class="InlineCode">lower()</code>
-      </td>
-      <td>
-         String
-      </td>
-      <td>
-         String
-      </td>
-      <td colspan="2" >
-         <p>Converts a string field to lowercase. Only uppercase ASCII bytes are converted; all other bytes are unaffected.
-         </p>
-         <p>Example:
-         <br /><code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-         <code class="InlineCode">upper()</code>
-      </td>
-      <td>
-         String
-      </td>
-      <td>
-         String
-      </td>
-      <td colspan="2" >
-         <p>Converts a string field to uppercase. Only lowercase ASCII bytes are converted; all other bytes are unaffected.</p>
-         <p>Example:
-         <br /><code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code></p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-          <code class="InlineCode">url_decode()</code>
-      </td>
-      <td>
-          String
-      </td>
-      <td>
-          String
-      </td>
-      <td colspan="2" >
-        <p>Decodes a URL formatted string, as in the following:
-          <ul>
-              <li><code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode  to <code class="InlineCode"> </code> (space characters)</li>
-              <li><code class="InlineCode">%E4%BD%A</code> decodes to  <code class="InlineCode">你</code></li>
-          </ul>
-        </p>
-        <p>Example:
-          <br />
-          <code class="InlineCode">any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</TableWrap>
+<Definitions>
+
+- <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+
+  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+  
+  - <em>Example:</em><br />
+
+    <code class='InlineCode' style='width:100%'>
+    any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+    </code>
+
+- <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+
+  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">all(http.request.headers['content-type'][*] == "application/json")</code>
+
+- <code>concat(<Type>String | Integer | bytes | Array elements</Type>)</code> <Type>String</Type>
+
+  - Takes a comma-separated list of values. Concatenates the argument values into a single String.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
+
+- <code>len(<Type>String | bytes</Type>)</code> <Type>Integer</Type>
+
+  - Returns the byte length of a String or Bytes field.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">len(http.host)</code>
+
+- <code>lower(<Type>String</Type>)</code> <Type>String</Type>
+
+  - Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
+
+- <code>upper(<Type>String</Type>)</code> <Type>String</Type>
+
+  - Converts a string field to uppercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
+
+- <code>url_decode(<Type>String</Type>)</code> <Type>String</Type>
+
+  - Decodes a URL formatted string, as in the following:
+
+    - <code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode to space characters <code class="InlineCode"> </code>
+
+    - <code class="InlineCode">%E4%BD</code> decodes to  <code class="InlineCode">ä½ </code>
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
+
+</Definitions>
 
 ## HMAC validation
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 
@@ -187,7 +101,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 ### Overview
 
-You can validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression by using the `is_timed_hmac_valid_v0()` function, which has the following signature:
+You can validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression by using the `is_timed_hmac_valid_v0()` function, which has this signature:
 
 ```java
 is_timed_hmac_valid_v0(
@@ -200,90 +114,41 @@ is_timed_hmac_valid_v0(
 ) -> <Bool as result>
 ```
 
-and these argument definitions:
+The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
-<TableWrap>
-  <table style="width: 100%">
-  <thead>
-    <tr>
-      <td>Argument</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>_Key_</td>
-      <td>String literal</td>
-      <td>Specifies the secret cryptographic key for validating the HMAC.</td>
-    </tr>
-    <tr>
-      <td>_MessageMAC_</td>
-      <td>String</td>
-      <td>
-        Contains a concatenation of the following HMAC elements: _message_,
-        _separator_, _timestamp_, _mac_. For a specification and example see
-        [_MessageMAC_](#messagemac).
-      </td>
-    </tr>
-    <tr>
-      <td>_ttl_</td>
-      <td>Integer literal</td>
-      <td>
-        <p>
-          Defines the time-to-live for the HMAC token, expressed in seconds.
-        </p>
-        <p>
-          Determines how long the token is valid, relative to the time it was
-          issued.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>_currentTimeStamp_</td>
-      <td>Integer</td>
-      <td>
-        <p>
-          Represents the Unix timestamp when Cloudflare received the request,
-          expressed in seconds.
-        </p>
-        <p>
-          Pass the `http.request.timestamp.sec` field as an approximate value to
-          this argument.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>_lengthOfSeparator_</td>
-      <td>Integer literal</td>
-      <td>
-        <p>
-          Optional argument that specifies the length of the _separator_ between
-          the _timestamp_ and the _message_ in the _MessageMAC_.
-        </p>
-        <p>Expressed in bytes, with a default value of 0.</p>
-      </td>
-    </tr>
-    <tr>
-      <td>_flags_</td>
-      <td>String literal</td>
-      <td>
-        <p>
-          When you set this optional argument to `` `s` ``, the function expects
-          the value of the base64-encoded _mac_ in the _MessageMAC_ argument to
-          use the URL-safe character set with no padding.
-        </p>
-        <p>
-          When you do **not** set the value of _flags_ to `` `s` ``, you must
-          URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</TableWrap>
+<Definitions>
 
-The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the _message_ and the _timestamp_ regions of the MessageMAC. If the generated MAC matches the _mac_ region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
+- _Key_ <Type>String literal</Type>
+
+  - Specifies the secret cryptographic key for validating the HMAC.
+
+- _MessageMAC_ <Type>String</Type>
+
+  - Contains a concatenation of these HMAC elements: _message_, _separator_, _timestamp_, _mac_. For a definition and an example, see [_MessageMAC_](#messagemac).
+
+- _ttl_ <Type>Integer literal</Type>
+
+  - Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
+
+- _currentTimeStamp_ <Type>Integer</Type>
+
+  - Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
+
+- _lengthOfSeparator_ <Type>Integer literal</Type> <PropMeta>optional</PropMeta>
+
+  - Specifies the length of the _separator_ between the _timestamp_ and the _message_ in the _MessageMAC_. Expressed in bytes, with a default value of 0.
+
+- _flags_ <Type>String literal</Type> <PropMeta>optional</PropMeta>
+
+  -  When you set this optional argument to `` `s` ``, the function expects the value of the base64-encoded _mac_ in the _MessageMAC_ argument to use the URL-safe character set with no padding.
+
+  -  When you do **not** set the value of _flags_ to `'s'`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+
+</Definitions>
+
+### Usage
+
+The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the _message_ and the _timestamp_ regions of the MessageMAC. When the generated MAC matches the _mac_ region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
 
 For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
 
@@ -304,47 +169,44 @@ A valid MessageMAC satisfies the regular expression
 
 and is composed of these parentheses-delimited expressions:
 
-<TableWrap>
-<table style="width: 100%;">
+<table>
   <thead>
     <tr>
-      <td><strong>Expression</strong></td>
-      <td><strong>Description</strong></td>
-      <td><strong>Example</strong></td>
+      <th>Expression</th>
+      <th style="width:50%">Description</th>
+      <th>Example</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="InlineCode">(.+)</code></td>
+      <td valign="top"><code>(.+)</code></td>
       <td>The <em>message</em> to validate</td>
-      <td><code class="InlineCode">/download/cat.jpg</code></td>
+      <td valign="top"><code class="InlineCode">/download/cat.jpg</code></td>
     </tr>
     <tr>
-      <td><code class="InlineCode">(.*)</code></td>
+      <td valign="top"><code>(.*)</code></td>
       <td>The <em>separator</em> between message and timestamp, commonly a parameter name</td>
-      <td><code class="InlineCode">&verify=</code></td>
+      <td valign="top"><code class="InlineCode">&verify=</code></td>
     </tr>
     <tr>
-      <td><code class="InlineCode">(\d{'{10}'})</code></td>
+      <td valign="top"><code>(\d{'{10}'})</code></td>
       <td>The 10-digit Unix <em>timestamp</em> when the MAC was issued, expressed in seconds</td>
-      <td><code class="InlineCode">1484063137</code></td>
+      <td valign="top"><code class="InlineCode">1484063137</code></td>
     </tr>
     <tr>
-      <td><code class="InlineCode">(.{'{43,}'})</code></td>
+      <td valign="top"><code>(.{'{43,}'})</code></td>
       <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">s</code>, you must URL encode the base64 value for <em>mac</em>.</p>
-      <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em>contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p>
-</td>
-      <td><code class="InlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
+      <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em>contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
+      <td valign="top"><code class="InlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
     </tr>
   </tbody>
 </table>
-</TableWrap>
 
 For details on generating a MessageMAC, see [_Implement token creation_](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#6P9Gz7kmyxQrpL6r6iPKQR)
 
-### Validation function examples
+## HMAC validation examples
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 

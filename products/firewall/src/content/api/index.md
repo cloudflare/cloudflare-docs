@@ -1,5 +1,5 @@
 ---
-title: Manage via the APIs
+title: Manage rules via the APIs
 order: 400
 ---
 

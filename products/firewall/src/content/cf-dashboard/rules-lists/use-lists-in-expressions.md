@@ -9,6 +9,7 @@ order: 370
 To use a Rules List in the [Expression Builder](/cf-dashboard/create-edit-delete-rules/):
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
+
    ![Using Lists in a firewall rule](../../images/lists-fw-rule-builder-editor.png)
 
 1. Select a Rules List from the **Value** drop-down list.
@@ -21,7 +22,7 @@ To use a Rules List in the [Expression Editor](/cf-dashboard/expression-preview-
 
 This expression filters requests from IP addresses that are in a Rules List named _office_network_:
 
-```txt
+```sql
 
 (ip.src in $office_network)
 ```
