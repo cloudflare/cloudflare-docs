@@ -192,7 +192,7 @@ The response will look something like below. Things to remember:
 
 ## Pagination
 
-GraphQL API supports seek pgination: using filters, you can specify the last video UID so the response only includes data for videos after the last video UID.
+GraphQL API supports seek pagination: using filters, you can specify the last video UID so the response only includes data for videos after the last video UID.
 
 The query below will return data for 2 videos that follow video id `5646153f8dea17f44d542a42e76cfd`:
 
