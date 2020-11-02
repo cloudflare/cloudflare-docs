@@ -26,19 +26,16 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 The Cloudflare Firewall Rules language supports these standard fields:
 
-<TableWrap>
-<table style="width: 100%;">
+<table>
   <thead>
     <tr>
-      <td><strong>Field Name</strong></td>
-      <td><strong>Type</strong></td>
-      <td><strong>Description</strong></td>
+      <th style="width:50%">Field</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
    <tr>
-      <td valign="top"><code class="InlineCode">http.cookie</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.cookie</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the entire cookie as a string.</p>
          <p>Example value:
@@ -47,8 +44,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.host</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.host</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the host name used in the full request URI.
          </p>
@@ -58,8 +54,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.referer</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.referer</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.
          </p>
@@ -69,8 +64,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.full_uri</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.request.full_uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the full URI as received by the web server (does not include <code class="InlineCode">#fragment</code>, which is not sent to web servers).
          </p>
@@ -80,8 +74,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.method</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.request.method</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the HTTP method, returned as a string of uppercase characters.
          </p>
@@ -91,21 +84,19 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.timestamp.sec</code></td>
-      <td valign="top">Integer</td>
+      <td valign="top"><code>http.request.timestamp.sec</code><br /><Type>Integer</Type></td>
       <td>
          <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">1484063137</code>
          </p>
-         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v()</code> <a href="/firewall/cf-firewall-language/functions/#hmac-validation">validation function</a>.
+         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v()</code> <a href="/cf-firewall-language/functions/#hmac-validation">validation function</a>.
          </p>
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.uri</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the absolute URI of the request.
          </p>
@@ -115,8 +106,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.uri.path</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.request.uri.path</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the URI path of the request.
          </p>
@@ -126,8 +116,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.uri.query</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code class>http.request.uri.query</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the entire query string, without the <code class="InlineCode">?</code> delimiter.
          </p>
@@ -137,8 +126,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.user_agent</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.user_agent</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the HTTP user agent, a request header that contains a characteristic string to allow identification of the client operating system and web browser.
          </p>
@@ -148,8 +136,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.version</code></td>
-      <td valign="top">Number</td>
+      <td valign="top"><code>http.version</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.
          </p>
@@ -162,8 +149,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.x_forwarded_for</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.x_forwarded_for</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the full <code class="InlineCode">X-Forwarded-For</code> HTTP header.
          </p>
@@ -173,8 +159,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.src</code></td>
-      <td valign="top">IP&nbsp;address</td>
+      <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
       <td>
          <p> Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
          <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
@@ -185,16 +170,14 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.geoip.asnum</code></td>
-      <td valign="top">Number</td>
+      <td valign="top"><code>ip.geoip.asnum</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
          </p>
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.geoip.continent</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>ip.geoip.continent</code><br /><Type>String</Type></td>
       <td>
          Represents the continent code associated with client IP address:
           <ul>
@@ -210,8 +193,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.geoip.country</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>ip.geoip.country</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
          </p>
@@ -221,20 +203,18 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.geoip.subdivision_1_iso_code</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>ip.geoip.subdivision_1_iso_code</code><br /><Type>String</Type></td>
       <td>
-         <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. If the actual value is not available, this field contains an empty string.</p>
+         <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. When the actual value is not available, this field contains an empty string.</p>
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.geoip.subdivision_2_iso_code</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>ip.geoip.subdivision_2_iso_code</code><br /><Type>String</Type></td>
       <td>
-         <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. If the actual value is not available, this field contains an empty string.
+         <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. When the actual value is not available, this field contains an empty string.
          </p>
          <p>Example value:
          <br />
@@ -243,16 +223,14 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">ip.geoip.is_in_european_union</code></td>
-      <td valign="top">Boolean</td>
+      <td valign="top"><code>ip.geoip.is_in_european_union</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
          </p>
       </td>
   </tr>
   <tr>
-      <td valign="top"><code class="InlineCode">ssl</code></td>
-      <td valign="top">Boolean</td>
+      <td valign="top"><code>ssl</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Returns<code class="InlineCode">true</code> when the HTTP connection to the client is encrypted.
          </p>
@@ -260,13 +238,12 @@ The Cloudflare Firewall Rules language supports these standard fields:
    </tr>
   </tbody>
 </table>
-</TableWrap>
 
 ## Dynamic fields
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan.
 
@@ -274,35 +251,30 @@ Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enter
 
 The Cloudflare Firewall Rules language supports these dynamic fields:
 
-<TableWrap>
-<table style="width: 100%;">
+<table>
   <thead>
    <tr>
-      <th>Field Name</th>
-      <th>Type</th>
+      <th style="width: 50%;">Field Name</th>
       <th>Description</th>
    </tr>
   </thead>
   <tbody style='vertical-align:top'>
     <tr>
-        <td><p><code class="InlineCode">cf.bot_management.verified_bot</code></p>
+        <td><p><code>cf.bot_management.verified_bot</code><br /><Type>Boolean</Type></p>
         </td>
-        <td>Boolean</td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known bot or crawler. It does not identify good or bad intent.
           </p>
         </td>
     </tr>
     <tr>
-        <td><code class="InlineCode">cf.client.bot</code></td>
-        <td>Boolean</td>
+        <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the client of a request is a known good bot.</p>
         </td>
     </tr>
     <tr>
-        <td><code class="InlineCode">cf.edge.server_port</code></td>
-        <td>Number</td>
+        <td><code>cf.edge.server_port</code><br /><Type>Number</Type></td>
         <td>
           <p>Represents the port number at which Cloudflare's network received the request.
           </p>
@@ -310,8 +282,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
-        <td><code class="InlineCode">cf.threat_score</code></td>
-        <td>Number</td>
+        <td><code>cf.threat_score</code><br /><Type>Number</Type></td>
         <td>
           <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the internet.
           </p>
@@ -320,13 +291,11 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
-      <td><code class="InlineCode">cf.tls_client_auth.cert_verified</code></td>
-      <td>Boolean</td>
+      <td><code>cf.tls_client_auth.cert_verified</code><br /><Type>Boolean</Type></td>
       <td>Returns <code class="InlineCode">true</code> when a request presents a valid client certificate.</td>
     </tr>
     <tr>
-      <td><code class="InlineCode">cf.worker.upstream_zone</code></td>
-      <td>String</td>
+      <td><code>cf.worker.upstream_zone</code> <br /><Type>String</Type></td>
       <td>
         <p>Identifies whether a request comes from a worker or not.</p>
         <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty</p>
@@ -334,7 +303,6 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
     </tr>
   </tbody>
 </table>
-</TableWrap>
 
 ## URI argument and value fields
 
@@ -342,23 +310,20 @@ The Cloudflare Firewall Rules language includes URI argument and value fields as
 
 The Cloudflare Firewall Rules language supports these URI argument and value fields:
 
-<TableWrap>
-<table style="width: 100%;">
+<table>
   <thead>
     <tr>
-      <td><strong>Field Name</strong></td>
-      <td><strong>Type</strong></td>
+      <td style="width: 50%;"><strong>Field Name</strong></td>
       <td><strong>Description</strong></td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.uri.args</code></td>
-      <td valign="top">Map &lt;String&gt;&lt;Array&gt;</td>
-      <td>
+      <td valign="top"><code>http.request.uri.args</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+       <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
         </p>
-        <p>If an argument is repeated, then the array will contain multiple items in the order they appear in the request.
+        <p>When an argument repeats, then the array contains multiple items in the order they appear in the request.
         </p>
         <p>Values are not pre-processed and retain the case used in the request.</p>
         <p><em>Decoding:</em> no decoding performed
@@ -373,12 +338,11 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
       </td>
     </tr>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.uri.args.names</code></td>
-      <td valign="top">Array&lt;String></td>
+      <td valign="top"><code>http.request.uri.args.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Represents the names of the arguments in the HTTP URI query string. Names are not pre-processed and retain the case used in the request.
         </p>
-        <p>If a name repeats, the array contains multiple items in the order that they appear in the request.
+        <p>When a name repeats, the array contains multiple items in the order that they appear in the request.
         </p>
         <p><em>Decoding:</em> no decoding performed
         <br /><em>Non-ASCII:</em> preserved
@@ -392,8 +356,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
       </td>
     </tr>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.uri.args.values</code></td>
-      <td valign="top">Array&lt;String></td>
+      <td valign="top"><code>http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Represents the values of arguments in the HTTP URI query string. Values are not pre-processed and retain the case used in the request. They are in the same order as in the request.
         </p>
@@ -412,7 +375,6 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
     </tr>
   </tbody>
 </table>
-</TableWrap>
 
 ## HTTP header fields
 
@@ -420,20 +382,17 @@ The Firewall Rules language includes fields that represent properties of HTTP re
 
 The Cloudflare Firewall Rules language supports these HTTP header fields:
 
-<TableWrap>
-<table style="width: 100%;">
+<table>
    <tr>
       <td><strong>Field Name</strong></td>
-      <td><strong>Type</strong></td>
-      <td><strong>Description</strong></td>
+      <td style="width: 50%;"><strong>Description</strong></td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.headers</code></td>
-      <td valign="top">Map&lt;String&gt;&lt;Array&gt;</td>
+      <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).
          </p>
-         <p>When there are repeating headers, the array includes them in the order they appear in the request. The keys will be converted to lowercase.</p>
+         <p>When there are repeating headers, the array includes them in the order they appear in the request. The keys convert to lowercase.</p>
          <p><em><em>Decoding:</em></em> no decoding performed
          <br /><em>Whitespace:</em> preserved
          <br /><em>Non-ASCII:</em> preserved
@@ -447,8 +406,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.header.names</code></td>
-      <td valign="top">Array&lt;String></td>
+      <td valign="top"><code>http.request.header.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the names of the headers in the HTTP request. The names are not pre-processed and retain the case used in the request.
          </p>
@@ -469,8 +427,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.header.values</code></td>
-      <td valign="top">Array&lt;String></td>
+      <td valign="top"><code>http.request.header.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the values of the headers in the HTTP request.</p>
          <p>Values are not pre-processed and retain the case used in the request.</p>
@@ -493,8 +450,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code class="InlineCode">http.request.header.truncated</code></td>
-      <td valign="top">Boolean</td>
+      <td valign="top"><code>http.request.header.truncated</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the HTTP request contains too many headers; otherwise, returns <code class="InlineCode">false</code>.
          </p>
@@ -503,11 +459,10 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       </td>
    </tr>
 </table>
-</TableWrap>
 
 ## HTTP body fields
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 Access to HTTP body fields requires a Cloudflare Enterprise plan.
 
@@ -517,20 +472,17 @@ The Firewall Rules language includes fields that represent properties of an HTTP
 
 The Cloudflare Firewall Rules language supports these HTTP body fields:
 
-<TableWrap>
-<table style="width: 100%;">
+<table>
   <thead>
     <tr>
-      <td><strong>Field Name</strong></td>
-      <td><strong>Type</strong></td>
+      <td style="width: 50%;"><strong>Field Name</strong></td>
       <td><strong>Description</strong>
       </td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.body.raw</code></td>
-      <td valign="top">String</td>
+      <td valign="top"><code>http.request.body.raw</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the unaltered HTTP request body.
          </p>
@@ -543,8 +495,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.body.truncated</code></td>
-      <td valign="top">Boolean</td>
+      <td valign="top"><code>http.request.body.truncated</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Indicates whether the HTTP request body is truncated.
          </p>
@@ -553,12 +504,11 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.body.form</code></td>
-      <td valign="top">Map&lt;String&gt;&lt;Array&gt;</td>
+      <td valign="top"><code>http.request.body.form</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
-         <p>Values are not pre-processed and retain the case used in the request. If a field repeats, then the array contains multiple items in the order they are in the request.
+         <p>Values are not pre-processed and retain the case used in the request. When a field repeats, then the array contains multiple items in the order they are in the request.
          </p>
          <p>The return value may be truncated if <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>.
          </p>
@@ -575,8 +525,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.body.form.names</code></td>
-      <td valign="top">Array&lt;String></td>
+      <td valign="top"><code>http.request.body.form.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the names of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
@@ -597,8 +546,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
       </td>
     </tr>
     <tr>
-      <td valign="top"><code class="InlineCode">http.request.body.form.values</code></td>
-      <td valign="top">Array&lt;String></td>
+      <td valign="top"><code>http.request.body.form.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the values of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
@@ -622,4 +570,3 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
     </tr>
   </tbody>
 </table>
-</TableWrap>

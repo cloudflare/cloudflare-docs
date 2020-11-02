@@ -34,30 +34,38 @@ Although priority ordering is enabled automatically when the number of active an
 
 Once priority ordering is enabled, you can set a priority number for each firewall rule.
 
-To set the priority number for a firewall rule, do this:
+To set the priority number for a firewall rule, follow these steps:
 
-1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
-2. Locate the **Priority** field and enter a positive integer value.
-   ![](../images/firewall-rules-order-and-priority-4.png)
+1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).
 
-3. Click **Save** to commit your changes and return to the **Rules List**.
+   The **Edit Firewall Rule** panel will open.
+
+1. Locate the **Priority** field and enter a positive integer value.
+
+![Edit Firewall Rule page](../images/firewall-rules-order-and-priority-4.png)
+
+1. Click **Save** to commit your changes and return to the **Rules List**.
 
 The **Priority** column displays the priority value for each rule.
 
-![](../images/firewall-rules-order-and-priority-5.png)
+![Firewall Rules tab](../images/firewall-rules-order-and-priority-5.png)
 
-Note that Firewall Rules does not impose default priorities, and you are not required to set a priority for every rule.
+<Aside type='note' header='Note'>
+
+Firewall Rules does not impose default priorities, and you are not required to set a priority for every rule.
+
+</Aside>
 
 ## Working with priority ordering
 
-Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update Firewall Rules command to set the `priority` property. See _[Cloudflare API v4 Documentation: Firewall Rules](https://api.cloudflare.com/#firewall-rules-properties)_ for details.
+Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update Firewall Rules command to set the `priority` property. See [_Cloudflare API v4 Documentation: Firewall Rules_](https://api.cloudflare.com/#firewall-rules-properties)_ for details.
 
 While your priority numbering scheme can be arbitrary, keep the following in mind:
 
-- **The evaluation sequence starts from the lowest priority** **number** and goes to the highest.
-- **Rules without a priority number are evaluated last**, in order of their action precedence. For example, a rule with the _Log_ action is evaluated before a rule that has the _Block_ action. For more on action precedence, see _Actions_.
-- **Avoid using the number 1** **as a priority** so that you can easily maintain and modify rule order.
-- **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some general examples:
-  - 5000-9999 — Trusted IP addresses
-  - 10000-19999 — Blocking rules for bad crawlers
-  - 20000-29999 — Blocking rules for abusive../spam users
+- **The evaluation sequence starts from the lowest priority number** and goes to the highest.
+- **Rules without a priority number are evaluated last**, in order of their action precedence. For example, a rule with the _Log_ action is evaluated before a rule that has the _Block_ action. For more on action precedence, see [_Actions_](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions).
+- **Avoid using the number 1 as a priority** so that you can easily maintain and modify rule order.
+- **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some examples:
+  - 5000-9999: Trusted IP addresses
+  - 10000-19999: Blocking rules for bad crawlers
+  - 20000-29999: Blocking rules for abusive users/spam

@@ -2,12 +2,19 @@
 
 In some cases, Microsoft Exchange Autodiscover service requests can be “noisy,” triggering large numbers of 404 errors.
 
-This example uses the `matches` [comparison operator](/cf-firewall-language/operators/#comparison-operators) and a regular expression to block `autodiscover.xml` and `autodiscover.src` requests.
+This example uses the `matches` [comparison operator](/https://developers.cloudflare.com/firewall/cf-firewall-language/operators#comparison-operators) and a regular expression to block `autodiscover.xml` and `autodiscover.src` requests:
 
-<TableWrap>
-
-| Expression                                                      | Action |
-| --------------------------------------------------------------- | ------ |
-| `http.request.uri.path matches "/autodiscover\.(xml \| src)\$"` | Block  |
-
-</TableWrap>
+<table>
+  <thead>
+  <tr>
+    <th>Expression</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>http.request.uri.path matches "/autodiscover.(xml|src)$"</code></td>
+      <td><em>Block</em></td>
+    </tr>
+  </tbody>
+</table>

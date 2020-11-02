@@ -1,9 +1,12 @@
 ---
 title: Preview rules
+type: table
 order: 330
 ---
 
 # Preview rules
+
+<ContentColumn>
 
 ## Overview
 
@@ -11,9 +14,9 @@ Cloudflare Firewall Rules provides a powerful and flexible platform for filterin
 
 To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the **Firewall Rules Expression Editor** so that you can test a rule as you edit it.
 
-<Aside type="note">
+<Aside type='warning' header='Important'>
 
-The Rule Preview functionality is available to customers in the Cloudflare Enterprise plan.
+Rule Preview requires access to an Cloudflare Enterprise plan.
 
 </Aside>
 
@@ -22,11 +25,15 @@ The Rule Preview functionality is available to customers in the Cloudflare Enter
 To test a firewall rule with Rule Preview:
 
 1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
-2. Click **Test rule** to trigger the test.
+1. Click **Test rule** to trigger the test.
 
-![](../images/firewall-rules-preview-1.png)
+![Expression Builder Test Rule button](../images/firewall-rules-preview-1.png)
 
-The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression. In the screenshot below, a rule created to match all User-Agents that contained the string “Mozilla,” would block about 8% of requests to the zone.
+The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression.
+
+In this screenshot, a rule that matches all User-Agents that contain the string `Mozilla` would block about 8% of requests to the zone:
+
+![Example rule preview results chart](../images/cf-firewall-rules-preview-rule-plot-chart.png)
 
 ## Important Notes
 
@@ -36,8 +43,10 @@ The results of the test are displayed in a plot that simulates how many of the t
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 
-<TableWrap><table style="width: 100%">
+</ContentColumn>
 
+<TableWrap style="width:100%">
+<table style="width: 100%">
    <thead>
       <tr>
         <td></td>
@@ -58,13 +67,13 @@ The results of the test are displayed in a plot that simulates how many of the t
           <p />
           <strong><code class="InlineCode">ip.geoip.asnum</code></strong>
         </td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
       </tr>
       <tr>
@@ -75,13 +84,13 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">ip.geoip.country</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
         <td>❌</td>
       </tr>
       <tr>
@@ -92,14 +101,14 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">http.host</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
       </tr>
       <tr>
         <td>
@@ -109,13 +118,13 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">ip.src</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td></td>
-        <td>✔</td>
+        <td>&#x2705;</td>
         <td>❌</td>
       </tr>
       <tr>
@@ -126,14 +135,14 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">http.referer</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
       </tr>
       <tr>
         <td>
@@ -143,13 +152,13 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">Http.request. method</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
         <td>❌</td>
       </tr>
       <tr>
@@ -160,7 +169,7 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">ssl</code></strong
           >
         </td>
-        <td>✔</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
@@ -177,8 +186,8 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">http.request.uri</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
@@ -194,14 +203,14 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">http.request.uri.path</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
       </tr>
       <tr>
         <td>
@@ -211,14 +220,14 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">http.request.uri.query</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
       </tr>
       <tr>
         <td>
@@ -228,14 +237,14 @@ The results of the test are displayed in a plot that simulates how many of the t
             <code class="InlineCode">http.user_agent</code></strong
           >
         </td>
-        <td>✔</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
+        <td>&#x2705;</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td>✔</td>
+        <td>&#x2705;</td>
       </tr>
     </tbody>
   </table>

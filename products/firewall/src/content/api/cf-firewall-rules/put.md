@@ -39,7 +39,7 @@ curl -X PUT \
 ]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
 ```
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 `PUT` does not update the filter specified. It only looks at the _filter id_ to update the rule with a new filter.
 
@@ -86,7 +86,7 @@ These fields are required:
 
 All other fields are optional.
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 `PUT` overwrites fields that aren't explicitly passed in the request.
 

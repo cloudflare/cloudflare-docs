@@ -16,9 +16,9 @@ The list of items displays sorted by IP address, ascending:
 
 ![View items in  a list](../../images/lists-view-items-in-list.png)
 
-<Aside type='warning'>
+<Aside type='note' header='Note'>
 
-You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation in the [Lists API](/api/cf-firewall-rules/#manage-the-items-in-a-list) to fetch them.
+You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation to fetch them.
 
 </Aside>
 
@@ -30,20 +30,21 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to a Firewall Rules list, follow these steps:
 
-1. [Access the Lists interface](/cf-dashboard/rules-lists/) in the **Configurations > Lists** page of your Cloudflare account.
+1. [Access the Lists interface](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/) in the **Configurations > Lists** page of your Cloudflare account.
+
 1. Click the **Edit** button associated with the list that you want to edit.
 
-The list of IP items displays.
+   The list of IP items displays.
 
 1. Click **Add items**.
 
-The **Add items to list** page displays:
+   The **Add items to list** page displays:
 
-![Add items to list page](../../images/lists-add-items-to-list-page.png)
+   ![Add items to list page](../../images/lists-add-items-to-list-page.png)
 
 1. To [add items to the list manually](#add-items-to-a-list-manually), use the text inputs in the Lists interface.
 
-To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
+1. To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
 
 ### Add items to a list manually
 
@@ -52,6 +53,7 @@ To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-i
    ![Enter list items manually](../../images/lists-add-items-manually.png)
 
 1. As you enter information into a text input, a new row of inputs displays below the current one.
+
    To delete any of the IP addresses that you have entered, click **X**.
 
 1. Click **Add to list** to add the new items.
@@ -60,7 +62,7 @@ To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-i
 
 ### Add items in CSV format
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
@@ -83,24 +85,24 @@ To add items to a Firewall Rules list by uploading a CSV file, follow these step
 
 1. In the **Add items to list** page, click **Upload CSV**.
 
-Your operating system's file browser dialog displays.
+   Your operating system's file browser dialog displays.
 
 1. Browse to the location of the CSV file, select it, and click **Open**.
 
-The **Add items to list** page updates to include the items from the CSV file:
+   The **Add items to list** page updates to include the items from the CSV file:
 
-![CSV items shown in Add items page](../../images/lists-add-items-csv.png)
+   ![CSV items shown in Add items page](../../images/lists-add-items-csv.png)
 
 1. You can continue to edit the items in the list before adding them:
 
    - To delete any of the IP addresses that you have entered, click **X**.
    - To add extra IP addresses manually, enter the information in the text inputs.
 
-2. Click **Add to list** to add the new items to your list.
+1. Click **Add to list** to add the new items to your list.
 
    The updated list displays.
 
-<Aside type='warning'>
+<Aside type='warning' header='Important'>
 
 When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
@@ -119,7 +121,7 @@ To delete items from a Firewall Rules list, follow these steps:
 
 1. Select the checkboxes next to the items that you want to delete. To select all of the items, use the checkbox in the column header:
 
-![Delete items from list](../../images/lists-delete-items.png)
+   ![Delete items from list](../../images/lists-delete-items.png)
 
 1. Click **Remove** to delete the selected items from the list.
 
