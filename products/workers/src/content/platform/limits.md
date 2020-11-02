@@ -36,6 +36,7 @@ order: 2
 | [Keys/namespace](#kv)                 | unlimited  |
 | [Key size](#kv)                       | 512 bytes  |
 | [Key metadata](#kv)                   | 1024 bytes |
+| [Value size](#kv)                     | 10 MB      |
 
 </TableWrap>
 
