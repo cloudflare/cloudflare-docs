@@ -135,7 +135,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 - `resolveOverride` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - Redirects the request to an alternate origin server.
+  - Directs the request to an alternate origin server by overriding the DNS lookup. The value of `resolveOverride` specifies an alternate hostname which will be used when determining the origin IP address, instead of using the hostname specified in the URL. The `Host` header of the request will still match what is in the URL. Thus, `resolveOverride` allows a request to be sent to a different server than the URL / `Host` header specifies. However, `resolveOverride` will only take effect if both the URL host and the host specified by `resolveOverride` are within your zone. If either specifies a host from a different zone / domain, then the option will be ignored for security reasons. If you need to direct a request to a host outside your zone (while keeping the `Host` header pointing within your zone), first create a CNAME record within your zone pointing to the outside host, and then set `resolveOverride` to point at the CNAME record. Note that, for security reasons, it is not possible to set the `Host` header to specify a host outside of your zone unless the request is actually being sent to that host.
 
 - `scrapeShield` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
