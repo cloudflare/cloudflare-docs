@@ -29,7 +29,7 @@ tunnel: NAME-OR-ID
 You can use `--config` to point to a non-standard YAML file location:
 
 ```sh
-$ cloudflared tunnel --config tunnels/config.yml
+$ cloudflared tunnel --config tunnels/config.yml run
 ```
 
 Without specifying `--config`, `cloudflared` will default to reading `~/.cloudflared/config.yml`.
