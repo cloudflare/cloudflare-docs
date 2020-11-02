@@ -4,18 +4,18 @@ order: 1
 
 # Setup instructions
 
-## [Router](./setup-instructions/router/)
+## [Router](./router/)
 
 See how you can send DNS queries to 1.1.1.1 for Families from a router.
 
-## [Mac](./setup-instructions/mac/)
+## [Mac](./mac/)
 
 See how you can send DNS queries to 1.1.1.1 for Families from a Mac.
 
-## [Windows](./setup-instructions/windows/)
+## [Windows](./windows/)
 
 See how you can send DNS queries to 1.1.1.1 for Families from Windows.
 
-## [Linux](./setup-instructions/linux/)
+## [Linux](./linux/)
 
 See how you can send DNS queries to 1.1.1.1 for Families from a Linux distro.
