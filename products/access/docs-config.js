@@ -19,8 +19,8 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "",
-    apiKey: "",
+    indexName: "cloudflare-access",
+    apiKey: "b3c13d590b79cf5f74f8ebc0d58fe73a"
   },
   siteMetadata: {
     title: "Cloudflare Access docs",
