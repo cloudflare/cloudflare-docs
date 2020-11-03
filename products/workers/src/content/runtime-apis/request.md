@@ -332,3 +332,4 @@ async function eventHandler(event){..}
 
 This code snippet will throw during script startup, and the `"fetch"` event
 listener will never be registered.
+
