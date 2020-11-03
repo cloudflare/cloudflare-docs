@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Service Tokens
+# Service tokens
 
 Cloudflare Access secures your application by evaluating each request for authentication. Many users authenticate using an identity provider (IdP), and for these users, Cloudflare Access generates a JSON Web Token (JWT) that is scoped to the applications they are authorized to access.
 

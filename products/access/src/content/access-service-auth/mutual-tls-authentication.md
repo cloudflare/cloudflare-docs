@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Mutual TLS Authentication
+# Mutual TLS authentication
 
 <Aside>
 
