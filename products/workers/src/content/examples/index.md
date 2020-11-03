@@ -4,8 +4,8 @@ hideChildren: true
 order: 1
 ---
 
-import DocsWorkersExamples from "../../components/docs-workers-examples"
+import DocsCodeExamplesOverview from "../../components/docs-code-examples-overview"
 
 # Examples
 
-<DocsWorkersExamples/>
+<DocsCodeExamplesOverview/>
