@@ -32,7 +32,7 @@ The `fetch()` function accepts parameters in the second argument inside ```{cf: 
 - `fit`
   - Resizing mode as a string. It affects interpretation of `width` and `height`:
 
-  <Definitions>
+    <Definitions>
 
     - `scale-down`
       - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
@@ -49,7 +49,7 @@ The `fetch()` function accepts parameters in the second argument inside ```{cf: 
     - `pad`
       - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). Use of this mode is not recommended, as the same effect can be more efficiently achieved with the `contain` mode and the CSS `object-fit: contain` property.
 
-  </Definitions>
+    </Definitions>
 
 - `gravity`
 
