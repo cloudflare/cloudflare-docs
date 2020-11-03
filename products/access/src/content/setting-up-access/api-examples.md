@@ -124,7 +124,7 @@ The request will need to present a valid certificate
 }
 ```
 
-##### Common name
+### Common name
 
 The request will need to present a valid certificate with an expected common name
 
