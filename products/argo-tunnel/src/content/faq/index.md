@@ -50,7 +50,7 @@ region1.argotunnel.com.	86400	IN	A	198.41.192.227
 
 ...
 
-$ dig route2.argotunnel.com
+$ dig region2.argotunnel.com
 
 ...
 
