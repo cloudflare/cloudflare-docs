@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Getting Started
+# Getting started
 
 * Read [Access Setup](/getting-started/access-setup/) for instructions on how to configure Cloudflare Access.
 

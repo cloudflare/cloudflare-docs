@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Advanced Management
+# Advanced management
 
 This section will cover:
 

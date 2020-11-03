@@ -2,7 +2,7 @@
 hidden: true
 ---
 
-# Mutual TLS Testing
+# Mutual TLS testing
 
 You can use Cloudflare's open source tools for private key infrastructure (PKI) to test the mTLS feature in Cloudflare Access. This guide details the process to generate a Root Client Authority (CA), add it to the Cloudflare dashboard, and issue client certificates that can authenticate against the root CA and reach a protected resource.
 
