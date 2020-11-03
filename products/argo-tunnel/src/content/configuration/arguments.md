@@ -8,7 +8,9 @@ order: 1
 
 All tunnel-related commands are prefixed with `tunnel`. For example:
 
-`cloudflared tunnel --url localhost:5555 --hostname x.example.com`
+```sh
+$ cloudflared tunnel --url localhost:5555 --hostname x.example.com`
+```
 
 - [Tunnel commands](#tunnel-commands)
   - [`--config`](#--config)
@@ -282,7 +284,9 @@ Prints the version number and build date.
 
 ## Login command
 
-`cloudflared tunnel login`
+```sh
+$ cloudflared tunnel login
+```
 
 Opens a special section of the Cloudflare dashboard for obtaining a Tunnel certificate.
 
@@ -292,8 +296,13 @@ You can also obtain a Tunnel certificate independently of this command by visiti
 
 ## Service commands
 
-`cloudflared service install`
-`cloudflared service uninstall`
+```sh
+$ cloudflared service install
+```
+
+```sh
+$ cloudflared service uninstall
+```
 
 Install or uninstall cloudflared as a system service. The details of service installation depend on the OS you are using.
 
