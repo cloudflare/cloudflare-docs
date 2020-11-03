@@ -260,7 +260,7 @@ Timeout after which an idle keepalive connection can be discarded.
 
 | Syntax | Default |
 |--|--|
-| `--socks5` | `true` |
+| `--socks5=value` | `true` |
 
 See [kubectl](https://developers.cloudflare.com/access/other-protocols/kubectl) for example usage.
 
