@@ -12,7 +12,7 @@ Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/rele
 
 Type   | amd64 / x86-64 | x86 (32-bit) | ARMv6 | ARM64 |
 -------|----------------|--------------|------|------|
-Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz) | [Download](https://github.com/cloudflare/cloudflared/releases/download/2020.8.2/cloudflared-linux-arm64) |
+Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz) | [Download](https://github.com/cloudflare/cloudflared/releases/download/2020.10.2/cloudflared-linux-arm64) |
 .deb   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.deb) | - |
 .rpm   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.rpm) | - |
 
@@ -24,7 +24,9 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 You can install `cloudflared` on macOS systems via Homebrew:
 
-`% brew install cloudflare/cloudflare/cloudflared`
+```sh
+$ brew install cloudflare/cloudflare/cloudflared`
+```
 
 Alternatively, you can download the latest Darwin amd64 release directly.
 
@@ -41,7 +43,9 @@ Once `cloudflared` is installed:
 4. Navigate to the same Downloads folder.
 5. Run the `cloudflared.exe` executable as an administrator to confirm the installation, replacing the path in the example below with the specifics of your directory:
 
-` PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version`
+```sh
+PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
+```
 
 The command above should output the version of `cloudflared` if successfully installed.
 
