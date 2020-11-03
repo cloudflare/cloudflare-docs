@@ -32,24 +32,24 @@ The `fetch()` function accepts parameters in the second argument inside ```{cf: 
 - `fit`
   - Resizing mode as a string. It affects interpretation of `width` and `height`:
 
-<Definitions>
+  <Definitions>
 
-  - `scale-down`
-    - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
+    - `scale-down`
+      - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
 
-  - `contain`
-    - Resizes to the maximum size that fits within the given `width` and `height`. If only a single dimension is given (e.g. only `width`), the image will be shrunk or enlarged to exactly match that dimension. Aspect ratio is always preserved.
+    - `contain`
+      - Resizes to the maximum size that fits within the given `width` and `height`. If only a single dimension is given (e.g. only `width`), the image will be shrunk or enlarged to exactly match that dimension. Aspect ratio is always preserved.
 
-  - `cover`
-    - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
+    - `cover`
+      - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
 
-  - `crop`
-    - The image will shrunk and cropped to fit within the area specified by `width` and `height`. The image won’t be enlarged. For images smaller than the given dimensions it’s the same as `scale-down`. For images larger than the given dimensions, it’s the same as `cover`. See also `trim`.
+    - `crop`
+      - The image will shrunk and cropped to fit within the area specified by `width` and `height`. The image won’t be enlarged. For images smaller than the given dimensions it’s the same as `scale-down`. For images larger than the given dimensions, it’s the same as `cover`. See also `trim`.
 
-  - `pad`
-    - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). Use of this mode is not recommended, as the same effect can be more efficiently achieved with the `contain` mode and the CSS `object-fit: contain` property.
+    - `pad`
+      - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). Use of this mode is not recommended, as the same effect can be more efficiently achieved with the `contain` mode and the CSS `object-fit: contain` property.
 
-</Definitions>
+  </Definitions>
 
 - `gravity`
 
