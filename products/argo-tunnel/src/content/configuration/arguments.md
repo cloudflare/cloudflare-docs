@@ -90,7 +90,7 @@ Autoupdate frequency. See also [`--no-autoupdate`](#no-autoupdate).
 
 | Syntax | Default |
 |--|--|
-| `--no-autoupdate` | false |
+| `--no-autoupdate` | `false` |
 
 Disables periodic check for updates, restarting the server with the new version. See also [`--autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare edge. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
@@ -106,7 +106,7 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 
 | Syntax | Default |
 |--|--|
-| `--no-tls-verify` | false |
+| `--no-tls-verify` | `false` |
 
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
@@ -154,11 +154,11 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 
 ### `--loglevel`
 
-**Syntax**: `--loglevel (panic|fatal|error|warn|info|debug)`
-**Default**: `info`
-**Environment Variable**: `TUNNEL_LOGLEVEL`
+| Syntax | Default | Environment Variable |
+|--|--|--|
+| `--loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
 
-Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production.
+Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available options: `panic` `fatal` `error` `warn` `info` `debug`
 
 
 ### `--proto-loglevel`
@@ -182,7 +182,7 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 
 | Syntax | Default |
 |--|--|
-| `--no-chunked-encoding` | false |
+| `--no-chunked-encoding` | `false` |
 
 Disables chunked transfer encoding; useful if you are running a WSGI server.
 
