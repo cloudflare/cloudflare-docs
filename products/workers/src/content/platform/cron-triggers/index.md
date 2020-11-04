@@ -10,7 +10,7 @@ Cron Triggers allow users to map a cron expression to a Worker script using a [S
 
 ## Adding Cron Triggers
 
-Cron Triggers can be added to scripts with the Cloudflare API or in the dashboard on a [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) up to the [per-script limit](/platform/limits).
+Cron Triggers can be added to scripts with the Cloudflare API, or in the dashboard on a [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) up to the [per-script limit](/platform/limits). If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the **`wrangler.toml`** file.
 
 ![workers-schedule-editor](./media/workers-schedule-editor.png)
 
