@@ -6,15 +6,15 @@ order: 2
 
 With Access, you can protect two types of applications: **SaaS** and **self-hosted**.
 
-SaaS apps include apps your team relies on that are not hosted by your organization, such as Slack or Airtable.
+SaaS applications include applications your team relies on that are not hosted by your organization, such as Slack or Airtable.
 
-Self-hosted apps include your internal tools and applications, such as Jira or Grafana. You must secure self-hosted applications with Cloudflare's authoritative DNS to use Cloudflare Access.
+Self-hosted applications include your internal tools and applications, such as Jira or Grafana. You must secure self-hosted applications with Cloudflare's authoritative DNS to use Cloudflare Access.
 
 ## Connecting SaaS Applications
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
 
-### 1. Add Your App
+### 1. Add Your Application
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 2. Click **Add an application**.
@@ -23,7 +23,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 ![Access Saas and Self-Hosted](../static/summary/selfhosted-vs-saas.png)
 
 4. In the **Configure app** section, select an application from the Application drop-down menu.
-If your app is not listed, type its name in the textbox and select it.
+If your application is not listed, type its name in the textbox and select it.
 
 ![Unlsited SaaS app](../static/summary/new-saas-app.png)
 
@@ -32,9 +32,9 @@ SaaS applications store this information in different ways.
 
 6. In the **Assertion Consumer Service URL** field, input the service provider’s endpoint for receiving and parsing SAML assertions.
 
-7. Scroll down to the **Application logo** card to choose a logo that will represent the app in the App Launcher and in the Applications page.
+7. Scroll down to the **Application logo** card to choose a logo that will represent the application in the App Launcher and in the Applications page.
 You can either:
-  * Select **Default** if you want the SaaS application’s logo to show.
+  * Select **Default** if you want to show the SaaS application’s logo.
   * Select **Custom** if you want to assign a custom logo to the application.
 
 ![SaaS logo](../static/summary/saas-logo.png)
@@ -57,7 +57,7 @@ To learn more about how policies work, read our [Policies section](/getting-star
 3. Specify one or more rules in the **Configure a rule** box. You can add as many include, exception, or require statements as needed.
 4. Click **Next** to add your application to Access.
 
-### 3. Integrate Your SaaS App With Access
+### 3. Integrate Your SaaS Application With Access
 Before you begin using your application through Access, your last step is to integrate your SaaS application to Access.
 
 1. First, configure these fields with your SAML SSO-compliant application. Take note of these fields before you click **Done**:
@@ -85,7 +85,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 Before you begin setting up your self-hosted application, you will need an active domain on Cloudflare. Access rules will be built to secure that domain.
 
-Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Cloudflare Argo Tunnel](/learning/access-tunnel/). If you do not wish to use Cloudflare Argo Tunnel, you must [validate the token](/learning/json-web-tokens/) issued by Cloudflare on your origin.
+Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/). If you do not wish to use Argo Tunnel, you must [validate the token](/learning/json-web-tokens/) issued by Cloudflare on your origin.
 
 ### 1. Add Your App
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
