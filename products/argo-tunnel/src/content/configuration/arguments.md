@@ -9,7 +9,7 @@ order: 1
 All tunnel-related commands are prefixed with `tunnel`. For example:
 
 ```sh
-$ cloudflared tunnel --url localhost:5555 --hostname x.example.com`
+$ cloudflared tunnel --url localhost:5555 --hostname x.example.com
 ```
 
 - [Tunnel commands](#tunnel-commands)
