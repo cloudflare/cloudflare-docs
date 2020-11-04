@@ -10,15 +10,15 @@ Cloudflare’s Bot Management feature scores the likelihood that a request origi
 
 Scores range from 1 to 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
-This example uses the `cf.bot_management.score` [dynamic field](/https://developers.cloudflare.com/firewall/cf-firewall-language/fields#dynamic-fields) to target requests from bots. It uses the `cf.bot_management.verified_bot` field to identify requests from known good bots.
+This example uses the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to target requests from bots. It uses the `cf.bot_management.verified_bot` field to identify requests from known good bots.
 
 When a request for `login` has a Bot Management score less than 30 and is _not_ on the list of known good bots, Cloudflare issues a CAPTCHA challenge:
 
-<table>
+<table style='table-layout:fixed; width:100%'>
   <thead>
   <tr>
     <th>Expression</th>
-    <th>Action</th>
+    <th style='width:20%'>Action</th>
   </tr>
   </thead>
   <tbody>

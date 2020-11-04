@@ -11,7 +11,7 @@ When working with the Firewall Rules API, refer to these topics for additional c
 - [Actions](/cf-firewall-rules/actions/)
 - [Expressions](/cf-firewall-rules/fields-and-expressions/)
 - [Firewall Rules language](/cf-firewall-language/)
-- [Cloudflare Filters](/firewall/api/cf-filters/)
+- [Cloudflare Filters](/api/cf-filters/)
 
 To get started with the API, review the Firewall Rules API [JSON object](/api/cf-firewall-rules/json-object/) and [Endpoints](/api/cf-firewall-rules/endpoints/).
 
