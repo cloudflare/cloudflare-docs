@@ -11,4 +11,3 @@ Use these articles to get started with the Cloudflare GraphQL Analytics API:
 * [_Querying basics_](/graphql-api/getting-started/querying-basics) brings you simple query examples for you to start exploring the GraphQl Analytics API.
 
 For examples of how to build your own GraphQL Analytics dashboard and query specific information, such as Firewall and Workers events, see [_Tutorials_](/graphql-api/tutorials).
-

@@ -23,7 +23,7 @@ This table outlines the differences between Cloudflare API keys and tokens:
   <tbody>
       <tr>
         <td><a href='https://developers.cloudflare.com/api/keys'>API Keys</a></td>
-        <td><p>Unique to each Cloudflare user and used only for authentication. API keys not authorize access to accounts or zones.</p>
+        <td><p>Unique to each Cloudflare user and used only for authentication. API keys do not authorize access to accounts or zones.</p>
         <p>Use the Global API Key for authentication. Only use the Origin CA Key when you create origin certificates through the API.</p></td>
       </tr>
       <tr>
@@ -37,4 +37,4 @@ This table outlines the differences between Cloudflare API keys and tokens:
 
 To find and retrieve API keys, as well as edit HTTP headers for authentication in GraphiQL, see [_Authenticate with a Cloudflare API key_](/graphql-api/getting-started/authentication/api-key-auth/).
 
-To create and configure GraphQL Analytics API tokens, see [_Configure an Analytics API token_](/graphql-api/getting-started/authentication/api-token-auth).
+To create and configure GraphQL Analytics API tokens, see [_Configure an Analytics API token_](/graphql-api/getting-started/authentication/api-token-auth/).

@@ -36,7 +36,7 @@ API keys are unique to each Cloudflare user and used only for authentication. An
 
 <Aside type='note' header='Note'>
 
-The right-side response pane is empty if you entered your information correctly. An error displays if there are problems with your header credentials.
+The right-side response pane is empty when you enter your information correctly. An error displays when there are problems with your header credentials.
 
 </Aside>
 
