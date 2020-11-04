@@ -7,7 +7,7 @@ order: 640
 The Cloudflare Firewall Rules language provides functions for manipulating and validating values in an expression:
 
 - [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
-- The [HMAC Validation function](#hmac-validation) tests the validity of an HMAC token. Use it write expressions that target requests based on the presence of a valid HMAC token.
+- The [HMAC Validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
 
 ## Transformation functions
 

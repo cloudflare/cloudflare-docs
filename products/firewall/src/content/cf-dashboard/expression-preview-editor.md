@@ -12,7 +12,7 @@ For example, only the Expression Editor editor supports grouping symbols. Cloudf
 
 <Aside type='warning' header='Important'>
 
-Firewall Rules expressions have a 4KB limit. This is approximately 4,000 text characters. This limit applies whether you use the visual **Expression Builder** or edit your expression manually in the **Expression Editor** text box.
+Firewall Rules expressions have a 4KB limit. This is approximately 4,000 text characters. This limit applies whether you use the visual **Expression Builder** or edit your expression manually in the **Expression Editor**.
 
 </Aside>
 

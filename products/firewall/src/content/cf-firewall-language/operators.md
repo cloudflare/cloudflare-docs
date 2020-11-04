@@ -14,7 +14,7 @@ The Cloudflare Firewall Rules language supports comparison and logical operators
 
 ## Comparison operators
 
-Comparison operators return `true` a value from an HTTP request matches a value defined in an expression.
+Comparison operators return `true` when a value from an HTTP request matches a value defined in an expression.
 
 This is the general pattern for using comparison operators:
 
@@ -245,7 +245,7 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 <Aside type='warning' header='Important'>
 
-Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](cf-dashboard/create-edit-delete-rules/) does not.
+Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/cf-dashboard/create-edit-delete-rules/) does not.
 
 </Aside>
 

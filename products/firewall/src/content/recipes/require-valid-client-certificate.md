@@ -5,7 +5,7 @@ Use Cloudflare [API Shield™](https://developers.cloudflare.com/firewall/cf-fir
 Before you can use API Shield to protect your API or web application, you must do the following:
 
 - [Enable mutual Transport Layer Security (mTLS) for a host](https://developers.cloudflare.com/ssl/client-certificates/enable-mtls) in your zone.
-- [Create a client certificate](https://developers.cloudflare.com/content/client-certificates/create-a-client-certificate).
+- [Create a client certificate](https://developers.cloudflare.com/ssl/client-certificates/create-a-client-certificate).
 - [Configure your mobile app or Internet-of-things device](https://developers.cloudflare.com/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use the client certificate.
 
 <Aside type='warning' header='Important'>
