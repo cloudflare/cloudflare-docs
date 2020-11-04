@@ -37,7 +37,9 @@ You can create DNS records from `cloudflared`, which will provision a CNAME reco
 
 To do so, run the following command.
 
-`cloudflared tunnel route dns <UUID or NAME> www.app.com`
+```sh
+$ cloudflared tunnel route dns <UUID or NAME> www.app.com
+```
 
 The command will create a CNAME record that points to the Tunnel subdomain, but will not proxy traffic if the Tunnel is not currently running.
 
