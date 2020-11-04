@@ -18,7 +18,7 @@ To immediately terminate all active sessions for a specific application:
 
 3. In the Overview page, click **Revoke existing tokens**.
 
-![revoke-users](../static/apps/revoke-app.png)
+![revoke-users](../../static/apps/revoke-app.png)
 
 Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
 
@@ -34,11 +34,11 @@ If you want to permanently revoke a user access:
 
  Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
 
-![revoke-users](../static/revoke/user-list.png)
+![revoke-users](../../static/revoke/user-list.png)
 
 3. Click **Revoke session** and confirm.
 
-![revoke-users](../static/revoke/confirm-revoke.png)
+![revoke-users](../../static/revoke/confirm-revoke.png)
 
 ## Subsequent Logins
 
