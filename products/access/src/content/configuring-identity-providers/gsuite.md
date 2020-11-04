@@ -55,7 +55,7 @@ Use these steps to set up G Suite as your IdP.
    - App Name (you can write e.g. Cloudflare Access)
    - User support email (pick from dropdown)
    - As **Authorized domains** enter `cloudflareaccess.com`.
-   - In Developer contact information you can write the same address as in support email.
+   - In Developexr contact information you can write the same address as in support email.
 
 1. Click **Save and continue**, skip Scopes (there is nothing to do) and check Summary.
 
