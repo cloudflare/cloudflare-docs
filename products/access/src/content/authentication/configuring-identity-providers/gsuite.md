@@ -41,15 +41,11 @@ Use these steps to set up G Suite as your IdP.
 
     ![GCP dashboard APIs card](../../static/gsuite/gsuite-credentials.png)
 
-   The **Credentials** page displays.
-
 1. Click **Create credentials > OAuth client ID**.
 
-    ![OAuth client ID field](../../static/gsuite/gcp-creds.png)
+1. Click **Configure Consent Screen**.
 
-    The **OAuth consent screen** page displays.
-
-1. In **Application type**, select the **Internal** option.
+1. In **User type**, select the **Internal** option.
 
     ![API Credentials](../../static/gsuite/gsuite-int-ext.png)
 
@@ -57,32 +53,35 @@ Use these steps to set up G Suite as your IdP.
 1. Scroll to the **Authorized Domains** field, and enter `cloudflareaccess.com`.
 1. Click **Save**.
 
-    The Application builder wizard displays.
-
-1. Click Web Application.
+    The Scopes menu displays.
+1. No Scopes typically need to be configured.
+1. Once consent screen is configured. Navigate to **Credentials**
+1. Click **Create Credentials > OAuth Client ID**
+1. Set the **application type** as Web Application
 1. Enter a name for your application.
+
+    ![OAuth Client Configuration](../../static/gsuite/gcp-create-oauth-client.png)
+
 1. In **Authorized JavaScript Origins**, enter the authentication domain from **Cloudflare Access**.
 
-    For example, `https://example.cloudflareaccess.com`.
+    For example, `https://EXAMPLE.cloudflareaccess.com`. Where `EXAMPLE` is your account name in Access.
 
 1. Enter your authentication domain in the **Authorized redirect URIs** field, and add this to the end of the path: `/cdn-cgi/access/callback`
 
-    For example: `https://example.cloudflareaccess.com/cdn-cgi/access/callback`
+    For example: `https://EXAMPLE.cloudflareaccess.com/cdn-cgi/access/callback`
 
     A window displays with your **OAuth Client ID** and **Client Secret**. Copy these to enter in your **Cloudflare Access** app.
 
 1. Return to your G Suite Admin console, and click **MORE CONTROLS** at the bottom of the window.
 1. Click **Security**.
 
-    ![G Suite Security Badge](../../static/gsuite/gadmin-security.png)
+    ![G Suite Security Badge](../../static/gsuite/gconsole-security.png)
 
     The Security page displays.
 
-    ![Manage API access](../../static/gsuite/gadmin-secadvance.png)
-
 1. Click **Advanced Settings > Manage API client access**.
 
-   ![Manage API client access](../../static/gsuite/gadmin-apiclient.png)
+    ![Manage API access](../../static/gsuite/gconsole-security-api-controls.png)
 
 1. Enter your copied Client ID in the **Client Name** field.
 1. Paste these URLs in the **One or More API Scopes** field:
@@ -90,6 +89,7 @@ Use these steps to set up G Suite as your IdP.
     ```txt
     https://www.googleapis.com/auth/admin.directory.group.member.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
     ```
+    ![Manage API client access](../../static/gsuite/gconsole-security-api-domain-wide-new-client.png)
 
 1. Click **Authorize**.
 1. In the **Cloudflare Access** app, under click **Add** under **Login Methods**, and select G Suite as your IdP.
