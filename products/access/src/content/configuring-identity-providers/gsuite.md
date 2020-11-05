@@ -100,9 +100,6 @@ Use these steps to set up G Suite as your IdP.
    ![Add a new client ID](../static/gsuite/gconsole-security-api-domain-wide-new-client.png)
 
 1. Click **Authorize**.
-
-<hr>
-
 1. In the **Cloudflare Access** app, under click **Add** under **Login Methods**, and select G Suite as your IdP.
 1. Paste in the **Client ID** and **Client Secret**.
 1. In the Cloudflare Access **Configuration** panel, enter your Google domain, including the TLD (e.g.: my-project.com).
