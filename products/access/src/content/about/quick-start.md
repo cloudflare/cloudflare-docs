@@ -17,7 +17,7 @@ Cloudflare Access is one-half of Cloudflare for Teams, a security platform that 
 
 ## 2) Configure your identity provider
 * Cloudflare Access integrates with your organization’s identity provider to determine a user’s identity which is used to validate their permission to reach your application.
-Access supports providers that are maintained by your team, like Okta, G Suite, and AzureAD, in addition to publicly available providers like LinkedIN and GitHub.
+Access supports providers that are maintained by your team, like Okta, Google Workspace, and AzureAD, in addition to publicly available providers like LinkedIN and GitHub.
 * Access [supports multiple providers](https://blog.cloudflare.com/multi-sso-and-cloudflare-access-adding-linkedin-and-github-teams/) simultaneously, including providers of the same type.
 * When users connect to an application protected by Access, they will be prompted to login with the identity provider configured.
 * As part of enabling Access in Step 1, you can begin configuring your identity provider right away. [Follow these instructions](/configuring-identity-providers/) to begin integrating your team’s login method.

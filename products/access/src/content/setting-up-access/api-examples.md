@@ -158,14 +158,14 @@ The request will need to present the headers for any service token created for t
 }
 ```
 
-### G Suite® Group
+### Google Workspace® Group
 
-Allow members of a specific G Suite group:
+Allow members of a specific Google Workspace group:
 
 ```json
 {
-  "gsuite": {
-    "email": "admins@mycompanygsuite.com",
+  "Google Workspace": {
+    "email": "admins@mycompany.workspace.google.com",
     "identity_provider_id": "ca298b82-93b5-41bf-bc2d-10493f09b761"
   }
 }

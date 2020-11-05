@@ -107,7 +107,7 @@ $ ssh username@ssh.site.com
 
 Replace `username` with your unix username.
 
-Note that Access matches based on the identity that precedes an email domain. **Unix usernames must match the identity preceding the email domain.** For example, if the user's identity in your Okta or GSuite provider is `jdoe@example.com` then Access will look to match that identity to the Unix user `jdoe`.
+Note that Access matches based on the identity that precedes an email domain. **Unix usernames must match the identity preceding the email domain.** For example, if the user's identity in your Okta or Google Workspace provider is `jdoe@example.com` then Access will look to match that identity to the Unix user `jdoe`.
 `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
 ### Connecting to Git repositories

@@ -89,7 +89,7 @@ This public key is now always available on this page.
 
 ## Match Unix usernames to SSO IDs
 
-Cloudflare Access takes the identity from a token and short-lived certificates to authorize the user. Access matches rely on the identity that precedes an email domain. For example, if the user identity in your Okta or GSuite IdP is `jdoe@example.com`, Access attempts to match that identity to the Unix user `jdoe`.
+Cloudflare Access takes the identity from a token and short-lived certificates to authorize the user. Access matches rely on the identity that precedes an email domain. For example, if the user identity in your Okta or Google Workspace IdP is `jdoe@example.com`, Access attempts to match that identity to the Unix user `jdoe`.
 
 Return to the SSH session with your droplet to complete this step. Our example user is `srhea@cloudflare.com`, which matches the Access policy because the identity belongs to the `@cloudflare.com` domain.
 

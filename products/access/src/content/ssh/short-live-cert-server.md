@@ -52,7 +52,7 @@ You can return to copy the public key any time in the dashboard card.
 #### 3. Ensure Unix Usernames Match User SSO Identities
 Cloudflare Access will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure. Access matches based on the identity that precedes an email domain.
 
-For example, if the user's identity in your Okta or GSuite provider is "jdoe@example.com" then Access will look to match that identity to the Unix user "jdoe".
+For example, if the user's identity in your Okta or Google Workspace provider is "jdoe@example.com" then Access will look to match that identity to the Unix user "jdoe".
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
