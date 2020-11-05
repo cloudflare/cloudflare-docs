@@ -19,87 +19,98 @@ Use these steps to set up G Suite as your IdP.
 
 1. Log in to the **Google Cloud** console at [https://console.cloud.google.com/](https://console.cloud.google.com/).
 
-    This console is separate from your G Suite Admin console.
+   This console is separate from your G Suite Admin console.
 
 1. Create a new Google Cloud Platform (GCP) project.
 
 1. Enter **Cloudflare Access** in the **Project Name** field.
 1. Ensure that the setting in the **Location** field matches your G Suite domain.
 
-    ![Access Location](../static/gsuite/gcp-newproject.png)
-
-   The GCP dashboard displays.
+   ![Access Location](../static/gsuite/gcp-newproject.png)
 
 1. In the APIs card, click **→ Go to APIs overview**.
-    ![GCP dashboard APIs card](../static/gsuite/gcp-projectdash.png)
+   ![GCP dashboard APIs card](../static/gsuite/gcp-projectdash.png)
 
-1. Follow the Admin SDK link [here](https://console.cloud.google.com/apis/api/admin.googleapis.com/overview) and click enable.
+1. Follow the Admin SDK link [here](https://console.cloud.google.com/apis/api/admin.googleapis.com/overview) (or find Admin SDK in the API Library) and click enable.
 
-    ![Enable admin API](../static/gsuite/gsuite-admin-sdk.png)
+   ![Enable admin API](../static/gsuite/gsuite-admin-sdk.png)
 
 1. Return to the APIs overview page. Select **Credentials** in the left menu pane.
 
-    ![GCP dashboard APIs card](../static/gsuite/gsuite-credentials.png)
-
-   The **Credentials** page displays.
+   ![GCP dashboard APIs card](../static/gsuite/gsuite-credentials.png)
 
 1. Click **Create credentials > OAuth client ID**.
 
-    ![OAuth client ID field](../static/gsuite/gcp-creds.png)
+   ![OAuth client ID field](../static/gsuite/create-credentials.png)
 
-    The **OAuth consent screen** page displays.
+1. Configure OAuth via **CONFIGURE CONSENT SCREEN** button.
+
+   ![OAuth client ID field](../static/gsuite/configure-consent-screen.png)
 
 1. In **Application type**, select the **Internal** option.
 
-    ![API Credentials](../static/gsuite/gsuite-int-ext.png)
+   ![API Credentials](../static/gsuite/gsuite-int-ext.png)
 
-1. Enter an **Application Name**.
-1. Scroll to the **Authorized Domains** field, and enter `cloudflareaccess.com`.
-1. Click **Save**.
+1. In **App information** fill:
+   - App Name (you can write e.g. Cloudflare Access)
+   - User support email (pick from dropdown)
+   - As **Authorized domains** enter `cloudflareaccess.com`.
+   - In Developexr contact information you can write the same address as in support email.
 
-    The Application builder wizard displays.
+1. Click **Save and continue**, skip Scopes (there is nothing to do) and check Summary.
 
-1. Click Web Application.
-1. Enter a name for your application.
-1. In **Authorized JavaScript Origins**, enter the authentication domain from **Cloudflare Access**.
+   ![App Information](../static/gsuite/app-information.png)
 
-    For example, `https://example.cloudflareaccess.com`.
+1. Go back to **Credentials**, if you were not redirected and continue creating **OAuth Client ID**.
+   - Application type: **Web Application**.
+   - Pick some name (you can write e.g. Cloudflare Access)
+   - In **Authorized JavaScript Origins**, enter the authentication domain from **Cloudflare Access**.
 
-1. Enter your authentication domain in the **Authorized redirect URIs** field, and add this to the end of the path: `/cdn-cgi/access/callback`
+     For example, `https://example.cloudflareaccess.com`.
 
-    For example: `https://example.cloudflareaccess.com/cdn-cgi/access/callback`
+   - Enter your authentication domain in the **Authorized redirect URIs** field, and add this to the end of the path: `/cdn-cgi/access/callback`
 
-    A window displays with your **OAuth Client ID** and **Client Secret**. Copy these to enter in your **Cloudflare Access** app.
+     For example: `https://example.cloudflareaccess.com/cdn-cgi/access/callback`
 
-1. Return to your G Suite Admin console, and click **MORE CONTROLS** at the bottom of the window.
-1. Click **Security**.
+1. A window displays with your **OAuth Client ID** and **Client Secret**. Copy these to enter in your **Cloudflare Access** app.
 
-    ![G Suite Security Badge](../static/gsuite/gadmin-security.png)
+1. Return to your G Suite Admin console (https://admin.google.com/), and click **Security**.
 
-    The Security page displays.
+   ![G Security ](../static/gsuite/gconsole-security.png)
 
-    ![Manage API access](../static/gsuite/gadmin-secadvance.png)
+1. Choose **API Controls**.
 
-1. Click **Advanced Settings > Manage API client access**.
+   ![API Controls](../static/gsuite/gconsole-security-api-controls.png)
 
-   ![Manage API client access](../static/gsuite/gadmin-apiclient.png)
+1. Click **Domain wide delegation** on the bottom of the screen.
 
-1. Enter your copied Client ID in the **Client Name** field.
-1. Paste these URLs in the **One or More API Scopes** field:
+   ![Domain wide delegation](../static/gsuite/gconsole-security-api-domain-wide-delegation.png)
+
+1. **Add new**.
+
+   ![Add new](../static/gsuite/gconsole-security-api-domain-wide-add-new.png)
+
+1. Enter your copied **Client ID**.
+1. Paste these URLs in the **OAuth Scopes** field:
 
     ```txt
     https://www.googleapis.com/auth/admin.directory.group.member.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
     ```
 
+   ![Add a new client ID](../static/gsuite/gconsole-security-api-domain-wide-new-client.png)
+
 1. Click **Authorize**.
+
+<hr>
+
 1. In the **Cloudflare Access** app, under click **Add** under **Login Methods**, and select G Suite as your IdP.
 1. Paste in the **Client ID** and **Client Secret**.
-1. In the Cloudflare Access **Configuration** panel, enter your Google domain, including the TLD.
+1. In the Cloudflare Access **Configuration** panel, enter your Google domain, including the TLD (e.g.: my-project.com).
 1. Click **Save and Test**.
 
-    On success, a confirmirmation displays that your connection works.
+   On success, a confirmirmation displays that your connection works.
 
-    ![Cloudflare IdP Connection Success](../static/gsuite/gsuite-9.png)
+   ![Cloudflare IdP Connection Success](../static/gsuite/gsuite-9.png)
 
 ## Example API Configuration
 
