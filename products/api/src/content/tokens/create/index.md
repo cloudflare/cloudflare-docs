@@ -95,9 +95,11 @@ If the secret is lost or believed to be compromised, the token can be rolled to 
 This screen also includes an example command to test the token (reproduced below). The `/user/tokens/verify` endpoint allows fetching the current status of the given token.
 
 ```bash
- curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
-     -H "Authorization: Bearer <token secret>" \
-     -H "Content-Type:application/json"
+
+curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+     -H "Authorization: Bearer idcEtkpyPJagRqYuE2wEwsBF3aPJEgV2GCgm3RSB" \
+     -H "Content-Type:application/json
+
 ```
 
 The result:
