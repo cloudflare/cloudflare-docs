@@ -59,11 +59,13 @@ order: 1
 
 3. Check that the PR description reflects a bullet point list of all commit titles. Add any other comment you want to share with us.
 
-4. Assign the relevant **product label**. Product labels follow this structure: ***product:product-name***.
+4. Assign the relevant **product label**.
+
+  Product labels follow this structure: ***product:product-name***. For example:
    * `product:access`
    * `product:1.1.1.1`
 
-5. Request a review from the code owner.  
+5. Request a review from the **code owner**.  
 
   See [here](/reference/codeowners) a list of code owners per product.
 
