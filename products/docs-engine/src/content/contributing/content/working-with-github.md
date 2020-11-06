@@ -5,13 +5,13 @@ order: 1
 # Working with GitHub
 
 <Aside>
-   <b>Goal</b>: ensure that PRs are easily <b>retrievable</b> and <b>readable</b>.
+   The <b>goal</b> is to ensure that PRs are easily <b>retrievable</b> and <b>readable</b>.
 
 </Aside>
 
-1. Give a meaningful title to every commit.  
+1. Make commit messages informative.  
 
- <b>Tip</b>: when you’re working on several files or making significant changes in your local repo, try to split work into logically meaningful commits.
+ <b>Tip</b>: when you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
 
 
 <table>
@@ -65,5 +65,5 @@ order: 1
 
 5. Request a review from the code owner.  
 
-  See [here](placeholder) a list of code owners per product.
+  See [here](/reference/codeowners) a list of code owners per product.
 
