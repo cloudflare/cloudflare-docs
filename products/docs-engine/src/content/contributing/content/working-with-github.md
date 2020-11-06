@@ -4,58 +4,27 @@ order: 1
 
 # Working with GitHub
 
-<Aside>
-   The <b>goal</b> is to ensure that PRs are easily <b>retrievable</b> and <b>readable</b>.
+The **goal** is to ensure that PRs are easily **retrievable** and **readable**.
 
+1. Make commit messages informative.
+
+<Aside>
+ <b>Tip</b>: when you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
 </Aside>
 
-1. Make commit messages informative.  
-
- <b>Tip</b>: when you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
-
-
-<table>
-  <tbody>
-    <tr>
-      <th align="center" style="color:red">✘</th>
-      <th align="center" style="color:green">✓</th>
-    </tr>
-    <tr>
-      <td>
-        <ul>
-          <li>fix access</li>
-        </ul>
-      </td>
-      <td>
-        <ul>
-          <li>fix image paths in getting-started.md</li>
-          <li>add step-by-step guide on configuring an idp</li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| <span style="color:red">✘</span> | <span style="color:green">✓</span> |
+|---|---|
+| *[commit 1]* fix access | *[commit 1]* fix image paths in getting-started.md |
+|  | *[commit 2]* add step-by-step guide on configuring an idp |
 
 2. When naming a PR, follow this title structure:
 
 ![Title Pattern](/pr-title-pattern.png)
 
-<table class="center">
-  <tbody>
-    <tr>
-      <th align="center" style="color:red">✘</th>
-      <th align="center" style="color:green">✓</th>
-    </tr>
-    <tr>
-      <td>broken link in access docs</td>
-      <td>[Access] fix broken link in example_file.md</td>
-    </tr>
-    <tr>
-      <td>fixes</td>
-      <td>[1.1.1.1] fix code style in getting started and /dns-over-https</td>
-    </tr>
-  </tbody>
-</table>
+| <span style="color:red">✘</span> | <span style="color:green">✓</span> |
+|---|---|
+| broken link in access docs | [Access] fix broken link in example_file.md |
+| fixes | [1.1.1.1] fix code style in getting started and /dns-over-https |
 
 3. Check that the PR description reflects a bullet point list of all commit titles. Add any other comment you want to share with us.
 
@@ -65,7 +34,7 @@ order: 1
    * `product:access`
    * `product:1.1.1.1`
 
-5. Request a review from the **code owner**.  
+5. Request a review from the **code owner**.
 
-  See [here](/reference/codeowners) a list of code owners per product.
+  See [here](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS) a list of code owners per product.
 
