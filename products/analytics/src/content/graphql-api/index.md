@@ -3,7 +3,7 @@ title: GraphQL Analytics API
 order: 1
 ---
 
-# GraphQL Analytics API
+# GraphQl Analytics API
 
 The GraphQL Analytics API provides data regarding HTTP requests passing through Cloudflare’s network, as well as data from specific products, such as Firewall or Load Balancing. Network Analytics users also have access to packet-level data. Use the GraphQL Analytics API to select specific data sets and metrics of interest, filter and aggregate the data along various dimensions, and integrate the results with other applications.
 
@@ -13,4 +13,4 @@ GraphQL models a business domain as a graph using a schema. In the schema, there
 
 ## Clients
 
-We’re using [_GraphiQL_ ](https://electronjs.org/apps/graphiql)for our example GraphQL queries. There are many other popular open-source clients that you can find online, such [_Altair_ ](https://altair.sirmuel.design) and [_Insomnia_](https://insomnia.rest). You can also use _curl_.
+We are using [_GraphiQL_](https://electronjs.org/apps/graphiql) for our example GraphQL queries. There are many other popular open-source clients that you can find online, such as [_Altair_](https://altair.sirmuel.design) and [_Insomnia_](https://insomnia.rest). Using `curl` is also a possibility.
