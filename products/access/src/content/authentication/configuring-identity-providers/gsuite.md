@@ -70,7 +70,7 @@ Follow these steps to set up G Suite as your IdP.
     Example: `https://EXAMPLE.cloudflareaccess.com/cdn-cgi/access/callback`
 
 1. A window displays with your **OAuth Client ID** and **Client Secret**.
-1. Copy these to enter in your **Cloudflare Access** application.
+1. Copy these to enter later in your Access **Login Methods** section.
 1. Return to your G Suite Admin console.
 1. Click **More Controls** at the bottom of the window.
 1. Click **Security** to display the Security page.
@@ -90,12 +90,15 @@ Follow these steps to set up G Suite as your IdP.
     ![Manage API client access](../../static/gsuite/gconsole-security-api-domain-wide-new-client.png)
 
 1. Click **Authorize**.
-1. In the **Cloudflare Access** application, click **Login Methods > Add > G Suite** to set G Suite as your IdP.
-1. Paste in the **Client ID** and **Client Secret**.
-1. In the Cloudflare Access **Configuration** panel, enter your Google domain, including the TLD.
-1. Click **Save and Test**.
+1. On the Teams dashboard, navigate to **Access > Authentication > Login Methods** and click **+Add**.
+1. Select **Google Suite**.
+1. Paste in the **Client ID** and **Client Secret**, and enter your G Suite domain.
 
-    On success, a confirmirmation displays that your connection works.
+    ![Add GSuite to Access](../../static/gsuite/add-gsuite-to-access.png)
+
+1. Click **Save**.
+
+    On success, a confirmation displays that your connection works.
 
     ![Cloudflare IdP Connection Success](../../static/gsuite/gsuite-9.png)
 
