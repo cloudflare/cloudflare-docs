@@ -43,7 +43,7 @@ We recommend increasing the chunk size to 52,428,800 bytes for better performanc
 
 <Aside>
 
-Important: Cloudflare Stream requires a chunk size divisible by 256KiB(256x1024 bytes). Please round your desired chunk size to the nearest multiple of 256KiB.
+Important: Cloudflare Stream requires a chunk size divisible by 256KiB (256x1024 bytes). Please round your desired chunk size to the nearest multiple of 256KiB.
 
 The final chunk of an upload or uploads that fit within a single chunk are exempt from this requirement.
 
