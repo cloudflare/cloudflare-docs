@@ -33,10 +33,6 @@ Note that cURL `-F` flag automatically configures the content-type header and ma
 
 [tus protocol](https://tus.io) is the recommended method for uploading large files to Cloudflare Stream from a computer. Popular programming languages have [tus client implementations](https://tus.io/implementations.html).
 
-### Chunk sizes
-
-tus clients allow you to configure them with a `ChunkSize`. Stream has requirements for the `ChunkSize` it will accept:
-
 <Aside>
 
 Important: Cloudflare Stream requires a minimum chunk size of 5,242,880 bytes when using TUS, unless the entire file is less than this amount.
@@ -225,4 +221,3 @@ upload.start();
 ```
 
 </Example>
-
