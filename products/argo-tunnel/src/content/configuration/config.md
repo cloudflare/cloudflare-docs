@@ -18,7 +18,7 @@ hostname: [hostname]
 
 ## Default behavior
 
-You can specify a particular Tunnel in the config file by name or ID. When the following stanza is present in the file, the command `cloudflaredtunnl run` will be treated as if `cloudflared tunnel run NAME-OR-ID` was run.
+You can specify a particular Tunnel in the config file by name or ID. When the following stanza is present in the file, the command `cloudflared tunnel run` will be treated as if `cloudflared tunnel run NAME-OR-ID` was run.
 
 ```yml
 tunnel: NAME-OR-ID

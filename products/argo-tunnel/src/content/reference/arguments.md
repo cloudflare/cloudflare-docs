@@ -5,7 +5,7 @@ order: 100
 # Command-line arguments
 
 * [Tunnel command](#tunnel-command)
-  * [Login command](#login-command)
+* [Login command](#login-command)
 * [Service command](#service-command)
 * [Update command](#update-command)
 
