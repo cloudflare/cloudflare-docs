@@ -32,5 +32,40 @@ order: 1
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>
+                2020-11-09
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2020-11-16
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Cloudflare Specials
+            </td>
+        </tr>
+        <tr>
+            <td>
+                100502
+            </td>
+        </tr>
+        <tr>
+            <td>
+                CVE:CVE-2020-13443
+            </td>
+        </tr>
+        <tr>
+            <td>
+                N/A
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Block
+            </td>
+        </tr>
     </tbody>
 </table></TableWrap>
