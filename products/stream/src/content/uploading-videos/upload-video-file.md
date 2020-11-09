@@ -41,6 +41,14 @@ We recommend increasing the chunk size to 52,428,800 bytes for better performanc
 
 </Aside>
 
+<Aside>
+
+Important: Cloudflare Stream requires a chunk size divisible by 256KiB (256x1024 bytes). Please round your desired chunk size to the nearest multiple of 256KiB.
+
+The final chunk of an upload or uploads that fit within a single chunk are exempt from this requirement.
+
+</Aside>
+
 ### Specifying upload options
 
 The tus protocol allows you to add optional parameters [in the `Upload-Metadata` header](https://tus.io/protocols/resumable-upload.html#upload-metadata).
@@ -213,4 +221,3 @@ upload.start();
 ```
 
 </Example>
-
