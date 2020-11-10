@@ -4,13 +4,23 @@ order: 200
 
 # Mutual TLS authentication
 
-<div class="notices info">
+<Aside type='note' header='Note'>
+
 Cloudflare Access can add mTLS to your application, but it requires a Cloudflare enterprise plan. To enforce mTLS in your application with Access, please contact your Cloudflare Customer Success Manager.
-</div>
+
+</Aside>
 
 Mutual TLS (mTLS) authentication ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
+
+<Aside type='warning' header='Important'>
+
+The certificate presented by our edge as part of the server hello is our usual edge certificate (such as our custom or universal certificate).
+
+When you configure mTLS in Cloudflare Access, you must upload a certificate. This certificate is **only** used to verify the client certificate during the handshake. The mTLS configuration does not control the edge SSL certificate presented in the server hello.
+
+</Aside>
 
 ![mTLS Diagram](../static/mtls.png)
 
