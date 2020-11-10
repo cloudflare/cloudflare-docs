@@ -9,7 +9,7 @@ The **goal** is to ensure that PRs are easily **retrievable** and **readable**.
 1. Make commit messages informative.
 
 <Aside>
- <b>Tip</b>: when you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
+ When you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
 </Aside>
 
 | <span style="color:red">✘</span> | <span style="color:green">✓</span> |
@@ -31,8 +31,8 @@ The **goal** is to ensure that PRs are easily **retrievable** and **readable**.
 4. Assign the relevant **product label**.
 
   Product labels follow this structure: ***product:product-name***. For example:
-   * `product:access`
-   * `product:1.1.1.1`
+    * `product:access`
+    * `product:1.1.1.1`
 
 5. Request a review from the **code owner**.
 
