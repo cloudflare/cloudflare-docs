@@ -55,5 +55,28 @@ order: 1
                 Block
             </td>
         </tr>
+        <tr>
+            <td>
+                2020-11-09
+            </td>
+            <td>
+                2020-11-16
+            </td>
+            <td>
+                Cloudflare Wordpress
+            </td>
+            <td>
+                WP0017
+            </td>
+            <td>
+                Wordpress - SQLi - CVE:CVE-2015-2213 fix
+            </td>
+            <td>
+                Block
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
     </tbody>
 </table></TableWrap>
