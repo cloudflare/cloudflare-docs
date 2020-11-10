@@ -10,7 +10,7 @@ The **goal** is to ensure that PRs are easily **retrievable** and **readable**.
 
 <Aside>
 
-When you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
+ When you’re working on several files or making significant changes in your local repo, try to split work into smaller commits.
 
 </Aside>
 
@@ -36,5 +36,5 @@ When you’re working on several files or making significant changes in your loc
 
 5. Request a review from the **code owner**.
 
-  See [here](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS) a list of code owners per product.
+ [See a list of code owners per product](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS).
 
