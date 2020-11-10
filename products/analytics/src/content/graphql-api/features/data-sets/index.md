@@ -29,7 +29,7 @@ The following data sets (and associated nodes) are available in Cloudflare Analy
 | Firewall Activity Log       | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                                                                  |
 | Firewall Analytics          | `firewallEventsAdaptiveGroups`                                                                                                 |
 | Health Check Analytics      | `healthCheckEventsAdaptive` `healthCheckEventsAdaptiveGroups`                                                                  |
-| HTTP Requests               | `httpRequestsAdaptiveGroups` `httpRequests1mGroups` `httpRequests1hGroups`  `httpRequests1dGroups` `httpRequests1mByColoGroups` `httpRequests1dByColoGroups` |
+| HTTP Requests               | `httpRequestsAdaptiveGroups` `httpRequests1mGroups` `httpRequests1hGroups`  `httpRequests1dGroups`                             |
 | Image Resizing Analytics    | `imageResizingRequests1mGroups`                                                                                                |
 | Load Balancing Analytics    | `loadBalancingRequestsAdaptive` `loadBalancingRequestsAdaptiveGroups`                                                          |
 | Network Analytics           | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups`                                                 |
@@ -59,6 +59,8 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 | Node                         | Replacement node                     | Sunset date   |
 | ---------------------------- | ------------------------------------ | ------------- |
 | `httpRequestsCacheGroups`    | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
+| `httpRequests1mByColoGroups` | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
+| `httpRequests1dByColoGroups` | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
 | `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
 | `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021 |   
 | `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021 |  
