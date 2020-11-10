@@ -40,11 +40,7 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 
 ## Run a Tunnel
 
-Once created, you can use Argo Tunnel to proxy traffic from the Tunnel to a locally available URL in your environment. You can specify configuration details for your tunnel in a configuration file.
-
-If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
-
-To begin, run the Tunnel with the following command.
+Once created, you can run the Argo Tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. To begin, run the Tunnel with the following command.
 
 `cloudflared tunnel --config path/config.yaml run <NAME>`
 
@@ -56,7 +52,11 @@ You can also specify the Tunnel name or UUID inside of the configuration file, i
 
 `cloudflared tunnel --config path/config.yaml run`
 
-You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID.
+If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
+
+When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [Ingress Rules](/routing-to-tunnel/ingress).
+
+You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route _all_ traffic to the given URL.
 
 `cloudflared tunnel run --url localhost:3000 <NAME or UUID>`
 
