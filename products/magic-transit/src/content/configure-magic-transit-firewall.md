@@ -186,7 +186,7 @@ _ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, 
   - Packet length
   - Bit field match (Cloudflare is able to match on any part of an IP packet to apply, allow, or drop rules)
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 When you or your end users are using other Cloudflare services (eg. CDN, Spectrum) that proxy traffic, be aware of the following:
 
