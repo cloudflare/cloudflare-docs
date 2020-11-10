@@ -19,7 +19,7 @@ Cloudflare encapsulates the ICMP reply packet and transmits the probe across the
 
 Every Cloudflare edge server configured to process your traffic sends a tunnel health check probe every 60 seconds. When a probe attempt fails, each server detecting the failure quickly probes up to 2 more times to obtain an accurate result.
 
-<Aside>
+<Aside type='note' header='Note'>
 
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply (rather than an ICMP echo request). To use echo request packets, please contact your Cloudflare account team.
 
@@ -43,7 +43,7 @@ Magic Transit steers traffic to tunnels based on priorities you set when you [as
 
 Tunnel routes with lower values have priority over those with higher values.
 
-<Aside>
+<Aside type='note' header='Note'>
 
 Since Cloudflare does not synchronize the health checks among edge servers and the Internet is not homogenous, Cloudflare edge servers may be able to reach the origin infrastructure from some locations at a given time but not others.
 

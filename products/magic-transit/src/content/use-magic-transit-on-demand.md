@@ -11,7 +11,7 @@ A common workflow is to enable prefix advertisement during an attack so that you
 
 To ensure smooth operation in general and simplify the advertisement process during an attack scenario, see [_Dynamic advertisement: Best practices_](https://developers.cloudflare.com/byoip/dynamic-advertisement/best-practices).
 
-<Aside>
+<Aside type='note' header='Note'>
 
 Once you have set up Magic Transit, all Cloudflare traffic to your prefixes uses GRE tunnels to reach your origin. This is true even when you disable dynamic advertising.
 

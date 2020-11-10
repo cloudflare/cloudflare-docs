@@ -51,7 +51,7 @@ These routing changes return any traffic generated within the Cloudflare edge ne
 
 You control the edge router advertisement, which dictates whether Cloudflare’s edge network advertises your prefixes. Advertisement is activated at the go-live call, routing traffic via Cloudflare and the GRE tunnels to your data center(s).
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 It is critical that you put the appropriate MSS clamps in place before routing changes are made. Failure to apply an MSS clamp may result in dropped packets and hard-to-debug connectivity issues.
 
