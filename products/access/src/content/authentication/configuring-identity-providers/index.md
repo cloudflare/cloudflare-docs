@@ -1,6 +1,5 @@
 ---
 order: 2
-type: overview
 ---
 
 # Configuring identity providers
@@ -40,7 +39,7 @@ To test if an IdP is correctly configured, click on **Authentication** > **Login
 
 If your provider is connected, another window will open in your browser, with this message:
 
-![Connecteed IdP](../../static/identity-index/connected-idp.png)
+![Connected IdP](../../static/identity-index/connected-idp.png)
  
 ### Your provider is not connected
 
