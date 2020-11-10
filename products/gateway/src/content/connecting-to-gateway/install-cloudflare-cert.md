@@ -36,7 +36,7 @@ You will need to install the root certificate in the Keychain Access application
 | Local Items | Cached iCloud passwords |
 | System      | All users on the system |
 
-Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System keychain affects all users who have access to that machine. 
+Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System keychain affects all users who have access to that machine.
 
 To install the certificate in Keychain Access:
 
@@ -77,15 +77,15 @@ The root certificate is now installed and ready to be used.
 
 ![ios profile](../static/ios_cert_profile.jpg)
 
-4. Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode. 
+4. Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
 5. Next, a certificate warning will appear. Tap **Install**.
 
  If a second prompt is displayed, tap **Install** again.
- 
+
 6. Next, the **Profile Installed** screen will appear. Tap **Done**.
 
- The certificate is now installed. However, before it can be used, it must be trusted by the device. 
+ The certificate is now installed. However, before it can be used, it must be trusted by the device.
 
 7. On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
 
@@ -93,7 +93,7 @@ The root certificate is now installed and ready to be used.
 
  ![ios cert trust](../static/ios_cert_trust1.jpg)
 
-8. Tap the slide button next to the Cloudflare certificate you just installed. 
+8. Tap the slide button next to the Cloudflare certificate you just installed.
 
 9. A confirmation dialogue will appear. Tap **Continue**.
 
@@ -169,7 +169,7 @@ The root certificate is now installed and ready to be used.
 
 8. Verify your identity through the fingerprint, or by inserting the pin code.
 
-9. Select the certificate you want to install. 
+9. Select the certificate you want to install.
 
 ![android choose cert](../static/android_choose_certificate.png)
 

@@ -303,7 +303,7 @@ from datetime import datetime
 
 def readSensor():
 
-    # Takes a reading from a temperature sensor and store it to temp_measurement 
+    # Takes a reading from a temperature sensor and store it to temp_measurement
 
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime(‘%Y-%m-%dT%H:%M:%SZ’)
@@ -317,13 +317,13 @@ def main():
 
     temperature = readSensor()
     payload = json.dumps(temperature)
-    
+
     url = 'https://shield.upinatoms.com/temps'
     json_headers = {'Content-Type': 'application/json'}
     cert_file = ('/etc/ssl/certs/sensor.pem', '/etc/ssl/private/sensor-key.pem')
-    
+
     r = requests.post(url, headers = json_headers, data = payload, cert = cert_file)
-    
+
     print("Request body: ", r.request.body)
     print("Response status code: %d" % r.status_code)
 ```

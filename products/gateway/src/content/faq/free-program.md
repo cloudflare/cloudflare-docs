@@ -13,9 +13,9 @@ If you are already a Cloudflare for Teams customer, we have removed the caps on 
 
 ### Program details
 The program includes the following features:
-* Up to 3 locations 
-* Unlimited security and content filters 
-* The ability to assign multiple policies to one location 
+* Up to 3 locations
+* Unlimited security and content filters
+* The ability to assign multiple policies to one location
 * The ability to update IPs for locations
 
-As September 2nd draws closer, users will be prompted to select a paid plan. Pricing for these plans can be found [here](https://www.cloudflare.com/teams-pricing/). Teams that exceed the limit of the Teams Free plan will not be immediately downgraded; however, they will not be able to expand protection to additional users or locations from their current deployment. 
+As September 2nd draws closer, users will be prompted to select a paid plan. Pricing for these plans can be found [here](https://www.cloudflare.com/teams-pricing/). Teams that exceed the limit of the Teams Free plan will not be immediately downgraded; however, they will not be able to expand protection to additional users or locations from their current deployment.

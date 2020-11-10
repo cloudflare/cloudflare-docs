@@ -14,7 +14,7 @@ Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead o
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
 ## [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/)
-A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.      
+A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## [Cloudflare Workers](https://developers.cloudflare.com/workers/)
 Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.  
@@ -41,7 +41,7 @@ The resource being protected by Cloudflare Access. An application can be a subdo
 |---|---|
 
 
-## Auth Domain 
+## Auth Domain
 The unique subdomain assigned to your Cloudflare account; for example, https://example.cloudflareaccess.com
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
@@ -49,35 +49,35 @@ The unique subdomain assigned to your Cloudflare account; for example, https://e
 
 ## Authenticated Origin Pulls
 
-Authenticated Origin Pulls let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.        
+Authenticated Origin Pulls let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
 
-| Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) | 
+| Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) |
 |---|---|
 
 ## cloudflared
 
-`cloudflared` is the software that powers Argo Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.      
+`cloudflared` is the software that powers Argo Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
-| Related products: | [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) | 
+| Related products: | [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) |
 |---|---|
 
 ## daemon
 A program that performs tasks without active management or maintenance.
 
-| Related products: | [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) | 
+| Related products: | [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) |
 |---|---|
 
 ## DoH
 *DNS over HTTPS*  
 
-With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.    
+With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) |
 |---|---|
 
 ## DNS filtering
 
-DNS filtering is the process of using the Domain Name System to block malicious websites and filter out harmful or inappropriate content. This ensures that company data remains secure and allows companies to have control over what their employees can access on company-managed networks. DNS filtering is often part of a larger access control strategy.     
+DNS filtering is the process of using the Domain Name System to block malicious websites and filter out harmful or inappropriate content. This ensures that company data remains secure and allows companies to have control over what their employees can access on company-managed networks. DNS filtering is often part of a larger access control strategy.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) |
 |---|---|
@@ -92,18 +92,18 @@ Each device connected to the Internet has a unique IP address which other machin
 ## DoT <a name="DoT"></a>
 *DNS over TLS*
 
-DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications. (TLS is also known as "SSL.") DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.    
+DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications. (TLS is also known as "SSL.") DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) |
 |---|---|
 
 ## hostname
-The name given to a server or node on a network. In most cases, the public DNS name of a server.    
+The name given to a server or node on a network. In most cases, the public DNS name of a server.
 
 ## IdP
 *identity provider*  
 
-An identity provider (IdP or IDP) stores and manages users' digital identities. Think of an IdP as being like a guest list, but for digital and cloud-hosted applications instead of an event. An IdP may check user identities via username-password combinations and other factors, or it may simply provide a list of user identities that another service provider (like an SSO) checks.    
+An identity provider (IdP or IDP) stores and manages users' digital identities. Think of an IdP as being like a guest list, but for digital and cloud-hosted applications instead of an event. An IdP may check user identities via username-password combinations and other factors, or it may simply provide a list of user identities that another service provider (like an SSO) checks.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
@@ -111,30 +111,30 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 ## JWT
 *JSON web token*
 
-An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.     
+An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
 
 ## location
-Locations are physical entities like offices, homes, retail stores, movie theatres or a data center. 
+Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) |
 |---|---|
 
 ## mTLS
-*mutual TLS*   
+*mutual TLS*
 
-The Server Message Block (SMB) protocol is a network file sharing protocol that allows applications on a computer to read and write to files and to request services from server programs in a computer network.        
+The Server Message Block (SMB) protocol is a network file sharing protocol that allows applications on a computer to read and write to files and to request services from server programs in a computer network.
 
 ## Next-generation firewall
-A next-generation firewall (NGFW) is more powerful than a traditional firewall. NGFWs have the capabilities of traditional firewalls, but they also have a host of added features to address a greater variety of organizational needs. NGFWs can run either in the cloud or on-premises.       
+A next-generation firewall (NGFW) is more powerful than a traditional firewall. NGFWs have the capabilities of traditional firewalls, but they also have a host of added features to address a greater variety of organizational needs. NGFWs can run either in the cloud or on-premises.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) |
 |---|---|
 
 ## OAuth
-OAuth is a technical standard for authorizing users. It is a protocol for passing authorization from one service to another without sharing the actual user credentials, such as a username and password. With OAuth, a user can sign in on one platform and then be authorized to perform actions and view data on another platform.   
+OAuth is a technical standard for authorizing users. It is a protocol for passing authorization from one service to another without sharing the actual user credentials, such as a username and password. With OAuth, a user can sign in on one platform and then be authorized to perform actions and view data on another platform.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
@@ -147,7 +147,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 |---|---|
 
 ## Origin certificate <a name="origin-certificate"></a>
-Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS. 
+Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 | Related products: | [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) |
 |---|---|
@@ -160,9 +160,9 @@ Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare fo
 |---|---|---|
 
 ## RDP
-*Remote Desktop Protocol*   
+*Remote Desktop Protocol*
 
-A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.   
+A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
 ## SafeSearch
 
@@ -174,13 +174,13 @@ A feature of search engines that can help you filter explicit or offensive conte
 ## SAML
 *Security Assertion Markup Language*  
 
-A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#SSO)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.       
+A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#SSO)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
 
 ## SASE
-*Secure Access Service Edge*   
+*Secure Access Service Edge*
 
 A cloud-based security model which bundles software-defined networking with network security functions and delivers them from a single service provider. SASE packages software-defined wide area networking (SD-WAN) capabilities with other network security functions (like secure web gateways, Zero Trust network access, firewall-as-a-service, and cloud access security brokers) and is delivered from and managed on a single cloud platform.
 
@@ -188,13 +188,13 @@ A cloud-based security model which bundles software-defined networking with netw
 |---|---|
 
 ## seat
-A unique user who authenticates to connect to an application protected by Cloudflare Access, or to use a Gateway service. 
+A unique user who authenticates to connect to an application protected by Cloudflare Access, or to use a Gateway service.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) | [Access](https://developers.cloudflare.com/access/) |
 |---|---|---|
 
 ## service token <a name="service-token"></a>
-Service tokens consist of an ID and Secret generated by Cloudflare Access that can be used by an automated system or application to reach an application protected by Cloudflare Access. Service tokens allow systems to authenticate without identity provider credentials in an automated way. 
+Service tokens consist of an ID and Secret generated by Cloudflare Access that can be used by an automated system or application to reach an application protected by Cloudflare Access. Service tokens allow systems to authenticate without identity provider credentials in an automated way.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
@@ -226,7 +226,7 @@ Secure Shell (SSH) protocol allows users to connect to infrastructure to perform
 |---|---|
 
 ## SSO <a name="SSO"></a>
-A technology which combines several different application login screens into one. With SSO, a user only has to enter their login credentials (username, password, etc.) one time on a single page to access all of their SaaS applications.     
+A technology which combines several different application login screens into one. With SSO, a user only has to enter their login credentials (username, password, etc.) one time on a single page to access all of their SaaS applications.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
@@ -250,7 +250,7 @@ WARP is a mobile app designed for everyone. It uses Cloudflare's global network 
 |---|---|
 
 ## Zero Trust Security
-An IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. No single specific technology is associated with zero trust architecture; it is a holistic approach to network security that incorporates several different principles and technologies.        
+An IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. No single specific technology is associated with zero trust architecture; it is a holistic approach to network security that incorporates several different principles and technologies.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|

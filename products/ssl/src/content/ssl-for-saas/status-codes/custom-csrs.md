@@ -32,7 +32,7 @@ HTTP Status Code|API Error Code|Error Message
 400|1412|Invalid subject alternative name(s) (SAN). SANs have to be smaller than 256 characters in length, cannot be IP addresses, cannot contain any special characters such as ~`!@#$%^&*()=+{}[]|\\;:'\",<>/? and cannot begin or end with a ‘-’ character. Please check your input and try again.
 400|1413|Subject Alternative Names (SANs) with non-ASCII characters are not supported. Please check your input and try again.
 400|1414|Reserved top domain subject alternative names (SAN), such as 'test', 'example', 'invalid' or 'localhost', is not supported. Please check your input and try again.
-400|1415|Unable to parse subject alternative name(s) (SAN) - :reason. Please check your input and try again. Reasons: publicsuffix: cannot derive eTLD+1 for domain %q; publicsuffix: invalid public suffix %q for domain %q; 
+400|1415|Unable to parse subject alternative name(s) (SAN) - :reason. Please check your input and try again. Reasons: publicsuffix: cannot derive eTLD+1 for domain %q; publicsuffix: invalid public suffix %q for domain %q;
 400|1416|Subject Alternative Names (SANs) ending in example.com, example.net, or example.org are prohibited. Please check your input and try again.
 400|1417|Invalid key type. Only 'rsa2048' or 'p256v1' is accepted. Please check your input and try again.
 400|1418|The custom CSR ID is invalid. Please check your input and try again.

@@ -17,7 +17,7 @@ To integrate the plugin, run the following command in your project directory:
 
 ## Initializing Neumob ##
 
-Initialization is the process of modifying your application in order to communicate with Neumob. You will need to register your iOS and/or Android application and obtain an ``appID`` from the Neumob portal. 
+Initialization is the process of modifying your application in order to communicate with Neumob. You will need to register your iOS and/or Android application and obtain an ``appID`` from the Neumob portal.
 
 **Initialize** Neumob after the plugins are finished loading. To initialize Neumob use the following API in either your **onDeviceReady** event or whenever your app plugins are loaded.  
 
@@ -28,7 +28,7 @@ Initialization is the process of modifying your application in order to communic
 - - **callback** - The callback is a optional function that can be used to verify initialization. It should accept 2 parameters:
   - ``initialized`` is a boolean indicating Neumob is enabled and ready to accelerate your network requests.
   - ``accelerated`` is a boolean indicating whether Neumob is currently accelerating your requests. You may configure whether or not Neumob is accelerated by adjusting the % accelerated slider through the portal (click the **settings** button for the app version on your app details page). If you plan to A / B test accelerated vs unaccelerated Neumob sessions, we recommend using the ``accelerated`` API in the ``completionHandler``. Please note that ``accelerated`` is **sticky**- meaning a user who is **accelerated** will remain accelerated until the % accelerated slider value is changed. The ``accelerated`` boolean value can be used to populate a property or dimension within your mobile analytics platform.
-    
+
     Here's an example of how you might verify Neumob initialization and check whether a session is accelerated.
 
     <dl>
@@ -49,7 +49,7 @@ Initialization is the process of modifying your application in order to communic
  > <dd>{`}`} else {`{`}</dd>
  > </dl>
  > #### // Neumob is OFF. Change log settings for more details. ####
- > 
+ >
  >  > <dl>
  >  >   <dt>{`}`}</dt>
  >  > <dd>
@@ -71,19 +71,19 @@ The logging levels available in order of verbosity are as follows
 2. ``Neumob.LOG_WARNING`` - Only print warning and error messages
 3. ``Neumob.LOG_ERROR`` - Only print error messages
 4. ``Neumob.LOG_NONE`` - Turn off all Neumob log messages
-   
+
    ## Considerations ##
-   
+
 5. The Cordova SDK uses allows you to accelerate only certain domains by implementing a blacklist or whitelist in the portal for your SDK Version and App Version. If you use 3rd party APIs like Google Analytics, we recommend adding those hosts to the blacklist.
-   
+
    iOS
 
 ~~~
 ### 1. If you are building a bitcode NOT enabled application, you will need to replace the Neumob.framework dependency in **platform/ios/NeumobSDK**. You can find a bitcode not enabled framework on the portal by navigating to any iOS application you've created and downloading the SDK with the format x.x.x.1 where 1 indicates bitcode disabled and 2 indicated bitcode enabled. ***
 
 1. The Cordova iOS SDK has a native dependency which causes the Xcode debugger to stop on SIGPIPEs. These SIGPIPEs will not negatively affect your application and you can ignore them by adding a breakpoint with the debugger command ``process handle SIGPIPE -n false -s false``
-   
 
- 
+
+
 
 1. The Cordova iOS SDK does not currently support ``WKWebView``.

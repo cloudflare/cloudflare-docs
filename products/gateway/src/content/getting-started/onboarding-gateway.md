@@ -33,7 +33,7 @@ To start using Gateway, set up your first **location** and your DNS resolvers.
 
 9. Click **Finish setup**.
 
-  This will take you to the [Teams dashboard](https://dash.teams.cloudflare.com), where you can start customizing your location, or you can add your first [DNS](https://developers.cloudflare.com/gateway/getting-started/configuring-dns-policy) or [HTTP policy](https://developers.cloudflare.com/gateway/getting-started/configuring-http-policy). 
+  This will take you to the [Teams dashboard](https://dash.teams.cloudflare.com), where you can start customizing your location, or you can add your first [DNS](https://developers.cloudflare.com/gateway/getting-started/configuring-dns-policy) or [HTTP policy](https://developers.cloudflare.com/gateway/getting-started/configuring-http-policy).
 
 
 

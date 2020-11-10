@@ -66,5 +66,5 @@ In this case, a customer is expressing their preference to have their content di
 
 ## Limitations
 
-- [Analytics](/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard. 
+- [Analytics](/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard.
 - Automatic error reporting is not available to third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.

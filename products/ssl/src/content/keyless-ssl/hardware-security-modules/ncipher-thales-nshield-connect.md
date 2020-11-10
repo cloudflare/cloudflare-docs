@@ -17,7 +17,7 @@ We ask `pkcs11-tool` (provided by the `opensc` package) to display the objects s
 ```txt
 $ pkcs11-tool --module /opt/nfast/toolkits/pkcs11/libcknfast.so -O
 Using slot 0 with a present token (0x1d622495)
-Private Key Object; RSA 
+Private Key Object; RSA
   label:      rsa-privkey
   ID:         105013281578de42ea45f5bfac46d302fb006687
   Usage:      decrypt, sign, unwrap

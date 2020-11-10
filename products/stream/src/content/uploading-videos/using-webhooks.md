@@ -104,7 +104,7 @@ Compare the signature in the request header to the expected signature. Preferabl
 
 If the signatures match, you can trust that the webhook was sent by Cloudflare.
 
-## Limitations 
+## Limitations
 
 - Webhooks will only be sent after the processing of a video is complete,
   and the body will indicate whether the processing of the video succeeded or failed.

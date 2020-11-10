@@ -8,13 +8,13 @@ order: 1
 
 Cloudflare’s Commitment to Privacy: 1.1.1.1 Public DNS Resolver
 
-The 1.1.1.1 public DNS resolver is governed by our [Privacy Policy](https://www.cloudflare.com/privacypolicy/). This document provides additional details on our collection, use, and disclosure of the information collected from the 1.1.1.1 public DNS resolver. 
+The 1.1.1.1 public DNS resolver is governed by our [Privacy Policy](https://www.cloudflare.com/privacypolicy/). This document provides additional details on our collection, use, and disclosure of the information collected from the 1.1.1.1 public DNS resolver.
 
 -----
 
 Nearly everything on the Internet starts with a DNS request. DNS is the Internet’s directory. Click on a link, open an app, send an email, and the first thing your phone or computer does is ask its directory: where can I find this?
 
-Unfortunately, by default, DNS is usually slow and insecure. Your ISP, and anyone else listening in on the Internet, can see every site you visit and every app you use — even if their content is encrypted. Creepily, some DNS providers sell data about your Internet activity or use it to target you with ads. 
+Unfortunately, by default, DNS is usually slow and insecure. Your ISP, and anyone else listening in on the Internet, can see every site you visit and every app you use — even if their content is encrypted. Creepily, some DNS providers sell data about your Internet activity or use it to target you with ads.
 
 Given the current state of affairs, Cloudflare created a DNS resolver with your privacy and security in mind. Cloudflare, in partnership with APNIC, runs the 1.1.1.1 public resolver, a recursive DNS service that values user privacy and security. DNS requests sent to our public resolver are sent over a secure channel, significantly decreasing the odds of any unwanted spying or man in the middle attacks.
 
@@ -26,10 +26,10 @@ The 1.1.1.1 public DNS resolver was designed for privacy first, and Cloudflare c
 4. Cloudflare will retain only the limited transaction and debug log data (“Public Resolver Logs”) set forth below, for the legitimate operation of our Public Resolver and research purposes, and Cloudflare will delete the Public Resolver Logs within 25 hours.
 5. Cloudflare will not share the Public Resolver Logs with any third parties except for APNIC pursuant to a Research Cooperative Agreement. APNIC will only have limited access to query the anonymized data in the Public Resolver Logs and conduct research related to the operation of the DNS system.
 
-Frankly, we don’t want to know what any one person is doing on the Internet — it’s none of our business — and we’ve taken the technical steps to ensure we can’t. 
+Frankly, we don’t want to know what any one person is doing on the Internet — it’s none of our business — and we’ve taken the technical steps to ensure we can’t.
 
 
-We wanted to put our money where our mouth was, so we retained one of the top four accounting firms to audit our practices and publish a public report confirming we're doing what we said we would. The report is available [here](https://www.cloudflare.com/compliance/). 
+We wanted to put our money where our mouth was, so we retained one of the top four accounting firms to audit our practices and publish a public report confirming we're doing what we said we would. The report is available [here](https://www.cloudflare.com/compliance/).
 
 ## LIMITED DATA SHARING WITH APNIC
 
@@ -81,7 +81,7 @@ Additionally, recursive resolvers perform outgoing queries to various authoritat
 
 The following subrequest data is included in the Public Resolver Logs:
 
-* subrequest.ipv6 (authoritative nameserver) 
+* subrequest.ipv6 (authoritative nameserver)
 * subrequest.ipv4 (authoritative nameserver)
 * subrequest.protocol
 * subrequest.durationMs
@@ -93,7 +93,7 @@ The following subrequest data is included in the Public Resolver Logs:
 * subrequest.recordData
 * subrequest.error
 
-Except for the limited aggregated data generated using the Public Resolver Logs described below, all of the Public Resolver Logs are deleted within 25 hours of Cloudflare’s receipt of such information. 
+Except for the limited aggregated data generated using the Public Resolver Logs described below, all of the Public Resolver Logs are deleted within 25 hours of Cloudflare’s receipt of such information.
 
 Cloudflare will only store the following aggregated data:
 
@@ -109,8 +109,8 @@ Cloudflare may store the aggregated data described above indefinitely in order t
 
 ## WHAT ABOUT REQUESTS FOR CONTENT BLOCKING?
 
-Cloudflare does not block or filter any content through the 1.1.1.1 Public DNS Resolver, which is designed for direct, fast DNS resolution, not for blocking or filtering content. Cloudflare does block and filter malware and adult content through 1.1.1.1 for Families, which is designed to help individuals protect their home networks. 
+Cloudflare does not block or filter any content through the 1.1.1.1 Public DNS Resolver, which is designed for direct, fast DNS resolution, not for blocking or filtering content. Cloudflare does block and filter malware and adult content through 1.1.1.1 for Families, which is designed to help individuals protect their home networks.
 
 In general, Cloudflare views government or civil requests to block content at the DNS level as  ineffective, inefficient, and overbroad. Because such a block would apply globally to all users of the resolver, regardless of where they are located, it would affect end users outside of the blocking government’s jurisdiction. A government request to block content through a globally available public recursive resolver like the 1.1.1.1 Public DNS Resolver and 1.1.1.1 for Families therefore should be evaluated as a request to block content globally.  
 
-Given the broad extraterritorial effect, if Cloudflare were to receive written requests from law enforcement and government agencies to block access to domains or content through the 1.1.1.1 Public DNS Resolver or to block access to domains or content through 1.1.1.1 for Families that is outside the scope of the filtering in that product, Cloudflare would pursue its legal remedies before complying with such a request. We also commit to documenting any government request to block access in our semi-annual transparency report, unless legally prohibited from doing so. 
+Given the broad extraterritorial effect, if Cloudflare were to receive written requests from law enforcement and government agencies to block access to domains or content through the 1.1.1.1 Public DNS Resolver or to block access to domains or content through 1.1.1.1 for Families that is outside the scope of the filtering in that product, Cloudflare would pursue its legal remedies before complying with such a request. We also commit to documenting any government request to block access in our semi-annual transparency report, unless legally prohibited from doing so.

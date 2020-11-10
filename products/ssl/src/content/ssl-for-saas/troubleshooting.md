@@ -56,7 +56,7 @@ You can send a `PATCH` request to request an immediate validation check on any c
 ```bash
 $ curl -sXPATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/7f09bb24-9ee0-49b3-98bb-11cccd664edb\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
-    -H 'Content-Type: application/json' -d '{"ssl":{"method":"cname", "type":"dv"}}' 
+    -H 'Content-Type: application/json' -d '{"ssl":{"method":"cname", "type":"dv"}}'
 
 {
   "result": {
@@ -96,7 +96,7 @@ There are two main causes of error 1016:
 1. Custom Hostname ownership verification is not complete.
 To check, run an API call to [search for a certificate by hostname](https://developers.cloudflare.com/ssl/ssl-for-saas/api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."],`
 2. Fallback Origin is not correctly set.
-[Check via API if the fallback Origin is correctly set](https://developers.cloudflare.com/ssl/ssl-for-saas/api-calls/) 
+[Check via API if the fallback Origin is correctly set](https://developers.cloudflare.com/ssl/ssl-for-saas/api-calls/)
 Check that the fallback origin DNS record exists in the DNS ([see step 2 of Getting Started](https://developers.cloudflare.com/ssl/ssl-for-saas/getting-started/)).
 
 --------

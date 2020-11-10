@@ -17,12 +17,12 @@ Clients using RSA key exchange|❌|✅|✅|✅
 Clients without SNI [^1]|❌|✅|✅|✅
 
 ### Free plan
-Universal SSL certificates issued for Free plan zones require user agents that i) send Server Name Indication (SNI) and ii) support the Elliptic Curve Digital Signature Algorithm (ECDSA). SNI and ECDSA certificates work with the following modern browsers: 
+Universal SSL certificates issued for Free plan zones require user agents that i) send Server Name Indication (SNI) and ii) support the Elliptic Curve Digital Signature Algorithm (ECDSA). SNI and ECDSA certificates work with the following modern browsers:
 
 **Desktop Browsers installed on Windows Vista or OS X 10.6 or later**:
 
 * Internet Explorer 7
-* Firefox 2 
+* Firefox 2
 * Opera 8 (with TLS 1.1 enabled)
 * Google Chrome v5.0.342.0
 * Safari 2.1

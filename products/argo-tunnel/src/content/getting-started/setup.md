@@ -16,7 +16,7 @@ Follow these steps to set up Cloudflare Argo Tunnel:
 
 1. Authenticate your instance `cloudflared` by logging in to your Cloudflare account with the following command:
 
-```sh 
+```sh
 $ cloudflared tunnel login
 ```
 

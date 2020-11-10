@@ -42,7 +42,7 @@ Note: You will need to create a public DNS record for your key server. If you ar
 
 Before your key server(s) can be configured, you must next upload the corresponding SSL certificates to Cloudflare’s edge. During TLS termination, Cloudflare will present these certificates to connecting browsers and then (for non-resumed sessions) communicate with the specified key server to complete the handshake.
 
-It is recommended that you upload certificates to Cloudflare with only SANs that you wish to use with Cloudflare Keyless SSL. All hostnames you wish to use with Keyless SSL must be “orange clouded” (proxied) on Cloudflare. 
+It is recommended that you upload certificates to Cloudflare with only SANs that you wish to use with Cloudflare Keyless SSL. All hostnames you wish to use with Keyless SSL must be “orange clouded” (proxied) on Cloudflare.
 
 For each certificate you wish to use with Keyless SSL:
 
