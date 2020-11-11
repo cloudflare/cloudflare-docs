@@ -25,13 +25,13 @@ The following data sets (and associated nodes) are available in Cloudflare Analy
 
 | Data set (product)          | Node                                                                                                                           |
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| Browser Insights            | `browserPerf1mGroups`                                                                                                          |
+| Browser Insights            | `browserInsightsAdaptiveGroups` `webVitalsAdaptiveGroups`                                                                      |
 | Firewall Activity Log       | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                                                                  |
 | Firewall Analytics          | `firewallEventsAdaptiveGroups`                                                                                                 |
-| Health Check Analytics      | `healthCheckEvents` `healthCheckEventsGroups`                                                                                  |
-| HTTP Requests               | `httpRequests1mGroups` `httpRequests1hGroups` `httpRequests1dGroups` `httpRequests1mByColoGroups` `httpRequests1dByColoGroups` |
+| Health Check Analytics      | `healthCheckEventsAdaptive` `healthCheckEventsAdaptiveGroups`                                                                  |
+| HTTP Requests               | `httpRequestsAdaptiveGroups` `httpRequests1mGroups` `httpRequests1hGroups`  `httpRequests1dGroups`                             |
 | Image Resizing Analytics    | `imageResizingRequests1mGroups`                                                                                                |
-| Load Balancing Analytics    | `loadBalancingRequests` `loadBalancingRequestsGroups`                                                                          |
+| Load Balancing Analytics    | `loadBalancingRequestsAdaptive` `loadBalancingRequestsAdaptiveGroups`                                                          |
 | Network Analytics           | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups`                                                 |
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
@@ -44,10 +44,9 @@ Beta data sets are available to Enterprise customers for testing and exploration
 
 <TableWrap>
 
-| Data set (product) | Node                                                                                            |
-| :----------------- | :---------------------------------------------------------------------------------------------- |
-| Cache Analytics    | `httpRequestsCacheGroups`                                                                       |
-| Browser Insights   | `browserPageRequests` `browserPerfGroups` `browserResourcePerfGroups` `browserResourceRequests` |
+| Data set (product) | Node                                      |
+| :----------------- | :---------------------------------------- |
+| Browser Insights   | `browserInsightsResourceAdaptiveGroups`   |
 
 </TableWrap>
 
@@ -57,12 +56,16 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 
 <TableWrap>
 
-| Node                         | Replacement node                     | Sunset date |
-| ---------------------------- | ------------------------------------ | ----------- |
-| `firewallEvents`             | `firewallEventsAdaptive`             | Oct 26, 2020 |
-| `firewallEventsGroups`       | `firewallEventsAdaptiveGroups`       | Oct 26, 2020 |
-| `firewallEventsByTimeGroups` | `firewallEventsByTimeGroupsAdaptive` | Oct 26, 2020 |
-| `firewallRulePreviewGroups`  | `httpRequestAdaptiveGroups`          | Oct 26, 2020 |
+| Node                         | Replacement node                     | Sunset date   |
+| ---------------------------- | ------------------------------------ | ------------- |
+| `httpRequestsCacheGroups`    | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
+| `httpRequests1mByColoGroups` | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
+| `httpRequests1dByColoGroups` | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
+| `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
+| `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021 |   
+| `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021 |  
+| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | March 1, 2021 | 
+| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| March 1, 2021 |
 
 </TableWrap>
 
