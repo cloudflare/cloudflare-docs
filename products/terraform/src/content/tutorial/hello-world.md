@@ -7,7 +7,7 @@ order: 1
 
 Let’s say you have a web server for your domain that’s accessible on 203.0.113.10. You just signed up your domain, example.com, on Cloudflare and want to manage everything in Terraform.
 
-This tutorial step shows you how to get started. Before you do so, make sure you’ve completed the [Getting Started](/getting-started/) steps.
+This tutorial step shows you how to get started. Before you do so, make sure you’ve [installed Terraform](/installing).
 
 ## 1. Defining your first Terraform config file
 
