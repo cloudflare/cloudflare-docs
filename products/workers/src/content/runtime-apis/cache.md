@@ -80,7 +80,7 @@ cache.put(request, response)
 - `request` <Type>string</Type> | <TypeLink href="/runtime-apis/request">Request</TypeLink>
     - Either a string or a [`Request`](/runtime-apis/request) object to serve as the key. If a string is passed, it is interpreted as the URL for a new Request object.
 
-- `response` <TypeLink href="/runtime-apis/request">Request</TypeLink>
+- `response` <TypeLink href="/runtime-apis/response">Response</TypeLink>
     -  A [`Response`](/runtime-apis/response) object to store under the given key.
 
 </Definitions>
