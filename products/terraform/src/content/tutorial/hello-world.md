@@ -5,13 +5,13 @@ order: 1
 
 # Hello World
 
-Let's say you have a web server for your domain that’s accessible on 203.0.113.10. You just signed up your domain, example.com, on Cloudflare and want to manage everything in Terraform.
+Let’s say you have a web server for your domain that’s accessible on 203.0.113.10. You just signed up your domain, example.com, on Cloudflare and want to manage everything in Terraform.
 
-This tutorial step shows you how to get started. Before you do so, make sure you've completed the [Getting Started](/getting-started/) steps.
+This tutorial step shows you how to get started. Before you do so, make sure you’ve completed the [Getting Started](/getting-started/) steps.
 
 ## 1. Defining your first Terraform config file
 
-First we'll create a initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As you configuration gets more complex you'll want to split the config into separate files and modules, but for now we'll proceed with a single file:
+First we’ll create a initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As you configuration gets more complex you’ll want to split the config into separate files and modules, but for now we’ll proceed with a single file:
 
 ```sh
 $ cat > cloudflare.tf <<'EOF'
@@ -115,8 +115,8 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 
 ------------------------------------------------------------------------
 
-Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-can't guarantee that exactly these actions will be performed if
+Note: You didn’t specify an "-out" parameter to save this plan, so Terraform
+can’t guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
