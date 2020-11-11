@@ -25,8 +25,8 @@ Moreover, you can access 1.1.1.1 as a Tor hidden service at this address:
 - [dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion](./fun-stuff/dns-over-tor/).
 
 <ButtonGroup>
-  <Button type="primary" href="/setting-up-1.1.1.1">Set up 1.1.1.1</Button>
-  <Button type="secondary" href="/what-is-1.1.1.1">Learn more</Button>
+  <Button type="primary" href="/1.1.1.1/setting-up-1.1.1.1">Set up 1.1.1.1</Button>
+  <Button type="secondary" href="/1.1.1.1/what-is-1.1.1.1">Learn more</Button>
 </ButtonGroup>
 
 </ContentColumn>
