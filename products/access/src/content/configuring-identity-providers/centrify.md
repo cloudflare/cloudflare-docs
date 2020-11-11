@@ -46,7 +46,7 @@ These steps help you set up Centrify as your identity provider (IdP).
 14. Copy the Client ID, Client Secret, and OpenID Connect Issuer URL.
 
     <Aside>
-    
+
     Do not use the forward slash from the <strong>Settings</strong> tab.
     </Aside>
 

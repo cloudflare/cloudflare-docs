@@ -21,7 +21,7 @@ All fields except for organizational_unit and key_type are required. If you do n
 ```bash
 $ request_body=$(< <(cat <<EOF
 {
-  "country": "US", 
+  "country": "US",
   "state": "MA",
   "locality": "Boston",
   "organization": "City of Boston",
@@ -44,7 +44,7 @@ EOF
 ```bash
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
-    -H 'Content-Type: application/json' -d "$request_body" 
+    -H 'Content-Type: application/json' -d "$request_body"
 
 {
   "result": {
@@ -105,13 +105,13 @@ EOF
 ))
 ```
 
-With the request body built, create the Custom Hostname with the supplied custom certificate. Note that if you intend to use the certificate with multiple hostnames, you will need to make multiple API calls replacing the “hostname” field with each hostname you wish to create. 
+With the request body built, create the Custom Hostname with the supplied custom certificate. Note that if you intend to use the certificate with multiple hostnames, you will need to make multiple API calls replacing the “hostname” field with each hostname you wish to create.
 
 ```bash
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json'\
-    -d "$request_body" 
+    -d "$request_body"
 
 {
   "result": {
@@ -202,7 +202,7 @@ You may delete a CSR provided there are no custom certificates using the private
 
 ```bash
 $ curl -sXDELETE https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs/{csr_id}\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" 
+    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
 
 {
     "result": null,

@@ -205,7 +205,7 @@ $ curl -sXGET -H "X-Auth-Key: $MYAPIKEY" -H "X-Auth-Email: $MYEMAIL" https://api
 }
 ```
 
-You now need to make this token at the path specified in `http_url`. This path should be publicly accessible to anyone on the internet otherwise the CA will not be able to successfully complete validation. 
+You now need to make this token at the path specified in `http_url`. This path should be publicly accessible to anyone on the internet otherwise the CA will not be able to successfully complete validation.
 
 Here is an example NGINX configuration that will return the above token:
 

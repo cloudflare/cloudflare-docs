@@ -13,9 +13,9 @@ order: 3
 When you try to visit a blocked website, by default you will see a browser error like the page you see below:
 ![No block page](../static/no-block-page.png)
 
-You will see this page because Gateway is not returning the IP address for the blocked domain. As a result, your browser cannot take you to that website. 
+You will see this page because Gateway is not returning the IP address for the blocked domain. As a result, your browser cannot take you to that website.
 
-However, this may be confusing for some people as they may think that their Internet is not working. 
+However, this may be confusing for some people as they may think that their Internet is not working.
 
 You can remove this confusion by show Cloudflare Gateway's block page to explain to the end user why a website is blocked.
 
@@ -51,7 +51,7 @@ From the drop down menu for **When using this certificate** select ***Always Tru
 Now close the menu and if your system asks for admin permission enter your password or use your fingerprint ID to confirm the changes.
 
 ## Firefox
-If you are not using Firefox, you can skip to the next section. 
+If you are not using Firefox, you can skip to the next section.
 
 Follow the instructions below to finish configuring the block page:
 

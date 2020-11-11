@@ -33,7 +33,7 @@ Installing a certificate in Keychain in macOS requires consideration of which us
 | Local Items | Cached iCloud passwords |
 | System      | All users on the system |
 
-Installing the certificate in Login will result in only the logged in user trusting the Cloudflare certificate. Installing in System affects all users who use that machine. 
+Installing the certificate in Login will result in only the logged in user trusting the Cloudflare certificate. Installing in System affects all users who use that machine.
 
 1. Download the Cloudflare certificate [at this location](../static/Cloudflare_CA.crt)
 

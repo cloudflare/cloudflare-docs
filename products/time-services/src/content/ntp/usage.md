@@ -10,7 +10,7 @@ Cloudflare offers a free public time service that allows you to use our anycast 
 We do not implement leap smearing: NTP includes a Leap Indicator field [spec](https://tools.ietf.org/html/rfc5905#section-7.3) and the kernel will apply the leap second correction at the appropriate time. This is the behavior servers
 in pool.ntp.org share. Using servers that smear time along with servers that do not may lead to unpredictable and anomalous results.
 
-Here is an example of how to configure your Mac to synchronize time from time.cloudflare.com: 
+Here is an example of how to configure your Mac to synchronize time from time.cloudflare.com:
 
 1. Go to System Preferences
 2. Go to Date & Time
@@ -20,9 +20,9 @@ Here is an example of how to configure your Mac to synchronize time from time.cl
 
 ![MacOS](../static/mactime.png)
 
-... and you're all set! 
+... and you're all set!
 
-Here is an example of how to configure your Windows computer to synchronize time from time.cloudflare.com: 
+Here is an example of how to configure your Windows computer to synchronize time from time.cloudflare.com:
 
 1. Go to Control Panel
 2. Go to Clock and Region
@@ -34,6 +34,6 @@ Here is an example of how to configure your Windows computer to synchronize time
 
 ![Windows](../static/window.png)
 
-You should receive the following message, letting you know that you have successfully synchronized your time. 
+You should receive the following message, letting you know that you have successfully synchronized your time.
 
 ![](../static/windowtime2.png)

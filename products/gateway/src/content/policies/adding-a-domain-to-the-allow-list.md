@@ -5,7 +5,7 @@ order: 4
 # Adding a domain to the allow list
 
 ## Why add a domain to the Allow list
-Sometimes you may want to allow a domain when that domain belongs to a category you are blocking. 
+Sometimes you may want to allow a domain when that domain belongs to a category you are blocking.
 
 For example: if you are blocking the category `Sports` and want to allow the domain `arsenal.com` (which belongs to the category), add the domain to the list of allowed domains.
 

@@ -27,7 +27,7 @@ To enable a block page using Gateway's policy engine, you will have to follow a 
 2. Find the policy for which you would like to set up a block page.
 3. Click **Edit**.
 4. Scroll down to find the **Block page** card.
-5. Toggle the **Enable** switch.   
+5. Toggle the **Enable** switch.
 
 ![Enable block page](../static/enable-block-page.png)
 
@@ -37,13 +37,13 @@ Enabling block page alone will not work for HTTPS connections. When your users t
 
 ![HTTPS browser error](../static/https-browser-error.png)
 
-To fix the browser error, you need to download and add a certificate to your system. 
+To fix the browser error, you need to download and add a certificate to your system.
 
 ## 2. Download certificate
 1. Navigate to the **Settings** tab on your [Teams dashboard](https://dash.teams.cloudflare.com).
 1. Click on **Account**.
 1. Scroll down to find the **Certificates** card.
-1. Click on **Download**. 
+1. Click on **Download**.
 
 ![Download certificate](../static/update-certificates-page.png)
 
@@ -69,7 +69,7 @@ You will now need to add the certificate to your system to ensure your web brows
 If your system asks for admin permission, enter your password or use your fingerprint ID to confirm the changes.
 
 ### Firefox
-If you are not using Firefox, you can skip this section. 
+If you are not using Firefox, you can skip this section.
 
 Follow the instructions below to finish configuring the block page:
 

@@ -20,7 +20,7 @@ The first step we’ll take is creating an HSM partition, which can be thought o
 vm$ ssh tenantadmin@hsm
 
 [local_host] lunash:>hsm login
-  Please enter the HSM Administrators' password: 
+  Please enter the HSM Administrators' password:
   > ********
 
 
@@ -32,7 +32,7 @@ Command Result : 0 (Success)
 [local_host] lunash:>partition create -partition KeylessSSL
 
 
-          Type 'proceed' to create the partition, or 
+          Type 'proceed' to create the partition, or
           'quit' to quit now.
           > proceed
 'partition create' successful.
@@ -62,11 +62,11 @@ lunacm (64-bit) v7.2.0-220. Copyright (c) 2018 SafeNet. All rights reserved.
 
   Available HSMs:
 
-  Slot Id ->              0 
-  Label ->                                                
-  Serial Number ->        XXXXXXXXXXXXX   
-  Model ->                LunaSA 7.2.0   
-  Firmware Version ->     7.0.3 
+  Slot Id ->              0
+  Label ->
+  Serial Number ->        XXXXXXXXXXXXX
+  Model ->                LunaSA 7.2.0
+  Firmware Version ->     7.0.3
   Configuration ->        Luna User Partition With SO (PW) Signing With Cloning Mode
   Slot Description ->     Net Token Slot
 
@@ -86,7 +86,7 @@ lunacm:>partition init -label KeylessSSL -domain cloudflare
 
   Type 'proceed' to continue, or 'quit' to quit now ->proceed
 
-Command Result : No Error 
+Command Result : No Error
 ```
 
 --------
@@ -99,7 +99,7 @@ Before running the commands below, check with your information security and/or c
 # cmu generatekeypair -keyType=RSA -modulusBits=2048 -publicExponent=65537 -sign=1 -verify=1 -labelpublic=myrsakey -labelprivate=myrsakey -keygenmech=1
 
 Please enter password for token in slot 0 : ********
- 
+
 # cmu list
 
 Please enter password for token in slot 0 : ********
@@ -120,7 +120,7 @@ Using "CKM_SHA256_RSA_PKCS" Mechanism
 
 ## 3. Obtain and upload a signed certificate from your Certificate Authority (CA)
 
-Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration/#uploading-keyless-ssl-certificates). 
+Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration/#uploading-keyless-ssl-certificates).
 
 --------
 

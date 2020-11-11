@@ -18,7 +18,7 @@ $ sudo -u keyless gokeyless --loglevel 0
 ## Browsers are seeing a TLS connection failure after trying to connect
 
 1. Make sure your key server is accessible from outside your network (tcp/2407)
-2. Provide a packet capture: 
+2. Provide a packet capture:
 `$ sudo tcpdump -nni <interface> -s 0 -w keyless-$(date +%s).pcap port 2407`
 
 ## Clients are connecting, but immediately aborting

@@ -55,7 +55,7 @@ To search for a certificate by *hostname*, add the hostname parameter to your qu
 
 ```bash
 $ curl -sX GET https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=app.example.com\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" -H 'Content-Type: application/json' 
+    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" -H 'Content-Type: application/json'
 
 {
   "result": [
@@ -149,9 +149,9 @@ Request schema:
 Response schema: same as GET response for success. If the request failed, includes errors and messages values.
 
 ```bash
-$ curl -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames/fallback_origin"\ 
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\ 
--H "Content-Type: application/json"\ 
+$ curl -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames/fallback_origin"\
+-H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+-H "Content-Type: application/json"\
 -d '{"origin":"proxy-fallback.saasprovider.com"}'
 
 {

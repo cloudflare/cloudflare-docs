@@ -49,7 +49,7 @@ $ echo $MYCERT
 $ request_body=$(< <(cat <<EOF
 {
   "hostname": "app.example.com",
-  "ssl": { 
+  "ssl": {
     "custom_certificate": "$MYCERT",
     "custom_key": "$MYKEY"
   }
@@ -65,7 +65,7 @@ Note that the serial number returned is unique to the issuer, but not globally u
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
-    -H 'Content-Type: application/json' -d "$request_body" 
+    -H 'Content-Type: application/json' -d "$request_body"
 
 {
   "result": {

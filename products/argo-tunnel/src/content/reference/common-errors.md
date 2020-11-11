@@ -23,7 +23,7 @@ If you are pointing `cloudflared` to a locally-available URL that is different f
 Find more information on the **no-tls-verify** flag [here](/reference/arguments/#no-tls-verify).
 
 ### <a name="invalid-tls"></a> Invalid TLS certificate
-If the TLS certificate used by the webserver is not valid, you may get a 502 Error.   
+If the TLS certificate used by the webserver is not valid, you may get a 502 Error.
 If you run:
 
 ```bash

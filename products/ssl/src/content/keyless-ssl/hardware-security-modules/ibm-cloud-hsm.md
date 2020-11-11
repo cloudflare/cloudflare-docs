@@ -19,14 +19,14 @@ The first step we’ll take is creating an HSM partition, which can be thought o
 vm$ ssh admin@hsm
 
 [cloudflare-hsm.softlayer.com] lunash:>partition create -partition KeylessSSL
- 
- 
+
+
           Type 'proceed' to create the partition, or
           'quit' to quit now.
           > proceed
 'partition create' successful.
- 
- 
+
+
 Command Result : 0 (Success)
 ```
 
@@ -34,11 +34,11 @@ Next, the partition needs to be assigned to the client, i.e., your key server.
 
 ```bash
 [cloudflare-hsm.softlayer.com] lunash:>client assignpartition -client cloudflare-vm.softlayer.com -partition KeylessSSL
- 
- 
+
+
 'client assignPartition' successful.
- 
- 
+
+
 Command Result : 0 (Success)
 ```
 
@@ -47,18 +47,18 @@ After the partition has been assigned, run `lunacm` from your virtual server and
 ```txt
 vm$ lunacm
 LunaCM v7.1.0-379. Copyright (c) 2006-2017 SafeNet.
- 
+
     Available HSMs:
- 
+
     Slot Id ->              0
-    Label ->                                               
+    Label ->
     Serial Number ->        XXXXXXXXXXXXX  
     Model ->                LunaSA 7.0.0  
     Firmware Version ->     7.0.1
     Configuration ->        Luna User Partition With SO (PW) Signing With Cloning Mode
     Slot Description ->     Net Token Slot
- 
- 
+
+
     Current Slot Id: 0
 
 lunacm:>partition init -label KeylessSSL -domain cloudflare
@@ -74,7 +74,7 @@ lunacm:>partition init -label KeylessSSL -domain cloudflare
 
   Type 'proceed' to continue, or 'quit' to quit now ->proceed
 
-Command Result : No Error 
+Command Result : No Error
 ```
 
 --------
@@ -86,10 +86,10 @@ Before running the commands below, check with your information security and/or c
 ```txt
 vm$ cmu generatekeypair -keyType=RSA -modulusBits=2048 -publicExponent=65537 -sign=1 -verify=1 -labelpublic=myrsakey -labelprivate=myrsakey -keygenmech=1
 Please enter password for token in slot 0 : ********
- 
+
 # cmu generatekeypair -keyType=ECDSA -curvetype=3 -sign=1 -verify=1 -labelpublic=myecdsakey -labelprivate=myecdsakey
 Please enter password for token in slot 0 : ********
- 
+
 # cmu list
 Please enter password for token in slot 0 : ********
 handle=61   label=myecdsakey
@@ -104,7 +104,7 @@ Using the keys created in the previous step, generate CSRs that can be sent to a
 # cmu requestCertificate -c="US" -o="Example, Inc." -cn="ibm-cloudhsm.example.com" -s="California" -l="San Francisco" -publichandle=45 -privatehandle=48 -outputfile="rsa.csr" -sha256withrsa
 Please enter password for token in slot 0 : ********
 Using "CKM_SHA256_RSA_PKCS" Mechanism
- 
+
 # cmu requestCertificate -c="US" -o="Example, Inc." -cn="ibm-cloudhsm.example.com" -s="California" -l="San Francisco" -publichandle=60 -privatehandle=61 -outputfile="ecdsa.csr" -sha256withecdsa
 Please enter password for token in slot 0 : ********
 Using "CKM_ECDSA_SHA256" Mechanism
@@ -114,7 +114,7 @@ Using "CKM_ECDSA_SHA256" Mechanism
 
 ## 3. Obtain and upload signed certificates from your Certificate Authority (CA)
 
-Provide the CSRs created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration/#uploading-keyless-ssl-certificates). 
+Provide the CSRs created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration/#uploading-keyless-ssl-certificates).
 
 --------
 

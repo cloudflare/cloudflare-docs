@@ -49,7 +49,7 @@ query {
   viewer {
     accounts(filter:{
       accountTag:"$ACCOUNT_ID"
- 
+
     }) {
       videoPlaybackEventsAdaptiveGroups(
         filter: {
@@ -201,7 +201,7 @@ query {
   viewer {
     accounts(filter:{
       accountTag:"6c04ee5623f70a112c8f488e4c7a2409"
- 
+
     }) {
       videoPlaybackEventsAdaptiveGroups(
         filter: {

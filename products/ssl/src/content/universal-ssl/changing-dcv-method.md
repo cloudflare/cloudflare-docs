@@ -8,7 +8,7 @@ order: 1
 
 ## What is Domain Control Validation (DCV)?
 
-Before a publicly trusted Certificate Authority will issue a certificate for a hostname, the requester must prove they have control over that hostname. 
+Before a publicly trusted Certificate Authority will issue a certificate for a hostname, the requester must prove they have control over that hostname.
 *(Domain and hostname are used interchangeably in this context)*
 
 There are several methods that are used to complete this process, the primary ones that Cloudflare works with are:
@@ -32,9 +32,9 @@ With Universal SSL under a CNAME setup, by default, Cloudflare will place an HTT
 * Hostname has a CNAME to Cloudflare from the domain’s authoritative DNS.
 * Hostname is Orange-Clouded in Cloudflare’s DNS settings.
 
-This means that by default the above items must be complete for a given hostname before certificates are issued. 
+This means that by default the above items must be complete for a given hostname before certificates are issued.
 
-The process of certificates being issued once DNS is changed is reported to be very fast, however you may require firm reassurance that your certificates are ready prior to making the switch to avoid any potential downtime. 
+The process of certificates being issued once DNS is changed is reported to be very fast, however you may require firm reassurance that your certificates are ready prior to making the switch to avoid any potential downtime.
 
 Using the Client API, we can change the validation method used to allow the certificates to be issued before cutting over live traffic.
 
@@ -44,7 +44,7 @@ Using the Client API, we can change the validation method used to allow the cert
 
 Even though the proxy service isn’t expected to be provided for this hostname unless switching to a Full DNS configuration with Cloudflare, completing the process above for the apex of a domain will allow us to complete DCV for all subdomains.
 
-As a matter of best practice, it’s best to validate against the apex, even if you don’t intend on proxying traffic for the apex in your CNAME setup. 
+As a matter of best practice, it’s best to validate against the apex, even if you don’t intend on proxying traffic for the apex in your CNAME setup.
 
 Otherwise, each subdomain needs to be validated manually.
 

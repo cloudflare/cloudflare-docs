@@ -28,7 +28,7 @@ You can configure the duration of both tokens on the dashboard. When users log i
 ![Global session](../../static/global-session.png)
 
 * If the global session duration is **shorter** than an application’s session length, users will be required to re-authenticate each time the global session time elapses.
- 
+
  This can be helpful to establish a maximum session duration across all applications.
 
 * If the global session duration is **longer** than an application’s session length, a user’s application session will be automatically refreshed until the global session expires.
