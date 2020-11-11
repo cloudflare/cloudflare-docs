@@ -7,7 +7,10 @@ order: 0
 
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare rather than using the public Internet.
 
-<p><Link to="/set-up-cni" className="Button Button-is-docs-primary">Set up CNI</Link> &nbsp; <Link to="/about" className="Button Button-is-docs-secondary">Learn more</Link></p>
+<ButtonGroup>
+  <Button type="primary" href="/set-up-cni">Set up CNI</Button>
+  <Button type="secondary" href="/about">Learn more</Button>
+</ButtonGroup>
 
 <br/>
 
