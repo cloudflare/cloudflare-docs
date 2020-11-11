@@ -26,7 +26,7 @@ To make your first request to the Stream API, you must obtain these pieces of in
 1. A Cloudflare Account API Token
 
 ### Step 1: Uploading your first video
-Stream provides multiple ways to upload videos. For this example, we will upload an MP4 file that is stored in a storage bucket onto Stream. The MP4 file can be found here: 
+Stream provides multiple ways to upload videos. For this example, we will upload an MP4 file that is stored in a storage bucket onto Stream. The MP4 file can be found here:
 
 To make your first request, simply take the cURL command below and replace the API token, and account id placeholders with your credentials.
 
