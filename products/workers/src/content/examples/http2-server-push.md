@@ -44,7 +44,7 @@ async function handleRequest(request) {
     return new Response(HTML, {
       headers: {
         "content-type": "text/html",
-        Link: "</http2_push/h2p/test.css>; rel=preload;",
+        Link: "</http2_push/h2p/test.css>; rel=preload; as=style",
       },
     })
   }
