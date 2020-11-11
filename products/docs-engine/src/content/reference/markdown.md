@@ -29,18 +29,62 @@ Learn how to use [`<Asides/>`](/reference/markdown#asides).
 - __Internal links__ will use [Gatsby’s `<Link/>` component](https://www.gatsbyjs.org/docs/gatsby-link/), which means they will be routed through `@reach/router` using `pushState`.
 - __External links__ (matching `/^https?:/`) and __hash links__ (`.indexOf("#") === 0`), will be rendered as regular `<a/>` elements.
 
-If you need to take advantage of Gatsby’s routing but you want control over the presentation of the link yourself, you can use `<Link/>` directly.
+<Aside>
+
+__Tip:__ If you’d like to take advantage of Gatsby’s routing, but you want more control over the presentation of the link, use `<Link/>` directly. For example, this could be used to implement a custom link button.
+
+</Aside>
+
+--------------------------------
+
+## Buttons
+
+The `<Button/>` can be used to render links (`<a/>`) stylized as buttons, or as literal HTML `<button/>` elements. This behavior is automatically determined based on whether an `href` attribute prop is passed.
 
 ```md
-<Link to="/how-it-works" className="Button Button-is-secondary">
-  How it Works
-</Link>
+<Button type="primary" href="/how-it-works">How it Works</Button>
 ```
 
 <Example>
-<Link to="/how-it-works" className="Button Button-is-secondary">
-  How it Works
-</Link>
+<Button type="primary" href="/how-it-works">How it Works</Button>
+</Example>
+
+```jsx
+<Button type="secondary" onClick={()=>alert("Clicked")}>Click me</Button>
+```
+
+<Example>
+<Button type="secondary" onClick={()=>alert("Clicked")}>Click me</Button>
+</Example>
+
+<Definitions>
+
+- `type`
+  - Currently only `"primary"` and `"secondary"` are supported.
+
+- `href`
+  - If set, the element will be rendered as `<a/>` and the `href` HTML attribute will be set to its value. If unset, the element will be rendered as `<button/>`.
+
+</Definitions>
+
+--------------------------------
+
+## ButtonGroup
+
+Button groups allow you to display a few buttons in a row, while allowing them to wrap nicely on smaller displays.
+
+```jsx
+<ButtonGroup>
+  <Button type="primary">Primary</Button>
+  <Button type="secondary">Secondary</Button>
+</ButtonGroup>
+```
+
+<Example>
+<ButtonGroup>
+  <Button type="primary">Primary</Button>
+  <Button type="secondary">Secondary</Button>
+</ButtonGroup>
 </Example>
 
 --------------------------------
