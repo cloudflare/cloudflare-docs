@@ -71,6 +71,7 @@ Specifically, please make sure to:
 
 --------------------------------
 
-## See also
-
-- [Accessibility](/contributing/content/accessibility)
+<ButtonGroup>
+  <Button type="secondary" href="/contributing/content/writing-style">← Writing style</Button>
+  <Button type="secondary" href="/contributing/content/accessibility">Accessibility →</Button>
+</ButtonGroup>

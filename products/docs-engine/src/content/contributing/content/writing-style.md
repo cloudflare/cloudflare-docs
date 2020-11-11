@@ -28,6 +28,7 @@ When writing documentation as part of a technical reference (e.g. [runtime API](
 
 --------------------------------
 
-## See also
-
-- [Formatting](/contributing/content/formatting)
+<ButtonGroup>
+  <Button type="secondary" href="/contributing/content/content-framework">← Content framework</Button>
+  <Button type="secondary" href="/contributing/content/formatting">Formatting →</Button>
+</ButtonGroup>

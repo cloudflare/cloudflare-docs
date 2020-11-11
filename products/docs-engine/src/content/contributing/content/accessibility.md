@@ -13,6 +13,7 @@ order: 3
 
 --------------------------------
 
-## See also
-
-- [Writing style](/contributing/content/writing-style)
+<ButtonGroup>
+  <Button type="secondary" href="/contributing/content/formatting">← Formatting</Button>
+  <Button type="secondary" href="/contributing/content/working-with-github">Working with Github →</Button>
+</ButtonGroup>

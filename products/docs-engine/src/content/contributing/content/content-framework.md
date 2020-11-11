@@ -95,6 +95,6 @@ When writing documentation as part of a technical reference (e.g. [runtime API](
 
 --------------------------------
 
-## See also
-
-- [Writing style](/contributing/content/writing-style)
+<ButtonGroup>
+  <Button type="secondary" href="/contributing/content/writing-style">Writing style →</Button>
+</ButtonGroup>
