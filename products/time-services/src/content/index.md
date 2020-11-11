@@ -6,10 +6,14 @@ type: overview
 
 # Cloudflare Time Services docs
 
-Learn more about Cloudflare’s suite of time services.
-
 <ContentColumn>
 
-<p><Link to="/ntp" className="Button Button-is-docs-primary">NTP</Link> &nbsp; <Link to="/nts" className="Button Button-is-docs-primary">NTS</Link> &nbsp; <Link to="/roughtime" className="Button Button-is-docs-primary">Roughtime</Link></p>
+Learn more about Cloudflare’s suite of time services.
+
+<ButtonGroup>
+  <Button type="primary" href="/ntp">NTP</Button>
+  <Button type="primary" href="/nts">NTS</Button>
+  <Button type="primary" href="/roughtime">Roughtime</Button>
+</ButtonGroup>
 
 </ContentColumn>
