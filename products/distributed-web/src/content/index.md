@@ -10,6 +10,9 @@ type: overview
 
 View files stored on the InterPlanetary File System in your browser. Interact with the Ethereum blockchain. Explore the Distributed Web.
 
-<p><Link to="/ipfs-gateway" className="Button Button-is-docs-primary">IPFS Gateway</Link> &nbsp; <Link to="/ethereum-gateway" className="Button Button-is-docs-primary">Ethereum Gateway</Link></p>
+<ButtonGroup>
+  <Button type="primary" href="/ipfs-gateway">IPFS Gateway</Button>
+  <Button type="primary" href="/ethereum-gateway">Ethereum Gateway</Button>
+</ButtonGroup>
 
 </ContentColumn>
