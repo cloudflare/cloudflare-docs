@@ -8,4 +8,4 @@ To use Cloudflare’s Provisioning API capabilities requires enablement by Cloud
 
 Once setup, one of your existing Cloudflare users will be enabled to use the provisioning capabilities outlined in these docs.
 
-<p><<Button type="primary" href="/tutorial">Take the tutorial</Button></p>
+<p><Button type="primary" href="/tutorial">Take the tutorial</Button></p>
