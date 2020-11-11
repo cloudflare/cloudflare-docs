@@ -25,7 +25,7 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 You can install `cloudflared` on macOS systems via Homebrew:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared`
+$ brew install cloudflare/cloudflare/cloudflared
 ```
 
 Alternatively, you can download the latest Darwin amd64 release directly.
