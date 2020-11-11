@@ -165,6 +165,15 @@ To log external visitor IPs, you will need to [configure an alternative method](
 ### When does the cert.pem generated expire?
 The Argo Tunnel login command generates an origin certificate and a service token. Both are stored in the `cert.pem`. The origin certificate is valid for at least 10 years and the service token is valid until revoked.
 
+### How to revoke the credentials for a tunnel?
+When you (as an administrator in possession of the cert.pem obtained with `cloudflared login`) create a tunnel via
+`cloudflared tunnel create` this generates a JSON credentials file. That file can be distributed to other users (who do
+not have the cert.pem) and they will (only) be able to start connections to serve that tunnel origin.
+
+However, at some point in time you (as an administrator) may want to revoke those credentials. The correct way to do so
+is by [deleting that tunnel by its name](/create-tunnel). Doing so will stop the active
+connections and prevent users (in possession of the tunnel credentials file) from starting them again.
+
 ### Did `cloudflared` run?
 
 ```sh
