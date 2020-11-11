@@ -6,7 +6,7 @@ order: 1
 
 Having access to Cloudflare’s provisioning capabilities allows you to more easily create and manage Cloudflare accounts. The following tutorial will get you started making API calls to provision accounts, users, and services.
 
-<p><Link to="/tutorial/provisioning-resources" className="Button Button-is-docs-primary">Start</Link></p>
+<p><Button type="primary" href="/tutorial/provisioning-resources">Start</Button></p>
 
 --------------------------------
 

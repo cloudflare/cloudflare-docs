@@ -58,4 +58,4 @@ To learn more about how you can integrate the Cloudflare Mobile SDK with your mo
 
 [Sign up](https://mobilesdk.cloudflare.com) for the free Metrics Mode.
 
-<p><Link to="https://mobilesdk.cloudflare.com" className="Button Button-is-docs-primary">Sign up</Link></p>
+<Button type="primary" href="https://mobilesdk.cloudflare.com">Sign up</Button>

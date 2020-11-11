@@ -12,7 +12,7 @@ Welcome to Spectrum: security and acceleration for any TCP or UDP based applicat
 
 We have a short demo you can watch below, and if you're eager to get started, [check out our guide](/getting-started).
 
-<p><Link to="/getting-started" className="Button Button-is-docs-primary">Get started</Link></p>
+<p><Button type="primary" href="/getting-started">Get started</Button></p>
 
 <StreamVideo id="14d0f82296f58f3f0386a7ce23cc97af"/>
 

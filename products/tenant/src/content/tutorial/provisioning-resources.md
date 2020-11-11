@@ -123,4 +123,4 @@ A successful request will return the id to confirm the operation:
 
 Learn how to manage how external customers access Cloudflare.
 
-<p><Link to="/tutorial/user-access" className="Button Button-is-docs-primary">Step 2: User access</Link></p>
+<p><Button type="primary" href="/tutorial/user-access">Step 2: User access</Button></p>
