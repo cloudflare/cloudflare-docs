@@ -25,7 +25,8 @@ To install [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI
 $ npm install -g @cloudflare/wrangler
 ```
 
-Read more about [installing `wrangler`](/cli-wrangler/install-update)
+Read more about [installing `wrangler`](/cli-wrangler/install-update).
+
 --------------------------------
 
 ## Playground
