@@ -18,7 +18,10 @@ You can transform images on Cloudflare’s edge platform. You can resize, adjust
 
 You can use Cloudflare Image Resizing with either a pre-defined [URL format](/url-format) or with [Cloudflare Workers](/resizing-with-workers), for advanced use-cases.
 
-<Link to="/url-format" className="Button Button-is-docs-primary">Learn the URL format</Link> &nbsp;&nbsp; <Link to="/resizing-with-workers" className="Button Button-is-docs-secondary">View the Workers docs</Link>
+<ButtonGroup>
+  <Button type="primary" href="/url-format">Learn the URL format</Button>
+  <Button type="secondary" href="/resizing-with-workers">View the Workers docs</Button>
+</ButtonGroup>
 
 ## Availability
 
