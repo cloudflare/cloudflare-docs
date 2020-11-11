@@ -11,4 +11,7 @@ The Cloudflare WARP client allows individuals or organizations to have a faster,
 
 * **For Everyone** the WARP client allows anyone access to a faster and safer internet.
 
-<p><Link to="/for-teams" className="Button Button-is-docs-primary">For Teams</Link> &nbsp; <Link to="/for-everyone" class="Button Button-is-docs-primary">For Everyone</Link></p>
+<ButtonGroup>
+  <Button type="primary" href="/for-teams">For Teams</Button>
+  <Button type="primary" href="/for-everyone">For Everyone</Button>
+</ButtonGroup>
