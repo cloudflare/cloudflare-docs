@@ -77,3 +77,11 @@ You can also:
 Note: the command requires the `cert.pem` file.
 
 ![List tunnels](../static/img/create-tunnel/lt1.png)
+
+## Revoke and delete a Tunnel
+
+You can delete an existing Tunnel with cloudflared. This will also invalidate the credentials file associated with that Tunnel. To delete a Tunnel, run the following command:
+
+`cloudflared tunnel delete <NAME>`
+
+Note: the command requires the `cert.pem` file.
