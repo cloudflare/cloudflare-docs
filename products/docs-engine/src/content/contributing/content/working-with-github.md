@@ -38,3 +38,8 @@ When you’re working on several files or making significant changes in your loc
 
  [See a list of code owners per product](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS).
 
+--------------------------------
+
+<ButtonGroup>
+  <Button type="secondary" href="/contributing/content/accessibility">← Accessibility</Button>
+</ButtonGroup>
