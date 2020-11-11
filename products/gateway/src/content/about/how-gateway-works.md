@@ -29,6 +29,13 @@ The DNS over HTTPS client encrypts the DNS request and sends it to the closest C
 
 By encrypting your DNS queries you will make sure that ISPs cannot snoop on your DNS queries, and at the same time you will be able to filter DNS requests that are malicious.
 
+### DNS over TLS
+
+Gateway also supports DNS-over-TLS encryption. This enables you to apply security policies for clients that don’t support DNS-over-HTTPS. The DNS client on a device that talks to the DNS resolver initiates a TLS connection with the resolver. Then, it establishes a TCP connection with `cloudflare-dns.com:853`, and initiates a TLS handshake.
+In the TLS handshake, `cloudflare-dns.com` presents its TLS certificate. Once the TLS connection is established, the DNS client can send DNS over an encrypted connection, preventing eavesdropping and tampering.
+
+All DNS queries sent over the TLS connection must comply with specifications of sending DNS over TCP.
+
 ## L7 Cloud Firewall
 
 Cloudflare Gateway includes a Layer 7 (L7) firewall that allows our customers to apply security and content policies to HTTP traffic. Users connect to Gateway with the Cloudflare for Teams client, which sends all internet-bound traffic from a user’s device to the Cloudflare Gateway. Administrators configure both DNS and HTTP policies--DNS policies are enforced at the Gateway DNS filtering service within the recursive resolver, and HTTP policies are enforced at the L7 firewall within the HTTP forward proxy.
