@@ -9,4 +9,7 @@ Argo Tunnel offers an easy way to expose web servers securely to the internet, w
 
 Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. You can lock down the web server to external requests. Instead, Argo Tunnel will connect out to Cloudflare from your origin.
 
-<p><Link to="/getting-started" className="Button Button-is-docs-primary">Get started</Link> &nbsp; <Link to="/learning/how-tunnel-works" class="Button Button-is-docs-secondary">How Argo Tunnel works</Link></p>
+<ButtonGroup>
+  <Button type="primary" href="/getting-started">Get started</Button>
+  <Button type="secondary" href="/learning/how-tunnel-works">How Argo Tunnel works</Button>
+</ButtonGroup>
