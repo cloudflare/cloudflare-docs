@@ -11,4 +11,7 @@ Authentication checks are performed at our edge network of 200 data centers. Thi
 
 Instead of configuring complex and error-prone network rules, IT teams build rules that enforce authentication using their identity provider. Security leaders can control who can reach internal applications in a single pane of glass and audit comprehensive logs from one source.
 
-<p><Link to="/getting-started" className="Button Button-is-docs-primary">Get started</Link> &nbsp; <Link to="/about/how-access-works" class="Button Button-is-docs-secondary">How Access works</Link></p>
+<ButtonGroup>
+  <Button type="primary" href="/getting-started">Get started</Button>
+  <Button type="secondary" href="/about/how-access-works">How Access works</Button>
+</ButtonGroup>
