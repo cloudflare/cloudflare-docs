@@ -14,7 +14,10 @@ The engine uses [Gatsby](https://www.gatsbyjs.com/), and includes many [built-in
 
 It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/cloudflare-docs-engine).
 
-<p><Link to="/how-it-works" class="Button Button-is-docs-primary">How it works</Link> &nbsp; <Link to="/faq" class="Button Button-is-docs-secondary">FAQ</Link></p>
+<ButtonGroup>
+  <Button type="primary" href="/how-it-works">How it works</Button>
+  <Button type="secondary" href="/faq">FAQ</Button>
+</ButtonGroup>
 
 --------------------------------
 
