@@ -9,7 +9,7 @@ Attempts to verify a Custom Hostname are distributed over 7 days (a total of 75 
 * For the first 10 attempts:
 
 ```txt
-now() + min((floor(60 * pow(1.05, retry_attempt)) * INTERVAL '1 second'), INTERVAL '4 hours') 
+now() + min((floor(60 * pow(1.05, retry_attempt)) * INTERVAL '1 second'), INTERVAL '4 hours')
 ```
 
 * For the remaining 65 attempts:

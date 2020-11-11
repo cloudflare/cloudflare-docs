@@ -47,7 +47,7 @@ Power users, particularly those who develop large numbers of firewall rules, can
 
 ## Entitlements
 
-Cloudflare Firewall Rules is available to all customers. Keep in mind that the number of firewall rules you can have active on your account is based on your type of plan, as is support for the _Log_ action and support for regular expressions. 
+Cloudflare Firewall Rules is available to all customers. Keep in mind that the number of firewall rules you can have active on your account is based on your type of plan, as is support for the _Log_ action and support for regular expressions.
 
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 

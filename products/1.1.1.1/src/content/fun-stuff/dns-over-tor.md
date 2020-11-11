@@ -63,7 +63,7 @@ UDP:53 on localhost as TCP packets using the following `socat` command:
 
 As explained in the blog post, our favorite way of using the hidden resolver is using DoH.
 
-1. First, start with downloading `cloudflared` by following the regular guide for 
+1. First, start with downloading `cloudflared` by following the regular guide for
 [Running a DNS over HTTPS Client](../../dns-over-https/cloudflared-proxy/).
 
 2. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:

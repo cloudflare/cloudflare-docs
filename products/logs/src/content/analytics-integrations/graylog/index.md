@@ -28,7 +28,7 @@ Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from
 
 ## Task 1 - Preparation
 
-Before getting Cloudflare logs into Graylog: 
+Before getting Cloudflare logs into Graylog:
 
 1. Configure Cloudflare [Logpush](https://developers.cloudflare.com/logs/logpush/) to push logs with all desired fields to an AWS S3 bucket of your choice.
 2. Download the latest Graylog Integration for Cloudflare from the Graylog website: [https://go.graylog.com/cloudflare](https://go.graylog.com/cloudflare).

@@ -11,7 +11,7 @@ The authentication process involves Cloudflare Access issuing a signed JSON Web 
 
 ## Per-Application
 
-To immediately terminate all active sessions for a specific application: 
+To immediately terminate all active sessions for a specific application:
 
 1. On the Teams dashboard, navigate to **Access > Applications** and locate the application for which you would like to revoke active sessions.
 

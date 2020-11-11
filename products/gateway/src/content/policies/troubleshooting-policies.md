@@ -38,7 +38,7 @@ If it takes longer than 60 seconds and you are still seeing that you can success
 
 ###### Safari
 
-Use the instructions in the Mac section to flush the DNS cache for Safari. 
+Use the instructions in the Mac section to flush the DNS cache for Safari.
 
 ###### Google Chrome
 

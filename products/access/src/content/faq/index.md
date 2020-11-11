@@ -42,7 +42,7 @@ Answers to common questions about Cloudflare Access.
 
     Access policies trigger in order based on their position in the policy table in the UI. The exception is Bypass policies, which Access evaluates first.
 
-    For Allow and Deny policies, Access enforces the decision starting at the top of your list and continues down the list. You can modify the order by dragging and dropping individual policies in the UI.    
+    For Allow and Deny policies, Access enforces the decision starting at the top of your list and continues down the list. You can modify the order by dragging and dropping individual policies in the UI.
 
 * **Can I use Access to secure applications with a second-level subdomain URL?**
 

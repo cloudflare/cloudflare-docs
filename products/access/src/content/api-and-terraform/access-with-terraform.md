@@ -13,7 +13,7 @@ order: 3
 ## Create An Application with Terraform
 
 1. Create an application.
- 
+
  Here is an example configuration:
 
 ```
@@ -107,7 +107,7 @@ To do so:
 
 1. Run a `terraform plan`:
 ```
-$ terraform plan 
+$ terraform plan
 
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be

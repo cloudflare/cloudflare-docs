@@ -16,7 +16,7 @@ iOS – Objective C.
 
     [mixpanel registerSuperProperties:@{@”Neumob Accelerated”: @accelerated}];
 
-iOS – Swift. 
+iOS – Swift.
 
     Mixpanel.mainInstance().registerSuperProperties([“Neumob Accelerated”: accelerated])
 
@@ -33,7 +33,7 @@ iOS – Objective C.
 
     [Localytics setValue:@accelerated forCustomDimension:0];
 
-iOS – Swift. 
+iOS – Swift.
 
     Localytics.setValue(accelerated, forCustomDimension: 0)
 

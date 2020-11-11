@@ -6,7 +6,7 @@ order: 3
 
 To fully secure your application, you must ensure that no one can access your origin server directly and bypass the zero trust security checks Cloudflare Access enforces for the hostname. For example, if someone discovers an exposed external IP they can bypass Cloudflare and attack the origin directly.
 
-Cloudflare signs a JSON Web Token (JWT) when users or services authenticate through Cloudflare Access. 
+Cloudflare signs a JSON Web Token (JWT) when users or services authenticate through Cloudflare Access.
 
 Two tokens are generated:
 
@@ -17,7 +17,7 @@ Two tokens are generated:
 
 You can use the JWT created by Cloudflare Access to validate requests on your origin.
 
-If you want to learn more about how Access works with JWT, read our [Access with JSON web tokens](../../learning/json-web-tokens) Learning section. 
+If you want to learn more about how Access works with JWT, read our [Access with JSON web tokens](../../learning/json-web-tokens) Learning section.
 
 | Best practices |  |
 | -------------- | ------ |

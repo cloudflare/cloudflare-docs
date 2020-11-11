@@ -11,7 +11,7 @@ order: 2
 
 ![Gateway first policy](../static/dash-first-policy.png)
 
-3. Add a **policy name**. 
+3. Add a **policy name**.
 
 ![Gateway policy name](../static/add-policy-name.png)
 
@@ -20,9 +20,9 @@ order: 2
 
 5. Navigate to **Security Threats** to choose which security categories you want to block. Click on **Block all** if you want to select all categories.
 
-6. Navigate to **Content Categories** to choose which content categories you want to block. 
+6. Navigate to **Content Categories** to choose which content categories you want to block.
 
-7. Navigate to **Custom** to allow, block, or override domains. The ability to override lists of URLs and IP addresses will be released in the future. 
+7. Navigate to **Custom** to allow, block, or override domains. The ability to override lists of URLs and IP addresses will be released in the future.
 
   * Click on **Add a destination**.
 

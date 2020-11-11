@@ -102,7 +102,7 @@ export class DurableObjectExample {
             let currentValue = await txn.get(key);
             if (currentValue != ifMatch && ifMatch != '*') {
                 txn.rollback();
-                return; 
+                return;
             }
             changedValue = true;
             await txn.put(key, newValue);
@@ -134,7 +134,7 @@ export class Counter {
     constructor(state, env) {
         this.storage = state.storage;
     }
-    
+
     async initialize() {
         let stored = await this.storage.get("value");
         // after initialization, future reads don't need to access storage!

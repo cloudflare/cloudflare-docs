@@ -6,7 +6,7 @@ order: 2
 
 Internet-bound traffic from a client is evaluated in the following way:
 
-If the WARP client is configured to send DNS requests over DoH to Gateway, the DNS queries are evaluated against content and security policies configured for the organization. If the domain is allowed, the client receives the DNS resolution and initiates an HTTP connection. 
+If the WARP client is configured to send DNS requests over DoH to Gateway, the DNS queries are evaluated against content and security policies configured for the organization. If the domain is allowed, the client receives the DNS resolution and initiates an HTTP connection.
 
 Cloudflare Gateway currently filters HTTP traffic over port 80 and 443. If the HTTP connection is within a TLS connection, the TLS connection will be terminated at Cloudflare Gateway so the HTTP traffic can be inspected (unless an administrator configures a bypass rule). If the HTTP connection does not violate any policies configured by an administrator, the traffic is allowed through to the origin server.
 
@@ -15,12 +15,12 @@ Cloudflare Gateway currently filters HTTP traffic over port 80 and 443. If the H
 
 ### What is a Policy?
 
-A policy is a set of rules you can set up for one specific location or for multiple locations. Through Cloudflare Gateway's policy engine, you can filter domains by categories, manually block domains by specifying them in a list, and override domains to allow them even if those domains are getting blocked by a category. 
+A policy is a set of rules you can set up for one specific location or for multiple locations. Through Cloudflare Gateway's policy engine, you can filter domains by categories, manually block domains by specifying them in a list, and override domains to allow them even if those domains are getting blocked by a category.
 
-When setting up a policy, you can also enable features such as SafeSearch or YouTube Restricted Mode. 
+When setting up a policy, you can also enable features such as SafeSearch or YouTube Restricted Mode.
 
 ### Blocking a Subdomain
-When you manually block a domain, you automatically block all of its subdomains. For example, if you are blocking `example.com`, our policy engine will also block `a.example.com`, `a.b.example.com`. 
+When you manually block a domain, you automatically block all of its subdomains. For example, if you are blocking `example.com`, our policy engine will also block `a.example.com`, `a.b.example.com`.
 
 If you only want to block a subdomain `a.example.com`, then instead of adding `example.com` to the list, you will add `a.example.com`. Note that once you add `a.example.com` to the block list, Cloudflare Gateway will also block all subdomains of `a.example.com`.
 
@@ -53,25 +53,25 @@ Cloudflare Gateway allows users to match against the following HTTP traffic crit
 * Uploaded and Downloaded File Extension
 * Uploaded and Downloaded Mime Type
 
-Like with DNS filtering, Cloudflare also maintains URLs associated with content categories and security threats. Organizations can choose to match against some or all of these categories to complement filtering at the DNS layer. 
+Like with DNS filtering, Cloudflare also maintains URLs associated with content categories and security threats. Organizations can choose to match against some or all of these categories to complement filtering at the DNS layer.
 
 ### How can a match be configured?
 
-Depending on the criteria selected, administrators can choose to match in a variety of ways: 
+Depending on the criteria selected, administrators can choose to match in a variety of ways:
 
-| Operator              |          Meaning         
+| Operator              |          Meaning
 |:---------------------:|:---------------------------:|
-|  is                   |  exact match, equals        | 
-|  is not               |  all except exact match     | 
-|  in                   |  in any of defined entries  | 
+|  is                   |  exact match, equals        |
+|  is not               |  all except exact match     |
+|  in                   |  in any of defined entries  |
 |  not in               |  not in defined entries     |
-|  matches regex        | regex evaluates to true         | 
+|  matches regex        | regex evaluates to true         |
 |  does not match regex |  all except when regex evals to true   |
 
 
 ### What actions can be taken when a match is made?
 
-All rules support **allow** and **block** actions. However, administrators may wish to bypass certain sites from inspection. Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria. 
+All rules support **allow** and **block** actions. However, administrators may wish to bypass certain sites from inspection. Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria.
 
 ### How can I bypass the L7 firewall for a website?
 
@@ -81,7 +81,7 @@ Bypassing the L7 firewall results in no HTTP traffic inspection and logging is d
 
 ### In what order are rules evaluated?
 
-The L7 firewall evaluates rules starting with the rule containing the lowest precedence (e.g., rule number one). Rules with a higher value precedence are evaluated after those with a lower value. 
+The L7 firewall evaluates rules starting with the rule containing the lowest precedence (e.g., rule number one). Rules with a higher value precedence are evaluated after those with a lower value.
 
 ### What file extensions can I match against?
 

@@ -32,11 +32,11 @@ Remove any IP addresses that may already be listed.
 3. Replace the nameserver lines with:
     * **172.64.36.1**
     * **172.64.36.2**
-4. Press the **ESC** key on your keyboard to save and exit vim. 
+4. Press the **ESC** key on your keyboard to save and exit vim.
 5. Type `:wq`.
 
 ### IPv6
 1. In the command line, type: `sudo vim /etc/resolv.conf`
 2. Add the IPv6 address from that we listed based on your location configuration.
-3. Press the **ESC** key on your keyboard to save and exit vim. 
+3. Press the **ESC** key on your keyboard to save and exit vim.
 4. Type `:wq`.

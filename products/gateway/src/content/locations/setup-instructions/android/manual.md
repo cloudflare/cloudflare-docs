@@ -10,7 +10,7 @@ Note that if you were using 1.1.1.1 for Families in the mobile app, you will at 
 </Aside>
 
 ## Install the 1.1.1.1 mobile app
-Install the 1.1.1.1 mobile app by visiting the [play store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) on your Android device. 
+Install the 1.1.1.1 mobile app by visiting the [play store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) on your Android device.
 
 If you already have the app on your phone, make sure you have the latest version of the app and then skip to the next step.
 
@@ -30,7 +30,7 @@ Click on 'DNS Settings'. This will take you to the screen where you can configur
 ![Click on DNS Settings](../../../static/android-click-on-dns-settings.png)
 
 ## Enter unique id from Gateway
-When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone. 
+When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
 
 1. Visit your teams dashboard to fetch the unique id from your location.
 ![Go to teams dash](../../../static/go-to-teams-dashboard.png)
@@ -50,4 +50,4 @@ When you are on this screen on your phone, you will need to enter the unique sub
 6. Enter the subdomain inside the field.
 ![Enter unique id](../../../static/android-enter-unique-id.png)
 
-If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now. 
+If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now.

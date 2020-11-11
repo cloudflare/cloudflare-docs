@@ -30,7 +30,7 @@ Navigate to the **Locations** page to visualize your location.
 
 ### Your source IPv4 address is taken
 ![Source IP taken](../static/source-ip-taken.png)
-If you are seeing this, you may be connected to a network where someone else in the same network signed up for Cloudflare Gateway before you did. 
+If you are seeing this, you may be connected to a network where someone else in the same network signed up for Cloudflare Gateway before you did.
 
 If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
@@ -42,12 +42,12 @@ If your network supports IPv6, you can still use Cloudflare Gateway's DNS filter
 You may not see analytics on the Overview page for the following reasons:
 
 ##### 1. You are not sending DNS queries to Gateway
-Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location: 
+Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location:
 
 ![Location With Destinations](../static/expanded-location-with-destinations.png)
 
 ##### 2. You are using other DNS resolvers
-If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses. 
+If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 
 ##### 3. The source IPv4 address for your location is incorrect
 If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
@@ -91,7 +91,7 @@ If it takes longer than 60 seconds and you are still seeing that you can success
 
 ##### Safari
 
-Use the instructions in the Mac section to flush the DNS cache for Safari. 
+Use the instructions in the Mac section to flush the DNS cache for Safari.
 
 ##### Google Chrome
 

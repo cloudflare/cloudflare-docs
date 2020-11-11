@@ -53,7 +53,7 @@ To create, list, delete, or get information about the profile, you will need you
   - `padding` <Type>float</Type> <PropMeta>default: 0.05</PropMeta>
 
     - Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
-    
+
     - Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
 
   - `scale` <Type>float</Type> <PropMeta>default: 0.15 </PropMeta>

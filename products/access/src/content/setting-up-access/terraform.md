@@ -9,7 +9,7 @@ order: 2
 
 ## Create an Application
 
-__NOTE:__ If you haven't installed Terraform, you can do so [here](https://learn.hashicorp.com/terraform/getting-started/install.html). 
+__NOTE:__ If you haven't installed Terraform, you can do so [here](https://learn.hashicorp.com/terraform/getting-started/install.html).
 
 Before we can do anything, we'll need to create an Access application. Here is an example configuration:
 ```
@@ -102,7 +102,7 @@ resource "cloudflare_access_policy" "cf_policy" {
 
 Next, we'll run a `terraform plan`:
 ```
-$ terraform plan 
+$ terraform plan
 
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be

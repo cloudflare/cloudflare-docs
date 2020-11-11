@@ -18,7 +18,7 @@ Azure AD integrates with the Office365 identity service as well as other SaaS ap
 
     ![Azure AD Services](../static/azure/azuread-1.png)
 
-3. On the **Azure AD** dashboard, click **App registrations** in the **Manage** section of the _Azure Active Directory_ pane. 
+3. On the **Azure AD** dashboard, click **App registrations** in the **Manage** section of the _Azure Active Directory_ pane.
 4. Click **+ New application registration**.
 
     ![New Azure AD App Registration](../static/azure/azuread-2.png)
@@ -37,7 +37,7 @@ Azure AD integrates with the Office365 identity service as well as other SaaS ap
 
      ![Azure AD Client Secret](../static/azure/azuread-6.png)
 
-9. Copy the value to the **Application Secret** field in your **Cloudflare** dashboard.    
+9. Copy the value to the **Application Secret** field in your **Cloudflare** dashboard.
 
 10. In the left hand panel, select **API permissions**, and then click **Add a permission**.
 
