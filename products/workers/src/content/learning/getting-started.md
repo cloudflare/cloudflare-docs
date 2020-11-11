@@ -20,7 +20,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 Before you can start [publishing](/cli-wrangler/commands#publish) your Workers on your own domain or a free workers.dev subdomain, you’ll need to sign up for a Cloudflare Workers account.
 
-<p><a href="https://dash.cloudflare.com/sign-up/workers" className="Button Button-is-docs-primary">Sign up</a></p>
+<p><Button type="primary" href="https://dash.cloudflare.com/sign-up/workers">Sign up</Button></p>
 
 The signup process will guide you through choosing a workers.dev subdomain and verifying your email address, both of which are required to publish.
 

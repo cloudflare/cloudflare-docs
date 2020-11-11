@@ -87,4 +87,4 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
   </div>
 </figure>
 
-<Link to="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url" className="Button Button-is-primary">View detailed API reference</Link>
+<p><Button type="primary" href="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url">View detailed API reference</Button></p>

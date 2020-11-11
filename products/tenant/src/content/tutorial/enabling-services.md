@@ -75,4 +75,4 @@ Once you have added the necessary features, you or your customer can move on to 
 
 Learn how to modify zone settings and other servics.
 
-<p><Link to="/tutorial/service-configuration" className="Button Button-is-docs-primary">Step 4: Service configuration</Link></p>
+<p><Button type="primary" href="/tutorial/service-configuration">Step 4: Service configuration</Button></p>

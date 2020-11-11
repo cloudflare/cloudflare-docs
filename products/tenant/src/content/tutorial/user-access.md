@@ -70,4 +70,4 @@ An example response for a successful creation:
 
 Now that the customer has access to the account in the next step we will look at how to enable paid services for customers.
 
-<p><Link to="/tutorial/enabling-services" className="Button Button-is-docs-primary">Step 3: Enabling services</Link></p>
+<p><Button type="primary" href="/tutorial/enabling-services">Step 3: Enabling services</Button></p>
