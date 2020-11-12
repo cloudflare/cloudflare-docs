@@ -25,7 +25,6 @@ The following data sets (and associated nodes) are available in Cloudflare Analy
 
 | Data set (product)          | Node                                                                                                                           |
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
-| Browser Insights            | `browserInsightsAdaptiveGroups` `webVitalsAdaptiveGroups`                                                                      |
 | Firewall Activity Log       | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                                                                  |
 | Firewall Analytics          | `firewallEventsAdaptiveGroups`                                                                                                 |
 | Health Check Analytics      | `healthCheckEventsAdaptive` `healthCheckEventsAdaptiveGroups`                                                                  |
@@ -44,9 +43,9 @@ Beta data sets are available to Enterprise customers for testing and exploration
 
 <TableWrap>
 
-| Data set (product) | Node                                      |
-| :----------------- | :---------------------------------------- |
-| Browser Insights   | `browserInsightsResourceAdaptiveGroups`   |
+| Data set (product) | Node                                                                                                   |
+| :----------------- | :----------------------------------------------------------------------------------------------------- |
+| Browser Insights   | `browserInsightsAdaptiveGroups` `browserInsightsResourceAdaptiveGroups` `webVitalsAdaptiveGroups`      |
 
 </TableWrap>
 
