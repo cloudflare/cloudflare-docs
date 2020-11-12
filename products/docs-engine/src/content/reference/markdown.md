@@ -530,7 +530,7 @@ Custom tokenization can also be achieved by manually applying tokens. For exampl
 
 ### Examples
 
-Check out the dedicated [code block examples](/markdown/code-block-examples) page for more.
+Check out the dedicated [code block examples](/examples/code-block-examples) page for more.
 
 --------------------------------
 
