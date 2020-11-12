@@ -1,10 +1,8 @@
 ---
-title: For Teams
-order: 2
-hidden: true
+order: 1
 ---
 
-# For Cloudflare for Teams
+# WARP Client for Teams
 
 [Cloudflare for Teams](https://www.cloudflare.com/teams/) customers can use the Cloudflare WARP application to connect corporate desktops to [Cloudflare Gateway](https://developers.cloudflare.com/gateway/) for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, now with security filtering available to the connection.
 

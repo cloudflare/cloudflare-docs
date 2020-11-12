@@ -1,9 +1,8 @@
 ---
 order: 3
-hidden: true
 ---
 
-# Installation
+# Deployment
 
 Review [Installation Requirements](/setting-up/requirements/) to ensure your device meets the minimum requirements for our application.
 

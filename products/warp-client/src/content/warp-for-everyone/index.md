@@ -1,9 +1,8 @@
 ---
 order: 1
-hidden: true
 ---
 
-# For everyone
+# WARP Client for everyone
 
 You can choose to have a private browsing experience by utilize 1.1.1.1 to keep your DNS lookups safe, or combine 1.1.1.1 with WARP end ensure all communication is private.
 
