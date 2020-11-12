@@ -1,13 +1,11 @@
 ---
 order: 0
-hidden: true
 ---
 
 # Configure DNS
 
-Cloudflare Gateway supports a variety of client configurations and operating systems as well as DNS over HTTPS.
+Cloudflare Gateway supports a variety of client configurations and operating systems as well as private, encrypted queries over DNS over HTTPS (DoH) and DNS over TLS (DoT).
 
-- [Browser Setup](/connecting-to-gateway/without-client/DNS/browser)
-- [Mac Setup](/connecting-to-gateway/without-client/DNS/mac)
-- [Windows Setup](/connecting-to-gateway/without-client/DNS/windows)
-- [Linux Setup](/connecting-to-gateway/without-client/DNS/linux)
+- [DNS over HTTPS](/connecting-to-gateway/without-client/DNS/dns-over-https)
+- [DNS over TLS](/connecting-to-gateway/without-client/DNS/dns-over-tls)
+- [Native Operating System Integration](/connecting-to-gateway/without-client/DNS/native-os)

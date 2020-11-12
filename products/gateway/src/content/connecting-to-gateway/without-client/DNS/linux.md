@@ -1,5 +1,6 @@
 ---
 order: 2
+hidden: true
 ---
 
 # Linux
