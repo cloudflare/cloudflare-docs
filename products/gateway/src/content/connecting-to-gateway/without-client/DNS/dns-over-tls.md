@@ -14,7 +14,7 @@ Cloudflare supports DoT on standard port `853` and is compliant with [RFC7858](h
 
 Each Gateway location has a unique DoT hostname. Locations and corresponding DoT hostnames have policies associated with them.
 
-1. Visit your Teams dashboard.
+1. Visit your [Teams dashboard](https://dash.teams.cloudflare.com/).
 1. Navigate to the **Locations** page to visualize your location.
 
  ![Go to teams dash](../../../static/go-to-teams-dashboard.png)
@@ -29,9 +29,9 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 
 4. Get the **DoT hostname** for the location.
  
- In the example below, the ID is: `9y65g5srsm.cloudflare-gateway.com`.
+ In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
- ![Get unique subdomain](../../../static/locations-dot.png)
+ ![Get unique subdomain](../../../static/locations-dot-complete.png)
 
 5. Take note of the **DoT hostname**.
 

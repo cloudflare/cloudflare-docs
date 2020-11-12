@@ -21,7 +21,7 @@ For example, if you are using Cloudflare Gateway, and send a DNS query to `examp
 
 ### DNS over HTTPS
 
-Gateway currently supports DNS over HTTPS (DoH). You can use **cloudflared** to setup your device and start sending DNS queries to Gateway in an encrypted fashion. It will also support other DNS over HTTPS clients, as long as you can change the hostname in your preferred DNS over HTTPS client. Here’s how DNS over HTTPS for Cloudflare Gateway works:
+You can use **cloudflared** to setup your device and start sending DNS queries to Gateway in an encrypted fashion. It will also support other DNS over HTTPS clients, as long as you can change the hostname in your preferred DNS over HTTPS client. Here’s how DNS over HTTPS for Cloudflare Gateway works:
 
 ![How Encrypted DNS Works](../static/encrypted-dns-gateway.png)
 
