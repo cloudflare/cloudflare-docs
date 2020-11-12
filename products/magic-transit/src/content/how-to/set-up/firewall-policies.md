@@ -172,7 +172,7 @@ When specifying Magic Transit firewall rules, consider these guidelines:
 * Cloudflare executes firewall rules in order of first match, so lists of rules are order sensitive.
 
 * You can specify any of these protocols:
-_ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, hopopt, icmp, idpr-cmtp, idrp, igmp, igp, ip, ipcomp, ipencap, ipip, ipv6, ipv6-frag, ipv6-icmp, ipv6-nonxt, ipv6-opts, ipv6-route, isis, iso-tp4, l2tp, manet, mobility-header, mpls-in-ip, ospf, pim, pup, rdp, rohc, rspf, rsvp, sctp, shim6, skip, st, tcp, udp, udplite, vmtp, vrrp, wesp, xns-idp, xtp_
+_ah, ax.25, dccp, ddp, egp, eigrp, encap, esp, etherip, fc, ggp, gre, hip, hmp, hopopt, icmp, idpr-cmtp, idrp, igmp, igp, ip, ipcomp, ipencap, ipip, isis, iso-tp4, l2tp, manet, mobility-header, mpls-in-ip, ospf, pim, pup, rdp, rohc, rspf, rsvp, sctp, shim6, skip, st, tcp, udp, udplite, vmtp, vrrp, wesp, xns-idp, xtp_
 
 * To use any of the following parameters in a firewall rule, contact your account team:
   * Source IP/prefix
