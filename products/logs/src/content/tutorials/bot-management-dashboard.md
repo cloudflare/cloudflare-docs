@@ -36,7 +36,7 @@ Before proceeding, make sure that you’ve enabled Cloudflare Bot Management for
 1. In the Cloudflare dashboard, create a Firewall rule. [_Learn more_](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/).
 2. For **Rule name**, enter _Bot management - Generic_.
 3. Under **Expression Preview,** click **Edit Expression**, then copy and paste the following expression: `(bot score lt 30 and not verified_bot)`.
-   - This rule only selects requests with a bot score less than 30 and excludes good bots. Requests with as score under 30 are considered bad bots. Your Firewall rule can be as granular as required. For example, applying conditions only for a specific URL, like login or sign-up pages.
+   - This rule only selects requests with a bot score less than 30 and excludes good bots. Requests with a score under 30 are considered bad bots. Your Firewall rule can be as granular as required. For example, applying conditions only for a specific URL, like login or sign-up pages.
 4. Choose an **action**: _Log_ or _Challenge (Captcha)_.
    - Cloudflare recommends starting with the action of _Log_ and running it for several days in order to identify which requests fall under the rule above to check if any false positives are registered. You can refine the rule expression further, based on your findings. Once you complete testing, switch the rule action to _Challenge (Captcha)_.
 5. Click **Save**.
