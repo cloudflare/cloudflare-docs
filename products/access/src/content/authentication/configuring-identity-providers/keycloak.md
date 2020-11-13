@@ -88,4 +88,4 @@ Solution: Use the X509 Certificate in the Realm Settings  rather than from Clien
 ![Empty](../../static/keycloak/empty.png)
 
 
-Solution: Solution: Configure the protocol mapper in Keycoak's SAML Client.
+Solution: Solution: Configure the protocol mapper in Keycloak's SAML Client.
