@@ -5,18 +5,8 @@ order: 4
 
 # iOS mobile client
 
-## Installation requirements
-<table>
-  <tbody>
-    <tr>
-      <td><strong>OS Ver</strong></td>
-      <td>iOS 11+</td>
-    </tr>
-  </tbody>
-</table>
-
 ## Steps to download
-[Download from the iOS App Store](https://apps.apple.com/us/app/id1423538627) or search for “1.1.1.1: Faster Internet”.
+[Download the app from the iOS App store by following this [link](https://apps.apple.com/us/app/id1423538627). Alternatively, you can search for *1.1.1.1: Faster Internet* on you preferred search engine.
 
 ## How to remove the application
 1. Find the application on the home screen.

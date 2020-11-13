@@ -28,3 +28,10 @@ Cloudflare WARP supports the following operational modes:
 
 * **WARP+** While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/), WARP+ will route your traffic around congested internet route and improve overall end to end performance.
     * **WARP Unlimited** is our monthly subscription offering for WARP+. Note WARP Unlimited can only be purchased via your iOS and Android device for the time being.
+
+
+<ButtonGroup>
+  <Button type="primary" href="test.com">1.1.1.1</Button>
+  <Button type="primary" href="">WARP</Button>
+  <Button type="primary" href="">WARP+</Button>
+</ButtonGroup>
