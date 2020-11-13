@@ -103,7 +103,6 @@ highlight: [6]
 }
 ```
 
-
 ### Step 3: Stream the video!
 
 The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/viewing-videos/using-the-stream-player).
