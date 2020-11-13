@@ -22,7 +22,7 @@ Once you are ready, choose how you are going to deploy the client in your organi
 
 The Cloudflare WARP Windows client allows for an automated install via tools like Intune, AD or any script or management tool that can execute a .msi file.
 
-Example command line (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/)):
+Example command line (for a description of each key and what it means, see [Deployment parameters](warp-for-teams/teams)):
 
 An Example command line to install the product
 ```shell

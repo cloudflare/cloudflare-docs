@@ -4,7 +4,7 @@ order: 3
 
 # Deployment
 
-Review [Installation Requirements](/setting-up/requirements/) to ensure your device meets the minimum requirements for our application.
+Review [Installation Requirements](/requirements/) to ensure your device meets the minimum requirements for our application.
 
 ## Windows
 * [Download Windows Installer](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi)
