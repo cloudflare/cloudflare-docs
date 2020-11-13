@@ -21,13 +21,20 @@ For example, if you are using Cloudflare Gateway, and send a DNS query to `examp
 
 ### DNS over HTTPS
 
-Gateway currently supports DNS over HTTPS (DoH), and will also support DNS over TLS in the future. You can use **cloudflared** to setup your device and start sending DNS queries to Gateway in an encrypted fashion. It will also support other DNS over HTTPS clients, as long as you can change the hostname in your preferred DNS over HTTPS client. Here’s how DNS over HTTPS for Cloudflare Gateway works:
+You can use **cloudflared** to setup your device and start sending DNS queries to Gateway in an encrypted fashion. It will also support other DNS over HTTPS clients, as long as you can change the hostname in your preferred DNS over HTTPS client. Here’s how DNS over HTTPS for Cloudflare Gateway works:
 
 ![How Encrypted DNS Works](../static/encrypted-dns-gateway.png)
 
 The DNS over HTTPS client encrypts the DNS request and sends it to the closest Cloudflare’s data center. Upon receiving the encrypted DNS request, it will decrypt it and send it to Cloudflare Gateway. Cloudflare Gateway will log the request, apply the required security policies, and return the response to our edge. Our edge will encrypt the response and send it back to the DNS over HTTPS client.
 
 By encrypting your DNS queries you will make sure that ISPs cannot snoop on your DNS queries, and at the same time you will be able to filter DNS requests that are malicious.
+
+### DNS over TLS
+
+Gateway also supports DNS-over-TLS encryption. This enables you to apply security policies for clients that don’t support DNS-over-HTTPS. The DNS client on a device that talks to the DNS resolver initiates a TLS connection with the resolver. Then, it establishes a TCP connection with `cloudflare-dns.com:853`, and initiates a TLS handshake.
+In the TLS handshake, `cloudflare-dns.com` presents its TLS certificate. Once the TLS connection is established, the DNS client can send DNS over an encrypted connection, preventing eavesdropping and tampering.
+
+All DNS queries sent over the TLS connection must comply with specifications of sending DNS over TCP.
 
 ## L7 Cloud Firewall
 

@@ -23,8 +23,8 @@ Gateway uses different ways to match a DNS query to locations depending on the t
 
 Here is a step by step flow of how Gateway determines the location for an incoming DNS query:
 
-### Step 1: DNS over HTTPS check and lookup based on hostname
-Check if the DNS query is using DNS over HTTPS. If yes, lookup location by the unique hostname. If not, go to step 2.
+### Step 1: Encrypted queries check and lookup based on hostname
+Check if the DNS query is using DNS over HTTPS or DNS over TLS. If yes, lookup location by the unique hostname. If not, go to step 2.
 
 ### Step 2: IPv4 check and lookup based on source IPv4 address
 Check if the DNS query is sent over IPv4. If yes, lookup location by the source IPv4 address. If no, go to step 3.

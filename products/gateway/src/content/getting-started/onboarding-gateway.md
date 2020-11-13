@@ -2,7 +2,7 @@
 order: 0
 ---
 
-# Gateway setup
+# Set up Gateway
 
 To start using Gateway, set up your first **location** and your DNS resolvers.
 
