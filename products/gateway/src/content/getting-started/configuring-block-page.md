@@ -2,7 +2,7 @@
 order: 5
 ---
 
-# Configuring a block page
+# Configure a block page
 
 When trying to visit a blocked website, users will see a default browser error page like this one:  
 

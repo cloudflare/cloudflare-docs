@@ -49,9 +49,6 @@ For example, if you are using Cloudflare Gateway, and send a DNS query to exampl
 ## Can I use a wildcard operator to block domains?
 You don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/reference/policy).
 
-## Can I block a URL using Gateway?
-Not yet. Today, Gateway only sees domain names and not the full URL. So it can only block domains.
-
 ## Does Cloudflare Gateway support IPv6 networks?
 Yes. Each location has a unique IPv6 address. You can use that IPv6 address to send DNS queries to Cloudflare Gateway.
 

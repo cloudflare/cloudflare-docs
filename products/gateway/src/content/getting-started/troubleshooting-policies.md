@@ -20,13 +20,13 @@ Navigate to the **Locations** page to visualize your location.
 
 3. Expand the location card for the location which you'd like to retrieve the corresponding DoH subdomain.
 
-![Expand location card](../static/expand-location-card.png)
+![Expand location card](../static/locations-doh-dot.png)
 
-4. Get the subdomain of the DNS over HTTPS hostname (previously known as a unique ID). In the example below, the ID is: `fix7p31bzg`.
+4. Get the subdomain of the DNS over HTTPS hostname (previously known as a unique ID). In the example below, the ID is: `9y65g5srsm`.
 
 5. Take note of the **DoH subdomain**.
 
-![Get unique subdomain](../static/unique-gateway-id.png)
+![Get unique subdomain](../static/locations-doh.png)
 
 ### Your source IPv4 address is taken
 ![Source IP taken](../static/source-ip-taken.png)
