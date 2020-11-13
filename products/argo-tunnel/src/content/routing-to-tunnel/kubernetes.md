@@ -10,7 +10,7 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 
 | Before you start |
 |---|
-| 1. [Enable Cloudflare Load Balancers](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
+| 1. [Enable Cloudflare Load Balancers](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui)  |
 | 2. [Create a Tunnel](/create-tunnel) |
 
 ## Deploy `cloudflared` to an upstream service
