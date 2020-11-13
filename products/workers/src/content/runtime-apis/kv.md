@@ -32,6 +32,8 @@ await NAMESPACE.put(key, value)
 
 This method returns a `Promise` that you should `await` on in order to verify a successful update.
 
+The maximum size of a value is 25MB.
+
 You can also [write key-value pairs from the command line with
 Wrangler](/cli-wrangler/commands#kvkey).
 
