@@ -8,9 +8,9 @@ hidden: true
 
 [Cloudflare for Teams](https://www.cloudflare.com/teams/) customers can use the Cloudflare WARP application to connect corporate desktops to [Cloudflare Gateway](https://developers.cloudflare.com/gateway/) for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, now with security filtering available to the connection.
 
-The result is a simple way for enterprises to protect their users wherever they are without requiring the backhaul of network traffic to a centralized security boundary. Instead, organizations can configure the WARP client application to securely and privately send remote users’ traffic through a Cloudflare data center near them. Gateway administrators apply policies to outbound Internet traffic proxied through the client, allowing organizations to protect users from threats on the Internet, and stop corporate data from leaving their organization.
+The result is a simple way for enterprises to protect their users wherever they are without requiring the backhaul of network traffic to a centralized security boundary. Instead, organizations can configure the WARP Client application to securely and privately send remote users’ traffic through a Cloudflare data center near them. Gateway administrators apply policies to outbound Internet traffic proxied through the client, allowing organizations to protect users from threats on the Internet, and stop corporate data from leaving their organization.
 
-The Cloudflare WARP client allows individuals or organizations to have a faster, more secure and private experience online.
+The Cloudflare WARP Client allows individuals or organizations to have a faster, more secure and private experience online.
 
 Here is an overview of features your organization can :
 
@@ -21,7 +21,7 @@ Here is an overview of features your organization can :
  Any Teams customer who deploys the Teams client applications will automatically receive the premium speed benefits of WARP+.
 
 * **Gateway Device Roaming**  
- With Gateway Device Roaming, you can enforce Cloudflare Gateway policies anywhere your users roam on any operating system supported by the Cloudflare WARP client.
+ With Gateway Device Roaming, you can enforce Cloudflare Gateway policies anywhere your users roam on any operating system supported by the Cloudflare WARP Client.
 
 * **L7 Firewall and user-based policies**  
  This allows your organization to enforce device authentication to your Teams account, enabling you to build user specific policies and force all traffic through the firewall.

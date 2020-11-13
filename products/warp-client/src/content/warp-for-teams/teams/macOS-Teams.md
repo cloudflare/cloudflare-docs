@@ -10,7 +10,7 @@ order: 3
 
 Visit the [Requirements section](/requirements) to review the system requirements for macOS and to download the macOS installer.
 
-Next, choose how you want to deploy the WARP client in your organization:
+Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) via command prompt
 * [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
 
@@ -53,9 +53,9 @@ For a description of each argument and what it means, see [deployment parameters
 
 ### Example configuration in Jamf
 
-With Jamf, the WARP client deployment is performed in three distinct steps: 
-1. Upload the WARP client `pkg` file.
-1. Create a policy that deploys the WARP client `pkg` file.
+With Jamf, the WARP Client deployment is performed in three distinct steps: 
+1. Upload the WARP Client `pkg` file.
+1. Create a policy that deploys the WARP Client `pkg` file.
 1. Create a configuration profile with the settings you want pushed down. 
 
 The following sections will walk you through each of these steps.
@@ -92,11 +92,11 @@ The following sections will walk you through each of these steps.
 1. Navigate to **Scope** to configure which devices in your organization should receive this profile.
 1. Click **Save**.
 
-Jamf is now configured to deploy the Cloudflare WARP client.
+Jamf is now configured to deploy the Cloudflare WARP Client.
 
 ## Manual configuration
 
-If you plan to direct your users to manually download and configure the Cloudflare WARP client application, they can do so in two ways, depending on your organization's Teams configuration:
+If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 * If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH Subdomain](#manually-configure-a-gateway-doh-subdomain).
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 

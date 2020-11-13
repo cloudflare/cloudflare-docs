@@ -10,7 +10,7 @@ order: 2
 
 Visit the [Requirements section](/requirements) to review the system requirements for Windows and to download the Windows installer.
 
-Next, choose how you want to deploy the WARP client in your organization:
+Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-install-via-command-prompt) via command prompt
 * [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
 
@@ -18,7 +18,7 @@ Next, choose how you want to deploy the WARP client in your organization:
 
 ## Automated configuration via command prompt
 
-The WARP client for Windows allows for an automated install via tools like Intune, AD, or any script or management tool that can execute a `.msi` file.
+The WARP Client for Windows allows for an automated install via tools like Intune, AD, or any script or management tool that can execute a `.msi` file.
 
 * Example command line to **install** the client:
 
@@ -52,11 +52,11 @@ Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 1. Review your configuration.
 1. Click **Create**.
 
-Intune is now configured to deploy the Cloudflare WARP client.
+Intune is now configured to deploy the Cloudflare WARP Client.
 
 ## Manual configuration
 
-If you plan to direct your users to manually download and configure the Cloudflare WARP client application, they can do so in two ways, depending on your organization's Teams configuration:
+If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 
 * If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH Subdomain](#manually-configure-a-gateway-doh-subdomain).
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).

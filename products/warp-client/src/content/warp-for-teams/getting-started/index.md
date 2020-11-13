@@ -10,7 +10,7 @@ order: 2
 
  </Aside>
 
-To get started with the WARP client, you'll first need to create a **device enrollment policy** in your Teams dashboard. To do so:
+To get started with the WARP Client, you'll first need to create a **device enrollment policy** in your Teams dashboard. To do so:
 
 1. In your [Teams dashboard](http://dash.teams.cloudflare.com/), navigate to **My Teams** > **Devices**.
 1. Under **Device Settings**, create a device enrollment [policy](https://developers.cloudflare.com/access/getting-started/policies) to define who can connect a device to your organization.

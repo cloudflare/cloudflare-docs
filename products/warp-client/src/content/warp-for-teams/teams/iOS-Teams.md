@@ -10,7 +10,7 @@ order: 4
 
 Visit the [Requirements section](/requirements) to review the system requirements for iOS and to download the iOS installer.
 
-Next, choose how you want to deploy the WARP client in your organization:
+Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) via command prompt
 * [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
 
@@ -37,7 +37,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 For a description of each argument and what it means, see [deployment parameters](/warp-for-teams/teams#parameters).
 
 ### Example Configuration in Jamf
-Follow these steps to deploy the WARP client via Jamf:
+Follow these steps to deploy the WARP Client via Jamf:
 
 #### Upload the package
 1. Login to your `jamfcloud.com` account.
@@ -55,11 +55,11 @@ Follow these steps to deploy the WARP client via Jamf:
 1. Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
 1. Click **Save**.
 
-Jamf is now configured to deploy the Cloudflare WARP client.
+Jamf is now configured to deploy the Cloudflare WARP Client.
 
 ## Manual Configuration
 
-If you plan to direct your users to manually download and configure the Cloudflare WARP client application, they can do so in two ways, depending on your organization's Teams configuration:
+If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 * If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH Subdomain](#manually-configure-a-gateway-doh-subdomain).
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
