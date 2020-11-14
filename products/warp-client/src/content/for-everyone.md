@@ -1,13 +1,15 @@
 ---
-title: For Everyone
-order: 2
+order: 1
+hidden: true
 ---
 
-# WARP for Everyone
+# For everyone
 
-Cloudflare WARP supports the following operational modes. You can choose to have a private browsing experience by utilize 1.1.1.1 to keep your DNS lookups safe, or combine 1.1.1.1 with WARP end ensure all communication is private.
+You can choose to have a private browsing experience by utilize 1.1.1.1 to keep your DNS lookups safe, or combine 1.1.1.1 with WARP end ensure all communication is private.
 
-## WARP Modes
+Cloudflare WARP supports the following operational modes:
+
+### WARP Modes
 
 * **1.1.1.1** Since nearly everything you do on the Internet starts with a DNS request, choosing the fastest DNS directory across all your devices will accelerate almost everything you do online. Speed isn’t  everything though, and while the connection between your application and a website may be encrypted, DNS lookups for that website were not. This allowed anyone, even your Internet Service Provider, to potentially snoop (and sell) on where you are going on the Internet.
 
@@ -27,10 +29,9 @@ Cloudflare WARP supports the following operational modes. You can choose to have
 * **WARP+** While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/), WARP+ will route your traffic around congested internet route and improve overall end to end performance.
     * **WARP Unlimited** is our monthly subscription offering for WARP+. Note WARP Unlimited can only be purchased via your iOS and Android device for the time being.
 
-## Next Steps
-1. Verify your device meets the [installations requirements](/setting-up/requirements)
-1. Follow the instructions for your device:
-    * [Windows](/setting-up/windows/)
-    * [macOS](/setting-up/macOS/)
-    * [iOS](/setting-up/iOS/)
-    * [Android](/setting-up/android/)
+
+<ButtonGroup>
+  <Button type="primary" href="test.com">1.1.1.1</Button>
+  <Button type="primary" href="">WARP</Button>
+  <Button type="primary" href="">WARP+</Button>
+</ButtonGroup>
