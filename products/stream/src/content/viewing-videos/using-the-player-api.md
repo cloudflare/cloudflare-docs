@@ -142,7 +142,7 @@ We support most of the [standardized media element events](https://developer.moz
 
 - `ended`
 
-Sent when playback completes.
+  - Sent when playback completes.
 
 - `error`
 
@@ -158,7 +158,7 @@ Sent when playback completes.
 
 - `loadstart`
 
- - Sent when loading of the media begins.
+  - Sent when loading of the media begins.
 
 - `pause`
 
