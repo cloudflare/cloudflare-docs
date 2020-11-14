@@ -22,7 +22,7 @@ Once you are ready, choose how you are going to deploy the client in your organi
 
 The Cloudflare WARP Windows client allows for an automated install via tools like Intune, AD or any script or management tool that can execute a .msi file.
 
-Example command line (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/)):
+Example command line (for a description of each key and what it means, see [Deployment parameters](warp-for-teams/teams)):
 
 An Example command line to install the product
 ```shell
@@ -56,7 +56,7 @@ Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 1. Review your configuration
 1. Click **Create**.
 
-Congratulations! Intune is now configured to deploy the Cloudflare WARP client.
+Congratulations! Intune is now configured to deploy the Cloudflare WARP Client.
 
 <div id="manual-configuration">
 
@@ -64,7 +64,7 @@ Congratulations! Intune is now configured to deploy the Cloudflare WARP client.
 ---------------------
 </div>
 
-If you plan to direct your users to manually download and configure the Cloudflare WARP client application, they can do so from two places in the UI:
+If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so from two places in the UI:
 
 #### Manually configure a Gateway DoH Subdomain
 If your organization uses Teams Gateway DNS filtering then you will need to instruct your users to configure the Gateway DoH Subdomain field. You can <a href="https://developers.cloudflare.com/gateway/connecting-to-gateway/with-client">click here to find this value</a> for your Teams Gateway configuration. Then complete the following steps:

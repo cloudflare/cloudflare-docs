@@ -1,5 +1,5 @@
 ---
-title: Known issues & FAQ
+title: Troubleshooting & FAQ
 order: 6
 ---
 

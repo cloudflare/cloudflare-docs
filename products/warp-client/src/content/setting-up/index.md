@@ -1,5 +1,6 @@
 ---
 order: 3
+hidden: true
 ---
 
 # Installation
