@@ -8,12 +8,6 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 <!-- Use non-breaking hyphens &#8209; instead of - to improve layout -->
 # Deploy a React app with create&#8209;react&#8209;app
 
-<Aside header="Workers Bundled plan required">
-
-This tutorials requires Workers KV which is only available to users with [a paid Workers plan](/platform/pricing).
-
-</Aside>
-
 <TutorialsBeforeYouStart/>
 
 ## Overview
