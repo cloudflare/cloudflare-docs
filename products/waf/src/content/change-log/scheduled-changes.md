@@ -32,51 +32,5 @@ order: 1
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                2020-11-09
-            </td>
-            <td>
-                2020-11-16
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                100502
-            </td>
-            <td>
-                CVE:CVE-2020-13443
-            </td>
-            <td>
-                N/A
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2020-11-09
-            </td>
-            <td>
-                2020-11-16
-            </td>
-            <td>
-                Cloudflare Wordpress
-            </td>
-            <td>
-                WP0017
-            </td>
-            <td>
-                Wordpress - SQLi - CVE:CVE-2015-2213 fix
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
     </tbody>
 </table></TableWrap>
