@@ -15,7 +15,7 @@ Clients using RSA key exchange|❌|✅|✅|✅
 
 <Aside type='warning' header='Important'>
 
-Cloudflare no longer supports SSL certificates under any plan for clients without Server Name Indication (SNI) extensions to the TLS protocol.
+Cloudflare no longer supports SSL certificates under any plan for clients without [Server Name Indication (SNI) extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) to the TLS protocol.
 
 </Aside>
 
@@ -52,6 +52,6 @@ Clients without SNI |✅|❌|❌|❌|❌
 
 <Aside type='note' header='Note'>
 
-SNI extensions to the TLS protocol were standardized in 2003. However some browsers and operating systems only implemented this extension when TLS 1.1 was released in 2006 (or 2011 for mobile browsers). If your visitors use devices that have not been updated since 2011, they may not have SNI support.
+SNI extensions to the TLS protocol were standardized in 2003. However, some browsers and operating systems only implemented this extension when TLS 1.1 was released in 2006 (or 2011 for mobile browsers). If your visitors use devices that have not been updated since 2011, they may not have SNI support.
 
 </Aside>
