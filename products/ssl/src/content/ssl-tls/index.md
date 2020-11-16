@@ -4,10 +4,10 @@ order: 9
 
 # SSL/TLS
 
-Information on:
+For more on Cloudflare SSL/TLS, see these articles:
 
-[Browser compatibility](/browser-compatibility)<br/>
-[Certificate and hostname priority](/certificate-and-hostname-priority)<br/>
-[Certificate authorities](/certificate-authorities)<br/>
-[Cipher suites](/cipher-suites)<br/>
-[Protocols](/protocols)
+* [_Cipher suites_](/ssl-tls/cipher-suites)
+* [_Protocols_](/ssl-tls/protocols)
+* [_Certificate and hostname priority_](/ssl-tls/certificate-and-hostname-priority)
+* [_Certificate authorities_](/ssl-tls/certificate-authorities)
+* [_Browser compatibility_](/ssl-tls/browser-compatibility)

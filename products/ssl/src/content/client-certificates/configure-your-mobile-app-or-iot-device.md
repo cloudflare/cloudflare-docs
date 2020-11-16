@@ -4,7 +4,7 @@ order: 3
 
 # Configure your mobile app or IoT device
 
-To configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](/firewall/cf-firewall-rules/api-shield), do the following:
+To configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield), follow this workflow:
 
 * [Create Cloudflare-issued certificates](#create-cloudflare-issued-certificates).
 * [Enable mutual Transport Layer Security (mTLS)](#enable-mtls).
@@ -12,7 +12,7 @@ To configure your Internet-of-things (IoT) device and mobile application to use 
 * [Embed the certificate in your mobile app](#embed-the-client-certificate-in-your-mobile-app).
 * [Embed the certificate on your IoT device](#embed-the-client-certificate-on-your-iot-device).
 
-Consider, for example, a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS can then retrieve those readings and display them.
+This walkthrough uses the example of a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS retrieves those readings and displays them.
 
 To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](https://developers.cloudflare.com/workers/tutorials/build-a-jamstack-app)).
 
@@ -140,11 +140,11 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 
 Before you can use API Shield to protect your API or web application, you must create Cloudflare-issued client certificates.
 
-You can [create a client certificate in the Cloudflare dashboard](/client-certificates/create-client-certificate).
+You can [create a client certificate in the Cloudflare dashboard](/client-certificates/create-a-client-certificate).
 
 However, since most developers working at scale generate their own private keys and certificate signing requests via API, this example uses the Cloudflare API to create client certificates.
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
@@ -266,7 +266,7 @@ For instructions, see [_Enable mutual Transport Layer Security_](/client-certifi
 
 ## Configure API Shield to require client certificates
 
-To configure API Shield to require client certificates, [create an API Shield rule](/firewall/cf-dashboard/create-api-shield-rule):
+To configure API Shield to require client certificates, [create an API Shield rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-api-shield-rule):
 
 ![create api shield clip](../static/create-api-shield-clip-1.gif)
 
@@ -276,15 +276,15 @@ To configure API Shield to require client certificates, [create an API Shield ru
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
 
-For simplicity, this example embeds a “bootstrap” certificate and key in the application bundle as a PKCS#12-formatted file.
+For simplicity, this example embeds a “bootstrap” certificate and key in the application bundle as a PKCS#12-formatted file:
 
-In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
-
-```bash
+```sh
 $ openssl pkcs12 -export -out bootstrap-cert.pfx -inkey ios-key.pem -in ios.pem
 Enter Export Password:
 Verifying - Enter Export Password:
 ```
+
+In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
 
 --------
 

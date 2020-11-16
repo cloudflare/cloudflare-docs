@@ -27,9 +27,10 @@ We strongly recommend that you use an operating system still supported by the ve
 
 ### DNS record created within zone
 
-<Aside>
+<Aside type='warning' header='Important'>
 
-Note: You will need to create a public DNS record for your key server. If you are using Cloudflare, this record **cannot yet be orange clouded**. As a security measure, you should obfuscate the hostname of your key server.
+You need to create a public DNS record for your key server. If you are using Cloudflare, this record **cannot yet be orange clouded**. As a security measure, you should obfuscate the hostname of your key server.
+
 </Aside>
 
 1. Use `openssl rand 24 -hex` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`

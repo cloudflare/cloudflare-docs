@@ -27,7 +27,7 @@ Full API details on the the Custom Hostname (SSL for SaaS) endpoint can be found
 Once a certificate has been ordered or uploaded, you can make API calls to check on the status, or review properties, of the certificate.
 
 ```bash
-$ curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}"\
+curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}"\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"\
 ```
@@ -37,7 +37,7 @@ This call will return information about a Custom Hostname, including whether the
 Alternatively, if you have not stored the hostname identifier, you can look the certificate up by hostname:
 
 ```bash
-$ curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=app.example.com"\
+curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=app.example.com"\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H "Content-Type: application/json"
 ```
@@ -46,9 +46,8 @@ $ curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostna
 
 ## Viewing the newly issued certificate
 
-You can view the certificate that was deployed to Cloudflare’s edge using `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/validation-methods)).
+You can view the certificate that was deployed to Cloudflare’s edge using `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/certificate-validation-methods)).
 
-```txt
+```sh
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
 ```
-

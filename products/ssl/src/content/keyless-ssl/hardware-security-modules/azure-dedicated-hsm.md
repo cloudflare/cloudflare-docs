@@ -4,7 +4,7 @@ order: 2
 
 # Azure dedicated HSM
 
-<Aside>
+<Aside type='note' header='Note'>
 
 The example below was tested using <a href="https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/">Azure Dedicated HSM</a>, a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a790. It is assumed that you have already followed Microsoft’s <a href="https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell">Tutorial – Deploying HSMs into an existing virtual network using PowerShell</a> and installed the SafeNet client software.
 

@@ -4,7 +4,7 @@ order: 3
 
 # SoftHSMv2
 
-<Aside type="warning">
+<Aside type='warning' header='Important'>
 
 SoftHSMv2 should not be considered any more secure than storing private keys directly on disk. No attempt is made below to secure this installation; it is provided simply for demonstration purposes.
 

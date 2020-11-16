@@ -37,7 +37,7 @@ If you have deployed Keyless SSL with an HSM model not listed above, please emai
 
 ## Configuration
 
-<Aside type="warning">
+<Aside type='warning' header='Important'>
 
 It is critical that you carefully review the manufacturer documentation for your HSM and properly restrict access to the key server.
 

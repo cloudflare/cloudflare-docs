@@ -12,21 +12,21 @@ To create a client certificate in the Cloudflare dashboard, use the **SSL** app 
 
   ![SSL app Overview tab](../static/ssl-app-overview-page.png)
   
-2. Click the **Client Certificates** tab.
+1. Click the **Client Certificates** tab.
 
-3. In the the **Client Certificates** card, click **Create Certificate**.
+1. In the the **Client Certificates** card, click **Create Certificate**.
 
   ![Client Certificates card](../static/ssl-client-certs-card.png)
 
   The **Create client certificate** dialog displays.
 
-<Aside>
+  <Aside type='warning' header='Important'>
 
-You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
+  You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
-If you need to use a different CA, contact a Cloudflare customer success manager.
+  If you need to use a different CA, contact a Cloudflare customer success manager.
 
-</Aside>
+  </Aside>
 
   ![Create client certificates card](../static/ssl-create-client-cert-dialog.png)
 
@@ -34,9 +34,9 @@ If you need to use a different CA, contact a Cloudflare customer success manager
 
   ![Private key type drop down](../static/ssl-client-certs-key-type.png)
 
-2. To configure the validity period for your certificate, use the **Certificate Validity** drop-down list. The default value is 10 years. Available values include 1, 2, 3, 5, and 15 years.
+1. To configure the validity period for your certificate, use the **Certificate Validity** drop-down list. The default value is 10 years. Available values include 1, 2, 3, 5, and 15 years.
 
-3. To create the certificate, click **Create**.
+1. To create the certificate, click **Create**.
 
   The **Client Certificate and Key Generation** page displays.
 

@@ -4,8 +4,6 @@ order: 3
 
 # Certificate validation methods
 
---------
-
 ## Recommended
 
 ### 1. HTTP
@@ -16,11 +14,11 @@ When you POST to the custom_hostnames endpoint and specify `http` as the validat
 
 For example, if you create a new custom hostname for `site.example.com`, the CA might ask us to return the value `ca3-38734555d85e4421beb4a3e6d1645fe6` for a request to `http://site.example.com/.well-known/pki-validation/ca3-39f423f095be4983922ca0365308612d.txt"`. As soon as we receive that value from the CA we make it accessible at our edge and ask the CA to confirm it’s there so that they can complete validation and the certificate order.
 
-<Aside>
+<Aside type='note' header='Note'>
 
 Cloudflare is able to serve the random token shown above from our edge due to the fact that site.example.com has a CNAME in place to `$CNAME_TARGET`, which ultimately resolves to Cloudflare IPs. If your customer has not yet added the CNAME, the attempt by the CA to retrieve that token will fail and the process will not complete.
 
-We will attempt to retry this validation check for a finite period before timing out; see the <a href="https://developers.cloudflare.com/ssl/ssl-for-saas/validation-retry/">Validation Retry Schedule</a> for more details.
+We will attempt to retry this validation check for a finite period before timing out; see the <a href="/ssl-for-saas/validation-backoff-schedule">Validation Retry Schedule</a> for more details.
 
 </Aside>
 
@@ -33,7 +31,6 @@ If you would like to complete the issuance process before asking your customer t
 For your customers that already have HTTPS on their custom domain, e.g., they’re self-hosted or you’ve manually provisioned, and cannot tolerate a couple minutes of downtime during cutover, additional “pre-validation” methods are available.
 
 The three validation methods below can be used to obtain a certificate in advance of setting the CNAME to your `$CNAME_TARGET`.
-
 
 ### 1. TXT record
 
@@ -84,7 +81,7 @@ $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 
 You should then ask your customer to create a TXT record with name `another.example.com` and content `ca3-e95fb6a33c3648daba3b05faf3d79410` at their authoritative DNS provider. Once this TXT is in place, validation and certificate issuance will automatically complete.
 
-If you’d like to request an immediate recheck, [rather than wait for the next retry](/ssl-for-saas/validation-retry/), you can simply send a `PATCH` as follows:
+If you’d like to request an immediate recheck, [rather than wait for the next retry](/ssl-for-saas/validation-backoff-schedule/), you can simply send a `PATCH` as follows:
 
 ```bash
 $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/46f8849a-72c9-49e0-9e42-857297d89306" \

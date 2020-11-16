@@ -4,7 +4,7 @@ order: 1
 
 # AWS cloud HSM
 
-<Aside>
+<Aside type='note' header='Note'>
 
 In this example it is assumed that you have already [provisioned the AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) and installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html). The example imports an existing key pair, but you may prefer to [generate your key on the HSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/manage-keys.html).
 
