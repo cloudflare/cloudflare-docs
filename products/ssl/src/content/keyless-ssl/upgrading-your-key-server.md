@@ -4,7 +4,7 @@ order: 5
 
 # Upgrading your key server
 
-<Aside type="warning">
+<Aside type='warning' header='Important'>
 
 If you are running in a high availability configuration, you should make sure to upgrade one server at a time as new TLS connections will fail to terminate at Cloudflare’s edge without a functioning key server.
 

@@ -16,7 +16,7 @@ Advanced Certificate Manager is a flexible and customizable way to issue and man
 
 Use the Advanced Certificate Manager when the Universal certificate does not meet your business requirements but you still want Cloudflare to manage the SSL certificate issuance and renewal. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 
-<Aside type="warning">
+<Aside type='warning' header='Important'>
 
 Selecting Let’s Encrypt as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, e.g. example.com, *.example.com).
 
@@ -112,9 +112,10 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certifica
 
 ## List Advanced Certificate Manager certificate pack
 
-<Aside type="note">
+<Aside type='note' header='Note'>
 
 This API call returns all certificate packs for the zone including Universal, Custom, and Advanced certificates.
+
 </Aside>
 
 To [list all Advanced Certificates on the zone via API](https://api.cloudflare.com/#certificate-packs-list-certificate-packs):

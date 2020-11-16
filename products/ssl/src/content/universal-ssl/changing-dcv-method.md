@@ -153,5 +153,7 @@ The status: `active` means that the certificate has been deployed to Cloudflareâ
 
 ## API documentation
 
-https://api.cloudflare.com/#ssl-verification-ssl-verification-details
-https://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method
+For more detail, see the Cloudflare API documentation on these operations:
+
+* [Get SSL Verification Details](https://api.cloudflare.com/#ssl-verification-ssl-verification-details)
+* [Edit SSL Certificate Pack Validation Method](https://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method)

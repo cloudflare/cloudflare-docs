@@ -14,7 +14,7 @@ To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare 
 
   ![SSL app Overview tab](../static/ssl-app-overview-page.png)
   
-3. To enable mTLS for a host, click the **Edit** link in the **Hosts** section of the **Client Certificates** card.
+1. To enable mTLS for a host, click the **Edit** link in the **Hosts** section of the **Client Certificates** card.
 
   ![Client Certificates card](../static/ssl-client-certs-card-edit-link.png)
 
@@ -22,12 +22,12 @@ To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare 
 
   ![Enable mTLS Hosts input](../static/ssl-client-certs-host-input.png)
 
-4. Use the input to enter the name of a host that is in the zone you selected in Step 1 and press `Enter`.
+1. Use the input to enter the name of a host that is in the zone you selected in Step 1 and press `Enter`.
 
   A tag representing your host displays. In this example, the host is `example.com`
 
   ![example host](../static/ssl-client-certs-hosts.png)
 
-5. Click **Save**.
+1. Click **Save**.
 
-Now that you have enabled mTLS for your host, [create a Cloudflare-issued client certificate](/client-certificates/create-client-certificate) so that you can [enforce mTLS with API Shield™](/firewall/cf-firewall-rules/api-shield).
+Now that you have enabled mTLS for your host, [create a Cloudflare-issued client certificate](/client-certificates/create-a-client-certificate) so that you can enforce mTLS with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield).

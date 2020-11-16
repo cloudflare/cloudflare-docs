@@ -4,7 +4,7 @@ order: 2
 
 # High availability
 
-<Aside type="warning">
+<Aside type='warning' header='Important'>
 
 It is important that you monitor the uptime and status of your key server, and ensure that it is available at all times, otherwise new TLS connections will not be possible.
 </Aside>

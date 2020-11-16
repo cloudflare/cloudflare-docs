@@ -1,22 +1,21 @@
 ---
+title: Custom CSRs
 order: 2
 ---
 
-# Custom CSRs
-
---------
+# Custom Certificate Signing Requests
 
 ## Success codes
-Endpoint|Method|Code
---------|------|----
-/api/v4/zones/:zone_id/custom_csrs|POST|201 Created
-/api/v4/zones/:zone_id/custom_csrs|GET|200 OK
-/api/v4/zones/:zone_id/custom_csrs/:custom_csr_id|GET|200 OK
-/api/v4/zones/:zone_id/custom_csrs/:custom_csr_id|DELETE|200 OK
 
---------
+Endpoint|Method|HTTP Status Code
+--------|------|----
+`/api/v4/zones/:zone_id/custom_csrs`|POST|201 Created
+`/api/v4/zones/:zone_id/custom_csrs`|GET|200 OK
+`/api/v4/zones/:zone_id/custom_csrs/:custom_csr_id`|GET|200 OK
+`/api/v4/zones/:zone_id/custom_csrs/:custom_csr_id`|DELETE|200 OK
 
 ## Error codes
+
 HTTP Status Code|API Error Code|Error Message
 ----------------|--------------|-------------
 400|1400|Unable to decode the JSON request body. Please check your input and try again.
