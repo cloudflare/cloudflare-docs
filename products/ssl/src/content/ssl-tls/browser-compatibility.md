@@ -15,7 +15,7 @@ Clients using RSA key exchange|❌|✅|✅|✅
 
 <Aside type='warning' header='Important'>
 
-Cloudflare no longer supports SSL certificates under any plan for clients without [Server Name Indication (SNI) extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) to the TLS protocol.
+Cloudflare Universal SSL only supports browsers and API clients that use the [Server Name Indication (SNI)](https://www.cloudflare.com/learning/ssl/what-is-sni/) extension to the TLS protocol.
 
 </Aside>
 
