@@ -4,6 +4,12 @@ order: 16
 
 # Session affinity
 
+<Aside type='warning' header='Important'>
+
+Cloudflare supports only cookie-based session affinity. Other methods, such as TCP session affinity, are not supported.
+
+</Aside>
+
 ## Overview
 
 Loading a website usually requires fetching multiple assets from a web server. Cloudflare Session Affinity minimizes redundant network requests by automatically directing requests from the same client to the same origin web server. Cloudflare sets a cookie on the initial response to the client. Using the cookie in subsequent client requests ensures those requests are sent to the same origin, unless the origin is unavailable.
@@ -14,46 +20,55 @@ When enabled, Cloudflare Session Affinity does the following:
 - **Subsequent requests by the same client are forwarded to that origin** for the duration of the cookie and as long as the origin server remains healthy.
 - **If the cookie expires or the origin server is unhealthy**, Cloudflare sets a new cookie encoding the appropriate failover origin.
 
-All sessions default to 23 hours unless a custom session TTL is specified (in seconds) between 30 minutes and 7 days.  A Session Affinity Cookie is required to honor the TTL.  The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled.  Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
+All sessions default to 23 hours unless a custom session TTL is specified (in seconds) between 30 minutes and 7 days. A Session Affinity Cookie is required to honor the TTL. The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
 
 ---
 
-## Enabling Session Affinity from the Load Balancing dashboard
+## Enabling Session Affinity from the Cloudflare dashboard
 
-To enable Session Affinity, use the **Session Affinity** panel in the Load Balancing dashboard.
-Session Affinity with **Client IP fallback** is not officially supported for grey-clouded Load Balancers.
+To enable Session Affinity, use the **Session Affinity** panel in the **Load Balancing** app.
 
 ### Configuring Session Affinity for a new load balancer
 
-You can enable the **Session Affinity** option during the first stage of the **Create a Load Balancer** wizard, as shown below. Select the **By Cloudflare cookie only** radio button and set the toggle switch to the _On_ position to enable session affinity. The **Client IP fallback** option behaves the same as the cookie option except client IP address is used as a fallback if no Session Affinity Cookie is provided.
+You can enable **Session Affinity** when you [create a load balancer](/create-load-balancer-ui), during the first step of the Create Load Balancer wizard.
 
-![](../static/images/session-affinity-1.png)
+To enable session affinity, click the **By Cloudflare cookie only** radio button and toggle Session Affinity:
+
+![Configure Session Affinity](../static/images/session-affinity-1.png)
+
+The **Client IP fallback** option behaves the same as the cookie option except the client IP address is used as a fallback when no session affinity cookie is provided.
+
+<Aside type='warning' header='Important'>
+
+Session Affinity with Client IP fallback is not supported for load balancers in [DNS-only mode (gray cloud)](/understand-basics/proxy-modes).
+
+</Aside>
 
 ### Configuring Session Affinity for an existing load balancer
 
 You can configure session affinity for an existing load balancer from the Load Balancing dashboard. Click the **Edit** button associated with the load balancer to open the **Edit Load Balancer** view and access the **Session Affinity** option.
 
-![](../static/images/session-affinity-2.png)
+![Load balancing card Edit option](../static/images/session-affinity-2.png)
 
 ### Origin Drain
 
 Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. Enable Origin Drain by entering a value in the **Origin drain duration TTL** field, after enabling Session Affinity. **Origin drain duration TTL** is the time (in seconds) it takes to drain all active connections. Traffic drains from any disabled origin or from all origins within a disabled pool.
 
-![](../static/images/session-affinity-3.png)
+![Session affinity configuration with origin drain](../static/images/session-affinity-3.png)
 
 To check the status of a disabled origin’s drain, use the added **Drain Time** column in the Manage Load Balancer table. **Drain Time** shows the time remaining for a drain in progress. You can edit the **Origin drain duration TTL** field value while an origin drains. Entering a value shorter than the remaining TTL for drains in progress servers current connections to those origins.
 
-![](../static/images/session-affinity-4.png)
+![Manage Load Balancer table with draining in progress](../static/images/session-affinity-4.png)
 
 When a drain is **Complete**, there are no longer any connections to that origin.
 
-![](../static/images/session-affinity-5.png)
+![Manage Load Balancer table with draining complete](../static/images/session-affinity-5.png)
 
 ---
 
 ## Enabling Session Affinity via the Cloudflare API
 
-Session affinity is a property of load balancers. Use the following endpoint to configure Session Affinity (see _[Create a load balancer with the API](/create-load-balancer-api/)_):
+Session affinity is a property of load balancers. Use the following endpoint to configure Session Affinity (see [_Create a load balancer with the API_](/create-load-balancer-api/)):
 
 ```txt
 zones/:identifier/load_balancers
@@ -62,6 +77,8 @@ zones/:identifier/load_balancers
 Set the `session_affinity` parameter to configure the feature. The default value is an empty string, which indicates that Session Affinity is disabled. To enable it, use the value “cookie” in your request.
 
 Set the `session_affinity_ttl` parameter to configure the duration of session affinity cookies. Values are in seconds and must be in the range 1800–604800 (30 minutes to seven days). Unless `session_affinity` is explicitly set, the default value of 23 hours is used. This parameter is ignored when Session Affinity is disabled.
+
+For a detailed description of the limitations and values available for `session-affinity` and `session_affinity_ttl`, see [_Load balancers_](/understand-basics/load-balancers/#properties).
 
 ### Configuring Session Affinity for a new load balancer
 
