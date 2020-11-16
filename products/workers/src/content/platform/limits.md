@@ -25,9 +25,25 @@ order: 2
 
 ## KV limits
 
+The Workers Free plan includes limited KV Usage. If you exceed one of these limits, further operations of that type will fail with an error. All limits reset daily at 00:00 UTC.
+
 <TableWrap>
 
-| Feature                               | Bundled    |
+| Feature                               | Free limit  |
+|---------------------------------------|-------------|
+| [Reads/day](#kv)                      |   100,000   |
+| [Writes/day](#kv)                     |     1,000   |
+| [Lists/day](#kv)                      |     1,000   |
+| [Deletes/day](#kv)                    |     1,000   |
+| [Storage limit](#kv)                  |     1 GB    |
+
+</TableWrap>
+
+The following limits apply regardless of the plan used.
+
+<TableWrap>
+
+| Feature                               | Limit      |
 |---------------------------------------|------------|
 | [Reads/second](#kv)                   | unlimited  |
 | [Writes/second (different keys)](#kv) | unlimited  |
@@ -36,7 +52,7 @@ order: 2
 | [Keys/namespace](#kv)                 | unlimited  |
 | [Key size](#kv)                       | 512 bytes  |
 | [Key metadata](#kv)                   | 1024 bytes |
-| [Value size](#kv)                     | 10 MB      |
+| [Value size](#kv)                     | 25 MB      |
 
 </TableWrap>
 
@@ -154,12 +170,12 @@ __Note:__ App Workers scripts do not count towards this limit.
 
 ## KV
 
-After subscription to a Workers Bundled plan, KV is enabled. Workers KV supports:
+Workers KV supports:
 
 - Up to 100 Namespaces per account
 - Unlimited keys per namespace
 - Keys of up to 512 bytes
-- Values of up to 10 MB
+- Values of up to 25 MB
 - Metadata of up to 1024 bytes per key
 - Unlimited reads per second
 - Unlimited writes per second, if they are to different keys

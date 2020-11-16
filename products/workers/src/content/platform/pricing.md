@@ -4,17 +4,31 @@ order: 3
 
 # Pricing
 
-Workers is now free to enable for all, and are subject to some limits.
+Workers and Workers KV are now free to enable for all, subject to some limits.
 
 ## Bundled
 
-To avoid the limits and enable KV, you can subscribe to the Workers Bundled plan for **$5 USD per month for an account**. This plan includes 10 million requests per month.
+To avoid the limits, you can subscribe to the Workers Bundled plan for **$5 USD per month for an account**. This plan includes 10 million requests per month.
 
 With the Workers Bundled plan, requests beyond the included quota will be charged at **$0.50/million requests**.
 
 ## KV
 
-Enabling Workers KV requires the Bundled plan.
+The Workers Free plan includes limited KV Usage. If you exceed one of these limits, further operations of that type will fail with an error. All limits reset daily at 00:00 UTC.
+
+<TableWrap>
+
+| Feature                               | Free limit  |
+|---------------------------------------|-------------|
+| [Reads/day](#kv)                      |   100,000   |
+| [Writes/day](#kv)                     |     1,000   |
+| [Lists/day](#kv)                      |     1,000   |
+| [Deletes/day](#kv)                    |     1,000   |
+| [Storage limit](#kv)                  |     1 GB    |
+
+</TableWrap>
+
+To avoid these limits, you can subscribe to the Workers Bundled plan.  Usage is then billed as follows:
 
 <TableWrap>
 
