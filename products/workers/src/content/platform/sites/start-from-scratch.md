@@ -6,7 +6,7 @@ order: 1
 
 To start from scratch to create a Workers Site, follow these steps:
 
-1. Ensure you have the latest version of [Wrangler](/cli-wrangler/install-update#update) and Node.js installed. Workers Sites require the Workers [Bundled plan](https://workers.cloudflare.com/sites#plans).
+1. Ensure you have the latest version of [Wrangler](/cli-wrangler/install-update#update) and Node.js installed.
 
 2. In your terminal run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. For example, I’ll create a project called my-site by running this command:
 
