@@ -124,7 +124,7 @@ Learn more about [the `FetchEvent` lifecycle](/learning/fetch-event-lifecycle).
 
 ### 4b. Routing and filtering requests
 
-Now that we have a very basic script running on all requests, the next thing you’ll commonly want to do be able to do is generate a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
+Now that we have a very basic script running on all requests, the next thing you’ll commonly want to be able to do is generate a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
 
 #### Option 1: Manually filter requests
 
