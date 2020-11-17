@@ -41,7 +41,6 @@ You can use the following YAML keys to configure how cloudflared communicates wi
 - [caPool](#caPool)
 - [noTLSVerify](#noTLSVerify)
 - [disableChunkedEncoding](#disableChunkedEncoding)
-- [bastionMode](#bastionMode)
 - [proxyAddress](#proxyAddress)
 - [proxyPort](#proxyPort)
 - [proxyType](#proxyType)
@@ -145,15 +144,6 @@ Disables TLS verification of the certificate presented by your origin. Will allo
 Default: `false`
 
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
-
-<div id="bastionMode">
-
-## bastionMode
-</div>
-
-Default: `false`
-
-Runs as jump host.
 
 <div id="proxyAddress">
 
