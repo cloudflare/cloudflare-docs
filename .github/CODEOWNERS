@@ -14,7 +14,7 @@ products/api/ @cloudflare/sdk
 products/argo-tunnel/ @abracchi-tw
 
 # BYOIP
-products/byoip/ @ConzorKingKong
+products/byoip/ @ConzorKingKong @dinasaur404
 
 # Distributed Web
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn
