@@ -280,6 +280,9 @@ local_protocol="https"
 To illustrate how these levels are applied, here is a wrangler.toml using multiple environments:
 
 ```toml
+---
+filename: wrangler.toml
+---
 # top level configuration
 type = "webpack"
 name = "my-worker-dev"
