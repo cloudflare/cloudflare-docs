@@ -12,7 +12,10 @@ The configuration file format uses [YAML syntax](http://www.yaml.org/start.html)
 
 For example, the `--hostname [hostname]` argument is written in the config file as:
 
-```yml
+```yaml
+---
+filename: config.yml
+---
 hostname: [hostname]
 ```
 
@@ -20,7 +23,10 @@ hostname: [hostname]
 
 You can specify a particular Tunnel in the config file by name or ID. When the following stanza is present in the file, the command `cloudflared tunnel run` will be treated as if `cloudflared tunnel run NAME-OR-ID` was run.
 
-```yml
+```yaml
+---
+filename: config.yml
+---
 tunnel: NAME-OR-ID
 ```
 
@@ -35,7 +41,10 @@ $ cloudflared tunnel --config tunnels/config.yml run
 Without specifying `--config`, `cloudflared` will default to reading `~/.cloudflared/config.yml`.
 An example `config.yml` for the above command could look like:
 
-```yml
+```yaml
+---
+filename: config.yml
+---
 hostname: tunnel.yourdomain.com
 url: http://localhost:8000
 logfile: /var/log/cloudflared.log
@@ -43,7 +52,10 @@ logfile: /var/log/cloudflared.log
 
 Flags that don't expect any value (such as `--hello-world`) should be specified as boolean `true` in the YAML:
 
-```yml
+```yaml
+---
+filename: config.yml
+---
 hello-world: true
 ```
 

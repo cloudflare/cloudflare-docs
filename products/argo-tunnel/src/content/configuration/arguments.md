@@ -196,7 +196,9 @@ Install or uninstall cloudflared as a system service. The details of service ins
 
 ## Update command
 
-`cloudflared update`
+```sh
+$ cloudflared update
+```
 
 Looks for a new version on the official download server. If a new version exists, updates the agent binary and quits. Otherwise, it does nothing.
 To determine if an update happened in a script, check for error code 64.
