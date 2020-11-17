@@ -56,8 +56,8 @@ Wrangler can be installed both through [npm](https://www.npmjs.com/get-npm) and 
 
     By default we vendor OpenSSL to make things easier when installing, but this can make the binary size a bit larger. If you want to use your system OpenSSL, provide the feature flag `sys-openssl` when running install.
 
-    ```bash
-    cargo install wrangler --features sys-openssl
+    ```sh
+    $ cargo install wrangler --features sys-openssl
     ```
 
 ### Manual Install
