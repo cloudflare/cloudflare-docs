@@ -33,7 +33,7 @@ deploy:
   steps:
     - uses: actions/checkout@v2
     - name: Publish
-      uses: cloudflare/wrangler-action@1.2.0
+      uses: cloudflare/wrangler-action@1.3.0
 ```
 
 2. **Add support for `CF_API_TOKEN` and `CF_ACCOUNT_ID` in your workflow**:
@@ -41,7 +41,7 @@ deploy:
 ```yaml
 # Update "Publish" step from last code snippet
 - name: Publish
-  uses: cloudflare/wrangler-action@1.2.0
+  uses: cloudflare/wrangler-action@1.3.0
   with:
     apiToken: ${{ secrets.CF_API_TOKEN }}
   env:
