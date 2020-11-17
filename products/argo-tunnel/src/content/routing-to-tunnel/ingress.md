@@ -12,8 +12,8 @@ order: 20
 | 4. [Install `cloudflared` and authenticate the software](/getting-started) |
 | 5. [Create an Argo Tunnel](/create-tunnel) |
 
-Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service. 
-By configuring **ingress rules** in the [configuration file](/configuration/config), you can specify which local services a request should be proxied to. 
+Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
+By configuring **ingress rules** in the [configuration file](/configuration/config), you can specify which local services a request should be proxied to.
 
 ## Matching traffic
 
@@ -62,7 +62,17 @@ ingress:
   - service: http_status:404
 ```
 
-With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status. 
+With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status.
+
+
+| Service | Description | Example `service` value |
+|--|--|--|--|
+| HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |
+| HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead | `unix:/home/production/echo.sock` |
+| TCP, RDP, SSH, SMB, kubectl to a single address | TCP requests are proxied to your local service. [Learn more](https://developers.cloudflare.com/access/protocols-and-connections). | `ssh://localhost:2222` |
+| TCP, RDP, SSH, SMB, kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
+| Hello World | Test server for validating your Argo Tunnel setup | `hello_world` |
+| HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
 
 ## Single-service configuration
 
@@ -78,7 +88,7 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 
 You can configure various properties of the requests `cloudflared` makes. For example, you can set a specific host header, or you can use a specific number of keep-alive connections. For a complete list of configuration options, see the [configuration](/configuration) page.
 
-The `originRequest` key in the root of your configuration file lets you configure these requests. Each local service will inherit this root-level config, and can override it with their own service-specific configuration. 
+The `originRequest` key in the root of your configuration file lets you configure these requests. Each local service will inherit this root-level config, and can override it with their own service-specific configuration.
 
 ```yaml
 originRequest: # Root-level configuration
