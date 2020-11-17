@@ -7,7 +7,7 @@ order: 1
 
 Overused or geographically distant servers add unnecessary latency and degrade the user experience. Unreliable or misconfigured servers can drop user requests completely, preventing access to websites, web apps, and APIs. Poor user experiences like these have a direct impact on revenue, reputation, and customer loyalty.
 
-Cloudflare Load Balancing provides DNS-based load balancing and active health checks against origin servers and pools. It expands on Cloudflare's existing Anycast DNS network to provide resilience against distributed denial of service (DDoS) attacks by steering away from healthy origin servers. Users can also enable Geo Steering, which directs traffic to specific origin pools based on the client’s region.
+Cloudflare Load Balancing provides DNS-based load balancing and active health checks against origin servers and pools. It expands on Cloudflare's existing Anycast DNS network to provide resilience against distributed denial of service (DDoS) attacks by steering away from unhealthy origin servers. Users can also enable Geo Steering, which directs traffic to specific origin pools based on the client’s region.
 
 Cloudflare Load Balancing delivers three key features:
 
