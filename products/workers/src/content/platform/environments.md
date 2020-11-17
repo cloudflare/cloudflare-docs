@@ -176,6 +176,9 @@ With this configuration, Wrangler will behave in the following manner:
 If you only want to deploy to workers.dev you can configure Wrangler like so:
 
 ```toml
+---
+filename: wrangler.toml
+---
 name = "my-worker-dev"
 type = "webpack"
 account_id = "12345678901234567890"
