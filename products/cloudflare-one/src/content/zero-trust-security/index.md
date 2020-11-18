@@ -2,6 +2,6 @@
 order: 1
 ---
 
-# Zero Trust Security tutorials
+# Zero Trust Security
 
 <DirectoryListing path="/zero-trust-security"/>
