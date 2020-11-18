@@ -16,14 +16,14 @@ This section of Cloudflare documentation provides step-by-step tutorials that co
 
 | List of Tutorials |
 |---|
-| [Secure GitLab with Zero Trust rules for SSH and HTTP](/gitlab)       |
-| [Require specifc countries](/country-rules) |
-| [Filter DNS on devices](/secure-dns-devices) |
-| [Block file uploads to Google Drive](/block-uploads) |
-| [Filter DNS on home or office network](/secure-dns-network) |
-| [Share development environments](/share-new-site) |
-| [Connect without long-lived API keys](/credentials-only) |
-| [Connect multiple HTTP origins](/multi-origin) |
+| [Secure GitLab with Zero Trust rules for SSH and HTTP](zero-trust-security/gitlab)       |
+| [Require specifc countries](zero-trust-security/country-rules) |
+| [Filter DNS on devices](secure-web-gateway/secure-dns-devices) |
+| [Block file uploads to Google Drive](secure-web-gateway/block-uploads) |
+| [Filter DNS on home or office network](secure-web-gateway/secure-dns-network) |
+| [Share development environments](secure-origin-connections/share-new-site) |
+| [Connect without long-lived API keys](secure-origin-connections/credentials-only) |
+| [Connect multiple HTTP origins](secure-origin-connections/multi-origin) |
 
 </TableWrap>
 
