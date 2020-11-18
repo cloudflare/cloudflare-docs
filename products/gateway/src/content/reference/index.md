@@ -4,6 +4,6 @@ order: 4
 
 # Learning
 
-This section expands on the concepts of **location** and **policy**, and how Cloudflare Gateway works.
+This section expands on Gateway features and concepts. If you want to know more about what a policy is, or how locations work, you've come to the right place. You will find definitions, explanations, and all the information you need to learn how Gateway works.
 
-For more information on how to set up locations and policies, visit the [Getting Started](/getting-started) section.
+For step-by-step instructions on how to configure Gateway, visit the [Getting Started](/getting-started) section.
