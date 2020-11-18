@@ -1,28 +1,22 @@
----
-order: 5
----
-
-# Android Deployment
+# Android
 
 <Aside>
 
-Before you get started please visit [Android Mobile Client](/setting-up/android/) to review the system requirements and find a link to the App Store.
+**Before you start**  
 
-Once you are ready, choose how you are going to deploy the client in your organization:
-* [Automated](#automated-install) (Intune, Endpoint Manager, etc.)
-* [Manual Configuration](#manual-configuration) (End users manually configure client on their own device)
+Visit the [Requirements section](../requirements) to review the system requirements for Android and to download the Android installer.
+
+Next, choose how you want to deploy the WARP Client in your organization:
+* [Automated configuration](#automated-configuration) via command prompt
+* [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
 
 </Aside>
 
-<div id="automated-install">
+## Automated configuration
 
-## Automated Install
----------------------
-</div>
+The Cloudflare WARP Android client (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en&gl=US)) allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 
-The Cloudflare WARP Android client (Known in the store as 1.1.1.1: Faster & Safer Internet) allows for an automated install via tools like Intune, Google Endpoint Manager and others.
-
-Accepted configuration values are as follows (for a description of each key and what it means, see [Deployment parameters](/teams/parameters/))
+Accepted configuration values are as follows:
 
 ```xml
 <key>organization</key>
@@ -36,19 +30,21 @@ Accepted configuration values are as follows (for a description of each key and 
 <key>support_url</key>
 <string>https://support.example.com</string>
 ```
+See the [deployment parameters](/teams/parameters/) for a description of each value.
 
-Cloudflare WARP (Known in the store as 1.1.1.1: Faster & Safer Internet) is deployed
+Cloudflare WARP (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en&gl=US)) is deployed
 
-<div id="manual-configuration">
+## Manual configuration
 
-## Manual Configuration
----------------------
-</div>
+If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
+* If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH Subdomain](#manually-configure-a-gateway-doh-subdomain).
+* If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
-If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so from two places in the UI:
+### Manually configure a Gateway DoH Subdomain
+If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain) to find this value for your Teams configuration.
 
-#### Manually configure a Gateway DoH Subdomain
-If your organization uses Teams Gateway then you will need to instruct your users to configure the Gateway DoH Subdomain field. You can <a href="https://developers.cloudflare.com/gateway/connecting-to-gateway/with-client">click here to find this value</a> for your Teams Gateway configuration. Then complete the following steps:
+Then ask your users to complete the following steps:
+
 1. Fine the **1.1.1.1** application and tap to launch.
 1. Tap the **menu bar icon** (3 lines) in the upper right.
 1. Tap **Advanced**.
@@ -57,8 +53,9 @@ If your organization uses Teams Gateway then you will need to instruct your user
 1. Enter a DoH Sub Domain and tap **Back** until you are back at the home screen.
 
 
-#### Manually configure a Cloudflare for Teams device registration
-If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, then you will need to instruct your users to login to Cloudflare for Teams.
+### Manually configure a Cloudflare for Teams device registration
+If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
+
 1. Fine the **1.1.1.1** application and tap to launch.
 1. Tap the **menu bar icon** (3 lines) in the upper right.
 1. Tap **Account**.

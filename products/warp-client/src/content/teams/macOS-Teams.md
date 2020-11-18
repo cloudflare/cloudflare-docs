@@ -9,7 +9,7 @@ hidden: true
 
 **Before you start**  
 
-Visit the [Requirements section](/requirements) to review the system requirements for macOS and to download the macOS installer.
+Visit the [Requirements section](../requirements) to review the system requirements for macOS and to download the macOS installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) via command prompt
@@ -42,7 +42,7 @@ Here is an example plist file with the accepted arguments:
 </plist>
 ```
 
-For a description of each argument and what it means, see [deployment parameters](/warp-for-teams/teams#parameters).
+For a description of each argument and what it means, see [deployment parameters](/teams/parameters/).
 
 [Click here](../../static/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
 1. Open a Terminal window.
