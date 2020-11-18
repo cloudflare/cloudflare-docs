@@ -4,7 +4,7 @@ order: 0
 
 # Start from existing
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to be on the [latest version](/cli-wrangler/install-update#update) — and the Workers [Bundled plan](https://workers.cloudflare.com/sites#plans).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to be on the [latest version](/cli-wrangler/install-update#update).
 
 To deploy a pre-existing static site project, you’ll need to start with a pre-generated site. Workers Sites works well with all static site generators! For a quick-start, check out the following projects:
 
