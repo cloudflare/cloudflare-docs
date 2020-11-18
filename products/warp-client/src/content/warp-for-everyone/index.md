@@ -15,7 +15,7 @@ Cloudflare WARP supports the following operational modes:
  Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, privacy-first consumer DNS service](https://blog.cloudflare.com/announcing-1111/) and [Introducing 1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/)
 
 
-* **WARP.** The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt all of the traffic from your device and send it directly to Cloudflare’s edge,e nsuring that no one in between is snooping on what you're doing. If the site you are visiting is already a Cloudflare customer, the content is immediately sent down to your device. If they aren't on our network, we use our global network of data centers  to devise  the shortest path to whomever you are talking to.
+* **WARP.** The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt all of the traffic from your device and send it directly to Cloudflare’s edge, ensuring that no one in between is snooping on what you're doing. If the site you are visiting is already a Cloudflare customer, the content is immediately sent down to your device. If they aren't on our network, we use our global network of data centers to devise the shortest path to whomever you are talking to.
 
  Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/)
 
