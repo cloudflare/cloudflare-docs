@@ -1,9 +1,12 @@
 ---
 title: Home
 order: 0
+type: overview
 ---
 
 # Cloudflare for Teams
+
+<ContentColumn>
 
 Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
 
@@ -18,3 +21,5 @@ Cloudflare One™ is the culmination of engineering and technical development gu
 <ButtonGroup>
   <Button type="secondary" href="https://blog.cloudflare.com/introducing-cloudflare-one/">Read the announcement</Button>
 </ButtonGroup>
+
+</ContentColumn>
