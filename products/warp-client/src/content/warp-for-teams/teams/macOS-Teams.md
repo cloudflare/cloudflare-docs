@@ -43,7 +43,7 @@ Here is an example plist file with the accepted arguments:
 
 For a description of each argument and what it means, see [deployment parameters](/warp-for-teams/teams#parameters).
 
-[Click here](/static/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
+[Click here](../../static/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
 1. Open a Terminal window.
 2. Run the following command:
 
