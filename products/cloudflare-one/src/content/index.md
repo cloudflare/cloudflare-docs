@@ -6,15 +6,15 @@ type: overview
 
 <ContentColumn>
 
-# Cloudflare One tutorials
+# Cloudflare for Teams tutorials
 
-Cloudflare One consists of several products which, together, help keep enterprises connected and secure using Cloudflare's network.
+Cloudflare for Teams consists of several products which, together, help keep enterprises connected and secure using Cloudflare's network.
 
-This section of Cloudflare documentation provides step-by-step tutorials that cover multiple products. Each tutorial starts with a specific use case and introduces Cloudflare One products and how they can help solve a specific challenge.
+This section of Cloudflare documentation provides step-by-step tutorials that cover multiple products. Each tutorial starts with a specific use case and introduces Cloudflare for Teams products and how they can help solve a specific challenge.
 
 You can also find product-specific technical documentation in the sections linked below.
 
-## Cloudflare One products
+## Cloudflare for Teams products
 
 |Product|Description|Documentation|
 |---|---|---|
