@@ -139,11 +139,17 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-<Aside>
+To use the `qr-image` package, configure the `type` to `"webpack"`, to tell Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. (Learn more about [`type` configuration](/cli-wrangler/configuration).)
 
-**Note:** You must set `type = "webpack"` in your `wrangler.toml` in order for Wrangler to use webpack to bundle your worker scripts. No other types will build your script with webpack.
-
-</Aside>
+```toml
+---
+filename: wrangler.toml
+highlight: [3]
+---
+name = "qr-code-generator"
+account_id = "$yourAccountId"
+type = "webpack"
+```
 
 In `index.js`, require the `qr-image` package as the variable `qr`. In the `generate` function, parse the incoming request as JSON, using `request.json`, and use the `text` to generate a QR code using `qr.imageSync`:
 
