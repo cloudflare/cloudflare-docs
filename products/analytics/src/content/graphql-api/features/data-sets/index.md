@@ -9,7 +9,7 @@ Cloudflare Analytics offers a range of data sets, including both general and pro
 
 - **Domain.** Each data set is named after the domain it describes and is associated with a set of nodes. Data nodes are typically named after the domain they represent. Product-specific data nodes incorporate the name of the relevant product, as in `loadBalancingRequests`. Network Analytics data nodes incorporate the `ipFlows` label.
 
-- **Aggregated data.** Nodes that represent aggregated data include the the `Groups` suffix. For example, the `loadBalancingRequestsGroups` node represents aggregated data for Load Balancing requests. Aggregated data returns in an array of `...Group` objects. If the data represented by a node is aggregated prior to query time, the aggregation period is also specified. For example, `requests1mGroups` represents data aggregated into a collection of minute-wise roll-up reports.
+- **Aggregated data.** Nodes that represent aggregated data include the `Groups` suffix. For example, the `loadBalancingRequestsGroups` node represents aggregated data for Load Balancing requests. Aggregated data returns in an array of `...Group` objects. If the data represented by a node is aggregated prior to query time, the aggregation period is also specified. For example, `requests1mGroups` represents data aggregated into a collection of minute-wise roll-up reports.
 
 - **Raw data.** Raw data nodes, such as `loadBalancingRequests`, are not aggregated and so do not incorporate the `Groups` suffix. Raw data returns in arrays containing objects of the relevant data type. For example, a query to `loadBalancingRequests` returns an array of _LoadBalancingRequest_ objects.
 
