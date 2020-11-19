@@ -11,12 +11,12 @@ order: 3
 Visit the [Requirements section](/requirements) to review the system requirements for macOS and to download the macOS installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
-* [Automated configuration](#automated-configuration) via command prompt
+* [Automated configuration](#automated-configuration) (Jamf, Intune, Script)
 * [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
 
 </Aside>
 
-## Automated configuration
+## Automated configuration (Jamf, Intune, Script)
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device.
 
