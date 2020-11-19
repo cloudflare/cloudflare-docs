@@ -327,13 +327,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/cloudflare-one"
-      # TODO - uncomment to deploy cloudflare-one to prod
-      # - name: Publish production
-      #   uses: cloudflare/wrangler-action@1.2.0
-      #   with:
-      #     apiToken: ${{ secrets.CF_API_TOKEN }}
-      #     workingDirectory: "products/cloudflare-one"
-      #     environment: "production"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/cloudflare-one"
+          environment: "production"
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
