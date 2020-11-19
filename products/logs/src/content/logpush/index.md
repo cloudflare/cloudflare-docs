@@ -21,6 +21,6 @@ If following the UI method, you'll be prompted to allow Cloudflare to access you
 - [Enable Microsoft Azure](/logpush/azure/)
 - [Enable Sumo Logic](/logpush/sumo-logic/)
 
-Currently, Logpush is available to customers on the Cloudflare Enteprise plan and for the following services: Amazon S3, Google Cloud Storage (GCS), Microsoft Azure, and Sumo Logic. Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can have their logs pushed to IBM's Cloud Object Storage (COS).
+Currently, Logpush is available to customers on the Cloudflare Enterprise plan and for the following services: Amazon S3, Google Cloud Storage (GCS), Microsoft Azure, and Sumo Logic. Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can have their logs pushed to IBM's Cloud Object Storage (COS).
 
 Cloudflare aims to support additional plans and services in the future. Interested in a particular service? Please take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
