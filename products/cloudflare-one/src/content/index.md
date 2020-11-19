@@ -35,10 +35,10 @@ For product-specific technical documentation, follow the links below:
 
 |Product|Description|Documentation|
 |---|---|---|
-|Access|Zero Trust security for self-hosted and SaaS applications|[Link](https://developers.cloudflare.com/access/)|
-|Gateway|Secure Web Gateway filtering and connectivity|[Link](https://developers.cloudflare.com/gateway/)|
-|Argo Tunnel|Outbound-only connections to Cloudflare's edge|[Link](https://developers.cloudflare.com/argo-tunnel/)|
-|WARP|Mobile and desktop client which connects devices to Cloudflare's network|[Link](https://developers.cloudflare.com/warpclient/)|
+|**Access**|Zero Trust security for self-hosted and SaaS applications|[Link](https://developers.cloudflare.com/access/)|
+|**Gateway**|Secure Web Gateway filtering and connectivity|[Link](https://developers.cloudflare.com/gateway/)|
+|**Argo Tunnel**|Outbound-only connections to Cloudflare's edge|[Link](https://developers.cloudflare.com/argo-tunnel/)|
+|**WARP**|Mobile and desktop client which connects devices to Cloudflare's network|[Link](https://developers.cloudflare.com/warpclient/)|
 
 </TableWrap>
 
