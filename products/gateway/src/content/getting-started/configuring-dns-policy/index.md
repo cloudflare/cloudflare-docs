@@ -9,11 +9,11 @@ order: 2
 1. On the Teams dashboard, navigate to the **Policies** tab.
 2. Click on **Create a policy**.
 
-![Gateway first policy](../static/dash-first-policy.png)
+ ![Gateway first policy](../../static/dash-first-policy.png)
 
 3. Add a **policy name**.
 
-![Gateway policy name](../static/add-policy-name.png)
+ ![Gateway policy name](../../static/add-policy-name.png)
 
 
 4. In the **Assign Locations** card, specify the location(s) for which you want to enable the policy. To enable it for all your locations, click **Select all** on the top right corner of the card.  
@@ -28,7 +28,7 @@ order: 2
 
   * From the drop-down menu, choose a **Destination Type**.
 
-    ![Gateway add destination](../static/add-a-destination.png)
+    ![Gateway add destination](../../static/add-a-destination.png)
 
   * Choose whether you want to allow, block, or override the destination.
 
@@ -36,4 +36,4 @@ order: 2
 
 8. Click on **Save** to add the policy to your dashboard.
 
-![Gateway added policy](../static/added-policy.png)
+ ![Gateway added policy](../../static/added-policy.png)
