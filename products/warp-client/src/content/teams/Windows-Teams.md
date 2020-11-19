@@ -11,12 +11,12 @@ order: 2
 Visit the [Requirements section](../requirements) to review the system requirements for Windows and to download the Windows installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
-* [Automated configuration](#automated-install-via-command-prompt) via command prompt
+* [Automated configuration](#automated-install-via-command-prompt) (Intune, Command Prompt)
 * [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
 
 </Aside>
 
-## Automated configuration via command prompt
+## Automated configuration (Intune, Command Prompt)
 
 The WARP Client for Windows allows for an automated install via tools like Intune, AD, or any script or management tool that can execute a `.msi` file.
 
