@@ -154,4 +154,4 @@ module.exports = {
 }
 ```
 
-([Source](https://github.com/cloudflare/cloudflare-docs/blob/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/docs-engine/docs-config.js))
+([Source](https://github.com/cloudflare/cloudflare-docs/blob/production/products/docs-engine/docs-config.js))
