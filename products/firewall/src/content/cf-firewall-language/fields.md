@@ -315,7 +315,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
   </thead>
   <tbody style='vertical-align:top'>
     <tr>
-        <td><p><code>cf.colo.najme</code><br /><Type>String</Type></p>
+        <td><p><code>cf.colo.name</code><br /><Type>String</Type></p>
         </td>
         <td>
         The data center that is handling this traffic.  <br />
