@@ -1,7 +1,7 @@
 module.exports = {
   product: "Tenant",
   pathPrefix: "/tenant",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
+  productIconKey: "tenant",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/tenant",
   externalLinks: [
@@ -22,4 +22,3 @@ module.exports = {
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }
-
