@@ -1,7 +1,7 @@
 module.exports = {
   product: "HTTP/3",
   pathPrefix: "/http3",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
+  productIconKey: "http3",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/http3",
   externalLinks: [
