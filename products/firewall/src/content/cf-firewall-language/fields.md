@@ -406,7 +406,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code>http.request.header.names</code><br /><Type>Array&lt;String></Type></td>
+      <td valign="top"><code>http.request.headers.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the names of the headers in the HTTP request. The names are not pre-processed and retain the case used in the request.
          </p>
@@ -427,7 +427,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code>http.request.header.values</code><br /><Type>Array&lt;String></Type></td>
+      <td valign="top"><code>http.request.headers.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the values of the headers in the HTTP request.</p>
          <p>Values are not pre-processed and retain the case used in the request.</p>
@@ -439,18 +439,28 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
          <br /><em>Whitespace:</em> preserved
          <br /><em>Non-ASCII:</em> preserved
          </p>
-         <p>Example:
+         <p>Example 1:
          <br />
          <code class="InlineCode">any(http.request.headers.values[*] == "application/json")</code>
          </p>
-         <p>Example value:
+         <p>Example value 1:
          <br />
          <code class="InlineCode">["application/json"]</code>
+         </p>
+         <p>Additionally used for logging requests according to the specified operator and the length/size entered for the header value.
+         </p>
+         <p>Example 2:
+         <br />
+         <code class="InlineCode">any(len(http.request.headers.values[*])[*] gt 10)</code>
+         </p>
+         <p>Example value 2:
+         <br />
+         <code class="InlineCode">["gt 10"]</code>
          </p>
       </td>
    </tr>
    <tr>
-      <td valign="top"><code>http.request.header.truncated</code><br /><Type>Boolean</Type></td>
+      <td valign="top"><code>http.request.headers.truncated</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the HTTP request contains too many headers; otherwise, returns <code class="InlineCode">false</code>.
          </p>
