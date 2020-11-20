@@ -359,7 +359,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.proto</code><br /><Type>String</Type></p>
         </td>
         <td>
-        The transport layer for the packet, if one can be determined. <br />
+        The transport layer for the packet, if it can be determined. <br />
         Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
         </td>
     </tr>

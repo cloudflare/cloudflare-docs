@@ -47,7 +47,7 @@ To add a rule to an existing ruleset, we'll need the two things from the previou
 We'll use this to fetch the existing rules to help us construct the call to update the ruleset:
 
 ```
-curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/${account_id}/rulesets/4376358e00ec4c42b0450b1afed120bf/versions/1 \
+curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/4376358e00ec4c42b0450b1afed120bf/versions/1 \
 -H 'Content-Type: application/json' \
 -H 'X-Auth-Email: user@example.com' \
 -H 'X-Auth-Key: 00000000000' | jq '.result | {description: .description, rules: [ .rules[] | {id: .id, description: .description, action: .action, expression: .expression} ]}
