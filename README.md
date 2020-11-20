@@ -20,6 +20,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | API                     | api                  | [Test](https://api.cloudflare-docs.workers.dev/api)                                   | [Prod](https://developers.cloudflare.com/api)                  |
 | Argo Tunnel             | argo-tunnel          | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   | [Prod](https://developers.cloudflare.com/argo-tunnel)          |
 | BYOIP                   | byoip                | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               | [Prod](https://developers.cloudflare.com/byoip)                |
+| Cloudflare One          | cloudflare-one       | [Test](https://cloudflare-one.cloudflare-docs.workers.dev/cloudflare-one)             | [Prod](https://developers.cloudflare.com/cloudflare-one)       |
 | Distributed Web Gateway | distributed-web      | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           | [Prod](https://developers.cloudflare.com/distributed-web)      |
 | Docs Engine             | docs-engine          | [Test](https://docs-engine.cloudflare-docs.workers.dev/docs-engine)                   | [Prod](https://developers.cloudflare.com/docs-engine)          |
 | Events                  | events               | [Test](https://events.cloudflare-docs.workers.dev/events)                             | [Prod](https://developers.cloudflare.com/events)               |
