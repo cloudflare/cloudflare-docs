@@ -1,5 +1,6 @@
 module.exports = {
   product: "Distributed Web Gateway",
+  pathPrefix: "/distributed-web",
   productIconKey: "distributed-web",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/distributed-web",
