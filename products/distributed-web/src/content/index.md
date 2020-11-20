@@ -16,3 +16,4 @@ View files stored on the InterPlanetary File System in your browser. Interact wi
 </ButtonGroup>
 
 </ContentColumn>
+
