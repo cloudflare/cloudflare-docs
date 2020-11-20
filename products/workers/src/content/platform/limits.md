@@ -48,6 +48,7 @@ The following limits apply regardless of the plan used.
 | [Reads/second](#kv)                   | unlimited  |
 | [Writes/second (different keys)](#kv) | unlimited  |
 | [Writes/second (same key)](#kv)       | 1          |
+| [Operations/worker invocation](#kv)   | 1000       |
 | [Namespaces](#kv)                     | 100        |
 | [Keys/namespace](#kv)                 | unlimited  |
 | [Key size](#kv)                       | 512 bytes  |
