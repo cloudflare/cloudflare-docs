@@ -205,6 +205,8 @@ The `keys` property will contain an array of objects describing each key. That o
 
 Additionally, if `list_complete` is `false`, there are more keys to fetch. You’ll use the `cursor` property to get more keys. See the [Pagination section](#pagination) below for more details.
 
+Note that if your values fit in [the metadata size limit](/platform/limits#kv-limits), list can be used to return information associated with multiple keys in one operation. This is more efficient than a list followed by a get per key.
+
 #### Listing by prefix
 
 You can also list all of the keys starting with a particular prefix. For example, say you’ve structured your keys with a user, a user id, and then some key names, separated by colons (e.g. ` user:1:<key>`). You could get the keys for user number one by doing this:
