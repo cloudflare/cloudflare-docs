@@ -315,10 +315,10 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
   </thead>
   <tbody style='vertical-align:top'>
     <tr>
-        <td><p><code>cf.colo.id</code><br /><Type>String</Type></p>
+        <td><p><code>cf.colo.najme</code><br /><Type>String</Type></p>
         </td>
         <td>
-        The colo that the packet is received in.  <br />
+        The data center that is handling this traffic.  <br />
         Example value: <code class="InlineCode"> sfo06 </code>
         </td>
     </tr>
@@ -326,7 +326,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>cf.colo.region</code><br /><Type>String</Type></p>
         </td>
         <td>
-        Similar to the cf.colo.id that already exists, this is the region that the PoP is in. <br />
+        Region of the data center that is handling this traffic. <br />
         Example value: <code class="InlineCode"> WNAM </code>
         </td>
     </tr>
@@ -350,7 +350,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.len</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The length of the packet <br />
+         The length of the packet. <br />
          Example value:
          <code class="InlineCode">60</code>
         </td>
@@ -359,7 +359,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.proto</code><br /><Type>String</Type></p>
         </td>
         <td>
-        The internet or transport for the packet, if one can be determined. <br />
+        The transport layer for the packet, if one can be determined. <br />
         Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
         </td>
     </tr>
@@ -367,7 +367,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.src</code><br /><Type>IP Address</Type></p>
         </td>
         <td>
-        The client/eyeball address as specified in the IP packet.
+        The source address of the IP Packet.
         </td>
     </tr>
     <tr>
@@ -378,87 +378,87 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
-        <td><p><code>tcp.dstport</code><br /><Type>Number</Type></p>
-        </td>
-        <td>
-        For TCP packets, this is the port number at which Cloudflare's network received the connection.
-        </td>
-    </tr>
-    <tr>
         <td><p><code>tcp.flags.ack</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP acknowledgment flag
+        TCP acknowledgment flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.cwr</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP congestion window reduced flag
+        TCP congestion window reduced flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.ecn</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP ECN-Echo flag
+        TCP ECN-Echo flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.fin</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP flag indicating this is the last packet from sender
+        TCP flag indicating this is the last packet from sender.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.push</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP push flag
+        TCP push flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.reset</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP reset flag
+        TCP reset flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.syn</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP synchronize flag
+        TCP synchronize flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.flags.urg</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-        TCP urgent flag
+        TCP urgent flag.
         </td>
     </tr>
     <tr>
         <td><p><code>tcp.srcport</code><br /><Type>Number</Type></p>
         </td>
         <td>
-        For TCP packets, this is the port number from which the eyeball opened a connection with Cloudflare's network.
+        Source port number of the IP packet. Only applies to TCP packets.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.dstport</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        Destination port number of the IP packet. Only applies to TCP packets.
         </td>
     </tr>
     <tr>
         <td><p><code>udp.dstport</code><br /><Type>Number</Type></p>
         </td>
         <td>
-        For UDP packets, this is the port number at which Cloudflare's network received the connection
+        Destination port number of the IP packet. Only applies to UDP packets.
         </td>
     </tr>
     <tr>
         <td><p><code>udp.srcport</code><br /><Type>Number</Type></p>
         </td>
         <td>
-        For UDP packets, this is the port number from which the eyeball opened a connection with Cloudflare's network.
+        Source port number of the IP packet. Only applies to UDP packets.
         </td>
     </tr>
   </tbody>

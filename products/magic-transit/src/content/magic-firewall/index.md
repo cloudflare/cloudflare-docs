@@ -5,7 +5,7 @@ order: 1
 
 # Magic Firewall
 
-Magic Firewall is a network-level firewall delivered through Cloudflare to secure your enterprise. It is
+Magic Firewall is a network-level firewall delivered through Cloudflare to protect your network. It is
 configurable by all Magic Transit customers by making calls to Cloudflare's API. Rules can be crafted in
 Wireshark syntax, a domain specific language common in the networking world and the same syntax we use
 across our other products. With this syntax, you can easily craft extremely powerful rules to precisely
