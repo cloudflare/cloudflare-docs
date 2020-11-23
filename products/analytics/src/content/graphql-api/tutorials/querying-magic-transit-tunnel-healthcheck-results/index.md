@@ -17,7 +17,7 @@ It will return the tunnel health check results by Cloudflare colo. The result fo
 CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
 CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
 PAYLOAD='{ "query":
-  "query GetTunnelHealthCheckResults($accountTag: string, $datetimeStart: string, $datetimeEnd: string, $scriptName: string) {
+  "query GetTunnelHealthCheckResults($accountTag: string, $datetimeStart: string, $datetimeEnd: string) {
     {
       viewer {
         accounts(filter: {accountTag: $accountTag}) {
@@ -43,7 +43,7 @@ PAYLOAD='{ "query":
     "variables": {
       "accountTag": "90f518ca7113dc0a91513972ba243ba5",
       "datetimeStart": "2020-05-04T00:00:00.000Z",
-      "datetimeEnd": "2020-05-04T00:00:00.000Z",
+      "datetimeEnd": "2020-05-04T00:00:00.000Z"
     }
   }'
 
