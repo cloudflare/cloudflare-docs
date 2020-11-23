@@ -11,7 +11,9 @@ Wireshark syntax, a domain specific language common in the networking world and 
 across our other products. With this syntax, you can easily craft extremely powerful rules to precisely
 allow or deny any traffic in or out of your network.
 
-Start by adding a rule!
+Access to the API is controlled by the `#waf:read` and `#waf:write` permissions.
+
+Start by [adding a rule](/magic-firewall/adding-rules)!
 
 <Aside type='warning' header='Important'>
 

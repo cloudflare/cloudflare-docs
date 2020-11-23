@@ -14,8 +14,12 @@ API Example:
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
 -H 'Content-Type: application/json' \
 -H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
+-H 'X-Auth-Key: 00000000000'
 ```
+
+<Aside type='note' header='Note'>
+Your account ID can be found via the `/client/v4/accounts` endpoint.
+</Aside>
 
 An account without a root ruleset will return a response like this one:
 
@@ -39,15 +43,18 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
 -H 'Content-Type: application/json' \
 -H 'X-Auth-Email: user@example.com' \
 -H 'X-Auth-Key: 00000000000' \
---data {
-    "name": "Example ruleset",
-    "kind": "root",
+--data '{
+  "name": "Example ruleset",
+  "kind": "root",
   "description": "Example ruleset description",
-    "rules": [{
-        "action": "block",
-        "expression": "ip.src == 172.16.0.7",
-        "description": "Block IP 172.16.0.7"
-    }   }]
+  "rules": [
+    {
+      "action": "block",
+      "expression": "ip.src == 172.16.0.7",
+      "description": "Block IP 172.16.0.7"
+    }
+  ]
+}'
 ```
 
 Example response:
