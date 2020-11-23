@@ -683,7 +683,7 @@ export const logout = event => {
   if (cookieHeader && cookieHeader.includes(cookieKey)) {
     return {
       headers: {
-        "Set-cookie": `${cookieKey}=""; SameSize-Lax; Secure;`,
+        "Set-cookie": `${cookieKey}=""; SameSite=Lax; Secure;`,
       },
     }
   }
