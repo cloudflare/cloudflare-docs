@@ -14,7 +14,7 @@ import HeroBlock from "../components/hero-block.js"
 
 # Your imagination, Cloudflare’s infrastructure
 
-Use Cloudflare’s API and edge network — which spans 200 cities in more than 95 countries — to build ultra-fast applications with best-in-class security.
+Use Cloudflare’s API and edge network — which spans 200 cities in more than 100 countries — to build ultra-fast applications with best-in-class security.
 
 </Stripe>
 
