@@ -136,12 +136,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "developers.cloudflare.com"
-      # - name: Publish production
-      #   uses: cloudflare/wrangler-action@1.2.0
-      #   with:
-      #     apiToken: ${{ secrets.CF_API_TOKEN }}
-      #     workingDirectory: "developers.cloudflare.com"
-      #     environment: "production"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "developers.cloudflare.com"
+          environment: "production"
 
   deploy-1-1-1-1:
     runs-on: ubuntu-latest
