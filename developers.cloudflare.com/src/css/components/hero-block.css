@@ -1,0 +1,10 @@
+.HeroBlock {
+  width: 28em;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.HeroBlock--content > *:last-child {
+  margin-bottom: 0;
+}
