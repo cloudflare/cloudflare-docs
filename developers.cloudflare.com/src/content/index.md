@@ -16,8 +16,6 @@ Use Cloudflare’s API and edge network — which spans 200 cities in more than 
 
 </Stripe>
 
-<br/>
-
 <ProductGrid/>
 
 <br/>
