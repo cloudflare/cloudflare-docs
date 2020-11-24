@@ -10,7 +10,7 @@ $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resourc
 $["argo-tunnel"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/argo-tunnel.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
-$["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
+// $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["gateway"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/gateway.js").pathD
@@ -59,11 +59,11 @@ const products = [
     path: "argo-tunnel",
     icon: "argo-tunnel",
   },
-  {
+/*   {
     title: "Cloudflare One",
     path: "cloudflare-one",
     icon: "cloudflare-one",
-  },
+  }, */
   {
     title: "Cloudflare for Teams",
     path: "cloudflare-one",
