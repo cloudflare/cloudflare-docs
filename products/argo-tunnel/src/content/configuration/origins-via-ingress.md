@@ -9,6 +9,9 @@ way that `cloudflared` sends requests to these servers by setting a key in your 
 second connection timeout for all origins except one:
 
 ```yaml
+---
+filename: config.yml
+---
 originRequest: # Root-level configuration
   connectTimeout: 30s
 ingress:
