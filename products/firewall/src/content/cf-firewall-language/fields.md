@@ -304,6 +304,166 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
   </tbody>
 </table>
 
+## Magic Firewall Fields
+
+<table>
+  <thead>
+   <tr>
+      <th style="width: 50%;">Field Name</th>
+      <th>Description</th>
+   </tr>
+  </thead>
+  <tbody style='vertical-align:top'>
+    <tr>
+        <td><p><code>cf.colo.name</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        The data center that is handling this traffic.  <br />
+        Example value: <code class="InlineCode"> sfo06 </code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>cf.colo.region</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        Region of the data center that is handling this traffic. <br />
+        Example value: <code class="InlineCode"> WNAM </code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        The raw IP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.dst</code><br /><Type>IP Address</Type></p>
+        </td>
+        <td>
+         The destination address as specified in the IP packet. <br />
+         Example value:
+         <code class="InlineCode">192.0.2.2</code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.len</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+         The length of the packet. <br />
+         Example value:
+         <code class="InlineCode">60</code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.proto</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        The transport layer for the packet, if it can be determined. <br />
+        Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.src</code><br /><Type>IP Address</Type></p>
+        </td>
+        <td>
+        The source address of the IP Packet.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        The raw TCP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.ack</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP acknowledgment flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.cwr</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP congestion window reduced flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.ecn</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP ECN-Echo flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.fin</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP flag indicating this is the last packet from sender.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.push</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP push flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.reset</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP reset flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.syn</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP synchronize flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags.urg</code><br /><Type>Boolean</Type></p>
+        </td>
+        <td>
+        TCP urgent flag.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.srcport</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        Source port number of the IP packet. Only applies to TCP packets.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.dstport</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        Destination port number of the IP packet. Only applies to TCP packets.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>udp.dstport</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        Destination port number of the IP packet. Only applies to UDP packets.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>udp.srcport</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        Source port number of the IP packet. Only applies to UDP packets.
+        </td>
+    </tr>
+  </tbody>
+</table>
+
 ## URI argument and value fields
 
 The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
