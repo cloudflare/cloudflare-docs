@@ -37,7 +37,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
     any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
     </code>
 
-- <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+- <code>all(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
 
   - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
