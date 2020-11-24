@@ -1,0 +1,10 @@
+.HeroBlockGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.HeroBlockGrid > * {
+  padding: 1em 2em;
+  max-width: 100%;
+}
