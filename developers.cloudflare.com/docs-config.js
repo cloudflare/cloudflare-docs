@@ -1,6 +1,6 @@
 module.exports = {
   product: "Cloudflare Developers",
-  pathPrefix: "docs",
+  pathPrefix: "",
   productIconKey: "docs-engine",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "developers.cloudflare.com",

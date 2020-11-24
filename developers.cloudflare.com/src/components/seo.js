@@ -1,3 +1,9 @@
+// Keep in sync with @cloudflare/cloudflare-docs-engine
+// Due to what seems like a Gatsby bug which occurs only with `gatsby build`
+// and not `gatsby develop`, when any file imported from cloudflare-docs-engine
+// contains `useStaticQuery` the build fails due to a relative import issue with
+// the way GraphQL stores the cached static JSON.
+
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
