@@ -5,7 +5,7 @@ import { SkipNavLink, SkipNavContent } from "@reach/skip-nav"
 import "@reach/skip-nav/styles.css"
 
 import Helmet from "react-helmet"
-import SEO from "cloudflare-docs-engine/src/components/seo"
+import SEO from "./seo"
 
 import HandleMobilePageNavigations from "cloudflare-docs-engine/src/components/handle-mobile-page-navigations"
 import BrowserResizeTracking from "cloudflare-docs-engine/src/components/browser-resize-tracking"
