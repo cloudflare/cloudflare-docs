@@ -1,0 +1,140 @@
+@font-face {
+  font-family: 'cloudflare-icons';
+  font-style: normal;
+  font-weight: normal;
+  src: url(data:application/x-font-woff;charset=utf-8;base64,d09GRk9UVE8AAAQQAAoAAAAABewAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAARQAAAEw7LPuDUZGVE0AAAIIAAAAGgAAABx04jsnT1MvMgAAAiQAAABLAAAAYGFpBYRjbWFwAAACcAAAAEcAAAFOP7UHcGhlYWQAAAK4AAAALwAAADYGoUQqaGhlYQAAAugAAAAfAAAAJAe/AetobXR4AAADCAAAABAAAAAQCwoAAG1heHAAAAMYAAAABgAAAAYABFAAbmFtZQAAAyAAAADaAAABsE3GDFBwb3N0AAAD/AAAABMAAAAg/50AZnicTY69S8NQFMXvbV5aLI/4GXEIzSJYAh0dXPwXLNpgVymvH6AtpMHJsWglk06CuPXvEPyg9E9wt2SVt/huk2exWUo5HPgdONx7EBgDROTioiWCSqfR6/YBc4BwTKUcuQbtsTo3JGelIrBh2Y2iJfBCFM5GydB04GXdAdhwYLTpwJqDB1tgZjfysA0ueHAYdq5EP+i02mGl0RbXQa97KZpLXvm9OgMA73CI98AQ90+aN+onkgmXKCVpacjd2ST5+pvk5TywE056zgsW+XRrq281rX2m0zROYxXXTtU0zRS/n6lFVhl9mBY90sDW5/RUrZOnhV547JvWLw0Y+fp5/KbLJMgjUX1dlB92Zkd2xIv/gw+CN3icY2BgYGQAggsF9tdA9CWLvytgNABOBQe1AAB4nGNgZopgnMDAysDBasw6k4GBUQ5CM19nSGMSYgACVgYIaGBgYGJAAgFprikMDgzXFazY0v6lMexg/sIgDhRmhCtQAEJGABgTC0oAeJxjYGBgZoBgGQZGBhDwAPIYwXwWBh0gzQakGRmYGK4rWP3/D+RfV7D8//+/FpAFUsUC1s0E5LAxQA0YnoCZibAaAF3eCGYAeJxjYGRgYADisx3H/eL5bb4ycHMwgMAli78rEPT/l8wCzF+AXA4GJpAoAFzJDHkAeJxjYGRgYP7y/yXDDmYBBoZ/b4EkUAQFsAAAloYFrwAEAAAAAf0AAAH9AAADEAAAAABQAAAEAAB4nI2PvQ3CMBCFXyCJxI8oEaULJCpHTiRSMEBKSvoIWVGaWHKYgREYgzEYgDEYgJoXc0UKCizZ/u7euzsbwBI3RBhWhAU2whMkMMJT7HAVjul5CCfkl3CKRbSiM4pnzKxD1cATzLEVnuKIUjim5y6ckJ/CKfkNixoNTw+NFmc4dOgBWzfW6/bsOgajvGSqEF/C7UO9QoGM/1A4cP/u+tVK5nI6NSsMac92rrtUzjdWFZlRBzWazqjUudGFyWn857WnoPfUB1VxwvAunKzvW9epPDN/9fkAFF9DNgAAeJxjYGYAg/+zGNIYsAAALpkCAwA=)
+    format('woff');
+}
+.more::after {
+  font-family: 'cloudflare-icons';
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  color: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  font-size: 1.2em;
+  line-height: 1;
+  height: 0.9em;
+  text-decoration: none;
+  content: '\203A';
+  padding-left: 0.3em;
+  -webkit-box-flex: 0;
+  flex: 0 0;
+}
+.sponsorship-grid {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: flex-center;
+  align-items: flex-center;
+  flex-wrap: wrap;
+  margin: 0;
+}
+@media (max-width: 420px) {
+  .sponsorship-grid {
+    margin-left: -1em;
+    margin-right: -1em;
+  }
+}
+.sponsorship-grid .sponsorship {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-flow: column;
+  width: 16em;
+  text-align: left;
+  margin: 0.75em;
+  background: #f3f3f4;
+  text-decoration: none;
+}
+[theme="dark"] .sponsorship-grid .sponsorship {
+  background: #242628;
+}
+@media (max-width: 48em) {
+  .sponsorship-grid .sponsorship {
+    font-size: 0.8em;
+    width: 14em;
+  }
+}
+@media (max-width: 420px) {
+  .sponsorship-grid .sponsorship {
+    width: auto;
+    font-size: 0.95em;
+  }
+}
+.sponsorship-grid .sponsorship .sponsorship-icon {
+  position: relative;
+}
+.sponsorship-grid .sponsorship .sponsorship-icon::after {
+  content: '';
+  display: block;
+  height: 0;
+  width: 100%;
+  padding-bottom: 66%;
+}
+.sponsorship-grid .sponsorship .sponsorship-icon:hover {
+  opacity: 0.8;
+}
+.sponsorship-grid .sponsorship .sponsorship-icon img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6em;
+  width: 6em;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.sponsorship-grid .sponsorship .sponsorship-title {
+  display: block;
+  padding: 0 1.5em;
+  text-decoration: none;
+}
+.sponsorship-grid .sponsorship .sponsorship-title > h3 {
+  font-weight: 500;
+  margin: 0;
+}
+@media (max-width: 48em) {
+  .sponsorship-grid .sponsorship .sponsorship-title > h3 {
+    font-size: 1.25em;
+  }
+}
+.sponsorship-grid .sponsorship .sponsorship-title:not(:hover) {
+  color: inherit;
+}
+.sponsorship-grid .sponsorship .sponsorship-description {
+  padding: 0.5em 1.5em;
+}
+.sponsorship-grid .sponsorship .sponsorship-description > *:last-child {
+  margin-bottom: 0;
+}
+.sponsorship-grid .sponsorship .sponsorship-links {
+  margin-top: auto;
+  padding-bottom: 1.125em;
+}
+.sponsorship-grid .sponsorship .sponsorship-links > a {
+  color: #0055dc;
+  padding: 0.375em 1.5em;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+  font-weight: 500;
+}
+.sponsorship-grid .sponsorship .sponsorship-links > a:hover {
+  background: #0055dc;
+  color: #fff;
+}
+[theme="dark"] .sponsorship-grid .sponsorship .sponsorship-links > a {
+  color: var(--code-orange);
+}
+[theme="dark"] .sponsorship-grid .sponsorship .sponsorship-links > a:hover {
+  background: var(--orange);
+  color: #fff;
+}

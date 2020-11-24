@@ -8,6 +8,7 @@ jobs:
     name: "Check for docs changes"
     runs-on: ubuntu-latest
     outputs:
+      developers-site: ${{ steps.filter.outputs.developers-site }}
       onedot: ${{ steps.filter.outputs.onedot }}
       access: ${{ steps.filter.outputs.access }}
       analytics: ${{ steps.filter.outputs.analytics }}
@@ -45,6 +46,8 @@ jobs:
         id: filter
         with:
           filters: |
+            developers-site:
+              - 'developers.cloudflare.com/**'
             onedot:
               - 'products/1.1.1.1/**'
             access:
@@ -107,6 +110,23 @@ jobs:
               - 'products/warp-client/**'
             workers:
               - 'products/workers/**'
+
+  build-developers-site:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.developers-site == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: "developers.cloudflare.com"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          npm run build
 
   build-1-1-1-1:
     runs-on: ubuntu-latest

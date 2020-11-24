@@ -1,0 +1,87 @@
+.SiteHeader {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  background: var(--background-color);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1em)) or (backdrop-filter:blur(1em))) {
+  .SiteHeader {
+    background: rgba(var(--background-color-rgb), .8);
+    -webkit-backdrop-filter: blur(1em);
+    backdrop-filter: blur(1em)
+  }
+}
+
+.SiteHeader--logo-section {
+  display: flex;
+  flex-shrink: 0;
+  height: var(--docs-header-height);
+  z-index: 1;
+}
+
+.SiteHeader--cloudflare-logo-link {
+  --logo-size: 2.8235294118rem;
+  --font-size: 1.17647em; /* 20 / 17 */
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.SiteHeader--cloudflare-logo-link {
+  transition: opacity .2s ease, color .2s ease;
+}
+
+.SiteHeader--cloudflare-logo-link:hover {
+  opacity: .75;
+  color: rgba(var(--color-rgb), .75);
+}
+
+.SiteHeader--theme-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-right: 1rem;
+}
+
+.SiteHeader--nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.SiteHeader--nav-link {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  color: inherit;
+}
+
+@media (hover: hover) {
+  .SiteHeader--nav-link:hover {
+    background: rgba(var(--color-rgb), .05);
+  }
+}
+
+.SiteHeader--nav-link[aria-current="page"] {
+  color: var(--orange-4);
+}
+
+[theme="dark"] .SiteHeader--nav-link[aria-current="page"] {
+  color: var(--code-orange);
+}
+
+@media (max-width: 48em) {
+  .SiteHeader--nav {
+    display: none;
+  }
+}
