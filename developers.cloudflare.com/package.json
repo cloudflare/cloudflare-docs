@@ -45,6 +45,7 @@
     "react-spring": "8.0.27",
     "react-timeago": "4.4.0",
     "react-transition-group": "4.4.1",
+    "react-twitter-embed": "^3.0.3",
     "remark-slug": "6.0.0",
     "saber-plugin-git-modification-time": "0.1.3",
     "set-interval-visible": "2.0.0"
