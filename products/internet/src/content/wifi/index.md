@@ -13,7 +13,7 @@ The radio transmission signal comes from your router.
 The reason why some parts of your home have better wifi signal than others is that wifi signal doesn’t travel well through walls. There are two radio bands that are allocated for wifi: 2.4 GHz and 5 GHz.
 If you have both at home, you may have noticed that the 5 GHz band provides slightly faster connection. There are 4 reasons for this:
 
-  * First, 5 GHz is literally a faster (higher) frequency. And because of the frequency, 5 GHz is better at going through walls.
+  * First, 5 GHz is literally a faster (higher) frequency. Higher frequencies are less likely to penetrate walls, this helps to contain the signal and keeps the 5 GHz band less crowded.
   * Second, because 5 GHz is newer, fewer routers support it and there is less congestion in a crowded place like an apartment building.
   * Third, before the 2.4 GHz band was allocated to wifi, many appliances such as microwaves used that band, so if you have an older microwave at home, you may have noticed you cannot use the wifi and the microwave at the same time.
   * Finally, the 2.4 GHz band has 14 channels and the 5 GHz band has more, which helps with congestion.
