@@ -71,7 +71,7 @@ You can sign to assert these optional constraints on the token:
 
 - `exp` - expiration; a unix epoch timestamp **after** which the token will not be accepted.
 - `nbf` - notBefore; a unix epoch timestamp **before** which the token will not be accepted.
-- `accessRules` - Video Access Control; these allow making the token conditionally accepted on a variety of factors. For more details, see <a href="../access-rules/">their documentation</a>
+- `accessRules` - Video Access Control; these allow making the token conditionally accepted on a variety of factors. For more details, see [their documentation](#video-access-control)
 
 ### Playback using signed tokens
 
