@@ -6,6 +6,7 @@ type: developers-site
 import Stripe from "../components/stripe.js"
 import HeroBlockGrid from "../components/hero-block-grid.js"
 import HeroBlock from "../components/hero-block.js"
+import ProductGrid from "../components/product-grid.js"
 
 <Stripe>
 
@@ -13,9 +14,13 @@ import HeroBlock from "../components/hero-block.js"
 
 Use Cloudflare’s API and edge network — which spans 200 cities in more than 95 countries — to build ultra-fast applications with best-in-class security.
 
-<p><Button type="primary" href="/docs">Documentation</Button></p>
-
 </Stripe>
+
+<br/>
+
+<ProductGrid/>
+
+<br/>
 
 <HeroBlockGrid>
   <div>
