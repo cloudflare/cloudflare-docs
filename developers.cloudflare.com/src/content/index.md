@@ -95,7 +95,7 @@ Use Cloudflare’s API and edge network — which spans 200 cities in more than 
       <p>Serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.</p>
       <ul>
         <li><p><a href="https://developers.cloudflare.com/workers/learning/getting-started">Getting Started</a></p></li>
-        <li><p><a href="https://developers.cloudflare.com/workers/starters">Started Templates</a></p></li>
+        <li><p><a href="https://developers.cloudflare.com/workers/starters">Starter Templates</a></p></li>
         <li><p><a href="https://developers.cloudflare.com/workers/tutorials">Workers Tutorials</a></p></li>
         <li><p><a href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Playground</a></p></li>
       </ul>
