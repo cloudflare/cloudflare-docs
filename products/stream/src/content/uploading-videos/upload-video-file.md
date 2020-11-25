@@ -97,7 +97,7 @@ x-content-type-options: nosniff
 x-envoy-upstream-service-time: 260
 server: cloudflare
 ```
-
+</Example>
 
 ### Command-line example
 
