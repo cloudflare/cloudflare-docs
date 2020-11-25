@@ -140,7 +140,7 @@ const products = [
   {
     title: "Railgun",
     href: "https://www.cloudflare.com/docs/railgun/",
-    icon: "http3", // TODO: add `railgun` icon to https://github.com/cloudflare/cloudflare-brand-assets
+    icon: "railgun",
   },
   {
     title: "Randomness Beacon",
