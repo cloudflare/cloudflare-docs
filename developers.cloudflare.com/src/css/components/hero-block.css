@@ -14,9 +14,10 @@
 }
 
 .HeroBlock [id^="twitter-widget"] {
-  border: 1px solid rgba(0, 0, 0, .1) !important;
+  border-radius: .5em;
+  overflow: hidden;
 }
 
-[theme="dark"] .HeroBlock [id^="twitter-widget"] {
-  -webkit-filter: saturate(0) sepia(.1) brightness(.88) invert(1) hue-rotate(-30deg);
+[theme="light"] .HeroBlock [id^="twitter-widget"] {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .1) !important;
 }
