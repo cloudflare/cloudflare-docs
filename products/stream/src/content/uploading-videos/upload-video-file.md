@@ -87,7 +87,7 @@ When you make the initial tus request, it responds with a tokenized URL in the l
 
 Instead, Stream returns a custom header named `Stream-Media-ID` which contains the video id. You should develop your application so it reads the `Stream-Media-ID` property in the response headers.
 
-**Here's a sample response header which shows the stream-media-id property:**
+<Example>
 ```
 location: https://upload.videodelivery.net/tus/cab807e0c477d01baq20f66c3d1dfc26cf
 ...
