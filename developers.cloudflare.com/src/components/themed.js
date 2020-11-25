@@ -3,7 +3,7 @@ import React from "react"
 const DEFAULT = "light"
 
 const getTheme = () => {
-  if (!document.documentElement) return DEFAULT
+  if (typeof document !== "undefined") return DEFAULT
   return document.documentElement.getAttribute("theme")
 }
 
