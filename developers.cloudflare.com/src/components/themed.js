@@ -2,18 +2,13 @@ import React from "react"
 
 const DEFAULT = "light"
 
-const getTheme = () => {
-  if (typeof document !== "undefined") return DEFAULT
-  return document.documentElement.getAttribute("theme")
-}
-
 class Themed extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      theme: getTheme()
+      theme: typeof document === "undefined" ? DEFAULT : document.documentElement.getAttribute("theme")
     }
   }
 
@@ -22,7 +17,9 @@ class Themed extends React.Component {
       mutationList.forEach(mutation => {
         if (mutation.type !== "attributes") return
 
-        this.setState({ theme: getTheme() })
+        this.setState({
+          theme: document.documentElement.getAttribute("theme") || DEFAULT
+        })
       })
     })
 
