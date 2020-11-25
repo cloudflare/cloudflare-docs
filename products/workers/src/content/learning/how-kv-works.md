@@ -12,6 +12,6 @@ KV achieves this performance by being eventually-consistent. Changes may take up
 
 All values are encrypted at rest with 256-bit AES-GCM, and only decrypted by the process executing your Worker scripts or responding to your API requests.
 
-Workers KV is an account-level feature, and comes with your Workers Bundled subscription.
+Workers KV is free to try, with additional usage available as part of the Workers Bundled plan.
 
 Learn more at the [Workers KV API reference](/runtime-apis/kv).
