@@ -217,7 +217,8 @@ var options = {
   onSuccess: function () {
     console.log("Upload finished:", upload.url);
     var index = upload.url.lastIndexOf("/") + 1;
-    var mediaId = upload.url.substr(index)
+    var lastPathSegment = upload.url.substr(index);
+    var mediaId = lastPathSegment.split('?')[0];
     console.log("Media id:", mediaId);
   }
 };
