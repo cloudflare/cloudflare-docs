@@ -5,6 +5,7 @@ type: developers-site
 
 import { TwitterTimelineEmbed } from "react-twitter-embed"
 
+import Themed from "../components/themed.js"
 import Stripe from "../components/stripe.js"
 import ProductGrid from "../components/product-grid.js"
 import HeroBlockGrid from "../components/hero-block-grid.js"
@@ -63,13 +64,20 @@ Use Cloudflare’s API and edge network — which spans 200 cities in more than 
 
   <div>
     <HeroBlock>
-      <TwitterTimelineEmbed
-        sourceType="profile"
-        screenName="CloudflareDev"
-        options={{
-          height: 1000
-        }}
-      />
+      {/* `key` set below fix re-render issue https://git.io/JkMlf */}
+      <Themed>
+        {(theme) => (
+          <TwitterTimelineEmbed
+            sourceType="profile"
+            screenName="CloudflareDev"
+            key={theme}
+            theme={theme}
+            options={{
+              height: 1000
+            }}
+          />
+        )}
+      </Themed>
     </HeroBlock>
   </div>
 </HeroBlockGrid>
