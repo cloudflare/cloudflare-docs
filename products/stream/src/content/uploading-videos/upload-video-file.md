@@ -81,7 +81,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 </Definitions>
 
-### Getting the video id when using tus
+### Getting the video ID when using TUS
 
 When you make the initial tus request, it responds with a tokenized URL in the location header. However, while the tokenized URL may contain the video id, this is not guaranteed behavior. We do not recommend parsing the tokenized URL to get the video id.
 
