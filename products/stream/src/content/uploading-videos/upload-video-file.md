@@ -83,7 +83,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 ### Getting the video ID when using TUS
 
-When you make the initial tus request, it responds with a tokenized URL in the location header. However, while the tokenized URL may contain the video id, this is not guaranteed behavior. We do not recommend parsing the tokenized URL to get the video id.
+When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
 
 Instead, Stream returns a custom header named `Stream-Media-ID` which contains the video id. You should develop your application so it reads the `Stream-Media-ID` property in the response headers.
 
