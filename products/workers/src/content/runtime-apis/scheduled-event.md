@@ -2,7 +2,7 @@
 
 ## Background
 
-The event type for Scheduled requests to a Worker. The `Object` passed through as `event` in [`addEventListener()`](/runtime-apis/add-event-listener).
+A ScheduledEvent is an event type invoked by a [Cron Trigger](/platform/cron-triggers). `Scheduled` is the `Object` passed through as `event` in [`addEventListener()`](/runtime-apis/add-event-listener).
 
 ## Context
 
