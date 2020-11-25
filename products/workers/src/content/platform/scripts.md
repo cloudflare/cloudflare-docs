@@ -77,7 +77,7 @@ Secrets are persisted between deploys of a Worker. You only need to include secr
 
 If your Worker uses plain text environment variables, you will want to add a `plain_text` binding object for each one to the `bindings` array in `metadata.json`.
 
-Secret bindings must include a `text`. The `text` value includes text, such as an API key you want to store.
+Plain text bindings must include a `text` property. The `text` value includes text, such as an API key you want to store.
 
 ## See also
 

@@ -22,6 +22,7 @@ $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resourc
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
 $["mobile-sdk"]           = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/mobile-sdk.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
+$["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/railgun.js").pathD
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
@@ -35,7 +36,7 @@ $["workers"]              = require("@cloudflare/cloudflare-brand-assets/resourc
 
 const products = [
   {
-    title: "Cloudflare API",
+    title: "API",
     path: "api",
     icon: "api",
   },
@@ -65,15 +66,15 @@ const products = [
     icon: "cloudflare-one",
   }, */
   {
+    title: "BYOIP",
+    path: "byoip",
+    icon: "byoip",
+  },
+  {
     title: "Cloudflare for Teams",
     path: "cloudflare-one",
     icon: "cloudflare-for-teams",
     wrap: true,
-  },
-  {
-    title: "BYOIP",
-    path: "byoip",
-    icon: "byoip",
   },
   {
     title: "DNS Resolver",
@@ -140,7 +141,7 @@ const products = [
   {
     title: "Railgun",
     href: "https://www.cloudflare.com/docs/railgun/",
-    icon: "http3", // TODO: add `railgun` icon to https://github.com/cloudflare/cloudflare-brand-assets
+    icon: "railgun",
   },
   {
     title: "Randomness Beacon",

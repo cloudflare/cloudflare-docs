@@ -42,13 +42,16 @@
   white-space: normal;
 }
 
-.ProductGrid--link:hover {
-  background: rgba(var(--color-rgb), .05);
-  color: inherit;
+@media (hover: hover) {
+  .ProductGrid--link:hover {
+    background: rgba(var(--color-rgb), .05);
+    color: inherit;
+  }
 }
 
 .ProductGrid--link:active {
   box-shadow: inset 0 .125em .125em rgba(0, 0, 0, .1);
+  background: rgba(var(--color-rgb), .05);
 }
 
 .ProductGrid--link svg {

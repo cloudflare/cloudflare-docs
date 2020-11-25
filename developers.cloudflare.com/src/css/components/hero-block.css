@@ -5,6 +5,19 @@
   margin-right: auto;
 }
 
+.HeroBlock--content > *:first-child {
+  margin-top: 0;
+}
+
 .HeroBlock--content > *:last-child {
   margin-bottom: 0;
+}
+
+.HeroBlock [id^="twitter-widget"] {
+  border-radius: .5em;
+  overflow: hidden;
+}
+
+[theme="light"] .HeroBlock [id^="twitter-widget"] {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .1) !important;
 }

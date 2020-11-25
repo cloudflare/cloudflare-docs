@@ -150,4 +150,6 @@ Polish won’t be applied to URLs using image resizing. Resized images already h
 
 Resizing causes the original image to be fetched from the origin server and cached (following the usual rules of HTTP caching, `Cache-Control` header, etc.). Requests for multiple different image sizes are likely to reuse the cached original image, without causing extra transfers from the origin server.
 
-Resized images follow the same caching rules as the original image they were resized from (i.e. the `Cache-Control` header is from the original to the resized image). We do not support purging of resized variants individually, but purging of the original image URL will also purge all of its resized variants.
+Resized images follow the same caching rules as the original image they were resized from, except the minimum cache time is 1 hour. If you need images to be updated more frequently, add `must-revalidate` to the `Cache-Control` header. Resizing supports cache revalidation, so we recommend serving images with the `Etag` header.
+
+We do not support purging of resized variants individually. URLs starting with `/cdn-cgi/` can't be purged. However, purging of the original image's URL will also purge all of its resized variants.

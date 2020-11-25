@@ -49,8 +49,6 @@ Since Cloudflare does not synchronize the health checks among edge servers and t
 
 As a result, tunnel health may be in different states in different parts of the world at the same time. In our example, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
 
-This is by design, so that health check probes arrive continuously at the origin router. Doing so ensures that failure discovery and steering changes occur within 60 seconds.
-
 </Aside>
 
 #### Failure

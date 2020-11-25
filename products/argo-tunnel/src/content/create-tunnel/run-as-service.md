@@ -135,6 +135,9 @@ PS C:> Start-Service cloudflared
 When running cloudflared as a service on Windows, the  path to the credentials file needs to be explicitly specified. This can be done in the config file:
 
 ```yaml
+---
+filename: config.yml
+---
 credentials-file: C:\ABSOLUTE\PATH\TO\UUID.json
 ```
 
@@ -145,6 +148,9 @@ In some cases, forward slashes should be used to set the explicit path to the cr
 * In double-quoted scalars, a forward slash should be used or the backslash should be escaped. For example, `"C:\\UUID.json"`.
 
 ```yaml
+---
+filename: config.yml
+---
 credentials-file: C:/UUID.json
 ```
 

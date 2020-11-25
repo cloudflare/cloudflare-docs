@@ -19,7 +19,7 @@ async function handleRequest(request) {
 
   // Only use the path for the cache key, removing query strings
   // and always store using HTTPS e.g. https://www.example.com/file-uri-here
-  const someCustomKey = "https://${url.hostname}${url.pathname}"
+  const someCustomKey = `https://${url.hostname}${url.pathname}`
 
   let response = await fetch(request, {
     cf: {
