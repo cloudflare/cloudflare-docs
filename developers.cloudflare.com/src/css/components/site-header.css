@@ -1,6 +1,6 @@
 .SiteHeader {
   position: fixed;
-  z-index: 10;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
@@ -13,6 +13,7 @@
 
 .SiteHeader---shadow {
   position: fixed;
+  z-index: 997;
   left: 0;
   width: 100%;
   top: calc(var(--docs-header-height) - 1px);
@@ -22,6 +23,7 @@
 
 .SiteHeader---shadow-cover {
   position: absolute;
+  z-index: 998;
   left: 0;
   width: 100%;
   top: calc(var(--docs-header-height) - 1px);
