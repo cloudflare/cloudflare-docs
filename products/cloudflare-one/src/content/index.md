@@ -12,8 +12,8 @@ Your employees, partners, and customers need a network that is secure, fast and 
 
 Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere. 
 
-import Stripe from "../components/stripe.js"
-import ProductGrid from "../components/product-grid.js"
+import Stripe from "../components/mdx/stripe.js"
+import ProductGrid from "../components/mdx/product-grid.js"
 
 <Stripe>
 
