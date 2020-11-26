@@ -88,6 +88,7 @@ When an initial TUS request is made, Stream responds with a URL in the location 
 Instead, the `Stream-Media-ID` HTTP header in the response should be used to retrieve the video ID.
 
 <Example>
+	
 ```
 location: https://upload.videodelivery.net/tus/cab807e0c477d01baq20f66c3d1dfc26cf
 ...
@@ -97,6 +98,7 @@ x-content-type-options: nosniff
 x-envoy-upstream-service-time: 260
 server: cloudflare
 ```
+
 </Example>
 
 ### Command-line example
