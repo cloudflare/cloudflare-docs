@@ -15,6 +15,7 @@ Cloudflare for Teams provides seamless access to any application and the Interne
 import Stripe from "../components/mdx/stripe.js"
 import ProductGrid from "../components/mdx/product-grid.js"
 
+
 <Stripe>
 
 ## Products
