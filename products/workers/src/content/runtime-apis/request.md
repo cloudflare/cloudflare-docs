@@ -193,7 +193,7 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 
 - `colo` <Type>string</Type>
 
-  - The three-letter airport code of the data center that the request hit, e.g. `"DFW"`.
+  - The three-letter [`ICAO`](https://en.wikipedia.org/wiki/ICAO_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
 
 - `tlsCipher` <Type>string</Type>
 
