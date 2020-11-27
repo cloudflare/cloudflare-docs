@@ -4,29 +4,29 @@ order: 2
 
 # Google Chrome
 
-Google has begun supporting HTTP/3 in nightly builds. Chrome Canary is an official experimental channel that provides binaries to allow you to test new features such as HTTP/3. Nightly builds may have some stability issues that you should keep in mind when testing.
+Google supports HTTP/3 in Stable and Chrome Canary release channels. Canary channel builds are more regularly updated but may have some stability issues that you should keep in mind when testing. You can install both versions side-by-side; the Canary installer can be found [here](https://www.google.com/chrome/canary/).
 
 HTTP/3 is not enabled by default. Chrome must be launched with the `--enable-quic --quic-version=h3-27` flags to work.
 
-## Installation
+## Running
 
-Only Chrome canaries currently support HTTP/3. To install the latest, [download](https://www.google.com/chrome/canary/) the installer and run it.
+Chrome's HTTP/3 support is not typically enabled by default. Therefore it's best to explicitly enable it by launching with the flags `--enable-quic --quic-version=h3-29`.
 
-## Running on Windows
+### Running on Windows
 
 If installed in the default location, starting Chrome with the correct flags is done by running the following commands in a command prompt:
 
 ```txt
 cd C:\Users\$USER\AppData\Local\Google\Chrome SxS\Application
-chrome.exe --enable-quic --quic-version=h3-27
+chrome.exe --enable-quic --quic-version=h3-29
 ```
 
 (Replace $USER with the name of your account on Windows.)
 
-## Running on MacOS X
+### Running on MacOS X
 
 If installed in the default location, starting Chrome with the correct flags is done by running the following command in a terminal:
 
 ```txt
-/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --enable-quic --quic-version=h3-27
+/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --enable-quic --quic-version=h3-29
 ```

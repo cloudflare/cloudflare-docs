@@ -24,7 +24,7 @@ Run the following commands to install required dependencies and to build curl wi
 - Build curl with quiche:
 
   ```sh
-  $ brew install -s https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
+  $ brew install --HEAD -s https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
   ```
 
 At the end curl binary will be installed on "/usr/local/opt/curl/bin",
@@ -38,7 +38,7 @@ $ curl --help | egrep 'alt-svc|http3'
     --http3         Use HTTP v3
 ```
 
-Now, you can try curl on any H3 enabled sites.
+Now, you can try curl on any HTTP/3 enabled sites.
 
 ```sh
 $ curl --http3 https://cloudflare-quic.com
