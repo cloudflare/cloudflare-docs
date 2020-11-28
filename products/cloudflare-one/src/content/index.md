@@ -6,30 +6,13 @@ type: overview
 
 <ContentColumn>
 
-# Cloudflare for Teams tutorials
+# Cloudflare for Teams documentation
 
-Cloudflare for Teams consists of several products which, together, help keep enterprises connected and secure using Cloudflare's network.
+Your employees, partners, and customers need a network that is secure, fast and reliable to get work done. Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
 
-This section of Cloudflare documentation provides step-by-step tutorials that cover multiple products. Each tutorial starts with a specific use case and introduces Cloudflare for Teams products and how they can help solve a specific challenge.
+Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere. 
 
-<TableWrap>
-
-| List of Tutorials |
-|---|
-| [Secure GitLab with Zero Trust rules for SSH and HTTP](zero-trust-security/gitlab)       |
-| [Require specifc countries](zero-trust-security/country-rules) |
-| [Filter DNS on devices](secure-web-gateway/secure-dns-devices) |
-| [Block file uploads to Google Drive](secure-web-gateway/block-uploads) |
-| [Filter DNS on home or office network](secure-web-gateway/secure-dns-network) |
-| [Share development environments](secure-origin-connections/share-new-site) |
-| [Connect without long-lived API keys](secure-origin-connections/credentials-only) |
-| [Connect multiple HTTP origins](secure-origin-connections/multi-origin) |
-
-</TableWrap>
-
-For product-specific technical documentation, follow the links below:
-
-## Cloudflare for Teams products
+## Products
 
 <TableWrap>
 
