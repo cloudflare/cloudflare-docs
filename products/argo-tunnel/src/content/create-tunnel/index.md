@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Create and run a Tunnel
+# Create a Tunnel
 
 | Before you start |
 |---|
@@ -37,36 +37,6 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 | Route traffic to a running Tunnel<br/>from the Cloudflare dashboard | Available | Available |
 
 </TableWrap>
-
-## Run a Tunnel
-
-Once created, you can run the Argo Tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. To begin, run the Tunnel with the following command.
-
-`cloudflared tunnel --config path/config.yaml run <NAME>`
-
-If you have deleted the `cert.pem` file, you must specify the UUID instead of the name.
-
-`cloudflared tunnel --config path/config.yaml run <UUID>`
-
-You can also specify the Tunnel name or UUID inside of the configuration file, in which case the command below will invoke the `run` command for that Tunnel.
-
-`cloudflared tunnel --config path/config.yaml run`
-
-If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
-
-When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [Ingress Rules](/routing-to-tunnel/ingress).
-
-You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route _all_ traffic to the given URL.
-
-`cloudflared tunnel run --url localhost:3000 <NAME or UUID>`
-
-![Run tunnels](../static/img/create-tunnel/rt1.png)
-
-Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
-
-You can also:
-* [Run a tunnel as a Kubernetes sidecar](/create-tunnel/kubernetes-sidecar-model/)
-* [Run a tunnel as a service](/create-tunnel/run-as-service)
 
 ## List available Tunnels
 
