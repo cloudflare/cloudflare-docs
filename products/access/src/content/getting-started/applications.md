@@ -25,7 +25,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 4. In the **Configure app** section, select an application from the Application drop-down menu.
 If your application is not listed, type its name in the textbox and select it.
 
-![Unlsited SaaS app](../static/summary/new-saas-app.png)
+![Unlisted SaaS app](../static/summary/new-saas-app.png)
 
 5. In the **Entity ID** field, provide the unique identifier of your SaaS application.
 SaaS applications store this information in different ways.
