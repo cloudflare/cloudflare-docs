@@ -189,17 +189,17 @@ The Services UI in Windows will allow you to set Start parameters, and Start the
 
 Alternatively, you can run the following commands to start Argo Tunnel as a service:
 
-```bash
+```
 C:\> sc start cloudflared tunnel run
 ```
 
 If you are a Powershell user, run this command instead:
 
-```bash
+```
 PS C:> Start-Service cloudflared tunnel run
 ```
 
-</Aside>
+<Aside>
 
 `cloudflared` will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
