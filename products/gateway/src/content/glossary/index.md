@@ -17,7 +17,7 @@ Cloudflare Gateway is a modern next generation firewall between your user, devic
 A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## [Cloudflare Workers](https://developers.cloudflare.com/workers/)
-Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.  
+Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 ---------------
 
@@ -68,7 +68,7 @@ A program that performs tasks without active management or maintenance.
 |---|---|
 
 ## DoH
-*DNS over HTTPS*  
+*DNS over HTTPS*
 
 With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
 
@@ -89,7 +89,7 @@ Each device connected to the Internet has a unique IP address which other machin
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) | [Access](https://developers.cloudflare.com/access/) |
 |---|---|---|
 
-## DoT <a name="DoT"></a>
+## DoT
 *DNS over TLS*
 
 DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications. (TLS is also known as "SSL.") DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
@@ -101,7 +101,7 @@ DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secu
 The name given to a server or node on a network. In most cases, the public DNS name of a server.
 
 ## IdP
-*identity provider*  
+*identity provider*
 
 An identity provider (IdP or IDP) stores and manages users' digital identities. Think of an IdP as being like a guest list, but for digital and cloud-hosted applications instead of an event. An IdP may check user identities via username-password combinations and other factors, or it may simply provide a list of user identities that another service provider (like an SSO) checks.
 
@@ -116,7 +116,7 @@ An open standard (RFC 7519) that defines a compact and self-contained way for se
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
 
-## location
+## Location
 Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) |
@@ -125,7 +125,7 @@ Locations are physical entities like offices, homes, retail stores, movie theatr
 ## mTLS
 *mutual TLS*
 
-The Server Message Block (SMB) protocol is a network file sharing protocol that allows applications on a computer to read and write to files and to request services from server programs in a computer network.
+Mutual TLS is a common security practice that uses client TLS certificates to provide an additional layer of protection, allowing to cryptographically verify the client information.
 
 ## Next-generation firewall
 A next-generation firewall (NGFW) is more powerful than a traditional firewall. NGFWs have the capabilities of traditional firewalls, but they also have a host of added features to address a greater variety of organizational needs. NGFWs can run either in the cloud or on-premises.
@@ -146,14 +146,15 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
 
-## Origin certificate <a name="origin-certificate"></a>
+## Origin certificate
+
 Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 | Related products: | [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) |
 |---|---|
 
 ## Policy
-**Gateway**: a set of rules determining which domains, content categories, or domain categories are allowed through Gateway.  
+**Gateway**: a set of rules determining which domains, content categories, or domain categories are allowed through Gateway.
 **Access**: a set of rules determining which users are allowed to access an application through Access.
 
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) | [Access](https://developers.cloudflare.com/access/) |
@@ -172,7 +173,7 @@ A feature of search engines that can help you filter explicit or offensive conte
 |---|---|
 
 ## SAML
-*Security Assertion Markup Language*  
+*Security Assertion Markup Language*
 
 A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#SSO)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.
 
@@ -193,7 +194,7 @@ A unique user who authenticates to connect to an application protected by Cloudf
 | Related products: | [Gateway](https://developers.cloudflare.com/gateway/) | [Access](https://developers.cloudflare.com/access/) |
 |---|---|---|
 
-## service token <a name="service-token"></a>
+## service token
 Service tokens consist of an ID and Secret generated by Cloudflare Access that can be used by an automated system or application to reach an application protected by Cloudflare Access. Service tokens allow systems to authenticate without identity provider credentials in an automated way.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
@@ -201,7 +202,7 @@ Service tokens consist of an ID and Secret generated by Cloudflare Access that c
 
 
 ## SIEM
-*Security Information and Event Management*  
+*Security Information and Event Management*
 
 Security Information and Event Management (SIEM) solutions provide an analysis layer for logs generated by other systems.
 
@@ -225,7 +226,7 @@ Secure Shell (SSH) protocol allows users to connect to infrastructure to perform
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|
 
-## SSO <a name="SSO"></a>
+## SSO
 A technology which combines several different application login screens into one. With SSO, a user only has to enter their login credentials (username, password, etc.) one time on a single page to access all of their SaaS applications.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
