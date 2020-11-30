@@ -210,3 +210,12 @@ PS C:> Start-Service cloudflared tunnel run
 `cloudflared` will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
 
 </Aside>
+
+### Start on reboot
+
+You can configure the service in Windows to start if the machine reboots.
+
+1. Open the Registry Editor as an administrator.
+2. Navigate to `Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`
+3. Edit the entry `ImagePath` to contain the path to the `cloudflared` binary.
+4. Add the parameters that were configured above; for example the path to the configuration file and the `tunnel run` command.
