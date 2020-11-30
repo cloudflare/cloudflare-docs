@@ -27,11 +27,11 @@ When you [enable Cloudflare Gateway](https://developers.cloudflare.com/gateway/g
 
 Start by navigating to the `Locations` page in the `Gateway` section of the sidebar. You will see the first location that you added has been set as the Default. Any device that enrolls into your Gateway account will follow the policies set for the Default location by using the `DNS over HTTPS` address.
 
-![Add DNS](../static/secure-web-gateway/secure-dns-devices/locations.png)
+![Add DNS](../../static/secure-web-gateway/secure-dns-devices/locations.png)
 
 If you wish to [use a different Location](https://developers.cloudflare.com/gateway/getting-started/configuring-locations) as your Default, and subsequently the one used for roaming devices, click `Add a location`. During location creation, toggle the `Default location` toggle and the new location will be the Default.
 
-![New Default](../static/secure-web-gateway/secure-dns-devices/new-default.png)
+![New Default](../../static/secure-web-gateway/secure-dns-devices/new-default.png)
 
 ## Create a Gateway policy
 
