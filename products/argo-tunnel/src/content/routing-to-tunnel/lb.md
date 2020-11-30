@@ -6,12 +6,9 @@ order: 50
 
 | Before you start |
 |---|
-| 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
-| 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
-| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
-| 5. [Create an Argo Tunnel](/create-tunnel) |
-| 6. [Create a Load Balancer pool in Cloudflare](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui) |
+| 1. [Create an Argo Tunnel](/create-tunnel) |
+| 2. [Configure the Tunnel](/configuration) |
+| 3. [Create a Load Balancer pool in Cloudflare](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui) |
 
 ## Route traffic from the dashboard
 
