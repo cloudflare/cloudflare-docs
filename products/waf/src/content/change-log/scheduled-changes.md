@@ -37,7 +37,7 @@ order: 1
                 2020-11-23
             </td>
             <td>
-                2020-11-30
+                2020-12-02
             </td>
             <td>
                 Cloudflare Specials
