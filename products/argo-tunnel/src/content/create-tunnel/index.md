@@ -1,42 +1,43 @@
 ---
-order: 2
+order: 5
 ---
 
-# Create a Tunnel
+# Run a Tunnel
 
 | Before you start |
 |---|
-| 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
-| 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
-| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 1. [Create a Tunnel](/create-tunnel) |
+| 2. [Configure the Tunnel](/configuration) |
+| 3. [Configure routing to the Tunnel](/routing-to-tunnel) |
 
-## Create a Tunnel
+## Run a Tunnel
 
-Run the following command to create a Tunnel.
+Once you have created a Tunnel and decided how to route traffic to that Tunnel, you can run the Tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. To begin, run the Tunnel with the following command. The command will connect `cloudflared` to Cloudflare's edge, using the configuration supplied. Traffic will route to the Tunnel based on the DNS or Load Balancer settings.
 
- `cloudflared tunnel create <NAME>`
+`cloudflared tunnel --config path/config.yaml run <NAME>`
 
-Replace `<NAME>` with the name you want to give to the Tunnel. The name assigned can be any string and does not need to relate to the hostname where traffic will be served.
+If you have deleted the `cert.pem` file, you must specify the UUID instead of the name.
 
-This command will create a Tunnel with the name provided and associate it with a UUID. The relationship between the UUID and the name is persistent. The command will not create a connection at this point.
+`cloudflared tunnel --config path/config.yaml run <UUID>`
 
-![Create a tunnel](../static/img/create-tunnel/ct1.png)
+You can also specify the Tunnel name or UUID inside of the configuration file, in which case the command below will invoke the `run` command for that Tunnel.
 
-Creating a Tunnel generates a credentials file for that specific Tunnel. This file is distinct from the cert.pem file. To run the Tunnel without managing DNS from `cloudflared`, you only need the credentials file.
+`cloudflared tunnel --config path/config.yaml run`
 
-<TableWrap>
+If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
 
-| Action | `cert.pem` | Credentials file |
-|---|---|---|
-| Create a new Tunnel | Required | - |
-| Delete a Tunnel | Required | - |
-| Run a Tunnel | Available | Required |
-| Create DNS records<br/>from `cloudflared` | Required | - |
-| Connect to load balancer<br/>pools from `cloudflared` | Required | - |
-| Route traffic to a running Tunnel<br/>from the Cloudflare dashboard | Available | Available |
+When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [Ingress Rules](/routing-to-tunnel/ingress).
 
-</TableWrap>
+You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route _all_ traffic to the given URL.
+
+`cloudflared tunnel run --url localhost:3000 <NAME or UUID>`
+
+![Run tunnels](../static/img/create-tunnel/rt1.png)
+
+Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
+
+You can also:
+* [Run a tunnel as a service](/run-tunnel/run-as-service)
 
 ## List available Tunnels
 
