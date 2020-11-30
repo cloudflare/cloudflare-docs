@@ -146,7 +146,7 @@ Disables TLS verification of the certificate presented by your origin. Will allo
 
 Default: `false`
 
-Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
+Disables chunked transfer encoding. Useful if you are running a WSGI server.
 
 <div id="proxyAddress">
 
