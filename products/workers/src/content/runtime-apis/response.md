@@ -48,6 +48,8 @@ Valid options for the `options` object include:
   - A simple getter to get the body contents.
 - `bodyUsed` <Type>boolean</Type>
   - A boolean indicating if the body was used in the response.
+- `encodeBody` <Type>string</Type>
+  - Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"auto"`.
 - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
   - The headers for the response.
 - `ok` <Type>boolean</Type>
