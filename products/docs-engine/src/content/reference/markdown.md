@@ -438,14 +438,14 @@ Header content other than [filenames](#filenames) can be specified with `header:
 ---
 header: Install the Workers CLI
 ---
-$ npm install -g @cloudflare/workers-cli
+$ npm install -g @cloudflare/wrangler
 ```
 
 ```sh
 ---
 header: Configure the Workers CLI
 ---
-$ workers config
+$ wrangler config
 ```
 
 ### Theme
