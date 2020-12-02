@@ -5,7 +5,7 @@ order: 40
 
 # Logpush Service
 
-Have logs of your HTTP requests or Spectrum events pushed to your cloud service in batches as soon as possible.
+Have logs of your HTTP requests, Spectrum events, or Firewall events pushed to your cloud service in batches as soon as possible.
 
 If you're already using the Logpull API to download HTTP request logs, you can get the same functionality—including selecting fields and sampling—in Logpush.
 
