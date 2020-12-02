@@ -1,27 +1,28 @@
 ---
-title: Create via UI
+title: Create via Cloudflare dashboard
 order: 20
 ---
 
-# Create a load balancer via the UI
+# Create a load balancer in the Cloudflare dashboard
 
 ## Overview
 
-In this walkthrough, you will use the Load Balancing interface in the **Traffic** app of the Cloudflare dashboard to create a load balancer in **active-passive failover** configuration. An active-passive failover configuration sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, Cloudflare then redirects traffic to the passive pool.
+This walkthrough uses the Load Balancing interface in the **Traffic** app of the Cloudflare dashboard to create a load balancer in **active-passive failover** configuration.
+
+An active-passive failover configuration sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, Cloudflare then redirects traffic to the passive pool.
+
+In the event that all pools are marked down, Cloudflare uses the **fallback pool**, which is the option of last resort for successfully sending traffic to an origin. Since the fallback pool is a last resort, its health is not taken into account, and Cloudflare reports  its status as 'No Health'. You can nominate the fallback pool via the API or in the Cloudflare dashboard. For more on working with fallback pools, see [_Traffic steering_](/understand-basics/traffic-steering).
 
 ---
 
-## Before you begin
+## Requirements
 
-Be sure that you have the following:
-
-**Access to Load Balancing** via one of the following:
-
-- An Enterprise plan with Load Balancing enabled.
-- An existing Free, Pro, or Business plan with a Load Balancing subscription. (Enable Load Balancing in the Traffic app.)
-- **Load balancer hostname**: The hostname for which the Cloudflare Load Balancer will manage traffic. The default hostname is the root hostname.
-- **Origin servers (2):** You will need access to at least two origin servers (_origin-server-1_ and _origin-server-2_, for example).
-- **Location:** Initially, we will configure only a single geographic region.
+- **Access to Load Balancing:** Load Balancing requires one of the following:
+  - A Cloudflare Enterprise plan with Load Balancing enabled.
+  - An existing Free, Pro, or Business plan with a Load Balancing subscription.
+- **Load balancer hostname:** The hostname for which the Cloudflare Load Balancer will manage traffic. The default hostname is the root hostname.
+- **Origin servers (2):** This walkthrough requires at least two origin servers (_origin-server-1_ and _origin-server-2_, for example).
+- **Location:** This walkthrough configures only a single geographic region.
 
 ---
 
