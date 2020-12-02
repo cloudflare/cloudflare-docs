@@ -12,6 +12,12 @@ Cron Triggers allow users to map a cron expression to a Worker script using a [S
 
 Cron Triggers can be added to scripts with the Cloudflare API, or in the dashboard on a [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) up to the [per-script limit](/platform/limits). If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the **`wrangler.toml`** file.
 
+<Aside header="Requires a ScheduledEvent Listener">
+
+In order to respond to a Cron Trigger, a [ScheduledEvent](/runtime-apis/scheduled-event) listener must be added to the Workers script. Similar to the Fetch listener, add your code within the Scheduled listener to specify what the Worker should do under the condition that it was triggered by a Cron Trigger.
+
+</Aside>
+
 ![workers-schedule-editor](./media/workers-schedule-editor.png)
 
 ## Supported cron expressions
