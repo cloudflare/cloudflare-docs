@@ -148,7 +148,7 @@ index b92cb6f..195b646 100644
 +}
 +resource "cloudflare_load_balancer_pool" "www-servers" {
 +  name = "www-servers"
-+  monitor = "${cloudflare_load_balancer_monitor.get-root-https.id}"
++  monitor = cloudflare_load_balancer_monitor.get-root-https.id
 +  check_regions = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 +  origins {
 +    name = "www-us"
@@ -166,8 +166,8 @@ index b92cb6f..195b646 100644
 +resource "cloudflare_load_balancer" "www-lb" {
 +  zone_id = var.zone_id
 +  name = "www-lb"
-+  default_pool_ids = ["${cloudflare_load_balancer_pool.www-servers.id}"]
-+  fallback_pool_id = "${cloudflare_load_balancer_pool.www-servers.id}"
++  default_pool_ids = [cloudflare_load_balancer_pool.www-servers.id]
++  fallback_pool_id = cloudflare_load_balancer_pool.www-servers.id
 +  description = "example load balancer"
 +  proxied = true
 +}

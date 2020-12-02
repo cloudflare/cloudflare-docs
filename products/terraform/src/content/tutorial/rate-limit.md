@@ -21,7 +21,7 @@ resource "cloudflare_rate_limit" "login-limit" {
   zone_id = var.zone_id
 
   threshold = 5
-  period = 60
+  period    = 60
   match {
     request {
       url_pattern = "${var.domain}/login"
@@ -55,7 +55,7 @@ This rule is a bit more complex than the zone settings rule, so let's break it d
 01:   zone_id = var.zone_id
 02:
 03:   threshold = 5
-04:   period = 60
+04:   period    = 60
 ```
 
 The `threshold` is an integer count of how many times an event (defined by the `match` block below) has to be detected in the `period` before the rule takes action. The `period` is measured in seconds, so the above rule says to take action if the match fires 5 times in 60 seconds.

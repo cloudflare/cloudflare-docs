@@ -77,7 +77,7 @@ Terraform will perform the following actions:
       actions.0.disable_performance:          "false"
       actions.0.disable_security:             "false"
       actions.0.security_level:               "under_attack"
-      priority:                               "10"
+      priority:                               "1"
       status:                                 "active"
       target:                                 "www.example.com/expensive-db-call"
       zone:                                   "example.com"
