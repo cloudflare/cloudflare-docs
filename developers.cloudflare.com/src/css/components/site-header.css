@@ -57,15 +57,14 @@
   align-items: center;
   padding-left: var(--content-indent);
   padding-right: var(--content-indent);
-}
-
-.SiteHeader--cloudflare-logo-link {
   transition: opacity .2s ease, color .2s ease;
 }
 
-.SiteHeader--cloudflare-logo-link:hover {
-  opacity: .75;
-  color: rgba(var(--color-rgb), .75);
+@media (hover: hover) {
+  a.SiteHeader--cloudflare-logo-link:hover {
+    opacity: .75;
+    color: rgba(var(--color-rgb), .75);
+  }
 }
 
 .SiteHeader--theme-toggle {
