@@ -76,47 +76,39 @@ If output to standard out, the result would look like the below. In this case we
 
 ```tf
 resource "cloudflare_record" "mitigateddos_net_mitigateddos_net" {
-    domain = "mitigateddos.net"
-
-    name = "mitigateddos.net"
-    type = "A"
-    ttl = "1"
+    zone_id = var.zone_id
+    name    = "@"
+    type    = "A"
+    ttl     = "1"
     proxied = "true"
-
-    value = "1.2.3.4"
+    value   = "192.0.2.1"
 }
 
 resource "cloudflare_record" "mitigateddos_net_www_mitigateddos_net" {
-    domain = "mitigateddos.net"
-
-    name = "www.mitigateddos.net"
-    type = "CNAME"
-    ttl = "1"
+    zone_id = var.zone_id
+    name    = "www"
+    type    = "CNAME"
+    ttl     = "1"
     proxied = "true"
-
-    value = "mitigateddos.net"
+    value   = "mitigateddos.net"
 }
 
 resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net" {
-    domain = "mitigateddos.net"
-
-    name = "a123.mitigateddos.net"
-    type = "NS"
-    ttl = "1"
+    zone_id = var.zone_id
+    name    = "a123"
+    type    = "NS"
+    ttl     = "300"
     proxied = "false"
-
-    value = "rafe.ns.cloudflare.com":50
+    value   = "rafe.ns.cloudflare.com"
 }
 
 resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net_2" {
-    domain = "mitigateddos.net"
-
-    name = "a123.mitigateddos.net"
-    type = "NS"
-    ttl = "1"
+    zone_id = var.zone_id
+    name    = "a123"
+    type    = "NS"
+    ttl     = "300"
     proxied = "false"
-
-    value = "terin.ns.cloudflare.com"
+    value   = "terin.ns.cloudflare.com"
 }
 ```
 
@@ -147,7 +139,7 @@ Terraform will perform the following actions:
       name:        "a123.mitigateddos.net"
       proxiable:   <computed>
       proxied:     "false"
-      ttl:         "1"
+      ttl:         "300"
       type:        "NS"
       value:       "rafe.ns.cloudflare.com"
       zone_id:     <computed>
@@ -162,7 +154,7 @@ Terraform will perform the following actions:
       name:        "a123.mitigateddos.net"
       proxiable:   <computed>
       proxied:     "false"
-      ttl:         "1"
+      ttl:         "300"
       type:        "NS"
       value:       "terin.ns.cloudflare.com"
       zone_id:     <computed>
@@ -179,7 +171,7 @@ Terraform will perform the following actions:
       proxied:     "true"
       ttl:         "1"
       type:        "A"
-      value:       "185.59.204.191"
+      value:       "192.0.2.1"
       zone_id:     <computed>
 
   + cloudflare_record.mitigateddos_net_www_mitigateddos_net
