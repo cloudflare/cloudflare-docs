@@ -18,30 +18,30 @@ Switched to a new branch 'step4-ratelimit'
 $ cat >> cloudflare.cf <<'EOF'
 
 resource "cloudflare_rate_limit" "login-limit" {
-  zone = "${var.domain}"
+  zone_id = var.zone_id
 
   threshold = 5
   period = 60
   match {
     request {
       url_pattern = "${var.domain}/login"
-      schemes = ["HTTP", "HTTPS"]
-      methods = ["POST"]
+      schemes     = ["HTTP", "HTTPS"]
+      methods     = ["POST"]
     }
     response {
-      statuses = [401, 403]
+      statuses       = [401, 403]
       origin_traffic = true
     }
   }
   action {
-    mode = "simulate"
+    mode    = "simulate"
     timeout = 300
     response {
       content_type = "text/plain"
-      body = "You have failed to login 5 times in a 60 second period and will be blocked from attempting to login again for the next 5 minutes."
+      body         = "You have failed to login 5 times in a 60 second period and will be blocked from attempting to login again for the next 5 minutes."
     }
   }
-  disabled = false
+  disabled    = false
   description = "Block failed login attempts (5 in 1 min) for 5 minutes."
 }
 EOF
@@ -52,7 +52,7 @@ This rule is a bit more complex than the zone settings rule, so let's break it d
 
 ```
 00: resource "cloudflare_rate_limit" "login-limit" {
-01:   zone = "${var.domain}"
+01:   zone_id = var.zone_id
 02:
 03:   threshold = 5
 04:   period = 60
@@ -64,8 +64,8 @@ The `threshold` is an integer count of how many times an event (defined by the `
 05:   match {
 06:     request {
 07:       url_pattern = "${var.domain}/login"
-08:       schemes = ["HTTP", "HTTPS"]
-09:       methods = ["POST"]
+08:       schemes     = ["HTTP", "HTTPS"]
+09:       methods     = ["POST"]
 10:     }
 11:     response {
 12:       statuses = [401, 403]
@@ -77,14 +77,14 @@ The `match` block tells the Cloudflare edge what to be on the lookout for, i.e.,
 
 ```
 15:   action {
-16:     mode = "simulate"
+16:     mode    = "simulate"
 17:     timeout = 300
 18:     response {
 19:       content_type = "text/plain"
-20:       body = "You have failed to login 5 times in a 60 second period and will be blocked from attempting to login again for the next 5 minutes."
+20:       body         = "You have failed to login 5 times in a 60 second period and will be blocked from attempting to login again for the next 5 minutes."
 21:     }
 22:   }
-23:   disabled = false
+23:   disabled    = false
 24:   description = "Block failed login attempts (5 in 1 min) for 5 minutes."
 25: }
 ```

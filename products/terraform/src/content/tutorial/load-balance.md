@@ -19,7 +19,7 @@ Switched to a new branch 'step5-loadbalance'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_record" "www-asia" {
-  domain  = "${var.domain}"
+  zone_id = var.zone_id
   name    = "www"
   value   = "198.51.100.15"
   type    = "A"
@@ -53,7 +53,7 @@ Resource actions are indicated with the following symbols:
 Terraform will perform the following actions:
 
   + cloudflare_record.www-asia
-      domain:      "example.com"
+      zone_id:     "e097e1136dc79bc1149e32a8a6bde5ef"
       name:        "www"
       proxied:     "true"
       type:        "A"
@@ -151,15 +151,15 @@ Switched to branch 'step5-loadbalance'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer_monitor" "get-root-https" {
-  expected_body = "alive"
+  expected_body  = "alive"
   expected_codes = "200"
-  method = "GET"
-  timeout = 5
-  path = "/"
-  interval = 60
-  retries = 2
-  check_regions = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
-  description = "GET / over HTTPS - expect 200"
+  method         = "GET"
+  timeout        = 5
+  path           = "/"
+  interval       = 60
+  retries        = 2
+  check_regions  = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
+  description    = "GET / over HTTPS - expect 200"
 }
 EOF
 ```
@@ -198,12 +198,12 @@ Note that when you create a load balancer (LB), it will [replace any existing DN
 ```sh
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer" "www-lb" {
-  zone = "example.com"
-  name = "www-lb"
-  default_pool_ids = ["${cloudflare_load_balancer_pool.www-servers.id}"]
-  fallback_pool_id = "${cloudflare_load_balancer_pool.www-servers.id}"
-  description = "example load balancer"
-  proxied = true
+  zone_id          = "d41d8cd98f00b204e9800998ecf8427e"
+  name             = "www-lb"
+  default_pool_ids = [cloudflare_load_balancer_pool.www-servers.id]
+  fallback_pool_id = cloudflare_load_balancer_pool.www-servers.id
+  description      = "example load balancer"
+  proxied          = true
 }
 EOF
 ```
