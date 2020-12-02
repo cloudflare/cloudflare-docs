@@ -53,7 +53,7 @@ header: Generate a new project
 $ wrangler generate --site wp-static
 ```
 
-the [`--site`](/platform/sites/config) flag indicates that we want to deploy a static site, namely, our static WordPress site.
+the [`--site`](/platform/sites/configuration) flag indicates that we want to deploy a static site, namely, our static WordPress site.
 
 ### Port the WordPress Site
 
