@@ -34,10 +34,21 @@ Returns:
 DNS over Discord supports the following record types, with `*` being supported to fetch them all:
 
     A
-    NS
-    CNAME
-    MX
-    TXT
     AAAA
-    SRV
     CAA
+    CERT
+    CNAME
+    DNSKEY
+    DS
+    LOC
+    MX
+    NAPTR
+    NS
+    PTR
+    SMIMEA
+    SPF
+    SRV
+    SSHFP
+    TLSA
+    TXT
+    URI
