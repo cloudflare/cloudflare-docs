@@ -19,12 +19,22 @@ A policy is a set of rules you can set up for one specific location or for multi
 
 When setting up a policy, you can also enable features such as SafeSearch or YouTube Restricted Mode.
 
-### Blocking a Subdomain
+### Blocking a subdomain
+
 When you manually block a domain, you automatically block all of its subdomains. For example, if you are blocking `example.com`, our policy engine will also block `a.example.com`, `a.b.example.com`.
 
 If you only want to block a subdomain `a.example.com`, then instead of adding `example.com` to the list, you will add `a.example.com`. Note that once you add `a.example.com` to the block list, Cloudflare Gateway will also block all subdomains of `a.example.com`.
 
-### Order Of Operations When Applying A Policy
+### Blocking a top-level domain
+
+Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `.net` in a custom list with the *Block* action selected. 
+
+<Aside>
+
+Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the internet.
+</Aside>
+
+### Order of operations when applying a policy
 
 When Gateway receives a DNS query and the query matches with a policy, the policy follows the order outlined below:
 
