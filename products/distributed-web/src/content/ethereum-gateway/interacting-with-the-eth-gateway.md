@@ -153,18 +153,18 @@ supported.
 | eth_accounts | X |
 | eth_blockNumber | X |
 | eth_chainId | X |
-| eth_getBalance | X |
-| eth_getStorageAt | X |
-| eth_getTransactionCount | X |
+| eth_getBalance* | X |
+| eth_getStorageAt* | X |
+| eth_getTransactionCount* | X |
 | eth_getBlockTransactionCountByHash | X |
 | eth_getBlockTransactionCountByNumber | X |
 | eth_getUncleCountByBlockHash | X |
 | eth_getUncleCountByBlockNumber | X |
-| eth_getCode | X |
+| eth_getCode* | X |
 | eth_sign | |
 | eth_sendTransaction | |
 | eth_sendRawTransaction | X |
-| eth_call | X |
+| eth_call* | X |
 | eth_estimateGas | X |
 | eth_getBlockByHash | X |
 | eth_getBlockByNumber | X |
