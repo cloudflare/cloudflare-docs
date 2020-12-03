@@ -129,11 +129,18 @@ To learn more about how policies work, read our [Policies section](/getting-star
 3. Specify one or more rules in the **Configure a rule** box. You can add as many include, exception, or require statements as needed.
 4. Click **Next** to add your application to Access.
 
-### 3. Configure Advanced Settings
+### 3. Configure advanced settings
 The **Setup section** allows you to configure a few advanced settings for your application.
+
 1. Configure [Cross-Origin Resource Sharing (CORS) settings](/setting-up-access/cors/).
 
  ![Advanced settings](../static/summary/advanced-settings.png)
+
+1. Configure **cookie settings**. For more information, you can read about [session management here](/advanced-management/session-management#browser-cookies-configuration-options).
+
+ ![Cookies and cloudflared settings](../static/summary/cookie-cloudflared.png)
+
+1. Configure **`cloudflared` settings**. For more information, you can read about [automatic `cloudflared` authentication here](/advanced-management/automatic-cloudflared-auth).
 
 1. Once you've configured the settings as needed, click **Add application**.
 
