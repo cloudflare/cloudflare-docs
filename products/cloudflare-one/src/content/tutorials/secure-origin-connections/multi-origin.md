@@ -69,6 +69,8 @@ ingress:
     service: http://localhost:3000
   - hostname: blog.widgetcorp.tech
     service: http://localhost:1313
+  # Catch-all rule, which just responds with 404 if traffic doesn't match any of
+  # the earlier rules
   - service: http_status:404
 ```
 
