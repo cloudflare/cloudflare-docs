@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Login Customization
+# Login customization
 
 In the **Authentication > Login** tab, you can customize the login process for your end users.
 
@@ -12,7 +12,7 @@ Use the **Login Methods** card to add new login methods, or edit/test any login 
 
 ![Login Methods](../static/app-launch/login-methods.png)
 
-## Auth Domain
+## Auth domain
 
 Use the **Auth domain** card to edit your auth domain. To do so, click Edit and input your desired domain name.
 
@@ -20,7 +20,7 @@ Use the **Auth domain** card to edit your auth domain. To do so, click Edit and 
 
 ![Auth Domain](../static/app-launch/auth-domain.png)
 
-## Login Page
+## Login page
 
 Use the **Login Page** card to customize the login page your end users will see. To do so, click *Customize*.
 

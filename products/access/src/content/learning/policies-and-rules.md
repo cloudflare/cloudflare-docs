@@ -2,13 +2,13 @@
 order: 4
 ---
 
-# Policies and Rules
+# Policies and rules
 
 This section addresses a few common policy configurations and best practices.
 
 For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies](/getting-started/policies/) page in the Setup section.
 
-## Combining Policy Actions and Rules
+## Combining policy actions and rules
 
 ### Allow
 
@@ -33,10 +33,6 @@ Use this rule action to bypass Access for a specific path of the application, a 
 Let’s take an example website secured with Access with a third-party service that needs access to a specific endpoint. You can configure traffic to bypass Access and access that endpoint. You can also whitelist a range of IP addresses to bypass Access or allow all traffic by setting the rule to include everyone.
 
 If the service does not publish its IP range or it changes periodically, you can choose to include Everyone in the Bypass action so that any request can access the specified path.
-
-***Pro-tip***. When configuring a Bypass action to allow requests to a specific page while protecting the entire site or other specified pages, store your assets in the path to bypass. Otherwise, Access allows traffic to that page but does not retrieve (display) assets stored in protected locations.
-
-***Note***. When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If *Always use HTTPS* is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
 
 ### Service Auth
 Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.

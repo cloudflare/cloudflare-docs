@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Set up Cloudflare Access
+# Set up Access
 
 <Aside>
 

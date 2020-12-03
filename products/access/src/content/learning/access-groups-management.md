@@ -2,7 +2,7 @@
 order: 6
 ---
 
-# Access Groups Management
+# Access groups management
 
 This section addresses a few common group configurations and best practices.
 
