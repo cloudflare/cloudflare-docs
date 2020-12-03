@@ -118,7 +118,7 @@ module.exports = {
 
 --------------------------------
 
-Here’s the `docs-config.js` file for [these docs](https://github.com/cloudflare/cloudflare-docs/tree/master/products/docs-engine):
+Here’s the `docs-config.js` file for [these docs](https://github.com/cloudflare/cloudflare-docs/tree/production/products/docs-engine):
 
 ```js
 ---

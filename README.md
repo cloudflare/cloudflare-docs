@@ -48,7 +48,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 
 ### Deployment
 
-Each [product](https://github.com/cloudflare/cloudflare-docs/tree/master/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using GitHub Actions to both testing and production environments:
+Each [product](https://github.com/cloudflare/cloudflare-docs/tree/production/products)’s docs are automatically deployed via [@cloudflare/wrangler](https://github.com/cloudflare/wrangler) using GitHub Actions to both testing and production environments:
 
 ```txt
 TEST: https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
