@@ -44,7 +44,7 @@ Valid options for the `options` object include:
 
 <Definitions>
 
-- `body` <TypeLink href="/apis/streams">Readable Stream</TypeLink>
+- `body` <TypeLink href="/runtime-apis/streams">Readable Stream</TypeLink>
   - A simple getter to get the body contents.
 - `bodyUsed` <Type>boolean</Type>
   - A boolean indicating if the body was used in the response.
