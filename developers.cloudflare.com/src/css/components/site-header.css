@@ -24,6 +24,12 @@
     )
 }
 
+@media (max-width: 1440px) {
+  .SiteHeader---shadow {
+    background: rgba(var(--shadow-color-rgb), .07);
+  }
+}
+
 .SiteHeader---shadow-cover {
   position: absolute;
   z-index: 998;
