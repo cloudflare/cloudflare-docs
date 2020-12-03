@@ -2,17 +2,17 @@
 order: 2
 ---
 
-# PuTTY Clients
+# PuTTY clients
 
 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) is a free implementation of SSH for Windows and Unix platforms. This is a guide on how to configure your machine to use PuTTy to connect to an SSH host secured with Cloudflare Access.
 
-## Before You Begin
+## Before you begin
 
 * [Download](https://developers.cloudflare.com/argo-tunnel/downloads/) the cloudflared.exe file from the options available.
 * Ensure you have the hostname of the Host Machine you are reaching.
 * Download and install the [PuTTY client](https://www.chiark.greenend.org.uk/~sgtatham/putty/).
 
-## 1. Establish A Cloudflared Connection To The Host Machine
+## 1. Establish a `cloudflared` connection to the host machine
 
 With the Host Machine hostname, run the following command:
 

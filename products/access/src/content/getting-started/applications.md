@@ -10,11 +10,14 @@ SaaS applications include applications your team relies on that are not hosted b
 
 Self-hosted applications include your internal tools and applications, such as Jira or Grafana. You must secure self-hosted applications with Cloudflare's authoritative DNS to use Cloudflare Access.
 
-## Connecting SaaS Applications
+* Protect a [SaaS application](#protect-a-saas-application)
+* Protect a [self-hosted application](#protect-a-self-hosted-application)
+
+## Protect a SaaS application
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
 
-### 1. Add Your Application
+### 1. Add your application
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 2. Click **Add an application**.
@@ -62,15 +65,16 @@ Before you begin using your application through Access, your last step is to int
 
 1. First, configure these fields with your SAML SSO-compliant application. Take note of these fields before you click **Done**:
 
-* Your SSO endpoint
-* Your Access Entity ID or Issuer
-* Your Public key
+  * Your SSO endpoint
+  * Your Access Entity ID or Issuer
+  * Your Public key
 
-![Setup SaaS application](../static/summary/setup-saas.png)
+ ![Setup SaaS application](../static/summary/setup-saas.png)
 
-2. Click **Done** to see your application listed on your Applications tab.
+4. Click **Done** to see your application listed on your Applications tab.
 
-## Connecting Self-Hosted Applications
+
+## Protect a self-hosted application
 
 <Aside>
 
@@ -87,7 +91,7 @@ Before you begin setting up your self-hosted application, you will need an activ
 
 Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/). If you do not wish to use Argo Tunnel, you must [validate the token](/learning/json-web-tokens/) issued by Cloudflare on your origin.
 
-### 1. Add Your App
+### 1. Add your app
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 2. Click **Add an application**.
 3. Select **Self-hosted**.
@@ -126,10 +130,11 @@ To learn more about how policies work, read our [Policies section](/getting-star
 4. Click **Next** to add your application to Access.
 
 ### 3. Configure Advanced Settings
-The **Setup section** allows you to configure CORS settings. To learn more about CORS, read our [Cross-Origin Resource Sharing (CORS) section](/setting-up-access/cors/).
+The **Setup section** allows you to configure a few advanced settings for your application.
+1. Configure [Cross-Origin Resource Sharing (CORS) settings](/setting-up-access/cors/).
 
  ![Advanced settings](../static/summary/advanced-settings.png)
 
-Click **Add application**.
+1. Once you've configured the settings as needed, click **Add application**.
 
 Your application is now connected to Access, and will appear in your Applications list. You can proceed with connecting your origin to Cloudflare at this URL.
