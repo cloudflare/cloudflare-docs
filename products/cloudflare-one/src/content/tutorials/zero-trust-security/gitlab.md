@@ -118,7 +118,7 @@ You can then add rules to determine who can reach the site.
 
 Click `Next` and `Next` again on the `Setup` page - this example does not require advanced CORS configuration. Repeat these steps for the second application, `gitlab-ssh.widgetcorp.tech`.
 
-![App List](../../static/secure-origin-connections/share-new-site/app-list.png)
+![App List](../../static/secure-origin-connections/gitlab/app-list.png)
 
 
 ## Cloudflare Argo Tunnel
