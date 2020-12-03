@@ -4,6 +4,9 @@ order: 0
 type: overview
 ---
 
+import ProductGrid from "./components/product-grid.js"
+import Stripe from "./components/stripe.js"
+
 <ContentColumn>
 
 # Cloudflare for Teams documentation
@@ -12,16 +15,22 @@ Your employees, partners, and customers need a network that is secure, fast and 
 
 Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere. 
 
+If you want to learn more about Teams, you can explore our:
+
+* [Tutorials](/tutorials) on how to make the most out of your Teams subscription
+* [Learning materials](/learning) to get accustomed to our products
+
+If you want to learn more about a specific Teams product, navigate to each product's developer documentation:
+
+<Stripe>
+
 ## Products
+</Stripe>
+
 
 <TableWrap>
 
-|Product|Description|Documentation|
-|---|---|---|
-|**Access**|Zero Trust security for self-hosted and SaaS applications|[Link](https://developers.cloudflare.com/access/)|
-|**Gateway**|Secure Web Gateway filtering and connectivity|[Link](https://developers.cloudflare.com/gateway/)|
-|**Argo Tunnel**|Outbound-only connections to Cloudflare's edge|[Link](https://developers.cloudflare.com/argo-tunnel/)|
-|**WARP**|Mobile and desktop client which connects devices to Cloudflare's network|[Link](https://developers.cloudflare.com/warpclient/)|
+<ProductGrid/>
 
 </TableWrap>
 
