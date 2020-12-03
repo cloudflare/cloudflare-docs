@@ -63,19 +63,30 @@ cloudflared update
 
 The update will cause `cloudflared` to restart which would impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's Load Balancer product or by using multiple `cloudflared` instances.
 
-### Cloudflare Load Balancer
+### Updating with Cloudflare Load Balancer
 
 We recommend this option if you are currently using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
 
-1. Install a new instance of `cloudflared` and [create](/create-tunnel/index) a new Argo Tunnel.
+1. Install a new instance of `cloudflared` and [create](/configuration/index) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same service or URL as your current, active instance of `cloudflared`.
 3. [Add the address]((/routing-to-tunnel/lb)) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4. Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
 5. Once confirmed, you can remove the older version from the Load Balancer pool.
 
-### Running multiple `cloudflared` instances
+### Updating with multiple `cloudflared` instances
 
-1. Install a new instance of `cloudflared` and [create](/create-tunnel/index) a new Argo Tunnel.
+1. Install a new instance of `cloudflared` and [create](/configuration/index) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same service or URL as your current, active instance of `cloudflared`.
 3. In the Cloudflare DNS dashboard, [replace](/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4. Remove the now-inactive instance of `cloudflared`.
+
+## Deprecated versions
+
+Cloudflare currently supports all versions of `cloudflared`. Starting on March 20, 2021, Cloudflare will no longer support versions released prior to 2020.5.1.
+
+All features available in versions released prior to 2020.5.1 are available in current versions. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1.
+
+| Version(s) | Deprecation status |
+|---|---|
+| 2020.5.1 and later | Supported |
+| Versions prior to 2020.5.1 | Will no longer be supported starting March 20, 2021 |
