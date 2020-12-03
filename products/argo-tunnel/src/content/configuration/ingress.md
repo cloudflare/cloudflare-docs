@@ -152,6 +152,10 @@ ingress:
     originRequest:
       connectTimeout: 10s
       disableChunkedEncoding: true
+  # Some built-in services (like `http_status`) don't use any config. So, this
+  # rule will inherit all the config, but won't actually use it (because it just
+  # responds with HTTP 404).
+  - service: http_status:404
 ```
 
 You can use the following configuration options inside of an ingress rule.
