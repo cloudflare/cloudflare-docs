@@ -18,7 +18,7 @@ This should only be enabled if a [service token](/access-service-auth/service-to
 
 </TableWrap>
 
-When you log into Access through cloudflared, your browser prompts you to allow access by 
+When you log into Access through `cloudflared`, your browser prompts you to allow access by 
 displaying this page:
 
 ![Access browser page](../static/access-page.png)
