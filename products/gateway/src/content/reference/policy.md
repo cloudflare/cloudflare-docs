@@ -27,7 +27,7 @@ If you only want to block a subdomain `a.example.com`, then instead of adding `e
 
 ### Blocking a top-level domain
 
-Like blocking a domain and all subdomains, you can choose to block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `.net` in a custom list with the *Block* action selected. 
+Just like you can choose to block a domain and all subdomains, you can also block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `.net` in a custom list with the *Block* action selected. 
 
 <Aside>
 
