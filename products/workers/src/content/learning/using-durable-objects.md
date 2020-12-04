@@ -160,7 +160,7 @@ export class Counter {
 
 The following describes the raw HTTP API to upload your class definition, define a Durable Object namespace, and then bind another worker to be able to talk to it. This functionality is not yet available in Wrangler, but will be very soon, at which point these instructions will become much simpler.
 
-We've included a helper script that will handle creating configuring and uploading the script for you.  See the [configuration script](#configuration-script) section below.
+We've included a helper script that will handle configuring a namespace and uploading its script for you.  See the [configuration script](#configuration-script) section below.
 
 </Aside>
 
