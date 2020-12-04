@@ -26,7 +26,7 @@ Each docs site built with the engine needs the following structure:
 
 For a repo holding a single docs site, everything but the content should be in the root, as is the case with the [Docs Engine minimal example](https://github.com/adamschwartz/docs-engine-example/tree/c45fa9f0a8affc68baf5d3517f8b890ba0522531).
 
-However, these files can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/master/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
+However, these files can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/production/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
 
 ### 1. package.json
 
