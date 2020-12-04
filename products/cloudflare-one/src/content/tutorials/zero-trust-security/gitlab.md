@@ -44,7 +44,7 @@ Run the following commands to begin.
 sudo apt-get update
 
 sudo apt-get install -y curl openssh-server ca-certificates
-curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash   
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 ```
 
 The commands above download the GitLab software to this machine. You must now install it. This is the first place this tutorial will diverge from the operations in the GitLab documentation. The next step in the GitLab-provided tutorial sets an external hostname. Instead, you can just install the software.
@@ -118,7 +118,7 @@ You can then add rules to determine who can reach the site.
 
 Click `Next` and `Next` again on the `Setup` page - this example does not require advanced CORS configuration. Repeat these steps for the second application, `gitlab-ssh.widgetcorp.tech`.
 
-![App List](../../static/secure-origin-connections/share-new-site/app-list.png)
+![App List](../../static/secure-origin-connections/gitlab/app-list.png)
 
 
 ## Cloudflare Argo Tunnel
@@ -170,7 +170,7 @@ You use the text editor of your choice to edit the configuration file. The examp
 vim ~/.cloudflared/config.yml
 ```
 
-Next, 
+Next,
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -181,6 +181,8 @@ ingress:
     service: http://localhost:80
   - hostname: gitlab-ssh.widgetcorp.tech
     service: ssh://localhost:22
+  # Catch-all rule, which just responds with 404 if traffic doesn't match any of
+  # the earlier rules
   - service: http_status:404
 ```
 

@@ -2,7 +2,7 @@
 order: 40
 ---
 
-# Kubernetes recommendations
+# Kubernetes
 
 You can deploy Argo Tunnel to route traffic to Kubernetes clusters. Cloudflare no longer maintains an ingress controller, but we recommend two options for connecting Kubernetes clusters to Cloudflare without introducing downtime caused by application restarts or `cloudflared` updates.
 

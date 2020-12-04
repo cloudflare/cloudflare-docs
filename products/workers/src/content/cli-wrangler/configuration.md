@@ -173,7 +173,7 @@ You can also define your `site` using [alternative TOML syntax](https://github.c
 
 #### Storage Limits
 
-For very exceptionally large pages, Workers Sites might not work for you. There is a 10MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
+For very exceptionally large pages, Workers Sites might not work for you. There is a 25MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
 
 #### Ignoring Subsets of Static Assets
 
