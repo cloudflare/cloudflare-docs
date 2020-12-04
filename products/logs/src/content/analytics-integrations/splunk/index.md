@@ -279,9 +279,7 @@ The available fields are:
 
 - EdgePathingSrc
 
-- EdgePathi
-
-- ngStatus
+- EdgePathingStatus
 
 - EdgeRateLimitAction
 
