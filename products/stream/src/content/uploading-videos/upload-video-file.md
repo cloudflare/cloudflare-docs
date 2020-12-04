@@ -85,21 +85,13 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
 
-Instead, the `Stream-Media-ID` HTTP header in the response should be used to retrieve the video ID.
+Instead, the `stream-media-id` HTTP header in the response should be used to retrieve the video ID.
 
-<Example>
-	
+For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream` with the TUS protocol, the response will contain a HTTP header like this:
+
 ```
-location: https://upload.videodelivery.net/tus/cab807e0c477d01baq20f66c3d1dfc26cf
-...
 stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
-tus-resumable: 1.0.0
-x-content-type-options: nosniff
-x-envoy-upstream-service-time: 260
-server: cloudflare
 ```
-
-</Example>
 
 ### Command-line example
 
