@@ -24,7 +24,7 @@ Video cannot be downloaded from Cloudflare Stream.
 
 Limits apply to Direct Creator Uploads at the time of upload URL creation.
 
-Uploads over these limits will receive a 429 (Too Many Requests) or 413 (Payload too large) HTTP status codes with more information in the request response. Please write to Cloudflare support or your customer success manager for higher limits.
+Uploads over these limits will receive a 429 (Too Many Requests) or 413 (Payload too large) HTTP status codes with more information in the response body. Please write to Cloudflare support or your customer success manager for higher limits.
 
 ## Can I embed videos on Stream even if my domain is not on Cloudflare?
 
