@@ -14,9 +14,17 @@ Video cannot be downloaded from Cloudflare Stream.
 
 ## Is there a limit to the amount of videos I can upload?
 
-Each account starts with a 500 GB weekly rolling upload limit, which means that videos uploaded in the past 7 days regardless of the day of week will be counted. This only includes original videos uploaded.
+- Each account starts with a 2048 GB weekly rolling upload limit (videos uploaded in the past 7 days regardless of the day of week will be counted.) This only includes original video files uploaded.
 
-A video file can be at most 20 GB. Please write to Cloudflare support or your customer success contact for higher limits.
+- By default, a video upload can be at most 20 GB.
+
+- By default, 70 videos can be in the "in progress" state at once.
+
+- An account cannot upload videos if the total video duration exceeds the video storage capacity purchased.
+
+Limits apply to Direct Creator Uploads at the time of upload URL creation.
+
+Uploads over these limits will receive a 429 (Too Many Requests) or 413 (Payload too large) HTTP status codes with more information in the response body. Please write to Cloudflare support or your customer success manager for higher limits.
 
 ## Can I embed videos on Stream even if my domain is not on Cloudflare?
 
