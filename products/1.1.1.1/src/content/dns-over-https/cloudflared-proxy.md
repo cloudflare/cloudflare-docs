@@ -8,50 +8,62 @@ There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1
 
 ## cloudflared
 
-We've open sourced a golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
+We've open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
 Step 1: Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/argo-tunnel/downloads/).
 
 Step 2: Verify that the `cloudflared` daemon is installed
 
     cloudflared --version
-    cloudflared version 2018.3.11 (built 2018-03-30-1849 UTC)
+    cloudflared version 2020.11.11 (built 2020-11-25-1643 UTC)
 
-Step 3: Start the DNS proxy on an address and port in your network. If you don't specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so you need to run the daemon as a privileged user in order to be able to bind to it.
+Step 3: Start the DNS proxy on an address and port in your network. If you don't
+specify an address and port, it will start listening on `localhost:53`. DNS (53)
+is a privileged port, so for the initial demo we will use a different port:
 
-    sudo cloudflared proxy-dns
-    INFO[0000] Adding DNS upstream                           url="https://cloudflare-dns.com/dns-query"
-    INFO[0000] Starting metrics server                       addr="127.0.0.1:49312"
-    INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
+    cloudflared proxy-dns --port 5553
+    INFO[2020-12-04T19:58:57Z] Adding DNS upstream - url: https://1.1.1.1/dns-query
+    INFO[2020-12-04T19:58:57Z] Adding DNS upstream - url: https://1.0.0.1/dns-query
+    INFO[2020-12-04T19:58:57Z] Starting metrics server on 127.0.0.1:44841/metrics
+    INFO[2020-12-04T19:58:57Z] Starting DNS over HTTPS proxy server on: dns://localhost:5553
 
 Step 4: You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
 
-    dig +short @127.0.0.1 cloudflare.com AAAA
-    2400:cb00:2048:1::c629:d6a2
-    2400:cb00:2048:1::c629:d7a2
+    dig +short @127.0.0.1 -p5553 cloudflare.com AAAA
+    2606:4700::6810:85e5
+    2606:4700::6810:84e5
 
-Step 5: Set up cloudflared as a service so it starts on user login. You can use numeric addresses, to avoid circular dependency on system resolver. First generate a configuration file, see the [configuration reference](https://developers.cloudflare.com/argo-tunnel/reference/config/) for the list of all possible variables. Here's an example:
+Step 5: Set up cloudflared as a service so it starts on user login. On many
+Linux distributions, this can be done with:
 
-    mkdir -p /usr/local/etc/cloudflared
-    cat << EOF > /usr/local/etc/cloudflared/config.yml
-    proxy-dns: true
-    proxy-dns-upstream:
-     - https://1.1.1.1/dns-query
-     - https://1.0.0.1/dns-query
+    sudo tee /etc/systemd/system/cloudflared-proxy-dns.service >/dev/null <<EOF
+    [Unit]
+    Description=DNS over HTTPS (DoH) proxy client
+    Wants=network-online.target nss-lookup.target
+    Before=nss-lookup.target
+
+    [Service]
+    AmbientCapabilities=CAP_NET_BIND_SERVICE
+    CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+    DynamicUser=yes
+    ExecStart=/usr/local/bin/cloudflared proxy-dns
+
+    [Install]
+    WantedBy=multi-user.target
     EOF
+    sudo systemctl enable --now cloudflared-proxy-dns
 
-Step 6: Install cloudflared as a service so it starts on user login. See the [Automatically starting Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/reference/service/) for reference. Since `proxy-dns` requires to bind to privileged port 53, it needs to be installed with admin privileges:
+Step 6: Change your system DNS servers to use 127.0.0.1. On Linux, one can
+modify `/etc/resolv.conf`:
 
-    sudo cloudflared service install
-    INFO[0000] Applied configuration from /usr/local/etc/cloudflared/config.yml
-    INFO[0000] Installing Argo Tunnel as an user launch agent
-    INFO[0000] Outputs are logged in /tmp/com.cloudflare.cloudflared.out.log and /tmp/com.cloudflare.cloudflared.err.log
+    sudo rm -f /etc/resolv.conf
+    echo nameserver 127.0.0.1 | sudo tee /etc/resolv.conf >/dev/null
 
-Step 7: Verify that it's running, then switch your DNS servers to 127.0.0.1
+Step 7: Finally verify it locally with:
 
     dig +short @127.0.0.1 cloudflare.com AAAA
-    2400:cb00:2048:1::c629:d6a2
-    2400:cb00:2048:1::c629:d7a2
+    2606:4700::6810:85e5
+    2606:4700::6810:84e5
 
 ## dnscrypt-proxy
 
