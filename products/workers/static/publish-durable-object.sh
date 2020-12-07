@@ -79,14 +79,17 @@ upload_script() {
        > /dev/null
 }
 
-# upload_bootstrap_script is a temporary hack to work around a chicken-and-egg problem: in order
-# to define a Durable Object namespace, we must tell it a script and class name. But when we upload our
-# script, we need to configure the environment to bind to our durable object namespaces. This function
-# uploads a version of our script with an empty environment (no bindings). The script won't be able
-# to run correctly, but this gets us far enough to define the namespaces, and then we can upload the
-# script with full environment later.
+# upload_bootstrap_script is a workaround to a chicken-and-egg problem: for a Durable Object namespace
+# to be usable, we must configure which script and class name should be run when an object in the namespace
+# is called. But because our script both implements the Durable Object namespace and wants to bind it to
+# send requests to objects within it, we can't upload the script with its bindings until after we've
+# defined the namespace.
 #
-# This is obviously dumb and we (Cloudflare) will come up with something better soon.
+# So we have to pick one of them to define first in an incomplete way -- either the namespace without a
+# script and class assigned, or the script without the namespace binding. We choose to upload the script
+# first without its binding and then add the binding later, but the opposite works too -- you can create
+# the namespace without a script assigned, then upload the script, then update the namespace to be
+# implemented by the script and class.
 upload_bootstrap_script() {
   echo '{"main_module": "'$SCRIPT_FILE'"}' > bootstrap-metadata.json
   curl_api https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME \
