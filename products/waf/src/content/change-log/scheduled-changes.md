@@ -36,33 +36,21 @@ order: 1
             <td>
                 2020-12-07
             </td>
-        </tr>
-        <tr>
             <td>
                 2020-12-14
             </td>
-        </tr>
-        <tr>
             <td>
                 Cloudflare Drupal
             </td>
-        </tr>
-        <tr>
             <td>
                 D0025
             </td>
-        </tr>
-        <tr>
             <td>
                 CVE:CVE-2020-13671
             </td>
-        </tr>
-        <tr>
             <td>
                 N/A
             </td>
-        </tr>
-        <tr>
             <td>
                 Block
             </td>
