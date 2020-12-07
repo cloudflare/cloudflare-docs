@@ -160,7 +160,7 @@ Durable Objects can be created so that they only run and store data within a spe
 let id = OBJECT_NAMESPACE.newUniqueId({jurisdiction: "eu"})
 ```
 
-Creates a new object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with system-generated ids.
+Creates a new object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with ids created by `newUniqueId()` and are not currently compatible with ids created by `idFromName(name)`.
 
 Note that objects that are constrained to a jurisdiction may still be accessed by your Workers from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
 
