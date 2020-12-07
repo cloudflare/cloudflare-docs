@@ -1,6 +1,5 @@
 ---
-order: 0
-hidden: true
+order: 1
 ---
 
 # How Argo Tunnel works
