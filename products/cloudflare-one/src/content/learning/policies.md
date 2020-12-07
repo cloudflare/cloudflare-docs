@@ -39,7 +39,7 @@ The action is the first element you'll be asked to configure when you create an 
 
 These are the action types you can choose from:
 
-* **​Allow**.  
+* **Allow**.  
     The allow action allows users that meet certain criteria to reach an application behind Access. 
 * **Block**.  
     The block action prevents users from reaching an application behind Access. 
@@ -106,7 +106,9 @@ Here is a list of all the criteria you can apply:
 
 ## Gateway policies
 
-Gateway policies allow you to grant or deny your users access to specific domains or domain categories.
+Gateway policies allow you to grant or deny your users access to specific domains or domain categories. If the WARP client is configured to send DNS requests over DoH to Gateway, the DNS queries are evaluated against content and security policies configured for the organization. If the domain is allowed, the client receives the DNS resolution and initiates an HTTP connection.
+
+Cloudflare Gateway currently filters HTTP traffic over port 80 and 443. If the HTTP connection is within a TLS connection, the TLS connection will be terminated at Cloudflare Gateway so the HTTP traffic can be inspected (unless an administrator configures a bypass rule). If the HTTP connection does not violate any policies configured by an administrator, the traffic is allowed through to the origin server.
 
 ### DNS policies
 
@@ -135,11 +137,26 @@ When creating a DNS policy, you can select as many content categories as you wan
 
 #### Destinations
 
-Setting a **destination** for a policy allows you to have manual control on what action to take on requests for specific domains.
+Setting a **destination** for a policy allows you to have manual control on what action to take on requests for **specific domains**.
 When setting a domain as a destination, you have the option to allow, block or override that domain.
 * **Allow**. This action forces resolving this destination and all its sub-destinations, and takes precedence over any blocked destinations.
 * **Block**. This action will block a destination and all its sub-destinations.
 * **Override**. This action will forward all requests to a given destination to another destination you can set.
+
+##### Blocking a subdomain
+
+When you manually block a domain, you automatically block all of its subdomains. For example, if you are blocking `example.com`, our policy engine will also block `a.example.com`, `a.b.example.com`.
+
+If you only want to block a subdomain `a.example.com`, then instead of adding `example.com` to the list, you will add `a.example.com`. Note that once you add `a.example.com` to the block list, Cloudflare Gateway will also block all subdomains of `a.example.com`.
+
+##### Blocking a top-level domain
+
+Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `net` in a custom list with the *Block* action selected. 
+
+<Aside>
+
+Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the internet.
+</Aside>
 
 #### Order of operations
 
