@@ -4,50 +4,53 @@ order: 12
 
 # Microsoft Azure AD® (Active Directory)
 
-
-
-These steps help you set up Azure AD as your identity provider (IdP).
-
-<Aside>
-
-Azure AD integrates with the Office365 identity service as well as other SaaS applications.
-</Aside>
+You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Teams and build rules based on user identity and group membership. Users will authenticate with their Azure AD credentials and login to resources protected by Cloudflare Access or enroll into Cloudflare Gateway.
 
 1. Sign in to [the Azure dashboard](https://portal.azure.com/).
+
+![Azure AD Portal](../../static/azure/azure-portal.png)
+
 2. Click **Azure Active Directory** in the Azure Services section.
 
-    ![Azure AD Services](../../static/azure/azuread-1.png)
+![Azure AD Select AD](../../static/azure/pick-azure-ad.png)
 
 3. On the **Azure AD** dashboard, click **App registrations** in the **Manage** section of the _Azure Active Directory_ pane.
-4. Click **+ New application registration**.
 
-    ![New Azure AD App Registration](../../static/azure/azuread-2.png)
+![Azure AD App Registration](../../static/azure/click-app-reg.png)
 
-5. Name your application and enter your **Sign-on URL** (for example, `https://<your authentication domain>/cdn-cgi/access/callback`). Click **Register**.
+4. Click **+ New registration**.
 
-    ![Azure AD App Registration](../../static/azure/azuread-3.png)
+![Azure AD New Registration](../../static/azure/click-new-reg.png)
 
-6. Select your new application and copy the **Application ID** and **Directory ID** into your **Cloudflare** dashboard.
+5. Name your application and enter your **Cloudflare Authentication Domain**. The format of the authentication domain will be `https://<your authentication domain>/cdn-cgi/access/callback`). Click **Register**.
 
-    ![Azure AD Cloudflare Access App](../../static/azure/azuread-4.png)
+![Azure AD Cloudflare Access App](../../static/azure/name-app.png)
 
-7. In the left hand panel, click **Manage > Certificates & Secrets** and then click **New client secret**.
+6. On the following screen, copy the `Application (client) ID` and `Directory (tenant ID`. You will need to input these values into the Cloudflare dashboard.
 
-8. Give it a **Description** and **Expires** setting and click **Add**.
+![Azure AD IDs](../../static/azure/client-directory-ids.png)
 
-     ![Azure AD Client Secret](../../static/azure/azuread-6.png)
+7. In the left hand panel, click **Certificates & Secrets** to create an Application Secret.
 
-9. Copy the value to the **Application Secret** field in your **Cloudflare** dashboard.
+![Azure AD Certs and Secrets](../../static/azure/certs-and-secrets.png)
 
-10. In the left hand panel, select **API permissions**, and then click **Add a permission**.
+8. Click **+ New client secret**. Name the client secret and choose an expiration. Click **Add**.
 
-    ![Azure AD Add API PErmissions](../../static/azure/azuread-7.png)
+![Azure AD Certs and Secrets](../../static/azure/name-client-cert.png)
 
-11. Click Microsoft Graph.
+Copy the `Value` field of the client secret. Treat this value like a password. This example leaves the value visible so the values in Azure can be seen in the Access configuration.
 
-    ![Azure AD Use microsoft graph](../../static/azure/azuread-8.png)
+![Azure AD Certs and Secrets](../../static/azure/client-cert-value.png)
 
-12. Click Microsoft Graph and then delegated permissions. Add the following permissions.
+9. In the left hand panel, select **API permissions**. Click **Add a permission**.
+
+![Azure AD API Permissions](../../static/azure/api-perms.png)
+
+10. Click **Microsoft Graph**.
+
+![Azure AD API Permissions](../../static/azure/microsoft-graph.png)
+
+11. Select Delegated permissions. You will need to toggle 7 specific permissions in the next page. Once toggled, click **Add permissions**.
 
     - email
     - openid
@@ -57,18 +60,25 @@ Azure AD integrates with the Office365 identity service as well as other SaaS ap
     - Directory.Read.All
     - Group.Read.All
 
-13. Click **Grant Admin Consent for ...**.
+![Azure AD API Permissions](../../static/azure/request-perms.png)
 
-    ![Azure AD Grant admin consent](../../static/azure/azuread-9.png)
+12. On the next page, click the button that begins **Grant Admin Consent for ...**.
 
-14. Return to your **Cloudflare** dashboard.
-15. If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
+![Azure AD API Permissions](../../static/azure/configured-perms.png)
 
-    ![Azure AD Edit IdP](../../static/azure/azuread-10.png)
+13. Return to the Cloudflare for Teams dashboard. Select `Authentication` under the Access section of the sidebar. In the `Login` tab, click **+ Add**. Choose `Azure AD` on the next page.
 
-16. Click **Save and Test** to check your connection to the IdP.
+![Azure AD Add Identity](../../static/azure/add-identity.png)
 
-    ![Azure AD Test Connection](../../static/azure/azuread-11.png)
+14. Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
+
+If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
+
+![Azure AD Add Identity](../../static/azure/add-azure-ad.png)
+
+15. Click **Save and Test** to check your connection to the IdP.
+
+![Azure AD Test](../../static/azure/valid-test.png)
 
 ## Using AzureAD Groups
 
