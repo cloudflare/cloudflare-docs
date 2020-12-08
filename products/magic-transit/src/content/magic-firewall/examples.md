@@ -7,7 +7,7 @@ order:  5
 
 ## Skip Action
 
-The example below blocks all tcp ports, but allows one port (8080) through
+The example below blocks all tcp ports, but allows one port (8080)
 by using the skip action.
 
 ```
