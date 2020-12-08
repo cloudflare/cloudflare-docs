@@ -17,7 +17,7 @@ Configuration files that contain ingress rules must always include a catch-all r
 
 In the following example, `- service: http_status:404` serves as the catch-all rule for the file.
 
-The file also includes the Tunnel UUID, path to the credentials file, and two hostname-service pairs. The Tunnel UUID can alternatively be specified in the `tunnel run` command and the path to the credentials file can be excluded if it is available in the default location.
+The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command and the path to the credentials file can be excluded if it is located at the default filepath.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
