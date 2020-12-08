@@ -23,6 +23,7 @@ A stub resolver (the DNS client on a device that talks to the DNS resolver) conn
 
 ## Example
 
+```sh
     $ kdig -d @1.1.1.1 +tls-ca +tls-host=cloudflare-dns.com  example.com
     ;; DEBUG: Querying for owner(example.com.), class(1), type(1), server(1.1.1.1), port(853), protocol(TCP)
     ;; DEBUG: TLS, imported 170 system certificates
@@ -50,6 +51,7 @@ A stub resolver (the DNS client on a device that talks to the DNS resolver) conn
     ;; Received 468 B
     ;; Time 2018-03-31 15:20:57 PDT
     ;; From 1.1.1.1@853(TCP) in 12.6 ms
+```
 
 ## Supported TLS versions
 
