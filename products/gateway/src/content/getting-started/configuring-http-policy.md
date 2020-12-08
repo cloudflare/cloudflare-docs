@@ -6,7 +6,7 @@ order: 2
 
 <Aside>
 
-This feature is only available on the **Teams Enterprise plan**. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
+This feature is not available on the Teams free plan. For more information, see the [Cloudflare for Teams pricing page](https://www.cloudflare.com/teams-pricing/).
 
 </Aside>
 
