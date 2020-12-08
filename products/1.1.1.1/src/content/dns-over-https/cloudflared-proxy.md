@@ -15,8 +15,8 @@ Step 1: Download the cloudflared daemon. You can [find it here](https://develope
 Step 2: Verify that the `cloudflared` daemon is installed
 
 ```sh
-$ cloudflared --version
-$ cloudflared version 2018.3.11 (built 2018-03-30-1849 UTC)
+cloudflared --version
+cloudflared version 2018.3.11 (built 2018-03-30-1849 UTC)
 ```
 
 Step 3: Start the DNS proxy on an address and port in your network. If you don't specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so you need to run the daemon as a privileged user in order to be able to bind to it.
