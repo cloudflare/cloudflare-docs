@@ -905,19 +905,19 @@ $ wrangler kv:bulk put --binding=MY_KV allthethingsupload.json
 Deletes all specified keys within a given namespace.
 
 ```sh
-$ wrangler kv:key delete --binding= [--env=] [--preview] [--namespace-id=] $FILENAME
+$ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FILENAME
 ```
 
 <Definitions>
 
 - `$FILENAME` <PropMeta>required</PropMeta>
-  - The file to write to the namespace
+  - The file with key-value pairs to delete
 
 - `--binding` <PropMeta>required (if no <Code>--namespace-id</Code>)</PropMeta>
-  - The name of the namespace to put to.
+  - The name of the namespace to delete from.
 
 - `--namespace-id` <PropMeta>required (if no <Code>--binding</Code>)</PropMeta>
-  - The id of the namespace to put to.
+  - The id of the namespace to delete from.
 
 - `--env` <PropMeta>optional</PropMeta>
   - Perform on a specific environment specified as `$ENVIRONMENT_NAME`.
