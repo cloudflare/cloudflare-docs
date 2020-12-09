@@ -12,7 +12,7 @@ The elements that make up an Access policy are:
 * **Rules**
 * **Criteria**
 
-### Actions
+## Actions
 
 Actions let you define what *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
 
@@ -31,7 +31,7 @@ These are the action types you can choose from:
 
 **Note.** When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If Always use HTTPS is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
 
-### Rules
+## Rules
 
 Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need. 
 
@@ -41,7 +41,7 @@ These are the rule types you can choose from:
 | ------- | ------- | ------- |
 | The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | Exceptions work like a NOT logical operator. A user meeting any Exclude criteria won’t be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
 
-### Criteria
+## Criteria
 
 When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`. 
 
@@ -66,7 +66,8 @@ To learn more about policy rules and how to combine policy actions and rules, re
 
 </Aside>
 
-## Managing policies
+## Policy management
+
 Policies are properties of applications. Creating the first policy for an application is part of the set up process for that application.
 
 You can then choose to edit or delete that first policy after completing the application setup, or you can decide to add new policies to the application, all from the Applications section of the Teams dashboard.
@@ -88,6 +89,13 @@ To make any changes to an application’s policies:
 
 5. Once you’ve made all the necessary changes, click **Save application**.
 
+## Policy evaluation
+
+For [self-hosted applications](/getting-started/applications#protect-a-self-hosted-application), policies are evaluated on every request to that application regardless of a user’s session length. 
+
+For [SaaS applications](/getting-started/applications#protect-a-saas-application), policies are only evaluated at the time of login. A user’s session will then be controlled by the specific SaaS application.
+
+To learn more on how Access evaluates policies, read our [Changes in user context section](/learning/policies-and-rules#changes-in-user-context).
 
 ## Example scenarios
 
@@ -110,6 +118,7 @@ To make any changes to an application’s policies:
 | Block  | Include | `Everyone` |
 
 **Result**: this configuration blocks every request to the application.
+
 
 <!--
 
