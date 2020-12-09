@@ -57,4 +57,4 @@ The dashboard displays the following metrics:
 - **Search Engine Bot Traffic**
 - **DNS** (DNS queries, response time, top hostnames, queries by type, stale vs. uncached queries)
 
-![cloudflare dashboard datadog](../../static/images/datadog/dashboards/cloudflare-dashboard-datadog.png)
+![Cloudflare dashboard datadog](../../static/images/datadog/dashboards/cloudflare-dashboard-datadog.png)
