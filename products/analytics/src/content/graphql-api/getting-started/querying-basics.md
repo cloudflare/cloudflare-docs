@@ -64,7 +64,7 @@ How can you tell what data sets, metrics, dimensions, operators, and functions a
 
 Handy links for setting up the GraphQL Analytics API and learning about GraphQL.
 
-### Cloudflare specifc
+### Cloudflare specific
 
 * [_Understanding the Cloudflare Dashboard_](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
 * [_How to find your zoneTag using the API_](https://api.cloudflare.com/#getting-started-resource-ids)

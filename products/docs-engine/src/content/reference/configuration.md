@@ -33,7 +33,7 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
   - By default the engine assumes that a docs site’s structure is placed in the root of a project repo. However, this whole structure can also be placed inside any sub-folder by setting this property. For example, this site’s content is inside the [`products/docs-engine` folder](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/docs-engine) of [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) so its `"products/docs-engine"`.
 
 - `externalLinks` <Type>array</Type> <PropMeta>required</PropMeta>
-  - An array of objects each specyfying a `title` <Type>string</Type> and `url` <Type>string</Type>. Used to construct the external links menu inside the sidebar nav on desktop.
+  - An array of objects each specifying a `title` <Type>string</Type> and `url` <Type>string</Type>. Used to construct the external links menu inside the sidebar nav on desktop.
 
 - `search` <Type>object</Type> <PropMeta>required</PropMeta>
   - Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, e.g.:

@@ -73,6 +73,6 @@ Once you have added the necessary features, you or your customer can move on to 
 
 ## Continue the tutorial
 
-Learn how to modify zone settings and other servics.
+Learn how to modify zone settings and other services.
 
 <p><Button type="primary" href="/tutorial/service-configuration">Step 4: Service configuration</Button></p>

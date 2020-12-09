@@ -16,7 +16,7 @@ You can use the documentation linked below or the same material in the Cloudflar
 |Guide|Type|Description|
 |---|---|---|
 |[One-Time Pin](https://developers.cloudflare.com/access/configuring-identity-providers/one-time-pin/)|Default|You can use Cloudflare Access without an identity provider with the one-time pin integration.|
-|[Facebook®](https://developers.cloudflare.com/access/configuring-identity-providers/facebook-login/)|Social|Guide to integrating Facebok as an identity option.|
+|[Facebook®](https://developers.cloudflare.com/access/configuring-identity-providers/facebook-login/)|Social|Guide to integrating Facebook as an identity option.|
 |[Google®](https://developers.cloudflare.com/access/configuring-identity-providers/google/)|Social|Guide to integrating Google® without a G Suite® organization.|
 |[GitHub®](https://developers.cloudflare.com/access/configuring-identity-providers/github/)|Social|Guide to integrating GitHub, including GitHub Teams.|
 |[LinkedIn](http://developers.cloudflare.com/access/configuring-identity-providers/linkedin/)|Social|Guide to integrating LinkedIN.

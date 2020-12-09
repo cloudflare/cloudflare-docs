@@ -97,7 +97,7 @@ Cloudflare Mobile SDK is now integrated with your iOS application! The **SDK Sta
 ## Verifying Integration
 
 To verify that Cloudflare SDK is initialized you can add a **completionHandler** parameter to initialize selector which
-will execute asychronously after SDK initialization is complete.
+will execute asynchronously after SDK initialization is complete.
 
 The **initialized** selector returns a boolean indicating whether SDK is initialized or not.
 

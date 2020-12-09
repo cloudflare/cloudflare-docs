@@ -17,7 +17,7 @@ Health checks that result in a status change for an origin server are recorded a
 - **Availability monitoring checks the health of origin servers every 15 seconds**. It reports results via email notifications and the Cloudflare API.
 - **The default retry rate is 5 retries/second** and is completely configurable. We do not recommend increasing the retry rate significantly. Retries use exponential backoff (1, 2, 4, 8, 16 seconds by default).
 - **You can configure** **monitoring for specific URLs** by sending periodic HTTP requests to the load balancer, taking advantage of customizable intervals, timeouts, and status codes. Once an origin server is marked unhealthy, multi-region failover reroutes traffic to the next available server in failover order.
-- **Load Balancing monitors use the following HTTP user-agen**t: `"Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; pool-id: $poolid)"`. The `$poolid` contains the first 16 characters of the Load Balancing pool that is the target of the health check.
+- **Load Balancing monitors use the following HTTP user-agent**: `"Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; pool-id: $poolid)"`. The `$poolid` contains the first 16 characters of the Load Balancing pool that is the target of the health check.
 - **To prevent health checks from failing**, and to secure user infrastructure against spoofed checks from bad actors, we recommend the following:
   - Only accept connections to hosts listed in the [Cloudflare IP ranges](https://www.cloudflare.com/ips/) in your firewall or web-server.
   - Use Cloudflare's user agent (see below) to reject HTTP requests that don't come from these ranges.

@@ -221,7 +221,7 @@ A network file sharing protocol that allows applications on a computer to read a
 ## SSH
 *Secure SHell protocol*
 
-Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activites like remote command execution.
+Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activities like remote command execution.
 
 | Related products: | [Access](https://developers.cloudflare.com/access/) |
 |---|---|

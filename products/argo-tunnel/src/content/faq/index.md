@@ -19,7 +19,7 @@ during that login flow. The host certificate is valid for the root domain and an
 one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to
 create DNS records for your domain in Cloudflare.
 
-The third componenent, the token, consists of the zone ID (for the selected domain) and
+The third component, the token, consists of the zone ID (for the selected domain) and
 an API token scoped to the user who first authenticated with the login command. When user
 permissions change (if that user is removed from the account or becomes an admin of another
 account, for example), Cloudflare rolls the user's API key. However, the certificate file

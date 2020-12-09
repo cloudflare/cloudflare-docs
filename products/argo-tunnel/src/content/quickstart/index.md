@@ -100,7 +100,7 @@ INFO[0020] Each HA connection's tunnel IDs: map[3:n1ud0l8y47d5755vsqxuvaa3tf7rp4
 
 Above, you can see Tunnel establishes four long-lived connections between the two closest data centers. You know the tunnel is ready when you see the message `Connected to …`.
 
-When the messages above conclude, Argo Tunnel has succesfully created a connection out from your machine to the Cloudflare network.
+When the messages above conclude, Argo Tunnel has successfully created a connection out from your machine to the Cloudflare network.
 
 If you go visit the domain name at which you created the tunnel (e.g. tunnel.example.com) you will see the request logs directly in the `cloudflared` output with debug level enabled. We call this Tunnel Vision.
 

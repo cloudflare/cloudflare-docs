@@ -4,7 +4,7 @@ order: 1
 
 # Using the player API
 
-The SDK provides an API for programatically controlling the player and listening for player events.
+The SDK provides an API for programmatically controlling the player and listening for player events.
 
 ## Example
 
@@ -106,7 +106,7 @@ The SDK provides an API for programatically controlling the player and listening
 
   <Aside>
 
-    The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligable.
+    The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
     </Aside>
 

@@ -60,4 +60,4 @@ This is your control panel from where you will control the knobs and switches of
 
 ### Get started today
 
-Cloudflare Mobile SDK is still in early access. Please [reach out to us](https://www.cloudflare.com/neumob/) if you are interested in accelerating your mobile app by joining our early acess program.
+Cloudflare Mobile SDK is still in early access. Please [reach out to us](https://www.cloudflare.com/neumob/) if you are interested in accelerating your mobile app by joining our early access program.

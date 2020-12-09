@@ -55,7 +55,7 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     On success a confirmation screen displays.
 
-    ![Sussessful connection to your IdP](../../static/github/github7.png)
+    ![Successful connection to your IdP](../../static/github/github7.png)
 
 > **Note:** If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
 

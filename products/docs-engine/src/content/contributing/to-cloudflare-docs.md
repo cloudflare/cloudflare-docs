@@ -9,7 +9,7 @@ This guide is for contributors to [@cloudflare/cloudflare-docs](http://github.co
 
 --------------------------------
 
-## Two ways to contibute
+## Two ways to contribute
 
 ### 1. GitHub website
 
