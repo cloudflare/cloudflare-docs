@@ -47,7 +47,7 @@ Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 1. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
 1. In the **Command-line arguments** field enter a valid set of command line arguments as describe above
     - Example: `/quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" ENABLE="true" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"`
-1. You don't need to fill other optional fields. Once you've entered all the necessary values, click **Next**. 
+1. You don't need to fill other optional fields. Once you've entered all the necessary values, click **Next**.
 1. Add the users or groups who require Cloudflare WARP.
 1. Click **Next**.
 1. Review your configuration.

@@ -12,7 +12,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 
 <Aside>
 
-**Before you start**  
+**Before you start**
 
 Visit the [Requirements section](/requirements) to review the system requirements for macOS and to download the macOS installer.
 
@@ -26,7 +26,7 @@ Next, choose how you want to deploy the WARP Client in your organization:
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device.
 
-Here is an example plist file with the accepted arguments: 
+Here is an example plist file with the accepted arguments:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -59,10 +59,10 @@ For a description of each argument and what it means, see [deployment parameters
 
 ### Example configuration in Jamf
 
-With Jamf, the WARP Client deployment is performed in three distinct steps: 
+With Jamf, the WARP Client deployment is performed in three distinct steps:
 1. Upload the WARP Client `pkg` file.
 1. Create a policy that deploys the WARP Client `pkg` file.
-1. Create a configuration profile with the settings you want pushed down. 
+1. Create a configuration profile with the settings you want pushed down.
 
 The following sections will walk you through each of these steps.
 

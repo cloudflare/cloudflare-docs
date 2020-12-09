@@ -86,7 +86,7 @@ Deleting a Load Balancer does not delete associated pools and monitors.  To dele
 This example creates two origin pools—the primary pool and a secondary, backup pool that serves traffic when the primary fails. (To set up an **active-active failover** configuration, where all servers receive traffic at once, create only a single pool.)
 
 1. In the **Add an Origin Pool** page, click **Create an origin pool**.
-   
+
   ![Add origin pool page in Create Load Balancer workflow](../static/images/create-load-balancer-add-origin.png)
 
 1. Enter a name and origin server address for the first pool (this must be unique). When the origin server has a hostname, you can enter that as well. To add existing origins, click **Add Origin**.
@@ -102,7 +102,7 @@ This example creates two origin pools—the primary pool and a secondary, backup
   The list of pools displays. By default, pools are ordered by date created. You can reorder them by clicking the arrows next to the numerals in the **Order** column:
 
    ![](../static/images/create-load-balancer-pools-list.png)
-   
+
    For now, leave the order as it is.
 
 1. Click **Next** to continue.
@@ -159,11 +159,11 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
 ### Configure the monitor
 
 1.  To configure the monitor, supply these values:
-    
+
     ![](../static/images/configure-monitor-values.png)
 
     * **Health Threshold:** Defines the number of healthy origin servers required to consider the pool healthy. When the number of healthy origin servers drops below the threshold, the pool will be marked unhealthy. There is only one origin server in this pool, so leave this value at 1.
-    
+
     * **Health Check Regions:** Specify geographic regions from which Cloudflare should send health check requests. To select a region, use the drop-down list.
 
     * **Notification E-mail:** Enter an email address to receive notifications in the **Notifications E-mail** field. You can use a mailing list address or a PagerDuty address to share the notifications with a group.

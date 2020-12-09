@@ -4,7 +4,7 @@ order: 10
 
 # Login page
 
-The **Authentication > Login** tab lets you customize your end users' login experience, so that it meets your organization's needs. 
+The **Authentication > Login** tab lets you customize your end users' login experience, so that it meets your organization's needs.
 
 This means you can:
 * Choose your preferred [login methods](#login-methods)

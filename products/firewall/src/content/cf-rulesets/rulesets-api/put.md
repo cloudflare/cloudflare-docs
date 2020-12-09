@@ -30,11 +30,11 @@ The following request modifies a root ruleset to deploy a managed ruleset.
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{root_ruleset_id}" --data '
 {
-  "description": "My Root ruleset deploying managed ruleset", 
+  "description": "My Root ruleset deploying managed ruleset",
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"", 
+      "expression": "cf.zone.name eq \"example.com\"",
       "action_parameters":
       {
         "id": "{managedRulesetID}"

@@ -30,7 +30,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 - <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
 
   - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
-  
+
   - <em>Example:</em><br />
 
     <code class='InlineCode' style='width:100%'>
@@ -105,7 +105,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
   - Select a slice of contiguous bits from a string field.  This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
   - The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
-  - Use of structure fields is preferred over this mechanism. 
+  - Use of structure fields is preferred over this mechanism.
 
 ## HMAC validation
 

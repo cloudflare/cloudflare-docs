@@ -19,11 +19,11 @@ Cloudflare WARP supports the following operational modes:
  Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/)
 
   <Aside>
- 
+
  **WARP** does not provide anonymity. It is not designed to prevent servers you communicate with from identifying you, or to allow you to pretend to be accessing the Internet in a different country than you are currently in.
 
  </Aside>
 
 * **WARP+.** While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/), WARP+ will route your traffic around congested internet route and improve overall end to end performance.
- 
+
  **WARP Unlimited** is our monthly subscription offering for WARP+. For the time being, WARP Unlimited can only be purchased via your iOS and Android device.

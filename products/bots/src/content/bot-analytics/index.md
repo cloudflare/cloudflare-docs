@@ -7,7 +7,7 @@ order: 400
 
 Cloudflare’s Bot Analytics tool provides Bot Management customers with dynamic options for examining bot traffic.
 
-To use Bot Analytics, open the Cloudflare dashboard and select Firewall > Bot traffic. 
+To use Bot Analytics, open the Cloudflare dashboard and select Firewall > Bot traffic.
 
 ![Bot Analytics on Dashboard](../images/bot-analytics-dashboard.png)
 
@@ -22,7 +22,7 @@ We provide a full tour of Bot Analytics in [our blog post](https://blog.cloudfla
 
 Bot Analytics shows up to one week of data at a time and can display data up to 30 days old. We use adaptive bitrate technology to show sampled data — most customers will see a 1-10% sample depending on how much information they are trying to view. Tooltips on the page will display the current sample rate.
 
-Bot Analytics displays data in real time in most cases. 
+Bot Analytics displays data in real time in most cases.
 
 ## Common uses
 

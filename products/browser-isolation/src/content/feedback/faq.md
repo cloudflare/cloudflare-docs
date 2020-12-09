@@ -29,7 +29,7 @@ You may need to completely close and reopen your browser to establish a new filt
 ## Why is API or CLI traffic not isolated?
 Isolation policies are applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API and command line requests.
 
-# In-Browser alerts 
+# In-Browser alerts
 
 ## Why do I see a "No Browsers Available" alert?
 

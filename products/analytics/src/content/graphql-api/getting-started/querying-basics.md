@@ -55,7 +55,7 @@ query
       firewallEventsAdaptive(
           filter: {
             datetime_gt: "2020-08-03T02:07:05Z",
-            datetime_lt: "2020-08-03T17:07:05Z" 
+            datetime_lt: "2020-08-03T17:07:05Z"
           },
           limit: 2,
           orderBy: [datetime_DESC, rayName_DESC])

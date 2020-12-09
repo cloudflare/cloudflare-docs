@@ -13,7 +13,7 @@ Bot Fight Mode is a simple, free product that helps detect and mitigate bot traf
 
 Bot Fight Mode is available to all Cloudflare customers, and you can enable Bot Fight Mode from **Firewall** > **Tools**.
 
-To prevent configuration overlap, customers who purchased Bot Management will not see Bot Fight Mode. 
+To prevent configuration overlap, customers who purchased Bot Management will not see Bot Fight Mode.
 
 ## Considerations
 

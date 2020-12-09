@@ -26,28 +26,28 @@ To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/450
 
 ![Splunk find Cloudflare app](../../static/images/splunk/screenshots/splunk-cloudflare-app-for-splunk.png)
 
-4. Restart and reopen your Splunk instance.   
+4. Restart and reopen your Splunk instance.
 5. Edit the `cloudflare:json` source type in the Cloudflare App for Splunk. To edit the source type:
-   1. Click the **Settings** dropdown and select **Source types**. 
-   2. Uncheck **Show only popular** and search for *cloudflare*. 
-   3. Click **Edit** and change the Regex expression to `([\r\n]+)`. 
+   1. Click the **Settings** dropdown and select **Source types**.
+   2. Uncheck **Show only popular** and search for *cloudflare*.
+   3. Click **Edit** and change the Regex expression to `([\r\n]+)`.
    4. Save your edits.
 
 6. Create an index on Splunk to store the HTTP Event logs. To create an index:
    1. Open the setup screen by clicking the **Settings** dropdown, then click **Indexes**.
    2. Select **New Index**. Note that the **Indexes** page also gives you the status of all your existing indexes so that you can see whether you're about to use up your licensed amount of space.
-   3. Name the index **cloudflare**, which is the default index that the Cloudflare App will use. 
+   3. Name the index **cloudflare**, which is the default index that the Cloudflare App will use.
 
 7. Set up the HTTP Event Collector (HEC) on Splunk. To create an HEC:
-   1. Click the **Settings** dropdown and select **Data inputs**. 
+   1. Click the **Settings** dropdown and select **Data inputs**.
    2. Click **+Add new** and follow the wizard. When prompted, submit the following responses:
       * Name: Cloudflare
       * Source Type: Select > "cloudflare:json"
       * App Context: Cloudflare App for Splunk (cloudflare)
       * Index: cloudflare
-   3. At the end of the wizard you will see a **Token Value**. This token authorizes the Cloudflare Logpush job to send data to your Splunk instance. If you forget to copy it now, Splunk allows you to get the value at any time. 
+   3. At the end of the wizard you will see a **Token Value**. This token authorizes the Cloudflare Logpush job to send data to your Splunk instance. If you forget to copy it now, Splunk allows you to get the value at any time.
 
-8. Verify whether Splunk is using a self-signed certificate. You'll need this information when creating the Logpush job. 
+8. Verify whether Splunk is using a self-signed certificate. You'll need this information when creating the Logpush job.
 9.  Determine the endpoint to use to send the data to. The endpoint should be:
 
 ```bash
@@ -61,7 +61,7 @@ Where:
 * `port`: 443 or 8088
 * `endpoint`: services/collector/raw
 
-For example: `https://prd-p-0qk3h.splunkcloud.com:8088/services/collector/raw`. Refer to the [Splunk Documentation](https://docs.splunk.com/Documentation/SplunkCloud/8.1.2011/Data/UsetheHTTPEventCollector) for more details and examples. 
+For example: `https://prd-p-0qk3h.splunkcloud.com:8088/services/collector/raw`. Refer to the [Splunk Documentation](https://docs.splunk.com/Documentation/SplunkCloud/8.1.2011/Data/UsetheHTTPEventCollector) for more details and examples.
 
 **Post Installation Notes**
 
@@ -85,11 +85,11 @@ You can also manually configure Data Models by going to **Settings** > **Data mo
 
 Create the Logpush job by following the instructions on [Enable Logpush to Splunk](https://developers.cloudflare.com/logs/logpush/splunk). The API call creates a Logpush job but does not enable it.
 
-Enable the Logpush job through the the Cloudflare dashboard or through the API by following the instructions on [Enable Logpush to Splunk](https://developers.cloudflare.com/logs/logpush/splunk). To enable through the dashboard: 
+Enable the Logpush job through the the Cloudflare dashboard or through the API by following the instructions on [Enable Logpush to Splunk](https://developers.cloudflare.com/logs/logpush/splunk). To enable through the dashboard:
 
-1. Navigate to the Cloudflare dashboard and select **Analytics** > **Logs**. 
-2. Click **Edit** and select the fields referenced in the Dashboard section below to fully populate all tables and graphs. 
-3. Enable the Logpush job by toggling on the switch next to the Edit link. Data takes a few minutes to populate. 
+1. Navigate to the Cloudflare dashboard and select **Analytics** > **Logs**.
+2. Click **Edit** and select the fields referenced in the Dashboard section below to fully populate all tables and graphs.
+3. Enable the Logpush job by toggling on the switch next to the Edit link. Data takes a few minutes to populate.
 
 To validate that you are receiving data, search `index=cloudflare` in Splunk.  
 

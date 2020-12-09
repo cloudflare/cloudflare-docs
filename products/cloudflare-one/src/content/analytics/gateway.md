@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Gateway overview 
+# Gateway overview
 
 You can use the Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or a time.
 

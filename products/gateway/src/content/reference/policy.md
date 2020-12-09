@@ -21,7 +21,7 @@ Cloudflare Gateway currently filters HTTP traffic over port 80 and 443. If the H
 
 ### DNS policies
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an override rule, the user's client receives the DNS resolution and initiates an HTTP connection. 
+When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an override rule, the user's client receives the DNS resolution and initiates an HTTP connection.
 
 DNS policies can be built by doing one or more of the following:
 
@@ -60,7 +60,7 @@ If you only want to block a subdomain `a.example.com`, then instead of adding `e
 
 ##### Blocking a top-level domain
 
-Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `net` in a custom list with the *Block* action selected. 
+Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `net` in a custom list with the *Block* action selected.
 
 <Aside>
 
@@ -103,8 +103,8 @@ Just like actions on destinations in DNS policies, actions in HTTP policies allo
 
 These are the action types you can choose from:
 
-* **Allow** 
-* **Block** 
+* **Allow**
+* **Block**
 * **Bypass**
 
 *Bypass* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
@@ -141,13 +141,13 @@ List of file extensions Gateway can match against:
 |  | pif | xls | | parquet | rar
 |  | pl | xlsx | | rc | rpm
 |  | prg | | | sav | sz
-|  | | | | wasm | xz | | 
+|  | | | | wasm | xz | |
 |  |      | | | sql lite | z
 |  |      | | | tar | zip
 |  |      | | | toml | zlib |
 |  |      | | | torrent | zst |
 |  |      | | | xml |  |
-|  |      | | | yaml | | 
+|  |      | | | yaml | |
 
 </TableWrap>
 
@@ -164,15 +164,15 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 |  does not match regex |  all except when regex evals to true   |
 
 #### Expressions
-Expressions are sets of conditions with which you can combine [selectors](#selectors) and [operators](#operators). By configuring one or more expressions, you can define the scope of your HTTP policy. 
+Expressions are sets of conditions with which you can combine [selectors](#selectors) and [operators](#operators). By configuring one or more expressions, you can define the scope of your HTTP policy.
 
 #### Example scenarios
 
-| Action | Selector | Operator | 
-| ------ | ---- | -------- | 
-| Block  | Content categories | in: `Gaming` | 
+| Action | Selector | Operator |
+| ------ | ---- | -------- |
+| Block  | Content categories | in: `Gaming` |
 
-**Result**: this configuration blocks any traffic to domains categorized as `Gaming`. 
+**Result**: this configuration blocks any traffic to domains categorized as `Gaming`.
 
 #### FAQ
 

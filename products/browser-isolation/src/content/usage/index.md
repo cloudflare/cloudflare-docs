@@ -37,6 +37,6 @@ Cloudflare for Teams + Gateway Intermediate indicates traffic was proxied throug
 
 ** Simplified context menu **
 
-Right-click context menu be simplified. 
+Right-click context menu be simplified.
 
 ![Simplified right click menu](../static/isolated-browser.png)

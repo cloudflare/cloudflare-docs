@@ -27,10 +27,10 @@ header: Set up script and authentication
 import pandas as pd
 from datetime import datetime, timedelta
 import requests
- 
+
 url = 'https://api.cloudflare.com/client/v4/graphql/'
 # Customize these variables.
-file_dir = ''  # Must include trailing slash. If left blank, 
+file_dir = ''  # Must include trailing slash. If left blank,
 # csv will be created in the current directory.
 api_email = '[your email here]'
 api_token = '[your API token here]'
@@ -74,41 +74,41 @@ def get_cf_graphql():
     # This variable replacement requires Python3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
-          $accountTag: string, 
+          $accountTag: string,
           $filter: AccountIpFlows1mAttacksGroupsFilter_InputObject) {{
           viewer {{
             accounts(
               filter: {{ accountTag: $accountTag }}
             ) {{
               ipFlows1mAttacksGroups(
-                filter: $filter, 
-                limit: 10000, 
+                filter: $filter,
+                limit: 10000,
                 orderBy: [min_datetimeMinute_ASC]
               ) {{
                 dimensions {{
-                  attackId, 
-                  attackDestinationIP, 
-                  attackDestinationPort, 
-                  attackMitigationType, 
-                  attackSourcePort, 
+                  attackId,
+                  attackDestinationIP,
+                  attackDestinationPort,
+                  attackMitigationType,
+                  attackSourcePort,
                   attackType
-                }}, 
+                }},
                 avg {{
-                  bitsPerSecond, 
+                  bitsPerSecond,
                   packetsPerSecond
-                }}, 
+                }},
                 min {{
-                  datetimeMinute, 
-                  bitsPerSecond, 
+                  datetimeMinute,
+                  bitsPerSecond,
                   packetsPerSecond
-                }}, 
+                }},
                 max {{
-                  datetimeMinute, 
-                  bitsPerSecond, 
+                  datetimeMinute,
+                  bitsPerSecond,
                   packetsPerSecond
-                }}, 
+                }},
                 sum {{
-                  bits, 
+                  bits,
                   packets}}
                 }}
               }}
@@ -147,10 +147,10 @@ def convert_to_csv():
     # Rename the columns to visually friendly names
     network_analytics_abridged.columns = ['Attack ID','Start date/time', 'End date/time', 'Action taken', 'Attack type', 'Destination IP', 'Max packets/second'] #Renaming columns
     network_analytics_abridged.to_csv("{}network-analytics-{}.csv".format(file_dir,min_date))
- 
+
 max_date = get_date(offset_days)
 min_date = get_date(historical_days)
- 
+
 raw_data = get_cf_graphql()
 convert_to_csv()
 ```
@@ -164,10 +164,10 @@ header: Cloudflare Analytics GraphQL to CSV
 import pandas as pd
 from datetime import datetime, timedelta
 import requests
- 
+
 url = 'https://api.cloudflare.com/client/v4/graphql/'
 # Customize these variables.
-file_dir = ''  # Must include trailing slash. If left blank, 
+file_dir = ''  # Must include trailing slash. If left blank,
 # csv will be created in the current directory.
 api_email = '[your email here]'
 api_token = '[your API token here]'
@@ -176,51 +176,51 @@ api_account = '[your account ID here]'
 offset_days = 1
 # How many days worth of data do we want? By default, 7.
 historical_days = 7
- 
+
 def get_date(num_days):
     today = datetime.utcnow().date()
     return today - timedelta(days=num_days)
- 
+
 def get_cf_graphql():
     headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
     # This variable replacement requires Python3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
-          $accountTag: string, 
+          $accountTag: string,
           $filter: AccountIpFlows1mAttacksGroupsFilter_InputObject) {{
           viewer {{
             accounts(
               filter: {{ accountTag: $accountTag }}
             ) {{
               ipFlows1mAttacksGroups(
-                filter: $filter, 
-                limit: 10000, 
+                filter: $filter,
+                limit: 10000,
                 orderBy: [min_datetimeMinute_ASC]
               ) {{
                 dimensions {{
-                  attackId, 
-                  attackDestinationIP, 
-                  attackDestinationPort, 
-                  attackMitigationType, 
-                  attackSourcePort, 
+                  attackId,
+                  attackDestinationIP,
+                  attackDestinationPort,
+                  attackMitigationType,
+                  attackSourcePort,
                   attackType
-                }}, 
+                }},
                 avg {{
-                  bitsPerSecond, 
+                  bitsPerSecond,
                   packetsPerSecond
-                }}, 
+                }},
                 min {{
-                  datetimeMinute, 
-                  bitsPerSecond, 
+                  datetimeMinute,
+                  bitsPerSecond,
                   packetsPerSecond
-                }}, 
+                }},
                 max {{
-                  datetimeMinute, 
-                  bitsPerSecond, 
+                  datetimeMinute,
+                  bitsPerSecond,
                   packetsPerSecond
-                }}, 
+                }},
                 sum {{
-                  bits, 
+                  bits,
                   packets}}
                 }}
               }}
@@ -237,7 +237,7 @@ def get_cf_graphql():
 
     r = requests.post(url, data=payload, headers=headers)
     return r.text
- 
+
 def convert_to_csv():
     # Parse JSON response in Pandas
     network_analytics = pd.read_json(raw_data)['data']['viewer']['accounts']
@@ -248,10 +248,10 @@ def convert_to_csv():
     # Rename the columns to visually friendly names
     network_analytics_abridged.columns = ['Attack ID','Start date/time', 'End date/time', 'Action taken', 'Attack type', 'Destination IP', 'Max packets/second'] #Renaming columns
     network_analytics_abridged.to_csv("{}network-analytics-{}.csv".format(file_dir,min_date))
- 
+
 max_date = get_date(offset_days)
 min_date = get_date(historical_days)
- 
+
 raw_data = get_cf_graphql()
 convert_to_csv()
 ```

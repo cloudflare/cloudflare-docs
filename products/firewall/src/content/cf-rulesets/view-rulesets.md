@@ -20,7 +20,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 ```
 
 The response displays the following rulesets:
-* Managed rulesets you can use indicated by `kind: managed` 
+* Managed rulesets you can use indicated by `kind: managed`
 * Root ruleset, if configured, indicated by `kind: root`.
   To create a root ruleset, see [configure the root ruleset for your account](/cf-rulesets/configure-root-ruleset/).
 * Custom rulesets, if configured, indicated by `kind: custom`.

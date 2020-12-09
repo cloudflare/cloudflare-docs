@@ -5,7 +5,7 @@ order: 58
 
 # Enable Logpush to Datadog
 
-Cloudflare Logpush now supports pushing logs directly to Datadog via API. 
+Cloudflare Logpush now supports pushing logs directly to Datadog via API.
 
 To set up a Datadog Logpush job:
 1. Create a job with the appropriate endpoint URL and authentication parameters
@@ -13,7 +13,7 @@ To set up a Datadog Logpush job:
 
 <Aside type="note" header="Note">
 
-Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog. 
+Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog.
 
 </Aside>
 
@@ -21,9 +21,9 @@ Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no own
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 * `name` (optional) - Use your domain name as the job name.
-* `destination_conf` - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below. 
+* `destination_conf` - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
 
-  * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
+  * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input'
   * `<DATADOG-API-KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
   * `service`, `host`, `ddsource`, `dtags`: Optional parameters allowed by Datadog
 
@@ -31,7 +31,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
 ```
 
-* `dataset` - the category of logs you want to receive. See [Log fields](https://developers.cloudflare.com/logs/log-fields) for the full list of supported datasets. 
+* `dataset` - the category of logs you want to receive. See [Log fields](https://developers.cloudflare.com/logs/log-fields) for the full list of supported datasets.
 * `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/understanding-logpush-api#options)
 
 Example request using cURL:

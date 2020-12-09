@@ -33,7 +33,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 
 </TableLayout>
 
-Your `build` command in `package.json` should build and export your Next.js application, like this: 
+Your `build` command in `package.json` should build and export your Next.js application, like this:
 
 ```json
 {

@@ -2,11 +2,11 @@
 order: 1
 ---
 
-# Access overview 
+# Access overview
 
 You can use the Overview page to see how many applications have been accessed, how many logins have failed, and how many users are currently connected to your applications.
 
-In the top-right corner, specify the time period you are interested in looking into. 
+In the top-right corner, specify the time period you are interested in looking into.
 
 ![Overview analytics](../static/documentation/logs/access-dash-overview-page.png)
 

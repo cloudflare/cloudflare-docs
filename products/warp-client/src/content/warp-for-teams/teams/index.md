@@ -29,7 +29,7 @@ Each client supports the following set of parameters as part of their deployment
 ### `organization`
 
 | Field | Type | Example | Required |
-| ----- | -------- | ---------- | --- | 
+| ----- | -------- | ---------- | --- |
 | `organization` | string | mycompanyname | yes |
 
 **Description.** If your Teams [auth domain](https://developers.cloudflare.com/access/glossary#auth-domain) is `https://example.cloudflareaccess.com`, you would enter `example`.
@@ -37,14 +37,14 @@ Each client supports the following set of parameters as part of their deployment
 ### `gateway_unique_id`
 
 | Field | Type | Example |  Required |
-| ----- | -------- | ---------- | ------ | 
+| ----- | -------- | ---------- | ------ |
 | `gateway_unique_id` | string | fix7p31bzg | no |
 
 **Description.** Your [Gateway DoH subdomain](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
 
 ### `enable`
 
-| Field | Type | Example |  Required | 
+| Field | Type | Example |  Required |
 | ----- | -------- | ---------- | -------- |
 | `enable` | boolean | true | no |
 

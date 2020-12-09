@@ -69,9 +69,9 @@ To begin using your application through Access, your last step is to integrate y
 
    * Your SSO endpoint
    * Your Access Entity ID or Issuer
-   * Your Public key  
+   * Your Public key
 
-   with your SAML SSO-compliant application.  
+   with your SAML SSO-compliant application.
 
    **Take note of these fields before you click `Done`**.
 

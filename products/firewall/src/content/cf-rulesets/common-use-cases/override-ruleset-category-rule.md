@@ -34,7 +34,7 @@ curl -s -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rules
     "rules": [
         {
             "action": "execute",
-            "expression": "cf.zone.name eq \"example.com\"", 
+            "expression": "cf.zone.name eq \"example.com\"",
             "action_parameters": {
                 "id": "{managed_Ruleset_id}",
                 "overrides": {

@@ -15,7 +15,7 @@ By default self-managed organizations are managed by the account administrator. 
 ## Managed beta organization rules
 Users participating in the `browser-beta` organization will have most traffic isolated by default with exceptions.
 
-Common certificate pinning websites are not decrypted and video conferencing is excluded. 
+Common certificate pinning websites are not decrypted and video conferencing is excluded.
 
 Here is the `browser-beta` configuration:
 

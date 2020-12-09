@@ -26,7 +26,7 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 
 <Aside header='Setting up certificate authorities (CAs) in Firefox'>
 
-If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox). 
+If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
 
 </Aside>
 
@@ -177,7 +177,7 @@ On Windows machines, you can choose to install the Cloudflare root certificate w
 * [GIT](#git)
 * [Python](#python-on-windows)
 
-#### Standard 
+#### Standard
 
 Windows offers two options to install the certificate, each having a different impact on which users will be affected by trusting the root certificate.
 
@@ -256,7 +256,7 @@ The root certificate is now installed and ready to be used.
 
 #### Python on Windows
 
-The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation). 
+The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation).
 
 1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
 

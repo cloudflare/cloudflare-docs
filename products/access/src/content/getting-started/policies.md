@@ -32,7 +32,7 @@ To add an Access policy:
  ![Add rule](../static/summary/add-rule.png)
 
 1. Select a **Rule name**. This name will identify your policy in the list of application policies.
-1. Select a **[Rule action](/policies-and-rules#actions)**. 
+1. Select a **[Rule action](/policies-and-rules#actions)**.
 1. Configure as many **[Rules](/policies-and-rules#rules)** as needed.
 1. Click **Save rule**.
 
@@ -64,7 +64,7 @@ To delete an Access policy:
 
 Your policy has now been deleted.
 
- 
+
 
 <!--
 

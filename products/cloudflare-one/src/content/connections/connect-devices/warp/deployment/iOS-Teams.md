@@ -20,7 +20,7 @@ Next, choose how you want to deploy the WARP Client in your organization:
 
 The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
 
-To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments: 
+To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments:
 
 ```xml
 <key>organization</key>

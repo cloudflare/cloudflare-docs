@@ -11,7 +11,7 @@ This section addresses the most common issues you may come across when setting u
   <Button type="primary" href="/faq/gateway/">Gateway</Button>
   <Button type="primary" href="/faq/warp/">WARP client</Button>
   <Button type="primary" href="/faq/tunnel/">Argo Tunnel</Button>
-  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button> 
+  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button>
 </ButtonGroup>
 
 # Self diagnostics
@@ -28,7 +28,7 @@ The [Teams help page](https://help.teams.cloudflare.com/) at `https://help.teams
 This page shows:
 
 * An overview of **Connectivity** details
-* **Debug information** 
+* **Debug information**
 * An overview of the content categories and security risks that are being blocked
 
 ![Help page](../static/documentation/faq/help-page.png)
@@ -36,7 +36,7 @@ This page shows:
 
 ## Account page
 
-The Account page in the App Launcher allows your end users to self-diagnose any issues they may encounter when accessing applications behind Teams. In the Account page, they can check their account information and their authentication methods. 
+The Account page in the App Launcher allows your end users to self-diagnose any issues they may encounter when accessing applications behind Teams. In the Account page, they can check their account information and their authentication methods.
 
 To reach the Account page:
 

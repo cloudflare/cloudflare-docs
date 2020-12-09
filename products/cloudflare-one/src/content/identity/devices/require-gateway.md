@@ -29,8 +29,8 @@ You are now ready to start requiring Gateway or WARP for your Access application
 
 1. To have an existing policy require Gateway or WARP, click **Edit** for that specific policy. Then, and add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*.
 
- To create a new policy requiring Gateway or WARP, click **Add a rule**. Then, add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*. 
+ To create a new policy requiring Gateway or WARP, click **Add a rule**. Then, add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*.
 
 1. Click **Save rule**.
 
-Before granting access to the application, your policy will now check that the user is running your organization's Gateway configuration, or the WARP client, on their machine. 
+Before granting access to the application, your policy will now check that the user is running your organization's Gateway configuration, or the WARP client, on their machine.

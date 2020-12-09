@@ -72,7 +72,7 @@ Users can also copy the data to share it with an administrator. The data is stru
    },
    "user_uuid":"78f51e22-2a9f-4f51-a60f-bf97d097fb59",
    "devicePosture":{
-      
+
    },
    "account_id":"1c787a4e7a6972171826b9c0bdd5a4ee",
    "auth_cert":"",

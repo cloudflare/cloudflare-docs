@@ -52,8 +52,8 @@ LunaCM v7.1.0-379. Copyright (c) 2006-2017 SafeNet.
 
     Slot Id ->              0
     Label ->
-    Serial Number ->        XXXXXXXXXXXXX  
-    Model ->                LunaSA 7.0.0  
+    Serial Number ->        XXXXXXXXXXXXX
+    Model ->                LunaSA 7.0.0
     Firmware Version ->     7.0.1
     Configuration ->        Luna User Partition With SO (PW) Signing With Cloning Mode
     Slot Description ->     Net Token Slot

@@ -11,7 +11,7 @@ This section addresses the most common issues you may come across when setting u
   <Button type="primary" href="/faq/gateway/">Gateway</Button>
   <Button type="primary" href="/faq/warp/">WARP client</Button>
   <Button type="primary" href="/faq/tunnel/">Argo Tunnel</Button>
-  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button> 
+  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button>
 </ButtonGroup>
 
 ## Gateway help
@@ -28,7 +28,7 @@ Yes. Each location has a unique IPv6 address. You can use that IPv6 address to s
 
 ### How can I report a false positive?
 
-If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed. 
+If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed.
 
 ## Policies
 
@@ -220,18 +220,18 @@ In order to accommodate applications that take advantage of certificate pinning,
 
 Some common applications that make use of certificate pinning include:
 
-<TableWrap>	
+<TableWrap>
 
-| Application     | FQDN               | Bypass Rules                                                                           |	
-|-----------------|--------------------|----------------------------------------------------------------------------------------|	
-| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |	
-| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |	
-| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |	
-| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |	
-| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |	
-| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |	
-| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |	
-| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |	
+| Application     | FQDN               | Bypass Rules                                                                           |
+|-----------------|--------------------|----------------------------------------------------------------------------------------|
+| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |
+| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |
+| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |
+| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |
+| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |
+| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |
+| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |
+| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |
 
 </TableWrap>
 

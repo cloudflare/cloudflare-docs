@@ -28,7 +28,7 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
  ![Expand location card](../../../static/documentation/connections/expand-locations-card.png)
 
 4. Get the **DoT hostname** for the location.
- 
+
  In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
  ![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
@@ -37,7 +37,7 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 
 ### Configure your DoT client
 
-Depending on your operating system, you can choose from a variety of standalone DoT clients. 
+Depending on your operating system, you can choose from a variety of standalone DoT clients.
 
 To configure your DoT client, use the following IP address and hostname:
 
@@ -46,7 +46,7 @@ Hostname: DoT hostname for a chosen location (above this is 9y65g5srsm.cloudflar
 IP address: 162.159.36.5
 ```
 
-Alternatively, stub resolvers (e.g., Unbound) support DoT natively. 
+Alternatively, stub resolvers (e.g., Unbound) support DoT natively.
 
 ```text
 # Unbound TLS Config
@@ -59,9 +59,9 @@ forward-zone:
 	forward-addr: 172.64.36.2@853#xxxxxxxxx.cloudflare-gateway.com
 	forward-addr: 2a06:98c1:54::xxxx#xxxxxxxxx.cloudflare-gateway.com
  ```
- 
+
  <Aside>
- 
+
 Each location has a unique DoT hostname and IPv6 address. Remember to enter your location's values when applying the config above.
 
 </Aside>

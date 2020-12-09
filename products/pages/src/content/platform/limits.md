@@ -8,7 +8,7 @@ Each time you push new code to your GitHub repository, we'll build and deploy yo
 
 ## Custom domains
 
-A Cloudflare Pages project can be attached to a maximum of ten (10) custom domains at a time. 
+A Cloudflare Pages project can be attached to a maximum of ten (10) custom domains at a time.
 
 ## Files
 

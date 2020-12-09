@@ -101,7 +101,7 @@ To configure Access to use Azure groups, make sure you toggle on the **Support g
 
 ![Azure AD groups](../../static/documentation/identity/azure/azure-ad-groups.png)
 
-This will enable you to select **Azure AD groups** when creating or editing a group. When asked for the **Azure group ID**, you must input the `Object Id`. 
+This will enable you to select **Azure AD groups** when creating or editing a group. When asked for the **Azure group ID**, you must input the `Object Id`.
 
 ![Azure AD Test Connection](../../static/documentation/identity/azure/configure-group-n.png)
 

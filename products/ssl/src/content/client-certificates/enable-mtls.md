@@ -13,7 +13,7 @@ To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare 
   The SSL **Overview** displays.
 
   ![SSL app Overview tab](../static/ssl-app-overview-page.png)
-  
+
 1. To enable mTLS for a host, click the **Edit** link in the **Hosts** section of the **Client Certificates** card.
 
   ![Client Certificates card](../static/ssl-client-certs-card-edit-link.png)

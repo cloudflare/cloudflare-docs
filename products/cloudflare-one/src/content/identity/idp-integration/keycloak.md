@@ -2,7 +2,7 @@
 order: 9
 ---
 
-# SAML | Keycloak 
+# SAML | Keycloak
 
 Keycloak is an open source identity and access management solution built by JBoss. Need a Keycloak lab environment for testing? An example is available [here](https://github.com/mw866/tunnel-keycloak).
 
@@ -19,7 +19,7 @@ To set up Keycloak (SAML) as your identity provider:
     ```txt
     https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
-    
+
     ![SAML Client](../../static/documentation/identity/keycloak/configure-client.png)
 
 1. Next, set the valid redirect URI to the Keycloak domain that you are using. For example, `https://<keycloak_domain>/auth/realms/master/protocol/saml`.

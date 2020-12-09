@@ -26,7 +26,7 @@ The ID of the HTTP request
 
 ### Timestamp
 The timestamp of the HTTP request
-  
+
 ### Account ID
 The Cloudflare Account Tag
 
@@ -50,13 +50,13 @@ The HTTP method used for the request (e.g., GET, POST, etc.)
 
 ### HTTP Version
 The HTTP version of the origin that Gateway connected to on behalf of the user
-  
+
 ### URL
 The full URL of the HTTP request
-  
+
 ### Referer
 The Referer request header contains the address of the page making the request
-  
+
 ### User Agent
 The user agent header sent in the request by the originating device
 
@@ -65,6 +65,6 @@ List of file name strings if a file upload occurred
 
 ### Downloaded Filenames
 List of file name strings if a file download occurred
-  
+
 ### Blocked Filename
 The name of the blocked file

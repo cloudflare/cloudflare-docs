@@ -12,7 +12,7 @@ You can define a custom page to be displayed when Pages can't find a requested f
 
 ## Single-page app (SPA) rendering
 
-If your project doesn't include a top-level `404.html` file, Pages assumes that you're deploying a single-page application. This includes frameworks like React, Vue, and Angular. Pages' default single-page application behavior matches all incoming paths to the root (`/`), allowing you to capture URLs like `/about` or `/help` and respond to them from within your SPA. 
+If your project doesn't include a top-level `404.html` file, Pages assumes that you're deploying a single-page application. This includes frameworks like React, Vue, and Angular. Pages' default single-page application behavior matches all incoming paths to the root (`/`), allowing you to capture URLs like `/about` or `/help` and respond to them from within your SPA.
 
 
 ## Caching and performance

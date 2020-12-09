@@ -42,9 +42,9 @@ If your project make use of environment variables to build your site, you can pr
 
 ## Language support and tools
 
-Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go (and many more). 
+Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go (and many more).
 
-If you need to use a specific version of a language, e.g. Node.js or Ruby, you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
+If you need to use a specific version of a language, e.g. Node.js or Ruby, you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
 Here are the pinned versions for tools included in the Cloudflare Workers build environment, and how to override them as relevant:
 

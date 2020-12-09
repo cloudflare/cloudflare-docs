@@ -136,7 +136,7 @@ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-liv
 
 ```sh
 Host ssh-bastion.widgetcorp.tech
-  ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1' 
+  ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1'
 
 Host cfpipe-ssh-bastion.widgetcorp.tech
   HostName ssh-bastion.widgetcorp.tech

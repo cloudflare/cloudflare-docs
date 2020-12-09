@@ -88,7 +88,7 @@ When you create a new token, a confirmation page displays that includes your tok
 
 ![ ](../../../static/images/api-token-confirmation-page.png)
 
-To copy the token to your device's clipboard, click the **Copy** button.  
+To copy the token to your device's clipboard, click the **Copy** button.
 
 <Aside type='warning' header='Warning'>
 

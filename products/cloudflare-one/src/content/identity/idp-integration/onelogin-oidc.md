@@ -32,7 +32,7 @@ To set up OneLogin as your identity provider:
     ```txt
     https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
-    
+
 1. Click **Save**.
 1. Select **More Actions > Add App to Connector**.
 

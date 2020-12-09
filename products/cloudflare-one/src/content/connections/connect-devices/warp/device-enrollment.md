@@ -8,7 +8,7 @@ order: 3
 
 <Aside>
 
-Revoking a user's permission to manage devices will not prevent that user from authenticating to applications. If you wish to revoke access to that user, you can do so by [revoking their user session](/identity/users/session-management#revoke-user-sessions). 
+Revoking a user's permission to manage devices will not prevent that user from authenticating to applications. If you wish to revoke access to that user, you can do so by [revoking their user session](/identity/users/session-management#revoke-user-sessions).
 
 </Aside>
 
@@ -20,7 +20,7 @@ Cloudflare for Teams allows you to establish which users in your organization ca
 
 2. Click **Device Settings** on the top-right corner.
 
-3. In the rule builder, configure a rule to define who can enroll or revoke devices. 
+3. In the rule builder, configure a rule to define who can enroll or revoke devices.
  In this example, only users with `cloudflare.com` email addresses who successfully authenticate during device enrollment through the WARP client will be able to enroll in the organization. This rule prevents outsider users from sending traffic through your account and will give your organization the ability to capture user profile logs and apply profile-specific rules.
 
 ![Enroll Rule](../../../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)

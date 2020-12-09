@@ -4,7 +4,7 @@ order: 0
 
 # DNS policies
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an override rule, the user's client receives the DNS resolution and initiates an HTTP connection. 
+When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an override rule, the user's client receives the DNS resolution and initiates an HTTP connection.
 
 ![Gateway DNS flow](../../../static/documentation/policies/gateway-flow-1.jpg)
 
@@ -45,7 +45,7 @@ If you only want to block a subdomain `a.example.com`, then instead of adding `e
 
 ### Blocking a top-level domain
 
-Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `net` in a custom list with the *Block* action selected. 
+Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by specifying it in a custom list. For example, if you wish to block all domains and subdomains registered as a `.net`, you would input `net` in a custom list with the *Block* action selected.
 
 <Aside>
 

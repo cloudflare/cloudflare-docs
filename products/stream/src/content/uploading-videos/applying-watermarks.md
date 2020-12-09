@@ -68,9 +68,9 @@ To create, list, delete, or get information about the profile, you will need you
       <Aside>
 
         Note that `center` will ignore the `padding` parameter.
-  
+
       </Aside>
-  
+
 </Definitions>
 
 ## Creating a Watermark profile

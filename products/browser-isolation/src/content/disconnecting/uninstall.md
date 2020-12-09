@@ -6,7 +6,7 @@ order: 1
 
 The installation helper tools only install the **Cloudflare for Teams Root CA**  and the **WARP** client.
 
-Here's how to remove them: 
+Here's how to remove them:
 
 ### macOS
 
@@ -16,7 +16,7 @@ Here's how to remove them:
    2. Select the Gear Icon
    3. Close Cloudflare WARP by selecting "Quit".
 2. Open **Finder**.
-3. Select **Applications**. 
+3. Select **Applications**.
 4. Drag **Cloudflare WARP** to your Trash icon in the Dock.
 
 #### Cloudflare for Teams Root CA

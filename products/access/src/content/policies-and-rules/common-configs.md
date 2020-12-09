@@ -22,7 +22,7 @@ All rule actions must have at least one Include. Add a Require rule in the same 
 | ------ | ---- | -------- |
 | Allow  | Include | Emails Ending In: `@example.com` |
 
-**Result**: this configuration lets any user with an `@example.com` email address, as validated against an IdP, reach the application. 
+**Result**: this configuration lets any user with an `@example.com` email address, as validated against an IdP, reach the application.
 
 | Action | Rule | Criteria |
 | ------ | ---- | -------- |

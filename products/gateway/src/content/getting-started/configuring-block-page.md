@@ -18,7 +18,7 @@ This is because Gateway responds to any blocked domain with 0.0.0.0, and does no
 
 However, this may be confusing for some people, as they may think that their Internet is not working.
 
-To remove this confusion, you can configure Cloudflare Gateway's block page to explain to the end user why a website is being blocked.  
+To remove this confusion, you can configure Cloudflare Gateway's block page to explain to the end user why a website is being blocked.
 
 To enable a block page using Gateway's policy engine, you will have to follow a three-step procedure:
 

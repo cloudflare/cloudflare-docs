@@ -4,7 +4,7 @@ order: 3
 
 # Service tokens
 
-You can provide automated systems with service tokens to authenticate against Cloudflare's Zero Trust policies. Cloudflare for teams will generate service tokens that consist of an ID and Secret. Automated systems or applications can then use these values to reach an application protected by Access. 
+You can provide automated systems with service tokens to authenticate against Cloudflare's Zero Trust policies. Cloudflare for teams will generate service tokens that consist of an ID and Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
 This section covers how to create, renew, and revoke a service token.
 
@@ -23,7 +23,7 @@ This section covers how to create, renew, and revoke a service token.
   ![Name Service Token](../../static/documentation/identity/users/name-service-token.png)
 
 4. Click **Generate token**.
-  
+
   The next page will display the generated `Client ID` and `Client Secret` for the service token.
 
 5. In the next page, copy the `Client Secret`.
@@ -91,5 +91,3 @@ To configure a service token expiration alert:
 7. Click **Create**.
 
 Your alert has been set, and is now visible in the **Notifications** tab of the Cloudflare dashboard.
-
-

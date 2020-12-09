@@ -13,7 +13,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 
 <Aside>
 
-This should only be enabled if a [service token](/access-service-auth/service-tokens) cannot be used for your automated service. 
+This should only be enabled if a [service token](/access-service-auth/service-tokens) cannot be used for your automated service.
 </Aside>
 
 <TableWrap>
@@ -25,7 +25,7 @@ This should only be enabled if a [service token](/access-service-auth/service-to
 
 </TableWrap>
 
-When you log into Access through `cloudflared`, your browser prompts you to allow access by 
+When you log into Access through `cloudflared`, your browser prompts you to allow access by
 displaying this page:
 
 ![Access browser page](../static/access-page.png)

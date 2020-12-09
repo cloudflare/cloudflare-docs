@@ -42,7 +42,7 @@ To set up PingIdentity (SAML) as your identity provider:
     ```txt
     https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
-    
+
 1. Fill the other fields with values from your Ping dashboard.
 1. Click **Save**.
 

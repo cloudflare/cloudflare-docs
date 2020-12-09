@@ -17,7 +17,7 @@ You will see the location you set up during your Gateway onboarding listed there
 
 2. Click on **Add a location**.
 
-3. Add a **location name** and IP address.  
+3. Add a **location name** and IP address.
 
 ![Gateway Begin Setup](../static/add-location-name.png)
 

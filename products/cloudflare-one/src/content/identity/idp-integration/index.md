@@ -44,7 +44,7 @@ To test if an IdP is correctly configured, click on **Authentication** > **Login
 If your provider is connected, another window will open in your browser, with this message:
 
 ![Connected IdP](../../static/documentation/identity/connected-idp.png)
- 
+
 ### Your provider is not connected
 
 If your provider is not connected, another window will open in your browser. Along with an error message, you will receive a detailed explanation of why the test has failed.

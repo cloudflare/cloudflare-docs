@@ -11,7 +11,7 @@ This section addresses the most common issues you may come across when setting u
   <Button type="primary" href="/faq/gateway/">Gateway</Button>
   <Button type="primary" href="/faq/warp/">WARP client</Button>
   <Button type="primary" href="/faq/tunnel/">Argo Tunnel</Button>
-  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button> 
+  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button>
 </ButtonGroup>
 
 ## Argo Tunnel help
@@ -39,7 +39,7 @@ certificate. Alternatively, the administrator can create a dedicated service use
 
 ### What can cause a `websocket: bad handshake` error?
 
-If your Cloudflare account has Universal SSL enabled and the `SSL/TLS encryption mode` is set to `Off`, `cloudflared` will return a `"websocket: bad handshake"` error. To resolve, set the `SSL/TLS encryption mode` to any setting other than `Off`. 
+If your Cloudflare account has Universal SSL enabled and the `SSL/TLS encryption mode` is set to `Off`, `cloudflared` will return a `"websocket: bad handshake"` error. To resolve, set the `SSL/TLS encryption mode` to any setting other than `Off`.
 
 ### What are the ports and IPs used by `cloudflared`?
 

@@ -34,7 +34,7 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
  ![Expand location card](../../../static/locations-doh-dot.png)
 
 4. Get the **DoT hostname** for the location.
- 
+
  In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
  ![Get unique subdomain](../../../static/locations-dot-complete.png)

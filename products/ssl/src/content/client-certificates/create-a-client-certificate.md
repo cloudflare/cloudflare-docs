@@ -11,7 +11,7 @@ To create a client certificate in the Cloudflare dashboard, use the **SSL** app 
   The SSL **Overview** displays.
 
   ![SSL app Overview tab](../static/ssl-app-overview-page.png)
-  
+
 1. Click the **Client Certificates** tab.
 
 1. In the the **Client Certificates** card, click **Create Certificate**.

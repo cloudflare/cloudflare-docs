@@ -12,7 +12,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 
 <Aside>
 
-**Before you start**  
+**Before you start**
 
 Visit the [Requirements section](/requirements) to review the system requirements for Android and to download the Android installer.
 

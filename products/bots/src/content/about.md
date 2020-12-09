@@ -62,4 +62,4 @@ If you have a large, sophisticated site with a lot of traffic, we recommend Bot 
 
 ## How do I get started?
 
-Review our guides for [Bot Fight Mode](/bot-fight-mode/) and [Bot Management for Enterprise](/bot-management-enterprise/). If you have any questions, visit the [community](https://community.cloudflare.com/) to engage with other Cloudflare users. 
+Review our guides for [Bot Fight Mode](/bot-fight-mode/) and [Bot Management for Enterprise](/bot-management-enterprise/). If you have any questions, visit the [community](https://community.cloudflare.com/) to engage with other Cloudflare users.

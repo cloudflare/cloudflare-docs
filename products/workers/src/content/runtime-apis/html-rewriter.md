@@ -99,7 +99,7 @@ All functions defined on both Element and Document handlers can return either `v
 class UserElementHandler {
   async element(element) {
     let response = await fetch(new Request("/user"));
-    
+
     // fill in user info using response
   }
 }

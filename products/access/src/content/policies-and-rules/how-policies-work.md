@@ -32,9 +32,9 @@ The action is the first element you'll be asked to configure when you create an 
 These are the action types you can choose from:
 
 * **​Allow**.  
-    The allow action allows users that meet certain criteria to reach an application behind Access. 
+    The allow action allows users that meet certain criteria to reach an application behind Access.
 * **Block**.  
-    The block action prevents users from reaching an application behind Access. 
+    The block action prevents users from reaching an application behind Access.
 * **Bypass**.  
     The bypass action disables any Access enforcement for traffic that meets the defined rule criteria.
 * **Service Auth**.  
@@ -44,7 +44,7 @@ These are the action types you can choose from:
 
 ## Rules
 
-Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need. 
+Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need.
 
 These are the rule types you can choose from:
 
@@ -54,7 +54,7 @@ These are the rule types you can choose from:
 
 ## Criteria
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`. 
+When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`.
 
 Here is a list of all the criteria you can apply:
 
@@ -75,7 +75,7 @@ Here is a list of all the criteria you can apply:
 
 ## Policy evaluation
 
-For [self-hosted applications](/getting-started/applications#protect-a-self-hosted-application), policies are evaluated on every request to that application regardless of a user’s session length. 
+For [self-hosted applications](/getting-started/applications#protect-a-self-hosted-application), policies are evaluated on every request to that application regardless of a user’s session length.
 
 For [SaaS applications](/getting-started/applications#protect-a-saas-application), policies are only evaluated at the time of login. A user’s session will then be controlled by the specific SaaS application.
 

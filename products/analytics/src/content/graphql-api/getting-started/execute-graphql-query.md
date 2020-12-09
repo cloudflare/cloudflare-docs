@@ -24,7 +24,7 @@ header: Example bash script that uses curl to query Analytics API
 # This script fetches the last 24 hours of firewall events for the ZoneID passed
 # in as the first parameter using the global key passed in as the second parameter.
 ######################################################################################
- 
+
 ZoneID="$1"
 global_key="$2"
 Email="user@domain.com"
@@ -35,7 +35,7 @@ end_epoch=$(date +'%s')
 let start_epoch=$end_epoch-$back_seconds
 start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%m:%SZ')
 end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%m:%SZ')
- 
+
 PAYLOAD='{ "query":
   "query {
     viewer {

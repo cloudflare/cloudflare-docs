@@ -76,7 +76,7 @@ Once integrated, users will login with their Google Suite credentials to reach r
 
  ![Create OAuth](../../static/documentation/identity/gsuite/create-oauth.png)
 
-1. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/glossary#team-domain). 
+1. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/glossary#team-domain).
 
 1. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 

@@ -16,9 +16,9 @@ order: 1
 
 1. In the **Assign locations** card, specify the location(s) for which you want to enable the policy. To enable it for all your locations, click **Select all** on the top right corner of the card.  
 
-1. You can choose to enable the **[Gateway Block Page](/policies/filtering/dns-policies/configuring-block-page)** to explain to the end user why a website is being blocked. 
+1. You can choose to enable the **[Gateway Block Page](/policies/filtering/dns-policies/configuring-block-page)** to explain to the end user why a website is being blocked.
 
-1. In the cards below, you can choose to enable **[SafeSearch](/policies/filtering/dns-policies/safesearch)** or **YouTube Restricted Mode** for your policy. 
+1. In the cards below, you can choose to enable **[SafeSearch](/policies/filtering/dns-policies/safesearch)** or **YouTube Restricted Mode** for your policy.
 
 1. Next, navigate to **[Security risks](/policies/filtering/dns-policies/categories#security-risk-categories)** to choose which security categories you want to block. Click on **Block all** if you want to select all categories.
 

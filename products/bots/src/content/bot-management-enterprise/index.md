@@ -31,7 +31,7 @@ The **Heuristics** engine processes all requests. Cloudflare conducts a number o
 
 The **Machine Learning (ML)** engine accounts for the majority of all detections, human and bot. This approach leverages our global network, which proxies billions of requests daily, to identify both automated and human traffic. We constantly train the ML engine to become more accurate and adapt to new threats. Most importantly, this engine learns from traffic across all Cloudflare sites and uses these insights to score traffic while honoring our [strict privacy standards](https://www.cloudflare.com/privacypolicy/). This engine produces scores two through 99.
 
-The **Anomaly Detection (AD)** engine is an optional detection engine that uses a form of unsupervised learning. We record a baseline of your site’s traffic and use the baseline to intelligently detect outlier requests. This approach is user agent-agnostic and can be turned on or off by your account team. 
+The **Anomaly Detection (AD)** engine is an optional detection engine that uses a form of unsupervised learning. We record a baseline of your site’s traffic and use the baseline to intelligently detect outlier requests. This approach is user agent-agnostic and can be turned on or off by your account team.
 
 Cloudflare does not recommend AD for sites that use SSL for SaaS or expect large amounts of API traffic. The AD engine immediately gives automated requests a score of one.
 

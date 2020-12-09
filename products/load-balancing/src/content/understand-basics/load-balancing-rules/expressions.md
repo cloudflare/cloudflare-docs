@@ -50,7 +50,7 @@ A compound expression uses a **logical operator** (_and_, _or_, for example) to 
 The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `stream1`:
 
 ```sql
-(http.request.uri.path contains "/content") 
+(http.request.uri.path contains "/content")
 and (http.request.uri.query contains "webserver")
 ```
 
@@ -83,7 +83,7 @@ This Expression Builder screenshot shows the example compound expression describ
 The **Expression Preview** displays the expression in text:
 
 ```sql
-(http.request.uri.path contains "/content") 
+(http.request.uri.path contains "/content")
 and (http.request.uri.query contains "webserver")
 ```
 
