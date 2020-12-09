@@ -5,7 +5,7 @@ order: 40
 
 # Build your own Analytics dashboard
 
-In this example, we're going to see how to use the GraphQL Analytics API to build your own dashboard. This tutorial walks you through building a simple line chart for your Cloudflare zone, using a bit of HTML, Javascript, AJAX and chart.js.
+In this example, we're going to see how to use the GraphQL Analytics API to build your own dashboard. This tutorial walks you through building a simple line chart for your Cloudflare zone, using a bit of HTML, JavaScript, AJAX and chart.js.
 
 ![GraphQL recipe](../static/graphQL-recipe-cacheVisual.gif)
 

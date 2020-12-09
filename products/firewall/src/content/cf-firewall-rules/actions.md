@@ -123,7 +123,7 @@ The only exception to this behavior involves the _Log_ action. Unlike the other 
               automatically.
             </li>
             <li>
-              The client that made the request must pass a Cloudflare Javascript
+              The client that made the request must pass a Cloudflare JavaScript
               Challenge before proceeding.
             </li>
             <li>
