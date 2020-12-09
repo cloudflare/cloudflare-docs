@@ -18,7 +18,7 @@ Example request:
 
 The same DNS query for `www.example.com`, using the POST method would be:
 
-```
+```txt
 :method = POST
 :scheme = https
 :authority = cloudflare-dns.com
@@ -35,7 +35,7 @@ content-length = 33
 
 And would return the answer in wireformat:
 
-```
+```txt
     :status = 200
     content-type = application/dns-message
     content-length = 64
@@ -51,7 +51,7 @@ And would return the answer in wireformat:
 To try using cURL you can do:
 
 ```sh
-    echo -n 'q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | base64 -D | curl -H 'content-type: application/dns-message' --data-binary @- https://cloudflare-dns.com/dns-query -o - | hexdump
+$ echo -n 'q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | base64 -D | curl -H 'content-type: application/dns-message' --data-binary @- https://cloudflare-dns.com/dns-query -o - | hexdump
 ```
 
 ## Using GET
@@ -61,32 +61,32 @@ When making requests using GET, the DNS query is encoded into the URL. The `acce
 Example request:
 
 ```sh
-    $ curl -H 'accept: application/dns-message' -v 'https://cloudflare-dns.com/dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | hexdump
-    * Using HTTP2, server supports multi-use
-    * Connection state changed (HTTP/2 confirmed)
-    * Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
-    * Using Stream ID: 1 (easy handle 0x7f968700a400)
-    GET /dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB HTTP/2
-    Host: cloudflare-dns.com
-    User-Agent: curl/7.54.0
-    accept: application/dns-message
+$ curl -H 'accept: application/dns-message' -v 'https://cloudflare-dns.com/dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | hexdump
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x7f968700a400)
+GET /dns-query?dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB HTTP/2
+Host: cloudflare-dns.com
+User-Agent: curl/7.54.0
+accept: application/dns-message
 
-    * Connection state changed (MAX_CONCURRENT_STREAMS updated)!
-    HTTP/2 200
-    date: Fri, 23 Mar 2018 05:14:02 GMT
-    content-type: application/dns-message
-    content-length: 49
-    cache-control: max-age=0
-    set-cookie: \__cfduid=dd1fb65f0185fadf50bbb6cd14ecbc5b01521782042; expires=Sat, 23-Mar-19 05:14:02 GMT; path=/; domain=.cloudflare.com; HttpOnly
-    server: cloudflare-nginx
-    cf-ray: 3ffe69838a418c4c-SFO-DOG
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+HTTP/2 200
+date: Fri, 23 Mar 2018 05:14:02 GMT
+content-type: application/dns-message
+content-length: 49
+cache-control: max-age=0
+set-cookie: \__cfduid=dd1fb65f0185fadf50bbb6cd14ecbc5b01521782042; expires=Sat, 23-Mar-19 05:14:02 GMT; path=/; domain=.cloudflare.com; HttpOnly
+server: cloudflare-nginx
+ cf-ray: 3ffe69838a418c4c-SFO-DOG
 
-    { [49 bytes data]
-    100    49  100    49    0     0    493      0 --:--:-- --:--:-- --:--:--   494
-    * Connection #0 to host cloudflare-dns.com left intact
-    0000000 ab cd 81 80 00 01 00 01 00 00 00 00 03 77 77 77
-    0000010 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 00 01 00
-    0000020 01 c0 0c 00 01 00 01 00 00 0a 8b 00 04 5d b8 d8
-    0000030 22
-    0000031
+{ [49 bytes data]
+100    49  100    49    0     0    493      0 --:--:-- --:--:-- --:--:--   494
+* Connection #0 to host cloudflare-dns.com left intact
+0000000 ab cd 81 80 00 01 00 01 00 00 00 00 03 77 77 77
+0000010 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 00 01 00
+0000020 01 c0 0c 00 01 00 01 00 00 0a 8b 00 04 5d b8 d8
+0000030 22
+0000031
 ```

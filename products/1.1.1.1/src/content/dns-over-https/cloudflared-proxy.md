@@ -15,14 +15,14 @@ Step 1: Download the cloudflared daemon. You can [find it here](https://develope
 Step 2: Verify that the `cloudflared` daemon is installed
 
 ```sh
-cloudflared --version
-cloudflared version 2018.3.11 (built 2018-03-30-1849 UTC)
+$ cloudflared --version
+$ cloudflared version 2018.3.11 (built 2018-03-30-1849 UTC)
 ```
 
 Step 3: Start the DNS proxy on an address and port in your network. If you don't specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so you need to run the daemon as a privileged user in order to be able to bind to it.
 
 ```sh
-sudo cloudflared proxy-dns
+$ sudo cloudflared proxy-dns
 INFO[0000] Adding DNS upstream                           url="https://cloudflare-dns.com/dns-query"
 INFO[0000] Starting metrics server                       addr="127.0.0.1:49312"
 INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
@@ -31,7 +31,7 @@ INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:5
 Step 4: You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
 
 ```sh
-dig +short @127.0.0.1 cloudflare.com AAAA
+$ dig +short @127.0.0.1 cloudflare.com AAAA
 2400:cb00:2048:1::c629:d6a2
 2400:cb00:2048:1::c629:d7a2
 ```
@@ -39,8 +39,8 @@ dig +short @127.0.0.1 cloudflare.com AAAA
 Step 5: Set up cloudflared as a service so it starts on user login. You can use numeric addresses, to avoid circular dependency on system resolver. First generate a configuration file, see the [configuration reference](https://developers.cloudflare.com/argo-tunnel/reference/config/) for the list of all possible variables. Here's an example:
 
 ```sh
-mkdir -p /usr/local/etc/cloudflared
-cat << EOF > /usr/local/etc/cloudflared/config.yml
+$ mkdir -p /usr/local/etc/cloudflared
+$ cat << EOF > /usr/local/etc/cloudflared/config.yml
 proxy-dns: true
 proxy-dns-upstream:
 - https://1.1.1.1/dns-query
@@ -51,7 +51,7 @@ EOF
 Step 6: Install cloudflared as a service so it starts on user login. See the [Automatically starting Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/reference/service/) for reference. Since `proxy-dns` requires to bind to privileged port 53, it needs to be installed with admin privileges:
 
 ```sh
-sudo cloudflared service install
+$ sudo cloudflared service install
 INFO[0000] Applied configuration from /usr/local/etc/cloudflared/config.yml
 INFO[0000] Installing Argo Tunnel as an user launch agent
 INFO[0000] Outputs are logged in /tmp/com.cloudflare.cloudflared.out.log and /tmp/com.cloudflare.cloudflared.err.log
@@ -60,7 +60,7 @@ INFO[0000] Outputs are logged in /tmp/com.cloudflare.cloudflared.out.log and /tm
 Step 7: Verify that it's running, then switch your DNS servers to 127.0.0.1
 
 ```sh
-dig +short @127.0.0.1 cloudflare.com AAAA
+$ dig +short @127.0.0.1 cloudflare.com AAAA
 2400:cb00:2048:1::c629:d6a2
 2400:cb00:2048:1::c629:d7a2
 ```
