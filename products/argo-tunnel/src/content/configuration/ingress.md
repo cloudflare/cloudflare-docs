@@ -13,13 +13,11 @@ You can define ingress rules inside of the configuration file.
 
 ## Requirements
 
-Configuration files that contain ingress rules must always include the following items:
+Configuration files that contain ingress rules must always include a catch-all rule that concludes the ingress file.
 
-* The Tunnel UUID value
-* The path to the credentials file for that Tunnel
-* A catch-all rule that concludes the ingress file
+In the following example, `- service: http_status:404` serves as the catch-all rule for the file.
 
-The following example includes all three requirements, as well as two hostname-service pairs. In this case, the catch-all rule will return a 404.
+The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command and the path to the credentials file can be excluded if it is located at the default filepath.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
