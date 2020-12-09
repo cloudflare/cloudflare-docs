@@ -360,7 +360,7 @@ If you are using CSP, you will need to add all subdomains of `cloudflarestream.c
 
     Content-Security-Policy: default-src 'self' *.cloudflarestream.com *.videodelivery.net
 
-If CSP is misconfigured your videos might not play or you might see an error similar to the one below in your browser's javascript console.
+If CSP is misconfigured your videos might not play or you might see an error similar to the one below in your browser's JavaScript console.
 
     Refused to load the script 'https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js' because it violates the following Content Security Policy directive: ...
 

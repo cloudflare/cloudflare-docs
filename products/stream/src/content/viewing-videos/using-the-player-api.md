@@ -22,7 +22,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 
 <script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
 
-<!-- Your javascript code below-->
+<!-- Your JavaScript code below-->
 <script>
   const player = Stream(document.getElementById('stream-player'))
   player.addEventListener('play', () => {
