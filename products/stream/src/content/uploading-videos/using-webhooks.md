@@ -126,7 +126,7 @@ import (
 )
 
 func main() {
-	secret := []byte("secret from the cloudflare API")
+	secret := []byte("secret from the Cloudflare API")
 	message := []byte("string from step 2")
 
 	hash := hmac.New(sha256.New, secret)
@@ -144,7 +144,7 @@ func main() {
 ```
 var crypto = require('crypto');
 
-var key = 'secret from the cloudflare API';
+var key = 'secret from the Cloudflare API';
 var message = 'string from step 2';
 
 var hash = crypto.createHmac('sha256', key).update(message);
@@ -157,7 +157,7 @@ hash.digest('hex');
 ```
 require 'openssl'
 
-key = 'secret from the cloudflare API'
+key = 'secret from the Cloudflare API'
 message = 'string from step 2'
 
 OpenSSL::HMAC.hexdigest('sha256', key, message)
@@ -166,7 +166,7 @@ OpenSSL::HMAC.hexdigest('sha256', key, message)
 In JavaScript (for example, to use in Cloudflare Workers):
 
 ```
-const key = 'secret from the cloudflare API';
+const key = 'secret from the Cloudflare API';
 const message = 'string from step 2';
 
 const getUtf8Bytes = str =>
