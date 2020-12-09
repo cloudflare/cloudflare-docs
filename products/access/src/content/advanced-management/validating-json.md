@@ -42,7 +42,7 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
     curl -s https://<your auth domain>/cdn-cgi/access/certs | jq .keys[0] | lokey to pem -----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA01SvMv4TgFIECQgzHaRL DGVaKhRQHjgdiSOpbqhHQMdcNtBIM0HAQbrs7YS6sQCCdZC5wCvlq3xgqdU5J6k YI5OCSsIWXKkobAl6PbXHdN0bJximeiHGa3O0hMREP6RKBoI6ayNmZ3WlVGWY 6ie47KGqN69l7fPKyZvszb4GdpxE0r8gllZZwIuPjzlghXRlrkaP48ucQwo+tq PSSdDdW57TCFmy+G547W5iWZWJIeNkfVu9t6FktvCwSZ1ekum3X7IQcd0O0DWSR Aj9tzNDPkzOeSFxmQkKpWs8Qw7ZBIfLOsO3DCH6VPNhS2cqhw1AAMunh8alDKQU aQIDAQAB -----END PUBLIC KEY-----
     ```
 
-    If an error occurs while running `lokey`, install the [python six](https://pypi.python.org/pypi/six) library, and try again:
+    If an error occurs while running `lokey`, install the [Python six](https://pypi.python.org/pypi/six) library, and try again:
 
     ```sh
     $ pip install six==1.10.0
