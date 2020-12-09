@@ -78,7 +78,7 @@ To set up JumpCloud SAML as your IdP in Access:
 
 15. In your **Cloudflare Access** dashboard, scroll to the **Login Methods** card, click **Add**, and select **SAML**.
 
-    ![Cloudlfare Access Select IdP](../static/jumpcloud/jumpcloud-saml-3.png)
+    ![Cloudflare Access Select IdP](../static/jumpcloud/jumpcloud-saml-3.png)
 
     The _Add a **SAML** identity provider_ dialog displays.
 

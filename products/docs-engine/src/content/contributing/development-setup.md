@@ -47,7 +47,7 @@ The basic steps for setting up a development are as follows.
 
 8. Open up `localhost:8000` in your browser to see your docs site.
 
-At this point, you can make changes to the Markdown files inside the contect directory (e.g. `my-docs-site/src/content`) to build or improve your docs site.
+At this point, you can make changes to the Markdown files inside the content directory (e.g. `my-docs-site/src/content`) to build or improve your docs site.
 
 <Aside header="Note">
 

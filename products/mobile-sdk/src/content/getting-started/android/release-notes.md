@@ -19,7 +19,7 @@ None at this time.
 ### Version 3.0.0
 
 - Stability and performance improvements
-- OkHttp3 compability improvement: certificate pinning, caching, cookie handling, redirection
+- OkHttp3 compatibility improvement: certificate pinning, caching, cookie handling, redirection
 - URLConnection compatibility improvement: caching, cookie handling, redirection
 - Improved metrics correctness
 - Compatibility mode: if you have an issues with SDK, you may try a compatibility mode with `CFMobile-Opt: compat=true` in the request header of okhttp3 or URLConnection. It will disable some of advanced internal working to have a better compatibility.

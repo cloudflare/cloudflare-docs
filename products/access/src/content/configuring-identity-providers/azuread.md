@@ -41,7 +41,7 @@ Azure AD integrates with the Office365 identity service as well as other SaaS ap
 
 10. In the left hand panel, select **API permissions**, and then click **Add a permission**.
 
-    ![Azure AD Add API PErmissions](../static/azure/azuread-7.png)
+    ![Azure AD Add API Permissions](../static/azure/azuread-7.png)
 
 11. Click Microsoft Graph.
 

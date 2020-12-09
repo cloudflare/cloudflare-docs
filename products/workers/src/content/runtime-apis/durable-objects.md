@@ -216,7 +216,7 @@ let id = OBJECT_NAMESPACE.idFromString(hexId)
 
 This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as as a string.
 
-A stringified object ID is a 64-digit hexidecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
+A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
 
 ### Obtaining an Object Stub
 

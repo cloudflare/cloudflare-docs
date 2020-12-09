@@ -87,7 +87,7 @@ In summary, a threshold BLS signature, `𝜎`, exhibits all properties required 
 ## Chained Randomness
 
 
-The drand randomness beacon operates in discrete rounds, `𝑟`. In every round, drand producess a new random value using threshold BLS signatures linked together into a chain of randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟∥𝜎𝑟−1)` where, `𝜎𝑟−1` denotes the (full) BLS threshold signature from round `𝑟−1` and `𝐻`, a cryptographic hash function.
+The drand randomness beacon operates in discrete rounds, `𝑟`. In every round, drand produces a new random value using threshold BLS signatures linked together into a chain of randomness. To extend this chain of randomness, each drand participant, `𝑖`, creates in round `𝑟` the partial BLS signature, `𝜎𝑟𝑖` on the message `𝑚=𝐻(𝑟∥𝜎𝑟−1)` where, `𝜎𝑟−1` denotes the (full) BLS threshold signature from round `𝑟−1` and `𝐻`, a cryptographic hash function.
 
 Once at least `𝑡` participants have broadcasted their partial signatures, `𝜎𝑟𝑖`, on `𝑚`, anyone can recover the full BLS threshold signature, `𝜎𝑟` that corresponds to the random value of round `𝑟`. After this, drand nodes move to round `𝑟+1` and reiterate the process.
 

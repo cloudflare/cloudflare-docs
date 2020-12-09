@@ -53,7 +53,7 @@ You will not be billed at this step. Cloudflare will only bill your card when yo
 --------
 
 ## Input your authorization code
-In the next page, you’ll need to input the authorization code for each domain you are transferring. You will also need to unlock each domain so that Cloudflare can process your request. For more information about transfering out from your current registrar, see the Transfer Instructions section.
+In the next page, you’ll need to input the authorization code for each domain you are transferring. You will also need to unlock each domain so that Cloudflare can process your request. For more information about transferring out from your current registrar, see the Transfer Instructions section.
 
 ![Authorization input screenshot](../static/input-field.png)
 

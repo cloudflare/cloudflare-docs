@@ -5,7 +5,7 @@ order: 4
 
 # Forming an expression
 
-Rules are written as using the Cloudflare Firewall Rules language - a DSL intented to mimic Wireshark semantics. See the documentation for more details: https://developers.cloudflare.com/firewall/cf-firewall-language
+Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. See the documentation for more details: https://developers.cloudflare.com/firewall/cf-firewall-language
 
 To start with a simple case, here's how you'd match a source IP:
 

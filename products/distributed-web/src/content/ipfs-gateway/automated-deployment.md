@@ -21,5 +21,5 @@ hash. There are several tools that help with different parts of this:
   a third-party pinning providers, and automatically update Cloudflare-managed
   DNS records.
 - [dnslink-cloudflare](https://github.com/ipfs-shipyard/dnslink-cloudflare) is a
-  script to programatically update DNSLink records. This can be run with the
+  script to programmatically update DNSLink records. This can be run with the
   `-Q` flag of `ipfs add` that only outputs the top-level hash.

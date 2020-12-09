@@ -81,4 +81,4 @@ File name string if a file transfer occurred or was attempted.
 The HTTP version of the origin that Gateway connected to on behalf of the user.
 
 #### Policy Details
-The policy corresponding to the decision Gateway made based on the traffic critera of the request.
+The policy corresponding to the decision Gateway made based on the traffic criteria of the request.

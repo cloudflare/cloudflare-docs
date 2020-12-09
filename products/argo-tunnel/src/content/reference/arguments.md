@@ -373,7 +373,7 @@ Install or uninstall cloudflared as a system service. The details of service ins
 
 `cloudflared update`
 
-Looks for a new version on the offical download server. If a new version exists, updates the agent binary and quits. Otherwise, does nothing.
+Looks for a new version on the official download server. If a new version exists, updates the agent binary and quits. Otherwise, does nothing.
 
 To determine if an update happened in a script, check for error code 64.
 
