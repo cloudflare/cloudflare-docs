@@ -41,7 +41,7 @@ Cloudflare Access can integrate with Google as an IdP. Use these steps to config
 
 1. In **Application type**, select **Web application**.
 1. Enter a **Name** for your application.
-1. Enter your account’s authorization domain in the **Authorized Javascript origins** field.
+1. Enter your account’s authorization domain in the **Authorized JavaScript origins** field.
 
     You can find this in the **Authorization Domain** section of the **Cloudflare Access** app.
 

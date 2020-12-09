@@ -86,7 +86,7 @@ The summary page will load and you can save and exit.
 https://<your-auth-domain-here>.cloudflareaccess.com
 ```
 
-Input the authentication domain without any path in the `Authorized Javascript origins` section. In the Authorized redirect URIs section, input your authentication domain with the path below.
+Input the authentication domain without any path in the `Authorized JavaScript origins` section. In the Authorized redirect URIs section, input your authentication domain with the path below.
 
 ```
 https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback

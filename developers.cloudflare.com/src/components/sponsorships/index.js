@@ -38,7 +38,7 @@ const sponsorships = [{
   },
   {
     title:"Moment.js",
-    description:"A library for Parsing, validating, manipulating, and displaying dates and times in Javascript.",
+    description:"A library for Parsing, validating, manipulating, and displaying dates and times in JavaScript.",
     logo: momentjsIMG,
     siteURL:"https://momentjs.com/",
     sourceURL:"https://github.com/moment/moment/"
@@ -80,21 +80,21 @@ const sponsorships = [{
   },
   {
     title:"Webpack",
-    description:"A module bundler for combining Javascript files.",
+    description:"A module bundler for combining JavaScript files.",
     logo:webpackIMG,
     siteURL:"https://webpack.js.org/",
     sourceURL:"https://github.com/webpack/webpack"
   },
   {
     title:"Node.js",
-    description:"A Javascript runtime built on Chrome’s V8 Javascript engine.",
+    description:"A JavaScript runtime built on Chrome’s V8 JavaScript engine.",
     logo:nodejsIMG,
     siteURL:"https://nodejs.org/",
     sourceURL:"https://github.com/nodejs/node"
   },
   {
     title:"React",
-    description:"A Javascript library for building user interfaces created by facebook.",
+    description:"A JavaScript library for building user interfaces created by facebook.",
     logo:reactIMG,
     siteURL:"https://reactjs.org/",
     sourceURL:"https://github.com/facebook/react/"
