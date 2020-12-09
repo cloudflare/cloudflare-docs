@@ -18,6 +18,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
 --data '{
     "name": "Example ruleset",
     "kind": "root",
+    "phase": "magic_transit",
     "description": "Example ruleset description",
     "rules": [
       {
@@ -28,7 +29,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
       },
       {
         "action": "block",
-        "expression": "tcp.dstport in { 1...65535 }",
+        "expression": "tcp.dstport in { 1..65535 }",
         "description": "Block all tcp ports"
       }
     ]
