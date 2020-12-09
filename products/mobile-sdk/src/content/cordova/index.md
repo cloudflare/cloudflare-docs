@@ -23,7 +23,7 @@ Initialization is the process of modifying your application in order to communic
 
 ### ``Neumob.initWithCallback(appIds, callback)`` ###
 
-- - **appIds** - Your application identifiers. Obtain this id by registering an app at portal.neumob.com. Simply add your appIDs as values corresponding to the platforms. Platforms currently available are iOS and android.
+- - **appIds** - Your application identifiers. Obtain this id by registering an app at portal.neumob.com. Simply add your appIDs as values corresponding to the platforms. Platforms currently available are iOS and Android.
 
 - - **callback** - The callback is a optional function that can be used to verify initialization. It should accept 2 parameters:
   - ``initialized`` is a boolean indicating Neumob is enabled and ready to accelerate your network requests.

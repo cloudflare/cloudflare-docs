@@ -147,30 +147,30 @@ The root certificate is now installed and ready to be used.
 
 3. Select **Security**.
 
-![android settings](../static/android_security_settings.png)
+![Android settings](../static/android_security_settings.png)
 
 4. Tap **Advanced** > **Encryption & Credentials**.
 
-![android encrypt settings](../static/android_advanced_encrypt.png)
+![Android encrypt settings](../static/android_advanced_encrypt.png)
 
-![android cred settings](../static/android_advanced_encrypt2.png)
+![Android cred settings](../static/android_advanced_encrypt2.png)
 
 5. Tap **Install a certificate**.
 
-![android install cert](../static/android_install_cert.png)
+![Android install cert](../static/android_install_cert.png)
 
 6. Tap **CA certificate**.
 
-![android ca cert](../static/android_ca_cert.png)
+![Android ca cert](../static/android_ca_cert.png)
 
 7. Tap **Install Anyway**.
 
-![android install anyway](../static/android_install_anyway.png)
+![Android install anyway](../static/android_install_anyway.png)
 
 8. Verify your identity through the fingerprint, or by inserting the pin code.
 
 9. Select the certificate you want to install.
 
-![android choose cert](../static/android_choose_certificate.png)
+![Android choose cert](../static/android_choose_certificate.png)
 
 The root certificate is now installed and ready to be used.
