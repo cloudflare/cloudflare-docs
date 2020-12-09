@@ -10,7 +10,7 @@ At this time, the Cloudflare SDK only supports React Native for iOS.
 
 Please follow the instructions under *Installing The Cloudflare Mobile SDK* in iOS integration [document](/getting_started/ios/) before proceeding with the instructions here.
 
-Initialization requires additional classes to bridge javascript to Cloudflare API. In your iOS project or workspace you can use the below files directly or as references to create your own bridge.
+Initialization requires additional classes to bridge JavaScript to Cloudflare API. In your iOS project or workspace you can use the below files directly or as references to create your own bridge.
 
 ### CloudflareJSBridge.h
 
