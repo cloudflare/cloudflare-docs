@@ -6,25 +6,44 @@ order: 4
 
 This section addresses a few common policy configurations and best practices.
 
-For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies](/getting-started/policies/) page in the Setup section.
+For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies page](/getting-started/policies/) in the [Getting started](/getting-started) section.
 
-## Combining policy actions and rules
+## Example policy configurations
 
 ### Allow
 
-All rule actions must have at least one Include. For example, an Allow action with an Include rule defined as `Emails Ending In: @example.com` lets any user with an `@example.com` email address, as validated against an IdP, reach the application. Exception and Require rules enforce more granular control in Allow actions.
+All rule actions must have at least one Include. Add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application.
 
-Add a Require rule in the same policy action to enforce additional checks. When the Require rule defines a set of IP ranges, a user must be a member of `@example.com` and their request must originate from the defined IP range.
+| Action | Rule | Criteria |
+| ------ | ---- | -------- |
+| Allow  | Include | Emails Ending In: `@example.com` |
 
-Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application. When the Exclude rule defines a single email, such as `johndoe@example.com`, then all users in `@example.com` within the defined IP range are granted access, except for `johndoe@example.com`.
+**Result**: this configuration lets any user with an `@example.com` email address, as validated against an IdP, reach the application. 
+
+| Action | Rule | Criteria |
+| ------ | ---- | -------- |
+| Allow  | Include | Country: `Portugal` |
+|  | Require | Emails Ending In: `@team.com` |
+|  | Exclude | Email: `user-1@team.com`, `user-2@team.com` |
+
+**Result**: this configuration lets any user from Portugal with a `@team.com` email address, as validated against an IdP, reach the application, except for `user-1` and `user-2`.
 
 ### Block
 
-Use this rule action to explicitly prevent users from reaching an application behind Access. Block actions enforce similar behavior to allow actions that contain an Exclude rule without the need to allow specific users.
+This action explicitly prevents users from reaching an application behind Access. Block actions enforce similar behavior to allow actions that contain an Exclude rule without the need to allow specific users.
 
-For example, a Block action that contains an Include decision defined as “Everyone” restricts access to any requests that attempt to reach the application.
+<Aside type='warning' header='Important'>
 
-***Caution.*** An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
+An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
+
+</Aside>
+
+| Action | Rule | Criteria |
+| ------ | ---- | -------- |
+| Block  | Include | `Everyone` |
+|   | Exclude | Email: `user-1@team.com` |
+
+**Result**: this configuration blocks every request to the application, except for requests from `user-1@team.com`.
 
 ### Bypass
 
@@ -44,7 +63,33 @@ For Allow, Block and Service Auth actions, Access enforces the decision starting
 
 ![Rule ordering](../static/summary/rule-ordering.png)
 
+## Changes in user context
+
+For [self-hosted applications](/getting-started/applications#protect-a-self-hosted-application), Access evaluates the following attributes on every request:
+* `IP Address`
+* `Country`
+* `mTLS Certificate`
+* `Service Token`
+
+If any of these attributes change and become out of policy, the user’s session will be immediately terminated, regardless of their remaining session length. For example, you could configure a policy with the following criteria:
+
+| Action | Rule | Criteria |
+| ------ | ---- | -------- |
+| Allow  | Include | Country: `United States` |
+|   | Require | Emails ending in: `@team.com` |
+|   | Require | IP ranges: `192.168.100.14` |
+
+Where `192.168.100.14` is the IP address of your office network. This would grant access to your team members from the United States who connect from your office network. If a user logs into the application with a session length of 8 hours, and leaves the office mid-session to connect from a different IP address, that user will be blocked.
+
+The following attributes are only evaluated on login:
+* `Email`
+* `Emails Ending in`
+* `All attributes for Access for SaaS applications`
+
+For [SaaS applications](/getting-started/applications#protect-a-saas-application), policies are only evaluated at the time of login. A user’s session will then be controlled by the specific SaaS application.
+
 ## Application Paths
+
 You can create unique rules for parts of an application that share a root path. When multiple rules are set for a common root path, they do not inherit rules. Instead, the more specific rule takes precedence. For example:
 
 * An example application is deployed at `dashboard.com/eng` that anyone on the engineering team should be able to access.
@@ -53,7 +98,7 @@ You can create unique rules for parts of an application that share a root path. 
 * When using only policy A, this path inherits the rules from policy A and members of the engineering team can access that path. You can instead create a second policy, policy B, to restrict access to the executive team only.
 * When applying Policy B to `dashboard.com/eng/`exec, the more specific policy takes precedence. The `/exec` path is gated by policy B instead of relying on the rules in policy A.
 
-## Subdomains and Wildcards
+## Subdomains
 
 You can configure an Application for an apex domain, a particular subdomain, or all subdomains using a wildcard rule. Similarly, you can apply an Access Application to an entire website or protect a specific path. When protecting the entire website, leave the path field empty. You specify paths, for example `/admin`, as well.
 
