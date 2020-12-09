@@ -69,13 +69,13 @@ The root certificate is now installed and ready to be used.
 
  The device will show a message: *This website is trying to open Settings to how you a configuration profile. Do you want to allow this?*
 
-![ios download](../static/ios_cert_download.jpg)
+![iOS download](../static/ios_cert_download.jpg)
 
 2. Tap **Allow**.
 
 3. Navigate to **Settings** > **General** > **Profile** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
-![ios profile](../static/ios_cert_profile.jpg)
+![iOS profile](../static/ios_cert_profile.jpg)
 
 4. Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
@@ -91,13 +91,13 @@ The root certificate is now installed and ready to be used.
 
  The installed root certificates will be displayed in the *Enable full trust for root certificates* section.
 
- ![ios cert trust](../static/ios_cert_trust1.jpg)
+ ![iOS cert trust](../static/ios_cert_trust1.jpg)
 
 8. Tap the slide button next to the Cloudflare certificate you just installed.
 
 9. A confirmation dialogue will appear. Tap **Continue**.
 
- ![ios cert confirm](../static/ios_cert_trust2.jpg)
+ ![iOS cert confirm](../static/ios_cert_trust2.jpg)
 
 The root certificate is now installed and ready to be used.
 
