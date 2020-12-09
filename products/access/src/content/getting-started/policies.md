@@ -12,7 +12,7 @@ The elements that make up an Access policy are:
 * **Rules**
 * **Criteria**
 
-To learn more about common scenarios, read the [Policies and rules learning page](/learning/policies-and-rules).
+You can find more information about how policies work in the [Policies and rules learning page](/learning/policies-and-rules).
 
 ## Actions
 
@@ -61,12 +61,6 @@ Here is a list of all the criteria you can apply:
 * **Service Token** - the request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 * **Authentication Method** - checks the [multifactor authentication](/learning/mfa-requirements) method used by the user, if supported by the identity provider.
-
-<Aside>
-
-To learn more about policy rules and how to combine policy actions and rules, read the [Policies and rules learning section](/learning/policies-and-rules/).
-
-</Aside>
 
 ## Policy management
 
