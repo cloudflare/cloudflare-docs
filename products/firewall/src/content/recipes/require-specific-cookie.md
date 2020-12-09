@@ -23,7 +23,7 @@ Since the _Allow_ action has precedence over _Block_, Cloudflare grants access t
     <tr>
       <td>1</td>
       <td><code>(http.cookie contains "devaccess=james" or http.cookie contains "devaccess=matt" or http.cookie contains "devaccess=michael") and http.host eq "dev.www.example.com")</code></td>
-      <td><em>Block</em></td>
+      <td><em>Allow</em></td>
     </tr>
     <tr>
       <td>2</td>
