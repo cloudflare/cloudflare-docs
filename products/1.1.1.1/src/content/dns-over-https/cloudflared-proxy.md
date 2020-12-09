@@ -74,13 +74,13 @@ Step 1: Install the dnscrypt-proxy. You can [find the instructions here](https:/
 Step 2: Verify that the `dnscrypt-proxy` is installed, and at least version 2.0
 
 ```sh
-dnscrypt-proxy -version
+$ dnscrypt-proxy -version
 2.0.8
 ```
 
-Step 3: Set up the configuration file using the [official instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#setting-up-dnscrypt-proxy), and add 'cloudflare' and 'cloudflare-ipv6' to the server list in `dnscrypt-proxy.toml`
+Step 3: Set up the configuration file using the [official instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#setting-up-dnscrypt-proxy), and add 'cloudflare' and 'cloudflare-ipv6' to the server list in `dnscrypt-proxy.toml`.
 
-```
+```txt
 server_names = ['cloudflare', 'cloudflare-ipv6']
 ```
 

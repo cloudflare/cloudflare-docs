@@ -20,34 +20,34 @@ cd                 | No             | CD bit - set to disable validation (either
 Example Request:
 
 ```sh
-    curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA'
+curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA'
 ```
 
 Example Response:
 
 ```json
+{
+  "Status": 0,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": true,
+  "CD": false,
+  "Question": [
     {
-      "Status": 0,
-      "TC": false,
-      "RD": true,
-      "RA": true,
-      "AD": true,
-      "CD": false,
-      "Question": [
-        {
-          "name": "example.com.",
-          "type": 28
-        }
-      ],
-      "Answer": [
-        {
-          "name": "example.com.",
-          "type": 28,
-          "TTL": 1726,
-          "data": "2606:2800:220:1:248:1893:25c8:1946"
-        }
-      ]
+      "name": "example.com.",
+      "type": 28
     }
+  ],
+  "Answer": [
+    {
+      "name": "example.com.",
+      "type": 28,
+      "TTL": 1726,
+      "data": "2606:2800:220:1:248:1893:25c8:1946"
+    }
+  ]
+}
 ```
 
 Below the fields in the response are explained

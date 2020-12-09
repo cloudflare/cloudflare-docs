@@ -36,16 +36,16 @@ content-length = 33
 And would return the answer in wireformat:
 
 ```txt
-    :status = 200
-    content-type = application/dns-message
-    content-length = 64
-    cache-control = max-age=128
+:status = 200
+content-type = application/dns-message
+content-length = 64
+cache-control = max-age=128
 
-    <64 bytes represented by the following hex encoding>
-    00 00 81 80 00 01 00 01  00 00 00 00 03 77 77 77
-    07 65 78 61 6d 70 6c 65  03 63 6f 6d 00 00 01 00
-    01 03 77 77 77 07 65 78  61 6d 70 6c 65 03 63 6f
-    6d 00 00 01 00 01 00 00  00 80 00 04 C0 00 02 01
+<64 bytes represented by the following hex encoding>
+00 00 81 80 00 01 00 01  00 00 00 00 03 77 77 77
+07 65 78 61 6d 70 6c 65  03 63 6f 6d 00 00 01 00
+01 03 77 77 77 07 65 78  61 6d 70 6c 65 03 63 6f
+6d 00 00 01 00 01 00 00  00 80 00 04 C0 00 02 01
 ```
 
 To try using cURL you can do:
@@ -79,7 +79,7 @@ content-length: 49
 cache-control: max-age=0
 set-cookie: \__cfduid=dd1fb65f0185fadf50bbb6cd14ecbc5b01521782042; expires=Sat, 23-Mar-19 05:14:02 GMT; path=/; domain=.cloudflare.com; HttpOnly
 server: cloudflare-nginx
- cf-ray: 3ffe69838a418c4c-SFO-DOG
+cf-ray: 3ffe69838a418c4c-SFO-DOG
 
 { [49 bytes data]
 100    49  100    49    0     0    493      0 --:--:-- --:--:-- --:--:--   494
