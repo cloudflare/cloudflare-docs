@@ -12,6 +12,8 @@ The elements that make up an Access policy are:
 * **Rules**
 * **Criteria**
 
+To learn more about common scenarios, read the [Policies and rules learning page](/learning/policies-and-rules).
+
 ## Actions
 
 Actions let you define what *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
@@ -95,30 +97,7 @@ For [self-hosted applications](/getting-started/applications#protect-a-self-host
 
 For [SaaS applications](/getting-started/applications#protect-a-saas-application), policies are only evaluated at the time of login. A user’s session will then be controlled by the specific SaaS application.
 
-To learn more on how Access evaluates policies, read our [Changes in user context section](/learning/policies-and-rules#changes-in-user-context).
-
-## Example scenarios
-
-| Action | Rule | Criteria |
-| ------ | ---- | -------- |
-| Allow  | Include | Emails Ending In: `@example.com` |
-
-**Result**: this configuration lets any user with an `@example.com` email address, as validated against an IdP, reach the application. 
-
-| Action | Rule | Criteria |
-| ------ | ---- | -------- |
-| Allow  | Include | Country: `Portugal` |
-|  | Require | Emails Ending In: `@team.com` |
-|  | Exclude | Email: `user-1@team.com`, `user-2@team.com` |
-
-**Result**: this configuration lets any user from Portugal with a `@team.com` email address, as validated against an IdP, reach the application, except for `user-1` and `user-2`.
-
-| Action | Rule | Criteria |
-| ------ | ---- | -------- |
-| Block  | Include | `Everyone` |
-
-**Result**: this configuration blocks every request to the application.
-
+To learn more on how Access evaluates policies, read the [section about changes in user context](/learning/policies-and-rules#changes-in-user-context).
 
 <!--
 
