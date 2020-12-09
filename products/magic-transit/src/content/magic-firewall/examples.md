@@ -23,12 +23,12 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
       {
         "action": "skip",
         "action_parameters": { "ruleset": "current" },
-        "expression": "tcp.port in { 8080 } ",
+        "expression": "tcp.dstport in { 8080 } ",
         "description": "Allow port 8080"
       },
       {
         "action": "block",
-        "expression": "tcp.port in { 1...65535 }",
+        "expression": "tcp.dstport in { 1...65535 }",
         "description": "Block all tcp ports"
       }
     ]
