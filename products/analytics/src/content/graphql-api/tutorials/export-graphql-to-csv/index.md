@@ -1,13 +1,12 @@
 ---
 title: Export GraphQL data to CSV
-order: 1
 ---
 
 # Export GraphQL data to CSV
 
 This tutorial shows how to create a python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like Splunk can easily ingest and visualize it.
 
-This example queries the `ipFlows1mAttacksGroups` [data set](/graphql-api/features/data-sets), which aggregates Network Analytics attack activity into 1-minute buckets.
+This example queries the `ipFlows1mAttacksGroups` [data set](/graphql-api/features/data-sets), which aggregates Network Analytics attack activity into 1-minute intervals.
 
 ## Set up script and authentication
 
@@ -19,7 +18,7 @@ If you do not already have one, see [_Configure an Analytics API token_](/gettin
 
 </Aside>
 
-The first step is to set up the script and define the variables for authenticating to the Analytics GraphQL API via a Cloudflare token. The script also provides a variable to set the range of data to export. This example queries for a seven-day period that ended yesterday.
+The first step is to set up the script and define the variables for authenticating to the Analytics GraphQL API using a Cloudflare API token. The script also provides variables to set the range of data to export. This example queries for a seven-day period that ended yesterday.
 
 ```python
 ---
@@ -30,14 +29,15 @@ from datetime import datetime, timedelta
 import requests
  
 url = 'https://api.cloudflare.com/client/v4/graphql/'
-# Customize these variables
-file_dir = ''  # Must include trailing slash, if left blank, 
-csv will be created in current directory api_email = '[your email here]'
+# Customize these variables.
+file_dir = ''  # Must include trailing slash. If left blank, 
+# csv will be created in the current directory.
+api_email = '[your email here]'
 api_token = '[your API token here]'
 api_account = '[your account ID here]'
-# Setting most recent day as yesterday
+# Set most recent day as yesterday by default.
 offset_days = 1
-# How many days worth of data do we want? By default 7.
+# How many days worth of data do we want? By default, 7.
 historical_days = 7
 ```
 
@@ -166,13 +166,15 @@ from datetime import datetime, timedelta
 import requests
  
 url = 'https://api.cloudflare.com/client/v4/graphql/'
-# Customize these variables
-file_dir = ''  # Must include trailing slash, if left blank csv will be created in current directory api_email = '[your email here]'
+# Customize these variables.
+file_dir = ''  # Must include trailing slash. If left blank, 
+# csv will be created in the current directory.
+api_email = '[your email here]'
 api_token = '[your API token here]'
 api_account = '[your account ID here]'
-# Setting most recent day as yesterday
+# Set most recent day as yesterday by default.
 offset_days = 1
-# How many days worth of data do we want? By default 7.
+# How many days worth of data do we want? By default, 7.
 historical_days = 7
  
 def get_date(num_days):

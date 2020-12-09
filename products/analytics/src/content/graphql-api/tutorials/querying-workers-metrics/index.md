@@ -1,6 +1,5 @@
 ---
 title: Querying Workers Metrics with GraphQL
-order: 50
 ---
 
 # Querying Workers Metrics with GraphQL
