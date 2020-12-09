@@ -97,7 +97,7 @@ stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
 
 <Example>
 
-You will also need to download a tus client. This tutorial will use the [tus python client](https://github.com/tus/tus-py-client), available through pip, pythons's package manager.
+You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
 ```bash
 pip install -U tus.py
