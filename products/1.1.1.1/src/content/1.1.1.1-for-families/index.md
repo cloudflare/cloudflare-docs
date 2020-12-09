@@ -19,7 +19,7 @@ Using the following DNS resolvers will block malicious content:
 
 ## Block malware and adult content
 
-When you change your DNS resolvers to the addressess below, 1.1.1.1 for Families will block malware and adult content.
+When you change your DNS resolvers to the addresses below, 1.1.1.1 for Families will block malware and adult content.
 
 * **1.1.1.3**
 * **1.0.0.3**

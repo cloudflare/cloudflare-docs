@@ -77,7 +77,7 @@ With these definitions in hand, let’s walk through an RSA handshake.
 
 Note that none of the messages in the handshake are encrypted with a session key; they are all sent in the clear.
 
-![rsa-handhsake](../static/ssl_handshake_rsa.jpg)
+![rsa-handshake](../static/ssl_handshake_rsa.jpg)
 
 ### Message 1: “Client Hello”
 

@@ -24,4 +24,4 @@ This process can take one to two days after you first enable DNSSEC.
 --------
 
 ## Confirming DNSSEC
-When DNSSEC has been succesfully applied to your domain, you will see a confirmed status in the DNSSEC card where you first clicked “Enable”. You can also confirm by reviewing the WHOIS information for your domain. Domains with DNSSEC will read “signedDelegation” in the DNSSEC field.
+When DNSSEC has been successfully applied to your domain, you will see a confirmed status in the DNSSEC card where you first clicked “Enable”. You can also confirm by reviewing the WHOIS information for your domain. Domains with DNSSEC will read “signedDelegation” in the DNSSEC field.

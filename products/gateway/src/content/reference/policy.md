@@ -81,11 +81,11 @@ Depending on the criteria selected, administrators can choose to match in a vari
 
 ### What actions can be taken when a match is made?
 
-All rules support **allow** and **block** actions. However, administrators may wish to bypass certain sites from inspection. Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria.
+All rules support **allow** and **block** actions. However, administrators may wish to bypass certain sites from inspection. Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria.
 
 ### How can I bypass the L7 firewall for a website?
 
-Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria.
+Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria.
 
 Bypassing the L7 firewall results in no HTTP traffic inspection and logging is disabled for that HTTP session.
 

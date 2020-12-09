@@ -83,7 +83,7 @@ $ cfssl genkey csr.json | cfssljson -bare certificate
 
 ## 3. Convert and import the key
 
-Now that the key has been generated, it’s time to load it into the slot we created. Before doing so, we need to convert from PKCS#1 to PKCS#8 format. During import we specify the token and PIN from token initialization and provide a unique hexidecimal ID and label to the key.
+Now that the key has been generated, it’s time to load it into the slot we created. Before doing so, we need to convert from PKCS#1 to PKCS#8 format. During import we specify the token and PIN from token initialization and provide a unique hexadecimal ID and label to the key.
 
 ```bash
 $ openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in certificate-key.pem -out certificate-key.p8
@@ -112,7 +112,7 @@ Private Key Object; RSA
 
 ## 4. Modify your gokeyless config file and restart the service
 
-With the keys in place, it’s time to build the configuration file that the key server will read on startup. The `id` refers to the hexidecimal ID you provided to the `softhsm2-util` import statement; we used `a000` so it is encoded as `%a0%00`. The `module-path` will vary slightly based on the Linux distribution you are using. On Debian it should be `/usr/lib/softhsm/libsofthsm2.so`.
+With the keys in place, it’s time to build the configuration file that the key server will read on startup. The `id` refers to the hexadecimal ID you provided to the `softhsm2-util` import statement; we used `a000` so it is encoded as `%a0%00`. The `module-path` will vary slightly based on the Linux distribution you are using. On Debian it should be `/usr/lib/softhsm/libsofthsm2.so`.
 
 Open up `/etc/keyless/gokeyless.yaml` and immediately after
 

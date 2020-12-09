@@ -40,7 +40,7 @@ To install the Cloudflare App for Datadog:
 6. Click **Install Integration**.
    ![Datadog configure and install integration](../../static/images/datadog/screenshots/cloudflare-tile-datadog-fill-details.png)
 
-The Cloudflare App for Datadog should be installed now and you can view the dashaboard.
+The Cloudflare App for Datadog should be installed now and you can view the dashboard.
 
 ## Task 2 - View the dashboard
 

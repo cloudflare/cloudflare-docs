@@ -210,7 +210,7 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 
 1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
 
-    ![Clloudflare Access Login Methods](../../static/adfs/adfs-19.png)
+    ![Cloudflare Access Login Methods](../../static/adfs/adfs-19.png)
 
     The **Add a SAML identity provider** card displays.
 

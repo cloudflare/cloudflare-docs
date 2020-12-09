@@ -4,7 +4,7 @@ order: 0
 
 # Setup Phase
 
-In the drand setup phase, you create a collective private and public key pair shared among _𝑛_ participants. This is done through a `𝑡-of-𝑛` Distributed Key Generation (DKG) process and results in each participant recieving a copy of the collective public key plus a private key share of the collective private key &mdash; no individual node knows the collective **private** key. Each private key share can then be used to perform cryptographic threshold computations, such as generating threshold signatures, where at least `𝑡` contributions produced using the individual private key shares are required to successfully finish the collective operation.
+In the drand setup phase, you create a collective private and public key pair shared among _𝑛_ participants. This is done through a `𝑡-of-𝑛` Distributed Key Generation (DKG) process and results in each participant receiving a copy of the collective public key plus a private key share of the collective private key &mdash; no individual node knows the collective **private** key. Each private key share can then be used to perform cryptographic threshold computations, such as generating threshold signatures, where at least `𝑡` contributions produced using the individual private key shares are required to successfully finish the collective operation.
 
 A DKG is performed in a fully distributed manner, avoiding any single points of failure. This is an overview of the different sub-components of the drand DKG implementation.
 

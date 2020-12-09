@@ -35,7 +35,7 @@ To learn more about how to block one or more categories while setting up a Gatew
 |Deceptive Ads	|	Sites that spoof clicks, impressions, conversions for ads.|
 |Drugs	|	Sites related to the use and promotion of illegal drugs or illegal use of prescribed drugs.|
 |Education	|	Site hosting educational content that are not included in other categories like Science, Technology or Educational institutions.|
-|Entertainment	|	Sites that are hosting entertaining content that are not includeded in other categories like Comic books, Audio streaming, Video streaming etc.|
+|Entertainment	|	Sites that are hosting entertaining content that are not included in other categories like Comic books, Audio streaming, Video streaming etc.|
 |Gambling	|	Sites that are providing online gambling or are related to gambling.|
 |Government & Politics	|	Sites related to government and politics.|
 |Health	|	Sites containing information about health and fitness.|

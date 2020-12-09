@@ -41,7 +41,7 @@ To set up OneLogin SAML as your IdP:
 1. Select the **Access** tab
 1. In Roles, use the mapping to programmatically and automatically assign users that can access the application.
 
-    ![OneLogin SAML Applicaiton Access](../static/onelogin/onelogin-saml-6.png)
+    ![OneLogin SAML Application Access](../static/onelogin/onelogin-saml-6.png)
 
 1. Select the **SSO** tab.
 1. Copy the OneLogin **SAML 2.0 Endpoint (HTTP)** to the Cloudflare Single Sign On URL.

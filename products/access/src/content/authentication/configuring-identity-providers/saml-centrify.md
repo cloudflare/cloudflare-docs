@@ -23,7 +23,7 @@ To set up SAML with Centrify as your identity provider (IdP):
 1. Click the **Custom** tab.
 1. Next to the **SAML** icon click **Add**.
 
-    ![Centrify Settings Add Applicaiton details page](../../static/saml-centrify/saml-centrify-3.png)
+    ![Centrify Settings Add Application details page](../../static/saml-centrify/saml-centrify-3.png)
 
 1. Enter the required information for your application.
 1. Click **Save**.

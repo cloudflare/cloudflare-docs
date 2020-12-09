@@ -50,7 +50,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - <Code>encrypt(algorithm, key, data)</Code> <Type>Promise&lt;ArrayBuffer></Type>
 
-  - Returns a Promise that fufills with the encrypted data corresponding to the clear text,
+  - Returns a Promise that fulfills with the encrypted data corresponding to the clear text,
     algorithm, and key given as parameters.
 
     __Parameters:__
