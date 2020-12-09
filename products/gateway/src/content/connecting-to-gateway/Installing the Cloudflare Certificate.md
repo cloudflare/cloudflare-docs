@@ -127,30 +127,30 @@ Installing a certificate in Windows requires consideration of which users to aff
 
 3. Select Security.
 
-![android settings](../static/android_security_settings.png)
+![Android settings](../static/android_security_settings.png)
 
 4. Click Advanced and then Click Encryption & Credentials
 
-![android encrypt settings](../static/android_advanced_encrypt.png)\
+![Android encrypt settings](../static/android_advanced_encrypt.png)\
 
-![android cred settings](../static/android_advanced_encrypt2.png)\
+![Android cred settings](../static/android_advanced_encrypt2.png)\
 
 5. Click Install Certificate
 
-![android install cert](../static/android_install_cert.png)
+![Android install cert](../static/android_install_cert.png)
 
 6. Click CA certificate
 
-![android ca cert](../static/android_ca_cert.png)
+![Android ca cert](../static/android_ca_cert.png)
 
 7. Click "Install Anyway"
 
-![android install anyway](../static/android_install_anyway.png)
+![Android install anyway](../static/android_install_anyway.png)
 
 8. Verify it is you w/ Fingerprint or Pin
 
 9. Choose the certificate you want to install. I have our default filename in the pictures, I can take this again if you want to call it something else.
 
-![android choose cert](../static/android_choose_certificate.png)
+![Android choose cert](../static/android_choose_certificate.png)
 
 10. You have completed the Android certificate installation.
