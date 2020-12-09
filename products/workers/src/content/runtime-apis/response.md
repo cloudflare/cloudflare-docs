@@ -74,7 +74,7 @@ Valid options for the `options` object include:
 <Definitions>
 
 - `clone()` <TypeLink href="#response">Response</TypeLink>
-  - Creates a clone of a [`Response`]("#response") object.
+  - Creates a clone of a [`Response`](#response) object.
 
 - `redirect()` <TypeLink href="#response">Response</TypeLink>
   - Creates a new response with a different URL.
