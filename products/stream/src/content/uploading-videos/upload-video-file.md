@@ -204,6 +204,7 @@ var tus = require("tus-js-client");
 var path = __dirname + "/test.mp4";
 var file = fs.createReadStream(path);
 var size = fs.statSync(path).size;
+var mediaId = ''
 
 var options = {
   endpoint: "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream",
@@ -227,10 +228,16 @@ var options = {
     console.log(bytesUploaded, bytesTotal, percentage + "%");
   },
   onSuccess: function () {
-    console.log("Upload finished:", upload.url);
-    var index = upload.url.lastIndexOf("/") + 1;
-    var mediaId = upload.url.substr(index)
-    console.log("Media id:", mediaId);
+    console.log("Upload finished");
+  },
+  onAfterResponse: function (req, res) {
+    return new Promise(resolve => {
+        var mediaIdHeader = res.getHeader("stream-media-id");
+        if (mediaIdHeader) {
+            mediaId = mediaIdHeader;
+        }
+        resolve()
+    })
   }
 };
 
