@@ -72,7 +72,6 @@ C:\Cloudflared\bin\cloudflared.exe login
 
   If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
-
   3. Once you login, Cloudflare will display the applications that you added to your account. Select the site where you want to create a subdomain to represent the remote desktop.
 
   For example, if you plan to share the desktop at `rdp.site.com`, select `site.com` from the list.
@@ -189,7 +188,6 @@ cloudflared will need to be installed on each user device that will connect.
 ### 2. Connect To The Remote Desktop
 
 1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
-
 
 ```bash
 \cloudflared.exe access rdp --hostname rdp.site.com --url localhost:2244

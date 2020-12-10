@@ -126,7 +126,6 @@ Example response:
 }
 ```
 
-
 <Aside type='note' header='Note'>
 
 The version number has incremented on the ruleset and it's contained rule. You may recall that earlier a version number was used to retrieve the ruleset details via `/accounts/${account_id}/rulesets/${ruleset_id}/versions/${version}`

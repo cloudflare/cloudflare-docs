@@ -26,7 +26,6 @@ Android.
     props.put(“Neumob Accelerated”, isAccelerated);
     mixpanel.registerSuperProperties(props);
 
-
 ## Localytics
 
 iOS – Objective C.

@@ -38,7 +38,6 @@ An example of one is Charles Proxy, but also packet analyzers like Wireshark wil
 Neumob does, however, provide metrics and charting capabilities of its own, including by site, country, app version, network carrier, etc.
 1. simple guide is here:  `Portal Brochure <http://resources.neumob.com/hubfs/resources/Neumob_Brochure_-_Portal.pdf>`_
 
-
 ## Other Notes ##
 
 ### NeumobBot ###
@@ -47,7 +46,6 @@ Neumob uses real-time measurements from our servers to find the best path to fet
 These measurements will be visible to your existing monitors.
 1. distributed network of agents with User-Agent = NeumobBot are used to conduct these measurements, so they can be ignored.
    The rate of NeumobBot UDP requests is once per pop, per domain, per hour. This rate does not increase with traffic.
-
 
 ### Client IP Address ###
 

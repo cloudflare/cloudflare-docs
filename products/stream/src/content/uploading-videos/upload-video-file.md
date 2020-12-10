@@ -115,7 +115,6 @@ In the beginning of the response from tus, you’ll see the endpoint for getting
 
 </Example>
 
-
 ### Golang Example
 
 <Example>
@@ -179,7 +178,6 @@ upload.Finished()
 </Example>
 
 Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functionality such as resuming uploads and getting more details about the progress of the upload.
-
 
 ### Node.js Example
 

@@ -20,7 +20,6 @@ The tables below describe the fields available by log category. The list of fiel
 
 </TableWrap>
 
-
 ## Spectrum events
 
 <TableWrap>
@@ -28,7 +27,6 @@ The tables below describe the fields available by log category. The list of fiel
 <LogFieldsSpectrumEvents/>
 
 </TableWrap>
-
 
 ## Firewall events
 

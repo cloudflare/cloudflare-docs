@@ -11,11 +11,9 @@ To start with a simple case, here's how you'd match a source IP:
 
 ```ip.src == 192.0.2.0```
 
-
 Expressions can be more complex by joining multiple clauses via a logical operator:
 
 ```ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)```
-
 
 # Restrictions
 

@@ -57,7 +57,6 @@ Note the `status` field indicates whether the video processing finished successf
   }
 ```
 
-
 ## Verify webhook authenticity
 
 Cloudflare Stream will sign the webhook requests it sends to your notification URLs and include the signature of each requrest in the `Webhook-Signature` HTTP header. This allows your application to verify that the webhook requests are sent by Stream.

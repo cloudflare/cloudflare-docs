@@ -5,7 +5,6 @@ order: 14
 
 # Pagination
 
-
 Pagination--breaking up your query results into smaller parts--can be done using `limit`, `orderBy`, and filtering parameters. The GraphQL Analytics API does not support cursors for pagination.
 
 - `limit` (integer) defines how many records to return

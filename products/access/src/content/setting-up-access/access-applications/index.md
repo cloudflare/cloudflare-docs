@@ -32,7 +32,6 @@ The instructions below provide options for locking down the infrastructure secur
 
 2. **Validate JSON web tokens (JWTs)**. You can use the JWT created by Cloudflare Access to validate requests on your origin. For more, see [_Validating JSON web tokens_](/setting-up-access/validate-jwt-tokens/).
 
-
 3. **Restrict inbound ingress so that only connections from [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are allowed**. This should be done in conjunction with validating the tokens sent by Cloudflare Access. This is not sufficient alone without JWT validation.
 
 4. **Do not create CNAME records that points to your protected hostname**. Adding a CNAME record within your account that points to the protected hostname can allow traffic to bypass the protected hostname. This is limited to CNAME records within the account. CNAME records from other accounts will still be blocked.

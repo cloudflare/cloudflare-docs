@@ -56,7 +56,6 @@ Then ask your users to complete the following steps:
 1. Tap **DNS settings**.
 1. Enter a DoH Sub Domain and tap **Back** until you are back at the home screen.
 
-
 ### Manually configure a Cloudflare for Teams device registration
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
@@ -66,4 +65,3 @@ If your organization uses Teams Access policies to control device registration, 
 1. Tap **Login with Cloudflare for Teams**.
 1. Enter your auth domain (if your auth domain is https://example.cloudflareaccess.com you would enter **example**)
 1. Complete authentication steps required by your organization.
-

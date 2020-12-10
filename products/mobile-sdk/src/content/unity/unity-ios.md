@@ -26,7 +26,6 @@ Select your newly created game object in the Hierarchy pane and fill in some add
 
 - **Client Key** - the client key provided by Neumob. Your client key can be retrieved on the portal by registering an application.
   
-
 Initialization is the process of modifying your application in order to communicate with Neumob. If you have created a GameObject with the above instructions then Neumob is now integrated with your Unity iOS application.
 
 In order to turn ``ON`` Neumob for your app version you'll go to the portal's app details page where you received your client key. The **State** for the app version will be ``OFF`` and this can be changed by clicking the settings button under ``Action``, toggling the switch in the upper right corner of the following screen, and then the ``Apply`` button at the bottom.
@@ -74,7 +73,6 @@ Here's an example of how you might verify Neumob initialization and check whethe
     <p>}</p>
   </dd>
 </dl>`}}></div>
-
 
 ### 4. KPI Metrics ###
 

@@ -26,4 +26,3 @@ displaying this page:
 To avoid seeing this page every time you authenticate through `cloudflared`, you can toggle on *Enable automatic `cloudflared` authentication* when adding a [self-hosted application](/getting-started/applications#protect-a-self-hosted-application).
 
 This option will still prompt a browser window in the background, but the authentication will be automatic.
-

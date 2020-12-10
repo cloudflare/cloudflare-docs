@@ -8,7 +8,6 @@ tags:
 
 # Authentication method
 
-
 ```json
 {
   "auth_method": {

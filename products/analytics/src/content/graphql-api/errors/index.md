@@ -60,4 +60,3 @@ Sample error messages:
 
 - "limit reached, please try reduced time period"
 - "quota exceeded, please repeat your request in the next minute"
-

@@ -23,7 +23,6 @@ iOS – Swift
     // stop the timer when the request has finished
     Mixpanel.mainInstance().track(event: "Request Latency to X")
 
-
 Android
 
     MixpanelAPI mixpanel = MixpanelAPI.getInstance(context, MIXPANEL_TOKEN);

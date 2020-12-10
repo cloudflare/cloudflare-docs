@@ -10,7 +10,6 @@ If the WARP client is configured to send DNS requests over DoH to Gateway, the D
 
 Cloudflare Gateway currently filters HTTP traffic over port 80 and 443. If the HTTP connection is within a TLS connection, the TLS connection will be terminated at Cloudflare Gateway so the HTTP traffic can be inspected (unless an administrator configures a bypass rule). If the HTTP connection does not violate any policies configured by an administrator, the traffic is allowed through to the origin server.
 
-
 ## DNS
 
 ### What is a Policy?
@@ -77,7 +76,6 @@ Depending on the criteria selected, administrators can choose to match in a vari
 |  not in               |  not in defined entries     |
 |  matches regex        | regex evaluates to true         |
 |  does not match regex |  all except when regex evals to true   |
-
 
 ### What actions can be taken when a match is made?
 

@@ -35,5 +35,3 @@ To enable the App Launcher:
 4. Click **Save**.
 
 The App Launcher is now configured. To edit it, navigate to **Access > Authentication**, and click **Edit Access App Launcher**.
-
-

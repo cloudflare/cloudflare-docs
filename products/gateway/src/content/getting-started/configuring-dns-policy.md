@@ -16,7 +16,6 @@ hidden: true
 
 ![Gateway policy name](../static/add-policy-name.png)
 
-
 4. In the **Assign Locations** card, specify the location(s) for which you want to enable the policy. To enable it for all your locations, click **Select all** on the top right corner of the card.  
 
 5. Navigate to **Security Threats** to choose which security categories you want to block. Click on **Block all** if you want to select all categories.
