@@ -26,7 +26,7 @@ Below is a table of the currently available API Token Templates and access they 
       <td>Zone</td>
     </tr>
     <tr>
-        <td rowspan="2">Read Billing Info</td>
+      <td rowspan="2">Read Billing Info</td>
       <td>Read Billing</td>
       <td>Account</td>
     </tr>
@@ -35,7 +35,7 @@ Below is a table of the currently available API Token Templates and access they 
       <td>Account</td>
     </tr>
     <tr>
-        <td rowspan="2">Read Analytics and Logs</td>
+      <td rowspan="2">Read Analytics and Logs</td>
       <td>Analytics Read</td>
       <td>Zone</td>
     </tr>
@@ -44,7 +44,7 @@ Below is a table of the currently available API Token Templates and access they 
       <td>Zone</td>
     </tr>
     <tr>
-        <td rowspan="5">Edit Cloudflare Workers</td>
+      <td rowspan="5">Edit Cloudflare Workers</td>
       <td>Edit Workers Routes</td>
       <td>Zone</td>
     </tr>
@@ -65,7 +65,7 @@ Below is a table of the currently available API Token Templates and access they 
       <td>User</td>
     </tr>
     <tr>
-        <td rowspan="2">Edit load balancing configuration</td>
+      <td rowspan="2">Edit load balancing configuration</td>
       <td>Edit Load Balancing: Monitors and Pools</td>
       <td>Account</td>
     </tr>
@@ -74,7 +74,7 @@ Below is a table of the currently available API Token Templates and access they 
       <td>Zone</td>
     </tr>
     <tr>
-        <td rowspan="6">Wordpress</td>
+      <td rowspan="6">WordPress</td>
       <td>Read Analytics</td>
       <td>Zone</td>
     </tr>

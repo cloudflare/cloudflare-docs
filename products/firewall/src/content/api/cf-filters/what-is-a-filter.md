@@ -19,7 +19,7 @@ A filter typically looks like:
 {
   "id": "6f58318e7fa2477a23112e8118c66f61",
   "expression": "(http.request.uri.path ~ \"^.*wp-login.php$\" or http.request.uri.path ~ \"^.*xmlrpc.php$\") and ip.src ne 93.184.216.34",
-  "description": "Wordpress login paths via the login page or mobile RPC endpoint"
+  "description": "WordPress login paths via the login page or mobile RPC endpoint"
 }
 ```
 
@@ -31,9 +31,9 @@ The expression specified in this example filter is:
 
 This filter expression has a `(this or that) and not this` structure designed to:
 
-1. capture two Wordpress paths that may be subject to brute force password attacks, and
+1. capture two WordPress paths that may be subject to brute force password attacks, and
 2. exclude traffic that comes from the IP address `93.184.216.34`.
 
-Imagine that this is an IP for your office. This expression demonstrates a filter that might be used (in a firewall rule) to block access to the Wordpress login when accessed outside of the office network.
+Imagine that this is an IP for your office. This expression demonstrates a filter that might be used (in a firewall rule) to block access to the WordPress login when accessed outside of the office network.
 
 Cloudflare has implemented a matching engine that uses expressions defined in the style of Wireshark® display filters, available under the GNU General Public License (GPL) v2. This means that we have combined the power of expressions from a network protocol analyzer with the features of Cloudflare to give you fine-grained control, globally, and at speed.
