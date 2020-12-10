@@ -81,7 +81,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 ### vars
 
-Values to use in your Worker script as a text environment variables.
+Values to use in your Worker script as text environment variables.
 
 Usage:
 
