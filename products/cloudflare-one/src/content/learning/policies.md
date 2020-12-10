@@ -79,9 +79,7 @@ Here is a list of all the criteria you can apply:
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 * **Authentication Method** - checks the [multifactor authentication](/learning/mfa-requirements) method used by the user, if supported by the identity provider.
 
-
 ### Example scenarios
-
 
 | Action | Rule | Criteria |
 | ------ | ---- | -------- |
@@ -102,7 +100,6 @@ Here is a list of all the criteria you can apply:
 | Block  | Include | `Everyone` |
 
 **Result**: this configuration blocks every request to the application.
-
 
 ## Gateway policies
 
@@ -240,8 +237,6 @@ List of file extensions Gateway can match against:
 
 </TableWrap>
 
-
-
 #### Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
 
@@ -270,7 +265,3 @@ Expressions are sets of conditions with which you can combine [selectors](#selec
 | Block  | Downloaded File Extension | is: `torrent` |
 
 **Result**: this configuration blocks the download of any torrent files. 
-
-
-
-

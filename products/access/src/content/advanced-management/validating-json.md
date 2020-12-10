@@ -10,7 +10,6 @@ Cloudflare signs a JSON Web Token (JWT) when users or services authenticate thro
 
 Two tokens are generated:
 
-
 * **Auth Domain Token**: a token stored at the auth domain that prevents a user from needing to login to each application. The token is stored as a cookie at your account's authentication domain, for example, `https://my-auth-domain.cloudflareaccess.com`.
 
 * **App Token**: a token generated for each application that a user reaches. The token is stored as a cookie on the application, for example, `https://jira.site.com`.
@@ -24,11 +23,9 @@ If you want to learn more about how Access works with JWT, read our [Access with
 | **Only validate tokens using the external endpoint, rather than saving the public key as a hard-coded value.** Cloudflare signs both tokens with a key pair that you can validate using the corresponding public certificate, available at an external endpoint. As a security best practice, Cloudflare rotates the key pair in use periodically. |  |
 | **Do not only look for the first certificate of the two in the list.** The ordering of which certificate is current will change. It is possible that clock skew between your server and Cloudflare's would result in a failure when validating a token's IAT or NBF fields. A grace period can help prevent downtime if that is the case.  |
 
-
 ## Manual verification
 
 <Aside>
-
 
 <b>Before you start</b>
 
@@ -57,7 +54,6 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 ## Programmatic verification
 
 <Aside>
-
 
 <b>Before you start</b>
 
@@ -216,6 +212,5 @@ if __name__ == '__main__':
 ## Support Additional OIDC Claims with your JWT
 
 Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under Optional Configurations
-
 
 ![jwt and oidc](../static/jwt-oidc.png)

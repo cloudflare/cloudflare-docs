@@ -290,8 +290,6 @@ $ curl -H "Content-Type: text/plain" https://calling-worker.<your-namespace>.wor
 ***.***.***.*** stored important data!
 ```
 
-
-
 ## Instantiating and communicating with a Durable Object
 
 When a Worker talks to a Durable Object, it does so through a "stub" object. The class binding's `get()` method returns a stub, and the stub's `fetch()` method sends [Requests](/runtime-apis/request) to the Durable Object instance.

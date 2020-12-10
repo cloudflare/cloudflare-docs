@@ -20,7 +20,6 @@ To enable a block page using Gateway's policy engine, you will have to follow a 
 2. **Download** the Cloudflare certificate.
 3. **Add** the certificate to your system.
 
-
 ## 1. Enable block page
 
 1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com).
@@ -80,8 +79,3 @@ Follow the instructions below to finish configuring the block page:
 ## See the block page
 When you visit a blocked website you will now see the following block page:
 ![Block page](../static/cert-block-page.png)
-
-
-
-
-

@@ -29,7 +29,6 @@ In the policy configuration page, enable the block by toggling the switch annota
 Enabling block page alone will not work for HTTPS connections. Your users will see the following error now when they try to visit a blocked website:
 ![HTTPS browser error](../static/https-browser-error.png)
 
-
 ## Download certificate
 To fix the browser error, go to the Account page to download a certificate given by Cloudflare.
 
@@ -64,8 +63,3 @@ Follow the instructions below to finish configuring the block page:
 ## See block page
 You are now all set, and when you visit a blocked website you will see the following block page:
 ![Block page](../static/cert-block-page.png)
-
-
-
-
-

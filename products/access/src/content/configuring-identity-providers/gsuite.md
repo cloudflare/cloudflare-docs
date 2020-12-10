@@ -4,8 +4,6 @@ order: 12
 
 # G Suite
 
-
-
 G Suite provides OpenID Connect (OIDC) Identity Provider support that you can use with many SaaS apps in the G Suite Marketplace, and adds support for SAML 2.0 (Security Assertion Markup Language) for more than 15 popular SaaS providers. Cloudflare Access supports G Suite as an IdP.
 
 <Aside>

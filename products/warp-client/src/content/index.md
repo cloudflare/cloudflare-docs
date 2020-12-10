@@ -15,5 +15,3 @@ The Cloudflare WARP Client allows individuals or organizations to have a faster,
   <Button type="primary" href="/warp-for-teams/">For Teams</Button>
   <Button type="primary" href="/warp-for-everyone/">For Everyone</Button>
 </ButtonGroup>
-
-

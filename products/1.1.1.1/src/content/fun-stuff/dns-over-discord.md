@@ -30,7 +30,6 @@ Returns:
 
 ![@1.1.1.1 cloudflare.com A AAAA](../static/dns-over-discord-2.png)
 
-
 DNS over Discord supports the following record types, with `*` being supported to fetch them all:
 
     A

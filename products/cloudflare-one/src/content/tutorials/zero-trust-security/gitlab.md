@@ -120,7 +120,6 @@ Click `Next` and `Next` again on the `Setup` page - this example does not requir
 
 ![App List](../../static/secure-origin-connections/gitlab/app-list.png)
 
-
 ## Cloudflare Argo Tunnel
 
 Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.

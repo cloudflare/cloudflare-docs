@@ -255,7 +255,6 @@ The sub-string must appear within the first 10KiB of your response body.
   </table>
 </TableWrap>
 
-
 ---
 
 ## Managing monitors via the Load Balancing dashboard

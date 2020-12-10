@@ -5,7 +5,6 @@ order: 55
 
 # Enable Amazon S3
 
-
 Cloudflare uses Amazon Identity and Access Management (IAM) to gain access to your S3 bucket. The Cloudflare IAM user needs *PutObject* permission for the bucket.
 
 Logs are written into that bucket as gzipped objects using the S3 Access Control List (ACL)

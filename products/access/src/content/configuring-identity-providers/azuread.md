@@ -4,8 +4,6 @@ order: 12
 
 # Microsoft Azure AD® (Active Directory)
 
-
-
 These steps help you set up Azure AD as your identity provider (IdP).
 
 <Aside>

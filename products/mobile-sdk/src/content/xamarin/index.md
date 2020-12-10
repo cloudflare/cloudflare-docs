@@ -53,7 +53,6 @@ In your AppDelegate.cs:
   </dd>
 </dl>` }}></div>
 
-
 ### At this time the Neumob Xamarin iOS SDK supports ``NSUrlSession``, ``NSUrlConnection``, ``UIWebView``, and ``ModernHttpClient``. ###
 
 ## Neumob Android ##
@@ -95,6 +94,5 @@ In your main activity class:
     <p>}</p>
   </dd>
 </dl>`}}></div>
-
 
 At this time the Neumob Xamarin Android SDK supports ``WebClient``, ``HttpWebRequest``, and ``Java.Net.HttpURLConnection``.

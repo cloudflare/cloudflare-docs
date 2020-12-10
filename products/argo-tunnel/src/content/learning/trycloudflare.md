@@ -46,6 +46,5 @@ Free tunnels are meant to be used for testing and development, not for deploying
 
 * With TryCloudflare, we plan to test new Argo Tunnel features and improvements. This provides us with a group of connections to test before we deploy to production customers.
 
-
 ## Legal
 Your installation of `cloudflared` software constitutes a symbol of your signature indicating that you accept the terms of the [Cloudflare License](/license/), [Terms](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/).

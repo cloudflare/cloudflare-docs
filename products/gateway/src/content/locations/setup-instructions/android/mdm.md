@@ -50,7 +50,6 @@ Open the file in a text editor and search for the id and replace the value `gate
 
 You can read more about using mdm on Android [here](https://developer.android.com/work/managed-configurations).
 
-
 After you save the file, use your preferred MDM tool to deploy the configuration change to your fleet of corporate mobile devices.
 
 If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now.

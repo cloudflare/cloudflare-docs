@@ -158,7 +158,6 @@ Once revoked all tokens created with that key will be invalidated.
 }
 ```
 
-
 #### Other offline signing examples
 
 ##### Sign in go using go-jose
@@ -365,7 +364,6 @@ If CSP is misconfigured your videos might not play or you might see an error sim
     Refused to load the script 'https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js' because it violates the following Content Security Policy directive: ...
 
 Read more about Content Security Policy at [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
-
 
 ## Video access control
 

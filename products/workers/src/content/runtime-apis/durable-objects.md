@@ -107,7 +107,6 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Definitions>
 
-
 - <Code>transaction(closure<ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts. Failed transactions are retried automatically.  Non-storage operations that affect external state, like calling `fetch`, may execute more than once if the transaction is retried.

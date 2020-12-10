@@ -48,7 +48,6 @@ supported.) Lastly, the configuration contains a list of addresses where the
 service can be reached, and which transport protocol to use to reach them.
 (Currently only UDP is supported.)
 
-
 ## TLS
 As a warm up , let's see how to sync a TLS client or server using a single
 Roughtime server.  What
@@ -92,7 +91,6 @@ Variable `t1` is the time reported by the server and `radius` is the server's
 uncertainty radius.  For a full working example, check out our
 [GitHub](https://github.com/cloudflare/roughtime/blob/master/recipes/tls.go).
 
-
 ## Desktop alerts
 
 A more general way to use Roughtime is to create desktop alerts that warn you
@@ -112,7 +110,6 @@ See our
 [GitHub](https://github.com/cloudflare/roughtime/tree/master/recipes/alerter.go)
 for a fully fleshed out alerter. (It has been tested on Ubuntu 18.04.) Run this
 as a cron job to periodically check that you're clock is in sync.
-
 
 ## Using multiple sources
 

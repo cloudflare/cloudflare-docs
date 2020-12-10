@@ -55,7 +55,6 @@ ssh.site.com --url ssh://localhost:22
 ```
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
-
 **Common issues**
 Ensure that the machine's firewall permits egress on ports `22`, `80`, `443`, otherwise cloudflared will return an error.
 

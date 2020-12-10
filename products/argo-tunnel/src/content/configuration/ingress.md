@@ -86,7 +86,6 @@ ingress:
 
 With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status.
 
-
 | Service | Description | Example `service` value |
 |--|--|--|--|
 | HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |

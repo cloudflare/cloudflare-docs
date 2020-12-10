@@ -65,7 +65,6 @@ To begin using your application through Access, your last step is to integrate y
    * Your Access Entity ID or Issuer
    * Your Public key  
 
-
    with your SAML SSO-compliant application.  
 
    **Take note of these fields before you click `Done`**.
@@ -73,6 +72,3 @@ To begin using your application through Access, your last step is to integrate y
 ![Setup SaaS application](../../static/summary/setup-saas.png)
 
 5. Click **Done** to see your application listed on your Applications tab.
-
-
-

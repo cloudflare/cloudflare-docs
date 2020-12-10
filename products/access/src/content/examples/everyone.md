@@ -8,8 +8,6 @@ tags:
 
 # Everyone
 
-
-
 ```json
 {
   "everyone": {}

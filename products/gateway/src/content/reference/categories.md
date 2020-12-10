@@ -25,7 +25,6 @@ To learn more about how to block one or more categories while setting up a Gatew
 | Spyware | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge.|
 | Unreachable | Domains that resolve to unreachable IP addresses.|
 
-
 ## Content categories
 
 | Category | Definition |

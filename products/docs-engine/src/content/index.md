@@ -39,4 +39,3 @@ It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/c
 </TableWrap>
 
 </ContentColumn>
-

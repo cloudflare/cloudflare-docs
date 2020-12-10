@@ -5,7 +5,6 @@ order: 30
 
 # Limits
 
-
 ## Data accessibility
 
 The GraphQL Analytics API is available to all Cloudflare users; however, users on larger plans have access to a greater selection of data sets and can query over broader historical intervals.

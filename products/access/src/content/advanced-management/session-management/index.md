@@ -55,7 +55,6 @@ To reach the settings menu:
 
 ![Settings menu](../../static/browser-cookies.png)
 
-
 ## HTTP Only
 
 The HTTP Only flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of XSS attacks.
@@ -90,5 +89,3 @@ See [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/
 #### References
 
 ###### 1. <a name="source"></a> Source: [SameSite Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
-
-

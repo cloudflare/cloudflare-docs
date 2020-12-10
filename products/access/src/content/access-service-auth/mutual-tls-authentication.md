@@ -50,7 +50,6 @@ The policy must be built with a hostname that was associated in the certificate 
 
 ![mTLS Policy](../static/mtls-test/mtls-rule.png)
 
-
 |Option|Result|
 |-|-|
 |**Common Name**|Only client certificates with a specific common name will be allowed to proceed.|
@@ -195,7 +194,6 @@ $ curl -v --cert client.pem --key client-key.pem https://iot.widgetcorp.tech
 The instructions here cover usage with a computer running MacOS.
 
 1. In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
-
 
 <Aside type='warning' header='Important'>
 
