@@ -22,6 +22,7 @@ Name (string): The name of the account that is displayed in the Cloudflare dashb
 Type (enum): Valid values are `standard` (default) and `enterprise`. For self-serve customers, use `standard`. For enterprise customers, use `enterprise`.
 
 Example:
+
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' \
 -d '{ "name": "<Account Name>", \
@@ -53,6 +54,7 @@ You own the account lifecycle from creation, ongoing management, and finally del
 ```bash
 curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
 ```
+
 <Aside type="note">
 
 __Note:__ This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.

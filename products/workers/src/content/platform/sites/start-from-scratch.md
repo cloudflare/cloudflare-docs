@@ -50,6 +50,7 @@ To start from scratch to create a Workers Site, follow these steps:
   Learn more about [configuring your project](/learning/getting-started#6-configure-your-project-for-deployment).
 
 6. Run:
+
   ```sh
   $ wrangler publish
   ```

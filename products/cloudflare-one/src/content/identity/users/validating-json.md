@@ -232,6 +232,7 @@ When you configure Access, the public certificates are available at this URL, wh
     "typ": "JWT"
 }
 ```
+
 The header contains the encoding algorithm. kid identifies the key used to sign tokens. Typ designates the token format.
 
 ### Payload

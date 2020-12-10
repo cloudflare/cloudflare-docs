@@ -35,6 +35,7 @@ logfile: /var/log/cloudflared.log
 ```
 
 Flags that don't expect any value (such as `--hello-world`) should be specified as boolean `true` in the YAML:
+
 ```yaml
 hello-world: true
 ```

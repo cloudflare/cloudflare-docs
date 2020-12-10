@@ -55,6 +55,7 @@ By default, the agent will run as a Local Account service and will look for the 
 ```bash
 mkdir C:\Windows\System32\config\systemprofile\.cloudflared
 ```
+
 <Aside>
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
@@ -100,6 +101,7 @@ logfile: C:\Windows\System32\config\systemprofile\.cloudflared\tunnel.log
 ```
 
 8. Save this file to the following location:
+
 ```bash
 C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`
 ```
@@ -131,11 +133,13 @@ For example, if you share the desktop at `rdp.site.com`, that is the subdomain y
 ```sh
 $ cloudflared tunnel --hostname rdp.site.com --no-tls-verify --origin-server-name rdp.internal.com --url rdp://localhost:433
 ```
+
    * If you are using the configuration file created as part of the *Authenticate cloudflared process* above, you can start the service from the Windows services panel, or run:
 
 ```bash
 sc start cloudflared
 ```
+
 In both operations, `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart.
 
 If the process is killed, end users will not be able to connect.
@@ -170,6 +174,7 @@ The command above will allow traffic to be proxied through cloudflared and to on
 ```sh
 cloudflared access rdp --hostname YOURDOMAIN.domain.com --url localhost:2244 --destination rdpserver:3389
 ```
+
 `rdpserver:3389` is a default value and could differ based on what was configured in your instance.
 
 4. Now run the RDP client with the server set to `localhost:2244`:
@@ -228,6 +233,7 @@ You can help end users connect without requiring the command line by providing t
 ```sh
 $ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
+
 4. Click **Next** and complete the wizard.
 
 At this point the shortcut will appear on the desktop, and users can launch with a double-click. The shortcut can then be distributed to end users along with `cloudflared`.
@@ -255,6 +261,7 @@ chmod +x $var
 ```sh
 $ lsof -nP -iTCP:2244 | grep LISTEN
 ```
+
 If needed, you can kill the process by running the following command:
 
 ```sh

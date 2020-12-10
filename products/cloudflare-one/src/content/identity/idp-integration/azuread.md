@@ -27,6 +27,7 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
     ```txt
     https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+
     Click **Register**.
 
  ![Azure AD Cloudflare Access App](../../static/documentation/identity/azure/name-app.png)

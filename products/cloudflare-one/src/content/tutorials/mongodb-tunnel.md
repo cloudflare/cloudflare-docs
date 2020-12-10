@@ -137,6 +137,7 @@ spec:
             path: authorized_keys
             mode: 0400
 ```
+
 </details>
 
 The corresponding service definition should also specify the the ports and target ports for the containers (in this case, the database service and the SSH proxy service).
@@ -176,6 +177,7 @@ spec:
       port: 22
       targetPort: 22
 ```
+
 </details>
 
 The MongoDB pod and the SSH jump host will share a Unix socket over an empty directory volume. The `entrypoint.sh` file run by the jump host, example below, will start an OpenSSH server.
@@ -303,6 +305,7 @@ data:
         bastionMode: true
     - service: http_status:404
 ```
+
 </details>
 
 ## Connect from a client

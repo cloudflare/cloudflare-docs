@@ -66,6 +66,7 @@ curl -sv https://auth.example.com
 
 Without a client certificate in the request, a `403 forbidden` response displays and the site cannot be accessed.
 Add your client certificate information to the request:
+
 ```curl
 curl -sv https://auth.example.com --cert example.pem --key key.pem
 ```
@@ -177,6 +178,7 @@ Returning to the terminal, generate a client certificate that will authenticate 
   ]
 }
 ```
+
 2. Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
 ```sh
@@ -214,6 +216,7 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 1. Get the serial number from the client certificate generated earlier. Add that serial number, or any others you intend to revoke, in hex format in a text file. This example uses a file named `serials.txt`.
 
 2. Create the CRL with the following command.
+
 ```bash
 cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
 You will need to add this to your server or enforce the revocation in a Cloudflare Worker.

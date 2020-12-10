@@ -195,6 +195,7 @@ To create a report for your log data based on the Cloudflare template:
    Else "Other"
    END
    ```
+
    \* Click **Save** in the lower right corner.
 
 10. Finally, add another new field for grouping status error codes. In the top right corner, click **+ ADD A FIELD**, then in the add field UI:

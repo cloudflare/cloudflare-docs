@@ -31,9 +31,11 @@ The WARP Client for Windows allows for an automated install via tools like Intun
  ```shell
  Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" ENABLE="true" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"
  ```
+
  See the [deployment parameters](/teams/parameters/) for a description of each argument.
 
 * Example command line to **uninstall** the client:
+
  ```shell
  msiexec /x Cloudflare_WARP_Release-x64.msi /quiet
  ```

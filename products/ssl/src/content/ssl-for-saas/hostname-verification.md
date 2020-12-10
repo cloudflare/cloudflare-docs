@@ -19,6 +19,7 @@ Cloudflare iterates over the CNAME chain starting from the hostname.  The value 
 ```txt
 app.example.com CNAME proxy-fallback.saasprovider.com
 ```
+
 2. Add a CNAME to Cloudflare DNS for your domain:
 
 ```txt

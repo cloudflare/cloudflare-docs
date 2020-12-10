@@ -10,6 +10,7 @@ order: 4
 * upstart/sysvinit: `sudo tail -f /var/log/gokeyless.log`
 
 ## Enable debug logging
+
 ```bash
 $ cd /etc/keyless
 $ sudo -u keyless gokeyless --loglevel 0

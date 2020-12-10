@@ -29,6 +29,7 @@ type Request {
 ````
 
 You can run a query to get the status by subrequest:
+
 ````javascript
 {
     requests {
@@ -42,6 +43,7 @@ You can run a query to get the status by subrequest:
 ````
 
 The results would be:
+
 ````javascript
 {
     "requests": [
@@ -62,6 +64,7 @@ The results would be:
 Maps behave like arrays, but can be grouped using the `sum` function. They are used in aggregated data sets, such as `httpRequest1dGroups`.
 
 Example maps:
+
 ````javascript
 type URLStatsMapElem {
     url: String!
@@ -77,6 +80,7 @@ type Request {
 ````
 
 Query:
+
 ````javascript
 {
     requests {
@@ -95,6 +99,7 @@ Query:
 ````
 
 Response:
+
 ````javascript
 {
     "requests": [
@@ -125,6 +130,7 @@ Response:
 ## Examples
 
 Query array fields in raw data sets:
+
 ````javascript
 query NestedFields($zoneTag: string, $dateStart: string, $dateEnd: string, $datetimeStart: string, $datetimeEnd: string) {
       viewer {
@@ -142,6 +148,7 @@ query NestedFields($zoneTag: string, $dateStart: string, $dateEnd: string, $date
 ````
 
 Example response:
+
 ````javascript
 {
   "data": {
@@ -173,6 +180,7 @@ Example response:
 ````
 
 Query maps fields in aggregated data sets:
+
 ````javascript
 query MapCapacity($zoneTag: string, $dateStart: string, $dateEnd: string, $datetimeStart: string, $datetimeEnd: string) {
     viewer {
@@ -198,6 +206,7 @@ query MapCapacity($zoneTag: string, $dateStart: string, $dateEnd: string, $datet
 ````
 
 Example response:
+
 ````javascript
 {
   "data": {

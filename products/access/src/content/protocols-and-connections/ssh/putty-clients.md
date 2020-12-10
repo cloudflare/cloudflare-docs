@@ -25,6 +25,7 @@ With the Host Machine hostname, run the following command:
 ```sh
 $ cloudflared.exe access ssh --hostname <the hostname of the SSH server> --url localhost:<unused port>
 ```
+
 This launches a browser window that prompts you to authenticate your identity credentials.
 
 ## 2. Configure PuTTY

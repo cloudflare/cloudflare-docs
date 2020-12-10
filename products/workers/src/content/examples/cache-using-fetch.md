@@ -54,6 +54,7 @@ addEventListener("fetch", event => {
 // Force Cloudflare to cache an asset
 fetch(event.request, { cf: { cacheEverything: true } })
 ```
+
 Setting the cache level to Cache Everything will override the default "cacheability" of the asset. For TTL, Cloudflare will still rely on headers set by the origin.
 
 ## Custom cache keys

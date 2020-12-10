@@ -34,6 +34,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 <key>support_url</key>
 <string>https://support.example.com</string>
 ```
+
 For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
 
 ### Example Configuration in Jamf

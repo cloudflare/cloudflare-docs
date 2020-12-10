@@ -269,6 +269,7 @@ Input the following values; replacing `gitlab-ssh.widgetcorp.tech` with the host
 Host gitlab-ssh.widgetcorp.tech
   ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```
+
 You can now test the SSH flow by attempting to clone the project created earlier.
 
 ```bash

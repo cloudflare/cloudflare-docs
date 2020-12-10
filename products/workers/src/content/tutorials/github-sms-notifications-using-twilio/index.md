@@ -234,6 +234,7 @@ async function sendText(message){
   return new Response(JSON.stringify(result), request)
 }
 ```
+
 To make this work, we need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with `wrangler secret put` in the cli.
 
 ```sh

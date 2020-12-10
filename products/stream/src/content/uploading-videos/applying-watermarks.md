@@ -78,6 +78,7 @@ To create, list, delete, or get information about the profile, you will need you
 ### Use Case 1: Upload a local image file directly
 
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
+
 ```bash
 curl -X POST -H "Authorization: Bearer $TOKEN" \
 -F file=@{path-to-image-locally} \
@@ -92,6 +93,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ### Use Case 2: Pass a URL to an image
 
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
+
 ```bash
 curl -X POST -H "Authorization: Bearer $TOKEN" \
 -H 'Content-Type: application/json' \
@@ -128,6 +130,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
   "messages": []
 }
 ```
+
 `downloadedFrom` will be populated if the profile was created via downloading from URL.
 
 ## Using a watermark profile on a video

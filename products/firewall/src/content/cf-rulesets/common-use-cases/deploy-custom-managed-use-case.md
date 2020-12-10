@@ -17,10 +17,13 @@ Use a single API request to add rules to your root ruleset and deploy managed an
 In the example below, the root ruleset configuration contains a rule to deploy a ruleset. To keep the rule in the new version of your root ruleset, you must include the rule in the request along with the rulesets you want to deploy.
 
 1. View the usable rulesets and managed rulesets. Use the [`jq`](https://stedolan.github.io/jq/) JSON processor to filter the `name` and `id` parameters of the rulesets.
+
     ```json
     $ curl -s -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" | jq .result[] | jq '.name, .id'
     ```
+
     The response lists the `name` and `id` parameters for the rulesets that you can use:
+
     ```json
     "Cloudflare OWASP Core Ruleset"
     "{Cloudflare-owasp-ruleset-id}"
@@ -33,11 +36,15 @@ In the example below, the root ruleset configuration contains a rule to deploy a
     "Root ruleset for my account"
     "{root-ruleset-id}"
     ```
+
 1. [Fetch your root ruleset](/cf-rulesets/view-root-rulesets/) to view the `id` of the existing rules to keep in the new version.
+
     ```json
     curl -s -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{root-ruleset-id}/versions/{version-number}"
     ```
+
     The reponse indicates that the only ruleset deployed is the Cloudflare OWASP managed ruleset.
+
     ```
     {"result": {
        "id": "{root-ruleset-id}",

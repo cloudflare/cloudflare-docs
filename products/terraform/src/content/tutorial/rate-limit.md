@@ -201,6 +201,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 Note that if you haven't purchased rate limiting yet, you will see the following error when attempting to apply the new rule:
+
 ```
 Error: Error applying plan:
 

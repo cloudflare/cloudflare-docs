@@ -68,6 +68,7 @@ Remember to keep your credentials saved in environment variables or terraform au
 We start by making a call to Cf-Terraforming to enumerate the Terraform configuration for the DNS records for the zone we want to manage with Terraform.
 
 Note: The below command assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
+
 ```
 $ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_TOKEN -z 1109d899a5ff5fd74bc01e581693685a record > importing-example.tf
 ```

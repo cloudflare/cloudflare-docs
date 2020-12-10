@@ -15,6 +15,7 @@ has some interesting additional features. The protocol is also implemented in
 
 The client configuration consists of a list of named Roughtime servers
 formatted as a JSON object. For example:
+
 ```
 {
   "servers": [
@@ -32,6 +33,7 @@ formatted as a JSON object. For example:
   ]
 }
 ```
+
 It includes each server's *root public key*.  When the server starts, it
 generates an *online* public/secret key pair; the root secret key is used to
 create a *delegation* for the online public key, and the online secret key is
@@ -58,14 +60,17 @@ import `github.com/cloudflare/roughtime`):
 ```
 servers, skipped, err := roughtime.LoadConfig("roughtime.config")
 ```
+
 Variable `servers` is the list of valid server configurations parsed from the
 input file; variable `skipped` indicates the number of servers that were
 skipped, say, if the signature algorithm or transport protocol isn't supported.
 Next, let's get the system time and query the first server in the list:
+
 ```
 t0 := time.Now()
 rt, err := roughtime.Get(&servers[0], attempts, timeout, nil)
 ```
+
 This sends a request to the server and verifies the response.  Variable `rt` is
 of type `*roughtime.Roughtime` and represents the result of the query. The
 inputs are:
@@ -80,6 +85,7 @@ request. (More on this later.) The `crypto/tls` package allows the user to
 [specify a callback](https://golang.org/pkg/crypto/tls/#Config) for the current
 time to use when validating certificates, session tickets, etc.  You can compute
 this callback as follows:
+
 ```
 t1, radius := rt.Now()
 delta := t1.Sub(t0.Now())
@@ -87,6 +93,7 @@ now := func() time.Time {
   return time.Now().Add(delta)
 }
 ```
+
 Variable `t1` is the time reported by the server and `radius` is the server's
 uncertainty radius.  For a full working example, check out our
 [GitHub](https://github.com/cloudflare/roughtime/blob/master/recipes/tls.go).
@@ -95,6 +102,7 @@ uncertainty radius.  For a full working example, check out our
 
 A more general way to use Roughtime is to create desktop alerts that warn you
 when your clock is skewed. On Ubuntu GNU/Linux, you can do something like this:
+
 ```
 skew := time.Duration(math.Abs(float64(delta)))
 if skew > 10*time.Second {
@@ -106,6 +114,7 @@ if skew > 10*time.Second {
   }
 }
 ```
+
 See our
 [GitHub](https://github.com/cloudflare/roughtime/tree/master/recipes/alerter.go)
 for a fully fleshed out alerter. (It has been tested on Ubuntu 18.04.) Run this
@@ -114,10 +123,12 @@ as a cron job to periodically check that you're clock is in sync.
 ## Using multiple sources
 
 Using multiple sources for Roughtime is easy (and highly recommended!):
+
 ```
 t0 := time.Now()
 res := roughtime.Do(servers, attempts, timeout, nil)
 ```
+
 The first parameter is a sequence of servers, and the remaining parameters are
 the same as in `roughtime.Get()`.  This queries each server in the sequence
 `servers` in order. The output `res` is a slice the same length as `servers`.
@@ -125,10 +136,12 @@ Each element represents the result of the query to the server: if the query was
 successful, then the result contains the server's time; if unsuccessful, then
 the result contains the error that occurred. To compute the average difference
 between your clock and the valid responses:
+
 ```
 thresh := 10 * time.Second
 delta, err := roughtime.AvgDeltaWithRadiusThresh(res, t0, thresh)
 ```
+
 This rejects responses whose uncertainty radii exceed 10 seconds. (An error will
 be returned if there were no valid responses.)
 
@@ -138,6 +151,7 @@ using the server's response in the last successful query. As we discuss in
 more detail in the [blog](https://blog.cloudflare.com/roughtime/), linking queries together in this manner
 results in cryptographic proof that the queries were made in order. To verify
 that the results have this property, you can do the following:
+
 ```
 chain := roughtime.NewChain(results)
 ok, err := chain.Verify(nil)
@@ -145,6 +159,7 @@ if err != nil || !ok {
   // error handling ...
 }
 ```
+
 Variable `chain` is a structure that contains the first successful query in
 `results`; it has a field, `chain.Next`, that points to the next successful
 query. The input parameter to `Verify()` allows you to use a previous result as
@@ -155,6 +170,7 @@ valid, then `chain.Next.Verify(chain.Roughtime)` will be valid, too.
 It's possible to have `roughtime.Do()` output useful information as it executes
 its queries. To do so, invoke `roughtime.SetLogger()` to set a logger. For
 example:
+
 ```
 roughtime.SetLogger(log.New(os.Stdout, "", 0))
 ```

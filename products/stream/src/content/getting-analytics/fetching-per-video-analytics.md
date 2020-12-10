@@ -125,6 +125,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vi
 * `totalImpressions` is the number of views on the video
 * `totalTimedViewMs` is the amount of time viewed in milliseconds
 * In this example, there are 7 `totalImpressions` and 37663 `totalTimeViewedMs`
+
 ```bash
     "data": [
       {

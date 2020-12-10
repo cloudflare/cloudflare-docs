@@ -5,6 +5,7 @@ Next.js is an open-source React framework for creating websites and apps. In thi
 ## Creating a new project
 
 Create a new project using npx
+
 ```sh
 $ npx create-next-app
 ```

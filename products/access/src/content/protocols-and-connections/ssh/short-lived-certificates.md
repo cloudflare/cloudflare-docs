@@ -47,6 +47,7 @@ For testing purposes, you can run the following command to generate a Unix user 
 ```sh
 $ sudo adduser jdoe
 ```
+
 ## 4. **Save your public key**
 
 1. Save the public key generated from the dashboard in Step 2 as a new `.pub` file in your system.
@@ -81,6 +82,7 @@ The first change requires that you uncomment a field already set in most default
 ```sh
 $ vim /etc/ssh/sshd_config
 ```
+
 2. Navigate to the row named `ubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
 
 ```bash
@@ -126,6 +128,7 @@ If you prefer to configure manually, these are the required commands:
 Host vm.example.com
     ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-vm.example.com >&2 <&1'
 ```
+
 ```bash
 Host cfpipe-vm.example.com
     HostName vm.example.com

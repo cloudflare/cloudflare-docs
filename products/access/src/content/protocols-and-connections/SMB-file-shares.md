@@ -44,6 +44,7 @@ Set-Location "C:\cloudflared"
 (New-Object System.Net.WebClient).DownloadFile("https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-amd64.zip","c:\cloudflared\cloudflared.zip")
 Expand-Archive -LiteralPath c:\cloudflared\cloudflared.zip -DestinationPath c:\cloudflared
 ```
+
 ### 2. Authenticate `cloudflared`
 
 1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
@@ -90,9 +91,11 @@ Follow the same steps above to download and install `cloudflared` on the client 
 ### 2. Connect To The SMB Drive
 
 1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
+
 ```bash
 \cloudflared.exe access tcp --hostname smb.site.com --url localhost:8445
 ```
+
 This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
 2. Open your SMB client and configure the client to point to `tcp:localhost:8445`. Do not input the hostname.

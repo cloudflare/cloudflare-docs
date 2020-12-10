@@ -12,6 +12,7 @@ To view examples for root rulesets, review the the [Magic Firewall Terraform doc
 If you're a new Magic Transit customer, you may not have a root ruleset created for your account.
 
 API Example:
+
 ```
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
 -H 'Content-Type: application/json' \

@@ -97,6 +97,7 @@ Add your Cloudflare account details to the configuration file located at `/etc/k
     $ ls -l /etc/keyless/keys
     -r-------- 1 keyless keyless 1675 Nov 18 16:44 example.com.key
     ```
+
     Note: when running multiple key servers, you must make sure that all required keys are distributed to each key server. Customers typically will either use a configuration management tool such as Salt, Puppet, etc. to distribute keys or mount `/etc/keyless/keys` to a network location that is accessible only by your key servers. Keys are read on boot into memory, so if using a network path it must be accessible during the gokeyless process start/restart.
 
 ### Activation

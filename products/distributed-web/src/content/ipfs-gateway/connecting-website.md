@@ -53,12 +53,14 @@ First off, if you haven’t already, download IPFS by following the instructions
 
 Once you've downloaded the IPFS software, open a terminal window and connect
 your IPFS node to the network by typing:
+
 ```
 ipfs daemon
 ```
 
 When the daemon says it’s ready, open another terminal window and add your
 content, which is the IPFS address of your content.
+
 ```
 ipfs add -r /path/to/folder-with-your-content
 ```

@@ -33,6 +33,7 @@ When you are on this screen on your phone, you will need to enter the unique sub
 Download the configuration file from <a href="./cfteams.mobileconfig" download>here</a>
 
 The contents of the file will look like below:
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

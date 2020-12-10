@@ -52,6 +52,7 @@ For example, if the application URL is example.com, then the certificate URL is:
     "typ": "JWT"
 }
 ```
+
 The header contains the encoding algorithm. kid identifies the key used to sign tokens. Typ designates the token format.
 
 ### Payload

@@ -60,6 +60,7 @@ What's up with that jq command? The API response has quite a bit of extra inform
 </Aside>
 
 Example response:
+
 ```
 {
   "description": "block traffic with known bad patterns",
@@ -97,6 +98,7 @@ curl -X PUT https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets
 ```
 
 Example response:
+
 ```
 {
   "result": {

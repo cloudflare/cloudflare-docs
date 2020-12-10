@@ -36,6 +36,7 @@ This section will cover:
 ```sh
 $ cloudflared tunnel login
 ```
+
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
 2. Once you login, Cloudflare will display the sites that you added to your account.
@@ -59,6 +60,7 @@ Run the following command to connect the machine to Cloudflare, replacing the `s
 $ cloudflared tunnel --hostname
 ssh.site.com --url ssh://localhost:22
 ```
+
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
 **Common issues**
@@ -99,6 +101,7 @@ The command will print the following details:
 Host ssh.site.com
 	ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```
+
 ## 2. Connect Over SSH To The Remote Machine
 
 1. Run the following command to create a connection from the device to Cloudflare.
@@ -120,6 +123,7 @@ Once configured, you can run the following command to test the connection:
 ```sh
 $ git clone ssh -T username@git.site.com
 ```
+
 Replace `username` with your unix username.
 
 Cloudflare Access does not replace SSH key exchange with a Git repository.

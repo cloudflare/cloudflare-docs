@@ -38,6 +38,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 ```bash
 "s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>"
 ```
+
 <Aside type="note" header="Note">
 
 `<ENDPOINT-URL>` is the url without the bucket name or path. Example: `endpoint=sfo2.digitaloceanspaces.com`

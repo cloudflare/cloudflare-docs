@@ -59,6 +59,7 @@ $ helm install --name anydomain --namespace default \
     --set controller.logLevel=6 \
     cloudflare/argo-tunnel
 ```
+
 > **Note**: the controller watches all namespaces.
 
 ## Step Three: Deploy a Service into a Kubernetes Cluster
@@ -119,6 +120,7 @@ Deploy `echoserver` into your Kubernetes cluster:
 ```sh
 $ kubectl apply -f echo.yaml`
 ```
+
 > **Tip**: `-n` sets the namespace for deployment.
 
 ## Step Four: Create a Tunnel Secret
@@ -127,6 +129,7 @@ Convert the domain certificate into a tunnel secret:
 ```sh
 $ kubectl create secret generic mydomain.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
+
 > **Tip**: `-n` sets the namespace for deployment.
 
 ## Step Five: Create an Ingress Definition
@@ -141,6 +144,7 @@ The ingress manifest contains:
 - mappings between `host` and tunnel secret
 
 Create an ingress definition called `echo-tunnel.yaml`:
+
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -163,6 +167,7 @@ spec:
           serviceName: echo
           servicePort: http
 ```
+
 **Note:**
 
 - the Ingress must be deployed in the **same namespace** as the Service
@@ -170,9 +175,11 @@ spec:
 - the `host` must belong the domain certificate (tunnel secret)
 
 Deploy the Ingress:
+
 ```sh
 $ kubectl apply -f echo-tunnel.yaml
 ```
+
 > **Tip**: `-n` sets the namespace for deployment.
 
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
@@ -181,6 +188,7 @@ The ingress controller opens a tunnel between the Cloudflare edge and the Kubern
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
 
 Curl the tunnel:
+
 ```sh
 $ curl http://echo.mydomain.com
 ```

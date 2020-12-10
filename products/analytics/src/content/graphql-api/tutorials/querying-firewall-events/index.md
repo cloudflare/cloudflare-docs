@@ -52,6 +52,7 @@ curl \
 ```
 
 The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
+
 ```
 curl \
   -X POST \

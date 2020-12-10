@@ -58,6 +58,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
  `thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the  `thumbnailTimestampPct` value to 0.5.
 
 The example will yield a request:
+
 ```bash
 curl -X POST \
 -H "Authorization: Bearer $TOKEN" \
@@ -74,6 +75,7 @@ Stream supports animated GIFs as thumbnails. Views using animated thumbnails do 
 ```
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
 ```
+
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" />
 
 Supported URL attributes for animated thumbnails are:
