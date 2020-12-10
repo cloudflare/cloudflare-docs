@@ -39,7 +39,7 @@ Keys to configure per project in your `wrangler.toml`.
 <Definitions>
 
 - `name` <Type>inherited</Type> <PropMeta>required</PropMeta>
-  -  The name of your Worker script. If inherited, your environment name with be appended to the top level.
+  -  The name of your Worker script. If inherited, your environment name will be appended to the top level.
 
 - `type` <Type>top level</Type> <PropMeta>required</PropMeta>
   -  Specifies how `wrangler build` will build your project. There are currently three options (`webpack`, `javascript`, and `rust`).
