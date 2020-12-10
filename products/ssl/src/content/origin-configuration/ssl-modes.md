@@ -46,5 +46,3 @@ The certificate presented by the origin will be validated the same as with Stric
 
 ## Off
 Not recommended. Disables HTTPS for your website. Any visitor attempting to connect via HTTPS will receive a HTTP 301 redirect to plaintext HTTP.
-
-

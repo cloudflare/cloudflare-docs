@@ -42,7 +42,6 @@ Each category contains Permission Groups related to those resources. DNS permiss
 
 After selecting a Permission Group, you can choose what level of access to grant the token. Most groups offer `Edit` or `Read` options. `Edit` is full _CRUDL_ (_create_, _read_, _update_, _delete_, _list_) access, while `Read` is just the _read_ permission and _list_ where appropriate.
 
-
 ### Token Resources
 
 The resources selected will be the only ones that the token will be able to perform the authorized actions against. For example granting `Zone DNS Read` access to a zone `example.com` will allow the token to read DNS records for only that specific zone. Any other zone will return an error for DNS record reads operations. Any other operation on that zone will also return an error.

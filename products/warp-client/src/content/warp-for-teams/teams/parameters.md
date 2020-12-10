@@ -17,7 +17,6 @@ Each client supports the following set of parameters as part of their deployment
 
 **Description.** If your Teams [auth domain](https://developers.cloudflare.com/access/glossary#auth-domain) is `https://example.cloudflareaccess.com`, you would enter `example`.
 
-
 ## Optional fields
 
 ### `gateway_unique_id`
@@ -59,6 +58,3 @@ A DoH subdomain value is only required if you configure DNS Filtering.
 
 * **How do I obtain logs in the event of an issue with client?**
 The macOS and Windows clients installations each contain an application in their installed folders called warp-diag that can be used to obtain logs.
-
-
-

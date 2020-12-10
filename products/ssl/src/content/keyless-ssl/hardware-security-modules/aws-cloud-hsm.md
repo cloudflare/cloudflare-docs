@@ -71,7 +71,6 @@ add:
 - uri: pkcs11:token=cavium;object=mykey?module-path=/opt/cloudhsm/lib/libcloudhsm_pkcs11_standard.so&pin-value=patrick:donahue&max-sessions=1
 ```
 
-
 With the config file saved, restart `gokeyless` and verify it started successfully.
 
 ```bash

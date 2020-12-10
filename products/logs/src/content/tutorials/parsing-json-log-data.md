@@ -5,7 +5,6 @@ order: 85
 
 # Parse Cloudflare Logs JSON data
 
-
 ## Overview
 
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
@@ -111,7 +110,6 @@ $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 * *ban* (blocked by IP address, range, etc.)
 * *tempOk* (challenge successfully completed)
 * *chl* (challenge issued)
-
 
 For example:
 

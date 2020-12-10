@@ -6,7 +6,6 @@ order: 1
 
 <DirectoryListing path="/how-access-works"/>
 
-
 Cloudflare Access evaluates requests to internal and SaaS applications and determines whether visitors are granted access based on pre-defined rules.
 
 ![Access Generic](../static/summary/network-diagram.png)

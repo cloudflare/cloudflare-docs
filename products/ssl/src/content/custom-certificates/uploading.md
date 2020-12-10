@@ -86,7 +86,6 @@ $ request_body=$(< <(cat <<EOF
 ```
 `sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.  
 
-
 ### 2. With the payload built, make the API call to upload your certificate and key
 
 ```bash

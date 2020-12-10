@@ -11,7 +11,6 @@ order: 1
 | 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
 | 4. [Install `cloudflared`](/getting-started/installation/) |
 
-
 Follow these steps to set up Cloudflare Argo Tunnel:
 
 1. Authenticate your instance `cloudflared` by logging in to your Cloudflare account with the following command:
@@ -35,4 +34,3 @@ The file is required if you want to:
 The file is not required if you want to:
   * Run an existing Tunnel
   * Manage routing from the Cloudflare dashboard
-

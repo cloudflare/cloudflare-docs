@@ -4,8 +4,6 @@ order: 110
 
 # Exposing Docker Containers
 
-
-
 <Aside>
 
 Argo Tunnel support for Docker is in Beta.

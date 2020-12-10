@@ -4,8 +4,6 @@ order: 12
 
 # Centrify
 
-
-
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 
 ## Set up Centrify

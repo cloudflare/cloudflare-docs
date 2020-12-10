@@ -62,7 +62,6 @@ To install the certificate in Keychain Access:
 
 The root certificate is now installed and ready to be used.
 
-
 ### iOS
 
 1. Download the Cloudflare certificate [here](../static/Cloudflare_CA.crt).

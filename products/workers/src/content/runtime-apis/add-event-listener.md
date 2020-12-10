@@ -27,7 +27,6 @@ This function defines triggers for a Worker script to execute. There are current
 - `type` <Type>string</Type>
   - Currently the only types supported are `"fetch"` and `"scheduled"`.
 
-
 - `listener` <Type>function</Type>
   - The function to handle incoming events to the Worker script. The listener is passed a single argument:
 

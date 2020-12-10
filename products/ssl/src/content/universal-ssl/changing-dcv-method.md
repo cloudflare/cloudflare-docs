@@ -85,7 +85,6 @@ From here you can change the validation method to CNAME or TXT records.
 
 Let’s continue by changing the DCV method to CNAME.
 
-
 ### 2. Change validation method
 This endpoint will modify the validation method of a selected certificate order. Note the `validation_method` value set in the request body.
 

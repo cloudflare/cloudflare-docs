@@ -31,7 +31,6 @@ traffic to a single local service, you can use CLI flags instead of YAML to conf
 
 Connects to the local webserver at `URL`.
 
-
 ### `--hostname`
 
 | Syntax | Environment Variable |
@@ -56,14 +55,11 @@ Add this tunnel to a Load Balancer pool. If it doesn’t already exist a load ba
 
 Path to the CA for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
 
-
 ### `--origin-server-name`
 
 | Syntax | Environment Variable |
 |--|--|
 | `--origin-server-name value` | `TUNNEL_ORIGIN_SERVER_NAME` |
-
-
 
 ### `--no-chunked-encoding`
 

@@ -5,7 +5,6 @@ order: 90
 
 # Bot Management Dashboard
 
-
 This tutorial explains how to activate Cloudflare **Bot Management** and view related dashboards in the Elastic, Google Data Studio, Looker, Splunk, and Sumo Logic analytics platforms.
 
 ## Overview

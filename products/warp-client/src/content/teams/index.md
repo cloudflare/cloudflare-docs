@@ -15,4 +15,3 @@ Already have Cloudflare for Teams configured and want to dive right in? Before y
 * [Obtained your Cloudflare for Teams auth domain](https://developers.cloudflare.com/access/glossary#auth-domain).
 
 Once you have completed these steps, read the instructions included in this section, based on the client you would like to deploy.
-

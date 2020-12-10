@@ -48,7 +48,6 @@ $ launchctl start com.cloudflare.cloudflared
 
 Output will be logged to `~/Library/Logs/com.cloudflare.cloudflared.err.log` and `~/Library/Logs/com.cloudflare.cloudflared.out.log`.
 
-
 If you wish to run at boot, open a Terminal and run the following command:
 
 ```sh

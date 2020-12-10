@@ -58,7 +58,6 @@ If you are working on a machine that does not have a browser, or a browser windo
 
 5. Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow cloudflared to create a DNS record for a subdomain of the site.
 
-
 ### 3. Secure The Subdomain With Cloudflare Access
 
 Next, protect the subdomain you plan to register with a Cloudflare Access application policy. Follow [these instructions](/getting-started/policies/) to build a new policy to control who can connect to the drive.

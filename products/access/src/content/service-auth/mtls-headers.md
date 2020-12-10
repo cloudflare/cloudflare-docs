@@ -31,7 +31,6 @@ Cloudflare Access will always set headers on each request. The system will not r
 
 1. Enable Workers for the zone.
 
-
 Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing apps without configuring or maintaining infrastructure. In our example, Workers listen for requests to your origin and pass the required variables from the client certificate.
 
 2. Add a Worker to the path being protected.

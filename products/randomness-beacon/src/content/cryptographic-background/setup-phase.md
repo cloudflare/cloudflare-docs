@@ -18,7 +18,6 @@ Secret sharing allows you to split a secret value `𝑠` into `𝑛` shares `�
 
 The SSS scheme is one of the most well-known and widely used secret sharing approaches, and a core component of drand. SSS works over an arbitrary finite field, but a simplistic approach uses the integers modulo `𝑝`, denoted by `ℤ𝑝`. Let `𝑠∈ℤ𝑝` denote the secret to share.
 
-
 ### Share Distribution
 To share `𝑠`, a dealer first creates a polynomial, `𝑞(𝑥)=𝑎0+𝑎1𝑥+⋯+𝑎𝑡−1𝑥𝑡−1` with `𝑎0=𝑠` and (random) `𝑎𝑖∈ℤ𝑝` for `𝑖=1,…,𝑡−1` and then creates one share 𝑠𝑖 for each participant 𝑖 by evaluating 𝑞(𝑥) at the integer 𝑖 and setting 𝑠𝑖=(𝑖,𝑞(𝑖)).
 
@@ -30,27 +29,17 @@ Note that you can use any subset of `𝑡-of-𝑛` shares to perform Lagrange in
 
 ## Verifiable Secret Sharing
 
-
 SSS scheme assumes that the dealer is honest, but this may not always hold in practice. A Verifiable Secret Sharing (VSS) scheme protects against malicious dealers by enabling participants to verify that their shares are consistent with those dealt to other nodes, ensuring that the shared secret can be correctly reconstructed later.
 
-
-
-
 drand uses Feldman’s VSS scheme, an extension of SSS. Let `𝔾` denote a cyclic group of prime order `𝑝` in which computing discrete logarithms is intractable. A _cyclic group_ means there exists a generator, `𝑔`, so that any element `𝑥∈𝔾` can be written as `𝑥=𝑔𝑎` for some `𝑎∈{0,…,𝑝−1}`.
-
-
 
 ### Share Distribution
 
 In addition to distributing shares of the secret to participants, the dealer also broadcasts commitments to the coefficients of the polynomial `𝑞(𝑥)` of the form `(𝐴0,𝐴1,…,𝐴𝑡−1)=(𝑔𝑠,𝑔𝑎1,…,𝑔𝑎𝑡−1)`. These commitments enable individual participants, `𝑖`, to verify that their share `𝑠𝑖=(𝑖,𝑞(𝑖))` is consistent with respect to the polynomial `𝑞(𝑥)` by checking that `𝑔𝑞(𝑖)=∏𝑡−1𝑗=0(𝐴𝑗)𝑖𝑗` holds.
 
-
-
 ### Secret Reconstruction
 
 The recovery of secret `𝑠` works the same as regular SSS, except that verified to be valid shares are used.
-
-
 
 ## Distributed Key Generation (DKG)
 

@@ -42,7 +42,6 @@ You can either:
 
 ![SaaS logo](../static/summary/saas-logo.png)
 
-
 8. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
 ![Select identity providers](../static/summary/idps-saas.png)
@@ -72,7 +71,6 @@ Before you begin using your application through Access, your last step is to int
  ![Setup SaaS application](../static/summary/setup-saas.png)
 
 4. Click **Done** to see your application listed on your Applications tab.
-
 
 ## Protect a self-hosted application
 

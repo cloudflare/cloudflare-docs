@@ -28,7 +28,6 @@ The 1.1.1.1 public DNS resolver was designed for privacy first, and Cloudflare c
 
 Frankly, we don’t want to know what any one person is doing on the Internet — it’s none of our business — and we’ve taken the technical steps to ensure we can’t.
 
-
 We wanted to put our money where our mouth was, so we retained one of the top four accounting firms to audit our practices and publish a public report confirming we're doing what we said we would. The report is available [here](https://www.cloudflare.com/compliance/).
 
 ## LIMITED DATA SHARING WITH APNIC

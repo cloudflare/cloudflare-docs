@@ -179,7 +179,6 @@ Curl the tunnel:
 $ curl http://echo.mydomain.com
 ```
 
-
 Questions? Feedback? [We're listening
 here][community-feedback].
 

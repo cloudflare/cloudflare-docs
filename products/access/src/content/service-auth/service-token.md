@@ -35,7 +35,6 @@ This is the only time Cloudflare Access will display the <b>Client Secret</b>. I
 
   You can now use the service token in [non-identity policies](/setting-up-access/configuring-access-policies/).
 
-
 ## Renew a service token
 
 By default, service tokens expire one year after creation. You can extend the lifecycle by navigating to the **Service Token** tab and clicking the `Refresh` button for a single token. The `Refresh` operation will extend the token's lifetime by one year from the current date.
