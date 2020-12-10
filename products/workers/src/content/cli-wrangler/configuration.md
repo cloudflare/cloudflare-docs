@@ -107,7 +107,7 @@ __Note:__ Using secrets should be handled using [wrangler secret](/cli-wrangler/
 
 ### kv_namespaces
 
-KV namespaces bind to your Worker and reference in your script.
+KV namespaces bind to your Worker and may be referenced in your script.
 
 Usage:
 
