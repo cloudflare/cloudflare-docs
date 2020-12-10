@@ -22,7 +22,7 @@ Before you begin, you'll need to follow [these instructions](https://developers.
 * Teams Standard
 * Gateway
 
-You can follow [these instructions](/secure-web-gateway/secure-dns-devices) to configure Gateway DNS filtering on roaming devices and [these instructions](/secure-web-gateway/secure-dns-network) for home or office networks.
+You can follow [these instructions](/tutorials/secure-web-gateway/secure-dns-devices) to configure Gateway DNS filtering on roaming devices and [these instructions](/tutorials/secure-web-gateway/secure-dns-network) for home or office networks.
 
 ## Review Gateway events
 
