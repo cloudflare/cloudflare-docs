@@ -78,7 +78,7 @@ When a DNS query matches with a DNS policy, Gateway follows this order of operat
 
 <Aside>
 
-This feature is only available on the **Teams Enterprise plan**. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
+This feature is not available on the **Teams Free plan**. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
 
 </Aside>
 
@@ -99,7 +99,9 @@ These are the action types you can choose from:
 
 * **Allow** 
 * **Block** 
-* **Bypass** lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
+* **Bypass**
+
+*Bypass* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
 
 #### Selectors
 Gateway matches HTTP traffic against the following selectors, or criteria:
@@ -167,11 +169,5 @@ Expressions are sets of conditions with which you can combine [selectors](#selec
 | Block  | Content categories | in: `Gaming` | 
 
 **Result**: this configuration blocks any traffic to domains categorized as `Gaming`. 
-
-| Action | Selector | Operator | 
-| ------ | ---- | -------- | 
-| Block  | Downloaded File Extension | is: `torrent` |
-
-**Result**: this configuration blocks the download of any torrent files. 
 
 
