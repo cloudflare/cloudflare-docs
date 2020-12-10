@@ -20,7 +20,7 @@ cd                 | No             | CD bit - set to disable validation (either
 Example Request:
 
 ```sh
-curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA'
+$ curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA'
 ```
 
 Example Response:

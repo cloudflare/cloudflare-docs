@@ -87,7 +87,7 @@ server_names = ['cloudflare', 'cloudflare-ipv6']
 Step 4: Make sure that nothing else is running on `localhost:53`, and check that everything works as expected
 
 ```sh
-dnscrypt-proxy -resolve cloudflare-dns.com
+$ dnscrypt-proxy -resolve cloudflare-dns.com
 Resolving [cloudflare-dns.com]
 
 Domain exists:  yes, 3 name servers found
