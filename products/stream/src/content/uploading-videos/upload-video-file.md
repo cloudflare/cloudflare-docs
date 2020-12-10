@@ -104,7 +104,7 @@ pip install -U tus.py
 ```
 
 ```bash
-tus-upload --chunk-size 5242880 --header Authorization "Bearer $TOKEN" $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+tus-upload --chunk-size 52428800 --header Authorization "Bearer $TOKEN" $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -146,7 +146,7 @@ func main() {
 	headers.Add("Authorization", "Bearer $TOKEN")
 
 	config := &tus.Config{
-		ChunkSize:           5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
+		ChunkSize:           50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
 		Resume:              false,
 		OverridePatchMethod: false,
 		Store:               nil,
@@ -209,7 +209,7 @@ var options = {
   headers: {
     'Authorization': 'Bearer $TOKEN',
   },
-  chunkSize: 5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
+  chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
   resume: true,
   metadata: {
     filename: "test.mp4",
