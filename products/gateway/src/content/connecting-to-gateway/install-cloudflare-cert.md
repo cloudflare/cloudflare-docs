@@ -118,7 +118,7 @@ Windows offers two options to install the certificate, each having a different i
 
 4. The **Certificate** window will appear. Click **Install Certificate**.
 
-![windows install cert](../static/windows_install_cert.png)
+![Windows install cert](../static/windows_install_cert.png)
 
 5. Now choose a Store Location.
 
@@ -130,11 +130,11 @@ Windows offers two options to install the certificate, each having a different i
 
 9. Click **OK**.
 
-![windows cert location](../static/windows_cert_location.png)
+![Windows cert location](../static/windows_cert_location.png)
 
 10. Click **Finish**.
 
-![windows cert install complete](../static/windows_cert_install_finished.png)
+![Windows cert install complete](../static/windows_cert_install_finished.png)
 
 The root certificate is now installed and ready to be used.
 

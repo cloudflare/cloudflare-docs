@@ -107,17 +107,17 @@ Installing a certificate in Windows requires consideration of which users to aff
 
 3. The Certificate window will appear. Click Install Certificate
 
-![windows install cert](../static/windows_install_cert.png)
+![Windows install cert](../static/windows_install_cert.png)
 
 4. Choose a Store Location and click Next.
 
 5. On the next screen, click Browse. Choose the Trusted Root Certification Authorities store. Click OK.
 
-![windows cert location](../static/windows_cert_location.png)
+![Windows cert location](../static/windows_cert_location.png)
 
 6. Click Finish.
 
-![windows cert install complete](../static/windows_cert_install_finished.png)
+![Windows cert install complete](../static/windows_cert_install_finished.png)
 
 ### Android
 
