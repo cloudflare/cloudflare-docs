@@ -78,7 +78,7 @@ When a DNS query matches with a DNS policy, Gateway follows this order of operat
 
 <Aside>
 
-This feature is not available on the **Teams Free plan**. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
+This feature is only available for Gateway and Teams paid plans. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
 
 </Aside>
 
