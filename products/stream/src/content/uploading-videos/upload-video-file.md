@@ -97,7 +97,7 @@ stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
 
 <Example>
 
-You will also need to download a tus client. This tutorial will use the [tus python client](https://github.com/tus/tus-py-client), available through pip, pythons's package manager.
+You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
 ```bash
 pip install -U tus.py
@@ -114,7 +114,6 @@ In the beginning of the response from tus, you’ll see the endpoint for getting
     ...
 
 </Example>
-
 
 ### Golang Example
 
@@ -180,7 +179,6 @@ upload.Finished()
 
 Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functionality such as resuming uploads and getting more details about the progress of the upload.
 
-
 ### Node.js Example
 
 <Example>
@@ -204,6 +202,7 @@ var tus = require("tus-js-client");
 var path = __dirname + "/test.mp4";
 var file = fs.createReadStream(path);
 var size = fs.statSync(path).size;
+var mediaId = ''
 
 var options = {
   endpoint: "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream",
@@ -227,10 +226,16 @@ var options = {
     console.log(bytesUploaded, bytesTotal, percentage + "%");
   },
   onSuccess: function () {
-    console.log("Upload finished:", upload.url);
-    var index = upload.url.lastIndexOf("/") + 1;
-    var mediaId = upload.url.substr(index)
-    console.log("Media id:", mediaId);
+    console.log("Upload finished");
+  },
+  onAfterResponse: function (req, res) {
+    return new Promise(resolve => {
+        var mediaIdHeader = res.getHeader("stream-media-id");
+        if (mediaIdHeader) {
+            mediaId = mediaIdHeader;
+        }
+        resolve()
+    })
   }
 };
 

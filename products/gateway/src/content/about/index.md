@@ -4,4 +4,3 @@ hidden: true
 ---
 
 # About
-

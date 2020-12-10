@@ -39,7 +39,7 @@ Keys to configure per project in your `wrangler.toml`.
 <Definitions>
 
 - `name` <Type>inherited</Type> <PropMeta>required</PropMeta>
-  -  The name of your Worker script. If inherited, your environment name with be appended to the top level.
+  -  The name of your Worker script. If inherited, your environment name will be appended to the top level.
 
 - `type` <Type>top level</Type> <PropMeta>required</PropMeta>
   -  Specifies how `wrangler build` will build your project. There are currently three options (`webpack`, `javascript`, and `rust`).
@@ -81,7 +81,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 ### vars
 
-Values to use in your Worker script as a text environment variables.
+Values to use in your Worker script as text environment variables.
 
 Usage:
 
@@ -107,7 +107,7 @@ __Note:__ Using secrets should be handled using [wrangler secret](/cli-wrangler/
 
 ### kv_namespaces
 
-KV namespaces bind to your Worker and reference in your script.
+KV namespaces bind to your Worker and may be referenced in your script.
 
 Usage:
 

@@ -42,7 +42,7 @@ allprojects {
 
 Don't put it under `buildscript { repositories { ... } }`.
 
-In your module Gradle file (ex. app/build.gradle), add the cloudflare SDK dependency:
+In your module Gradle file (ex. app/build.gradle), add the Cloudflare SDK dependency:
 
 ```java
 android {

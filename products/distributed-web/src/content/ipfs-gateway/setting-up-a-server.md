@@ -19,7 +19,7 @@ pinning service and your own server for higher availability.
 - A Linux server that's online as much as possible. A VPS from a provider like
   [DigitalOcean](https://www.digitalocean.com/) is an option, or something like
   a [NUC](https://www.intel.com/content/www/us/en/products/boards-kits/nuc.html)
-  or [Rasberry Pi](https://www.raspberrypi.org/) running on your home network
+  or [Raspberry Pi](https://www.raspberrypi.org/) running on your home network
   will work.<br />
   <u>Recommended Minimum Requirements:</u>
   - 2 gigabytes of RAM

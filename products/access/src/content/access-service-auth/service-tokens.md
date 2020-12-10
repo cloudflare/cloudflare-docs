@@ -49,7 +49,6 @@ The `Refresh` operation will extend the token's lifetime by one year from the da
 
 ![Access Service Token card](../static/service-tokens/service-token-home.png)
 
-
 ## Revoke Service Tokens
 
 By default, Cloudflare Access service tokens expire one year after they’re created. If you need to revoke access earlier, simply delete the token.

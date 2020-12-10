@@ -13,4 +13,3 @@ order: 4
 1. Touch and hold on the application tile.
 1. Tap **Remove App**.
 1. Select **Delete App**.
-

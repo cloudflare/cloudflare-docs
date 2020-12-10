@@ -5,17 +5,15 @@ order: 4
 
 # Forming an expression
 
-Rules are written as using the Cloudflare Firewall Rules language - a DSL intented to mimic Wireshark semantics. See the documentation for more details: https://developers.cloudflare.com/firewall/cf-firewall-language
+Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. See the documentation for more details: https://developers.cloudflare.com/firewall/cf-firewall-language
 
 To start with a simple case, here's how you'd match a source IP:
 
 ```ip.src == 192.0.2.0```
 
-
 Expressions can be more complex by joining multiple clauses via a logical operator:
 
 ```ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)```
-
 
 # Restrictions
 

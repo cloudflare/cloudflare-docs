@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 The [`HTMLRewriter`](/runtime-apis/html-rewriter) class (currently in beta) built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML at the edge, giving developers the ability to efficiently and transparently customize their Workers applications.
 
-In this tutorial, we’ll build an example internationalization and localization engine (commonly referred to as “i18n” and “l10n”) for your application, server the content of your site, and automatically translate the content based your visitors’ location in the world.
+In this tutorial, we’ll build an example internationalization and localization engine (commonly referred to as “i18n” and “l10n”) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
 ![Demo Image](./media/i18n.jpg)
 

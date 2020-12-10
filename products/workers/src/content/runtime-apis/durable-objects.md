@@ -107,7 +107,6 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Definitions>
 
-
 - <Code>transaction(closure<ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts. Failed transactions are retried automatically.  Non-storage operations that affect external state, like calling `fetch`, may execute more than once if the transaction is retried.
@@ -151,6 +150,20 @@ When generating an ID randomly, you need to store the ID somewhere in order to b
 Unique IDs are unguessable, therefore they can be used in URL-based access control, sometimes known as "anyone with the link can access."
 
 To store the ID in external storage, use its `.toString()` method to convert it into a hex string, and `OBJECT_NAMESPACE.idFromString()` to convert the string back into an ID later.
+
+#### Restricting objects to a jurisdiction
+
+Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations. You must specify the jurisdiction when generating the Durable Object's id.
+
+```js
+let id = OBJECT_NAMESPACE.newUniqueId({jurisdiction: "eu"})
+```
+
+Creates a new object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with ids created by `newUniqueId()` and are not currently compatible with ids created by `idFromName(name)`.
+
+Note that objects that are constrained to a jurisdiction may still be accessed by your Workers from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
+
+The only jurisdiction currently supported is `eu` (the European Union).
 
 <Aside header="Unique IDs perform best">
 
@@ -202,7 +215,7 @@ let id = OBJECT_NAMESPACE.idFromString(hexId)
 
 This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as as a string.
 
-A stringified object ID is a 64-digit hexidecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
+A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
 
 ### Obtaining an Object Stub
 

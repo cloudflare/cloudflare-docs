@@ -47,7 +47,6 @@ resource "cloudflare_rate_limit" "login-limit" {
 EOF
 ```
 
-
 This rule is a bit more complex than the zone settings rule, so let's break it down:
 
 ```

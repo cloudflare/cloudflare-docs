@@ -22,4 +22,3 @@ Cloudflare uses this data to understand how much faster the WARP Client applicat
 
 ### Aggregate Usage
 Cloudflare tracks the aggregate amount of traffic by website and by region. Knowing this information helps Cloudflare plan better when we should build future data centers.
-

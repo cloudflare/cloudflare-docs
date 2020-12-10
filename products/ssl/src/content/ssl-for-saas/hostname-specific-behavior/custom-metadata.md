@@ -86,4 +86,4 @@ There are some limitations to the metadata that can be provided to Cloudflare:
 * It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
 * Custom metadata cannot be set on custom hostnames that contain wildcards
 
-You should not modify the schema—which includes adding/removing keys or changing possible values—without notifying Cloudflare. Changing the shape of the data will typically cause the Cloduflare Worker to either ignore the data or return an error for requests that trigger it.
+You should not modify the schema—which includes adding/removing keys or changing possible values—without notifying Cloudflare. Changing the shape of the data will typically cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.

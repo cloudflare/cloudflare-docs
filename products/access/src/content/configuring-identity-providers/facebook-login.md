@@ -43,7 +43,7 @@ Use these steps to set up Facebook as your identity provider.
 11. Click **Save**.
 12. Click **Continue**.
 
-    Ignore any Javascript page that suggests that you install it on your site.
+    Ignore any JavaScript page that suggests that you install it on your site.
 
 13. Click **Settings > Basic** on the left-hand menu.
 

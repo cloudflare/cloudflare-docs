@@ -47,7 +47,7 @@ These occur for actions triggered from users based on the configuration for a sp
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Firewall Rules
 
@@ -62,7 +62,7 @@ The Cloudflare **Firewall Rules** app triggers actions based on matching custome
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Zone Lockdown
 
@@ -76,7 +76,7 @@ _Zone Lockdown_ blocks visitors to particular URIs where the visitor's IP is not
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Firewall User-Agent Block
 
@@ -90,7 +90,7 @@ Challenge (Captcha or JavaScript) or block visitors who use a browser for which 
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Browser Integrity Check
 
@@ -104,7 +104,7 @@ Assert whether the source of the request is illegitimate or the request itself i
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Hot Linking
 
@@ -118,7 +118,7 @@ Prevent hot linking from other sites
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## L7-to-L7 DDoS mitigation
 
@@ -132,7 +132,7 @@ Drop DDoS attacks through L7 mitigation
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## IP Reputation (MACRO)
 
@@ -172,7 +172,7 @@ All other paths in the MACRO stage issue a challenge. Possible scenarios include
 
 </TableWrap>
 
-To understand the behavior of challenge pages, see [Javascript and Captcha Challenge](#javascript-and-captcha-challenge).
+To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Special cases
 
@@ -186,7 +186,7 @@ To understand the behavior of challenge pages, see [Javascript and Captcha Chall
 
 </TableWrap>
 
-## Javascript and Captcha Challenge
+## JavaScript and Captcha Challenge
 
 <TableWrap>
 

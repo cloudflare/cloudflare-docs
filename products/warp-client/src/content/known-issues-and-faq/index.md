@@ -35,7 +35,6 @@ order: 6
 * [Why is my public IP address sometimes visible?](#public-ip)
 * [My throughput has dropped while using WARP](#throughput-drop-with-warp)
 
-
 ---------------------
 
 <div id="vpn-conflict">

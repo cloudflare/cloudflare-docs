@@ -20,7 +20,7 @@ Retrofit retrofit = new Retrofit.Builder()
     .build();
 ```
 
-If any cutom settings is required, a Builder object can be specified while creating the instance. To create the instance with Builder settings, use:
+If any custom settings is required, a Builder object can be specified while creating the instance. To create the instance with Builder settings, use:
 
 ```java
 Retrofit.Builder builder = new Retrofit.Builder()

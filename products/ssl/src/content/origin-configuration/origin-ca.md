@@ -23,4 +23,4 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 If you misplace your key material or wish to indicate that a certificate should otherwise no longer be trusted, you can click the “x” icon to the far-right of the Origin Certificate and click “OK”. This process cannot be undone.
 
 ## Automated issuance
-Our API allows you to [automate the issuance of Origin Certificates](https://api.cloudflare.com/#cloudflare-ca-properties).In the future, an ACME endpoint will be provided.
+Our API allows you to [automate the issuance of Origin Certificates](https://api.cloudflare.com/#origin-ca).In the future, an ACME endpoint will be provided.

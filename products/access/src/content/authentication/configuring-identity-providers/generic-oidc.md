@@ -6,7 +6,7 @@ order: 12
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
-## Setting up a generic ODIC
+## Setting up a generic OIDC
 
 To set up a generic OIDC:
 

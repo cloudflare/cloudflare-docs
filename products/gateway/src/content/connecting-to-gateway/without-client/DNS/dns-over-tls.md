@@ -35,7 +35,6 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 
 5. Take note of the **DoT hostname**.
 
-
 ### Configure your DoT client
 
 Depending on your operating system, you can choose from a variety of standalone DoT clients. Alternatively, stub resolvers (e.g. BIND) support DoT natively.

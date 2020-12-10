@@ -9,7 +9,6 @@ The Activity log allows you to see individual DNS queries made from your locatio
 ## DNS
 ![Gateway activity log](../static/teams-dash-activity-log.png)
 
-
 When you click on the row, you can see information related to the identity that is making the DNS request and attributes relevant to the DNS queries.
 
 ![Gateway activity log expanded](../static/teams-dash-activity-log-expanded.png)
@@ -81,4 +80,4 @@ File name string if a file transfer occurred or was attempted.
 The HTTP version of the origin that Gateway connected to on behalf of the user.
 
 #### Policy Details
-The policy corresponding to the decision Gateway made based on the traffic critera of the request.
+The policy corresponding to the decision Gateway made based on the traffic criteria of the request.

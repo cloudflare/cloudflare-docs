@@ -19,13 +19,13 @@ use.
 
 ## Angular, React, Vue
 
-These popular javascript frameworks are covered in a [blog
+These popular JavaScript frameworks are covered in a [blog
 post](https://medium.com/pinata/how-to-easily-host-a-website-on-ipfs-9d842b5d6a01)
 from [Pinata](https://pinata.cloud/). They're fixed with minor config changes.
 
 ## Gatsby
 
-Gatsby is a javascript framework based on React. There is a
+Gatsby is a JavaScript framework based on React. There is a
 [plugin](https://www.gatsbyjs.org/packages/gatsby-plugin-ipfs/) for it that
 ensures links are relative.
 

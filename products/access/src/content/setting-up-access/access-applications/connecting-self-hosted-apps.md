@@ -7,7 +7,6 @@ order: 1
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer using your existing identity providers to control who has access to your applications.
 
-
 ## 1. Add and configure your app
 
 1. Navigate to the **Applications** tab on the Teams dashboard.
@@ -64,5 +63,3 @@ The **Setup section** allows you to configure CORS settings. To learn more about
  Click **Add application**.
 
 Your application is now connected to Access, and will appear in your Applications list.
-
-

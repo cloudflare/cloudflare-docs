@@ -172,7 +172,7 @@ This starter is used in the tutorial for [building a Slack Bot](/tutorials/build
 
 ### 4c. Make use of runtime APIs
 
-The example outlined in this guide is just a starting point. There are many Workers [runtime APIs](/runtime-apis) available to manipulate requests and generate responses. For example, you can use [HTMLRewriter](/runtime-apis/html-rewriter) to parse and transform HTML on the fly, use the [Cache](/runtime-apis/cache) to retrieve data from and put data into from [the Cloudflare cache](/learning/how-the-cache-works), compute a custom response right from the edge, redirect the request to another service, and so much more.
+The example outlined in this guide is just a starting point. There are many Workers [runtime APIs](/runtime-apis) available to manipulate requests and generate responses. For example, you can use the [HTMLRewriter API](/runtime-apis/html-rewriter) to parse and transform HTML on the fly, use the [Cache API](/runtime-apis/cache) to retrieve data from and put data into [the Cloudflare cache](/learning/how-the-cache-works), compute a custom response right from the edge, redirect the request to another service, and so much more.
 
 For inspiration, visit [Built with Workers](https://workers.cloudflare.com/built-with) for a showcase of projects.
 

@@ -32,5 +32,28 @@ order: 1
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>
+                2020-12-07
+            </td>
+            <td>
+                2020-12-14
+            </td>
+            <td>
+                Cloudflare Drupal
+            </td>
+            <td>
+                D0025
+            </td>
+            <td>
+                CVE:CVE-2020-13671
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
     </tbody>
 </table></TableWrap>

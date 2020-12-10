@@ -80,9 +80,9 @@ If you're producing a brand new file for Cloudflare Stream, we recommend you use
  - H264 high profile
  - Closed GOP
  - Content should be encoded and uploaded in the same frame rate it was recorded
- - Mono or Stereo audio (Stream does not support audio tracks with more than 2 channels)
+ - Mono or Stereo audio (Stream will mix audio tracks with more than 2 channels down to stereo)
 
-Below are bitrate reccomendations for encoding new videos for Stream:
+Below are bitrate recommendations for encoding new videos for Stream:
 
 <TableWrap>
 

@@ -5,7 +5,6 @@ order: 11
 
 # Enabling log retention
 
-
 By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you'll need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (_see [Data retention period](/logpull-api/understanding-the-basics/#data-retention-period)_).
 
 ## Endpoints
@@ -17,7 +16,7 @@ There are two endpoints for managing log retention:
 
 <Aside type="note" header="Note">
 
-To make a `POST` call, you must have a Cloudflare account role with "edit" permissions, such as Super Administrator, Administator, or Log Share.
+To make a `POST` call, you must have a Cloudflare account role with "edit" permissions, such as Super Administrator, Administrator, or Log Share.
 </Aside>
 
 ## Example API requests using cURL

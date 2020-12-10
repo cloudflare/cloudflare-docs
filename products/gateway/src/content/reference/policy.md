@@ -145,8 +145,6 @@ List of file extensions Gateway can match against:
 
 </TableWrap>
 
-
-
 #### Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
 
@@ -170,4 +168,13 @@ Expressions are sets of conditions with which you can combine [selectors](#selec
 
 **Result**: this configuration blocks any traffic to domains categorized as `Gaming`. 
 
+#### FAQ
 
+* **How can I bypass the L7 firewall for a website?**
+
+Cloudflare Gateway uses the hostname in the HTTP CONNECT header to identify the destination of the request. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic. The **bypass** action is only available when matching against the **host** criteria.
+Bypassing the L7 firewall results in no HTTP traffic inspection and logging is disabled for that HTTP session.
+
+* **In what order are rules evaluated?**
+
+The L7 firewall evaluates rules starting with the rule containing the lowest precedence (e.g., rule number one). Rules with a higher value precedence are evaluated after those with a lower value.

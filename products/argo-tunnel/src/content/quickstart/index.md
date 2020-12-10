@@ -77,7 +77,7 @@ Argo Tunnel runs a virtual, encrypted tunnel from a local web server to the Clou
 To do so, pass the flag --hello-world and replace [hostname] with a hostname in your Cloudflare account. Because Tunnel automatically creates DNS records for you, you can choose a subdomain that is not otherwise in use.
 
 ```sh
-$ cloudflared --hostname test.warptunnels.org --hello-world
+$ cloudflared --hostname [hostname] --hello-world
 INFO[0000] Build info: {GoOS:darwin GoVersion:go1.11.1 GoArch:amd64}
 INFO[0000] Version 2019.2.1
 INFO[0000] Flags map[hostname:test.warptunnels.org no-autoupdate:true grace-period:10s hello-world:true]
@@ -100,7 +100,7 @@ INFO[0020] Each HA connection's tunnel IDs: map[3:n1ud0l8y47d5755vsqxuvaa3tf7rp4
 
 Above, you can see Tunnel establishes four long-lived connections between the two closest data centers. You know the tunnel is ready when you see the message `Connected to …`.
 
-When the messages above conclude, Argo Tunnel has succesfully created a connection out from your machine to the Cloudflare network.
+When the messages above conclude, Argo Tunnel has successfully created a connection out from your machine to the Cloudflare network.
 
 If you go visit the domain name at which you created the tunnel (e.g. tunnel.example.com) you will see the request logs directly in the `cloudflared` output with debug level enabled. We call this Tunnel Vision.
 
@@ -115,7 +115,7 @@ With your credentials saved to disk, you can now start Argo Tunnel for your prod
 The localhost address should point to a locally running web server.
 
 ```sh
-$ cloudflared tunnel --hostname [hostname] http://localhost:8000
+$ cloudflared tunnel --hostname [hostname] --url http://localhost:8000
 INFO[0000] Proxying tunnel requests to https://127.0.0.1:8000
 INFO[0000] Starting metrics server                       addr="127.0.0.1:62634"
 INFO[0001] Connected to LAX

@@ -20,7 +20,6 @@ To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 
 ![SafeSearch Card](../static/safesearch-card.png)
 
-
 5. Hit **Save**.
 
 ## Test SafeSearch

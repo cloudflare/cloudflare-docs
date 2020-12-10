@@ -24,14 +24,14 @@ To set up OneLogin as your IdP:
 
      The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
 
-    ![OneLogin OIDC Application Basic Congifuration page](../../static/onelogin/onelogin-oidc-3.png)
+    ![OneLogin OIDC Application Basic Configuration page](../../static/onelogin/onelogin-oidc-3.png)
 
 1. In **Sign-On Method**, select the **OpenID Connect** option.
 1. In the **Redirect URI** field, enter your authentication domain and include this callback at the end of the path:  `/cdn-cgi/access/callback`.
 1. Click **Save**.
 1. Select **More Actions > Add App to Connector**.
 
-    ![OneLogin OIDC Application Basic Congifuration page More Actions menu](../../static/onelogin/onelogin-oidc-4.png)
+    ![OneLogin OIDC Application Basic Configuration page More Actions menu](../../static/onelogin/onelogin-oidc-4.png)
 
 1. In the **Portal** section, enter a name for your application in the **Display Name** field.
 

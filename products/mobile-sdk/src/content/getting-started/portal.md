@@ -10,7 +10,7 @@ Sign up using an email address. If you already have a Cloudflare account, we sti
 
 ![App Dashboard](../images/portal-dashboard.png)
 
-On the left column, under 'My Apps' you will see the a link to the developer docs. Along with that, you will see the list of device speicifc Cloudlflare Mobile SDKs. On the top right corner you will see a large button saying 'Add'. Click on this button to add an existing app to your Mobile SDK portal.
+On the left column, under 'My Apps' you will see the a link to the developer docs. Along with that, you will see the list of device specific Cloudflare Mobile SDKs. On the top right corner you will see a large button saying 'Add'. Click on this button to add an existing app to your Mobile SDK portal.
 
 Once you click on that button, the portal will prompt you to fill out the name of your App. You have a choice of choosing between Android and iOS. The App Store Link here is optional.
 

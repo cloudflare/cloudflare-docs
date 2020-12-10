@@ -9,7 +9,7 @@ order: 3
 
 The Cloudflare Docs Engine is based on [Gatsby](https://www.gatsbyjs.com), and enables developers to quickly build out docs sites by allowing them to focus on the Markdown content.
 
-Authors can leverage the power of MDX by building custom compontents or utilize the powerful [built-in components](/reference/markdown).
+Authors can leverage the power of MDX by building custom components or utilize the powerful [built-in components](/reference/markdown).
 
 ## Contributing
 
