@@ -23,7 +23,7 @@ Before sending your Cloudflare log data to Graylog, make sure that you:
 
 <Aside type="note" header="Note">
 
-Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 195+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. All timestamp formats are supported by Graylog.
+Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. All timestamp formats are supported by Graylog.
 </Aside>
 
 ## Task 1 - Preparation
