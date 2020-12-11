@@ -213,7 +213,7 @@ async function handleRequest(request) {
       'Upload-Metadata': request.headers.get('Upload-Metadata')
     },
   }
-  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/MYACCOUNT/media?direct_user=true", init)
+  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", init)
   const results = await gatherResponse(response)
   return new Response(null, {headers: {'Access-Control-Expose-Headers':'Location','Access-Control-Allow-Headers':'*','Access-Control-Allow-Origin':'*','location':results}})
 
@@ -226,7 +226,7 @@ async function gatherResponse(response) {
 }
 ```
 
-You can apply the same constraints as Direct Creator Upload via basic upload: expiry and maxDurationSeconds. They have the exact same meaning here as elsewhere. No metadata or authentication is required from the client. If any is provided, it will be ignored.
+You can apply the same constraints as Direct Creator Upload via basic upload: expiry and maxDurationSeconds. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
 Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article. 
 
