@@ -206,7 +206,7 @@ async function handleRequest(request) {
   const init = {
     method: 'POST',
     headers: {
-       'Authorization': 'bearer $TOKEN'
+      'Authorization': 'bearer $TOKEN',
       'Tus-Resumable': '1.0.0',
       'Upload-Length': request.headers.get('Upload-Length'),
       'Upload-Metadata': request.headers.get('Upload-Metadata')
