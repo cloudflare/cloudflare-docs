@@ -208,7 +208,7 @@ Security Information and Event Management (SIEM) solutions provide an analysis l
 |---|---|
 
 ## SMB
-*Server Message Block*
+*Secure Messaging Block*
 
 A network file sharing protocol that allows applications on a computer to read and write to files and to request services from server programs in a computer network. (From: [source](https://docs.microsoft.com/en-us/windows-server/storage/file-server/file-server-smb-overview))
 
