@@ -85,7 +85,7 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
 1. Test the configuration by typing the selected hostname in your browser address bar.
 
-    Access to the Tunnel is permitted over both HTTP and HTTPS, though you can easily redirect all HTTP traffic to HTTPS with Cloudflare.On success, the content is served from your local web server.
+    Access to the Tunnel is permitted over both HTTP and HTTPS, though you can easily redirect all HTTP traffic to HTTPS with Cloudflare. On success, the content is served from your local web server.
 
 You can now proceed to use your on-premise application from any location without a VPN.
 
