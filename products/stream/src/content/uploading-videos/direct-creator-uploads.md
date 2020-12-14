@@ -51,7 +51,11 @@ Additionally, you can control security features through these fields:
 
 </Definitions>
 
-### Example request
+## Using Basic Uploads 
+
+If the uploads from your creators are under 200MB, you can use basic uploads. For videos over 200 MB, use TUS uploads (described later in this article.)
+
+The first step is to request a token by calling the `direct_upload` end point from your server:
 
 ```bash
 curl -X POST \
@@ -171,6 +175,61 @@ size, the user will receive a `4xx` response.
 ```
 
 </Example>
+
+## Using tus (recommended for videos over 200MB) 
+
+tus is a protocol that supports resumable uploads and works best for larger files. 
+
+Typically, tus uploads require the authentication information to be sent with every request. This is not ideal for direct creators uploads because it exposes your API key (or token) to the end user. 
+
+To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
+
+
+```
+curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
+```
+
+The response will contain a `Location` header which provides the one-time URL the client can use to upload the video using tus.
+
+Here is a demo Cloudflare Worker script which returns the one-time upload URL:
+
+```
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+/**
+ * Respond to the request
+ * @param {Request} request
+ */
+async function handleRequest(request) {
+  const init = {
+    method: 'POST',
+    headers: {
+      'Authorization': 'bearer $TOKEN',
+      'Tus-Resumable': '1.0.0',
+      'Upload-Length': request.headers.get('Upload-Length'),
+      'Upload-Metadata': request.headers.get('Upload-Metadata')
+    },
+  }
+  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", init)
+  const results = await gatherResponse(response)
+  return new Response(null, {headers: {'Access-Control-Expose-Headers':'Location','Access-Control-Allow-Headers':'*','Access-Control-Allow-Origin':'*','location':results}})
+
+}
+
+async function gatherResponse(response) {
+  const { headers } = response
+  return await headers.get('location')
+
+}
+```
+
+You can apply the same constraints as Direct Creator Upload via basic upload: expiry and maxDurationSeconds. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
+
+Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article. 
+
+If you simply want to do a test upload with a tokenized url, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste the returned url in the "Upload endpoint" field. 
 
 ## Tracking user upload progress
 
