@@ -80,7 +80,7 @@ To get started with KV, we need to set up a “namespace”. All of our cached d
 ---
 header: Create a new KV namespace
 ---
-$ wrangler kv:namespace create "TODOS"
+$ wrangler kv:namespace create "TODOS" --preview
 ```
 
 Namespaces can be added to your application by defining them inside your Wrangler configuration. Copy your newly created namespace ID, and in your `wrangler.toml`, define a `kv_namespaces` key to set up your namespace:
