@@ -40,7 +40,7 @@ Then run `wrangler --version` to confirm that the installation was successful:
 
 ```sh
 $ wrangler --version
-👷 ✨  wrangler 1.11.0
+👷 ✨  wrangler 1.12.2
 ```
 
 --------------------------------
