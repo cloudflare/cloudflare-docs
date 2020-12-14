@@ -113,7 +113,7 @@ export class DurableObjectExample {
 }
 ```
 
-Transactions operate at a [serializable isolation level](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).  This means transactions can fail if they conflict with a concurrent transaction being run by the same Durable Object.  
+Transactions operate at a [serializable isolation level](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).  This means transactions can fail if they conflict with a concurrent transaction being run by the same Durable Object.
 
 Transactions are transparently and automatically retried once by rerunning the provided function before returning an error.  To avoid transaction conflicts, don't use transactions when you don't need them, don't hold transactions open any longer than necessary, and limit the number of key-value pairs operated on by each transaction.
 
@@ -413,13 +413,14 @@ export class Counter {
 
         // Apply requested action.
         let url = new URL(request.url);
+        let currentValue = this.value;
         switch (url.pathname) {
         case "/increment":
-            ++this.value;
+            currentValue = ++this.value;
             await this.storage.put("value", this.value);
             break;
         case "/decrement":
-            --this.value;
+            currentValue = --this.value;
             await this.storage.put("value", this.value);
             break;
         case "/":
@@ -429,8 +430,12 @@ export class Counter {
             return new Response("Not found", {status: 404});
         }
 
-        // Return current value.
-        return new Response(this.value);
+        // Return `currentValue`. Note that `this.value` may have been
+        // incremented or decremented by a concurrent request when we
+        // yielded the event loop to `await` the `storage.put` above!
+        // That's why we stored the counter value created by this
+        // request in `currentValue` before we used `await`.
+        return new Response(currentValue);
     }
 }
 ```
