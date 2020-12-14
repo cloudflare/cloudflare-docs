@@ -5,7 +5,7 @@ order: 2
 
 # Contribute to Cloudflare’s docs
 
-This guide is for contributors to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs).
+This guide is for contributors to [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs).
 
 --------------------------------
 
@@ -23,7 +23,7 @@ GitHub will then guide you through making a commit and ultimately a pull request
 
 <Aside header="Note for Cloudflare employees">
 
-Contact the __Developer Docs__ room if you’d like to be given write access to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs). Otherwise you can fork the repo on GitHub.
+Contact the __Developer Docs__ room if you’d like to be given write access to [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs). Otherwise you can fork the repo on GitHub.
 
 </Aside>
 

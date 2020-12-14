@@ -19,7 +19,7 @@ With Zone Lockdown enabled, your team has already completed [many of the steps r
 
 > In both Zone Lockdown and Cloudflare Access, you must ensure that your origin can only accept connects from authenticated requests. Secure your origin with [Argo Tunnel](/setting-up-access/argo-tunnel/) or by [validating JSON Web Tokens](/setting-up-access/validate-jwt-tokens/) to prevent unauthorized connections.
 
-1) Navigate to the [Cloudflare for Teams dashboard](http://dash.teams.cloudflare.com/). Enable Cloudflare Access for your account.
+1) Navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com/). Enable Cloudflare Access for your account.
 1) [Integrate](/configuring-identity-providers/) your organization's identity provider.
 1) Selecting `Applications` to begin building an identity-based policy.
 1) Choose the hostname protected by Zone Lockdown today. [Build an Access policy](/setting-up-access/configuring-access-policies/) to only allow connections from users in your organization. Test the connection from an IP allowed by your Zone Lockdown policy.
