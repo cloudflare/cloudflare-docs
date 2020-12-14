@@ -3,14 +3,14 @@
 addEventListener('fetch', event => {
     event.respondWith(handleRequest(event.request))
   })
-  
+
   // Global variables
   const jwkKey = 'REDACTED'
   const keyID = 'REDACTED'
   const videoID = 'REDACTED'
   // expiresTimeInS is the expired time in second of the video
   const expiresTimeInS = 3600
-   
+
   // Main function
   async function streamSignedUrl () {
     const encoder = new TextEncoder()
@@ -37,11 +37,11 @@ addEventListener('fetch', event => {
         }
       ]
     }
-   
+
     const token = `${objectToBase64url(headers)}.${objectToBase64url(data)}`
-   
+
     const jwk = JSON.parse(atob(jwkKey))
-   
+
     const key = await crypto.subtle.importKey(
       "jwk", jwk,
       {
@@ -50,17 +50,17 @@ addEventListener('fetch', event => {
       },
       false, [ "sign" ]
     )
-   
+
     const signature = await crypto.subtle.sign(
       { name: 'RSASSA-PKCS1-v1_5' }, key,
       encoder.encode(token)
     )
-   
+
     const signedToken = `${token}.${arrayBufferToBase64Url(signature)}`
-   
+
     return signedToken
   }
-   
+
   // Utilities functions
   function arrayBufferToBase64Url(buffer) {
     return btoa(String.fromCharCode(...new Uint8Array(buffer)))
@@ -68,13 +68,13 @@ addEventListener('fetch', event => {
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
   }
-   
+
   function objectToBase64url(payload) {
     return arrayBufferToBase64Url(
       new TextEncoder().encode(JSON.stringify(payload)),
     )
   }
-  
+
   const someHtml = (token) => { return  `<!DOCTYPE html>
   <html>
     <body>
@@ -83,8 +83,8 @@ addEventListener('fetch', event => {
     <stream src="`+token+`" controls></stream>
     <script data-cfasync="false" defer type="text/javascript" src="https://embed.videodelivery.net/embed/r4xu.fla9.latest.js?video=`+token+`"></script>
     </body>
-  </html>` } 
-  
+  </html>` }
+
   /**
    * Respond to the request
    * @param {Request} request
@@ -97,6 +97,6 @@ addEventListener('fetch', event => {
           },
       }
       const token = await streamSignedUrl()
-  
+
       return new Response(someHtml(token), init)
   }
