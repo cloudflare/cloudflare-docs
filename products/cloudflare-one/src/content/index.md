@@ -14,10 +14,7 @@ Your employees, partners, and customers need a network that is secure, fast and 
 
 Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere.
 
-If you want to learn more about Teams, you can explore our:
-
-* [Tutorials](/tutorials) on how to make the most out of your Teams subscription
-* [Learning materials](/learning) to get accustomed to our products
+If you want to learn more about Teams, you can explore our [Tutorials](/tutorials) on how to make the most out of your Teams subscription.
 
 If you want to learn more about a specific Teams product, navigate to each product's developer documentation:
 
