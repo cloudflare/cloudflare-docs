@@ -176,9 +176,9 @@ size, the user will receive a `4xx` response.
 
 </Example>
 
-## Using TUS (recommended for videos over 200MB) 
+## Using tus (recommended for videos over 200MB) 
 
-TUS is a protocol that supports resumable uploads and works best for larger files. 
+tus is a protocol that supports resumable uploads and works best for larger files. 
 
 Typically, tus uploads require the authentication information to be sent with every request. This is not ideal for direct creators uploads because it exposes your API key (or token) to the end user. 
 
