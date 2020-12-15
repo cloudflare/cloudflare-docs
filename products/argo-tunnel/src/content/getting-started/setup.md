@@ -8,7 +8,7 @@ order: 1
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
+| 3. (Optional) [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) to speed up your Tunnel |
 | 4. [Install `cloudflared`](/getting-started/installation/) |
 
 Follow these steps to set up Cloudflare Argo Tunnel:

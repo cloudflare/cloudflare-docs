@@ -10,7 +10,12 @@ Argo Tunnel offers an easy way to expose web servers securely to the internet, w
 Argo Tunnel relies on the `cloudflared` daemon to create a persistent connection between your web server and the Cloudflare network. You can lock down the web server to external requests. Instead, Argo Tunnel will connect out to Cloudflare from your origin.
 
 ## How much does Argo Tunnel cost?
-Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing can be purchased [in the Cloudflare dashboard](https://dash.cloudflare.com/?zone=traffic) and costs $5/month plus 10 cents per GB. Cloudflare only charges for Argo routing; there is no charge for the count of tunnels used.
+Argo Tunnel is free.
+
+You can optionally purchase Argo Smart Routing [in the Cloudflare dashboard](https://dash.cloudflare.com/?zone=traffic)
+to speed up your Tunnel traffic up to 30%. It costs $5/month plus 10 cents per GB. Cloudflare only charges for Argo
+routing; there is no charge for the count of tunnels used.
+
 
 ## Setup
 
@@ -20,7 +25,7 @@ Argo Tunnel is free with the purchase of Argo Smart Routing. Argo Smart Routing 
 * An <a href="https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-Cloudflare-account-and-add-a-website">active zone on Cloudflare</a>
 * An active subscription to <a href="https://dash.cloudflare.com/?zone=traffic">Argo</a> which you can enable in the Cloudflare dashboard in the Traffic tab
 
-### Step 1: Enable Argo
+### Step 1: Optionally enable Argo
 Argo Tunnel uses Argo Smart Routing technology to route traffic over the fastest path within the Cloudflare network between the user and the data centers closest to your origin.
 
 To begin using Argo Smart Routing, navigate to the <a href="https://dash.cloudflare.com/?zone=traffic" target="_blank">Traffic tab of the Cloudflare dashboard</a>, click the 'Enable' button, and follow the steps on the screen for setting up usage-based billing.
