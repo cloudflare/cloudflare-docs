@@ -3,13 +3,19 @@ title: Explore the GraphQL schema
 order: 40
 ---
 
-# Explore the GraphQL schema in the GraphQL client
+# Explore the GraphQL schema in the GraphiQL client
+
+One of the great features of a GraphQL API is that it offers "introspection"—you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform.
+
+_GraphiQL_ uses this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
 
 You can explore the schema of the Coudflare GraphQL endpoint in the the GraphQL client. The examples below use the GraphiQL client.
 
 Before you begin, configure the API endpoint and HTTP headers in the GraphQL client.
 
-Click **Docs** to open the _Documentation Explorer_ pane.
+## Use the Documentation Explorer
+
+Click **Docs** to open the **Documentation Explorer** pane.
 
 A list of available nodes displays. The nodes in the list follow this syntax:
 
@@ -17,34 +23,41 @@ A list of available nodes displays. The nodes in the list follow this syntax:
 node-name: node-type-definition
 ```
 
-Click on the _type definition_ of a node to view the fields that it provides. The _Documentation Explorer_ pane also displays descriptions of the nodes.
+## Find the type definition of a node
 
-When you first open the _Documentation Explorer_ pane, the **mutation** and **query** nodes display:
+When you first open the **Documentation Explorer** pane, the **mutation** and `query` nodes display:
 
 ![Mutation and query nodes](../../static/images/docs-query.png)
 
-* **query** is the name of the node.
-* **Query** is the type definition of the node.
+In this example `query` is the name of the node, and `Query` is the type definition of the node.
 
-Click the **Query** type definition. The _Documentation Explorer_ panel displays the fields that the **query** node provides: **cost** and **viewer**.
+## Find the fields available for a given type definition
+
+Click on the _type definition_ of a node to view the fields that it provides. The **Documentation Explorer** pane also displays descriptions of the nodes.
+
+Click the Query type definition. The **Documentation Explorer** panel displays the fields that the `query` node provides. In this example, the fields are `cost` and `viewer`.
 
 ![Cost and viewer fields](../../static/images/docs-viewer.png)
 
-Click on the type definition of **viewer** to list the fields of the **viewer** node. The **viewer** node fields include nodes that allow you to query **accounts** or **zones** data:
+## Find the arguments associated with a field
+
+Click on the type definition of the `viewer` field to list its sub-fields. The `viewer` field provides sub-fields that allow you to query `accounts` or `zones` data:
 
 ![viewer fields](../../static/images/docs-zone-filter.png)
 
-The **accounts** and **zones** nodes take arguments to specify what data set to query.
-For the **zones** node you can provide a **filter** of **ZoneFilter_InputObject** type. To view the fields to specify in the filter, click **ZoneFilter_InputObject**.
+The `accounts` and `zones` fields take arguments to specify what data set to query.
 
-To limit the amount of search results that the query returns, click **limit**.
+For the `zones` node you can provide a filter of ZoneFilter_InputObject type. To view the fields to specify in the filter, click **ZoneFilter_InputObject**.
 
-To view a list of the fields within a zone, click on the **zones** type definition after the colon in the **zones** field:
+To limit the amount of search results that the query returns, click the **limit** argument.
+
+## Find the search nodes available for a zone
+
+To view a list of the search nodes available for a zone, click on the `zones` type definition after the colon (`:`) in the `zones` field:
 
 ![Zones type definition](../../static/images/docs-zone.png)
 
-A list of _search nodes_ appears, with a brief description of their behavior and a list of valid arguments.
-Arguments that end with an exclamation mark ("!") are required.
+A list of **search nodes** appears, with a brief description of their behavior and a list of valid arguments. Arguments that end with an exclamation mark (`!`) are required.
 
 ![Search nodes](../../static/images/docs-fw-data-set.png)
 

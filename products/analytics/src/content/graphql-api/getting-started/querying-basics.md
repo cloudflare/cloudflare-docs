@@ -40,11 +40,14 @@ query{
 }
 ```
 
-## Example Query
+### Example Query
 
 The following query searches data from a zone for firewall events that occurred during a time interval. It sorts the results, limits the amount of results returned, and displays a set of fields for each firewall event.
 
 ```json
+---
+header: Query Firewall events for a specific time interval
+---
 query
 {
   viewer
@@ -80,6 +83,9 @@ query
 You can send the query with an API call or by clicking **Play** in the GraphiQL client. The format of the response is in JSON:
 
 ```json
+---
+header: Query response from firewallEventsAdaptive
+---
 {
   "data": {
     "viewer": {
@@ -109,11 +115,14 @@ You can send the query with an API call or by clicking **Play** in the GraphiQL 
 }
 ```
 
-## Example Query showing two sets of data
+## Querying two data sets in a single API call
 
-This example query shows a range of GraphQL functionality. Two data sets for the specified zone are queried simultaneously, filters and aggregations are applied, and a limit is set on the number of records returned (note that you must include the `limit` argument, which can be equal or up to 10,000).
+This example query employs a broad range of GraphQL functionality. The example queries two data sets for the specified zone simultaneously, applies filters and aggregations, and sets a limit on the number of records returned. (Note that you must include the `limit` argument, which can be equal or up to 10,000.)
 
-```code
+```json
+---
+header: Query two data sets simultaneously
+---
 query {
   viewer {
     zones(filter: {zoneTag: "<your zone ID>"}) {
@@ -148,7 +157,11 @@ This is only an example. You must specify the <code>zoneTag</code> for your doma
 
 </Aside>
 
-How can you tell what data sets, metrics, dimensions, operators, and functions are available? One of the great features of a GraphQL API is that it offers "introspection": you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform. _GraphiQL_ users this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `Query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
+## Introspection
+
+One of the great features of a GraphQL API is that it offers "introspection"—you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform. 
+
+_GraphiQL_ users this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `Query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
 
 ## Helpful Resources
 
