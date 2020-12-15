@@ -62,7 +62,7 @@ Here is a list of all the criteria you can apply:
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 * **Authentication Method** - checks the [multifactor authentication](/learning/mfa-requirements) method used by the user, if supported by the identity provider.
 * **WARP** - checks if the user's machine is running the Cloudflare WARP client.
-* **Gateway** - checks if the user's machine is running your  organization's Gateway configuration.
+* **Gateway** - checks if the user's machine is running your organization's Gateway configuration.
 
 
 ## Policy management
