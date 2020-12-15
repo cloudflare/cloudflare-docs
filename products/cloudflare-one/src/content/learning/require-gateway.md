@@ -23,4 +23,4 @@ You are now ready to start requiring Gateway for your Access applications:
 
 1. In the policy, add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*.
 
-The policy will now check that a user has the Gateway instance, or the WARP client, running on their machine before being granted access to the application.
+The policy will now check that the Gateway instance, or the WARP client, is running on a user's machine before granting them access to the application.
