@@ -10,7 +10,7 @@ Cloudflare Access allows your users to use Facebook as their IdP.
 
 Use these steps to set up Facebook as your identity provider.
 
-1. Go to go to [developers.facebook.com](http://developers.facebook.com/).
+1. Go to go to [developers.facebook.com](https://developers.facebook.com/).
 2. Click **Create App** at the top-right.
 
     ![Facebook IdP Login page](../../static/facebook/fb1.png)

@@ -9,7 +9,7 @@ You can integrate your organization's identity provider with Cloudflare Access. 
 
 ![identity flow](../static/summary/identity.png)
 
-Guides are available for specific providers as well as generic OIDC or SAML integrations. Cloudflare Access supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using [signed AuthN requests](http://developers.cloudflare.com/access/configuring-identity-providers/signed_authn/) with SAML providers.
+Guides are available for specific providers as well as generic OIDC or SAML integrations. Cloudflare Access supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using [signed AuthN requests](https://developers.cloudflare.com/access/configuring-identity-providers/signed_authn/) with SAML providers.
 
 You can use the documentation linked below or the same material in the Cloudflare for Teams dashboard.
 
@@ -19,8 +19,8 @@ You can use the documentation linked below or the same material in the Cloudflar
 |[Facebook®](https://developers.cloudflare.com/access/configuring-identity-providers/facebook-login/)|Social|Guide to integrating Facebook as an identity option.|
 |[Google®](https://developers.cloudflare.com/access/configuring-identity-providers/google/)|Social|Guide to integrating Google® without a G Suite® organization.|
 |[GitHub®](https://developers.cloudflare.com/access/configuring-identity-providers/github/)|Social|Guide to integrating GitHub, including GitHub Teams.|
-|[LinkedIn](http://developers.cloudflare.com/access/configuring-identity-providers/linkedin/)|Social|Guide to integrating LinkedIN.
-|[Keycloak](http://developers.cloudflare.com/access/configuring-identity-providers/keycloak/)|Open Source|Guide to integrating Keycloak|
+|[LinkedIn](https://developers.cloudflare.com/access/configuring-identity-providers/linkedin/)|Social|Guide to integrating LinkedIN.
+|[Keycloak](https://developers.cloudflare.com/access/configuring-identity-providers/keycloak/)|Open Source|Guide to integrating Keycloak|
 |[G Suite®](https://developers.cloudflare.com/access/configuring-identity-providers/gsuite/)|Corporate|Guide to integrating G Suite®, including groups.|
 |[Okta®](https://developers.cloudflare.com/access/configuring-identity-providers/okta/)|Corporate|Guide to integrating Okta®|
 |[Okta® with SAML](https://developers.cloudflare.com/access/configuring-identity-providers/saml-okta/)|Corporate|Guide to integrating Okta® as a SAML provider.|
@@ -28,9 +28,9 @@ You can use the documentation linked below or the same material in the Cloudflar
 |[Azure AD®](https://developers.cloudflare.com/access/configuring-identity-providers/azuread/)|Corporate|Guide to integrating Azure AD®|
 |[Centrify®](https://developers.cloudflare.com/access/configuring-identity-providers/centrify/)|Corporate|Guide to integrating Centrify®|
 |[Yandex®](https://developers.cloudflare.com/access/configuring-identity-providers/yandex/)|Corporate|Guide to integrating Yandex®|
-|[Citrix ADC SAML](http://developers.cloudflare.com/access/configuring-identity-providers/citrixadc-saml/)|Corporate|Guide to integrating Citrix ADC, formerly Citrix NetScaler ADC.|
-|[PingIdentity®](http://developers.cloudflare.com/access/configuring-identity-providers/ping-saml/)|Corporate|Guide to integrating PingFederate and PingOne.|
-|[Active Directory](http://developers.cloudflare.com/access/configuring-identity-providers/adfs/)|Corporate|Guide to integrating self-hosted Active Directory.|
+|[Citrix ADC SAML](https://developers.cloudflare.com/access/configuring-identity-providers/citrixadc-saml/)|Corporate|Guide to integrating Citrix ADC, formerly Citrix NetScaler ADC.|
+|[PingIdentity®](https://developers.cloudflare.com/access/configuring-identity-providers/ping-saml/)|Corporate|Guide to integrating PingFederate and PingOne.|
+|[Active Directory](https://developers.cloudflare.com/access/configuring-identity-providers/adfs/)|Corporate|Guide to integrating self-hosted Active Directory.|
 
 ## Configure identity providers in the Access app
 
