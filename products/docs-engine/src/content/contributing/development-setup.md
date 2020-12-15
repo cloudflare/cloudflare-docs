@@ -24,7 +24,7 @@ The basic steps for setting up a development are as follows.
 
   <Aside header="Note for Cloudflare employees">
 
-  When contributing to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs) specifically, you’ll need to `cd` into the sub-folder for your product (`products/[productName]` inside the repo).
+  When contributing to [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) specifically, you’ll need to `cd` into the sub-folder for your product (`products/[productName]` inside the repo).
 
   </Aside>
 
