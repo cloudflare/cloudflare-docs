@@ -2,11 +2,13 @@
 order: 2
 ---
 
-#  Require Gateway for Access
+#  Enforce Gateway or WARP for Access
 
 With Access, you can require that all traffic to specific applications is monitored by Cloudflare Gateway. With Gateway protecting and filtering all requests to your applications, you will be able to see all user traffic and activity in each of these applications, broken down by user and device.
 
-You can choose to require Gateway by configuring it as an option within an Access policy, or alternatively, you can choose to include or require WARP, Cloudflare’s secure and modern VPN, which ensures that all user traffic is encrypted and routed through Cloudflare.
+Alternatively, you can require users to run WARP (Cloudflare's secure and modern VPN) in order to access an application. This ensures that all user traffic is encrypted and routed through Cloudflare.
+
+You can choose to require Gateway or WARP by configuring dedicated actions within your Access policies.
 
 The first step you need to take in order to require Gateway or WARP is to add a device posture integration.
 
