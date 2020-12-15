@@ -15,14 +15,22 @@ The first step you need to take in order to require Gateway or WARP is to add a 
 To do that:
 
 1. Log in to your [Teams dashboard](https://dash.teams.cloudflare.com/) and navigate to **Access > Authentication > Device Posture**.
-2. Select **Gateway** if you’d like to require all traffic to flow through your Gateway instance. Select **WARP** if you’d like to require all traffic to flow through Cloudflare’s VPN.
+1. Select **Gateway** if you’d like to require all traffic to flow through your Gateway instance. Select **WARP** if you’d like to require all traffic to flow through Cloudflare’s VPN.
 
 ![Device Posture](../static/require-gateway/device-posture.png)
 
-You are now ready to start requiring Gateway for your Access applications:
+You are now ready to start requiring Gateway or WARP for your Access applications.
 
-1. Log in to your **Access** dashboard and open an application’s policy.
+1. On the Teams dashboard, navigate to **Access > Applications**.
 
-1. In the policy, add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*.
+1. Locate the application for which you want to require Gateway or WARP.
 
-The policy will now check that the Gateway instance, or the WARP client, is running on a user's machine before granting them access to the application.
+1. Click **Edit**.
+
+1. To have an existing policy require Gateway or WARP, click **Edit** for that specific policy. Then, and add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*.
+
+ To create a new policy requiring Gateway or WARP, click **Add a rule**. Then, add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*. 
+
+1. Click **Save rule**.
+
+Before granting access to the application, your policy will now check that the user is running your organization's Gateway configuration, or the WARP client, on their machine. 
