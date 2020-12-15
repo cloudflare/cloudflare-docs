@@ -8,8 +8,8 @@ order: 3
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
-| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 3. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 4. [Understand the overview for using Argo Tunnels](/getting-started/high-level-steps) |
 
 ## Create a Tunnel
 
