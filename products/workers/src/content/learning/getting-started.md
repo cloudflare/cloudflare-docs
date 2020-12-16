@@ -45,7 +45,22 @@ $ wrangler --version
 
 --------------------------------
 
-## 3. Generate a new project
+## 3. Configure the Workers CLI
+
+Now that Wrangler is installed, you'll need to give it an API Token for your Cloudflare account. Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
+
+```bash
+$ wrangler login
+Allow Wrangler to open a page in your browser? [y/n]
+y
+💁  Opened a link in your default browser: https://dash.cloudflare.com/wrangler?key=girjeanvioajsdn...
+```
+
+Open the browser, log into your account, and click the `Authorize Wrangler` button. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
+
+--------------------------------
+
+## 4. Generate a new project
 
 Wrangler’s [`generate` subcommand](/cli-wrangler/commands#generate) will create a new project from a “starter” template—just a GitHub repo. With no [template argument](/cli-wrangler/commands#generate), Wrangler generates projects from the [default starter](https://github.com/cloudflare/worker-template). Let’s generate a new project, called `my-worker`:
 
@@ -82,11 +97,11 @@ To start a project from your own code—rather than a starter—use [`wrangler i
 
 --------------------------------
 
-## 4. Write code
+## 5. Write code
 
 With your new project generated, you’re ready to write your own code.
 
-### 4a. Understanding Hello World
+### 5a. Understanding Hello World
 
 At its heart, a Workers app consists of two parts:
 
@@ -122,7 +137,7 @@ Let’s break this down:
 
 Learn more about [the `FetchEvent` lifecycle](/learning/fetch-event-lifecycle).
 
-### 4b. Routing and filtering requests
+### 5b. Routing and filtering requests
 
 Now that we have a very basic script running on all requests, the next thing you’ll commonly want to be able to do is generate a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
 
@@ -170,7 +185,7 @@ For more complex routing, it can be helpful to use a library. The [Workers route
 
 This starter is used in the tutorial for [building a Slack Bot](/tutorials/build-a-slackbot).
 
-### 4c. Make use of runtime APIs
+### 5c. Make use of runtime APIs
 
 The example outlined in this guide is just a starting point. There are many Workers [runtime APIs](/runtime-apis) available to manipulate requests and generate responses. For example, you can use the [HTMLRewriter API](/runtime-apis/html-rewriter) to parse and transform HTML on the fly, use the [Cache API](/runtime-apis/cache) to retrieve data from and put data into [the Cloudflare cache](/learning/how-the-cache-works), compute a custom response right from the edge, redirect the request to another service, and so much more.
 
@@ -178,7 +193,7 @@ For inspiration, visit [Built with Workers](https://workers.cloudflare.com/built
 
 --------------------------------
 
-## 5. Preview your project
+## 6. Preview your project
 
 When you’re ready to preview your code, run Wrangler’s `preview` command:
 
@@ -198,25 +213,19 @@ Running `wrangler preview` and `wrangler publish` both run `wrangler build` befo
 
 --------------------------------
 
-## 6. Configure your project for deployment
+## 7. Configure your project for deployment
 
-In order to publish your Workers project on Cloudflare’s global cloud network, you’ll need to configure Wrangler using details from your [Workers account](https://dash.cloudflare.com/sign-up/workers).
+In order to publish your Workers project on Cloudflare’s global cloud network, you’ll need to configure your project's `wrangler.toml` with an **Account ID**.
 
-Specifically you’ll need to obtain:
+If deploying on a free workers.dev subdomain, that’s it. If you’re deploying onto your own domain, you’ll additionally need to configure the project with a **Zone ID**.
 
-- **Account ID**
-
-- **API token** (recommended), or both **email** and **Global API Key**.
-
-If deploying on a free workers.dev subdomain, that’s it. If you’re deploying onto your own domain, you’ll additionally need to configure the project with:
-
-- **Zone ID**
-
-### 6a. Obtaining your Account ID (and Zone ID)
+### 7a. Obtaining your Account ID (and Zone ID)
 
 #### workers.dev
 
-For workers.dev domains, you will just need the Account ID:
+For workers.dev domains, you will just need the Account ID. The easiest way to get it is by running `wrangler whoami`.
+
+However, you can also find your Account ID in the Cloudflare dashboard with the following steps:
 
 1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select **Workers**.
 2. On the right, look for **Account ID** and click **Click to copy** below the input.
@@ -230,55 +239,11 @@ For domains that you have registered on Cloudflare, you need both IDs:
 3. Scroll down until you see both **Zone ID** and **Account ID* on the right.
 4. Click **Click to copy** below the input to each.
 
-### 6b. Obtaining your **API token** or **Global API key**
-
-#### Option 1: Obtaining your **API token** (recommended)
-
-1. Continuing, also on the right side, click **Get your API token**.
-2. You’ll be taken to your **Profile** page.
-3. Click **Create token**.
-4. Under the **API token templates** section, find the **Edit Cloudflare Workers** template and click **Use template**.
-5. Fill out the rest of the fields and then click **Continue to summary**, where you can click **Create Token** and issue your token for use.
-
-#### Option 2: Obtaining your **Global API Key**
-
-1. Continuing, also on the right side, click **Get your API token**.
-2. You’ll be taken to your **Profile** page.
-3. Scroll to **API Keys**, and click **View** to copy your **Global API Key**.\*
-
-<Aside type="warning">
-
-\* __Warning:__ Treat your Global API Key like a password. It should not be stored in version control or in your code, use environment variables if possible.
-
-</Aside>
-
-### 6c. Configuring Wrangler with your credentials
-
-Set up your default credentials on your local machine with `wrangler config`. This is an interactive command that will prompt you for your **API token**:
-
-```sh
-$ wrangler config
-Enter API token:
-superlongapitoken
-```
-
-Use the `--api-key` flag to instead configure with **email** and **global API key**:
-
-```sh
-$ wrangler config --api-key
-Enter email:
-testuser@example.com
-Enter global API key:
-superlongapikey
-```
-
-You can also [use environment variables](https://developers.cloudflare.com/workers/tooling/wrangler/configuration/) to configure these authentication credentials.
-
-### 6d. Configuring your project
+### 7b. Configuring your project
 
 To configure your project, we need to fill in a few missing fields in the `wrangler.toml` file in the root of the generated project. This file contains the information Wrangler needs to connect to the Cloudflare Workers API and publish your code.
 
-For now, fill in just the `account_id` field with the value found in your dashboard.
+For now, fill in just the `account_id` field with the value found from running `wrangler whoami` or from looking in your dashboard.
 
 ```toml
 ---
@@ -350,7 +315,7 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 --------------------------------
 
-## 7. Publish your project
+## 8. Publish your project
 
 With our project configured, it’s time to publish it. The way we’ve configured it we have two deploy targets we can publish to.
 
