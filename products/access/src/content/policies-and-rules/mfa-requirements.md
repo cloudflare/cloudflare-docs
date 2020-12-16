@@ -4,14 +4,16 @@ order: 3
 
 # Enforce MFA
 
-You can build rules into policies that require users to authenticate with certain types of MFA methods (if supported by your IdP). When added, Cloudflare Access will reject user logins that did not use the required MFA method. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key. This feature is only available to teams using the following identity providers:
+You can use Cloudflare Access to require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
+
+This feature is only available to teams using the following identity providers:
 
 * Okta
 * Azure AD
 
-To add an MFA requirement to your application, follow the instructions below.
+To add an MFA requirement to your application:
 
-1. Navigate to the application in the Cloudflare for Teams dashboard, or create a new application.
+1. On the Teams dashboard, navigate to **Access > Applications** and select the application for which you want to enforce MFA. Alternatively, create a new application.
 
 2. In the **Policies** section of the a application, edit an existing rule that contains an identity requirement or add a new rule.
 
