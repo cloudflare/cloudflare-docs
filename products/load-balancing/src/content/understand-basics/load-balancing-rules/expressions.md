@@ -43,11 +43,11 @@ For a list of supported fields and comparison operators, see
 
 A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions are powerful because they allow you to build complex statements within a single expression.
 
-This example expression returns true when both the HTTP request URI path contains `/content` and the query string contains `webserver`:
+This example expression returns true when both the HTTP request URI path contains `/content` and the query string contains `stream1`:
 
 ```sql
 (http.request.uri.path contains "/content") 
-AND (http.request.uri.query contains "webserver")
+and (http.request.uri.query contains "webserver")
 ```
 
 In general, compound expressions use this pattern:
@@ -60,7 +60,7 @@ Note that a compound expression can itself be one of the operands of a logical o
 
 ## Working with expressions
 
-The Expression Builder’s visual interface allows you to build expressions without worrying about field names and syntax. 
+The Expression Builder’s visual interface allows you to build expressions without worrying about field names and syntax.
 
 By comparison, the Expression Editor is text only, but it supports advanced features not available in the builder.
 
@@ -76,7 +76,7 @@ Notice how the **Expression Preview** displays the expression in text:
 
 ```sql
 (http.request.uri.path contains "/content") 
-AND (http.request.uri.query contains "webserver")
+and (http.request.uri.query contains "webserver")
 ```
 
 For more on using Cloudflare’s visual expression builder, see [_Creating Load Balancing rules_](/create-rules).
