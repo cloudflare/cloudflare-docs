@@ -75,7 +75,7 @@ Enter API token:
 superlongapitoken
 ```
 
-Use the --api-key flag to instead configure with email and global API key:
+Use the `--api-key` flag to instead configure with email and global API key:
 
 ```bash
 $ wrangler config --api-key
