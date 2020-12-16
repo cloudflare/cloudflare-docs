@@ -51,7 +51,7 @@ You can either:
 ### 2. Add a policy
 You can now configure a policy to control who can access your app.
 
-To learn more about how policies work, read our [Policies section](/getting-started/policies/).
+To learn more about how policies work, read our [Policies and rules section](/policies-and-rules/).
 <!-- To learn more on how to effectively combine rule actions and conditions, read our [Policy Management]() section. -->
 
 1. First, specify a name for your rule. This is a mandatory field.
@@ -119,7 +119,7 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 ### 2. Add a policy
 You can now configure a policy to control who can access your app.
 
-To learn more about how policies work, read our [Policies section](/getting-started/policies/).
+To learn more about how policies work, read our [Policies and rules section](/policies-and-rules/).
 <!-- To learn more on how to effectively combine rule actions and conditions, read our [Policy Management](/learning-and-examples/policy-management/) section. -->
 
 1. First, specify a name for your rule. This is a mandatory field.
