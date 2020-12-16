@@ -17,7 +17,7 @@ Expressions can be more complex by joining multiple clauses via a logical operat
 
 # Capabilities
 
-You can use Magic Firewall to allow or block packets based on source or destination IP, source or destination port, protocol, packet length, or bit field match.
+You can use Magic Firewall to skip or block packets based on source or destination IP, source or destination port, protocol, packet length, or bit field match.
 
 # Restrictions
 
