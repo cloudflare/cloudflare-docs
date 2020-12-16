@@ -15,7 +15,7 @@ In the event that all pools are marked down, Cloudflare uses the **fallback pool
 
 ---
 
-## Requirements
+## Prerequisites
 
 - **Access to Load Balancing:** Load Balancing requires one of the following:
   - A Cloudflare Enterprise plan with Load Balancing enabled.
@@ -26,13 +26,33 @@ In the event that all pools are marked down, Cloudflare uses the **fallback pool
 
 ---
 
+## Workflow
+
+When creating a load balancer in the Cloudflare dashboard, follow this workflow:
+
+1. [Create a load balancer](#create-a-load-balancer)
+
+1. [Create and add origin pools](#create-and-add-origin-pools)
+
+1. [Create, attach, and configure health checks](#create-attach-and-configure-health-checks)
+
+1. [Configure Geo Routing](#configure-geo-routing)
+
+1. [Create custom Load Balancing rules](#create-custom-load-balancing-rules)
+
+1. [Review your load balancer configuration](#review-your-load-balancer-configuration)
+
+1. [Share your load balancer with other sites](#share-your-load-balancer-with-other-sites)
+
+---
+
 ## Create a load balancer
 
-To start, we’ll create a load balancer using the **Create a Load Balancer** wizard in the Cloudflare Traffic app:
+To start, create a load balancer using the **Create a Load Balancer** wizard in the Cloudflare Traffic app:
 
-1. Log in to the Cloudflare web application and select the site for which you want to create a load balancer.
+1. Log in to your Cloudflare Account Home and click site for which you want to create a load balancer.
 
-1. Open the **Traffic** app. If you see the **Enable Load Balancing** action instead of **Create a Load Balancer**, you will need to add the Load Balancing service to your customer plan in order to proceed.
+1. Open the **Traffic** app. If you see the **Enable Load Balancing** action instead of **Create a Load Balancer**, you need to add the Load Balancing service to your customer plan before you can proceed.
    ![](../static/images/creating-a-load-balancer-using-the-traffic-app-1.png)
 
 1. Click **Create a Load Balancer** and provide the hostname for your load balancer—the DNS name at which the load balancer will be available.
@@ -40,16 +60,18 @@ To start, we’ll create a load balancer using the **Create a Load Balancer** wi
    - To enable **Session Affinity**, select the **By Cloudflare cookie only** radio button and set the toggle switch to the _On_ position.
      ![test](../static/images/creating-a-load-balancer-using-the-traffic-app-2.png)
 
-     <Aside type="note">
+     <Aside type="note" header="Note">
 
      The orange cloud icon to the right of the hostname indicates that the load balancer will run in proxy mode. In proxy mode, Cloudflare announces Cloudflare IP addresses externally, but masks origin server IP addresses for security. See _[Proxy Modes](/understand-basics/proxy-modes/)_ for more detail.
      </Aside>
 
 1. Click **Next** to continue.
 
-<Aside type="note">
+You are now ready to create and add origin pools to your load balancer.
 
-Deleting a Load Balancer does not delete associated pools and monitors.  Delete pools and monitors via the respective **Manage Pools** and **Manage Monitors** buttons within the **Load Balancing** tab under the **Traffic** app of the Cloudflare dashboard.
+<Aside type="note" header="Note">
+
+Deleting a Load Balancer does not delete associated pools and monitors.  Delete pools and monitors via the respective **Manage Pools** and **Manage Monitors** buttons within the **Load Balancing** tab in the **Traffic** app of the Cloudflare dashboard.
 
 </Aside>
 
@@ -57,44 +79,53 @@ Deleting a Load Balancer does not delete associated pools and monitors.  Delete 
 
 ## Create and add origin pools
 
-In this example, we are going to create two pools: The primary pool, and a secondary, backup pool that will serve traffic if the primary fails. (To set up an **active-active failover** configuration, where all servers receive traffic at once, we would create only a single pool.)
+This example adds two origin pools—the primary pool and a secondary, backup pool that serves traffic when the primary fails. (To set up an **active-active failover** configuration, where all servers receive traffic at once, create only a single pool.)
 
 1. Click **Create an origin pool**.
    ![](../static/images/creating-a-load-balancer-using-the-traffic-app-3.png)
 
-1. Enter a name and origin server address for the first pool (this must be unique). This example uses an IP address, but if the origin server has a hostname, you can enter that instead. If you have configured pools already, you can select and add those here as well.
+1. Enter a name and origin server address for the first pool (this must be unique). This example uses an IP address, but when the origin server has a hostname, you can enter that instead. If you have already configured origin pools, you can select and add those here as well.
    ![](../static/images/creating-a-load-balancer-using-the-traffic-app-4.png)
 
 1. Click **Save** to continue.
 
-1. Add a second pool, similar to our first, by clicking **Add Pool**. Name the pool and provide an origin server name and address. Click **Save**.
+1. Add a second pool, similar to the first, by clicking **Add Pool**. Name the pool and provide an origin server name and address. Click **Save**.
    ![](../static/images/creating-a-load-balancer-using-the-traffic-app-5.png)
+
    By default, pools are ordered by date created. You can reorder them by clicking the arrows next to the numerals in the **Order** column.
+
    ![](../static/images/creating-a-load-balancer-using-the-traffic-app-6.png)
+   
    For now, leave the order as it is.
 
 1. Click **Next** to continue.
+
+You are now ready to configure health checks for your load balancer.
 
 ---
 
 ## Create, attach, and configure health checks
 
-Now you will create monitors to run health checks that track the status of your origin servers.
+Create monitors to run health checks that track the status of your origin servers:
 
 1.  Click **Attach Health Check** and then **Create a Health Check**.
+
     ![](../static/images/creating-a-load-balancer-using-the-traffic-app-7.png)
 
 1.  Click **Next** to attach the new health check to your primary pool.
+
     ![](../static/images/creating-a-load-balancer-using-the-traffic-app-8.png)
 
 1.  Configure the health check:
 
-    - The **Health Threshold** defines the number of healthy origin servers required to consider the pool healthy. If the number of healthy origin servers drops below the threshold, the pool will be marked unhealthy. There is only one origin server in this pool, so leave this value at 1.
+    - The **Health Threshold** defines the number of healthy origin servers required to consider the pool healthy. When the number of healthy origin servers drops below the threshold, the pool will be marked unhealthy. There is only one origin server in this pool, so leave this value at 1.
     - Use the **Health Check Regions** field to specify geographic regions from which Cloudflare should send health check requests.
     - Enter an email address to receive notifications in the **Notifications E-mail** field. You can use a mailing list address or a PagerDuty address to share the notifications with a group.
+    
       ![](../static/images/creating-a-load-balancer-using-the-traffic-app-9.png)
 
 **Simulate Zone** pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration.  It allows you to emulate the specified zone while probing.
+
 Monitors support authenticated origin pulls by entering the appropriate zone in the **Simulate Zone** field of the UI.
 
 1.  Click **Save**.
@@ -121,7 +152,11 @@ Click **Next** to continue to the final step, **Reviewing the Load Balancing con
 
 ---
 
-## Review you load balancing configuration
+## Create custom Load Balancing rules
+
+---
+
+## Review your load balancer configuration
 
 Before creating your load balancer, the creation wizard presents your a summary of your configuration so that you can review and make changes.
 
@@ -137,7 +172,7 @@ You can monitor your load balancers on the **Load Balancing** dashboard. The das
 
 ---
 
-## Share you load balancer with other sites
+## Share your load balancer with other sites
 
 You can share your load balancer with other sites in your account by creating a canonical name (CNAME) record in the Cloudflare DNS app. This is useful for sharing configurations with multiple other domains, and you don’t have to create new load balancers for each site.
 

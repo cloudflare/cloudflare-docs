@@ -35,7 +35,7 @@ type: table
       <td>IP address</td>
       <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
       <td>
-         <p> Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
+         <p>Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
          <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
          </p>
          <p>Example value:

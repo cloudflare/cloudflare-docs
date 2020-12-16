@@ -9,9 +9,9 @@ order: 20
 
 When working with [Load Balancing rules](/understand-basics/load-balancing-rules), you will encounter two kinds of expression:
 
-- [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. You can identify a simple expression by the presence of a **comparison operator** (_equals, less than_, for example).
+- [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. You can identify a simple expression by the presence of a **comparison operator** (_equals_ or _less than_, for example).
 
-- [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. You can identify a compound expression by the presence of a **logical operator** (_and_, _or_, for example). Since each firewall rule can only contain a single expression, compound expressions allow you to tailor rules to specific use cases with a high degree of accuracy and precision.
+- [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. You can identify a compound expression by the presence of a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
 
 The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
