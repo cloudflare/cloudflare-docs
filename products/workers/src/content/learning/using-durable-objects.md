@@ -85,7 +85,7 @@ export class DurableObjectExample {
 }
 ```
 
-Each individual storage operation behaves like a database transaction. More complex use cases can wrap multiple storage statements in a transaction. For example, this actor puts a key if and only if its current value matches the provided "If-Match" header value:
+Each individual storage operation behaves like a database transaction. More complex use cases can wrap multiple storage statements in a transaction. For example, this Durable Object puts a key if and only if its current value matches the provided "If-Match" header value:
 
 ```js
 export class DurableObjectExample {
