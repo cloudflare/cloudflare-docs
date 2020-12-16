@@ -272,7 +272,7 @@ When uploading the worker that needs to call your Durable Object, you will again
 Upload your worker like this, where `CALLING_SCRIPT_NAME` is the name you've chosen for your calling worker:
 
 ```sh
-$ curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/scripts/${CALLING_SCRIPT_NAME}" -X PUT -F "metadata=@calling-worker.json;type=application/json" -F "script=@calling-worker.js;type=application/javascript+module"
+$ curl -i -H "Authorization: Bearer ${API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_TAG}/workers/scripts/${CALLING_SCRIPT_NAME}" -X PUT -F "metadata=@calling-worker.json;type=application/json" -F "script=@calling-worker.js;type=application/javascript"
 ```
 
 <Aside>
