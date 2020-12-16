@@ -52,5 +52,5 @@ Each [product](https://github.com/cloudflare/cloudflare-docs/tree/production/pro
 
 ```txt
 TEST: https://$pathPrefix.cloudflare-docs.workers.dev/$pathPrefix/
-PROD: https://developers.cloudflare.com/$pathPrefix/
+PROD: https://developers.cloudflare.com/../work
 ```
