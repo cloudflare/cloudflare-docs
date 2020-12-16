@@ -136,7 +136,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
-      <td valign="top"><code>http.version</code><br /><Type>Number</Type></td>
+      <td valign="top"><code>http.request.version</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.
          </p>
