@@ -15,12 +15,15 @@ Cloudflare Access can replace Zone Lockdown deployments with a zero-trust model 
 
 ## Migration to Cloudflare Access
 
-With Zone Lockdown enabled, your team has already completed [many of the steps required](/about/quick-start/) to set up Cloudflare Access. Replacing the IP rules with identity-based rules requires the following additional steps.
+With Zone Lockdown enabled, your team has already completed [many of the steps required](/getting-started/) to set up Cloudflare Access. Replacing the IP rules with identity-based rules requires the following additional steps.
 
-> In both Zone Lockdown and Cloudflare Access, you must ensure that your origin can only accept connects from authenticated requests. Secure your origin with [Argo Tunnel](/setting-up-access/argo-tunnel/) or by [validating JSON Web Tokens](/setting-up-access/validate-jwt-tokens/) to prevent unauthorized connections.
+<Aside>
 
-1) Navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com/). Enable Cloudflare Access for your account.
-1) [Integrate](/configuring-identity-providers/) your organization's identity provider.
-1) Selecting `Applications` to begin building an identity-based policy.
-1) Choose the hostname protected by Zone Lockdown today. [Build an Access policy](/setting-up-access/configuring-access-policies/) to only allow connections from users in your organization. Test the connection from an IP allowed by your Zone Lockdown policy.
-1) Return to the Firewall tab of the Cloudflare dashboard and remove the Zone Lockdown policies.
+In both Zone Lockdown and Cloudflare Access, you must ensure that your origin can only accept connects from authenticated requests. Secure your origin with [Argo Tunnel](/setting-up-access/argo-tunnel/) or by [validating JSON Web Tokens](/advanced-management/validating-json/) to prevent unauthorized connections.
+</Aside>
+
+1. Navigate to the [Teams dashboard](https://dash.teams.cloudflare.com/). Enable Cloudflare Access for your account.
+1. [Integrate](/authentication/configuring-identity-providers/) your organization's identity provider.
+1. Selecting `Applications` to begin building an identity-based policy.
+1. Choose the hostname protected by Zone Lockdown today. [Add an Access policy](/getting-started/applications/) to only allow connections from users in your organization. Test the connection from an IP allowed by your Zone Lockdown policy.
+1. Return to the Firewall tab of the Cloudflare dashboard and remove the Zone Lockdown policies.
