@@ -3,13 +3,13 @@ title: Explore the GraphQL schema
 order: 40
 ---
 
-# Explore the GraphQL schema in the GraphiQL client
+# Explore the GraphQL schema
 
 One of the great features of a GraphQL API is that it offers "introspection"—you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform.
 
-_GraphiQL_ uses this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
+_GraphiQL_ uses this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the **Docs** link on the right-hand side and then drill down, starting with `query` and proceeding to `viewer` and then `zone`. GraphiQL also uses introspection to provide query auto-complete and syntax validation.
 
-You can explore the schema of the Coudflare GraphQL endpoint in the the GraphQL client. The examples below use the GraphiQL client.
+You can explore the schema of the Coudflare GraphQL endpoint in a GraphQL client. The examples below use the GraphiQL client.
 
 Before you begin, configure the API endpoint and HTTP headers in the GraphQL client.
 
@@ -33,9 +33,9 @@ In this example `query` is the name of the node, and `Query` is the type definit
 
 ## Find the fields available for a given type definition
 
-Click on the _type definition_ of a node to view the fields that it provides. The **Documentation Explorer** pane also displays descriptions of the nodes.
+Click on the **type definition** of a node to view the fields that it provides. The **Documentation Explorer** pane also displays descriptions of the nodes.
 
-Click the Query type definition. The **Documentation Explorer** panel displays the fields that the `query` node provides. In this example, the fields are `cost` and `viewer`.
+Click the `Query` type definition. The **Documentation Explorer** panel displays the fields that the `query` node provides. In this example, the fields are `cost` and `viewer`.
 
 ![Cost and viewer fields](../../static/images/docs-viewer.png)
 
@@ -45,9 +45,9 @@ Click on the type definition of the `viewer` field to list its sub-fields. The `
 
 ![viewer fields](../../static/images/docs-zone-filter.png)
 
-The `accounts` and `zones` fields take arguments to specify what data set to query.
+The `accounts` and `zones` fields take arguments to specify which data set to query.
 
-For the `zones` node you can provide a filter of ZoneFilter_InputObject type. To view the fields to specify in the filter, click **ZoneFilter_InputObject**.
+For the `zones` node you can provide a filter of `ZoneFilter_InputObject` type. To view the fields available to filter, click **ZoneFilter_InputObject**.
 
 To limit the amount of search results that the query returns, click the **limit** argument.
 
