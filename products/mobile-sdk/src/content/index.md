@@ -5,7 +5,16 @@ order: 1
 
 # Cloudflare Mobile SDK
 
-Cloudflare Mobile SDK let’s mobile app developers understand how poor network performance on mobile apps can affect end-user engagement. With our Metrics Mode dashboard, developers can identify what carriers, networks and APIs are suffering the most and take actions based on that.
+<Aside type='warning' header='Important'>
+
+Cloudflare is deprecating the Mobile SDK. You will no longer be able to log in to the portal or view stats about your mobile app after February 22, 2021.
+
+While your mobile app will continue working with the SDK even after the portal is removed, we encourage you to remove the Mobile SDK as soon as possible.
+
+For more, see [_Deprecation notice: Cloudflare Mobile SDK_](https://support.cloudflare.com/hc/en-us/articles/360054452251-Deprecation-notice-Cloudflare-Mobile-SDK).
+</Aside>
+
+Cloudflare Mobile SDK lets mobile app developers understand how poor network performance on mobile apps can affect end-user engagement. With our Metrics Mode dashboard, developers can identify what carriers, networks and APIs are suffering the most and take actions based on that.
 
 Using Mobile NX Metrics, you can identify top N requests, slow requests, and requests most likely to fail. You’re also able to understand all the third party calls your app is making through included libraries. You always suspected that ad network you’re calling out to kills performance. Now you know.
 
