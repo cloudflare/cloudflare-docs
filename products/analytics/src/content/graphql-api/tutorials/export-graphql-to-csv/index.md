@@ -4,7 +4,7 @@ title: Export GraphQL data to CSV
 
 # Export GraphQL data to CSV
 
-This tutorial shows how to create a python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like Splunk can easily ingest and visualize it.
+This tutorial shows how to create a Python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like Splunk can easily ingest and visualize it.
 
 This example queries the `ipFlows1mAttacksGroups` [data set](/graphql-api/features/data-sets), which aggregates Network Analytics attack activity into 1-minute intervals.
 
@@ -14,7 +14,7 @@ This example queries the `ipFlows1mAttacksGroups` [data set](/graphql-api/featur
 
 This tutorial assumes that you already have a Cloudflare API token for authentication to the Analytics GraphQL API.
 
-If you do not already have one, see [_Configure an Analytics API token_](/getting-started/authentication/api-token-auth).
+If you do not already have one, see [_Configure an Analytics API token_](/graphql-api/getting-started/authentication/api-token-auth).
 
 </Aside>
 
@@ -71,7 +71,7 @@ header: Query the Network Analytics GraphQL API
 ---
 def get_cf_graphql():
     headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
-    # This variable replacement requires python3.6 or higher
+    # This variable replacement requires Python3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
           $accountTag: string, 
@@ -129,7 +129,7 @@ def get_cf_graphql():
 
 ## Convert the data to CSV
 
-Use a tool such as the open-source [pandas](https://pandas.pydata.org/pandas-docs/stable/index.html) library (`pd`) to convert the GraphQL data to CSV. In this example, the `convert_to_csv()` function does a bit of JSON processing before conversion to normalize the data, select only the desired data, and rename the columns so that they are user friendly.
+Use a tool such as the open-source [pandas](https://pandas.pydata.org/pandas-docs/stable/index.html) library (`pd`) to convert the GraphQL data to CSV. In this example, the `convert_to_csv()` function does a bit of JSON processing before conversion—normalizing the data, selecting only the desired data, and renaming the columns so that they are user friendly.
 
 The result is output to file in the directory specified by `file_dir`.
 
@@ -183,7 +183,7 @@ def get_date(num_days):
  
 def get_cf_graphql():
     headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
-    # This variable replacement requires python3.6 or higher
+    # This variable replacement requires Python3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
           $accountTag: string, 
