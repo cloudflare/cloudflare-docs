@@ -16,6 +16,8 @@ To create a Load Balancing rule in the Cloudflare dashboard, follow this workflo
 1. [Configure an action](#configure-the-action)
 1. [Save the rule and the load balancer configuration](#save-a-load-balancing-rule-and-configuration)
 
+---
+
 ## Create a new Load Balancing rule
 
 1. Log in to your Cloudflare Account Home and click the site you want to manage in the dashboard.
@@ -37,6 +39,8 @@ To create a Load Balancing rule in the Cloudflare dashboard, follow this workflo
   ![Screenshot, Create Custom Rule dialog](../../static/images/create-custom-rule.png)
 
 Now that you have created a rule and named it, continue to the next section and [build a Load Balancing expression](#build-a-load-balancing-expression) that defines when to trigger your rule.
+
+---
 
 ## Build a Load Balancing expression
 
@@ -60,6 +64,8 @@ Now that you have created a rule and named it, continue to the next section and 
 
 Now that you have built an expression, continue to the next section and [configure a Load Balancing action](#configure-a-load-balancing-action) for your rule.
 
+---
+
 ## Configure a Load Balancing action
 
 1. To set an action for your rule, use the **Action** drop-down list. This example uses the _Pool selection_ action:
@@ -73,6 +79,8 @@ Now that you have built an expression, continue to the next section and [configu
 1. [Optional] Click **Add another action** to add another action to the rule.
 
 Now that you have configured a Load Balancing action, continue to the next section and [save the Load Balancing rule and configuration](#save-a-load-balancing-rule-and-configurationa).
+
+---
 
 ## Save a Load Balancing rule and configuration
 

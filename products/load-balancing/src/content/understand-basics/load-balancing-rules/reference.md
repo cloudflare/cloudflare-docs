@@ -35,7 +35,7 @@ type: table
       <td>IP address</td>
       <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
       <td>
-         <p>Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
+         <p> Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
          <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
          </p>
          <p>Example value:
@@ -77,26 +77,44 @@ type: table
   </tbody>
 </table>
 
+---
+
 ## Operators
 
 ### Comparison operators
+
+Comparison operators return `true` when a value from an HTTP request matches a value defined in an expression.
+
+This is the general pattern for using comparison operators:
+
+```sql
+<field> <comparison operator> <value>
+```
+
+Load Balancing rules support these comparison operators:
+
+<Aside type='warning' header='Important'>
+
+Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
+
+</Aside>
 
 <TableWrap style='width:100%'>
   <table style='width:100%'>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Operator Notation</th>
-        <th colspan="3" style="text-align:center">Supported Data Types</th>
-        <th>Example (operator in bold)</th>
+      <th>Name</th>
+      <th>Operator Notation</th>
+      <th colspan="3" style="text-align:center">Supported Data Types</th>
+      <th>Example (operator in bold)</th>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <th>String</th>
-        <th>IP</th>
-        <th>Rules list</th>
-        <th></th>
+      <td></td>
+      <td></td>
+      <th>String</th>
+      <th>IP</th>
+      <th>Rules list</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -153,4 +171,3 @@ type: table
     </tbody>
   </table>
 </TableWrap>
-
