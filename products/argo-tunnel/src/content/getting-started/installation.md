@@ -67,18 +67,31 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 We recommend this option if you are currently using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
 
-1. Install a new instance of `cloudflared` and [create](/configuration/index) a new Argo Tunnel.
-2. Configure the instance to point traffic to the same service or URL as your current, active instance of `cloudflared`.
+1. Install a new instance of `cloudflared` and [create](/create-tunnel) a new Argo Tunnel.
+2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. [Add the address]((/routing-to-tunnel/lb)) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4. Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
 5. Once confirmed, you can remove the older version from the Load Balancer pool.
 
 ### Updating with multiple `cloudflared` instances
 
-1. Install a new instance of `cloudflared` and [create](/configuration/index) a new Argo Tunnel.
-2. Configure the instance to point traffic to the same service or URL as your current, active instance of `cloudflared`.
+1. Install a new instance of `cloudflared` and [create](/create-tunnel) a new Argo Tunnel.
+2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. In the Cloudflare DNS dashboard, [replace](/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4. Remove the now-inactive instance of `cloudflared`.
+
+
+#### Running multiple instances in Windows
+
+Windows systems require services to have a unique name and display name. You can run multiple instances of `cloudflared` by creating `cloudflared` services with unique names.
+
+First, install and configure `cloudflared`. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
+
+`sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"`
+
+Proceed to create additional services with unique names. You can now start each unique service.
+
+`sc.exe start <unique-name>`
 
 ## Deprecated versions
 
