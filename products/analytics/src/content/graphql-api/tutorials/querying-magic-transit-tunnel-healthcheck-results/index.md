@@ -1,6 +1,5 @@
 ---
 title: Querying Magic Transit Tunnel Health Check Results with GraphQL
-order: 50
 ---
 
 # Querying Magic Transit Tunnel Health Check Results with GraphQL
