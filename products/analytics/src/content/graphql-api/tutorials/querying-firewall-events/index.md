@@ -1,6 +1,5 @@
 ---
 title: Querying Firewall Events with GraphQL
-order: 50
 ---
 
 # Querying Firewall Events with GraphQL
