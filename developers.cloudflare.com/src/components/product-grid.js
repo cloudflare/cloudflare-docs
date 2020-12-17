@@ -20,7 +20,6 @@ $["internet"]             = require("@cloudflare/cloudflare-brand-assets/resourc
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
-$["mobile-sdk"]           = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/mobile-sdk.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/railgun.js").pathD
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
@@ -126,11 +125,6 @@ const products = [
     title: "Magic Transit",
     path: "magic-transit",
     icon: "magic-transit",
-  },
-  {
-    title: "Mobile SDK",
-    path: "mobile-sdk",
-    icon: "mobile-sdk",
   },
   {
     title: "Network Interconnect",
