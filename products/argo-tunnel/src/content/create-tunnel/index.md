@@ -74,6 +74,6 @@ Deleting the tunnel also invalidates the credentials file associated with that T
 
 <Aside>
 
-Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard.
+Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard. These connections will be added to the dashboard in a future release.
 
 </Aside>
