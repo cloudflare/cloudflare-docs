@@ -47,7 +47,9 @@ $ wrangler --version
 
 ## 3. Configure the Workers CLI
 
-Now that Wrangler is installed, you'll need to give it an API Token for your Cloudflare account. Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
+Now that Wrangler is installed, you'll need to give it an API Token for your Cloudflare account.
+
+Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
 
 ```bash
 $ wrangler login
@@ -195,19 +197,45 @@ For inspiration, visit [Built with Workers](https://workers.cloudflare.com/built
 
 ## 6. Preview your project
 
-When you’re ready to preview your code, run Wrangler’s `preview` command:
+In order to preview our Worker, we're going to need to configure our project by adding our `Account ID` to our project's `wrangler.toml`.
 
-```sh
-~/my-worker $ wrangler preview --watch
+Run the command `wrangler whoami` and copy your `Account ID`.
+
+```bash
+$ wrangler whoami
+👋  You are logged in with an API Token, associated with the email '<Your Email>'!
+
++----------------------------------+----------------------------------+
+| Account Name                     | Account ID                       |
++----------------------------------+----------------------------------+
+| Your Account                     | $yourAccountId                   |
++----------------------------------+----------------------------------+
 ```
 
-This command will build your project, upload it to a unique URL, and open a tab in your browser to view it. This allows you to quickly test your project running on the actual Workers runtime, and optionally, even share it with others too.
+Then, open up your project's `wrangler.toml` and paste it in as the value for the `account_id` field.
 
-The `--watch` flag tells Wrangler to watch your Workers project directory for changes, and will **automatically update** the preview tab live with the latest URL.
+```toml
+---
+filename: wrangler.toml
+highlight: [2]
+---
+name = "my-worker"
+account_id = "$yourAccountId"
+```
+
+Once you've done that, you’re ready to preview your code. Run the `wrangler dev` command:
+
+```sh
+~/my-worker $ wrangler dev
+💁  watching "./"
+👂  Listening on http://127.0.0.1:8787
+```
+
+This command will build your project, run it locally, and return a url for you to visit to preview the worker.
 
 <Aside header="A note about building">
 
-Running `wrangler preview` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/cli-wrangler/commands).
+Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/cli-wrangler/commands).
 
 </Aside>
 
@@ -215,35 +243,22 @@ Running `wrangler preview` and `wrangler publish` both run `wrangler build` befo
 
 ## 7. Configure your project for deployment
 
-In order to publish your Workers project on Cloudflare’s global cloud network, you’ll need to configure your project's `wrangler.toml` with an **Account ID**.
-
-If deploying on a free workers.dev subdomain, that’s it. If you’re deploying onto your own domain, you’ll additionally need to configure the project with a **Zone ID**.
-
-### 7a. Obtaining your Account ID (and Zone ID)
-
-#### workers.dev
-
-For workers.dev domains, you will just need the Account ID. The easiest way to get it is by running `wrangler whoami`.
-
-However, you can also find your Account ID in the Cloudflare dashboard with the following steps:
-
-1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select **Workers**.
-2. On the right, look for **Account ID** and click **Click to copy** below the input.
-
-#### Registered domains
-
-For domains that you have registered on Cloudflare, you need both IDs:
-
-1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired domain.
-2. Select the **Overview** tab on the navigation bar.
-3. Scroll down until you see both **Zone ID** and **Account ID* on the right.
-4. Click **Click to copy** below the input to each.
-
-### 7b. Configuring your project
-
 To configure your project, we need to fill in a few missing fields in the `wrangler.toml` file in the root of the generated project. This file contains the information Wrangler needs to connect to the Cloudflare Workers API and publish your code.
 
-For now, fill in just the `account_id` field with the value found from running `wrangler whoami` or from looking in your dashboard.
+You should have already filled in the `account_id` field in the last step. If you didn't, you can get your `Account ID` by running `wrangler whoami`.
+
+```bash
+$ wrangler whoami
+👋  You are logged in with an API Token, associated with the email '<Your Email>'!
+
++----------------------------------+----------------------------------+
+| Account Name                     | Account ID                       |
++----------------------------------+----------------------------------+
+| Your Account                     | $yourAccountId                   |
++----------------------------------+----------------------------------+
+```
+
+Then, paste it into your `wrangler.toml` as the value for the `account_id` field.
 
 ```toml
 ---
@@ -266,28 +281,18 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-Finally, we need to tell Wrangler where we want to deploy our project.
-
-#### Configure for deploying to workers.dev
-
-With the `workers_dev` key in `wrangler.toml` set to `true`, Wrangler will publish your project to your `workers.dev` subdomain.
-
-```toml
----
-filename: wrangler.toml
-highlight: [4]
----
-name = "my-worker"
-account_id = "$yourAccountId"
-type = "webpack"
-workers_dev = true
-```
-
-When deploying to a workers.dev subdomain, the **name** field will be used as the secondary subdomain for the deployed script, e.g. `my-worker.my-subdomain.workers.dev`.
+By default, this project will deploy to your workers.dev subdomain. When deploying to a workers.dev subdomain, the **name** field will be used as the secondary subdomain for the deployed script, e.g. `my-worker.my-subdomain.workers.dev`.
 
 #### (Optional) Configure for deploying to a registered domain
 
 To publish your application on a domain you own, and not a workers.dev subdomain, you can add a `route` key to your `wrangler.toml`.
+
+You can get your `zone_id` with the following steps:
+
+1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired domain.
+2. Select the **Overview** tab on the navigation bar.
+3. Scroll down until you see both **Zone ID** on the right.
+4. Click **Click to copy** below the input.
 
 Wrangler’s [environments feature](/platform/environments) allows us to specify multiple different deploy targets for our application. Let's add a `production` environment, passing in a `zone_id` and `route`:
 
@@ -317,7 +322,7 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 ## 8. Publish your project
 
-With our project configured, it’s time to publish it. The way we’ve configured it we have two deploy targets we can publish to.
+With our project configured, it’s time to publish it.
 
 To deploy to our workers.dev subdomain, we can run:
 
@@ -334,7 +339,9 @@ __Note:__ When pushing to workers.dev project for the first time, you may initia
 
 </Aside>
 
-To deploy to our “production” environment we set in our `wrangler.toml`, we can pass the `--env` flag to the command:
+#### (Optional) Publish your project to a registered domain
+
+To deploy to our production environment we set in our `wrangler.toml` in the optional configuration step, we can pass the `--env` flag to the command:
 
 ```sh
 ---
