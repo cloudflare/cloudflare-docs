@@ -8,7 +8,15 @@ module.exports = {
   externalLinks: [
     {
       title: 'Pages home',
-      url: 'https://pages.dev',
+      url: 'https://pages.cloudflare.com',
+    },
+    {
+      title: 'Announcement blog post',
+      url: 'https://blog.cloudflare.com/cloudflare-pages',
+    },
+    {
+      title: 'First look at Cloudflare Pages (video)',
+      url: 'https://www.youtube.com/watch?v=IeHC4NwkEfc',
     },
   ],
   search: {

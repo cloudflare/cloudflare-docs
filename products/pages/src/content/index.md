@@ -21,6 +21,6 @@ Get started deploying your first site using our starter guide below, or check ou
 
 ---
 
-These docs are built with the [Cloudflare Docs engine](https://workers.cloudflare.com/workers/docs-engine).
+These docs are built with the [Cloudflare Docs engine](https://developers.cloudflare.com/docs-engine/).
 
 </ContentColumn>
