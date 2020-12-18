@@ -55,6 +55,9 @@ products/mobile-sdk/ @cloudflare/sdk @lalkaka
 # Network Interconnect
 products/network-interconnect @ConzorKingKong
 
+# Pages
+products/pages/ @cloudflare/workers-docs
+
 # Randomness Beacon
 products/randomness-beacon/ @lukevalenta @armfazh
 
