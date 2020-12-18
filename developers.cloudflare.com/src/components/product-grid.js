@@ -21,6 +21,7 @@ $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resourc
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
+$["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/railgun.js").pathD
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
@@ -131,6 +132,11 @@ const products = [
     path: "network-interconnect",
     icon: "network-interconnect",
     wrap: true,
+  },
+  {
+    title: "Pages",
+    path: "pages",
+    icon: "pages",
   },
   {
     title: "Railgun",
