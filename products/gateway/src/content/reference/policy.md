@@ -6,7 +6,7 @@ order: 2
 
 <Aside>
 
-For instructions on how to set up policies in the Teams dash, visit our [Getting started section](../getting-started).
+For instructions on how to set up policies in the Teams dash, visit our [Getting started section](/getting-started/).
 </Aside>
 
 Gateway policies allow you to grant or deny your users access to specific domains or domain categories. If the WARP client is configured to send DNS requests over DoH to Gateway, the DNS queries are evaluated against content and security policies configured for the organization. If the domain is allowed, the client receives the DNS resolution and initiates an HTTP connection.
