@@ -1,0 +1,12 @@
+name = "pages"
+type = "webpack"
+workers_dev = false
+account_id = "b54f07a6c269ecca2fa60f1ae4920c99"
+zone_id = "351cf9fc660523187714fa772ad5ca49"
+route = "https://developers.cloudflare.com/pages*"
+# kv namespace is workers-docs-REDIRECTS in dash
+kv-namespaces = [{ binding = "REDIRECTS", id = "c055afe37e9f42f19f5e0faad229c8bd", preview_id = "c055afe37e9f42f19f5e0faad229c8bd" }]
+
+[site]
+bucket = ".docs/public"
+entry-point = ".docs/workers-site"
