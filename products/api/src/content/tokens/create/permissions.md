@@ -57,8 +57,8 @@ Below is a list of all the Token Permissions that are available to use. The curr
 |Load Balancers Write|6d7f2f5f5b1d4a0e9081fdc98d432fd1|Grants write access to load balancers and associated resources|com.cloudflare.api.account.zone|
 |Load Balancing: Monitors and Pools Read|9d24387c6e8544e2bc4024a03991339f|Grants read access to account level load balancer resources|com.cloudflare.api.account|
 |Load Balancing: Monitors and Pools Write|d2a1802cc9a34e30852f8b33869b2f3c|Grants write access to account level load balancer resources|com.cloudflare.api.account|
-|Logs Read|c4a30cd58c5d42619c86a3c36c441e2d|Grants read access to logs and logpush jobs|com.cloudflare.api.account.zone|
-|Logs Write|3e0b5820118e47f3922f7c989e673882|Grants write access to logpush jobs|com.cloudflare.api.account.zone|
+|Logs Read|6a315a56f18441e59ed03352369ae956|Grants read access to logs and logpush jobs|com.cloudflare.api.account|
+|Logs Write|96163bd1b0784f62b3e44ed8c2ab1eb6|Grants write access to logpush jobs|com.cloudflare.api.account|
 |Page Rules Read|b415b70a4fd1412886f164451f20405c|Grants read access to Page Rules|com.cloudflare.api.account.zone|
 |Page Rules Write|ed07f6c337da4195b4e72a1fb2c6bcae|Grants write access to Page Rules|com.cloudflare.api.account.zone|
 |SSL and Certificates Read|7b7216b327b04b8fbc8f524e1f9b7531|Grants read access to SSL configuration and cert management|com.cloudflare.api.account.zone|
