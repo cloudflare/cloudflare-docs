@@ -27,7 +27,7 @@ that performs its own function distinct from the application container.
 In this model, the Argo Tunnel daemon, `cloudflared`, runs in its own container
 and connects to the Cloudflare network to proxy requests for an associated
 hostname. The `cloudflared` container will then send those requests to port
-8080 on the application container over the common localhost in the Pod using the
+80 on the application container over the common localhost in the Pod using the
 shared IP address space.
 
 ## Docker image
@@ -100,7 +100,7 @@ metadata:
 spec:
   ports:
   - name: http
-    port: 8080
+    port: 80
     protocol: TCP
     targetPort:
 // targetPort defaults to the port configured above if left blank.
@@ -145,7 +145,7 @@ spec:
             fieldRef:
               fieldPath: status.podIP
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
           limits:
             cpu: 100m
@@ -158,7 +158,7 @@ spec:
         imagePullPolicy: Always
         command: ["cloudflared", "tunnel"]
         args:
-        - --url=http://127.0.0.1:8080
+        - --url=http://127.0.0.1:80
         - --hostname=hello.example.com
         - --origincert=/etc/cloudflared/cert.pem
         - --no-autoupdate
