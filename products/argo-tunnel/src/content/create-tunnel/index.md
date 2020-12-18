@@ -13,6 +13,12 @@ order: 3
 
 ## Create a Tunnel
 
+<Aside>
+
+Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard. These connections will be added to the dashboard in a future release.
+
+</Aside>
+
 Run the following command to create a Tunnel.
 
 ```sh
@@ -71,9 +77,3 @@ $ cloudflared tunnel delete -f <NAME>
 This will cause those connections to be dropped.
 
 Deleting the tunnel also invalidates the credentials file associated with that Tunnel, meaning those connections can not be re-established again.
-
-<Aside>
-
-Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard. These connections will be added to the dashboard in a future release.
-
-</Aside>
