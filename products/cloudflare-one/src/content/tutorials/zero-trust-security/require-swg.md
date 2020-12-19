@@ -1,23 +1,27 @@
 ---
-order: 3
+order: 5
 ---
 
-# Block sites by host and URL
+# Require Gateway connections
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname.
+You can build rules in Cloudflare Access that require users to connect through your organization's Cloudflare Gateway configuration before they reach on-premise applications or login to [SaaS applications](https://blog.cloudflare.com/cloudflare-access-for-saas/).
 
 **🗺️ This tutorial covers how to:**
 
-* Enroll devices into Gateway
-* Create a Gateway policy to block URLs that contain a hostname
-* Create a Gateway policy to block URLs that contain a URL path
-* Review the block events in the Gateway logs
+* Add Cloudflare Gateway to your Cloudflare for Teams account
+* Enroll devices in Cloudflare Gateway
+* View enrolled devices
+* Build a rule in Access to require Cloudflare Gateway
 
-**⏲️Time to complete: 25 minutes**
+**⏲️Time to complete: 40 minutes**
+
+## Configure Cloudflare Access
+
+Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup/) to set up Cloudflare Access in your account.
 
 ## Add Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/onboarding-gateway) to set up Cloudflare Gateway in your account. Cloudflare Gateway operates in two modes:
+Cloudflare Gateway operates in two modes:
 
 * DNS filtering
 * Proxy (HTTP filtering)
@@ -74,46 +78,46 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 ![Add Policy](../../static/secure-web-gateway/block-uploads/filter-toggle.png)
 
-## Build a hostname policy
+## View enrolled devices
 
-Click **Add a rule** to add a new HTTP policy. You can build rules that match an exact hostname or, like the example here, rules that use regular expressions to match for patterns.
+You can view enrolled devices and their associated users in the Cloudflare for Teams dashboard. To do so, navigate to the `My Teams` section and open the `Devices` page.
 
-The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host. You can also build a rule with an `is` operator and input `espn.com` directly.
+![Add Policy](../../static/zero-trust-security/require-swg/device-view.png)
 
-```
-.*espn\.com
-```
+## Build a Gateway rule in Access
 
-![Block ESPN](../../static/secure-web-gateway/block-football/block-espn-host.png)
+You can now build rules in Cloudflare Access applications that require users connecting to those applications do so through Cloudflare Gateway. This can help protect your applications by only allowing devices which are blocked from reaching malware on the Internet. Additionally, you can ensure that you do not miss logs of SaaS application activity by requiring users who login to those SaaS applications only do so through Cloudflare Gateway.
 
-Once you have clicked **Create rule** you should see it appear at the bottom of the rule list. Gateway enforces rules from top to bottom. If you had a rule with higher precedence (ranked higher in the list) that allowed ESPN, that rule would allow the user before this rule could block.
+To add a `Require Gateway` rule, navigate to the `Authentication` page of the `Access` section of the Cloudflare for Teams dashboard. Click the **Device Posture** tab. Click **+ Add**.
 
-![Post ESPN](../../static/secure-web-gateway/block-football/post-espn.png)
+![Add Policy](../../static/zero-trust-security/require-swg/add.png)
 
-## Build a URL policy
+Select `Gateway` from the options listed.
 
-Some websites are organized by URL path, so blocking by host or subdomain is not sufficient. Instead, you must build rules for a specific URL path.
+![Add Policy](../../static/zero-trust-security/require-swg/select-gateway.png)
 
-In the example below, `reddit.com` is a website where different areas of interest are grouped into a URL string that follows `/r/`. In this case, `CFB` is the section of Reddit that discusses college football.
+Click **Save** on the next screen.
 
-Matching for this URL requires a regular expression rule.
+You can now build rules with your organization's Cloudflare Gateway configuration.
 
-```
-/r/CFB
-```
+![Add Policy](../../static/zero-trust-security/require-swg/added.png)
 
-![Block CFB](../../static/secure-web-gateway/block-football/block-cfb-url.png)
+To do build rules, open the `Applications` page of the `Access` section of the dashboard. Edit an existing application or add a new one.
 
-Click **Create rule** and you should see it appear in your rule list.
+![Add Policy](../../static/zero-trust-security/require-swg/app-list-before.png)
 
-![Block CFB](../../static/secure-web-gateway/block-football/post-cfb.png)
+Edit an existing rule or add a new one.
 
-## Blocks
+![Add Policy](../../static/zero-trust-security/require-swg/edit-rule.png)
 
-When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
+In the rule builder view, click **+ Add require** and select `Gateway` from both drop-down menus.
 
-![Block Page](../../static/secure-web-gateway/block-football/block-page.png)
+![Add Policy](../../static/zero-trust-security/require-swg/require-gateway.png)
 
-You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type.
+Save the rule and the application.
 
-![Block Log](../../static/secure-web-gateway/block-football/block-log.png)
+![Add Policy](../../static/zero-trust-security/require-swg/save-app.png)
+
+Requests and logins to the application will now require Gateway be used to connect.
+
+You can avoid adding the `Require Gateway` rule to each application manually by creating an `Access Group` which includes the `Require` rule, similar to [the configuration of country rules](/tutorials/zero-trust-security/country-rules). Add that `Access Group` to applications and the Gateway requirement will be enforced.

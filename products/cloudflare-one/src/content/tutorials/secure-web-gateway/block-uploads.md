@@ -63,7 +63,7 @@ Download the Cloudflare certificate provided in the [instructions here](https://
 
 Next, follow [these instructions](https://developers.cloudflare.com/gateway/connecting-to-gateway/install-cloudflare-cert) to install the certificate on your system.
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Scroll to the bottom and toggle `Proxy Settings` to enabled.
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Click the **Settings** tab and toggle `Proxy Settings` to enabled.
 
 ![Add Policy](../../static/secure-web-gateway/block-uploads/filter-toggle.png)
 

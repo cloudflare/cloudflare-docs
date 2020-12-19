@@ -1,16 +1,15 @@
 ---
-order: 3
+order: 5
 ---
 
-# Block sites by host and URL
+# Block sites for specific users
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname.
+You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname. You can build these rules [globally for your entire organization](/tutorials//secure-web-gateway/block-football) or for specific users.
 
 **🗺️ This tutorial covers how to:**
 
 * Enroll devices into Gateway
-* Create a Gateway policy to block URLs that contain a hostname
-* Create a Gateway policy to block URLs that contain a URL path
+* Create a Gateway policy to block URLs that contain a hostname for certain users
 * Review the block events in the Gateway logs
 
 **⏲️Time to complete: 25 minutes**
@@ -70,7 +69,7 @@ Download the Cloudflare certificate provided in the [instructions here](https://
 
 Next, follow [these instructions](https://developers.cloudflare.com/gateway/connecting-to-gateway/install-cloudflare-cert) to install the certificate on your system.
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Scroll to the bottom and toggle `Proxy Settings` to enabled.
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Click the **Settings** tab and toggle `Proxy Settings` to enabled.
 
 ![Add Policy](../../static/secure-web-gateway/block-uploads/filter-toggle.png)
 
@@ -78,35 +77,21 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 Click **Add a rule** to add a new HTTP policy. You can build rules that match an exact hostname or, like the example here, rules that use regular expressions to match for patterns.
 
+![Add Rule](../../static/secure-web-gateway/block-football/add-rule-sam.png)
+
 The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host. You can also build a rule with an `is` operator and input `espn.com` directly.
 
 ```
 .*espn\.com
 ```
 
-![Block ESPN](../../static/secure-web-gateway/block-football/block-espn-host.png)
+![Block ESPN](../../static/secure-web-gateway/block-football/block-espn-host-sam.png)
+
+You can also build rules by user group (including name or ID).
 
 Once you have clicked **Create rule** you should see it appear at the bottom of the rule list. Gateway enforces rules from top to bottom. If you had a rule with higher precedence (ranked higher in the list) that allowed ESPN, that rule would allow the user before this rule could block.
 
-![Post ESPN](../../static/secure-web-gateway/block-football/post-espn.png)
-
-## Build a URL policy
-
-Some websites are organized by URL path, so blocking by host or subdomain is not sufficient. Instead, you must build rules for a specific URL path.
-
-In the example below, `reddit.com` is a website where different areas of interest are grouped into a URL string that follows `/r/`. In this case, `CFB` is the section of Reddit that discusses college football.
-
-Matching for this URL requires a regular expression rule.
-
-```
-/r/CFB
-```
-
-![Block CFB](../../static/secure-web-gateway/block-football/block-cfb-url.png)
-
-Click **Create rule** and you should see it appear in your rule list.
-
-![Block CFB](../../static/secure-web-gateway/block-football/post-cfb.png)
+![Post ESPN](../../static/secure-web-gateway/block-football/post-espn-sam.png)
 
 ## Blocks
 
@@ -114,6 +99,6 @@ When users visit that section of Reddit (and any page within it), they will rece
 
 ![Block Page](../../static/secure-web-gateway/block-football/block-page.png)
 
-You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type.
+You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type. The block logs will also list the user who made the request.
 
 ![Block Log](../../static/secure-web-gateway/block-football/block-log.png)
