@@ -1,7 +1,11 @@
 ---
-order: 0
+type: overview
+hideChildren: true
+order: 1
 ---
 
-# Teams tutorials
+import DocsTutorials from "../../components/docs-tutorials"
 
-<DirectoryListing path="/tutorials"/>
+# Tutorials
+
+<DocsTutorials/>

@@ -1,5 +1,7 @@
 ---
-order: 3
+updated: 2020-11-28
+category: 🛡️ Secure Web Gateway
+difficulty: Advanced
 ---
 
 # Block file uploads to Google Drive
@@ -29,11 +31,11 @@ First, you will need to determine which devices can enroll. To begin, you will n
 
 Next, build a rule to decide which devices can enroll into your Gateway account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
 
-![Device List](../../static/secure-web-gateway/secure-dns-devices/device-page.png)
+![Device List](../static/secure-web-gateway/secure-dns-devices/device-page.png)
 
 Click `Device Settings` to build the enrollment rule. In the policy, define who should be allowed to enroll a device and click `Save`.
 
-![Enroll Rule](../../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
+![Enroll Rule](../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
 
 ## Enroll a device
 
@@ -41,19 +43,19 @@ You can use the WARP client to enroll a device into your security policies. Foll
 
 Once installed, click the gear icon.
 
-![WARP](../../static/secure-web-gateway/secure-dns-devices/warp.png)
+![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
 Under the `Account` tab, click `Login with Cloudflare for Teams`.
 
-![Account View](../../static/secure-web-gateway/secure-dns-devices/account-view.png)
+![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
 Input your Cloudflare for Teams org name. You will have created this during the Cloudflare Access setup flow. You can find it under the `Authentication` tab in the `Access` section of the sidebar.
 
-![Org Name](../../static/secure-web-gateway/secure-dns-devices/org-name.png)
+![Org Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`.
 
-![Confirm WARP](../../static/secure-web-gateway/block-uploads/with-warp.png)
+![Confirm WARP](../static/secure-web-gateway/block-uploads/with-warp.png)
 
 ## Configure the Cloudflare certificate
 
@@ -65,27 +67,27 @@ Next, follow [these instructions](https://developers.cloudflare.com/gateway/conn
 
 Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Click the **Settings** tab and toggle `Proxy Settings` to enabled.
 
-![Add Policy](../../static/secure-web-gateway/block-uploads/filter-toggle.png)
+![Add Policy](../static/secure-web-gateway/block-uploads/filter-toggle.png)
 
 ## Create a Gateway HTTP policy
 
 Next, you can [build a policy](https://developers.cloudflare.com/gateway/getting-started/configuring-http-policy) that will block file uploads to Google Drive. Navigate to the `Policies` page. On the HTTP tab, click `Add a policy`.
 
-![Add Policy](../../static/secure-web-gateway/block-uploads/add-policy.png)
+![Add Policy](../static/secure-web-gateway/block-uploads/add-policy.png)
 
 Uploading files to Google Drive consists of `POST` and `PUT` methods made to `clients6.google.com`. To block Google Drive uploads, block these methods to that host.
 
 In the rule builder, add `Host is drive.google.com` and a second rule where `HTTP Method is POST`. Choose the Block action. Click `Save`.
 
-![Block POST](../../static/secure-web-gateway/block-uploads/block-post.png)
+![Block POST](../static/secure-web-gateway/block-uploads/block-post.png)
 
 Add a second policy, replacing `POST` with `PUT`.
 
-![Block PUT](../../static/secure-web-gateway/block-uploads/block-put.png)
+![Block PUT](../static/secure-web-gateway/block-uploads/block-put.png)
 
 You should now see both policies in the `Policies` view.
 
-![All Policies](../../static/secure-web-gateway/block-uploads/all-policies.png)
+![All Policies](../static/secure-web-gateway/block-uploads/all-policies.png)
 
 <Aside>
 
@@ -97,7 +99,7 @@ Alternatively, you can block all POST and PUT methods to `google.com` subdomains
 
 You can test the policy by attempting to upload a file to Google Drive. Google Drive should return an error message when blocked.
 
-![Block Action](../../static/secure-web-gateway/block-uploads/block-result.png)
+![Block Action](../static/secure-web-gateway/block-uploads/block-result.png)
 
 ## View Logs
 
@@ -105,7 +107,7 @@ Once enabled, if a user attempts to upload a file you can view logs of the block
 
 Navigate to the `Logs` section of the sidebar and choose `Gateway`. Open the Filter action and select `Block` from the dropdown under `Decision`.
 
-![Block Action](../../static/secure-web-gateway/block-uploads/block-logs.png)
+![Block Action](../static/secure-web-gateway/block-uploads/block-logs.png)
 
 ## Optional: Deploy via MDM
 
