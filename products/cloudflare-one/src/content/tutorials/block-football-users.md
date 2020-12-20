@@ -6,7 +6,7 @@ difficulty: Advanced
 
 # Block sites for specific users
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname. You can build these rules [globally for your entire organization](/tutorials//secure-web-gateway/block-football) or for specific users.
+You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname. You can build these rules [globally for your entire organization](/tutorials/secure-web-gateway/block-football) or for specific users.
 
 **🗺️ This tutorial covers how to:**
 
@@ -103,4 +103,4 @@ When users visit that section of Reddit (and any page within it), they will rece
 
 You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type. The block logs will also list the user who made the request.
 
-![Block Log](../static/secure-web-gateway/block-football/block-log.png)
+![Block Log](../../static/secure-web-gateway/block-football/block-log.png)
