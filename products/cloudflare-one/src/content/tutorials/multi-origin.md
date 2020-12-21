@@ -1,5 +1,7 @@
 ---
-order: 3
+updated: 2020-12-03
+category: 🌐 Connect Resources
+difficulty: Advanced
 ---
 
 # Connect multiple HTTP origins
@@ -30,13 +32,13 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
-![Choose Site](../../static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
 
-![Download Cert](../../static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
@@ -48,7 +50,7 @@ Run the following command to create a Tunnel. You can replace `new-website` with
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel. This Tunnel will represent both applications and both hostnames.
 
-![New Tunnel](../../static/secure-origin-connections/share-new-site/create.png)
+![New Tunnel](../static/secure-origin-connections/share-new-site/create.png)
 
 ## Configure `cloudflared`
 
@@ -96,6 +98,6 @@ Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the
 
 `5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
 
-![Add DNS](../../static/secure-origin-connections/multi-origin/multi-origin-dns.png)
+![Add DNS](../static/secure-origin-connections/multi-origin/multi-origin-dns.png)
 
 Once saved, you can share the subdomain created and visitors can reach both applications.

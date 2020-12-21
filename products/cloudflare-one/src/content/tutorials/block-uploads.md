@@ -1,19 +1,20 @@
 ---
-order: 3
+updated: 2020-11-28
+category: 🛡️ Secure Web Gateway
+difficulty: Advanced
 ---
 
-# Block sites by host and URL
+# Block file uploads to Google Drive
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to each hostnames or to block URL paths without blocking the rest of the hostname.
+You can use Cloudflare Gateway and the Cloudflare WARP client application to prevent enrolled devices from uploading files to an unapproved cloud storage provider.
 
 **🗺️ This tutorial covers how to:**
 
-* Enroll devices into Gateway
-* Create a Gateway policy to block URLs that contain a hostname
-* Create a Gateway policy to block URLs that contain a URL path
-* Review the block events in the Gateway logs
+* Create a Gateway policy to block file uploads to a specific provider
+* Enroll devices into a Cloudflare for Teams account where this rule will be enforced
+* Log file type upload attempts
 
-**⏲️Time to complete: 25 minutes**
+**⏲️Time to complete: ~45 minutes**
 
 ## Configure Cloudflare Gateway
 
@@ -30,11 +31,11 @@ First, you will need to determine which devices can enroll. To begin, you will n
 
 Next, build a rule to decide which devices can enroll into your Gateway account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
 
-![Device List](../../static/secure-web-gateway/secure-dns-devices/device-page.png)
+![Device List](../static/secure-web-gateway/secure-dns-devices/device-page.png)
 
 Click `Device Settings` to build the enrollment rule. In the policy, define who should be allowed to enroll a device and click `Save`.
 
-![Enroll Rule](../../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
+![Enroll Rule](../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
 
 ## Enroll a device
 
@@ -42,19 +43,19 @@ You can use the WARP client to enroll a device into your security policies. Foll
 
 Once installed, click the gear icon.
 
-![WARP](../../static/secure-web-gateway/secure-dns-devices/warp.png)
+![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
 Under the `Account` tab, click `Login with Cloudflare for Teams`.
 
-![Account View](../../static/secure-web-gateway/secure-dns-devices/account-view.png)
+![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
 Input your Cloudflare for Teams org name. You will have created this during the Cloudflare Access setup flow. You can find it under the `Authentication` tab in the `Access` section of the sidebar.
 
-![Org Name](../../static/secure-web-gateway/secure-dns-devices/org-name.png)
+![Org Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`.
 
-![Confirm WARP](../../static/secure-web-gateway/block-uploads/with-warp.png)
+![Confirm WARP](../static/secure-web-gateway/block-uploads/with-warp.png)
 
 ## Configure the Cloudflare certificate
 
@@ -64,50 +65,50 @@ Download the Cloudflare certificate provided in the [instructions here](https://
 
 Next, follow [these instructions](https://developers.cloudflare.com/gateway/connecting-to-gateway/install-cloudflare-cert) to install the certificate on your system.
 
-## Build a hostname policy
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Click the **Settings** tab and toggle `Proxy Settings` to enabled.
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Scroll to the bottom and toggle `Proxy Settings` to enabled.
+![Add Policy](../static/secure-web-gateway/block-uploads/filter-toggle.png)
 
-![Confirm WARP](../../static/secure-web-gateway/block-football/with-warp.png)
+## Create a Gateway HTTP policy
 
-Click **Add a rule** to add a new HTTP policy. You can build rules that match an exact hostname or, like the example here, rules that use regular expressions to match for patterns.
+Next, you can [build a policy](https://developers.cloudflare.com/gateway/getting-started/configuring-http-policy) that will block file uploads to Google Drive. Navigate to the `Policies` page. On the HTTP tab, click `Add a policy`.
 
-The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host. You can also build a rule with an `is` operator and input `espn.com` directly.
+![Add Policy](../static/secure-web-gateway/block-uploads/add-policy.png)
 
-```
-.*espn\.com
-```
+Uploading files to Google Drive consists of `POST` and `PUT` methods made to `clients6.google.com`. To block Google Drive uploads, block these methods to that host.
 
-![Block ESPN](../../static/secure-web-gateway/block-football/block-espn-host.png)
+In the rule builder, add `Host is drive.google.com` and a second rule where `HTTP Method is POST`. Choose the Block action. Click `Save`.
 
-Once you have clicked **Create rule** you should see it appear at the bottom of the rule list. Gateway enforces rules from top to bottom. If you had a rule with higher precedence (ranked higher in the list) that allowed ESPN, that rule would allow the user before this rule could block.
+![Block POST](../static/secure-web-gateway/block-uploads/block-post.png)
 
-![Post ESPN](../../static/secure-web-gateway/block-football/post-espn.png)
+Add a second policy, replacing `POST` with `PUT`.
 
-## Build a URL policy
+![Block PUT](../static/secure-web-gateway/block-uploads/block-put.png)
 
-Some websites are organized by URL path, so blocking by host or subdomain is not sufficient. Instead, you must build rules for a specific URL path.
+You should now see both policies in the `Policies` view.
 
-In the example below, `reddit.com` is a website where different areas of interest are grouped into a URL string that follows `/r/`. In this case, `CFB` is the section of Reddit that discusses college football.
+![All Policies](../static/secure-web-gateway/block-uploads/all-policies.png)
 
-Matching for this URL requires a regular expression rule.
+<Aside>
 
-```
-/r/CFB
-```
+Alternatively, you can block all POST and PUT methods to `google.com` subdomains in the event that the `clients6` subdomain changes. However, this may block other Google functionality.
 
-![Block CFB](../../static/secure-web-gateway/block-football/block-cfb-url.png)
+</Aside>
 
-Click **Create rule** and you should see it appear in your rule list.
+## Test policy
 
-![Block CFB](../../static/secure-web-gateway/block-football/post-cfb.png)
+You can test the policy by attempting to upload a file to Google Drive. Google Drive should return an error message when blocked.
 
-## Blocks
+![Block Action](../static/secure-web-gateway/block-uploads/block-result.png)
 
-When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
+## View Logs
 
-![Block Page](../../static/secure-web-gateway/block-football/block-page.png)
+Once enabled, if a user attempts to upload a file you can view logs of the block.
 
-You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type.
+Navigate to the `Logs` section of the sidebar and choose `Gateway`. Open the Filter action and select `Block` from the dropdown under `Decision`.
 
-![Block Log](../../static/secure-web-gateway/block-football/block-log.png)
+![Block Action](../static/secure-web-gateway/block-uploads/block-logs.png)
+
+## Optional: Deploy via MDM
+
+You can deploy the WARP client on corporate devices in a way that does not require users to configure the Org Name. To do so, [follow these instructions](https://developers.cloudflare.com/warp-client/teams).
