@@ -16,7 +16,7 @@ When there are multiple routes with equal priority and different next-hops—Tun
 
 The use of ECMP routing provides load balancing across tunnels with the same priority.
 
-## Equal-cost muli-path routing
+## Equal-cost multi-path routing
 
 Equal-cost multi-path routing uses hashes calculated from packet data to determine routes. The hash always uses the source and destination IP addresses. For TCP and UDP packets, the hash includes the source and destination ports as well. The ECMP algorithm divides the hash for each packet by the number of equal-cost next hops. The modulus (remainder) determines the route the packet takes.
 
