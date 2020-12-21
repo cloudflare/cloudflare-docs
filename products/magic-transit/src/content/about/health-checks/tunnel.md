@@ -39,7 +39,7 @@ Magic Transit uses tunnel health check packets to prioritize and steer traffic a
 
 There are three tunnel health states: **_Healthy_** tunnels are preferred to **_Degraded_** tunnels, and _Degraded_ tunnels are preferred to those that are **_Down_**.
 
-Magic Transit steers traffic to tunnels based on priorities you set when you [assign-tunnel-route-priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the [onboarding process](/set-up/onboarding).
+Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the [onboarding process](/set-up/onboarding).
 
 Tunnel routes with lower values have priority over those with higher values.
 
