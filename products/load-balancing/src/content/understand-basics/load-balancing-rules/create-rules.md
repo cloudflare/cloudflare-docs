@@ -21,12 +21,17 @@ To create a Load Balancing rule in the Cloudflare dashboard, follow this workflo
 ## Create a new Load Balancing rule
 
 1. Log in to your Cloudflare Account Home and click the site you want to manage in the dashboard.
-1. In the Cloudflare dashboard, click the **Traffic** app, then select the **Load Balancing** tab. 
+
+1. In the Cloudflare dashboard, click the **Traffic** app, then select the **Load Balancing** tab.
+
   ![Load Balancing tab in the Traffic app](../../static/images/load-balancing-tab.png)
+
 1. To add a rule to an existing load balancer, click the **Edit** link associated with the load balancer you want to manage. Otherwise, click **Create Load Balancer** and follow the workflow in [_Create a load balancer in the Cloudflare dashboard_](/create-load-balancer-ui).
   
   The **Edit Load Balancer** page displays:
+
   ![Edit Load Balancer page in Traffic app](../../static/images/edit-load-balancer-hostname.png)
+
 1. In the breadcrumb links for the Edit Load Balancer workflow, click **Custom Rules**.
 
   The **Custom Rules** card displays:
@@ -86,7 +91,7 @@ Now that you have configured a Load Balancing action, continue to the next secti
 
 <Aside type='warning' header='Warning'>
 
-Unless follow these steps and save **not only** the new rule **but also** the load balancer configuration, your rule and any configuration changes you made will be lost.
+Unless you follow these steps and save **not only** the new rule **but also** the load balancer configuration, your rule and any configuration changes you made will be lost.
 
 </Aside>
 

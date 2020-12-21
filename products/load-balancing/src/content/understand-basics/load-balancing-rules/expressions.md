@@ -15,6 +15,8 @@ When working with [Load Balancing rules](/understand-basics/load-balancing-rules
 
 The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
+---
+
 ## Simple expressions
 
 Simple expressions are composed of three elements:
@@ -37,7 +39,7 @@ In general, simple expressions use this pattern:
 <field> <operator> <value>
 ```
 
-For a list of supported fields and comparison operators, see 
+For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
 
 ## Compound expressions
 
@@ -57,6 +59,8 @@ In general, compound expressions use this pattern:
 ```
 
 Note that a compound expression can itself be one of the operands of a logical operator. In this way, you can use multiple operators to construct a compound expression from many individual expressions.
+
+---
 
 ## Working with expressions
 
@@ -94,3 +98,13 @@ The Expression Editor displays:
 ![Expression Editor in Load Balancing tab of Traffic app](../../static/images/rules-editor-1.png)
 
 To return to the builder, click **Use expression builder**.
+
+### Rules lists
+
+Rules Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your Load Balancing expressions.
+
+For example, you might create a list of known office IP addresses and use it in a Load Balancing rule that selects a specific pool for requests from the addresses in the list.
+
+Cloudflare stores your lists at the account level and sends to the edge, so you can view, manage, and incorporate them into firewall rules for any of your zones.
+
+For more, see [_Rules Lists_](https://developers.cloudflare.com/firewall/cf-firewall-rules/rules-lists) in the Firewall Rules documentation.
