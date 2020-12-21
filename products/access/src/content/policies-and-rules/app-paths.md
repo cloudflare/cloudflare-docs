@@ -10,7 +10,7 @@ You can create unique rules for parts of an application that share a root path. 
 * Policy A restricts access to that path to members of the engineering team.
 * A tool deployed at `dashboard.com/eng/exec` that only the executive team should be able to access.
 * When using only policy A, this path inherits the rules from policy A and members of the engineering team can access that path. You can instead create a second policy, policy B, to restrict access to the executive team only.
-* When applying Policy B to `dashboard.com/eng/`exec, the more specific policy takes precedence. The `/exec` path is gated by policy B instead of relying on the rules in policy A.
+* When applying Policy B to `dashboard.com/eng/exec`, the more specific policy takes precedence. The `/exec` path is gated by policy B instead of relying on the rules in policy A.
 
 ## Subdomains
 
