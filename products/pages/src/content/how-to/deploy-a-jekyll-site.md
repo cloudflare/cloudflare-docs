@@ -12,7 +12,7 @@ We recommend using [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on 
 $ rbenv install 2.7
 ```
 
-With Ruby installed, yuo can install the `jekyll` Ruby gem:
+With Ruby installed, you can install the `jekyll` Ruby gem:
 
 ```sh
 $ gem install jekyll
