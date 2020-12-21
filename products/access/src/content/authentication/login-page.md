@@ -35,7 +35,7 @@ This will allow you to add an organization name, a custom header and footer, a l
 
 Any changes you make will be reflected in real time in the **Preview** card.
 
-![Preview Card](../static/app-launch/preview-card-login.png)
+![Preview Card](../static/app-launch/login-customization.gif)
 
 Once you’re satisfied with your customization, click **Save**.
 

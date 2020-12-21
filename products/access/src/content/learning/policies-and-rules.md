@@ -1,5 +1,6 @@
 ---
 order: 4
+hidden: true
 ---
 
 # Policies and rules
