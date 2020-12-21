@@ -47,11 +47,10 @@ All three settings can be enabled in an Application’s settings menu.
 
 To reach the settings menu:
 
-1. Navigate to the [Teams Dashboard](https://dash.teams.cloudflare.com).
-2. Select **Applications**.
-3. Locate the application for which you would like to enable these settings.
-4. Click **Edit**.
-5. Select **Settings**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. Locate the application for which you would like to enable these settings.
+1. Click **Edit**.
+1. Select **Settings**.
 
 ![Settings menu](../../static/browser-cookies.png)
 

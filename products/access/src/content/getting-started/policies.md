@@ -2,70 +2,12 @@
 order: 3
 ---
 
-# Policies
+# Policy management
 
-Access policies let you define who has access to your organization's applications. To build an Access policy, you will have to combine different elements; the way you assemble these "building blocks" determines the scope and effectiveness of your policy.
+<Aside>
 
-The elements that make up an Access policy are:
-
-* **Actions**
-* **Rules**
-* **Criteria**
-
-You can find more information about how policies work in the [Policies and rules learning page](/learning/policies-and-rules).
-
-## Actions
-
-Actions let you define what *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
-
-The action is the first element you'll be asked to configure when you create an Access policy in the Teams dash. You can set only one action per policy.
-
-These are the action types you can choose from:
-
-* **​Allow**.  
-    The allow action allows users that meet certain criteria to reach an application behind Access. 
-* **Block**.  
-    The block action prevents users from reaching an application behind Access. 
-* **Bypass**.  
-    The bypass action disables any Access enforcement for traffic that meets the defined rule criteria.
-* **Service Auth**.  
-    Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
-
-**Note.** When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If Always use HTTPS is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
-
-## Rules
-
-Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need. 
-
-These are the rule types you can choose from:
-
-| Include | Exception | Require |
-| ------- | ------- | ------- |
-| The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | Exceptions work like a NOT logical operator. A user meeting any Exclude criteria won’t be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
-
-## Criteria
-
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`. 
-
-Here is a list of all the criteria you can apply:
-
-* **Emails** — `you@company.com`
-* **Emails ending in** — `@company.com`
-* **Access groups** — `example-team`
-* **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
-* **Everyone** — allows, denies, or bypasses access to everyone.
-* **Country** – uses the IP address to determine country.
-* **Valid Certificate** - the request will need to present any valid client certificate.
-* **Common Name** - the request will need to present a valid certificate with an expected common name.
-* **Any Access Service Token** - the request will need to present the headers for any [service token](/access-service-auth/service-tokens) created for this account.
-* **Service Token** - the request will need to present the correct service token headers configured for the specific application
-* **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
-* **Authentication Method** - checks the [multifactor authentication](/learning/mfa-requirements) method used by the user, if supported by the identity provider.
-* **WARP** - checks if the user's machine is running the Cloudflare WARP client.
-* **Gateway** - checks if the user's machine is running your organization's Gateway configuration.
-
-
-## Policy management
+To learn more about policies, visit the dedicated section [Policies and rules](/policies-and-rules).
+</Aside>
 
 Policies are properties of applications. Creating the first policy for an application is part of the set up process for that application.
 
@@ -73,28 +15,50 @@ You can then choose to edit or delete that first policy after completing the app
 
 There is no limit to the number of policies you can set up for your applications.
 
+## Add a policy
+
+To add an Access policy:
+
+1. On the Teams dashboard, navigate to the **Access > Applications** page.
+1. Locate the application for which you want to create the policy.
+1. Click **Add a Rule**.
+
+ ![Add rule](../static/summary/add-rule.png)
+
+1. Select a **Rule name**. This name will identify your policy in the list of application policies.
+1. Select a **[Rule action](/policies-and-rules#actions)**. 
+1. Configure as many **[Rules](/policies-and-rules#rules)** as needed.
+1. Click **Save rule**.
+
+Your policy has now been added to the application.
+
+## Edit a policy
+
 To make any changes to an application’s policies:
 
 1. On the Teams dashboard, navigate to the **Access > Applications** page.
-2. Locate the application for which you want to change the policies.
-3. Click **Edit**. This will automatically redirect you to the app’s **Policies** section.
+1. Locate the application for which you want to change the policies.
+1. Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
 ![Policies section](../static/summary/policies-section.png)
 
-4. Once in the **Policies** section:
-  * To make changes to an existing policy, click Edit.
-  * To delete a policy, click Delete.
-  * To add a new policy, click Add a policy on top of the Policies card.
+1. Once in the **Policies** section, you can edit the **Rule name**, the **Rule action**, and any rules you had configured.
+1. Once you’ve made all the necessary changes, click **Save application**.
 
-5. Once you’ve made all the necessary changes, click **Save application**.
+## Delete a policy
 
-## Policy evaluation
+To delete an Access policy:
 
-For [self-hosted applications](/getting-started/applications#protect-a-self-hosted-application), policies are evaluated on every request to that application regardless of a user’s session length. 
+1. On the Teams dashboard, navigate to the **Access > Applications** page.
+1. Locate the application for which you want to delete the policy.
+1. Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
+1. Locate the policy you want to delete and click **Delete**.
+1. A pop-up message will ask you to confirm your decision to delete the policy. Click **Delete**.
+1. Click **Save application**.
 
-For [SaaS applications](/getting-started/applications#protect-a-saas-application), policies are only evaluated at the time of login. A user’s session will then be controlled by the specific SaaS application.
+Your policy has now been deleted.
 
-To learn more on how Access evaluates policies, read the [section about changes in user context](/learning/policies-and-rules#changes-in-user-context).
+ 
 
 <!--
 
