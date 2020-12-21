@@ -38,6 +38,6 @@ Check out the [L7 firewall reference section](/reference/policy/#l7-firewall) fo
 
 ## Enable L7 filtering
 
-At the bottom of the `HTTP` policies page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
+In the settings (Gateway → Policies → Settings) page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
 
 Do not enable filtering without first [configuring certificates](https://developers.cloudflare.com/gateway/policies/configure-block-page/#add-certificate-to-your-system) on the devices enrolled, otherwise you will prevent those devices from connecting to the Internet.
