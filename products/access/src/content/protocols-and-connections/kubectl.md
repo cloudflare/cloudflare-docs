@@ -86,3 +86,9 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 ```sh
 $ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
 ```
+
+If you want to use Cloudflare Access to protect an Azure AKS cluster, exclude the [login + refresh-token endpoints](https://docs.microsoft.com/en-us/azure/aks/concepts-identity#webhook-and-api-server) from the `HTTPS_PROXY` first. This will prevent the login and refresh mechanisms from going through the proxy and failing.
+
+```sh
+$ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 NO_PROXY=login.microsoftonline.com kubectl"
+```
