@@ -135,7 +135,6 @@ curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
   "name": "readonly token",
   "policies": [
     {
-      "id": "f267e341f3dd4697bd3b9f71dd96247f",
       "effect": "allow",
       "resources": {
         "com.cloudflare.api.account.zone.eb78d65290b24279ba6f44721b3ea3c4": "*",
