@@ -91,4 +91,4 @@ If you need to use a specific version of a language, e.g. Node.js or Ruby, you c
 | Ruby          | `RUBY_VERSION`       | `.ruby-version`           |
 | Yarn          | `YARN_VERSION`       |                           |
 
-If you're looking to set a specific version of a framework your Cloudflare Workers project is using, note that Pages will respect your package manager of choice during your build process. For instance, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` NPM package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
+If you're looking to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For instance, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` NPM package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
