@@ -105,7 +105,6 @@ This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](http
 
 ![privacy command](../static/dns-over-discord/privacy-command.png)\
 _`/privacy`_
-_`/help`_
 
 ### github command
 
