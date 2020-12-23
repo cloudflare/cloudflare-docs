@@ -12,14 +12,11 @@ The fallback origin is used to route the traffic of your Custom Hostnames.  The 
 1. Sign up your desired zone at [www.cloudflare.com](https://www.cloudflare.com) and select the Free plan.
 2. Add a DNS record pointing to the origin (fallback origin) for Cloudflare to send custom hostname traffic. This hostname is not provided to customers.  Name the hostname according to your naming convention.  For example: `proxy-fallback.saasprovider.com`.
 3. Set up an additional DNS CNAME record to serve as the CNAME target for your end customers.  CNAME this record to your fallback origin, and use a more user-friendly CNAME target for customers.  This record can optionally be a wildcard, e.g. `*.customers.saasprovider.com`.
-4. Notify your Cloudflare Account Team of:
-    * The zone you set up, and
-    * The fallback DNS record created in step 2.
-5. Wait for your Account Team to upgrade the zone to the Enterprise plan.
-6. Retrieve your zone’s
+4. Upgrade your zone to an Enterprise plan.
+5. Retrieve your zone’s
     * __[Global API Key](https://support.cloudflare.com/hc/articles/200167836#12345682)__, and
     * __Zone ID__ (via the __Overview__ app of the Cloudflare dashboard). Alternatively, [retrieve a user’s zones and associated Zone IDs](https://api.cloudflare.com/#zone-list-zones) via the Cloudflare API.
-7. Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
+6. Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
 
 ```bash
 $ curl -XPUT
