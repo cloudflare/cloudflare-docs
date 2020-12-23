@@ -4,9 +4,9 @@ order: 2
 
 # DNS over Discord
 
-Ever wanted to make DNS requests from the comfort of your Discord server? Well now you can, thanks to the [@1.1.1.1 bot](https://dns-over-discord.v4.wtf/invite).
+Ever wanted to make DNS requests from the comfort of your Discord server? Well now you can, thanks to the [@1.1.1.1 bot](https://cfl.re/3nM6VfQ).
 
-To start using the DNS over Discord bot, invite it to your Discord server using this link: [https://dns-over-discord.v4.wtf/invite](https://dns-over-discord.v4.wtf/invite)
+To start using the DNS over Discord bot, invite it to your Discord server using this link: [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ)
 
 ## dig command
 
@@ -108,7 +108,8 @@ _`/privacy`_
 
 ### github command
 
-The DNS over Discord bot is open-source (here), and the `/github` command provides a quick link to access this GitHub repository.
+The DNS over Discord bot is open-source, and the `/github` command provides a quick link to access the GitHub repository.
+The GitHub repository can be access with [https://dns-over-discord.v4.wtf/github](https://dns-over-discord.v4.wtf/github).
 
 ![github command](../static/dns-over-discord/github-command.png)\
 _`/github`_
