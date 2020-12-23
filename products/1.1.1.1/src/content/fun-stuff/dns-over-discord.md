@@ -109,7 +109,7 @@ _`/privacy`_
 ### github command
 
 The DNS over Discord bot is open-source, and the `/github` command provides a quick link to access the GitHub repository.
-The GitHub repository can be access with [https://dns-over-discord.v4.wtf/github](https://dns-over-discord.v4.wtf/github).
+The GitHub repository can be accessed at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).
 
 ![github command](../static/dns-over-discord/github-command.png)\
 _`/github`_
@@ -117,7 +117,7 @@ _`/github`_
 ### invite command
 
 The `/invite` command provides the user with a quick link to invite the 1.1.1.1 DNS over Discord bot to another Discord server.
-The bot can be invited at any time with [https://dns-over-discord.v4.wtf/invite](https://dns-over-discord.v4.wtf/invite).
+The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ).
 
 ![invite command](../static/dns-over-discord/invite-command.png)\
 _`/invite`_
