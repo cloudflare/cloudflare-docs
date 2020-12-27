@@ -25,7 +25,7 @@ Durable Objects are named instances of a class you define.  Just like a class in
 Today, Wrangler does not support managing Durable Objects.  There are four steps to creating a Durable Object:
 
 * [__Writing the class__](#writing-a-class-that-defines-a-durable-object) that defines a Durable Object.
-* [__Configuring the class as Durable Object namespace__](#configuring-the-class-to-define-a-durable-object-namespace) and uploading it to Cloudflare's servers.
+* [__Configuring the class as Durable Object namespace__](#defining-a-durable-object-namespace) and uploading it to Cloudflare's servers.
 * [__Binding that namespace__](#binding-to-the-durable-object-namespace) into a Worker.
 * [__Instantiating and communicating with a Durable Object__](#instantiating-and-communicating-with-a-durable-object) from a running Worker via the Fetch API.
 
