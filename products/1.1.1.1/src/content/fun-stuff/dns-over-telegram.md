@@ -6,7 +6,7 @@ order: 4
 
 To perform DNS over Telegram, you will need the Telegram app. For the unfamiliar, Telegram is an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
 
-First, you will need to add the 1.1.1.1 bot to your friends list in Telegram. Open the Telegram app, click on 'contacts' and search for `onedotonedotonedotonebot`.
+First, you will need to add the 1.1.1.1 bot to your friends list in Telegram. Open the Telegram app, click on 'contacts' and search for `onedotonedotonedotonedotbot`.
 
 ![search](../static/search.png)
 
