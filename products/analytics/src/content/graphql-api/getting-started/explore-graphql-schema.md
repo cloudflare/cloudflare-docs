@@ -7,62 +7,66 @@ order: 40
 
 One of the great features of a GraphQL API is that it offers "introspection"—you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform.
 
-_GraphiQL_ uses this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the **Docs** link on the right-hand side and then drill down, starting with `query` and proceeding to `viewer` and then `zone`. GraphiQL also uses introspection to provide query auto-complete and syntax validation.
+[GraphiQL]([GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme)) uses introspection to provide the **Documentation Explorer** so that you can visually browse the Analytics schema, including available data sets (nodes) and available fields.
 
-You can explore the schema of the Coudflare GraphQL endpoint in a GraphQL client. The examples below use the GraphiQL client.
+This article provides an introduction to the GraphQL Documentation Explorer.
 
-Before you begin, configure the API endpoint and HTTP headers in the GraphQL client.
+## Prerequisites
 
-## Use the Documentation Explorer
+Before you begin, [configure the API endpoint and HTTP headers](/graphql-api/getting-started/authentication/graphql-client-headers) in the GraphQL client.
 
-Click **Docs** to open the **Documentation Explorer** pane.
+## Open the Documentation Explorer
 
-A list of available nodes displays. The nodes in the list follow this syntax:
+To open the GraphiQL Documentation Explorer, click the **Docs** link in header of the response pane:
+
+![GraphiQL Docs link](../../static/images/graphiql-docs-link.png)
+
+A list of available objects displays. The objects in the list follow this syntax:
 
 ```
-node-name: node-type-definition
+object-name: object-type-definition
 ```
 
-## Find the type definition of a node
+## Find the type definition of an object
 
-When you first open the **Documentation Explorer** pane, the **mutation** and `query` nodes display:
+When you first open the **Documentation Explorer** pane, the `mutation` and `query` root types display:
 
 ![Mutation and query nodes](../../static/images/docs-query.png)
 
-In this example `query` is the name of the node, and `Query` is the type definition of the node.
+In this example `query` is the name of a root, and `Query` is the type definition.
 
 ## Find the fields available for a given type definition
 
 Click on the **type definition** of a node to view the fields that it provides. The **Documentation Explorer** pane also displays descriptions of the nodes.
 
-Click the `Query` type definition. The **Documentation Explorer** panel displays the fields that the `query` node provides. In this example, the fields are `cost` and `viewer`.
+For example, click the **Query** type definition. The **Documentation Explorer** panel displays the fields that Query` provides. In this example, the fields are `cost` and `viewer`.
 
 ![Cost and viewer fields](../../static/images/docs-viewer.png)
 
 ## Find the arguments associated with a field
 
-Click on the type definition of the `viewer` field to list its sub-fields. The `viewer` field provides sub-fields that allow you to query `accounts` or `zones` data:
+Click the type definition of the `viewer` field to list its sub-fields. The `viewer` field provides sub-fields that allow you to query `accounts` or `zones` data:
 
 ![viewer fields](../../static/images/docs-zone-filter.png)
 
 The `accounts` and `zones` fields take arguments to specify which data set to query.
 
-For the `zones` node you can provide a filter of `ZoneFilter_InputObject` type. To view the fields available to filter, click **ZoneFilter_InputObject**.
+For example, the `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter_InputObject**.
 
 To limit the amount of search results that the query returns, click the **limit** argument.
 
 ## Find the search nodes available for a zone
 
-To view a list of the search nodes available for a zone, click on the `zones` type definition after the colon (`:`) in the `zones` field:
+To view a list of the data sets available for a zone, click on the `zones` type definition after the colon (`:`) in the `zones` field:
 
 ![Zones type definition](../../static/images/docs-zone.png)
 
-A list of **search nodes** appears, with a brief description of their behavior and a list of valid arguments. Arguments that end with an exclamation mark (`!`) are required.
+A list of **search nodes** displays, with a brief description of their behavior and a list of valid arguments. Arguments that end with an exclamation mark (`!`) are required.
 
 ![Search nodes](../../static/images/docs-fw-data-set.png)
 
-Refer to [Data Sets (tables)](/graphql-api/features/data-sets) for details on nomenclature and behavior of these nodes.
+Refer to [_Data Sets (tables)_](/graphql-api/features/data-sets) for details on nomenclature and behavior of these nodes.
 
-To view the fields that a node provides, click on its type definition. If you click on the **ZoneFirewallEventsAdaptive** type definition in the  **firewallEventsAdaptive** node, a list of fields is displayed:
+To view the fields available for a particular data set, click on its type definition. If you click on the **ZoneFirewallEventsAdaptive** type definition in the  **firewallEventsAdaptive** node, a list of fields is displayed:
 
 ![ZoneFirewallEventsAdaptive type definition](../../static/images/docs-fw-fields-list.png)
