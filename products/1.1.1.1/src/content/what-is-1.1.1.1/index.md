@@ -18,7 +18,7 @@ How do resolvers know how to find the address of a domain name? They work backwa
 
 Every resolver knows how to find the invisible ‘.’ at the end of domain names (e.g. cloudflare.com.). There are [hundreds of servers](http://www.root-servers.org/) all over the world that host the ‘.’ file. Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/). Resolvers are [hard coded to know the IP addresses](http://www.internic.net/domain/named.root) of those servers.
 
-The resolver asks one of the root servers where to find the next link in the chain, the TLD or domain ending. An example of a TLD is .com or .org. Luckily the root servers store the locations of all the TLD servers, so they can return which IP address the DNS resolver should go ask next.
+The resolver asks one of the root servers where to find the next link in the chain, the top-level domain (abbreviated to TLD) or domain ending. An example of a TLD is .com or .org. Luckily the root servers store the locations of all the TLD servers, so they can return which IP address the DNS resolver should go ask next.
 
 The resolver then asks the TLD’s servers where it can find the domain it is looking for, for example, a resolver might ask .com where to find cloudflare.com. TLD’s host a file containing the location of every domain using the TLD.
 
