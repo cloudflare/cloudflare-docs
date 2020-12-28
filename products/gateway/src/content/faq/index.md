@@ -59,7 +59,7 @@ If you have multiple policies and both policies are applied to a single location
 Assuming the location is configured correctly, Gateway will log the DNS queries and show them in the analytics dashboard. As there are no policies assigned to the location, Gateway will not block any DNS queries.
 
 ## How can I test if SafeSearch is working?
-Visit the [SafeSearch page](/getting-started/configuring-policies/safesearch) to see how you can test if SafeSearch is working.
+Visit the [SafeSearch page](/getting-started/safesearch) to see how you can test if SafeSearch is working.
 
 ## In what order does Gateway apply the rules inside a policy?
 Visit the [Policies page](/reference/policy) to see in what order Gateway applies its rules inside a policy.
