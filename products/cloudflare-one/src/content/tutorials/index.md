@@ -4,7 +4,7 @@ hideChildren: true
 order: 1
 ---
 
-import ContentTable from "../../components/content-table"
+import ContentTable from "../components/content-table"
 
 # Tutorials
 
