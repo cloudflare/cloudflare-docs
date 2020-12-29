@@ -2,4 +2,4 @@
 order: 1
 ---
 
-# Setup
+# Teams deployment
