@@ -1,6 +1,6 @@
 ---
 updated: 2020-11-28
-category: 🌐 Connect Resources
+category: 🌐 Connections
 difficulty: Medium
 ---
 

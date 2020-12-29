@@ -1,6 +1,6 @@
 ---
 updated: 2020-11-30
-category: 🛡️ Secure Web Gateway
+category: 🛡️ Web Gateway
 difficulty: Medium
 ---
 
