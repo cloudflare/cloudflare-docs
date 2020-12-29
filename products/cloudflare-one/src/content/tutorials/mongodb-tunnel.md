@@ -309,10 +309,6 @@ data:
 
 Once deployed, you can run `cloudflared` on the client side to connect to the MongoDB deployment. Add the following lines to your SSH configuration file, replacing the examples with your hostname and details. The `--destination` value should match the URL of the SSH Proxy service configured previously.
 
-This is a one-time step. When you next attempt to make an SSH connection to the deployment, `cloudflared` will launch a browser window and prompt you to authenticate. Once authenticated, you will be connected if you have a valid session. Once the tunnel is established, all requests to `localhost:27000` on your machine will be forwarded to `/socket/mongodb-27017.sock` on the SSH proxy container.
-
-You can then set MongoDB Compass to connect to `localhost:27000`.
-
 ```bash
 Host mongodb
   ProxyCommand /usr/local/bin/cloudflared access ssh --hostname mongodb.widgetcorp.tech --destination ssh-proxy.mongodb.svc.cluster.local:22
@@ -320,3 +316,9 @@ Host mongodb
   User root
   IdentityFile /Users/username/.ssh/id_rsa
 ```
+
+This is a one-time step. When you next attempt to make an SSH connection to the deployment, `cloudflared` will launch a browser window and prompt you to authenticate. Once authenticated, you will be connected if you have a valid session. Once the tunnel is established, all requests to `localhost:27000` on your machine will be forwarded to `/socket/mongodb-27017.sock` on the SSH proxy container.
+
+You can then set MongoDB Compass to connect to `localhost:27000`.
+
+![Compass Config](../static/secure-origin-connections/mongodb-tunnel/compass-config.png)
