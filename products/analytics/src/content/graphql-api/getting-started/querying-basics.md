@@ -115,7 +115,7 @@ header: Query response from firewallEventsAdaptive
 }
 ```
 
-## Querying two data sets in a single API call
+## Query two data sets in a single API call
 
 This example query employs a broad range of GraphQL functionality. The example queries two data sets for the specified zone simultaneously, applies filters and aggregations, and sets a limit on the number of records returned. (Note that you must include the `limit` argument, which can be equal or up to 10,000.)
 
