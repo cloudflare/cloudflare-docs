@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import TimeAgo from "react-timeago";
+import "../css/docs-tutorials.css" 
 
 const getPageTitle = ({ frontmatter, headings }) => {
   if (!frontmatter) return "Not found";

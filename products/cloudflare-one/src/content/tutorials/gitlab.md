@@ -1,9 +1,9 @@
 ---
 updated: 2020-12-10
-category: 🔐 Zero Trust Rules
+category: 🔐 Zero Trust
 difficulty: Advanced
 ---
-# Secure GitLab with Zero Trust Rules for SSH and HTTP
+# Zero Trust GitLab SSH & RDP
 
 You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance of GitLab. Combined with Argo Tunnel, users can connect through HTTP and SSH and authenticate with your team's identity provider.
 

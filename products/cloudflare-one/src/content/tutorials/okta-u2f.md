@@ -1,6 +1,6 @@
 ---
 updated: 2020-12-07
-category: 🔐 Zero Trust Rules
+category: 🔐 Zero Trust
 difficulty: Medium
 ---
 
