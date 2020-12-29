@@ -8,7 +8,7 @@ difficulty: Advanced
 
 You can build Zero Trust rules to secure connections to MongoDB deployments using Cloudflare Access and Argo Tunnel. Argo Tunnel requires a lightweight daemon, `cloudflared`, running alongisde the deployment and as on the client side.
 
-In this example, a client  running `cloudflared` connects over SSH to a MongoDB deployment running on Kubernetes. The MongoDB Kubernetes deployment runs both the MongoDB database service and `cloudflared` as a sidecar that operates like a jump host.
+In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB deployment running on Kubernetes. The deployment example is structured to connect [Compass](https://www.mongodb.com/products/compass) to the MongoDB instance. The MongoDB Kubernetes deployment runs both the MongoDB database service and `cloudflared` as a ingress service that operates like a jump host.
 
 **🗺️ This tutorial covers how to:**
 
@@ -196,7 +196,7 @@ done;
 
 ## Configure Argo Tunnel
 
-Next, you can `cloudflared` to connect to Cloudflare's Edge using Argo Tunnel. Start by [downloading and installing](https://developers.cloudflare.com/argo-tunnel/getting-started/installation) the Argo Tunnel daemon, `cloudflared`.
+Next, you can use `cloudflared` to connect to Cloudflare's Edge using Argo Tunnel. Start by [downloading and installing](https://developers.cloudflare.com/argo-tunnel/getting-started/installation) the Argo Tunnel daemon, `cloudflared`.
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
@@ -230,11 +230,13 @@ The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem`
 
 If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](https://developers.cloudflare.com/argo-tunnel/create-tunnel#create-a-tunnel).
 
-### Configure the Tunnel sidecar
+Store the `JSON` file as a Kubernetes secret.
 
-The previous setps used `cloudflared` to generate a credentials file for your Cloudflare account. When run as a sidecar alongside the MongoDB Kubernetes deployment you will need to use a Docker image of `cloudflared`. Cloudflare makes an [official image available](https://hub.docker.com/r/cloudflare/cloudflared) in DockerHub.
+### Configure Argo Tunnel
 
-The configuration below will run a single replica of `cloudflared` as a sidecar alongside the MongoDB and SSH proxy services. `cloudflared` will proxy traffic to the SSH proxy service.
+The previous setps used `cloudflared` to generate a credentials file for your Cloudflare account. When run as a service alongside the MongoDB Kubernetes deployment you will need to use a Docker image of `cloudflared`. Cloudflare makes an [official image available](https://hub.docker.com/r/cloudflare/cloudflared) in DockerHub.
+
+The configuration below will run a single replica of `cloudflared` as an ingress point alongside the MongoDB and SSH proxy services. `cloudflared` will proxy traffic to the SSH proxy service. The `cloudflared` instance will run as its own deployment in a different namespace and, if network policy allows, ingress to any service in the Kubernetes node.
 
 <details>
     <summary>`cloudflared` Configuration</summary>
@@ -307,7 +309,9 @@ data:
 
 Once deployed, you can run `cloudflared` on the client side to connect to the MongoDB deployment. Add the following lines to your SSH configuration file, replacing the examples with your hostname and details. The `--destination` value should match the URL of the SSH Proxy service configured previously.
 
-This is a one-time step. When you next attempt to make an SSH connection to the deployment, `cloudflared` will launch a browser window and prompt you to authenticate. Once authenticated, you will be connected if you have a valid session.
+This is a one-time step. When you next attempt to make an SSH connection to the deployment, `cloudflared` will launch a browser window and prompt you to authenticate. Once authenticated, you will be connected if you have a valid session. Once the tunnel is established, all requests to `localhost:27000` on your machine will be forwarded to `/socket/mongodb-27017.sock` on the SSH proxy container.
+
+You can then set MongoDB Compass to connect to `localhost:27000`.
 
 ```bash
 Host mongodb
