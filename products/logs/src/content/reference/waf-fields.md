@@ -11,15 +11,15 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 
 <TableWrap>
 
-| Value | Action |
-|---|---|
-| <em><span style="font-weight: 400;">0</span></em> | Unknown |
-| <em><span style="font-weight: 400;">1</span></em> | Allow |
-| <em><span style="font-weight: 400;">2</span></em> | Drop |
-| <em><span style="font-weight: 400;">3</span></em> | Challenge Allow |
-| <em><span style="font-weight: 400;">4</span></em> | Challenge Drop |
-| <em><span style="font-weight: 400;">5</span></em> | Simulate |
-| <em><span style="font-weight: 400;">6</span></em> | Log |
+| Value | Action | Description |
+|---|---|---|
+| <em><span style="font-weight: 400;">0</span></em> | Unknown | Take no other action |
+| <em><span style="font-weight: 400;">1</span></em> | Allow | Bypass all subsequent WAF rules |
+| <em><span style="font-weight: 400;">2</span></em> | Drop | Block with an HTTP 403 response |
+| <em><span style="font-weight: 400;">3</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
+| <em><span style="font-weight: 400;">4</span></em> | Challenge Drop | Unused |
+| <em><span style="font-weight: 400;">5</span></em> | Simulate | Take no action other than logging the event |
+| <em><span style="font-weight: 400;">6</span></em> | Log | Increment the anomaly score for OWASP rules. Records actions only if the total anomaly score for all matching OWASP rules exceeds the overall trigger threshold for an OWASP action (challenge, block, simulate) |
 
 </TableWrap>
 
