@@ -65,7 +65,7 @@ A list of **search nodes** displays, with a brief description of their behavior 
 
 ![Search nodes](../../static/images/docs-fw-data-set.png)
 
-Refer to [_Data Sets (tables)_](/graphql-api/features/data-sets) for details on nomenclature and behavior of these nodes.
+Refer to [_Data Sets (tables)_](/graphql-api/features/data-sets) for details on the nomenclature and behavior of these nodes.
 
 To view the fields available for a particular data set, click on its type definition. If you click on the **ZoneFirewallEventsAdaptive** type definition in the  **firewallEventsAdaptive** node, a list of fields is displayed:
 

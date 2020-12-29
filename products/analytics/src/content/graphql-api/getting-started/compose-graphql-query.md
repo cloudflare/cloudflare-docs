@@ -5,61 +5,96 @@ order: 50
 
 # Create a query in a GraphQL client
 
-You can use a GraphQL client to build and execute queries to the GraphQL API endpoint. The example below uses the GraphiQL client.
+You can use a GraphQL client to build and execute queries to the GraphQL API endpoint. The example below uses the [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) client.
 
-Before you begin, configure the API endpoint and HTTP headers in the GraphQL client.
+## Prerequisites
 
-Click on the editing pane of GraphiQL and add the following base query:
+This article assumes that you are already familiar with [_Querying basics_](/graphql-api/getting-started/querying-basics).
 
-```json
-query {
-  viewer {
-    zones(filter: { zoneTag: "{zone-id}"}) {
+Before you begin, [configure the API endpoint and HTTP headers](/graphql-api/getting-started/authentication/graphql-client-headers) in the GraphiQL client.
 
-    }
-  }
-}
-```
+<Aside type='tip' header='Tip'>
 
-To explore the documentation for the nodes and fields in the Cloudflare GraphQL schema, click **Docs** to open the _Documentation Explorer_ pane.
+To explore the documentation for the data sets and fields in the Cloudflare GraphQL schema, click **Docs** to open the _Documentation Explorer_ pane.
 
-The GraphiQL client has auto completion, to assist query building. Place your cursor on the line under "zones" and start typing a word: a popup window appears, listing all the possible fields that contain that word. For example, if you type `firewall`, the popup displays the fields that return firewall information:
+For an introduction, see [Explore the GraphQL schema](/graphql-api/getting-started/explore-graphql-schema).
 
-![firewall nodes](../../static/images/create-query-fw-data-set.png)
+</Aside>
+
+## Set up a query and choose a data set
+
+Click on the editing pane of GraphiQL and add this base query, replacing `zone-id` with your Cloudflare zone ID:
+
+![GraphiQL base query](../../static/images/graphiql-base-query.png)
+
+<Aside type='tip' header='Tip'>
+
+To find the ID for a zone, log in to your Cloudflare account and click the site for which you want to obtain the zone ID. In the Cloudflare dashboard **Overview** page, scroll to the **API** section in the right sidebar, which displays your zone ID and account ID.
+
+</Aside>
+
+To assist query building, the GraphiQL client has word completion. Place your cursor on the line below `zones` and start entering a value—a popup menu displays. For example, when you type `firewall`, the popup displays the data sets that return firewall information:
+
+![firewall nodes](../../static/images/graphiql-word-completion.png)
 
 The text at the bottom of the list displays a short description of the data that the node returns.
 
-Select the field you want to use and insert it into your query: either click the item in the list, or scroll using  arrow keys and hit return.
+Select the data set you want to query and insert it—either click the item in the list, or scroll using arrow keys and press <kbd>Return</kbd>. This example uses the `firewallEventsAdaptive` data set.
 
-Hover your mouse over a field to open a popup window showing the documentation for that field. The following popup window appears when you hover over the `firewallEventsAdaptive` field:
+## Supply required parameters
 
-![Autocomplete popup](../../static/images/create-query-fw-data-set-description.png)
+Hover your mouse over a field to display a tooltip that describes the data set. In this example, hovering over the `firewallEventsAdaptive` node displays this description:
 
-Click on the node name (blue text) to display information about the field, including the required parameters, in the _Documentation Explorer_ pane.
+![GraphiQL parameters](../../static/images/graphiql-set-up-base-query.png)
 
-Click on the type definition (gold text) to display information about the field type in the _Documentation Explorer_ pane.
+To display information about the data set, including required parameters, click the data set name (blue text). The **Documentation Explorer** opens and displays details about the data set:
 
-Add the required parameters for the field in the editing pane: type the open parenthesis character, `(`, after the field name. GraphiQL inserts the closing parenthesis and opens a popup window with a list of required parameters:
+![GraphiQL parameters](../../static/images/graphiql-parameters.png)
 
-![GraphiQL filter popup](../../static/images/create-query-fw-data-set-filter.png)
+Note that the `filter` and `limit` arguments are required, as indicated by the exclamation mark (`!`) after their type definitions (gold text). In this example, the `orderBy` argument is not required, though when used it requires a value of type `ZoneFirewallEventsAdaptiveOrderBy`.
 
-Configure the required parameters.
+To browse a list of supported filter fields, click the filter type definition (gold text) in the Documentation Explorer. In this example the type is `ZoneFirewallEventsAdaptiveFilter_InputObject`:
 
-To add the data fields that you want to display, type the opening bracket `{` after the closing parenthesis containing parameters. GraphiQL automatically inserts the closing bracket. For readability, hit the return key between the brackets.
+![GraphiQL filter fields](../../static/images/graphiql-filter-fields.png)
 
-Click the field type definition to display the list of fields in in the  _Documentation Explorer_ pane:
+This example query shows the required `filter` and `limit` arguments for `firewallEventsAdaptive`:
 
-![List of fields](../../static/images/create-query-fw-data-set-field-type.png)
+![GraphiQL filter values](../../static/images/graphiql-filter-values.png)
 
-Start typing the name of a field that you want to fetch, to open an auto-complete list. Once you have entered all the fields you want, click the **Play** button to submit the query. The response pane contains the data fetched from the Cloudflare GraphQL API endpoint.
+## Define the fields to return with your query
 
-The GraphiQL client allows you to create variables to use in the query.
-In the following example, the _Query variables_ pane contains a variable that represents a zone ID:
+To browse the fields you can return with your query, hover your cursor over the dataset name in your query, and in the tooltip that displays, click the data type definition (gold text):
+
+![GraphiQL parameters](../../static/images/graphiql-set-up-base-query.png)
+
+**The Documentation Explorer** opens and displays a list of fields:
+
+![List of fields](../../static/images/graphiql-return-fields.png)
+
+To add the data fields that you want to display, type an opening brace (`{`) after the closing parenthesis for the parameters, then start typing the name of a field that you want to fetch. Use word completion to choose a field.
+
+This example query returns the `action`, `datetime`, `clientRequestHTTPHost`, and `userAgent` fields:
+
+![Example query with return fields](../../static/images/graphiql-query-return-field-values.png)
+
+Once you have entered all the fields you want your query to return, you can click the **Play** button to submit the query. The response pane contains the data fetched from the Cloudflare GraphQL API endpoint.
+
+![GraphiQL response](../../static/images/create-query-fw-data-set-play.png)
+
+## Variable substitution
+
+The GraphiQL client allows you to create variables for use in your queries.
+
+To add a query variable, click the **Query Variables** pane and enter a JSON object that defines  your variable.
+
+This example JSON object defines a query variable for a zone ID:
 
 ```json
 {"zoneTag":"xxxxxxxxx"}
 ```
 
-Use `$zoneTag` to refer to the variable in a query.
+To use a variable in your query, prepend the `$` character to your variable name and use it to replace the desired value. When using a variable as a value in a query, do not wrap the variable in quotes as you would for a literal value.
 
-![GraphiQL response](../../static/images/create-query-fw-data-set-play.png)
+This example query uses the zoneTag query variable to represent the zone ID:
+
+![GraphiQL query variables](../../static/images/graphiql-query-variables.png)
