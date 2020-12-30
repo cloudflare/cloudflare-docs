@@ -5,11 +5,11 @@ order: 40
 
 # Explore the Analytics schema with GraphiQL
 
-A useful feature a GraphQL API is that it offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform.
+The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, fields, and operations you can perform.
 
-[GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) is a GraphQL client that uses introspection to provide the **Documentation Explorer** so that you can visually browse a GraphQL schema.
+[GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) is a GraphQL client that uses introspection to provide the **Documentation Explorer**, a tool with which you can visually browse a GraphQL schema.
 
-This article provides an introduction to exploring the Analytics GraphQL schema with the GraphiQL Documentation Explorer.
+This article provides an introduction to browsing the Analytics GraphQL schema with the Documentation Explorer.
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ For example, click the **Query** type definition. The **Documentation Explorer**
 
 ![Cost and viewer fields](../../static/images/graphiql-doc-explorer-view-cost.png)
 
-To explore the schema, click the names of objects and definitions. You can also use search input (magnifying glass) and breadcrumb links in the header.
+To explore the schema, click the names of objects and definitions. You can also use the search input (magnifying glass icon) and breadcrumb links in the header.
 
 ## Find the arguments associated with a field
 
@@ -58,8 +58,6 @@ Click the type definition of the `viewer` field (gold text) to list its sub-fiel
 The `accounts` and `zones` fields take arguments to specify which data set to query.
 
 For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter_InputObject**.
-
-To limit the number of search results that the query returns, click **limit**.
 
 ## Find the data sets available for a zone
 

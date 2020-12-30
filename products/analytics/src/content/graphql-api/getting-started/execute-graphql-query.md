@@ -1,17 +1,17 @@
 ---
-title: Use curl to query the GraphQL API
+title: Use curl to query the Analytics API
 order: 60
 ---
 
 # Use curl to query the Analytics API
 
-You can submit a query built with the GraphiQL client as the payload in the `data` field of a POST request to the Analytics API.
+You can submit a [query built with the GraphiQL client](/graphql-api/getting-started/compose-graphql-query) as the payload in the `data` field of a POST request to the Analytics API.
 
-The advantage of executing the request with [curl](https://curl.se/) is that you can redirect the response to a file and execute other post processing methods.
+The advantage of executing a request with [curl](https://curl.se/) is that you can redirect the response to a file and execute other post processing methods.
 
-The GraphQL endpoint requires valid JSON, so you must pass the query as the _value_ part of a JSON _key:value_ pair with a key named "query".
+The GraphQL endpoint requires valid JSON, so you must pass the query as the _value_ part of a JSON _key:value_ pair with a key named `query`.
 
-Pass the list of variables in another JSON _key:value_ pair with a key named "variables".
+Pass the list of variables in another JSON _key:value_ pair with a key named `variables`.
 
 The script below returns the firewall events in one zone over the last 24 hours:
 

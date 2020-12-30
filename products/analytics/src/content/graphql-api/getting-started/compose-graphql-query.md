@@ -33,13 +33,13 @@ To find the ID for a zone, log in to your Cloudflare account and click the site 
 
 </Aside>
 
-To assist query building, the GraphiQL client has word completion. Place your cursor on the line below `zones` and start entering a value—a popup menu displays. For example, when you type `firewall`, the popup displays the data sets that return firewall information:
+To assist query building, the GraphiQL client has word completion. Insert your cursor in the query, in this case on the line below `zones`, and start entering a value to engage the feature. For example, when you type `firewall`, a popup menu displays the data sets that return firewall information:
 
 ![firewall nodes](../../static/images/graphiql-word-completion.png)
 
 The text at the bottom of the list displays a short description of the data that the node returns.
 
-Select the data set you want to query and insert it—either click the item in the list, or scroll using arrow keys and press <kbd>Return</kbd>. This example uses the `firewallEventsAdaptive` data set.
+Select the data set you want to query and insert it. Either click the item in the list, or scroll using arrow keys and press <kbd>Return</kbd>. This example uses the `firewallEventsAdaptive` data set.
 
 ## Supply required parameters
 
@@ -95,6 +95,6 @@ This example JSON object defines a query variable for a zone ID:
 
 To use a variable in your query, prepend the `$` character to your variable name and use it to replace the desired value. When using a variable as a value in a query, do not wrap the variable in quotes as you would for a literal value.
 
-This example query uses the zoneTag query variable to represent the zone ID:
+This example query uses the `zoneTag` query variable to represent the zone ID:
 
 ![GraphiQL query variables](../../static/images/graphiql-query-variables.png)

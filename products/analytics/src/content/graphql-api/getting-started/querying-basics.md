@@ -7,9 +7,7 @@ order: 20
 
 ## Structure of a GraphQL query
 
-GraphQL structures data as a graph. GraphQL uses a schema to define the  objects and their hierarchy in your data graph. You can explore the edges of the graph by using queries to get the data you need. These queries must respect the structure of the schema.
-
-Every GraphQL schema is different, which is one of the reasons it depends on being "introspective."
+GraphQL structures data as a graph. GraphQL uses a schema to define the objects and their hierarchy in your data graph. You can explore the edges of the graph by using queries to get the data you need. These queries must respect the structure of the schema.
 
 At the core of a GraphQL query is a _node_, followed by its _fields_. The node is an object of a certain _type_; the type specifies the fields that make up the object.
 
@@ -159,13 +157,13 @@ This is only an example. You must specify the <code>zoneTag</code> for your doma
 
 ## Introspection
 
-One of the great features of a GraphQL API is that it offers "introspection"—you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform. 
+The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, fields, and operations you can perform.
 
-_GraphiQL_ users this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `Query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
+For an introduction to browsing the Analytics GraphQL API, see [_Explore the Analytics schema with GraphiQL_](/graphql-api/getting-started/explore-graphql-schema).
 
 ## Helpful Resources
 
-Handy links for setting up the GraphQL Analytics API and learning about GraphQL.
+Here are some helpful articles about working with the Cloudflare Analytics API and GraphQL.
 
 ### Cloudflare specific
 
