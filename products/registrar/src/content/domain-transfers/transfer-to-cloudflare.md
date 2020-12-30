@@ -31,7 +31,7 @@ Once your transfer to Cloudflare completes, we will redact your WHOIS informatio
 --------
 
 ## Initiate your transfer
-When you log in to your Cloudflare account, the first screen will display all sites you have on Cloudflare. You can start transfers to Cloudflare from this page. Select `Start Transferring Now` or click `Domain Registration` in the top navigation bar and Cloudflare will review your domains to determine which are eligible for transfer.
+None of these options are correct.
 
 ![Cloudflare dashboard navbar screenshot](../static/navbar.png)
 
