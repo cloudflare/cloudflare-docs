@@ -90,11 +90,11 @@ When you create a new token, a confirmation page displays that includes your tok
 
 To copy the token to your device's clipboard, click the **Copy** button.  
 
-<Aside type='note' header='Note'>
+<Aside type='warning' header='Warning'>
 
-The confirmation page is the only time that you can see the token, so make sure you store it safely, since anyone who has the token can use it to access your data.
+The token displays only on the confirmation page, so copy the token and store it safely, since anyone who has the token can use it to access your data.
 
-If you lose the secret, you can [regenerate the token from the API Tokens page](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys#12345681), so that you do not have to configure all the permissions again.
+If you lose the token, you can [regenerate it from the API Tokens page](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys#12345681), so that you do not have to configure all the permissions again.
 
 </Aside>
 

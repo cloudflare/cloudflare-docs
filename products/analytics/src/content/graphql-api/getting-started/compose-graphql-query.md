@@ -1,9 +1,9 @@
 ---
-title: Create a query in a GraphQL client
+title: Create a query in GraphiQL
 order: 50
 ---
 
-# Create a query in a GraphQL client
+# Create a query in GraphiQL
 
 You can use a GraphQL client to build and execute queries to the GraphQL API endpoint. The example below uses the [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) client.
 
@@ -53,7 +53,7 @@ To display information about the data set, including required parameters, click 
 
 Note that the `filter` and `limit` arguments are required, as indicated by the exclamation mark (`!`) after their type definitions (gold text). In this example, the `orderBy` argument is not required, though when used it requires a value of type `ZoneFirewallEventsAdaptiveOrderBy`.
 
-To browse a list of supported filter fields, click the filter type definition (gold text) in the Documentation Explorer. In this example the type is `ZoneFirewallEventsAdaptiveFilter_InputObject`:
+To browse a list of supported filter fields, click the filter type definition (gold text) in the Documentation Explorer. In this example, the type is `ZoneFirewallEventsAdaptiveFilter_InputObject`:
 
 ![GraphiQL filter fields](../../static/images/graphiql-filter-fields.png)
 
@@ -77,7 +77,7 @@ This example query returns the `action`, `datetime`, `clientRequestHTTPHost`, an
 
 ![Example query with return fields](../../static/images/graphiql-query-return-field-values.png)
 
-Once you have entered all the fields you want your query to return, you can click the **Play** button to submit the query. The response pane contains the data fetched from the Cloudflare GraphQL API endpoint.
+Once you have entered all the fields you want your query to return, click the **Play** button to submit the query. The response pane contains the data fetched from the Cloudflare GraphQL API endpoint.
 
 ![GraphiQL response](../../static/images/create-query-fw-data-set-play.png)
 
