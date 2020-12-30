@@ -14,12 +14,12 @@ This article presents examples of queries you can use to populate your own dashb
 * [TCP flags](#tcp-flags)
 * [Executive summary](#executive-summary)
 
-Use the following workflow to build and test queries:
+Use this workflow to build and test queries:
 
-* Configure a GraphQL client with the Cloudflare GraphQL endpoint and your authorization information. Cloudflare recommends token authentication. _[Configure an Analytics API token](/graphql-api/getting-started/authentication/api-token-auth/)_ outlines how to create authentication tokens for the GraphQL Analytics API.
-* Construct the queries in the GraphQL client. You can use the introspective documentation in the GraphQL client to explore the nodes available. For further information about queries, refer to  _[Querying basics](/graphql-api/getting-started/querying-basics/)_.
-* Once you have constructed your queries, test them by running them from the GraphiQL client or by passing them as the payload in a cURL request to the GraphQL API endpoint. _[Querying Firewall Events with GraphQL](/graphql-api/tutorials/querying-firewall-events)_ presents an example of running a query using `curl`.
-* Use the queries to configure the widgets that you want in your dashboard.
+* Install and configure the [GraphiQL](https://www.electronjs.org/apps/graphiql) app to authenticate to the Cloudflare Analytics GraphQL API. Cloudflare recommends token authentication. (See _[Configure an Analytics API token](/graphql-api/getting-started/authentication/api-token-auth/)_.)
+* Construct the queries in the GraphiQL. You can use the introspective documentation in the GraphQL client to explore the nodes available. For further information about queries, refer to  _[Querying basics](/graphql-api/getting-started/querying-basics/)_.
+* Test your queries by running them from GraphiQL or by passing them as the payload in a cURL request to the GraphQL API endpoint.
+* Use the queries in your application to provide data for your dashboard widgets.
 
 ## Parameters and filters
 
@@ -27,7 +27,7 @@ These examples use the account ID for the Cloudflare account that you are queryi
 
 The queries also use a filter to specify the time interval that you want to query. The filter uses a start time and end time to define the time interval. You use different attributes to specify the start and end times, depending on the time period that you want to query. Refer to  _[Filtering](/graphql-api/features/filtering)_ for further information about filters.
 
-The following code shows the settings for a query against an account for data recorded on dates greater than or equal to `date_geq` and less then or equal to `date_leq`: 
+The following example queries for data with dates greater than or equal to `date_geq` and less than or equal to `date_leq`:
 
 ```json
 ---
@@ -44,9 +44,9 @@ header: Account and query time interval settings
 }
 ```
 
-This table lists the node names for the Network Analytics data sets that you can query. These represent the time ranges that you are interested in. Query nodes with the `Groups` suffix are rollups of aggregated data in a time interval. For more information about aggregated data sets, see _[Data Sets (tables)](/graphql-api/features/data-sets)_.
+This table lists Network Analytics data sets (nodes) and the `datetimeDimension` that you should use when querying data for a given time selection.
 
-When you want an aggregated view of data, use the Groups query nodes. For example, the ipFlows1mAttacksGroups data set represents minute-wise rollup reports of attack activity. _[Available data sets](/graphql-api/features/data-sets#available-data-sets)_ lists the data sets (and associated nodes) available in Cloudflare Analytics.
+When you want an aggregated view of data, use the `Groups` query nodes. For example, the `ipFlows1mAttacksGroups` data set represents minute-wise rollup reports of attack activity. For more detail, see [_Data sets_](/graphql-api/features/data-sets).
 
 <TableWrap>
 
@@ -179,7 +179,7 @@ query ipFlowTimeseries(
 
 ## Activity log
 
-This query returns an activity log summarizing minute-wise rollups of attack traffic in IP flows, and grouping the data by the fields listed in the `dimensions` field.
+This query returns an activity log summarizing minute-wise rollups of attack traffic in IP flows. The query groups the data by the fields listed in the `dimensions` object.
 
 ```json
 ---
