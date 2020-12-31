@@ -185,6 +185,8 @@ All properties of an incoming `Request` object (i.e. `event.request`) are read o
 
 In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s edge.
 
+All plans have access to:
+
 <Definitions>
 
 - `asn` <Type>string</Type>
@@ -210,6 +212,12 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 - `tlsVersion` <Type>string</Type>
 
   - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
+
+</Definitions>
+
+Business and Enterprise scripts have access to:
+
+<Definitions>
 
 - `requestPriority` <Type>string | null</Type>
 
