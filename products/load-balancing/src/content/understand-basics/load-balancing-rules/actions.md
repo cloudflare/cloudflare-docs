@@ -9,11 +9,11 @@ order: 30
 
 Actions tell Cloudflare how to handle HTTP requests that have matched a Load Balancing expression.
 
-Note that a single Load Balancing rule can include more than one action. 
+Note that a single Load Balancing rule can include more than one action.
 
 ## Supported Actions
 
-This table lists the available actions for Load Balancing rules. For a walkthrough on configuring actions in rules, see [_Creating Load Balancing rules_](/understand-basics/load-balancing-rules/create-rules).
+This table lists the actions available for Load Balancing rules. For a walkthrough, see [_Creating Load Balancing rules_](/understand-basics/load-balancing-rules/create-rules).
 
 <table style='width:100%'>
   <thead>

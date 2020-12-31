@@ -15,6 +15,8 @@ When working with [Load Balancing rules](/understand-basics/load-balancing-rules
 
 The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
+![Create Custom Rule dialog](../../static/images/traffic-app-create-custom-rule-dialog.png)
+
 ---
 
 ## Simple expressions
@@ -25,7 +27,7 @@ Simple expressions are composed of three elements:
 2. A representative **value** for that field, which Cloudflare compares with the actual value from the request.
 3. A **comparison operator**, which specifies how the value defined in the expression must relate to the actual value from the request for the operator to return `true`.
 
-If the comparison operator returns `true`, the request matches the expression.
+When the comparison operator returns `true`, the request matches the expression.
 
 This example expression returns true when a request URI path contains `/content`:
 
@@ -40,6 +42,8 @@ In general, simple expressions use this pattern:
 ```
 
 For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
+
+---
 
 ## Compound expressions
 
@@ -59,6 +63,8 @@ In general, compound expressions use this pattern:
 ```
 
 Note that a compound expression can itself be one of the operands of a logical operator. In this way, you can use multiple operators to construct a compound expression from many individual expressions.
+
+For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
 
 ---
 
@@ -83,9 +89,9 @@ Notice how the **Expression Preview** displays the expression in text:
 and (http.request.uri.query contains "webserver")
 ```
 
-For more on using Cloudflare’s visual expression builder, see [_Creating Load Balancing rules_](/create-rules).
+For a walkthrough, see [_Creating Load Balancing rules_](/understand-basics/load-balancing-rules/create-rules).
 
-### Expression editor
+### Expression Editor
 
 The Expression Editor is a text-only interface for creating Load Balancing expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor editor supports advanced features, such as support for grouping symbols (parentheses).
 

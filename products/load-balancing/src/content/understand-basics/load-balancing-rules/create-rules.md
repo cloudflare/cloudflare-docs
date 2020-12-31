@@ -61,7 +61,7 @@ Now that you have created a rule and named it, continue to the next section and 
 
 1. [Optional] To create a compound expression using logical operators, click the **And** or **Or** button.
 
-  A new expression displays. Edit the expression. This example uses the `and` operator and adds the requirement that the URI query string must contain `webserver`:
+  A new expression displays. Edit the expression. This example uses the `and` operator and adds the requirement that the URI query string contain `webserver`:
 
   ![Screenshot, Create Custom Rule dialog, add logical operator](../../static/images/create-custom-rule-compound-expression.png)
 
@@ -73,15 +73,15 @@ Now that you have built an expression, continue to the next section and [configu
 
 ## Configure a Load Balancing action
 
-1. To set an action for your rule, use the **Action** drop-down list. This example uses the _Pool selection_ action:
+1. To set an action for your rule, use the **Action** drop-down list. This example selects the _Pool selection_ action:
 
   ![Screenshot, Create Custom Rule dialog, choose action](../../static/images/create-custom-rule-action.png)
 
-1. The configuration options for the selected action display. This example shows the _Pool selection_ controls:
+  The configuration options for the selected action display:
 
     ![Screenshot, Create Custom Rule dialog, choose action](../../static/images/create-custom-rule-action-pool-selection.png)
 
-1. [Optional] Click **Add another action** to add another action to the rule.
+1. [Optional] Click **Add another action**.
 
 Now that you have configured a Load Balancing action, continue to the next section and [save the Load Balancing rule and configuration](#save-a-load-balancing-rule-and-configurationa).
 
