@@ -197,13 +197,21 @@ All plans have access to:
 
   - The three-letter airport code of the data center that the request hit, e.g. `"DFW"`.
 
-- `tlsCipher` <Type>string</Type>
-
-  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
-
 - `country` <Type>string | null</Type>
 
   - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
+
+- `httpProtocol` <Type>string</Type>
+
+  - HTTP Protocol, e.g. `"HTTP/2"`.
+
+- `requestPriority` <Type>string | null</Type>
+
+  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
+
+- `tlsCipher` <Type>string</Type>
+
+  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
 
 - `tlsClientAuth` <Type>Object | null</Type>
 
@@ -219,10 +227,6 @@ Business and Enterprise scripts have access to:
 
 <Definitions>
 
-- `requestPriority` <Type>string | null</Type>
-
-  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
-
 - `city` <Type>string | null</Type>
 
   - City of the incoming request, e.g. `"Austin"`.
@@ -230,10 +234,6 @@ Business and Enterprise scripts have access to:
 - `continent` <Type>string | null</Type>
 
   - Continent of the incoming request, e.g. `"NA"`.
-
-- `httpProtocol` <Type>string</Type>
-
-  - HTTP Protocol, e.g. `"HTTP/2"`.
 
 - `latitude` <Type>string | null</Type>
 
