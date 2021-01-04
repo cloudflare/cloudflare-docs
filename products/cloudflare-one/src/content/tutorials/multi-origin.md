@@ -54,7 +54,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Configure `cloudflared`
 
-You can now [configure](https://developers.cloudflare.com/argo-tunnel/configuration) `cloudflared` to route traffic to both applications for multiple hostnames using [ingress rules](https://developers.cloudflare.com/argo-tunnel/routing-to-tunnel/ingress). You must use a configuration file to do so.
+You can now [configure](https://developers.cloudflare.com/argo-tunnel/configuration) `cloudflared` to route traffic to both applications for multiple hostnames using [ingress rules](https://developers.cloudflare.com/argo-tunnel/configuration/ingress). You must use a configuration file to do so.
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 
