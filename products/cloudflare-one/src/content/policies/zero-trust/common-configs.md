@@ -6,7 +6,7 @@ order: 2
 
 This section addresses a few common policy configurations and best practices.
 
-For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies page](/policies/).
+For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [policy management page](/policies/zero-trust/policy-management).
 
 ## Allow
 
