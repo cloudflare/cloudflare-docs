@@ -185,6 +185,8 @@ All properties of an incoming `Request` object (i.e. `event.request`) are read o
 
 In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s edge.
 
+All plans have access to:
+
 <Definitions>
 
 - `asn` <Type>string</Type>
@@ -195,13 +197,21 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 
   - The three-letter airport code of the data center that the request hit, e.g. `"DFW"`.
 
-- `tlsCipher` <Type>string</Type>
-
-  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
-
 - `country` <Type>string | null</Type>
 
   - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
+
+- `httpProtocol` <Type>string</Type>
+
+  - HTTP Protocol, e.g. `"HTTP/2"`.
+
+- `requestPriority` <Type>string | null</Type>
+
+  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
+
+- `tlsCipher` <Type>string</Type>
+
+  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
 
 - `tlsClientAuth` <Type>Object | null</Type>
 
@@ -211,9 +221,11 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 
   - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
 
-- `requestPriority` <Type>string | null</Type>
+</Definitions>
 
-  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
+Business and Enterprise scripts have access to:
+
+<Definitions>
 
 - `city` <Type>string | null</Type>
 
@@ -222,10 +234,6 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 - `continent` <Type>string | null</Type>
 
   - Continent of the incoming request, e.g. `"NA"`.
-
-- `httpProtocol` <Type>string</Type>
-
-  - HTTP Protocol, e.g. `"HTTP/2"`.
 
 - `latitude` <Type>string | null</Type>
 
