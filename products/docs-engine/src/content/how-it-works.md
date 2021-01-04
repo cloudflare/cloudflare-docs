@@ -145,7 +145,7 @@ Some helpful things to know:
 
 - If you want to create reusable “partials” that don’t generate pages, start the file names with `_`. See [an example in the Workers docs](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/_partials/_tutorials-before-you-start.md). Then you can [import them](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-slackbot/index.md#L6-L10) as you would any other MDX component.
 
-Learn more about the [content framework](/contributing/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
+Learn more about the [content framework](/contributing/content/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
 
 --------------------------------
 
