@@ -225,11 +225,21 @@ async function gatherResponse(response) {
 }
 ```
 
-You can apply the same constraints as Direct Creator Upload via basic upload: expiry and maxDurationSeconds. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
-
 Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article. 
 
-If you simply want to do a test upload with a tokenized url, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste the returned url in the "Upload endpoint" field. 
+To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field. 
+
+## Using the Upload-Metadata header
+
+You can apply the same constraints as Direct Creator Upload via basic upload: requiresignedurls, expiry and maxDurationSeconds. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
+
+Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces. 
+
+In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
+
+```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls```
+
+*NjAw* is the base64 encoded value for "600" (or 10 minutes). 
 
 ## Tracking user upload progress
 
