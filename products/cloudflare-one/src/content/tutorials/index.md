@@ -4,7 +4,7 @@ hideChildren: true
 order: 9
 ---
 
-import DocsTutorials from "../../components/docs-tutorials"
+import DocsTutorial from "../components/content-table"
 
 # Tutorials
 
