@@ -122,4 +122,4 @@ Save the rule and the application.
 
 Requests and logins to the application will now require Gateway be used to connect.
 
-You can avoid adding the `Require Gateway` rule to each application manually by creating an `Access Group` which includes the `Require` rule, similar to [the configuration of country rules](/tutorials/zero-trust-security/country-rules). Add that `Access Group` to applications and the Gateway requirement will be enforced.
+You can avoid adding the `Require Gateway` rule to each application manually by creating an `Access Group` which includes the `Require` rule, similar to [the configuration of country rules](/tutorials/country-rules). Add that `Access Group` to applications and the Gateway requirement will be enforced.
