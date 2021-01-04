@@ -1,11 +1,11 @@
 ---
 type: overview
 hideChildren: true
-order: 1
+order: 9
 ---
 
-import DocsTutorial from "../components/content-table"
+import DocsTutorials from "../../components/docs-tutorials"
 
 # Tutorials
 
-<DocsTutorial/>
+<DocsTutorials/>
