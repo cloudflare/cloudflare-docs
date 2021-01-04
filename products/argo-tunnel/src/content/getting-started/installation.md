@@ -69,7 +69,7 @@ We recommend this option if you are currently using Cloudflare's Load Balancer p
 
 1. Install a new instance of `cloudflared` and [create](/create-tunnel) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3. [Add the address]((/routing-to-tunnel/lb)) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
+3. [Add the address](/routing-to-tunnel/lb) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4. Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
 5. Once confirmed, you can remove the older version from the Load Balancer pool.
 
