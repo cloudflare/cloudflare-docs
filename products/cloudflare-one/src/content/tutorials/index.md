@@ -8,4 +8,4 @@ import DocsTutorial from "../components/content-table"
 
 # Tutorials
 
-<DocsTutorials/>
+<DocsTutorial/>
