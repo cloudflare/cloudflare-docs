@@ -35,10 +35,10 @@ If you wish to block a hostname or URL that belongs to a security threat categor
 ### Block security threat categories
 
 1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
-2. [Create a new policy](/getting-started/configuring-dns-policy), or edit an existing one.
+2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
 3. Navigate to the **Security threats** tab.
 
-![Security threats page](../../static/security-threats.png)
+![Security threats page](../../../static/documentation/policies/security-threats.png)
 
 4. Select all the security threats categories you want your policy to block.
 5. Click **Save** to finalize your changes.
@@ -81,10 +81,10 @@ If you wish to block a hostname or URL that belongs to a security threat categor
 ### Blocking content categories
 
 1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
-2. [Create a new policy](/getting-started/configuring-dns-policy), or edit an existing one.
+2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
 3. Navigate to the **Content categories** tab.
 
-![Content categories page](../../static/content-categories.png)
+![Content categories page](../../../static/documentation/policies/content-categories.png)
 
 4. Select all the content categories you want your policy to block.
 5. Click **Save** to finalize your changes.
