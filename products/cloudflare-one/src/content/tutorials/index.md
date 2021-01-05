@@ -1,7 +1,7 @@
 ---
 type: overview
 hideChildren: true
-order: 3
+order: 2
 ---
 
 import DocsTutorial from "../components/content-table"
