@@ -2,7 +2,7 @@
 order: 10
 ---
 
-# Login customization
+# Login Page
 
 The **Authentication > Login** tab lets you customize your end users' login experience, so that it meets your organization's needs. 
 

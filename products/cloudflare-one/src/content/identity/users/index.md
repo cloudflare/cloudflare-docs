@@ -2,6 +2,6 @@
 order: 0
 ---
 
-# Users
+# User management
 
 <DirectoryListing path="/identity/users"/>

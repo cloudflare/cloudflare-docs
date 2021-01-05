@@ -2,7 +2,7 @@
 order: 2
 ---
 
-#  Enforce Gateway or WARP for Access
+#  Require Gateway
 
 With Access, you can require that all traffic to specific applications is monitored by Cloudflare Gateway. With Gateway protecting and filtering all requests to your applications, you will be able to see all user traffic and activity in each of these applications, broken down by user and device.
 

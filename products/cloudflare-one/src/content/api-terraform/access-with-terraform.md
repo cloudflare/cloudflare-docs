@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Build Access with Terraform
+# Terraform
 
 | Requirements |
 | ------------ |
