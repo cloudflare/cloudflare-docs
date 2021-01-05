@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Mutual TLS authentication
+# Mutual TLS
 
 <Aside type='warning' header='Important'>
 

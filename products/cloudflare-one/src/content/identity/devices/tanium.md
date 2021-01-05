@@ -1,21 +1,8 @@
----
-order: 3
----
-
-# Device posture
-
-Cloudflare Access can integrate with endpoint protection providers to check requests for device posture. When configured, users will only be allowed to connect to a protected application when they are using a managed or healthy device, as determined by the endpoint security provider.
-
-|Guide|Description|
-|---|---|
-|[Tanium™](#tanium)|Guide to integrating Tanium™ Endpoint Identity.|
-|[Azure AD®](#azure-ad)|Guide to integrating Azure AD® managed device requirements.|
-
-## Tanium
+# Tanium
 
 Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource.
 
-### Tanium Configuration
+## Tanium Configuration
 
 Tanium's Endpoint Identity feature can share information about a device that is attempting to authenticate through Cloudflare Access, including patch status, management status, and vulnerabilities score.
 
@@ -23,7 +10,7 @@ First, configure your Tanium deployment using the [step-by-step documentation](h
 
 Once complete, return to the Cloudflare for Teams dashboard to integrate with your Cloudflare Access account.
 
-### Cloudflare Access Configuration
+## Cloudflare Access Configuration
 
 Cloudflare Access relies on a secure exchange between a user's browser and the Tanium agent to read data from the Tanium client. When users attempt to connect to a resource protected by Access with a Tanium rule, Cloudflare Access will validate the user's identity, and the browser will connect to the Tanium agent before making a decision to grant access.
 
@@ -32,7 +19,7 @@ Cloudflare Access relies on a secure exchange between a user's browser and the T
 The integration does not currently support Safari.
 </Aside>
 
-### Integrating Tanium Identity
+## Integrating Tanium Identity
 
 | Requirements |
 | ------------ |
@@ -66,7 +53,7 @@ Integrate your Tanium deployment with Cloudflare Access using public keys genera
 
  Adding the certificate allows Cloudflare to validate that the response from the Tanium agent is valid.
 
-### Building policy rules with Tanium endpoint signal
+## Building policy rules with Tanium endpoint signal
 
 With Tanium integrated, you can build policies that enforce decisions using signal from the endpoint.
 
@@ -89,35 +76,3 @@ With Tanium integrated, you can build policies that enforce decisions using sign
 5. Save the rule.
 
 The rule above will only allow users who are part of your team's email domain and running the Tanium agent to connect to the protected resource.
-
-## Azure AD
-
-Cloudflare Access can integrate with Azure AD's Conditional Access feature to require that users connect to certain applications from managed devices. To enable, you must integrate Azure AD with Cloudflare Access as a cloud app that requires managed device connections. You can use Cloudflare Access' [per-app IdP feature](/configuring-identity-providers/#configuring-applications-to-specific-identity-providers) to segment which Access applications require Azure AD with managed devices and which only require Azure AD.
-
-### Azure AD Configuration
-
-When you [integrate Cloudflare Access with Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/what-is-single-sign-on), Azure AD treats Cloudflare as a single cloud application, even if you have multiple applications secured with Cloudflare Access. To introduce device posture requirements, Cloudflare Access can reuse that same integration.
-
-If you want to allow users to reach certain applications with only Azure AD logins, and no device requirement, you will need to maintain two distinct integrations. One integration with Cloudflare will require device management and the other will only require Azure AD logins.
-
-You can configure which applications secured by Cloudflare Access use which integration in the steps below.
-
-1. Follow the [instructions](/idp-integration/azuread/) to integrate Cloudflare Access as a cloud app with Azure AD.
-
-2. Repeat this step a second time if you want to maintain an integration that does not require Azure AD device management. We recommend giving each a distinct name that will be used in the steps below.
-
-    <!-- ![Name Providers](../../static/azuread-device/name-providers.png) -->
-
-3. Next, [create a new](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/require-managed-devices)  Conditional Access policy in Azure AD. In that policy, you can require that users connect from Managed, Hybrid, or compliant devices.
-Apply that policy to the integration with Cloudflare Access.
-
-4. Apply that policy to the integration with Cloudflare Access.
-
-### Cloudflare Access Configuration
-
-In the Cloudflare for Teams dashboard, you can configure which applications require connections from a managed device and which do not.
-1. Navigate to an application that requires managed device connections.
-
-2. Open the **Authentication** tab.
-
-3. Toggle the *Azure AD* integration that requires managed device usage.
