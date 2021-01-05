@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Connect to Gateway
+# Connect devices
 
 You can secure your internet-bound traffic by connecting to Gateway in two ways:
 
