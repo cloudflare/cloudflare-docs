@@ -36,7 +36,7 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 <Definitions>
 
 - <Code>crypto.getRandomValues(buffer<ParamType>ArrayBuffer</ParamType>)</Code>
-  <Type>Promise&lt;ArrayBuffer></Type>
+  <Type>ArrayBuffer</Type>
 
   - Fills the passed ArrayBuffer with cryptographically sound random values.
 
