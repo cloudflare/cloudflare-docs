@@ -36,10 +36,12 @@ Due to limitations in Discord, the `/dig` command can only offer 10 different DN
 
 ### Examples
 
-![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)\
+![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
+
 _`/dig domain: cloudflare.com`_
 
-![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)\
+![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)
+
 _`/dig domain: cloudflare.com type: AAAA short: True`_
 
 ## multi-dig command
@@ -81,10 +83,12 @@ Please provide a space-separated list of valid DNS record types to lookup, any i
 
 ### Examples
 
-![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)\
+![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)
+
 _`/multi-dig domain: cloudflare.com types: A AAAA`_
 
-![multi-dig domain: cloudflare.com types: DNSKEY short: True](../static/dns-over-discord/multi-dig-command-example-2.png)\
+![multi-dig domain: cloudflare.com types: DNSKEY short: True](../static/dns-over-discord/multi-dig-command-example-2.png)
+
 _`/multi-dig domain: cloudflare.com types: DNSKEY short: True`_
 
 ## Other commands
@@ -95,7 +99,8 @@ The bot also has a set of helper commands available to get more information abou
 
 The `/help` command provides in-Discord documentation about all the commands available in the 1.1.1.1 DNS over Discord bot.
 
-![help command](../static/dns-over-discord/help-command.png)\
+![help command](../static/dns-over-discord/help-command.png)
+
 _`/help`_
 
 ### privacy command
@@ -103,7 +108,8 @@ _`/help`_
 The `/privacy` command displays the privacy policy notice for using the 1.1.1.1 DNS over Discord bot.
 This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](https://dns-over-discord.v4.wtf/privacy).
 
-![privacy command](../static/dns-over-discord/privacy-command.png)\
+![privacy command](../static/dns-over-discord/privacy-command.png)
+
 _`/privacy`_
 
 ### github command
@@ -111,7 +117,8 @@ _`/privacy`_
 The DNS over Discord bot is open-source, and the `/github` command provides a quick link to access the GitHub repository.
 The GitHub repository can be accessed at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).
 
-![github command](../static/dns-over-discord/github-command.png)\
+![github command](../static/dns-over-discord/github-command.png)
+
 _`/github`_
 
 ### invite command
@@ -119,5 +126,6 @@ _`/github`_
 The `/invite` command provides the user with a quick link to invite the 1.1.1.1 DNS over Discord bot to another Discord server.
 The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ).
 
-![invite command](../static/dns-over-discord/invite-command.png)\
+![invite command](../static/dns-over-discord/invite-command.png)
+
 _`/invite`_
