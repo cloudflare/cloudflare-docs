@@ -4,7 +4,7 @@ order: 2
 
 # HTTP policies
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 This feature is only available for Gateway and Teams paid plans. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
 

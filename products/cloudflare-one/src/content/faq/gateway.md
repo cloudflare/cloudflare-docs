@@ -162,22 +162,6 @@ Some common applications that make use of certificate pinning include:
 
 </TableWrap>
 
-### Find a location DoH Subdomain
-DoH subdomains (previously known as a unique id) are aligned to locations. Locations and corresponding DoH subdomains have policies associated with them.
-
-1. Visit your Teams dashboard to fetch the **DoH subdomain** from your location.
-Navigate to the **Locations** page to visualize your location.
-
-2. If you have more than one location set up, you will see a list of all your locations.
-
-3. Expand the location card for the location which you'd like to retrieve the corresponding DoH subdomain.
-
-4. Get the subdomain of the DNS over HTTPS hostname (previously known as a unique ID). In the example below, the ID is: `9y65g5srsm`.
-
-5. Take note of the **DoH subdomain**.
-
-![Get unique subdomain](../static/documentation/faq/locations-doh.png)
-
 ### Your source IPv4 address is taken
 
 ![Source IP taken](../static/documentation/faq/source-ip-taken.png)
