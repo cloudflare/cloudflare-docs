@@ -4,7 +4,7 @@ order: 2
 
 # Policy management
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 This feature is not available on the Teams free plan. For more information, see the [Cloudflare for Teams pricing page](https://www.cloudflare.com/teams-pricing/).
 

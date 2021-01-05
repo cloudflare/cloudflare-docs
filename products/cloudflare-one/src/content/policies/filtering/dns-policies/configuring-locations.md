@@ -67,3 +67,19 @@ If the location you are sending requests from is only using IPv6 or sending all 
 5. Your location will now appear in the **Locations** tab, along with the others you have setup.
 
 ![Gateway Begin Setup](../../../static/documentation/policies/two-locations.png)
+
+## Find a location's DoH subdomain
+DoH subdomains (previously known as a unique ids) are aligned to locations. Locations and corresponding DoH subdomains have policies associated with them.
+
+1. Visit your Teams dashboard to fetch the **DoH subdomain** from your location.
+Navigate to the **Locations** page to visualize your location.
+
+2. If you have more than one location set up, you will see a list of all your locations.
+
+3. Expand the location card for the location which you'd like to retrieve the corresponding DoH subdomain.
+
+4. Get the subdomain of the DNS over HTTPS hostname (previously known as a unique ID). In the example below, the ID is: `9y65g5srsm`.
+
+5. Take note of the **DoH subdomain**.
+
+![Get unique subdomain](../../../static/documentation/faq/locations-doh.png)
