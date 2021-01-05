@@ -4,30 +4,36 @@ order: 5
 
 # Enforce MFA
 
-You can use Cloudflare Access to require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
+With zero-trust policies, you can require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
 
-This feature is only available to teams using the following identity providers:
+This feature is only available if you are using the following identity providers:
 
 * Okta
 * Azure AD
 
-To add an MFA requirement to your application:
+To enforce an MFA requirement to an application:
 
-1. On the Teams dashboard, navigate to **Access > Applications** and select the application for which you want to enforce MFA. Alternatively, create a new application.
+1. On the Teams dashboard, navigate to **Access > Applications**.
 
-2. In the **Policies** section of the a application, edit an existing rule that contains an identity requirement or add a new rule.
+1. Find the application for which you want to enforce MFA and click **Edit**. Alternatively, [create a new application](/applications/configure-apps/).
 
- The rule must contain an Include rule which defines an identity. For example, the Include rule should allow for users who are part of an email domain, identity provider group, or Access Group.
+1. Navigate to the **Rules** section of the application.
 
-3. In the rule builder, add a *Require* action.
+1. If your application already has a  rule containing an identity requirement, find it and click **Edit**.
+
+![Identity rule](../../static/documentation/applications/identity-rule.png)
+
+ The rule must contain an Include rule which defines an identity. For example, the Include rule should allow for users who are part of a user [group](/identity/users/groups), email domain, or identity provider group.
+
+3. Add a *Require* action to the rule.
 
 4. Select *Authentication Method* and choose `mfa - multiple-factor authentication`.
 
-![MFA](../static/summary/mfa.png)
+![MFA](../../static/documentation/applications/mfa.png)
 
 5. Save the rule.
 
-<Aside>
+<Aside type='warning' header='Important'>
 
 **What happens if the user fails to present the required MFA method?**
 
