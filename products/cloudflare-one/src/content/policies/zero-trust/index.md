@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Zero-trust policies
+# Zero Trust
 
 Cloudflare Access determines who can reach your applications by applying the zero-trust policies you configure. To build a zero-trust policy, you will have to combine different elements; the way you assemble these "building blocks" determines the scope and effectiveness of your policy.
 

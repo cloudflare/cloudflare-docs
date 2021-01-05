@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Automatic `cloudflared` authentication
+# `cloudflared` authentication
 
 <Aside>
 
