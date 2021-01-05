@@ -4,8 +4,6 @@ order: 4
 
 # JSON web tokens
 
-To fully secure your application, you must ensure that no one can bypass the zero trust security checks Cloudflare Access enforces for the hostname. For example, if someone discovers an exposed external IP, they can bypass Cloudflare and attack the origin directly.
-
 Cloudflare Access uses JSON Web Tokens (JWTs) and their contents to confirm a user’s identity before allowing or denying access to sensitive resources. Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
 
 Two tokens are generated:

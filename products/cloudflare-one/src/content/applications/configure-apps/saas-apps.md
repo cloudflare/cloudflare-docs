@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Configure applications
+# SaaS applications
 
 With Cloudflare for Teams, you can protect two types of applications: SaaS and self-hosted.
 
