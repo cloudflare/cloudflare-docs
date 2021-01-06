@@ -24,7 +24,7 @@ Each client supports the following set of parameters as part of their deployment
 | ----- | -------- | ---------- | 
 | `gateway_unique_id` | string | fix7p31bzg |
 
-**Description.** Your [Gateway DoH subdomain](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
+**Description.** Your [Gateway DoH subdomain](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain).
 
 ### `enable`
 
@@ -46,7 +46,7 @@ Each client supports the following set of parameters as part of their deployment
 
 | Field | Value Type | Example | 
 | ----- | -------- | ---------- | 
-| `support_url` | string | https://support.example.com |
+| `support_url` | string | `https://support.example.com` |
 
 **Description.** 	Allows you to add a web url or mailto that will change in-app feedback mechanism to point at your IT department for support.​ If the value is not specified, the mechanism will be disabled.
 
