@@ -6,22 +6,19 @@ order: 1
 
 You can begin using Cloudflare for Teams by creating a Cloudflare account.
 
-1. Navigate to the [Cloudflare for Teams](https://www.cloudflare.com/teams/) website and click **Get started**. 
+1. Navigate to [Cloudflare for Teams](https://dash.cloudflare.com/sign-up?redirect_uri=https%3A%2F%2Fdash.teams.cloudflare.com%2Fauth-callback) and create a new account with your email address and a password.
 
-1. Insert your email address and choose a password.
+![Create Account](../static/documentation/quickstart/create-account.png)
 
 1. Click **Create account**.
 
 You can now choose to:
 
-1. Set up [Cloudflare Access](#set-up-cloudflare-access).
-1. Set up [Cloudflare Gateway](#set-up-cloudflare-gateway).
+1. Set up [Cloudflare Access](#set-up-cloudflare-access) to begin building Zero Trust rules for the applications and data you protect.
+1. Set up [Cloudflare Gateway](#set-up-cloudflare-gateway) to build DNS filtering, Secure Web Gateway, and cloud firewall policies for your organization.
 1. Skip directly to the [Teams dashboard](https://dash.teams.cloudflare.com).
 
 ![Start Onboarding](../static/documentation/quickstart/first-screen.png)
-
-
-
 
 ## Set up Cloudflare Access
 
@@ -79,3 +76,7 @@ You can return to edit the policy with more complex rules like identity provider
 1. Click **Finish setup**. This will take you to the Teams dashboard.
 
 You have now successfully set up Cloudflare Gateway.
+
+## Tutorials
+
+Once you have your account created, you can begin using Cloudflare for Teams. We recommend reviewing the Cloudflare for Teams [Tutorials](/tutorials) section to begin adding new features.
