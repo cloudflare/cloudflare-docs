@@ -1,6 +1,7 @@
 ---
 order: 0
 type: overview
+hideChildren: true
 ---
 
 <ContentColumn>

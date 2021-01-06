@@ -29,7 +29,7 @@ Replace `<NAME>` with the name you want to give to the Tunnel. The name assigned
 
 This command will create a Tunnel with the name provided and associate it with a UUID. The relationship between the UUID and the name is persistent. The command will not create a connection at this point.
 
-![Create a tunnel](../static/img/create-tunnel/ct1.png)
+![Create a tunnel](../../../static/documentation/connections/ct1.png)
 
 Creating a Tunnel generates a credentials file for that specific Tunnel. This file is distinct from the cert.pem file. To run the Tunnel without managing DNS from `cloudflared`, you only need the credentials file.
 
