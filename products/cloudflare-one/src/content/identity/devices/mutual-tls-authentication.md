@@ -16,7 +16,7 @@ With a root certificate authority (CA) in place, Access only allows requests fro
 
 ![mTLS Diagram](../../static/documentation/identity/devices/mtls.png)
 
-## Add MTLS Authentication To Your Access Configuration
+## Add mTLS authentication to your Access configuration
 
 To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
 

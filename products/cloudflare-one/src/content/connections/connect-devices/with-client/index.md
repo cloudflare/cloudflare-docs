@@ -1,10 +1,12 @@
 ---
 order: 3
+hidden: true
 ---
 
-# WARP Client
+# WARP client
 
-## Getting Started
+## Getting started
+
 The Cloudflare WARP client supports manual installs, deployment scripts, or advanced enterprise management tools, such as Microsoft Intune or Jamf.
 
 To start using Cloudflare for Teams, ensure you perform the following steps prior to configuring the WARP client to connect to your Teams organization:
@@ -13,11 +15,11 @@ To start using Cloudflare for Teams, ensure you perform the following steps prio
 
 1. Visit your Teams dashboard and navigate to the **Devices** page to find the Device Settings button.
 
-![Go to teams dash](../../static/go-to-teams-dashboard-devices.png)
+![Go to teams dash](../../../static/documentation/connections/go-to-teams-dashboard-devices.png)
 
 2. Click the **Device Settings** button.
 
-![Go to device settings page](../../static/go-to-device-settings-page.png)
+![Go to device settings page](../../../static/documentation/connections/go-to-device-settings-page.png)
 
 3. Configure a rule to defines who should be allowed to enroll in your Gateway organization. In this example, only users with cloudflare.com email addresses who successfully authenticate during device enrollment through the WARP client will be able to enroll in the organization. This rule prevents outsider users from sending traffic through your account and will give your organization the ability to capture user profile logs and apply profile-specific rules.
 
@@ -25,13 +27,13 @@ To start using Cloudflare for Teams, ensure you perform the following steps prio
 
 1. Your organization has a DoH subdomain for the entire account. You can create additional subdomains for specific locations or groups, if needed.
 
-[Obtain a location DoH subdomain (previously known as a unique id)](/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain)
+[Obtain a location DoH subdomain (previously known as a unique id)](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain)
 
 ### Obtain your Cloudflare for Teams auth domain
 
 1. Visit your Teams dashboard and navigate to the **Authentication** page under **Access** to find the Auth Domain configuration section.
 
-![Configure the auth domain](../../static/go-to-auth-domain-page.png)
+![Configure the auth domain](../../../static/documentation/connections/go-to-auth-domain-page.png)
 
 2. Configure a unique Auth Domain for your account. This domain will be used as your Gateway organization name in the WARP client during user and device enrollment. The Auth Domain represents your organization's Teams account and is used across both Access and Gateway.
 
@@ -39,7 +41,7 @@ To start using Cloudflare for Teams, ensure you perform the following steps prio
 
 If your organization plans to inspect HTTP traffic, you must download the Cloudflare for Teams certificate on any device being enrolled.
 
-To install the Cloudflare root certificate, follow the steps [found here](/connecting-to-gateway/install-cloudflare-cert).
+To install the Cloudflare root certificate, follow the steps [found here](/connections/connect-devices/install-cloudflare-cert).
 
 ### Install the WARP client and log in with Cloudflare for Teams
 
