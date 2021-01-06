@@ -24,7 +24,7 @@ You can use Cloudflare Access, in combination with Cloudflare Argo Tunnel, to co
 
 ### 1. Install The Cloudflare Daemon On The Host Machine
 
-The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/).
+The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using **Argo Tunnel**.
 
 Follow these instructions to download and install cloudflared in a location that can address the Kubernetes cluster's API server.
 

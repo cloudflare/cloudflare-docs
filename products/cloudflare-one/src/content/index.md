@@ -12,4 +12,6 @@ Your employees, partners, and customers need a network that is secure, fast and 
 
 Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere.
 
+![Teams illustration](/static/documentation/teams-no-background.png)
+
 </ContentColumn>
