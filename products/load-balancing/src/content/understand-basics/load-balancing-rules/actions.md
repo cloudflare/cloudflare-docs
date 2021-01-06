@@ -7,9 +7,9 @@ order: 30
 
 ## Overview
 
-Actions tell Cloudflare how to handle HTTP requests that have matched a Load Balancing expression.
+Actions tell Cloudflare how to handle HTTP requests that match a Load Balancing expression.
 
-Note that a single Load Balancing rule can include more than one action.
+A single Load Balancing rule can include more than one action.
 
 ## Supported Actions
 
@@ -29,7 +29,7 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
     </tr>
     <tr>
       <td><em>Pool selection</em></td>
-      <td>Select the pool to receive the request. You can customize the logic to use for pool selection, including traffic steering method, available pools, fallback pool, and region.</td>
+      <td>Select the pool to receive the request. You can customize the logic for pool selection, including traffic steering method, available pools, fallback pool, and region.</td>
     </tr>
     <tr>
       <td><em>Redirect</em></td>

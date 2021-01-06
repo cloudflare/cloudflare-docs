@@ -7,11 +7,11 @@ order: 20
 
 ## Overview
 
-When working with [Load Balancing rules](/understand-basics/load-balancing-rules), you will encounter two kinds of expression:
+[Load Balancing rules](/understand-basics/load-balancing-rules) uses two kinds of expressions:
 
-- [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. You can identify a simple expression by the presence of a **comparison operator** (_equals_ or _less than_, for example).
+- [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (_equals_ or _less than_, for example).
 
-- [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. You can identify a compound expression by the presence of a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
+- [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
 
 The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
@@ -24,7 +24,7 @@ The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces
 Simple expressions are composed of three elements:
 
 1. A **field** that represents a property of an HTTP request.
-2. A representative **value** for that field, which Cloudflare compares with the actual value from the request.
+2. A representative **value** for that field which Cloudflare compares to the actual request value.
 3. A **comparison operator**, which specifies how the value defined in the expression must relate to the actual value from the request for the operator to return `true`.
 
 When the comparison operator returns `true`, the request matches the expression.
@@ -47,9 +47,9 @@ For more, see [_Supported fields and operators_](/understand-basics/load-balanci
 
 ## Compound expressions
 
-A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions are powerful because they allow you to build complex statements within a single expression.
+A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
 
-This example expression returns true when both the HTTP request URI path contains `/content` and the query string contains `stream1`:
+The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `stream1`:
 
 ```sql
 (http.request.uri.path contains "/content") 
@@ -62,7 +62,7 @@ In general, compound expressions use this pattern:
 <expression> <logical operator> <expression>
 ```
 
-Note that a compound expression can itself be one of the operands of a logical operator. In this way, you can use multiple operators to construct a compound expression from many individual expressions.
+A compound expression can be an operand of a logical operator. This allows multiple operators to construct a compound expression from many individual expressions.
 
 For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
 
@@ -82,7 +82,7 @@ This Expression Builder screenshot shows the example compound expression describ
 
 ![Expression Builder in Load Balancing tab of Traffic app](../../static/images/rules-builder-1.png)
 
-Notice how the **Expression Preview** displays the expression in text:
+The **Expression Preview** displays the expression in text:
 
 ```sql
 (http.request.uri.path contains "/content") 
@@ -93,7 +93,7 @@ For a walkthrough, see [_Creating Load Balancing rules_](/understand-basics/load
 
 ### Expression Editor
 
-The Expression Editor is a text-only interface for creating Load Balancing expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor editor supports advanced features, such as support for grouping symbols (parentheses).
+The Expression Editor is a text-only interface for creating Load Balancing expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports advanced features such as support for grouping symbols (parentheses).
 
 To access the Expression Editor in the **Traffic** app, click **Edit expression** in the **Create Custom Rule** dialog:
 
