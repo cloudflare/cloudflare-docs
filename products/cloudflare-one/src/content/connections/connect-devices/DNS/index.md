@@ -8,7 +8,7 @@ Organizations can enforce DNS content and security policies for roaming users by
 
 The DNS filtering policy configured for that location will be applied to WARP client DNS traffic. When the client connection toggle is enabled, only DNS traffic is sent to Cloudflare Gateway for policy enforcement--all non-DNS traffic is sent directly to the internet.
 
-![DNS only filtering](../../../static/client-dns-filtering-only.png)
+![DNS only filtering](../../../static/documentation/connections/client-dns-filtering-only.png)
 
 When DNS filtering is enabled, all other traffic will be sent directly to the Internet. Entering a DoH subdomain for an organization triggers WARP into Teams mode
 

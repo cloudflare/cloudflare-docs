@@ -8,7 +8,7 @@ order: 2
 
 **Before you start**  
 
-Visit the [requirements section](../../system-requirements) to review the system requirements for Windows and to download the Windows installer.
+Visit the [requirements section](../system-requirements) to review the system requirements for Windows and to download the Windows installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-install-via-command-prompt) (Intune, Command Prompt)
@@ -25,7 +25,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
  ```shell
  Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" ENABLE="true" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"
  ```
- See the [deployment parameters](/connections/warp/deployment/parameters) for a description of each argument.
+ See the [deployment parameters](/connections/connect-devices/warp/deployment/parameters) for a description of each argument.
 
 * Example command line to **uninstall** the client:
  ```shell
@@ -73,7 +73,7 @@ Then ask your users to complete the following steps:
 1. Enter a value for *Gateway DoH subdomain* (example: `fmxk762nrj`).
 1. Click **Save**.
 
-![Preferences UI in the connection tab with the Change button circled](../../../static/documentation/connections/windows_GatewayButton.png)
+![Preferences UI in the connection tab with the Change button circled](../../../../static/documentation/connections/windows_GatewayButton.png)
 
 ### Manually configure a Cloudflare for Teams device registration
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
@@ -86,4 +86,4 @@ If your organization uses Teams Access policies to control device registration, 
 1. Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
 1. Complete the authentication steps required by your organization.
 
-![Preferences UI in the Account tab with the Login to Teams button circled](../../../static/documentation/connections/windows_TeamsButton.png)
+![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/windows_TeamsButton.png)

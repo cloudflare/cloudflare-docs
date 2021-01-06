@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Self-hosted applications
+# Add applications
 
 With Cloudflare for Teams, you can protect two types of applications: SaaS and self-hosted.
 
@@ -32,7 +32,7 @@ Before you begin setting up your self-hosted application, you will need an activ
 
 Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/). If you do not wish to use Argo Tunnel, you must [validate the token](/identity/users/json-web-tokens/) issued by Cloudflare on your origin.
 
-### 1. Add your app
+### 1. Add your application
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 
