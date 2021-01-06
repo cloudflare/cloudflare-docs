@@ -17,21 +17,21 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 1. Visit your [Teams dashboard](https://dash.teams.cloudflare.com/).
 1. Navigate to the **Locations** page to visualize your location.
 
- ![Go to teams dash](../../../static/go-to-teams-dashboard.png)
+ ![Go to teams dash](../../../static/documentation/connections/go-to-teams-dashboard.png)
 
 1. If you have more than one location set up, you will see a list of all your locations.
 
- ![Go to locations page](../../../static/go-to-locations-page.png)
+ ![Go to locations page](../../../static/documentation/connections/go-to-locations-page.png)
 
 3. Expand the location card for the location whose DoT hostname you'd like to retrieve.
 
- ![Expand location card](../../../static/locations-doh-dot.png)
+ ![Expand location card](../../../static/documentation/connections/expand-locations-card.png)
 
 4. Get the **DoT hostname** for the location.
  
  In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
- ![Get unique subdomain](../../../static/locations-dot-complete.png)
+ ![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
 
 5. Take note of the **DoT hostname**.
 

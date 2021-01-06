@@ -15,7 +15,6 @@ This section addresses the most common issues you may come across when setting u
 
 ## Gateway help
 
-
 ### I have a dynamic IP address assigned to me by my ISP. How can I still use Gateway?
 
 There are two ways to connect to Cloudflare Gateway: with the Cloudflare WARP client and without the client.
@@ -48,6 +47,10 @@ If the Block page is **enabled** for the policy, then you should see `NOERROR` i
 It takes about 60 seconds for the policy to be updated across all of our data centers around the world.
 
 If you are still seeing responses from the DNS queries for a domain that you blocked. The answers may be cached by your browser from anywhere between 5 minutes to a few hours.
+
+### How do I know if Gateway is working for me?
+
+You can visit the [Teams help page](https://help.teams.cloudflare.com/). This page will give you an overview of your network details, as well as an overview of the categories that are being blocked and/or allowed.
 
 ### Will I see the private IP addresses in the activity log?
 No. The IP addresses are NAT-ed behind a public IP address. Activity log will only show the public Source IP address.

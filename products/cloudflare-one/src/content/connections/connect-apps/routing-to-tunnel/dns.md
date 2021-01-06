@@ -6,8 +6,8 @@ order: 50
 
 | Before you start |
 |---|
-| 1. [Create an Argo Tunnel](/create-tunnel) |
-| 2. [Configure the Tunnel](/configuration) |
+| 1. [Create an Argo Tunnel](/connections/connect-apps/create-tunnel) |
+| 2. [Configure the Tunnel](/connections/connect-apps/configuration) |
 
 ## Route traffic from the Cloudflare dashboard
 

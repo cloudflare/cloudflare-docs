@@ -6,13 +6,13 @@ order: 30
 
 | Before you start |
 |---|
-| 1. [Create a Tunnel](/create-tunnel) |
-| 2. [Configure the Tunnel](/configuration) |
-| 3. [Configure routing to the Tunnel](/routing-to-tunnel) |
+| 1. [Create a Tunnel](/connections/connect-apps/create-tunnel) |
+| 2. [Configure the Tunnel](/connections/connect-apps/configuration) |
+| 3. [Configure routing to the Tunnel](/connections/connect-apps/routing-to-tunnel) |
 
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
-By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/configuration/config/), but at a minimum you must specify the following arguments to run as a service:
+By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/config/), but at a minimum you must specify the following arguments to run as a service:
 
 |Argument|Description|
 |---|---|
@@ -20,7 +20,7 @@ By default, Argo Tunnel expects all of the configuration to exist in the `cloudf
 |`tunnel`|The UUID of your Tunnel
 |`credentials-file`|The location of the credentials file for your Tunnel|
 
-You must [create the Tunnel](/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
+You must [create the Tunnel](/connections/connect-apps/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
 
 If you do not want to create the tunnel in advance, you must install `cloudflared` with the `--legacy` flag.
 
@@ -151,7 +151,7 @@ copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\system
 
 ### Create, route, and configure the Tunnel
 
-You can now [create](/create-tunnel) an Argo Tunnel and edit the configuration file to [configure](/configuration) `cloudflared`. We recommend setting the [routing](/routing-to-tunnel) before running the service in the next step.
+You can now [create](/connections/connect-apps/create-tunnel) an Argo Tunnel and edit the configuration file to [configure](/connections/connect-apps/configuration) `cloudflared`. We recommend setting the [routing](/connections/connect-apps/routing-to-tunnel) before running the service in the next step.
 
 <Aside>
 
@@ -183,7 +183,7 @@ credentials-file: C:/UUID.json
 
 To start the service, open the Service Manager, select `Argo Tunnel agent` and open the `General` tab. In the `Start parameters` field, specify the location of the configuration file and place the `tunnel run` command after the path. For example:
 
-![DNS tab](../static/img/windows/start-param.png)
+![DNS tab](../../../static/documentation/connections/start-param-1.png)
 
 Once applied, you can click `Start` to run the Tunnel.
 

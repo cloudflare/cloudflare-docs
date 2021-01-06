@@ -6,8 +6,8 @@ order: 50
 
 | Before you start |
 |---|
-| 1. [Create an Argo Tunnel](/create-tunnel) |
-| 2. [Configure the Tunnel](/configuration) |
+| 1. [Create an Argo Tunnel](/connections/connect-apps/create-tunnel) |
+| 2. [Configure the Tunnel](/connections/connect-apps/configuration) |
 | 3. [Create a Load Balancer pool in Cloudflare](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui) |
 
 ## Route traffic from the dashboard
@@ -20,7 +20,7 @@ To add an Argo Tunnel connection to a Cloudflare Load Balancer pool:
 
 1. Navigate to the Load Balancer page in the Cloudflare dashboard.
 2. Create or edit an existing Origin Pool. Add the Argo Tunnel subdomain as an Origin Address.
-3. Click `Save`.
+3. Click **Save**.
 
 ## Route traffic from the command line
 
