@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 0
 ---
 
-# Connect Applications
+# Connect applications

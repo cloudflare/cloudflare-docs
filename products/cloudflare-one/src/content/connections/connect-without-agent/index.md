@@ -1,7 +1,7 @@
 ---
-order: 4
+order: 2
 ---
 
 # Agentless options
 
-<DirectoryListing path="/connections"/>
+<DirectoryListing path="/connections/connect-without-agent"/>

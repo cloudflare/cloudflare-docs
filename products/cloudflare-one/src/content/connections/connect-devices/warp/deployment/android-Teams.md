@@ -8,7 +8,7 @@ order: 5
 
 **Before you start**  
 
-Visit the [requirements section](../../system-requirements) to review the system requirements for Android and to download the Android installer.
+Visit the [requirements section](../system-requirements) to review the system requirements for Android and to download the Android installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) via command prompt
@@ -34,7 +34,7 @@ Accepted configuration values are as follows:
 <key>support_url</key>
 <string>https://support.example.com</string>
 ```
-See the [deployment parameters](/connections/warp/deployment/parameters) for a description of each value.
+See the [deployment parameters](/connections/connect-devices/warp/deployment/parameters) for a description of each value.
 
 Cloudflare WARP (known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en&gl=US)) is deployed
 
@@ -45,7 +45,7 @@ If you plan to direct your users to manually download and configure the Cloudfla
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH subdomain
-If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH subdomain field. Follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain) to find this value for your Teams configuration.
+If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
 
 Then ask your users to complete the following steps:
 

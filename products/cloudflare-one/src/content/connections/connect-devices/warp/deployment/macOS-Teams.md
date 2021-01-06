@@ -8,7 +8,7 @@ order: 3
 
 **Before you start**  
 
-Visit the [requirements section](../../system-requirements) to review the system requirements for macOS and to download the macOS installer.
+Visit the [requirements section](../system-requirements) to review the system requirements for macOS and to download the macOS installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) (Jamf, Intune, Script)
@@ -41,9 +41,9 @@ Here is an example plist file with the accepted arguments:
 </plist>
 ```
 
-For a description of each argument and what it means, see [deployment parameters](/connections/warp/deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
 
-[Click here](../../../static/documentation/connections/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
+[Click here](../../../../static/documentation/connections/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
 1. Open a Terminal window.
 2. Run the following command:
 
@@ -111,7 +111,7 @@ Then ask your users to complete the following steps:
 1. Select the **Connect** tab.
 1. Click **Change** next to *Gateway DoH Subdomain*, and enter your DoH Subdomain.
 
-![Preferences UI in the connection tab with the Change button circled](../../../static/documentation/connections/macOS_GatewayButton.png)
+![Preferences UI in the connection tab with the Change button circled](../../../../static/documentation/connections/macOS_GatewayButton.png)
 
 ### Manually configure a Cloudflare for Teams device registration
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
@@ -124,4 +124,4 @@ If your organization uses Teams Access policies to control device registration, 
 1. Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
 1. Complete the authentication steps required by your organization.
 
-![Preferences UI in the Account tab with the Login to Teams button circled](../../../static/documentation/connections/macOS_TeamsButton.png)
+![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/macOS_TeamsButton.png)

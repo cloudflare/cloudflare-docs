@@ -8,7 +8,7 @@ order: 4
 
 **Before you start**  
 
-Visit the [requirements section](../../system-requirements) to review the system requirements for iOS and to download the iOS installer.
+Visit the [requirements section](../system-requirements) to review the system requirements for iOS and to download the iOS installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) via command prompt
@@ -34,7 +34,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 <key>support_url</key>
 <string>https://support.example.com</string>
 ```
-For a description of each argument and what it means, see [deployment parameters](/connections/warp/deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
 
 ### Example Configuration in Jamf
 Follow these steps to deploy the WARP Client via Jamf:
