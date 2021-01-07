@@ -25,5 +25,5 @@ Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3
 is executed whenever the Tunnel is to be started, normally by the owner of the
 Tunnel (whom may be different from the administrator).
 
-Be sure to check out our [Tutorials](/learning/tutorials) where you can also find
+Be sure to check out our [Tutorials](/tutorials) where you can also find
 best practices for managing Tunnels as an administrator.
