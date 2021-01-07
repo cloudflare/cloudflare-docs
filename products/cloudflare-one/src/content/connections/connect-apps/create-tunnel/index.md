@@ -8,18 +8,17 @@ order: 3
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Install `cloudflared` and authenticate the software](/getting-started) |
-| 4. [Understand the overview for using Argo Tunnels](/getting-started/high-level-steps) |
+| 3. [Install and authenticate `cloudflared`](/connections/connect-apps/install-and-setup) |
 
 ## Create a Tunnel
 
 <Aside>
 
-Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard. These connections will be added to the dashboard in a future release.
+Tunnels created in this method do not currently display in the **Traffic** tab of the [Cloudflare dashboard](https://dash.cloudflare.com). These connections will be added to the dashboard in a future release.
 
 </Aside>
 
-Run the following command to create a Tunnel.
+To create a Tunnel, run the following command:
 
 ```sh
 $ cloudflared tunnel create <NAME>
@@ -65,10 +64,13 @@ You can delete an existing Tunnel with cloudflared. To delete a Tunnel, run the 
 ```sh
 $ cloudflared tunnel delete <NAME>
 ```
+<Aside>
 
-Note: the command requires the `cert.pem` file.
+The command requires the `cert.pem` file.
 
-If there are still active connections on that tunnel, then you will have to force the deletion with:
+</Aside>
+
+If there are still active connections on that Tunnel, then you will have to force the deletion with:
 
 ```sh
 $ cloudflared tunnel delete -f <NAME>
@@ -76,4 +78,4 @@ $ cloudflared tunnel delete -f <NAME>
 
 This will cause those connections to be dropped.
 
-Deleting the tunnel also invalidates the credentials file associated with that Tunnel, meaning those connections can not be re-established again.
+Deleting the Tunnel also invalidates the credentials file associated with that Tunnel, meaning those connections can not be re-established.
