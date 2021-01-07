@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Installation
+# Install `cloudflared`
 
 Argo Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 
@@ -10,11 +10,15 @@ Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/rele
 
 ## Linux
 
+<TableWrap>
+
 Type   | amd64 / x86-64 | x86 (32-bit) | ARMv6 | ARM64 |
 -------|----------------|--------------|------|------|
 Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz) | [Download from GitHub](https://github.com/cloudflare/cloudflared/releases) |
 .deb   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.deb) | - |
 .rpm   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.rpm) | - |
+
+</TableWrap>
 
 ## Docker
 
@@ -103,3 +107,4 @@ All features available in versions released prior to 2020.5.1 are available in c
 |---|---|
 | 2020.5.1 and later | Supported |
 | Versions prior to 2020.5.1 | Will no longer be supported starting March 20, 2021 |
+
