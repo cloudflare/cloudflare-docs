@@ -29,7 +29,7 @@ Browser extensions / plugins are not compatible with isolated pages at this time
 
 We are still defining our minimum requirements but expect Browser Isolation to work on most modern web browsers. Under the hood the browser needs to support:
 
-- [Web Assembly](https://caniuse.com/?search=wasm)
+- [WebAssembly](https://caniuse.com/?search=wasm)
 - [WebRTC](https://caniuse.com/?search=webrtc)
 - [LocalStorage](https://caniuse.com/?search=localstorage)
 
