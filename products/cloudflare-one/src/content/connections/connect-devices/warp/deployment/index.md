@@ -2,17 +2,14 @@
 order: 1
 ---
 
-# Getting started
+# Deployment
 
- <Aside>
+The Cloudflare WARP client can be deployed via a device management platform like JAMF or InTune or through end user self-enrollment.
 
- Before you start, make sure **Cloudflare Access** and **Cloudflare Gateway** are set up. 
-
- </Aside>
-
-To get started with the WARP client, you'll first need to create a **device enrollment policy** in your Teams dashboard. To do so:
+To get started, you'll first need to create a **device enrollment policy** in your Teams dashboard. The device enrollment policy will determine who can enroll a device into your organization. To do so:
 
 1. In your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Teams** > **Devices**.
+
 1. Under **Device Settings**, create a [device enrollment policy](connections/connect-devices/warp/device-enrollment) to define who can connect a device to your organization.
 
 1. Once your device enrollment policy is set up, configure [filtering policies](/policies/filtering) for your organization. If you are configuring [HTTP policies](/policies/filtering/http-policies), make sure to deploy the [root certificate](/connections/connect-devices/install-cloudflare-cert.md) to your devices. 
