@@ -4,7 +4,7 @@ order: 0
 
 # Connect applications
 
-You can connect applications, servers, and other resources to Cloudflare's network using Argo Tunnel. 
+You can connect applications, servers, and other resources to Cloudflare's network using Cloudflare Argo Tunnel. When connected, Cloudflare can [apply Zero Trust policies](/policies/zero-trust) to determine who can reach the resource.
 
 Argo Tunnel runs a lightweight daemon (`cloudflared`) in your infrastructure that establishes outbound connections (Tunnels) between your web server and the Cloudflare edge. When Cloudflare receives a request for your chosen hostname, it proxies the request through those connections to `cloudflared`. In turn, `cloudflared` proxies the request to your applications.
 

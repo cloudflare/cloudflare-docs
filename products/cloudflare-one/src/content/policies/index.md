@@ -2,20 +2,17 @@
 order: 6
 ---
 
+<ContentColumn>
+
 # Policies
 
-<Aside> 
+Policies are sets of rules that allow you to create:
+* **Zero Trust** rules to secure applications with **Cloudflare Access**, and
+* **Secure Web Gateway** rules to filter traffic to the Internet, with **Cloudflare Gateway**.
 
-**Definition**
+<ButtonGroup>
+  <Button type="primary" href="/applications/configure-apps/policies/filtering/">Secure Web Gateway</Button>
+  <Button type="primary" href="/applications/configure-apps/policies/zero-trust/">Zero Trust</Button>
+</ButtonGroup>
 
-Policies are sets of rules that allow you to control:
-* **Inbound** requests to your applications, with **Access**
-* **Outbound** traffic to the Internet, with **Gateway**
-
-</Aside>
-
-Cloudflare for Teams allows your organization to control inbound requests to your applications, as well as outbound traffic to the Internet. Policies also allow you to block security threats and potentially malicious websites.
-
-While both [zero-trust policies](/policies/zero-trust) in Access and [filters](/policies/filtering) in Gateway act as a set of rules that help you filter activity on your network, they are quite different in nature and scope. Let's dive into what you can do with policies in both products.
-
-<DirectoryListing path="/policies"/>
+</ContentColumn>

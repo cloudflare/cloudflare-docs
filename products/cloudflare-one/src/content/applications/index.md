@@ -4,7 +4,7 @@ order: 5
 
 # Applications
 
-Cloudflare for Teams brings a consistent login experience to your internal and SaaS applications, and evaluates every request  for user identity and device context. 
+Cloudflare for Teams can secure self-hosted and SaaS applications with Zero Trust rules.
 
 Learn how to secure your applications, and how to configure one dashboard for your users to reach all the applications you've secured behind Teams:
 
