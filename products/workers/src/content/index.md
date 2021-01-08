@@ -13,6 +13,7 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 <ButtonGroup>
   <Button type="primary" href="/learning/getting-started">Get started</Button>
   <Button type="secondary" href="/tutorials">View the tutorials</Button>
+  <Button type="secondary" href="/learning/videos">Watch videos</Button>
 </ButtonGroup>
 
 --------------------------------
