@@ -6,8 +6,6 @@ order: 1
 
 The only requirement for a location is its name. All other fields are optional if the location you are sending requests from is only using IPv6 or sending all DNS requests using DNS over HTTPS.
 
-<img src={gatewayCreateLocation} alt="Configuring a location" />
-
 ## IPv4
 Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log the DNS requests. When you go through onboarding or in our location tab, the dashboard automatically identifies the public source IP address.
 
