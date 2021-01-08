@@ -21,6 +21,7 @@ jobs:
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
       gateway: ${{ steps.filter.outputs.gateway }}
+      browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
       images: ${{ steps.filter.outputs.images }}
       internet: ${{ steps.filter.outputs.internet }}
@@ -73,6 +74,8 @@ jobs:
               - 'products/firewall/**'
             gateway:
               - 'products/gateway/**'
+            browser-isolation:
+              - 'products/browser-isolation/**'
             http3:
               - 'products/http3/**'
             images:
@@ -348,6 +351,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/gateway
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+  
+  build-browser-isolation:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.browser-isolation == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/browser-isolation
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
