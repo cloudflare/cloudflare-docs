@@ -7,7 +7,6 @@ type: overview
 <ContentColumn>
 
 # Welcome
-
 Welcome to the Cloudflare Browser Isolation beta program!
 
 <Aside type="warning" header="Beta">
