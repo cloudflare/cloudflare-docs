@@ -4,8 +4,13 @@ order: 0
 
 # Secure Web Gateway
 
-Gateway policies allow you to grant or deny your users access to specific domains or domain categories. If the WARP client is configured to send DNS requests over DoH to Gateway, the DNS queries are evaluated against content and security policies configured for the organization. If the domain is allowed, the client receives the DNS resolution and initiates an HTTP connection.
+Gateway polices filter DNS requests and HTTP traffic to the Internet.
 
-Cloudflare Gateway currently filters HTTP traffic over port 80 and 443. If the HTTP connection is within a TLS connection, the TLS connection will be terminated at Cloudflare Gateway so the HTTP traffic can be inspected (unless an administrator configures a bypass rule). If the HTTP connection does not violate any policies configured by an administrator, the traffic is allowed through to the origin server.
+Cloudflare Gateway filters traffic in two modes:
+
+* **DNS filtering:** Filter DNS queries from networks or devices.
+* **HTTP filtering:** Inspect and filter HTTP traffic over port 80 and 443 from enrolled devices. If the HTTP connection is within a TLS connection, the TLS connection will be terminated at Cloudflare Gateway so the HTTP traffic can be inspected (unless an administrator configures a bypass rule).
+
+This section describes how to create DNS and HTTP policies in Cloudflare for Teams. You can review how to connect networks and devices to Cloudflare in the [Connections section](/connections)
 
 <DirectoryListing path="/policies/filtering"/>
