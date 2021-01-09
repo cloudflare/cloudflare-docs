@@ -9,3 +9,8 @@ Cloudflare for Teams integrates with your organization's identity provider to ap
 You can also build rules based on device posture using mutual TLS authentication, third party integrations, or the Cloudflare WARP client.
 
 <DirectoryListing path="/identity"/>
+
+## Related tutorials
+
+* [Require U2F keys with Okta](/tutorials/okta-u2f)
+* [Troubleshoot user login details](/tutorials/user-diagnostics)
