@@ -1,6 +1,5 @@
 ---
 order: 2
-hidden: true
 ---
 
 # Locations

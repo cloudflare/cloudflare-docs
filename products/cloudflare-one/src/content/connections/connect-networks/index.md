@@ -6,4 +6,4 @@ order: 1
 
 You can configure networks to send DNS queries to Cloudflare for filtering and logging.
 
-<DirectoryListing path="/connect-networks"/>
+<DirectoryListing path="connections/connect-networks"/>

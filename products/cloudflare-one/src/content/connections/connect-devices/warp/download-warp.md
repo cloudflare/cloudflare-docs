@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# System requirements
+# Download WARP
 
 ## Windows
 <table>
