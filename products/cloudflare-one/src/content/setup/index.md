@@ -4,7 +4,7 @@ order: 1
 
 # Quick start
 
-You can begin using Cloudflare for Teams by creating a Cloudflare account.
+Start using Cloudflare for Teams by creating a Cloudflare account.
 
 1. Navigate to [Cloudflare for Teams](https://dash.cloudflare.com/sign-up?redirect_uri=https%3A%2F%2Fdash.teams.cloudflare.com%2Fauth-callback) and create a new account with your email address and a password.
 

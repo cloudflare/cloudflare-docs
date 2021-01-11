@@ -10,9 +10,9 @@ This feature is only available for Gateway and Teams paid plans. For more inform
 
 </Aside>
 
-You can decide to add a policy to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
+HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
-You can build an HTTP policy by configuring the following elements:
+Build an HTTP policy by configuring the following elements:
 
 * **Actions**
 * **Expressions**

@@ -23,22 +23,28 @@ When applying *executives* to `dashboard.com/eng/exec`, the more specific policy
 
 ## Subdomains
 
-You can configure an Application for an apex domain, a particular subdomain, or all subdomains using a wildcard rule. Similarly, you can apply an Access Application to an entire website or protect a specific path. When protecting the entire website, leave the path field empty. You specify paths, for example `/admin`, as well.
-
-![Policy Wildcards](../../static/documentation/applications/policy-wildcards.png)
+You can configure an application for an apex domain, a particular subdomain, or all subdomains. This allows you to choose between protecting an entire website behind Access, or a specific path. To protect an entire website, leave the path field empty. To protect a subdmain, specify its path, for example `/admin`.
 
 Access does not support overlapping definitions. For example, when setting rules for `/admin` and `/admin/specific` separately, `/admin/specific` does not inherit the rule set for `/admin`. The more specific rule is enforced.
 
 Access does not support port numbers in the URL. Requests to URLs with port numbers are redirected to the URL and the port numbers stripped.
 
-## Using wildcards in rules
+### Using wildcards in rules
 
-You can secure any subdomain of the apex domain in Cloudflare Access by using a wildcard in the rule. Wildcard rules use an asterisk (`*`) in the Subdomain field in the Application Overview menu.
+Wildcard rules use an asterisk (`*`) in the *Subdomain* field in the Application Overview menu. Using a wildcard while configuring an application allows you to extend that application to all subdomains of a given apex domain at once.
 
 When using wildcards in rules, keep in mind that:
 
-* **Using a wildcard in the *Subdomain* field does not cover the apex domain.** That is, a wildcard rule that controls access using the format, `*.example.com`, covers `alpha.example`.com and `beta.example.com`, but not `example.com`. You must create separate rules for the apex domain.
+* Using a wildcard in the *Subdomain* field **does not cover the apex domain**. You must create dedicated rules for the apex domain.
 
-* **Using a wildcard in the *Subdomain* field does not cover multi-level subdomains**. For instance, a wildcard rule like `*.example.com` would cover `test.example.com` but not `test.beta.example.com`.
+| Wildcard | Covers | Doesn't cover |
+| -------- | ------ | ------------- |
+| `*.example.com` | `alpha.example.com`, `beta.example.com` | `example.com` |
+
+* Using a wildcard in the *Subdomain* field **does not cover multi-level subdomains**.
+
+| Wildcard | Covers | Doesn't cover |
+| -------- | ------ | ------------- |
+| `*.example.com` | `test.example.com` | `test.beta.example.com` |
 
 
