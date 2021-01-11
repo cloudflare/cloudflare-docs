@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Troubleshooting locations
+# Troubleshoot locations
 
 ## Why am I not seeing Analytics in my Overview page?
 ![Overview empty](../../../static/documentation/connections/gateway-dash-overview-empty.png)

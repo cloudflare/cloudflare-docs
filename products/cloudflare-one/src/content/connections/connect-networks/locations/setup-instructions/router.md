@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Router Setup Instructions
+# Router
 
 ## IPv4
 * Click on the Start menu, then click on Control Panel.
