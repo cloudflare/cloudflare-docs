@@ -136,12 +136,16 @@ When logging using this strategy, remember that outstanding asynchronous tasks a
 
 ```js
 addEventListener("fetch", event => {
+  event.respondWith(handleEvent(event))
+}
+
+async function handleEvent(event) {
   // ...
 
   // Without event.waitUntil(), our fetch() to our logging service may
   // or may not complete.
   event.waitUntil(postLog(stack))
-  return fetch(request)
+  return fetch(event.request)
 }
 
 function postLog(data) {
