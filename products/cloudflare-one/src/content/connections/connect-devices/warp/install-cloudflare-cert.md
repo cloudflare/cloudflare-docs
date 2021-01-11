@@ -7,7 +7,7 @@ order: 0
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 
 ## Download the Cloudflare root certificate
-First, download the Cloudflare certificate [from this location](../../static/documentation/connections/Cloudflare_CA.crt).
+First, download the Cloudflare certificate [from this location](../../../../static/documentation/connections/Cloudflare_CA.crt).
 
 ### Verify the certificate fingerprint
 
@@ -40,23 +40,23 @@ Installing the certificate in the Login keychain will result in only the logged 
 
 To install the certificate in Keychain Access:
 
-1. Download the Cloudflare certificate [here](../../static/documentation/connections/Cloudflare_CA.crt).
+1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
 
 2. Double-click on the `.crt` file.
 
   The certificate is now listed in the **Keychain Access** application, under the **login** keychain. If you want to install it in the **System** keychain instead, drag and drop the certificate from the login keychain onto the System keychain section on the left.
 
-![Keychain](../../static/documentation/connections/listed-in-keych.png)
+![Keychain](../../../static/documentation/connections/listed-in-keych.png)
 
 3. Double-click on the certificate.
 
 4. Click **Trust**.
 
-![Keychain](../../static/documentation/connections/cert-click-on-trust.png)
+![Keychain](../../../static/documentation/connections/cert-click-on-trust.png)
 
 5. From the **When using this certificate** drop-down menu, select **Always Trust**.
 
-![Always trust](../../static/documentation/connections/cert-select-always-trust.png)
+![Always trust](../../../static/documentation/connections/cert-select-always-trust.png)
 
 6. Close the menu.
 
@@ -64,17 +64,17 @@ The root certificate is now installed and ready to be used.
 
 ### iOS
 
-1. Download the Cloudflare certificate [here](../../static/documentation/connections/Cloudflare_CA.crt).
+1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
 
  The device will show a message: *This website is trying to open Settings to how you a configuration profile. Do you want to allow this?*
 
-![iOS download](../../static/documentation/connections/ios_cert_download.jpg)
+![iOS download](../../../static/documentation/connections/ios_cert_download.jpg)
 
 2. Tap **Allow**.
 
 3. Navigate to **Settings** > **General** > **Profile** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
-![iOS profile](../../static/documentation/connections/ios_cert_profile1.jpg)
+![iOS profile](../../../static/documentation/connections/ios_cert_profile1.jpg)
 
 4. Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
@@ -90,13 +90,13 @@ The root certificate is now installed and ready to be used.
 
  The installed root certificates will be displayed in the *Enable full trust for root certificates* section.
 
- ![iOS cert trust](../../static/documentation/connections/ios_cert_trust1.jpg)
+ ![iOS cert trust](../../../static/documentation/connections/ios_cert_trust1.jpg)
 
 8. Tap the slide button next to the Cloudflare certificate you just installed.
 
 9. A confirmation dialogue will appear. Tap **Continue**.
 
- ![iOS cert confirm](../../static/documentation/connections/ios_cert_trust2.jpg)
+ ![iOS cert confirm](../../../static/documentation/connections/ios_cert_trust2.jpg)
 
 The root certificate is now installed and ready to be used.
 
@@ -110,7 +110,7 @@ Windows offers two options to install the certificate, each having a different i
 | Current User Store  | The logged in user      |
 | Local Machine Store | All users on the system |
 
-1. Download the Cloudflare certificate [here](../../static/documentation/connections/Cloudflare_CA.crt).
+1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
 
 2. Right-click on the certificate file.
 3. Click **Open**.  
@@ -118,7 +118,7 @@ Windows offers two options to install the certificate, each having a different i
 
 4. The **Certificate** window will appear. Click **Install Certificate**.
 
-![Windows install cert](../../static/documentation/connections/windows_install_cert.png)
+![Windows install cert](../../../static/documentation/connections/windows_install_cert.png)
 
 5. Now choose a Store Location.
 
@@ -130,23 +130,23 @@ Windows offers two options to install the certificate, each having a different i
 
 9. Click **OK**.
 
-![Windows cert location](../../static/documentation/connections/windows_cert_location.png)
+![Windows cert location](../../../static/documentation/connections/windows_cert_location.png)
 
 10. Click **Finish**.
 
-![Windows cert install complete](../../static/documentation/connections/windows_cert_install_finished.png)
+![Windows cert install complete](../../../static/documentation/connections/windows_cert_install_finished.png)
 
 The root certificate is now installed and ready to be used.
 
 ### Android
 
-1. Download the Cloudflare certificate [here](../../static/documentation/connections/Cloudflare_CA.crt).
+1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
 
 2. Navigate to the **Settings** menu.
 
 3. Select **Security**.
 
-![Android settings](../../static/documentation/connections/android_security_settings.png)
+![Android settings](../../../static/documentation/connections/android_security_settings.png)
 
 4. Tap **Advanced** > **Encryption & Credentials**.
 
@@ -154,7 +154,7 @@ The root certificate is now installed and ready to be used.
 
 |  |  |
 |------|------|
-| ![Android encrypt settings](../../static/documentation/connections/android_advanced_encrypt.png) | ![Android cred settings](../../static/documentation/connections/android_advanced_encrypt2.png) |
+| ![Android encrypt settings](../../../static/documentation/connections/android_advanced_encrypt.png) | ![Android cred settings](../../../static/documentation/connections/android_advanced_encrypt2.png) |
 
 </TableWrap>
 
@@ -164,18 +164,18 @@ The root certificate is now installed and ready to be used.
 
 |  |  |
 |------|------|
-| ![Android install cert](../../static/documentation/connections/android_install_cert.png) | ![Android ca cert](../../static/documentation/connections/android_ca_cert.png) |
+| ![Android install cert](../../../static/documentation/connections/android_install_cert.png) | ![Android ca cert](../../../static/documentation/connections/android_ca_cert.png) |
 
 </TableWrap>
 
 7. Tap **Install Anyway**.
 
-![Android install anyway](../../static/documentation/connections/android_install_anyway.png)
+![Android install anyway](../../../static/documentation/connections/android_install_anyway.png)
 
 8. Verify your identity through the fingerprint, or by inserting the pin code.
 
 9. Select the certificate you want to install.
 
-![Android choose cert](../../static/documentation/connections/android_choose_certificate.png)
+![Android choose cert](../../../static/documentation/connections/android_choose_certificate.png)
 
 The root certificate is now installed and ready to be used.

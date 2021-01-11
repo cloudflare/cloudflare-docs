@@ -4,20 +4,12 @@ order: 3
 
 # Determining a location
 
-Gateway uses different ways to match a DNS query to [locations](/locations) depending on the type of request and network. This is how Gateway determines the location of a DNS query:
+Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
-![Determine location](../static/gateway-determine-location-dns.png)
+![Determine location](../../../static/documentation/policies/gateway-determine-location-dns.png)
 
-Here is a step by step flow of how Gateway determines the location for an incoming DNS query:
+1. **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the location by its unique hostname. 
 
-## Step 1: DNS over HTTPS check and lookup based on hostname
+2. **Step 2**: if the query wasn't sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the location by the source IPv4 address.
 
-Check if the DNS query is using DNS over HTTPS. If yes, lookup location by the unique hostname. If not, go to step 2.
-
-## Step 2: IPv4 check and lookup based on source IPv4 address
-
-Check if the DNS query is sent over IPv4. If yes, lookup location by the source IPv4 address. If no, go to step 3.
-
-## Step 3: Lookup based on IPv6
-
-If the query is in this step, it means that the DNS query is using IPv6. Gateway will lookup the location associated with the DNS query based on the destination IPv6 address.
+3. **Step 3**: If the query wasn't sent over IPv4, it means it was sent over IPv6. Gateway will look up the location associated with the DNS query based on the destination IPv6 address. 

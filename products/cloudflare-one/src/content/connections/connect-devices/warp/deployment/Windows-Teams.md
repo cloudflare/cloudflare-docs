@@ -8,7 +8,7 @@ order: 2
 
 **Before you start**  
 
-Visit the [requirements section](../system-requirements) to review the system requirements for Windows and to download the Windows installer.
+Visit the [requirements section](/connections/connect-devices/warp/download-warp) to review the system requirements for Windows and to download the Windows installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-install-via-command-prompt) (Intune, Command Prompt)

@@ -8,7 +8,7 @@ order: 5
 
 **Before you start**  
 
-Visit the [requirements section](../system-requirements) to review the system requirements for Android and to download the Android installer.
+Visit the [requirements section](/connections/connect-devices/warp/download-warp) to review the system requirements for Android and to download the Android installer.
 
 Next, choose how you want to deploy the WARP Client in your organization:
 * [Automated configuration](#automated-configuration) via command prompt
