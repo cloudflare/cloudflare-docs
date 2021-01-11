@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# Configure a Location
+# Configure locations
 
 The only requirement for a location is its name. All other fields are optional if the location you are sending requests from is only using IPv6 or sending all DNS requests using DNS over HTTPS.
 
@@ -16,7 +16,19 @@ On your router or if you are using a device or a daemon, forward DNS queries to 
 * **172.64.36.1**
 * **172.64.36.2**
 
-See how you can start sending DNS queries by visiting the [setup instructions](/locations/setup-instructions/)
+See how you can start sending DNS queries by visiting the [setup instructions](/locations/setup-instructions/).
+
+<Aside type='note' header='Your IPv4 address is taken'>
+
+When trying to configure a location over IPv4, you may run into this error:
+
+![Source IP taken](../../../static/documentation/connections/source-ip-taken.png)
+
+This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
+
+If you think someone else is wrongfully using this IPv4 address, please [let us know](https://forms.gle/MUtjTheQh24MRY2aA).
+
+</Aside>
 
 ## IPv6
 When you create a location, your location will receive a unique IPv6 address. Cloudflare Gateway will identify your location based on this unique IPv6 address.
@@ -30,6 +42,6 @@ Each location has a unique hostname for DNS over HTTPS.
 
 Cloudflare Gateway will identify your location based on the DNS over HTTPS hostname.
 
-![DNS over HTTPS hostname](../static/location-with-dns-over-https-hostname.png)
+![DNS over HTTPS hostname](../../../static/documentation/policies/location-with-dns-over-https-hostname.png)
 
-See how you can start sending DNS queries over HTTPS using [Firefox.](/locations/setup-instructions/firefox).
+See how you can start sending DNS queries over HTTPS using [Firefox](/locations/setup-instructions/firefox).

@@ -32,11 +32,15 @@ The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS
 
 The rule is inserted at the bottom of the list of rules when more than one rule is present. Rules are enabled by default and take effect as soon as the rule is created.
 
-Administrators are able to create up to 50 rules in their HTTP policy.
+Administrators can create up to 50 rules in their HTTP policy.
 
 
 ## Enable L7 filtering
 
 In the settings (Gateway → Policies → Settings) page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
 
-Do not enable filtering without first configuring certificates on the devices enrolled, otherwise you will prevent those devices from connecting to the Internet.
+<Aside type='warning' header='Important'>
+
+Do not enable filtering without first configuring certificates on the devices enrolled, otherwise  those devices will be prevented from connecting to the Internet.
+
+</Aside>

@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Firefox Setup Instructions
+# Firefox
 
 With Firefox, you can send DNS queries using the DNS over HTTPS protocol.  
 
