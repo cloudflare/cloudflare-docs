@@ -2,7 +2,7 @@
 order: 11
 ---
 
-# Legacy: Configuring Origins via CLI
+# Legacy: configuring origins via CLI
 
 `cloudflared` proxies traffic to local services running on your origin. You can configure the exact properties of each
 origin by adding stanzas to the [Ingress Rules](/configuration/ingress#origin-configurations). However, if you only want to proxy

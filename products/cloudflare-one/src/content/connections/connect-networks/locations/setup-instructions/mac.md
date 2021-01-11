@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Mac Setup Instructions
+# Mac
 
 ## IPv4
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.

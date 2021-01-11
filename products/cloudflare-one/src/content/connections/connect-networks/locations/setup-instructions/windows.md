@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Windows Setup Instructions
+# Windows
 
 ## IPv4
 * Click on the Start menu, then click on Control Panel.
