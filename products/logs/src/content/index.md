@@ -1,6 +1,6 @@
 ---
 title: Welcome
-order: 0
+order: 5000
 ---
 
 # Cloudflare Logs documentation
