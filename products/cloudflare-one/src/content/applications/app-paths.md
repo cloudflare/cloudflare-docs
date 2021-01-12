@@ -23,7 +23,7 @@ When you create an application for a specific subdomain or path, you can use ast
 
 This is how to use wildcards effectively:
 
-### Protect all subdomain of an apex domain
+### Protect all subdomains of an apex domain
 
 Using a wildcard in the *subdomain* field **does not cover the apex domain**.
 
@@ -49,7 +49,7 @@ Using a wildcard in the *path* field **does not cover the apex domain**.
 
 ### Protect multi-level subdomains
 
-Using a wildcard in the *subdomain* field to protect second-level subdomains **does not cover that subdomain's top subdomain nor the apex domain**. 
+Using a wildcard in the *subdomain* field to protect multi-level subdomains **does not cover that subdomain's top subdomain nor the apex domain**. 
 
 <TableWrap>
 
@@ -59,9 +59,9 @@ Using a wildcard in the *subdomain* field to protect second-level subdomains **d
 
 </TableWrap>
 
-### Protect all subpaths of a path
+### Protect multi-level paths
 
-Using a wildcard in the *subdomain* field to protect subpaths **does not cover that subpath's parent path nor the apex domain**. 
+Using a wildcard in the *path* field to protect multi-level paths **does not cover that subpath's parent path nor the apex domain**. 
 
 <TableWrap>
 
