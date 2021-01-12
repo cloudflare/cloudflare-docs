@@ -4,20 +4,24 @@ order: 0
 
 # SSO integration
 
-You can integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
+Teams allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
+
+Adding an identity provider as a login method requires configuration both on the [Teams dashboard](https://dash.teams.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
+
+<Aside>
 
 Cloudflare Access supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using signed AuthN requests with SAML providers.
-
-Adding an identity provider as a login method requires configuration both on the [Teams dashboard](https://dash.teams.cloudflare.com) and with the identity provider. Consult our IdP-specific documentation to learn more about what you need to set up.
+</Aside>
 
 ## Set up IdPs on the Teams dashboard
 
-1. Navigate to **Access > Authentication** on the [Teams dashboard](https://dash.teams.cloudflare.com).
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Authentication**.
+
 2. In the **Login methods** card, click *+Add*.
 
 ![Login methods](../../static/documentation/identity/login-methods-card.png)
 
-3. Select the identity provider you want to set up. You can integrate multiple providers of the same type.
+3. Select the identity provider you want to add. You can add multiple providers of the same type.
 
 4. Fill in the necessary fields to set up your identity provider.
 
