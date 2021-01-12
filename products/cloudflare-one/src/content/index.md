@@ -8,9 +8,19 @@ type: overview
 
 <ContentColumn>
 
-Your employees, partners, and customers need a network that is secure, fast and reliable to get work done. Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
+Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
 
-Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere.
+**Zero Trust access for all of your applications.**
+
+* Authenticate users on our global edge network
+* Onboard third-party users seamlessly
+* Log every event and request
+
+**A Secure Web Gateway to protect users and devices.**
+
+* Enforce your company’s Acceptable Use Policy (AUP)
+* Block risky sites with custom blocklists and built-in threat intel
+* Enhance visibility and protection into SaaS applications
 
 ![Teams illustration](/static/documentation/teams-no-background.png)
 

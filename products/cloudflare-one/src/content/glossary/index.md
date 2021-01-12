@@ -7,13 +7,13 @@ order: 10
 ## [Cloudflare for Teams](https://www.cloudflare.com/teams-home/)
 Cloudflare for Teams brings the power of Cloudflare’s global network to your internal teams and infrastructure. Teams empowers users with secure, fast and seamless access to any device on the Internet.
 
-## Cloudflare Access
+## [Cloudflare Access](https://www.cloudflare.com/en-gb/teams/access/)
 Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead of placing internal tools on a private network, customers deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
 
-## Cloudflare Gateway
+## [Cloudflare Gateway](https://www.cloudflare.com/en-gb/teams/gateway/)
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
-## Argo Tunnel
+## [Argo Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
 A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
@@ -31,7 +31,7 @@ A DNS zone is a portion of the DNS namespace that is managed by a specific organ
 
 The resource being protected by Cloudflare for Teams. An application can be a subdomain, a path, or a SaaS application.
 
-## Auth Domain
+## Authentication domain
 The unique subdomain assigned to your Cloudflare account; for example, `https://example.cloudflareaccess.com`
 
 ## Authenticated Origin Pulls
@@ -43,7 +43,7 @@ Authenticated Origin Pulls let origin web servers validate that a web request ca
 
 ## cloudflared
 
-`cloudflared` is the software that powers Argo Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
+`cloudflared` is the software that powers [Argo Tunnel](#argo-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
 ## daemon
 A program that performs tasks without active management or maintenance.

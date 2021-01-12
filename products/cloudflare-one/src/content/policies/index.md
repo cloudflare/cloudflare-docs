@@ -5,10 +5,10 @@ order: 6
 # Policies
 
 Policies are sets of rules that allow you to create:
-* **Zero Trust** rules to secure applications with **Cloudflare Access**, and
-* **Secure Web Gateway** rules to filter traffic to the Internet, with **Cloudflare Gateway**.
 
-<DirectoryListing path="/policies"/>
+* [**Secure Web Gateway**](/policies/filtering) rules to filter traffic to the Internet, with [Cloudflare Gateway](/glossary#cloudflare-gateway)
+* [**Zero Trust**](/policies/zero-trust) rules to secure applications with [Cloudflare Access](/glossary#cloudflare-access)
+
 
 ## Related tutorials
 
