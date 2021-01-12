@@ -4,6 +4,6 @@ order: 0
 
 # User management
 
-You can use the Cloudflare for Teams dashboard to manage user group membership, session revocation, and validate the JSON Web Tokens issued by Cloudflare.
+Use the Teams dashboard to manage user group membership, session revocation, and validate the JSON web tokens issued by Cloudflare.
 
 <DirectoryListing path="/identity/users"/>

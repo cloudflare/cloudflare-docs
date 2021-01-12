@@ -6,7 +6,7 @@ order: 2
 
 <Aside type='warning' header='Important'>
 
-Cloudflare Access can add mTLS to your application, but it requires a Cloudflare enterprise plan. To enforce mTLS in your application with Access, please contact your Cloudflare customer success manager.
+Adding mTLS to your application is only available on the [**Cloudflare enterprise plan**](https://www.cloudflare.com/en-gb/plans/enterprise/). For more information, please contact your Cloudflare customer success manager.
 
 </Aside>
 
