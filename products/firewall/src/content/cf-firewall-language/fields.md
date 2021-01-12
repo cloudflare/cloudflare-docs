@@ -245,7 +245,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='warning' header='Important'>
 
-Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan.
+Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan with [Bot Management](https://support.cloudflare.com/hc/articles/360027519452#12345683) enabled.
 
 </Aside>
 
@@ -263,14 +263,14 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>cf.bot_management.verified_bot</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known bot or crawler. It does not identify good or bad intent.
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.
           </p>
         </td>
     </tr>
     <tr>
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the client of a request is a known good bot.</p>
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
         </td>
     </tr>
     <tr>
