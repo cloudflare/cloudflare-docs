@@ -39,13 +39,6 @@ Here is the `browser-beta` configuration:
 | - | - | - | - |
 | Host | matches regex | `www\.cloudflare\.com\|assets\.browser\.run` | Bypass
 
-### Bypass Discord
-Temporarily bypassed due to known websocket error
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | matches regex | `.*\.discord\.gg\|discord.gg` | Bypass
-
 ### Bypass common cert pinning sites
 | Selector | Operator | Value | Action |
 | - | - | - | - |
