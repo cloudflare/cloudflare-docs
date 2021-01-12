@@ -150,7 +150,7 @@ If the system detects that a Worker is deadlocked on open connections — for in
 The maximum number of environment variables (secret and text combined) for a Worker is 32 variables.
 There is no limit to the number of environment variables per account.
 
-Each environment variable has a size limitation of 1 KiB.
+Each environment variable has a size limitation of 5 KiB.
 
 ### Script size
 
