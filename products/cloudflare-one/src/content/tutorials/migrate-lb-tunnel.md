@@ -52,7 +52,7 @@ To migrate to the Named Tunnel model, first [download and authenticate](/connect
 To begin, create a Named Tunnel with the following command.
 
 ```sh
-cloudflared tnnel create lisbon-app
+cloudflared tunnel create lisbon-app
 ```
 
 ![Create LB](../static/secure-origin-connections/migrate-lb-tunnel/tunnel-create.png)
