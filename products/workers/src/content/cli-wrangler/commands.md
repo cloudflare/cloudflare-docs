@@ -964,7 +964,7 @@ y
 
 ```sh
 $ wrangler --help
-👷 ✨  wrangler 1.10.3
+👷 ✨  wrangler 1.12.3
 The Wrangler Team <wrangler@cloudflare.com>
 
 USAGE:
@@ -986,9 +986,10 @@ SUBCOMMANDS:
     preview         🔬  Preview your code temporarily on cloudflareworkers.com
     dev             👂  Start a local server for developing your worker
     publish         🆙  Publish your worker to the orange cloud
-    config          🕵️  Set up wrangler with your Cloudflare account
+    config          🕵️  Authenticate Wrangler with a Cloudflare API Token or Global API Key
     subdomain       👷  Configure your workers.dev subdomain
     whoami          🕵️  Retrieve your user info and test your auth config
     tail            🦚  Aggregate logs from production worker
+    login           🔓 Authenticate Wrangler with your Cloudflare username and password
     help            Prints this message or the help of the given subcommand(s)
 ```
