@@ -8,7 +8,7 @@ order: 1
 **Important:** While the Remote Browser Isolation technology only requires a web browser to function, the beta programme integrates into the end-to-end Cloudflare for Teams experience. This uses a local client to proxy Internet traffic through from your computer to the nearest Cloudflare data center.
 
 ## Install WARP client
-Follow the steps described on our developer portal for more information: https://developers.cloudflare.com/warp-client/warp-for-teams.
+Download and install the WARP client here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/requirements.
 
 ## Install the Cloudflare Root CA
 Advanced security features including Browser Isolation require users to install and trust the Cloudflare root certificate on their machine or device.
