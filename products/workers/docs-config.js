@@ -17,6 +17,10 @@ module.exports = {
       title: "Pricing",
       url: "https://workers.cloudflare.com/#plans"
     },
+    {
+      title: "Discord",
+      url: "https://discord.gg/cloudflaredev"
+    },
   ],
   search: {
     indexName: "cloudflare-workers-v2",
