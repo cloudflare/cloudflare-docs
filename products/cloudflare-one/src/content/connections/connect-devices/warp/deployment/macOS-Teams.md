@@ -121,7 +121,10 @@ If your organization uses Teams Access policies to control device registration, 
 1. Navigate to **Preferences**.
 1. Select the **Account** tab.
 1. Click **Login with Cloudflare for Teams**.
+
+ ![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/macOS_TeamsButton.png)
+
 1. Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
 1. Complete the authentication steps required by your organization.
 
-![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/macOS_TeamsButton.png)
+

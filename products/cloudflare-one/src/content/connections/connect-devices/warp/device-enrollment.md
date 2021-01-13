@@ -2,7 +2,7 @@
 order: 3
 ---
 
-# Device enrollment
+# Device enrollment policies
 
 <Aside>
 
