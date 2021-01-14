@@ -16,7 +16,7 @@ order: 2
 | [Subrequests](#subrequests)                                                     | 50                                                   | 50        |
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6                                                    | 6         |
 | [Environment variables](#environment-variables)                                 | 32/worker                                            | 32/worker |
-| [Environment variable<br/>size](#environment-variables)                         | 5 KB                                                 | 5 KB      |
+| [Environment variable<br/>size](#environment-variables)                         | 1 KB                                                 | 1 KB      |
 | [Script size](#script-size)                                                     | 1 MB                                                 | 1 MB      |
 | [Number of scripts](#number-of-scripts)                                         | 30                                                   | 30        |
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3                                                    | 3         |
@@ -150,7 +150,7 @@ If the system detects that a Worker is deadlocked on open connections — for in
 The maximum number of environment variables (secret and text combined) for a Worker is 32 variables.
 There is no limit to the number of environment variables per account.
 
-Each environment variable has a size limitation of 5 KiB.
+Each environment variable has a size limitation of 1 KB.
 
 ### Script size
 
