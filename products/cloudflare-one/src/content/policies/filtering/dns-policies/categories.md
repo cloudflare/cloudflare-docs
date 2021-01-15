@@ -4,15 +4,15 @@ order: 5
 
 # Categories
 
-Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security threats on the public internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security threats and content categories.
+Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security risks on the public internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security risks and content categories.
 
-You can block security threats and content categories by creating DNS policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.  
+You can block security risks and content categories by creating DNS policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.  
 
-## Security threat categories
+## Security risk categories
 
 <Aside>
 
-If you wish to block a hostname or URL that belongs to a security threat category, you need to block that category. If the security threat category is not configured as blocked, requests to that hostname or URL will appear in your Gateway logs as allowed requests.
+If you wish to block a hostname or URL that belongs to a security risk category, you need to block that category. If the security risk category is not configured as blocked, requests to that hostname or URL will appear in your Gateway logs as allowed requests.
 
 </Aside>
 
@@ -32,15 +32,15 @@ If you wish to block a hostname or URL that belongs to a security threat categor
 | Spyware | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge.|
 | Unreachable | Domains that resolve to unreachable IP addresses.|
 
-### Block security threat categories
+### Block security risk categories
 
 1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
 2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
-3. Navigate to the **Security threats** tab.
+3. Navigate to the **Security risks** tab.
 
-![Security threats page](../../../static/documentation/policies/security-threats.png)
+![Security risks page](../../../static/documentation/policies/security-risks.png)
 
-4. Select all the security threats categories you want your policy to block.
+4. Select all the security risk categories you want your policy to block.
 5. Click **Save** to finalize your changes.
 
 
