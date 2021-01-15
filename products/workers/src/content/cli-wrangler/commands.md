@@ -63,7 +63,7 @@ Default values indicated by <Type>=value</Type>.
 
 ## build
 
-Build your project. This command looks at your `wrangler.toml` file and runs the build steps associated
+Build your project (if applicable). This command looks at your `wrangler.toml` file and runs the build steps associated
 with the`"type"` declared in your `wrangler.toml`.
 
 ```sh
