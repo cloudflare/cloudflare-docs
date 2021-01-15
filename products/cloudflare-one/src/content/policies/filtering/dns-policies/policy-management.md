@@ -20,7 +20,7 @@ order: 1
 
 1. In the cards below, you can choose to enable **[SafeSearch](/policies/filtering/dns-policies/safesearch)** or **YouTube Restricted Mode** for your policy. 
 
-1. Next, navigate to **[Security threats](/policies/filtering/dns-policies/categories#security-threat-categories)** to choose which security categories you want to block. Click on **Block all** if you want to select all categories.
+1. Next, navigate to **[Security risks](/policies/filtering/dns-policies/categories#security-risk-categories)** to choose which security categories you want to block. Click on **Block all** if you want to select all categories.
 
 1. Navigate to **[Content categories](/policies/filtering/dns-policies/categories#content-categories)** to choose which content categories you want to block.
 
