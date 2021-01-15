@@ -12,7 +12,13 @@ This feature is not available on the Teams free plan. For more information, see 
 
 ## Before you start
 
+1. Install the [WARP client](/connections/connect-devices/warp) and set it to WARP mode on the devices you want to connect.
+
+2. Install the [Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert) on your devices you want to connect.
+
+<Aside>
 The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device.
+</Aside>
 
 ## Setup your first HTTP policy
 
@@ -41,6 +47,6 @@ In the settings (Gateway → Policies → Settings) page, click the toggle to en
 
 <Aside type='warning' header='Important'>
 
-Do not enable filtering without first configuring certificates on the devices enrolled, otherwise  those devices will be prevented from connecting to the Internet.
+Do not enable filtering without first configuring the [Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert) on the devices enrolled, otherwise those devices will be prevented from connecting to the Internet.
 
 </Aside>
