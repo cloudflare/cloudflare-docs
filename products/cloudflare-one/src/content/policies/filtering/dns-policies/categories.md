@@ -38,7 +38,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
 3. Navigate to the **Security risks** tab.
 
-![Security risks page](../../../static/documentation/policies/security-threats.png)
+![Security risks page](../../../static/documentation/policies/security-risks.png)
 
 4. Select all the security risk categories you want your policy to block.
 5. Click **Save** to finalize your changes.
