@@ -24,14 +24,14 @@ Teams customers can use the Cloudflare WARP application to connect corporate des
 ## [App Launcher](/applications/app-launcher)
 The App Launcher portal provides end users with a single dashboard from which they can open applications secured by Teams.
 
-## Active zone
+## active zone
 A DNS zone is a portion of the DNS namespace that is managed by a specific organization or administrator. For a domain to be active on Cloudflare, its nameservers need to be changed to Cloudflare's.
 
-## [Application](/applications/)
+## [application](/applications/)
 
 The resource being protected by Cloudflare for Teams. An application can be a subdomain, a path, or a SaaS application.
 
-## Authentication domain
+## authentication domain
 The unique subdomain assigned to your Cloudflare account; for example, `https://example.cloudflareaccess.com`
 
 ## Authenticated Origin Pulls
@@ -97,11 +97,11 @@ OAuth is a technical standard for authorizing users. It is a protocol for passin
 
 A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner. (From: [source](https://openid.net/connect/))
 
-## Origin certificate
+## origin certificate
 
 Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
-## [Policy](/policies)
+## [policy](/policies)
 A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.
 
 ## RDP

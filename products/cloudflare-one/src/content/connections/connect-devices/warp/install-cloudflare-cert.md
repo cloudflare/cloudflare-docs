@@ -7,7 +7,7 @@ order: 0
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 
 ## Download the Cloudflare root certificate
-First, download the Cloudflare certificate [from this location](../../../../static/documentation/connections/Cloudflare_CA.crt).
+First, download the Cloudflare certificate [from this location](../../../static/documentation/connections/Cloudflare_CA.crt).
 
 ### Verify the certificate fingerprint
 
@@ -28,7 +28,7 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 ### MacOS
 
 #### Before you start
-You will need to install the root certificate in the Keychain Access application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
+You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
 
 | Keychain   | Impact                  |
 |-------------|-------------------------|
@@ -38,27 +38,31 @@ You will need to install the root certificate in the Keychain Access application
 
 Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System keychain affects all users who have access to that machine.
 
-To install the certificate in Keychain Access:
+To install the certificate in **Keychain Access**:
 
 1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
 
 2. Double-click on the `.crt` file.
 
-  The certificate is now listed in the **Keychain Access** application, under the **login** keychain. If you want to install it in the **System** keychain instead, drag and drop the certificate from the login keychain onto the System keychain section on the left.
+3. In the pop-up message, choose the option that suits your needs (*login*, *Local Items*, or *System*) and click **Add**.
 
-![Keychain](../../../static/documentation/connections/listed-in-keych.png)
+ ![Popup](../../../static/documentation/connections/keychain-popup.png)
 
-3. Double-click on the certificate.
+ The certificate is now listed in your preferred keychain within the **Keychain Access** application. You can always move the certificate under a different keychain by dragging and dropping the certificate onto the desired keychain on the left.
 
-4. Click **Trust**.
+ ![Keychain](../../../static/documentation/connections/listed-in-keych.png)
+
+4. Double-click on the certificate.
+
+5. Click **Trust**.
 
 ![Keychain](../../../static/documentation/connections/cert-click-on-trust.png)
 
-5. From the **When using this certificate** drop-down menu, select **Always Trust**.
+6. From the **When using this certificate** drop-down menu, select **Always Trust**.
 
 ![Always trust](../../../static/documentation/connections/cert-select-always-trust.png)
 
-6. Close the menu.
+7. Close the menu.
 
 The root certificate is now installed and ready to be used.
 
