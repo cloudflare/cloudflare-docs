@@ -37,7 +37,7 @@ async function handleRequest(event) {
         "Bad response at origin. Status: " +
           response.status +
           " Body: " +
-          //Ensure the string is small enough to be a header
+          // Ensure the string is small enough to be a header
           body.trim().substring(0, 10),
       )
     }
@@ -58,7 +58,7 @@ async function handleRequest(event) {
 }
 
 addEventListener("fetch", event => {
-  //Have any uncaught errors thrown go directly to origin
+  // Have any uncaught errors thrown go directly to origin
   event.passThroughOnException()
   event.respondWith(handleRequest(event))
 })
