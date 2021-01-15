@@ -9,7 +9,7 @@ Jekyll is written in Ruby, meaning that you'll need a functioning Ruby installat
 We recommend using [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on your computer. Follow the [`rbenv` install instructions](https://github.com/rbenv/rbenv#installation), and install a recent version of Ruby using `rbenv`:
 
 ```sh
-$ rbenv install 2.7
+$ rbenv install 2.7.2
 ```
 
 With Ruby installed, you can install the `jekyll` Ruby gem:
