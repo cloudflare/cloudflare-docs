@@ -10,15 +10,15 @@ When a user makes a DNS request to Gateway, Gateway matches the request against 
 
 DNS policies can be built by doing one or more of the following:
 
-1. Selecting security threat categories you want to block.
+1. Selecting security risk categories you want to block.
 1. Enabling SafeSearch.
 1. Enabling YouTube Restricted Mode.
 1. Selecting content categories you want to block.
 1. Adding custom domains you want to block, allow, or override.
 
-## Security threat categories
+## Security risk categories
 
-When creating a DNS policy, you can select as many security threat categories as you want to block with the policy. This allows you to block known and potential security threats on the public Internet.
+When creating a DNS policy, you can select as many security risk categories as you want to block with the policy. This allows you to block known and potential security risks on the public Internet.
 
 ## Content categories
 
