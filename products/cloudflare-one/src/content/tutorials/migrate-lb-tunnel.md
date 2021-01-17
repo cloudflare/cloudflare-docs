@@ -83,10 +83,10 @@ cloudflared tunnel run lisbon-app
 
 ## Migrate the Load Balancer configuration
 
-You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Open the Load Balancer panel and open the Origin Pool for the Load Balancer. Add a new origin to the list.
+You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Create a new Origin Pool in the Load Balancer.Add a new origin to the list.
 
 In the origin address field, input the ID of the tunnel followed by `cfargotunnel.com`. In this example, the origin address value would be `6b9b8f72-b655-46fb-b008-a45366e26b48.cfargotunnel.com`.
 
 ![Create LB](../static/secure-origin-connections/migrate-lb-tunnel/drain-classic-tunnel.png)
 
-Wait 1 minute while the new origin is recognized as healthy by Cloudflare Load Balancer. Once healthy, you can begin to remove the Legacy Argo Tunnel origins from the Load Balancer.
+Wait 1 minute while the new origin is recognized as healthy by Cloudflare Load Balancer. Once healthy, you can begin to disable the Legacy Argo Tunnel origins from the legacy Load Balancer pool.
