@@ -15,7 +15,7 @@ After creating a new branch we specify the rate limiting rule:
 $ git checkout -b step4-ratelimit
 Switched to a new branch 'step4-ratelimit'
 
-$ cat >> cloudflare.cf <<'EOF'
+$ cat >> cloudflare.tf <<'EOF'
 
 resource "cloudflare_rate_limit" "login-limit" {
   zone_id = var.zone_id
