@@ -4,13 +4,12 @@ order: 0
 
 # Install the Cloudflare root certificate
 
-Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
+Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 First, download the Cloudflare certificate [from this location](../../../static/documentation/connections/Cloudflare_CA.crt).
 
 ### Verify the certificate fingerprint
-
 To verify your download, check that the certificate's thumbprint matches:
 
 #### SHA1
@@ -24,6 +23,12 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 ```
 
 ## Add the certificate to your system
+
+<Aside header='Setting up certificate authorities (CAs) in Firefox'>
+
+If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox). 
+
+</Aside>
 
 ### MacOS
 
