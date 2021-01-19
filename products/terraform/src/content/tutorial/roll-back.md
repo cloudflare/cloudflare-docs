@@ -90,9 +90,9 @@ index 0b39450..ef11d8a 100644
  }
 +
 +resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
-+  zone = "${var.domain}"
++  zone_id = var.zone_id
 +  target = "www.${var.domain}/expensive-db-call"
-+  priority = 10
++  priority = 1
 +
 +  actions = {
 +    security_level = "under_attack",
@@ -100,9 +100,9 @@ index 0b39450..ef11d8a 100644
 +}
 +
 +resource "cloudflare_page_rule" "redirect-to-new-db-page" {
-+  zone = "${var.domain}"
++  zone_id = var.zone_id
 +  target = "www.${var.domain}/old-location.php"
-+  priority = 10
++  priority = 2
 +
 +  actions = {
 +    forwarding_url {
@@ -148,7 +148,7 @@ index b92cb6f..195b646 100644
 +}
 +resource "cloudflare_load_balancer_pool" "www-servers" {
 +  name = "www-servers"
-+  monitor = "${cloudflare_load_balancer_monitor.get-root-https.id}"
++  monitor = cloudflare_load_balancer_monitor.get-root-https.id
 +  check_regions = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 +  origins {
 +    name = "www-us"
@@ -164,10 +164,10 @@ index b92cb6f..195b646 100644
 +  notification_email = "you@example.com"
 +}
 +resource "cloudflare_load_balancer" "www-lb" {
-+  zone = "${var.domain}"
++  zone_id = var.zone_id
 +  name = "www-lb"
-+  default_pool_ids = ["${cloudflare_load_balancer_pool.www-servers.id}"]
-+  fallback_pool_id = "${cloudflare_load_balancer_pool.www-servers.id}"
++  default_pool_ids = [cloudflare_load_balancer_pool.www-servers.id]
++  fallback_pool_id = cloudflare_load_balancer_pool.www-servers.id
 +  description = "example load balancer"
 +  proxied = true
 +}
@@ -187,7 +187,7 @@ index 9f25a0c..b92cb6f 100644
    description = "Block failed login attempts (5 in 1 min) for 5 minutes."
  }
 +resource "cloudflare_record" "www-asia" {
-+  domain  = "${var.domain}"
++  zone_id = var.zone_id
 +  name    = "www"
 +  value   = "198.51.100.15"
 +  type    = "A"
