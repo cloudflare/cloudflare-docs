@@ -2,7 +2,7 @@
 order: 0
 ---
 
-# SSO integration
+# IdP integration
 
 Teams allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
 
