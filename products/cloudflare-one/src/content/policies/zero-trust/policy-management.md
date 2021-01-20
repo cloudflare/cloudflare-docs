@@ -18,7 +18,7 @@ To add a Zero Trust policy:
 1. Locate the application for which you want to create the policy.
 1. Click **Add a Rule**.
 1. Select a **Rule name**. This name will identify your policy in the list of application policies.
-1. In the rule builder, select any [groups](/identity/users/groups) you may want to add to your rule.
+1. In the rule builder, select any [groups](/identity/users/groups) you want to add to your rule.
 
  ![Add rule](../../static/documentation/identity/users/access-policy-group.png)
 
