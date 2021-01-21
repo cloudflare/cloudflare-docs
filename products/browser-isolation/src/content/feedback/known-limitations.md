@@ -17,7 +17,10 @@ If one of these limitations affects you, please let us know by [submitting feedb
 
 ## Browser plugins / extensions
 
-Browser extensions / plugins are not compatible with isolated pages at this time. We intend to support them in future, let us know what plugins you would like supported by [submitting feedback](/feedback).
+Browser extensions / plugins are not compatible with isolated pages at this time however we do plan to support them in future. Let us know what plugins you would like supported by [submitting feedback](/feedback).
+
+### Ad blockers
+Advertisement blocking extensions installed in your local browser such as AdBlock or uBlock Origin may negatively interfere with the web-based remoting client. While using isolated browsing it is recommended to disable ad blocking extensions.
 
 ## Device / Browser support
 
