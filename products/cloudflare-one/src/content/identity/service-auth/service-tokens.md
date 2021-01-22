@@ -78,7 +78,7 @@ Service tokens have a default expiration of 12 months from when they are first c
 
 To configure a service token expiration alert:
 
-1. Navigate to the [Cloudflare Dashboard](https://dash.cloudflare.com).
+1. Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select the **Notifications** tab.
 3. Click **Create**.
 4. Select the Event Type “Expiring Access Service Token”.
@@ -88,6 +88,8 @@ To configure a service token expiration alert:
 
 6. If you'd like to add other recipients for the notification email, click *+Add email recipient*.
 
-7. Click **Create**. 
+7. Click **Create**.
+
+Your alert has been set, and is now visible in the **Notifications** tab of the Cloudflare dashboard.
 
 
