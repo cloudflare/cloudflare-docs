@@ -7,7 +7,7 @@ order: 730
 
 <Aside type='warning' header='Important'>
 
-This feature is part of an early access experience for select Enterprise customers. Access to Rulesets requires a Cloudflare Enterprise plan.
+This feature is part of an early access experience for selected customers.
 
 </Aside>
 

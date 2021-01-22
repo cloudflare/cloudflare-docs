@@ -8,7 +8,7 @@ order: 773
 
 <Aside type='warning' header='Important'>
 
-This feature is part of an early access experience for select Enterprise customers. Access to Rulesets requires a Cloudflare Enterprise plan.
+This feature is part of an early access experience for selected customers.
 </Aside>
 
 Use a ruleset override and a rule override in your root ruleset to deploy selected rules in a managed ruleset.
