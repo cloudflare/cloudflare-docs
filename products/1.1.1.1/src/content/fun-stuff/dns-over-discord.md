@@ -154,3 +154,11 @@ The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/
 ![invite command](../static/dns-over-discord/invite-command.png)
 
 _`/invite`_
+
+---
+
+## Development
+
+The DNS over Discord bot is deployed on [Cloudflare Workers](https://workers.cloudflare.com/).
+
+You can find the source code for the bot on GitHub, as well as information on getting started with contributing to the project, at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).  
