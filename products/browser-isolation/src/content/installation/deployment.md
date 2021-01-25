@@ -1,6 +1,6 @@
 ---
 title: Enterprise deployment
-order: 3
+order: 4
 ---
 
 # Enterprise deployment
