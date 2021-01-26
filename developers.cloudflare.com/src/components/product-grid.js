@@ -66,6 +66,11 @@ const products = [
   //   icon: "cloudflare-one",
   // },
   {
+    title: "Bot Management",
+    path: "bot-management",
+    icon: "bot-management",
+  },
+  {
     title: "BYOIP",
     path: "byoip",
     icon: "byoip",
