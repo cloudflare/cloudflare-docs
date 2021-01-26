@@ -70,7 +70,7 @@ Setting up an S3-compatible Logpush job requires two steps:
 
 For more detailed instructions with examples, follow steps 2-3 in the [Manage Logpush with cURL](https://developers.cloudflare.com/logs/tutorials/tutorial-logpush-curl/#step-2---create-a-job) tutorial.
 
-<Aside type="note" header="No ownership challenge">
+<Aside type="note" header="Note">
 
 Unlike Logpush jobs to AWS S3, there is no ownership challenge with S3-compatible APIs.
 
