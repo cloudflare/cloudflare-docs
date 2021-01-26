@@ -32,7 +32,8 @@ If your organization is using Firefox, the browser may need additional configura
 
 ### MacOS
 
-On Windows machines, you can choose to install the Cloudflare root certificate with three different methods:
+On MacOS, you can choose to install the Cloudflare root certificate with three different methods:
+
 * [Keychain](#keychain)
 * [Base Operating System](#base-operating-system)
 * [Python](#python-on-mac)
