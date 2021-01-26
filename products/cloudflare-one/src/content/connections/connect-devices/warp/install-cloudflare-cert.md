@@ -112,9 +112,9 @@ python -m certifi
 
 1. This will output:
 
-```
-~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
-```
+ ```
+ ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
+ ```
 
 1. Append the Cloudflare certificate to this CA Store by running:
 
