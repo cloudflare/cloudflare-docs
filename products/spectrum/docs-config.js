@@ -13,7 +13,7 @@ module.exports = {
   search: {
     indexName: "developers-cloudflare",
     apiKey: "b23088ab4d346409f9d3ece6606344c3",
-    algoliaOptions: { 'facetFilters': '["project:spectrum]'}
+    algoliaOptions: { 'facetFilters': '["project:spectrum"]'}
   },
   siteMetadata: {
     title: "Cloudflare Spectrum docs",
