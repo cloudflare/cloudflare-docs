@@ -11,6 +11,7 @@ module.exports = {
     search: {
         indexName: "",
         apiKey: "",
+        algoliaOptions: { 'facetFilters': ''}
     },
     siteMetadata: {
         title: "Browser Isolation Beta",

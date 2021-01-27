@@ -21,6 +21,7 @@ module.exports = {
   search: {
     indexName: "",
     apiKey: "",
+    algoliaOptions: { 'facetFilters': ''}
   },
   siteMetadata: {
     title: "Cloudflare Mobile SDK docs",
