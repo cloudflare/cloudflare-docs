@@ -26,7 +26,7 @@ Keycloak is an open source identity and access management solution built by JBos
 
     Set the Master SAML Processing URL using the same Keycloak domain: `https://<keycloak_domain>/auth/realms/master/protocol/saml`.
 
-    Finally, if you wish to enable client signatures, you will need to [configure](/configuring-identity-providers/signed_authn/) signing in the Cloudflare Access dashboard.
+    Finally, if you wish to enable client signatures, you will need to [configure](/identity/idp-integration/signed_authn) signing in the Cloudflare Access dashboard.
 
 1. Email property
 

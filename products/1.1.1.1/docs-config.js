@@ -15,8 +15,9 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "",
-    apiKey: "",
+    indexName: "developers-cloudflare",
+    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    algoliaOptions: { 'facetFilters': '["project:1.1.1.1"]'}
   },
   siteMetadata: {
     title: "1.1.1.1 docs",

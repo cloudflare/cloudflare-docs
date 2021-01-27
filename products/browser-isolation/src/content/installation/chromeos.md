@@ -1,6 +1,6 @@
 ---
 title: ChromeOS
-order: 4
+order: 5
 ---
 
 # ChromeOS
