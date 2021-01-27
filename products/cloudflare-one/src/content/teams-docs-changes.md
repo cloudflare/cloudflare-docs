@@ -8,7 +8,7 @@ hidden: true
 
 Welcome to the brand new **Cloudflare for Teams documentation**.
 
-Starting on **February 8, 2020**, this space will replace the separate, independent documentation sections for [Cloudflare Access](/glossary#cloudflare-access), [Cloudflare Gateway](/glossary#cloudflare-gateway), [Argo Tunnel](/glossary#argo-tunnel), and [WARP client for Teams](/glossary#warp-client).
+Starting on **February 8, 2021**, this space will replace the separate, independent documentation sections for [Cloudflare Access](/glossary#cloudflare-access), [Cloudflare Gateway](/glossary#cloudflare-gateway), [Argo Tunnel](/glossary#argo-tunnel), and [WARP client for Teams](/glossary#warp-client).
 
 ![Teams illustration](/static/documentation/teams-no-background.png)
 
