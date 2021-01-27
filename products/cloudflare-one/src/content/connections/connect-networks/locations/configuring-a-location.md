@@ -48,7 +48,7 @@ See how you can start sending DNS queries over HTTPS using [Firefox](/connection
 
 ## Editable IP addresses
 
-When adding a location to Teams, users on the Enterprise plan have the option of entering **custom IP addresses**. This enables them to protect networks even if they're not connecting from any of those network's IP addresses when adding the location on the dashboard. 
+When users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Teams dashboard. 
 
 ![Editable IP address](../../../static/documentation/policies/editable-ip-address.png)
 
