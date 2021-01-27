@@ -19,8 +19,9 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "cloudflare-one",
-    apiKey: "97fce3a3dcc62e4702d7820e78296caf",
+    indexName: "developers-cloudflare",
+    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    algoliaOptions: { 'facetFilters': '["project:cloudflare-one"]' }
   },
   siteMetadata: {
     title: "Cloudflare for Teams documentation",
