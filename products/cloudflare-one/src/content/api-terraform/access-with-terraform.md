@@ -10,7 +10,7 @@ order: 3
 
 [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://www.terraform.io/docs/providers/cloudflare/). Listed below are examples to help you get started with building Access with Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
 
-## Create An Application with Terraform
+## Create an application with Terraform
 
 1. Create an application.
 
@@ -87,7 +87,7 @@ cloudflare_access_application.cf_app: Creation complete after 2s [id=xxxxxxxx-xx
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
-## Create a Policy
+## Create a policy
 
 After you've created an application, you can start creating policies and attaching them to applications:
 ```
@@ -153,7 +153,7 @@ can't guarantee that exactly these actions will be performed if
 $ terraform apply --auto-approve
 ```
 
-### Configuring an Identity Provider
+### Configuring an identity provider
 
 The example below shows how you can configure an identity provider and attach it to a policy:
 ```

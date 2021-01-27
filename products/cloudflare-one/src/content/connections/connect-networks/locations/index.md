@@ -13,8 +13,8 @@ If you don’t have IPv6 network, you can set up a location by adding the source
 
 If you want to send your DNS queries over an encrypted connection, you can use the hostname that we provide in the dashboard to send queries using DNS over HTTPS.
 
-* [Configuring a location](/locations/configuring-a-location)
-* [Setup instructions](/locations/setup-instructions)
+* [Configuring a location](/connect-networks/locations/configuring-a-location)
+* [Setup instructions](/connect-networks/locations/setup-instructions)
 
 
 ## How Gateway matches queries to locations
