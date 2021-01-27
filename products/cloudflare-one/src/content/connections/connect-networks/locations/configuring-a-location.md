@@ -16,7 +16,7 @@ On your router or if you are using a device or a daemon, forward DNS queries to 
 * **172.64.36.1**
 * **172.64.36.2**
 
-See how you can start sending DNS queries by visiting the [setup instructions](/locations/setup-instructions/).
+See how you can start sending DNS queries by visiting the [setup instructions](/connections/connect-networks/locations/setup-instructions/).
 
 <Aside type='note' header='Your IPv4 address is taken'>
 
@@ -35,7 +35,7 @@ When you create a location, your location will receive a unique IPv6 address. Cl
 
 On your router/device/forwarder/daemon forward DNS queries to the corresponding IPv6 address for the location.
 
-See how you can start sending DNS queries by visiting the [setup instructions](/locations/setup-instructions/)
+See how you can start sending DNS queries by visiting the [setup instructions](/connections/connect-networks/locations/setup-instructions/).
 
 ## DNS over HTTPS
 Each location has a unique hostname for DNS over HTTPS.
@@ -44,4 +44,12 @@ Cloudflare Gateway will identify your location based on the DNS over HTTPS hostn
 
 ![DNS over HTTPS hostname](../../../static/documentation/policies/location-with-dns-over-https-hostname.png)
 
-See how you can start sending DNS queries over HTTPS using [Firefox](/locations/setup-instructions/firefox).
+See how you can start sending DNS queries over HTTPS using [Firefox](/connections/connect-networks/locations/setup-instructions/firefox).
+
+## Editable IP addresses
+
+When users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Teams dashboard. 
+
+![Editable IP address](../../../static/documentation/policies/editable-ip-address.png)
+
+To learn more about Teams pricing plans and the features they include, visit our [plans page](https://www.cloudflare.com/en-gb/teams-pricing/).
