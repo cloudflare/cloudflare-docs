@@ -12,7 +12,7 @@ Answers to common questions about Cloudflare Access.
 
     Cloudflare Access assigns JWTs (JSON web tokens) during authentication and looks for them in 1 of 2 places: a cookie in the browser or a custom authentication header.
 
-    The cookie name is `CF_Authorization`. The header value is `cf-access-jwt-assertion`.
+    The cookie name is `CF_Authorization`. The header name is `cf-access-token`.
 
 * **Does Access support multi-factor authentication?**
 
