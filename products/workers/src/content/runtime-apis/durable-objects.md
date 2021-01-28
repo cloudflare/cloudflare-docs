@@ -97,6 +97,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
       - Key at which the list results should end, exclusive.
 
+    - <Code>prefix<ParamType>string</ParamType></Code>
+
+      - Restricts results to only include key-value pairs whose keys begin with the prefix.
+
     - <Code>reverse<ParamType>boolean</ParamType></Code>
 
       - If true, return results in descending lexicographic order instead of the default ascending order.

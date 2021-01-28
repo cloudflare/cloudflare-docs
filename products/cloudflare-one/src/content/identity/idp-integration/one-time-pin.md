@@ -10,7 +10,7 @@ For example, if your team uses Okta® but you’re collaborating with someone ou
 
 ## Set up OTP
 
-To set up OTP to allow guest-user access, you simply add the guest user’s email address to a [Policy rule](/setting-up-access/configuring-access-policies/) and to the [Access Group](/setting-up-access/access-groups/) that allows your team to reach the application.
+To set up OTP to allow guest-user access, you simply add the guest user's email address to a [Zero Trust rule](/policies/zero-trust/policy-management#add-a-policy) and to the [group](/identity/users/groups) that allows your team to reach the application.
 
 This is the workflow for your guest user:
 

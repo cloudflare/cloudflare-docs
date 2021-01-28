@@ -47,9 +47,9 @@ For a description of each argument and what it means, see [deployment parameters
 1. Open a Terminal window.
 2. Run the following command:
 
-```shell
-% plutil -convert binary1 com.cloudflare.warp.plist
-```
+ ```
+ % plutil -convert binary1 com.cloudflare.warp.plist
+ ```
 
 ### Example configuration in Jamf
 
