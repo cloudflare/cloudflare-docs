@@ -55,16 +55,16 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 
 <TableWrap>
 
-| Node                         | Replacement node                     | Sunset date   |
-| ---------------------------- | ------------------------------------ | ------------- |
-| `httpRequestsCacheGroups`    | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
-| `httpRequests1mByColoGroups` | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
-| `httpRequests1dByColoGroups` | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
-| `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021 |
-| `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021 |   
-| `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021 |  
-| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | March 1, 2021 | 
-| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| March 1, 2021 |
+| Node                         | Replacement node                     | Sunset date       |
+| ---------------------------- | ------------------------------------ | ----------------- |
+| `httpRequestsCacheGroups`    | `httpRequestsAdaptiveGroups`         | March 1, 2021     |
+| `httpRequests1mByColoGroups` | `httpRequestsAdaptiveGroups`         | September 1, 2021 |
+| `httpRequests1dByColoGroups` | `httpRequestsAdaptiveGroups`         | September 1, 2021 |
+| `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021     |
+| `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021     |   
+| `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021     |  
+| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | March 1, 2021     | 
+| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| March 1, 2021     |
 
 </TableWrap>
 
