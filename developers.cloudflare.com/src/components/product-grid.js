@@ -66,8 +66,8 @@ const products = [
   //   icon: "cloudflare-one",
   // },
   {
-    title: "Bot Management",
-    path: "bot-management",
+    title: "Bots",
+    path: "bots",
     icon: "bot-management",
   },
   {
