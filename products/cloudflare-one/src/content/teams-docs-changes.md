@@ -14,7 +14,7 @@ Starting on **February 8, 2021**, this space will replace the separate, independ
 
 ## The new structure
 
-We want your experience with our documentation to be as intuitive and as seamless as possible. This is why we decided to provide you with documentation that really is about what Teams can do, rather than any specific product. The days of jumping in between product sections are over. 
+We decided to provide you with documentation that really is about what Teams can do, rather than any specific product. The days of jumping in between product sections to set up Teams are over. 
 
 The new Cloudflare for Teams documentation is structured around six main topics:
 
