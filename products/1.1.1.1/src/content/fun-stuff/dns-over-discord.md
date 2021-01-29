@@ -93,8 +93,7 @@ _`/multi-dig domain: cloudflare.com types: DNSKEY short: True`_
 
 ## whois command
 
-Curious about who's behind a domain name, an IP address or even an ASN?
-The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord for a given domain, IP or ASN.
+The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord to find who is behind a given domain name, an IP address, or an ASN.
 
 ![whois command](../static/dns-over-discord/whois-command.png)
 
