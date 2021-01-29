@@ -341,7 +341,7 @@ jobs:
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/bots
+          workingDirectory: "products/bots"
           environment: "production"
 
   deploy-byoip:
