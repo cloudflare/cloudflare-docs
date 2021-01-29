@@ -77,8 +77,8 @@ import (
 
 var (
     ctx        = context.TODO()
-    authDomain = "https://test.cloudflareaccess.com"
-    certsURL   = fmt.Sprintf("%s/cdn-cgi/access/certs", authDomain)
+    orgDomain = "https://test.cloudflareaccess.com"
+    certsURL   = fmt.Sprintf("%s/cdn-cgi/access/certs", orgDomain)
 
     // policyAUD is your application AUD value
     policyAUD = "4714c1358e65fe4b408ad6d432a5f878f08194bdb4752441fd56faefa9b2b6f2"
@@ -87,7 +87,7 @@ var (
         ClientID: policyAUD,
     }
     keySet   = oidc.NewRemoteKeySet(ctx, certsURL)
-    verifier = oidc.NewVerifier(authDomain, keySet, config)
+    verifier = oidc.NewVerifier(orgDomain, keySet, config)
 )
 
 // VerifyToken is a middleware to verify a CF Access token
@@ -149,9 +149,9 @@ app = Flask(__name__)
 # Your policies audience tag
 POLICY_AUD = os.getenv("POLICY_AUD")
 
-# Your CF Access Authentication domain
-AUTH_DOMAIN = os.getenv("AUTH_DOMAIN")
-CERTS_URL = "{}/cdn-cgi/access/certs".format(AUTH_DOMAIN)
+# Your CF Access organization domain
+ORG_DOMAIN = os.getenv("ORG_DOMAIN")
+CERTS_URL = "{}/cdn-cgi/access/certs".format(ORG_DOMAIN)
 
 def _get_public_keys():
     """
@@ -284,10 +284,10 @@ Click **Revoke existing tokens** to revoke JWTs associated with the selected pol
 
 The JWT created by Cloudflare Access contains the user identity and also a mechanism for your application to identify the user's SSO group membership. For example, your application can validate that a given user is a member of an Okta or AzureAD group like `Finance-Team` or `Eng`.
 
-Requests sent to the origin contain the JWT in a header, `Cf-Access-Jwt-Assertion`, as well as a cookie in the user's browser titled `CF_Authorization`. If your application retrieves that cookie, it can then make a request to `https://<authdomain>.cloudflareaccess.com/cdn-cgi/access/get-identity`, where the authdomain is your account's authentication domain. The request should be structured as follows:
+Requests sent to the origin contain the JWT in a header, `Cf-Access-Jwt-Assertion`, as well as a cookie in the user's browser titled `CF_Authorization`. If your application retrieves that cookie, it can then make a request to `https://<orgDomain>.cloudflareaccess.com/cdn-cgi/access/get-identity`, where the orgDomain is your account's authentication domain. The request should be structured as follows:
 
 ```
-curl -H 'cookie: CF_Authorization=<users token>' https://<authdomain>.cloudflareaccess.com/cdn-cgi/access/get-identity
+curl -H 'cookie: CF_Authorization=<users token>' https://<orgDomain>.cloudflareaccess.com/cdn-cgi/access/get-identity
 ```
 
 The response will be structured as JSON:
