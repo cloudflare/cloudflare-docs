@@ -54,15 +54,11 @@ You can review the summary information and return to the dashboard at the bottom
 
 ![Name OAuth](../../static/documentation/identity/google/name-oauth.png)
 
-10. You will need to input your Cloudflare organization domain. The domain will be structured in the following format:
+10. In the **Authorized JavaScript origins**, input your [organization domain](/glossary#organization-domain).
 
-```
-https://<your-organization-name>.cloudflareaccess.com
-```
+ In the** Authorized redirect URIs** section, input your organization domain with the path below:
 
-Input the organization domain without any path in the `Authorized JavaScript origins` section. In the Authorized redirect URIs section, input your organization domain with the path below.
-
-```
+```text
 https://<your-organization-name>.cloudflareaccess.com/cdn-cgi/access/callback
 ```
 

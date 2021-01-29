@@ -23,7 +23,7 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     You users see this name on the login page.
 
-4. In the **Homepage URL** field, eter your account’s [organization domain](/glossary#organization-domain).
+4. In the **Homepage URL** field, enter your [organization domain](/glossary#organization-domain).
 
     For example, `https://something.cloudflareaccess.com`. You can find this under the **Authentication** tab in the **Access** section of the Teams dash.
 

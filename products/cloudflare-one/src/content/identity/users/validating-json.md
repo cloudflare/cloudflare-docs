@@ -8,7 +8,7 @@ Cloudflare Access uses JSON Web Tokens (JWTs) and their contents to confirm a us
 
 Two tokens are generated:
 
-* **organization domain Token**: a token stored at the organization domain that prevents a user from needing to login to each application. The token is stored as a cookie at your account's [organization domain](/glossary#organization-domain), for example, `https://example.cloudflareaccess.com`.
+* **Organization domain token**: a token stored at the [organization domain](/glossary#organization-domain) that prevents a user from needing to login to each application. The token is stored as a cookie at your account's organization domain, for example, `https://example.cloudflareaccess.com`.
 
 * **App Token**: a token generated for each application that a user reaches. The token is stored as a cookie on the application, for example, `https://jira.site.com`.
 
