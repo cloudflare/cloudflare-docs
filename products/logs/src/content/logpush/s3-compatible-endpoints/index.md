@@ -1,6 +1,6 @@
 ---
 title: Enable S3-compatible endpoints
-order: 61
+order: 56
 ---
 
 # Enable S3-compatible endpoints
@@ -18,9 +18,19 @@ Cloudflare Logpush now supports S3-compatible destinations in an API-only beta, 
 
 For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](https://developers.cloudflare.com/logs/logpush) documentation.
 
-To set up S3-compatible endpoints, you must create a job and then enable it.
+To set up S3-compatible endpoints:
+1. Create a job with the appropriate endpoint URL and authentication parameters
+2. Then, enable the job to begin pushing logs
 
-1. Create a job
+See below for detailed instructions.
+
+<Aside type="note" header="Note">
+
+Unlike Logpush jobs to AWS S3, there is no ownership challenge with S3-compatible APIs.
+
+</Aside>
+
+## 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 * `name` (optional) - We suggest using your domain name as the job name.
@@ -46,6 +56,8 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 "destination_conf":"s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>",  "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
+Response:
+
 ```json
 {
   "errors": [],
@@ -65,18 +77,19 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 }
 ```
 
-2. Enable (update) a job
+## 2. Enable (update) a job
 
 To enable a  job, make a `PUT` request to the Logpush jobs endpoint. You’ll use the job ID returned from the previous step in the URL, and send `{"enabled": true}` in the request body.
 
-Example using cURL:
+Example request using cURL:
 
 ```bash
 curl -s -X PUT \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabled":true}' | jq .
 ```
 
-The response for the above
+Response:
+
 ```json
 {
   "errors": [],
@@ -95,9 +108,3 @@ The response for the above
   "success": true
 }
 ```
-
-<Aside type="note" header="Note">
-
-Unlike Logpush jobs to AWS S3, there is no ownership challenge with S3-compatible APIs.
-
-</Aside>

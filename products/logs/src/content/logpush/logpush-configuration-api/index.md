@@ -15,8 +15,9 @@ To get started:
 
    - [Enable Amazon S3](/logpush/aws-s3/)
    - [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
-   - [Enabled Microsoft Azure](/logpush/azure/)
+   - [Enable Microsoft Azure](/logpush/azure/)
    - [Enable Sumo Logic](/logpush/sumo-logic/)
+   - [Enable S3-compatible endpoints](/logpush/s3-compatible-endpoints/)
 
 2. Have your Cloudflare API credentials and other information handy, including:
 
