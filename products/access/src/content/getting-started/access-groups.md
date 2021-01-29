@@ -4,6 +4,12 @@ order: 4
 
 # Access Groups
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 ## Managing Groups
 
 Access Groups define a set of rules that can be defined once and then quickly applied across many applications. You can select an Access Group as an attribute in any Policy rule, and all the criteria from the selected Access Group will apply to that application.

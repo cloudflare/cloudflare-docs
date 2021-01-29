@@ -4,6 +4,12 @@ order: 12
 
 # Google
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration will allow any user with a Google account to login (if the Access policy allows them to reach the resource). Unlike the instructions for [Google Workspace](/authentication/configuring-identity-providers/gsuite), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
 1. Visit the Google Cloud Platform console. Create a new project.

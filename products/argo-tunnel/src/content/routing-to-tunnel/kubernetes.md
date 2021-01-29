@@ -4,6 +4,12 @@ order: 40
 
 # Kubernetes
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 You can deploy Argo Tunnel to route traffic to Kubernetes clusters. Cloudflare no longer maintains an ingress controller, but we recommend two options for connecting Kubernetes clusters to Cloudflare without introducing downtime caused by application restarts or `cloudflared` updates.
 
 Both options rely on Cloudflare's Load Balancer to send traffic for a single hostname to two or more instances of `cloudflared`, allowing you to update or modify `cloudflared` without downtime. Those instances of `cloudflared` should point to a service or ingress controller that runs in front of your Kubernetes cluster.
