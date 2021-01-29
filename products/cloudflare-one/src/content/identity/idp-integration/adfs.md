@@ -72,7 +72,7 @@ To create a Relying Party Trust:
 
     In your **Cloudflare Access** app, click the **Login Page Domain** field to copy the authorization domain to the clipboard.
 
-    Replace “your-domain” in this example with the authentication domain listed in Cloudflare Access, and include the callback in the path:
+    Replace `your-domain` in this example with your [organization name](glossary#organization-name) listed in Cloudflare Access, and include the callback in the path:
 
     ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
@@ -253,7 +253,7 @@ To get your Cloudflare metadata file:
     https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+    Replace organization name with your account’s organization name(glossary#).
 
    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
 

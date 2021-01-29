@@ -31,9 +31,6 @@ A DNS zone is a portion of the DNS namespace that is managed by a specific organ
 
 The resource being protected by Cloudflare for Teams. An application can be a subdomain, a path, or a SaaS application.
 
-## authentication domain
-The unique subdomain assigned to your Cloudflare account; for example, `https://example.cloudflareaccess.com`
-
 ## Authenticated Origin Pulls
 
 Authenticated Origin Pulls let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
@@ -96,6 +93,20 @@ OAuth is a technical standard for authorizing users. It is a protocol for passin
 ## OpenID Connect
 
 A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner. (From: [source](https://openid.net/connect/))
+
+## organization domain
+
+The organization domain is a unique subdomain assigned to your Cloudflare account; for example, `https://example.cloudflareaccess.com`. When setting up Teams for the first time, you’ll be asked to choose an [organization name](#organization-name) (in the domain above: `example`) for your organization domain. 
+
+When navigating to the organization domain, users will be asked to authenticate with an one-time PIN. Once they do that, they’ll be able to access the [App Launcher](#app-launcher), and through the App Launcher, they’ll be able to access the applications you’ve protected behind Cloudflare for Teams.
+
+## organization name
+
+The customizable portion of your [organization domain](#organization-domain). You can use your team name or your organization's. 
+
+| organization domain | organization name |
+| ------- | ----------- |
+| `https://example.cloudflareaccess.com` | `example` |
 
 ## origin certificate
 
