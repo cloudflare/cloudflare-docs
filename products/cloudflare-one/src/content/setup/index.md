@@ -61,7 +61,7 @@ You can return to edit the policy with more complex rules like identity provider
 
 1. Click **Begin setup** in the Cloudflare Gateway card.
 
-1. Enter your *organization domain*. The authentication domain will be used as your Gateway organization name in the WARP client during user and device enrollment.
+1. Enter your [organization domain](/glossary#organization-domain). The organization domain will be used as your Gateway organization name in the WARP client during user and device enrollment.
 
 1. Set up your first location. Alternatively, you can choose to click **Skip to Teams dash**.
 

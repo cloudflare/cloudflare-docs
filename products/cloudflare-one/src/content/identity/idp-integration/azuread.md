@@ -22,7 +22,7 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
 ![Azure AD New Registration](../../static/documentation/identity/azure/click-new-reg.png)
 
-5. Name your application and enter your **Cloudflare Authentication Domain**. The format of the authentication domain will be `https://<your authentication domain>/cdn-cgi/access/callback`). Click **Register**.
+5. Name your application and enter your [organization domain](/glossary#organization-domain). The format of the organization domain will be `https://<your-organization-domain>/cdn-cgi/access/callback`). Click **Register**.
 
 ![Azure AD Cloudflare Access App](../../static/documentation/identity/azure/name-app.png)
 
