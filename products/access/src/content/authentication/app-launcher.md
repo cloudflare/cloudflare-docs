@@ -4,6 +4,12 @@ order: 1
 
 # App Launcher
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 With the App Launcher portal, users can easily open all applications that they have access to from a single dashboard.
 
 The App Launcher is available at an auth domain unique to your Cloudflare Access account. The domain will resemble `mycompany.cloudflareaccess.com`, where `mycompany` is the organization name you created for Cloudflare Access.

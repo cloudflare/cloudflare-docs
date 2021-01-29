@@ -4,6 +4,12 @@ order: 2
 
 # Getting started
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 * Read [Access Setup](/getting-started/access-setup/) for instructions on how to configure Cloudflare Access.
 
 * Read [Applications](/getting-started/applications/) for instructions on how to connect both self-hosted and SaaS applications to Cloudflare Access.

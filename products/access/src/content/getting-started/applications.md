@@ -4,6 +4,12 @@ order: 2
 
 # Applications
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 With Access, you can protect two types of applications: **SaaS** and **self-hosted**.
 
 SaaS applications include applications your team relies on that are not hosted by your organization, such as Slack or Airtable.

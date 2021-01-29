@@ -6,6 +6,12 @@ hidden: true
 
 # Access Applications
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access allows you to securely publish **self-hosted applications** to the Internet by providing an authentication layer using your existing identity providers to control who has access to your applications.
 
 Cloudflare Access also allows you to integrate your **SaaS applications** by acting as an identity aggregator, or proxy. Cloudflare Access can then apply additional rules to each login or integrate multiple SSO provider types.
