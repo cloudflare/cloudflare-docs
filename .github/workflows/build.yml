@@ -61,6 +61,8 @@ jobs:
               - 'products/api/**'
             argo-tunnel:
               - 'products/argo-tunnel/**'
+            bots:
+              - 'products/bots/**'
             byoip:
               - 'products/byoip/**'
             cloudflare-one:
