@@ -66,7 +66,7 @@ Input the authentication domain without any path in the `Authorized JavaScript o
 https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 ```
 
-![Auth Domain](../../static/documentation/identity/google/auth-domain.png)
+![organization domain](../../static/documentation/identity/google/auth-domain.png)
 
 11. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should be kept securely and not shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
 

@@ -92,7 +92,7 @@ Input the authentication domain without any path in the `Authorized JavaScript o
 https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 ```
 
-![Input Auth Domain](../../static/documentation/identity/gsuite/input-auth-domain.png)
+![Input organization domain](../../static/documentation/identity/gsuite/input-auth-domain.png)
 
 Click **Create**.
 
