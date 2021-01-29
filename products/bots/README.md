@@ -1,4 +1,4 @@
-# Cloudflare Bot Management docs
+# Cloudflare Bot Management docs 🤖
 
 [View docs →](https://developers.cloudflare.com/bots)
 
