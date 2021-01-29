@@ -44,34 +44,3 @@ To enable Logpush to Amazon S3:
 
 Logpush uses multipart upload for S3. Aborted uploads will result in incomplete files remaining in your bucket. To minimize your storage costs, Amazon recommends configuring a lifecycle rule using the `AbortIncompleteMultipartUpload` action. *See [Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Policy](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config)*.
 </Aside>
-
-## S3-compatible endpoints
-
-Cloudflare Logpush now supports S3-compatible destinations in an API-only beta, including:
-
-* [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
-* [Backblaze B2](https://www.backblaze.com/b2/docs/)
-* [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
-* [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
-* [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
-* [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-compatibility-api)
-* [Linode Object Storage](https://www.linode.com/products/object-storage/)
-* On-premise [Ceph Object Gateway](https://docs.ceph.com/docs/mimic/radosgw/s3/)
-
-For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](https://developers.cloudflare.com/logs/logpush) documentation.
-
-
-### Set up S3-compatible endpoints
-
-Setting up an S3-compatible Logpush job requires two steps:
-
-1. Create a job with the appropriate endpoint URL and authentication parameters
-2. Enable the job to begin pushing logs
-
-For more detailed instructions with examples, follow steps 2-3 in the [Manage Logpush with cURL](https://developers.cloudflare.com/logs/tutorials/tutorial-logpush-curl/#step-2---create-a-job) tutorial.
-
-<Aside type="note" header="Note">
-
-Unlike Logpush jobs to AWS S3, there is no ownership challenge with S3-compatible APIs.
-
-</Aside>
