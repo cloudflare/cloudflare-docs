@@ -14,6 +14,7 @@ jobs:
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
       argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
+      bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
