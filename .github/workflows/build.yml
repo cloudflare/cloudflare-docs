@@ -14,6 +14,7 @@ jobs:
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
       argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
+      bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
@@ -60,6 +61,8 @@ jobs:
               - 'products/api/**'
             argo-tunnel:
               - 'products/argo-tunnel/**'
+            bots:
+              - 'products/bots/**'
             byoip:
               - 'products/byoip/**'
             cloudflare-one:
@@ -218,6 +221,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/argo-tunnel
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-bots:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.bots == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/bots
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
