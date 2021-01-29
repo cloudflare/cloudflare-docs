@@ -1,6 +1,6 @@
 ---
 title: Enable S3-compatible endpoints
-order: 
+order: 61
 ---
 
 # Enable S3-compatible endpoints
