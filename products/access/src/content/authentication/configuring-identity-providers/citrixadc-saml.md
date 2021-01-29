@@ -4,6 +4,12 @@ order: 12
 
 # Citrix ADC SAML
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Access.
 
 ## Configure SAML

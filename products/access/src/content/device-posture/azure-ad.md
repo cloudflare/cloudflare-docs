@@ -4,6 +4,12 @@ order: 10
 
 # Azure AD
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access can integrate with Azure AD's Conditional Access feature to require users connect to certain applications from managed devices. To enable, you must integrate Azure AD with Cloudflare Access as a cloud app that requires managed device connections. You can use Cloudflare Access' [per-app IdP feature](/configuring-identity-providers/#configuring-applications-to-specific-identity-providers) to segment which Access applications require Azure AD with managed devices and which only require Azure AD.
 
 ## Azure AD configuration

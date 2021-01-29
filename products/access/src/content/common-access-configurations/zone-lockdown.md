@@ -4,6 +4,12 @@ order: 5
 
 # Migrate from Zone Lockdown
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Some teams use Cloudflare's Zone Lockdown feature alongside their Virtual Private Network deployment to only allow IP ranges in that VPN to connect to applications. This model relies on IP ranges, rather than identity, to control who can reach sensitive applications.
 
 Cloudflare Access can replace Zone Lockdown deployments with a zero-trust model built on your team's SSO. The migration takes less than 10 minutes. Once cutover, end users can deprecate their VPN client and administrators have more granular control and logging over user connections.

@@ -5,6 +5,12 @@ hidden: true
 
 # Configuring identity providers
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 You can integrate your organization's identity provider with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with [partners or contractors](https://blog.cloudflare.com/multi-sso-and-cloudflare-access-adding-linkedin-and-github-teams/).
 
 ![identity flow](../static/summary/identity.png)

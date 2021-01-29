@@ -4,6 +4,12 @@ order: 2
 
 # Blocking categories
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security threats on the public internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security threats and content categories.
 
 You can block security threats and content categories by creating Gateway policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs. 

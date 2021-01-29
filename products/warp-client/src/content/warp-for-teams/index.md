@@ -4,6 +4,12 @@ order: 3
 
 # WARP Client for Teams
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 [Cloudflare for Teams](https://www.cloudflare.com/teams/) customers can use the Cloudflare WARP application to connect corporate desktops to [Cloudflare Gateway](https://developers.cloudflare.com/gateway/) for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, now with security filtering available to the connection.
 
 The result is a simple way for enterprises to protect their users wherever they are without requiring the backhaul of network traffic to a centralized security boundary. Instead, organizations can configure the WARP Client application to securely and privately send remote users’ traffic through a Cloudflare data center near them. Gateway administrators apply policies to outbound Internet traffic proxied through the client, allowing organizations to protect users from threats on the Internet, and stop corporate data from leaving their organization.

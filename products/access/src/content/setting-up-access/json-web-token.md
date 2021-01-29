@@ -4,6 +4,12 @@ order: 20
 
 # JSON Web Tokens (JWT)
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 JSON Web Tokens (JWTs) are an open standard for securely sharing user information in the form of JSON objects. JWTs are digitally signed using a secret, so the information can be verified and trusted.
 
 Cloudflare Access uses that JWT, and its contents, to confirm a user identity before allowing or denying access to sensitive resources. Cloudflare securely creates these through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider. Each JWT consists of three Base64-URL strings: the header, the payload, and the signature.

@@ -5,6 +5,12 @@ hidden: true
 
 # Access app launch
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 The Access App Launch portal provides end users with a single dashboard from which they can open applications secured by Access.
 
 The Access App Launch portal is available at an authentication domain that is unique to your Cloudflare Access account. The domain will resemble `mycompany.cloudflareaccess.com` where `mycompany` is the organization name you created for Cloudflare Access.
