@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Activity log
+# Activity logs
 
 The Activity log allows you to see individual DNS queries made from your locations or, for paid subscribers, HTTP requests made from WARP clients. You can use the Activity log to investigate anomalies in your network. You can search by the DNS query or HTTP request and investigate each by clicking on a row.
 
