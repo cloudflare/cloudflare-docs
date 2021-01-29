@@ -98,7 +98,9 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 The organization domain is a unique subdomain assigned to your Cloudflare account; for example, `https://example.cloudflareaccess.com`. When setting up Teams for the first time, you’ll be asked to choose an [organization name](#organization-name) (in the domain above: `example`) for your organization domain. 
 
-When navigating to the organization domain, users will be asked to authenticate with an one-time PIN. Once they do that, they’ll be able to access the [App Launcher](#app-launcher), and through the App Launcher, they’ll be able to access the applications you’ve protected behind Cloudflare for Teams.
+When navigating to the organization domain, users will be asked to authenticate. Once they do that, they’ll be able to access the [App Launcher](#app-launcher), and through the App Launcher, they’ll be able to access the applications you’ve protected behind Cloudflare for Teams.
+
+You can find and edit your organization domain under **Access > Authentication > Organization domain**.
 
 ## organization name
 

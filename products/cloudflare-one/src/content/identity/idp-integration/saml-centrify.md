@@ -119,10 +119,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://example.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+    Replace `example` with your [organization name](/glossary#organization-name).
 
     In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
 

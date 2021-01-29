@@ -38,9 +38,7 @@ To set up SAML with Okta as your IdP:
 
     ![Okta SAML Settings card](../../static/documentation/identity/saml-okta/saml-okta-5.png)
 
-1. In the **Single sign on URL** and the **Audience URI** **(SP Entity ID)** fields, enter your authorization domain, and include this  callback at the end of the path: `/cdn-cgi/access/callback`.
-
-    **Tip**: You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above.
+1. In the **Single sign on URL** and the **Audience URI** **(SP Entity ID)** fields, enter your authorization domain, and include this callback at the end of the path: `/cdn-cgi/access/callback`.
 
 1. Select the value to pass from the **Name ID** drop-down list.
 1. In **Attribute Statements** **Name** field, enter “email” to create a new attribute.
@@ -125,10 +123,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://example.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+    Replace `example` with your [organization name](/glossary#organization-name).
 
     In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
 

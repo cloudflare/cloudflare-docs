@@ -48,7 +48,7 @@ To set up JumpCloud SAML as your IdP in Access:
 5. Enter an application name in **Display Label**.
 6. Enter an IdP entity in the **IDP IDENTITY ID** field.
 
-    **Tip:** The IdP entity can be anything, but must be unique. It is suggested to reference something easily identified, such as your Cloudflare authentication domain.
+    **Tip:** The IdP entity can be anything, but must be unique. It is suggested to reference something easily identified, such as your Cloudflare [organization domain](/glossary#organization-domain).
 
     **For example:** `https://example.cloudflareaccess.com/`
 

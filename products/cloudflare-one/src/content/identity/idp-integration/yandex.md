@@ -25,10 +25,10 @@ To set up Yandex for Cloudflare Access:
 1. Select **Platform** and click **Web Services.**
 1. In the **Callback URL #1** field, input your authorization domain.
 
-    Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path:
+    Replace `example` with your [organization name](/glossary#organization-name), and include the callback in the path:
 
     ```txt
-    https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
+    https://example.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
     ![Yandex scopes](../../static/documentation/identity/yandex/yandex-3.png)
@@ -59,10 +59,10 @@ To set up Yandex for Cloudflare Access:
 1. In the Callback URI #1 field, input your authorization domain.
 
     ```txt
-    https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
+    https://example.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path.
+    Replace `example` with your organization name, and include the callback in the path:
 
 1. Click **Save and test**.
 

@@ -8,7 +8,7 @@ You can integrate a Google Workspace (formerly Google Suite) account with Cloudf
 
 Once integrated, users will login with their Google Suite credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-1. Log in the Google Cloud Platform [console][https://console.cloud.google.com/]. This is separate from your Google Workspace console.
+1. Log in the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
 ![GCP Console](../../static/documentation/identity/gsuite/gcp-home.png)
 
@@ -80,21 +80,17 @@ The summary page will load and you can save and exit.
 
 ![Create OAuth](../../static/documentation/identity/gsuite/create-oauth.png)
 
-14. You will need to input your Cloudflare authentication domain. The domain will be structured in the following format:
+14. In the **Authorized JavaScript origins** section, input your [organization domain](/glossary#organization-domain), for example `https://<your-organization-name>.cloudflareaccess.com`.  
 
-```
-https://<your-auth-domain-here>.cloudflareaccess.com
-```
+ In the **Authorized redirect URIs** section, input your organization domain with the path below:
 
-Input the authentication domain without any path in the `Authorized JavaScript origins` section. In the Authorized redirect URIs section, input your authentication domain with the path below.
+ ```text
+ https://<your-organization-name>.cloudflareaccess.com/cdn-cgi/access/callback
+ ```
 
-```
-https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
-```
+ ![Input organization domain](../../static/documentation/identity/gsuite/input-auth-domain.png)
 
-![Input organization domain](../../static/documentation/identity/gsuite/input-auth-domain.png)
-
-Click **Create**.
+ Click **Create**.
 
 15. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should be kept securely and not shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
 

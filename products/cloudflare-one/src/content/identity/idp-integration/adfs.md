@@ -72,7 +72,7 @@ To create a Relying Party Trust:
 
     In your **Cloudflare Access** app, click the **Login Page Domain** field to copy the authorization domain to the clipboard.
 
-    Replace `your-domain` in this example with your [organization name](glossary#organization-name) listed in Cloudflare Access, and include the callback in the path:
+    Replace `your-domain` in this example with your [organization name](/glossary#organization-name) listed in Cloudflare Access, and include the callback in the path:
 
     ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
@@ -223,12 +223,12 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 
     This is the default location. You can find your federation service identifier in ADFS.
 
-4. In the **IdP Entity ID** field, enter your authorization domain, and include this  callback at the end of the path: `/cdn-cgi/access/callback`.
+4. In the **IdP Entity ID** field, enter your authorization domain, and include this callback at the end of the path: `/cdn-cgi/access/callback`.
 
-    You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above, for example:
+    You can find your organization’s authorization domain in Cloudflare Access. It begins with your [organization domain](/glossary#organization-domain), and it ends with the callback path specified above, for example:
 
     ```txt
-    https://YourDomain/cdn-cgi/access/callback
+    https://example.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 5. Under **Signing certificate** paste the exported certificate.
@@ -250,10 +250,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://organization-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace organization name with your account’s organization name(glossary#).
+    Replace `organization-name` with your account’s organization name(/glossary#organization-name).
 
    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
 

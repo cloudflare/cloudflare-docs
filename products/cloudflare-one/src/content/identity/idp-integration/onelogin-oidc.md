@@ -27,7 +27,7 @@ To set up OneLogin as your IdP:
     ![OneLogin OIDC Application Basic Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-3.png)
 
 1. In **Sign-On Method**, select the **OpenID Connect** option.
-1. In the **Redirect URI** field, enter your authentication domain and include this callback at the end of the path:  `/cdn-cgi/access/callback`.
+1. In the **Redirect URI** field, enter your [organization domain](/glossary#organization-domain) and include this callback at the end of the path:  `/cdn-cgi/access/callback`.
 1. Click **Save**.
 1. Select **More Actions > Add App to Connector**.
 

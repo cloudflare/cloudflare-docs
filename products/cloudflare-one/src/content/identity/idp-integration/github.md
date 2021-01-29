@@ -23,17 +23,11 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     You users see this name on the login page.
 
-4. Enter your account’s authorization domain in the **Homepage URL** field.
+4. In the **Homepage URL** field, eter your account’s [organization domain](/glossary#organization-domain).
 
-    For example, `https://something.cloudflareaccess.com`
+    For example, `https://something.cloudflareaccess.com`. You can find this under the **Authentication** tab in the **Access** section of the Teams dash.
 
-    You can find this in the **Login Page Domain** field in **Cloudflare Access**.
-
-    ![Finding the Homepage URL in Cloudflare](../../static/documentation/identity/github/github3.png)
-
-    Click anywhere in the field to copy the content to your clipboard.
-
-5. Paste the domain in the GitHub **Authorization callback URL** field, and add this to the end of the path: `/cdn-cgi/access/callback`
+5. Paste the domain in the GitHub **Authorization callback URL** field, and add this to the end of the path: `/cdn-cgi/access/callback`.
 6. Click **Register application**.
 7. Copy the **Client ID** and **Client Secret**.
 

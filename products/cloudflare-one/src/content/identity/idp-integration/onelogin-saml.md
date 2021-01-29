@@ -82,10 +82,10 @@ To add a metadata file to your OneLogin SAML configuration:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://example.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-1. Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+1. Replace `example` with your [organization name](/glossary#organization-name).
 
     The link returns a web page with your SAML SP data in XML format.
 

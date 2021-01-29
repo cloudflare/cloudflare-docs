@@ -45,7 +45,7 @@ To set up PingIdentity as your IdP:
 
 7. Enter the following URL in the **IdP Entity ID** field.
 
-    Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path:
+    Replace `your-domain` with the [organization name](/glossary#organization-name) listed in Cloudflare Access, and include the callback in the path:
 
     ```txt
     https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
@@ -67,10 +67,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://example.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-1. Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+1. Replace `example` with your account’s [organization name](/glossary#organization-name).
 
     The link returns a web page with your SAML SP data in XML format.
 

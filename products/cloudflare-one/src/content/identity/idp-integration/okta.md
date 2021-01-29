@@ -26,19 +26,10 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 ![Create New App](../../static/documentation/identity/okta/web-app.png)
 
-6. You can name the application to be any value. In the `Login redirect URIs` field, input the callback URL of your Cloudflare authentication domain.
+6. You can name the application to be any value. In the `Login redirect URIs` field, input your Cloudflare [organization domain](/glossary#organization-domain) followed by `/cdn-cgi/access/callback`, for example:
 
-The domain will be structured in the following format:
-
-```
-https://<your-auth-domain-here>.cloudflareaccess.com
-```
-
-In the URI field, input your authentication domain with the path below.
-
-```
-https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
-
+```text
+https://example.cloudflareaccess.com/cdn-cgi/access/callback
 ```
 
 ![Create New App](../../static/documentation/identity/okta/add-uri.png)

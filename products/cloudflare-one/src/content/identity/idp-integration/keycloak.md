@@ -18,9 +18,9 @@ Keycloak is an open source identity and access management solution built by JBos
 
     ![SAML Client](../../static/documentation/identity/keycloak/configure-client.png)
 
-    Set the Client AD as the Access callback URL. The format will resemble the following URL; replace the `<organization_name>` value with your organization name.
+    Set the Client AD as the Access callback URL. The format will resemble the following URL; replace the `your-domain` value with your [organization name](/glossary#organization-name).
 
-    `https://<organization_name>.cloudflareaccess.com/cdn-cgi/access/callback`
+    `https://<your-domain>.cloudflareaccess.com/cdn-cgi/access/callback`
 
     Next, set the valid redirect URI to the Keycloak domain that you are using. For example, `https://<keycloak_domain>/auth/realms/master/protocol/saml`.
 

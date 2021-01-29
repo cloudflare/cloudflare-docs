@@ -8,7 +8,7 @@ Cloudflare Access uses JSON Web Tokens (JWTs) and their contents to confirm a us
 
 Two tokens are generated:
 
-* **organization domain Token**: a token stored at the organization domain that prevents a user from needing to login to each application. The token is stored as a cookie at your account's authentication domain, for example, `https://my-auth-domain.cloudflareaccess.com`.
+* **organization domain Token**: a token stored at the organization domain that prevents a user from needing to login to each application. The token is stored as a cookie at your account's [organization domain](/glossary#organization-domain), for example, `https://example.cloudflareaccess.com`.
 
 * **App Token**: a token generated for each application that a user reaches. The token is stored as a cookie on the application, for example, `https://jira.site.com`.
 
@@ -55,9 +55,9 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
 Click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the _Edit Access Policy_ dialog box:
 
- Certificate URL: `https://<Your Authentication Domain>/cdn-cgi/access/certs`
+ Certificate URL: `https://<Your Organization Domain>/cdn-cgi/access/certs`
 
- JWT Issuer: `https://<Your Authentication Domain>`
+ JWT Issuer: `https://<Your Organization Domain>`
 
 </Aside>
 

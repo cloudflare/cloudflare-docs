@@ -12,7 +12,7 @@ Configuring LinkedIn as a Cloudflare Access IdP requires a LinkedIn account.
 
 To configure LinkedIn as an IdP:
 
-1. Go to [the LinkedIn Developer Portal](https://www.linkedin.com/developers).
+1. Navigate to the [LinkedIn Developer Portal](https://www.linkedin.com/developers).
 2. Click **Create App**.
 
     ![LinkedIn Create App button](../../static/documentation/identity/linkedin/lin1.png)
@@ -56,9 +56,7 @@ To configure LinkedIn as an IdP:
 
     ![LinkedIn OAuth 2.0 settings](../../static/documentation/identity/linkedin/lin8.png)
 
-19. Enter your authentication domain URL, and add this to the end of the path: `/cdn-cgi/access/callback`
-
-    You can find your authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above
+19. Enter your Cloudflare [organization domain](/glossary#organization-domain), and add this to the end of the path: `/cdn-cgi/access/callback`.
 
 20. In the Cloudflare Access **Add a LinkedIn identity provider** window, click **Save** and then **Test**.
 
