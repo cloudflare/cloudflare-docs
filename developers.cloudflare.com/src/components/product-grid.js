@@ -8,6 +8,7 @@ $["access"]               = require("@cloudflare/cloudflare-brand-assets/resourc
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
 $["argo-tunnel"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/argo-tunnel.js").pathD
+$["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
@@ -68,7 +69,7 @@ const products = [
   {
     title: "Bots",
     path: "bots",
-    icon: "bot-management",
+    icon: "bots",
   },
   {
     title: "BYOIP",
