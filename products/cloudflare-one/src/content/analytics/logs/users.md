@@ -11,17 +11,18 @@ Teams allows you to consult a comprehensive list of users who have authenticated
 
 ## Revoke user sessions
 
-Clicking the **Revoke** button will terminate all currently active sessions for that user, and revoke access to all their connected devices. If you want to prevent this user from logging in again, you need to manually remove this user from any existing policies that grant them access to your applications. 
+Clicking **Revoke** will terminate all currently active sessions for that user, and revoke access to all their connected devices. If you want to prevent this user from logging in again, you need to manually remove this user from any existing policies that grant them access to your applications. 
 
 ## View user details
 
-Clicking the View button for any user will show you details for that user, such as:
+Clicking **View** for any given user will show you details for that user, such as:
+
 * Their user details
  ![User details](../../static/documentation/logs/user-summary.png)
 * Devices they have connected to Teams
 * Their recent logins
 
-Click on **View all activity** to see a full list of the user’s login events.
+Click **View all activity** to see a full list of the user’s login events.
 
 ## Workplace records
 
