@@ -147,6 +147,8 @@ You can get the metadata associated with a key-value pair alongside its value by
 
 If there’s no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
+You can pass an optional `type` parameter to the `getWithMetadata` method, similar to `get`.
+
 ### Deleting key-value pairs
 
 To delete a key-value pair, you can call the `delete` method on any namespace you’ve bound to your script:
