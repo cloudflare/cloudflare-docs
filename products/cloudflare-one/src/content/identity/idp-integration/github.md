@@ -19,7 +19,7 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     ![GitHub Register a new OAuth application window](../../static/documentation/identity/github/github2.png)
 
-3. Enter an **Application name**. You users will see this name on the login page.
+3. Enter an **Application name**. You users willsee this name on the login page.
 
 4. Enter your [team domain](/glossary#team-domain) in the **Homepage URL** field.
 
@@ -31,25 +31,18 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
 
-8. In Cloudflare Access, scroll to **Login Methods** and click **GitHub**.
+8. On the Teams dashboard, navigate to **Access > Authentication**.
 
-    The _Add a GitHub identity provider_ window displays.
+9. Under **Login methods**, click *+ Add*.
 
-    ![GitHub identity provider window](../../static/documentation/identity/github/github5.png)
+10. Choose **GitHub** on the next page. 
 
-9. Paste in the **Client ID** and **Client secret**.
+11. Paste in the **Client ID** and **Client secret**.
 10. Click **Save**.
-11. Click **Done**.
 
-    ![Edit GitHub identity provider window](../../static/documentation/identity/github/github6.png)
-
-12. Click **Save and Test.**
-
-    On success a confirmation screen displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/github/github7.png)
-
-> **Note:** If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
+<Aside>
+If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
+</Aside>
 
 ## Example API Configuration
 

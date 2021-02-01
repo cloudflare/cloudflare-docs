@@ -57,7 +57,7 @@ Use these steps to set up Facebook as your identity provider.
     ![Facebook OAuth Settings](../../static/documentation/identity/facebook/fb8.png)
 
 16. Set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
-17. Enter your [team domain](/glossary#team-domain) in the **Valid OAuth redirect URIs** field.
+17. In the **Valid OAuth redirect URIs** field, enter your [team domain](/glossary#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
 18. Click **Save Changes**.
 19. Click **Save and Test** in the **Cloudflare Access** app.
 
