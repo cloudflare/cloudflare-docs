@@ -38,6 +38,9 @@ export class DurableObject {
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
+- <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+  - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
+
 - `env`
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
