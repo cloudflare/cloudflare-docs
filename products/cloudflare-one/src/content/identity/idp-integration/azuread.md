@@ -8,21 +8,26 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
 1. Sign in to [the Azure dashboard](https://portal.azure.com/).
 
-![Azure AD Portal](../../static/documentation/identity/azure/azure-portal.png)
+ ![Azure AD Portal](../../static/documentation/identity/azure/azure-portal.png)
 
 2. Click **Azure Active Directory** in the Azure Services section.
 
-![Azure AD Select AD](../../static/documentation/identity/azure/pick-azure-ad.png)
+ ![Azure AD Select AD](../../static/documentation/identity/azure/pick-azure-ad.png)
 
 3. On the **Azure AD** dashboard, click **App registrations** in the **Manage** section of the _Azure Active Directory_ pane.
 
-![Azure AD App Registration](../../static/documentation/identity/azure/click-app-reg.png)
+ ![Azure AD App Registration](../../static/documentation/identity/azure/click-app-reg.png)
 
 4. Click **+ New registration**.
 
 ![Azure AD New Registration](../../static/documentation/identity/azure/click-new-reg.png)
 
-5. Name your application and enter your **Cloudflare Authentication Domain**. The format of the authentication domain will be `https://<your authentication domain>/cdn-cgi/access/callback`). Click **Register**.
+5. Name your application and enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+    Click **Register**.
 
 ![Azure AD Cloudflare Access App](../../static/documentation/identity/azure/name-app.png)
 
@@ -82,13 +87,17 @@ If you are using Azure AD groups, toggle **Support Groups** slider **On** in the
 
 ## Using AzureAD Groups
 
-AzureAD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`. In the example below, the group named "Admins" has an ID of "61503835-b6fe-4630-af88-de551dd59a2".
+AzureAD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`. In the example below, the group named "Admins" has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
 ![Azure AD Test Connection](../../static/documentation/identity/azure/object-id.png)
 
-When configuring Access to use Azure groups, you must input the `Object Id`.
+To configure Access to use Azure groups, make sure you toggle on the **Support groups** switch.
 
-![Azure AD Test Connection](../../static/documentation/identity/azure/group-config.png)
+![Azure AD groups](../../static/documentation/identity/azure/azure-ad-groups.png)
+
+This will enable you to select **Azure AD groups** when creating or editing a group. When asked for the **Azure group ID**, you must input the `Object Id`. 
+
+![Azure AD Test Connection](../../static/documentation/identity/azure/configure-group-n.png)
 
 ## Example API Configuration
 
