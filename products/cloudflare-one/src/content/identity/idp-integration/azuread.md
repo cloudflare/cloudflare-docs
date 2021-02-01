@@ -71,17 +71,21 @@ Copy the `Value` field of the client secret. Treat this value like a password. T
 
 ![Azure AD API Permissions](../../static/documentation/identity/azure/configured-perms.png)
 
-13. Return to the Cloudflare for Teams dashboard. Select `Authentication` under the Access section of the sidebar. In the `Login` tab, click **+ Add**. Choose `Azure AD` on the next page.
+13. On the Teams dashboard, navigate to **Access > Authentication**.
+
+14. Under **Login methods**, click *+ Add*.
+
+15. Choose **Azure AD** on the next page.
 
 ![Azure AD Add Identity](../../static/documentation/identity/azure/add-identity.png)
 
-14. Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
+16. Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
 
 If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
 
 ![Azure AD Add Identity](../../static/documentation/identity/azure/add-azure-ad.png)
 
-15. Click **Save and Test** to check your connection to the IdP.
+17. Click **Save and Test** to check your connection to the IdP.
 
 ![Azure AD Test](../../static/documentation/identity/azure/valid-test.png)
 

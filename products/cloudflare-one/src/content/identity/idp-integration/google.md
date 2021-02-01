@@ -34,7 +34,7 @@ You will also be prompted to input contact fields.
 
 ![Contact Fields](../../static/documentation/identity/google/contact-fields.png)
 
-7. In the `Scopes` section, we recommend adding the `userinfo.email` scope. This is not required for the integration to work, but will indicate to users authenticating what information is being gathered.
+7. In the **Scopes** section, we recommend adding the `userinfo.email` scope. This is not required for the integration to work, but will indicate to users authenticating what information is being gathered.
 
 ![Scopes](../../static/documentation/identity/google/scopes.png)
 
@@ -46,7 +46,7 @@ You can review the summary information and return to the dashboard at the bottom
 
 ![Summary](../../static/documentation/identity/google/consent-screen-summary.png)
 
-8. Return to the `APIs & Services` page and click **+ Create Credentials**. Select `OAuth client ID`.
+8. Return to the **APIs & Services** page and click *+ Create Credentials*. Select `OAuth client ID`.
 
 ![Create OAuth](../../static/documentation/identity/google/create-oauth.png)
 
@@ -54,29 +54,25 @@ You can review the summary information and return to the dashboard at the bottom
 
 ![Name OAuth](../../static/documentation/identity/google/name-oauth.png)
 
-10. You will need to input your Cloudflare authentication domain. The domain will be structured in the following format:
+10. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/glossary#team-domain). 
 
-```
-https://<your-auth-domain-here>.cloudflareaccess.com
-```
+11. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
 
-Input the authentication domain without any path in the `Authorized JavaScript origins` section. In the Authorized redirect URIs section, input your authentication domain with the path below.
+![Team Domain](../../static/documentation/identity/google/auth-domain.png)
 
-```
-https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
-```
-
-![Auth Domain](../../static/documentation/identity/google/auth-domain.png)
-
-11. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should be kept securely and not shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
+12. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should not be shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
 
 ![Secret Field](../../static/documentation/identity/google/oauth-created.png)
 
-16. Navigate to the Cloudflare for Teams dashboard. In the `Authentication` page of the Access section, click **+ Add**.
+13. On the Teams dashboard, navigate to **Access > Authentication**.
+
+14. Under **Login methods**, click *+ Add*.
+
+15. Choose **Google** on the next page.
 
 ![Add IdP](../../static/documentation/identity/google/add-idp.png)
 
-17. Select `Google`.
+14. Select **Google**.
 
 ![Add Google](../../static/documentation/identity/google/add-google.png)
 
@@ -84,7 +80,7 @@ https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 
 ![Add Google Suite](../../static/documentation/identity/google/input-client.png)
 
-21. You can now return to the list of identity providers in the `Authentication` page of the Cloudflare for Teams dashboard. Select Google Suite and click **Test**.
+21. You can now return to the list of identity providers in the **Authentication** page of the Cloudflare for Teams dashboard. Select Google Suite and click **Test**.
 
 Your user identity should return.
 

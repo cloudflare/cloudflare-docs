@@ -14,7 +14,7 @@ Each client supports the following set of parameters as part of their deployment
 | ----- | -------- | ---------- |
 | `organization` | string | mycompanyname |
 
-**Description.** If your Teams [auth domain](/glossary#auth-domain) is `https://example.cloudflareaccess.com`, you would enter `example`.
+**Description.** Your [team name](/glossary#team-name).
 
 ## Optional fields
 

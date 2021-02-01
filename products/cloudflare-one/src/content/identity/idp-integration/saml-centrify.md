@@ -33,9 +33,7 @@ To set up SAML with Centrify as your identity provider (IdP):
     ![Centrify Setting Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-4.png)
 
 1. Choose the **Manual Configuration** option.
-1. Enter your authorization domain in the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields** and include this callback at the end of the path: `/cdn-cgi/access/callback`.
-
-    In your **Cloudflare Access** app, click the **Login Page Domain** field to copy the authorization domain to the clipboard.
+1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
 
 1. Click **Save**.
 1. In the middle menu pane, select **User Access**.
@@ -119,12 +117,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
-
-    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
+    Replace `your-team-name`  with your [team name](/glossary#team-name).
 
 1. Save the file in XML format.
 1. Upload the XML document to your **Centrify** account.

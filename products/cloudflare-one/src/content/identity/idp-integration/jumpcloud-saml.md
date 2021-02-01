@@ -18,7 +18,7 @@ To set up JumpCloud SAML as your IdP in Access:
 
     If you do not have a certificate, this command generates one using OpenSSL:
 
-    ```sh
+    ```bash
     $ openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
     Generating RSA private key, 2048 bit long modulus
     .................................................................................+++++
@@ -26,7 +26,7 @@ To set up JumpCloud SAML as your IdP in Access:
     e is 65537 (0x010001)
     ```
 
-    When asked to enter a Distinguished Name or a DN to incorporate into your certificate request there are a lot of fields. You can leave some of these fields blank. Some fields have a default value. Enter a dot (`.`) in the field to leave it blank. For example:
+    When asked to enter a Distinguished Name or a DN to incorporate into your certificate request, you can leave some of these fields blank. Some fields have a default value. Enter a dot (`.`) in the field to leave it blank. For example:
 
     ```bash
     -----
@@ -48,14 +48,16 @@ To set up JumpCloud SAML as your IdP in Access:
 5. Enter an application name in **Display Label**.
 6. Enter an IdP entity in the **IDP IDENTITY ID** field.
 
-    **Tip:** The IdP entity can be anything, but must be unique. It is suggested to reference something easily identified, such as your Cloudflare authentication domain.
+    <Aside>
+    The IdP entity can be anything, but must be unique. It is suggested to reference something easily identified, such as your Cloudflare [team domain](/glossary#team-domain).
+    </Aside>
 
-    **For example:** `https://example.cloudflareaccess.com/`
+    **For example:** `https://your-team-name.cloudflareaccess.com/`
 
 7. At the prompt, enter the IdP private key and IdP certificate you previously generated.
-8. Set both the SP entity ID and ACS URL to your Cloudflare Access URL.
+8. Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `your-team-name` is your Cloudflare [team name](/glossary#team-name):
 
-    **For example:** `https://example.cloudflareaccess.com/cdn-cgi/access/callback`
+    **For example:** `https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback`
 
 9. Under **SAML SUBJECT NAMEID** choose **email**.
 10. Set the **SAML SUBJECT NAMEID FORMAT** to:
@@ -64,7 +66,7 @@ To set up JumpCloud SAML as your IdP in Access:
     urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
     ```
 
-11. Under USER ATTRIBUTES enter “email” for the name and “email” for the value.
+11. Under USER ATTRIBUTES enter `email` for the name and `email` for the value.
 12. Leave other settings at default.
 13. Click **save**.
 
@@ -76,7 +78,11 @@ To set up JumpCloud SAML as your IdP in Access:
 
     This file provides Cloudflare Access several required fields so you don’t have to manually input them.
 
-15. In your **Cloudflare Access** dashboard, scroll to the **Login Methods** card, click **Add**, and select **SAML**.
+15. On the Cloudflare dashboard, navigate to **Authentication**.
+
+14. Under **Login methods**, click *+ Add*.
+
+15. Choose **SAML**.
 
     ![Cloudflare Access Select IdP](../../static/documentation/identity/jumpcloud/jumpcloud-saml-3.png)
 

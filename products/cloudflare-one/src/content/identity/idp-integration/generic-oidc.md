@@ -29,7 +29,12 @@ To set up a generic OIDC:
 
 4. Enter your IdP in the **Name** field.
 5. Paste in the **Client ID** and **Client secret**.
-5. In the **authorized redirect URI** field for your IdP, enter your authentication domain `/cdn-cgi/access/callback` URL.
+5. In the **authorized redirect URI** field for your IdP, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+
 8. Click **Save and Test**.
    On success a confirmation screen displays.
 

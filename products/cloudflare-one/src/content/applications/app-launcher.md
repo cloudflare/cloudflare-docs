@@ -6,7 +6,7 @@ order: 1
 
 With the App Launcher portal, users can easily open all applications that they have access to from a single dashboard.
 
-The App Launcher is available at an auth domain unique to your Cloudflare Access account. The domain will resemble `mycompany.cloudflareaccess.com`, where `mycompany` is the organization name you created for Cloudflare Access.
+The App Launcher is available at an [team domain](/glossary#team-domain) unique to your Cloudflare Access account. The domain will resemble `mycompany.cloudflareaccess.com`, where `mycompany` is the organization name you created for Cloudflare Access.
 
 Users log in using one of the identity providers configured for the account. Once Access authenticates the user, the App Launcher displays applications they are authorized to use, in the form of application tiles. Clicking on an application tile launches the application’s hostname, sending the user to that tool as part of their SSO flow.
 

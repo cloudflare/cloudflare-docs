@@ -15,7 +15,7 @@ To set up OneLogin SAML as your IdP:
 
     ![OneLogin SAML Add Apps](../../static/documentation/identity/onelogin/onelogin-saml-1.png)
 
-1. Under **Find Applications** search for **Cloudflare Access**.
+1. Under **Find Applications**, search for **Cloudflare Access**.
 1. Select the result sponsored by **Cloudflare, Inc**.
 
     ![OneLogin SAML Find Applications](../../static/documentation/identity/onelogin/onelogin-saml-2.png)
@@ -28,9 +28,8 @@ To set up OneLogin SAML as your IdP:
 
     ![OneLogin SAML Add Cloudflare Access app](../../static/documentation/identity/onelogin/onelogin-saml-3.png)
 
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Login Page Domain** to put the domain on your clipboard.
-1. In **OneLogIn** select the **Configuration** tab.
-1. In the **Cloudflare Access Authorization Domain** field paste the copied domain.
+1. Select the **Configuration** tab.
+1. In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/glossary#team-domain).
 
     ![OneLogin SAML Application Configuration](../../static/documentation/identity/onelogin/onelogin-saml-4.png)
 
@@ -52,26 +51,18 @@ To set up OneLogin SAML as your IdP:
 
 1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
 
-    ![Cloudflare Access Login Methods](../../static/documentation/identity/onelogin/onelogin-saml-8.png)
 
 1. Input the details from your OneLogin account in the fields.
 
-    If other headers and SAML attribute names were added to OneLogin be sure to add them to Cloudflare under **SAML attributes** and  **SAML header attributes**.
+    If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
 
-    **Tip**: Name the attributes the same in both OneLogin and Cloudflare.
+    <Aside>
+    We suggest that you name the attributes the same in both OneLogin and Cloudflare.
 
-    ![Cloudflare Access Edit your SAML identity provider card](../../static/documentation/identity/onelogin/onelogin-saml-9.png)
+    </Aside>
 
-1. Click **Save** and then **Test**.
+1. Click **Save**.
 
-    This tests your SAML integration and provides descriptive errors if Access cannot authenticate with your OneLogin identity deployment.
-
-    On successful connection to your OneLogin IdP, a confirmation displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/onelogin/onelogin-saml-10.png)
-
-1. Return Cloudflare Access and click **Save.**
-1. Click **Close**.
 
 ## Download SP metadata (optional)
 
@@ -79,13 +70,11 @@ OneLogin SAML allows administrators to upload metadata files from the service pr
 
 To add a metadata file to your OneLogin SAML configuration:
 
-1. Download your unique SAML metadata file at the following URL:
+1. Download your unique SAML metadata file at the following URL, replacing `your-team-name` with your [team name](/glossary#team-name):
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
-
-1. Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
 
     The link returns a web page with your SAML SP data in XML format.
 

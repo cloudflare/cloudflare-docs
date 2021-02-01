@@ -11,7 +11,7 @@ Cloudflare Access allows your to connect to your applications using their GitHub
 To configure GitHub access in both GitHub and Cloudflare Access:
 
 1. Log into GitHub.
-2. Go to your account **Settings > Developer Setting**, select **OAuth Apps** and click **Register a new application**.
+2. Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**.
 
     ![GitHub OAuth page](../../static/documentation/identity/github/github1.png)
 
@@ -19,21 +19,13 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     ![GitHub Register a new OAuth application window](../../static/documentation/identity/github/github2.png)
 
-3. Enter an **Application name**.
+3. Enter an **Application name**. You users will see this name on the login page.
 
-    You users see this name on the login page.
+4. Enter your [team domain](/glossary#team-domain) in the **Homepage URL** field.
 
-4. Enter your account’s authorization domain in the **Homepage URL** field.
+    For example, `https://your-team-name.cloudflareaccess.com`
 
-    For example, `https://something.cloudflareaccess.com`
-
-    You can find this in the **Login Page Domain** field in **Cloudflare Access**.
-
-    ![Finding the Homepage URL in Cloudflare](../../static/documentation/identity/github/github3.png)
-
-    Click anywhere in the field to copy the content to your clipboard.
-
-5. Paste the domain in the GitHub **Authorization callback URL** field, and add this to the end of the path: `/cdn-cgi/access/callback`
+5. In the GitHub **Authorization callback URL** field, enter your [team domain](/glossary#team-domain) and add this to the end of the path: `/cdn-cgi/access/callback`.
 6. Click **Register application**.
 7. Copy the **Client ID** and **Client Secret**.
 

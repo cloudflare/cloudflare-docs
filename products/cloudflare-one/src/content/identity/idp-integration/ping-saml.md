@@ -4,7 +4,7 @@ order: 12
 
 # PingIdentity® SAML
 
-The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html)  documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
+The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html) documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
 
 ## Set up PingIdentity as your IdP
 
@@ -43,16 +43,10 @@ To set up PingIdentity as your IdP:
     If you are using a self-hosted deployment of PingFederate and a separate IdP or directory service, change the auto-populated value in the <strong>IdP Entity ID</strong> field. The metadata file sets it to a domain that you control.
     </Aside>
 
-7. Enter the following URL in the **IdP Entity ID** field.
-
-    Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path:
-
-    ```txt
-    https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+7. In the **IdP Entity ID** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
 
 8. Confirm that the fields set by the metadata file are accurate.
-9. Click **Save** and then **Test**.
+9. Click **Save**.
 
     On successful connection to your PingIdentity deployment, a confirmation displays.
 
@@ -67,10 +61,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-1. Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+    Replace `your-team-name`  with your [team name](/glossary#team-name).
 
     The link returns a web page with your SAML SP data in XML format.
 

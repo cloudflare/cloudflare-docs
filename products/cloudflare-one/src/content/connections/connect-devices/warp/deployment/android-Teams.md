@@ -63,5 +63,5 @@ If your organization uses Teams Access policies to control device registration, 
 1. Tap the **menu bar icon** (3 lines) in the upper right.
 1. Tap **Account**.
 1. Tap **Login with Cloudflare for Teams**.
-1. Enter your auth domain (if your auth domain is https://example.cloudflareaccess.com you would enter **example**)
+1. Enter your [team name](/glossary#team-name).
 1. Complete authentication steps required by your organization.

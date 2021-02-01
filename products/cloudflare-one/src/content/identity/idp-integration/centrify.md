@@ -4,7 +4,7 @@ order: 12
 
 # Centrify
 
-Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
+Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the number one cause of breaches: privileged access abuse.
 
 ## Set up Centrify
 
@@ -36,7 +36,12 @@ These steps help you set up Centrify as your identity provider (IdP).
 
     ![Centrify OpenID Connect](../../static/documentation/identity/centrify/centrify-5.png)
 
-12. Under **Authorized Redirect URIs** enter your authentication domain as `/cdn-cgi/access/callback`.
+12. Under **Authorized Redirect URIs** enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+
 13. Click **Save**.
 
     ![Centrify Trust](../../static/documentation/identity/centrify/centrify-6.png)
@@ -54,7 +59,8 @@ These steps help you set up Centrify as your identity provider (IdP).
 
     ![Centrify User Access](../../static/documentation/identity/centrify/centrify-7.png)
 
-18. In the **Cloudflare Access** app, under click **Add** under **Login Methods**, and select Centrify as your IdP.
+18. On the **Teams dashboard**, navigate to **Access > Authentication**.
+19. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
 19. Paste in the **Client ID** and **Client Secret**.
 20. Click **Save and Test**.
 

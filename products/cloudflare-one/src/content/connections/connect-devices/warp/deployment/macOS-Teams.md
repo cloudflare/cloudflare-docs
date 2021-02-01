@@ -124,7 +124,7 @@ If your organization uses Teams Access policies to control device registration, 
 
  ![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/macOS_TeamsButton.png)
 
-6. Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
+6. Enter your [team name](/glossary#team-name).
 7. Complete the authentication steps required by your organization.
 
 

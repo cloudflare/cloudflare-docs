@@ -4,7 +4,7 @@ order: 12
 
 # Citrix ADC SAML
 
-Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Access.
+Cloudflare for Teams can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Teams.
 
 ## Configure SAML
 
@@ -38,7 +38,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
    * **Assertion Consumer Service URL:**
 
     ```txt
-    https://example.cloudflareaccess.com/cdn-cgi/access/callback
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
    * **IdP Certificate Name:** This is the certificate name you defined in Step 1.
@@ -60,7 +60,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
     ```json
     add authentication samlIdPProfile samlProf_CloudflareAccess \
         -samlIdPCertName SAML_Signing \
-        -assertionConsumerServiceURL "https://example.cloudflareaccess.com/cdn-cgi/access/callback" \
+        -assertionConsumerServiceURL "https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback" \
         -samlIssuerName "https://idp.yourdomain.com/saml/login" \
         -rejectUnsignedRequests OFF \
         -NameIDFormat emailAddress \
@@ -91,7 +91,7 @@ Cloudflare Access can integrate with Citrix ADC (formerly Citrix NetScaler ADC) 
 
     ![Edit your SAML identity provider](../../static/documentation/identity/citrixadc/citrixadc-saml-7.png)
 
-9. Click **Save.**
+9. Click **Save**.
 10. Click **Test**.
 
     This tests your SAML integration and provides descriptive errors if Access cannot authenticate with your Citrix ADC deployment.
