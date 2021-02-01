@@ -59,6 +59,7 @@ Here is a list of all the criteria you can apply:
 * **Service Token** - the request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 * **Authentication Method** - checks the [multifactor authentication](/learning/mfa-requirements) method used by the user, if supported by the identity provider.
+* **Login Method** - checks the identity provider used at the time of login.
 
 
 ### Example scenarios
