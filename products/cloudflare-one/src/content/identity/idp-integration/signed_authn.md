@@ -31,7 +31,7 @@ To set up Signed AuthN requests:
     <Aside>
     Ensure that your IdP validation uses the most recent certificate. Cloudflare Access routinely rotates the public key as a security measure.
 
-    </Asied>
+    </Aside>
 
     Cloudflare Access uses a certificate that includes the following 2 distinguished name fields:
 
