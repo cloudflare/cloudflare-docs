@@ -26,7 +26,7 @@ Currently, Logpush is available to customers on the Cloudflare Enterprise plan a
 - Google Cloud Storage (GCS), 
 - Microsoft Azure, and 
 - Sumo Logic. 
-Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can have their logs pushed to IBM's Cloud Object Storage (COS).
+Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can push their logs to IBM's Cloud Object Storage (COS).
 
 Cloudflare Logpush also supports S3-compatible endpoints in an API-only beta, which includes:
 
