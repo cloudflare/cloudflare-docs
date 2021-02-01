@@ -29,6 +29,7 @@ $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resourc
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
+$["tenant"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/tenant.js").pathD
 $["terraform"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/terraform.js").pathD
 $["time-services"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/time-services.js").pathD
 $["waf"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waf.js").pathD
@@ -174,6 +175,11 @@ const products = [
     title: "Stream",
     path: "stream",
     icon: "stream",
+  },
+  {
+    title: "Tenant",
+    path: "tenant",
+    icon: "tenant",
   },
   {
     title: "Terraform",
