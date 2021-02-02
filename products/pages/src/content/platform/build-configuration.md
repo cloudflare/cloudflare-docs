@@ -16,6 +16,7 @@ Below are some standard build commands and directories for popular frameworks an
 | Brunch                       | `brunch build --production`         | `public`                                       |
 | Docusaurus                   | `npm run build`                     | `build`                                        |
 | Eleventy                     | `eleventy`                          | `_site`                                        |
+| Ember.js                     | `ember build`                       | `dist`                                         |
 | Gatsby                       | `gatsby build`                      | `public`                                       |
 | GitBook                      | `gitbook build`                     | `_book`                                        |
 | Gridsome                     | `gridsome build`                    | `dist`                                         |
