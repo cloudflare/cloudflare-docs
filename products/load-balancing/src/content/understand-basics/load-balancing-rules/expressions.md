@@ -15,8 +15,6 @@ order: 20
 
 The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
-![Create Custom Rule dialog](../../static/images/traffic-app-create-custom-rule-dialog.png)
-
 ---
 
 ## Simple expressions

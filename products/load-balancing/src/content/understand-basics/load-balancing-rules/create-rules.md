@@ -13,7 +13,6 @@ Create a Load Balancing rule in the Cloudflare dashboard via the following:
 
 1. [Create a new rule](#create-a-new-load-balancing-rule)
 1. [Build an expression for the rule](#build-a-load-balancing-expression)
-1. [Configure an action](#configure-the-action)
 1. [Save the rule and the load balancer configuration](#save-a-load-balancing-rule-and-configuration)
 
 ---
@@ -67,23 +66,11 @@ After creating a rule, [build a Load Balancing expression](#build-a-load-balanci
 
 1. Continue editing the expression as necessary.
 
-After building the expression, [configure a Load Balancing action](#configure-a-load-balancing-action) for your rule.
-
----
-
-## Configure a Load Balancing action
-
-1. Set an action for your rule via the **Action** drop-down list. This example selects the _Pool selection_ action:
-
-  ![Screenshot, Create Custom Rule dialog, choose action](../../static/images/create-custom-rule-action.png)
-
-  The configuration options for the selected action display:
-
-    ![Screenshot, Create Custom Rule dialog, choose action](../../static/images/create-custom-rule-action-pool-selection.png)
+1. Choose a Load Balancing action of either **Respond with fixed response** or **Override** a current Load Balancer setting when the rule matches.
 
 1. [Optional] Click **Add another action**.
 
-After configuring a Load Balancing action, [save the Load Balancing rule and configuration](#save-a-load-balancing-rule-and-configurationa).
+After configuring a Load Balancing action, [save the Load Balancing rule and configuration](#save-a-load-balancing-rule-and-configuration).
 
 ---
 

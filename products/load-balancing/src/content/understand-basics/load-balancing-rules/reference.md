@@ -176,12 +176,6 @@ Load Balancing expressions support these comparison operators:
   </table>
 </TableWrap>
 
-<Aside type='warning' header='Important'>
-
-The `matches` operator requires a Cloudflare Business or Enterprise plan.
-
-</Aside>
-
 ### Logical operators
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
