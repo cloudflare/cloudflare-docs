@@ -1,7 +1,7 @@
 module.exports = {
   product: "Load Balancing",
   pathPrefix: "/load-balancing",
-  productIconKey: "load-balancing",
+  productLogoPathD: "dummy content",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/load-balancing",
   externalLinks: [
@@ -16,7 +16,7 @@ module.exports = {
     algoliaOptions: { 'facetFilters': '["project:load-balancing"]'}
   },
   siteMetadata: {
-    title: "Cloudflare Load Balancing docs",
+    title: "Cloudflare Load Balancing",
     description: "Balance traffic loads, manage failovers, monitor server and pool health, and apply geographic control with Cloudflare Load Balancing",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/load-balancing",
