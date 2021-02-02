@@ -41,6 +41,7 @@ jobs:
       terraform: ${{ steps.filter.outputs.terraform }}
       time-services: ${{ steps.filter.outputs.time-services }}
       waf: ${{ steps.filter.outputs.waf }}
+      waiting-room: ${{ steps.filter.outputs.waiting-room }}
       warp-client: ${{ steps.filter.outputs.warp-client }}
       workers: ${{ steps.filter.outputs.workers }}
     steps:
@@ -115,6 +116,8 @@ jobs:
               - 'products/time-services/**'
             waf:
               - 'products/waf/**'
+            waiting-room:
+              - 'products/waiting-room/**'
             warp-client:
               - 'products/warp-client/**'
             workers:
@@ -734,6 +737,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/waf
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-waiting-room:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.waiting-room == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/waiting-room
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

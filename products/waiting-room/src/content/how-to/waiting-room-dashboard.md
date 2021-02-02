@@ -1,0 +1,20 @@
+---
+title: Access the Cloudflare Waiting Rooms Dashboard
+alwaysopen: true
+weight: 170
+hidden: false
+---
+
+Use Cloudflare Waiting Room to create a holding area where users can queue to access a high-traffic area of your enterprise website. For an introduction, see [_About Waiting Room_](/waiting-room/about/).
+
+To access **Waiting Rooms** on the Cloudflare dashboard:
+
+1. Log in to the **Cloudflare** dashboard.
+1. Select the enterprise zone for which you want to manage the Waiting Rooms.
+1. Click the **Traffic** app.
+1. Click the **Waiting Rooms** tab.
+The **Waiting Rooms** card displays.
+
+![Waiting Rooms User Interface](../static/wr-dashboard.png)
+
+Use the dashboard to  [create](/waiting-room/how-to/create-waiting-room/) [edit](/waiting-room/how-to/edit-delete-waiting-room/), [delete](/waiting-room/how-to/edit-delete-waiting-room/), [control](/waiting-room/how-to/control-waiting-room), and [monitor](/waiting-room/how-to/monitor-waiting-room) waiting rooms.
