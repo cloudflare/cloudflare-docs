@@ -2,7 +2,7 @@
 order: 17
 ---
 
-# Load Balancing rules
+# Load Balancing rules - BETA
 
 Use Load Balancing rules to customize the behavior of your Cloudflare [load balancer](/understand-basics/load-balancers). For example, create a Load Balancing rule that selects an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
 
