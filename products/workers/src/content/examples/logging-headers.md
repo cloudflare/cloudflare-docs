@@ -44,6 +44,12 @@ Use the spread operator if you need to quickly stringify a Headers object:
 let requestHeaders = JSON.stringify([...request.headers])
 ```
 
+Or use ES2019 `Object.fromEntries` to convert it to an object:
+
+```js
+let requestHeaders = Object.fromEntries(request.headers)
+```
+
 ### The problem
 
 When debugging Worker scripts, we often want to examine the headers on a request or response. A common pitfall is to try to log headers to the developer console via code like this:
@@ -118,3 +124,24 @@ Request headers: [
 While not as elegant as object literal syntax, this is certainly readable and useful for debugging purposes.
 
 </ContentColumn>
+
+### Convert headers into an object, with Object.fromEntries (ES2019)
+
+[the ES2019 provided `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), which takes iterables natrually, so it's just a simple call to convert the headers into an object:
+
+```js
+let requestHeaders = JSON.stringify(Object.fromEntries(request.headers), null, 2)
+console.log(`Request headers: ${requestHeaders}`)
+```
+
+This results in something like:
+
+```js
+Request headers: {
+  "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+  "accept-encoding": "gzip",
+  "accept-language": "en-US,en;q=0.9",
+  "cf-ipcountry": "US",
+  // ...
+}"
+```
