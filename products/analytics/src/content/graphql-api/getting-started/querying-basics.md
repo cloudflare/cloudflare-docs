@@ -5,25 +5,122 @@ order: 20
 
 # Querying basics
 
-GraphQL structures data as a graph. You can explore the edges of the graph by using queries to get the data you need. This is an example query format:
+## Structure of a GraphQL query
+
+GraphQL structures data as a graph. GraphQL uses a schema to define the objects and their hierarchy in your data graph. You can explore the edges of the graph by using queries to get the data you need. These queries must respect the structure of the schema.
+
+At the core of a GraphQL query is a _node_, followed by its _fields_. The node is an object of a certain _type_; the type specifies the fields that make up the object.
+
+A field can be another node, in which case the appropriate query would contain nested elements. Some nodes look like functions that can take on arguments to limit the scope of what they can act on. You can apply filters at each node.
+
+## Query against the Cloudflare GraphQL schema
+
+A typical query against the Cloudflare GraphQL schema is made up of five components:
+
+* `query` - The root node.
+* `viewer` - A nested node indicating to GraphQL that you want to view the results. The `viewer` component represents the initial node of the user running the query.
+* `zones` or `account` - A nested node indicating the domain area or account you want to query against. The `viewer` can access one or more zones or accounts. Each zone or account contains a collection of data sets.
+* **Leaf node** - This specifies the data set you want to query against in a zone or account. `firewallEventsAdaptive` is an example of a leaf node that represents a data set for firewall events in a `zone` node.
+* **Field** - The fields in a query specify the set of metrics that you want to fetch. The `firewallEventsAdaptive` leaf node includes the `clientIP` field. If your leaf node queries requests, possible fields would include response bytes or the time at which requests were received.
+
+The following example shows the format for a firewall query:
 
 ```code
-viewer {
-      zones(filter:...) {
-         requests(filter:...) {
-           date, time, bytes,...
+
+query{
+  viewer {
+      zones(filter: {...}) {
+         firewallEventsAdaptive( limit: 10, orderBy: [...], filter: {...} ) {
+           datetime, clientCountryName, action, ...
          }
       }
+  }
 }
 ```
 
- where the `viewer` represents the initial node of the user running the query.
+### Example Query
 
-The viewer can access one or more zones (domains) or accounts. Each zone or account contains various data sets, such as HTTP requests for a zone. There are numerous metrics and dimensions about requests, such as the the response bytes or the time at which the requests were received. You can apply filters at each node.
+The following query searches data from a zone for firewall events that occurred during a time interval. It sorts the results, limits the amount of results returned, and displays a set of fields for each firewall event.
 
-This example query shows a range of GraphQL functionality. Two data sets for the specified zone are queried simultaneously, filters and aggregations are applied, and a limit is set on the number of records returned (note that you must include the `limit` argument, which can be equal or up to 10,000).
+```json
+---
+header: Query Firewall events for a specific time interval
+---
+query
+{
+  viewer
+  {
+    zones(filter: { zoneTag: "11111111"})
+    {
+      firewallEventsAdaptive(
+          filter: {
+            datetime_gt: "2020-08-03T02:07:05Z",
+            datetime_lt: "2020-08-03T17:07:05Z" 
+          },
+          limit: 2,
+          orderBy: [datetime_DESC, rayName_DESC])
+      {
+        action
+        datetime
+        rayName
+        clientRequestHTTPHost
+        userAgent
+      }
+    }
+  }
+}
+```
 
-```code
+* `zones(filter: { zoneTag: "11111111"})` confines the query to search to one zone.
+* `firewallEventsAdaptive` is the large data set that you want to query against. The set of data returned is defined by the following:
+    * `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than).
+    * `limit: 2` limits the results to 2 (the maximum value is 10,000).
+    * `orderBy` sorts the results, first by `datetime_DESC`, the datetime field , in descending order, and then by the rayname, also in descending order.
+    * The list of fields: `action` (Allow, Block, Challenge), `datetime`, `rayName` (the RayID), `clientRequestHTTPHost` (the host the client requested), and `userAgent`.
+
+You can send the query with an API call or by clicking **Play** in the GraphiQL client. The format of the response is in JSON:
+
+```json
+---
+header: Query response from firewallEventsAdaptive
+---
+{
+  "data": {
+    "viewer": {
+      "zones": [
+        {
+          "firewallEventsAdaptive": [
+            {
+              "action": "simulate",
+              "clientRequestHTTPHost": "cloudflare.guru",
+              "datetime": "2020-08-03T17:07:03Z",
+              "rayName": "5bd1a1fc584357ed",
+              "userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 08c774cde2f3c385)"
+            },
+            {
+              "action": "simulate",
+              "clientRequestHTTPHost": "cloudflare.guru",
+              "datetime": "2020-08-03T17:07:01Z",
+              "rayName": "5bd1a1ef3bb5d296",
+              "userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 764497f790f6a070)"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "errors": null
+}
+```
+
+## Query two data sets in a single API call
+
+This example query employs a broad range of GraphQL functionality. The example queries two data sets for the specified zone simultaneously, applies filters and aggregations, and sets a limit on the number of records returned. (Note that you must include the `limit` argument, which can be equal or up to 10,000.)
+
+```json
+---
+header: Query two data sets simultaneously
+---
 query {
   viewer {
     zones(filter: {zoneTag: "<your zone ID>"}) {
@@ -58,11 +155,15 @@ This is only an example. You must specify the <code>zoneTag</code> for your doma
 
 </Aside>
 
-How can you tell what data sets, metrics, dimensions, operators, and functions are available? One of the great features of a GraphQL API is that it offers "introspection": you can explore the graph (by making API calls) to see the available data sets, the fields and their types, and the operations you can perform. _GraphiQL_ uses this functionality to provide a "Documentation Explorer" that you can use to understand the schema. Click on the _Docs_ link on the right-hand side and then drill down starting with `Query` and proceeding to `viewer` and then `zone`. Introspection is also used to provide query auto-complete and syntax validation.
+## Introspection
+
+The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, fields, and operations you can perform.
+
+For an introduction to browsing the Analytics GraphQL API, see [_Explore the Analytics schema with GraphiQL_](/graphql-api/getting-started/explore-graphql-schema).
 
 ## Helpful Resources
 
-Handy links for setting up the GraphQL Analytics API and learning about GraphQL.
+Here are some helpful articles about working with the Cloudflare Analytics API and GraphQL.
 
 ### Cloudflare specific
 
