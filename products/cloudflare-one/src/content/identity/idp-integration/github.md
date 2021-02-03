@@ -25,7 +25,12 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
     For example, `https://your-team-name.cloudflareaccess.com`
 
-1. In the GitHub **Authorization callback URL** field, enter your [team domain](/glossary#team-domain) and add this to the end of the path: `/cdn-cgi/access/callback`.
+1. In the GitHub **Authorization callback URL** field, enter your [team domain](/glossary#team-domain) and add this to the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+    
 1. Click **Register application**.
 1. Copy the **Client ID** and **Client Secret**.
 

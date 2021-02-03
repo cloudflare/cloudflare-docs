@@ -55,7 +55,12 @@ Use these steps to set up Facebook as your identity provider.
     ![Facebook OAuth Settings](../../static/documentation/identity/facebook/fb8.png)
 
 1. On [developers.facebook.com](https://developers.facebook.com/), set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
-1. In the **Valid OAuth redirect URIs** field, enter your [team domain](/glossary#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
+1. In the **Valid OAuth redirect URIs** field, enter your [team domain](/glossary#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+    
 1. Click **Save Changes**.
 1. On the Teams dashboard, click **Save**.
 

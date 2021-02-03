@@ -33,7 +33,11 @@ To set up SAML with Centrify as your identity provider:
     ![Centrify Setting Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-4.png)
 
 1. Choose the **Manual Configuration** option.
-1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
+1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
 1. Click **Save**.
 1. In the middle menu pane, select **User Access**.
