@@ -2,13 +2,13 @@
 order: 0
 ---
 
-# SAML with Centrify
+# SAML | Centrify
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 
-## Set up Centrify
+## Set up Centrify (SAML)
 
-To set up SAML with Centrify as your identity provider (IdP):
+To set up SAML with Centrify as your identity provider:
 
 1. Log in to your **Centrify** admin portal and click **Apps**.
 
@@ -69,11 +69,7 @@ To set up SAML with Centrify as your identity provider (IdP):
 1. Select the **Manual Configuration** option.
 1. On the **Teams dashboard**, navigate to **Access > Authentication**.
 1. Click *+ Add* under **Login Methods**, and select SAML.
-1. Copy and paste the corresponding information from Centrify into the fields in the **Edit a SAML identity provider** dialog in **Cloudflare Access**.
-
-    ![Cloudflare Access Add a SAML identity provider dialog](../../static/documentation/identity/saml-centrify/saml-centrify-15.png)
-
-1. Enter an **Email Attribute name**.
+1. Copy and paste the corresponding information from Centrify into the fields.
 1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
@@ -95,7 +91,7 @@ To get your Cloudflare metadata file:
 1. Save the file in XML format.
 1. Upload the XML document to your **Centrify** account.
 
-## Example API Config
+## Example API configuration
 
 ```json
 {

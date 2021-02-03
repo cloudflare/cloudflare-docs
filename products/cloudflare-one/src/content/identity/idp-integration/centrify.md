@@ -8,7 +8,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 ## Set up Centrify
 
-These steps help you set up Centrify as your identity provider (IdP).
+These steps help you set up Centrify as your identity provider:
 
 1. Log in to the Centrify administrator panel.
 1. Click **Apps**.

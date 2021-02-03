@@ -2,7 +2,7 @@
 order: 12
 ---
 
-# Microsoft Azure AD® (Active Directory)
+# Microsoft Azure AD®
 
 You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Teams and build rules based on user identity and group membership. Users will authenticate with their Azure AD credentials and connect to Teams.
 

@@ -2,13 +2,13 @@
 order: 1
 ---
 
-# SAML with Okta
+# SAML | Okta
 
-Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate SAML with Okta as an IdP.
+Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate SAML with Okta as an identity provider.
 
-## Set up Okta as your IdP
+## Set up Okta (SAML)
 
-To set up SAML with Okta as your IdP:
+To set up SAML with Okta as your identity provider:
 
 1. Log in to your Okta Admin portal, and choose **Applications**.
 1. Click **Add Application**.
@@ -58,7 +58,7 @@ To set up SAML with Okta as your IdP:
 
     The _Assign application name to Groups_ card displays, where you grant users or groups permission to access your application.
 
-![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
+ ![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
 
 1. Click **Done**.
 
@@ -100,7 +100,7 @@ To get your Cloudflare metadata file:
 1. Save the file in XML format.
 1. Upload the XML document to your **Okta **account.
 
-## Example API Configuration
+## Example API configuration
 
 ```json
 {

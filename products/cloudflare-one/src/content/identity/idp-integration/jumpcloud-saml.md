@@ -2,13 +2,15 @@
 order: 4
 ---
 
-# SAML with Jumpcloud
+# SAML | Jumpcloud
 
 JumpCloud provides [Directory-as-a-Service®](https://jumpcloud.com/daas-product/) to securely connect user identities to systems, apps, files, and networks. Cloudflare Access integrates with JumpCloud using the SAML protocol. [This documentation from JumpCloud](https://support.jumpcloud.com/customer/en/portal/topics/924865-applications-saml-sso-/articles) can help you configure applications within your JumpCloud deployment.
 
 These steps focus on requirements specific to Teams.
 
-To set up JumpCloud SAML as your IdP in Teams:
+## Set up Jumpcloud SAML
+
+To set up JumpCloud SAML as your identity provider:
 
 1. Generate a SAML certificate.
 
@@ -82,7 +84,7 @@ To set up JumpCloud SAML as your IdP in Teams:
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
-## Example API Config
+## Example API configuration
 
 ```json
 {

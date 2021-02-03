@@ -1,14 +1,14 @@
 ---
-order: 12
+order: 11
 ---
 
 # OneLogin OIDC
 
-OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC IdP.
+OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an OIDC identity provider.
 
-## Set up OneLogin OIDC as your IdP
+## Set up OneLogin OIDC
 
-To set up OneLogin as your IdP:
+To set up OneLogin as your identity provider:
 
 1. Log in to your OneLogin admin portal.
 1. Select **Apps > Custom Connectors**.

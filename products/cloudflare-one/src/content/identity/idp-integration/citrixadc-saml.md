@@ -2,11 +2,13 @@
 order: 7
 ---
 
-# SAML with Citrix ADC 
+# SAML | Citrix ADC
 
 Cloudflare for Teams can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Teams.
 
-## Configure SAML
+## Set up Citrix ADC (SAML)
+
+To set up Citrix ADC (SAML) as your identity provider:
 
 1. First, you'll need to configure 2 SAML certificates:
    * A certificate to **terminate TLS at the vServer**.

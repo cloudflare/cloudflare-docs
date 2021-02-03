@@ -2,13 +2,13 @@
 order: 3
 ---
 
-# SAML with OneLogin
+# SAML | OneLogin
 
-OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML IdP.
+OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 
-## Set up OneLogin SAML as your IdP
+## Set up neLogin (SAML)
 
-To set up OneLogin SAML as your IdP:
+To set up OneLogin (SAML) as your identity provider:
 
 1. Log in to your OneLogin admin portal.
 1. Select  **Apps > Add Apps**.
@@ -84,7 +84,7 @@ To add a metadata file to your OneLogin SAML configuration:
 1. Save the file as an XML document.
 1. Upload the XML document to **OneLogin**.
 
-## Example API Configuration
+## Example API configuration
 
 ```json
 {

@@ -2,11 +2,13 @@
 order: 9
 ---
 
-# SAML with Keycloak
+# SAML | Keycloak 
 
 Keycloak is an open source identity and access management solution built by JBoss. Need a Keycloak lab environment for testing? An example is available [here](https://github.com/mw866/tunnel-keycloak).
 
-## Set up Keycloak with Access
+## Set up Keycloak (SAML)
+
+To set up Keycloak (SAML) as your identity provider:
 
 1. In Keycloak, select **Clients** in the navigation bar and create a new client.
 
