@@ -34,4 +34,6 @@ API Shield requires Cloudflare-issued certificates. You can use API Shield with 
 
 If you need to use certificates issued by another (CA), please reach out to a Cloudflare Customer Success Manager.
 
+When using Yubikeys, the browser may prompt for unlocking the key due to a problem in Yubikey's PKCS#11 library.
+
 </Aside>

@@ -59,6 +59,14 @@ async function handleRequest(request) {
 
 --------------------------------
 
+## Community
+
+You can [connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you’re building, and discuss the platform with other developers. 
+
+[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what's new in Cloudflare Workers.
+
+--------------------------------
+
 These docs are built with the [Cloudflare Docs Engine](https://developers.cloudflare.com/docs-engine/).
 
 </ContentColumn>

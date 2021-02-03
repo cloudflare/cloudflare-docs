@@ -27,7 +27,7 @@ A Cloudflare load balancer is identified by the DNS hostname whose traffic you w
 
 **If there is no preexisting DNS record with the same name**, disabling the load balancer will prevent clients from resolving the host, and requests will fail.
 
-**If a Load Balancer is manually disabled**, traffic is not served to the associated origins or the fallback.  If all pools in a Load Balancer are manually disabled, the fallback origin is used unless the fallback is also disabled.  If the fallback is also disabled, the SOA record is served.  Otherwise, if there is one pool in the Load Balancer and the pool is unhealthy, Cloudflare sends traffic to the fallback pool regardless of the fallback pool's health.
+**If a Load Balancer is manually disabled**, traffic is not served to the associated origins or the fallback. If all pools in a Load Balancer are manually disabled or unhealthy, traffic goes to the fallback pool. No health checks run on the fallback pool. If the fallback is also disabled, the SOA record is served.
 
 ## HTTP keep-alive (persistent HTTP connection)
 

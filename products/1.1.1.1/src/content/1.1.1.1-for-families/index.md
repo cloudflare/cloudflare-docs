@@ -28,7 +28,7 @@ When you change your DNS resolvers to the addresses below, 1.1.1.1 for Families 
 
 Cloudflare will return 0.0.0.0 if the FQDN or IP in a DNS query is classified as malicious.
 
-Ready to set it up? You’ll find an easy guide for every device in the [setup instructions](/1.1.1.1/1.1.1.1-for-families/setup-instructions/) page.
+Ready to set it up? You’ll find an easy guide for every device in the [setup instructions](/1.1.1.1-for-families/setup-instructions/) page.
 
 ## Domain miscategorization
 

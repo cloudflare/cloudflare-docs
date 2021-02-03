@@ -13,6 +13,7 @@ module.exports = {
   search: {
     indexName: "",
     apiKey: "",
+    algoliaOptions: { 'facetFilters': ''}
   },
   siteMetadata: {
     title: "Cloudflare Tenant docs",

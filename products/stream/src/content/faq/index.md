@@ -14,9 +14,7 @@ Video cannot be downloaded from Cloudflare Stream.
 
 ## Is there a limit to the amount of videos I can upload?
 
-- Each account starts with a 2048 GB weekly rolling upload limit (videos uploaded in the past 7 days regardless of the day of week will be counted.) This only includes original video files uploaded.
-
-- By default, a video upload can be at most 20 GB.
+- By default, a video upload can be at most 30 GB.
 
 - By default, 70 videos can be in the "in progress" state at once.
 

@@ -8,6 +8,7 @@ $["access"]               = require("@cloudflare/cloudflare-brand-assets/resourc
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
 $["argo-tunnel"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/argo-tunnel.js").pathD
+$["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
@@ -28,6 +29,7 @@ $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resourc
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
+$["tenant"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/tenant.js").pathD
 $["terraform"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/terraform.js").pathD
 $["time-services"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/time-services.js").pathD
 $["waf"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waf.js").pathD
@@ -65,6 +67,11 @@ const products = [
   //   path: "cloudflare-one",
   //   icon: "cloudflare-one",
   // },
+  {
+    title: "Bots",
+    path: "bots",
+    icon: "bots",
+  },
   {
     title: "BYOIP",
     path: "byoip",
@@ -168,6 +175,11 @@ const products = [
     title: "Stream",
     path: "stream",
     icon: "stream",
+  },
+  {
+    title: "Tenant",
+    path: "tenant",
+    icon: "tenant",
   },
   {
     title: "Terraform",

@@ -31,7 +31,7 @@ async function handleRequest(event) {
   let response = await cache.match(cacheKey)
 
   if (!response) {
-    //If not in cache, get it from origin
+    // If not in cache, get it from origin
     response = await fetch(request)
 
     // Must use Response constructor to inherit all of response's fields
@@ -80,7 +80,7 @@ async function handlePostRequest(event) {
 
   const cache = caches.default
 
-  //Find the cache key in the cache
+  // Find the cache key in the cache
   let response = await cache.match(cacheKey)
 
   // Otherwise, fetch response to POST request from origin

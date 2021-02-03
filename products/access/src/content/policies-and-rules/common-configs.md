@@ -4,6 +4,12 @@ order: 1
 
 # Common policy configurations
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 This section addresses a few common policy configurations and best practices.
 
 For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [Policies page](/getting-started/policies/) in the [Getting started](/getting-started) section.

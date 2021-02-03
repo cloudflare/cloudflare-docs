@@ -42,7 +42,7 @@ Keys to configure per project in your `wrangler.toml`.
   -  The name of your Worker script. If inherited, your environment name will be appended to the top level.
 
 - `type` <Type>top level</Type> <PropMeta>required</PropMeta>
-  -  Specifies how `wrangler build` will build your project. There are currently three options (`webpack`, `javascript`, and `rust`).
+  -  Specifies how `wrangler build` will build your project. There are currently three options — `webpack`, `javascript`, and `rust`. `javascript` skips building the project, `webpack` builds your project with webpack, and `rust` compiles the Rust in your project to WASM.
 
 - `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
   - This is the ID of the "zone" or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a [workers.dev](https://workers.dev) subdomain.
