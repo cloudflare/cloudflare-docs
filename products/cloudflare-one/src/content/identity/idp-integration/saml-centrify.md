@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 0
 ---
 
 # SAML with Centrify
@@ -66,47 +66,17 @@ To set up SAML with Centrify as your identity provider (IdP):
 
     ![Centrify Settings Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-10.png)
 
-1. Select the **Metadata** option, and click **Download Metadata file**.
-
-    The metadata XML file saves to your designated download directory.
-
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
-
-    ![Cloudflare Access Add IdP](../../static/documentation/identity/saml-centrify/saml-centrify-11.png)
-
-    The **Add a SAML identity provider** dialog displays.
-
-1. Click to browse and select or drag the metadata file into the file upload box.
-
-    ![Adding a metadata file to your SAML IdP in Cloudflare Access](../../static/documentation/identity/saml-centrify/saml-centrify-12.png)
-
-1. Confirm that the field entries from the metadata file upload are accurate.
-1. Click **Save** and then **Test**.
-
-    On successful connection to your Ping Identity deployment, a confirmation displays.
-
-    ![Successful Connection to your IdP](../../static/documentation/identity/saml-centrify/saml-centrify-13.png)
-
-## To manually enter data in Cloudflare Access from your Centrify IdP
-
-1. In your Centrify account, click **Settings** in the left pane.
-1. In the middle menu pane, choose **Trust**.
-
-    ![Centrify Settings Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-4.png)
-
 1. Select the **Manual Configuration** option.
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select SAML.
 1. Copy and paste the corresponding information from Centrify into the fields in the **Edit a SAML identity provider** dialog in **Cloudflare Access**.
 
     ![Cloudflare Access Add a SAML identity provider dialog](../../static/documentation/identity/saml-centrify/saml-centrify-15.png)
 
 1. Enter an **Email Attribute name**.
-1. Click **Save** and then **Test**.
+1. Click **Save**.
 
-    On successful connection to your Ping Identity deployment, a confirmation displays.
-
-    ![Successful Connection to your IdP](../../static/documentation/identity/saml-centrify/saml-centrify-13.png)
-
-1. Close the dialog.
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

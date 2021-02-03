@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 1
 ---
 
 # SAML with Okta
@@ -70,30 +70,6 @@ To set up SAML with Okta as your IdP:
 
     ![Okta SAML Settings Sign On page](../../static/documentation/identity/saml-okta/saml-okta-9.png)
 
-1. Scroll to the bottom of the screen, copy the metadata and save it as an XML file.
-
-    ![Okta SAML Settings metadata field](../../static/documentation/identity/saml-okta/saml-okta-10.png)
-
-1. Name the metadata file `sp-metadata.xml`.
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
-
-    ![Cloudflare Access Login Methods](../../static/documentation/identity/saml-okta/saml-okta-11.png)
-
-    The **Add a SAML identity provider** card displays.
-
-1. Click to browse and select or drag the metadata file into the file upload box.
-
-    ![Cloudflare Access Upload metadata file field](../../static/documentation/identity/saml-okta/saml-okta-12.png)
-
-1. Confirm that the field entries from the metadata file upload are accurate.
-1. Click **Save** and then **Test**.
-
-    On successful connection to your Ping Identity deployment, a confirmation displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/saml-okta/saml-okta-13.png)
-
-## To manually enter metadata from your Okta IdP
-
 1. Copy and paste the following information into the Cloudflare Access **Edit a SAML identity provider** card.
 
    * **Provider Name**: Name your IdP.
@@ -101,18 +77,11 @@ To set up SAML with Okta as your IdP:
    * **IdP Entity ID**: Enter the IdP issuer.
    * **Signing Certificate**: Copy the certificate from Okta in **X.509 Certificate** between **Begin Certificate** and **End Certificate**.
 
-    ![aCloudflare Access Edita a SAML identity provider card](../../static/documentation/identity/saml-okta/saml-okta-14.png)
-
 1. After completing the information, enter the name “email” as your email attribute for the **SAML assertion** field.
+
 1. Click **Save**.
-1. Click **Close**.
-1. Click **Save** and then **Test**.
 
-    On successful connection to your Okta deployment, a confirmation displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/saml-okta/saml-okta-13.png)
-
-1. Close the **Edit a SAML identity provider** card.
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

@@ -1,8 +1,8 @@
 ---
-order: 12
+order: 9
 ---
 
-# Keycloak SAML
+# SAML with Keycloak
 
 Keycloak is an open source identity and access management solution built by JBoss. Need a Keycloak lab environment for testing? An example is available [here](https://github.com/mw866/tunnel-keycloak).
 
@@ -41,47 +41,6 @@ Keycloak is an open source identity and access management solution built by JBos
 
     ![Access Config](../../static/documentation/identity/keycloak/access-config-keycloak.png)
 
-1. Click **Save**
+1. Click **Save**.
 
-    Click "Save" and then confirm the connection is working by clicking "Test".
-
-    ![Access Test](../../static/documentation/identity/keycloak/test-access.png)
-
-## Optional: Custom SAML Attributes
-
-Keycloak can be configured to pass on custom SAML attributes for consumption by Access Policy. For example, role-based access policy.
-
-1. Roles
-
-    In Keycloak, add the `role list` inside of the "Builtin Protocol Mapper" tab.
-
-    ![Role List](../../static/documentation/identity/keycloak/role-list.png)
-
-1. Access setting
-
-    In Cloudflare Access, add `Role` as a SAML attribute. Click "Save" and test the connection.
-
-    ![Role Test](../../static/documentation/identity/keycloak/role-test.png)
-
-1. Build a policy
-
-    In Access, build a policy to use a SAML attribute. In this example, use "Role".
-
-    ![Role Policy](../../static/documentation/identity/keycloak/role-policy.png)
-
-## Troubleshooting
-
-**Keycloak: We are sorry... Invalid requester**
-
-![Invalid Requester](../../static/documentation/identity/keycloak/509.png)
-
-Solution: Disable "Client Signature Required " in Client Settings
-
-**Access Test: Response uses a certificate that is not configured.**
-Solution: Use the X509 Certificate in the Realm Settings  rather than from Client Setting.
-
-**Access Test: Successful bu email property is empty**
-
-![Empty](../../static/documentation/identity/keycloak/empty.png)
-
-Solution: Solution: Configure the protocol mapper in Keycloak's SAML Client.
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.

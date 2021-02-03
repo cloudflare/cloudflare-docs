@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 5
 ---
 
 # SAML with Active Directory®
@@ -21,7 +21,7 @@ Then to begin the connection between Cloudflare Access and ADFS create a Relying
 
 ## Create a Relying Party Trust
 
-You run the Add Relying Party Trust wizard to begin SAML AD integration with Cloudflare Access.
+Run the Add Relying Party Trust wizard to begin SAML AD integration with Cloudflare Access.
 
 To create a Relying Party Trust:
 
@@ -111,7 +111,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 ## Create claim rules
 
-Now you create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create _Access Policies_.
+Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Zero Trust policies](/policies/zero-trust).
 
 <Aside>
 
@@ -198,13 +198,13 @@ To ensure that ADFS signs the full response when communicating with Cloudflare, 
 Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
 ```
 
-## Configure Cloudflare Access
+## Configure Cloudflare for Teams
 
-To enable Cloudflare Access to accept the claims and assertions sent from ADFS, follow these steps:
+To enable Cloudflare for Teams to accept the claims and assertions sent from ADFS, follow these steps:
 
-1. On the Teams dashboard, navigate to **Access > Authentication**
-1. Scroll to **Login Methods** and click *+Add*.
-1. Click the **SAML** button.  The **Add a SAML identity provider** card displays.
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select **SAML**.
+1. The **Add a SAML identity provider** card displays.
 
     ![Cloudflare Access Login Methods](../../static/documentation/identity/adfs/adfs-19-b.png)
 
@@ -227,9 +227,9 @@ To enable Cloudflare Access to accept the claims and assertions sent from ADFS, 
 
     There can be no spaces or return characters in the text field.
 
-1. Click **Save** and then **Test**.
+1. Click **Save**.
 
-    On successful connection to your AD deployment, a confirmation displays.
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

@@ -11,8 +11,8 @@ You can protect two types of web applications: SaaS and self-hosted.
 **Self-hosted applications** consist of internal applications that you host in your own environment. These can the data center versions of tools like the Atlassian suite or applications created by your own team. To secure self-hosted applications, you must use Cloudflare's authoritative DNS and [connect the application](/connections/connect-apps) to Cloudflare.
 
 <ButtonGroup>
-  <Button type="primary" href="/applications/configure-apps/saas-apps/">SaaS applications</Button>
-  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Self-hosted applications</Button>
+  <Button type="primary" href="/applications/configure-apps/saas-apps/">Guide to SaaS applications</Button>
+  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Guide to self-hosted applications</Button>
 </ButtonGroup>
 
 ## Protect self-hosted applications
@@ -28,9 +28,11 @@ You can protect two types of web applications: SaaS and self-hosted.
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet, by providing an authentication layer using your existing identity providers to control who has access to your applications.
 
-Before you begin setting up your self-hosted application, you will need an active domain on Cloudflare. Access rules will be built to secure that domain.
+![Self-hosted applications diagram](../../static/documentation/applications/network-diagram.png)
 
-Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/). If you do not wish to use Argo Tunnel, you must [validate the token](/identity/users/json-web-tokens/) issued by Cloudflare on your origin.
+Make sure you create [Zero Trust policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use Argo Tunnel. If you do not wish to use Argo Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
+
+
 
 ### 1. Add your application
 

@@ -1,8 +1,8 @@
 ---
-order: 12
+order: 6
 ---
 
-# PingIdentity® SAML
+# SAML with PingIdentity® 
 
 The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html) documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
 
@@ -35,22 +35,13 @@ To set up PingIdentity as your IdP:
 
     This file shares several fields with Cloudflare Access so you don’t have to input this data.
 
-5. Navigate to **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML icon.**
-6. Upload the metadata file in the **Add a SAML identity provider**.
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select SAML.
+1. In the **IdP Entity ID** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
+1. Fill the other fields with values from your Ping dashboard.
+1. Click **Save**.
 
-    <Aside>
-
-    If you are using a self-hosted deployment of PingFederate and a separate IdP or directory service, change the auto-populated value in the <strong>IdP Entity ID</strong> field. The metadata file sets it to a domain that you control.
-    </Aside>
-
-7. In the **IdP Entity ID** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
-
-8. Confirm that the fields set by the metadata file are accurate.
-9. Click **Save**.
-
-    On successful connection to your PingIdentity deployment, a confirmation displays.
-
-    ![Successful connection](../../static/documentation/identity/ping/ping-saml-1.png)
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

@@ -44,26 +44,17 @@ To configure LinkedIn as an IdP:
 1. Click the **Auth** tab.
 1. Copy the **Client ID** and **Client Secret**.
 1. On the Teams dashboard, navigate to **Access > Authentication**.
-
-    ![Cloudflare Access Login Methods](../../static/documentation/identity/linkedin/lin6.png)
-
-1. Under **Login methods**, click *+ Add*.
-
-1. Choose **LinkedIn** on the next page.
-
-1. Provide a name for the IdP, and paste in the **Client ID** and **Client Secret**.
-
+1. Click *+ Add* under **Login Methods**, and select LinkedIn as your IdP.
+1. In the **App ID** and **Client secret** fields, input the **Client ID** and **Client secret** values you've copied from the Application credentials tab in the LinkedIn Developer Portal.
+1. Click **Save**.
 1. In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and click the **pencil icon** to edit the settings.
 
     ![LinkedIn OAuth 2.0 settings](../../static/documentation/identity/linkedin/lin8.png)
 
-1. Enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`.
+1. Enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. 
 
-1. In the Cloudflare Access **Add a LinkedIn identity provider** window, click **Save** and then **Test**.
+To test that your connection is working, in the Teams dashboard, navigate to **Authentication > Login methods** and click **Test** next to LinkedIn.
 
-    On successful connection to your identity provider, a confirmation window displays.
-
-    ![Cloudflare Access Successful connection to your IdP](../../static/documentation/identity/linkedin/lin9.png)
 
 ## Example API configuration
 

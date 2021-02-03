@@ -1,8 +1,8 @@
 ---
-order: 12
+order: 3
 ---
 
-# OneLogin SAML
+# SAML with OneLogin
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML IdP.
 
@@ -49,8 +49,9 @@ To set up OneLogin SAML as your IdP:
 
     ![OneLogin SAML Application SSO](../../static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
 
+1. Click *+ Add* under **Login Methods**, and select SAML.
 
 1. Input the details from your OneLogin account in the fields.
 
@@ -62,6 +63,8 @@ To set up OneLogin SAML as your IdP:
     </Aside>
 
 1. Click **Save**.
+
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 
 ## Download SP metadata (optional)

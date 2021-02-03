@@ -52,12 +52,11 @@ To set up OneLogin as your IdP:
 
 1. On the Teams dashboard, navigate to **Access > Authentication**.
 
-1. Under **Login methods**, click *+ Add*.
-
-1. Choose **OneLogin** on the next page.
-
+1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
 1. Paste in your copied **Client ID** and **Client secret**.
 1. Click **Save**.
+
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
 
 ## Example API Config
 
