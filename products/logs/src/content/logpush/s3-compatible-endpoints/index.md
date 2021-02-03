@@ -33,7 +33,7 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 * `name` (optional) - Use your domain name as the job name.
-* `destination_conf` - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access key in the following string format:
+* `destination_conf` - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
 
 ```bash
 "s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>"
