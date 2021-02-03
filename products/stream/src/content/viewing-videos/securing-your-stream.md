@@ -343,7 +343,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ### Signed URLs
 
-Combining [signed URLs](/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
+Combining signed URLs with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
 
 To do so
 
@@ -369,7 +369,7 @@ Read more about Content Security Policy at [Mozilla Developer Network](https://d
 
 Video Access Control allow you to define Rules to have finer-grained control over your content than signed URL tokens alone. They are primarily aimed at making tokens conditionally valid based on user information. Access Rules are specified on token payloads as the `accessRules` property containing an array of `Rule` objects.
 
-If you're not already familiar with signed URLs, it's recommended to <a href="/stream/security/signed-urls/">start here.</a>
+If you're not already familiar with signed URLs, <a href="#signed-urls--tokens">start here.</a>
 
 ### Rules
 
