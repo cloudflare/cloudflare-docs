@@ -8,13 +8,12 @@ order: 56
 Cloudflare Logpush now supports S3-compatible destinations in an API-only beta, including:
 
 * [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
-* [Backblaze B2](https://www.backblaze.com/b2/docs/)
+* [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
 * [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
 * [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
 * [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
-* [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-compatibility-api)
 * [Linode Object Storage](https://www.linode.com/products/object-storage/)
-* On-premise [Ceph Object Gateway](https://docs.ceph.com/docs/mimic/radosgw/s3/)
+* On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
 For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](https://developers.cloudflare.com/logs/logpush) documentation.
 
@@ -26,7 +25,7 @@ See below for detailed instructions.
 
 <Aside type="note" header="Note">
 
-Unlike Logpush jobs to AWS S3, there is no ownership challenge with S3-compatible APIs.
+Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compatible APIs.
 
 </Aside>
 

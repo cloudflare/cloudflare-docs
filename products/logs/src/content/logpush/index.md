@@ -21,23 +21,9 @@ If following the UI method, you'll be prompted to allow Cloudflare to access you
 - [Enable Microsoft Azure](/logpush/azure/)
 - [Enable Sumo Logic](/logpush/sumo-logic/)
 
-Currently, Logpush is available to customers on the Cloudflare Enterprise plan and for the following services: 
-- Amazon S3, 
-- Google Cloud Storage (GCS), 
-- Microsoft Azure, and 
-- Sumo Logic. 
-Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can push their logs to IBM's Cloud Object Storage (COS).
+Currently, Logpush is available to customers on the Cloudflare Enterprise plan and for the following services: Amazon S3, Google Cloud Storage (GCS), Microsoft Azure, and Sumo Logic. Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can push their logs to [IBM's Cloud Object Storage (COS)](https://cloud.ibm.com/docs/cis?topic=cis-logpush).
 
-Cloudflare Logpush also supports S3-compatible endpoints in an API-only beta, which includes:
-
-* [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
-* [Backblaze B2](https://www.backblaze.com/b2/docs/)
-* [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
-* [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
-* [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
-* [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-compatibility-api)
-* [Linode Object Storage](https://www.linode.com/products/object-storage/)
-* On-premise [Ceph Object Gateway](https://docs.ceph.com/docs/mimic/radosgw/s3/)
+Cloudflare Logpush also supports S3-compatible endpoints in an API-only beta, which includes: [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/), [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html), [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2), [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2), [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm), [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-compatibility-api), [Linode Object Storage](https://www.linode.com/products/object-storage/), and On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/).
 
 See instructions to [Enable S3-compatible endpoints](/logpush/s3-compatible-endpoints).
 
