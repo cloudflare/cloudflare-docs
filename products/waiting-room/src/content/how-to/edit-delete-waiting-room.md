@@ -5,6 +5,8 @@ weight: 260
 hidden: false
 ---
 
+# Update and delete Waiting Rooms
+
 You can manage your waiting rooms using the [Waiting Rooms dashboard](/waiting-room/how-to/waiting-room-dashboard) or the API.
 
 ## Edit a waiting room in the Cloudflare dashboard

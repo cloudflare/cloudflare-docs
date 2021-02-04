@@ -1,9 +1,11 @@
 ---
-title: Monitor waiting room status
+title: Monitor Waiting Room status
 alwaysopen: true
 weight: 280
 hidden: false
 ---
+
+# Monitor Waiting Room status
 
 You can monitor the status of your waiting rooms using the [user interface](/waiting-room/how-to/waiting-room-dashboard) or the API.
 

@@ -5,6 +5,8 @@ weight: 250
 hidden: false
 ---
 
+# Create a Waiting Room via the Cloudflare dashboard
+
 1. Click the [Waiting Rooms](/waiting-room/how-to/waiting-room-dashboard) tab in the **Traffic** app.
 
 

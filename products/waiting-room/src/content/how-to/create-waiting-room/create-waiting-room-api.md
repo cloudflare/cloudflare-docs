@@ -1,9 +1,11 @@
 ---
-title: Create a waiting room using the Waiting Room API
+title: Create a Waiting Room via the API
 alwaysopen: true
 weight: 260
 hidden: false
 ---
+
+# Create a Waiting Room via the API
 
 Create a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com/#waiting-room-create-waiting-room) to the Cloudflare API base URL.
 

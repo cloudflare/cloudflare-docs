@@ -1,9 +1,11 @@
 ---
-title: Waiting room cookie
+title: Waiting Room cookie
 alwaysopen: true
 weight: 110
 hidden: false
 ---
+
+# Waiting Room cookie
 
 <Aside type='warning' header='Important'>
 

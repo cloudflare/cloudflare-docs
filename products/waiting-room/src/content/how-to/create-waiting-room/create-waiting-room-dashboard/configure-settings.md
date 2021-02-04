@@ -5,6 +5,8 @@ weight: 254
 hidden: false
 ---
 
+# Configure settings from the Cloudflare dashboard
+
 To configure settings for a waiting room, select the **Settings** tab in the **Create Waiting Room** page.
 
 ![Waiting Rooms Settings](../../../static/wr-create-waiting-room-settings.png)

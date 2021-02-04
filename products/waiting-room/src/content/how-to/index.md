@@ -5,8 +5,6 @@ weight: 150
 hidden: false
 ---
 
-Cloudflare Waiting Room is straightforward to set up and use.
-
 ## Before you begin
 
 Before you begin to work with waiting rooms, review the [prerequisites](/waiting-room/about#prerequisites) and [entitlements](/waiting-room/about#entitlements).

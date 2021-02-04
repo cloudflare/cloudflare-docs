@@ -1,9 +1,11 @@
 ---
-title: Customize a waiting room
+title: Customize a Waiting Room
 alwaysopen: false
 weight: 256
 hidden: false
 ---
+
+# Customize a Waiting Room
 
 To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
 

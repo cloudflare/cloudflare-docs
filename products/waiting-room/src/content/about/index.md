@@ -6,6 +6,8 @@ hidden: false
 showNew: false
 ---
 
+# About Cloudflare Waiting Room
+
 Cloudflare Waiting Room queues site visitors when a website experiences unmanageable surges in legitimate traffic.
 
 When the amount of traffic to a host/path combination on your site exceeds a user-defined threshold, all subsequent requests are queued in a Waiting Room. A [cookie](/waiting-room/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
@@ -27,4 +29,4 @@ You can set up, manage, and monitor your waiting rooms in the **Traffic** app on
 
 * Cloudflare’s CDN is required to use the Waiting Room feature.
 * Configure a [proxied DNS record or a proxied load balancer](/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname: a DNS record is not auto-configured after a waiting room is created.
-* Visitors must enable cookies. Refer to [_Waiting room cookie_](/waiting-room/about/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
+* Visitors must enable cookies. Refer to [_Waiting room cookie_](/about/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
