@@ -3,22 +3,16 @@
 You may want to adjust your firewall rules to provide additional access to customers or partners.
 
 Potential examples include:
-- Providing access to internal systems or data
+- Allowing access to internal systems or data
 - Removing rate limiting for an API
 - Sharing brand assets and marketing materials
 
-## Exempt by ASN
+## Update firewall rules by ASN
 If a customer or partner is large enough, you could set up a firewall rule based on an [autonomous system number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
 
 ### Allow traffic by ASN
 
-This example uses the `AS number` to specify the general region, as well as the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to target requests from bots.
-
-<Aside type='warning' header='Important'>
-
-Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan.
-
-</Aside>
+This example uses `ip.geoip.asnum` to specify the general region, as well as the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure that partner traffic does not come from bots.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -35,9 +29,15 @@ Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-
   </tbody>
 </table>
 
+<Aside type='warning' header='Important'>
+
+Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan.
+
+</Aside>
+
 ### Adjust rules by ASN
 
-This example uses the `AS number` to specify the general region, as well as the `cf.threat_score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) make sure these requests are not coming from spammers or bots.
+This example uses `ip.geoip.asnum` to specify the general region, as well as the `cf.threat_score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 If a request meets these criteria, your firewall bypasses its normal `User Agent Block` rules.
 
@@ -56,12 +56,12 @@ If a request meets these criteria, your firewall bypasses its normal `User Agent
   </tbody>
 </table>
 
-##  Exempt by IP
-For smaller organizations, you might set up firewall rules based on IP addresses.
+##  Update firewall rules by IP
+For smaller organizations, you could set up firewall rules based on IP addresses.
 
 ### Allow traffic by IP address
 
-This example specifies the network and host, as well as the `cf.threat_score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) make sure these requests are not coming from spammers or bots..
+This example specifies the network and host, as well as the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -77,12 +77,6 @@ This example specifies the network and host, as well as the `cf.threat_score` [d
     </tr>
   </tbody>
 </table>
-
-<Aside type='warning' header='Important'>
-
-Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan.
-
-</Aside>
 
 ### Adjust rules by IP address
 
