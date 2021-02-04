@@ -4,28 +4,24 @@ order: 12
 
 # Facebook
 
-Cloudflare Access allows your users to use Facebook as their IdP.
-
-## Set up Facebook as your IdP
-
 Use these steps to set up Facebook as your identity provider.
 
 1. Go to go to [developers.facebook.com](https://developers.facebook.com/).
-2. Click **Create App** at the top-right.
+1. Click **Create App** at the top-right.
 
     ![Facebook IdP Login page](../../static/documentation/identity/facebook/fb1.png)
 
-3. The **Create a New App ID** card displays
-4. Enter the **Display Name** and **Contact Email**.
-5. Click **Create App ID**.
+   The **Create a New App ID** card displays.
+1. Enter the **Display Name** and **Contact Email**.
+1. Click **Create App ID**.
 
     The Create a New App ID window displays.
 
     ![Facebook Create New App ID](../../static/documentation/identity/facebook/fb2.png)
 
-6. Enter the Captcha code to proceed.
-7. Click **Submit**.
-8. On the **Facebook Login** card, click **Set Up**.
+1. Enter the Captcha code to proceed.
+1. Click **Submit**.
+1. On the **Facebook Login** card, click **Set Up**.
 
     ![Facebook Add a Product](../../static/documentation/identity/facebook/fb3.png)
 
@@ -33,36 +29,42 @@ Use these steps to set up Facebook as your identity provider.
 
     ![Facebook Quickstart](../../static/documentation/identity/facebook/fb4.png)
 
-9. Click **Web**.
+1. Click **Web**.
 
-    The _Web_ tab displays.
+    The *Web* tab displays.
 
-10. Enter your **Site URL**.
-11. Click **Save**.
-12. Click **Continue**.
+1. Enter your **Site URL**.
+1. Click **Save**.
+1. Click **Continue**.
 
     Ignore any JavaScript page that suggests that you install it on your site.
 
-13. Click **Settings > Basic** on the left-hand menu.
+1. Click **Settings > Basic** on the left-hand menu.
 
     ![Facebook Settings](../../static/documentation/identity/facebook/fb6.png)
 
-14. In the **Cloudflare** **Access** app, copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
+1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select Facebook as your IdP. 
 
-    ![OAuth ID and OAuth Secret](../../static/documentation/identity/facebook/fb7.png)
+1. Copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
 
-15. Click **Facebook Login**.
+    ![OAuth ID and OAuth Secret](../../static/documentation/identity/facebook/fb10.png)
+
+1. Click **Save**.
 
     ![Facebook OAuth Settings](../../static/documentation/identity/facebook/fb8.png)
 
-16. Set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
-17. Enter your authentication domain in the **Valid OAuth redirect URIs** field.
-18. Click **Save Changes**.
-19. Click **Save and Test** in the **Cloudflare Access** app.
+1. On [developers.facebook.com](https://developers.facebook.com/), set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
+1. In the **Valid OAuth redirect URIs** field, enter your [team domain](/glossary#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    On successful connection to your identity provider, a confirmation window displays.
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+    
+1. Click **Save Changes**.
+1. On the Teams dashboard, click **Save**.
 
-    ![Cloudflare Idp Connection Success](../../static/documentation/identity/facebook/fb9.png)
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Facebook.
 
 ## Example API Configuration
 

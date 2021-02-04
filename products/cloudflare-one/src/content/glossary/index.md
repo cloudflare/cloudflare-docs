@@ -31,9 +31,6 @@ A DNS zone is a portion of the DNS namespace that is managed by a specific organ
 
 The resource being protected by Cloudflare for Teams. An application can be a subdomain, a path, or a SaaS application.
 
-## authentication domain
-The unique subdomain assigned to your Cloudflare account; for example, `https://example.cloudflareaccess.com`
-
 ## Authenticated Origin Pulls
 
 Authenticated Origin Pulls let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
@@ -146,6 +143,16 @@ Secure Shell (SSH) protocol allows users to connect to infrastructure to perform
 
 ## SSO
 A technology which combines several different application login screens into one. With SSO, a user only has to enter their login credentials (username, password, etc.) one time on a single page to access all of their SaaS applications.
+
+## team domain
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `your-team-name.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them. 
+
+## team name
+The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under the **Authentication** tab.
+
+| team domain | team name |
+|-------------|-----------|
+| `your-team-name.cloudflareaccess.com` | `your-team-name` |
 
 ## Terraform
 [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building Cloudflare resources.

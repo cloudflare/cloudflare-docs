@@ -11,13 +11,15 @@ You can protect two types of web applications: SaaS and self-hosted.
 **Self-hosted applications** consist of internal applications that you host in your own environment. These can the data center versions of tools like the Atlassian suite or applications created by your own team. To secure self-hosted applications, you must use Cloudflare's authoritative DNS and [connect the application](/connections/connect-apps) to Cloudflare.
 
 <ButtonGroup>
-  <Button type="primary" href="/applications/configure-apps/saas-apps/">SaaS applications</Button>
-  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Self-hosted applications</Button>
+  <Button type="primary" href="/applications/configure-apps/saas-apps/">Guide to SaaS applications</Button>
+  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Guide to self-hosted applications</Button>
 </ButtonGroup>
 
 ## Protect SaaS applications
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
+
+![SaaS applications diagram](../../static/documentation/applications/new-diagram-saas.png)
 
 ### 1. Add your application
 

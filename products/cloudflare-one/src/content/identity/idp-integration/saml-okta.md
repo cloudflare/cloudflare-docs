@@ -1,14 +1,14 @@
 ---
-order: 12
+order: 1
 ---
 
-# SAML with Okta
+# SAML | Okta
 
-Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate SAML with Okta as an IdP.
+Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate SAML with Okta as an identity provider.
 
-## Set up Okta as your IdP
+## Set up Okta (SAML)
 
-To set up SAML with Okta as your IdP:
+To set up SAML with Okta as your identity provider:
 
 1. Log in to your Okta Admin portal, and choose **Applications**.
 1. Click **Add Application**.
@@ -38,9 +38,11 @@ To set up SAML with Okta as your IdP:
 
     ![Okta SAML Settings card](../../static/documentation/identity/saml-okta/saml-okta-5.png)
 
-1. In the **Single sign on URL** and the **Audience URI** **(SP Entity ID)** fields, enter your authorization domain, and include this  callback at the end of the path: `/cdn-cgi/access/callback`.
+1. In the **Single sign on URL** and the **Audience URI** **(SP Entity ID)** fields, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    **Tip**: You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above.
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
 1. Select the value to pass from the **Name ID** drop-down list.
 1. In **Attribute Statements** **Name** field, enter “email” to create a new attribute.
@@ -60,7 +62,7 @@ To set up SAML with Okta as your IdP:
 
     The _Assign application name to Groups_ card displays, where you grant users or groups permission to access your application.
 
-![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
+ ![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
 
 1. Click **Done**.
 
@@ -72,30 +74,6 @@ To set up SAML with Okta as your IdP:
 
     ![Okta SAML Settings Sign On page](../../static/documentation/identity/saml-okta/saml-okta-9.png)
 
-1. Scroll to the bottom of the screen, copy the metadata and save it as an XML file.
-
-    ![Okta SAML Settings metadata field](../../static/documentation/identity/saml-okta/saml-okta-10.png)
-
-1. Name the metadata file `sp-metadata.xml`.
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
-
-    ![Cloudflare Access Login Methods](../../static/documentation/identity/saml-okta/saml-okta-11.png)
-
-    The **Add a SAML identity provider** card displays.
-
-1. Click to browse and select or drag the metadata file into the file upload box.
-
-    ![Cloudflare Access Upload metadata file field](../../static/documentation/identity/saml-okta/saml-okta-12.png)
-
-1. Confirm that the field entries from the metadata file upload are accurate.
-1. Click **Save** and then **Test**.
-
-    On successful connection to your Ping Identity deployment, a confirmation displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/saml-okta/saml-okta-13.png)
-
-## To manually enter metadata from your Okta IdP
-
 1. Copy and paste the following information into the Cloudflare Access **Edit a SAML identity provider** card.
 
    * **Provider Name**: Name your IdP.
@@ -103,18 +81,11 @@ To set up SAML with Okta as your IdP:
    * **IdP Entity ID**: Enter the IdP issuer.
    * **Signing Certificate**: Copy the certificate from Okta in **X.509 Certificate** between **Begin Certificate** and **End Certificate**.
 
-    ![aCloudflare Access Edita a SAML identity provider card](../../static/documentation/identity/saml-okta/saml-okta-14.png)
-
 1. After completing the information, enter the name “email” as your email attribute for the **SAML assertion** field.
+
 1. Click **Save**.
-1. Click **Close**.
-1. Click **Save** and then **Test**.
 
-    On successful connection to your Okta deployment, a confirmation displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/saml-okta/saml-okta-13.png)
-
-1. Close the **Edit a SAML identity provider** card.
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 
@@ -125,17 +96,15 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
-
-    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
+    Replace `your-team-name`  with your [team name](/glossary#team-name).
 
 1. Save the file in XML format.
 1. Upload the XML document to your **Okta **account.
 
-## Example API Configuration
+## Example API configuration
 
 ```json
 {

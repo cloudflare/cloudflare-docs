@@ -22,7 +22,7 @@ When users log in to an application protected by Access, Access generates two se
 
 | Token | Description | Storage |
 |---|---|---|
-| **Global session token**| Establishes the maximum amount of time for a user’s Access session | Your Cloudflare auth domain  `<auth_domain>.cloudflareaccess.com` |
+| **Global session token**| Establishes the maximum amount of time for a user’s Access session | Your Cloudflare [team domain](/glossary#team-domain) |
 | **Application token** | Establishes a session for a specific application | The hostname of the application protected |
 
 </TableWrap>

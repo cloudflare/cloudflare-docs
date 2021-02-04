@@ -1,14 +1,14 @@
 ---
-order: 12
+order: 0
 ---
 
-# SAML with Centrify
+# SAML | Centrify
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 
-## Set up Centrify
+## Set up Centrify (SAML)
 
-To set up SAML with Centrify as your identity provider (IdP):
+To set up SAML with Centrify as your identity provider:
 
 1. Log in to your **Centrify** admin portal and click **Apps**.
 
@@ -33,9 +33,11 @@ To set up SAML with Centrify as your identity provider (IdP):
     ![Centrify Setting Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-4.png)
 
 1. Choose the **Manual Configuration** option.
-1. Enter your authorization domain in the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields** and include this callback at the end of the path: `/cdn-cgi/access/callback`.
+1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    In your **Cloudflare Access** app, click the **Login Page Domain** field to copy the authorization domain to the clipboard.
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
 1. Click **Save**.
 1. In the middle menu pane, select **User Access**.
@@ -68,47 +70,13 @@ To set up SAML with Centrify as your identity provider (IdP):
 
     ![Centrify Settings Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-10.png)
 
-1. Select the **Metadata** option, and click **Download Metadata file**.
-
-    The metadata XML file saves to your designated download directory.
-
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
-
-    ![Cloudflare Access Add IdP](../../static/documentation/identity/saml-centrify/saml-centrify-11.png)
-
-    The **Add a SAML identity provider** dialog displays.
-
-1. Click to browse and select or drag the metadata file into the file upload box.
-
-    ![Adding a metadata file to your SAML IdP in Cloudflare Access](../../static/documentation/identity/saml-centrify/saml-centrify-12.png)
-
-1. Confirm that the field entries from the metadata file upload are accurate.
-1. Click **Save** and then **Test**.
-
-    On successful connection to your Ping Identity deployment, a confirmation displays.
-
-    ![Successful Connection to your IdP](../../static/documentation/identity/saml-centrify/saml-centrify-13.png)
-
-## To manually enter data in Cloudflare Access from your Centrify IdP
-
-1. In your Centrify account, click **Settings** in the left pane.
-1. In the middle menu pane, choose **Trust**.
-
-    ![Centrify Settings Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-4.png)
-
 1. Select the **Manual Configuration** option.
-1. Copy and paste the corresponding information from Centrify into the fields in the **Edit a SAML identity provider** dialog in **Cloudflare Access**.
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select SAML.
+1. Copy and paste the corresponding information from Centrify into the fields.
+1. Click **Save**.
 
-    ![Cloudflare Access Add a SAML identity provider dialog](../../static/documentation/identity/saml-centrify/saml-centrify-15.png)
-
-1. Enter an **Email Attribute name**.
-1. Click **Save** and then **Test**.
-
-    On successful connection to your Ping Identity deployment, a confirmation displays.
-
-    ![Successful Connection to your IdP](../../static/documentation/identity/saml-centrify/saml-centrify-13.png)
-
-1. Close the dialog.
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 
@@ -119,17 +87,15 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
-
-    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
+    Replace `your-team-name`  with your [team name](/glossary#team-name).
 
 1. Save the file in XML format.
 1. Upload the XML document to your **Centrify** account.
 
-## Example API Config
+## Example API configuration
 
 ```json
 {

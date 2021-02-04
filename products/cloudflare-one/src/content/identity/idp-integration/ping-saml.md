@@ -1,14 +1,14 @@
 ---
-order: 12
+order: 6
 ---
 
-# PingIdentity® SAML
+# SAML | PingIdentity®
 
-The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html)  documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
+The PingOne® and PingFederate® offerings from PingIdentity require the SAML integrator for integration with Cloudflare Access. The [PingFederate](https://docs.pingidentity.com/bundle/pingfederate-100/page/ejm1564002949565.html) and [PingOne](https://docs.pingidentity.com/bundle/p14c/page/als1564020488261.html) documentation explains how to configure applications. These steps focus on the requirements specific to Cloudflare Access.
 
-## Set up PingIdentity as your IdP
+## Set up PingIdentity (SAML)
 
-To set up PingIdentity as your IdP:
+To set up PingIdentity (SAML) as your identity provider:
 
 1. Log in to your dashboard **Ping** and navigate to **Applications**.
 1. Click **Add Application**.
@@ -35,28 +35,18 @@ To set up PingIdentity as your IdP:
 
     This file shares several fields with Cloudflare Access so you don’t have to input this data.
 
-5. Navigate to **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML icon.**
-6. Upload the metadata file in the **Add a SAML identity provider**.
-
-    <Aside>
-
-    If you are using a self-hosted deployment of PingFederate and a separate IdP or directory service, change the auto-populated value in the <strong>IdP Entity ID</strong> field. The metadata file sets it to a domain that you control.
-    </Aside>
-
-7. Enter the following URL in the **IdP Entity ID** field.
-
-    Replace “your-domain” with the authentication domain listed in Cloudflare Access, and include the callback in the path:
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select SAML.
+1. In the **IdP Entity ID** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
+    
+1. Fill the other fields with values from your Ping dashboard.
+1. Click **Save**.
 
-8. Confirm that the fields set by the metadata file are accurate.
-9. Click **Save** and then **Test**.
-
-    On successful connection to your PingIdentity deployment, a confirmation displays.
-
-    ![Successful connection](../../static/documentation/identity/ping/ping-saml-1.png)
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 
@@ -67,17 +57,17 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-1. Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
+    Replace `your-team-name`  with your [team name](/glossary#team-name).
 
     The link returns a web page with your SAML SP data in XML format.
 
 1. Save the file as an XML document.
 1. Upload the XML document to your **PingIdentity** account.
 
-## Example API Configuration
+## Example API configuration
 
 ```json
 {

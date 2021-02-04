@@ -8,66 +8,59 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1. In your Okta dashboard, click **Admin**.
 
-![Okta Applications](../../static/documentation/identity/okta/click-admin.png)
+ ![Okta Applications](../../static/documentation/identity/okta/click-admin.png)
 
-2. Select the `Applications` tab in the Admin dashboard.
+1. Select the **Applications** tab in the Admin dashboard.
 
-![Admin Dash](../../static/documentation/identity/okta/select-admin.png)
+ ![Admin Dash](../../static/documentation/identity/okta/select-admin.png)
 
-3. Click **Add Application** on the next page.
+1. Click **Add Application** on the next page.
 
-![Add App](../../static/documentation/identity/okta/add-app.png)
+ ![Add App](../../static/documentation/identity/okta/add-app.png)
 
-4. Click **Create New App** in the top right corner.
+1. Click **Create New App** in the top right corner.
 
-![Create New App](../../static/documentation/identity/okta/create-new-app.png)
+ ![Create New App](../../static/documentation/identity/okta/create-new-app.png)
 
-5. Choose `Web` as the Platform and toggle `OpenID Connect`. Click **Create**.
+1. Choose `Web` as the Platform and toggle **OpenID Connect**. Click **Create**.
 
-![Create New App](../../static/documentation/identity/okta/web-app.png)
+ ![Create New App](../../static/documentation/identity/okta/web-app.png)
 
-6. You can name the application to be any value. In the `Login redirect URIs` field, input the callback URL of your Cloudflare authentication domain.
+1. You can name the application to be any value. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
-The domain will be structured in the following format:
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
-```
-https://<your-auth-domain-here>.cloudflareaccess.com
-```
+ ![Create New App](../../static/documentation/identity/okta/add-uri.png)
 
-In the URI field, input your authentication domain with the path below.
+1. Once saved, choose the `Sign On` tab from the application view.
 
-```
-https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
+ ![Create New App](../../static/documentation/identity/okta/app-view.png)
 
-```
+1. Scroll down to the `OpenID ConnectID Token`.
 
-![Create New App](../../static/documentation/identity/okta/add-uri.png)
+ ![Scroll Down](../../static/documentation/identity/okta/scroll-down.png)
 
-7. Once saved, choose the `Sign On` tab from the application view.
+1. Click **Edit** and edit the Groups claim filter to `Starts with` and the value `.*`.
 
-![Create New App](../../static/documentation/identity/okta/app-view.png)
+ ![Scroll Down](../../static/documentation/identity/okta/edit-groups.png)
 
-8. Scroll down to the `OpenID ConnectID Token`.
+1. Next, click the **Assignments** tab.
 
-![Scroll Down](../../static/documentation/identity/okta/scroll-down.png)
+ ![Assignments Tab](../../static/documentation/identity/okta/assignments-tab.png)
 
-9. Click **Edit** and edit the Groups claim filter to `Starts with` and the value `.*`.
+1. Click **Assign** and assign the application to all users in your organization.
 
-![Scroll Down](../../static/documentation/identity/okta/edit-groups.png)
+ ![Assign App](../../static/documentation/identity/okta/assign-app.png)
 
-10. Next, click the `Assignments` tab.
+1. Return to the **General** tab. Scroll down to find your credentials. Copy the ID and secret.
 
-![Assignments Tab](../../static/documentation/identity/okta/assignments-tab.png)
+ ![Credentials](../../static/documentation/identity/okta/credentials.png)
 
-11. Click **Assign** and assign the application to all users in your organization.
+1. On the Teams dashboard, navigate to **Access > Authentication**.
 
-![Assign App](../../static/documentation/identity/okta/assign-app.png)
-
-12. Return to the `General` tab. Scroll down to find your credentials. Copy the ID and secret.
-
-![Credentials](../../static/documentation/identity/okta/credentials.png)
-
-13. Visit the Cloudflare for Teams dashboard and navigate to the `Authentication` page of the Access section. Click **+Add** to add a new identity provider. Choose `Okta`.
+1. Click *+ Add* under **Login Methods**, and select Okta as your IdP.
 
 ![Choose Okta](../../static/documentation/identity/okta/choose-okta.png)
 
@@ -75,9 +68,7 @@ https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 
 ![Input](../../static/documentation/identity/okta/input-credentials.png)
 
-15. In the application list, you can now test the connection by clicking the **Test** button.
-
-![Test](../../static/documentation/identity/okta/with-mfa.png)
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Okta.
 
 ## Example API Configuration
 
