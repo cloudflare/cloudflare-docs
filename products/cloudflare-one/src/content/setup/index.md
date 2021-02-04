@@ -22,9 +22,9 @@ Start using Cloudflare for Teams by creating a Cloudflare account.
 
 1. Click **Begin setup** in the Cloudflare Access card.
 
-1. Enter your *auth domain*. The authentication domain will represent your Cloudflare for Teams account across Access and Gateway. The URL will also serve as the launch page for end users.
+1. Enter your *[team domain](/glossary#team-domain)*. The team domain will represent your Cloudflare for Teams account across Access and Gateway. The URL will also serve as the launch page for end users.
 
- ![Auth Domain](../static/documentation/quickstart/auth-domain.png)
+ ![Team Domain](../static/documentation/quickstart/auth-domain.png)
 
 1. Click **Next**. Cloudflare will now check if you have [added an active zone to Cloudflare](https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website).
 
@@ -61,7 +61,7 @@ You can return to edit the policy with more complex rules like identity provider
 
 1. Click **Begin setup** in the Cloudflare Gateway card.
 
-1. Enter your *auth domain*. The authentication domain will be used as your Gateway organization name in the WARP client during user and device enrollment.
+1. Enter your *[team domain](/glossary#team-domain)*. The team domain will be used as your Gateway organization name in the WARP client during user and device enrollment.
 
 1. Set up your first location. Alternatively, you can choose to click **Skip to Teams dash**.
 

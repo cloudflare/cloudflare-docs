@@ -4,14 +4,14 @@ order: 12
 
 # GitHub
 
-Cloudflare Access allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
+Cloudflare for Teams allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
 
-To configure GitHub access in both GitHub and Cloudflare Access:
+To configure GitHub access in both GitHub and Cloudflare for Teams:
 
 1. Log into GitHub.
-2. Go to your account **Settings > Developer Setting**, select **OAuth Apps** and click **Register a new application**.
+1. Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**.
 
     ![GitHub OAuth page](../../static/documentation/identity/github/github1.png)
 
@@ -19,45 +19,37 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 
     ![GitHub Register a new OAuth application window](../../static/documentation/identity/github/github2.png)
 
-3. Enter an **Application name**.
+1. Enter an **Application name**. You users willsee this name on the login page.
 
-    You users see this name on the login page.
+1. Enter your [team domain](/glossary#team-domain) in the **Homepage URL** field.
 
-4. Enter your account’s authorization domain in the **Homepage URL** field.
+    For example, `https://your-team-name.cloudflareaccess.com`
 
-    For example, `https://something.cloudflareaccess.com`
+1. In the GitHub **Authorization callback URL** field, enter your [team domain](/glossary#team-domain) and add this to the end of the path: `/cdn-cgi/access/callback`. For example:
 
-    You can find this in the **Login Page Domain** field in **Cloudflare Access**.
-
-    ![Finding the Homepage URL in Cloudflare](../../static/documentation/identity/github/github3.png)
-
-    Click anywhere in the field to copy the content to your clipboard.
-
-5. Paste the domain in the GitHub **Authorization callback URL** field, and add this to the end of the path: `/cdn-cgi/access/callback`
-6. Click **Register application**.
-7. Copy the **Client ID** and **Client Secret**.
+    ```txt
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+    
+1. Click **Register application**.
+1. Copy the **Client ID** and **Client Secret**.
 
     ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
 
-8. In Cloudflare Access, scroll to **Login Methods** and click **GitHub**.
+1. On the Teams dashboard, navigate to **Access > Authentication**.
 
-    The _Add a GitHub identity provider_ window displays.
+1. Under **Login methods**, click *+ Add*.
 
-    ![GitHub identity provider window](../../static/documentation/identity/github/github5.png)
+1. Choose **GitHub** on the next page. 
 
-9. Paste in the **Client ID** and **Client secret**.
-10. Click **Save**.
-11. Click **Done**.
+1. Paste in the **Client ID** and **Client secret**.
+1. Click **Save**.
 
-    ![Edit GitHub identity provider window](../../static/documentation/identity/github/github6.png)
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to GitHub.
 
-12. Click **Save and Test.**
-
-    On success a confirmation screen displays.
-
-    ![Successful connection to your IdP](../../static/documentation/identity/github/github7.png)
-
-> **Note:** If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
+<Aside>
+If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
+</Aside>
 
 ## Example API Configuration
 

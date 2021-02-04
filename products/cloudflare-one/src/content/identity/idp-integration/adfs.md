@@ -1,14 +1,14 @@
 ---
-order: 12
+order: 5
 ---
 
-# SAML with Active Directory®
+# SAML | Active Directory® 
 
-Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language (SAML).
+Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language ([SAML](/glossary#saml)).
 
-## Prerequisites
+## Before you start
 
-To begin you need:
+To get started, you need:
 
 * An Active Directory Domain Controller where all users have an email attribute
 * Generic SAML enabled for your Access Identity Provider (IdP)
@@ -21,91 +21,89 @@ Then to begin the connection between Cloudflare Access and ADFS create a Relying
 
 ## Create a Relying Party Trust
 
-You run the Add Relying Party Trust wizard to begin SAML AD integration with Cloudflare Access.
+Run the Add Relying Party Trust wizard to begin SAML AD integration with Cloudflare Access.
 
 To create a Relying Party Trust:
 
-1. Launch the **ADFS Management** tool in **Windows Server**, and select the **Relying Party Trusts** folder.
-2. On the **Actions** sidebar, select **Add Relying Party Trust**.
+1. In **Windows Server**, launch the **ADFS Management** tool.
+2. Select the **Relying Party Trusts** folder.
+3. On the **Actions** sidebar, select **Add Relying Party Trust**.
 
     The **Add Relying Party Trust Wizard** launches.
 
     ![Add Relying Party Trust Wizard](../../static/documentation/identity/adfs/adfs-1.png)
 
-3. In the left menu, choose **Select Data Source**.
+4. In the left menu, choose **Select Data Source**.
 
     ![Select Data Source](../../static/documentation/identity/adfs/adfs-2.png)
 
-4. Select the **Enter data about the relying party manually** option.
-5. Click **Next**.
+5. Select the **Enter data about the relying party manually** option.
+6. Click **Next**.
 
     The **Specify Display Name** step displays.
 
     ![Specify Display Name](../../static/documentation/identity/adfs/adfs-3.png)
 
-6. Enter a **Display name**.
+7. Enter a **Display name**.
 
-    Use an easily recognizable name. Include any information regarding this connection in the **Notes** field.
+    We suggest you use an easily recognizable name. Include any information regarding this connection in the **Notes** field.
 
-7. Click **Next**.
+8. Click **Next**.
 
     The **Choose Profile** step displays.
 
     ![Choose Profile](../../static/documentation/identity/adfs/adfs-4.png)
 
-8. Select the **AD FS profile** option.
-9. Click **Next**.
+9. Select the **AD FS profile** option.
+10. Click **Next**.
 
     The **Configure Certificate** step displays.
 
     ![Configure Certificate](../../static/documentation/identity/adfs/adfs-5.png)
 
-10. Leave the **Certificate **options at their defaults.
-11. Click **Next**.
+11. Leave the **Certificate** options at their defaults.
+12. Click **Next**.
 
     The **Configure URL** step displays.
 
     ![Configure URL](../../static/documentation/identity/adfs/adfs-6.png)
 
-12. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
-13. Enter your callback address for Cloudflare Access in the **Relying party SAML 2.0 SSO service URL** field, include this callback at the end of the path: `/cdn-cgi/access/callback`.
+13. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
 
-    In your **Cloudflare Access** app, click the **Login Page Domain** field to copy the authorization domain to the clipboard.
-
-    Replace “your-domain” in this example with the authentication domain listed in Cloudflare Access, and include the callback in the path:
+14. In the **Relying party SAML 2.0 SSO service URL** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-domain.cloudflareaccess.com/cdn-cgi/access/callback
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-14. Click **Next**.
+15. Click **Next**.
 
     The **Configure Identifiers** step displays.
 
     ![Configure Identifiers](../../static/documentation/identity/adfs/adfs-7.png)
 
-15. Paste the callback URL in the **Relying party trust identifier** field.
-16. Click **Next**.
+16. Paste the callback URL from step 15 in the **Relying party trust identifier** field.
+17. Click **Next**.
 
     In the **Configure Multi-factor Authentication Now?** step, you can configure multi-factor authentication. Our example does not configure multi-factor authentication.
 
     ![Configure Multi-factor Authentication Now?](../../static/documentation/identity/adfs/adfs-8.png)
 
-17. Click **Next**.
+18. Click **Next**.
 
     The **Choose Issuance Authorization Rules** step displays.
 
     ![Choose Issuance Authorization Rules](../../static/documentation/identity/adfs/adfs-9.png)
 
-18. Select the **Permit all users to access this relying party** option.
-19. Click **Next**.
+19. Select the **Permit all users to access this relying party** option.
+20. Click **Next**.
 
     The **Ready to Add Trust** step displays.
 
     ![Ready to Add Trust](../../static/documentation/identity/adfs/adfs-10.png)
 
-20. Review your settings.
-21. Click **Next**.
+21. Review your settings.
+22. Click **Next**.
 
 Cloudflare now relies on ADFS for user-identity authorization.
 
@@ -113,7 +111,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 ## Create claim rules
 
-Now you create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create _Access Policies_.
+Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Zero Trust policies](/policies/zero-trust).
 
 <Aside>
 
@@ -123,8 +121,6 @@ If you closed the Add Relying Trust wizard, use Explorer to find the <strong>Rel
 To create Claim Rules:
 
 1. In the **Edit Claim Rules for CF Login** window, click  **Add Rule…**.
-
-    ![Edit Claim Rules for CF Login](../../static/adfs/adfs-11.png)
 
     The **Choose Rule Type** step displays.
 
@@ -202,20 +198,18 @@ To ensure that ADFS signs the full response when communicating with Cloudflare, 
 Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
 ```
 
-## Configure Cloudflare Access
+## Configure Cloudflare for Teams
 
-To Cloudflare to accept the claims and assertions sent from ADFS, so that you can create an Access Policy:
+To enable Cloudflare for Teams to accept the claims and assertions sent from ADFS, follow these steps:
 
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
+1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. Click *+ Add* under **Login Methods**, and select **SAML**.
+1. The **Add a SAML identity provider** card displays.
 
-    ![Cloudflare Access Login Methods](../../static/documentation/identity/adfs/adfs-19.png)
+    ![Cloudflare Access Login Methods](../../static/documentation/identity/adfs/adfs-19-b.png)
 
-    The **Add a SAML identity provider** card displays.
-
-    ![Add a SAML identity provider](../../static/documentation/identity/adfs/adfs-20.png)
-
-2. Enter an IdP **Provider Name**.
-3. Under **Single Sign On URL** enter:
+1. Enter an IdP **Name**.
+1. Under **Single Sign On URL** enter:
 
     ```txt
     https://hostnameOfADFS/adfs/ls/
@@ -223,23 +217,19 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 
     This is the default location. You can find your federation service identifier in ADFS.
 
-4. In the **IdP Entity ID** field, enter your authorization domain, and include this  callback at the end of the path: `/cdn-cgi/access/callback`.
-
-    You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above, for example:
+1. In the **IdP Entity ID or Issuer URL** field, enter your [team domain](/glossary#team-domain), and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://YourDomain/cdn-cgi/access/callback
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-5. Under **Signing certificate** paste the exported certificate.
+1. Under **Signing certificate**, paste the exported certificate.
 
     There can be no spaces or return characters in the text field.
 
-6. Click **Save** and then **Test**.
+1. Click **Save**.
 
-    On successful connection to your AD deployment, a confirmation displays.
-
-    ![Successful Connection to your IdP](../../static/documentation/identity/adfs/adfs-21.png)
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 
@@ -247,13 +237,11 @@ Some IdPs allow administrators to upload metadata files from their SP (service p
 
 To get your Cloudflare metadata file:
 
-1. Download your unique SAML metadata file at the following URL:
+1. Download your unique SAML metadata file at the following URL (replace `your-team-name` in this example with your own [team name](/glossary#team-name)):
 
     ```txt
-    https://auth-domain.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
-
-    Replace authentication domain with your account’s **Login Page Domain** found in the **Access** tab in **Cloudflare Access**.
 
    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
 
@@ -265,7 +253,7 @@ To get your Cloudflare metadata file:
 ```json
 {
     "config": {
-        "issuer_url": "https://example.cloudflareaccess.com/",
+        "issuer_url": "https://your-team-name.cloudflareaccess.com/",
         "sso_target_url": "https://adfs.example.com/adfs/ls/",
         "attributes": ["email"],
         "email_attribute_name": "",
