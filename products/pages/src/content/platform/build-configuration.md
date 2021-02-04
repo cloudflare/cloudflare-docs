@@ -18,12 +18,10 @@ Below are some standard build commands and directories for popular frameworks an
 | Eleventy                     | `eleventy`                          | `_site`                                        |
 | Ember.js                     | `ember build`                       | `dist`                                         |
 | Gatsby                       | `gatsby build`                      | `public`                                       |
-| GitBook                      | `gitbook build`                     | `_book`                                        |
 | Gridsome                     | `gridsome build`                    | `dist`                                         |
 | Harp                         | `harp compile`                      | `www`                                          |
 | Hexo                         | `hexo generate`                     | `public`                                       |
 | Hugo                         | `hugo`                              | `public`                                       |
-| Jekyll                       | `jekyll build`                      | `_site`                                        |
 | Middleman                    | `middleman build`                   | `build`                                        |
 | mdBook                       | `mdbook build path/to/book`         | `./book` (or `build.build-dir` in `book.toml`) |
 | Mkdocs                       | `mkdocs build`                      | `site`                                         |
