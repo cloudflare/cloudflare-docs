@@ -1,6 +1,6 @@
 # Update firewall rules for customers or partners
 
-You may want to adjust your firewall rules to provide additional access to customers or partners.
+You may want to adjust your firewall rules to increase access by customers or partners.
 
 Potential examples include:
 - Allowing access to internal systems or data
@@ -12,7 +12,9 @@ If a customer or partner is large enough, you could set up a firewall rule based
 
 ### Allow traffic by ASN
 
-This example uses `ip.geoip.asnum` to specify the general region, as well as the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure that partner traffic does not come from bots.
+This example uses:
+- `ip.geoip.asnum` to specify the general region
+- The `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure partner traffic does not come from bots
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -37,9 +39,11 @@ Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-
 
 ### Adjust rules by ASN
 
-This example uses `ip.geoip.asnum` to specify the general region, as well as the `cf.threat_score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+This example uses:
+- `ip.geoip.asnum` to specify the general region
+- The `cf.threat_score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic
 
-If a request meets these criteria, your firewall bypasses its normal `User Agent Block` rules.
+If a request meets these criteria, your firewall bypasses normal `User Agent Block` rules.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -61,7 +65,9 @@ For smaller organizations, you could set up firewall rules based on IP addresses
 
 ### Allow traffic by IP address
 
-This example specifies the network and host, as well as the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+This example:
+- Specifies the network and host
+- Uses the `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -72,7 +78,7 @@ This example specifies the network and host, as well as the `cf.bot_management.s
   </thead>
   <tbody>
     <tr>
-      <td><code>(ip.src eq 1.1.1.1 and cf.bot_management.score gt 30 and http.host eq "example.com")</code></td>
+      <td><code>(ip.src eq 1.1.1.1 and http.host eq "example.com" and cf.bot_management.score gt 30)</code></td>
       <td><em>Allow</em></td>
     </tr>
   </tbody>
@@ -82,7 +88,7 @@ This example specifies the network and host, as well as the `cf.bot_management.s
 
 This example specifies the network and host.
 
-If a request meets these criteria, your firewall bypasses its normal `Rate Limiting` rules.
+If a request meets these criteria, your firewall bypasses normal `Rate Limiting` rules.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
