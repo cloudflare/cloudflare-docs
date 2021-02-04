@@ -120,7 +120,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
 
 ### Preview the HTML code for a customized waiting room
 
-Before making an API request to configure a waiting room web page with customized  HTML, you can preview your custom HTML by uploading it to a preview endpoint:
+Before making an API request to configure a waiting room web page with customized HTML, you can preview your custom HTML by uploading it to a preview endpoint:
 
 ```shell
 POST https://api.cloudflare.com/client/v4/zones/<zone_id>/waiting_rooms/preview
@@ -151,7 +151,7 @@ The preview endpoint returns a temporary URL in the response body where you can 
 ```shell
 {
   "result": {
-    "preview_url": "http://example.com/preview/11111111"
+    "preview_url": "https://waitingrooms.dev/preview/111111111111"
   },
   "success": true,
   "errors": [],
@@ -163,7 +163,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 ### Preview the default or current waiting room web page
 
-Use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
+After [generating a preview URL](https://api.cloudflare.com/#waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
 ```shell
 GET https://waitingrooms.dev/preview/{waiting-room-id}
