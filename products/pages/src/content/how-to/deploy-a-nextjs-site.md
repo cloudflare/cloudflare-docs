@@ -25,13 +25,23 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 
 <TableLayout>
 
-| Configuration option | Value                       |
-| -------------------- | --------------------------- |
-| Production branch    | `main`                      |
-| Build command        | `next build && next export` |
-| Build directory      | `out`                       |
+| Configuration option | Value           |
+| -------------------- | ----------------|
+| Production branch    | `main`          |
+| Build command        | `npm run build` |
+| Build directory      | `out`           |
 
 </TableLayout>
+
+Your `build` command in `package.json` should build and export your Next.js application, like this: 
+
+```json
+{
+  "scripts": {
+    "build": "next build && next export`
+  }
+}
+```
 
 Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site, before deploying it.
 
