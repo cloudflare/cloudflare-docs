@@ -3,7 +3,6 @@
 You may want to adjust your firewall rules to increase access by customers or partners.
 
 Potential examples include:
-- Allowing access to internal systems or data
 - Removing rate limiting for an API
 - Sharing brand assets and marketing materials
 
@@ -33,7 +32,7 @@ This example uses:
 
 <Aside type='warning' header='Important'>
 
-Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan.
+Access to [Bot Management](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard/) requires a Cloudflare Enterprise plan with Bot Management.
 
 </Aside>
 
