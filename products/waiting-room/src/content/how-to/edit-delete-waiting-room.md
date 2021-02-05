@@ -7,7 +7,7 @@ hidden: false
 
 # Update and delete Waiting Rooms
 
-You can manage your waiting rooms using the [Waiting Rooms dashboard](/waiting-room/how-to/waiting-room-dashboard) or the API.
+You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/waiting-room-dashboard) or the API.
 
 ## Edit a waiting room in the Cloudflare dashboard
 
@@ -25,7 +25,7 @@ A list of the settings for your waiting room displays.
 
 ![Edit settings on Create Waiting Room page](../static/wr-dashboard-edit-settings.png)
 
-4. Edit the settings. Refer to [_Configure Settings_](/waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/configure-settings/) for a description of waiting room settings.
+4. Edit the settings. Refer to [_Configure Settings_](/how-to/create-waiting-room/create-waiting-room-dashboard/configure-settings/) for a description of waiting room settings.
 1. Click **Next** or **Customization**.
 The **Customization** tab in the **Edit Waiting Room** page displays.
 
@@ -33,7 +33,7 @@ The **Customization** tab in the **Edit Waiting Room** page displays.
 ![Customize the Waiting Room web page](../static/wr-dashboard-edit-customization.png)
 
 
-6. Edit the text in the textbox or upload a HTML file to customize the appearance of the waiting room. Refer to [Customize a waiting room](/waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/customize-waiting-room/) for more information.
+6. Edit the text in the textbox or upload a HTML file to customize the appearance of the waiting room. Refer to [Customize a waiting room](/how-to/create-waiting-room/create-waiting-room-dashboard/customize-waiting-room/) for more information.
 1. Click **Next** or **Review**.
 The **Review** tab in the **Edit Waiting Room** page displays.
 
@@ -41,7 +41,7 @@ The **Review** tab in the **Edit Waiting Room** page displays.
 ![Review the Waiting Room settings and web page](../static/wr-dashboard-edit-review.png)
 
 
-8. [Review](/waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard/review-waiting-room/) the settings for your Waiting Room, and preview how the Waiting Room will appear to visitors.
+8. [Review](/how-to/create-waiting-room/create-waiting-room-dashboard/review-waiting-room/) the settings for your Waiting Room, and preview how the Waiting Room will appear to visitors.
 9. Click **Save** to save the changes to your Waiting Room.
 
 ## Delete a waiting room in the Cloudflare dashboard

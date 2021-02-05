@@ -6,7 +6,7 @@ weight: 180
 
 # Using the Waiting Room API
 
-[Cloudflare Waiting Rooms](/waiting-room/about) redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
+[Cloudflare Waiting Rooms](/about) redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 
 The [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting_rooms) provides an interface for programmatically managing waiting rooms.
 

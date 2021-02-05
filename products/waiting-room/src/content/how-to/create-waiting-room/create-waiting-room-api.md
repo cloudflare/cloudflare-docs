@@ -40,7 +40,7 @@ The following parameters are optional:
 
 ## Example
 
-The following example API request configures a waiting room with the same settings as the example shown in [_Create a waiting room using the Cloudflare dashboard_](/waiting-room/how-to/create-waiting-room/create-waiting-room-dashboard).
+The following example API request configures a waiting room with the same settings as the example shown in [_Create a waiting room using the Cloudflare dashboard_](/how-to/create-waiting-room/create-waiting-room-dashboard).
 
 ```shell
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \

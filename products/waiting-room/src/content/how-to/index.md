@@ -7,7 +7,7 @@ hidden: false
 
 ## Before you begin
 
-Before you begin to work with waiting rooms, review the [prerequisites](/waiting-room/about#prerequisites) and [entitlements](/waiting-room/about#entitlements).
+Before you begin to work with waiting rooms, review the [prerequisites](/about#prerequisites) and [entitlements](/about#entitlements).
 
 Before configuring a waiting room, consider the following:
 
@@ -34,4 +34,4 @@ Cloudflare provides a template waiting room page to get you started, but you can
 
 ## Get started
 
-You can [create](/waiting-room/how-to/create-waiting-room/) [edit](/waiting-room/how-to/edit-delete-waiting-room), [delete](/waiting-room/how-to/edit-delete-waiting-room#delete-a-waiting-room-in-the-cloudflare-dashboard) [manage](/waiting-room/how-to/control-waiting-room), and [monitor](/waiting-room/how-to/monitor-waiting-room) Cloudflare Waiting Rooms using the **Traffic** app on the [Cloudflare dashboard](/waiting-room/how-to/waiting-room-dashboard) or with the [Waiting Room API](/waiting-room/how-to/use-waiting-room-api).
+You can [create](/how-to/create-waiting-room/), [edit](/how-to/edit-delete-waiting-room), [delete](/how-to/edit-delete-waiting-room#delete-a-waiting-room-in-the-cloudflare-dashboard), [manage](/how-to/control-waiting-room), and [monitor](/how-to/monitor-waiting-room) Cloudflare Waiting Rooms using the **Traffic** app on the [Cloudflare dashboard](/how-to/waiting-room-dashboard) or with the [Waiting Room API](/how-to/use-waiting-room-api).

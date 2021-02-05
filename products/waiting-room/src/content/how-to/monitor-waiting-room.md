@@ -7,7 +7,7 @@ hidden: false
 
 # Monitor Waiting Room status
 
-You can monitor the status of your waiting rooms using the [user interface](/waiting-room/how-to/waiting-room-dashboard) or the API.
+You can monitor the status of your waiting rooms using the [user interface](/how-to/waiting-room-dashboard) or the API.
 
 ## Monitor waiting room status in the Waiting Rooms dashboard
 

@@ -10,7 +10,7 @@ showNew: false
 
 Cloudflare Waiting Room queues site visitors when a website experiences unmanageable surges in legitimate traffic.
 
-When the amount of traffic to a host/path combination on your site exceeds a user-defined threshold, all subsequent requests are queued in a Waiting Room. A [cookie](/waiting-room/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
+When the amount of traffic to a host/path combination on your site exceeds a user-defined threshold, all subsequent requests are queued in a Waiting Room. A [cookie](/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
 
 The main advantage of Waiting Room is to protect websites from surges in legitimate traffic that may otherwise bring an application down.
 
