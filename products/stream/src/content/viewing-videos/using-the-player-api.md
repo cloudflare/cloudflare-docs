@@ -96,7 +96,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 
   - Returns whether the video is paused
 
-- `played` <Type>boolean</Type> <PropMeta>readonly</PropMeta>
+- `played` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">TimeRanges</TypeLink> <PropMeta>readonly</PropMeta>
 
   - An object conforming to the TimeRanges interface. This object is normalized, which means that ranges are ordered, don't overlap, aren't empty, and don't touch (adjacent ranges are folded into one bigger range).
 
