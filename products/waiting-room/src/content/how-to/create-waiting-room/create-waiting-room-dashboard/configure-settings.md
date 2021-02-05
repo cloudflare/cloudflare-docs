@@ -13,17 +13,17 @@ To configure settings for a waiting room, select the **Settings** tab in the **C
 
 The table below describes the **Settings** fields that you can configure in the dashboard, and indicates the equivalent Waiting Room API parameter for each setting.
 
-<table>
+<table style="width:100%">
   <thead>
     <tr>
-      <td colspan="2"><strong>Settings</strong></td>
-      <td colspan="2"><strong>Notes</strong></td>
+      <td colspan="2" style="width:40%"><strong>Settings</strong></td>
+      <td colspan="2" style="width:60%"><strong>Notes</strong></td>
     </tr>
     <tr>
-      <td><strong>Dashboard Setting</strong></td>
-      <td><strong>API parameter</strong></td>
-      <td><strong>Required or optional</strong></td>
-      <td><strong>Description</strong></td>
+      <td style="width:20%"><strong>Dashboard Setting</strong></td>
+      <td style="width:20%"><strong>API parameter</strong></td>
+      <td style="width:20%"><strong>Required or optional</strong></td>
+      <td style="width:40%"><strong>Description</strong></td>
     </tr>
   </thead>
   <tbody>

@@ -24,8 +24,8 @@ For help with endpoints and pagination, see [_Getting Started: Endpoints_](https
 
 ## Manage Your Waiting Rooms
 
-<table>
-    <thead>
+<table style="width:100%">
+   <thead>
         <tr>
             <th>Operation</th>
             <th>Method + URL stub</th>
@@ -68,7 +68,7 @@ For help with endpoints and pagination, see [_Getting Started: Endpoints_](https
 
 ## Fetch the current status of a Waiting Room
 
-<table>
+<table style="width:100%">
     <thead>
         <tr>
             <th>Operation</th>

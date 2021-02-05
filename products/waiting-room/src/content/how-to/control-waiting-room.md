@@ -16,17 +16,17 @@ Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
 
 Use the **Queue All** and **Enabled** switches in the dashboard to manage the status of your waiting rooms.
 
-<table>
+<table style="width:100%">
   <thead>
     <tr>
-      <td colspan="2"><strong>Waiting Rooms Dashboard</strong></td>
-      <td colspan="2"><strong>Waiting Room API</strong></td>
+      <td colspan="2" style="width:50%"><strong>Waiting Rooms Dashboard</strong></td>
+      <td colspan="2" style="width:50%"><strong>Waiting Room API</strong></td>
     </tr>
     <tr>
-      <td><strong>Dashboard Setting</strong></td>
-      <td><strong>Notes</strong></td>
-      <td><strong>Parameter</strong></td>
-      <td><strong>API Notes</strong></td>
+      <td style="width:20%"><strong>Dashboard Setting</strong></td>
+      <td style="width:30%"><strong>Notes</strong></td>
+      <td style="width:20%"><strong>Parameter</strong></td>
+      <td style="width:30%"><strong>API Notes</strong></td>
     </tr>
   </thead>
   <tbody>
@@ -77,12 +77,12 @@ Activating **Queue All** suspends access to the origin: new visitors queue indef
 
 The following table summarizes how **Enabled** and **Queue All** settings affect requests to `host/path`.
 
-<table>
+<table style="width:100%">
   <thead>
     <tr>
-      <td><strong>Enabled</strong></td>
-      <td><strong><strong>Queue All</strong></strong></td>
-      <td><strong>Status</strong></td>
+      <td style="width:30%"><strong>Enabled</strong></td>
+      <td style="width:30%"><strong><strong>Queue All</strong></strong></td>
+      <td style="width:40%"><strong>Status</strong></td>
     </tr>
   </thead>
   <tbody>
