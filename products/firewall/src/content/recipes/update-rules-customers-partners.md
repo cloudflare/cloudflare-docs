@@ -6,6 +6,12 @@ Potential examples include:
 - Removing rate limiting for an API
 - Sharing brand assets and marketing materials
 
+<Aside type='note' header='Note'>
+
+These rules can bypass Cloudflare's security features and are generally not recommended. Use with caution.
+
+</Aside>
+
 ## Update firewall rules by ASN
 If a customer or partner is large enough, you could set up a firewall rule based on an [autonomous system number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
 
