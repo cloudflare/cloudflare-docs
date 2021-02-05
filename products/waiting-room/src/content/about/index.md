@@ -8,7 +8,7 @@ showNew: false
 
 # About Cloudflare Waiting Room
 
-Cloudflare Waiting Room queues site visitors when a website experiences unmanageable surges in legitimate traffic.
+Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 
 When the amount of traffic to a host/path combination on your site exceeds a user-defined threshold, all subsequent requests are queued in a Waiting Room. A [cookie](/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
 

@@ -83,7 +83,7 @@ For help with endpoints and pagination, see [_Getting Started: Endpoints_](https
             <td>
                 <ul>
                 <li>Returns <code>queueing</code> if the queue is activated (clients are put in the waiting room).</li>
-                <li>Returns <code>not_queueing</code>if the queue is not activated or if the waiting room is suspended.</li>
+                <li>Returns <code>not_queueing</code> if the queue is not activated or if the waiting room is suspended.</li>
                 </ul>
             </td>
         </tr>

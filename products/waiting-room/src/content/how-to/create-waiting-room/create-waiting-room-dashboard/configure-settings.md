@@ -60,7 +60,7 @@ The table below describes the **Settings** fields that you can configure in the 
     <tr>
       <td>Session duration</td>
       <td><code>session_duration</code></td>
-      <td>Required</td>
+      <td>Optional</td>
       <td>The amount of time in minutes that a user who left <code>host/path</code> can come directly back without having to go into the Waiting Room.</td>
     </tr>
     <tr>
