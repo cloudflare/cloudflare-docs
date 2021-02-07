@@ -361,9 +361,9 @@ Currently, Durable Objects do not migrate between locations after initial creati
 
 Because of these factors, when using string-derived object IDs, you may find that request latency varies considerably between objects, while system-generated IDs will result in consistently low latency. Once our work is complete, you should be able to expect that variability exists only in initial creation latency for string-derived IDs.
 
-### Cross-object Storage Access
+### Enumerating objects
 
-The storage API is scoped to a single Durable Object.  It is not currently possible to access data stored in a Durable Object from a different Durable Object or external API. There is no support for listing objects or bulk imports or exports.
+There is currently no support for generating a list of all existing objects, nor any way to bulk export objects.
 
 ### Performance
 
