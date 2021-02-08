@@ -45,4 +45,4 @@ Flags that don't expect any value (such as `--hello-world`) should be specified 
 hello-world: true
 ```
 
-See the full set of [command-line arguments](./arguments.md).
+See the full set of [command-line arguments](/connections/connect-apps/configuration/arguments).
