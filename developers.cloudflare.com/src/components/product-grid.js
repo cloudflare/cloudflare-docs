@@ -33,6 +33,7 @@ $["tenant"]               = require("@cloudflare/cloudflare-brand-assets/resourc
 $["terraform"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/terraform.js").pathD
 $["time-services"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/time-services.js").pathD
 $["waf"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waf.js").pathD
+$["waiting-room"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waiting-room.js").pathD
 $["warp-client"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/warp-client.js").pathD
 $["workers"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/workers.js").pathD
 
@@ -195,6 +196,11 @@ const products = [
     title: "WAF",
     path: "waf",
     icon: "waf",
+  },
+  {
+    title: "Waiting Room",
+    path: "waiting-room",
+    icon: "waiting-room",
   },
   {
     title: "WARP Client",
