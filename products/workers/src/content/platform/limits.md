@@ -20,6 +20,7 @@ order: 2
 | [Script size](#script-size)                                                     | 1 MB                                                 | 1 MB      |
 | [Number of scripts](#number-of-scripts)                                         | 30                                                   | 30        |
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3                                                    | 3         |
+| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5                                                    | 90        |
 
 </TableWrap>
 
