@@ -23,15 +23,15 @@ Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no own
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 * `name` (optional) - Use your domain name as the job name.
-* `destination_conf` - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the following string format:
+* `destination_conf` - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below. 
+
+  * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
+  * `<DATADOG-API-KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
+  * `service`, `host`, `ddsource`, `dtags`: Optional parameters allowed by Datadog
 
 ```bash
 "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API_KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
 ```
-
-    * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
-    * `<DATADOG-API-KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
-    * `service`, `host`, `ddsource`, `dtags`: Optional parameters allowed by Datadog
 
 * `dataset` - the category of logs you want to receive; either `http_requests` (default) or `firewall_events`. 
 
