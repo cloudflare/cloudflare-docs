@@ -8,7 +8,7 @@ order: 2
 
 ## Before you begin
 
-* [Download](https://developers.cloudflare.com/argo-tunnel/downloads/) the cloudflared.exe file from the options available.
+* [Download](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) the cloudflared.exe file from the options available.
 * Ensure you have the hostname of the Host Machine you are reaching.
 * Download and install the [PuTTY client](https://www.chiark.greenend.org.uk/~sgtatham/putty/).
 
