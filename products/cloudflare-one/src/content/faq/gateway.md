@@ -16,6 +16,9 @@ This section addresses the most common issues you may come across when setting u
 
 ## Gateway help
 
+### How can I report a false positive?
+If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed. 
+
 ### I have a dynamic IP address assigned to me by my ISP. How can I still use Gateway?
 
 There are two ways to connect to Cloudflare Gateway: with the Cloudflare WARP client and without the client.
