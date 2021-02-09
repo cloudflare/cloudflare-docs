@@ -28,7 +28,7 @@ This section will cover:
 
 The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. SMB traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://www.cloudflare.com/products/argo-tunnel/).
 
-Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downloads/) to download and install `cloudflared` on the machine hosting the file share.
+Follow [these instructions](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) to download and install `cloudflared` on the machine hosting the file share.
 
 For example, on a Windows server, the following Powershell example can be used.
 

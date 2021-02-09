@@ -10,7 +10,7 @@ There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1
 
 We've open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-Step 1: Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/argo-tunnel/downloads/).
+Step 1: Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 
 Step 2: Verify that the `cloudflared` daemon is installed
 
