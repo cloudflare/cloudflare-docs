@@ -4,17 +4,14 @@ import "../css/components/product-grid.css"
 
 const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
-$["access"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/access.js").pathD
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
-$["argo-tunnel"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/argo-tunnel.js").pathD
 $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
-$["gateway"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/gateway.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
 $["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
 $["internet"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/internet.js").pathD
@@ -44,11 +41,6 @@ const products = [
     icon: "api",
   },
   {
-    title: "Access",
-    path: "access",
-    icon: "access",
-  },
-  {
     title: "Analytics",
     path: "analytics",
     icon: "analytics",
@@ -57,11 +49,6 @@ const products = [
     title: "Apps",
     href: "https://www.cloudflare.com/apps/docs",
     icon: "api", // TODO: add `apps` icon to https://github.com/cloudflare/cloudflare-brand-assets
-  },
-  {
-    title: "Argo Tunnel",
-    path: "argo-tunnel",
-    icon: "argo-tunnel",
   },
   // {
   //   title: "Cloudflare One",
@@ -99,11 +86,6 @@ const products = [
     title: "Firewall Rules",
     path: "firewall",
     icon: "firewall",
-  },
-  {
-    title: "Gateway",
-    path: "gateway",
-    icon: "gateway",
   },
   {
     title: "HTTP/3",
