@@ -24,10 +24,6 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 * `name` (optional) - Use your domain name as the job name.
 * `destination_conf` - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, sourcetype, authorization header in the string format below. 
 
-```bash
-"splunk://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>&header_Authorization=<SPLUNK-AUTH-TOKEN>"
-```
-
   * `<SPLUNK-ENDPOINT-URL>`: The Splunk raw HTTP Event Collector URL with port. Example: `splunk.cf-analytics.com:8088/services/collector/raw`
       * Cloudflare expects the HEC network port to be configured to :443 or :8088. 
       * Cloudflare expects the Splunk endpoint to be /services/collector/raw while configuring and setting up the Logpush job.  
@@ -43,6 +39,9 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   * `<SOURCE-TYPE>`: The Splunk sourcetype. Example: `cloudflare:json`
   * `<SPLUNK-AUTH-TOKEN>`: The Splunk authorization token that’s URL-encoded. Example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`   
 
+```bash
+"splunk://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>&header_Authorization=<SPLUNK-AUTH-TOKEN>"
+```
 
 * `dataset` - The category of logs you want to receive, which is either `http_requests` (default), `spectrum_events`, or `firewall_events`.
 
