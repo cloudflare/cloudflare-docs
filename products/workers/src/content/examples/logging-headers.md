@@ -70,7 +70,7 @@ The reason this happens is because [Headers](https://developer.mozilla.org/en-US
 
 Headers objects are iterable, however, which we can take advantage of to develop a couple quick one-liners for debug-printing headers.
 
-## Pass headers through a Map
+### Pass headers through a Map
 
 The first common idiom for making Headers `console.log()`-friendly is to construct a Map object from the Headers object, and log the Map object.
 
@@ -97,37 +97,9 @@ let requestHeaders = JSON.stringify([...request.headers], null, 2)
 console.log(`Request headers: ${requestHeaders}`)
 ```
 
-This results in something like:
+### Convert headers into an object with Object.fromEntries (ES2019)
 
-```js
-Request headers: [
-  [
-    "accept",
-    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
-  ],
-  [
-    "accept-encoding",
-    "gzip"
-  ],
-  [
-    "accept-language",
-    "en-US,en;q=0.9"
-  ],
-  [
-    "cf-ipcountry",
-    "US"
-  ],
-  // ...
-]
-```
-
-While not as elegant as object literal syntax, this is certainly readable and useful for debugging purposes.
-
-</ContentColumn>
-
-### Convert headers into an object, with Object.fromEntries (ES2019)
-
-[the ES2019 provided `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), which takes iterables natrually, so it's just a simple call to convert the headers into an object:
+[ES2019 provides `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), so it's just a simple call to convert the headers into an object:
 
 ```js
 let requestHeaders = JSON.stringify(Object.fromEntries(request.headers), null, 2)
@@ -145,3 +117,5 @@ Request headers: {
   // ...
 }"
 ```
+
+</ContentColumn>
