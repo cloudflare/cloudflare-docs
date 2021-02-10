@@ -5,7 +5,7 @@ order: 63
 
 # Enable Logpush to Splunk
 
-Cloudflare Logpush now supports Logpush directly to Splunk via API. 
+Cloudflare Logpush now supports pushing logs directly to Splunk via API.
 
 To set up a Splunk Logpush job:
 1. Create a job with the appropriate endpoint URL and authentication parameters
@@ -13,13 +13,14 @@ To set up a Splunk Logpush job:
 
 <Aside type="note" header="Note">
 
-Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog. 
+Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog.
 
 </Aside>
 
 ## 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
+
 * `name` (optional) - Use your domain name as the job name.
 * `destination_conf` - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, sourcetype, authorization header in the string format below. 
 
@@ -30,13 +31,16 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   * `<SPLUNK-ENDPOINT-URL>`: The Splunk raw HTTP Event Collector URL with port. Example: `splunk.cf-analytics.com:8088/services/collector/raw`
       * Cloudflare expects the HEC network port to be configured to :443 or :8088. 
       * Cloudflare expects the Splunk endpoint to be /services/collector/raw while configuring and setting up the Logpush job.  
-  * `<SPLUNK-CHANNEL-ID>`: A unique channel id. This is a random GUID that you can generate by:
+  * `<SPLUNK-CHANNEL-ID>`: A unique channel ID. This is a random GUID that you can generate by:
       * Using an online tool like the [GUID generator](https://www.guidgenerator.com/) 
       * Using command line.  Example: `python -c 'import uuid; print(uuid.uuid4())'` 
   * `<INSECURE-SKIP-VERIFY>`: Boolean value. If set to true, makes insecure connection to Splunk. Setting this value to true is equivalent to using the `-k` option with curl as shown in Splunk examples and is NOT recommended.
-      * Cloudflare highly recommends setting this value to false.
-      * 
-  * `<SOURCE-TYPE>`: The splunk sourcetype. Example: `cloudflare:json`
+
+<Aside type="note" header="Note">
+      * Cloudflare highly recommends setting this value to false. Refer to the FAQ below for more information.
+</Aside>
+
+  * `<SOURCE-TYPE>`: The Splunk sourcetype. Example: `cloudflare:json`
   * `<SPLUNK-AUTH-TOKEN>`: The Splunk authorization token that’s URL-encoded. Example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`   
 
 
