@@ -5,7 +5,7 @@ order: 58
 
 # Enable Logpush to Datadog
 
-Cloudflare Logpush now supports Logpush directly to Datadog via API. 
+Cloudflare Logpush now supports pushing logs directly to Datadog via API. 
 
 To set up a Datadog Logpush job:
 1. Create a job with the appropriate endpoint URL and authentication parameters
