@@ -161,8 +161,8 @@ The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a me
 For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
 
 ```java
-http.host = "download.example.com"
-AND not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
+http.host == "download.example.com"
+and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
 To review examples of firewall rules that use HMAC validation, see [_Common use cases_](/recipes/).
