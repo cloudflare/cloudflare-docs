@@ -17,34 +17,44 @@ Throughout the onboarding process, Cloudflare partners closely with your organiz
 
 ## Scope your configuration
 
-Starting with an initial kickoff call, Cloudflare engages your organization to confirm the scope and timeline for setting up CNI.
+Cloudflare engages your organization with an initial kickoff call to confirm the scope and timeline for the CNI setup.
 
-_Customer requirements:_ At the kickoff call, be prepared to provide the [configuration data](/network-interconnect/set-up-cni/configuration-data/) for the type of network cross-connect you want to use with CNI.
+_Customer requirements:_ During the kickoff call, be prepared to provide the [configuration data](/network-interconnect/set-up-cni/configuration-data/) for the type of network cross-connect you want to use with CNI.
 
 ## Configure the network cross-connect
 
-To configure the cross-connect, the Cloudflare Infrastructure uses information provided by you to generate a Letter of Authorization (LOA)/service key.
+To configure the cross-connect, the Cloudflare Infrastructure uses your information to generate a Letter of Authorization (LOA)/service key.
 
 _Duration:_ 1–2 weeks.
 
-_Customer requirements:_ The resulting LOA/service key is provided to you so that you can accomplish these steps:
+_Customer requirements:_ We provide you with the LOA/service key so you can:
 
 * Order cross-connects at the locations the LOA specifies.
 * Verify when the cross-connects are complete.
+
+For Equinix users, open your Equinix dashboard and select Cloudflare as your service provider. Select your port, Cloudflare port, and port speed. After choosing your VLANID, submit the connection request for approval from Cloudflare.
 
 <Aside type='note'>
 
 When using a virtual partner network interconnect, provision cross-connects using the appropriate partner portals.
 
-For more, see the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/#:~:text=Network%20Interconnect%20Partner%20Program&text=Cloudflare%20has%20partnered%20with%20five,over%20high%2Dperformance%20network%20fabrics.).
+For more information, see the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
 
 </Aside>
 
-Once you have provided verification, Cloudflare assigns IP addresses to use with the cross-connect (assuming you are not using an Internet exchange point for the cross-connect).
+After you provide verification, Cloudflare assigns IP addresses to use with the cross-connect, assuming you are not using an Internet exchange point for the cross-connect.
 
 ## Configure Cloudflare BGP
 
 During this phase, Cloudflare validates BGP sessions over the cross-connect.
+
+1. Cloudflare supplies customers with the GRE IPs and BGP Peering info, which is completed after GRE tunnels in CNI links are onboarded.
+
+2. Work with Cloudflare to establish the BGP sesion for the PNI on both sides. This requires a BGP call and a ~2 hour manintenance window provided by the customer.
+
+3. Configure the GRE tunnel over the PNI.
+
+4. Cloudflare up-prefs the CNI connection and turns Magic Transit back on.
 
 _Duration:_ Approximately 1 week.
 
