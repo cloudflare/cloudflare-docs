@@ -35,6 +35,9 @@ export class DurableObject {
 - `state`
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
+- `state.id` <Type>DurableObjectId</Type>
+  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
+
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
