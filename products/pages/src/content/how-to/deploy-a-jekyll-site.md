@@ -53,6 +53,8 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
+If you're migrating an existing Jekyll project to Pages, you should confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
+
 ## Deploying with Cloudflare Pages
 
 You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
