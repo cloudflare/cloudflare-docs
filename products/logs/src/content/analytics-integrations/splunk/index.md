@@ -15,7 +15,7 @@ This tutorial describes how to send HTTP request lots directly to Splunk.
 
 ### Prerequisites
 
-Before sending your Cloudflare log data to Splunk, make sure that you:
+Before sending your Cloudflare log data to Splunk, ensure that you:
 
 - Have an existing Splunk Enterprise or Cloud account
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
@@ -33,16 +33,17 @@ Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from
 To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/):
 
 1. Log in to your Splunk instance.
-2. Under **Apps** > **Find More Apps** search for _Cloudflare App for Splunk._
+2. Under **Apps** > **Find More Apps**, search for _Cloudflare App for Splunk._
 3. Click **Install**.
 
 ![Splunk find Cloudflare app](../../static/images/splunk/screenshots/splunk-cloudflare-app-for-splunk.png)
+4. Restart and reopen your Splunk instance . 
 
 Once installed, create an index on Splunk to store the HTTP Event logs. To create an index:
 
-1. Open the set up screen by clicking the **Settings** dropdown, then **Indexes**
-2. Enter the **Index name** where the Cloudflare JSON logs are stored. 
-3. Select **New Index** and name it **cloudflare**, which is the default index that the Cloudflare App will use. Note that the **Indexes** page also gives you the status of all your existing indexes so that you can see whether you're about to use up your licensed amount of space.
+1. Open the setup screen by clicking the **Settings** dropdown, then click **Indexes**.
+2. Select **New Index**. Note that the **Indexes** page also gives you the status of all your existing indexes so that you can see whether you're about to use up your licensed amount of space.
+3. Name the index **cloudflare**, which is the default index that the Cloudflare App will use. 
 
 After you've created an index, set up the HTTP Event Collector (HEC) on Splunk. To create an HEC:
 
@@ -62,7 +63,7 @@ The final information you need is the endpoint to use to send the data to. The e
 ```
 * `protocol`: HTTP or HTTPS
 * `input`: `input` or `http-inputs` based on whether you have a self-service or managed cloud plan
-* `host`: The hostname of your Splunk instance. The easiest way to determine the hostname is to look at the URL you went to to log into Splunk.
+* `host`: The hostname of your Splunk instance. The easiest way to determine the hostname is to look at the URL you went to when you logged in to Splunk.
 * `port`: 443 or 8088
 * `endpoint`: Services/collector/raw
 
@@ -70,7 +71,7 @@ Refer to the [Splunk Documentation](https://docs.splunk.com/Documentation/Splunk
 
 **Post Installation Notes**
 
-You can change the **Index Name** after initial configuration by accessing the app **Set up** page by clicking on the **Apps** dropdown, then **Manage Apps** > **Cloudflare App for Splunk** > **Set up**.
+You can change the **Index Name** after initial configuration by accessing the app **Set up** page by clicking on the **Apps** dropdown and navigating to **Manage Apps** > **Cloudflare App for Splunk** > **Set up**.
 
 ![Splunk apps set up interface](../../static/images/splunk/screenshots/splunk-apps-manage-apps-cloudflare-set-up.png)
 
@@ -84,7 +85,7 @@ You can enable or disable acceleration after the initial configuration by access
 
 ![Splunk search macros](../../static/images/splunk/screenshots/splunk-apps-manage-apps-cloudflare-set-up-enable-data-model-acceleration.png)
 
-You can also manually configure Data Models by going to **Settings** > **Data models**. Learn more about data model acceleration [here](https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Acceleratedatamodels).
+You can also manually configure Data Models by going to **Settings** > **Data models**. Learn more about data model acceleration in the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Acceleratedatamodels).
 
 ## Task 2 - Make the API call to create the Logpush job
 
@@ -126,11 +127,11 @@ Response:
 ```
 
 This API call creates a Logpush job but does not enable it. You will need to enable the Logpush job after setting the desired fields to push. The final step to start pushing data into Splunk is to:
-1. Navigate to the Cloudflare dashboard and click **Analytics** then **Logs**. 
+1. Navigate to the Cloudflare dashboard and select **Analytics** > **Logs**. 
 2. Click **Edit** and select the fields referenced in the Dashboard section below to fully populate all tables and graphs. 
-3. Enable the Logpush job by toggling the switch next to the Edit link. Data takes a few minutes to populate. 
+3. Enable the Logpush job by toggling on the switch next to the Edit link. Data takes a few minutes to populate. 
 
-To validate that you are receiving data, search `index=cloudflare` in Splunk's.  
+To validate that you are receiving data, search `index=cloudflare` in Splunk.  
 
 ## Task 3 - View the Dashboards
 
