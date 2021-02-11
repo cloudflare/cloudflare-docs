@@ -139,6 +139,8 @@ The `fetch()` method of a Durable Object namespace is called by the system when 
 
 The method takes a [`Request`](/runtime-apis/request) as the parameter, and returns a [`Response`](/runtime-apis/response) (or a `Promise` for a `Response`).
 
+If the method fails with an uncaught exception, the exception will be thrown into the calling worker that made the `fetch()` request.
+
 --------------------------------
 
 ## Accessing a Durable Object from a Worker
@@ -270,3 +272,5 @@ let response = await stub.fetch(url, options)
 ```
 
 The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/runtime-apis/fetch). However, instead of sending an HTTP request to the internet, the request is always sent to the Durable Object to which the stub points.
+
+Any uncaught exceptions thrown by the Durable Object's `fetch()` handler are propagated to the caller's `fetch()` promise.
