@@ -5,9 +5,7 @@ order: 58
 
 # Enable Logpush to Datadog
 
-Cloudflare Logpush now supports Logpush directly to Datadog in an API-only beta. 
-
-For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](https://developers.cloudflare.com/logs/logpush) documentation.
+Cloudflare Logpush now supports pushing logs directly to Datadog via API. 
 
 To set up a Datadog Logpush job:
 1. Create a job with the appropriate endpoint URL and authentication parameters
@@ -33,14 +31,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API_KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
 ```
 
-* `dataset` - the category of logs you want to receive; either `http_requests` (default) or `firewall_events`. 
-
-<Aside type="note" header="Note">
-
-At the time of publishing this page, Datadog is not supported for spectrum_events datasets.
-
-</Aside>
-
+* `dataset` - the category of logs you want to receive. See [Log fields](https://developers.cloudflare.com/logs/log-fields) for the full list of supported datasets. 
 * `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/understanding-logpush-api#options)
 
 Example request using cURL:
@@ -49,7 +40,7 @@ Example request using cURL:
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -d '{"name":"<DOMAIN_NAME>",
-"destination_conf":"datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",  "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
+"destination_conf":"datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",  "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset":"http_requests"}' | jq .
 ```
 
 Response:
@@ -88,7 +79,7 @@ Response:
 
 ```json
 {
-    "errors": [],
+  "errors": [],
   "messages": [],
   "result": {
     "id": 100,
@@ -109,6 +100,3 @@ Response:
 
 ### I am observing errors pushing to Datadog after I modify an existing job for another destination to push logs to Datadog.
 Datadog destination is exclusive to new jobs and might not be backward compatible with older jobs. Create new jobs if you expect to send your logs directly to Datadog instead of modifying already existing ones.
-
-### I am observing errors pushing to Datadog for spectrum_events dataset.
-At the time of publishing this page, Cloudflare does not support the Datadog destination for the `sepctrum_events` dataset. Support is underway and will be added soon.
