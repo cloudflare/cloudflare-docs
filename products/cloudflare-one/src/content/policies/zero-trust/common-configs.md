@@ -47,7 +47,7 @@ An Exclude rule will allow any user meeting that criteria to access an applicati
 
 Use this rule action to bypass Access for a specific path of the application, a subset of users or for the entire application. The bypass rule action disables any Access enforcement for traffic that meets the defined rule criteria.
 
-Let’s take an example website secured with Access with a third-party service that needs access to a specific endpoint. You can configure traffic to bypass Access and access that endpoint. You can also whitelist a range of IP addresses to bypass Access or allow all traffic by setting the rule to include everyone.
+Let’s take an example website secured with Access with a third-party service that needs access to a specific endpoint. You can configure traffic to bypass Access and access that endpoint. You can also allowlist a range of IP addresses to bypass Access or allow all traffic by setting the rule to include everyone.
 
 If the service does not publish its IP range or it changes periodically, you can choose to include Everyone in the Bypass action so that any request can access the specified path.
 
