@@ -19,7 +19,7 @@ You can protect two types of web applications: SaaS and self-hosted.
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
 
-![SaaS applications diagram](../../static/documentation/applications/new-diagram-saas.png)
+![SaaS applications diagram](../../static/documentation/applications/diagram-saas.jpg)
 
 ### 1. Add your application
 
