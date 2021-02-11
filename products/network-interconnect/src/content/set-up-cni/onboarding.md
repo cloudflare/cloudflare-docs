@@ -42,7 +42,7 @@ For more information, see the [Cloudflare Network Interconnect Partner Program](
 
 </Aside>
 
-After you provide verification, Cloudflare assigns IP addresses to use with the cross-connect, assuming you are not using an Internet exchange point for the cross-connect).
+After you provide verification, Cloudflare assigns IP addresses to use with the cross-connect, assuming you are not using an Internet exchange point for the cross-connect.
 
 ## Configure Cloudflare BGP
 
