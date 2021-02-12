@@ -44,7 +44,7 @@ products/internet/ @ConzorKingKong @cloudflare/PCX
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
 
 # Logs
-products/logs/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
+products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
