@@ -195,7 +195,7 @@ All plans have access to:
 
 - `colo` <Type>string</Type>
 
-  - The three-letter airport code of the data center that the request hit, e.g. `"DFW"`.
+  - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
 
 - `country` <Type>string | null</Type>
 
