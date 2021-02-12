@@ -9,7 +9,7 @@ Browser Isolation may be enabled on ChromeOS / Chromebook devices by installing 
 
 ## Install the Cloudflare Root CA
 
-Download the Cloudflare Root CA from our [developer portal](https://developers.cloudflare.com/gateway/connecting-to-gateway/install-cloudflare-cert).
+Download the Cloudflare Root CA from our [developer portal](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert).
 
 Import the Cloudflare Root CA within Chrome:
 
