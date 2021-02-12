@@ -183,7 +183,7 @@ def verify_token(f):
         for key in keys:
             try:
                 # decode returns the claims that has the email when needed
-                jwt.decode(token, key=key, audience=POLICY_AUD)
+                jwt.decode(token, key=key, audience=POLICY_AUD, algorithms=['RS256'])
                 valid_token = True
                 break
             except:
