@@ -50,7 +50,7 @@ Any data Cloudflare handles as a result of its resolver for Firefox is as a data
 * coloID (unique Cloudflare data center ID)
 * metalId (unique Cloudflare data center ID)
 
-All of the above information will be stored briefly as part of Cloudflare’s temporary logs, and then permanently deleted within 24 hours of Cloudflare’s receipt of such information. In addition to the above information, Cloudflare will also collect and store the following information as part of its permanent logs.
+All the above information will be stored briefly as part of Cloudflare’s temporary logs, and then permanently deleted within 24 hours of Cloudflare’s receipt of such information. In addition to the above information, Cloudflare will also collect and store the following information as part of its permanent logs.
 
 - Total number of requests processed by each Cloudflare co-location facility
 - Aggregate list of all domain names requested

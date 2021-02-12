@@ -14,7 +14,7 @@ Prerequisites:
 
 1. A domain that you own.
 2. Access to your domain's DNS records.
-3. All of the content for your website collected into one folder, with the
+3. All the content for your website collected into one folder, with the
    homepage in a file called `index.html`.
 
 A few notes about content: IPFS is currently best for static content, and this

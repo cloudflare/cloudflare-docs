@@ -65,7 +65,7 @@ filename: src/content/_partials/_tutorials-before-you-start.md
 ---
 ## Before you start
 
-All of the tutorials assume you’ve already gone through [Getting started](/learning/getting-started), which gets you set up with a Cloudflare Workers account, and the Workers CLI tool, [Wrangler](https://github.com/cloudflare/wrangler).
+All the tutorials assume you’ve already gone through [Getting started](/learning/getting-started), which gets you set up with a Cloudflare Workers account, and the Workers CLI tool, [Wrangler](https://github.com/cloudflare/wrangler).
 ```
 
 Inside the tutorial it’s imported as you would any other MDX component ([source](https://github.com/cloudflare/cloudflare-docs/blob/4ba1e70d2a535c93ef6de42b0fc5178dabdb942b/products/workers/src/content/tutorials/build-a-qr-code-generator/index.md)):
