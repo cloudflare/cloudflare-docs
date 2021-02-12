@@ -17,4 +17,4 @@ If your project doesn't include a top-level `404.html` file, Pages assumes that 
 
 ## Caching and performance
 
-Pages includes good caching defaults. That means that every time you deploy an asset to Pages, it remains cached on our CDN until your next deploy. As much as possible, Pages sets `ETag` and `If-None-Match` headers to allow clients to also cache content in their browsers — for more details on these behaviors, check out the MDN ["HTTP Caching" page]([https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)). Pages will also serve Gzip and Brotli responses whenever possible.
+Pages includes good caching defaults. That means that every time you deploy an asset to Pages, it remains cached on our CDN until your next deploy. As much as possible, Pages sets `ETag` and `If-None-Match` headers to allow clients to also cache content in their browsers — for more details on these behaviors, check out the MDN ["HTTP Caching" page](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching). Pages will also serve Gzip and Brotli responses whenever possible.
