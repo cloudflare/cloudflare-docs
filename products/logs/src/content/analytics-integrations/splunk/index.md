@@ -25,12 +25,13 @@ To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/450
 3. Click **Install**.
 
 ![Splunk find Cloudflare app](../../static/images/splunk/screenshots/splunk-cloudflare-app-for-splunk.png)
-4. Restart and reopen your Splunk instance. 
+
+4. Restart and reopen your Splunk instance.   
 5. Edit the `cloudflare:json` source type in the Cloudflare App for Splunk. To edit the source type:
    1. Click the **Settings** dropdown and select **Source types**. 
    2. Uncheck **Show only popular** and search for *cloudflare*. 
    3. Click **Edit** and change the Regex expression to `([\r\n]+)`. 
-   4. Save your edits. 
+   4. Save your edits.
 
 6. Create an index on Splunk to store the HTTP Event logs. To create an index:
    1. Open the setup screen by clicking the **Settings** dropdown, then click **Indexes**.
@@ -47,7 +48,7 @@ To install the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/450
    3. At the end of the wizard you will see a **Token Value**. This token authorizes the Cloudflare Logpush job to send data to your Splunk instance. If you forget to copy it now, Splunk allows you to get the value at any time. 
 
 8. Verify whether Splunk is using a self-signed certificate. You'll need this information when creating the Logpush job. 
-9. Determine the endpoint to use to send the data to. The endpoint should be:
+9.  Determine the endpoint to use to send the data to. The endpoint should be:
 
 ```bash
 "<protocol>://input-<host>:<port>/<endpoint>" or "<protocol>://http-inputs-<host>:<port>/<endpoint>"
