@@ -1,14 +1,8 @@
 # Require specific HTTP headers
 
-<Aside type='warning' header='Important'>
-
-Access to HTTP header and body fields require a Cloudflare Enterprise plan.
-
-</Aside>
-
 Many organizations qualify traffic based on the presence of specific HTTP request headers.
 
-Use the Firewall Rules [HTTP header and body fields](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) to target requests with specific headers.
+Use the Firewall Rules [HTTP header fields](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) to target requests with specific headers.
 
 This example uses the `http.headers.names` field to look for the presence of an X-CSRF-Token header. The `lower()` [transformation function](https://developers.cloudflare.com/firewall/cf-firewall-language/functions#transformation-functions) converts the value to lowercase so that the expression is case insensitive.
 
