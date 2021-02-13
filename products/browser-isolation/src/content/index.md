@@ -15,11 +15,11 @@ Browser Isolation is currently in beta. If you are interested in participating, 
 
 ## How Browser Isolation works
 
-Browser Isolation works by intercepting normal browsing traffic and serving a web-native remote client to the user's browser instead of the normal HTML/CSS/Javascript content.
+Browser Isolation works by intercepting normal browsing traffic and serving a web-native remote client to the user's browser instead of the normal HTML/CSS/JavaScript content.
 
-This web-based remoting client connects to a containerized headless browser hosted in a nearby Cloudflare data center. The remote browser is responsible for downloading and executing all foreign webpage code (HTML, CSS, Javascript etc), and serves network vector drawing commands over the network to your local browser.
+This web-based remoting client connects to a containerized headless browser hosted in a nearby Cloudflare data center. The remote browser is responsible for downloading and executing all foreign webpage code (HTML, CSS, JavaScript etc), and serves network vector drawing commands over the network to your local browser.
 
-Since HTML, CSS and Javascript content is not served to the user's browser, it is protected from malicious websites that attempt to exploit web-based vulnerabilities.
+Since HTML, CSS and JavaScript content is not served to the user's browser, it is protected from malicious websites that attempt to exploit web-based vulnerabilities.
 
 The web-based remoting client is downloaded, installed and updated on-the-fly without requiring the user to make any changes to their browser.
 
