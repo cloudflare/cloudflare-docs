@@ -31,7 +31,7 @@ These are the action types you can choose from:
 * **Block** 
 * **Bypass**
 
-*Bypass* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
+*Bypass* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
 
 #### Selectors
 Gateway matches HTTP traffic against the following selectors, or criteria:

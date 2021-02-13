@@ -36,7 +36,7 @@ Here is the `browser-beta` configuration:
 
 ### Bypass common cert pinning sites
 
-See [Gateway recommeded rules](https://developers.cloudflare.com/gateway/connecting-to-gateway/Troubleshooting#im-using-a-common-application-and-it-seems-unable-to-connect-when-i-inspect-http-traffic-or-presents-an-untrusted-certificate-error)
+See [Gateway recommended rules](https://developers.cloudflare.com/gateway/connecting-to-gateway/Troubleshooting#im-using-a-common-application-and-it-seems-unable-to-connect-when-i-inspect-http-traffic-or-presents-an-untrusted-certificate-error)
 
 ### Isolate Google Search
 This rule is placed above bypass Google Workspace to ensure all Google Search endpoints are isolated.

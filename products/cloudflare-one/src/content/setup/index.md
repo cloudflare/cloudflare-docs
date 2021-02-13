@@ -65,7 +65,7 @@ You can return to edit the policy with more complex rules like identity provider
 
 1. Set up your first location. Alternatively, you can choose to click **Skip to Teams dash**.
 
-1. If you choose to set up your first location, enter a location name and click **Next**. You will be able to change this name at any time on the Teams dashbaord.
+1. If you choose to set up your first location, enter a location name and click **Next**. You will be able to change this name at any time on the Teams dashboard.
 
  ![Onboarding App](../static/documentation/quickstart/first-location.png)
 
