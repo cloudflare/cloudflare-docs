@@ -37,7 +37,7 @@ In the example below, the root ruleset configuration contains a rule to deploy a
     ```json
     curl -s -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{root-ruleset-id}/versions/{version-number}"
     ```
-    The reponse indicates that the only ruleset deployed is the Cloudflare OWASP managed ruleset.
+    The response indicates that the only ruleset deployed is the Cloudflare OWASP managed ruleset.
     ```
     {"result": {
        "id": "{root-ruleset-id}",
