@@ -16,7 +16,7 @@ To temporarily ignore an origin server:
 
 1. Deliberately configure a monitor so that your origin will fail health checks and Cloudflare will consider the origin server unhealthy and route traffic away from it. For example, set the **Response Code** to an HTTP status code you know your server does not return. Alternatively, you could set a value for **Response Body** that will not match. For example, you can configure the Response Body in a monitor to look for specific text.
 
-  ![](../static/images/best-practices-1.png)
+  ![Best practices 1](../static/images/best-practices-1.png)
 
 1. Confirm the origin server is not receiving traffic. Load Balancing will issue a notification email that the origin is down.
 
@@ -67,7 +67,7 @@ To temporarily set origin status to _disabled_, use the Update Load Balancer com
 
 Cloudflare’s Load Balancer distributes global traffic intelligently across Google Kubernetes Engine (GKE) and Amazon Web Services EC2 (AWS). Cloudflare’s native Kubernetes support provides a multi-cloud deployment that is transparent to end users.
 
-![](../static/images/best-practices-2.png)
+![Best practices 2](../static/images/best-practices-2.png)
 
 ### Prerequisites
 
@@ -86,7 +86,7 @@ We will be using [Google Cloud Shell](https://cloud.google.com/shell/) interface
 
 Go to the [Kubernetes Engine](https://console.cloud.google.com/kubernetes?_ga=2.151836153.-1932148812.1510627946). Click the **Activate Google Cloud Shell** button at the top of the console window. A Cloud Shell session with a command prompt will open in a new frame at the bottom of the console.
 
-![](../static/images/best-practices-3.png)
+![Best practices 3](../static/images/best-practices-3.png)
 
 Set default configuration values by running the following commands:
 

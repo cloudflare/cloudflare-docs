@@ -322,8 +322,8 @@ PagerDuty will generate an email address that will create incidents based on ema
 
 If you already have email integration configured in PagerDuty, you can find the designated email address by going to **Configuration > Services > Email** (under **Integrations**).
 
-![](../static/images/monitors-1.png)
+![Monitors 1](../static/images/monitors-1.png)
 
 When creating the Notifier object, configure the email to go to the PagerDuty integration email. Consequently, whenever a pool or origin goes down, an Incident will be created to capture it.
 
-![](../static/images/monitors-2.png)
+![Monitors 2](../static/images/monitors-2.png)

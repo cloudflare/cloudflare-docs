@@ -36,4 +36,4 @@ Here is an example of how to configure your Windows computer to synchronize time
 
 You should receive the following message, letting you know that you have successfully synchronized your time.
 
-![](../static/windowtime2.png)
+![Windows time](../static/windowtime2.png)

@@ -54,7 +54,7 @@ To start, create a load balancer using the **Create a Load Balancer** wizard in 
 
 1. Open the **Traffic** app. If you see the **Enable Load Balancing** action instead of **Create a Load Balancer**, you need to add the Load Balancing service to your customer plan before you can proceed.
 
-   ![](../static/images/create-load-balancer.png)
+   ![Create load balancer](../static/images/create-load-balancer.png)
 
 1. Click **Create a Load Balancer**.
 
@@ -101,7 +101,7 @@ This example creates two origin pools—the primary pool and a secondary, backup
 
   The list of pools displays. By default, pools are ordered by date created. You can reorder them by clicking the arrows next to the numerals in the **Order** column:
 
-   ![](../static/images/create-load-balancer-pools-list.png)
+   ![Create load balancer pools list](../static/images/create-load-balancer-pools-list.png)
    
    For now, leave the order as it is.
 
@@ -160,7 +160,7 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
 
 1.  To configure the monitor, supply these values:
     
-    ![](../static/images/configure-monitor-values.png)
+    ![Configure monitor values](../static/images/configure-monitor-values.png)
 
     * **Health Threshold:** Defines the number of healthy origin servers required to consider the pool healthy. When the number of healthy origin servers drops below the threshold, the pool will be marked unhealthy. There is only one origin server in this pool, so leave this value at 1.
     
@@ -195,7 +195,7 @@ Now that you have set up health checks for your load balancer, click **Next** to
 
 Use Geo Routing to configure traffic policies and failover priority by geographic region. This is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
-![](../static/images/add-traffic-steering.png)
+![Add traffic steering](../static/images/add-traffic-steering.png)
 
 For this exercise, don’t add new regions. For more on Geo Routing, see _[Traffic steering](/understand-basics/traffic-steering/)_.
 

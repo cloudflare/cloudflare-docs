@@ -48,7 +48,7 @@ A significant amount of traffic is required for the distribution to converge on 
 
 Users can configure origin weights when they set up a load balancer or from the **Load Balancing** dashboard in the **Traffic** app.
 
-![](../static/images/weighted-load-balancing-1.png)
+![Weighted load balancing](../static/images/weighted-load-balancing-1.png)
 
 ---
 

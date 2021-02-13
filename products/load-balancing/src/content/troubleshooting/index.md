@@ -150,7 +150,7 @@ If you're using the Cloudflare API and receive a Quota Exceeded error, you have 
 
 #### Dashboard
 
-![](../static/images/troubleshooting-1.png)
+![Troubleshooting](../static/images/troubleshooting-1.png)
 
 #### API
 

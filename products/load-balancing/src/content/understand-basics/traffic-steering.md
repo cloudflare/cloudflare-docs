@@ -8,7 +8,7 @@ order: 12
 
 Load Balancing provides several traffic steering modes, which allow customers to optimize how load balancers route traffic. You can configure Traffic Steering from the Load Balancing dashboard, in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel. You can also configure Traffic Steering via the Cloudflare API. Available steering options include standard failover (steering disabled), Dynamic Steering, and Geo Steering.
 
-![](../static/images/traffic-steering-1.png)
+![Traffic-steering 1](../static/images/traffic-steering-1.png)
 
 ---
 
@@ -38,7 +38,7 @@ For TCP health checks, calculated latency may not reflect the true latency to th
 
 The diagram below shows how Cloudflare would route traffic to the pool with the lowest EWMA among three regions: Eastern North America, Europe, and Australia. In this case, the ENAM pool is selected, because it has the lowest RTT.
 
-![](../static/images/traffic-steering-2.png)
+![Traffic steering 2](../static/images/traffic-steering-2.png)
 
 ---
 
