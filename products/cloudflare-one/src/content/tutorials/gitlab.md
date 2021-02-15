@@ -96,7 +96,7 @@ To determine who can reach the application, Cloudflare Access relies on integrat
 
 For GitLab, start by building two policies. Users will connect to GitLab in a couple of methods: in the web app and over SSH. Create policies to secure a subdomain for each. First, the web app.
 
-Before you build the rule, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup) to set up Cloudflare Access in your account.
+Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
 Once enabled, navigate to the `Applications` page in the Cloudflare for Teams dashboard. Click `Add an application`.
 

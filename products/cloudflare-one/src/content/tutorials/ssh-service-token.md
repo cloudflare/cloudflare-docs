@@ -6,7 +6,7 @@ category: 🔐 Zero Trust
 
 You can use Cloudflare Access to create Zero Trust rules that determine which users can reach resources over HTTP, SSH, and other protocols. However, some resources also need to be available to automated systems that need to authenticate through Cloudflare's network. You can use Cloudflare Access to generate a service token for those systems.
 
-This walkthrough extends a [previous guide](./gitlab) that describes configuring GitLab with Cloudflare Access. In this case, an administrator needs to reach GitLab over SSH using a service token. While this tutorial uses that as an example, any deployment can use these steps to add service tokens as an option.
+This walkthrough extends a [previous guide](/tutorials/gitlab) that describes configuring GitLab with Cloudflare Access. In this case, an administrator needs to reach GitLab over SSH using a service token. While this tutorial uses that as an example, any deployment can use these steps to add service tokens as an option.
 
 **🗺️ This walkthrough covers how to:**
 

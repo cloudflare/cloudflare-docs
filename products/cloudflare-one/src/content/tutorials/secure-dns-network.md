@@ -17,7 +17,7 @@ You can use Cloudflare Gateway to filter and log DNS queries from any device usi
 
 ## Configure Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/onboarding-gateway) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
 
 * Teams Free
 * Teams Standard
@@ -33,7 +33,7 @@ If you want to create a different location, one that you are not currently using
 
 ## Create a Gateway policy
 
-Next, you can [build a policy](https://developers.cloudflare.com/gateway/getting-started/configuring-dns-policy) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Add a policy`.
+Next, you can [build a policy](/policies/filtering/dns-policies) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Add a policy`.
 
 ![Add Policy](../static/secure-web-gateway/secure-dns-devices/add-policy.png)
 

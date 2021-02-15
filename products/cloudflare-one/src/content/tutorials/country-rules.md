@@ -8,7 +8,7 @@ difficulty: Beginner
 
 You can use Cloudflare Access to require team members to connect to self-hosted or SaaS applications from a list of approved countries.
 
-Before you build the rule, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup) to set up Cloudflare Access in your account.
+Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
 **🗺️ This walkthrough covers how to:**
 

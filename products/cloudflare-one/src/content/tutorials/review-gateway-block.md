@@ -18,13 +18,13 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 ## Configure Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/onboarding-gateway) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
 
 * Teams Free
 * Teams Standard
 * Gateway
 
-You can follow [these instructions](/secure-web-gateway/secure-dns-devices) to configure Gateway DNS filtering on roaming devices and [these instructions](/secure-web-gateway/secure-dns-network) for home or office networks.
+You can follow [these instructions](/tutorials/secure-dns-devices) to configure Gateway DNS filtering on roaming devices and [these instructions](/tutorials/secure-dns-network) for home or office networks.
 
 ## Review Gateway events
 

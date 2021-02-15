@@ -23,7 +23,7 @@ The first two sections of this tutorial link to guides to set up Cloudflare Acce
 
 ## Configure Cloudflare Access
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup/) to set up Cloudflare Access in your account. The hardware key feature is available on any plan, including the free plan.
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account. The hardware key feature is available on any plan, including the free plan.
 
 ## Integrate Okta
 
