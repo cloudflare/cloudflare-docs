@@ -18,7 +18,7 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to blo
 
 ## Add Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](/policies/filtering) to set up Cloudflare Gateway in your account. Cloudflare Gateway operates in two modes:
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. Cloudflare Gateway operates in two modes:
 
 * DNS filtering
 * Proxy (HTTP filtering)

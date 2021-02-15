@@ -26,9 +26,9 @@ Replacing long-lived API keys with short-lived certificates offers the following
 
 **⏲️Time to complete: 45 minutes**
 
-## Build a Cloudflare Access policy
+## Build a Zero Trust policy
 
-First, build a Cloudflare Access policy to enforce Zero Trust rules whenever any user attempts to connect to the resources being protected. Building the Access policy first ensures that resources are not connected to Cloudflare for a period of time before an Access policy can be added.
+First, build a Zero Trust policy to enforce rules whenever any user attempts to connect to the resources being protected. Building the Zero Trust policy first ensures that resources are not connected to Cloudflare for a period of time before a Zero Trust policy can be added.
 
 In the Cloudflare for Teams dashboard, open the `Applications` page of the `Access` section. Select the "Self-hosted" option.
 

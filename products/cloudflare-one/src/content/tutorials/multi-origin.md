@@ -6,7 +6,7 @@ difficulty: Advanced
 
 # Connect multiple HTTP origins
 
-You can use [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) to connect applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections. You can deploy a single instance of `cloudflared` to proxy traffic to multiple destinations for multiple hostnames.
+You can use [Argo Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections. You can deploy a single instance of `cloudflared` to proxy traffic to multiple destinations for multiple hostnames.
 
 **🗺️ This tutorial covers how to:**
 
@@ -22,7 +22,7 @@ In this example, two resources are running and need to be connected to the Inter
 * a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313`.
 * Grafana, a charting application. Grafana is available at `localhost:3000`
 
-Start by [downloading and installing](https://developers.cloudflare.com/argo-tunnel/getting-started/installation) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation here](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -42,7 +42,7 @@ You can now use `cloudflared` to control Argo Tunnel connections in your Cloudfl
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -54,7 +54,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Configure `cloudflared`
 
-You can now [configure](https://developers.cloudflare.com/argo-tunnel/configuration) `cloudflared` to route traffic to both applications for multiple hostnames using [ingress rules](https://developers.cloudflare.com/argo-tunnel/configuration/ingress). You must use a configuration file to do so.
+You can now [configure](/connections/connect-apps/configuration) `cloudflared` to route traffic to both applications for multiple hostnames using [ingress rules](/connections/connect-apps/configuration/ingress). You must use a configuration file to do so.
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 
@@ -86,13 +86,13 @@ If you are using the credentials file without the `cert.pem` file, you must spec
 
 ## Run Argo Tunnel
 
-At this point, you have created and configured your Argo Tunnel connection. You can now [run that](https://developers.cloudflare.com/argo-tunnel/create-tunnel) Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Argo Tunnel connection. You can now [run](/connections/connect-apps/run-tunnel) that Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 
 ## Create DNS records
 
-You can now [route traffic](https://developers.cloudflare.com/argo-tunnel/routing-to-tunnel) to your Tunnel, and on to both applications, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
+You can now [route traffic](/connections/connect-apps/routing-to-tunnel) to your Tunnel, and on to both applications, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
 
 Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`. Repeat this process for the second subdomain - they will both share the same Tunnel address.
 

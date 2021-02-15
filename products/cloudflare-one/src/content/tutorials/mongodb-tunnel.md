@@ -23,7 +23,7 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-First, follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup/) to set up Cloudflare Access in your account.
+First, follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
 Next, navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
 
@@ -37,7 +37,7 @@ Create an application for a subdomain where users will connect to your deploymen
 
 ![Apps](../static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
-Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](https://developers.cloudflare.com/cloudflare-one/tutorials/okta-u2f), or [country](https://developers.cloudflare.com/cloudflare-one/tutorials/country-rules).
+Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/tutorials/okta-u2f), or [country](/tutorials/country-rules).
 
 ![Apps](../static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
@@ -196,7 +196,7 @@ done;
 
 ## Configure Argo Tunnel
 
-Next, you can use `cloudflared` to connect to Cloudflare's Edge using Argo Tunnel. Start by [downloading and installing](https://developers.cloudflare.com/argo-tunnel/getting-started/installation) the Argo Tunnel daemon, `cloudflared`.
+Next, you can use `cloudflared` to connect to Cloudflare's Edge using Argo Tunnel. Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`.
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
@@ -214,7 +214,7 @@ You can now use `cloudflared` to control Argo Tunnel connections in your Cloudfl
 
 ### Create a Tunnel
 
-You can now [create an Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -228,7 +228,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](https://developers.cloudflare.com/argo-tunnel/create-tunnel#create-a-tunnel).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](connections/connect-apps/create-a-tunnel).
 
 Store the `JSON` file as a Kubernetes secret.
 

@@ -17,27 +17,27 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 ## Configure Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/onboarding-gateway) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
 
 * Teams Free
 * Teams Standard
 * Gateway
 
-## Create a Default Location
+## Create a default location
 
-When you [enable Cloudflare Gateway](https://developers.cloudflare.com/gateway/getting-started) for the first time, you will be prompted to configure your first location. You can use that Location to represent a physical office and/or roaming users.
+When you [enable Cloudflare Gateway](/setup) for the first time, you will be prompted to configure your first location. You can use that Location to represent a physical office and/or roaming users.
 
-Start by navigating to the `Locations` page in the `Gateway` section of the sidebar. You will see the first location that you added has been set as the Default. Any device that enrolls into your Gateway account will follow the policies set for the Default location by using the `DNS over HTTPS` address.
+Start by navigating to the `Locations` page in the `Gateway` section of the sidebar. You will see the first location that you added has been set as the Default. Any device that enrolls into your Gateway account will follow the policies set for the default location by using the `DNS over HTTPS` address.
 
 ![Add DNS](../static/secure-web-gateway/secure-dns-devices/locations.png)
 
-If you wish to [use a different Location](https://developers.cloudflare.com/gateway/getting-started/configuring-locations) as your Default, and subsequently the one used for roaming devices, click `Add a location`. During location creation, toggle the `Default location` toggle and the new location will be the Default.
+If you wish to [use a different Location](/connections/connect-networks/locations) as your Default, and subsequently the one used for roaming devices, click `Add a location`. During location creation, toggle the `Default location` toggle and the new location will be the Default.
 
 ![New Default](../static/secure-web-gateway/secure-dns-devices/new-default.png)
 
-## Create a Gateway policy
+## Create a Secure Web Gateway policy
 
-Next, you can [build a policy](https://developers.cloudflare.com/gateway/getting-started/configuring-dns-policy) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Add a policy`.
+Next, you can [build a policy](/policies/filtering/dns-policies) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Add a policy`.
 
 ![Add Policy](../static/secure-web-gateway/secure-dns-devices/add-policy.png)
 
@@ -53,9 +53,9 @@ You can also configure content or custom blocks. Once complete, click `Save`.
 
 ## Determine which devices can enroll
 
-Now that you have a Default location and DNS filtering policy, you can [begin to enroll devices](https://developers.cloudflare.com/gateway/connecting-to-gateway). When devices enroll, users will be prompted to authenticate with your identity provider or a consumer identity service. By authenticating, you can attribute devices and DNS queries to users while also limiting who can enroll.
+Now that you have a default location and DNS filtering policy, you can [begin to enroll devices](/connections/connect-devices/warp/deployment). When devices enroll, users will be prompted to authenticate with your identity provider or a consumer identity service. By authenticating, you can attribute devices and DNS queries to users while also limiting who can enroll.
 
-To begin, you will need to enable Cloudflare Access for your account. Cloudflare Access provides the identity integration to enroll users. This feature of Cloudflare Access is available in the Teams Free plan or in the Gateway plan at no additional cost. Follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup) to add Access and integrate a free identity option or a specific provider.
+To begin, you will need to enable Cloudflare Access for your account. Cloudflare Access provides the identity integration to enroll users. This feature of Cloudflare Access is available in the Teams Free plan or in the Gateway plan at no additional cost. Follow [these instructions](/setup) to add Access and integrate a free identity option or a specific provider.
 
 Next, build a rule to decide which devices can enroll into your Gateway account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
 
@@ -67,7 +67,7 @@ Click `Device Settings` to build the enrollment rule. In the policy, define who 
 
 ## Enroll a device
 
-You can use the WARP client to enroll a device into your security policies. Follow the [instructions here](https://developers.cloudflare.com/warp-client/setting-up) to install the client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+You can use the WARP client to enroll a device into your security policies. Follow the [instructions here](/connections/connect-devices/warp) to install the client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
 Once installed, click the gear icon.
 
@@ -77,7 +77,7 @@ Under the `Account` tab, click `Login with Cloudflare for Teams`.
 
 ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-Input your Cloudflare for Teams org name. You will have created this during the Cloudflare Access setup flow. You can find it under the `Authentication` tab in the `Access` section of the sidebar.
+Input your Cloudflare for Teams [team name](/glossary#team-name). You will have created this during the Cloudflare Access setup flow. You can find it under the `Authentication` tab in the `Access` section of the sidebar.
 
 ![Org Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 
@@ -85,10 +85,10 @@ The user will be prompted to login with the identity provider configured in Clou
 
 ![DoH](../static/secure-web-gateway/secure-dns-devices/with-doh.png)
 
-You can confirm that the device is using the default location under the `Connection` tab. The DoH address will match that of the Default location.
+You can confirm that the device is using the default location under the `Connection` tab. The DoH address will match that of the default location.
 
 ![Confirm DoH](../static/secure-web-gateway/secure-dns-devices/doh-subdomain.png)
 
-## Optional: Deploy via MDM
+## Optional: deploy via MDM
 
-You can deploy the WARP client on corporate devices in a way that does not require users to configure the Org Name. To do so, [follow these instructions](https://developers.cloudflare.com/warp-client/teams).
+You can deploy the WARP client on corporate devices in a way that does not require users to configure the Org Name. To do so, [follow these instructions](/connections/connect-devices/warp/deployment).

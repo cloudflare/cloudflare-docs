@@ -62,4 +62,4 @@ To exclude IP addresses not in the default list, input the address or CIDR in th
 
 ## Enroll devices
 
-You [can now begin enrolling devices](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp) to use Cloudflare for Teams with the WARP client.
+You [can now begin enrolling devices](/connections/connect-devices/warp) to use Cloudflare for Teams with the WARP client.
