@@ -5,7 +5,7 @@ order: 11
 # Legacy: configuring origins via CLI
 
 `cloudflared` proxies traffic to local services running on your origin. You can configure the exact properties of each
-origin by adding stanzas to the [Ingress Rules](/configuration/ingress#origin-configurations). However, if you only want to proxy
+origin by adding stanzas to the [Ingress Rules](/connections/connect-apps/configuration/ingress). However, if you only want to proxy
 traffic to a single local service, you can use CLI flags instead of YAML to configure that service.
 
 - [`--url`](#--url)
