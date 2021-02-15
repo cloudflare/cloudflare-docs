@@ -6,7 +6,7 @@ difficulty: Beginner
 
 # Share development environments
 
-You can use Cloudflare's reverse proxy and [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/) to share local development environments with team members or customers.
+You can use Cloudflare's reverse proxy and [Argo Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers.
 
 **🗺️ This tutorial covers how to:**
 
@@ -18,7 +18,7 @@ You can use Cloudflare's reverse proxy and [Argo Tunnel](https://developers.clou
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Argo Tunnel. Argo Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Argo Tunnel to quickly share projects you are working on with team members. In this example, you can use Argo Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a Cloudflare Access policy to only allow certain people to reach the site.
+You can use Argo Tunnel to quickly share projects you are working on with team members. In this example, you can use Argo Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
 
 | Before you start |
 |---|
@@ -32,7 +32,7 @@ In this example, the new website is a [Hugo site](https://gohugo.io/getting-star
 
 ![New Hugo](../static/secure-origin-connections/share-new-site/hugo-new.png)
 
-To share this work-in-progress with an audience on the Internet, start by [downloading and installing](https://developers.cloudflare.com/argo-tunnel/getting-started/installation) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation here](https://docs.brew.sh/Installation) to install it.
+To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -50,7 +50,7 @@ Once you click one of the sites in your account, Cloudflare will download a cert
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose.
 
@@ -62,7 +62,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Configure `cloudflared`
 
-You can now [configure](https://developers.cloudflare.com/argo-tunnel/configuration) `cloudflared` to route traffic to your local development environment. You can use a configuration file to do so, which makes it easier to start `cloudflared` in the future.
+You can now [configure](/connections/connect-apps/configuration) `cloudflared` to route traffic to your local development environment. You can use a configuration file to do so, which makes it easier to start `cloudflared` in the future.
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 
@@ -84,7 +84,7 @@ At this point, you have created and configured your Argo Tunnel connection. You 
 
 ## Create DNS records
 
-You can now [route traffic](https://developers.cloudflare.com/argo-tunnel/routing-to-tunnel) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
+You can now [route traffic](/connections/connect-apps/routing-to-tunnel) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
 
 Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`.
 
@@ -96,11 +96,11 @@ Alternatively, you can create a DNS record from `cloudflared` directly.
 
 Once saved, you can share the subdomain created and visitors can reach your local web server environment.
 
-## Optional: Add an Access policy
+## Optional: Add a Zero Trust policy
 
 When you create the DNS record, any visitor will be able to view that new site. You can restrict the audience to certain users by adding a rule in Cloudflare Access. You can also build this Access rule before creating the DNS record so that the site is never accessible to the rest of the Internet.
 
-Before you build the rule, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup) to set up Cloudflare Access in your account.
+Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
 Once enabled, navigate to the `Applications` page in the Cloudflare for Teams dashboard. Click `Add an application`.
 

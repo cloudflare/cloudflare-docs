@@ -14,7 +14,7 @@ Some second factor methods are more resistant to phishing. U2F options require y
 
 * Integrate Cloudflare Access with Okta
 * Configure Okta for U2F enrollment
-* Build an Access policy that require users login with a hardware key
+* Build a [Zero Trust policy](/policies/zero-trust) that require users login with a hardware key
 * Specify that policy to apply to certain Access applications
 
 The first two sections of this tutorial link to guides to set up Cloudflare Access and integrate Okta. If you already use Cloudflare Access with Okta, you can skip ahead to the fourth section.
@@ -23,7 +23,7 @@ The first two sections of this tutorial link to guides to set up Cloudflare Acce
 
 ## Configure Cloudflare Access
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup/) to set up Cloudflare Access in your account. The hardware key feature is available on any plan, including the free plan.
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account. The hardware key feature is available on any plan, including the free plan.
 
 ## Integrate Okta
 
@@ -49,7 +49,7 @@ Log out of Okta and return to the list of providers in Access. Click **Test** ag
 
 ![Test MFA](../static/zero-trust-security/require-yubikey/with-hwk.png)
 
-## Build an Access policy to require U2F
+## Build a Zero Trust policy to require U2F
 
 You can use this information to build a rule in Access. Navigate to the `Applications` list in the Cloudflare Access section of the dashboard. Choose an application that you have already built or create a new one. This example adds the requirement to an existing application.
 

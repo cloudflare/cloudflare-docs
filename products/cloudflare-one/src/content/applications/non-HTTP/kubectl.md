@@ -47,7 +47,7 @@ If you are working on a machine that does not have a browser, or a browser windo
 
 ### 3. Secure The Subdomain With Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/policies/) to build a new policy to control who can connect to the resource.
+Next, protect the subdomain you plan to register with a [Zero Trust policy](/policies/zero-trust). Follow [these instructions](/policies/zero-trust/policy-management) to build a new policy to control who can connect to the resource.
 
 For example, if you share the cluster API server at `cluster.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
