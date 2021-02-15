@@ -60,7 +60,7 @@ Intune is now configured to deploy the Cloudflare WARP Client.
 If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 
 * If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH subdomain](#manually-configure-a-gateway-doh-subdomain).
-* If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
+* If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH Subdomain
 If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
@@ -77,7 +77,7 @@ Then ask your users to complete the following steps:
 ![Preferences UI in the connection tab with the Change button circled](../../../../static/documentation/connections/windows_GatewayButton.png)
 
 ### Manually configure a Cloudflare for Teams device registration
-If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
+If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or is using the Gateway L7 Filtering and user or device-specific [Secure Web Gateway policies](/policies/filtering), your users will need to login to Cloudflare for Teams by following these instructions:
 
 1. Click on the Cloudflare Logo in the System Tray.
 1. Select the gear icon.

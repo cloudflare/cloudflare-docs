@@ -146,7 +146,7 @@ Instead of deploying `cloudflared` on each target machine, you can deploy it onc
 
 <Aside>
 
-Ensure that an Access policy is in place before creating this connection, as the connection will allow lateral traffic within the subnet.
+Ensure that a [Zero Trust policy](/policies/zero-trust) is in place before creating this connection, as the connection will allow lateral traffic within the subnet.
 </Aside>
 
 To do so:

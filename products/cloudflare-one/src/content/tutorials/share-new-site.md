@@ -18,7 +18,7 @@ You can use Cloudflare's reverse proxy and [Argo Tunnel](/glossary#argo-tunnel) 
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Argo Tunnel. Argo Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Argo Tunnel to quickly share projects you are working on with team members. In this example, you can use Argo Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a Cloudflare Access policy to only allow certain people to reach the site.
+You can use Argo Tunnel to quickly share projects you are working on with team members. In this example, you can use Argo Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
 
 | Before you start |
 |---|
@@ -96,7 +96,7 @@ Alternatively, you can create a DNS record from `cloudflared` directly.
 
 Once saved, you can share the subdomain created and visitors can reach your local web server environment.
 
-## Optional: Add an Access policy
+## Optional: Add a Zero Trust policy
 
 When you create the DNS record, any visitor will be able to view that new site. You can restrict the audience to certain users by adding a rule in Cloudflare Access. You can also build this Access rule before creating the DNS record so that the site is never accessible to the rest of the Internet.
 

@@ -84,7 +84,7 @@ Users connect to GitLab over SSH (port 22 here) and HTTP for the web app (port 8
 
 ## Securing GitLab with Zero Trust rules
 
-### Building Access policies
+### Building Zero Trust policies
 
 You can use Cloudflare Access to build Zero Trust rules to determine who can connect to both the web application of GitLab (HTTP) and who can connect over SSH.
 
@@ -213,7 +213,7 @@ This command should be run as a `systemd` service for long-term use; if it termi
 
 You can now create DNS records for GitLab in the Cloudflare dashboard. Remember, you will still need two records - one for the web application and one for SSH traffic.
 
-In the DNS tab, choose the website where you built your Access policies. Click `+Add record` and select `CNAME` from type. In the `Name` field, input `gitlab`. In the `Target` field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
+In the DNS tab, choose the website where you built your [Zero Trust policies](/policies/zero-trust). Click `+Add record` and select `CNAME` from type. In the `Name` field, input `gitlab`. In the `Target` field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
 
 ```
 6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com

@@ -20,7 +20,7 @@ You can configure which applications secured by Cloudflare Access use which inte
 
     <!-- ![Name Providers](../../static/azuread-device/name-providers.png) -->
 
-3. Next, [create a new](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/require-managed-devices)  Conditional Access policy in Azure AD. In that policy, you can require that users connect from Managed, Hybrid, or compliant devices.
+3. Next, [create a new](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/require-managed-devices) Conditional Access policy in Azure AD. In that policy, you can require that users connect from Managed, Hybrid, or compliant devices.
 Apply that policy to the integration with Cloudflare Access.
 
 4. Apply that policy to the integration with Cloudflare Access.

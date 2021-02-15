@@ -42,7 +42,7 @@ Cloudflare WARP (known in the Google Play store as [1.1.1.1: Faster & Safer Inte
 
 If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 * If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH Subdomain](#manually-configure-a-gateway-doh-subdomain).
-* If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
+* If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH subdomain
 If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
@@ -57,7 +57,7 @@ Then ask your users to complete the following steps:
 1. Enter a DoH Sub Domain and tap **Back** until you are back at the home screen.
 
 ### Manually configure a Cloudflare for Teams device registration
-If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
+If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
 1. Fine the **1.1.1.1** application and tap to launch.
 1. Tap the **menu bar icon** (3 lines) in the upper right.

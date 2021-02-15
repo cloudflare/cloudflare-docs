@@ -23,7 +23,7 @@ Navigate to the `Groups` page in the `My Teams` section of the Cloudflare for Te
 
 ![Initial Groups](../static/zero-trust-security/default-groups/group-list-start.png)
 
-Groups contain criteria that you can reuse in Access policies. Additionally, groups allow you to nest certain operators within rules in the Access policy.
+Groups contain criteria that you can reuse in your [Zero Trust policies](/policies/zero-trust). Additionally, groups allow you to nest certain operators within rules in the Access policy.
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators.
 
@@ -71,6 +71,6 @@ Finally, you can add manual one-off rules at the bottom of the page.
 
 Click **Next** to finish creating the application.
 
-## Change a Group once and update all applications
+## Change a group once and update all applications
 
 Going forward, you can make edits once to the default group that will apply to any application that uses the group. For example, if a third contractor is added to the team you can add them to any application that uses the default group by editing the group itself.

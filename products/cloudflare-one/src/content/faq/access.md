@@ -57,7 +57,7 @@ This section addresses the most common issues you may come across when setting u
 
 * **What is the order of policy enforcement?**
 
-    Access policies trigger in order based on their position in the policy table in the UI. The exception is Bypass policies, which Access evaluates first.
+    [Zero Trust policies](/policies/zero-trust) trigger in order based on their position in the policy table in the UI. The exception is Bypass policies, which Access evaluates first.
 
     For Allow and Deny policies, Access enforces the decision starting at the top of your list and continues down the list. You can modify the order by dragging and dropping individual policies in the UI.
 

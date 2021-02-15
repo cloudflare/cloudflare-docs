@@ -41,7 +41,7 @@ For example, if you plan to share the machine at `ssh.site.com` select `site.com
 
 ## 2. Secure The Subdomain With Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the machine.
+Next, protect the subdomain you plan to register with a [Zero Trust policy](/policies/zero-trust). Follow [these instructions](/policies/zero-trust/policy-management) to build a new policy to control who can connect to the machine.
 For example, if you share the machine at `ssh.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
 ## 3. Connect The Remote Machine To Cloudflare
@@ -120,7 +120,7 @@ Cloudflare Access does not replace SSH key exchange with a Git repository.
 
 ### Service tokens
 
-[Service tokens](/access-service-auth/service-tokens/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the Access policy protecting the resource also allows for the particular service token.
+[Service tokens](/access-service-auth/service-tokens/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the [Zero Trust policy](/policies/zero-trust) protecting the resource also allows for the particular service token.
 
 ### Securing your connection with Argo Tunnel
 
