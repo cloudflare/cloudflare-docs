@@ -2,9 +2,9 @@
 order: 1
 ---
 
-# Config file
+# Configuration file
 
-You can run `cloudflared` with [Arguments](./arguments) from the command line or a configuration file.
+You can run `cloudflared` with [Arguments](/connections/connect-apps/configuration/arguments) from the command line or a configuration file.
 
 The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Every command-line argument of cloudflared can be expressed in YAML.
 
