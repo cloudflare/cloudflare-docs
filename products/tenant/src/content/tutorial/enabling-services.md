@@ -16,7 +16,7 @@ Creating a zone is no different the Client V4 API, but be sure to specify the cu
 Example - Create Zone
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/zones -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "name": "example.com", "account": { "id": "<customer account id>" } }'
+curl -X POST https://api.cloudflare.com/client/v4/zones -H 'Content-Type: application/json' -H "Authorization: Bearer $API_TOKEN" -d '{ "name": "example.com", "account": { "id": "<customer account id>" } }'
 ```
 
 ## Create a zone subscription
@@ -28,7 +28,7 @@ Now that you have a zone provisioned for the customer, you can add the appropria
 Example - Create Zone Subscription
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/zones/<zone id>/subscription -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{"rate_plan": {"id": "<rate plan identifier>"}}'
+curl -X POST https://api.cloudflare.com/client/v4/zones/<zone id>/subscription -H 'Content-Type: application/json' -H "Authorization: Bearer $API_TOKEN" -d '{"rate_plan": {"id": "<rate plan identifier>"}}'
 ```
 
 Allowed rate plans are:
@@ -64,7 +64,7 @@ Depending on your agreement, you may be allowed to resell other add-on services.
 Example - Create Account Subscription
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<account id>/subscriptions -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "rate_plan": {"id": "<rate plan id>"} }'
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<account id>/subscriptions -H 'Content-Type: application/json' -H "Authorization: Bearer $API_TOKEN" -d '{ "rate_plan": {"id": "<rate plan id>"} }'
 ```
 
 Once you have added the necessary features, you or your customer can move on to configuring the various services and fine-tuning settings.
