@@ -12,8 +12,7 @@ API Example:
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000'
+-H "Authorization: Bearer $API_TOKEN"
 ```
 
 Example data:
@@ -49,8 +48,7 @@ We'll use this to fetch the existing rules to help us construct the call to upda
 ```
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/4376358e00ec4c42b0450b1afed120bf/versions/1 \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' | jq '.result | {description: .description, rules: [ .rules[] | {id: .id, description: .description, action: .action, action_parameters: .action_parameters, expression: .expression} ]}'
+-H "Authorization: Bearer $API_TOKEN" | jq '.result | {description: .description, rules: [ .rules[] | {id: .id, description: .description, action: .action, action_parameters: .action_parameters, expression: .expression} ]}'
 ```
 
 <Aside type='note' header='Note'>
@@ -81,8 +79,7 @@ Now, we have enough to make the call to update the ruleset:
 ```
 curl -X PUT https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/${ruleset_id} \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
+-H "Authorization: Bearer $API_TOKEN" \
 --data '{
   "description": "block traffic with known bad patterns",
   "rules": [
