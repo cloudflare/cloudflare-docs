@@ -17,8 +17,7 @@ The three endpoints the Logpull API supports are:
 
 The following headers are required for all endpoint calls:
 
-* `X-Auth-Email` - the Cloudflare account email address associated with the domain
-* `X-Auth-Key` - the Cloudflare API key
+* `Authorization` - a Cloudflare API Token with `#logs:read` permissions for the zone
 
 ## Parameters
 
@@ -66,8 +65,7 @@ The overlap will be handled correctly.
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
+    -H "Authorization: Bearer $API_TOKEN" \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=RayID,ClientIP"
 ```
 
@@ -75,8 +73,7 @@ curl -s \
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
+    -H "Authorization: Bearer $API_TOKEN" \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/47ff6e2c812d3ccb?timestamps=rfc3339"
 ```
 
@@ -97,9 +94,8 @@ Using <em>Bash</em> subshell and <em>jq</em>, you can download the logs with all
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
+    -H "Authorization: Bearer $API_TOKEN" \
+    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "Authorization: Bearer $API_TOKEN" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
 *See [HTTP request fields](/log-fields/#http-requests)* for the currently available fields.

@@ -23,8 +23,7 @@ To get started:
 
 2. Have your Cloudflare API credentials and other information handy, including:
 
-   - Email address
-   - Cloudflare API key
+   - Cloudflare API token
    - Zone ID
    - Destination access details for your cloud service provider
 
