@@ -6,13 +6,11 @@ title: Querying Workers Metrics with GraphQL
 
 In this example, we're going to use the GraphQL Analytics API to query for Workers Metrics over a specified time period. We can query up to one week of data for dates up to three months ago.
 
-The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetimeStart`, `datetimeEnd`, `accountTag`, and `scriptName` variables as needed.
+The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `CLOUDFLARE_API_TOKEN` with your API token, and adjust the `datetimeStart`, `datetimeEnd`, `accountTag`, and `scriptName` variables as needed.
 
 ## API Call
 
 ```
-CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
-CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
 PAYLOAD='{ "query":
   "query GetWorkersAnalytics($accountTag: string, $datetimeStart: string, $datetimeEnd: string, $scriptName: string) {
       viewer {
@@ -51,8 +49,7 @@ PAYLOAD='{ "query":
 curl \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
+  -H "Authorization: Bearer CLOUDFLARE_API_TOKEN" \
   --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/
 ```
@@ -63,8 +60,7 @@ The results returned will be in JSON (as requested), so piping the output to `jq
 curl \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
+  -H "Authorization: Bearer CLOUDFLARE_API_TOKEN" \
   --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/ | jq .
 {

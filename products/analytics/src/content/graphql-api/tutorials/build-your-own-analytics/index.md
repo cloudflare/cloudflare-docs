@@ -9,7 +9,7 @@ In this example, we're going to see how to use the GraphQL Analytics API to buil
 
 ![GraphQL recipe](../static/graphQL-recipe-cacheVisual.gif)
 
-The following code will build a page with all the requirement to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button.
+The following code will build a page with all the requirement to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your API token and your zone ID, and then push the `Fetch analytics` button.
 
 ## Code
 
@@ -34,8 +34,7 @@ The following code will build a page with all the requirement to fetch from Grap
         <br />
         <div>
             <form><label for="site" class=""><span>Enter your API details:</span></label>
-                    <input placeholder= "Email" id="email"></textarea>
-                    <input placeholder= "API Token" id= "apiKey" ></textarea></form>
+                    <input placeholder= "API Token" id= "apiToken" ></textarea></form>
         </div>
         <label for="site" class=""><span>Choose the zone tag you want to fetch for:</span></label>
         <div><input placeholder= "Zone Tag" id="zoneTag"></textarea></div>
@@ -119,7 +118,7 @@ The following code will build a page with all the requirement to fetch from Grap
 
         };
 
-        function fetchAPI(url, email, apiKey, zoneTag) {
+        function fetchAPI(url, apiToken, zoneTag) {
             let request = new Request(url)
             let query = {"query":"{\n  viewer {\n    zones(filter: { zoneTag: " + zoneTag + " }) {\n      httpRequests1dGroups(\n        orderBy: [date_ASC]\n        limit: 1000\n        filter: { date_gt: \"2019-07-15\" }\n      ) {\n        date: dimensions {\n          date\n        }\n        sum {\n          cachedBytes\n          bytes\n        }\n      }\n    }\n  }\n}","variables":{}}
 
@@ -127,23 +126,21 @@ The following code will build a page with all the requirement to fetch from Grap
                 method: 'POST',
                 body: JSON.stringify(query)
             }
-            request.headers.set('x-auth-key', apiKey)
-            request.headers.set('x-auth-email', email)
+            request.headers.set('Authorization', `Bearer ${apiToken}`)
 
             return fetch(request, init)
         }
 
         document.getElementById('fetch').addEventListener('click', async function() {
-            var email = document.getElementById('email').value
-            var apiKey = document.getElementById('apiKey').value
+            var apiToken = document.getElementById('apiToken').value
             var zoneTag = document.getElementById('zoneTag').value
             var ctx = document.getElementById('canvas').getContext('2d');
             var beforeGraph = document.getElementById('canvas')
 
-            if (email && apiKey) {
+            if (apiToken) {
                 document.getElementById('error').innerHTML = ""
 
-                let response = await fetchAPI('https://api.cloudflare.com/client/v4/graphql', email, apiKey, zoneTag)
+                let response = await fetchAPI('https://api.cloudflare.com/client/v4/graphql', apiToken, zoneTag)
                 let json = await response.json()
 
                 if (response.status == 200) {
@@ -168,7 +165,7 @@ The following code will build a page with all the requirement to fetch from Grap
 
             }
             else {
-                document.getElementById('error').innerHTML = "Please fill the form with your key and email"
+                document.getElementById('error').innerHTML = "Please fill the form with your API token"
                 document.getElementById('error').style.color = "Red"
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }

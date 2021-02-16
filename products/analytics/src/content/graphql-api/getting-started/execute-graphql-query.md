@@ -22,12 +22,11 @@ header: Example bash script that uses curl to query Analytics API
 #!/bin/bash
 #
 # This script fetches the last 24 hours of firewall events for the ZoneID passed
-# in as the first parameter using the global key passed in as the second parameter.
+# in as the first parameter using the API token passed in as the second parameter.
 ######################################################################################
- 
+
 ZoneID="$1"
-global_key="$2"
-Email="user@domain.com"
+api_token="$2"
 #
 # Calculate 24 hours back and produce the start and end times in the appropriate format.
 back_seconds=60*60*24  # 24 hours
@@ -35,7 +34,7 @@ end_epoch=$(date +'%s')
 let start_epoch=$end_epoch-$back_seconds
 start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%m:%SZ')
 end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%m:%SZ')
- 
+
 PAYLOAD='{ "query":
   "query {
     viewer {
@@ -67,5 +66,5 @@ PAYLOAD="$PAYLOAD
 
 # Run query to GraphQL API endpoint
 
-curl -s -X POST -H "Content-Type: application/json" -H "X-Auth-Email: $Email" -H  "X-Auth-Key: $global_key" --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
+curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $api_token" --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
 ```
