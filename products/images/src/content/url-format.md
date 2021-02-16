@@ -85,10 +85,13 @@ At least one option must be specified. Options are comma-separated (spaces are n
     </Definitions>
 
 - `quality=x` or __`q=x`__
-  - Specifies quality for images in JPEG, WebP and AVIF formats. The quality is in 1-100 scale, but useful values are between 50 (low quality, small file size) and 90 (high quality, large file size). 85 is the default. It doesn’t do anything for PNG.
+  - Specifies quality for images in JPEG, WebP and AVIF formats. The quality is in 1-100 scale, but useful values are between 50 (low quality, small file size) and 90 (high quality, large file size). 85 is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
 
 - `format=auto` or __`f=auto`__
   - Allows serving of the WebP format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+
+- `anim=false`
+  - Reduces animations to still images. This setting is recommended to avoid surprisingly large animGIF files, or flashing images.
 
 - `sharpen=x`
   - Specifies strength of sharpening filter. The value is a floating-point number between 0 (no sharpening) and 10 (max). 1 is a recommended value.
