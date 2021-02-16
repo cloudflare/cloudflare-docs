@@ -47,6 +47,7 @@ For testing purposes, you can run the following command to generate a Unix user 
 ```sh
 $ sudo adduser jdoe
 ```
+
 ## 4. **Save your public key**
 
 1. Save the public key generated from the dashboard in Step 2 as a new `.pub` file in your system.
@@ -112,6 +113,7 @@ $ sudo systemctl restart ssh
 ```
 
 ## 7. Configure your client SSH config
+
 On the client side, follow the instructions [here](/ssh/ssh-guide/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:

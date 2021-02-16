@@ -25,6 +25,7 @@ This section will cover:
 # Connect the remote server to Cloudflare
 
 ## 1. Authenticate `cloudflared`
+
 1. Run the following command to authenticate cloudflared into your Cloudflare account.
 
 ```sh
@@ -93,6 +94,7 @@ The command will print the following details:
 Host ssh.site.com
 	ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```
+
 ## 2. Connect Over SSH To The Remote Machine
 
 1. Run the following command to create a connection from the device to Cloudflare.

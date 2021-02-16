@@ -11,6 +11,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 </Aside>
 
 ## Getting Started
+
 The Cloudflare WARP client supports manual installs, deployment scripts, or advanced enterprise management tools, such as Microsoft Intune or Jamf.
 
 To start using Cloudflare for Teams, ensure you perform the following steps prior to configuring the WARP client to connect to your Teams organization:

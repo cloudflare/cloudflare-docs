@@ -47,6 +47,7 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" POST "https://
 ```
 
 #### Parameters
+
 * *flag* - can be either `true` or `false`
 
 #### Response

@@ -34,11 +34,13 @@ In this example, we're going to expose a private version of the `echoserver` thr
 This example assumes you have a Kubernetes cluster running on one of the platforms mentioned above.
 
 ## Step One: Download `cloudflared` & Generate a Certificate
+
 Download and install `cloudflared` [here][cflare-tunnel-daemon].
 
 Then, run `cloudflared login` and select a domain to generate and download a certificate. Make sure the certificate is placed into `~/.cloudflared/cert.pem`
 
 ## Step Two: Install the Ingress Controller with Helm
+
 [Helm][help] is a package manager for kubernetes which defines an application as a set of templates. This makes it easy to install and update applications in a kubernetes cluster.
 
 Add the repository that holds the Helm chart:
@@ -62,6 +64,7 @@ $ helm install --name anydomain --namespace default \
 > **Note**: the controller watches all namespaces.
 
 ## Step Three: Deploy a Service into a Kubernetes Cluster
+
 The `echoserver` image starts a http listener that simply mimics the request as its response.
 
 Create a manifest called echo.yaml:
@@ -122,6 +125,7 @@ $ kubectl apply -f echo.yaml`
 > **Tip**: `-n` sets the namespace for deployment.
 
 ## Step Four: Create a Tunnel Secret
+
 Convert the domain certificate into a tunnel secret:
 
 ```sh
@@ -130,6 +134,7 @@ $ kubectl create secret generic mydomain.com --from-file="$HOME/.cloudflared/cer
 > **Tip**: `-n` sets the namespace for deployment.
 
 ## Step Five: Create an Ingress Definition
+
 The Kubernetes Ingress is a spec for external connectivity to a Kubernetes service. Typically,
 an ingress will contain an annotation, `kubernetes.io/ingress.class`, to identify the controller
 that should handle the ingress.
@@ -178,6 +183,7 @@ $ kubectl apply -f echo-tunnel.yaml
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
 
 ## Step Six: Use the Tunnel
+
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
 
 Curl the tunnel:

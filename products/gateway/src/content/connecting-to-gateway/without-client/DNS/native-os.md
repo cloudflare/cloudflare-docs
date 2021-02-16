@@ -15,6 +15,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 ### Ubuntu
 
 #### IPv4
+
 1. Click **System** > **Preferences** > **Network Connections**.
 2. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
 3. Click **Edit**.
@@ -26,6 +27,7 @@ Remove any IP addresses that may already be listed.
 7. Click **Apply**.
 
 #### IPv6
+
 1. Click **System** > **Preferences** > **Network Connections**.
 2. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
 3. Click **IPv6**.
@@ -35,6 +37,7 @@ Remove any IP addresses that may already be listed.
 ### Debian
 
 #### IPv4
+
 1. In the command line, type: `sudo vim /etc/resolv.conf`
 2. Press the **i** key on your keyboard to edit the document
 3. Replace the nameserver lines with:
@@ -44,6 +47,7 @@ Remove any IP addresses that may already be listed.
 5. Type `:wq`.
 
 ### IPv6
+
 1. In the command line, type: `sudo vim /etc/resolv.conf`
 2. Add the IPv6 address from that we listed based on your location configuration.
 3. Press the **ESC** key on your keyboard to save and exit vim. 
@@ -52,6 +56,7 @@ Remove any IP addresses that may already be listed.
 ## Mac
 
 ### IPv4
+
 1. Go to **System Preferences** > **Network**.
 2. Click **Advanced**.
 3. Select the **DNS** tab, and remove any IP addresses that may be already listed.
@@ -76,6 +81,7 @@ Remove any IP addresses that may already be listed.
 ## Windows
 
 ### IPv4
+
 1. Click on **Start** menu, then click on Control Panel.
 2. Click on **Network and Internet**.
 3. Click on **Change Adapter Settings**.
@@ -89,6 +95,7 @@ Remove any IP addresses that may already be listed.
 9. Click **OK**.
 
 ### IPv6
+
 1. Click on **Start** > **Control Panel**.
 2. Click on **Network and Internet**.
 3. Click on **Change Adapter Settings**.

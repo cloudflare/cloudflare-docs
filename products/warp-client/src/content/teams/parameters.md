@@ -78,7 +78,9 @@ Each client supports the following set of parameters as part of their deployment
 ## Frequently Asked Questions
 
 ### What happens if I don't supply a Gateway DoH subdomain?
+
 A DoH subdomain value is only required if you configure DNS Filtering.
 
 ### How do I obtain logs in the event of an issue with client?
+
 The macOS and Windows clients installations each contain an application in their installed folders called warp-diag that can be used to obtain logs.

@@ -61,6 +61,7 @@ Let’s take an example website secured with Access with a third-party service t
 If the service does not publish its IP range or it changes periodically, you can choose to include Everyone in the Bypass action so that any request can access the specified path.
 
 ### Service Auth
+
 Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
 
 ## Rule ordering

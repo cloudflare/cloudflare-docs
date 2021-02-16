@@ -12,6 +12,7 @@ This feature must be enabled by Cloudflare, if you do not see it please email yo
 </Aside>
 
 ## Before you start
+
 The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. See [Install Cloudflare Root CA for more information](https://developers.cloudflare.com/gateway/connecting-to-gateway/install-cloudflare-cert).
 
 ## Manage HTTP policies
@@ -43,6 +44,7 @@ When a HTTP policy applies the Isolate action the user's web browser is transpar
 | Host | In | `example.com`, `example.net` | Isolate
 
 #### Isolating entire domain names
+
 If you would like to isolate an entire domain name, use a regular expression match such as:
 
 | Selector | Operator | Value | Action |
@@ -60,6 +62,7 @@ For a list of recommended policies see <a href="/usage/isolated-traffic#managed-
 </Aside>
 
 ### API traffic
+
 Isolation policies are applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
 
 ## Enable L7 filtering

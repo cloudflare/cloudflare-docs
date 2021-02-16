@@ -82,6 +82,7 @@ $ find .terraform/
 ```
 
 ## 3. Reviewing the execution plan
+
 With the Cloudflare provider installed, let’s ask Terraform what changes it’s planning to make to your Cloudflare account so it matches the configuration you previously defined:
 
 ```sh

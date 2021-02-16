@@ -10,26 +10,32 @@ Note that if you were using 1.1.1.1 for Families in the mobile app, you will at 
 </Aside>
 
 ## Install the 1.1.1.1 mobile app
+
 Install the 1.1.1.1 mobile app by visiting the [play store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) on your Android device.
 
 If you already have the app on your phone, make sure you have the latest version of the app and then skip to the next step.
 
 ## Click on the menu button
+
 After you open the 1.1.1.1 mobile app, visit settings.
 
 ## Click on Advanced
+
 Click on 'Advanced' which is located under the 'Account' button.
 ![Click on Advanced](../../../static/android-click-on-advanced.png)
 
 ## Click on Connection options
+
 Click on 'Connection options' which is located at the bottom of the screen right above 'Diagnostics'.
 ![Click on Connection options](../../../static/android-click-on-connection-options.png)
 
 ## Click on DNS Settings
+
 Click on 'DNS Settings'. This will take you to the screen where you can configure Gateway for your 1.1.1.1 mobile app.
 ![Click on DNS Settings](../../../static/android-click-on-dns-settings.png)
 
 ## Enter unique id from Gateway
+
 When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
 
 1. Visit your teams dashboard to fetch the unique id from your location.

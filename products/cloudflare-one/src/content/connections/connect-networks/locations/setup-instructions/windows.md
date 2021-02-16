@@ -5,6 +5,7 @@ order: 3
 # Windows
 
 ## IPv4
+
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
 * Click on Change Adapter Settings.
@@ -18,6 +19,7 @@ order: 3
 * Click OK.
 
 ## IPv6
+
 * Click on the Start menu, then click on Control Panel.
 * Click on Network and Internet.
 * Click on Change Adapter Settings.

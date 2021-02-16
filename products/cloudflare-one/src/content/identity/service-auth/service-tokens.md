@@ -41,6 +41,7 @@ This is the **only time** Cloudflare Access will display the Client Secret. If y
 You can now use the service token when you create [service auth policies](/policies/zero-trust/).
 
 ## Connect your service to Access
+
 Access expects both values as headers in any request sent to the applications behind Access. Add the following to the headers of any requests and name them as follows:
 
 `CF-Access-Client-Id: <Client ID>`

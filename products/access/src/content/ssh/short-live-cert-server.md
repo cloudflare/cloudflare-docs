@@ -41,10 +41,13 @@ On the server, administrators save their public key as a `TrustedUserCAKeys` fil
 * **Comprehensive audit logs.** Regardless of your infrastructure, whether on-premisses, hybrid, or public cloud, administrators can control who can reach what environments in a single place. Audit logs are collected by Cloudflare Access and standardized across any protected resources. These logs let administrators know who accessed what and when.
 
 ### How can it be configured?
+
 #### 1. Secure a Server behind Cloudflare Access
+
 To protect a resource behind Cloudflare Access, first follow the instructions [here](/ssh/ssh-guide/) to secure the server.
 
 #### 2. Generate a Short-Lived Certificate Public Key
+
 In the Access section of the Cloudflare for Teams dashboard, navigate to the **Service Auth** row. In the drop-down, choose the application that represents the resource you secured in Step 1.
 
 ![New Cert](../static/short-lived/slc-create.png)
@@ -56,6 +59,7 @@ Click "Generate certificate" and a row will appear with a public key scoped to y
 You can return to copy the public key any time in the dashboard card.
 
 #### 3. Ensure Unix Usernames Match User SSO Identities
+
 Cloudflare Access will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure. Access matches based on the identity that precedes an email domain.
 
 For example, if the user's identity in your Okta or GSuite provider is "jdoe@example.com" then Access will look to match that identity to the Unix user "jdoe".
@@ -67,6 +71,7 @@ $ sudo adduser jdoe
 ```
 
 #### 4. Save your Public Key
+
 Save the public key generated from the dashboard in Step 2 as a new `.pub` file in your system. Use the following command to change directories to the SSH configuration directory on the machine.
 
 ```sh
@@ -87,6 +92,7 @@ In the `ca.pub` file, paste the public key generated in Access without any modif
 ```
 
 #### 5. Modify your SSHD Config
+
 Cloudflare Access requires two changes to the `SSHD` config file used on the target machine. The first change requires that you uncomment a field already set in most default configurations; the second change adds a new field.
 
 While staying within the "/etc/ssh" directory, open the ``"sshd_config"`` file.
@@ -117,6 +123,7 @@ The change above will tell your SSH configuration to use the public key saved in
 ```
 
 #### 6. Restart your SSH Server
+
 Once you have modified your `SSHD` configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running `systemd`, as well. You can execute both.
 
 ```sh
@@ -125,6 +132,7 @@ $ sudo systemctl restart ssh
 ```
 
 #### 7. Configure your Client SSH Config
+
 On the client side, follow the instructions [here](/ssh/ssh-guide/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 ```bash

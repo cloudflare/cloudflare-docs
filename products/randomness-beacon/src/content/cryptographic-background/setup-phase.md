@@ -19,6 +19,7 @@ Secret sharing allows you to split a secret value `𝑠` into `𝑛` shares `�
 The SSS scheme is one of the most well-known and widely used secret sharing approaches, and a core component of drand. SSS works over an arbitrary finite field, but a simplistic approach uses the integers modulo `𝑝`, denoted by `ℤ𝑝`. Let `𝑠∈ℤ𝑝` denote the secret to share.
 
 ### Share Distribution
+
 To share `𝑠`, a dealer first creates a polynomial, `𝑞(𝑥)=𝑎0+𝑎1𝑥+⋯+𝑎𝑡−1𝑥𝑡−1` with `𝑎0=𝑠` and (random) `𝑎𝑖∈ℤ𝑝` for `𝑖=1,…,𝑡−1` and then creates one share 𝑠𝑖 for each participant 𝑖 by evaluating 𝑞(𝑥) at the integer 𝑖 and setting 𝑠𝑖=(𝑖,𝑞(𝑖)).
 
 ### Secret Reconstruction

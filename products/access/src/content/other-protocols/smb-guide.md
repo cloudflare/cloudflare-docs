@@ -16,6 +16,7 @@ The Secure Messaging Block (SMB) protocol allows users to access, read, and writ
 Cloudflare Access provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to shared files over SMB without being on a virtual private network (VPN).
 
 ### Requirements
+
 * A Cloudflare account
 * A site active on Cloudflare
 * The `cloudflared` daemon installed on the host and client machines

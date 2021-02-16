@@ -18,6 +18,7 @@ We recognize that this emergency has put a strain on the infrastructure of compa
 If you are already a Cloudflare for Teams customer, we have removed the caps on usage during this emergency so you can scale to whatever number of seats you need without additional cost through September 1, 2020. If you are not yet using Cloudflare for Teams, and if you or your employer are struggling with limits on the capacity of your existing VPN or Firewall, we stand ready to help and have removed the limits on the free trials of our Access and Gateway products through September 1, 2020. Cloudflare employees around the world have volunteered to run onboarding sessions so you can get setup quickly and can ensure your business’ continuity.
 
 ### Program details
+
 The program includes the following features:
 * Up to 3 locations
 * Unlimited security and content filters

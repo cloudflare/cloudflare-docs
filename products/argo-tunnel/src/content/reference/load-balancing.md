@@ -47,6 +47,7 @@ you should manually specify your Tunnel's hostname as the Host header:
 ![Health Check UI](../static/img/load-balancing/health-check-header.png)
 
 ## Fall-back pools
+
 Users can configure fall-back pools in the event that service through an active tunnel is disrupted. The fall-back pool will consist of origin servers that can be reached over IP networks using TLS encryption and by making sure that the [Cloudflare IP addresses](https://www.cloudflare.com/ips/) are allowed (whitelisted) to reach to origin servers in this fall-back pool.
 
 The failover threshold from Argo Tunnel pool (number of healthy servers in the pool, number of [health-check failures](https://support.cloudflare.com/hc/en-us/articles/230866667-Identifying-Load-Balancing-Health-Checks), etc.), can be configured accordingly. In events that a fail-over to the fall-back pool may happen, the primary pool (Argo Tunnel) will become active again as soon as the configured threshold for number of healthy servers and state of health-checks is restored.

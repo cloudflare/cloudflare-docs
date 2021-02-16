@@ -23,6 +23,7 @@ To fully secure your application, you must ensure that no one can access your or
 The instructions below provide options for locking down the infrastructure secured by Cloudflare Access.
 
 #### 1. Set up Argo Tunnel
+
 To defend against attackers addressing IPs directly, Argo Tunnel can help secure the interface and force outbound requests through Cloudflare Access. With Argo Tunnel, and firewall rules preventing inbound traffic, no request can reach those IPs without first hitting Cloudflare, where Access can evaluate the request for authentication.
 
 Argo Tunnel runs in your infrastructure to connect the applications and machines to Cloudflare. That tunnel makes outbound-only calls to the Cloudflare network and organizations can replace complex firewall rules with just one: disable all inbound connections.
@@ -38,6 +39,7 @@ For more, see [_Validating JSON web tokens_](/setting-up-access/validate-jwt-tok
 Restrict inbound ingress so that only connections from [Cloudflare IP ranges](https://www.cloudflare.com/ips/) are allowed. This should be done in conjunction with validating the tokens sent by Cloudflare Access. This is not sufficient alone without JWT validation.
 
 #### 3. Do not create CNAME records that points to your protected hostname
+
 Adding a CNAME record within your account that points to the protected hostname can allow traffic to bypass the protected hostname. This is limited to CNAME records within the account. CNAME records from other accounts will still be blocked.
 
 ## Configure Cloudflare Access

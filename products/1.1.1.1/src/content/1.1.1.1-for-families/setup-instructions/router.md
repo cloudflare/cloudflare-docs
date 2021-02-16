@@ -98,6 +98,7 @@ Step 3: In the Internet Connection tab, under WAN DNS Setting, in DNS servers, a
 ```
 
 ## Block Malware and Adult Content
+
 Follow this quick guide to start using 1.1.1.1 for Families on your router.
 
 Step 1: Go to the IP address used to access your router's admin console in your browser.

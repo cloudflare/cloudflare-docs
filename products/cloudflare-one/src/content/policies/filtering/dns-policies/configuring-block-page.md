@@ -37,6 +37,7 @@ Enabling block page alone will not work for HTTPS connections. When your users t
 To fix the browser error, you need to download and add a certificate to your system.
 
 ## Download certificate
+
 1. Navigate to the **Settings** tab on your [Teams dashboard](https://dash.teams.cloudflare.com).
 1. Click on **Account**.
 1. Scroll down to find the **Certificates** card.
@@ -66,6 +67,7 @@ You will now need to add the certificate to your system to ensure your web brows
 If your system asks for admin permission, enter your password or use your fingerprint ID to confirm the changes.
 
 ### Firefox
+
 If you are not using Firefox, you can skip this section.
 
 Follow the instructions below to finish configuring the block page:
@@ -75,6 +77,7 @@ Follow the instructions below to finish configuring the block page:
 1. Set `security.enterprise_roots.enabled` to `true`.
 
 ## See the block page
+
 When you visit a blocked website you will now see the following block page:
 
 ![Block page](../../../static/documentation/policies/cert-block-page.png)

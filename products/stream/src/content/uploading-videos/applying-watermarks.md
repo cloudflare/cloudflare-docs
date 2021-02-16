@@ -30,6 +30,7 @@ tus-upload --chunk-size 5242880 \
 ```
 
 ### Step 3: Done
+
 ![Watermarked Video](./cat.png)
 
 ## Profiles
@@ -194,6 +195,7 @@ $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 ### Direct creator uploads
+
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
 
 ```bash
@@ -238,6 +240,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 `watermark` will be `null` if no watermark was specified.
 
 ## Get a watermark profile
+
 To view a watermark profile that you created:
 
 ```bash

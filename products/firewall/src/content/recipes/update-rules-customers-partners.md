@@ -13,6 +13,7 @@ These rules can bypass Cloudflare's security features and are generally not reco
 </Aside>
 
 ## Update firewall rules by ASN
+
 If a customer or partner is large enough, you could set up a firewall rule based on an [autonomous system number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
 
 ### Allow traffic by ASN
@@ -66,6 +67,7 @@ If a request meets these criteria, your firewall bypasses normal `User Agent Blo
 </table>
 
 ##  Update firewall rules by IP
+
 For smaller organizations, you could set up firewall rules based on IP addresses.
 
 ### Allow traffic by IP address

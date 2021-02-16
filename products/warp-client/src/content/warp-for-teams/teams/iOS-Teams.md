@@ -43,9 +43,11 @@ To proceed with the installation, here is an example of the XML code you will ne
 For a description of each argument and what it means, see [deployment parameters](/warp-for-teams/teams#parameters).
 
 ### Example Configuration in Jamf
+
 Follow these steps to deploy the WARP Client via Jamf:
 
 #### Upload the package
+
 1. Login to your `jamfcloud.com` account.
 1. Navigate to **Devices**.
 1. Click the **Mobile Device Apps**.
@@ -70,6 +72,7 @@ If you plan to direct your users to manually download and configure the Cloudfla
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH Subdomain
+
 If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain) to find this value for your Teams configuration.
 
 Then ask your users to complete the following steps:
@@ -82,6 +85,7 @@ Then ask your users to complete the following steps:
 1. Enter the DoH Sub Domain and tap **Back** until you are back at the home screen.
 
 ### Manually configure a Cloudflare for Teams device registration
+
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
 1. Find the **1.1.1.1** application and tap to launch.

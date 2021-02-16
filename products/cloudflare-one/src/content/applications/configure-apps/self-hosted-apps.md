@@ -65,6 +65,7 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 9. Click **Next**.
 
 ### 2. Add a policy
+
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies section](/policies/).

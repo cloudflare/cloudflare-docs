@@ -67,6 +67,7 @@ With Jamf, the WARP Client deployment is performed in three distinct steps:
 The following sections will walk you through each of these steps.
 
 #### Upload the package
+
 1. Login to your `jamfcloud.com` account.
 1. Navigate to **Computer**.
 1. Click the **All Settings** (gear) in the upper right corner.
@@ -78,6 +79,7 @@ The following sections will walk you through each of these steps.
 1. Click **Save** to complete the upload.
 
 #### Create the policy
+
 1. Select **Computers** > **Policies** on the menu to your left.
 1. Click **+ New**.
 1. Enter a Display name such as "Cloudflare WARP Client".  
@@ -88,6 +90,7 @@ The following sections will walk you through each of these steps.
 1. Click **Save**.
 
 #### Add Configuration Profile
+
 1. Navigate to **Configuration Profiles**.
 1. Click **New**.
 1. Enter a name for your new profile, such as *Cloudflare for Teams*.
@@ -107,6 +110,7 @@ If you plan to direct your users to manually download and configure the Cloudfla
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH Subdomain
+
 If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain) to find this value for your Teams configuration.
 
 Then ask your users to complete the following steps:
@@ -120,6 +124,7 @@ Then ask your users to complete the following steps:
 ![Preferences UI in the connection tab with the Change button circled](../../static/macOS_GatewayButton.png)
 
 ### Manually configure a Cloudflare for Teams device registration
+
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
 1. Click on the Cloudflare Logo in the Menu Bar.

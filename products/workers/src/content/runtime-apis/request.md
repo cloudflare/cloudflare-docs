@@ -90,6 +90,7 @@ let request = new Request(input [, init])
 </Definitions>
 
 #### `RequestInitCfProperties`
+
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
 ```js

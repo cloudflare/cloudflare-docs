@@ -44,6 +44,7 @@ Do not enable HttpOnly if:
 The Binding Cookie is an additional cookie created when a user successfully authenticates, shared with Cloudflare to verify identity, and then stripped before it reaches the origin server. The Binding Cookie associates the browser with the Access token; the association protects against compromised authorization tokens because the origin webapp would never see this binding cookie. This protects against session hijack style attacks.
 
 ### When not to use the Binding Cookie
+
 * Do not use the Binding Cookie for non-browser based Access applications that rely on protocols like SSH, RDP, etc.
 
 ## SameSite Attribute
@@ -58,6 +59,7 @@ The selector options are<sup>[[1](#source)]</sup>:
 See [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) for specific behaviors of these options.
 
 ## When not to use SameSite
+
 * If you have additional sites or applications that rely on a specific application’s authorization cookie.
 
 #### References

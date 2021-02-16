@@ -19,6 +19,7 @@ simultaneously.
 </Aside>
 
 ## Sidecar model background
+
 A Kubernetes [pod](https://kubernetes.io/docs/concepts/workloads/pods/pod/) consists of
 one or more containers that share storage and network. Pods are defined by a
 configuration file that determines the deployment of the containers, typically
@@ -35,6 +36,7 @@ hostname. The `cloudflared` container will then send those requests to port
 shared IP address space.
 
 ## `cloudflared` Docker image
+
 Cloudflare publishes an official Docker image of `cloudflared` available on [DockerHub](https://hub.docker.com/r/cloudflare/cloudflared).
 
 Alternatively, you can build your own image.`cloudflared` is written in Go and can be built
@@ -45,6 +47,7 @@ Once built, the image will need to be pushed to a container registry that the
 Kubernetes cluster can reach (whether a private registry or a public one like Docker Hub or Google Container Registry).
 
 ## Secret generation
+
 Even though Kubernetes will grab the `cloudflared` image from a container
 registry, the sidecar model still needs a mechanism for authentication.
 Argo Tunnel authenticates machines to a hostname using a certificate
@@ -79,6 +82,7 @@ example.com         opaque       3    42s
 ```
 
 ## Pod configuration
+
 Kubernetes can use YAML files to configure the settings for the
 deployment of a Pod to a given cluster. In the sidecar model,
 `cloudflared` must be defined as a "kind: Deployment" section. The

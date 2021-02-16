@@ -64,6 +64,7 @@ Wildcard custom hostnames are similar to new Custom Hostnames, but with wildcard
 --------
 
 ## Example scenarios
+
 Customer1 uses Cloudflare for authoritative DNS for the zone *shop.example.com*. Customer2 is a SaaS provider that creates and successfully verifies the new Custom Hostname shop.*example.com*. Afterward, traffic starts routing over Customer2’s zone.
 - If Customer1 wants to regain control of their zone, Customer 1 contacts Customer2 and requests them to delete the Custom Hostname record. Another  possibility is to grey-cloud the record.
 - If Customer1 is already proxying a new Custom Hostname for *www.example.com*, Customer2 creates and verifies *www.example.com* so traffic starts routing over Customer2’s zone.  Since this new Custom Hostname is the last one validated, the new custom hostname on Customer1’s zone enters a *moved* status.

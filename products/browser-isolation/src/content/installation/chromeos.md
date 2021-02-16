@@ -19,6 +19,7 @@ Import the Cloudflare Root CA within Chrome:
 4. Import the Cloudflare Root CA.
 
 ## Install WARP client for Android
+
 ChromeOS is compatible with the WARP client for [Android](https://developers.cloudflare.com/warp-client/warp-for-teams/teams/android-Teams).
 
 1. Open the **Play Store** app.
@@ -26,6 +27,7 @@ ChromeOS is compatible with the WARP client for [Android](https://developers.clo
 3. Download and install the WARP client ([1.1.1.1: Faster and Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone)).
 
 ### Manually configure a Cloudflare for Teams device registration
+
 Follow these instructions to authorize your device with Cloudflare for Teams.
 
 1. Fine the **1.1.1.1** application and tap to launch.

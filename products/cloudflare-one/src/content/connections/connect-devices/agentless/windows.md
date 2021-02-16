@@ -6,6 +6,7 @@ hidden: true
 # Windows
 
 ## IPv4
+
 1. Click on **Start** menu, then click on Control Panel.
 2. Click on **Network and Internet**.
 3. Click on **Change Adapter Settings**.
@@ -19,6 +20,7 @@ hidden: true
 9. Click **OK**.
 
 ## IPv6
+
 1. Click on **Start** > **Control Panel**.
 2. Click on **Network and Internet**.
 3. Click on **Change Adapter Settings**.

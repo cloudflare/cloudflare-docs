@@ -6,6 +6,7 @@ order: 1
 # Installation requirements
 
 ## Windows
+
 <table>
   <tbody>
     <tr>
@@ -34,6 +35,7 @@ order: 1
 __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi)__
 
 ## macOS
+
 <table>
   <tbody>
     <tr>
@@ -62,6 +64,7 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
 __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)__
 
 ## iOS
+
 <table>
   <tbody>
     <tr>
@@ -74,6 +77,7 @@ __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.
 [Download from the iOS App Store](https://apps.apple.com/us/app/id1423538627) or search for “1.1.1.1: Faster Internet”.
 
 ## Android
+
 <table>
   <tbody>
     <tr>

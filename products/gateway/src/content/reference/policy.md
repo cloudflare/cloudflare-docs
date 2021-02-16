@@ -110,6 +110,7 @@ These are the action types you can choose from:
 *Bypass* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
 
 #### Selectors
+
 Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Host**
 * **URL**
@@ -152,6 +153,7 @@ List of file extensions Gateway can match against:
 </TableWrap>
 
 #### Operators
+
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
 
 | Operator              |          Meaning
@@ -164,6 +166,7 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 |  does not match regex |  all except when regex evals to true   |
 
 #### Expressions
+
 Expressions are sets of conditions with which you can combine [selectors](#selectors) and [operators](#operators). By configuring one or more expressions, you can define the scope of your HTTP policy. 
 
 #### Example scenarios

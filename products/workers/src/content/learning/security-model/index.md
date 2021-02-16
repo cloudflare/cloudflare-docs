@@ -152,6 +152,7 @@ Some have proposed that we can solve this by making timers inaccurate or adding 
 Many security researchers see this as the end of the story. What good is slowing down an attack, if the attack is still possible? Once the attacker gets your private key, it’s game over, right? What difference does it make if it takes them a minute or a month?
 
 ### Cascading slow-downs
+
 We find that, actually, measures that slow down an attack can be powerful.
 
 Our key insight is this: as an attack becomes slower, new techniques become practical to make it even slower still. The goal, then, is to chain together enough techniques that an attack becomes so slow as to be uninteresting.

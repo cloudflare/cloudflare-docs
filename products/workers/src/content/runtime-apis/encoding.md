@@ -44,6 +44,7 @@ The **TextDecoder** interface represents a UTF-8 decoder. Decoders take a stream
 [`TextDecoder()`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/TextDecoder) returns a newly constructed `TextDecoder` that generates a code-point stream.
 
 ### Constructor
+
 ```js
 let decoder = new TextDecoder()
 ```

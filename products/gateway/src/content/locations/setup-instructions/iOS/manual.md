@@ -16,6 +16,7 @@ Note that if you were using 1.1.1.1 for Families in the mobile app, you will at 
 </Aside>
 
 ## Install the 1.1.1.1 mobile app
+
 Install the 1.1.1.1 mobile app by visiting the [app store](https://itunes.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) on your iOS device.
 
 If you already have the app on your phone, make sure you have the latest version of the app and then skip to the next step.
@@ -23,22 +24,27 @@ If you already have the app on your phone, make sure you have the latest version
 ![Install the 1.1.1.1 mobile app](../../../static/install-one-dot-app.png)
 
 ## Click on the menu button
+
 After you open the 1.1.1.1 mobile app, click on the menu button on the top right corner.
 ![Click on the menu button](../../../static/click-on-menu.PNG)
 
 ## Click on Advanced
+
 Click on 'Advanced' which is located under the 'Account' button.
 ![Click on Advanced](../../../static/click-on-advanced.PNG)
 
 ## Click on Connection options
+
 Click on 'Connection options' which is located at the bottom of the screen right above 'Diagnostics'.
 ![Click on Connection options](../../../static/click-on-connection-options.PNG)
 
 ## Click on DNS Settings
+
 Click on 'DNS Settings'. This will take you to the screen where you can configure Gateway for your 1.1.1.1 mobile app.
 ![Click on DNS Settings](../../../static/click-on-dns-settings.PNG)
 
 ## Enter unique id from Gateway
+
 When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
 
 1. Visit your teams dashboard to fetch the unique id from your location.

@@ -39,6 +39,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
  ```
 
 ### Example configuration with Microsoft Intune
+
 Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 
 1. Login to your Microsoft Intune account.
@@ -68,6 +69,7 @@ If you plan to direct your users to manually download and configure the Cloudfla
 * If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH Subdomain
+
 If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain) to find this value for your Teams configuration.
 
 Then ask your users to complete the following steps:
@@ -82,6 +84,7 @@ Then ask your users to complete the following steps:
 ![Preferences UI in the connection tab with the Change button circled](../../static/windows_GatewayButton.png)
 
 ### Manually configure a Cloudflare for Teams device registration
+
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
 1. Click on the Cloudflare Logo in the System Tray.

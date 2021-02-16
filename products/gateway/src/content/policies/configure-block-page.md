@@ -28,6 +28,7 @@ You can remove this confusion by show Cloudflare Gateway's block page to explain
 Here's how you can configure a block page using Gateway's policy engine:
 
 ## Enable block page
+
 ![Enable block page](../static/enable-block-page.png)
 
 In the policy configuration page, enable the block by toggling the switch annotated above. Hit 'Save'.
@@ -36,12 +37,14 @@ Enabling block page alone will not work for HTTPS connections. Your users will s
 ![HTTPS browser error](../static/https-browser-error.png)
 
 ## Download certificate
+
 To fix the browser error, go to the Account page to download a certificate given by Cloudflare.
 
 From the account page click on 'Download' to add the certificate:
 ![Download certificate](../static/update-certificates-page.png)
 
 ## Add certificate to your system
+
 You will need to add the certificate to your system to ensure your web browser will use this certificate to establish HTTPS connections.
 
 If you are on a Mac, double click on the .pem file. You will notice that the certificate is now listed in the 'Keychain Access' application like below:
@@ -56,6 +59,7 @@ From the drop down menu for **When using this certificate** select ***Always Tru
 Now close the menu and if your system asks for admin permission enter your password or use your fingerprint ID to confirm the changes.
 
 ## Firefox
+
 If you are not using Firefox, you can skip to the next section.
 
 Follow the instructions below to finish configuring the block page:
@@ -67,5 +71,6 @@ Follow the instructions below to finish configuring the block page:
 * Set `security.enterprise_roots.enabled` to `true`
 
 ## See block page
+
 You are now all set, and when you visit a blocked website you will see the following block page:
 ![Block page](../static/cert-block-page.png)

@@ -23,24 +23,29 @@ To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 5. Hit **Save**.
 
 ## Test SafeSearch
+
 You can test if SafeSearch is working by performing dig on the search engines. Instead of returning the regular IP address, you should see the CNAMEs returned like below:
 
 ### Google
+
 Google will return `forcesafesearch.google.com`.
 
 ![SafeSearch Google](../../../static/documentation/policies/google-safesearch.png)
 
 ### YouTube
+
 YouTube will return `restrict.youtube.com`.
 
 ![SafeSearch Youtube](../../../static/documentation/policies/youtube-safesearch.png)
 
 ### Bing
+
 Bing will return `strict.bing.com`.
 
 ![SafeSearch Bing](../../../static/documentation/policies/bing-safesearch.png)
 
 ### DuckDuckGo
+
 DuckDuckGo will return `safe.duckduckgo.com`.
 
 ![SafeSearch DuckDuckGo](../../../static/documentation/policies/duckduckgo-safesearch.png)

@@ -54,6 +54,7 @@ As mentioned, to start managing existing Cloudflare resources in Terraform, e.g.
 2. An accompanying Terraform state file of that resources state (defined in a .tfstate file)
 
 ### 1. Generate Terraform Configuration with Cf-Terraforming
+
 If you don't have a Terraform configuration file defined, all you need is the provider blocked defined as follows:
 
 ```tf

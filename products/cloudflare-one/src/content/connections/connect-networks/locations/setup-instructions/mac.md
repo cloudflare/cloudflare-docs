@@ -5,6 +5,7 @@ order: 2
 # Mac
 
 ## IPv4
+
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
 * Click Advanced.
@@ -15,6 +16,7 @@ order: 2
 * Click Apply.
 
 ## IPv6
+
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
 * Click Advanced.

@@ -17,6 +17,7 @@ Cloudflare Access provides a mechanism for end users to authenticate with their 
 You can choose to deploy the Cloudflare agent on every target desktop or deploy it once, in a bastion mode, in your target environment.
 
 ### Requirements
+
 * A Cloudflare account
 * A site active on Cloudflare
 * The `cloudflared` daemon installed on the host and client machines

@@ -15,6 +15,7 @@ TryCloudflare is a tool that allows developers to experiment with Argo Tunnel wi
 TryCloudflare will launch a process that generates a random subdomain on `trycloudflare.com`. Requests to that subdomain will be proxied through the Cloudflare network to your web server running on localhost.
 
 ## Using TryCloudflare
+
 1. Follow the instructions [here](/getting-started/installation) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
 2. Launch a web server that is available over localhost to `cloudflared`.
 3. Run the following terminal command to start a free tunnel.
@@ -32,6 +33,7 @@ $ cloudflared tunnel --url http://localhost:7000
 `cloudflared` will generate a random subdomain when connecting to the Cloudflare network and print it in the terminal for you to use and share. The output will serve traffic from the server on your local machine to the public internet, using Cloudflare's Argo Smart Routing, at a public URL.
 
 ## Example use cases for TryCloudflare
+
 With TryCloudflare, you can:
 * Create a web server for a project on your laptop that you want to share with others on different networks.
 
@@ -53,4 +55,5 @@ Free tunnels are meant to be used for testing and development, not for deploying
 * With TryCloudflare, we plan to test new Argo Tunnel features and improvements. This provides us with a group of connections to test before we deploy to production customers.
 
 ## Legal
+
 Your installation of `cloudflared` software constitutes a symbol of your signature indicating that you accept the terms of the [Cloudflare License](/license/), [Terms](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/).

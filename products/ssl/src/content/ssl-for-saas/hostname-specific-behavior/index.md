@@ -9,6 +9,7 @@ order: 0
 ## For less than 125 hostnames
 
 ### Page Rules
+
 You can set custom behavior per-hostname (customer), or per path with a wildcard, using Page Rules. For example, the rules below modify Cache behavior on paths containing /static/ on any hostname; and set a higher security level on one particular hostname.
 
 Page Rules are an easy way to quickly create rules to modify request behavior, but they are limited in quantity to 125. If you would like to create additional rules, please review the Custom Metadata detail below.

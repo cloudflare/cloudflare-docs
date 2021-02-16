@@ -11,12 +11,13 @@ This section addresses the most common issues you may come across when setting u
   <Button type="primary" href="/faq/gateway/">Gateway</Button>
   <Button type="primary" href="/faq/warp/">WARP client</Button>
   <Button type="primary" href="/faq/tunnel/">Argo Tunnel</Button>
-  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button> 
+  <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button>
 </ButtonGroup>
 
 ## Gateway help
 
 ### What is the difference between Cloudflare Gateway and 1.1.1.1?
+
 The primary difference between 1.1.1.1 and Cloudflare Gateway is that 1.1.1.1 does not block any DNS query. When a browser requests for example.com, 1.1.1.1 simply looks up the answer either in cache or by performing a full recursive DNS query.
 
 Cloudflare Gateway's DNS resolver adds an additional step to introduce security into this flow. Instead of allowing all DNS queries, Gateway first checks the hostname being queried against the intelligence Cloudflare has about threats on the Internet. If that query matches a known threat, or is requesting a blocked domain configured by an administrator as part of a Gateway policy, Gateway stops it before the site could load for the user - and potentially execute code or phish that team member.
@@ -24,11 +25,12 @@ Cloudflare Gateway's DNS resolver adds an additional step to introduce security 
 For example, if you are using Cloudflare Gateway, and send a DNS query to example.com, Gateway checks if the DNS query matches with any of the policies you set up earlier to block domains. The policy could be a domain that you are manually blocking or it could be part of a broader security category that you enabled. If the domain matches one of those cases, Gateway will return REFUSED. The browser will think this website does not exist. As a result, it will not take the customer to the blocked website.
 
 ### Does Cloudflare Gateway support IPv6 networks?
+
 Yes. Each location has a unique IPv6 address. You can use that IPv6 address to send DNS queries to Cloudflare Gateway.
 
 ### How can I report a false positive?
 
-If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed. 
+If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed.
 
 ## Policies
 
@@ -44,25 +46,31 @@ Let's say you want to block requests to two hosts if either appears in a request
 To evaluate if your regex matches, you can use [this tool](https://rustexp.lpil.uk/).
 
 ### If I add a policy, how long does it take to propagate or take effect?
+
 It takes about 60 seconds for the policy to be updated across all of our data centers around the world.
 
 If you are still seeing responses from the DNS queries for a domain that you blocked. The answers may be cached by your browser from anywhere between 5 minutes to a few hours.
 
 ### In what order does Gateway apply the rules inside a policy?
+
 Visit the [policies page](/policies) to see in what order Gateway applies its rules inside a policy.
 
 ### Can I use a wildcard operator to block domains?
+
 You don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/policies).
 
 ### What happens when I have multiple policies assigned to the same location?
+
 If you have multiple policies and both policies are applied to a single location, Gateway will arbitrarily choose one of the policies and apply them to the location.
 
 ### What happens when there is no policy assigned to a location?
+
 Assuming the location is configured correctly, Gateway will log the DNS queries and show them in the analytics dashboard. As there are no policies assigned to the location, Gateway will not block any DNS queries.
 
 ### You added a domain to the block list but you can still resolve it. Here's what could've happened:
 
 #### 1. Policy update is still in progress
+
 After you update your policy, Cloudflare updates the new setting across all of our data centers around the world. It takes about 60 seconds to update the policy when you make a change.
 
 #### 2. DNS records are cached
@@ -109,9 +117,11 @@ Use the instructions in the Mac section to flush the DNS cache for Safari.
 3. Now go back and change the value to `3600`
 
 #### 3. Your device using another DNS resolver
+
 If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. As a result, the domain you are trying to block is still accessible from your device. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 
 #### 4. The policy is not assigned to a location
+
 If your policy is not assigned to a location and you send a DNS query from that location, Gateway will not apply that policy. Assign a policy to a location to make sure the desired policy is applied when you send a DNS query from that location.
 
 ### I have a dynamic IP address assigned to me by my ISP. How can I still use Gateway?
@@ -127,6 +137,7 @@ Connecting to Gateway with the Cloudflare WARP client creates a secure connectio
 [Learn more about the Cloudflare WARP client](https://developers.cloudflare.com/warpclient/)
 
 ### How can I check if Gateway is blocking a domain?
+
 After you blocked a domain using a policy, you can use either `dig` or `nslookup` to see if it's working.
 
 Before you test if the domain is blocked, please make sure that you are connected to a network that is associated with the location where the policy is applied.
@@ -148,6 +159,7 @@ You can visit the [Teams help page](https://help.teams.cloudflare.com/). This pa
 
 
 ### How can I test if SafeSearch is working?
+
 Visit the [SafeSearch page](/policies/filtering/dns-policies/safesearch) to see how you can test if SafeSearch is working.
 
 ### I receive an untrusted certificate warnings for every page and I am unable to browse the internet.
@@ -220,18 +232,18 @@ In order to accommodate applications that take advantage of certificate pinning,
 
 Some common applications that make use of certificate pinning include:
 
-<TableWrap>	
+<TableWrap>
 
-| Application     | FQDN               | Bypass Rules                                                                           |	
-|-----------------|--------------------|----------------------------------------------------------------------------------------|	
-| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |	
-| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |	
-| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |	
-| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |	
-| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |	
-| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |	
-| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |	
-| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |	
+| Application     | FQDN               | Bypass Rules                                                                           |
+|-----------------|--------------------|----------------------------------------------------------------------------------------|
+| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |
+| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |
+| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |
+| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |
+| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |
+| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |
+| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass          |
+| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass         |	
 
 </TableWrap>
 
@@ -246,6 +258,7 @@ If your network supports IPv6, you can still use Cloudflare Gateway's DNS filter
 ## Analytics
 
 ### Will I see the private IP addresses in the activity log?
+
 No. The IP addresses are NAT-ed behind a public IP address. Activity log will only show the public Source IP address.
 
 ### You are not seeing analytics on the Overview page
@@ -255,15 +268,19 @@ No. The IP addresses are NAT-ed behind a public IP address. Activity log will on
 You may not see analytics on the Overview page for the following reasons:
 
 ##### 1. You are not sending DNS queries to Gateway
+
 Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location:
 
 ![Location With Destinations](../static/documentation/faq/expanded-location-with-destinations.png)
 
 ##### 2. You are using other DNS resolvers
+
 If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 
 ##### 3. The source IPv4 address for your location is incorrect
+
 If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
 
 ##### 4. Analytics is not available yet
+
 It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.

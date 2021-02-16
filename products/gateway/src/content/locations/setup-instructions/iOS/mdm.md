@@ -20,6 +20,7 @@ You can disable it by going to `Advanced -> Connection options -> DNS Settings -
 You can deploy Gateway to your corporate iOS devices in bulk. Use an MDM solution to deploy your Gateway configuration to all corporate devices. If you want to learn how to use Gateway on your personal iOS device please use the setup instructions from [this page](/locations/setup-instructions/ios/manual/) instead.
 
 ## Unique Gateway Id
+
 When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
 
 1. Visit your teams dashboard to fetch the unique id from your location.

@@ -11,6 +11,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 </Aside>
 
 ## IPv4
+
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
 * Click Advanced.
@@ -21,6 +22,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 * Click Apply.
 
 ## IPv6
+
 * Go to System Preferences. You can find it by pressing Command+Space on your Mac and typing System Preferences.
 * Click on the icon called Network.
 * Click Advanced.

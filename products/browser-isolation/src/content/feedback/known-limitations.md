@@ -6,6 +6,7 @@ order: 3
 # Known limitations
 
 ## Webpage compatibility
+
 Our Network Vector Rendering (NVR) technology allows us to deliver a secure remote computing experience without the bandwidth limitations of video streams. While we expect most websites to work perfectly, some browser features and web technologies are unsupported and will be implemented in future:
 
 - Webcam / Microphone support is unavailable.
@@ -20,6 +21,7 @@ If one of these limitations affects you, please let us know by [submitting feedb
 Browser extensions / plugins are not compatible with isolated pages at this time however we do plan to support them in future. Let us know what plugins you would like supported by [submitting feedback](/feedback).
 
 ### Ad blockers
+
 Advertisement blocking extensions installed in your local browser such as AdBlock or uBlock Origin may negatively interfere with the web-based remoting client. While using isolated browsing it is recommended to disable ad blocking extensions.
 
 ## Device / Browser support

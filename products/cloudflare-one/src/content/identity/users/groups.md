@@ -5,6 +5,7 @@ order: 1
 # Groups
 
 ## Definition
+
 A group is a set of rules that can be configured once and then quickly applied across many Access applications. You can select a group as a selector in any zero-trust rule, and all the criteria from the selected group will apply to that application.
 
 <Aside>

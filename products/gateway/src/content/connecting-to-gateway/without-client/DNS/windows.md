@@ -12,6 +12,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 </Aside>
 
 ## IPv4
+
 1. Click on **Start** menu, then click on Control Panel.
 2. Click on **Network and Internet**.
 3. Click on **Change Adapter Settings**.
@@ -25,6 +26,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 9. Click **OK**.
 
 ## IPv6
+
 1. Click on **Start** > **Control Panel**.
 2. Click on **Network and Internet**.
 3. Click on **Change Adapter Settings**.

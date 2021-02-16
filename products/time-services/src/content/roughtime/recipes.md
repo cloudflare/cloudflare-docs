@@ -49,6 +49,7 @@ service can be reached, and which transport protocol to use to reach them.
 (Currently only UDP is supported.)
 
 ## TLS
+
 As a warm up , let's see how to sync a TLS client or server using a single
 Roughtime server.  What
 we're going to do is compute the time difference between our clock and the
@@ -133,6 +134,7 @@ This rejects responses whose uncertainty radii exceed 10 seconds. (An error will
 be returned if there were no valid responses.)
 
 ### Auditing Your Sources
+
 Function `roughtime.Do()` chains together valid responses, generating each nonce
 using the server's response in the last successful query. As we discuss in
 more detail in the [blog](https://blog.cloudflare.com/roughtime/), linking queries together in this manner
@@ -152,6 +154,7 @@ a starting point for verifying the chain. For example, if `chain.Verify(nil)` is
 valid, then `chain.Next.Verify(chain.Roughtime)` will be valid, too.
 
 ### Being Verbose
+
 It's possible to have `roughtime.Do()` output useful information as it executes
 its queries. To do so, invoke `roughtime.SetLogger()` to set a logger. For
 example:

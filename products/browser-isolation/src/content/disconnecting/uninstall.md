@@ -11,6 +11,7 @@ Here's how to remove them:
 ### macOS
 
 #### Cloudflare WARP
+
 1. Close Cloudflare WARP
    1. Select Cloudflare WARP from your menu bar (top right).
    2. Select the Gear Icon
@@ -20,6 +21,7 @@ Here's how to remove them:
 4. Drag **Cloudflare WARP** to your Trash icon in the Dock.
 
 #### Cloudflare for Teams Root CA
+
 1. Open Keychain Access.
 The fastest way to do this is open Spotlight (Command + Space) and type: *Keychain Access*.
 2. Search "*Cloudflare for Teams ECC Certificate Authority*" in search input (top right).
@@ -28,9 +30,11 @@ The fastest way to do this is open Spotlight (Command + Space) and type: *Keycha
 ![Recording of Windows express installation](../static/macos-remove-root-ca.png)
 
 ### Windows
+
 Both the **Cloudflare for Teams Root CA** and the **Cloudflare WARP** client may be uninstalled in Windows 10 settings:
 
 #### Cloudflare WARP
+
 1. Close Cloudflare WARP
    1. Select *Cloudflare WARP* from your task bar (bottom right).
    2. Select the Gear Icon.

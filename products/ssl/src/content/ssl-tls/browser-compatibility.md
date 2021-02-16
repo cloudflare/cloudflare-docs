@@ -20,6 +20,7 @@ Cloudflare Universal SSL only supports browsers and API clients that use the [Se
 </Aside>
 
 ### Free plan
+
 Universal SSL certificates issued for Free plan zones require user agents that send Server Name Indication (SNI) and support the Elliptic Curve Digital Signature Algorithm (ECDSA). SNI and ECDSA certificates work with these modern browsers:
 
 **Desktop Browsers installed on Windows Vista or OS X 10.6 or later**:

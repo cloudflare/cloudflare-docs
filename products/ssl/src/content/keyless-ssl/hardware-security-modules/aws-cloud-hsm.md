@@ -56,6 +56,7 @@ Command: exit
 --------
 
 ## 2. Modify the gokeyless config file and restart the service
+
 Now that the keys are in place, we need to modify the configuration file that the key server will read on startup. Be sure to change the `object=mykey` and `pin-value=username:password` values to match the key label you provided and CU user you created.
 
 Open  `/etc/keyless/gokeyless.yaml` and immediately after:

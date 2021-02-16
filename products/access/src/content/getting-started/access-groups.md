@@ -40,6 +40,7 @@ To create and manage Access Groups:
 6. Click **Save**.
 
 ## Legacy Groups
+
 Cloudflare Access supported a flow in the UI to build policies with IdP groups, called *Legacy groups*. Native integration with groups surfaced from your IdP has replaced this feature.
 
 If your account built policies with Legacy groups, these are still available and continue to work as you intend.

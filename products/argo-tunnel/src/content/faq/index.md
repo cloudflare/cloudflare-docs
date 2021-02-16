@@ -13,6 +13,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 ## General
 
 ### What causes tunnels to fail to authenticate?
+
 To start using Argo Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`.
 The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
 
@@ -169,9 +170,11 @@ No. When using Argo Tunnel, all requests to the origin are made internally betwe
 To log external visitor IPs, you will need to [configure an alternative method](https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs-Logging-visitor-IP-addresses-with-mod-cloudflare-).
 
 ### When does the cert.pem generated expire?
+
 The Argo Tunnel login command generates an origin certificate and a service token. Both are stored in the `cert.pem`. The origin certificate is valid for at least 10 years and the service token is valid until revoked.
 
 ### How to revoke the credentials for a tunnel?
+
 When you (as an administrator in possession of the cert.pem obtained with `cloudflared login`) create a tunnel via
 `cloudflared tunnel create` this generates a JSON credentials file. That file can be distributed to other users (who do
 not have the cert.pem) and they will (only) be able to start connections to serve that tunnel origin.

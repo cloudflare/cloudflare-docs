@@ -7,6 +7,7 @@ order: 1
 --------
 
 ## Configure zone with proxy fallback origin
+
 The fallback origin is used to route the traffic of your Custom Hostnames.  The fallback record is the value of the DNS record you set up via step 2 below.
 
 1. Sign up your desired zone at [www.cloudflare.com](https://www.cloudflare.com) and select the Free plan.
@@ -29,6 +30,7 @@ $ curl -XPUT
 --------
 
 ## Certificate Validation vs Hostname Verification
+
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
 * __[Certificate Validation](https://developers.cloudflare.com/ssl/ssl-for-saas/certificate-validation-methods/)__: Upon successful validation, the certificates are deployed to Cloudflare’s edge network.

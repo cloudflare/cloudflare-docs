@@ -16,6 +16,7 @@ Cloudflare offers options to customize the appearance of your waiting room:
   * Alternatively, you can import a HTML file.
 
 ## Default waiting room
+
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
 
 ![Choose default waiting room](../../../static/default-form.png)

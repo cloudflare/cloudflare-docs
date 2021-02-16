@@ -38,6 +38,7 @@ Set-Location "C:\cloudflared"
 (New-Object System.Net.WebClient).DownloadFile("https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-amd64.zip","c:\cloudflared\cloudflared.zip")
 Expand-Archive -LiteralPath c:\cloudflared\cloudflared.zip -DestinationPath c:\cloudflared
 ```
+
 ### 2. Authenticate `cloudflared`
 
 1. Run the following command to authenticate `cloudflared` into your Cloudflare account.

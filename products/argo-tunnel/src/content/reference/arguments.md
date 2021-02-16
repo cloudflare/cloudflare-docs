@@ -18,6 +18,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 <div id="tunnel-command">
 
 ### Tunnel command
+
 </div>
 
 All tunnel-related commands are prefixed with 'tunnel'. For example:
@@ -29,6 +30,7 @@ cloudflared tunnel --url localhost:5555 --hostname x.example.com
 <div id="config">
 
 ## config
+
 </div>
 
 Syntax: `--config value`
@@ -40,6 +42,7 @@ Specifies a config file in YAML format.
 <div id="url">
 
 ## url
+
 </div>
 
 Syntax: `--url URL`
@@ -52,6 +55,7 @@ Connect to the local webserver at URL.
 <div id="hostname">
 
 ## hostname
+
 </div>
 
 Syntax: `--hostname value`
@@ -63,6 +67,7 @@ Set a hostname on a Cloudflare zone to route traffic through this tunnel.
 <div id="lb-pool">
 
 ## lb-pool
+
 </div>
 
 Syntax : `--lb-pool POOL_NAME`
@@ -74,6 +79,7 @@ pool will be load balanced across this tunnel and any other tunnels which share 
 <div id="autoupdate-freq">
 
 ## autoupdate-freq
+
 </div>
 
 Syntax: `--autoupdate-freq duration`
@@ -85,6 +91,7 @@ Autoupdate frequency. See also [--no-autoupdate](#no-autoupdate)
 <div id="no-autoupdate">
 
 ## no-autoupdate
+
 </div>
 
 Syntax: `--no-autoupdate`
@@ -98,6 +105,7 @@ Restarts are performed by spawning a new process that connects to the Cloudflare
 <div id="origincert">
 
 ## origincert
+
 </div>
 
 Syntax: `--origincert value`
@@ -111,6 +119,7 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 <div id="no-tls-verify">
 
 ## no-tls-verify
+
 </div>
 
 Syntax: `--no-tls-verify`
@@ -127,6 +136,7 @@ The connection from your machine to Cloudflare's Edge is still encrypted and ver
 <div id="origin-ca-pool">
 
 ## origin-ca-pool
+
 </div>
 
 Syntax: `--origin-ca-pool value`
@@ -136,6 +146,7 @@ Path to the CA for the certificate of your origin. This option should be used on
 <div id="origin-server-name">
 
 ## origin-server-name
+
 </div>
 
 Syntax: `--origin-server-name value`
@@ -147,6 +158,7 @@ Hostname that `cloudflared` should expect from your origin server certificate.
 <div id="metrics">
 
 ## metrics
+
 </div>
 
 Syntax: `--metrics value`
@@ -159,6 +171,7 @@ Address to query for usage metrics.
 <div id="metrics-update-freq">
 
 ## metrics-update-freq
+
 </div>
 
 Syntax: `--metrics-update-freq duration`
@@ -172,6 +185,7 @@ Frequency to update tunnel metrics.
 <div id="tag">
 
 ## tag
+
 </div>
 
 Syntax: `--tag KEY=VALUE`
@@ -183,6 +197,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 <div id="loglevel">
 
 ## loglevel
+
 </div>
 
 Syntax: `--loglevel (panic|fatal|error|warn|info|debug)`
@@ -197,6 +212,7 @@ wish to run with "warn" in production.
 <div id="proto-loglevel">
 
 ## proto-loglevel
+
 </div>
 
 Syntax: `--proto-loglevel (panic|fatal|error|warn|info|debug)`
@@ -211,6 +227,7 @@ to debug low-level performance issues and protocol quirks.
 <div id="retries">
 
 ## retries
+
 </div>
 
 Syntax: `--retries value`
@@ -224,6 +241,7 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 <div id="no-chunked-encoding">
 
 ## no-chunked-encoding
+
 </div>
 
 Syntax: `--no-chunked-encoding`
@@ -235,6 +253,7 @@ Disables chunked transfer encoding; useful if you are running a WSGI server.
 <div id="hello-world">
 
 ## hello-world
+
 </div>
 
 Syntax: `--hello-world`
@@ -246,6 +265,7 @@ Use the established tunnel to expose a 'Hello world' HTTP server for testing Arg
 <div id="pidfile">
 
 ## pidfile
+
 </div>
 
 Syntax: `--pidfile value`
@@ -257,6 +277,7 @@ Write the application's PID to this file after first successful connection. Main
 <div id="logfile">
 
 ## logfile
+
 </div>
 
 Syntax: `--logfile value`
@@ -268,6 +289,7 @@ Save application log to this file. Mainly useful for reporting issues.
 <div id="proxy-connect-timeout">
 
 ## proxy-connect-timeout
+
 </div>
 
 Syntax: `--proxy-connect-timeout value`
@@ -279,6 +301,7 @@ Timeout for establishing a new TCP connection to your origin server. This exclud
 <div id="proxy-tls-timeout">
 
 ## proxy-tls-timeout
+
 </div>
 
 Syntax: `--proxy-tls-timeout value`
@@ -290,6 +313,7 @@ Timeout for completing a TLS handshake to your origin server, if you have chosen
 <div id="proxy-tcp-keepalive">
 
 ## proxy-tcp-keepalive
+
 </div>
 
 Syntax: `--proxy-tcp-keepalive value`
@@ -301,6 +325,7 @@ The timeout after which a TCP keepalive packet is sent on a connection between T
 <div id="proxy-no-happy-eyeballs">
 
 ## proxy-no-happy-eyeballs
+
 </div>
 
 Syntax: `--proxy-no-happy-eyeballs`
@@ -310,6 +335,7 @@ Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local netw
 <div id="proxy-keepalive-connections">
 
 ## proxy-keepalive-connections
+
 </div>
 
 Syntax: `--proxy-keepalive-connections value`
@@ -321,6 +347,7 @@ Maximum number of idle keepalive connections between Tunnel and your origin. Thi
 <div id="proxy-keepalive-timeout">
 
 ## proxy-keepalive-timeout
+
 </div>
 
 Syntax: `--proxy-keepalive-timeout value`
@@ -332,6 +359,7 @@ Timeout after which an idle keepalive connection can be discarded.
 <div id="help">
 
 ## help
+
 </div>
 
 Syntax: `--help`
@@ -341,6 +369,7 @@ Shows help text.
 <div id="version">
 
 ## version
+
 </div>
 
 Syntax: `--version`
@@ -349,6 +378,7 @@ Prints the version number and build date.
 <div id="login-command">
 
 #### Login command
+
 </div>
 
 `cloudflared tunnel login`
@@ -364,6 +394,7 @@ You can also obtain a Tunnel certificate independently of this command by visiti
 <div id="service-command">
 
 #### Service command
+
 </div>
 
 `cloudflared service install`
@@ -374,6 +405,7 @@ Install or uninstall cloudflared as a system service. The details of service ins
 <div id="update-command">
 
 ### Update command
+
 </div>
 
 `cloudflared update`

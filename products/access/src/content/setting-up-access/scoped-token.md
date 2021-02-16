@@ -13,6 +13,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 The administrators managing policies and groups in Cloudflare Access might be different from the users responsible for configuring firewall rules or other Cloudflare for Infrastructure settings. Cloudflare Access supports [scoped API tokens](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys) so that team members and automated systems can manage settings specific to Access without having permission to modify other configurations in Cloudflare.
 
 ## Creating a scoped API token
+
 1. In the [Cloudflare for Infrastructure](https://dash.cloudflare.com/) dashboard, click the user icon in the top right and navigate to "My Profile".
 
 2. Select the `API Tokens` tab. The existing tokens will display.

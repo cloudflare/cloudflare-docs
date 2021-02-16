@@ -55,6 +55,7 @@ You can either:
 9. Click **Next**.
 
 ### 2. Add a policy
+
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies and rules section](/policies-and-rules/).
@@ -66,6 +67,7 @@ To learn more about how policies work, read our [Policies and rules section](/po
 4. Click **Next** to add your application to Access.
 
 ### 3. Integrate Your SaaS Application With Access
+
 Before you begin using your application through Access, your last step is to integrate your SaaS application to Access.
 
 1. First, configure these fields with your SAML SSO-compliant application. Take note of these fields before you click **Done**:
@@ -96,6 +98,7 @@ Before you begin setting up your self-hosted application, you will need an activ
 Create Access rules before connecting your application to Cloudflare. To connect your origin to Cloudflare, you can use [Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/). If you do not wish to use Argo Tunnel, you must [validate the token](/learning/json-web-tokens/) issued by Cloudflare on your origin.
 
 ### 1. Add your app
+
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
 2. Click **Add an application**.
 3. Select **Self-hosted**.
@@ -123,6 +126,7 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 9. Click **Next**.
 
 ### 2. Add a policy
+
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies and rules section](/policies-and-rules/).
@@ -134,6 +138,7 @@ To learn more about how policies work, read our [Policies and rules section](/po
 4. Click **Next** to add your application to Access.
 
 ### 3. Configure advanced settings
+
 The **Setup section** allows you to configure a few advanced settings for your application.
 
 1. Configure [Cross-Origin Resource Sharing (CORS) settings](/setting-up-access/cors/).

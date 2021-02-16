@@ -12,9 +12,11 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 </Aside>
 
 ## Getting started
+
 Deploying the Cloudflare WARP Client to support your Cloudflare for Teams configuration supports manual installs, simple deployment scripts, or advanced enterprise management tools, such as Microsoft Intune or Jamf.
 
 ### If you already have Cloudflare for Teams configured
+
 Already have Cloudflare for Teams configured and want to dive right in? Before you start, make sure you have:
 * Configured a device Access Policy to allow devices to authenticate against your organization.
 * [Obtained your Gateway DoH subdomain](https://developers.cloudflare.com/gateway/getting-started/configuring-clients/browser/#1-find-your-locations-unique-id) (if using DNS Filtering).

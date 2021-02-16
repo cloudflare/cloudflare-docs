@@ -181,6 +181,7 @@ You can use the following configuration options inside of an ingress rule.
 <div id="connectTimeout">
 
 ## connectTimeout
+
 </div>
 
 Default: `30s`
@@ -191,6 +192,7 @@ establish TLS, which is controlled by [tlsTimeout]({{< ref "#tlsTimeout" >}}).
 <div id="tlsTimeout">
 
 ## tlsTimeout
+
 </div>
 
 Default: `10s`
@@ -200,6 +202,7 @@ Timeout for completing a TLS handshake to your origin server, if you have chosen
 <div id="tcpKeepAlive">
 
 ## tcpKeepAlive
+
 </div>
 
 Default: `30s`
@@ -209,6 +212,7 @@ The timeout after which a TCP keepalive packet is sent on a connection between T
 <div id="noHappyEyeballs">
 
 ## noHappyEyeballs
+
 </div>
 
 Default: `false`
@@ -218,6 +222,7 @@ Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local netw
 <div id="keepAliveConnections">
 
 ## keepAliveConnections
+
 </div>
 
 Default: `100`
@@ -227,6 +232,7 @@ Maximum number of idle keepalive connections between Tunnel and your origin. Thi
 <div id="keepAliveTimeout">
 
 ## keepAliveTimeout
+
 </div>
 
 Default: `1m30s`
@@ -236,6 +242,7 @@ Timeout after which an idle keepalive connection can be discarded.
 <div id="httpHostHeader">
 
 ## httpHostHeader
+
 </div>
 
 Default: `""`
@@ -245,6 +252,7 @@ Sets the HTTP Host header on requests sent to the local service.
 <div id="originServerName">
 
 ## originServerName
+
 </div>
 
 Default: `""`
@@ -254,6 +262,7 @@ Hostname that `cloudflared` should expect from your origin server certificate.
 <div id="caPool">
 
 ## caPool
+
 </div>
 
 Default: `""`
@@ -263,6 +272,7 @@ Path to the CA for the certificate of your origin. This option should be used on
 <div id="noTLSVerify">
 
 ## noTLSVerify
+
 </div>
 
 Default: `false`
@@ -272,6 +282,7 @@ Disables TLS verification of the certificate presented by your origin. Will allo
 <div id="disableChunkedEncoding">
 
 ## disableChunkedEncoding
+
 </div>
 
 Default: `false`
@@ -281,6 +292,7 @@ Disables chunked transfer encoding. Useful if you are running a WSGI server.
 <div id="proxyAddress">
 
 ## proxyAddress
+
 </div>
 
 Default: `127.0.0.1`
@@ -291,6 +303,7 @@ This configures the listen address for that proxy.
 <div id="proxyPort">
 
 ## proxyPort
+
 </div>
 
 Default: `0`
@@ -301,6 +314,7 @@ This configures the listen port for that proxy. If set to zero, an unused port w
 <div id="proxyType">
 
 ## proxyType
+
 </div>
 
 Default: `""`

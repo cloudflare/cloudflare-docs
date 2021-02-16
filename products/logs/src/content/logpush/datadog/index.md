@@ -99,4 +99,5 @@ Response:
 ## Troubleshooting
 
 ### I am observing errors pushing to Datadog after I modify an existing job for another destination to push logs to Datadog.
+
 Datadog destination is exclusive to new jobs and might not be backward compatible with older jobs. Create new jobs if you expect to send your logs directly to Datadog instead of modifying already existing ones.

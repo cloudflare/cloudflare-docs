@@ -41,6 +41,7 @@ The next page will display the generated `Client ID` and `Client Secret` for the
 You can now use the service token when you create [service auth policies](/getting-started/policies/#service-auth).
 
 ## Connect your Service to Access
+
 Cloudflare Access expects both values as headers in any request sent to the applications behind Access. Add the following to the headers of any requests and name them as follows:
 
 `CF-Access-Client-Id: <Client ID>`

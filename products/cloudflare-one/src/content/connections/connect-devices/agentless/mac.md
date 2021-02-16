@@ -6,6 +6,7 @@ hidden: true
 # Mac
 
 ## IPv4
+
 1. Go to **System Preferences** > **Network**.
 2. Click **Advanced**.
 3. Select the **DNS** tab, and remove any IP addresses that may be already listed.

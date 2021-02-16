@@ -21,6 +21,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
 ```
 
 ### Parameters
+
 * *destination_conf* - see [Destination](/logpush/logpush-configuration-api/understanding-logpush-api/#destination) for details
 
 ### Response
