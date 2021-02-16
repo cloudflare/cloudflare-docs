@@ -44,8 +44,7 @@ The following example API request configures a waiting room with the same settin
 
 ```shell
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: xxxxxxxx" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '{"name":"shop_waiting_room",
               "description":"Waiting room for webshop",
@@ -89,8 +88,7 @@ In the following PATCH request, the `custom_page_html` field contains the HTML c
 
 ```shell
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: xxxxxxxx" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '{"custom_page_html":"<p>Include custom HTML here</p>"}'
 ```
@@ -142,8 +140,7 @@ Example request:
 
 ```shell
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/preview" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: xxxxxxxx" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '{"custom_html":"<p>Include custom HTML here</p>"}'
 ```
