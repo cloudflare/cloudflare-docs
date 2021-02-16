@@ -18,8 +18,7 @@ DELETE zones/{zone_id}/firewall/rules
 
 ```bash
 curl -X DELETE \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules?id=cbf4b7a5a2a24e59a03044d6d44ceb09"
 ```
 
@@ -50,8 +49,7 @@ DELETE zones/{zone_id}/firewall/rules/{id}
 
 ```bash
 curl -X DELETE \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules/cbf4b7a5a2a24e59a03044d6d44ceb09"
 ```
 

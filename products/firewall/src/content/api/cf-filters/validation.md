@@ -44,7 +44,7 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
 #### Request
 
 ```bash
-curl -X GET -H "X-Auth-Email: user@cloudflare.com" -H "X-Auth-Key: REDACTED" 'https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.src==34'
+curl -X GET -H "Authorization: Bearer $API_TOKEN" 'https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.src==34'
 ```
 
 #### Response
@@ -76,8 +76,7 @@ Filter parsing error:
 
 ```bash
 curl -X POST \
-    -H "X-Auth-Email: user@cloudflare.com" \
-    -H "X-Auth-Key: REDACTED" \
+    -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
     "expression": "ip.src in {2400:cb00::/32 2405:8100::/2000 2405:b500::/32 2606:4700::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29}"

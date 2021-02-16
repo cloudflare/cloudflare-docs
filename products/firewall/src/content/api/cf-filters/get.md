@@ -18,8 +18,7 @@ GET zones/{zone_id}/filters
 
 ```bash
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters"
 ```
 
@@ -81,8 +80,7 @@ GET zones/{zone_id}/filters/{id}
 
 ```bash
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
 "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters/b7ff25282d394be7b945e23c7106ce8a"
 ```
 

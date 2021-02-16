@@ -30,8 +30,7 @@ Results are sorted by Ruleset ID in ascending order.
 
 ```bash
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets"
 ```
 
@@ -75,8 +74,7 @@ The API returns a HTTP Status Code 404 under these conditions:
 
 ```bash
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
   "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}"
 ```
 
@@ -111,8 +109,7 @@ Returns the version of a ruleset with the specified Ruleset ID and version numbe
 
 ```bash
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
   "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset-id}/versions/1"
 ```
 
@@ -151,8 +148,7 @@ Fetches a list of rules in a managed ruleset tagged with a specific category. Th
 
 ```bash
 curl -X GET \
-      -H "X-Auth-Email: user@cloudflare.com" \
-      -H "X-Auth-Key: REDACTED" \
+      -H "Authorization: Bearer $API_TOKEN" \
     "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset-id}/versions/2/by_category/drupal"
 
 ```

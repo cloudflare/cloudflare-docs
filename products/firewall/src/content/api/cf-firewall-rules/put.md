@@ -19,8 +19,7 @@ You can include up to 25 rules in the JSON object array (_-d_ flag) to update as
 
 ```bash
 curl -X PUT \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '[
   {
@@ -100,8 +99,7 @@ To preserve existing values, issue a `GET` request and based on the response, de
 
 ```bash
 curl -X PUT \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
   "id": "f2d427378e7542acb295380d352e2ebd",
