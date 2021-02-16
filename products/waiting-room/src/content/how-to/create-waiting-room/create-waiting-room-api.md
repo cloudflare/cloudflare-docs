@@ -88,10 +88,10 @@ You can use the Waiting Room API to customize the web page served to visitors wh
 In the following PATCH request, the `custom_page_html` field contains the HTML code for the customized waiting room:
 
 ```shell
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"
-     -H "X-Auth-Email: user@example.com"
-     -H "X-Auth-Key: xxxxxxxx"
-     -H "Content-Type: application/json"
+curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}" \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: xxxxxxxx" \
+     -H "Content-Type: application/json" \
      --data '{"custom_page_html":"<p>Include custom HTML here</p>"}'
 ```
 
@@ -141,10 +141,10 @@ Note that you pass HTML content to the preview endpoint in the `custom_html` fie
 Example request:
 
 ```shell
-curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/preview"
-     -H "X-Auth-Email: user@example.com"
-     -H "X-Auth-Key: xxxxxxxx"
-     -H "Content-Type: application/json"
+curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/preview" \
+     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Key: xxxxxxxx" \
+     -H "Content-Type: application/json" \
      --data '{"custom_html":"<p>Include custom HTML here</p>"}'
 ```
 
