@@ -88,8 +88,7 @@ You can configure session affinity as part of your request to the Create Load Ba
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e9661899b7252/load_balancers" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '   "description":"Load Balancer for www.example.com",
    "name":"www.example.com",
@@ -192,8 +191,7 @@ PUT zones/:identifier/load_balancers/:identifier
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/699d98642c564d2e855e9661899b7252/load_balancers" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '   "description":"Load Balancer for www.example.com",
    "name":"www.example.com",
