@@ -64,7 +64,7 @@ Note that the serial number returned is unique to the issuer, but not globally u
 
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
+    -H "Authorization: Bearer $API_TOKEN"\
     -H 'Content-Type: application/json' -d "$request_body"
 
 {

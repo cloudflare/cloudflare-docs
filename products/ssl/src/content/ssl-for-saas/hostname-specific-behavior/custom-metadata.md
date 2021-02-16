@@ -24,7 +24,7 @@ You may add custom metadata to Cloudflare via the Custom Hostnames API. This dat
 
 ```bash
 $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id} /custom_hostnames/{hostname_id}"\
-     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+     -H "Authorization: Bearer $API_TOKEN"\
      -H "Content-Type: application/json"\
      -d '{"ssl":{"method":"http","type":"dv"},"custom_metadata":{"customer_id":"12345","redirect_to_https": true}}'
 ```

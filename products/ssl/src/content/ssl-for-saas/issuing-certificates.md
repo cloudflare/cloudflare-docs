@@ -28,7 +28,7 @@ Once a certificate has been ordered or uploaded, you can make API calls to check
 
 ```bash
 curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}"\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+    -H "Authorization: Bearer $API_TOKEN"\
     -H "Content-Type: application/json"\
 ```
 
@@ -38,7 +38,7 @@ Alternatively, if you have not stored the hostname identifier, you can look the 
 
 ```bash
 curl -XGET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=app.example.com"\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+    -H "Authorization: Bearer $API_TOKEN"\
     -H "Content-Type: application/json"
 ```
 

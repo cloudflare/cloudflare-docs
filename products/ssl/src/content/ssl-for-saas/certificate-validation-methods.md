@@ -38,7 +38,7 @@ This validation method allows your customer to add a TXT record to prove control
 
 ```bash
 $ curl -sX POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+       -H "Authorization: Bearer $API_TOKEN" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"another.example.com", "ssl":{"method":"txt","type":"dv"}}'
 
@@ -61,7 +61,7 @@ After a few seconds, i.e., once the state has transition from `initializing` to 
 
 ```bash
 $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/46f8849a-72c9-49e0-9e42-857297d89306" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
+       -H "Authorization: Bearer $API_TOKEN"
 {
   "result": {
     "id": "46f8849a-72c9-49e0-9e42-857297d89306",
@@ -85,7 +85,7 @@ If you’d like to request an immediate recheck, [rather than wait for the next 
 
 ```bash
 $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/46f8849a-72c9-49e0-9e42-857297d89306" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+       -H "Authorization: Bearer $API_TOKEN" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"another.example.com", "ssl":{"method":"txt","type":"dv"}}'
 ```
@@ -98,7 +98,7 @@ First, create a new hostname using `"method":"email"`:
 
 ```bash
 $ curl -sX POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+       -H "Authorization: Bearer $API_TOKEN" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"emailval.example.com", "ssl":{"method":"email","type":"dv"}}'
 
@@ -121,7 +121,7 @@ Then, request the status to see the email addresses to which the approval email 
 
 ```bash
 $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/16798830-42c1-4e4f-82b4-4695ee8b62e4" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
+       -H "Authorization: Bearer $API_TOKEN"
 {
   "result": {
     "id": "16798830-42c1-4e4f-82b4-4695ee8b62e4",
@@ -163,7 +163,7 @@ First, make a request using `"method":"http"`:
 
 ```bash
 $ curl -sXPOST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+       -H "Authorization: Bearer $API_TOKEN" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"http-preval.example.com", "ssl":{"method":"http","type":"dv"}}'
 {
@@ -184,7 +184,7 @@ $ curl -sXPOST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 Next, wait a few seconds for the status to transition from `initializing` to `pending_validation`, the step that obtains the random path and token from the CA, and then request status:
 
 ```bash
-$ curl -sXGET -H "X-Auth-Key: $MYAPIKEY" -H "X-Auth-Email: $MYEMAIL" https://api.cloudflare.com/client/v4/zones/$MYZONETAG/custom_hostnames/3aa0e60f-7622-47a4-8519-7a5fd7eb7145
+$ curl -sXGET -H "Authorization: Bearer $API_TOKEN" https://api.cloudflare.com/client/v4/zones/$MYZONETAG/custom_hostnames/3aa0e60f-7622-47a4-8519-7a5fd7eb7145
 {
   "result": {
     "id": "3aa0e60f-7622-47a4-8519-7a5fd7eb7145",
@@ -223,7 +223,7 @@ On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete
 
 ```bash
 $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+       -H "Authorization: Bearer $API_TOKEN" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"http-preval.example.com", "ssl":{"method":"http","type":"dv"}}'
 ```
@@ -234,7 +234,7 @@ The last DCV method available is via a CNAME record. First, make a request using
 
 ```bash
 $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+       -H "Authorization: Bearer $API_TOKEN" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"cname.example.com", "ssl":{"method":"cname","type":"dv"}}'
 

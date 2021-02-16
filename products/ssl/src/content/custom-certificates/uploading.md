@@ -86,12 +86,12 @@ $ request_body=$(< <(cat <<EOF
 }
 ))
 ```
-`sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.  
+`sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.
 
 ### 2. With the payload built, make the API call to upload your certificate and key
 
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
-     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" -d "$request_body"
 ```

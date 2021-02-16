@@ -31,7 +31,7 @@ If your zone has been granted the Custom Origin Server entitlement, you have the
 
 ```bash
 $ curl -sX PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
-     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{"ssl":{"method":"http","type":"dv"},"custom_origin_server":"origin2.example.com"}'
 ```
@@ -48,7 +48,7 @@ In this API example, we PATCH an existing custom hostname to enable HTTP/2 (spec
 
 ```bash
 $ curl -sX PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
-     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{"ssl":{"method":"http","type":"dv","settings":{"http2":"on","min_tls_version":"1.1","tls_1_3":"on"}}}'
 ```

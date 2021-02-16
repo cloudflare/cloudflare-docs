@@ -86,7 +86,7 @@ To enable Authenticated Origin Pull globally on a zone:
 
     ```bash
     curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zone/settings/tls_client_auth" \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+    -H "Authorization: Bearer $API_TOKEN" \
     -H "Content-Type: application/json" \
     --data '{"value":"on"}'
 
@@ -144,7 +144,7 @@ To enable Authenticated Origin Pull globally on a zone:
 
     ```bash
     curl -sX POST https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth \
- 	-H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+    -H "Authorization: Bearer $API_TOKEN" \
     -H Content-Type: application/json' \
     -d "$request_body"
 
@@ -174,7 +174,7 @@ The following [API call enables Authenticated origin pull at zone level](https:/
     curl -X PUT https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth/settings
 
     \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+    -H "Authorization: Bearer $API_TOKEN" \
     -H "Content-Type: application/json" \
     --data '{"enabled":true}'
     {
@@ -234,7 +234,7 @@ To upload a client certificate in Cloudflare:
 
   ```bash
   curl -sX POST https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth/hostnames/certificates \
-  -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+  -H "Authorization: Bearer $API_TOKEN" \
   -H Content-Type: application/json' \
   -d "$request_body"
 
@@ -266,7 +266,7 @@ Link the client certificate to a specific hostname:
 
     ```bash
     curl -sX PUT https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth/hostnames \
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+    -H "Authorization: Bearer $API_TOKEN" \
     -H Content-Type: application/json' \
     -d '{"config":[{"hostname":"app.example.com","cert_id":"2458ce5a-0c35-4c7f-82c7-8e9487d3ff60","enabled":true}]}'
 
