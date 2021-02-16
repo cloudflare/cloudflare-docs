@@ -44,8 +44,7 @@ Full example of creating an application that routes traffic through Cloudflareâ€
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \
-     -H "X-Auth-Email: USER_EMAIL" \
-     -H "X-Auth-Key: API_KEY" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '{
       "protocol": "tcp/80",
