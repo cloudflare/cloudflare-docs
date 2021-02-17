@@ -108,6 +108,14 @@ Cloudflare plans to expand its list of known bots in the near future.
         </tr>
         <tr>
             <td>
+                <p>better uptime</p>
+            </td>
+            <td>
+                <p>Bot for monitoring website uptime</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <p>bing</p>
             </td>
             <td>
