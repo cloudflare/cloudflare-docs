@@ -5,11 +5,9 @@ order: 40
 
 # Logpush Service
 
-Have logs of your HTTP requests, Spectrum events, or Firewall events pushed to your cloud service in batches as soon as possible.
+Push logs of your HTTP requests, Spectrum events, or Firewall events to your cloud service in batches as soon as possible.
 
-If you're already using the Logpull API to download HTTP request logs, you can get the same functionality—including selecting fields and sampling—in Logpush.
-
-Logpush can be configured using one of the following methods:
+Configure Logpush using one of the following methods:
 
 - [Cloudflare UI (Dashboard)](/logpush/logpush-dashboard/)
 - [Cloudflare Logpush API](/logpush/logpush-configuration-api/)
@@ -23,10 +21,13 @@ If following the UI method, you'll be prompted to allow Cloudflare to access you
 
 Currently, Logpush is available to customers on the Cloudflare Enterprise plan and for the following services:
 - Amazon S3
+- Datadog
 - Google Cloud Storage (GCS)
 - Microsoft Azure
+- Splunk
 - Sumo Logic
-Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts, powered by Cloudflare, can push their logs to [IBM's Cloud Object Storage (COS)](https://cloud.ibm.com/docs/cis?topic=cis-logpush)
+
+Customers using IBM Cloud Internet Services (CIS) on Enterprise accounts powered by Cloudflare can push their logs to [IBM's Cloud Object Storage (COS)](https://cloud.ibm.com/docs/cis?topic=cis-logpush)
 
 Cloudflare Logpush also supports S3-compatible endpoints in an API-only beta, which includes: 
 - [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/) 
@@ -39,4 +40,4 @@ Cloudflare Logpush also supports S3-compatible endpoints in an API-only beta, wh
 
 See instructions to [Enable S3-compatible endpoints](/logpush/s3-compatible-endpoints).
 
-Cloudflare aims to support additional plans and services in the future. Interested in a particular service? Please take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
+Cloudflare aims to support additional plans and services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
