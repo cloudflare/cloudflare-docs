@@ -36,8 +36,8 @@ To enable the Clouflare Logpush service:
 
    * For **Amazon S3**, enter or select the following:
      * **Bucket path**
-     * * **Daily subfolders**
-     * * **Bucket region**
+     * **Daily subfolders**
+     * **Bucket region**
      * **Encryption constraint in bucket policy**
     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
       * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
@@ -74,6 +74,6 @@ Tips for seeing the token:
 
 10. Next in the **Customize log** screen, select the data set in which you're interested (currently `HTTP requests` or `Spectrum events`). You can keep the default fields to include in your log or make changes. You can add or remove fields at a later time by modifying your settings in **Logs** > **Logpush** (select the wrench icon).
 
-11. To finish enabling Logpush, click **Save and Start Pushing**w
+11. To finish enabling Logpush, click **Save and Start Pushing**s
 
 Once connected, Cloudflare lists the provider you just configured under **Logs** > **Logpush**. This is where you can make changes or remove the provider.
