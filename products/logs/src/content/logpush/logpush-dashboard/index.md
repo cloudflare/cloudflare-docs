@@ -35,28 +35,28 @@ To enable the Clouflare Logpush service:
 7. Complete the steps below based on your provider, then continue to *step 8*
 
    * For **Amazon S3**, enter or select the following:
-    * **Bucket path**
-    * **Daily subfolders**
-    * **Bucket region**
-    **Encryption constraint in bucket policy**
+     * **Bucket path**
+     * * **Daily subfolders**
+     * * **Bucket region**
+     * **Encryption constraint in bucket policy**
     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
-        * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
+      * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
 
    * For **Google Cloud Storage**, enter or select the following:
-    * **Bucket path**
-    * **Daily subfolders**
-    * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
-        * See *step 2* in [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
+     * **Bucket path**
+     * **Daily subfolders**
+     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
+       * See *step 2* in [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
 
    * For **Microsoft Azure**, enter or select the following:
-    * **SAS URL**
-        * See [Enable Microsoft Azure](/logpush/azure/) for instructions on creating this URL
-    * **Blob container subpath (optional)**
-    * **Daily subfolders**
+     * **SAS URL**
+       * See [Enable Microsoft Azure](/logpush/azure/) for instructions on creating this URL
+     * **Blob container subpath (optional)**
+     * **Daily subfolders**
 
    * For **Sumo Logic**, enter or select the following:
-    * **HTTP Source Address**
-        * See [Enable Sumo Logic](/logpush/sumo-logic/) for instructions on getting this address
+     * **HTTP Source Address**
+       * See [Enable Sumo Logic](/logpush/sumo-logic/) for instructions on getting this address
 
 8.  In the Cloudflare dashboard, click **Validate access**
 
