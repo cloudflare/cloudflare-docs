@@ -69,6 +69,14 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
 
+- <code>remove_bytes(<Type>bytes</Type>)</code> <Type>bytes</Type>
+
+  - Returns a new byte array with all the occurrences of the given bytes removed.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
+
 - <code>upper(<Type>String</Type>)</code> <Type>String</Type>
 
   - Converts a string field to uppercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
