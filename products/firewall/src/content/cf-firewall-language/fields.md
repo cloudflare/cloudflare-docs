@@ -268,6 +268,14 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>cf.bot_management.score</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+          <p>Represents a score from 1&#8211;99 that indicates the likelihood that a request originates from a bot. A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
+          </p>
+        </td>
+    </tr>
+    <tr>
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
