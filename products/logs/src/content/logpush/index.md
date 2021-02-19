@@ -15,7 +15,7 @@ If enabling via the API, you can push to the following storage services:
 - [AWS S3](/logpush/aws-s3/)
 - [S3-compatible endpoints](/logpush/s3-compatible-endpoints)
 - [Google Cloud Storage](/logpush/google-cloud-storage/)
-- [Microsoft Azure Blobg Storage](/logpush/azure/)
+- [Microsoft Azure Blob Storage](/logpush/azure/)
 
 You can also push to the following SIEMs and log management providers:
 - [Datadog](/logpush/datadog)
