@@ -257,6 +257,40 @@ The sub-string must appear within the first 10KiB of your response body.
 
 ---
 
+## Override HTTP Host headers (per origin or monitor)
+
+When your application needs specialized routing (CNAME setup or custom hosts like Heroku), change the `Host` header used in health checks.
+
+You can set these headers on a specific origin or a monitor. Headers set on an origin always override headers set on a monitor.
+
+### Per origin override
+
+For example, you might have a load balancer with the following setup:
+
+- Origin Pools:
+
+  - Pool 1:
+
+    - Origin 1 (host header set to `www.example1.com`)
+    - Origin 2
+  
+  - Pool 2:
+
+    - Origin 3
+    - Origin 4
+
+- Monitor (host header set to `www.example2.com`)
+
+In this scenario, health checks for **Origin 1** would use `www.example1.com` and all other health checks would default to the `www.example2.com`. 
+
+For a list of origins that override the `Host` header:
+
+1. On a monitor, select **Edit**.
+1. Select **Advanced health check settings**.
+1. If you have an origin overrides, you will see **Origin host header overrides**.
+
+---
+
 ## Managing monitors via the Load Balancing dashboard
 
 Use the **Create Load Balancer** or **Edit Load Balancer** panels in the Load Balancing dashboard to manage health check monitors. For step-by-step guidance, see _[Create, attach, and configuring health checks](/create-load-balancer-ui#create-attach-and-configure-health-checks)_.

@@ -89,7 +89,7 @@ This example creates two origin pools—the primary pool and a secondary, backup
    
   ![Add origin pool page in Create Load Balancer workflow](../static/images/create-load-balancer-add-origin.png)
 
-1. Enter a name and origin server address for the first pool (this must be unique). When the origin server has a hostname, you can enter that as well. To add existing origins, click **Add Origin**.
+1. Enter a name and origin server address for the first pool (this must be unique). When the origin server has a [hostname](/understand-basics/monitors#override-http-host-headers-per-origin-or-monitor), you can enter that as well. To add existing origins, click **Add Origin**.
   
   ![Create origin pool page in Create Load Balancer workflow](../static/images/create-load-balancer-create-origin.png)
 
@@ -101,8 +101,8 @@ This example creates two origin pools—the primary pool and a secondary, backup
 
   The list of pools displays. By default, pools are ordered by date created. You can reorder them by clicking the arrows next to the numerals in the **Order** column:
 
-   ![](../static/images/create-load-balancer-pools-list.png)
-   
+   ![Reorder list of pools](../static/images/create-load-balancer-pools-list.png)
+
    For now, leave the order as it is.
 
 1. Click **Next** to continue.
