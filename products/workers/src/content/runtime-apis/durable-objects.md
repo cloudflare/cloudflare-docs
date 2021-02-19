@@ -42,6 +42,7 @@ export class DurableObject {
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
 - <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+
   - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
 
 - `env`
