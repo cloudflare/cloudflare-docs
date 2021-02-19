@@ -37,7 +37,7 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 
 ### Configure your DoT client
 
-Depending on your operating system, you can choose from a variety of standalone DoT clients. Alternatively, stub resolvers (e.g. BIND) support DoT natively.
+Depending on your operating system, you can choose from a variety of standalone DoT clients. 
 
 To configure your DoT client, use the following IP address and hostname:
 
@@ -45,6 +45,26 @@ To configure your DoT client, use the following IP address and hostname:
 Hostname: DoT hostname for a chosen location (above this is 9y65g5srsm.cloudflare-gateway.com)
 IP address: 162.159.36.5
 ```
+
+Alternatively, stub resolvers (e.g., Unbound) support DoT natively. 
+
+```text
+# Unbound TLS Config
+tls-cert-bundle: "/etc/ssl/cert.pem"
+# Forwarding Config
+forward-zone:
+	name: "."
+	forward-tls-upstream: yes
+	forward-addr: 172.64.36.1@853#xxxxxxxxx.cloudflare-gateway.com
+	forward-addr: 172.64.36.2@853#xxxxxxxxx.cloudflare-gateway.com
+	forward-addr: 2a06:98c1:54::xxxx#xxxxxxxxx.cloudflare-gateway.com
+ ```
+ 
+ <Aside>
+ 
+Each location has a unique DoT hostname and IPv6 address. Remember to enter your location's values when applying the config above.
+
+</Aside>
 
 ## Supported TLS versions
 
