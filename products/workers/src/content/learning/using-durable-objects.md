@@ -71,13 +71,13 @@ Durable Objects gain access to a [persistent storage API](/runtime-apis/durable-
 ```js
 export class DurableObjectExample {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async fetch(request) {
         let ip = request.headers.get('CF-Connecting-IP');
         let data = await request.text();
-        let storagePromise = this.storage.put(ip, data);
+        let storagePromise = this.state.storage.put(ip, data);
         await storagePromise;
         return new Response(ip + ' stored ' + data);
     }
@@ -90,7 +90,7 @@ Each individual storage operation behaves like a database transaction. More comp
 ```js
 export class DurableObjectExample {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async fetch(request) {
@@ -98,7 +98,7 @@ export class DurableObjectExample {
         let ifMatch = request.headers.get('If-Match');
         let newValue = await request.text();
         let changedValue = false;
-        await this.storage.transaction(async txn => {
+        await this.state.storage.transaction(async txn => {
             let currentValue = await txn.get(key);
             if (currentValue != ifMatch && ifMatch != '*') {
                 txn.rollback();
@@ -132,11 +132,11 @@ This is shown in the [Counter example](#example---counter) below, which is parti
 ```js
 export class Counter {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async initialize() {
-        let stored = await this.storage.get("value");
+        let stored = await this.state.storage.get("value");
         // after initialization, future reads don't need to access storage!
         this.value = stored || 0;
     }
@@ -395,11 +395,11 @@ async function handleRequest(request, env) {
 
 export class Counter {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async initialize() {
-        let stored = await this.storage.get("value");
+        let stored = await this.state.storage.get("value");
         this.value = stored || 0;
     }
 
@@ -417,11 +417,11 @@ export class Counter {
         switch (url.pathname) {
         case "/increment":
             currentValue = ++this.value;
-            await this.storage.put("value", this.value);
+            await this.state.storage.put("value", this.value);
             break;
         case "/decrement":
             currentValue = --this.value;
-            await this.storage.put("value", this.value);
+            await this.state.storage.put("value", this.value);
             break;
         case "/":
             // Just serve the current value. No storage calls needed!
