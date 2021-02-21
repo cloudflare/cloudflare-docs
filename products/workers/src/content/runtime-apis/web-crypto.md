@@ -298,3 +298,4 @@ __Footnotes:__
 
 - [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
 - [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)
+- [Example: signing requests](/examples/signing-requests)
