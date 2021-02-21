@@ -38,7 +38,7 @@ Your `build` command in `package.json` should build and export your Next.js appl
 ```json
 {
   "scripts": {
-    "build": "next build && next export`
+    "build": "next build && next export"
   }
 }
 ```
