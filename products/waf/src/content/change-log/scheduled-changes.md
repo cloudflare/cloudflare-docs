@@ -49,10 +49,10 @@ order: 1
                 Improve LFI Log Injection/Disclourse coverage.
             </td>
             <td>
-                simulate
+                drop
             </td>
             <td>
-                simulate
+                drop
             </td>
         </tr>
     <tbody>
