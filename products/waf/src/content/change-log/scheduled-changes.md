@@ -55,6 +55,5 @@ order: 1
                 Block
             </td>
         </tr>
-    <tbody>
     </tbody>
 </table></TableWrap>
