@@ -132,6 +132,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Definitions>
 
+- <Code>deleteAll()</Code> <Type>Promise</Type>
+
+  - Deletes all keys and associated values, effectively deallocating all storage used by the worker. Once `deleteAll()` has been called, no subsequent Durable Storage operations (including transactions and operations on transactions) may be executed until after the `deleteAll()` operation completes and the returned promise resolves. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
+
 </Definitions>
 
 ### `fetch()` handler method
