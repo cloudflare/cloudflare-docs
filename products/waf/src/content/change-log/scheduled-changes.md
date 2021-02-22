@@ -46,7 +46,7 @@ order: 1
                 100005
             </td>
             <td>
-                Improve LFI Log Injection/Disclourse coverage.
+                Improve LFI Log Injection/Disclosure coverage.
             </td>
             <td>
                 Block
