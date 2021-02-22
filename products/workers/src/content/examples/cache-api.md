@@ -20,7 +20,7 @@ async function handleRequest(event) {
   const request = event.request
   const cacheUrl = new URL(request.url)
 
-  // Construct the cache hey from the cache URL
+  // Construct the cache key from the cache URL
   const cacheKey = new Request(cacheUrl.toString(), request)
   const cache = caches.default
 
