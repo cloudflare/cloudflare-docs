@@ -78,7 +78,7 @@ region2.argotunnel.com.	300	IN	A	198.41.200.113
 
 ### Can a user create an Argo Tunnel for an apex domain?
 
-No. Argo Tunnel will only create DNS records for subdomains.
+Yes. With [Named Tunnels](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) you can create a CNAME at the apex that points to the named tunnel.
 
 ### Does Argo Tunnel support Websockets?
 
@@ -106,7 +106,7 @@ Registered   | This is logged when Tunnel is started and connects to the Cloudfl
 Unregistered | This is logged when Tunnel is disconnected from the Cloudflare edge.
 CNAME add    | This is logged when Tunnel registers a new DNS (CNAME or AAAA) record for the tunneled application.
 
-#### How can origin servers be secured when using Tunnel?
+### How can origin servers be secured when using Tunnel?
 
 Tunnel can expose web applications to the internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:
 
