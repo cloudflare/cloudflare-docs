@@ -39,8 +39,8 @@ To enable the Clouflare Logpush service:
      * **Daily subfolders**
      * **Bucket region**
      * **Encryption constraint in bucket policy**
-    * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
-      * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
+     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
+        * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
 
    * For **Google Cloud Storage**, enter or select the following:
      * **Bucket path**
