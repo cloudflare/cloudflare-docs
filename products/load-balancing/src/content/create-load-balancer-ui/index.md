@@ -89,7 +89,7 @@ This example creates two origin pools—the primary pool and a secondary, backup
    
   ![Add origin pool page in Create Load Balancer workflow](../static/images/create-load-balancer-add-origin.png)
 
-1. Enter a name and origin server address for the first pool (this must be unique). When the origin server has a [hostname](/understand-basics/monitors#override-http-host-headers), you can enter that as well. To add existing origins, click **Add Origin**.
+1. Enter a name and origin server address for the first pool (this must be unique). When the origin server has a [hostname](/understand-basics/pools#per-origin-host-header-override), you can enter that as well. To add existing origins, click **Add Origin**.
   
   ![Create origin pool page in Create Load Balancer workflow](../static/images/create-load-balancer-create-origin.png)
 

@@ -261,7 +261,7 @@ The sub-string must appear within the first 10KiB of your response body.
 
 When your application needs specialized routing (CNAME setup or custom hosts like Heroku), change the `Host` header used in health checks.
 
-You can set these headers on a specific origin or a monitor. Headers set on an origin always override headers set on a monitor.
+You can set these headers on a [specific origin](/understand-basics/pools#per-origin-host-header-override) or a monitor. Headers set on an origin always override headers set on a monitor.
 
 ### Host header prioritization
 
