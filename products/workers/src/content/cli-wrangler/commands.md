@@ -23,7 +23,7 @@ Default values indicated by <Type>=value</Type>.
 - `$NAME` <Type>=worker</Type> <PropMeta>optional</PropMeta>
   - Name of the Workers project, setting both the directory name and `name` property in the generated `wrangler.toml` [configuration](/cli-wrangler/configuration) file.
 
-- `$TEMPLATE` <Type>=github.com/cloudflare/worker-template</Type> <PropMeta>optional</PropMeta>
+- `$TEMPLATE` <Type>=https://github.com/cloudflare/worker-template</Type> <PropMeta>optional</PropMeta>
   - GitHub URL of the [repo to use as the template](https://github.com/cloudflare/worker-template) for generating the project.
 
 - `--type=$TYPE` <Type>=webpack</Type> <PropMeta>optional</PropMeta>
