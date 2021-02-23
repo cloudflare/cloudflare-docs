@@ -50,9 +50,9 @@ By default, the SSH protocol listens on port `22`. Confirm which port your infra
 Run the following command to connect the machine to Cloudflare, replacing the `ssh.site.com` and 22 values with your site and port.
 
 ```sh
-$ cloudflared tunnel --hostname
-ssh.site.com --url ssh://localhost:22
+$ cloudflared tunnel --hostname ssh.site.com --url ssh://localhost:22
 ```
+
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
 **Common issues**
@@ -72,7 +72,7 @@ $ cloudflared access ssh-config
 
 The command will print SSH configuration details in the following format:
 
-```bash
+```txt
 Host [your hostname]
 	ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```
@@ -89,7 +89,7 @@ $ cloudflared access ssh-config --hostname ssh.site.com
 
 The command will print the following details:
 
-```bash
+```txt
 Host ssh.site.com
 	ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```

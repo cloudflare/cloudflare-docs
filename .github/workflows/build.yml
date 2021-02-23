@@ -386,7 +386,7 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-  
+
   build-browser-isolation:
     runs-on: ubuntu-latest
     needs: changes

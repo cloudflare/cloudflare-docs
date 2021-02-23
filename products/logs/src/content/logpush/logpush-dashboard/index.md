@@ -74,6 +74,6 @@ Tips for seeing the token:
 
 10. Next in the **Customize log** screen, select the data set in which you're interested (currently `HTTP requests` or `Spectrum events`). You can keep the default fields to include in your log or make changes. You can add or remove fields at a later time by modifying your settings in **Logs** > **Logpush** (select the wrench icon).
 
-11. To finish enabling Logpush, click **Save and Start Pushing**s
+11. To finish enabling Logpush, click **Save and Start Pushing**
 
 Once connected, Cloudflare lists the provider you just configured under **Logs** > **Logpush**. This is where you can make changes or remove the provider.

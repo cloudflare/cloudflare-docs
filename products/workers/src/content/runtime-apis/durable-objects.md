@@ -42,6 +42,7 @@ export class DurableObject {
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
 - <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+
   - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
 
 - `env`
@@ -130,6 +131,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
         Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
     </Definitions>
+
+- <Code>deleteAll()</Code> <Type>Promise</Type>
+
+  - Deletes all keys and associated values, effectively deallocating all storage used by the worker. Once `deleteAll()` has been called, no subsequent Durable Storage operations (including transactions and operations on transactions) may be executed until after the `deleteAll()` operation completes and the returned promise resolves. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
 
 </Definitions>
 

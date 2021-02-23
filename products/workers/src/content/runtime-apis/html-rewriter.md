@@ -430,3 +430,4 @@ async function handle(request) {
 
 - [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
 - [Tutorial: Localize a Website](/tutorials/localize-a-website)
+- [Example: rewrite links](/examples/rewrite-links)

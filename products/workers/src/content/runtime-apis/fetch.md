@@ -57,7 +57,7 @@ async function eventHandler(event) {
 
 ## See also
 
-- [Respond with another site](/examples/respond-with-another-site)
-- [Fetch HTML](/examples/fetch-html)
-- [Fetch JSON](/examples/fetch-json)
-- [Cache using Fetch](/examples/cache-using-fetch)
+- [Example: use `fetch` to respond with another site](/examples/respond-with-another-site)
+- [Example: Fetch HTML](/examples/fetch-html)
+- [Example: Fetch JSON](/examples/fetch-json)
+- [Example: cache using Fetch](/examples/cache-using-fetch)
