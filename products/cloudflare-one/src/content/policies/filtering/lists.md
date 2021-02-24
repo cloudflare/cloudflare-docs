@@ -5,7 +5,7 @@ hidden: true
 
 # Lists
 
-With Teams, you can create lists of URLs to reference when creating Secure Web Gateway policies. This allows you to quickly create rules that match and take actions against several items. 
+With Teams, you can create lists of URLs to reference when creating [Secure Web Gateway policies](/policies/filtering). This allows you to quickly create rules that match and take actions against several items. 
 
 You can create a list by:
 * [Bulk uploading](#creating-a-bulk-upload-list) many entries
