@@ -9,7 +9,7 @@ order: 5
 In order for the WARP client to pick up any changes you make to Split Tunnels or Local Domain Fallback, you will need to restart it. To do that, you can either restart the computer or quit the application and relaunch it. This behavior will be improved in a future release.
  
 </Aside>
- 
+
 Split Tunnels mode can be configured to exclude IP addresses commonly used for private routing, including those defined in [RFC 1918](https://tools.ietf.org/html/rfc1918). You can find a list of excluded IP addresses under **Gateway** > **Policies** > **Settings** > **Split Tunnels - WARP**.
  
 You can add or remove IP addresses from the Split Tunnels list at any time.
