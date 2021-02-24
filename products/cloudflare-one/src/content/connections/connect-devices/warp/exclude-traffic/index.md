@@ -1,5 +1,6 @@
 ---
 order: 4
+hidden: true
 ---
  
 # Exclude network traffic from WARP
