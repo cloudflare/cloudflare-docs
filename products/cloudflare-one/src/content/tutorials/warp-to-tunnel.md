@@ -22,7 +22,7 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 <Aside>
 
 * You must have a Cloudflare for Teams Gateway or Standard plan to use this feature.
-* This flow does not currently work on mobile versions of the WARP softare.
+* This flow does not currently work on mobile versions of the WARP software.
 
 </Aside>
 
