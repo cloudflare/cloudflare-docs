@@ -24,7 +24,7 @@ Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,00
 1. Drag and drop a file into the CSV File window, or click **Select a file**.
 
  <Aside>
- Keep in mind that the file must be smaller than 2 MB.
+ Keep in mind that the file must be a CSV and smaller than 2 MB.
  </Aside>
 
 1. Click **Create**. 
