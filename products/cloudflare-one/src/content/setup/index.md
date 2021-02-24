@@ -18,7 +18,7 @@ Setting up Cloudflare for Teams takes only a couple of minutes, and is as fast a
  
 Let's walk through the setup flow!
 
-1. Once you've created your Cloudflare account, navigate to our [product page](https://www.cloudflare.com/teams/) and click **Get Started**.
+1. Once you've created your Cloudflare account, navigate to [the sign-up link](https://dash.cloudflare.com/sign-up/teams).
 1. Log in with your Cloudflare credentials.
 1. Click on the Teams icon.
 
