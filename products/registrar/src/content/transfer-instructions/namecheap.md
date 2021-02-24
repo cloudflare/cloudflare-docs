@@ -47,4 +47,4 @@ In the Cloudflare transfer screen, input the authorization code. Each domain wil
 --------
 
 ## Step 5: Approve the transfer
-Unfortunately, the email confirmation which Namecheap sends as of Nov, 2020 contains a link to _cancel_ rather than _expedite_ or _approve_ the transfer. No alternative funtionality exists in the domain's control panel. You will need to wait the standard 5 days for your request to default to being approved and the domain to be transferred. Alternatively, you can try contacting Namecheap support directly.
+The email confirmation which Namecheap sends as of Nov, 2020 contains a link to _cancel_ rather than _expedite_ or _approve_ the transfer. No alternative funtionality exists in the domain's control panel. You will need to wait the standard 5 days for your request to default to being approved and the domain to be transferred. Alternatively, you can try contacting Namecheap support directly.
