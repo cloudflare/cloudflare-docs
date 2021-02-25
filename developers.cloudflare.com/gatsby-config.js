@@ -28,7 +28,6 @@ const products = [
   "load-balancing",
   "logs",
   "magic-transit",
-  "mobile-sdk",
   "network-interconnect",
   "randomness-beacon",
   "registrar",
