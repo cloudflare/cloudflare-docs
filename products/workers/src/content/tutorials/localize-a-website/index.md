@@ -6,7 +6,7 @@ type: "📝 Tutorial"
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
 
-# Localize a website
+# Localize a website with HTMLRewriter
 
 <TutorialsBeforeYouStart/>
 
