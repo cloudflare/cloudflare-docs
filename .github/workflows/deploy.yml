@@ -31,7 +31,6 @@ jobs:
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
-      mobile-sdk: ${{ steps.filter.outputs.mobile-sdk }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
@@ -94,8 +93,6 @@ jobs:
               - 'products/logs/**'
             magic-transit:
               - 'products/magic-transit/**'
-            mobile-sdk:
-              - 'products/mobile-sdk/**'
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
@@ -793,38 +790,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-transit"
-          environment: "production"
-
-  deploy-mobile-sdk:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.mobile-sdk == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/mobile-sdk
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-        env:
-          WORKERS_ENV: development
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/mobile-sdk"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/mobile-sdk"
           environment: "production"
 
   deploy-network-interconnect:

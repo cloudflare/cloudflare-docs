@@ -49,9 +49,6 @@ products/logs/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
 
-# Mobile SDK
-products/mobile-sdk/ @cloudflare/sdk @lalkaka @cloudflare/PCX
-
 # Network Interconnect
 products/network-interconnect @ConzorKingKong @cloudflare/PCX
 
