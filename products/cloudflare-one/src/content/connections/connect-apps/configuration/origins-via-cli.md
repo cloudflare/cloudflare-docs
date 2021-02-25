@@ -1,5 +1,5 @@
 ---
-order: 11
+order: 20
 ---
 
 # Legacy: configuring origins via CLI
