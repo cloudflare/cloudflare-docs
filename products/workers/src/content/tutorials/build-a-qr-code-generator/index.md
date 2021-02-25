@@ -14,8 +14,6 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 In this tutorial, you’ll build and publish a serverless function that generates QR codes, using Cloudflare Workers.
 
-![QR code generator working in the browser](./media/demo.png)
-
 If you’re interested in building and publishing serverless functions, this is the guide for you! No prior experience with serverless functions or Cloudflare Workers is assumed.
 
 One more thing before you start the tutorial: if you just want to jump straight to the code, we’ve made the final version of the codebase [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take that code, customize it, and deploy it for use in your own projects. Happy coding!
@@ -216,9 +214,7 @@ async function handleRequest(request) {
 }
 ```
 
-The `landing` variable, which is a static HTML string, sets up an `input` tag and a corresponding `button`, which calls the `generate` function. This function will make an HTTP `POST` request back to your serverless function, allowing you to see the corresponding QR code image data inside of your browser’s network inspector:
-
-![QR code generator working in the browser](./media/demo.png)
+The `landing` variable, which is a static HTML string, sets up an `input` tag and a corresponding `button`, which calls the `generate` function. This function will make an HTTP `POST` request back to your serverless function, allowing you to see the corresponding QR code image data inside of your browser’s network inspector.
 
 With that, your serverless function is complete! The full version of the code looks like this:
 
