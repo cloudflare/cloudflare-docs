@@ -49,6 +49,7 @@ Cloudflare Pages' build environment has broad support for a variety of languages
 | Elixir    | 1.7             |
 | Emacs     | 25              |
 | Erlang    | 21              |
+| Go        | 1.12            |
 | Java      | 8               |
 | Node.js   | 10              |
 | PHP       | 5.6             |
