@@ -22,7 +22,7 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 <Aside>
 
 * You must have a Cloudflare for Teams Gateway or Standard plan to use this feature.
-* This flow does not currently work on mobile versions of the WARP softare.
+* This flow does not currently work on mobile versions of the WARP software.
 
 </Aside>
 
@@ -70,7 +70,7 @@ cloudflared tunnel list
 
 Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. That range should use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918). The private IP space specified should match the private IP space of your subnet or environment where Argo Tunnel will send connections.
 
-This example tells Argo Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be servied by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
+This example tells Argo Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
 ```bash
 cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -94,6 +94,8 @@ Next, create a configuration file for the Tunnel. The following template contain
 tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
 credentials-file: /root/.cloudflared/8e343b13-a087-48ea-825f-9783931ff2a5.json
 protocol: http2
+warp-routing:
+  enabled: true
 ```
 
 <Aside>
