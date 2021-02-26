@@ -372,3 +372,9 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
   </tbody>
 </table>
 </TableWrap>
+
+### Why does a Firewall Event display a Cloudflare IP address even though other fields match the client details?
+
+This happens when a request goes through a Cloudflare Worker.
+
+In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.
