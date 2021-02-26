@@ -35,7 +35,7 @@ If your domain is unexpectedly blocked, you can use [this form](https://develope
 ### You're using a regex in your HTTP policy, but it doesn't seem to be matching traffic as expected.
 
 Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. For example, if you want to match multiple domains, you could use the pipe symbol (`|`) as an OR operator. In Gateway, you do not need to use an escape character (`\`) before the pipe symbol.
-Let's say you want to block requests to two hosts if either appears in a request header. A regex for such a rule would like like this:
+Let's say you want to block requests to two hosts if either appears in a request header. A regex for such a rule would look like this:
 * Selector: `Host`
 * Operator: `Matches regex`
 * Value: `.*whispersystems.org | .*signal.org`
