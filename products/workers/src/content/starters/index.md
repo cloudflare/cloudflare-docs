@@ -56,6 +56,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
 />
 
 <WorkerStarter
+  title="Sunder Starter (Typescript)"
+  description="A batteries-included starter template using Sunder, Typescript, ESBuild, Jest and Sass. Uses Worker Sites for static assets."
+  repo="gzuidhof/sunder-worker-template"
+/>
+
+<WorkerStarter
   title="Apollo GraphQL Server"
   description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers."
   repo="signalnerve/workers-graphql-server"
