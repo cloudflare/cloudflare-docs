@@ -48,6 +48,10 @@ You can now use `cloudflared` to control Argo Tunnel connections in your Cloudfl
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
+<Aside>
+  If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`. 
+</Aside>
+
 ## Create a Tunnel
 
 You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge.
