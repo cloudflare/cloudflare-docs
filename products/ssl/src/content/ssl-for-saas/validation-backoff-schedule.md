@@ -4,7 +4,7 @@ order: 7
 
 # Validation backoff schedule
 
-Attempts to complete domain validation with our CA partners are distributed over 14 days. Afterward, DCV tokens expire as dictated by the CA/B Baseline Requirements, which govern issuance of publicly trusted SSL certificates.
+Attempts to complete domain validation with our CA partners, Digicert and Let's Encrypt are distributed over 14 days and 7 days, respectively. Afterward, DCV tokens expire as dictated by the CA/B Baseline Requirements, which govern issuance of publicly trusted SSL certificates.
 
 Here is the function that is used to determine the next check:
 
