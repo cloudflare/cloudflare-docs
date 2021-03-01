@@ -40,7 +40,7 @@ async function handleRequest(event) {
     // will limit the response to be in cache for 10 seconds max
 
     // Any changes made to the response here will be reflected in the cached value
-    response.headers.append("Cache-Control", "s-max-age=10")
+    response.headers.append("Cache-Control", "s-maxage=10")
 
     // Store the fetched response as cacheKey
     // Use waitUntil so you can return the response without blocking on
