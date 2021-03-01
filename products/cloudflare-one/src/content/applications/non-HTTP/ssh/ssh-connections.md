@@ -120,7 +120,7 @@ Cloudflare Access does not replace SSH key exchange with a Git repository.
 
 ### Service tokens
 
-[Service tokens](/access-service-auth/service-tokens/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the [Zero Trust policy](/policies/zero-trust) protecting the resource also allows for the particular service token.
+[Service tokens](/identity/service-auth/service-tokens/) can be used with the Cloudflare Access SSH flow. To do so, set `--id` and `--secret` on the request with the values of the service token. Ensure the [Zero Trust policy](/policies/zero-trust) protecting the resource also allows for the particular service token.
 
 ### Securing your connection with Argo Tunnel
 
