@@ -46,6 +46,22 @@ Cloudflare Gateway will identify your location based on the DNS over HTTPS hostn
 
 See how you can start sending DNS queries over HTTPS using [Firefox](/connections/connect-networks/locations/setup-instructions/firefox).
 
+## Find a location's DoH subdomain
+
+DoH subdomains (previously known as a unique id) are aligned to locations. Locations and corresponding DoH subdomains have policies associated with them. To find a location's DoH subdomain:
+
+1. On the Teams dashboard, navigate to **Gateway** > **Locations**.
+
+1. If you have more than one location set up, you will see a list of all your locations.
+
+1. Expand the location card for the location whose subdomain you'd like to retrieve.
+
+1. Get the subdomain of the DNS over HTTPS hostname (previously known as a unique ID). In the example below, the ID is: `9y65g5srsm`.
+
+ ![Expand location card](../../../static/documentation/connections/locations-doh-dot.png) 
+
+1. Take note of the **DoH subdomain**.
+
 ## Editable IP addresses
 
 When users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Teams dashboard. 

@@ -63,7 +63,7 @@ If you plan to direct your users to manually download and configure the Cloudfla
 * If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH Subdomain
-If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
+If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](/connections/connect-networks/locations/configuring-a-location#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
 
 Then ask your users to complete the following steps:
 

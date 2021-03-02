@@ -2,42 +2,26 @@
 order: 2
 ---
 
-# iOS Setup Instructions (MDM)
+# iOS (MDM)
 
 <Aside>
 
 Note that if you were using 1.1.1.1 for Families in the mobile app, you will at first need to disable 1.1.1.1 for Families.
 
-You can disable it by going to `Advanced -> Connection options -> DNS Settings -> 1.1.1.1 for Families -> And select 'None'`.
+You can disable it by going to `Advanced > Connection options > DNS Settings > 1.1.1.1 for Families > 'None'` in your 1.1.1.1 app.
 </Aside>
 
-You can deploy Gateway to your corporate iOS devices in bulk. Use an MDM solution to deploy your Gateway configuration to all corporate devices. If you want to learn how to use Gateway on your personal iOS device please use the setup instructions from [this page](/locations/setup-instructions/ios/manual/) instead.
+You can deploy Gateway to your corporate iOS devices in bulk. Use an MDM solution to deploy your Gateway configuration to all corporate devices. 
 
-## Unique Gateway Id
-When you are on this screen on your phone, you will need to enter the unique subdomain of the location you created for your mobile phone.
 
-1. Visit your teams dashboard to fetch the unique id from your location.
-![Go to teams dash](../../../static/go-to-teams-dashboard.png)
+1. Download the configuration file from <a href="./cfteams.mobileconfig" download>here</a>.
 
-2. Go to locations page to see the list of locations
-![Go to locations page](../../../static/go-to-locations-page.png)
-
-3. Expand the location card for the location you want to associate your mobile device with. If you have only one location, expand that location card.
-![Expand location card](../../../static/expand-location-card.png)
-
-4. Get the subdomain of the DNS over HTTPS hostname. This is your unique id. In the example below, this id is: fix7p31bzg.
-![Get unique subdomain](../../../static/unique-gateway-id.png)
-
-## Modify configuration file
-
-Download the configuration file from <a href="./cfteams.mobileconfig" download>here</a>
-
-The contents of the file will look like below:
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
+ The contents of the file will look like below:
+ ```xml
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0">
+ <dict>
 	<key>PayloadContent</key>
 	<array>
 		<dict>
@@ -101,12 +85,20 @@ The contents of the file will look like below:
 	<string>8D0811D8-0CCA-4162-AC6F-DA2808A942A2</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
-</dict>
-</plist>
-```
+ </dict>
+ </plist>
+ ```
 
-Use a texteditor to replace the string `gateway_unique_id` with the 10 character unique subdomain from the DNS over HTTPS hostname for your location that you got from the previous section. Please make sure that you don't change any other parts of the file.
+1. Use a texteditor to replace the string `gateway_unique_id` with the 10-character [DoH subdomain](/connections/connect-networks/locations/configuring-a-location#find-a-locations-doh-subdomain) from the DNS over HTTPS hostname.
 
-After you save the file, use your preferred MDM tool to deploy the configuration change to your fleet of corporate mobile devices.
+ <Aside type="Warning">
+
+ Please make sure that you don't change any other parts of the file.
+
+ </Aside>
+
+1. Save the file.
+
+1. Use your preferred MDM tool to deploy the configuration change to your fleet of corporate mobile devices.
 
 If 1.1.1.1 DNS, WARP or WARP+ was already enabled, the 1.1.1.1 app should be using Gateway now.
