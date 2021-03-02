@@ -164,23 +164,6 @@ Cloudflare Gateway dynamically generates a certificate for all encrypted connect
 
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
-
-
-<TableWrap>	
-
-| Application     | FQDN               | Bypass Rules                                                                           |	
-|-----------------|--------------------|----------------------------------------------------------------------------------------|	
-| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |	
-| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |	
-| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |	
-| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |	
-| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |	
-| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |	
-| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |	
-| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |	
-
-</TableWrap>
-
 ### I browsed to a website and received a Cloudflare Gateway error page, not a block page.
 
 ![HTTP error page](../static/documentation/faq/http-error-page.png)
@@ -235,7 +218,22 @@ The application may use **certificate pinning**. This is a process used by appli
 
 In order to accommodate applications that take advantage of certificate pinning, a bypass for the hostnames associated with the application must be configured in the Gateway L7 firewall. In the future, Gateway will provide the ability for organizations to simply select the name or type of application in order to configure rules.
 
-Some common applications that make use of certificate pinning include Signal, Zoom, and Apple. For a full list of applications and associated hostnames, see [here](/policies/filtering/http-policies/general-rules#hostnames-incompatible-with-decryption).
+Some common applications that make use of certificate pinning include:
+
+<TableWrap>	
+
+| Application     | FQDN               | Bypass Rules                                                                           |	
+|-----------------|--------------------|----------------------------------------------------------------------------------------|	
+| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |	
+| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |	
+| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |	
+| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |	
+| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |	
+| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |	
+| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |	
+| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |	
+
+</TableWrap>
 
 ### Your source IPv4 address is taken
 
