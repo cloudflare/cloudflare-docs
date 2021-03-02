@@ -13,7 +13,7 @@ To set up a Splunk Logpush job:
 
 <Aside type="note" header="Note">
 
-Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog.
+Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Splunk.
 
 </Aside>
 
