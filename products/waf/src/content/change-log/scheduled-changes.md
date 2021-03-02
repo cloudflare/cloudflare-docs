@@ -32,28 +32,5 @@ order: 1
         </tr>
     </thead>
         <tbody>
-        <tr>
-            <td>
-                2021-02-22
-            </td>
-            <td>
-                2021-03-01
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                100005
-            </td>
-            <td>
-                Improve LFI Log Injection/Disclosure coverage.
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
     </tbody>
 </table></TableWrap>
