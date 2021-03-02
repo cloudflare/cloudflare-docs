@@ -23,3 +23,4 @@ Cloudflare for Teams applies a set of **global rules** to all accounts.
 | Request Header | `Accept: text/html` | noisolate | Browsers issue an `Accept:` header that begins with `text/html`. Do not isolate if we don't see such a header because this is not a browser |
 
 </TableWrap>
+
