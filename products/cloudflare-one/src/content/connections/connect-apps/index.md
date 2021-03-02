@@ -19,9 +19,9 @@ In order to create and manage Tunnels, you'll first need to:
 
 Once `cloudflared` has been installed and authenticated, the process to get your first Tunnel up and running includes 3 high-level steps:
 
-1. [Creating a Named Tunnel](/connections/connect-apps/create-tunnel)
-2. [Routing traffic to your Tunnel](/connections/connect-apps/routing-to-tunnel)
-3. [Running your Tunnel](/connections/connect-apps/run-tunnel)
+1. [Create a Tunnel](/connections/connect-apps/create-tunnel)
+2. [Route traffic to your Tunnel](/connections/connect-apps/routing-to-tunnel)
+3. [Run your Tunnel](/connections/connect-apps/run-tunnel)
 
 Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3 is executed whenever the Tunnel is to be started, normally by the owner of the Tunnel (whom may be different from the administrator).
 
