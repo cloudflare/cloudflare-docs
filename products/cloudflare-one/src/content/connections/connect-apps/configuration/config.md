@@ -4,10 +4,8 @@ order: 1
 
 # Configuration file
 
-You can run `cloudflared` with a configuration file, which contains keys and values to configure `cloudflared`'s behaviour.
-The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Most keys have an equivalent CLI argument,
-however, some (e.g. ingress and originRequest) do not, as CLIs aren't very good at expressing trees of configuration. To learn
-more about the CLI, just run `cloudflared --help` or `cloudflared tunnel --help`.
+You can run `cloudflared` with a configuration file, which contains keys and values to configure `cloudflared`'s behavior. The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Most keys have an equivalent CLI argument;
+however, some (e.g. `ingress` and `originRequest`) do not, as CLIs aren't the most appropriate tool to express trees of configuration. To learn more about the CLI, just run `cloudflared --help` or `cloudflared tunnel --help`.
 
 ## Default behavior
 
@@ -26,8 +24,9 @@ $ cloudflared tunnel --config tunnels/config.yml run
 ```
 
 Without specifying `--config`, `cloudflared` will examine default directories for config files.
-On Windows the default directory is `~/.cloudflared`.
-On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared` and `/usr/local/etc/cloudflared` in that order.
+* On Windows the default directory is `~/.cloudflared`.
+* On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared` and `/usr/local/etc/cloudflared` in that order.
+
 An example `config.yml` for the above command could look like:
 
 ```yml
