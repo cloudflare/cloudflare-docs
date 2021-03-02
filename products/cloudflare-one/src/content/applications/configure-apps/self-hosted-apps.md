@@ -78,7 +78,7 @@ To learn more about how policies work, read our [Policies section](/policies/).
 
 The **Setup section** allows you to configure a few advanced settings for your application.
 
-1. Configure [Cross-Origin Resource Sharing (CORS) settings](/policies/cors/).
+1. Configure [Cross-Origin Resource Sharing (CORS) settings](/policies/zero-trust/cors).
 
  ![Advanced settings](../../static/documentation/applications/advanced-settings.png)
 

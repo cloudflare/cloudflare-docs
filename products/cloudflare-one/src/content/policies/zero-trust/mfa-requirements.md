@@ -50,5 +50,3 @@ Certain identity providers can also share the multifactor authentication (MFA) m
 Cloudflare Access then stores that method into the same JWT issued to the user.
 
 Cloudflare Access follows [RFC 8176](https://tools.ietf.org/html/rfc8176), Authentication Method Reference Values, to define authentication methods.
-
-For instructions on how to create policies to enforce MFA, see our [Policies and Rules section](/learning/policies-and-rules/#enforcing-mfa).
