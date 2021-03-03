@@ -145,7 +145,11 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 
 You can get the metadata associated with a key-value pair alongside its value by calling the `getWithMetadata` method on a namespace you’ve bound in your script:
 
-`const {value, metadata} = await NAMESPACE.getWithMetadata(key)`
+```
+const valueAndMetadata = await NAMESPACE.getWithMetadata(key)
+const value = valueAndMetadata.value
+const metadata = valueAndMetadata.metadata
+```
 
 If there’s no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
