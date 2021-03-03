@@ -97,16 +97,9 @@ Next, create a configuration file for the Tunnel. The following template contain
 ```yaml
 tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
 credentials-file: /root/.cloudflared/8e343b13-a087-48ea-825f-9783931ff2a5.json
-protocol: http2
 warp-routing:
   enabled: true
 ```
-
-<Aside>
-
-The specification of `http2` is required but only impacts HTTP connections. You can use this Tunnel for any arbitrary TCP traffic.
-
-</Aside>
 
 You can now run the Tunnel. The command below will connect this instance of `cloudflared` to Cloudflare's network. Traffic inside of your organization, from enrolled WARP agents, will be sent to this instance when the destination is this private IP range.
 
