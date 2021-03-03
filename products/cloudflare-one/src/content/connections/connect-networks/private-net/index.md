@@ -12,14 +12,14 @@ When users connect to an IP made available through Argo Tunnel, WARP sends their
 
 In order to connect private networks, you'll first need to:
 
-1. [Download and install `cloudflared`](/connections/connect-networks/private-net/install-and-setup/installation) in your private network
-2. [Authenticate `cloudflared`](/connections/connect-networks/private-net/install-and-setup/setup)
+1. [Download and install `cloudflared`](/connections/connect-apps/install-and-setup/installation) in your private network
+2. [Authenticate `cloudflared`](/connections/connect-apps/install-and-setup/setup)
 
 Once `cloudflared` has been installed and authenticated, you will need 3 high-level steps to connect your network to users enrolled in your organization's Cloudflare for Teams account.
 
 1. [Create a Tunnel](/connections/connect-networks/private-net/create-tunnel)
 2. [Configure IPs in WARP](/connections/connect-devices/warp/exclude-traffic)
-2. [Run your Tunnel](/connections/connect-networks/private-net/run-tunnel)
+2. [Run your Tunnel](/connections/connect-apps/run-tunnel)
 
 Be sure to check out our [Tutorials](/tutorials), where you can also find
 best practices for managing Tunnels as an administrator.
