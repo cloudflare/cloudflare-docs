@@ -341,6 +341,31 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>icmp</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        The raw ICMP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>icmp.type</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+         The ICMP type. Only applies to ICMP packets. <br />
+         Example value:
+         <code class="InlineCode">8</code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>icmp.code</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+         The ICMP code. Only applies to ICMP packets. <br />
+         Example value:
+         <code class="InlineCode">2</code>
+        </td>
+    </tr>
+    <tr>
         <td><p><code>ip</code><br /><Type>String</Type></p>
         </td>
         <td>
@@ -357,6 +382,15 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>ip.hdr_len</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+         The length of the IP header in bytes. <br />
+         Example value:
+         <code class="InlineCode">5</code>
+        </td>
+    </tr>
+    <tr>
         <td><p><code>ip.len</code><br /><Type>Number</Type></p>
         </td>
         <td>
@@ -366,11 +400,28 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>ip.opt.type</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+         The first byte of IP options field, if the options field is set. <br />
+         Example value:
+         <code class="InlineCode">25</code>
+        </td>
+    </tr>
+    <tr>
         <td><p><code>ip.proto</code><br /><Type>String</Type></p>
         </td>
         <td>
         The transport layer for the packet, if it can be determined. <br />
         Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.ttl</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        The time-to-live of the IP Packet. <br />
+        Example values: <code class="InlineCode">54</code>
         </td>
     </tr>
     <tr>
@@ -385,6 +436,13 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
         <td>
         The raw TCP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>tcp.flags</code><br /><Type>Number</Type></p>
+        </td>
+        <td>
+        The numeric value of the TCP flags byte.
         </td>
     </tr>
     <tr>
@@ -455,6 +513,13 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
         <td>
         Destination port number of the IP packet. Only applies to TCP packets.
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>udp</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+        The raw UDP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
         </td>
     </tr>
     <tr>
