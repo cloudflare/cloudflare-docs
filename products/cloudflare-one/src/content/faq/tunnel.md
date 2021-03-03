@@ -37,6 +37,10 @@ downloaded through `cloudflared` retains the older API key and can cause authent
 failures. The user will need to login once more through `cloudflared` to regenerate the
 certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
+### What can cause a `websocket: bad handshake` error?
+
+If your Cloudflare account has Universal SSL enabled and the `SSL/TLS encryption mode` is set to `Off`, `cloudflared` will return a `"websocket: bad handshake"` error. To resolve, set the `SSL/TLS encryption mode` to any setting other than `Off`. 
+
 ### What are the ports and IPs used by `cloudflared`?
 
 Users can implement a positive security model with Argo Tunnel by restricting traffic originating from cloudflared. The parameters below can be configured for egress traffic inside of a firewall.
