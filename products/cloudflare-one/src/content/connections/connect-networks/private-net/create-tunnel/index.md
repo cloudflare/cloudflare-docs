@@ -38,13 +38,13 @@ Note: the command requires the `cert.pem` file.
 
 ## Associate the Tunnel with a CIDR
 
-To map th Tunnel to a range of IPs, run the followign command:
+To map the Tunnel to a range of IPs, run the following command:
 
 ```sh
 $ cloudflared tunnel route ip add <CIDR> <NAME>
 ```
 
-Replace `<CIDR>` with the range of IPs that this Tunnel represents. The `<NAME>` value should be the name of a Tunnel already created.
+Replace `<CIDR>` with the range of IPs that this Tunnel represents, for example `10.1.2.40/29`. The IP addresses used can include RFC 1918 ranges. The `<NAME>` value should be the name of a Tunnel already created.
 
 This command will tell Cloudflare to send traffic from users in your organization to this Tunnel when those users connect to the range of IPs specified. The IPs must match the internal IPs of services running in your environment that `cloudflared` can reach.
 
