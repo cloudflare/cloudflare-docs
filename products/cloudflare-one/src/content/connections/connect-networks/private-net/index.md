@@ -6,7 +6,7 @@ order: 0
 
 You can connect private networks and the services running in those networks to Cloudflare using [Argo Tunnel](/glossary#argo-tunnel). End users can connect to those resources using the Cloudflare WARP agent by first authenticating into your organization's account.
 
-Argo Tunnel runs a lightweight [daemon](/glossary#daemon) ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your environment and the Cloudflare edge. Administrators define the IPs available in that environment and associate them with the Tunnel.
+Argo Tunnel runs a lightweight [daemon](/glossary#daemon) named ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your environment and the Cloudflare edge. Administrators define the IPs available in that environment and associate them with the Tunnel.
 
 When users connect to an IP made available through Argo Tunnel, WARP sends their connection through Cloudflare's network to the corresponding Argo Tunnel.
 

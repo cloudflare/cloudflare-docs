@@ -15,7 +15,7 @@ To begin, run the Tunnel with the following command. The command will connect `c
 
 `cloudflared tunnel --config path/config.yaml run <NAME>`
 
-If you have deleted the `cert.pem` file, you must specify the UUID instead of the name.
+You can also use the UUID of the Tunnel instead of the Name value.
 
 `cloudflared tunnel --config path/config.yaml run <UUID>`
 
