@@ -39,7 +39,9 @@ Wrangler](/cli-wrangler/commands#kvkey).
 
 Finally, you can [write data via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
 
-Due to the eventually consistent nature of Workers KV, it’s a common pattern to write data via Wrangler or the API, but read the data from within a worker.
+Due to the eventually consistent nature of Workers KV, concurrent writes from different edge locations can end up up overwriting one another. It’s a common pattern to write data via Wrangler or the API but read the data from within a worker, avoiding this issue by issuing all writes from the same location.
+
+Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. See [How KV works](/learning/how-kv-works) for more on this topic.
 
 #### Writing data in bulk
 
@@ -98,7 +100,7 @@ To get the value for a given key, you can call the `get` method on any namespace
 
 The method returns a promise you can `await` to get the value. If the key is not found, the promise will resolve with the literal value `null`.
 
-Changes may take up to 60 seconds to be visible when reading key-value pairs.
+Note that `get` may return stale values -- if a given key has recently been read in a given location, changes to the key made in other locations may take up to 60 seconds to be visible. See [How KV works](/learning/how-kv-works) for more on this topic.
 
 Here’s an example of reading a key from within a Worker:
 
