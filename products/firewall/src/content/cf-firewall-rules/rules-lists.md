@@ -55,6 +55,21 @@ The number of Rules Lists you can create depends on the Cloudflare plans associa
 - To manage and edit lists from your Cloudflare account interface, see [_Use Rules Lists_](/cf-dashboard/rules-lists).
 - To manage and edit lists using the Cloudflare API, see [_Rules Lists API_](/api/cf-lists/).
 
+## Managed IP Lists: Open Proxies
+
+Use Managed IP Lists to access Cloudflare's IP threat intelligence. 
+
+Cloudflare scans public, open proxy lists for reachable, open proxies. After verifying the proxies, Cloudflare determines their exit IPs and creates a list of IPs you can use when writing rules via the dashboard or API. 
+
+- To browse the managed lists, see [Use Rules Lists](/cf-dashboard/rules-lists).
+- To use a list when writing a rule, use the **Operator** menu to select *is in list*. From **Value**, select the list. 
+
+To create a new rule via the API, use the `cf.open_proxies` list name.
+
+<Aside header="Important">
+  Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</code> requires a Cloudflare Enterprise plan.
+</Aside>
+
 ## Using lists in expressions
 
 Both the Cloudflare dashboard and the Cloudflare API support Rules Lists.
