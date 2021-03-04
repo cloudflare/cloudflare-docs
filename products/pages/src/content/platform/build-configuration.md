@@ -82,11 +82,11 @@ If you need to use a specific version of a language, e.g. Node.js or Ruby, you c
 | Language/tool | Environment variable | File                      |
 | ------------- | -------------------- | ------------------------- |
 | Go            | `GO_VERSION`         |                           |
+| Hugo          | `HUGO_VERSION`       |                           |
 | Node.js       | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
 | NPM           | `NPM_VERSION`        |                           |
 | Python        | `PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
 | Ruby          | `RUBY_VERSION`       | `.ruby-version`           |
 | Yarn          | `YARN_VERSION`       |                           |
-| Hugo          | `HUGO_VERSION`       |                           |
 
 If you're looking to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For instance, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` NPM package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
