@@ -28,4 +28,4 @@ Your Pages site can be managed by an unlimited number of users via the Cloudflar
 
 ## Sites
 
-Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, we may temporarily disable your ability to deploy to Pages, if you're deploying a large number of applications in a short amount of time. Please email workers-support@cloudflare.com if you need this restriction removed.
+Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, we may temporarily disable your ability to create new Pages projects, if you're deploying a large number of applications in a short amount of time. Please email workers-support@cloudflare.com if you need this restriction removed.
