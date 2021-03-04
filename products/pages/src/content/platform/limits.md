@@ -25,3 +25,7 @@ You can have a unlimited number of [preview deployments](/platform/preview-deplo
 ## Users
 
 Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your GitHub project--you can manage both public and private repos, open issues, and accept pull requests via GitHub without it impacting your Pages site.
+
+## Sites
+
+Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, we may temporarily disable your ability to create new Pages projects, if you're deploying a large number of applications in a short amount of time. Please email workers-support@cloudflare.com if you need this restriction removed.
