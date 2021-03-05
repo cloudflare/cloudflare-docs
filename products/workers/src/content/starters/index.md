@@ -40,7 +40,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 <WorkerStarter
   title="Hello World (TypeScript)"
   description="A bare-bones starter in TypeScript."
-  repo="EverlastingBugstopper/worker-typescript-template"
+  repo="cloudflare/worker-typescript-template"
 />
 
 <WorkerStarter
