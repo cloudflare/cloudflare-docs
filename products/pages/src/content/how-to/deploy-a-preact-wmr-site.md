@@ -1,4 +1,4 @@
-# Deploy a WMR site
+# Deploy a Preact WMR site
 
 [WMR](https://github.com/preactjs/wmr) is a tiny all-in-one development tool for modern web applications.
 It uses the ES Modules and [Preact](https://preactjs.com) out of the box, and pre-renders your pages to static HTML at build time.
