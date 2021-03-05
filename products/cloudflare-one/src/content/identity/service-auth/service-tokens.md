@@ -4,7 +4,7 @@ order: 3
 
 # Service tokens
 
-You can provide automates systems with service tokens to authenticate against Cloudflare's Zero Trust policies. Cloudflare for teams will generate service tokens that consist of an ID and Secret. Automated systems or applications can then use these values to reach an application protected by Access. 
+You can provide automated systems with service tokens to authenticate against Cloudflare's Zero Trust policies. Cloudflare for teams will generate service tokens that consist of an ID and Secret. Automated systems or applications can then use these values to reach an application protected by Access. 
 
 This section covers how to create, renew, and revoke a service token.
 
