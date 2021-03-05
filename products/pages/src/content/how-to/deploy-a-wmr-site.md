@@ -1,9 +1,10 @@
 # Deploy a WMR site
 
-WMR is a tiny all-in-one development tool for modern web applications, it uses the modern esmodules and uses Preact
-out of the box.
+[WMR](https://github.com/preactjs/wmr) is a tiny all-in-one development tool for modern web applications.
+It uses the ES Modules and [Preact](https://preactjs.com) out of the box, and pre-renders your pages to static HTML at build time.
 
-In this guide, you'll create a new Preact application and deploy it using Cloudflare Pages. We'll be using `create-wmr`, a tool to generate a new WMR application.
+In this guide, you'll create a new Preact application and deploy it using Cloudflare Pages.
+We'll be using [create-wmr](https://www.npmjs.com/package/create-wmr) to quickly generate a new WMR application.
 
 ## Setting up a new project
 
@@ -11,6 +12,7 @@ Create a new project using `npx`, giving it a title.
 
 ```sh
 $ npm init wmr your-project-name
+$ cd your-project-name
 ```
 
 ## Creating a GitHub repository
@@ -21,7 +23,7 @@ Create a new GitHub repository by visiting [repo.new](https://repo.new). Once yo
 $ git init
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git checkout -b main
-$ git add .
+$ git add -A
 $ git commit -m "<insert message>"
 $ git push -u origin main
 ```
