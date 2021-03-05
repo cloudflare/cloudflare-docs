@@ -10,11 +10,11 @@ Before you start using Cloudflare for Teams, create a Cloudflare account. To do 
 
 </Aside>
 
-Setting up Cloudflare for Teams takes only a couple of minutes, and is as fast as going through these three steps:
+Setting up Cloudflare for Teams takes only a couple of minutes. You will need to complete these three steps:
 
- * Choosing a [team name](/glossary#team-name).
- * Choosing a [payment plan](https://www.cloudflare.com/en-gb/teams-pricing/).
- * Adding your payment details (also required for customers on the Free plan).
+1. Choose a [team name](/glossary#team-name).
+1. Choose a [plan](https://www.cloudflare.com/en-gb/teams-pricing/).
+1. Adding your payment details (also required for customers on the Free plan).
  
 Let's walk through the setup flow!
 
