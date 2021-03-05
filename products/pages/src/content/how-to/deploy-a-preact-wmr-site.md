@@ -1,7 +1,7 @@
 # Deploy a Preact WMR site
 
 [WMR](https://github.com/preactjs/wmr) is a tiny all-in-one development tool for modern web applications.
-It uses the ES Modules and [Preact](https://preactjs.com) out of the box, and pre-renders your pages to static HTML at build time.
+It uses ES Modules and [Preact](https://preactjs.com) out of the box, and pre-renders your pages to static HTML at build time.
 
 In this guide, you'll create a new Preact application and deploy it using Cloudflare Pages.
 We'll be using [create-wmr](https://www.npmjs.com/package/create-wmr) to quickly generate a new WMR application.
