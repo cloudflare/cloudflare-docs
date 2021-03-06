@@ -22,6 +22,7 @@ Below are some standard build commands and directories for popular frameworks an
 | Gridsome                     | `gridsome build`                    | `dist`                      |
 | Hugo                         | `hugo`                              | `public`                    |
 | Jekyll                       | `jekyll build`                      | `_site`                     |
+| Jigsaw                       | `vendor/bin/jigsaw build`           | `build_production`          |
 | Mkdocs                       | `mkdocs build`                      | `site`                      |
 | Next.js (Static HTML Export) | `next build && next export`         | `out`                       |
 | Nuxt.js                      | `nuxt generate`                     | `dist`                      |
