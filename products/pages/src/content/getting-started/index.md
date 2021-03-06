@@ -30,7 +30,7 @@ You can select a GitHub project from your personal account or an organization yo
 
 <Aside>
 
-Don't have a project? [Check out our extensive How To section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
+Don't have a project? [Check out our extensive How-To section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
 
 </Aside>
 
