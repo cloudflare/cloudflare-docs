@@ -651,12 +651,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-images:
     runs-on: ubuntu-latest
@@ -689,7 +691,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
-          environment: "production
+          environment: "production"
           wranglerVersion: '1.13.0'
 
   deploy-internet:
