@@ -145,12 +145,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "developers.cloudflare.com"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "developers.cloudflare.com"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-1-1-1-1:
     runs-on: ubuntu-latest
@@ -209,12 +211,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/access"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/access"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-analytics:
     runs-on: ubuntu-latest
@@ -241,12 +245,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-api:
     runs-on: ubuntu-latest
@@ -273,12 +279,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/api"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/api"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-argo-tunnel:
     runs-on: ubuntu-latest
@@ -305,12 +313,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/argo-tunnel"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/argo-tunnel"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-bots:
     runs-on: ubuntu-latest
@@ -337,12 +347,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/bots"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/bots"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-byoip:
     runs-on: ubuntu-latest
@@ -401,12 +413,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/cloudflare-one"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/cloudflare-one"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -433,12 +447,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-docs-engine:
     runs-on: ubuntu-latest
@@ -465,12 +481,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-events:
     runs-on: ubuntu-latest
@@ -497,12 +515,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/events"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/events"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-firewall:
     runs-on: ubuntu-latest
@@ -529,12 +549,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-gateway:
     runs-on: ubuntu-latest
@@ -561,12 +583,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/gateway"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/gateway"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-browser-isolation:
     runs-on: ubuntu-latest
@@ -593,12 +617,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/browser-isolation"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/browser-isolation"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-http3:
     runs-on: ubuntu-latest
@@ -657,12 +683,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
-          environment: "production"
+          environment: "production
+          wranglerVersion: '1.13.0'
 
   deploy-internet:
     runs-on: ubuntu-latest
@@ -689,12 +717,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/internet"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/internet"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-load-balancing:
     runs-on: ubuntu-latest
@@ -721,12 +751,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/load-balancing"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/load-balancing"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-logs:
     runs-on: ubuntu-latest
@@ -753,12 +785,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-magic-transit:
     runs-on: ubuntu-latest
@@ -785,12 +819,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-transit"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-transit"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -817,12 +853,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-pages:
     runs-on: ubuntu-latest
@@ -849,12 +887,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: 'products/pages'
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: 'products/pages'
           environment: 'production'
+          wranglerVersion: '1.13.0'
 
   deploy-randomness-beacon:
     runs-on: ubuntu-latest
@@ -881,12 +921,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-registrar:
     runs-on: ubuntu-latest
@@ -913,12 +955,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-spectrum:
     runs-on: ubuntu-latest
@@ -945,12 +989,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-ssl:
     runs-on: ubuntu-latest
@@ -977,12 +1023,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ssl"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ssl"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-stream:
     runs-on: ubuntu-latest
@@ -1009,12 +1057,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-tenant:
     runs-on: ubuntu-latest
@@ -1041,12 +1091,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-terraform:
     runs-on: ubuntu-latest
@@ -1073,12 +1125,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-time-services:
     runs-on: ubuntu-latest
@@ -1105,12 +1159,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-waf:
     runs-on: ubuntu-latest
@@ -1137,12 +1193,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-waiting-room:
     runs-on: ubuntu-latest
@@ -1169,12 +1227,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waiting-room"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waiting-room"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-warp-client:
     runs-on: ubuntu-latest
@@ -1201,12 +1261,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-workers:
     runs-on: ubuntu-latest
@@ -1230,6 +1292,7 @@ jobs:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
+        wranglerVersion: '1.13.0'
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
