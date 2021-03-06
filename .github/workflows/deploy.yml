@@ -1294,13 +1294,14 @@ jobs:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
-        wranglerVersion: '1.13.0'
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
           environment: "production"
+          wranglerVersion: '1.13.0'
