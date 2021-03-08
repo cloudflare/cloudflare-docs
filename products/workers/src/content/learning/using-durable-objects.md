@@ -399,8 +399,16 @@ export class Counter {
     }
 
     async initialize() {
-        let stored = await this.state.storage.get("value");
-        this.value = stored || 0;
+        try {
+            let stored = await this.state.storage.get("value");
+            this.value = stored || 0;
+        } catch (err) {
+            // If anything throws during initialization then we
+            // need to be sure that a future request will retry by
+            // creating another `initializePromise` below.
+            this.initializePromise = undefined;
+            throw err;
+        }
     }
 
     // Handle HTTP requests from clients.
@@ -408,6 +416,12 @@ export class Counter {
         // Make sure we're fully initialized from storage.
         if (!this.initializePromise) {
             this.initializePromise = this.initialize();
+
+            // `state.waitUntil` ensures that the `initializePromise`
+            // will run to completion even if the request that created
+            // it ends (e.g. the client disconnects before the `await`
+            // below completes).
+            this.state.waitUntil(this.initializePromise);
         }
         await this.initializePromise;
 
