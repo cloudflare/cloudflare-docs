@@ -1,0 +1,48 @@
+---
+title: "2021-03-08 – Emergency"
+type: table
+order: 944
+---
+
+# 2021-03-08 – Emergency release
+
+<TableWrap><table style="width: 100%">
+    <thead>
+        <tr>
+            <th>
+                Ruleset
+            </th>
+            <th>
+                Rule
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Previous Action
+            </th>
+            <th>
+                New Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Cloudflare Specials
+            </td>
+            <td>
+                100179
+            </td>
+            <td>
+                Improve Rule Performance
+            </td>
+            <td>
+                Block
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+    </tbody>
+</table></TableWrap>
