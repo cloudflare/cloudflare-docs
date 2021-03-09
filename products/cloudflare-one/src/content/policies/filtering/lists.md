@@ -1,6 +1,5 @@
 ---
 order: 10
-hidden: true
 ---
 
 # Lists
@@ -8,12 +7,14 @@ hidden: true
 With Teams, you can create lists of URLs to reference when creating [Secure Web Gateway policies](/policies/filtering). This allows you to quickly create rules that match and take actions against several items. 
 
 You can create a list by:
-* [Bulk uploading](#creating-a-bulk-upload-list) many entries
-* [Manually entering](#creating-a-manual-list) each item in a list
+* [Bulk uploading](#creating-a-list-from-a-csv-file) many entries
+* [Manually entering](#creating-a-manual-list) items in a list
 
+<Aside>
 Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,000 for Standard subscriptions.
+</Aside>
 
-## Creating a bulk upload list
+## Creating a list from a CSV file
 
 1. On the Teams dashboard, navigate to **Gateway > Lists**.
 1. Click **Upload CSV**.
@@ -31,6 +32,8 @@ Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,00
 
 Your list will now appear in the Lists page.
 
+If you'd like to test how this works, you can download this [test CSV file](../../static/documentation/list-test.csv) and follow the instructions above to upload it to the Teams dashboard.
+
 ## Creating a manual list
 
 1. On the Teams dashboard, navigate to **Gateway > Lists**.
@@ -42,11 +45,11 @@ Your list will now appear in the Lists page.
 1. Enter your elements manually in the *Add entries* field.
 1. Click **Save**.
 
-## Editing a manual list
+## Editing a list
 
 1. In the Lists page, locate the list you want to edit.
 1. Click **Edit**. You will be able to:
-  * Edit your list info (name and description).
-  * If you have entries in your list, you can delete these entries.
-  * Delete the list.
+    * Edit your list info (name and description).
+    * If you have entries in your list, you can delete these entries.
+    * Delete the list.
 1. Once you’ve edited your list, click **Save**.
