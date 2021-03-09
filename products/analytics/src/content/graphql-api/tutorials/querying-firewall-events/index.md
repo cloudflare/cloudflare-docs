@@ -144,7 +144,7 @@ curl \
               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
             },
             {
-              "action": "drop",
+              "action": "block",
               "clientAsn": "5089",
               "clientCountryName": "GB",
               "clientIP": "203.0.113.69",
