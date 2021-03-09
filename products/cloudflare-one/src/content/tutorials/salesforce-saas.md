@@ -1,5 +1,5 @@
 ---
-updated: 2020-11-28
+updated: 2021-03-09
 category: 🔐 Zero Trust
 difficulty: Intermediate
 ---
@@ -8,6 +8,7 @@ difficulty: Intermediate
 
 **🗺️ This tutorial covers how to:**
 * Configure Salesforce as a SaaS application in Teams
+* Force logins to Salesforce through Cloudflare's Zero Trust rules
 
 **⏲️ Time to complete: 15 minutes**
 
