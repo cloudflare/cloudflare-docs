@@ -26,7 +26,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 ## Supported Applications and App Types
 
 ### Applications
-A full list of supported applications and their respective application types are available to download here.
+A full list of supported applications and their respective application types are available to download [here](../../../static/documentation/applications.csv).
 
 ### Application Types
 

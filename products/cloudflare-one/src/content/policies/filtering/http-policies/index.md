@@ -4,12 +4,6 @@ order: 2
 
 # HTTP policies
 
-<Aside type='warning' header='Important'>
-
-This feature is only available for Gateway and Teams paid plans. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
-
-</Aside>
-
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
 ![Gateway flow HTTP](../../../static/documentation/policies/gateway-flow-3.jpg)
@@ -33,7 +27,7 @@ These are the action types you can choose from:
 
 ### Do Not Inspect
 
-<Aside type='Warning'>
+<Aside type='Warning' header='Warning'>
 
 When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
 
@@ -41,7 +35,10 @@ When a *Do Not Inspect* rule is created for a given hostname, application, or ap
 
 *Do Not Inspect* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic.
 
-The Do Not Inspect action is only available when matching against the host criteria.
+The *Do Not Inspect* action is only available when matching against the host criteria.
+
+The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
+
 
 ## Selectors
 Gateway matches HTTP traffic against the following selectors, or criteria:

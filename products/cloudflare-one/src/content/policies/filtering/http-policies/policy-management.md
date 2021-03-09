@@ -4,12 +4,6 @@ order: 2
 
 # Policy management
 
-<Aside type='warning' header='Important'>
-
-This feature is not available on the Teams free plan. For more information, see the [Cloudflare for Teams pricing page](https://www.cloudflare.com/teams-pricing/).
-
-</Aside>
-
 ## Before you start
 
 1. Install the [WARP client](/connections/connect-devices/warp) and set it to WARP mode on the devices you want to connect.
