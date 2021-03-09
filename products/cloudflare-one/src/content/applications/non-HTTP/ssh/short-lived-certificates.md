@@ -75,10 +75,10 @@ The first change requires that you uncomment a field already set in most default
 ```sh
 $ vim /etc/ssh/sshd_config
 ```
-2. Navigate to the row named `ubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
+2. Navigate to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
 
 ```bash
-# PubkeyAuthentication yes`
+# PubkeyAuthentication yes
 ```
 
 3. Remove the # symbol to uncomment the line; keep the setting `yes` enabled.

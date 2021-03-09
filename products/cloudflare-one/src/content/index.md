@@ -24,4 +24,4 @@ Cloudflare for Teams replaces legacy security perimeters with our global edge, m
 
 ![Teams illustration](/static/documentation/teams-no-background.png)
 
-</ContentColumn>
+</ContentColumn> 

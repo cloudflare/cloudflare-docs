@@ -10,7 +10,7 @@ When multiple rules are set for a common root path, its subdomains do not inheri
 
 In the Teams dashboard, when adding a [self-hosted web application](/applications/configure-apps/self-hosted-apps), you can choose to protect the entire website by entering its apex domain, or alternatively, you can specify any subdomains and paths in the dedicated fields.
 
-![Application domain](../static/documentation/applications/path-subdomain.png)
+![Application domain](../../static/documentation/applications/path-subdomain.png)
 
 <Aside>
 
