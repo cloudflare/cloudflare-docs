@@ -14,4 +14,4 @@ Cloudflare will not alter the Host header by default, and will forward exactly a
 
 When establishing a TLS connection to your origin server, if the request is being sent to your configured Fallback Host then the value of the SNI sent by Cloudflare will match the value of the Host header sent by the client (i.e. the custom hostname).
 
-If however the request is being forwarded to a Custom Origin, then the value of the SNI will be that of the Custom Origin.
+If however the request is being forwarded to a Custom Origin, then the value of the SNI will be that of the Custom Origin. This will break Custom Hostnames if the SSL Mode for your zone is set to Full (Strict) or Strict SSL only due to the SNI verification of the origin bound SNI header. Full or Flexible modes will work for this.  
