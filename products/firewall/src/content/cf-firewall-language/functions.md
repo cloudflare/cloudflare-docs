@@ -53,6 +53,19 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
 
+- <code>ends_with(<Type>String</Type>, <Type>String</Type>)</code> <Type>Boolean</Type>
+
+  - Returns `true` when a string (first argument) ends with a given substring (second argument). Returns `false` otherwise.
+
+  - _Example:_<br />
+    `ends_with("/welcome.html", ".html") == true`
+
+    <Aside type='warning'>
+    
+    You can only use the `ends_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+
+    </Aside>
+
 - <code>len(<Type>String | bytes</Type>)</code> <Type>Integer</Type>
 
   - Returns the byte length of a String or Bytes field.
@@ -69,6 +82,36 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
 
+- <code>regex_replace(<Type>String</Type>, <Type>String</Type>, <Type>String</Type>)</code> <Type>String</Type>
+
+  - Replaces a substring of a given string (first argument) matched by a regular expression (second argument) with a replacement string (third argument), returning the result. The replacement string can contain references to regular expression capture groups.
+
+  - _Examples:_
+
+    Literal match replace:<br />
+    `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
+
+    If there is no match, the input string does not change:<br />
+    `regex_replace("/x", "^/y$", "/mumble") == "/x"`
+
+    Match is case sensitive by default:<br />
+    `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
+
+    When there are multiple matches, only one replacement occurs (the first one):<br />
+    `regex_replace("/a/a", "/a", "/b") == "/b/a"`
+
+    Escape a `$` in the replacement string by prefixing it with another `$`:<br />
+    `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
+
+    Replace with capture groups:<br />
+    `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
+
+    <Aside type='warning'>
+    
+    You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
+
+    </Aside>
+
 - <code>remove_bytes(<Type>bytes</Type>)</code> <Type>bytes</Type>
 
   - Returns a new byte array with all the occurrences of the given bytes removed.
@@ -76,6 +119,19 @@ The Cloudflare Firewall Rules language supports these transformation functions:
   - <em>Example:</em><br />
 
     <code class="InlineCode">remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
+
+- <code>starts_with(<Type>String</Type>, <Type>String</Type>)</code> <Type>Boolean</Type>
+
+  - Returns `true` when a string (first argument) starts with a given substring (second argument). Returns `false` otherwise.
+
+  - _Example:_<br />
+    `starts_with("/blog/first-post", "/blog") == true`
+
+    <Aside type='warning'>
+    
+    You can only use the `starts_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+
+    </Aside>
 
 - <code>upper(<Type>String</Type>)</code> <Type>String</Type>
 
