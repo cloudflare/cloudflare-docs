@@ -44,9 +44,9 @@ Text after **Path** > **Rewrite to...** > _Static_:
 /welcome-pt.html
 ```
 
-## Rewrite the URL query string for blog visitors
+## Rewrite URL query string of blog visitors
 
-To rewrite a request to the /blog path to /blog?sort-by=date, create a Transform Rule with the following settings:
+To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a Transform Rule with the following settings:
 
 **Rule #1**
 
@@ -66,7 +66,7 @@ Additionally, set the path rewrite action of the same rule to _Preserve_ so that
 
 ![Rule configuration for query rewrite in the blog example](../static/transform/use-case-blog.png)
 
-## Rewrite the path of archived blog posts
+## Rewrite path of archived blog posts
 
 To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new Transform Rule and define a dynamic URL path rewrite using an expression:
 
@@ -86,7 +86,7 @@ concat("/archive", http.request.uri.path)
 
 The filter uses the `starts_with()` function all paths starting with `/news/2012/`. The dynamic path rewrite uses the `concat()` function to concatenate a prefix to the original URL path of the HTTP request.
 
-## Rewrite the path of moved section of a website
+## Rewrite path of moved section of a website
 
 To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Use the `regex_replace()` function for this purpose:
 
@@ -126,8 +126,8 @@ The function `regex_replace()` also allows you to extract parts of the URL using
 
 <Aside type="warning" header="Notes">
 
-You can only use the fields under `http.request.uri` and `http.request.headers` in rewrite expressions.
+You can only use the fields under [`http.request.uri`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#uri-argument-and-value-fields) and [`http.request.headers`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) in rewrite expressions.
 
-You can only call the functions `concat()` and `regex_replace()` functions **once** in a rewrite expression.
+You can only call the functions `concat()` and `regex_replace()` functions **once** in a rewrite expression. For more on these functions, see [Transformation functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions#transformation-functions).
 
 </Aside>
