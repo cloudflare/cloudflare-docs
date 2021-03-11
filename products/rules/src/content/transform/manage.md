@@ -43,7 +43,7 @@ To create a new Transform Rule:
 
 1. Click **Create a transform rule**.
 
-1. In the **Create Transform Rule** page that displays, use the Rule name input to supply a descriptive name. The rule name in this example is _Welcome GB Users_.
+1. In the Create Transform Rule page that displays, enter a descriptive name for the rule in the **Rule name** input. The rule name in this example is _Welcome GB Users_.
 
 1. Under **When incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
@@ -59,7 +59,7 @@ To create a new Transform Rule:
 
     ![Entering a field value in the Expression Builder](../static/transform/expression-value.png)
 
-1. To define the action for your Transform Rule, select either one of the available options displayed as radio buttons, and then a value from the dropdown, depending on the action.
+1. To define the action for your Transform Rule, select either one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action.
 
     In this example, the path rewrite _Static_ action tells Cloudflare to rewrite the original path changing it to the provided path, _/welcome-gb.html_.
 
