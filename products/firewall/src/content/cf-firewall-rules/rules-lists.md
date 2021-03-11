@@ -29,6 +29,8 @@ Cloudflare scans public, open proxy lists for reachable, open proxies. After ver
 - To browse the managed lists, see [Use Rules Lists](/cf-dashboard/rules-lists).
 - To use a list when writing a rule, use the **Operator** menu to select *is in list*. From **Value**, select the list. 
 
+![Managed open proxies list](../images/cf-open-proxies-list.png)
+
 ## Entitlements
 
 The number of Rules Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
