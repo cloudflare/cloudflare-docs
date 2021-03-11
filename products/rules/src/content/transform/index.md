@@ -3,7 +3,7 @@ title: Transform Rules - Beta
 order: 200
 ---
 
-# About Cloudflare Transform Rules - Beta
+# About Transform Rules - Beta
 
 <Aside type="warning" header="Important">
 
