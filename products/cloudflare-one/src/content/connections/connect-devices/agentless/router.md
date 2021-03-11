@@ -1,8 +1,8 @@
 ---
-order: 1
+order: 4
 ---
 
-# Router
+# Router setup
 
 ## IPv4
 * Click on the Start menu, then click on Control Panel.

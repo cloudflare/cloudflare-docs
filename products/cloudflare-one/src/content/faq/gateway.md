@@ -48,8 +48,9 @@ It takes about 60 seconds for the policy to be updated across all of our data ce
 
 If you are still seeing responses from the DNS queries for a domain that you blocked. The answers may be cached by your browser from anywhere between 5 minutes to a few hours.
 
-### In what order does Gateway apply the rules inside a policy?
-Visit the [policies page](/policies) to see in what order Gateway applies its rules inside a policy.
+### In what order does Gateway apply the rules inside an HTTP policy?
+
+Rules are enforced top to bottom. However, the L7 firewall will evaluate *Do Not Inspect* rules before any subsequent *Allow* or *Block* rules, to determine if decryption should occur. This means regardless of precedence in your list of rules, all *Do Not Inspect* rules will take precedence over *Allow* or *Block* rules.
 
 ### Can I use a wildcard operator to block domains?
 You don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/policies).
@@ -212,29 +213,6 @@ Action: bypass
 
 This allows the WARP client to connect to Cloudflare and determine if the Cloudflare certificate is not present and trusted on the local device; and if not, then the client will alert the user.
 
-### I'm using a common application and it seems unable to connect when I inspect HTTP traffic or presents an untrusted certificate error.
-
-The application may use **certificate pinning**. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application. This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in oder to decrypt the traffic. Unfortunately, this is exactly what TLS interception in a Secure Web Gateway does although for the purposes of securing a user's web traffic.
-
-In order to accommodate applications that take advantage of certificate pinning, a bypass for the hostnames associated with the application must be configured in the Gateway L7 firewall. In the future, Gateway will provide the ability for organizations to simply select the name or type of application in order to configure rules.
-
-Some common applications that make use of certificate pinning include:
-
-<TableWrap>	
-
-| Application     | FQDN               | Bypass Rules                                                                           |	
-|-----------------|--------------------|----------------------------------------------------------------------------------------|	
-| Signal          | whispersystems.org | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*whispersystems\.org ***Action:*** bypass |	
-| Signal          | signal.org         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*signal\.org ***Action:*** bypass         |	
-| Zoom            | zoom.us            | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoom\.us ***Action:*** bypass            |	
-| Zoom            | zoomgov.com        | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*zoomgov\.com ***Action:*** bypass        |	
-| Wells Fargo App | wellsfargo.com     | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*wellsfargo\.com ***Action:*** bypass     |	
-| USAA Mobile App | usaa.com           | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*usaa\.com ***Action:*** bypass           |	
-| Apple/iCloud    | apple.com          | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*apple\.com ***Action:*** bypass           |	
-| Apple/iCloud    | icloud.com         | ***Selector:*** hostname ***Operator:*** matches regex ***Value:*** .*icloud\.com ***Action:*** bypass           |	
-
-</TableWrap>
-
 ### Your source IPv4 address is taken
 
 ![Source IP taken](../static/documentation/faq/source-ip-taken.png)
@@ -257,7 +235,6 @@ You may not see analytics on the Overview page for the following reasons:
 ##### 1. You are not sending DNS queries to Gateway
 Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location:
 
-![Location With Destinations](../static/documentation/faq/expanded-location-with-destinations.png)
 
 ##### 2. You are using other DNS resolvers
 If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.

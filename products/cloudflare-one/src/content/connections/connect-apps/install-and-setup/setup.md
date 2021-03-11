@@ -9,7 +9,7 @@ order: 2
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
 | 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
-| 4. [Install `cloudflared`](/connections/connect-apps/installation/) |
+| 4. [Install `cloudflared`](/connections/connect-apps/install-and-setup/installation) |
 
 Follow these steps to authenticate `cloudflared`:
 

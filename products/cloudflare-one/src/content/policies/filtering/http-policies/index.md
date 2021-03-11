@@ -4,12 +4,6 @@ order: 2
 
 # HTTP policies
 
-<Aside type='warning' header='Important'>
-
-This feature is only available for Gateway and Teams paid plans. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
-
-</Aside>
-
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
 ![Gateway flow HTTP](../../../static/documentation/policies/gateway-flow-3.jpg)
@@ -21,7 +15,7 @@ Build an HTTP policy by configuring the following elements:
 * **Selectors**
 * **Operators**
 
-#### Actions
+## Actions
 
 Just like actions on destinations in DNS policies, actions in HTTP policies allow you to choose what to do with a given set of elements (domains, IP addresses, file types, and so on). You can assign one action per policy.
 
@@ -29,11 +23,24 @@ These are the action types you can choose from:
 
 * **Allow** 
 * **Block** 
-* **Bypass**
+* **Do Not Inspect**
 
-*Bypass* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic. The bypass action is only available when matching against the host criteria.
+### Do Not Inspect
 
-#### Selectors
+<Aside type='Warning' header='Warning'>
+
+When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
+
+</Aside>
+
+*Do Not Inspect* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic.
+
+The *Do Not Inspect* action is only available when matching against the host criteria.
+
+The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
+
+
+## Selectors
 Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Host**
 * **URL**
@@ -45,6 +52,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Uploaded and Downloaded File Extension**
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
+* **Applications**
 
 List of file extensions Gateway can match against:
 
@@ -75,7 +83,7 @@ List of file extensions Gateway can match against:
 
 </TableWrap>
 
-#### Operators
+## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
 
 | Operator              |          Meaning
@@ -87,10 +95,10 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 |  matches regex        | regex evaluates to true         |
 |  does not match regex |  all except when regex evals to true   |
 
-#### Expressions
+## Expressions
 Expressions are sets of conditions with which you can combine [selectors](#selectors) and [operators](#operators). By configuring one or more expressions, you can define the scope of your HTTP policy. 
 
-#### Example scenarios
+## Example scenarios
 
 | Action | Selector | Operator | 
 | ------ | ---- | -------- | 
@@ -98,7 +106,7 @@ Expressions are sets of conditions with which you can combine [selectors](#selec
 
 **Result**: this configuration blocks any traffic to domains categorized as `Gaming`. 
 
-#### FAQ
+## FAQ
 
 * **How can I bypass the L7 firewall for a website?**
 

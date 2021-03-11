@@ -71,31 +71,3 @@ If adding more than one IP address or range to a group, it’s best to use an In
 ## Using groups for country requirements
 
 You can create an Access Group that consists of countries to allow or block. The Access Group will treat the countries in the `Include` policy with an `OR` operator. You can use this Access Group inside of a `Require` rule to require at least one of the countries inside of the group.
-
-## Legacy Groups
-
-Cloudflare Access supported a flow in the UI to build policies with IdP groups, called *Legacy groups*. Native integration with groups surfaced from your IdP has replaced this feature.
-
-If your account built policies with Legacy groups, these are still available and continue to work as you intend.
-
-If your account uses Legacy groups, a banner displays in the Access dashboard.
-
-Unfortunately, Access cannot automatically migrate your Legacy groups. This is due to the risk of Legacy group names not matching identity provider group names or, in some cases, IdP groups consisting of a unique ID unknown to Access.
-To migrate from Legacy groups:
-
-1. Open policies using Legacy groups.
-
-1. Navigate to your Access policies and open any using Legacy groups.
-
-1. Replace Legacy groups with identity provider groups.
-
-1. Replace the policy rules using Legacy groups by adding a new, mirrored rule that pulls groups from your identity provider.
-For example, if you have a Legacy group that allows “Engineers,” and that Legacy group maps to the same membership of an Okta® group, add a new rule based on Okta groups to allow “Engineers.”
-
-1. Remove the Legacy group rule.
-
-1. Once you create a new rule with the group from your identity provider, remove the rule that uses Legacy groups.
-
-1. Click **Save**.
-
-**Note**: If you continue to use policies with Legacy groups, Access still prevents unauthorized users from reaching your applications; however, users who are members of Legacy groups are also prevented from being authenticated.
