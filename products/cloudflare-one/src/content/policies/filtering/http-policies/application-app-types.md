@@ -4,7 +4,7 @@ order: 4
 
 # Applications and app types
 
-Cloudflare Gateway’s HTTP policies allow you to filter HTTP traffic on the L7 firewall. To make it easier to manage firewall policies for cloud applications, Gateway allows you to build policies based on applications and application types. 
+Cloudflare Gateway’s HTTP policies allow you to filter HTTP traffic on the L7 firewall. To make it easier to manage firewall policies for cloud applications, Gateway allows you to build policies based on applications and app types. 
 
 Using these two selectors in the HTTP rule builder, you can have more granular control over how web applications are used on your network.
 
@@ -23,12 +23,12 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 1. Click **Create rule** to finalize your changes.
 
 
-## Supported applications and application types
+## Supported applications and app types
 
 ### Applications
-A full list of supported applications and their respective application types are available to download [here](../../../static/documentation/applications.csv).
+A full list of supported applications and their respective app types are available to download [here](../../../static/documentation/applications.csv).
 
-### Application types
+### App types
 
 <TableWrap>
 
