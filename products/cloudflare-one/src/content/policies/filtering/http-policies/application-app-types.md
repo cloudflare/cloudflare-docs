@@ -4,7 +4,7 @@ order: 4
 
 # Applications and app types
 
-Cloudflare Gateway’s HTTP policies allow you to filter HTTP traffic on the L7 firewall. To make it easier to manage firewall policies for cloud applications, Gateway allows you to build policies based on applications and application types. 
+Cloudflare Gateway’s HTTP policies allow you to filter HTTP traffic on the L7 firewall. To make it easier to manage firewall policies for cloud applications, Gateway allows you to build policies based on applications and app types. 
 
 Using these two selectors in the HTTP rule builder, you can have more granular control over how web applications are used on your network.
 
@@ -23,16 +23,16 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 1. Click **Create rule** to finalize your changes.
 
 
-## Supported Applications and App Types
+## Supported applications and app types
 
 ### Applications
-A full list of supported applications and their respective application types are available to download [here](../../../static/documentation/applications.csv).
+A full list of supported applications and their respective app types are available to download [here](../../../static/documentation/applications.csv).
 
-### Application Types
+### App types
 
 <TableWrap>
 
-| Application Type | Definition |
+| Application type | Definition |
 | ---------------- | ---------- |
 | Collaboration & Online Meetings | Applications used to communicate or collaborate in a business setting. |
 | Development | Applications used for software development and development operations. |
@@ -50,11 +50,25 @@ A full list of supported applications and their respective application types are
 | Security | Applications used for information security. |
 | Social Networking | Applications used for social networking. |
 | Streaming |Applications used for streaming video or audio. |
-| Do Not Decrypt | Applications that either send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS, utilize certificate pinning, or are incompatible with the TLS man-in the middle certificate that is required for Cloudflare Gateway's proxy to function. |
+| [Do Not Decrypt](#do-not-decrypt-applications) | Applications that are incompatible with the TLS man-in the middle certificate that is required for Cloudflare Gateway's proxy to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
 
 </TableWrap>
 
-## Supported actions for Applications
+
+#### Do Not Decrypt applications
+
+Some applications are incompatible with TLS decryption for a variety of reasons, one of which is **certificate pinning**. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
+
+This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in oder to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
+
+Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Decrypt* app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/policies/filtering/http-policies/application-app-types), select *Application* as a **Selector**, *in* as an **Operator**, and check the *Do Not Decrypt* app type in the **Value** field. Then, set the rule action to *Do Not Inspect*.
+
+Gateway periodically updates the *Do Not Decrypt* app type to include new applications. By creating this *Do Not Inspect* rule and selecting all applications within the *Do Not Decrypt* app type, you'll ensure that your rule will apply to any new applications that will be added to the app type.
+
+![Do not decrypt HTTP rule](../../../static/documentation/faq/do-not-decrypt.png)
+
+
+## Supported actions for applications
 
 The Applications selector allows you to create rules with the following actions:
 
