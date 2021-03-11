@@ -1,9 +1,15 @@
 ---
-title: About Transform Rules
+title: Transform Rules - Beta
 order: 200
 ---
 
-# About Cloudflare Transform Rules
+# About Cloudflare Transform Rules - Beta
+
+<Aside type="warning" header="Important">
+
+This feature is part of an early access experience for selected customers.
+
+</Aside>
 
 Transform Rules allow you to make adjustments to incoming requests at the edge before they go through any other Cloudflare products. 
 
