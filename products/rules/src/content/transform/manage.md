@@ -43,7 +43,7 @@ To create a new Transform Rule:
 
 1. Click **Create a transform rule**.
 
-1. In the Create Transform Rule page that displays, enter a descriptive name for the rule in the **Rule name** input. The rule name in this example is _Welcome GB Users_.
+1. In the Create Transform Rule page that displays, enter a descriptive name for the rule in **Rule name**. The rule name in this example is _Welcome GB Users_.
 
 1. Under **When incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
