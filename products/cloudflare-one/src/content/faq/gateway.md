@@ -213,19 +213,6 @@ Action: bypass
 
 This allows the WARP client to connect to Cloudflare and determine if the Cloudflare certificate is not present and trusted on the local device; and if not, then the client will alert the user.
 
-### I'm using a common application and it seems unable to connect when I inspect HTTP traffic or presents an untrusted certificate error.
-
-Some applications are incompatible with TLS decryption for a variety of reasons, one of which is **certificate pinning**. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
-
-This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in oder to decrypt the traffic.
-
-Unfortunately, this is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
-
-Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Decrypt* app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/policies/filtering/http-policies/application-app-types), select *Application* as a **Selector**, *in* as an **Operator**, and check the *Do Not Decrypt* app type in the **Value** field. Then, set the rule action as *Allow*.
-
-![Do not decrypt HTTP rule](../static/documentation/faq/do-not-decrypt.png)
-
-
 ### Your source IPv4 address is taken
 
 ![Source IP taken](../static/documentation/faq/source-ip-taken.png)
