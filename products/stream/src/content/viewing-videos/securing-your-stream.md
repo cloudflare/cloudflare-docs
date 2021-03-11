@@ -31,14 +31,16 @@ Upon creation you will get a RSA private key in PEM and JWK formats. Keys are cr
   "result": {
     "id": "$KEYID",
     "pem": "$PRIVATE_KEY_IN_PEM_FORMAT",
-    "jwk": "{PRIVATE-KEY-IN-JWK-FORMAT}",
-    "created": "{TIMESTAMP}"
+    "jwk": "$PRIVATE-KEY-IN-JWK-FORMAT",
+    "created": "$TIMESTAMP"
   },
   "success": true,
   "errors": [],
   "messages": []
 }
 ```
+
+The `pem` and `jwk` fields are base64-encoded, you must decode them before using them.
 
 ### Making a video require signed URLs
 
@@ -66,6 +68,8 @@ Restricting viewing can be done by updating the video's metadata.
 ### Signing unique tokens
 
 After creating a key, you can use it to sign unique signed tokens. These tokens can be used in place of video ids in the stream embed code.
+
+For security reasons, the key signing a token to view a video **must** be associated with the same account the video was uploaded to. For example, if you have a key owned by account A attempting to sign a token for a video owned by account B, that token will not be accepted.
 
 You can sign to assert these optional constraints on the token:
 
