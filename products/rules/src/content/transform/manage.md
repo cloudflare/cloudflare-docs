@@ -53,7 +53,7 @@ To create a new Transform Rule:
 
     ![Selecting an operator in the Expression Builder](../static/transform/expression-operator.png)
 
-    In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more information on the Expression Editor, see **Edit rule expressions** in the Firewall documentation.
+    In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more information on the Expression Editor, see [Edit rule expressions](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor) in the Firewall documentation.
 
 1. Specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 
