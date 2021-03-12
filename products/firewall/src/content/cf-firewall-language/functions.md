@@ -53,9 +53,9 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
 
-- <code>ends_with(<Type>String</Type>, <Type>String</Type>)</code> <Type>Boolean</Type>
+- <code>ends_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
 
-  - Returns `true` when a string (first argument) ends with a given substring (second argument). Returns `false` otherwise.
+  - Returns `true` when a source string ends with a given substring. Returns `false` otherwise.
 
   - _Example:_<br />
     `ends_with("/welcome.html", ".html") == true`
@@ -82,9 +82,9 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
 
-- <code>regex_replace(<Type>String</Type>, <Type>String</Type>, <Type>String</Type>)</code> <Type>String</Type>
+- <code>regex_replace(source<ParamType>String</ParamType>, regular_expression<ParamType>String</ParamType>, replacement<ParamType>String</ParamType>)</code> <Type>String</Type>
 
-  - Replaces a substring of a given string (first argument) matched by a regular expression (second argument) with a replacement string (third argument), returning the result. The replacement string can contain references to regular expression capture groups.
+  - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
   - _Examples:_
 
@@ -120,9 +120,9 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
 
-- <code>starts_with(<Type>String</Type>, <Type>String</Type>)</code> <Type>Boolean</Type>
+- <code>starts_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
 
-  - Returns `true` when a string (first argument) starts with a given substring (second argument). Returns `false` otherwise.
+  - Returns `true` when a source string starts with a given substring. Returns `false` otherwise.
 
   - _Example:_<br />
     `starts_with("/blog/first-post", "/blog") == true`
