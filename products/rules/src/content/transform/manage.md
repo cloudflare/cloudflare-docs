@@ -10,7 +10,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-**Transform Rules** is a feature of **Rules** in the Cloudflare UI (dashboard).
+**Transform Rules** is a feature of **Rules** in the Cloudflare dashboard.
 
 As depicted in the image below, the **Transform Rules** dashboard interface lets you:
 
@@ -35,11 +35,11 @@ You can specify the match expression using the Expression Builder or using the E
 
 To create a new Transform Rule:
 
-1. Log in to the **Cloudflare** dashboard.
+1. Log in to the Cloudflare dashboard.
 
 1. Select the **Websites** tab and choose the site for which you want to create a new Transform Rule.
 
-1. To open Transform Rules from the Cloudflare dashboard, click the **Rules** tile in the app bar, and then click the **Transform Rules** tab.
+1. To open Transform Rules from the dashboard, click the **Rules** tile in the app bar, and then click the **Transform Rules** tab.
 
 1. Click **Create a transform rule**.
 

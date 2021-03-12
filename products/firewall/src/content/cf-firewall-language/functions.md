@@ -282,7 +282,7 @@ For details on generating a MessageMAC, see [_Implement token creation_](https:/
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
-For more, see [HMAC Validation: Overview](#overview).
+For more information, see [HMAC Validation: Overview](#overview).
 
 </Aside>
 

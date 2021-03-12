@@ -29,7 +29,7 @@ You can manipulate the URL of a request through different operations, namely thr
 A **rewrite** is a server-side operation that occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change. 
 
 A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can see the URL changing when the redirect occurs.
-You can configure transform rules in the Cloudflare UI (the dashboard) to perform rewrites at the edge, without reaching your web server. 
+You can configure Transform Rules in the dashboard to perform rewrites at the edge, without reaching your web server. 
 
 <Aside type='note' header='Note'>
 
