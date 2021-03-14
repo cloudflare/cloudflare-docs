@@ -221,7 +221,6 @@ async function handleRequest(request) {
 async function gatherResponse(response) {
   const { headers } = response
   return headers.get('location')
-
 }
 ```
 

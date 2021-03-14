@@ -60,7 +60,7 @@ async function handleRequest(request) {
   newRequest.headers.set("X-Example", "bar")
   newRequest.headers.set("Content-Type", "application/json")
   try {
-    return fetch(newRequest)
+    return await fetch(newRequest)
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500 })
   }

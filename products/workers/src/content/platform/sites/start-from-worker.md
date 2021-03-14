@@ -40,7 +40,7 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
   async function handleEvent(event) {
     try {
-      return getAssetFromKV(event)
+      return await getAssetFromKV(event)
     } catch (e) {
       let pathname = new URL(event.request.url).pathname
       return new Response(`"${pathname}" not found`, {
