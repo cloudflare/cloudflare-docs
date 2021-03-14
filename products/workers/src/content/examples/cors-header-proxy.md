@@ -59,11 +59,11 @@ const DEMO_PAGE = `
     let reqs = {};
     reqs.noproxy = async () => {
       let response = await fetch("${API_URL}")
-      return await response.json()
+      return response.json()
     }
     reqs.proxy = async () => {
       let response = await fetch(window.location.origin + "${PROXY_ENDPOINT}?apiurl=${API_URL}")
-      return await response.json()
+      return response.json()
     }
     reqs.proxypreflight = async () => {
       const reqBody = {
@@ -76,7 +76,7 @@ const DEMO_PAGE = `
         },
         body: JSON.stringify(reqBody),
       })
-      return await response.json()
+      return response.json()
     }
     (async () => {
       for (const [reqName, req] of Object.entries(reqs)) {

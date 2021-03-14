@@ -34,7 +34,7 @@ async function postDataBreach(request) {
       "content-type": "application/json;charset=UTF-8"
     },
   }
-  return await fetch(SOME_HOOK_SERVER, init)
+  return fetch(SOME_HOOK_SERVER, init)
 }
 
 /**

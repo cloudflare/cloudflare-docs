@@ -220,7 +220,7 @@ async function handleRequest(request) {
 
 async function gatherResponse(response) {
   const { headers } = response
-  return await headers.get('location')
+  return headers.get('location')
 
 }
 ```

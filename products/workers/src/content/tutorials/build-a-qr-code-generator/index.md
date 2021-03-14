@@ -122,7 +122,7 @@ highlight: [4]
 async function handleRequest(request) {
   // ...
   if (request.method === "POST") {
-    return await generate(request)
+    return generate(request)
   // ...
 }
 ```
@@ -208,7 +208,7 @@ const landing = `
 
 async function handleRequest(request) {
   if (request.method === "POST") {
-    return await generate(request)
+    return generate(request)
   }
   return new Response(landing, { headers: { "Content-Type": "text/html" } })
 }
@@ -250,7 +250,7 @@ const landing = `
 
 async function handleRequest(request) {
   if (request.method === "POST") {
-    return await generate(request)
+    return generate(request)
   }
   return new Response(landing, { headers: { "Content-Type": "text/html" } })
 }

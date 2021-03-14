@@ -28,7 +28,7 @@ async function redirect(request) {
     return Response.redirect(url)
   }
   else {
-    return await fetch(request)
+    return fetch(request)
   }
 }
 
