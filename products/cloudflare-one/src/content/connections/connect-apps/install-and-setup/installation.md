@@ -20,6 +20,23 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 </TableWrap>
 
+### Build from source
+
+You can also build the latest version of `cloudflared` from source with the following steps.
+
+```sh
+$ git clone https://github.com/cloudflare/cloudflared.git
+$ cd cloudflared
+$ make cloudflared
+$ go install github.com/cloudflare/cloudflared/cmd/cloudflared
+```
+
+Depending on where you installed `cloudflared`, you can move it to a known path as well.
+
+```sh
+mv /root/cloudflared/cloudflared /usr/bin/cloudflared
+```
+
 ## Docker
 
 A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.com/r/cloudflare/cloudflared).
