@@ -1,5 +1,5 @@
 ---
-updated: 2021-02-16
+updated: 2021-03-16
 category: 🔐 Zero Trust
 difficulty: Advanced
 ---
@@ -17,13 +17,13 @@ You can also use `cloudflared` to quickly gather the JWT from an application and
 **🗺️ This tutorial covers how to:**
 
 * Login to an application secured by Cloudflare Access from the command line using `cloudflared`
-* Use Z Shell to create a time-saving command to store the JWT as an environment variable
+* Use Z Shell or Bash to create a time-saving command to store the JWT as an environment variable
 
 **⏲️Time to complete: 5 minutes**
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -49,18 +49,9 @@ Leave cloudflared running to download the token automatically.
 
 ## Set as environment variable
 
-If you have an application where you frequently need to request a token, you can save time and reduce steps by adding a command shell. This example uses the Z shell (Zsh).
+If you have an application where you frequently need to request a token, you can save time and reduce steps by adding a command to your shell.
 
-<Aside>
-
-To follow this tutoroial, you need `python2` and `zsh` installed. The commands below install them on an Ubuntu system.
-
-```sh
-apt install python2
-apt install zsh
-```
-
-</Aside>
+### Z shell
 
 If you are using the Z shell, edit your existing `~/.zshrc` file or create one for the first time.
 
@@ -72,10 +63,9 @@ You can add the following function to your file, replacing `https://jira.company
 
 ```sh
 function login-jira() {
-  export JIRA_TOKEN=$(cloudflared access login https://jira.company.com | python2 -c "import re, sys; print '\r\n'.join(re.findall('fetched your token:\n\n(.*)', sys.stdin.read()))")
+  export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN
 }
-source ~/.bash_profile;
 ```
 
 Next, run the following command in your shell to update your profile.
@@ -83,6 +73,31 @@ Next, run the following command in your shell to update your profile.
 ```sh
 $ source ~/.zshrc
 ```
+
+### Bash
+
+If you are using Bash, edit your existing `~/.bashrc` file or create one for the first time.
+
+```sh
+vim ~/.bashrc
+```
+
+You can add the following function to your file, replacing `https://jira.company.com` with the application you need. You can also rename the function to something shorter or more applicable to your application.
+
+```sh
+function login-jira() {
+  export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
+  echo $JIRA_TOKEN
+}
+```
+
+Next, run the following command in your shell to update your profile.
+
+```sh
+$ source ~/.bashrc
+```
+
+### Run command
 
 Now, you can run the following command to login to Cloudflare Access. Instead of printing the token, the shell will store it as an environment variable that you can use.
 
