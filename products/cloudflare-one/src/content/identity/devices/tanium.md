@@ -21,29 +21,31 @@ The integration does not currently support Safari.
 
 ## Integrating Tanium Identity
 
+<TableWrap>
+
 | Requirements |
 | ------------ |
 | You will need an active Tanium™ Core Platform deployment that runs version 7.2 or later. |
 
+</TableWrap>
+
 Integrate your Tanium deployment with Cloudflare Access using public keys generated in the Tanium step-by-step documentation linked above.
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices**.
 
-2. Select the **Device Posture** tab.
+2. Select the **Device posture** tab.
 
-    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/add-posture.png)
+    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/add-device-posture.png)
 
 3. Click *+Add* to start configuring the Tanium integration.
 
 3. Select **Tanium** from the list of providers.
 
-    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/select-tanium.png)
+    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/add-posture-tanium.png)
 
-4. In the next screen, give a name to the Tanium integration.
+4. In the next screen, give a name to the Tanium integration. *Tanium* will work, or, if you prefer, you can choose a more specific name.
 
- "Tanium" will work, or, if you prefer, you can choose a more specific name.
-
-    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/add-tanium.png)
+    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/tanium-setup.png)
 
 5. Input `17472` for the port value.
 
