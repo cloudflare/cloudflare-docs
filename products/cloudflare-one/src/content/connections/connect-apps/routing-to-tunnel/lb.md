@@ -33,3 +33,7 @@ $ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load bal
 ```
 
 **Note**: this command requires the `cert.pem` file.
+
+## Optional: Configure additional Cloudflare settings
+
+The application will default to the Cloudflare settings of the hostname in your account that includes the Argo Tunnel Load Balancer records, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
