@@ -8,7 +8,7 @@ difficulty: Intermediate
 
 Cloudflare for Teams allows you to create Zero Trust rules that are tailored to your organization’s needs. 
 
-Let’s say you want your team's full-time employees to have permanent and direct access to an internal application like Grafana. However, if your team works with external resources (e.g., contractors), you may want to enforce a different level of security and ask every external resource to always authenticate through One-Time PIN (OTP) to Grafana.
+Let’s say you want your team's full-time employees to have permanent and direct access to an internal application like Grafana when connecting from your office IP range. However, if your team works with external resources (e.g., contractors), you may want to enforce a different level of security and ask every external resource to always authenticate through One-Time PIN (OTP) to Grafana.
 
 You can configure rules so that your employees will enjoy smooth access to Grafana, while still making it possible for you to check for identity every external access request. Let's see how.
 
