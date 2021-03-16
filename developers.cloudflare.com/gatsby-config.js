@@ -2,12 +2,6 @@ const docsConfig = require("./docs-config.js")
 
 const isProduction = process.env.NODE_ENV === "production"
 
-const getProduct = (name) => {
-  const repo = "@cloudflare/cloudflare-brand-assets"
-  const dir = "resources/product-icons/"
-  return `./node_modules/${repo}/${dir}/${name}.js`
-}
-
 const products = [
   "1.1.1.1",
   "access",
@@ -44,7 +38,7 @@ const products = [
 
 const productIcons = {}
 products.forEach(name => {
-  productIcons[name] = require(getProduct(name)).pathD
+  productIcons[name] = require(`./data/cloudflare-brand-assets/resources/product-icons/${name}`).pathD
 })
 
 if (docsConfig.productLogoPathD && docsConfig.productIconKey) {
