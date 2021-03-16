@@ -53,7 +53,7 @@ If you are still seeing responses from the DNS queries for a domain that you blo
 Rules are enforced top to bottom. However, the L7 firewall will evaluate *Do Not Inspect* rules before any subsequent *Allow* or *Block* rules, to determine if decryption should occur. This means regardless of precedence in your list of rules, all *Do Not Inspect* rules will take precedence over *Allow* or *Block* rules.
 
 ### Can I use a wildcard operator to block domains?
-You don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/policies).
+You can only use a wildcard operator for DNS policies. However, you don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/policies).
 
 ### What happens when I have multiple policies assigned to the same location?
 If you have multiple policies and both policies are applied to a single location, Gateway will arbitrarily choose one of the policies and apply them to the location.
@@ -212,20 +212,6 @@ Action: bypass
 ```
 
 This allows the WARP client to connect to Cloudflare and determine if the Cloudflare certificate is not present and trusted on the local device; and if not, then the client will alert the user.
-
-### I'm using a common application and it seems unable to connect when I inspect HTTP traffic or presents an untrusted certificate error.
-
-Some applications are incompatible with TLS decryption for a variety of reasons, one of which is **certificate pinning**. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
-
-This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in oder to decrypt the traffic.
-
-Unfortunately, this is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
-
-Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Decrypt* app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/policies/filtering/http-policies/application-app-types), select *Application* as a **Selector**, *in* as an **Operator**, and check the *Do Not Decrypt* app type in the **Value** field. Then, set the rule action to *Do Not Inspect*.
-
-Gateway periodically updates the *Do Not Decrypt* app type to include new applications. By creating this *Do Not Inspect* rule and selecting all applications within the *Do Not Decrypt* app type, you'll ensure that your rule will apply to any new applications that will be added to the app type.
-
-![Do not decrypt HTTP rule](../static/documentation/faq/do-not-decrypt.png)
 
 ### Your source IPv4 address is taken
 

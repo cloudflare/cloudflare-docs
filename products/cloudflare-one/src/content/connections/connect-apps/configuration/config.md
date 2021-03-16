@@ -143,7 +143,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 |--|--|--|
 | `loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
 
-Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available options: `panic` `fatal` `error` `warn` `info` `debug`
+Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 
 ### `transport-loglevel`
 
@@ -151,8 +151,8 @@ Specifies the verbosity of logging. The default `info` is not noisy, but you may
 |--|--|--|
 | `transport-loglevel` | `warn` | `TUNNEL_PROTO_LOGLEVEL` |
 
-Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge.
-Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks.
+Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
+Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks. 
 
 ### `retries`
 
