@@ -34,14 +34,14 @@ Once installed, click the gear icon.
 
 ![WARP](../../../static/secure-web-gateway/secure-dns-devices/warp.png)
 
-Under the `Account` tab, click `Login with Cloudflare for Teams`.
+Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
 ![Account View](../../../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-The user must input your Cloudflare for Teams org name. You can find your team's name under the `Authentication` tab in the `Access` section of the sidebar.
+The user must input your Cloudflare for Teams org name. You can find your team's name under the **Authentication** tab in the **Access** section of the sidebar.
 
 ![Org Name](../../../static/secure-web-gateway/secure-dns-devices/org-name.png)
 
-The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy.
+The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to *Teams mode*. You can click the gear to toggle between DNS filtering or full proxy.
 
 ![Confirm WARP](../../../static/secure-web-gateway/block-uploads/with-warp.png)
