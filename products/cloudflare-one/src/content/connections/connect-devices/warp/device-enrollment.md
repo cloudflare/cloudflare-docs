@@ -4,7 +4,7 @@ order: 3
 
 # Device enrollment
 
-## Build enrollment rule
+## Build an enrollment policy
 
 <Aside>
 
@@ -14,13 +14,12 @@ Revoking a user's permission to manage devices will not prevent that user from a
 
 Cloudflare for Teams allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a **device enrollment rule** on the Teams dashboard.
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Devices**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices**.
 
-![Device List](../../../static/secure-web-gateway/secure-dns-devices/device-page.png)
-
-2. Click **Device Settings** on the top-right corner.
+2. Click **Device enrollment** on the top-right corner.
 
 3. In the rule builder, configure a rule to define who can enroll or revoke devices. 
+
  In this example, only users with `cloudflare.com` email addresses who successfully authenticate during device enrollment through the WARP client will be able to enroll in the organization. This rule prevents outsider users from sending traffic through your account and will give your organization the ability to capture user profile logs and apply profile-specific rules.
 
 ![Enroll Rule](../../../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
