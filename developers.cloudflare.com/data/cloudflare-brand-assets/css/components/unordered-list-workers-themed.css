@@ -1,0 +1,30 @@
+.UnorderedListWorkersThemed {
+  padding: 0;
+  list-style: none;
+}
+
+.UnorderedListWorkersThemed > li {
+  padding-left: 2em;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17" height="16" width="17"><path fill="%23232324" d="M9.5.4l5 2.8c1 .5 1.5 1.5 1.5 2.5v5.6c0 1-.6 2-1.5 2.5l-5 2.8a3 3 0 0 1-3 0l-5-2.8A2.8 2.8 0 0 1 0 11.3V5.7c0-1 .6-2 1.5-2.5l5-2.8a3 3 0 0 1 3 0z"/></svg>') no-repeat .25em .4em;
+  background-size: .6em .6em;
+}
+
+[theme="dark"] .UnorderedListWorkersThemed > li {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17" height="16" width="17"><path fill="%23fff" d="M9.5.4l5 2.8c1 .5 1.5 1.5 1.5 2.5v5.6c0 1-.6 2-1.5 2.5l-5 2.8a3 3 0 0 1-3 0l-5-2.8A2.8 2.8 0 0 1 0 11.3V5.7c0-1 .6-2 1.5-2.5l5-2.8a3 3 0 0 1 3 0z"/></svg>') no-repeat .25em .4em;
+  background-size: .6em .6em;
+}
+
+.UnorderedListWorkersThemed > li:not(:last-child) {
+  margin-bottom: .5em;
+}
+
+.UnorderedListWorkersThemed.UnorderedListWorkersThemed-is-primary > li,
+[theme="dark"] .UnorderedListWorkersThemed.UnorderedListWorkersThemed-is-primary > li {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17" height="16" width="17"><defs><linearGradient id="g" x1="87%" x2="13.7%" y1="0%" y2="100%"><stop offset="0%" stop-color="%23faae40"/><stop offset="100%" stop-color="%23f38020"/></linearGradient></defs><path fill="url(%23g)" d="M9.5.4l5 2.8c1 .5 1.5 1.5 1.5 2.5v5.6c0 1-.6 2-1.5 2.5l-5 2.8a3 3 0 0 1-3 0l-5-2.8A2.8 2.8 0 0 1 0 11.3V5.7c0-1 .6-2 1.5-2.5l5-2.8a3 3 0 0 1 3 0z"/></svg>') no-repeat 0 .275em;
+  background-size: 1em 1em;
+  padding-left: 2em;
+}
+
+.UnorderedListWorkersThemed.UnorderedListWorkersThemed-is-primary > li:not(:last-child) {
+  margin-bottom: .75em;
+}

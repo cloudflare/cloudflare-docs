@@ -1,0 +1,36 @@
+[with-styled-webkit-scrollbars] {
+  --scrollbar-thumb-background-color: var(--gray-6);
+  --scrollbar-thumb-background-color-active: var(--gray-4);
+}
+
+[theme="dark"][with-styled-webkit-scrollbars],
+[theme="dark"] [with-styled-webkit-scrollbars] {
+  --scrollbar-thumb-background-color: var(--gray-2);
+  --scrollbar-thumb-background-color-active: var(--gray-5);
+}
+
+[with-styled-webkit-scrollbars]::-webkit-scrollbar,
+[with-styled-webkit-scrollbars] ::-webkit-scrollbar {
+  width: 1em;
+}
+
+[with-styled-webkit-scrollbars]::-webkit-scrollbar-track,
+[with-styled-webkit-scrollbars] ::-webkit-scrollbar-track {
+  background: none;
+  border: none;
+}
+
+[with-styled-webkit-scrollbars]::-webkit-scrollbar-thumb,
+[with-styled-webkit-scrollbars] ::-webkit-scrollbar-thumb {
+  min-height: 3.5em;
+  background-color: var(--scrollbar-thumb-background-color);
+  background-clip: padding-box;
+  border: .25em solid transparent;
+  border-radius: .5em;
+  box-shadow: none;
+}
+
+[with-styled-webkit-scrollbars]::-webkit-scrollbar-thumb:active,
+[with-styled-webkit-scrollbars] ::-webkit-scrollbar-thumb:active {
+  background-color: var(--scrollbar-thumb-background-color-active);
+}

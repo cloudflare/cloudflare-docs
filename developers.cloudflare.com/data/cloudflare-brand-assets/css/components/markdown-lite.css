@@ -1,0 +1,10 @@
+.MarkdownLite > p:not(:last-child),
+.MarkdownLite > ul:not(:last-child),
+.MarkdownLite > ol:not(:last-child) {
+  margin-bottom: .5em;
+}
+
+.MarkdownLite > figure:not(:last-child),
+.MarkdownLite > pre:not(:last-child) {
+  margin-bottom: 1.5em;
+}

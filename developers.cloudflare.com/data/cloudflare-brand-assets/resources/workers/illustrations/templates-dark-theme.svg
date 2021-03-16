@@ -1,0 +1,37 @@
+<svg width="237px" height="160px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 237 160">
+  <title>Templates</title>
+  <defs>
+    <path id="CloudflareWorkersIllustrationTemplates--template-path" d="M11.25 0h45.2a7.5 7.5 0 0 1 5.22 2.1L77.7 17.63a7.5 7.5 0 0 1 2.29 5.4v85.73c0 6.21-5.04 11.25-11.25 11.25h-57.5A11.25 11.25 0 0 1 0 108.75v-97.5C0 5.04 5.04 0 11.25 0z"/>
+    <filter id="CloudflareWorkersIllustrationTemplates--template-filter" width="120.6%" height="113.8%" x="-10.3%" y="-4.4%" filterUnits="objectBoundingBox">
+      <feOffset dy="3" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.25"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.041 0 0 0 0 0.041 0 0 0 0 0.071 0 0 0 0.267 0"/>
+    </filter>
+    <linearGradient id="CloudflareWorkersIllustrationTemplates--gradient" x1="100%" x2="14.71%" y1="-78.4%" y2="149.09%">
+      <stop offset="0%" stop-color="#FAAE40"/>
+      <stop offset="100%" stop-color="#F38020"/>
+    </linearGradient>
+  </defs>
+  <g opacity=".33"><g transform="translate(130 30)"><use fill="#000" filter="url(#CloudflareWorkersIllustrationTemplates--template-filter)" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/><use fill="#4e5255" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/></g><path fill="#b7bbbd" d="M186.41 30h.65a6 6 0 0 1 4.17 1.69l16.94 16.38a6 6 0 0 1 1.83 4.3v.44h-15.59a8 8 0 0 1-8-8V30z"/></g>
+  <g opacity=".66"><g transform="translate(142 18)"><use fill="#000" filter="url(#CloudflareWorkersIllustrationTemplates--template-filter)" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/><use fill="#4e5255" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/></g><path fill="#b7bbbd" d="M198.41 18h.65a6 6 0 0 1 4.17 1.69l16.94 16.38a6 6 0 0 1 1.83 4.3v.44h-15.59a8 8 0 0 1-8-8V18z"/></g>
+  <g transform="translate(154 6)"> <use fill="#000" filter="url(#CloudflareWorkersIllustrationTemplates--template-filter)" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/><use fill="#4e5255" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/></g>
+  <path fill="#36393a" d="M210.41 6h.65a6 6 0 0 1 4.17 1.69l16.94 16.38a6 6 0 0 1 1.83 4.3v.44h-15.59a8 8 0 0 1-8-8V6z"/>
+  <g opacity=".33"><g transform="translate(6 30)"><use fill="#000" filter="url(#CloudflareWorkersIllustrationTemplates--template-filter)" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/><use fill="#4e5255" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/></g><path fill="#b7bbbd" d="M62.41 30h.65a6 6 0 0 1 4.17 1.69l16.94 16.38a6 6 0 0 1 1.83 4.3v.44H70.41a8 8 0 0 1-8-8V30z"/></g>
+  <g opacity=".66"><g transform="translate(18 18)"><use fill="#000" filter="url(#CloudflareWorkersIllustrationTemplates--template-filter)" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/><use fill="#4e5255" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/></g><path fill="#b7bbbd" d="M74.41 18h.65a6 6 0 0 1 4.17 1.69l16.94 16.38a6 6 0 0 1 1.83 4.3v.44H82.41a8 8 0 0 1-8-8V18z"/></g>
+  <g transform="translate(30 6)"><use fill="#000" filter="url(#CloudflareWorkersIllustrationTemplates--template-filter)" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/><use fill="#4e5255" xlink:href="#CloudflareWorkersIllustrationTemplates--template-path"/></g>
+  <path fill="#36393a" d="M86.41 6h.65a6 6 0 0 1 4.17 1.69l16.94 16.38a6 6 0 0 1 1.83 4.3v.44H94.41a8 8 0 0 1-8-8V6z"/>
+  <rect width="43" height="6" x="42" y="43" fill="#b7bbbd" rx="2"/>
+  <rect width="13" height="6" x="42" y="31" fill="url(#CloudflareWorkersIllustrationTemplates--gradient)" rx="2"/>
+  <rect width="37" height="6" x="42" y="103" fill="#b7bbbd" rx="2"/>
+  <rect width="45" height="6" x="49" y="55" fill="#b7bbbd" rx="2"/>
+  <rect width="20" height="6" x="49" y="91" fill="#b7bbbd" rx="2"/>
+  <rect width="43" height="6" x="55" y="79" fill="#b7bbbd" rx="2"/>
+  <rect width="28" height="6" x="55" y="67" fill="#b7bbbd" rx="2"/>
+  <rect width="43" height="6" x="166" y="43" fill="#b7bbbd" rx="2"/>
+  <rect width="37" height="6" x="166" y="103" fill="#b7bbbd" rx="2"/>
+  <rect width="45" height="6" x="173" y="55" fill="#b7bbbd" rx="2"/>
+  <rect width="20" height="6" x="173" y="91" fill="#b7bbbd" rx="2"/>
+  <rect width="43" height="6" x="179" y="79" fill="#b7bbbd" rx="2"/>
+  <rect width="28" height="6" x="179" y="67" fill="#b7bbbd" rx="2"/>
+  <rect width="13" height="6" x="166" y="31" fill="url(#CloudflareWorkersIllustrationTemplates--gradient)" rx="2"/>
+</svg>

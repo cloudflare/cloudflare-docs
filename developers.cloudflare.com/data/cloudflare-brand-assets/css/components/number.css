@@ -1,0 +1,24 @@
+.Number {
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.Number--dollars {
+  display: inline-block;
+  font-size: .75em;
+  vertical-align: top;
+  line-height: 1;
+  margin-top: .45em;
+  padding-right: .05em;
+}
+
+.Number--per,
+.Number--per-unit,
+.Number--unit {
+  font-size: .8em;
+}
+
+.Number.Number-is-strong .Number--dollars,
+.Number.Number-is-strong .Number--number {
+  font-weight: 500;
+}

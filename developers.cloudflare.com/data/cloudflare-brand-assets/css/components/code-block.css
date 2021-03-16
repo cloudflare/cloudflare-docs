@@ -1,0 +1,510 @@
+.CodeBlock {
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--monospace-font-family);
+  font-size: var(--code-font-size);
+  margin: 0;
+  --padding-vertical: .9em;
+  --padding-horizontal: 1.25em;
+  --border-radius: .5em;
+  border-radius: var(--border-radius);
+  background: var(--code-block-background-color);
+  color: var(--code-block-color);
+  --outdent: 0rem;
+  margin-left: calc(-1 * var(--outdent));
+  width: calc(100% + (2 * var(--outdent)));
+  max-width: calc(100% + (2 * var(--outdent)));
+  cursor: text;
+}
+
+[theme="light"] .CodeBlock-is-light-in-light-theme {
+  --code-block-background-color: var(--code-block-background-color-light-theme);
+  --code-block-color: currentColor;
+  --code-block-scrollbar-color: var(--gray-6);
+
+  --code-gray:   var(--code-gray-light-theme);
+  --code-red:    var(--code-red-light-theme);
+  --code-orange: var(--code-orange-light-theme);
+  --code-gold:   var(--code-gold-light-theme);
+  --code-green:  var(--code-green-light-theme);
+  --code-blue:   var(--code-blue-light-theme);
+  --code-cyan:   var(--code-cyan-light-theme);
+  --code-indigo: var(--code-indigo-light-theme);
+  --code-lilac:  var(--code-lilac-light-theme);
+  --code-violet: var(--code-violet-light-theme);
+
+  --diff-indicator-red: var(--diff-indicator-red-light-theme);
+  --diff-indicator-green: var(--diff-indicator-green-light-theme);
+}
+
+.CodeBlock > code {
+  display: block;
+  padding: var(--padding-vertical) var(--padding-horizontal);
+  font-family: inherit;
+  cursor: default;
+}
+
+.CodeBlock > code > * {
+  cursor: text;
+}
+
+.CodeBlock > code::-webkit-scrollbar {
+  height: 14px;
+}
+
+.CodeBlock > code::-webkit-scrollbar-track-piece {
+  background: transparent;
+  border-radius: var(--border-radius);
+}
+
+.CodeBlock > code::-webkit-scrollbar-thumb {
+  border-radius: var(--border-radius);
+  box-shadow: inset 0 1px 1px rgba(var(--background-color-rgb), .1);
+  background-color: var(--code-block-scrollbar-color);
+  background-clip: padding-box;
+  border: 4px solid transparent;
+  border-radius: calc(20 * var(--border-radius));
+}
+
+[theme="dark"] .CodeBlock > code::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 1px 1px rgba(var(--color-rgb), .1);
+}
+
+.CodeBlock-is-one-liner > code {
+  border-radius: calc(.625 * var(--border-radius));
+  white-space: nowrap;
+  word-break: normal;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.CodeBlock-scrolls-horizontally > code {
+  white-space: pre;
+  word-break: normal;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.CodeBlock-is-hero {
+  --padding-vertical: 1.25em;
+  --padding-horizontal: 1.5em;
+  box-shadow:
+    0 1px 1px rgba(var(--shadow-color-rgb), .075),
+    0 .1333em .26667em rgba(var(--shadow-color-rgb), .075),
+    0 .2222em .66667em 0 rgba(var(--shadow-color-rgb), .075),
+    0 .4444em 1.3333em 0 rgba(var(--shadow-color-rgb), .075);
+}
+
+.CodeBlock--header,
+.CodeBlock--filename {
+  display: block;
+  background: rgba(var(--color-rgb), .05);
+  box-shadow: 0 1px rgba(var(--shadow-color-rgb), .12);
+  padding: .4em var(--padding-horizontal);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  opacity: .9;
+  font-weight: bold;
+}
+
+[theme="light"] .CodeBlock-is-light-in-light-theme .CodeBlock--header,
+[theme="light"] .CodeBlock-is-light-in-light-theme .CodeBlock--filename {
+  background: transparent;
+}
+
+.CodeBlock--header {
+  font-family: var(--font-family);
+}
+
+.CodeBlock--filename {
+  padding-top: .45em;
+  font-size: .9em;
+  padding-left: calc(var(--padding-horizontal) / .9);
+  padding-right: calc(var(--padding-horizontal) / .9);
+}
+
+.CodeBlock b {
+  font-weight: normal;
+}
+
+.CodeBlock u {
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  text-decoration: none;
+  transition: opacity .25s ease;
+}
+
+.CodeBlock:hover u,
+.CodeBlock[has-selection-contained-within] u {
+  opacity: .25;
+}
+
+/* CodeBlock with rows */
+
+.CodeBlock.CodeBlock-with-rows.CodeBlock-scrolls-horizontally > code {
+  display: block;
+}
+
+.CodeBlock.CodeBlock-with-rows,
+.CodeBlock.CodeBlock-with-rows > code {
+  white-space: normal;
+}
+
+.CodeBlock-with-rows > code {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.CodeBlock-with-rows .CodeBlock--rows {
+  display: block;
+}
+
+.CodeBlock-with-rows .CodeBlock--rows-content {
+  display: inline-block;
+  min-width: 100%;
+}
+
+.CodeBlock-with-rows .CodeBlock--row {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.CodeBlock-with-rows .CodeBlock--row-content {
+  display: block;
+  white-space: pre-wrap;
+  padding: 0 var(--padding-horizontal);
+}
+
+.CodeBlock-with-rows.CodeBlock-scrolls-horizontally .CodeBlock--row-content {
+  white-space: pre;
+}
+
+.CodeBlock--row-is-highlighted {
+  background: rgba(var(--color-rgb), .05);
+  box-shadow: inset 2px 0 rgba(var(--color-rgb), .3);
+}
+
+.CodeBlock--row-diff-add {
+  --row-diff-background-color: rgba(var(--color-rgb), .05);
+  background: var(--row-diff-background-color);
+}
+
+[theme="light"] .CodeBlock-is-light-in-light-theme.CodeBlock-with-rows .CodeBlock--row-diff-add {
+  --row-diff-background-color: rgba(var(--background-color-rgb), .8);
+}
+
+.CodeBlock--row-diff-remove {
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.CodeBlock-with-rows .CodeBlock--row-diff-add .CodeBlock--row-indicator,
+.CodeBlock-with-rows .CodeBlock--row-diff-remove .CodeBlock--row-indicator {
+  position: sticky;
+  left: 0;
+  display: flex;
+  border-left: .125em solid;
+  --width: .75em;
+  width: var(--width);
+  margin-right: calc(-1 * var(--width));
+  background:
+    linear-gradient(to right, var(--row-diff-background-color), transparent),
+    linear-gradient(to right, var(--code-block-background-color), transparent);
+}
+
+.CodeBlock-with-rows .CodeBlock--row-diff-add .CodeBlock--row-indicator {
+  border-left-color: var(--diff-indicator-green);
+}
+
+.CodeBlock-with-rows .CodeBlock--row-diff-remove .CodeBlock--row-indicator {
+  border-left-color: var(--diff-indicator-red);
+}
+
+[theme="light"] .CodeBlock-with-rows.CodeBlock-is-light-in-light-theme .CodeBlock--row-diff-add .CodeBlock--row-indicator {
+  background: transparent;
+}
+
+.CodeBlock-with-rows .CodeBlock--word-remove {
+  opacity: .5;
+  position: relative;
+}
+
+.CodeBlock-with-rows .CodeBlock--word-remove::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: .125em;
+  right: -.5em;
+  bottom: 0em;
+  left: -.5em;
+  height: 1px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: linear-gradient(
+    to right,
+    rgba(var(--color-rgb), 0),
+    rgba(var(--color-rgb), 0) 1em,
+    rgba(var(--color-rgb), .5) 2em,
+    rgba(var(--color-rgb), .5) calc(100% - 2em),
+    rgba(var(--color-rgb), 0) calc(100% - .5em),
+    rgba(var(--color-rgb), 0)
+  );
+}
+
+/* PrismJS syntax highlighting */
+
+.CodeBlock--token-punctuation,
+.CodeBlock--token-template-string.CodeBlock--token-interpolation {
+  color: inherit;
+}
+
+.CodeBlock--token-comment,
+.CodeBlock--token-block-comment,
+.CodeBlock--token-prolog,
+.CodeBlock--token-doctype,
+.CodeBlock--token-cdata {
+  font-style: italic;
+  color: var(--code-gray);
+}
+
+.CodeBlock--token-keyword,
+.CodeBlock--token-operator,
+.CodeBlock--token-template-string.CodeBlock--token-interpolation.CodeBlock--token-interpolation-punctuation {
+  color: var(--code-red);
+}
+
+.CodeBlock--token-class,
+.CodeBlock--token-class-name,
+.CodeBlock--token-function,
+.CodeBlock--token-function-name,
+.CodeBlock--token-template-string.CodeBlock--token-interpolation.CodeBlock--token-function {
+  color: var(--code-green);
+}
+
+.CodeBlock--token-symbol,
+.CodeBlock--token-constant,
+.CodeBlock--token-template-string.CodeBlock--token-interpolation.CodeBlock--token-interpolation-constant {
+  color: var(--code-indigo);
+}
+
+.CodeBlock--token-arrow,
+.CodeBlock--token-declaration-keyword {
+  color: var(--code-cyan);
+}
+
+.CodeBlock--token-parameter,
+.CodeBlock--token-function-parameter {
+  font-style: italic;
+  color: var(--code-lilac);
+}
+
+.CodeBlock--token-number,
+.CodeBlock--token-boolean,
+.CodeBlock--token-null-undefined,
+.CodeBlock--token-builtin,
+.CodeBlock--token-method {
+  color: var(--code-violet);
+}
+
+.CodeBlock--token-api {
+  color: var(--code-orange);
+}
+
+.CodeBlock--token-char,
+.CodeBlock--token-regex,
+.CodeBlock--token-string,
+.CodeBlock--token-template-string,
+.CodeBlock--token-object-property {
+  color: var(--code-gold);
+}
+
+.CodeBlock--token-bold,
+.CodeBlock--token-important {
+  font-weight: bold;
+}
+
+.CodeBlock--token-italic {
+  font-style: italic;
+}
+
+.CodeBlock--token-namespace,
+.CodeBlock--token-deleted {
+  color: var(--code-red);
+}
+
+.CodeBlock--token-entity {
+  color: var(--code-blue);
+  cursor: help;
+}
+
+.CodeBlock--token-inserted {
+  color: var(--code-green);
+}
+
+.CodeBlock--token-url,
+.CodeBlock--token-link {
+  color: var(--code-violet);
+}
+
+.CodeBlock--token-url.CodeBlock--token-content,
+.CodeBlock--token-link.CodeBlock--token-content {
+  color: inherit;
+}
+
+.CodeBlock--token-tag {
+  color: var(--code-red);
+}
+
+.CodeBlock--token-tag.CodeBlock--token-punctuation {
+  color: inherit;
+}
+
+.CodeBlock--token-tag.CodeBlock--token-attr-name {
+  color: var(--code-green);
+}
+
+.CodeBlock--token-tag.CodeBlock--token-attr-name + .CodeBlock--token-punctuation {
+  color: inherit;
+}
+
+.CodeBlock--token-tag.CodeBlock--token-attr-value {
+  color: var(--code-gold);
+}
+
+[language="css"] .CodeBlock--token-plain,
+[language="css"] .CodeBlock--token-property,
+.CodeBlock--language-css.CodeBlock--token-plain,
+.CodeBlock--language-css.CodeBlock--token-style,
+.CodeBlock--language-css.CodeBlock--token-property {
+  color: var(--code-blue);
+}
+
+.CodeBlock--language-css.CodeBlock--token-style.CodeBlock--token-punctuation {
+  color: inherit;
+}
+
+[language="css"] .CodeBlock--token-selector,
+.CodeBlock--language-css.CodeBlock--token-selector {
+  color: var(--code-red);
+}
+
+[language="css"] .CodeBlock--token-class,
+[language="css"] .CodeBlock--token-attribute,
+.CodeBlock--language-css.CodeBlock--token-class,
+.CodeBlock--language-css.CodeBlock--token-attribute {
+  color: var(--code-green);
+}
+
+[language="css"] .CodeBlock--token-function,
+.CodeBlock--language-css.CodeBlock--token-function {
+  color: var(--code-lilac);
+}
+
+[language="css"] .CodeBlock--token-variable,
+.CodeBlock--language-css.CodeBlock--token-variable {
+  color: var(--code-violet);
+}
+
+[language="css"] .CodeBlock--token-attribute.CodeBlock--token-value,
+.CodeBlock--language-css.CodeBlock--token-attribute.CodeBlock--token-value {
+  color: var(--code-gold);
+}
+
+[language="css"] .CodeBlock--token-color,
+.CodeBlock--language-css.CodeBlock--token-color {
+  color: var(--code-violet);
+}
+
+[language="css"] .CodeBlock--token-attribute.CodeBlock--token-punctuation,
+.CodeBlock--language-css.CodeBlock--token-attribute.CodeBlock--token-punctuation {
+  color: inherit;
+}
+
+[language="css"] .CodeBlock--token-unit,
+[language="css"] .CodeBlock--token-important,
+[language="css"] .CodeBlock--token-atrule.CodeBlock--token-rule,
+[language="css"] .CodeBlock--token-attribute.CodeBlock--token-operator,
+.CodeBlock--language-css.CodeBlock--token-unit,
+.CodeBlock--language-css.CodeBlock--token-important,
+.CodeBlock--language-css.CodeBlock--token-atrule.CodeBlock--token-rule,
+.CodeBlock--language-css.CodeBlock--token-attribute.CodeBlock--token-operator {
+  color: var(--code-red);
+}
+
+[language="css"] .CodeBlock--token-pseudo-class,
+.CodeBlock--language-css.CodeBlock--token-pseudo-class,
+[language="css"] .CodeBlock--token-pseudo-element,
+.CodeBlock--language-css.CodeBlock--token-pseudo-element {
+  color: var(--code-violet);
+}
+
+[language="markdown"] .CodeBlock--token-title,
+[language="markdown"] .CodeBlock--token-header {
+  color: var(--code-orange);
+}
+
+[language="markdown"] .CodeBlock--token-list {
+  color: var(--code-red);
+}
+
+[language="markdown"] .CodeBlock--token-blockquote {
+  color: var(--code-blue);
+}
+
+[language="markdown"] .CodeBlock--token-code {
+  color: var(--code-green);
+}
+
+[language="markdown"] .CodeBlock--token-hr {
+  color: var(--code-gold);
+}
+
+[language="sh"] .CodeBlock--token-directory {
+  color: var(--code-orange);
+}
+
+[language="sh"] .CodeBlock--token-prompt {
+  color: var(--code-orange);
+  opacity: .7;
+}
+
+[language="sh"] .CodeBlock--token-value {
+  color: var(--code-cyan);
+}
+
+[language="sh"] .CodeBlock--token-success {
+  color: var(--code-green);
+}
+
+[language="sh"] .CodeBlock--token-plain {
+  color: var(--code-gray);
+}
+
+[language="sh"] .CodeBlock--token-plain,
+[language="sh"] .CodeBlock--token-unselectable {
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  text-decoration: none;
+  transition: opacity .25s ease;
+}
+
+[language="sh"]:hover .CodeBlock--token-plain,
+[language="sh"]:hover .CodeBlock--token-unselectable,
+[language="sh"][has-selection-contained-within] .CodeBlock--token-plain,
+[language="sh"][has-selection-contained-within] .CodeBlock--token-unselectable {
+  opacity: .25;
+}
+
+/* TODO: revisit */
+/* Temporary fix for bugs in which empty lines can appear missing. */
+.CodeBlock--row > .CodeBlock--row-indicator:empty + .CodeBlock--row-content > .CodeBlock--token-plain:empty + .CodeBlock--token-doc-comment.CodeBlock--token-comment:empty::after,
+.CodeBlock--row > .CodeBlock--row-indicator:empty + .CodeBlock--row-content > .CodeBlock--token-table.CodeBlock--token-table-data-rows:empty + .CodeBlock--token-plain:empty::after {
+  content: " ";
+}

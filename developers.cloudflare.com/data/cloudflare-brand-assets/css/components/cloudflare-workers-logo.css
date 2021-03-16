@@ -1,0 +1,17 @@
+.CloudflareWorkersLogo {
+  display: block;
+}
+
+.CloudflareWorkersLogo-horizontal-combination-mark {
+  width: 10em;
+  height: 2.75em;
+}
+
+.CloudflareWorkersLogoCombinationMark--cloudflare-wordmark,
+.CloudflareWorkersLogoCombinationMark--workers-wordmark {
+  fill: currentColor;
+}
+
+.CloudflareWorkersLogoCombinationMark--cloudflare-wordmark {
+  opacity: .6;
+}

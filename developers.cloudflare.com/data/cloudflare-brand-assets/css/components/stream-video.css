@@ -1,0 +1,16 @@
+.StreamVideo .video-js {
+  font-family: inherit;
+}
+
+.StreamVideo .video-js .vjs-control-bar {
+  font-size: 1.75em;
+}
+
+.StreamVideo .video-js .vjs-playback-rate,
+.StreamVideo .video-js .cf-quality-selector {
+  display: none;
+}
+
+.StreamVideo .video-js .vjs-slider {
+  background: rgba(var(--gray-5-rgb), .5);
+}

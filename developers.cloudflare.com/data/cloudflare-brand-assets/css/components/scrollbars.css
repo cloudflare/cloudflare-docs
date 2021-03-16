@@ -1,0 +1,29 @@
+.Scrollbars--track-vertical {
+  top: .25em;
+  right: .25em;
+  bottom: .25em;
+
+  /*
+    Override inline styles
+    See https://git.io/Jf0Mi or https://git.io/Jf0MP
+  */
+  width: .5em !important;
+}
+
+.Scrollbars--thumb {
+  cursor: pointer;
+  background-color: var(--gray-6);
+  border-radius: .5em;
+}
+
+.Scrollbars--thumb:active {
+  background-color: var(--gray-4);
+}
+
+[theme="dark"] .Scrollbars--thumb {
+  background-color: var(--gray-2);
+}
+
+[theme="dark"] .Scrollbars--thumb:active {
+  background-color: var(--gray-5);
+}

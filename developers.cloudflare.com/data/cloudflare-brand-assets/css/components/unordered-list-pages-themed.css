@@ -1,0 +1,22 @@
+.UnorderedListPagesThemed {
+  padding: 0;
+  list-style: none;
+}
+
+.UnorderedListPagesThemed > li {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 68"><path fill="%231d1f20" d="M 13 39 h -10 l -1.66 -3.12 l 23 -34 l 3.62 1.5 l -4.54 23.62 h 13.58 l 1.68 3.09 l -22 34 l -3.66 -1.4 l 3.65 -23.69 z"/></svg>') no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-left: 2em;
+}
+
+[theme="dark"] .UnorderedListPagesThemed > li {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 68"><path fill="%23fff" d="M 13 39 h -10 l -1.66 -3.12 l 23 -34 l 3.62 1.5 l -4.54 23.62 h 13.58 l 1.68 3.09 l -22 34 l -3.66 -1.4 l 3.65 -23.69 z"/></svg>');
+}
+
+.UnorderedListPagesThemed.UnorderedListPagesThemed-is-primary > li {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 68"><defs><linearGradient id="g" x1="118.18%" x2="10.8%" y1="-2.39%" y2="101.62%"><stop offset="0%" stop-color="%23fbb743"/><stop offset="100%" stop-color="%23f28333"/><stop offset="100%" stop-color="%23ea6b00"/></linearGradient></defs><path fill="url(%23g)" d="M 13 39 h -10 l -1.66 -3.12 l 23 -34 l 3.62 1.5 l -4.54 23.62 h 13.58 l 1.68 3.09 l -22 34 l -3.66 -1.4 l 3.65 -23.69 z"/></svg>');
+}
+
+.UnorderedListPagesThemed > li:not(:last-child) {
+  margin-bottom: .75em;
+}

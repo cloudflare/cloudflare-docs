@@ -1,0 +1,89 @@
+.Tooltip---root {
+  position: relative;
+}
+
+span.Tooltip---root {
+  display: inline-block;
+}
+
+.Tooltip {
+  --gap: .75em;
+  position: absolute;
+  font-size: .925em;
+  font-weight: normal;
+  font-style: normal;
+  line-height: var(--line-height);
+  text-transform: none;
+  letter-spacing: normal;
+  padding: .3em .85em;
+  white-space: nowrap;
+  max-width: calc(100vw - 1em);
+  color: var(--background-color);
+  background: var(--color);
+  opacity: 0;
+  transition: opacity .25s ease;
+  border-radius: .25em;
+  z-index: 10;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .Tooltip---root:hover .Tooltip {
+    opacity: 1;
+  }
+}
+
+.Tooltip:not([position]),
+.Tooltip[position="top"] {
+  bottom: 100%;
+  margin-bottom: var(--gap);
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.Tooltip[position="bottom"] {
+  top: 100%;
+  margin-top: var(--gap);
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.Tooltip[position="left"] {
+  right: 100%;
+  margin-right: var(--gap);
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.Tooltip[position="right"] {
+  left: 100%;
+  margin-left: var(--gap);
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.Tooltip[position="top-start"] {
+  bottom: 100%;
+  margin-bottom: var(--gap);
+  left: 0;
+}
+
+.Tooltip[position="bottom-start"] {
+  top: 100%;
+  margin-top: var(--gap);
+  left: 0;
+}
+
+.Tooltip[position="top-end"] {
+  bottom: 100%;
+  margin-bottom: var(--gap);
+  right: 0;
+}
+
+.Tooltip[position="bottom-end"] {
+  top: 100%;
+  margin-top: var(--gap);
+  right: 0;
+}

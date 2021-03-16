@@ -9,7 +9,6 @@ exports.onCreateWebpackConfig = ({
   plugins,
 }) => {
   const config = getConfig()
-
   // Hides "[HMR] ..." logs in devtools
   if (config.entry.commons) {
     config.entry.commons = config.entry.commons.map(path => (

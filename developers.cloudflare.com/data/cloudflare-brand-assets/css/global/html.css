@@ -1,0 +1,12 @@
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: var(--html-font-size);
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  color: var(--color);
+  background: var(--background-color);
+}

@@ -1,0 +1,4 @@
+[theme="light"] [dark-theme-only],
+[theme="dark"] [light-theme-only] {
+  display: none;
+}
