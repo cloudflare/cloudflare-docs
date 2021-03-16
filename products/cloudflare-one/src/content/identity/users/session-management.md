@@ -67,15 +67,15 @@ If you want to permanently revoke a user's access:
 
 1. Disable their account in your IdP so that they cannot authenticate, then revoke their Access user session.
 
-2. On the Teams dashboard, navigate to **Logs** > **Users**.
+2. On the Teams dashboard, navigate to **My Team** > **Users**.
 
  Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
 
-![revoke-users](../../static/documentation/identity/users/user-list.png)
+![revoke-users](../../static/documentation/identity/users/connected-user-list.png)
 
 3. Click **Revoke session** and confirm.
 
-![revoke-users](../../static/documentation/identity/users/confirm-revoke.png)
+![revoke-users](../../static/documentation/identity/users/revoke-user-session.png)
 
 ### Subsequent Logins
 

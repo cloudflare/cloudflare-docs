@@ -4,12 +4,18 @@ order: 1
 
 # Configure locations
 
+<Aside>
+
+Changing the IP address of a location is an Enterprise feature. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
+
+</Aside>
+
 The only requirement for a location is its name. All other fields are optional if the location you are sending requests from is only using IPv6 or sending all DNS requests using DNS over HTTPS.
 
 ## IPv4
 Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log the DNS requests. When you go through onboarding or in our location tab, the dashboard automatically identifies the public source IP address.
 
-If you are using Gateway's paid plans, you can manually enter the IP address and netmask of your location. You can find out what public IP address you are using by connecting to the network of the location and then googling “What’s my IP address”.
+If you are using an Enterprise plan, you can manually enter the IP address and netmask of your location. You can find out what public IP address you are using by connecting to the network of the location and then googling “What’s my IP address”.
 
 On your router or if you are using a device or a daemon, forward DNS queries to the following IP addresses:
 

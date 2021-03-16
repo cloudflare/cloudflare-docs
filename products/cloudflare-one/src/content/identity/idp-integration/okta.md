@@ -42,9 +42,9 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
  ![Scroll Down](../../static/documentation/identity/okta/scroll-down.png)
 
-1. Click **Edit** and edit the Groups claim filter to `Starts with` and the value `.*`.
+1. Click **Edit** and edit the Groups claim filter to Matches regex and the value `.*`.
 
- ![Scroll Down](../../static/documentation/identity/okta/edit-groups.png)
+ ![Scroll Down](../../static/documentation/identity/okta/okta-edit.png)
 
 1. Next, click the **Assignments** tab.
 
