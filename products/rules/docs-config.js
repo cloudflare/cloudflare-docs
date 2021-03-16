@@ -19,7 +19,7 @@ module.exports = {
   search: {
     indexName: "",
     apiKey: "",
-    algoliaOptions: {}
+    algoliaOptions: { "facetFilters": "" }
   },
   siteMetadata: {
     title: "Cloudflare Rules docs",
