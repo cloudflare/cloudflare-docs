@@ -11,10 +11,15 @@ module.exports = {
       url: "https://cloudflare.com"
     }
   ],
+//  search: {
+//    indexName: "developers-cloudflare",
+//    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+//    algoliaOptions: { 'facetFilters': '["project:rules"]'}
+//  },
   search: {
-    indexName: "developers-cloudflare",
-    apiKey: "b23088ab4d346409f9d3ece6606344c3",
-    algoliaOptions: { 'facetFilters': '["project:rules"]'}
+    indexName: "",
+    apiKey: "",
+    algoliaOptions: {}
   },
   siteMetadata: {
     title: "Cloudflare Rules docs",
