@@ -1,0 +1,3 @@
+If you have a smaller site and have identified a bot problem, we recommend Bot Fight Mode or Super Bot Fight Mode which are included with your plan subscription. You can enable Bot Fight Mode from your dashboard, but you cannot set specific bot rules.
+
+If you have a large, sophisticated site with a lot of traffic, we recommend Bot Management for Enterprise, especially for customers in ecommerce, banking, and security. To enable Bot Management for Enterprise and write rules to customize your bot protection, contact the Solutions Engineering team.
