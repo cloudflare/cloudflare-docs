@@ -14,7 +14,7 @@ $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resourc
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
 $["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
-$["internet"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/internet.js").pathD
+$["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/internet.js").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
@@ -98,7 +98,7 @@ const products = [
     icon: "images",
   },
   {
-    title: "Internet",
+    title: "Cloudflare Fundamentals",
     path: "internet",
     icon: "internet",
   },

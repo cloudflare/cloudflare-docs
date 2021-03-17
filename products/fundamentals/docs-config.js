@@ -1,9 +1,9 @@
 module.exports = {
-  product: "Internet",
-  pathPrefix: "/internet",
+  product: "Cloudflare Fundamentals",
+  pathPrefix: "/fundamentals",
   productIconKey: "internet",
   contentRepo: "cloudflare/cloudflare-docs",
-  contentRepoFolder: "products/internet",
+  contentRepoFolder: "products/fundamentals",
   externalLinks: [
     {
       title: "How does Cloudflare work?",
