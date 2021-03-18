@@ -1,7 +1,7 @@
 ---
 title: Free
 order: 0
-type: document
+type: overview
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
@@ -15,7 +15,7 @@ import GetStarted from "../../_partials/_plan-get-started.md"
 
 <PlanButtons/>
 
-## Features
+## Free Features
 
 <PlanInfoFree/>
 

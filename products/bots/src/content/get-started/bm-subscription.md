@@ -1,11 +1,11 @@
 ---
-title: Bot Management for Enterprise
-order: 300
+title: Enterprise Bot Management
+order: 3
 ---
 
-# Bot Management for Enterprise
+# Getting started with Bot Management for Enterprise
 
-Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your site. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
+SBot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your site. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
 
 Our Enterprise product provides the most flexibility to customers by:
 
@@ -56,3 +56,6 @@ Use **Bot Analytics and Logs** to view Bot Management’s impact without affecti
 **Some automated traffic is good!** To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. To treat mobile traffic differently, use the user agent or IP address fields in Firewall Rules. You can also fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link) to suggest new bots for verification.
 
 
+## Analytics
+
+For more on analytics, see [Bot Analytics](/bot-analytics/).

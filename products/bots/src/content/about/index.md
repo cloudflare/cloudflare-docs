@@ -1,6 +1,6 @@
 ---
 title: About
-order: 100
+order: 1
 ---
 
 import GetStarted from "../_partials/_plan-get-started.md"
@@ -16,6 +16,10 @@ If you have a smaller site and have identified a bot problem, we recommend Bot F
 If you have a large, sophisticated site with a lot of traffic, we recommend Bot Management for Enterprise, especially for customers in ecommerce, banking, and security. To enable Bot Management for Enterprise and write rules to customize your bot protection, contact the Solutions Engineering team.
 
 To see the differences in features and functionality, visit [Plans](/about/plans/).
+
+## How does Cloudflare detect bots?
+
+Cloudflare uses a variety of methods to detect bots. For more details, see [Bot detection](/about/bot-detection/).
 
 ## How do I get started?
 

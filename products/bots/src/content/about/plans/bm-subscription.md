@@ -1,6 +1,7 @@
 ---
 title: Enterprise Bot Management
 order: 3
+type: overview
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
@@ -14,7 +15,7 @@ import GetStarted from "../../_partials/_plan-get-started.md"
 
 <PlanButtons/>
 
-## Features
+## Bot Management for Enterprise Features
 
 <PlanInfoBMSub/>
 

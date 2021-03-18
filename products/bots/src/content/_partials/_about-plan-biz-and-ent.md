@@ -38,3 +38,12 @@
 </table>
 
 *When users purchase Bot Management for Enterprise, Cloudflare automatically replaces Bot Fight Mode to prevent configuration overlap.
+
+## Considerations
+
+Super Bot Fight Mode uses the same underlying technology that powers our [Bot Management](https://www.cloudflare.com/products/bot-management/) product.  Specifically, Super Bot Fight Mode:
+
+- Protects entire sites without endpoint restrictions
+- Cannot be customized, adjusted, or reconfigured via Firewall Rules
+
+Although Super Bot Fight Mode is designed to fight malicious actors on the Internet, it may challenge API or mobile app traffic. For more granular control, we recommend customers upgrade to [Bot Management for Enterprise](../bm-subscription).
