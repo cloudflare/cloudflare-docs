@@ -6,7 +6,7 @@ order: 3
 
 | Before you start |
 |---|
-| 1. [Install and authenticate `cloudflared`](connections/connect-apps/install-and-setup/installation) |
+| 1. [Install and authenticate `cloudflared`](/connections/connect-apps/install-and-setup/installation) |
 
 ## Create a Tunnel
 
