@@ -12,7 +12,7 @@
     </tr>
     <tr>
       <td><b>Availability</b></td>
-      <td>All business and enterprise customers without Bot Management</td>
+      <td>All business customers and enterprise customers without Bot Management*</td>
     </tr>
     <tr>
       <td><b>Enablement</b></td>
@@ -36,3 +36,5 @@
     </tr>
   </tbody>
 </table>
+
+*When users purchase Bot Management for Enterprise, Cloudflare automatically replaces Bot Fight Mode to prevent configuration overlap.

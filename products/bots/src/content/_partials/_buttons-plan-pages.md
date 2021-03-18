@@ -1,6 +1,6 @@
 <ButtonGroup>
-  <Button type="primary" href="/about/free">Free</Button>
-  <Button type="primary" href="/about/pro">Pro</Button>
-  <Button type="primary" href="/about/biz-and-ent">Business and Enterprise</Button>
-  <Button type="primary" href="/about/bm-subscription">Enterprise add-on subscription</Button>
+  <Button type="primary" href="../free">Free</Button>
+  <Button type="primary" href="../pro">Pro</Button>
+  <Button type="primary" href="../biz-and-ent">Business</Button>
+  <Button type="primary" href="../bm-subscription">Bot Management for Enterprise</Button>
 </ButtonGroup>

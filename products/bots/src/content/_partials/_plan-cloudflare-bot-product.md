@@ -1,1 +1,0 @@
-While Cloudflare offers several products that mitigate and identify bot traffic, this section reviews our _bot-specific products_, Bot Fight Mode, Bot Super Fight Mode, and Bot Management for Enterprise.
