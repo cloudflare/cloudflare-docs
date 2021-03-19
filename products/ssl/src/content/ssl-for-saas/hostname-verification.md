@@ -58,6 +58,9 @@ Each API call to create a Custom Hostname provides a TXT *ownership_verification
   ]
 }
 ```
+<Aside header="Note">
+Once you activate a Custom Hostname, you can remove the TXT record.
+</Aside>
 
 ### HTTP
 
