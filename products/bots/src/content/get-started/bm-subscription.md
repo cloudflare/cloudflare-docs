@@ -61,4 +61,4 @@ Use **Bot Analytics and Logs** to view Bot Management’s impact without affecti
 
 ## Analytics
 
-For more on analytics, see [Bot Analytics](/bot-analytics/).
+For more on analytics, see [Bot Analytics](/bot-analytics/bm-subscription/).

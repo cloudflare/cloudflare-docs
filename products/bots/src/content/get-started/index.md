@@ -9,4 +9,3 @@ order: 3
 - [Pro](/get-started/pro)
 - [Business](/get-started/biz-and-ent)
 - [Bot Management for Enterprise](/get-started/bm-subscription)
-
