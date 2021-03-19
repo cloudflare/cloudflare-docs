@@ -3,7 +3,7 @@ title: Business
 order: 2
 ---
 
-import EnableSteps from "../../_partials/_get-started-pro-biz-steps.md"
+import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
 
 # Getting started with Super Bot Fight Mode
 
@@ -16,9 +16,9 @@ Super Bot Fight Mode is included in your Business subscription. When enabled, th
 
 <Aside>
 
-_Note:_ If you have an Enterprise subscription without Bot Management, your application will also have Super Bot Fight Mode for Business.
+**Note**: If you have an Enterprise subscription without Bot Management, your application will also have Super Bot Fight Mode for Business.
 
-<Aside>
+</Aside>
 
 ## Enable Super Bot Fight Mode
 

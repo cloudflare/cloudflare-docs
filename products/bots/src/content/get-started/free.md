@@ -3,7 +3,7 @@ title: Free
 order: 0
 ---
 
-import FirewallEvents from "../../_partials/_get-started-firewall-events.md"
+import FirewallEvents from "../_partials/_get-started-firewall-events.md"
 
 # Getting started with Bot Fight Mode
 

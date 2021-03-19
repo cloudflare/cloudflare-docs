@@ -3,8 +3,8 @@ title: Pro
 order: 1
 ---
 
-import EnableSteps from "../../_partials/_get-started-pro-biz-steps.md"
-import FirewallEvents from "../../_partials/_get-started-firewall-events.md"
+import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
+import FirewallEvents from "../_partials/_get-started-firewall-events.md"
 
 # Getting started with Super Bot Fight Mode
 

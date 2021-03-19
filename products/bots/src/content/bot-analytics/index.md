@@ -1,13 +1,13 @@
 ---
 title: Bot Analytics
-order: 400
+order: 4
 ---
 
 # Bot Analytics
 
-Cloudflare’s Bot Analytics tool provides Bot Management customers with dynamic options for examining bot traffic.
+Bot Analytics tool provides Business and Enterprise customers with dynamic options for examining bot traffic.
 
-To use Bot Analytics, open the Cloudflare dashboard and select Firewall > Bot traffic. 
+To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **Bots**. 
 
 ![Bot Analytics on Dashboard](../images/bot-analytics-dashboard.png)
 
@@ -16,24 +16,32 @@ To use Bot Analytics, open the Cloudflare dashboard and select Firewall > Bot tr
 We provide a full tour of Bot Analytics in [our blog post](https://blog.cloudflare.com/introducing-bot-analytics/). At a high level, the tool includes:
 
 - Requests by bot score. View your total site traffic and segment it vertically by traffic type. Keep an eye on “automated” and “likely automated” subsets of traffic.
-- Bot score distribution. View the number of requests assigned a bot score 1 through 99. Use this to find a threshold for your Firewall Rules.
+- Bot score distribution. View the number of requests assigned a bot score 1 through 99. 
 - Bot score source. Identify the most common detection engines used to score your traffic. Hover over a tooltip to learn more about each engine.
 - Top requests by source. View more detailed information on specific IP addresses and more.
 
 Bot Analytics shows up to one week of data at a time and can display data up to 30 days old. We use adaptive bitrate technology to show sampled data — most customers will see a 1-10% sample depending on how much information they are trying to view. Tooltips on the page will display the current sample rate.
 
-Bot Analytics displays data in real time in most cases. 
+Bot Analytics displays data in real time in most cases.
 
-## Common uses
+## Common uses with Super Bot Fight Mode
 
-Customers can gain more value from Bot Management by using Bot Analytics to:
+Business and Enterprise customers without Bot Management can use Bot Analytics to:
+
+- Understand bot traffic
+- Study recent attacks to find trends and detailed information
+- Learn more about Cloudflare’s detection engines with real data
+
+## Common uses with Bot Management for Enterprise
+
+Bot Management customers can gain more value from by using Bot Analytics to:
 
 - Understand traffic during the initial onboarding phase
 - Tune Firewall Rules to be effective, but not overly aggressive
 - Study recent attacks to find trends and detailed information
 - Learn more about Cloudflare’s detection engines with real data
 
-## Finding a bot score threshold
+### Finding a bot score threshold
 
 Before deploying Bot Management on live traffic, use Bot Analytics to determine your site’s sensitivity to bot traffic. This sensitivity can then be translated into effective Firewall Rules.
 
@@ -64,10 +72,3 @@ Customers who are new to Cloudflare should give Bot Analytics a few days to gath
 ## API
 
 The data that powers Bot Analytics is available via GraphQL API. We provide access to bot scores, bot sources, and bot “decisions” (“automated,” “likely automated,” etc.). Read the [GraphQL Analytics API documentation](https://developers.cloudflare.com/analytics/graphql-api) for more information about GraphQL and basic querying.
-
-
-## Bot Report
-
-If you have an Enterprise plan without Bot Management, you can use the Bot Report tool, instead of Bot Analytics, to view bot traffic in the Firewall app. The Bot Report is updated in real time and provides information on site traffic for the past 24 hours. We encourage you to take a look at your bot traffic and monitor it. If you see a double-digit percentage of automated traffic, Bot Management may be able to save you money on origin costs or large-scale attacks.
-
-![Bot report Traffic distribution](../images/traffic-distribution.png)

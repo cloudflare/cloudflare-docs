@@ -5,7 +5,7 @@ order: 3
 
 # Getting started with Bot Management for Enterprise
 
-SBot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your site. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
+Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your site. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
 
 Our Enterprise product provides the most flexibility to customers by:
 
@@ -23,6 +23,8 @@ To enable Bot Management, contact your account team. After it’s enabled, Bot M
 
 Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall Rules that will block or challenge traffic based on bot score. Others just use Bot Analytics or perform custom actions using our Workers platform.
 
+For more guidance on tuning your Firewall Rules, see [Finding a bot score threshold](/bot-analytics#finding-a-bot-score-threshold/).
+
 ## Bot Management variables
 
 Bot Management provides access to several new variables available within the Firewall expression builder.
@@ -36,6 +38,8 @@ These variables are also available as part of the [request.cf](https://developer
 - request.cf.botManagement.score
 - request.cf.botManagement.verifiedBot
 - request.cf.botManagement.staticResource
+
+For a list of supported file types for static resources, see [Static resource protection](/about/static-resources/).
 
 ## Best practices and examples
 
@@ -54,7 +58,6 @@ Deploy the rule and watch the results! For additional help with Firewall Rules, 
 Use **Bot Analytics and Logs** to view Bot Management’s impact without affecting live traffic. To integrate with a third-party service to analyze traffic, select **Log** as an action from Firewall.
 
 **Some automated traffic is good!** To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. To treat mobile traffic differently, use the user agent or IP address fields in Firewall Rules. You can also fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link) to suggest new bots for verification.
-
 
 ## Analytics
 

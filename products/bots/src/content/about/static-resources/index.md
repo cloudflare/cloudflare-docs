@@ -1,0 +1,18 @@
+---
+title: Static resource protection
+order: 3
+---
+
+# Static resource protection
+
+Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their static resources from bots.
+
+To enable this feature as a Pro or Business customer or an Enterprise customer without Bot Management:
+1. Go to **Firewall** > **Bots**.
+1. Select **Configure Super Bot Fight Mode**.
+1. For **Static resource protection**, select **On**.
+
+To enable this feature as an Enterprise customer with Bot Management, set up a **Firewall Rule** using the <code class="InlineCode">cf.botManagement.staticResource</code> field.
+
+These actions protect the following file extensions:
+```|css|jar|js|jpg|jpeg|gif|ico|png|bmp|pict|csv|doc|docx|xls|xlsx|pdf|ps|pls|ppt|txt|ico|pptx|tif|tiff|ttf|otf|woff|woff2|webp|svg|svgz|eot|eps|ejs|swf|torrent|midi|mid|```
