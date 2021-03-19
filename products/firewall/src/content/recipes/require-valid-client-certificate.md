@@ -41,4 +41,4 @@ Because the [action](/cf-firewall-rules/actions) is _Block_, only requests that 
   </tbody>
 </table>
 
-To create an API Shield rule that requires a valid client certificate in the Cloudflare dashboard, [use the API Shield Rule interface](/cf-dashboard/create-api-shield-rule#use-the-api-shield-rule-interface) in the **Firewall** app.
+To create a mTLS rule that requires a valid client certificate in the Cloudflare dashboard, [use the Mutual TLS Rule interface](/cf-dashboard/create-mtls-rule#use-the-mutual-tls-rule-interface) in the **Firewall** app.

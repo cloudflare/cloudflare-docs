@@ -266,9 +266,7 @@ For instructions, see [_Enable mutual Transport Layer Security_](/client-certifi
 
 ## Configure API Shield to require client certificates
 
-To configure API Shield to require client certificates, [create an API Shield rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-api-shield-rule):
-
-![create api shield clip](../static/create-api-shield-clip-1.gif)
+To configure API Shield to require client certificates, [create a mTLS rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule).
 
 --------
 
