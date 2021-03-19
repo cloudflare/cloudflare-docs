@@ -40,7 +40,7 @@ To set up Yandex for Cloudflare Access:
 
     ![Yandex Platform card](../../static/documentation/identity/yandex/yandex-4.png)
 
-1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
 
 1. Click *+ Add* under **Login Methods**, and select Yandex.
 

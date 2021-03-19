@@ -55,7 +55,7 @@ To set up OneLogin as your identity provider:
 1. Click **Show client secret**.
 1. Copy both the **Client ID** and **Client Secret**.
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
 1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
 1. Paste in your copied **Client ID** and **Client secret**.
