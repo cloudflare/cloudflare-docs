@@ -43,11 +43,11 @@ While we recommend customers block or challenge bot scores below 30, some custom
 
 1. After adding Bot Management to your account, visit Bot Analytics to ensure the tool has been added to your dashboard. If you experience issues, log out and then log back in.
 
-2. Apply a filter on bot scores of 1 or “automated” traffic. Sort through the IP addresses, ASNs, and other data points at the bottom of the page. We suggest blocking or challenging traffic with a score of 1, so you’ll want to look for any traffic that should be *exempted* from this action. You may have API or mobile app traffic that appears on the page. Please take note.
+2. Apply a filter on bot scores of 1 or **automated** traffic. Sort through the IP addresses, ASNs, and other data points at the bottom of the page. We suggest blocking or challenging traffic with a score of 1, so you’ll want to look for any traffic that should be *exempted* from this action. You may have API or mobile app traffic that appears on the page.
 
 3. Create a Firewall Rule that challenges or blocks scores of 1 and exempts any good, automated requests. Monitor for a few days.
 
-4. Apply filters to different subsets of your traffic — consider a filter on 2 through 29 scores (“likely automated” traffic). Some customers prefer to use the slider tool to identify large spikes in bot scores. For example, you may find that your mobile app is routinely scored 37. Identify nuances in your traffic that may require special attention, and try to find a range of scores that you can confidently block or challenge.
+4. Apply filters to different subsets of your traffic — consider a filter on 2 through 29 scores (**likely automated** traffic). Some customers prefer to use the slider tool to identify large spikes in bot scores. For example, you may find that your mobile app is routinely scored 37. Identify nuances in your traffic that may require special attention and try to find a range of scores that you can confidently block or challenge.
 
 5. Create Firewall Rules that mitigate these subsets of traffic. Again, monitor over the course of a few days to ensure traffic is being correctly impacted.
 
@@ -57,9 +57,9 @@ After completing these steps, you will have an initial set of Firewall Rules and
 
 <Aside type='note' header='Important'>
 
-If you were already a Cloudflare customer before adding Bot Management, you’ll be able to retroactively view analytics (including traffic from before you purchased Bot Management). This means that you will be able to sort through traffic insights immediately.
+If you were a Cloudflare customer before adding Bot Management, you can view past analytics (including traffic from before you purchased Bot Management). This means that you will be able to sort through traffic insights immediately.
 
-Customers who are new to Cloudflare should give Bot Analytics a few days to gather data. You should only begin blocking or challenging traffic after checking for possible exemptions or special endpoints.
+New customers should give Bot Analytics a few days to gather data. You should only begin blocking or challenging traffic after checking for possible exemptions or special endpoints.
 
 </Aside>
 
