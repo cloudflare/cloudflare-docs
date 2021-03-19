@@ -20,7 +20,7 @@
     </tr>
     <tr>
       <td><b>Type of bots detected</b></td>
-      <td>Simple <i>and</i> sophisticated bots, identified by rigorous detection engines</td>
+      <td>Simple and sophisticated bots, headless browsers, and domain-specific anomalies</td>
     </tr>
     <tr>
       <td><b>Actions</b></td>

@@ -5,7 +5,7 @@ order: 3
 
 # Getting started with Bot Management for Enterprise
 
-Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your site. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
+Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
 
 Our Enterprise product provides the most flexibility to customers by:
 

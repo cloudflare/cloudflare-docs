@@ -15,7 +15,7 @@ To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **
 
 We provide a full tour of Bot Analytics in [our blog post](https://blog.cloudflare.com/introducing-bot-analytics/). At a high level, the tool includes:
 
-- Requests by bot score. View your total site traffic and segment it vertically by traffic type. Keep an eye on “automated” and “likely automated” subsets of traffic.
+- Requests by bot score. View your total domain traffic and segment it vertically by traffic type. Keep an eye on “automated” and “likely automated” subsets of traffic.
 - Bot score distribution. View the number of requests assigned a bot score 1 through 99. 
 - Bot score source. Identify the most common detection engines used to score your traffic. Hover over a tooltip to learn more about each engine.
 - Top requests by source. View more detailed information on specific IP addresses and more.
@@ -43,9 +43,9 @@ Bot Management customers can gain more value from by using Bot Analytics to:
 
 ### Finding a bot score threshold
 
-Before deploying Bot Management on live traffic, use Bot Analytics to determine your site’s sensitivity to bot traffic. This sensitivity can then be translated into effective Firewall Rules.
+Before deploying Bot Management on live traffic, use Bot Analytics to determine your domain's sensitivity to bot traffic. This sensitivity can then be translated into effective Firewall Rules.
 
-While we recommend customers block or challenge bot scores below 30, some customers, such as those with ecommerce sites, may want to be less aggressive to prevent false positives and lost revenue. Other sites may perform better with aggressive thresholds, depending on expected traffic and revenue sources. The best approach is to slowly increase your threshold to prevent widespread issues. We recommend our customers do the following:
+While we recommend customers block or challenge bot scores below 30, some customers, such as those with ecommerce domains, may want to be less aggressive to prevent false positives and lost revenue. Other domains may perform better with aggressive thresholds, depending on expected traffic and revenue sources. The best approach is to slowly increase your threshold to prevent widespread issues. We recommend our customers do the following:
 
 1. After adding Bot Management to your account, visit Bot Analytics to ensure the tool has been added to your dashboard. If you experience issues, log out and then log back in.
 

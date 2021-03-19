@@ -12,19 +12,19 @@
     </tr>
     <tr>
       <td><b>Availability</b></td>
-      <td>All pro customers</td>
+      <td>All Pro customers</td>
     </tr>
     <tr>
       <td><b>Enablement</b></td>
-      <td>Toggle in <b>Firewall</b> > <b>Tools</b></td>
+      <td>Toggle in <b>Firewall</b> > <b>Bots</b></td>
     </tr>
     <tr>
       <td><b>Type of bots detected</b></td>
-      <td>Simple bots identified by common heuristics</td>
+      <td>Simple bots and headless browsers</td>
     </tr>
     <tr>
       <td><b>Actions</b></td>
-      <td>Customer chooses whether to do nothing, block, or challenge</td>
+      <td>Customer chooses whether to allow, block, or challenge</td>
     </tr>
     <tr>
       <td><b>Analytics</b></td>

@@ -1,12 +1,15 @@
 ---
 title: Pro
 order: 1
-type: overview
+type: document
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
 import PlanButtons from "../../_partials/_buttons-plan-pages.md"
 import PlanInfoPro from "../../_partials/_about-plan-pro.md"
+import BotsHeuristics from "../../_partials/_bots-heuristics.md"
+import BotsJSD from "../../_partials/_bots-jsd.md"
+import Considerations from "../../_partials/_about-plan-considerations.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
 
@@ -16,9 +19,25 @@ import GetStarted from "../../_partials/_plan-get-started.md"
 
 <PlanButtons/>
 
-## Pro Features
+## Pro features
 
 <PlanInfoPro/>
+
+## Bot detection engines
+
+### Heuristics
+
+<BotsHeuristics/>
+
+### JavaScript detections
+
+<BotsJSD/>
+
+JSD is completely optional. To adjust your settings, configure Super Bot Fight Mode from **Firewall** > **Bots**.
+
+## Considerations
+
+<Considerations/>
 
 ## How do I get started?
 

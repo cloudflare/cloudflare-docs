@@ -12,15 +12,15 @@
     </tr>
     <tr>
       <td><b>Availability</b></td>
-      <td>All free customers</td>
+      <td>All Free customers</td>
     </tr>
     <tr>
       <td><b>Enablement</b></td>
-      <td>Toggle in <b>Firewall</b> > <b>Tools</b></td>
+      <td>Toggle in <b>Firewall</b> > <b>Bots</b></td>
     </tr>
     <tr>
       <td><b>Type of bots detected</b></td>
-      <td>Simple bots identified by common heuristics</td>
+      <td>Simple bots and headless browsers</td>
     </tr>
     <tr>
       <td><b>Actions</b></td>

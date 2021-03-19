@@ -1,3 +1,3 @@
-The **Anomaly Detection (AD)** engine is an optional detection engine that uses a form of unsupervised learning. We record a baseline of your site’s traffic and use the baseline to intelligently detect outlier requests. This approach is user agent-agnostic and can be turned on or off by your account team. 
+The **Anomaly Detection (AD)** engine is an optional detection engine that uses a form of unsupervised learning. We record a baseline of your domain's traffic and use the baseline to intelligently detect outlier requests. This approach is user agent-agnostic and can be turned on or off by your account team. 
 
-Cloudflare does not recommend AD for sites that use SSL for SaaS or expect large amounts of API traffic. The AD engine immediately gives automated requests a score of one.
+Cloudflare does not recommend AD for domains that use SSL for SaaS or expect large amounts of API traffic. The AD engine immediately gives automated requests a score of one.
