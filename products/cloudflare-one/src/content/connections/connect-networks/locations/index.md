@@ -6,7 +6,7 @@ order: 2
 
 Locations are usually physical entities like offices, homes, retail stores, movie theatres, or data centers. The fastest way to start sending DNS queries from a location and protect it from security threats is by changing the DNS resolvers at the router.
 
-* If you have an IPv6 network, you can change your DNS resolvers to the dedicated IPv6 address for your locations.
+* If you have an IPv6 network, you can change your DNS resolvers to the dedicated IPv6 address for your location.
 
 * If you don’t have an IPv6 network, you can set up a location by changing the DNS resolvers to:
 
