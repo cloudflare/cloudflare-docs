@@ -61,11 +61,11 @@ This feature is only available for customers in the Enterprise plan.
 
 </Aside>
 
-An API schema defines which API requests are valid based on several request properties like target endpoint and HTTP method.
+An API Schema defines which API requests are valid based on several request properties like target endpoint and HTTP method.
 
-Schema validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
+Schema Validation allows you to check if incoming traffic complies with a previously supplied API Schema. When you provide an API Schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
-API Shield supports API schemas using OpenAPI Specification v3. The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
+API Shield supports API Schemas using OpenAPI Specification v3. The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 
 To configure Schema Validation for one or more hosts using the dashboard, check [Configure Schema Validation](/cf-dashboard/configure-schema-validation).
 
@@ -74,7 +74,7 @@ To configure Schema Validation for one or more hosts using the dashboard, check 
 **Notes about the current Beta:**
 
 - The only available action for requests whose validations fail is _Log_.
-- API Shield does not currently support Schema Validation rules based on cookies or the request body. Additionally, API Shield does not currently support every type of schema validation rule.
+- API Shield does not currently support Schema Validation rules based on cookies or the request body. Additionally, API Shield does not currently support every type of Schema Validation rule.
 - You can only configure Schema Validation using the Cloudflare dashboard. The API for configuring Schema Validation is not yet available.
 
 </Aside>
