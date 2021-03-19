@@ -65,7 +65,7 @@ An API schema defines which API requests are valid based on several request prop
 
 Schema validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
-API Shield supports API schemas with OpenAPI v3 syntax. The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
+API Shield supports API schemas using OpenAPI Specification v3. The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 
 To configure Schema Validation for one or more hosts using the dashboard, check [Configure Schema Validation](/cf-dashboard/configure-schema-validation).
 

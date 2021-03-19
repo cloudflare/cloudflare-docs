@@ -12,7 +12,7 @@ This feature is only available for customers in the Enterprise plan.
 
 Use the **API Shield** interface to configure schema validation which validates requests according to the API schema you provide.
 
-Before you can configure schema validation for an API, you must obtain its API schema file. API Shield supports API schemas in OpenAPI v3 format. The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
+Before you can configure schema validation for an API, you must obtain its API schema file. API Shield supports API schemas using OpenAPI Specification v3. The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
 
 ## Use the API Shield interface
 
