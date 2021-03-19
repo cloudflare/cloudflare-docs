@@ -7,6 +7,10 @@ order: 3
 
 Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their static resources from bots.
 
+<Aside type="warning" header="Warning">
+If you enable static resource protection, you may block good bots — like mail clients — that routinely fetch static resources. Make sure you understand your existing infrastructure before enabling this feature.
+</Aside>
+
 To enable this feature as a Pro or Business customer or an Enterprise customer without Bot Management:
 1. Go to **Firewall** > **Bots**.
 1. Select **Configure Super Bot Fight Mode**.

@@ -4,9 +4,8 @@ order: 1
 ---
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
-import FirewallEvents from "../_partials/_get-started-firewall-events.md"
 
-# Getting started with Super Bot Fight Mode
+# Get started with Super Bot Fight Mode (Pro)
 
 Super Bot Fight Mode is included in your Pro subscription. When enabled, the product:
 
@@ -31,4 +30,4 @@ To access the **Bot Report**, go to **Firewall** > **Bots**. If you see a double
 
 ### Firewall events
 
-<FirewallEvents/>
+You can see logs of bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Super Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.

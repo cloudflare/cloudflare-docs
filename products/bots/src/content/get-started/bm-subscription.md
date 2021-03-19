@@ -17,7 +17,7 @@ The bot score is an indicator of certainty. For example, a score of 1 means we a
 
 ## Enable Bot Management for Enterprise
 
-To enable Bot Management, contact your account team. After it’s enabled, Bot Management displays under **Firewall** > **Tools**.
+To enable Bot Management, contact your account team. After it’s enabled, Bot Management displays under **Firewall** > **Bots**.
 
 ![Bot Management on Dashboard](../images/bot-management.png)
 

@@ -5,7 +5,7 @@ order: 2
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
 
-# Getting started with Super Bot Fight Mode
+# Get started with Super Bot Fight Mode (Business)
 
 Super Bot Fight Mode is included in your Business subscription. When enabled, the product:
 

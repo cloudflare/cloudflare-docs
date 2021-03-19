@@ -27,8 +27,8 @@
       <td>Cloudflare issues a computationally-expensive challenge</td>
     </tr>
     <tr>
-      <td><b>Analytics</b></td>
-      <td>Limited analytics available in <b>Firewall Events</b></td>
+      <td><b>Logs</b></td>
+      <td>Logs of bot activity available in <b>Firewall Events</b></td>
     </tr>
     <tr>
       <td><b>Additional control</b></td>

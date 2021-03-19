@@ -3,9 +3,7 @@ title: Free
 order: 0
 ---
 
-import FirewallEvents from "../_partials/_get-started-firewall-events.md"
-
-# Getting started with Bot Fight Mode
+# Get started with Bot Fight Mode
 
 Bot Fight Mode is a simple, free product that helps detect and mitigate bot traffic on your domain. When enabled, the product:
 
@@ -20,6 +18,6 @@ To start using Bot Fight Mode:
 1. Select **Bots**.
 1. For **Bot Fight Mode**, select **On**.
 
-## Analytics
+## Logs
 
-<FirewallEvents/>
+You can see logs of bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.

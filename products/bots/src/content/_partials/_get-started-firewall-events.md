@@ -1,1 +1,0 @@
-You can monitor actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
