@@ -5,9 +5,9 @@ order: 3
 
 import AnalyticsFeatures from "../_partials/_analytics-features.md"
 
-# Bot Management Analytics
+# Bot Management for Enterprise Analytics
 
-Enterprise customers can use **Bot Analytics** to dynamically examine bot traffic.
+Enterprise customers with Bot Management can use **Bot Analytics** to dynamically examine bot traffic.
 
 ## Access
 
