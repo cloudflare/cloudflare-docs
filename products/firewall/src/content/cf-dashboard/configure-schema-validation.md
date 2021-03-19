@@ -68,7 +68,7 @@ To configure schema validation in the Cloudflare dashboard, follow these steps:
 
     </Aside>
 
-1. After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and what will be the action taken for all non-compliant requests.
+1. After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and what will be the action taken for non-compliant and unprotected requests.
 
     ![API Shield Browse endpoints wizard step](../images/api-shield-browse-endpoints-step.png)
 
