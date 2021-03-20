@@ -8,17 +8,7 @@ In this guide, you'll create a new Hugo application and deploy it using Cloudfla
 
 First, install the Hugo CLI, using the specific instructions for your operating system below:
 
-### Linux
-
-Your Linux distro's package manager may include Hugo. If this is the case, you can install it directly using your distro's package manager -- for instance, in Ubuntu:
-
-```sh
-$ sudo apt-get install hugo
-```
-
-If your package manager doesn't include Hugo or you'd like to download a release directly, see the "Manual" section below.
-
-### Homebrew (macOS)
+### macOS (Homebrew)
 
 If you use the package manager [Homebrew](https://brew.sh), you can use `brew install` to install Hugo:
 
@@ -31,8 +21,26 @@ $ brew install hugo
 If you use the package manager [Chocolatey](https://chocolatey.org/), you can use `choco install` to install Hugo:
 
 ```sh
-$ choco install hugo --confirm
+$ choco install hugo
 ```
+
+### Windows (Scoop)
+
+If you use the package manager [Scoop](https://scoop.sh/), you can use `choco install` to install Hugo:
+
+```sh
+$ scoop install hugo
+```
+
+### Linux (apt)
+
+Your Linux distro's package manager may include Hugo. If this is the case, you can install it directly using your distro's package manager -- for instance, in Ubuntu:
+
+```sh
+$ sudo apt-get install hugo
+```
+
+If your package manager doesn't include Hugo or you'd like to download a release directly, see the "Manual" section below.
 
 ### Manual installation
 
