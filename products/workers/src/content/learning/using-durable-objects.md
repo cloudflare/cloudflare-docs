@@ -355,6 +355,12 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 There is currently no support for generating a list of all existing objects, nor any way to bulk export objects.
 
+### Development tools
+
+[Wrangler tail](/cli-wrangler/commands#tail) and [Wrangler dev](/cli-wrangler/commands#dev) do not currently work with Durable Objects.
+
+The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
+
 ### Object Location
 
 Not all Cloudflare locations support Durable Objects yet today, so objects may not be created in exactly the same point-of-presence where they are first requested.
