@@ -107,8 +107,8 @@ This will enable you to select **Azure AD groups** when creating or editing a gr
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
-        "directory_id": "<your azure directory uuid",
+        "client_secret": "<your client secret>",
+        "directory_id": "<your azure directory uuid>",
         "support_groups": true
     },
     "type": "azureAD",
