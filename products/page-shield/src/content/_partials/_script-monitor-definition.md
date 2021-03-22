@@ -1,0 +1,1 @@
+Script Monitor simplifies external script management by tracking existing JavaScript dependencies and providing alerts when they change.
