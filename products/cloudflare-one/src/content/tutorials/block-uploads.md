@@ -25,17 +25,17 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to pre
 
 You can [build a policy](/policies/filtering/http-policies) that will block file uploads to Google Drive. Navigate to the `Policies` page. On the HTTP tab, click `Add a policy`.
 
-![Add Policy](../static/secure-web-gateway/block-uploads/add-policy.png)
+![Add Policy](../static/secure-web-gateway/block-uploads/add-http-policy.png)
 
 Cloudflare curates a constantly-updating list of the hostnames, URLs, and endpoints used by common applications. In this example, "Google Drive" list containst the destinations used by Google Drive.
 
 In the rule builder, select "Application" in the **Selector** field, "in" in the **Operator** field, and under "File Sharing" select "Google Drive" in the **Value** field.
 
-![Select Drive](../static/secure-web-gateway/block-uploads/select-drive.png)
+![Select Drive](../static/secure-web-gateway/block-uploads/select-google-drive.png)
 
 Next, click **+ Add Condition** and choose "Upload Mime Type" and "matches regex". Under value, input `.*` - this will match against files of any type being uploaded.
 
-![Block Drive](../static/secure-web-gateway/block-uploads/drive-block.png)
+![Block Drive](../static/secure-web-gateway/block-uploads/upload-mime-type.png)
 
 Scroll to **Action** and choose "Block". Click **Create rule** to save the rule.
 
@@ -43,11 +43,11 @@ Scroll to **Action** and choose "Block". Click **Create rule** to save the rule.
 
 You can control the order of rule operations in the Gateway policies page. If you need to allow certain users in your organization to upload files, create a rule with the same first two expressions and add a condition that specifies the user or group. Instead of "Block" choose "Allow" in the **Action** field.
 
-![Allow Drive](../static/secure-web-gateway/block-uploads/drive-allow.png)
+![Allow Drive](../static/secure-web-gateway/block-uploads/http-rule-list.png)
 
 Rank the Allow rule higher than the Block rule.
 
-![Rule List](../static/secure-web-gateway/block-uploads/rule-list.png)
+![Rule List](../static/secure-web-gateway/block-uploads/allow-first.png)
 
 ## Test policy
 
@@ -61,4 +61,4 @@ Once enabled, if a user attempts to upload a file you can view logs of the block
 
 Navigate to the `Logs` section of the sidebar and choose `Gateway`. Open the Filter action and select `Block` from the dropdown under `Decision`.
 
-![Block Action](../static/secure-web-gateway/block-uploads/block-logs.png)
+![Block Action](../static/secure-web-gateway/block-uploads/block-gateway-logs.png)
