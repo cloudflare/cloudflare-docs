@@ -20,7 +20,7 @@ To start from scratch to create a Workers Site, follow these steps:
     - `workers-site`: The JavaScript for serving your assets. You don’t need to edit this- but if you want to see how it works or add more functionality to your Worker, you can edit `workers-site/index.js`.
     - `wrangler.toml`: Your configuration file. You’ll configure your account and project information here.
 
-3. Add your `account_id` your `wrangler.toml`. You can find your `account_id` on the right sidebar of the Workers or Overview Dashboard. Note: You may need to scroll down! For more details on finding your `account_id` visit [Getting started](/learning/getting-started#6a-obtaining-your-account-id-and-zone-id).
+3. Add your `account_id` your `wrangler.toml`. You can find your `account_id` on the right sidebar of the Workers or Overview Dashboard. Note: You may need to scroll down! For more details on finding your `account_id` visit [Getting started](/get-started/guide#6a-obtaining-your-account-id-and-zone-id).
 
 4. You can preview your site by running:
 
@@ -28,7 +28,7 @@ To start from scratch to create a Workers Site, follow these steps:
   $ wrangler preview --watch
   ```
 
-5. Decide where you’d like to publish your site to: [a workers.dev subdomain](/learning/getting-started#configure-for-deploying-to-workersdev) or your [personal domain](/learning/getting-started#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare.
+5. Decide where you’d like to publish your site to: [a workers.dev subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or your [personal domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare.
 
   Then, update your `wrangler.toml`:
 
@@ -47,7 +47,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
   **workers.dev**: Set `workers_dev`  to true. This is the default.
 
-  Learn more about [configuring your project](/learning/getting-started#6-configure-your-project-for-deployment).
+  Learn more about [configuring your project](/get-started/guide#6-configure-your-project-for-deployment).
 
 6. Run:
   ```sh
