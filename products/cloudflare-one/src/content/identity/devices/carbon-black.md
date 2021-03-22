@@ -10,12 +10,13 @@ Cloudflare for Teams can check if [Carbon Black](https://www.carbonblack.com/) i
 
 | Prerequisites |
 | ------------- |
-| The WARP client installed on a user machine | 
+| The WARP client installed on a user machine |
 | Carbon Black installed on a user machine |
-  
+
 </TableWrap>
 
-# Configuring the Cloudflare integration
+
+## Configuring the Cloudflare integration
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices > Device posture**.
 
