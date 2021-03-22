@@ -60,7 +60,7 @@ If you have GitHub two-factor authentication enabled, you will need to first log
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "github",
     "name": "my example idp"

@@ -81,7 +81,7 @@ To test that your connection is working, in the Teams dashboard, navigate to **A
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "linkedin",
     "name": "my example idp"

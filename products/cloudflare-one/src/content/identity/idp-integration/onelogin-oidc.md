@@ -69,7 +69,7 @@ To test that your connection is working, navigate to **Authentication > Login me
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "onelogin_account": "https://mycompany.onelogin.com",
     },
     "type": "onelogin",
