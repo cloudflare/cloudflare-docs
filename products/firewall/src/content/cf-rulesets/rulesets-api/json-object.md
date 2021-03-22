@@ -18,27 +18,27 @@ A fully populated ruleset object has the following JSON structure.
 
 ```json
 {
-    "id": "ruleset_id",
+    "id": "ruleset-id",
     "name": "Example Ruleset",
-    "description": Description of Example Ruleset",
-    "kind": "managed",
+    "description": "Description of Example Ruleset",
+    "kind": "custom",
     "version": "2",
+    "phase": "http_request_firewall_custom", 
     "rules": [
-      {
+    {
         "id": "rule-id",
         "version": "2",
         "action": "block",
-        "expression": "cf.zone.name eq \"example.com\"  ",
+        "expression": "cf.zone.name eq \"example.com\" ",
         "last_updated": "2020-07-20T10:44:29.124515Z"
-      }
-    ],
+    }],
     "last_updated": "2020-07-20T10:44:29.124515Z",
   }
 ```
 
 ## Properties
 
-The table lists the properties of a ruleset object
+The table lists the properties of a ruleset object.
 
 <table>
   <thead>
@@ -72,9 +72,10 @@ The table lists the properties of a ruleset object
       <td><code>kind</code></td>
       <td>The kind of ruleset the JSON object represents.</td>
       <td>
-        <p>There are three kinds of ruleset:
+        <p>There are four kinds of rulesets:
           <ul>
             <li><em>root</em></li>
+            <li><em>zone</em></li>            
             <li><em>managed</em></li>
             <li><em>custom</em></li>
           </ul>
@@ -87,6 +88,12 @@ The table lists the properties of a ruleset object
       <td>The version of the ruleset</td>
       <td>An integer value that starts at <code>1</code> and increments by 1 each time the ruleset is modified</td>
       <td>Read-only</td>
+    </tr>
+    <tr>
+      <td><code>phase</code></td>
+      <td>The Phase to which the ruleset belongs</td>
+      <td>A string containing the Phase name (different Cloudflare products support different Phases)</td>
+      <td>The Phase is immutable</td>
     </tr>
     <tr>
       <td><code>rules</code></td>
