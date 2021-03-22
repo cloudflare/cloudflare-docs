@@ -11,6 +11,7 @@ Cloudflare for Teams allows your to connect to your applications using their Git
 To configure GitHub access in both GitHub and Cloudflare for Teams:
 
 1. Log into GitHub.
+
 1. Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**.
 
     ![GitHub OAuth page](../../static/documentation/identity/github/github1.png)
@@ -32,17 +33,19 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
     ```
     
 1. Click **Register application**.
+
 1. Copy the **Client ID** and **Client Secret**.
 
     ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
 1. Under **Login methods**, click *+ Add*.
 
 1. Choose **GitHub** on the next page. 
 
 1. Paste in the **Client ID** and **Client secret**.
+
 1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to GitHub.

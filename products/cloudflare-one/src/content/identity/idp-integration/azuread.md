@@ -71,19 +71,17 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
  ![Azure AD API Permissions](../../static/documentation/identity/azure/configured-perms.png)
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
 1. Under **Login methods**, click *+ Add*.
 
 1. Choose **Azure AD** on the next page.
 
- ![Azure AD Add Identity](../../static/documentation/identity/azure/add-identity.png)
-
 1. Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
 
  If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
 
- ![Azure AD Add Identity](../../static/documentation/identity/azure/add-azure-ad.png)
+ ![Azure AD Add Identity](../../static/documentation/identity/azure/add-azure.png)
 
 1. Click **Save**.
 
@@ -97,9 +95,7 @@ AzureAD exposes directory groups in a format that consists of random strings, th
 
 ![Azure AD Test Connection](../../static/documentation/identity/azure/object-id.png)
 
-To configure Access to use Azure groups, make sure you toggle on the **Support groups** switch.
-
-![Azure AD groups](../../static/documentation/identity/azure/azure-ad-groups.png)
+To configure Access to use Azure groups, make sure you toggle on the **Support groups** switch as you set up Azure AD on your Teams dash.
 
 This will enable you to select **Azure AD groups** when creating or editing a group. When asked for the **Azure group ID**, you must input the `Object Id`. 
 

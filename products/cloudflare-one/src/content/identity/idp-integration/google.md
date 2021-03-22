@@ -68,23 +68,17 @@ You can integrate Google authentication with Cloudflare Access without a Google 
 
  ![Secret Field](../../static/documentation/identity/google/oauth-created.png)
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
 1. Under **Login methods**, click *+ Add*.
 
 1. Choose **Google** on the next page.
 
- ![Add IdP](../../static/documentation/identity/google/add-idp.png)
-
-1. Select **Google**.
-
- ![Add Google](../../static/documentation/identity/google/add-google.png)
-
 1. Input the Client ID and Client Secret fields generated previously.
 
 1. Click **Save**.
 
-![Add Google Suite](../../static/documentation/identity/google/input-client.png)
+![Add Google Suite](../../static/documentation/identity/google/input-client-id.png)
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Google.
 
