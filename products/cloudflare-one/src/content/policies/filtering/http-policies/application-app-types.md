@@ -11,15 +11,20 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 ## Creating rules with applications and app types
 
 1. On the [Teams dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
+
 1. Navigate to the **HTTP tab**.
+
 1. [Create a new rule](/policies/filtering/http-policies/policy-management#create-your-first-http-policy), or edit an existing one.
 1. In the **Selector** drop-down menu, select the *Application* option. 
+
 1. In the **Operator** drop-down menu, select *in* or *not in*, depending on whether you want to include or exclude applications or app types from your rule.
+
 1. In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
 
   ![Applications](../../../static/documentation/policies/http-applications-operator-value.png)
 
 1. Next, select an **[Action](#supported-actions-for-applications)** for your rule.
+
 1. Click **Create rule** to finalize your changes.
 
 
