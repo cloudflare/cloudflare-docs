@@ -351,7 +351,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>icmp.type</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The ICMP type. Only applies to ICMP packets. <br />
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type">ICMP type</a>. Only applies to ICMP packets. <br />
          Example value:
          <code class="InlineCode">8</code>
         </td>
@@ -360,7 +360,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>icmp.code</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The ICMP code. Only applies to ICMP packets. <br />
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code">ICMP code</a>. Only applies to ICMP packets. <br />
          Example value:
          <code class="InlineCode">2</code>
         </td>
@@ -403,7 +403,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.opt.type</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The first byte of IP options field, if the options field is set. <br />
+         The first byte of <a href="https://en.wikipedia.org/wiki/IPv4#Options">IP options field</a>, if the options field is set. <br />
          Example value:
          <code class="InlineCode">25</code>
         </td>
