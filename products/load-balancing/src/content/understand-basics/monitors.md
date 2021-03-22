@@ -267,23 +267,23 @@ You can set these headers on a [specific origin](/understand-basics/pools#per-or
 
 When a load balancer runs health checks, headers set on an origin always override headers set on a monitor.
 
-For example, you might have a load balancer with the following setup:
+For example, you might have a load balancer for `www.example.com` with the following setup:
 
 - Origin Pools:
 
   - Pool 1:
 
-    - Origin 1 (host header set to `your-bucket-1.s3.amazonaws.com`)
+    - Origin 1 (host header set to `lb-app-a.example.com`)
     - Origin 2
   
   - Pool 2:
 
     - Origin 3
-    - Origin 4 (host header set to `your-bucket-2.s3.amazonaws.com`)
+    - Origin 4 (host header set to `lb-app-b.example.com`)
 
 - Monitor (host header set to `www.example.com`)
 
-In this scenario, health checks for **Origin 1** would use `your-bucket-1.s3.amazonaws.com`, health checks for **Origin 4** would use `your-bucket-2.s3.amazonaws.com`, and all other health checks would default to the `www.example.com`.
+In this scenario, health checks for **Origin 1** would use `lb-app-a.example.com`, health checks for **Origin 4** would use `lb-app-b.example.com`, and all other health checks would default to the `www.example.com`. For more on updating custom host configuration to be compatible with Cloudflare, see [Configure Cloudflare and Heroku over HTTPS](https://support.cloudflare.com/hc/articles/205893698).
 
 For a list of origins that override a monitor's `Host` header:
 
