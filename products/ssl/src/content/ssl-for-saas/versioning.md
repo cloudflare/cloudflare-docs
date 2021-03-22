@@ -31,7 +31,7 @@ When the HTTP token is verified, the Custom Hostname will be marked as **Active*
 
 ### CNAME Validation
 
-Custom Hostnames can also be validated once Cloudflare detects that the Custom Hostname is a CNAME record pointing to the fallback record configured for the SSL for SaaS domain. Though this is the simplest validation method, it also includes more risk. Since a CNAME record would also route traffic to Cloudflare’s edge, traffic may reach our edge before the Custom Hostname has completed validation or the SSL certificate has issued.
+Custom Hostnames can also be validated once Cloudflare detects that the Custom Hostname is a CNAME record pointing to the fallback record configured for the SSL for SaaS domain. Though this is the simplest validation method, it increases the risk of errors. Since a CNAME record would also route traffic to Cloudflare’s edge, traffic may reach our edge before the Custom Hostname has completed validation or the SSL certificate has issued.
 
 Once you have tested and added the hostname validation step to your Custom Hostname creation process, please contact your Cloudflare Account Team to schedule a date to migrate your SSL for SaaS v1 zones. Your Cloudflare Account Team will work with you to validate your existing Custom Hostnames without downtime.
 
