@@ -119,7 +119,7 @@ Use these steps to set up G Suite as your IdP.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "apps_domain": "mycompany.com"
     },
     "type": "google-apps",

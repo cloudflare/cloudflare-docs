@@ -102,7 +102,7 @@ Your user identity should return.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
     },
     "type": "google",
     "name": "my example idp"

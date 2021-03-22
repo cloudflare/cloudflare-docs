@@ -131,7 +131,13 @@ To enable Authenticated Origin Pull globally on a zone:
 4. Build the payload:
 
     ```bash
-    $ request_body=$(< <(cat <<EOF { "certificate": "$MYCERT", "private_key": "$MYKEY" } } EOF ))
+    $ request_body=$(< <(cat <<EOF
+    {
+    "certificate": "$MYCERT",
+    "private_key": "$MYKEY"
+    }
+    EOF
+    ))
     ```
 
 5. [Upload the client certificate and private key via the Cloudflare API](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate):
@@ -215,7 +221,13 @@ To upload a client certificate in Cloudflare:
 4. Build the payload:
 
     ```bash
-    $ request_body=$(< <(cat <<EOF { "certificate": "$MYCERT", "private_key": "$MYKEY" } } EOF ))
+    $ request_body=$(< <(cat <<EOF
+    {
+    "certificate": "$MYCERT",
+    "private_key": "$MYKEY"
+    }
+    EOF
+    ))
     ```
 
 5. Upload the [client certificate and private key via the Cloudflare API](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate):

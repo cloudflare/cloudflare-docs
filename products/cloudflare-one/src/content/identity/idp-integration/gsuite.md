@@ -132,7 +132,7 @@ Once integrated, users will login with their Google Suite credentials to reach r
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "apps_domain": "mycompany.com"
     },
     "type": "google-apps",

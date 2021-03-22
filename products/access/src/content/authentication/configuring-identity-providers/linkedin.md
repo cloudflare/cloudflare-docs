@@ -78,7 +78,7 @@ To configure LinkedIn as an IdP:
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "linkedin",
     "name": "my example idp"

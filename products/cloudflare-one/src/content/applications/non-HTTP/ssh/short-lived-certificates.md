@@ -17,7 +17,7 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 ## 2. **Generate a short-lived certificate public key**.
 
-1. On the Teams dashboard, navigate to **Access > Service Auth**.
+1. On the Teams dashboard, navigate to **Configuration > Service Auth**.
 
 2. In the drop-down, choose the application that represents the resource you secured in Step 1.
 
@@ -75,10 +75,10 @@ The first change requires that you uncomment a field already set in most default
 ```sh
 $ vim /etc/ssh/sshd_config
 ```
-2. Navigate to the row named `ubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
+2. Navigate to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
 
 ```bash
-# PubkeyAuthentication yes`
+# PubkeyAuthentication yes
 ```
 
 3. Remove the # symbol to uncomment the line; keep the setting `yes` enabled.

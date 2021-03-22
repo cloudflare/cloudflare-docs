@@ -67,5 +67,5 @@ PAYLOAD="$PAYLOAD
 
 # Run query to GraphQL API endpoint
 
-curl -s -X POST -H "Content-Type: application/json" -H "X-Auth-Email: $Email" -H  X-Auth-Key: $global_key --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
+curl -s -X POST -H "Content-Type: application/json" -H "X-Auth-Email: $Email" -H  "X-Auth-Key: $global_key" --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
 ```

@@ -270,7 +270,7 @@ is_timed_hmac_valid_v0(
         http.request.uri,
         http.request.headers["timestamp"][0],
         "-",
-        http.request.headers["MAC"]),
+        http.request.headers["mac"][0]),
     100000,
     http.request.timestamp.sec,
     0
