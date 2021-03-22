@@ -28,7 +28,7 @@ Yes. Each location has a unique IPv6 address. You can use that IPv6 address to s
 
 ### How can I report a false positive?
 
-If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed. 
+If your domain is unexpectedly blocked, you can use [this form](https://radar.cloudflare.com/categorization-feedback/) to get the URL reviewed. 
 
 ## Policies
 
