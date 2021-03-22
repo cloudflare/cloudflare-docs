@@ -17,9 +17,15 @@ A rule that is deploying a ruleset consists of:
 
 - The **ID of the ruleset** you want to deploy.
 - An **expression**.
-    - When deploying a ruleset to a Phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to deploy a ruleset in a Phase at the account level is cf.zone.name. The following operators are valid: equals, not equals, contains, does not contain, is in, is not in.
-    - When deploying a ruleset to a Phase at the **zone** level, you must set the expression to `true`. 
 - An **action**. To deploy a ruleset, set the action to execute. The rules in the ruleset are executed when a request satisfies the expression.
+
+<Aside type='warning' header='Important'>
+
+When deploying a ruleset to a Phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to deploy a ruleset in a Phase at the account level is `cf.zone.name`. The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
+
+When deploying a ruleset to a Phase at the **zone** level, you must set the expression to `true`. 
+
+</Aside>
 
 
 ## Example
