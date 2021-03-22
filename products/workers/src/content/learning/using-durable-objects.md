@@ -153,6 +153,14 @@ export class Counter {
 }
 ```
 
+### WebSockets in Durable Objects
+
+As part of Durable Objects, we've made it possible for Workers to act as WebSocket endpoints -- including as a client or as a server. Previously, Workers could proxy WebSocket connections on to a back-end server, but could not speak the protocol directly.
+
+While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
+
+Full documentation for WebSockets will be coming soon, but for now check out this [heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo) that runs in Durable Objects to see how it works.
+
 ## Instantiating and communicating with a Durable Object
 
 As mentioned above, Durable Objects do not receive requests directly from the Internet, but from Workers or other Durable Objects. This is achieved by configuring a binding in the calling Worker for each Durable Object class that you'd like it to be able to talk to. These bindings work similarly to KV bindings and must be configured at upload time. Methods exposed by the binding can be used to communicate with particular Durable Object instances.
