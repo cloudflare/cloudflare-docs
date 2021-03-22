@@ -1,7 +1,7 @@
 ---
 title: Work with Managed Rulesets
 alwaysopen: true
-order: 760
+order: 750
 ---
 
 # Work with Managed Rulesets

@@ -1,7 +1,7 @@
 ---
 title: Override a Managed Ruleset
 alwaysopen: true
-order: 762
+order: 752
 ---
 
 # Override a Managed Ruleset

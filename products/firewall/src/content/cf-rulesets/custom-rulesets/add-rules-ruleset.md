@@ -1,7 +1,7 @@
 ---
 title: Add rules to a custom ruleset
 alwaysopen: true
-order: 752
+order: 762
 ---
 
 # Add rules to a custom ruleset

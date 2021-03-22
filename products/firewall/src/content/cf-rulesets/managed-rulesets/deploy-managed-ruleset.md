@@ -1,7 +1,7 @@
 ---
 title: Deploy a Managed Ruleset
 alwaysopen: true
-order: 761
+order: 751
 ---
 
 # Deploy a Managed Ruleset
