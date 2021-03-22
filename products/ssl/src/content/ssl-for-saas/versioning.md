@@ -5,7 +5,7 @@ order: 10
 
 # Deprecation notice for SSL for SaaS - Version 1
 
-The first version of SSL for SaaS will be deprecated on Sept 1, 2021.
+The first version of SSL for SaaS will be deprecated on September 1, 2021.
 
 ## Why is SSL for SaaS changing?
 
@@ -31,7 +31,7 @@ When the HTTP token is verified, the Custom Hostname will be marked as **Active*
 
 ### CNAME Validation
 
-Custom Hostnames can also be validated once Cloudflare detects that the Custom Hostname is a CNAME record pointing to the fallback record configured for the SSL for SaaS domain. This is the simplest validation method as it requires the fewest number of steps, but since a CNAME record would also route traffic to Cloudflare’s edge, traffic may reach our edge before the Custom Hostname has completed validation or the SSL certificate has issued.
+Custom Hostnames can also be validated once Cloudflare detects that the Custom Hostname is a CNAME record pointing to the fallback record configured for the SSL for SaaS domain. Though this is the simplest validation method, it also includes more risk. Since a CNAME record would also route traffic to Cloudflare’s edge, traffic may reach our edge before the Custom Hostname has completed validation or the SSL certificate has issued.
 
 Once you have tested and added the hostname validation step to your Custom Hostname creation process, please contact your Cloudflare Account Team to schedule a date to migrate your SSL for SaaS v1 zones. Your Cloudflare Account Team will work with you to validate your existing Custom Hostnames without downtime.
 
@@ -49,7 +49,7 @@ Once the migration has been started for your zone(s), Cloudflare will require ev
 
 Your Cloudflare Account Team will work with you to schedule a migration window for each of your SSL for SaaS zones. After the migration has started and has had some time to progress, Cloudflare will generate a list of Custom Hostnames that failed to migrate and ask for your approval to complete the migration. When you give your approval, the migration will be complete, SSL for SaaS v1 will be disabled for the zone, and any Custom Hostname that has not completed hostname validation will no longer function.
 
-The migration timeline depends on the number of Custom Hostnames. For example, if a zone has fewer than ten thousand Custom Hostnames, the list can be generated around an hour after beginning the migration. If a zone has millions of Custom Hostnames, it may take up to 24 hours to identify instances that failed to successfully migrate. 
+The migration timeline depends on the number of Custom Hostnames. For example, if a zone has fewer than 10,000 Custom Hostnames, the list can be generated around an hour after beginning the migration. If a zone has millions of Custom Hostnames, it may take up to 24 hours to identify instances that failed to successfully migrate. 
 
 When your Cloudflare Account Team asks for approval to complete the migration, please respond in a timely manner. You will have **two weeks** to validate any remaining Custom Hostnames before they are systematically deleted.
 
