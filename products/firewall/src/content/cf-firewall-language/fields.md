@@ -385,7 +385,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.hdr_len</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The length of the IP header in bytes. <br />
+         The length of the IPv4 header in bytes. <br />
          Example value:
          <code class="InlineCode">5</code>
         </td>
@@ -417,18 +417,18 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>ip.src</code><br /><Type>IP Address</Type></p>
+        </td>
+        <td>
+        The source address of the IP Packet.
+        </td>
+    </tr>
+    <tr>
         <td><p><code>ip.ttl</code><br /><Type>Number</Type></p>
         </td>
         <td>
         The time-to-live of the IP Packet. <br />
         Example values: <code class="InlineCode">54</code>
-        </td>
-    </tr>
-    <tr>
-        <td><p><code>ip.src</code><br /><Type>IP Address</Type></p>
-        </td>
-        <td>
-        The source address of the IP Packet.
         </td>
     </tr>
     <tr>
