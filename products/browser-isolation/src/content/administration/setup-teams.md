@@ -9,6 +9,8 @@ If you do not have a Cloudflare for Teams account, [sign up here](https://dash.c
 
 If you already have a Cloudflare account, [login to the Teams dashboard here](https://dash.teams.cloudflare.com).
 
+Browser Isolation requires a subscription with L7 Filtering and the Browser Isolation add-on.
+
 ## New account setup
 
 Browser Isolation is enabled through Gateway. Choose **Cloudflare Gateway** and then **Begin setup**.
@@ -34,4 +36,3 @@ You may specify individual email addresses, or entire domain names. When finishe
 ## Setup an isolation policy
 
 Your Cloudflare for Teams account has now been created. Continue to [isolation policies](/administration/isolation-policies).
-
