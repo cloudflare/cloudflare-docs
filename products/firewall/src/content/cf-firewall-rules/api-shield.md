@@ -74,7 +74,8 @@ To configure Schema Validation for one or more hosts using the dashboard, check 
 **Notes about the current Beta:**
 
 - The only available action for requests whose validations fail is _Log_.
-- API Shield does not currently support Schema Validation rules based on cookies or the request body. Additionally, API Shield does not currently support every type of Schema Validation rule.
+- You cannot edit an API Shield. If you need to make changes, delete the existing shield and create a new one.
+- API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 - You can only configure Schema Validation using the Cloudflare dashboard. The API for configuring Schema Validation is not yet available.
 
 </Aside>
