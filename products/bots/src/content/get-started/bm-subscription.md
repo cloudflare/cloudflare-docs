@@ -7,7 +7,7 @@ order: 3
 
 Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
 
-Our Enterprise product provides the most flexibility to customers by:
+This Enterprise product provides the most flexibility to customers by:
 
 - Generating a bot score of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
 - Allowing customers to action on this score with Firewall Rules or Workers.
@@ -17,20 +17,71 @@ The bot score is an indicator of certainty. For example, a score of 1 means we a
 
 ## Enable Bot Management for Enterprise
 
-To enable Bot Management, contact your account team. After it’s enabled, Bot Management displays under **Firewall** > **Bots**.
-
-![Bot Management on Dashboard](../images/bot-management.png)
-
 Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall Rules that will block or challenge traffic based on bot score. Others just use Bot Analytics or perform custom actions using our Workers platform.
 
-For more guidance on tuning your Firewall Rules, see [Finding a bot score threshold](/bot-analytics#finding-a-bot-score-threshold/).
+### 1. Contact your account team
+
+To enable Bot Management, contact your account team. After it is enabled, Bot Management displays under **Firewall** > **Bots**.
+
+### 2. Configure Bot Management
+
+Decide whether you want to enable [JavaScript detections](../about/javascript-detections) to help identify bots.
+
+To enable this feature, go to **Firewall** > **Bots**.
+
+### 3. Monitor domain traffic
+
+Before deploying Bot Management on live traffic, use [Bot Analytics](../../bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic. This sensitivity can then be translated into effective Firewall Rules.
+
+Go to **Firewall** > **Bots** to examine the following traffic segments:
+- **Automated traffic**: Bot scores of 1
+- **Likely automated traffic**: Bots scores of 2 to 29
+- **Other traffic groups**: Any additional large spikes in bot scores
+
+For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that *should not be blocked* — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
+
+Use the slider tool to identify **other traffic groups**. For example, you may find that your mobile app is routinely scored 37. 
+
+![Bot score distribution](../images/bot-score-distribution.png)
+
+At the end of your analysis, you should:
+- Have a range of scores you can confidently block or challenge
+- Understand nuances in your traffic that may require special attention
+
+For more in-depth analysis, you could also integrate a third-party service. Create a Firewall Rule with an action of **Log**.
+
+<Aside type='note' header='Important'>
+
+If you were a Cloudflare customer before adding Bot Management, you can view past analytics (including traffic from before you purchased Bot Management). This means that you will be able to sort through traffic insights immediately.
+
+New customers should give Bot Analytics a few days to gather data. You should only begin blocking or challenging traffic after checking for possible exemptions or special endpoints.
+
+</Aside>
+
+### 4. Create a firewall rule for automated traffic
+
+Based on your analysis of **automated** traffic, create a Firewall Rule that challenges or blocks scores of 1 and exempts any good, automated requests. Monitor for a few days.
+
+### 5. Create additional firewall rules (optional)
+
+Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. Again, monitor your traffic for a few days.
+
+Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
+- If you want to minimize false positives and lost revenue — ecommerce domains — you might want to allow lower bot scores.
+- If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
+
+The best approach is to understand your traffic and slowly increase your threshold to prevent widespread issues.
+
+### 6. Continue monitoring domain traffic
+
+You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](../../bot-analytics/bm-subscription) to see if your rules need additional tuning.
 
 ## Bot Management variables
 
-Bot Management provides access to several new variables available within the Firewall expression builder.
+Bot Management provides access to several [new variables](/firewall/cf-firewall-language/fields#dynamic-fields) available within the Firewall expression builder.
 
 - Bot Score: An integer used to isolate bot requests which ranges from 1-99. Lower scores usually indicate automated traffic, while higher scores indicate human traffic. Most traffic scored below 30 comes from bots.
-- Verified Bot: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic.
+- Verified Bot: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
 - Serves Static Resource: An identifier that matches file extensions for many types of static resources. Use this variable if you send emails that retrieve static images.
 
 These variables are also available as part of the [request.cf](https://developers.cloudflare.com/workers/reference/apis/request/#the-cf-object) object via [Cloudflare Workers](https://developers.cloudflare.com/workers/):
@@ -41,9 +92,7 @@ These variables are also available as part of the [request.cf](https://developer
 
 For a list of supported file types for static resources, see [Static resource protection](/about/static-resources/).
 
-## Best practices and examples
-
-As you get started, keep the following in mind.
+## Other considerations
 
 Bot Score is different from Threat Score. Bot Score identifies bots, and Threat Score measures IP reputation across our services. Most customers achieve the best results by blocking or challenging bot scores lower than 30 and avoiding IP reputation entirely.
 

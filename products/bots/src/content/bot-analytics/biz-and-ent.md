@@ -17,7 +17,7 @@ To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **
 
 ## Features
 
-We provide a full tour of Bot Analytics in [our blog post](https://blog.cloudflare.com/introducing-bot-analytics/). At a high level, the tool includes:
+For a full tour of Bot Analytics, see [our blog post](https://blog.cloudflare.com/introducing-bot-analytics/). At a high level, the tool includes:
 
 - **Requests by traffic type**: View your total domain traffic segmented vertically by traffic type. Keep an eye on “automated” and “likely automated” subsets of traffic.
 - **Requests by detection source**: Identify the most common detection engines used to score your traffic. Hover over a tooltip to learn more about each engine.

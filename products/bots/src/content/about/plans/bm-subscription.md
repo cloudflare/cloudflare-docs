@@ -11,6 +11,7 @@ import BotsHeuristics from "../../_partials/_bots-heuristics.md"
 import BotsJSD from "../../_partials/_bots-jsd.md"
 import BotsML from "../../_partials/_bots-ml.md"
 import BotsAD from "../../_partials/_bots-ad.md"
+import BotCookie from "../../_partials/_bots-cookie.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
 # Plans
@@ -46,6 +47,10 @@ The ML engine produces scores two through 99.
 <BotsJSD/>
 
 JSD is enabled by default but completely optional. To adjust your settings, open the Bot Management Configuration page from **Firewall** > **Bots**.
+
+### Notes on detection
+
+<BotCookie/>
 
 ## How do I get started?
 

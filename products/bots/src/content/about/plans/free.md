@@ -10,6 +10,7 @@ import PlanInfoFree from "../../_partials/_about-plan-free.md"
 import Considerations from "../../_partials/_about-plan-considerations.md"
 import BotsHeuristics from "../../_partials/_bots-heuristics.md"
 import BotsJSD from "../../_partials/_bots-jsd.md"
+import BotCookie from "../../_partials/_bots-cookie.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
 # Plans
@@ -33,6 +34,10 @@ import GetStarted from "../../_partials/_plan-get-started.md"
 <BotsJSD/>
 
 JSD is automatically enabled with Bot Fight Mode.
+
+### Notes on detection
+
+<BotCookie/>
 
 ## Considerations
 

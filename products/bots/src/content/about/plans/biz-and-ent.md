@@ -10,6 +10,7 @@ import PlanInfoBizEnt from "../../_partials/_about-plan-biz-and-ent.md"
 import BotsHeuristics from "../../_partials/_bots-heuristics.md"
 import BotsJSD from "../../_partials/_bots-jsd.md"
 import BotsML from "../../_partials/_bots-ml.md"
+import BotCookie from "../../_partials/_bots-cookie.md"
 import Considerations from "../../_partials/_about-plan-considerations.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
@@ -40,6 +41,10 @@ The ML engine identifies **likely automated** traffic.
 <BotsJSD/>
 
 JSD is completely optional. To adjust your settings, configure Super Bot Fight Mode from **Firewall** > **Bots**.
+
+### Notes on detection
+
+<BotCookie/>
 
 ## Considerations
 

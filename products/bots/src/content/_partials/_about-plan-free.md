@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td><b>Actions</b></td>
-      <td>Cloudflare issues a computationally-expensive challenge</td>
+      <td>Cloudflare issues a computationally expensive challenge</td>
     </tr>
     <tr>
       <td><b>Logs</b></td>
