@@ -52,7 +52,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   <thead>
     <tr>
       <th>Operation</th>
-      <th>Verb</th>
+      <th>Method</th>
       <th>Notes</th>
     </tr>
   </thead>
