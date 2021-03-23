@@ -53,7 +53,7 @@ When a request is made to an application behind our network, the request will su
 By default, service tokens expire one year after creation. You can extend a token’s lifecycle by navigating to the **Service Tokens** tab and clicking the **Refresh** button for the token you want to renew.
 The `Refresh` operation will extend the token's lifetime by **one year** from the date of the refresh.
 
-![Access Service Token card](../../static/documentation/identity/users/service-token-home.png)
+![Access Service Token card](../../static/documentation/identity/users/service-token-list.png)
 
 ## Revoke service tokens
 

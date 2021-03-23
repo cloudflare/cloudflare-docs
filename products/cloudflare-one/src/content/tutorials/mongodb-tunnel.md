@@ -17,7 +17,7 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 * Configure an Argo Tunnel connection to Cloudflare's edge
 * Create an SSH configuration file for the client
 
-**⏲️Time to complete: 50 minutes**
+**⏲️ Time to complete: 50 minutes**
 
 ## Configure Cloudflare Access
 

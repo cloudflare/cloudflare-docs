@@ -20,23 +20,6 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 </TableWrap>
 
-### Build from source
-
-You can also build the latest version of `cloudflared` from source with the following steps.
-
-```sh
-$ git clone https://github.com/cloudflare/cloudflared.git
-$ cd cloudflared
-$ make cloudflared
-$ go install github.com/cloudflare/cloudflared/cmd/cloudflared
-```
-
-Depending on where you installed `cloudflared`, you can move it to a known path as well.
-
-```sh
-mv /root/cloudflared/cloudflared /usr/bin/cloudflared
-```
-
 ## Docker
 
 A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.com/r/cloudflare/cloudflared).
@@ -71,8 +54,27 @@ PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudfla
 The command above should output the version of `cloudflared` if successfully installed.
 
 <Aside>
+
 Instances of `cloudflared` do not automatically update on Windows. You will need to perform manual updates.
+
 </Aside>
+
+## Build from source
+
+You can also build the latest version of `cloudflared` from source with the following steps.
+
+```sh
+$ git clone https://github.com/cloudflare/cloudflared.git
+$ cd cloudflared
+$ make cloudflared
+$ go install github.com/cloudflare/cloudflared/cmd/cloudflared
+```
+
+Depending on where you installed `cloudflared`, you can move it to a known path as well.
+
+```sh
+mv /root/cloudflared/cloudflared /usr/bin/cloudflared
+```
 
 ## Updating `cloudflared`
 
@@ -86,7 +88,7 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 ### Updating with Cloudflare Load Balancer
 
-We recommend this option if you are currently using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
+You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
 
 1. Install a new instance of `cloudflared` and [create](connections/connect-apps/create-tunnel) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
@@ -95,6 +97,8 @@ We recommend this option if you are currently using Cloudflare's Load Balancer p
 5. Once confirmed, you can remove the older version from the Load Balancer pool.
 
 ### Updating with multiple `cloudflared` instances
+
+If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
 1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.

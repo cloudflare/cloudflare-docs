@@ -171,7 +171,7 @@ You use the text editor of your choice to edit the configuration file. The examp
 vim ~/.cloudflared/config.yml
 ```
 
-Next,
+Next, configure the Tunnel to serve traffic.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
