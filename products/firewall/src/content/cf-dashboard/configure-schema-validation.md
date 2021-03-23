@@ -74,7 +74,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     The API Shield rule will validate all incoming requests addressed at the endpoints listed in the **Protected** section. The several columns in the table list the validations deployed for each endpoint, according to the information described in the API Schema file. The **Action** column indicates the action taken by API Shield for incoming requests that fail Schema Validation.
 
-    The **Unprotected** section lists endpoints that API Shield will not protect. This list includes any endpoints with schema definitions that API Shield does not support. There’s an additional validation for handling requests addressed to any other endpoints or URLs other than the ones described in the schema file. The **Action** column indicates the action taken by API Shield for all incoming requests addressed at these unprotected API endpoints.
+    The **Unprotected** section lists endpoints that API Shield will not protect. This list includes any endpoints with API Schema definitions that API Shield does not support. There’s an additional validation for handling requests addressed to any other endpoints or URLs other than the ones described in the schema file. The **Action** column indicates the action taken by API Shield for all incoming requests addressed at these unprotected API endpoints.
 
     <Aside type='warning'>
     
