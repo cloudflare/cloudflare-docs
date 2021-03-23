@@ -17,13 +17,19 @@ The Rulesets API provides specific endpoints for updating the rulesets of Phases
 For example, instead of using the following endpoint:
 
 ```bash
-PUT https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}
+PUT /zones/{zone-id}/rulesets/{ruleset-id}
 ```
 
 You can use the following endpoint:
 
 ```bash
-PUT https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint
+PUT /zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint
+```
+
+To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
+
+```bash
+https://api.cloudflare.com/client/v4/
 ```
 
 For authentication instructions, see [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
