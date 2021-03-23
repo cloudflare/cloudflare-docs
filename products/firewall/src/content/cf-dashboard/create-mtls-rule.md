@@ -8,8 +8,9 @@ Use the [Mutual TLS](/cf-firewall-rules/api-shield#mutual-tls-mtls) Rule interfa
 
 Before you can create a mTLS rule, you must do the following:
 
-- [Enable mutual Transport Layer Security (mTLS) for a host](https://developers.cloudflare.com/ssl/client-certificates/enable-mtls) in your zone.
 - [Create a client certificate](https://developers.cloudflare.com/ssl/client-certificates/create-a-client-certificate).
+- [Configure your mobile app or IoT device](https://developers.cloudflare.com/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
+- [Enable mutual Transport Layer Security (mTLS) for a host](https://developers.cloudflare.com/ssl/client-certificates/enable-mtls) in your zone.
 
 <Aside type='warning' header='Important'>
 
@@ -18,8 +19,6 @@ You can only use mTLS with a certificate authority (CA) that is fully managed by
 If you need to use a different CA, contact a Cloudflare Customer Success Manager.
 
 </Aside>
-
-After you have created your mTLS  rule, [configure your mobile app or IoT device](https://developers.cloudflare.com/ssl/client-certificates/configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
 
 ## Use the Mutual TLS Rule interface
 
