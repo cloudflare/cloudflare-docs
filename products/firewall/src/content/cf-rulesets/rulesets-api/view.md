@@ -1,10 +1,10 @@
 ---
-title: GET examples
+title: List and view rulesets
 alwaysopen: true
 order: 783
 ---
 
-# GET examples
+# List and view rulesets
 
 <Aside type='warning' header='Important'>
 
@@ -12,189 +12,428 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-* [List Rulesets](#list-rulesets)
-* [Get Ruleset](#get-ruleset)
-* [Get Version of Ruleset](#get-version-of-ruleset)
+* [List existing rulesets](#list-existing-rulesets)
+* [View a specific ruleset](#view-a-specific-ruleset)
+* [List all versions of a ruleset](#list-all-versions-of-a-ruleset)
+* [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset)
+* [List rules in a Managed Ruleset with a specific tag](#list-rules-in-a-managed-ruleset-with-a-specific-tag)
 
-## List Rulesets
+## List existing rulesets
+
+Returns the list of existing rulesets at the account level or at the zone level.
 
 ```bash
-GET accounts/{account_id}/rulesets
+---
+header: Account-level endpoint
+---
+GET /accounts/{account-id}/rulesets
 ```
 
-Returns the latest version of all rulesets owned by the account and any managed rulesets the account is entitled to use.
+```bash
+---
+header: Zone-level endpoint
+---
+GET /zones/{zone-id}/rulesets
+```
 
-Results are sorted by Ruleset ID in ascending order.
+The result includes rulesets across all Phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
-### Request
+Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy at the specified zone.
+
+<Aside type='warning' header='Important'>
+
+Not all zone-level Phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on what ruleset types are allowed in that product’s supported Phases.
+
+</Aside>
+
+The result does not include the rules in the ruleset (the `rules` field is `null`). Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how you can obtain the list of rules.
+
+### Example
 
 ```bash
+---
+header: Request
+---
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-     "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets"
+    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Key: REDACTED" \
+    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
 ```
-
-### Response
 
 ```json
+---
+header: Response
+---
 {
-  "result": [
-    {
-      "id": "managed_ruleset_id",
-      "name": "Cloudflare managed ruleset",
-      "kind": "managed",
-      "version": "1",
-      "last_updated": "2020-07-17T15:42:37.917815Z"
-    },
-    {
-      "id": "root_ruleset_id",
-      "name": "My root ruleset",
-      "kind": "root",
-      "version": "1",
-      "last_updated": "2020-07-17T16:01:43.997713Z"
-    }
-  ]
+    "result": [
+        {
+            "id": "{phase-ruleset-id}",
+            "name": "Account-level Phase Ruleset 1",
+            "description": "",
+            "kind": "root",
+            "version": "5",
+            "rules": null,
+            "last_updated": "2021-03-18T18:30:08.122758Z",
+            "phase": "http_request_firewall_managed"
+        },
+        {
+            "id": "{managed-ruleset-id}",
+            "name": "Cloudflare Managed Ruleset",
+            "description": "Managed Ruleset created by Cloudflare",
+            "kind": "managed",
+            "version": "4",
+            "rules": null,
+            "last_updated": "2021-03-19T16:54:32.942986Z",
+            "phase": "http_request_firewall_managed"
+        }
+    ],
+    "success": true,
+    "errors": [],
+    "messages": []
 }
 ```
 
-## Get Ruleset
+## View a specific ruleset
+
+Returns the properties of the most recent version of a specific ruleset.
 
 ```bash
-GET  accounts/{account_id}/rulesets/{ruleset_id}
+---
+header: Account-level endpoint
+---
+GET /accounts/{account-id}/rulesets/{ruleset-id}
+```
+
+```bash
+---
+header: Zone-level endpoint
+---
+GET /zones/{zone-id}/rulesets/{ruleset-id}
+```
+
+<Aside type='warning' header='Important'>
+
+Note: You can only use the zone-level endpoint for zone-level rulesets, that is, Phases where `kind` is set to `zone`.
+
+</Aside>
+
+You can also use the following specific endpoints for viewing the ruleset of a Phase:
+
+```bash
+---
+header: Account-level Phase endpoint
+---
+GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint
+```
+
+```bash
+---
+header: Zone-level Phase endpoint
+---
+GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 ```
 
 Returns the ruleset with the specified Ruleset ID.
 
-The API returns a HTTP Status Code 404 under these conditions:
+The API returns a 404 HTTP Status Code under these conditions:
 
 * When a ruleset cannot be found.
-* When the specified ruleset is not a managed ruleset the calling account is entitled to deploy.
+* When the specified ruleset is not a Managed Ruleset the calling account is entitled to deploy.
+* When you are trying to get the ruleset of a Phase and you have not added any rule to it yet. A Phase ruleset only exists after you add at least one rule to it.
 
-### Request
+### Example
 
 ```bash
+---
+header: Request
+---
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}"
+    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Key: REDACTED" \
+    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}"
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
-  "result": [
-    {
-      "id": "{ruleset_id}",
-      "name": "Example ruleset",
-      "kind": "managed",
-      "version": "1",
-      "last_updated": "2020-07-17T15:42:37.917815Z"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+    "result": {
+        "id": "{managed-ruleset-id}",
+        "name": "Cloudflare Managed Ruleset",
+        "description": "Managed Ruleset created by Cloudflare",
+        "kind": "managed",
+        "version": "4",
+        "rules": [
+            {
+                "id": "{rule-id-1}",
+                "version": "3",
+                "action": "log",
+                "categories": [
+                    "cve-2014-5265",
+                    "cve-2014-5266",
+                    "cve-2014-5267",
+                    "dos",
+                    "drupal",
+                    "wordpress"
+                ],
+                "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+                "last_updated": "2021-03-19T16:54:32.942986Z",
+                "ref": "{rule-ref-1}",
+                "enabled": true
+            }
+        ],
+        "last_updated": "2021-03-19T16:54:32.942986Z",
+        "phase": "http_request_firewall_managed"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
 }
 ```
 
-## Get Version of Ruleset
+## List all versions of a ruleset
+
+Returns a list of all the versions of a ruleset.
+
+For Managed Rulesets, this method returns a list with one item with the information about the most recent version of the ruleset.
 
 ```bash
-accounts/{account_id}/rulesets/{ruleset-id}/versions/{version-number}
+---
+header: Account-level endpoint
+---
+GET /accounts/{account-id}/rulesets/{ruleset-id}/versions
 ```
 
-Returns the version of a ruleset with the specified Ruleset ID and version number. This command only works for the most recent version of a managed ruleset. However, you can fetch older versions of your root ruleset and your custom rulesets.
+```bash
+---
+header: Zone-level endpoint
+---
+GET /zones/{zone-id}/rulesets/{ruleset-id}/versions
+```
 
-### Request
+The result contains the ruleset properties of each version but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
+
+You can also use the following specific endpoints for the ruleset of a Phase:
 
 ```bash
+---
+header: Account-level Phase endpoint
+---
+GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions
+```
+
+```bash
+---
+header: Zone-level Phase endpoint
+---
+GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions
+```
+
+When the specified Phase ruleset does not exist, this API method returns an empty array in the `result` field.
+
+### Example
+
+```bash
+---
+header: Request
+---
 curl -X GET \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset-id}/versions/1"
+    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Key: REDACTED" \
+    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}/versions"
 ```
-
-### Response
 
 ```json
+---
+header: Response
+---
 {
-  "result": {
-    "id": "{ruleset_id}",
-    "name": "Example ruleset",
-    "kind": "managed",
-    "version": "1",
-    "rules": [
-      {
-        "id": "{rule_id}",
-        "version": "1",
-        "action": "log",
-        "expression": "cf.zone.name eq \"example.com\" ",
-        "last_updated": "2020-07-17T15:42:37.917815Z"
-      }
+    "result": [
+        {
+            "id": "{custom-ruleset-id}",
+            "name": "Custom Ruleset 1",
+            "description": "My custom ruleset",
+            "kind": "custom",
+            "version": "1",
+            "rules": null,
+            "last_updated": "2021-02-17T11:15:13.128705Z",
+            "phase": "http_request_firewall_custom"
+        },
+        {
+            "id": "{custom-ruleset-id}",
+            "name": "Custom Ruleset 1",
+            "description": "My updated custom ruleset",
+            "kind": "custom",
+            "version": "2",
+            "rules": null,
+            "last_updated": "2021-02-17T11:24:06.869326Z",
+            "phase": "http_request_firewall_custom"
+        }
     ],
-    "last_updated": "2020-07-17T15:42:37.917815Z"
-  }
+    "success": true,
+    "errors": [],
+    "messages": []
 }
 ```
 
-## View rules tagged with a category
+## View a specific version of a ruleset
+
+Returns the configuration of a specific version of a ruleset, including its rules.
+
+You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a Managed Ruleset.
 
 ```bash
-accounts/{account_id}/rulesets/{ruleset-id}/versions/{version-number}
+---
+header: Account-level endpoint
+---
+GET /account/{account-id}/rulesets/{ruleset-id}/versions/{version-number}
 ```
 
-Fetches a list of rules in a managed ruleset tagged with a specific category. This command only works for the most recent version of a ruleset.
+```bash
+---
+header: Zone-level endpoint
+---
+GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}
+```
 
-### Request
+You can also use the following specific endpoints for the ruleset of a Phase:
 
 ```bash
+---
+header: Account-level Phase endpoint
+---
+GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
+```
+
+```bash
+---
+header: Zone-level Phase endpoint
+---
+GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
+```
+
+When the specified Phase ruleset does not exist, this API method returns returns a 404 HTTP Status Code.
+
+### Example
+
+```bash
+---
+header: Request
+---
 curl -X GET \
-      -H "X-Auth-Email: user@cloudflare.com" \
-      -H "X-Auth-Key: REDACTED" \
-    "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset-id}/versions/2/by_category/drupal"
-
+    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Key: REDACTED" \
+    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}"
 ```
-
-### Response
 
 ```json
+---
+header: Response
+---
 {
-  "result": {
-    "id": "{ruleset_id}",
-    "name": "Cloudflare Managed Ruleset",
-    "description": "Created by the Cloudflare security team",
-    "kind": "managed",
-    "shareable_entitlement_name": "fw_global_rulesets_read_managed_allowed",
-    "version": "2",
-    "rules": [
-      {
-        "id": "{rule_id}",
-        "version": "1",
-        "action": "log",
-        "categories": [
-          "dos",
-          "drupal",
-          "wordpress"
+    "result": {
+        "id": "{custom-ruleset-id}",
+        "name": "Custom Ruleset 1",
+        "description": "My updated custom ruleset",
+        "kind": "custom",
+        "version": "2",
+        "rules": [
+            {
+                "id": "{rule-id-1}",
+                "version": "1",
+                "action": "challenge",
+                "expression": "not http.request.uri.path matches \"^/api/.*$\"",
+                "last_updated": "2021-02-17T11:24:06.869326Z",
+                "ref": "{rule-ref-1}",
+                "enabled": true
+            }
         ],
-        "last_updated": "2020-10-12T09:01:43.772617Z",
-        "ref": "{ref-id}",
-        "enabled": true
-      },
-      {
-        "id": "{rule_id}",
-        "version": "1",
-        "action": "block",
-        "categories": [
-          "command-injection",
-          "drupal"
-        ],
-        "last_updated": "2020-10-12T09:01:43.772617Z",
-        "ref": "{ref-id}",
-        "enabled": true
-      }
-    ]
-  }
+        "last_updated": "2021-02-17T11:24:06.869326Z",
+        "phase": "http_request_firewall_custom"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+
+<Aside type='note' header='Note'>
+
+When you view a specific version of a Managed Ruleset, each rule listed in the result has one or more associated categories/tags and it does not contain an expression.
+
+</Aside>
+
+## List rules in a Managed Ruleset with a specific tag
+
+Returns a list of all the rules in a Managed Ruleset tagged with a specific tag.
+
+```bash
+GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_category/{category-name}
+```
+
+### Example
+
+```bash
+---
+header: Request
+---
+curl -X GET \
+    -H "X-Auth-Email: user@cloudflare.com" \
+    -H "X-Auth-Key: REDACTED" \
+    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_category/wordpress"
+```
+
+```json
+---
+header: Response
+---
+{
+    "result": {
+        "id": "{managed-ruleset-id}",
+        "name": "Cloudflare Managed Ruleset",
+        "description": "Managed Ruleset created by Cloudflare",
+        "kind": "managed",
+        "version": "4",
+        "rules": [
+            {
+                "id": "{rule-id-1}",
+                "version": "3",
+                "action": "log",
+                "categories": [
+                    "cve-2014-5265",
+                    "cve-2014-5266",
+                    "cve-2014-5267",
+                    "dos",
+                    "drupal",
+                    "wordpress"
+                ],
+                "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+                "last_updated": "2021-03-19T16:54:32.942986Z",
+                "ref": "{rule-ref-1}",
+                "enabled": true
+            },
+            {
+                "id": "{rule-id-2}",
+                "version": "3",
+                "action": "block",
+                "categories": [
+                    "broken-access-control",
+                    "cve-2018-12895",
+                    "wordpress"
+                ],
+                "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+                "last_updated": "2021-03-19T16:54:32.942986Z",
+                "ref": "{rule-ref-2}",
+                "enabled": true
+            },
+            // (...)
+       ],
+        "last_updated": "2021-03-19T16:54:32.942986Z",
+        "phase": "http_request_firewall_managed"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
 }
 ```
