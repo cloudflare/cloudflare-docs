@@ -36,7 +36,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     The API Shield creation wizard displays.
 
-    ![API Shield name and expression wizard step](../images/api-shield-name-expression-step.png)
+    ![API Shield Properties wizard step](../images/api-shield-properties-step.png)
 
 1. Enter a descriptive name for the API Shield in the **Shield name** input. 
 
@@ -70,7 +70,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
 1. After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and what will be the action taken for non-compliant and unprotected requests.
 
-    ![API Shield Browse endpoints wizard step](../images/api-shield-browse-endpoints-step.png)
+    ![API Shield Review endpoints wizard step](../images/api-shield-review-endpoints-step.png)
 
     The API Shield rule will validate all incoming requests addressed at the endpoints listed in the **Protected** section. The several columns in the table list the validations deployed for each endpoint, according to the information described in the API Schema file. The **Action** column indicates the action taken by API Shield for incoming requests that fail Schema Validation.
 
