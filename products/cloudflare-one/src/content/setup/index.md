@@ -56,9 +56,9 @@ Let's walk through the setup flow!
 
  And so much more. Happy exploring!
 
- ![Enter payment details](../static/documentation/quickstart/step-6.png)
+ ![Enter payment details](../static/documentation/quickstart/quickstart.png)
 
 
 ## Tutorials
 
-Once you have your account created, you can begin using Cloudflare for Teams. We recommend reviewing the Cloudflare for Teams [Tutorials](/tutorials) section to begin adding new features.
+Once you've created your account, you can start exploring Cloudflare for Teams. We recommend reviewing the Cloudflare for Teams [Tutorials](/tutorials) section to begin adding new features.

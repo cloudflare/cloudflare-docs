@@ -21,7 +21,7 @@ Policies are sets of rules that allow you to create:
 
 ### Zero Trust policies
 
-* [Require Gateway connections](tutorials/require-swg)
+* [Require Gateway connections](/tutorials/require-swg)
 * [Secure SSH and HTTP for GitLab](/tutorials/gitlab)
 * [Require U2F keys with Okta](/tutorials/okta-u2f)
 * [Require specific countries](/tutorials/country-rules)

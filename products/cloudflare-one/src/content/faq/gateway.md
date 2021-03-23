@@ -28,7 +28,7 @@ Yes. Each location has a unique IPv6 address. You can use that IPv6 address to s
 
 ### How can I report a false positive?
 
-If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed. 
+If your domain is unexpectedly blocked, you can use [this form](https://radar.cloudflare.com/categorization-feedback/) to get the URL reviewed. 
 
 ## Policies
 
@@ -53,7 +53,7 @@ If you are still seeing responses from the DNS queries for a domain that you blo
 Rules are enforced top to bottom. However, the L7 firewall will evaluate *Do Not Inspect* rules before any subsequent *Allow* or *Block* rules, to determine if decryption should occur. This means regardless of precedence in your list of rules, all *Do Not Inspect* rules will take precedence over *Allow* or *Block* rules.
 
 ### Can I use a wildcard operator to block domains?
-You don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/policies).
+You can only use a wildcard operator for DNS policies. However, you don’t need to use a wildcard operator to block domains. For example, if you want to block all the subdomains for `example.com` then you only have to block `example.com`. It will not only block dns requests to `example.com` but also all subdomains for `example.com`. You can read more about it on our [policies page](/policies).
 
 ### What happens when I have multiple policies assigned to the same location?
 If you have multiple policies and both policies are applied to a single location, Gateway will arbitrarily choose one of the policies and apply them to the location.
@@ -119,7 +119,7 @@ If your policy is not assigned to a location and you send a DNS query from that 
 
 There are two ways to connect to Cloudflare Gateway: with the Cloudflare WARP client and without the client.
 
-You can filter DNS traffic without using the client by registering the source IP of your network and configuring Gateway as your upstream DNS resolver; however, if your IP address changes then Gateway will not know which policy to apply to your queries. This can be solved by using the DoH subdomain associated with the location for which you've configured a policy. When queries reach Gateway over DoH, only the DoH subdomain is used to determine which organization and policy to apply to the query--the source IP of the query is not considered. There are a several of DoH clients available for a variety of operating systems, and we recommend using cloudflared to send queries to Gateway via DoH if not using the Cloudflare WARP client. Simply install cloudflared and configure the DoH subdomain for a chosen location as the upstream resolver in cloudflared.
+You can filter DNS traffic without using the client by registering the source IP of your network and configuring Gateway as your upstream DNS resolver; however, if your IP address changes then Gateway will not know which policy to apply to your queries. This can be solved by using the [DoH subdomain](/glossary#doh-subdomain) associated with the location for which you've configured a policy. When queries reach Gateway over DoH, only the DoH subdomain is used to determine which organization and policy to apply to the query--the source IP of the query is not considered. There are a several of DoH clients available for a variety of operating systems, and we recommend using cloudflared to send queries to Gateway via DoH if not using the Cloudflare WARP client. Simply install cloudflared and configure the DoH subdomain for a chosen location as the upstream resolver in cloudflared.
 
 [Install and configure cloudflared](https://developers.cloudflare.com/1.1.1.1/dns-over-https/cloudflared-proxy)
 

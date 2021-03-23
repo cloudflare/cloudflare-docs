@@ -1,5 +1,5 @@
 ---
-updated: 2021-02-22
+updated: 2021-03-23
 category: 🌐 Connections
 difficulty: Advanced
 ---
@@ -26,7 +26,7 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
 </Aside>
 
-**⏲️Time to complete: 45 minutes**
+**⏲️ Time to complete: 45 minutes**
 
 ## Install `cloudflared`
 

@@ -146,7 +146,7 @@ Your user identity and group membership should return.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "apps_domain": "mycompany.com"
     },
     "type": "google-apps",

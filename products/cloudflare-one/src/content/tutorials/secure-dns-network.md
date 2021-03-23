@@ -13,7 +13,7 @@ You can use Cloudflare Gateway to filter and log DNS queries from any device usi
 * Create a DNS filtering policy that secures a home or office network by blocking malicious hostnames
 * Review logs and events that occur on that network
 
-**⏲️Time to complete: ~15 minutes**
+**⏲️ Time to complete: ~15 minutes**
 
 ## Configure Cloudflare Gateway
 

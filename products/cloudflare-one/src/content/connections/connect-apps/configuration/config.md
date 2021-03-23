@@ -5,9 +5,23 @@ order: 1
 # Configuration file
 
 You can run `cloudflared` with a configuration file, which contains keys and values to configure `cloudflared`'s behaviour.
-The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Most keys have an equivalent CLI argument,
-however, some (e.g. ingress and originRequest) do not, as CLIs aren't very good at expressing trees of configuration. To learn
-more about the CLI, just run `cloudflared --help` or `cloudflared tunnel --help`.
+The configuration file format uses [YAML syntax](http://www.yaml.org/start.html).
+
+## Example file
+
+The example file below uses a single Argo Tunnel to send traffic sent to two distinct hostnames to two services that `cloudflared` can address. The configuration file uses [ingress rules](/connections/connect-apps/configuration/ingress) to route traffic that arrives at `cloudflared`.
+
+```yml
+tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
+credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+
+ingress:
+  - hostname: gitlab.widgetcorp.tech
+    service: http://localhost:80
+  - hostname: gitlab-ssh.widgetcorp.tech
+    service: ssh://localhost:22
+  - service: http_status:404
+```
 
 ## Default behavior
 
@@ -143,7 +157,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 |--|--|--|
 | `loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
 
-Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available options: `panic` `fatal` `error` `warn` `info` `debug`
+Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 
 ### `transport-loglevel`
 
@@ -151,8 +165,8 @@ Specifies the verbosity of logging. The default `info` is not noisy, but you may
 |--|--|--|
 | `transport-loglevel` | `warn` | `TUNNEL_PROTO_LOGLEVEL` |
 
-Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge.
-Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks.
+Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
+Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks. 
 
 ### `retries`
 

@@ -3,7 +3,6 @@
 **Cloudflare Pages is currently in open beta.** Here are some known bugs and issues that we're aware of:
 
 - Deleting a project with a custom URL may show the old build at that URL. You'll need to delete the Cloudflare DNS record for that custom domain to remove that old build.
-- Zone configurations are not working (such as running a Workers script in front of your Pages application, using Pages Rules, and enabling "Always HTTPS").
 - No direct support for running routes or redirects in Pages (however, if your project contains a 404.html file, that's served first. If not, then your /index.html file is served)
 - No Access integration yet to protect preview URLs.
 - Source code hosting tools besides GitHub—for instance, BitBucket or Gitlab—are not currently supported.

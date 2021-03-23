@@ -24,7 +24,7 @@ If you are migrating from "classic" Argo Tunnel deployments to the new, persiste
 * Give the application a hostname where users can connect
 * Complete the entire process with a single command using `cloudflared`
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete: 10 minutes**
 
 ## Install `cloudflared`
 

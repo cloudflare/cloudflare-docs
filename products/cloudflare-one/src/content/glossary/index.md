@@ -45,11 +45,6 @@ Authenticated Origin Pulls let origin web servers validate that a web request ca
 ## daemon
 A program that performs tasks without active management or maintenance.
 
-## [DoH](/connections/connect-without-agent/DNS/dns-over-https)
-*DNS over HTTPS*
-
-With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
-
 ## DNS filtering
 
 DNS filtering is the process of using the Domain Name System to block malicious websites and filter out harmful or inappropriate content. This ensures that company data remains secure and allows companies to have control over what their employees can access on company-managed networks. DNS filtering is often part of a larger access control strategy.
@@ -57,6 +52,19 @@ DNS filtering is the process of using the Domain Name System to block malicious 
 ## DNS server
 
 Each device connected to the Internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as 192.168.1.1 (in IPv4), or more complex newer alphanumeric IP addresses such as 2400:cb00:2048:1::c629:d7a2 (in IPv6).
+
+## [DoH](/connections/connect-without-agent/DNS/dns-over-https)
+*DNS over HTTPS*
+
+With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
+
+## DoH subdomain
+
+Each location in Teams has a unique DoH subdomain (previously known as a *unique id*). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **Locations**, expand the location card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
+
+| DNS over HTTPS hostname | DoH subdomain |
+| ----------------------- | ------------- |
+| `https://9y65g5srsm.cloudflare-gateway.com/dns-query` | `9y65g5srsm` |
 
 ## [DoT](/connections/connect-without-agent/DNS/dns-over-tls)
 *DNS over TLS*
