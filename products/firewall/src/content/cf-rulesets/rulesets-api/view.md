@@ -36,7 +36,7 @@ header: Zone-level endpoint
 GET /zones/{zone-id}/rulesets
 ```
 
-The result includes rulesets across all Phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
+The result includes rulesets across all Phases at a given level (account or zone). The `phase` field in each result element indicates the Phase where that ruleset is defined.
 
 Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy at the specified zone.
 

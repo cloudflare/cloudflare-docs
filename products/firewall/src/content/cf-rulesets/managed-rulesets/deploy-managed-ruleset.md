@@ -41,7 +41,7 @@ curl -X PUT \
             "id": "{cloudflare-managed-ruleset-id}"
         },
         "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
-        "description": "Execute Cloudflare Managed Ruleset on my account-level phase ruleset"
+        "description": "Execute Cloudflare Managed Ruleset on my account-level Phase ruleset"
     }]
 }'
 ```
@@ -67,7 +67,7 @@ header: Response
                     "version": "latest"
                 },
                 "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
-                "description": "Execute Cloudflare Managed Ruleset on my account-level phase ruleset",
+                "description": "Execute Cloudflare Managed Ruleset on my account-level Phase ruleset",
                 "last_updated": "2021-03-18T18:30:08.122758Z",
                 "ref": "{rule-ref}",
                 "enabled": true
