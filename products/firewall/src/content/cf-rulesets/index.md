@@ -28,9 +28,9 @@ The following diagram shows how the rulesets interact with one another.
 
 A Phase defines a stage or entry point in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and you cannot modify them.
 
-At a conceptual level, a phase is also a ruleset. You deploy rulesets to a phase by adding rules to the phase ruleset. 
+At a conceptual level, a Phase is also a ruleset. You deploy rulesets to a Phase by adding rules to the Phase ruleset. 
 
-Phases exist at two levels: at the **account** level and at the **zone** level. At an account-level phase you can only deploy other rulesets. In contrast, at a zone-level phase you can deploy other rulesets or create rules directly in the phase ruleset.
+Phases exist at two levels: at the **account** level and at the **zone** level. At an account-level Phase you can only deploy other rulesets. In contrast, at a zone-level Phase you can deploy other rulesets or create rules directly in the Phase ruleset.
 
 For the same phase, rules defined at the account level run **before** the rules defined at the zone level.
 
