@@ -5,11 +5,11 @@ order: 2
 
 import WorkerStarter from "../../components/worker-starter"
 
-# Starters
+# Quickstarts
 
 <ContentColumn>
 
-Starters are essentially GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
+Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
 
 ```sh
 $ wrangler generate <new-project-name> <github-repo-url>
@@ -29,17 +29,17 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 --------------------------------
 
-## JavaScript, TypeScript
+## Templates
 
 <WorkerStarter
-  title="Hello World"
-  description="A bare-bones starter in JavaScript."
+  title="JavaScript Starter"
+  description="A bare-bones Workers starter project, in JavaScript."
   repo="cloudflare/worker-template"
 />
 
 <WorkerStarter
-  title="Hello World (TypeScript)"
-  description="A bare-bones starter in TypeScript."
+  title="TypeScript Starter"
+  description="A bare-bones Workers starter project, in TypeScript."
   repo="cloudflare/worker-typescript-template"
 />
 
@@ -55,11 +55,25 @@ $ wrangler generate <new-project-name> <github-repo-url>
   repo="cloudflare/worker-template-router"
 />
 
+--------------------------------
+
+## Frameworks
+
 <WorkerStarter
   title="Apollo GraphQL Server"
   description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers."
   repo="signalnerve/workers-graphql-server"
 />
+
+<WorkerStarter
+  title="Flareact"
+  description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs."
+  repo="flareact/flareact"
+/>
+
+--------------------------------
+
+## Example Projects
 
 <WorkerStarter
   title="Speedtest"
