@@ -70,21 +70,18 @@ The second expression — `not cf.tls_client_auth.cert_verified` — returns `tr
 
 Because the [action](/cf-firewall-rules/actions) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
 
-### Check for revoked certificates
+## Check for revoked certificates
 
-Since you can [revoke client certificates](https://developers.cloudflare.com/ssl/client-certificates/revoke-client-certificate), you can add a mTLS rule that checks if the certificate included in the request has been revoked.
+Since you can [revoke client certificates](https://developers.cloudflare.com/ssl/client-certificates/revoke-client-certificate), you can add a mTLS rule that checks if the certificate included in the request has been revoked. To create such a rule you must use the Expression Editor.
 
 When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revoked` field is set to `true`. You can create a rule using this field to block requests that include a revoked certificate.
 
-To create such a rule using the Expression Builder, add a clause to the rule filter that checks for a revoked certificate:
+For example, the following Firewall rule blocks incoming requests that include a revoked certificate:
 
-- **Field**: _Client Certificate_
-- **Operator**: _Is Revoked_
-- **Value**: _On_
+* **Rule expression**: `cf.tls_client_auth.cert_revoked`
+* **Action**: _Block_
 
-`SCREENSHOT PLACEHOLDER`
-
-You can use a single mTLS rule to block requests that do not include a valid client certificate or that include a revoked certificate. To define such a rule you must use the Expression Editor. 
+You can also use a single mTLS rule to block requests that do not include a valid client certificate or that include a revoked certificate. You must also use the Expression Editor to enter this rule expression.
 
 For example, you could define a rule expression similar to the following:
 
