@@ -21,7 +21,11 @@ Before you begin:
 Execute a PUT request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` Phase that executes rules in the custom ruleset when the zone name matches `example.com`.
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
+---
+header: Request
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
 -d '{
     "rules": [{
         "action":"execute",
@@ -43,6 +47,9 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 The response displays the rules in your Phase.
 
 ```json
+---
+header: Response
+---
 {
     "result": {
         "id": "{account-phase-ruleset-id}",

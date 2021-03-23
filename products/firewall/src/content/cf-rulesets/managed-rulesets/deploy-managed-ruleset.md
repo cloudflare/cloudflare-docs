@@ -27,11 +27,13 @@ Use the following workflow to deploy a managed ruleset to a Phase at the account
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` Phase of your account (`{account-id}`). The rules in the Managed Ruleset are executed when the zone name matches one of "example.com" or "anotherexample.com".
 
-Example request:
-
-```
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
---data '{
+```json
+---
+header: Request
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
     "rules": [
     {
         "action": "execute",
@@ -44,13 +46,14 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 }'
 ```
 
-Example response:
-
 ```json
+---
+header: Response
+---
 {
     "result": {
-        "id": "{account-level-phase-ruleset-id}",
-        "name": "Account-level Ruleset 2",
+        "id": "{ruleset-id}",
+        "name": "http_request_firewall_managed Account-level Ruleset",
         "description": "",
         "kind": "root",
         "version": "5",
@@ -98,11 +101,13 @@ When deploying to a zone-level Phase, you must set the rule `expression` to `tru
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` Phase of a given zone (`{zone-id}`).
 
-Example request:
-
-```
-curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
---data '{
+```json
+---
+header: Request
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
     "rules": [
     {
         "action": "execute",
@@ -115,9 +120,10 @@ curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phase
 }'
 ```
 
-Example response:
-
 ```json
+---
+header: Response
+---
 {
     "result": {
         "id": "{zone-level-phase-ruleset-id}",

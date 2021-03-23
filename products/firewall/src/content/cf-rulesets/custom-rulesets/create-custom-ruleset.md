@@ -15,6 +15,9 @@ This feature is part of an early access experience for selected customers.
 The following POST request creates a new custom ruleset. Set the `kind` field to `custom` and specify the name of the Phase where you want to create the custom ruleset in the `phase` field.
 
 ```json
+---
+header: Request
+---
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
 -d '{
     "name": "Custom Ruleset 1",
@@ -27,6 +30,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account-id}/ruleset
 The response includes the ruleset ID of the new custom ruleset in the `id` field:
 
 ```json
+---
+header: Response
+---
 {
     "result": {
         "id": "f82ccda3d21f4a02825d3fe45b5e1c10",

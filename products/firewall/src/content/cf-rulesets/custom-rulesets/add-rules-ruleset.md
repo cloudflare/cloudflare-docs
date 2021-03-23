@@ -17,6 +17,9 @@ To add rules to an existing custom ruleset, execute a PUT request to the custom 
 The following request adds two rules to a custom ruleset.
 
 ```json
+---
+header: Request
+---
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
 -d '{
     "rules": [{
@@ -35,6 +38,9 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 The response includes the rule ID of the new rules in the `id` field:
 
 ```json
+---
+header: Response
+---
 "result": {
     "id": "{custom-ruleset-id}",
     "name": "Custom Ruleset 1",
@@ -73,6 +79,9 @@ To update a rule, execute a PUT request to the custom ruleset. Include the ID of
 The following request edits a rule in a custom ruleset and updates the order of execution of the rules.
 
 ```json
+---
+header: Request
+---
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
 -d '{
     "rules": [{
@@ -90,6 +99,9 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 The response returns the modified custom ruleset. Note that the updated rule and ruleset version number increment.
 
 ```json
+---
+header: Response
+---
 {
     "result": {
         "id": "{custom-ruleset-id}",
