@@ -20,6 +20,24 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 </TableWrap>
 
+### `.deb` install
+
+Use the `deb` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` package in this example. 
+
+```sh
+wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
+dpkg -i cloudflared-stable-linux-amd64.deb
+```
+
+### `.rpm` install
+
+Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example. 
+
+```sh
+wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
+rpm -ivh cloudflared-stable-linux-amd64.rpm
+```
+
 ### Build from source
 
 You can also build the latest version of `cloudflared` from source with the following steps.
