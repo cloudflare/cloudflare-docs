@@ -36,13 +36,13 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     The API Shield creation wizard displays.
 
-    ![API Shield name and filter wizard step](../images/api-shield-name-filter-step.png)
+    ![API Shield name and expression wizard step](../images/api-shield-name-expression-step.png)
 
 1. Enter a descriptive name for the API Shield in the **Shield name** input. 
 
-1. Configure the filter for the API Shield using the available request fields.
+1. Configure the expression for the API Shield using the available request fields.
 
-    For example, if your API is available at `http://api.example.com/v1`, the filter must include a check for the _hostname_ field (which must be equal to `api.example.com`) and a check for the _URI path_ field (which must be equal to `/v1`).
+    For example, if your API is available at `http://api.example.com/v1`, the expression must include a check for the _hostname_ field (which must be equal to `api.example.com`) and a check for the _URI path_ field (which must be equal to `/v1`).
 
     <Aside type='warning' header='Important'>
 
@@ -52,15 +52,15 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
 1. Click **Next**.
 
-    The API Shield Properties step displays.
+    The **Security solution** step displays.
 
-    ![API Shield properties wizard step](../images/api-shield-properties-step.png)
+    ![API Shield Security solution wizard step](../images/api-shield-security-solution-step.png)
 
 1. Enable the toggle in the **Enforce Schema Validation** card.
 
 1. Upload the API Schema file in **Upload API Schema** by selecting a file or dragging a file to the file upload area (dashed rectangle). 
 
-1. Cloudflare validates the content of the schema file. If the validation is successful, click **Deploy**.
+1. Click **Deploy** to validate the content of the schema file and deploy the Schema Validation rule.
 
     <Aside type='note'>
 
@@ -78,7 +78,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     <Aside type='warning'>
     
-    Currently, the only available action is _Log_.
+    Currently, cookie and request body validations are not supported. Additionally, the only available action is _Log_.
 
     </Aside>
 
