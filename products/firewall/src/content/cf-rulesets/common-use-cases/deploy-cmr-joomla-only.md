@@ -14,24 +14,25 @@ This feature is part of an early access experience for selected customers.
 
 Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy Managed Rulesets and override their behavior. This ensures that **only rules with a specific tag are enabled**. By default, enabled rules run with actions set by the ruleset issuer in the Managed Ruleset.
 
-Follow the steps below to deploy Managed Rulesets that enable rules tagged with `jomla`.
+Follow the steps below to deploy Managed Rulesets that enable rules tagged with `joomla`.
 
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a Phase that deploys a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
-1. Configure a tag override that enables only rules that are tagged with a given tag.
+1. Configure a tag override that enables only the rules with a given tag.
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset with only Joomla rules enabled. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a Phase with only Joomla rules enabled. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
--d '
-{
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
     "rules": [
     {
         "action": "execute",
-        "expression": "cf.zone.name eq \"example.com\"", "action_parameters": {
+        "expression": "cf.zone.name eq \"example.com\"",
+        "action_parameters": {
             "id": "{managed-ruleset-id}",
             "overrides": {
                 "rulesets": [
@@ -55,16 +56,16 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 
 You can add more than one category override to a rule.
 
-The example below uses a PUT request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in a Phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses a PUT request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` Phase for a given zone (`{zone-id}`). Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
--d '
-{
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
     "rules": [
     {
         "action": "execute",
-        "expression": "cf.zone.name contains \"/example.com/\"",
+        "expression": "true",
         "action_parameters:" {
             "id": "{managed-ruleset-id}",
             "overrides": {

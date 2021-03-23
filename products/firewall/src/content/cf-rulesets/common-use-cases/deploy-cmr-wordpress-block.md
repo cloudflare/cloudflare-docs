@@ -19,21 +19,19 @@ Follow the steps below to deploy a Managed Ruleset and override rules for a spec
 
 The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to execute the steps in a single PUT request.
 
-* Add a rule to the ruleset of the Phase that applies the **Cloudflare Managed Ruleset** to requests for `example.com`.
-* Override rules with the `wordpress` tag to set the action to `block`.
-
-The example below uses the [Rulesets API](/cf-rulesets/rulesets-api) to deploy a Managed Ruleset and override its behavior. This ensures rules with a specific tag perform a specific action. All other rules use the default action provided by the ruleset issuer.
+* Add a rule to the ruleset of the `http_request_firewall_managed` Phase that applies the **Cloudflare Managed Ruleset** to requests for `example.com`.
+* Override rules with the `wordpress` tag to set the action to `block`. All other rules use the default action provided by the ruleset issuer.
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
--d '
-{
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
     "rules": [
     {
         "action": "execute",
         "expression": "cf.zone.name eq \"example.com\"",
         "action_parameters": {
-            "id": "{managed_Ruleset_ID}",
+            "id": "{managed-ruleset-id}",
             "overrides": {
                 "categories": [
                 {

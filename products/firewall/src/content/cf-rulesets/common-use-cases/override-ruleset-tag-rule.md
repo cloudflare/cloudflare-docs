@@ -16,7 +16,7 @@ Customize the deployment of Managed Rulesets with a combination of ruleset overr
 
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to a Phase to deploy a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
-1. [Configure a tag override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for rules tagged with a given tag.
+1. [Configure a tag override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for rules with a given tag.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for the rules you want to deploy.
 
 The request below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to execute the following in a single PUT request:
