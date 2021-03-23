@@ -56,7 +56,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     ![API Shield Security solution wizard step](../images/api-shield-security-solution-step.png)
 
-1. Enable the toggle in the **Enforce Schema Validation** card.
+1. Enable the toggle in the **Schema Validation** card.
 
 1. Upload the API Schema file in **Upload API Schema** by selecting a file or dragging a file to the file upload area (dashed rectangle). 
 
@@ -78,7 +78,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     <Aside type='warning'>
     
-    Currently, cookie and request body validations are not supported. Additionally, the only available action is _Log_.
+    Currently, request body validations are not supported. Additionally, the only available action is _Log_.
 
     </Aside>
 

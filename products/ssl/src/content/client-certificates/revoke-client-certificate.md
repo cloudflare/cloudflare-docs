@@ -14,11 +14,11 @@ You can revoke a client certificate you previously generated.
 
 1. Click the **Client Certificates** tab.
 
-1. In the **Client Certificates** card, click the certificate you want to revoke.
+1. In the **Client Certificates** card, expand the certificate you want to revoke.
 
-    `SCREENSHOT PLACEHOLDER`
+    ![Show client certificate details](../static/ssl-client-certificates-details.png)
 
-1. In the certificate details, click **Revoke Certificate** and confirm the operation.
+1. In the certificate details, click **Revoke** and confirm the operation.
 
 <Aside type='warning' header='Important'>
 

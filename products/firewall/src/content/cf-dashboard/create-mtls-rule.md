@@ -29,7 +29,7 @@ To create a mTLS rule in the Cloudflare dashboard, follow these steps:
 
 1. Click the **Firewall** app.
 
-    The Firewall **Overview** displays.
+    The Firewall Overview displays.
 
     ![Firewall app Overview](../images/firewall-app-overview.png)
 
@@ -39,7 +39,7 @@ To create a mTLS rule in the Cloudflare dashboard, follow these steps:
 
     ![Firewall Rules card](../images/firewall-rules-card.png)
 
-1. Click **Create firewall rule** > **Create a mTLS rule**.
+1. Click **Create a mTLS rule**.
 
     The **Mutual TLS Rule** dialog displays.
 
