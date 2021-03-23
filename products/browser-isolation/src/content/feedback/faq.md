@@ -6,7 +6,7 @@ order: 7
 # Frequently asked questions
 
 ## What are the recommended isolation and L7 firewall policies?
-See [isolated traffic](/usage/isolated-traffic) for the list of policies used by the managed beta account.
+See [isolated traffic](/usage/isolated-traffic) for the list of example isolation policies.
 
 ## How do L7 HTTP policies work with DNS resolver locations?
 Gateway with HTTP filtering does not affect DNS locations.
@@ -22,7 +22,7 @@ This makes it possible for an isolated browser to remotely render a block page, 
 It usually takes about 60 seconds for a new policy to be deployed for users.
 
 ### Existing browser connections
-Many websites establish long-lived HTTP2 connections with your browser. If you access a website without traffic filtering enabled or with an active **Bypass** rule **Block** / **Isolate** actions will not execute until a new filtered connection is established with the `Cloudflare for Teams ECC Certificate Authority` certificate.
+Many websites establish long-lived HTTP2 connections with your browser. If you access a website without traffic filtering enabled or with an active **Do Not Inspect** rule **Block** / **Isolate** actions will not execute until a new filtered connection is established with the `Cloudflare for Teams ECC Certificate Authority` certificate.
 
 You may need to completely close and reopen your browser to establish a new filtered connection.
 
@@ -33,7 +33,7 @@ Isolation policies are applied to requests that include `Accept: text/html*`. Th
 
 ## Why do I see a "No Browsers Available" alert?
 
-During the beta phase we are manually managing the maximum number of concurrent users. Please try again later or file feedback if the error persists.
+If you encounter this error please [file feedback](/feedback) via the WARP client and we will investigate.
 
 ## Why do I see a "Maximum Sessions Reached"?
 
