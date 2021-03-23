@@ -12,7 +12,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-To deploy a Managed ruleset from your root ruleset, use the [Rulesets API](/cf-rulesets/rulesets-api).
+To deploy a Managed Ruleset to a Phase at the account level or at the zone level, use the [Rulesets API](/cf-rulesets/rulesets-api).
 
 ## Deploy a Managed Ruleset to a Phase at the account level
 
