@@ -28,9 +28,9 @@ To create a mTLS rule in the Cloudflare dashboard, follow these steps:
 
 1. Click the **Firewall** app.
 
-    The Firewall Overview displays.
+    The Firewall **Overview** displays.
 
-    ![Firewall app Overview](../images/firewall-app-overview.png)
+    ![Firewall Overview tab](../images/firewall-app-overview.png)
 
 1. Click the **Firewall Rules** tab.
 
