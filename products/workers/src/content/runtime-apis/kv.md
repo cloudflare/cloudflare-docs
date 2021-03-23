@@ -126,9 +126,9 @@ Finally, you can also [read from the API](https://api.cloudflare.com/#workers-kv
 
 #### Types
 
-You can pass an optional `type` parameter to the `get` method as well:
+You can pass in an options object with a `type` parameter to the `get` method as well:
 
-`NAMESPACE.get(key, type)`
+`NAMESPACE.get(key, {type: "text"})`
 
 The `type` parameter can be any of:
 
@@ -140,6 +140,16 @@ The `type` parameter can be any of:
 For simple values it often makes sense to use the default `"text"` type which provides you with your value as a string. For convenience a `"json"` type is also specified which will convert a JSON value into an object before returning it to you. For large values you can request a `ReadableStream`, and for binary values an `ArrayBuffer`.
 
 For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type`s can be ordered from fastest to slowest as `"stream"`, `"arrayBuffer"`, `"text"`, and `"json"`.
+
+#### Cache TTL
+
+The `get` options object also accepts a `cacheTtl` parameter:
+
+`NAMESPACE.get(key, {cacheTtl: 3600})`
+
+The `cacheTtl` parameter must be an integer that is greater than or equal to 60. It defines the length of time in seconds that a KV result is cached in the edge location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely, but is not recommended if your data is updated often and you need to see updates shortly after they're written, because writes that happen from other edge locations won't be visible until the cached value expires.
+
+The effective Cache TTL of an already cached item can be reduced by getting it again it with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60.
 
 #### Metadata
 
@@ -153,7 +163,7 @@ const metadata = valueAndMetadata.metadata
 
 If there’s no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
-You can pass an optional `type` parameter to the `getWithMetadata` method, similar to `get`.
+You can pass an options object with `type` and/or `cacheTtl` parameters to the `getWithMetadata` method, similar to `get`.
 
 ### Deleting key-value pairs
 
