@@ -1,8 +1,9 @@
 ---
 order: 0
+title: "Guide"
 ---
 
-# Getting started
+# Getting Started Guide
 
 Cloudflare Workers is a **serverless application platform** running on Cloudflare’s global cloud network in over 200 cities around the world, offering both [free and paid plans](/platform/pricing).
 
