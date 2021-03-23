@@ -14,23 +14,16 @@ This feature is part of an early access experience for selected customers.
 
 The Rulesets API provides specific endpoints for updating the rulesets of Phases so that you do not need to know the ruleset ID of the Phase beforehand. Instead, use the Phase name directly in the API endpoint.
 
-For example, instead of using the following endpoint to update the ruleset of the `http_request_firewall_managed` Phase at the zone level:
+For example, instead of using the following endpoint:
 
-```
+```bash
 PUT https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}
 ```
 
-Use the following endpoint:
+You can use the following endpoint:
 
-```
+```bash
 PUT https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint
-```
-
-To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
-
-```
-https://api.cloudflare.com/client/v4/
-
 ```
 
 For authentication instructions, see [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
@@ -62,14 +55,14 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       <td><a href="/cf-rulesets/rulesets-api/view/#list-existing-rulesets">List existing rulesets</a></td>
       <td><code>GET</code></td>
       <td>
-        <p>Returns the latest version of all rulesets owned by the account and any Managed Rulesets the account is entitled to execute.</p>
+        <p>Returns the list of existing rulesets at the account level or at the zone level.</p>
       </td>
     </tr>
     <tr>
       <td><a href="/cf-rulesets/rulesets-api/view/#view-a-specific-ruleset">View a specific ruleset</a></td>
       <td><code>GET</code></td>
       <td>
-        <p>Returns the latest version of a ruleset with the specified ruleset ID.</p>
+        <p>Returns the properties of the most recent version of a specific ruleset.</p>
       </td>
     </tr>
     <tr>
@@ -83,7 +76,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       <td><a href="/cf-rulesets/rulesets-api/view/#view-a-specific-version-of-a-ruleset">View a specific version of a ruleset</a></td>
       <td><code>GET</code></td>
       <td>
-        <p>Returns the configuration of a specific version of a ruleset.</p>
+        <p>Returns the configuration of a specific version of a ruleset, including its rules.</p>
       </td>
     </tr>
     <tr>
@@ -118,7 +111,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       <td><a href="/cf-rulesets/rulesets-api/update/#update-a-rule-in-a-ruleset">Update a rule in a ruleset</a></td>
       <td><code>PATCH</code></td>
       <td>
-        <p>Updates a rule definition within a ruleset.<br/>Allows you to change the order of a rule in a ruleset.</p>
+        <p>Updates the definition of a single rule within a ruleset.<br/>Allows you to change the order of a rule in a ruleset.</p>
       </td>
     </tr>
   </tbody>
