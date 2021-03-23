@@ -16,7 +16,7 @@ If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel d
 * Migrate a Legacy Argo Tunnel deployment to Named Argo Tunnel model
 * Use Cloudflare Load Balancer to perform a zero downtime migration
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete: 10 minutes**
 
 ## Creating a Legacy Argo Tunnel with Cloudflare Load Balancer
 

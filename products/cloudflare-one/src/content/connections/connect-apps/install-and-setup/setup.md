@@ -23,13 +23,15 @@ $ cloudflared tunnel login
 
   If running on a headless system, copy the link and paste it into a browser.
 
-3. Once authenticated, Cloudflare will return a certificate file, `cert.pem`, that will give this instance of `cloudflared` the ability to:
+3. Choose any hostname in your account. Cloudflare will issue credentials that are account-wide in scope; you do not need to pick a specific hostname where you plan to connect the Tunnel.
+
+4. Once authenticated, Cloudflare will return a certificate file, `cert.pem`, that will give this instance of `cloudflared` the ability to:
     * Create and delete Tunnels
     * Modify DNS records in your account
 
  The file is **required** if you want to:
    * Create new Tunnels
-   * Change DNS routing from `cloudflared`
+   * Configure routing from `cloudflared`
 
  The file is **not required** if you want to:
    * Run an existing Tunnel

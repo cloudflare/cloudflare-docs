@@ -2,6 +2,7 @@
 updated: 2021-01-04
 category: 🔐 Zero Trust
 ---
+
 # Service tokens for SSH connections
 
 You can use Cloudflare Access to create Zero Trust rules that determine which users can reach resources over HTTP, SSH, and other protocols. However, some resources also need to be available to automated systems that need to authenticate through Cloudflare's network. You can use Cloudflare Access to generate a service token for those systems.
