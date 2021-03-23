@@ -92,7 +92,7 @@ The table lists the properties of a ruleset object.
     <tr>
       <td><code>phase</code></td>
       <td>The Phase to which the ruleset belongs</td>
-      <td>A string containing the Phase name (different Cloudflare products support different Phases)</td>
+      <td>A string containing the Phase name</td>
       <td>The Phase is immutable</td>
     </tr>
     <tr>
