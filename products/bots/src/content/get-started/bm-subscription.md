@@ -25,7 +25,7 @@ To enable Bot Management, contact your account team. After it is enabled, Bot Ma
 
 ### 2. Configure Bot Management
 
-Decide whether you want to enable [JavaScript detections](../about/javascript-detections) to help identify bots.
+Decide whether you want to enable [JavaScript detections](../../about/javascript-detections) to help identify bots.
 
 To enable this feature, go to **Firewall** > **Bots**.
 
@@ -33,7 +33,7 @@ To enable this feature, go to **Firewall** > **Bots**.
 
 Before deploying Bot Management on live traffic, use [Bot Analytics](../../bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic.
 
-Go to **Firewall** > **Bots** to examine the following traffic segments:
+Go to **Firewall** > **Bots** and examine the following traffic segments:
 - **Automated traffic**: Bot scores of 1
 - **Likely automated traffic**: Bots scores of 2 to 29
 - **Other traffic groups**: Any additional large spikes in bot scores
@@ -81,20 +81,18 @@ For additional help with Firewall Rules, review the [Firewall Rules documentatio
 
 ### 5. Create additional Firewall Rules
 
-Just as before, start small and slowly increase your threshold to prevent widespread issues.
+Just as before, start small and slowly increase your threshold to prevent widespread issues. For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
 
 Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. Again, start with a **Log** action and monitor your traffic for a few days.
 
-For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
-
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
-- If you want to minimize false positives and lost revenue — ecommerce domains — you might want to allow lower bot scores.
+- If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
 - If your Firewall Rule has a **Captcha Solve Rate (CSR)** higher than *3%*, consider lowering your challenge threshold.
 
 ### 6. Continue monitoring domain traffic
 
-You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](../../bot-analytics/bm-subscription) to see if your rules need additional tuning.
+You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](../../bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
 
 ## Bot Management variables
 
@@ -114,7 +112,7 @@ These variables are also available as part of the [request.cf](https://developer
 
 ### Comparison to Threat Score
 
-Bot Score is different from Threat Score. Bot Score identifies bots, and Threat Score measures IP reputation across our services. Most customers achieve the best results by blocking or challenging bot scores lower than 30 and avoiding IP reputation entirely.
+Bot Score is different from Threat Score. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by blocking or challenging bot scores lower than 30 and avoiding IP reputation entirely.
 
 ### Verified bots
 
