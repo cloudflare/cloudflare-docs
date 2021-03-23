@@ -34,11 +34,12 @@ The following example deploys a Managed Ruleset to the `http_request_firewall_ma
 
 When deploying to a zone-level Phase, you must set `expression` to `true`, since the zone scope is already defined in the endpoint.
 
-Example request:
-
-```
+```json
+---
+header: Request
+---
 curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
---data '{
+-d '{
     "rules": [
     {
         "action": "execute",
@@ -51,9 +52,10 @@ curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phase
 }'
 ```
 
-Example output:
-
 ```json
+---
+header: Response
+---
 {
     "result": {
         "id": "{zone-level-phase-ruleset-id}",
@@ -62,21 +64,20 @@ Example output:
         "kind": "zone",
         "version": "latest",
         "rules": [
-            {
-                "id": "{rule-id}",
-                "version": "1",
-                "action": "execute",
-                "action_parameters": {
-                    "id": "{cloudflare-managed-ruleset-id}",
-                    "version": "3"
-                },
-                "expression": "true",
-                "description": "Execute Cloudflare Managed Ruleset on my zone ruleset",
-                "last_updated": "2021-03-18T18:08:14.003361Z",
-                "ref": "{ruleset-ref}",
-                "enabled": true
-            }
-        ],
+        {
+            "id": "{rule-id}",
+            "version": "1",
+            "action": "execute",
+            "action_parameters": {
+                "id": "{cloudflare-managed-ruleset-id}",
+                "version": "3"
+            },
+            "expression": "true",
+            "description": "Execute Cloudflare Managed Ruleset on my zone ruleset",
+            "last_updated": "2021-03-18T18:08:14.003361Z",
+            "ref": "{ruleset-ref}",
+            "enabled": true
+        }],
         "last_updated": "2021-03-18T18:08:14.003361Z",
         "phase": "http_request_firewall_managed"
     },
