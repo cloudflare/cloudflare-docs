@@ -366,7 +366,7 @@ When you view a specific version of a Managed Ruleset, each rule listed in the r
 
 ## List rules in a Managed Ruleset with a specific tag
 
-Returns a list of all the rules in a Managed Ruleset tagged with a specific tag.
+Returns a list of all the rules in a Managed Ruleset with a specific tag.
 
 ```bash
 GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_category/{category-name}

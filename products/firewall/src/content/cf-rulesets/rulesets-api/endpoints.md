@@ -89,7 +89,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       <td><a href="/cf-rulesets/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">List rules in a Managed Ruleset with a specific tag</a></td>
       <td><code>GET</code></td>
       <td>
-        <p>Returns a list of all the rules in a Managed Ruleset tagged with a specific tag.</p>
+        <p>Returns a list of all the rules in a Managed Ruleset with a specific tag.</p>
       </td>
     </tr>
   </tbody>
