@@ -6,8 +6,8 @@ order: 0
 
 # Page Shield
 
-Page Shield allows you to detect — and potentially prevent — attacks directed at an end user's browser.
+Page Shield helps you detect attacks happening in your end users' browsers.
 
-Page Shield includes the following components:
+Page Shield includes the following features:
 - [Script Monitor](/script-monitor/)
 
