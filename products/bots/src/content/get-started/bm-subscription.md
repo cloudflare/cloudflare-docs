@@ -31,7 +31,7 @@ To enable this feature, go to **Firewall** > **Bots**.
 
 ### 3. Monitor domain traffic
 
-Before deploying Bot Management on live traffic, use [Bot Analytics](../../bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic. This sensitivity can then be translated into effective Firewall Rules.
+Before deploying Bot Management on live traffic, use [Bot Analytics](../../bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic.
 
 Go to **Firewall** > **Bots** to examine the following traffic segments:
 - **Automated traffic**: Bot scores of 1
@@ -40,15 +40,13 @@ Go to **Firewall** > **Bots** to examine the following traffic segments:
 
 For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that *should not be blocked* — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
 
-Use the slider tool to identify **other traffic groups**. For example, you may find that your mobile app is routinely scored 37. 
+Use the slider tool to identify **other traffic groups**. For example, you may find that your mobile app is routinely scored at 37. 
 
 ![Bot score distribution](../images/bot-score-distribution.png)
 
 At the end of your analysis, you should:
 - Have a range of scores you can confidently block or challenge
 - Understand nuances in your traffic that may require special attention
-
-For more in-depth analysis, you could also integrate a third-party service. Create a Firewall Rule with an action of **Log**.
 
 <Aside type='note' header='Important'>
 
@@ -58,19 +56,41 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 </Aside>
 
-### 4. Create a firewall rule for automated traffic
+### 4. Create a Firewall Rule for automated traffic
 
-Based on your analysis of **automated** traffic, create a Firewall Rule that challenges or blocks scores of 1 and exempts any good, automated requests. Monitor for a few days.
+Based on your analysis of **automated** traffic, create a Firewall Rule that **logs** scores of 1 and exempts any good, automated requests. Monitor that request for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
-### 5. Create additional firewall rules (optional)
+<table style='table-layout:fixed; width:100%'>
+  <thead>
+  <tr>
+    <th>Expression</th>
+    <th style='width:20%'>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(cf.bot_management.score eq 1) and not (cf.bot_management.verified_bot)</code></td>
+      <td><em>Log</em></td>
+    </tr>
+  </tbody>
+</table>
 
-Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. Again, monitor your traffic for a few days.
+Once you validate your rule, change the **Action** to **Challenge** or **Block**. Monitor again for a few days.
+
+For additional help with Firewall Rules, review the [Firewall Rules documentation](/firewall/cf-firewall-rules).
+
+### 5. Create additional Firewall Rules
+
+Just as before, start small and slowly increase your threshold to prevent widespread issues.
+
+Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. Again, start with a **Log** action and monitor your traffic for a few days.
+
+For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 - If you want to minimize false positives and lost revenue — ecommerce domains — you might want to allow lower bot scores.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-
-The best approach is to understand your traffic and slowly increase your threshold to prevent widespread issues.
+- If your Firewall Rule has a **Captcha Solve Rate (CSR)** higher than *3%*, consider lowering your challenge threshold.
 
 ### 6. Continue monitoring domain traffic
 
@@ -80,9 +100,9 @@ You can adjust your Firewall Rules at any point. Set aside time to review [Bot A
 
 Bot Management provides access to several [new variables](/firewall/cf-firewall-language/fields#dynamic-fields) available within the Firewall expression builder.
 
-- Bot Score: An integer used to isolate bot requests which ranges from 1-99. Lower scores usually indicate automated traffic, while higher scores indicate human traffic. Most traffic scored below 30 comes from bots.
-- Verified Bot: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
-- Serves Static Resource: An identifier that matches file extensions for many types of static resources. Use this variable if you send emails that retrieve static images.
+- **Bot Score**: An integer used to isolate bot requests which ranges from 1-99. Lower scores usually indicate automated traffic, while higher scores indicate human traffic. Most traffic scored below 30 comes from bots.
+- **Verified Bot**: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
+- **Serves Static Resource**: An identifier that matches [file extensions](../../about/static-resources) for many types of static resources. Use this variable if you send emails that retrieve static images.
 
 These variables are also available as part of the [request.cf](https://developers.cloudflare.com/workers/reference/apis/request/#the-cf-object) object via [Cloudflare Workers](https://developers.cloudflare.com/workers/):
 
@@ -90,23 +110,18 @@ These variables are also available as part of the [request.cf](https://developer
 - request.cf.botManagement.verifiedBot
 - request.cf.botManagement.staticResource
 
-For a list of supported file types for static resources, see [Static resource protection](/about/static-resources/).
-
 ## Other considerations
+
+### Comparison to Threat Score
 
 Bot Score is different from Threat Score. Bot Score identifies bots, and Threat Score measures IP reputation across our services. Most customers achieve the best results by blocking or challenging bot scores lower than 30 and avoiding IP reputation entirely.
 
-For example, you can issue a JS challenge in response to bot scores lower than 30 with a Firewall Rule.
+### Verified bots
 
-Enter a name for your rule and then match your settings to the settings shown below.
+Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that we are not [currently tracking](/firewall/known-issues-and-faq#bots-currently-detected), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
-![Create a firewall rule](../images/create-firewall-rule.png)
-
-Deploy the rule and watch the results! For additional help with Firewall Rules, review the [Firewall Rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/order-priority).
-
-Use **Bot Analytics and Logs** to view Bot Management’s impact without affecting live traffic. To integrate with a third-party service to analyze traffic, select **Log** as an action from Firewall.
-
-**Some automated traffic is good!** To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. To treat mobile traffic differently, use the user agent or IP address fields in Firewall Rules. You can also fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link) to suggest new bots for verification.
+### Mobile traffic
+To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your Firewall Rules.
 
 ## Analytics
 
