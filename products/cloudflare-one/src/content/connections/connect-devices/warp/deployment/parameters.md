@@ -24,7 +24,7 @@ Each client supports the following set of parameters as part of their deployment
 | ----- | -------- | ---------- | 
 | `gateway_unique_id` | string | fix7p31bzg |
 
-**Description.** Your [Gateway DoH subdomain](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain).
+**Description.** Your [DoH subdomain](/glossary#doh-subdomain).
 
 ### `enable`
 

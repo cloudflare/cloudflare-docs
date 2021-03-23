@@ -19,7 +19,7 @@ Some second factor methods are more resistant to phishing. U2F options require y
 
 The first two sections of this tutorial link to guides to set up Cloudflare Access and integrate Okta. If you already use Cloudflare Access with Okta, you can skip ahead to the fourth section.
 
-**⏲️Time to complete: 20 minutes**
+**⏲️ Time to complete: 20 minutes**
 
 ## Configure Cloudflare Access
 

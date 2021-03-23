@@ -114,7 +114,7 @@ For an example of scoping configuration data, see the table below. It lists GRE 
 </tbody>
 </table>
 
-Cloudflare has 13 geographic regions across the world. This table lists region codes and their associated regions:
+Cloudflare has nine geographic regions across the world. This table lists region codes and their associated regions:
 
 <table>
   <thead>
@@ -125,8 +125,18 @@ Cloudflare has 13 geographic regions across the world. This table lists region c
   </thead>
   <tbody>
     <tr>
-    <td>WNAM</td>
-    <td>Western North America
+    <td>AFR</td>
+    <td>Africa
+    </td>
+    </tr>
+    <tr>
+    <td>APAC</td>
+    <td>Asia Pacific
+    </td>
+    </tr>
+    <tr>
+    <td>EEUR</td>
+    <td>Eastern Europe
     </td>
     </tr>
     <tr>
@@ -135,23 +145,8 @@ Cloudflare has 13 geographic regions across the world. This table lists region c
     </td>
     </tr>
     <tr>
-    <td>WEU</td>
-    <td>Western Europe
-    </td>
-    </tr>
-    <tr>
-    <td>EEU</td>
-    <td>Eastern Europe
-    </td>
-    </tr>
-    <tr>
-    <td>NSAM</td>
-    <td>Northern South America
-    </td>
-    </tr>
-    <tr>
-    <td>SSAM</td>
-    <td>Southern South America
+    <td>ME</td>
+    <td>Middle East
     </td>
     </tr>
     <tr>
@@ -160,33 +155,18 @@ Cloudflare has 13 geographic regions across the world. This table lists region c
     </td>
     </tr>
     <tr>
-    <td>ME</td>
-    <td>Middle East
+    <td>SAM</td>
+    <td>South America
     </td>
     </tr>
     <tr>
-    <td>NAF</td>
-    <td>Northern Africa
+    <td>WEUR</td>
+    <td>Western Europe
     </td>
     </tr>
     <tr>
-    <td>SAF</td>
-    <td>Southern Africa
-    </td>
-    </tr>
-    <tr>
-    <td>IN</td>
-    <td>India
-    </td>
-    </tr>
-    <tr>
-    <td>SEAS</td>
-    <td>Southeast Asia
-    </td>
-    </tr>
-    <tr>
-    <td>NEAS</td>
-    <td>Northeast Asia
+    <td>WNAM</td>
+    <td>Western North America
     </td>
     </tr>
   </tbody>

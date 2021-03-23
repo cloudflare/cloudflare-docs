@@ -58,7 +58,7 @@ These steps help you set up Centrify as your identity provider:
 
     ![Centrify User Access](../../static/documentation/identity/centrify/centrify-7.png)
 
-1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
 1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
 1. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 1. Click **Save**.
@@ -71,7 +71,7 @@ To test that your connection is working, navigate to **Authentication > Login me
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "centrify_account": "https://abc123.my.centrify.com/",
         "centrify_app_id": "exampleapp",
     },
