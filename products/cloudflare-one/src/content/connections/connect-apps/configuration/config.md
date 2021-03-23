@@ -5,9 +5,23 @@ order: 1
 # Configuration file
 
 You can run `cloudflared` with a configuration file, which contains keys and values to configure `cloudflared`'s behaviour.
-The configuration file format uses [YAML syntax](http://www.yaml.org/start.html). Most keys have an equivalent CLI argument,
-however, some (e.g. ingress and originRequest) do not, as CLIs aren't very good at expressing trees of configuration. To learn
-more about the CLI, just run `cloudflared --help` or `cloudflared tunnel --help`.
+The configuration file format uses [YAML syntax](http://www.yaml.org/start.html).
+
+## Example file
+
+The example file below uses a single Argo Tunnel to send traffic sent to two distinct hostnames to two services that `cloudflared` can address. The configuration file uses [ingress rules](/connections/connect-apps/configuration/ingress) to route traffic that arrives at `cloudflared`.
+
+```yml
+tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
+credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+
+ingress:
+  - hostname: gitlab.widgetcorp.tech
+    service: http://localhost:80
+  - hostname: gitlab-ssh.widgetcorp.tech
+    service: ssh://localhost:22
+  - service: http_status:404
+```
 
 ## Default behavior
 
