@@ -1,7 +1,7 @@
 ---
 title: PUT example
 alwaysopen: true
-order: 785
+order: 784
 ---
 
 # PUT example
