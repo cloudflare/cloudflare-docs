@@ -26,11 +26,6 @@ Use Managed IP Lists to access Cloudflare's IP threat intelligence.
 
 Cloudflare scans public, open proxy lists for reachable, open proxies. After verifying the proxies, Cloudflare determines their exit IPs and creates a list of IPs you can use when writing rules via the dashboard or API. 
 
-- To browse the managed lists, see [Use Rules Lists](/cf-dashboard/rules-lists).
-- To use a list when writing a rule, use the **Operator** menu to select *is in list*. From **Value**, select the list. 
-
-![Managed open proxies list](../images/cf-open-proxies-list.png)
-
 ## Entitlements
 
 The number of Rules Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
@@ -73,8 +68,6 @@ The number of Rules Lists you can create depends on the Cloudflare plans associa
 ## Using lists in expressions
 
 Both the Cloudflare dashboard and the Cloudflare API support Rules Lists.
-
-To create a new rule via the API, use the `cf.open_proxies` list name.
 
 To use Rules Lists in an expression from the Cloudflare dashboard, see [_Use lists in expressions_](/cf-dashboard/rules-lists/use-lists-in-expressions).
 
