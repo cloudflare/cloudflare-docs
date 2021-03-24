@@ -5,7 +5,7 @@ category: 🔐 Zero Trust
 
 # Connect through Cloudflare Access over RDP
 
-You can connect to machines over SSH using Cloudflare's Zero Trust platform.
+You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 **🗺️ This walkthrough covers how to:**
 

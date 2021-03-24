@@ -40,7 +40,7 @@ $ cloudflared tunnel --config tunnels/config.yml run
 ```
 
 Without specifying `--config`, `cloudflared` will examine default directories for config files.
-On Windows the default directory is `~/.cloudflared`.
+On Windows the default directory is `%USERPROFILE%\.cloudflared`.
 On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared` and `/usr/local/etc/cloudflared` in that order.
 An example `config.yml` for the above command could look like:
 
