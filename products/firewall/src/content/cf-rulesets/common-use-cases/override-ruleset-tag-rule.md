@@ -21,13 +21,13 @@ Customize the deployment of Managed Rulesets with a combination of ruleset overr
 
 The request below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to execute the following in a single PUT request:
 
-* Add a rule to the ruleset of a Phase that applies the **Cloudflare Managed Ruleset** to requests for `example.com`.
+* Add a rule to the ruleset of the `http_request_firewall_managed` Phase that applies a Managed Ruleset to requests for `example.com`.
 * Use category overrides to enable rules with `wordpress` and `drupal` tags and set their actions to `log`.
 * Add a rule override that enables a single rule.
 
 ```json
 curl -s -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{root-ruleset-id}"  
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
     "rules": [
     {
@@ -60,7 +60,7 @@ curl -s -X PUT \
 }'
 ```
 
-* `"ruleset": {"id": "{managed-ruleset-id}"}` adds a rule to the Phase ruleset that applies the Cloudflare Managed Ruleset to requests for `example.com`.
+* `"id": "{managed-ruleset-id}"` adds a rule to the `http_request_firewall_managed` Phase ruleset that applies a Managed Ruleset.
 * `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-* `"overrides": {"category": wordpress", "action": "log"}` defines an override at the tag level to enable rules tagged with `wordpress` and sets their action to `log`.
+* `"overrides": {"categories": [{"category": wordpress", "action": "log"}, {"category": drupal", "action": "log"}]}` defines an override at the tag level to enable rules tagged with `wordpress` or `drupal` and sets their action to `log`.
 * `"overrides": {"rules": [{"id": "{rule-id}", "action": "block"}]}` defines an override at the rule level that enables one individual rule and sets the action to `block`.
