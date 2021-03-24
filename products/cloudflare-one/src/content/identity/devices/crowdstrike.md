@@ -10,7 +10,7 @@ Cloudflare for Teams can check if [CrowdStrike](https://www.crowdstrike.com/) is
 
 | Prerequisites |
 | ------------- |
-| The WARP client installed on a user machine |
+| The WARP client installed on a user machine and updated to the latest version (minimum version required - Windows: 1.4.25.0, macOS: 1.4.27) |
 | CrowdStrike installed on a user machine |
 
 </TableWrap>
