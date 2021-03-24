@@ -61,6 +61,6 @@ curl -s -X PUT \
 ```
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the `http_request_firewall_managed` Phase ruleset that applies a Managed Ruleset.
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+* `"overrides": {"rulesets": [{"enabled": false}]}` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
 * `"overrides": {"categories": [{"category": wordpress", "action": "log"}, {"category": drupal", "action": "log"}]}` defines an override at the tag level to enable rules tagged with `wordpress` or `drupal` and sets their action to `log`.
 * `"overrides": {"rules": [{"id": "{rule-id}", "action": "block"}]}` defines an override at the rule level that enables one individual rule and sets the action to `block`.
