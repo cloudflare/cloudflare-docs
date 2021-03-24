@@ -301,8 +301,22 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+      <td><code>cf.tls_client_auth.cert_revoked</code><br /><Type>Boolean</Type></td>
+      <td>
+      <p>
+      Returns <code class="InlineCode">true</code> when a request presents a valid but revoked client certificate.
+      </p>
+      <p>When <code class="InlineCode">true</code>, the <code class="InlineCode">cf.tls_client_auth.cert_verified</code> field is also <code class="InlineCode">true</code>.
+      </p>
+      </td>
+    </tr>
+    <tr>
       <td><code>cf.tls_client_auth.cert_verified</code><br /><Type>Boolean</Type></td>
-      <td>Returns <code class="InlineCode">true</code> when a request presents a valid client certificate.</td>
+      <td>
+      <p>Returns <code class="InlineCode">true</code> when a request presents a valid client certificate.
+      </p>
+      <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
+      </p></td>
     </tr>
     <tr>
       <td><code>cf.worker.upstream_zone</code> <br /><Type>String</Type></td>
