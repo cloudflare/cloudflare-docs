@@ -46,7 +46,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     <Aside type='warning' header='Important'>
 
-    The _hostname_ field is mandatory in API Shield rules. You must define this field value explicitly, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+    To validate the hostname, you must include the _hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
 
     </Aside>
 
