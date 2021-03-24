@@ -70,7 +70,7 @@ Based on your analysis of **automated** traffic, create a Firewall Rule that **c
   <tbody>
     <tr>
       <td><code>(cf.bot_management.score eq 1) and not (cf.bot_management.verified_bot)</code></td>
-      <td><em>Log</em></td>
+      <td><em>JS Challenge</em></td>
     </tr>
   </tbody>
 </table>
@@ -79,14 +79,14 @@ For additional help with Firewall Rules, review the [Firewall Rules documentatio
 
 ### 5. Create additional Firewall Rules
 
-Just as before, start small and slowly increase your threshold to prevent widespread issues. For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
-
-Create Firewall Rules that address **likely automated** traffic and **other traffic groups**.
+Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 - If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
 - If your Firewall Rule has a **Challenge Solve Rate (CSR)** higher than *3%*, consider lowering your challenge threshold.
+
+The best approach is to start small and slowly increase your threshold to prevent widespread issues.
 
 ### 6. Continue monitoring domain traffic
 
@@ -94,7 +94,7 @@ You can adjust your Firewall Rules at any point. Set aside time to review [Bot A
 
 ## Bot Management variables
 
-Bot Management provides access to several [new variables](/firewall/cf-firewall-language/fields#dynamic-fields) available within the Firewall expression builder.
+Bot Management provides access to several [new variables](/firewall/cf-firewall-language/fields#dynamic-fields) within the Firewall expression builder.
 
 - **Bot Score**: An integer used to isolate bot requests which ranges from 1-99. Lower scores usually indicate automated traffic, while higher scores indicate human traffic. Most traffic scored below 30 comes from bots.
 - **Verified Bot**: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
