@@ -208,7 +208,7 @@ To begin, navigate to the **HTTP** tab in the `Policies` page of the Gateway sec
 
 Click **Add a rule**.
 
-![../static/secure-web-gateway/gw-rollout-guide/http-default.png]
+![HTTP default](../static/secure-web-gateway/gw-rollout-guide/http-default.png)
 
 This first rule will block security threats discovered in HTTP traffic. Select `Security Risks` from the Selector, choose `In` for the Operator, and click **All security risks** as the value.
 
