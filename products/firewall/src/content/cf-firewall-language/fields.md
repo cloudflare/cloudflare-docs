@@ -245,7 +245,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='warning' header='Important'>
 
-Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan with [Bot Management](https://support.cloudflare.com/hc/articles/360027519452#12345683) enabled.
+Access to the `cf.bot_management.verified_bot` field requires a Cloudflare Enterprise plan with [Bot Management](/bots/get-started/bm-subscription) enabled.
 
 </Aside>
 

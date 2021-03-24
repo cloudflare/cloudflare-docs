@@ -2,7 +2,7 @@
 
 <Aside type='warning' header='Important'>
 
-Access to [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) requires a Cloudflare Enterprise plan.
+Access to [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) requires a Cloudflare Enterprise plan with Bot Management enabled.
 
 </Aside>
 
@@ -17,8 +17,7 @@ These examples use:
 ## Suggested rules
 
 For best results:
-- Use [Bot Analytics](/bots/get-started/bm-subscription#enable-bot-management-for-enterprise) to learn about your traffic
-- Start with **Log** actions before implementing **Blocks** or **Challenges**
+- Use [Bot Analytics](/bots/get-started/bm-subscription#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
 - Start small and increase your bot threshold over time
 
 Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription#5-create-additional-firewall-rules) and your tolerance for false positives.
@@ -88,6 +87,14 @@ The following rules would block definitely automated mobile traffic, but only ch
     </tr>
   </tbody>
 </table>
+
+### Layer rules
+
+If your domain saw mobile, browser, and API traffic, you would want to arrange these example rules in the following order:
+- API
+- Mobile - Block
+- Mobile - Challenge
+- Browser - Block
 
 ### Additional considerations
 
