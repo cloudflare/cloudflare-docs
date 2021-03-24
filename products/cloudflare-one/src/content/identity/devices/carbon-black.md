@@ -8,7 +8,7 @@ Cloudflare for Teams can check if [Carbon Black](https://www.carbonblack.com/) i
 
 | Prerequisites |
 | ------------- |
-| The WARP client installed on a user machine and updated to the latest version (minimum version required - Windows: 1.4.25.0, macOS: 1.4.27) |
+| The WARP client installed on a user machine and updated to the latest version (minimum version required - macOS: Version 1.4.34 and Windows: Version 1.4.33.0) |
 | Carbon Black installed on a user machine |
 
 
