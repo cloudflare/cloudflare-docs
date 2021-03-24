@@ -7,7 +7,7 @@ order: 250
 Cloudflare API Shield allows you to secure your APIs using the following security solutions:
 
 - **Mutual TLS (mTLS)** - Blocks traffic from devices that do not have a valid client SSL/TLS certificate with an API Shield rule.
-- **Schema validation (Beta)** - Protects your origin from invalid API requests or a malicious payload by matching each request with the provided schema.
+- **Schema Validation (Beta)** - Protects your origin from invalid API requests or a malicious payload by matching each request with the provided schema.
 
 ## A positive security model for APIs
 
