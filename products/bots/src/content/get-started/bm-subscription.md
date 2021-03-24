@@ -3,7 +3,7 @@ title: Enterprise Bot Management
 order: 3
 ---
 
-# Getting started with Bot Management for Enterprise
+# Get started with Bot Management for Enterprise
 
 Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
 
@@ -50,7 +50,7 @@ At the end of your analysis, you should:
 
 <Aside type='note' header='Important'>
 
-If you were a Cloudflare customer before adding Bot Management, you can view past analytics (including traffic from before you purchased Bot Management). This means that you will be able to sort through traffic insights immediately.
+If you were a Cloudflare customer before adding Bot Management, you can view past analytics. This means that you will be able to sort through traffic insights immediately.
 
 New customers should give Bot Analytics a few days to gather data. You should only begin blocking or challenging traffic after checking for possible exemptions or special endpoints.
 
@@ -58,7 +58,7 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 ### 4. Create a Firewall Rule for automated traffic
 
-Based on your analysis of **automated** traffic, create a Firewall Rule that **logs** scores of 1 and exempts any good, automated requests. Monitor that request for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
+Based on your analysis of **automated** traffic, create a Firewall Rule that **challenges** scores of 1 and exempts any good, automated requests. Monitor that request for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -75,20 +75,18 @@ Based on your analysis of **automated** traffic, create a Firewall Rule that **l
   </tbody>
 </table>
 
-Once you validate your rule, change the **Action** to **Challenge** or **Block**. Monitor again for a few days.
-
 For additional help with Firewall Rules, review the [Firewall Rules documentation](/firewall/cf-firewall-rules).
 
 ### 5. Create additional Firewall Rules
 
 Just as before, start small and slowly increase your threshold to prevent widespread issues. For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
 
-Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. Again, start with a **Log** action and monitor your traffic for a few days.
+Create Firewall Rules that address **likely automated** traffic and **other traffic groups**.
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 - If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-- If your Firewall Rule has a **Captcha Solve Rate (CSR)** higher than *3%*, consider lowering your challenge threshold.
+- If your Firewall Rule has a **Challenge Solve Rate (CSR)** higher than *3%*, consider lowering your challenge threshold.
 
 ### 6. Continue monitoring domain traffic
 
