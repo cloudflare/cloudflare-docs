@@ -95,7 +95,13 @@ Monitors support a great deal of customization and have the following properties
         </td>
         <td>
           <ul>
-            <li>default value: 60</li>
+            <li>default value: 60 </li>
+            <li>minimum values: 
+            <ul>
+              <li>60 (Pro)</li>
+              <li>10 (Business)</li>
+              <li>5 (Enterprise)</li>
+            </ul></li>
           </ul>
         </td>
       </tr>
