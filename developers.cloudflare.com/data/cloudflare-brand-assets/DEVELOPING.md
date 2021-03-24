@@ -1,27 +1,9 @@
 # Developing
 
-## Publishing to NPM
+## How to add new icon to product-icons
 
-First run:
+Create a new js file with the correct name and export the pathD
 
-```txt
-npm version minor
-```
+The pathD will be inserted in a single <path> element inside an <svg>
 
-You’ll be returned the new version, call it `vX.X.X`. Then run:
-
-```txt
-git push origin vX.X.X --tags
-```
-
-Finally, run:
-
-```txt
-npm publish
-```
-
-And:
-
-```txt
-git push origin master
-```
+Make sure image is square as it will be rendered in a 48px by 48px <svg> viewbox

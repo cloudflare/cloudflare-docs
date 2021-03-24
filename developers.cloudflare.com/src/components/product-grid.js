@@ -14,13 +14,13 @@ const ProductGridColumns = ({ numColumns }) => {
   const result = useStaticQuery(graphql`
   query {
     allTypeProduct {
-    nodes {
-    title
-    path
-    pathD 
-    wrap
+      nodes {
+        title
+        path
+        pathD 
+        wrap
+      }
     }
-  }
   }
 `
   )
