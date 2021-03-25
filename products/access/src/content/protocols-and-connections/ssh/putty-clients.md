@@ -22,7 +22,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 
 With the Host Machine hostname, run the following command:
 
-```sh
+```bash
 $ cloudflared.exe access ssh --hostname <the hostname of the SSH server> --url localhost:<unused port>
 ```
 This launches a browser window that prompts you to authenticate your identity credentials.

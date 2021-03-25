@@ -59,7 +59,7 @@ To enforce mTLS authentication from the Cloudflare dashboard:
 
     This `curl` command example is for the site `example.com` that has an Access policy set for `https://auth.example.com`:
 
-    ```sh
+    ```bash
     $ curl -sv https://auth.example.com
     ```
 
@@ -67,7 +67,7 @@ To enforce mTLS authentication from the Cloudflare dashboard:
 
 1. Add your client certificate information to the request:
 
-    ```sh
+    ```bash
     $ curl -sv https://auth.example.com --cert example.pem --key key.pem
     ```
 

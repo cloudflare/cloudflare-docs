@@ -14,13 +14,13 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 
 All tunnel-related commands are prefixed with `tunnel`. For example:
 
-```sh
+```bash
 $ cloudflared tunnel --origincert ~/cert.pem --config ~/tunnel.yaml run mytunnel
 ```
 
 Tunnel-related commands include creating, deleting and running tunnels with
 
-```sh
+```bash
 $ cloudflared tunnel create <TUNNELNAME>
 $ cloudflared tunnel delete <TUNNELNAME>
 $ cloudflared tunnel run    <TUNNELNAME>
@@ -28,7 +28,7 @@ $ cloudflared tunnel run    <TUNNELNAME>
 
 You can also list all tunnels with
 
-```sh
+```bash
 $ cloudflared tunnel list
 ```
 
@@ -175,7 +175,7 @@ Prints the version number and build date.
 
 ## Login command
 
-```sh
+```bash
 $ cloudflared tunnel login
 ```
 
@@ -187,11 +187,11 @@ You can also obtain a Tunnel certificate independently of this command by visiti
 
 ## Service commands
 
-```sh
+```bash
 $ cloudflared service install
 ```
 
-```sh
+```bash
 $ cloudflared service uninstall
 ```
 
@@ -199,7 +199,7 @@ Install or uninstall cloudflared as a system service. The details of service ins
 
 ## Update command
 
-```sh
+```bash
 $ cloudflared update
 ```
 

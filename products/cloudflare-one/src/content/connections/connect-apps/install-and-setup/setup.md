@@ -15,7 +15,7 @@ Follow these steps to authenticate `cloudflared`:
 
 1. Log in to your Cloudflare account with the following command:
 
-```sh
+```bash
 $ cloudflared tunnel login
 ```
 

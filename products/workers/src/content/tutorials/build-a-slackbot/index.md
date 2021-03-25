@@ -68,7 +68,7 @@ Cloudflare’s command-line tool for managing Worker projects, Wrangler, has gre
 
 In the command line, generate your Worker project, passing in a project name (e.g. “slack-bot”), and the [template](/examples) URL to base your project on:
 
-```sh
+```bash
 ---
 header: Generate a new project
 ---
@@ -158,7 +158,7 @@ Finally, the function returns the `response`, whether it’s a match from the ro
 
 This request/response pattern makes it really straightforward to understand _how_ requests are routed in your Workers application. You’re _almost_ done with this file: to complete it, you need to actually define the corresponding function handlers for your routes. In this tutorial, you’ll define those handlers in `src/handlers`:
 
-```sh
+```bash
 ---
 header: Create new folders and files
 ---
@@ -236,7 +236,7 @@ With Slack slash commands, you can respond to a slash command by returning struc
 
 To begin, let’s parse the incoming data from a Slack message inside of the `lookup` handler. As previously mentioned, the Slack API sends an HTTP POST in URL Encoded format. To parse this, you need to add the first (and only) NPM package dependency to your project — a popular query string parser package called [`qs`](https://github.com/ljharb/qs):
 
-```sh
+```bash
 ---
 header: Install the qs package
 ---
@@ -628,7 +628,7 @@ export default async request => {
 
 The constant `SLACK_WEBHOOK_URL` represents the Slack Webhook URL that you created all the way back in the “Incoming Webhook” section of this guide. **This webhook allows developers to post directly to your Slack channel, so it should be kept secret!** To use this constant inside of your codebase, you can use Wrangler’s [Secrets](/cli-wrangler/commands#secret) feature:
 
-```sh
+```bash
 ---
 header: Set the SLACK_WEBHOOK_URL secret
 ---

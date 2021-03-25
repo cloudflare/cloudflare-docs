@@ -28,7 +28,7 @@ If you’d like to deploy your own version of the site, you can find the source 
 
 To generate a new project, we’ll use `wrangler generate --site` to create a new application, calling it `i18n-example`:
 
-```sh
+```bash
 ---
 theme: dark
 ---
@@ -162,7 +162,7 @@ To implement this, we’ll update the `strings` object, adding a second layer of
 
 To parse the `Accept-Language` header, we’ll install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) NPM package:
 
-```sh
+```bash
 ---
 theme: dark
 ---
@@ -283,7 +283,7 @@ entry-point = "workers-site"
 
 With that, it’s time to publish your application! Using `wrangler`, we can publish to Cloudflare’s entire network almost instantly, using the `publish` command:
 
-```sh
+```bash
 ---
 theme: dark
 ---

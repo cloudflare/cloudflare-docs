@@ -37,7 +37,7 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```sh
+```bash
 $ cloudflared tunnel login
 ```
 
@@ -59,7 +59,7 @@ By default, the SSH protocol listens on port 22. Confirm which port your infrast
 
 Run the following command to connect the machine to Cloudflare, replacing the `ssh.site.com` and `22` values with your site and port.
 
-```sh
+```bash
 $ cloudflared tunnel --hostname ssh.site.com --url ssh://localhost:22
 ```
 
@@ -81,7 +81,7 @@ Cloudflare Access does not require any unique commands or SSH wrappers. The only
 
 To generate generic configuration settings, run the following command:
 
-```sh
+```bash
 $ cloudflared access ssh-config
 ```
 
@@ -96,7 +96,7 @@ Replace the `[your hostname]` value with the hostname configured for the remote 
 
 Optionally, if you know the hostname, you can run the following command to generate the exact SSH configuration details. Replace `ssh.site.com` with your remote machine's hostname.
 
-```sh
+```bash
 $ cloudflared access ssh-config --hostname ssh.site.com
 ```
 
@@ -111,7 +111,7 @@ Host ssh.site.com
 
 Run the following command to create a connection from the device to Cloudflare.
 
-```sh
+```bash
 $ ssh username@ssh.site.com
 ```
 
@@ -123,7 +123,7 @@ If you use SSH to reach a Git repository, you can continue to use the `git` comm
 
 Once configured, you can run the following command to test the connection:
 
-```sh
+```bash
 $ git clone ssh -T username@git.site.com
 ```
 

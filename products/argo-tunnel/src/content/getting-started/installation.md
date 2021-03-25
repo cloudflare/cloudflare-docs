@@ -30,7 +30,7 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 You can install `cloudflared` on macOS systems via Homebrew:
 
-```sh
+```bash
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
@@ -49,7 +49,7 @@ Once `cloudflared` is installed:
 4. Navigate to the same Downloads folder.
 5. Run the `cloudflared.exe` executable as an administrator to confirm the installation, replacing the path in the example below with the specifics of your directory:
 
-```sh
+```bash
 PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
 ```
 

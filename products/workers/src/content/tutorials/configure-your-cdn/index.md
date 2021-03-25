@@ -43,7 +43,7 @@ Cloudflare’s command-line tool for managing Worker projects, Wrangler, has gre
 
 In the command line, generate your Workers project, and pass the project name `serve-cdn-assets`:
 
-```sh
+```bash
 ---
 header: Generate a new project
 ---
@@ -246,7 +246,7 @@ async function handleRequest(event) {
 
 To make this script available for use, you’ll need to build and publish it to Cloudflare using Wrangler. To do this, we’ll first _build_ the code, and then _publish_ it:
 
-```sh
+```bash
 ---
 header: Build and publish your project
 ---

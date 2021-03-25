@@ -16,7 +16,7 @@ Using [`lerna`](https://github.com/lerna/lerna), a tool for managing multiple Ja
 
 Begin by installing `lerna`, and creating a new project in the folder `workers-monorepo`:
 
-```sh
+```bash
 ---
 header: Install lerna and init a new project
 ---
@@ -27,7 +27,7 @@ $ lerna init
 
 Inside of `packages`, where `lerna` will look for your projects, you can generate multiple new Wrangler codebases, or even `git clone` your existing Workers codebase to migrate it into a `lerna` monorepo:
 
-```sh
+```bash
 ---
 header: Generate projects using Wrangler
 ---
@@ -41,7 +41,7 @@ $ git clone https://github.com/signalnerve/my-cool-project.git
 
 This approach to managing your Workers projects can become incredibly powerful when you begin to share dependencies between the projects. Imagine that your codebase has a pre-defined set of API handlers that you want to re-use between our public and private APIs, in the packages `public-api` and `private-api`:
 
-```sh
+```bash
 ---
 header: Generate projects using Wrangler
 ---
@@ -52,7 +52,7 @@ $ wrangler generate private-api
 
 Adjacent to your API projects, you can create a new package `handlers`, which can be imported into each project:
 
-```sh
+```bash
 ---
 header: Create a new lerna package
 ---
@@ -72,7 +72,7 @@ filename: packages/public-api/package.json
 
 Using the `bootstrap` command, you can link the packages together and use them inside of your code:
 
-```sh
+```bash
 ---
 header: Link packages using lerna bootstrap
 ---
@@ -121,7 +121,7 @@ filename: packages/private-api/package.json
 
 `lerna run publish` will look for the `publish` script defined in each package’s `project.json`, and if the project defines it, it will run the script inside of that project’s directory:
 
-```sh
+```bash
 ---
 header: Publish packages using lerna run
 ---

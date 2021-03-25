@@ -10,7 +10,7 @@ First, [install](https://www.getzola.org/documentation/getting-started/installat
 
 If you use the package manager [Homebrew](https://brew.sh), you can use `brew install` to install Zola:
 
-```sh
+```bash
 $ brew install zola
 ```
 
@@ -18,13 +18,13 @@ $ brew install zola
 
 If you use the package manager [Chocolatey](https://chocolatey.org/), you can use `choco install` to install Zola:
 
-```sh
+```bash
 $ choco install zola
 ```
 
 If you use the package manager [Scoop](https://scoop.sh/), you can use `scoop install` to install Zola:
 
-```sh
+```bash
 $ scoop install zola
 ```
 
@@ -32,7 +32,7 @@ $ scoop install zola
 
 Your Linux distro's package manager may include Zola. If this is the case, you can install it directly using your distro's package manager -- for instance, using `pkg`:
 
-```sh
+```bash
 $ pkg install hugo
 ```
 
@@ -48,7 +48,7 @@ For more instruction on installing these releases, see [Zola's install guide](ht
 
 With Zola installed, you can create a new project using `zola init`. For now, we'll use the default template:
 
-```sh
+```bash
 $ zola init my-zola-project
 ```
 
@@ -64,7 +64,7 @@ You can leave this one blank  for  now
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```sh
+```bash
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

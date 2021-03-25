@@ -17,13 +17,13 @@ Run the following commands to install required dependencies and to build curl wi
 
 - Uninstall curl if you already have:
 
-  ```sh
+  ```bash
   $ brew remove -f curl
   ```
 
 - Build curl with quiche:
 
-  ```sh
+  ```bash
   $ brew install --HEAD -s https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
   ```
 
@@ -32,7 +32,7 @@ so you need to add to your $PATH
 
 Check if curl with H3 support is built properly:
 
-```sh
+```bash
 $ curl --help | egrep 'alt-svc|http3'
     --alt-svc <file name> Enable alt-svc with this cache file
     --http3         Use HTTP v3
@@ -40,7 +40,7 @@ $ curl --help | egrep 'alt-svc|http3'
 
 Now, you can try curl on any HTTP/3 enabled sites.
 
-```sh
+```bash
 $ curl --http3 https://cloudflare-quic.com
 $ curl --http3 https://blog.cloudflare.com
 ```

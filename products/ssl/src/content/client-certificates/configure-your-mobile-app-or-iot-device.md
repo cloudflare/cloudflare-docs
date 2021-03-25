@@ -262,7 +262,7 @@ To configure the mobile app to securely request temperature data submitted by th
 
 For simplicity, this example embeds a “bootstrap” certificate and key in the application bundle as a PKCS#12-formatted file:
 
-```sh
+```bash
 $ openssl pkcs12 -export -out bootstrap-cert.pfx -inkey ios-key.pem -in ios.pem
 Enter Export Password:
 Verifying - Enter Export Password:

@@ -16,7 +16,7 @@ Let's begin by creating a new Cloudflare Workers project. If you haven't used Cl
 
 We'll use the Workers TypeScript template to generate our project. Don't worry if you don't know TypeScript -- we won't be writing any complicated types, and if you're using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` to create a new project using the template:
 
-```sh
+```bash
 ---
 header: Creating a new Workers project with Wrangler
 ---
@@ -29,7 +29,7 @@ Our Workers application will serve as a backend API to return blog post data usi
 
 While you can manually parse incoming URLs, it's much easier to use a routing library to consistently handle incoming requests. We'll install and use [itty-router](https://github.com/kwhitley/itty-router), an open-source routing library with support for Cloudflare Workers:
 
-```sh
+```bash
 ---
 header: Installing itty-router
 ---
@@ -229,7 +229,7 @@ export default Post
 
 With our API configured, we're ready to publish! Run `wrangler publish`, and when you've successfully deployed your application, you should be able to make requests to your API to see data returned in the console:
 
-```sh
+```bash
 ---
 header: "Testing the API"
 ---
@@ -245,7 +245,7 @@ With our serverless API deployed, we can now build the frontend of our applicati
 
 To start, create a new React app using `create-react-app` in your terminal, and then navigate into the directory and start a local development server:
 
-```sh
+```bash
 ---
 header: "Creating a new React application"
 ---
@@ -275,7 +275,7 @@ export default App;
 
 Add `@reach/router`:
 
-```sh
+```bash
 ---
 header: "Adding @reach/router"
 ---

@@ -36,7 +36,7 @@ Inside of our application’s settings, the client ID and client secret are keys
 
 Using wrangler’s `generate` command, we can begin building a new application using a Workers template. For this tutorial, we’ll heavily modify the default template for [Workers Sites](/platform/sites), which deploys a static HTML application:
 
-```sh
+```bash
 ---
 header: Generate a new project
 ---
@@ -515,7 +515,7 @@ With our application persisting authentication data in Workers KV and associatin
 
 To begin, install the NPM package [`cookie`](https://www.npmjs.com/package/cookie), which we’ll use to simplify parsing the `Cookie` header in the `request`:
 
-```sh
+```bash
 ---
 header: Install cookie package
 ---
@@ -841,7 +841,7 @@ account_id = "$accountId"
 
 In the code for this tutorial, we’ve used the constant `AUTH_STORE` to refer to a Workers KV namespace where we store authorization info for our users. Before we can deploy this project, we need to create a Workers KV namespace and attach it to our Workers application. Using wrangler, we can create this Workers KV namespace directly from the command-line:
 
-```sh
+```bash
 ---
 header: Create a new KV namespace with Wrangler
 ---
@@ -891,7 +891,7 @@ let AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_CALLBACK_URL, SALT
 
 With these constants stubbed, you can publish your application:
 
-```sh
+```bash
 ---
 header: Publish your project
 ---
@@ -910,7 +910,7 @@ filename: workers-site/auth0.js
 
 Using `wrangler secret`, you can now set each secret directly in the command-line:
 
-```sh
+```bash
 ---
 header: Set secret values
 ---
@@ -943,7 +943,7 @@ To generate a salt, we’ll simply make a new, random string, and save it as a �
 
 With a random string generated, you can set it using `wrangler secret`:
 
-```sh
+```bash
 ---
 header: Set the SALT secret
 ---
@@ -965,7 +965,7 @@ Note that Auth0 has great security defaults and any callback URLs or origins tha
 
 With your `wrangler.toml` successfully configured, you can now use wrangler’s `publish` command to deploy your application:
 
-```sh
+```bash
 ---
 header: Publish your project
 ---

@@ -20,7 +20,7 @@ We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Pl
 
 You need the hostname of the machine you are reaching through Access. With that hostname, run the following command, which launches a browser window that prompts you to authenticate your identity credentials.
 
-```sh
+```bash
 $ cloudflared.exe access ssh --hostname <the hostname of the SSH server> --url localhost:<unused port>
 ```
 

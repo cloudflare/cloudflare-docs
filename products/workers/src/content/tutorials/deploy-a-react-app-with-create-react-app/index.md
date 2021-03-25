@@ -27,7 +27,7 @@ In addition, we’ll be using [create-react-app](https://github.com/facebook/cre
 
 In this tutorial, we’ll use [`create-react-app`](https://github.com/facebook/react) to create a simple static application. As previously mentioned, no experience with React is necessary, and we can create a new project directly by using `npx`:
 
-```sh
+```bash
 ---
 header: Create a new React application
 ---
@@ -40,7 +40,7 @@ $ npx create-react-app my-static-site
 
 In the command line, navigate to your newly-created React project, and use `wrangler init --site` to generate a Workers Sites configuration for your project:
 
-```sh
+```bash
 ---
 header: Initialize a new Wrangler project
 ---
@@ -70,7 +70,7 @@ entry-point = "workers-site"
 
 With a configured `wrangler.toml` file, it’s time to build your project, and publish it to Workers. Run `npm run build` to tell `create-react-app` to build your site, and `wrangler publish` to deploy it to Workers:
 
-```sh
+```bash
 ---
 header: Build and publish your application
 ---

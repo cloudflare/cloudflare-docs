@@ -18,7 +18,7 @@ The `api.cloudflare.com` endpoint has a default rate limit of 1200 calls per 5 m
 
 Even with an updated rate limit, Terraform will need to stay under this threshold otherwise the Cloudflare API will respond with `HTTP 429/Too Many Requests` responses. When it does, the Cloudflare Terraform provider will back off before retrying. All of these figures can be customized, as shown below.
 
-```sh
+```bash
 $ export CLOUDFLARE_RPS=
 $ export CLOUDFLARE_API_CLIENT_LOGGING=true
 ```

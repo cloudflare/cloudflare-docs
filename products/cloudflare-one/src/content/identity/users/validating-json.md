@@ -37,7 +37,7 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
     If an error occurs while running `lokey`, install the [Python six](https://pypi.python.org/pypi/six) library, and try again:
 
-    ```sh
+    ```bash
     $ pip install six==1.10.0
     ```
 

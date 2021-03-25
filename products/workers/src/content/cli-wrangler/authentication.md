@@ -25,13 +25,13 @@ You can also configure your global user with environment variables. This is the 
 
 You can deploy with authentication tokens (recommended). Obtain `CF_ACCOUNT_ID` and `CF_API_TOKEN` from the Cloudflare dashboard and run:
 
-```sh
+```bash
 $ CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken wrangler publish
 ```
 
 Or you can deploy with your email and your global API key. Obtain `CF_EMAIL` and `CF_API_KEY` from the Cloudflare dashboard and run:
 
-```sh
+```bash
 $ CF_EMAIL=cloudflareEmail CF_API_KEY=veryLongAPI wrangler publish
 ```
 

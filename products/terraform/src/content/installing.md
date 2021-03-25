@@ -13,7 +13,7 @@ The installation process for Terraform is extremely simple as it ships as a sing
 
 The easiest way to install Terraform on macOS is with Homebrew:
 
-```sh
+```bash
 $ brew install terraform
 
 ==> Downloading https://homebrew.bintray.com/bottles/terraform-0.11.6.sierra.bottle.tar.gz
@@ -31,7 +31,7 @@ Terraform v0.11.6
 
 On Linux, you just need to download and place the binary in your $PATH:
 
-```sh
+```bash
 $ wget -q https://releases.hashicorp.com/terraform/0.11.6/terraform_0.11.6_linux_amd64.zip
 
 $ unzip terraform_0.11.6_linux_amd64.zip

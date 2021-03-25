@@ -28,7 +28,7 @@ If you do not want to create the tunnel in advance, you must install `cloudflare
 
 Run the following command:
 
-```sh
+```bash
 $ sudo cloudflared service install
 ```
 
@@ -48,7 +48,7 @@ The above arguments are required for pre-configured Argo Tunnel deployments. If 
 
 Open a Terminal and run the following command:
 
-```sh
+```bash
 $ cloudflared service install
 ```
 
@@ -58,7 +58,7 @@ Argo Tunnel will be installed as a launch agent, and start whenever you log in, 
 
 Run the following command:
 
-```sh
+```bash
 $ launchctl start com.cloudflare.cloudflared
 ```
 
@@ -68,7 +68,7 @@ Output will be logged to `~/Library/Logs/com.cloudflare.cloudflared.err.log` and
 
 Run the following command:
 
-```sh
+```bash
 $ sudo cloudflared service install
 ```
 
@@ -78,7 +78,7 @@ Argo Tunnel will be installed as a launch daemon, and start whenever your system
 
 Run the following command:
 
-```sh
+```bash
 $ sudo launchctl start com.cloudflare.cloudflared
 ```
 

@@ -37,7 +37,7 @@ Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downlo
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```sh
+```bash
 $ cloudflared tunnel login
 ```
 
@@ -59,7 +59,7 @@ For example, if you share the cluster API server at `cluster.site.com`, build a 
 
 Run the following command to connect the resource to Cloudflare, replacing the `cluster.site.com` and `tcp://kubernetes.docker.internal:6443` values with your site and port.
 
-```sh
+```bash
 $ cloudflared tunnel --hostname cluster.site.com --url tcp://kubernetes.internal:6443 --socks5=true
 ```
 
@@ -77,7 +77,7 @@ Follow the same steps above to download and install `cloudflared` on the client 
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```sh
+```bash
 $ cloudflared access tcp --hostname cluster.site.com --url 127.0.0.1:1234
 ```
 
@@ -85,6 +85,6 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 
 `kubeconfig` does not support proxy command configurations at this time, though the community has submitted plans to do so. In the interim, users can alias the cluster's API server to save time.
 
-```sh
+```bash
 $ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
 ```

@@ -43,7 +43,7 @@ Enterprise customers who have enabled Argo will need to contact their Cloudflare
 
 Once installed, verify `cloudflared` has installed properly by checking the version.
 
-```sh
+```bash
 $ cloudflared --version
 cloudflared version 2019.2.1 (built 2019-02-28-0010 UTC)
 ```
@@ -55,7 +55,7 @@ Next, login to your Cloudflare account from `cloudflared`. You will use the same
 
 Run the following command and a login page should open in your browser:
 
-```sh
+```bash
 $ cloudflared tunnel login
 A browser window should have opened at the following URL:
 
@@ -73,7 +73,7 @@ The certificate consists of three components bundled into a single PEM file. One
 
 Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser will download the certificate as a file named `cert.pem`. You should see it in your browser's standard list of downloaded files. You'll need to move that `cert.pem` file from your browser's downloads folder into the `~/.cloudflared` folder. Copy and paste the following command to move the certificate to the `.cloudflared` directory on your system.
 
-```sh
+```bash
 $ mv cert.pem ~/.cloudflared/cert.pem
 ```
 
@@ -82,7 +82,7 @@ Argo Tunnel runs a virtual, encrypted tunnel from a local web server to the Clou
 
 To do so, pass the flag --hello-world and replace [hostname] with a hostname in your Cloudflare account. Because Tunnel automatically creates DNS records for you, you can choose a subdomain that is not otherwise in use.
 
-```sh
+```bash
 $ cloudflared --hostname [hostname] --hello-world
 INFO[0000] Build info: {GoOS:darwin GoVersion:go1.11.1 GoArch:amd64}
 INFO[0000] Version 2019.2.1
@@ -120,7 +120,7 @@ With your credentials saved to disk, you can now start Argo Tunnel for your prod
 
 The localhost address should point to a locally running web server.
 
-```sh
+```bash
 $ cloudflared tunnel --hostname [hostname] --url http://localhost:8000
 INFO[0000] Proxying tunnel requests to https://127.0.0.1:8000
 INFO[0000] Starting metrics server                       addr="127.0.0.1:62634"

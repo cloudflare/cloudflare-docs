@@ -16,7 +16,7 @@ When you’re developing your Workers application, `wrangler dev` can significan
 
 To get started, run `wrangler dev` in your Workers project directory. `wrangler` will deploy your application to our preview service, and make it available for access on `localhost`:
 
-```sh
+```bash
 $ wrangler dev
 
   Built successfully, built project size is 27 KiB.
@@ -43,7 +43,7 @@ addEventListener("fetch", event => {
 })
 ```
 
-```sh
+```bash
 $ wrangler dev
 
 [2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK
@@ -84,7 +84,7 @@ The output of each `wrangler tail` log is a structured JSON object:
 
 By piping the output to tools like [`jq`](https://stedolan.github.io/jq/), you can query and manipulate the requests to look for specific information:
 
-```sh
+```bash
 $ wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/"
 "https://www.bytesized.xyz/component---src-pages-index-js-a77e385e3bde5b78dbf6.js"
