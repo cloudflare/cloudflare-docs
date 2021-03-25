@@ -141,7 +141,7 @@ header: Response
 
 You can view all versions in phases (both account-level and zone-level) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
 
-The following example lists the rules in version `2` of a Managed Ruleset (the most recent version of that Managed Ruleset).
+The following example lists the rules in version `2` of a Managed Ruleset (the most recent version of that ruleset).
 
 ```bash
 ---
@@ -204,6 +204,6 @@ header: Response
 }
 ```
 
-Each rule in a Managed Ruleset can have associated tags or categories, listed in the `categories` array.
+Each rule in a Managed Ruleset can have associated tags or categories, listed in the `categories` field.
 
 For more information on the available API methods for viewing rulesets, check [List and view rulesets](/cf-rulesets/rulesets-api/view).

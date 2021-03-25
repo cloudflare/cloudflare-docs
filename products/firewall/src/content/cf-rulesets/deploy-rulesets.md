@@ -13,7 +13,7 @@ This feature is part of an early access experience for selected customers.
 
 Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy or execute a ruleset. Add a rule with `"action": "execute"` to a Phase, specifying the Ruleset ID as an action parameter. This rule executes the ruleset. Use a separate rule for each ruleset you want to deploy.
 
-A rule that is deploying a ruleset consists of:
+A rule that deploys a ruleset consists of:
 
 - The **ID of the ruleset** you want to deploy.
 - An **expression**.
@@ -89,6 +89,6 @@ header: Response
 
 Check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information on working with Managed Rulesets and custom rulesets.
 
-For more information on the available API endpoints for editing and deploying rulesets, check [Update and deploy rulesets](#).
+For more information on the available API endpoints for editing and deploying rulesets, check [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
 
 For examples of deploying rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).

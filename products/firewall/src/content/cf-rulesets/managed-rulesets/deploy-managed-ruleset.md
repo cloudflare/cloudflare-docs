@@ -19,13 +19,13 @@ To deploy a Managed Ruleset to a Phase at the account level or at the zone level
 Use the following workflow to deploy a managed ruleset to a Phase at the account level.
 
 1. Get your account ID.
-1. Get the ID of the Managed Ruleset you wish to deploy. See [View available rulesets](#).
+1. Get the ID of the Managed Ruleset you wish to deploy. See [List existing rulesets](cf-rulesets/rulesets-api/view.md#list-existing-rulesets).
 1. Identify the Phase where you want to deploy the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same Phase where you want to deploy it. To learn more about the available Phases supported by each Cloudflare product, check the specific documentation for that product.
 1. Add a rule to the account-level Phase to deploy the Managed Ruleset.
 
 ### Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` Phase of your account (`{account-id}`). The rules in the Managed Ruleset are executed when the zone name matches one of "example.com" or "anotherexample.com".
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` Phase of your account (`{account-id}`). The rules in the Managed Ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
 
 ```json
 ---
@@ -87,7 +87,7 @@ header: Response
 Use the following workflow to deploy a managed ruleset to a Phase at the zone level.
 
 1. Get your zone ID.
-1. Get the ID of the Managed Ruleset you wish to deploy. See [View available rulesets](#).
+1. Get the ID of the Managed Ruleset you wish to deploy. See [List existing rulesets](cf-rulesets/rulesets-api/view.md#list-existing-rulesets).
 1. Identify the Phase where you want to deploy the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same Phase where you want to deploy it. To learn more about the available Phases supported by each Cloudflare product, check the specific documentation for that product.
 1. Add a rule to the zone-level Phase to deploy the Managed Ruleset.
 
