@@ -24,10 +24,10 @@ Super Bot Fight Mode is included in your Pro subscription. When enabled, the pro
 
 Use the **Bot Report** to monitor bot traffic for the past 24 hours.
 
-To access the **Bot Report**, go to **Firewall** > **Bots**. If you see a double-digit percentage of automated traffic, you may want to upgrade to [Bot Management](/about/plans/bm-subscription) to save money on origin costs and protect your domain from large-scale attacks.
+To access the **Bot Report**, go to **Firewall** > **Bots**. If you see a double-digit percentage of automated traffic, you may want to upgrade to [Bot Management](../bm-subscription) to save money on origin costs and protect your domain from large-scale attacks.
 
-![Bot report Traffic distribution](../images/traffic-distribution.png)
+![Bot report traffic distribution](../images/bot-report-pro.png)
 
 ### Firewall events
 
-You can see logs of bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Super Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+You can see bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Super Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.

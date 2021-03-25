@@ -20,15 +20,11 @@
     </tr>
     <tr>
       <td><b>Type of bots detected</b></td>
-      <td>Simple bots and headless browsers</td>
+      <td>Simple bots (from cloud ASNs) and headless browsers</td>
     </tr>
     <tr>
       <td><b>Actions</b></td>
       <td>Cloudflare issues a computationally expensive challenge</td>
-    </tr>
-    <tr>
-      <td><b>Logs</b></td>
-      <td>Logs of bot activity available in <b>Firewall Events</b></td>
     </tr>
     <tr>
       <td><b>Additional control</b></td>

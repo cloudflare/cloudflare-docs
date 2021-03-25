@@ -19,7 +19,7 @@ To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **
 
 For a full tour of Bot Analytics, see [our blog post](https://blog.cloudflare.com/introducing-bot-analytics/). At a high level, the tool includes:
 
-- **Requests by bot score**: View your total domain traffic and segment it vertically by traffic type. Keep an eye on “automated” and “likely automated” subsets of traffic.
+- **Requests by bot score**: View your total domain traffic and segment it vertically by traffic type. Keep an eye on *automated* and *likely automated* traffic.
 - **Bot score distribution**: View the number of requests assigned a bot score 1 through 99.
 - **Bot score source**: Identify the most common detection engines used to score your traffic. Hover over a tooltip to learn more about each engine.
 - **Top requests by attribute**: View more detailed information on specific IP addresses and more.
@@ -37,10 +37,10 @@ Bot Management customers can use Bot Analytics to:
 
 ## API
 
-Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, and bot *decisions* (“automated,” “likely automated,” etc.).
+Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, and bot *decisions* (*automated*, *likely automated*, etc.).
 
 Read the [GraphQL Analytics API documentation](https://developers.cloudflare.com/analytics/graphql-api) for more information about GraphQL and basic querying.
 
 ## Third-party tools
 
-To bring data from **Bot Management** into tools like Elastic, Google Data Studio, and more, see our [Bot Management Dashboard tutorial](/logs/tutorials/bot-management-dashboard).
+To bring data from **Bot Management** into tools like Elastic, Google Data Studio, and more, see our [Bot Management Dashboard tutorial](https://developers.cloudflare.com/logs/tutorials/bot-management-dashboard).

@@ -3,6 +3,8 @@ title: Enterprise Bot Management
 order: 3
 ---
 
+import StaticResourcesBM from "../_partials/_static-resources-bm.md"
+
 # Get started with Bot Management for Enterprise
 
 Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard. Bot Management also supports custom solutions via Workers and Logs.
@@ -13,7 +15,9 @@ This Enterprise product provides the most flexibility to customers by:
 - Allowing customers to action on this score with Firewall Rules or Workers.
 - Allowing customers to view this score in Bot Analytics or Logs.
 
-The bot score is an indicator of certainty. For example, a score of 1 means we are quite certain the request was automated while a score of 99 means we are quite certain the request came from a human.
+The bot score is an indicator of certainty. For example, a score of 1 means Cloudflare is quite certain the request was automated while a score of 99 means Cloudflare is quite certain the request came from a human.
+
+---
 
 ## Enable Bot Management for Enterprise
 
@@ -35,12 +39,12 @@ Before deploying Bot Management on live traffic, use [Bot Analytics](../../bot-a
 
 Go to **Firewall** > **Bots** and examine the following traffic segments:
 - **Automated traffic**: Bot scores of 1
-- **Likely automated traffic**: Bots scores of 2 to 29
+- **Likely automated traffic**: Bots scores of 2 through 29
 - **Other traffic groups**: Any additional large spikes in bot scores
 
-For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that *should not be blocked* — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
+For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that *should not* be blocked — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
 
-Use the slider tool to identify **other traffic groups**. For example, you may find that your mobile app is routinely scored at 37. 
+Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12. 
 
 ![Bot score distribution](../images/bot-score-distribution.png)
 
@@ -58,7 +62,7 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 ### 4. Create a Firewall Rule for automated traffic
 
-Based on your analysis of **automated** traffic, create a Firewall Rule that **challenges** scores of 1 and exempts any good, automated requests. Monitor that request for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
+Based on your analysis of **automated** traffic, create a [Firewall Rule](https://developers.cloudflare.com/firewall/cf-firewall-rules) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -75,11 +79,9 @@ Based on your analysis of **automated** traffic, create a Firewall Rule that **c
   </tbody>
 </table>
 
-For additional help with Firewall Rules, review the [Firewall Rules documentation](/firewall/cf-firewall-rules).
-
 ### 5. Create additional Firewall Rules
 
-Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds, see our [Firewall Rules documentation](/firewall/recipes/challenge-bad-bots).
+Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, see our [Firewall Rules documentation](https://developers.cloudflare.com/firewall/recipes/challenge-bad-bots).
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 - If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
@@ -92,12 +94,14 @@ The best approach is to start small and slowly increase your threshold to preven
 
 You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](../../bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
 
+---
+
 ## Bot Management variables
 
-Bot Management provides access to several [new variables](/firewall/cf-firewall-language/fields#dynamic-fields) within the Firewall expression builder.
+Bot Management provides access to several [new variables](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#dynamic-fields) within the Firewall expression builder.
 
 - **Bot Score**: An integer used to isolate bot requests which ranges from 1-99. Lower scores usually indicate automated traffic, while higher scores indicate human traffic. Most traffic scored below 30 comes from bots.
-- **Verified Bot**: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
+- **Verified Bot**: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](https://developers.cloudflare.com/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
 - **Serves Static Resource**: An identifier that matches [file extensions](../../about/static-resources) for many types of static resources. Use this variable if you send emails that retrieve static images.
 
 These variables are also available as part of the [request.cf](https://developers.cloudflare.com/workers/reference/apis/request/#the-cf-object) object via [Cloudflare Workers](https://developers.cloudflare.com/workers/):
@@ -112,9 +116,15 @@ These variables are also available as part of the [request.cf](https://developer
 
 Bot Score is different from Threat Score. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by blocking or challenging bot scores lower than 30 and avoiding IP reputation entirely.
 
+### Static resources
+
+<StaticResourcesBM/>
+
+For more details, see [Static resource protection](/about/static-resources).
+
 ### Verified bots
 
-Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that we are not [currently tracking](/firewall/known-issues-and-faq#bots-currently-detected), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that Cloudflare is not [currently tracking](https://developers.cloudflare.com/firewall/known-issues-and-faq#bots-currently-detected), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ### Mobile traffic
 To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your Firewall Rules.

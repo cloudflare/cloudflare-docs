@@ -18,6 +18,6 @@ To start using Bot Fight Mode:
 1. Select **Bots**.
 1. For **Bot Fight Mode**, select **On**.
 
-## Logs
+## Visibility
 
-You can see logs of bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+You can see bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.

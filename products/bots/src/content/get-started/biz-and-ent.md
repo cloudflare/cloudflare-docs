@@ -7,7 +7,7 @@ import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
 
 # Get started with Super Bot Fight Mode (Business)
 
-Super Bot Fight Mode is included in your Business subscription. When enabled, the product:
+Super Bot Fight Mode is included in your Business or Enterprise subscription. When enabled, the product:
 
 - Identifies traffic matching patterns of known bots and likely bots
 - Can challenge or block bots

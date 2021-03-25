@@ -4,6 +4,8 @@ order: 3
 
 ---
 
+import StaticResourcesBM from "../../_partials/_static-resources-bm.md"
+
 # Static resource protection
 
 Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their static resources from bots.
@@ -21,7 +23,7 @@ To enable this feature as a Pro or Business customer or an Enterprise customer w
 
 ## Bot Management for Enterprise
 
-To enable this feature as an Enterprise customer with Bot Management, set up a **Firewall Rule** using the <code class="InlineCode">cf.botManagement.staticResource</code> field.
+<StaticResourcesBM/>
 
 ## Which files are protected?
 

@@ -36,7 +36,7 @@ The Heuristics engine immediately gives automated requests a score of one.
 
 <BotsML/>
 
-The ML engine produces scores two through 99.
+The ML engine produces scores 2 through 99.
 
 ### Anomaly detection
 
