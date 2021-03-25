@@ -2,19 +2,23 @@
 order: 2
 ---
 
-# Azure dedicated HSM
+# Azure Dedicated HSM
 
-<Aside type='note' header='Note'>
+This tutorial uses <a href="https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/">Azure Dedicated HSM</a> — a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a790.
 
-The example below was tested using <a href="https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/">Azure Dedicated HSM</a>, a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a790. It is assumed that you have already followed Microsoft’s <a href="https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell">Tutorial – Deploying HSMs into an existing virtual network using PowerShell</a> and installed the SafeNet client software.
+---
 
-</Aside>
+## Before you start
 
---------
+Make sure you have:
+- Followed Microsoft's <a href="https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell">tutorial</a> for deploying HSMs into an existing virtual network using Powershell
+- Installed the [SafeNet client software](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/fips-common-criteria-validations/)
+
+---
 
 ## 1. Create, assign, and initialize a new partition
 
-The first step we’ll take is creating an HSM partition, which can be thought of as an independent logical HSM within your Azured Dedicated HSM device.
+The first step we’ll take is creating an HSM partition, which can be thought of as an independent logical HSM within your Azure Dedicated HSM device.
 
 ```txt
 vm$ ssh tenantadmin@hsm
