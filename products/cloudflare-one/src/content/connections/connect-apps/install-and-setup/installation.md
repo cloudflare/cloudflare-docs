@@ -20,6 +20,41 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 </TableWrap>
 
+### `.deb` install
+
+Use the `deb` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` package in this example. 
+
+```sh
+wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
+dpkg -i cloudflared-stable-linux-amd64.deb
+```
+
+### `.rpm` install
+
+Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example. 
+
+```sh
+wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
+rpm -ivh cloudflared-stable-linux-amd64.rpm
+```
+
+### Build from source
+
+You can also build the latest version of `cloudflared` from source with the following steps.
+
+```sh
+$ git clone https://github.com/cloudflare/cloudflared.git
+$ cd cloudflared
+$ make cloudflared
+$ go install github.com/cloudflare/cloudflared/cmd/cloudflared
+```
+
+Depending on where you installed `cloudflared`, you can move it to a known path as well.
+
+```sh
+mv /root/cloudflared/cloudflared /usr/bin/cloudflared
+```
+
 ## Docker
 
 A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.com/r/cloudflare/cloudflared).
