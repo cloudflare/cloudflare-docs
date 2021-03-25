@@ -4,6 +4,12 @@ order: 2
 
 # HTTP policies
 
+<Aside>
+
+Install the <a href="/connections/connect-devices/warp/install-cloudflare-cert">Cloudflare Root Certificate</a> before creating HTTP policies.
+
+</Aside>
+
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
 ![Gateway flow HTTP](../../../static/documentation/policies/gateway-flow-3.jpg)
@@ -66,6 +72,14 @@ If you would like to isolate an **entire domain name**, you can use a regular ex
 | Selector | Operator | Value | Action |
 | - | - | - | - |
 | Host | matches regex | `example\.com\|.*\.example\.com` | Isolate
+
+<Aside type='note' header='Isolate identity providers for applications'>
+
+Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign on using third-party cookies will also need to be isolated.
+
+For example, example.com authenticates using Google Workspace you will also need to isolate the top level <a href="https://support.google.com/a/answer/9012184">Google Workspace URLs</a>.
+
+</Aside>
 
 ### Do Not Isolate
 

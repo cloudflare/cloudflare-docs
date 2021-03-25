@@ -44,3 +44,17 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 ![Simplified right click menu](../../static/documentation/rbi/isolated-browser.png)
 
+## Disconnecting Browser Isolation
+
+If you would like to temporarily disconnect Browser Isolation, you can do this by simply selecting the WARP agent and disconnecting the client.
+
+### macOS
+1. Click on the Cloudflare Logo in the Menu Bar.
+1. Toggle the blue Connected switch into the Disconnected state.
+1. Refresh your webpage to return to the non-isolated page.
+
+### Windows
+
+1. Click on the Cloudflare Logo in the System Tray.
+1. Toggle the blue Connected switch into the Disconnected state.
+1. Refresh your webpage to return to the non-isolated page.
