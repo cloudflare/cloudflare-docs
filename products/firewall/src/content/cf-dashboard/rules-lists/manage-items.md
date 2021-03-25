@@ -14,7 +14,7 @@ To view the items in a Firewall Rules list, follow these steps:
 
 The list of items displays sorted by IP address, ascending:
 
-![View items in  a list](../../images/lists-view-items-in-list.png)
+![View items in a list](../../images/lists-view-items-in-list.png)
 
 <Aside type='note' header='Note'>
 

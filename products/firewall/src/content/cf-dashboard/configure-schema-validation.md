@@ -42,11 +42,13 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
 1. Configure the expression for the API Shield using the available request fields.
 
-    For example, if your API is available at `http://api.example.com/v1`, the expression must include a check for the _hostname_ field (which must be equal to `api.example.com`) and a check for the _URI path_ field (which must be equal to `/v1`).
+    For example, if your API is available at `http://api.example.com/v1`, the expression must include a check for the _Hostname_ field (which must be equal to `api.example.com`) and a check for the _URI Path_ field using a regular expression (which must match the regex `^/v1`).
 
     <Aside type='warning' header='Important'>
 
-    To validate the hostname, you must include the _hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+    To validate the hostname, you must include the _Hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+
+    Regular expression support is a paid add-on in the Enterprise plan.
 
     </Aside>
 
