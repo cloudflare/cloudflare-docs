@@ -12,20 +12,20 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 This Enterprise product provides the most flexibility to customers by:
 
 - Generating a bot score of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to action on this score with Firewall Rules or Workers.
+- Allowing customers to take action on this score with Firewall Rules or Workers.
 - Allowing customers to view this score in Bot Analytics or Logs.
 
-The bot score is an indicator of certainty. For example, a score of 1 means Cloudflare is quite certain the request was automated while a score of 99 means Cloudflare is quite certain the request came from a human.
+The bot score is an indicator of certainty. For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
 
 ---
 
 ## Enable Bot Management for Enterprise
 
-Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall Rules that will block or challenge traffic based on bot score. Others just use Bot Analytics or perform custom actions using our Workers platform.
+Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall Rules that will block or challenge traffic based on bot score. Others use Bot Analytics or perform custom actions using our Workers platform.
 
 ### 1. Contact your account team
 
-To enable Bot Management, contact your account team. After it is enabled, Bot Management displays under **Firewall** > **Bots**.
+To enable Bot Management, contact your account team. After you have purchased Bot Management, you can access it by going to **Firewall** > **Bots**.
 
 ### 2. Configure Bot Management
 
@@ -86,7 +86,7 @@ Create Firewall Rules that address **likely automated** traffic and **other traf
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 - If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-- If your Firewall Rule has a **Challenge Solve Rate (CSR)** higher than *3%*, consider lowering your challenge threshold.
+- If your Firewall Rule has a **Challenge Solve Rate (CSR)** higher than 3%, consider lowering your challenge threshold.
 
 The best approach is to start small and slowly increase your threshold to prevent widespread issues.
 
