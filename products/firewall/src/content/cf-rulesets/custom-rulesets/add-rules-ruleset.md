@@ -14,13 +14,22 @@ This feature is part of an early access experience for selected customers.
 
 To add rules to an existing custom ruleset, execute a PUT request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action.
 
+<Aside type='info' header='Info'>
+
+When you modify a ruleset using a PUT request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules. 
+
+If you are updating several rules at once, use the PUT request described in this section. It allows you to make changes to several rules in bulk, while changing the version number of the updated rules and of the ruleset only once. However, if you are updating a single rule, consider using the [Update rule](#) method instead.
+
+</Aside>
+
 The following request adds two rules to a custom ruleset.
 
 ```json
 ---
 header: Request
 ---
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
 -d '{
     "rules": [{
         "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score > 0",
@@ -72,17 +81,18 @@ header: Response
 }
 ```
 
-## Update a rule in a custom ruleset
+## Update rules in a custom ruleset
 
-To update a rule, execute a PUT request to the custom ruleset. Include the ID of the rule you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
+To update one or more rules in a custom ruleset, execute a PUT request to the custom ruleset. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
 
-The following request edits a rule in a custom ruleset and updates the order of execution of the rules.
+The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
 ```json
 ---
 header: Request
 ---
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
 -d '{
     "rules": [{
         "id": "{custom-rule-id-2}",
