@@ -24,7 +24,7 @@ Create a VM where you will deploy the keyless daemon.
 
 ## 2. Deploy the keyless server
 
-Follow [these instructions](../../configuration) to deploy your keyless server.
+Follow [these instructions](../../configuration#key-server) to deploy your keyless server.
 
 ---
 
@@ -49,15 +49,15 @@ brew install azure-cli
     <Aside type="note" header="Note:">The public preview of Managed HSM is available in the following regions: East US 2, South Central US, North Europe, and West Europe</Aside>
 
 1. [Create, provision, and activate](https://docs.microsoft.com/en-us/azure/key-vault/managed-hsm/quick-create-cli) the HSM.
-1. Add your private key to the keyvault, which returns a URI that you will later add to the Keyless YAML file to indicate where your private key is stored:
+1. Add your private key to the `keyvault`, which returns the URI you need for **Step 4**:
     ```
     $ az keyvault key import --hsm-name "KeylessHSM" --name "hsm-pub-keyless" --pem-file server.key
     ```
 
-1. If the key server is running in an Azure VM in the same account, use Managed services:
+1. If the key server is running in an Azure VM in the same account, use **Managed services** for authorization:
     1. Enable managed services on the VM in the UI.
     1. Give your service user (associated with your VM) HSM sign permissions
     ```
     $ az keyvault role assignment create  --hsm-name KeylessHSM --assignee $(az vm identity show --name "hsmtestvm" --resource-group "HSMgroup" --query principalId -o tsv) --scope / --role "Managed HSM Crypto User"
     ```
-1. In the gokeyless YAML file, add the URI you received in **Step 2** under private_key_stores. See our [README](https://github.com/cloudflare/gokeyless/blob/5a7af439328ad77fbec14d5bbe14a12ef6890851/README.md#azure-key-store-or-managed-hsm) for an example.
+1. In the `gokeyless` YAML file, add the URI from **Step 2** under `private_key_stores`. See our [README](https://github.com/cloudflare/gokeyless/blob/5a7af439328ad77fbec14d5bbe14a12ef6890851/README.md#azure-key-store-or-managed-hsm) for an example.

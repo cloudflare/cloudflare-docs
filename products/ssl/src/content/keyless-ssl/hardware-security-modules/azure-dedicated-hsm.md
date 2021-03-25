@@ -12,7 +12,7 @@ This tutorial uses <a href="https://azure.microsoft.com/en-us/services/azure-ded
 
 Make sure you have:
 - Followed Microsoft's <a href="https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell">tutorial</a> for deploying HSMs into an existing virtual network using Powershell
-- Installed the [SafeNet client software](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/fips-common-criteria-validations/)
+- Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
 ---
 

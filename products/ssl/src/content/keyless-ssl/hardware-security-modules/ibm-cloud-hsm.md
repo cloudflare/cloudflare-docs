@@ -12,7 +12,7 @@ The example below was tested using <a href="https://console.bluemix.net/docs/inf
 
 Make sure that you have:
 - Initialized <a href="https://console.bluemix.net/docs/infrastructure/hardware-security-modules/initialize_hsm.html#initializing-the-ibm-cloud-hsm">your device</a> 
-- Installed the [SafeNet client software](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/fips-common-criteria-validations/)
+- Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
 ---
 
