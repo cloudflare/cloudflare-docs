@@ -42,7 +42,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
 1. Configure the expression for the API Shield using the available request fields.
 
-    For example, if your API is available at `http://api.example.com/v1`, the expression must include a check for the _Hostname_ field (which must be equal to `api.example.com`) and a check for the _URI Path_ field using a regular expression (which must match regex `^/v1.*`).
+    For example, if your API is available at `http://api.example.com/v1`, the expression must include a check for the _Hostname_ field (which must be equal to `api.example.com`) and a check for the _URI Path_ field using a regular expression (which must match the regex `^/v1`).
 
     <Aside type='warning' header='Important'>
 
