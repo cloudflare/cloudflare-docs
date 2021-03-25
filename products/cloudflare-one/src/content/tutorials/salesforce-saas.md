@@ -12,9 +12,9 @@ difficulty: Intermediate
 
 **⏲️ Time to complete: 15 minutes**
 
-What's needed to complete this guide:
-* Admin access to a Cloudflare for Teams account
-* Admin access to a Salesforce account
+| Before you start |
+|---|
+| 1. You'll need admin access to a Salesforce account |
 
 ## Set up Salesforce as a SaaS application in Teams
 

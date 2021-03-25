@@ -1,0 +1,1 @@
+To get started, review our [setup guides](/get-started/). If you have any questions, visit the [community](https://community.cloudflare.com/) to engage with other Cloudflare users.

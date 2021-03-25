@@ -14,12 +14,12 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to pre
 * Enroll devices into a Cloudflare for Teams account where this rule will be enforced
 * Log file type upload attempts
 
-**Before you start:**
+**⏲️ Time to complete: 10 minutes**
 
+| Before you start |
+|---|---|
 1. [Connect devices](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp) to Cloudflare's edge with the WARP client and [install the root certificate](/connections/connect-devices/warp/install-cloudflare-cert)
 1. [ Enable web inspection](/connections/connect-devices/warp/control-proxy)
-
-**⏲️ Time to complete: 10 minutes**
 
 ## Create a Gateway HTTP policy
 
