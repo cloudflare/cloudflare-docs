@@ -9,7 +9,7 @@ The [Zone Analytics API](https://api.cloudflare.com/#zone-analytics-properties) 
 
 For example, here is a sample curl call to get data for a two minute period:
 ```bash
-curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?since=2019-09-08T20:00:00Z&until=2019-09-08T20:02:00Z&continuous=false" | jq .
+curl -s -H "Authorization: Bearer $API_TOKEN" -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?since=2019-09-08T20:00:00Z&until=2019-09-08T20:02:00Z&continuous=false" | jq .
 ```
 
 <details>

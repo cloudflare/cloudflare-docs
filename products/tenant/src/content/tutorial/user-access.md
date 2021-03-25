@@ -17,7 +17,7 @@ The first method gives customers control over all aspects of Cloudflare, while t
 If you want to give customers access to their individual accounts then its no different then if you were inviting a teammate to help manage your account. This can be done in our dashboard through the members tab in the account management area or by making the below API call.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id>/members' -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<customer-email>", "roles": ["<user-role>"] }'
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id>/members' -H 'Content-Type: application/json' -H "Authorization: Bearer $API_TOKEN" -d '{ "email": "<customer-email>", "roles": ["<user-role>"] }'
 ```
 
 In most cases the user-role to use is that of the `Administrator` role which is id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles` in the case of ENT customers whom have access to our full set of user roles.
@@ -33,7 +33,7 @@ If you want to have greater control over how customers use Cloudflare or integra
 Creating a user works as follows:
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/users -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<identifier>@youremaildomain.com>" }'
+curl -X POST https://api.cloudflare.com/client/v4/users -H 'Content-Type: application/json' -H "Authorization: Bearer $API_TOKEN" -d '{ "email": "<identifier>@youremaildomain.com>" }'
 ```
 
 In these cases these users are service users as no one will log into the dashboard with them. If you are planning to use this method we will enable you to see the API key for this user in order to make API calls as this user.

@@ -5,7 +5,7 @@ order: 0
 
 # Step 1: Provisioning resources
 
-All the API calls described in this tutorial use the Cloudflare client v4 interface at `https://api.cloudflare.com/client/v4`. API requests are authenticated in the same manner using a Cloudflare user's email and API key as the `x-auth-email` and `x-auth-key` headers. Your Cloudflare user must be active, verified, and enabled by Cloudflare to use these provisioning specific endpoints.
+All the API calls described in this tutorial use the Cloudflare client v4 interface at `https://api.cloudflare.com/client/v4`. API requests are authenticated in the same manner providing a Cloudflare API token in the `Authorization` header. Your Cloudflare user must be active, verified, and enabled by Cloudflare to use these provisioning specific endpoints.
 
 More details about making Cloudflare API calls can be found in our general api docs [here](https://api.cloudflare.com/#getting-started-endpoints).
 
@@ -23,7 +23,7 @@ Type (enum): Valid values are `standard` (default) and `enterprise`. For self-se
 
 Example:
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' \
+curl -X POST https://api.cloudflare.com/client/v4/accounts -H 'Content-Type: application/json' -H "Authorization: Bearer $API_TOKEN" \
 -d '{ "name": "<Account Name>", \
       "type": "standard" }'
 ```
@@ -51,7 +51,7 @@ A successful request will return with an HTTP status of 200 and the following re
 You own the account lifecycle from creation, ongoing management, and finally deletion. To see the newly created account, make a `GET /accounts` request:
 
 ```bash
-curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
+curl -X GET https://api.cloudflare.com/client/v4/accounts -H "Authorization: Bearer $API_TOKEN"
 ```
 <Aside type="note">
 
@@ -101,7 +101,7 @@ If for any reason you need to delete an account you created, then call `DELETE /
 **WARNING:** Account deletion is permanent and will delete any zones or other resources under the account.
 
 ```bash
-curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<account_id> -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
+curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<account_id> -H "Authorization: Bearer $API_TOKEN"
 ```
 
 A successful request will return the id to confirm the operation:

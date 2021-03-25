@@ -55,8 +55,7 @@ To begin, find the `cert_pack_uuid` of the order that you would like to change v
 ```bash
 curl -sX GET \
 "https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verification/" \
--H 'X-Auth-Email: YOUR_EMAIL' \
--H 'X-Auth-Key: API_KEY'
+-H "Authorization: Bearer $API_TOKEN"
 
 {
     "result": [
@@ -90,8 +89,7 @@ This endpoint will modify the validation method of a selected certificate order.
 
 ```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verification/<cert_pack_uuid>" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: API_KEY" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      --data '{"validation_method":"cname"}'
 
@@ -127,8 +125,7 @@ Once that is validated by the Certificate Authority, the “Get Validation Metho
 ```bash
 curl -sX GET \
 "https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verification/" \
--H 'X-Auth-Email: YOUR_EMAIL' \
--H 'X-Auth-Key: API_KEY'
+-H "Authorization: Bearer $API_TOKEN"
 
 {
     "result": [

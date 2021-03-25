@@ -62,8 +62,7 @@ The example below uses the Update Pools command—`POST /user/load_balancers/poo
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/user/load_balancers/pools" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
 --data '{
    "description":"Primary data center - Provider XYZ",

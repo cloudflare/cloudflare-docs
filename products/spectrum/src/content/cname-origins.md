@@ -17,8 +17,7 @@ You will need to create a record on your Cloudflare hosted zone that points to y
 ```bash
 curl 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/dns_records'  \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
+-H "Authorization: Bearer $API_TOKEN" \
 -X POST --data '{"type":"CNAME", "name":"cname-to-origin.example.com", "content":"origin.domain.com", "proxied":true}'
 ```
 
@@ -42,8 +41,7 @@ You will then need to create the Spectrum application that will point to the dom
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
 -H "Content-Type: application/json" \
--H "X-Auth-Email: email" \
--H "X-Auth-Key: key" \
+-H "Authorization: Bearer $API_TOKEN" \
 --data '{"dns":{"type":"CNAME","name":"spectrum-cname.example.com"},"ip_firewall":false,"protocol":"tcp/22","proxy_protocol":"off","tls":"off","origin_dns": {"name": "cname-to-origin.example.com", "ttl": 1200}, "origin_port": 22}'
 ```
 

@@ -21,7 +21,7 @@ The fallback origin is used to route the traffic of your Custom Hostnames.  The 
 ```bash
 $ curl -XPUT
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames/fallback_origin"\
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+-H "Authorization: Bearer $API_TOKEN"\
 -H "Content-Type: application/json"\
 -d '{"origin":"proxy-fallback.saasprovider.com"}'
 ```
@@ -60,7 +60,7 @@ In this example, HTTP based validation is used ("method":"http") to issue this c
 
 ```bash
 $ curl -XPOST "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames"\
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+       -H "Authorization: Bearer $API_TOKEN"\
        -H "Content-Type: application/json"\
        -d '{"hostname":"app.example.com", "ssl":{"method":"http","type":"dv"}}'
 ```

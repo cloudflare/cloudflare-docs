@@ -38,7 +38,7 @@ For concrete examples, see the tutorial [Manage Logpush with cURL](/tutorials/tu
 The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
-$ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" \
+$ curl -s -H "Authorization: Bearer $API_TOKEN" \
     'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 ```
 
@@ -130,8 +130,7 @@ Log options, such as fields or sampling rate, are configured in the `logpull_opt
 
 ```bash
 curl -sv \
-    -H'X-Auth-Email: <REDACTED>' \
-    -H'X-Auth-Key: <REDACTED>' \
+    -H "Authorization: Bearer $API_TOKEN" \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 

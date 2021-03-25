@@ -31,8 +31,7 @@ The below image will configure a TCP health check for an application running on 
 ```bash
 curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers/monitors'  \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
+-H "Authorization: Bearer $API_TOKEN" \
 -X POST --data '{"description":"Spectrum Health Check","type":"tcp","port":2048,"interval":30,"retries":2,"timeout":5,"method":"connection_established"}'
 ```
 
@@ -105,8 +104,7 @@ Navigate to the Spectrum tab in the dashboard and select the `Add an Application
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps' \
 -H "Content-Type: application/json" \
--H "X-Auth-Email: email" \
--H "X-Auth-Key: key" \
+-H "Authorization: Bearer $API_TOKEN" \
 --data '{"dns":{"type":"CNAME","name":"spectrum-cname.example.com"},"ip_firewall":false,"protocol":"tcp/22","proxy_protocol":false,"tls":"off","origin_dns": {"name": "cname-to-origin.example.com", "ttl": 1200}, "origin_port": 22}'
 ```
 

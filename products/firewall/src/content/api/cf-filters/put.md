@@ -18,8 +18,7 @@ PUT zones/{zone_id}/filters
 
 ```bash
 curl -X PUT \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '[
 {
@@ -59,8 +58,7 @@ PUT zones/{zone_id}/filters/{id}
 
 ```bash
 curl -X PUT \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '{
     "id": "b7ff25282d394be7b945e23c7106ce8a",

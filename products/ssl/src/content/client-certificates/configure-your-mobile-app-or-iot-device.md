@@ -206,7 +206,7 @@ EOF
 ))
 
 // save the response so we can view it and then extra the certificate
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d “$request_body” https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
+$ curl -H "Authorization: Bearer $API_TOKEN" -H 'Content-Type: application/json' -d “$request_body” https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates > response.json
 
 $ cat response.json | jq .
 {
@@ -250,7 +250,7 @@ $ request_body=$(< <(cat <<EOF
 EOF
 ))
 
-$ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-Type: application/json' -d "$request_body" https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates | perl -npe 's/\\n/\n/g; s/"//g' > sensor.pem
+$ curl -H "Authorization: Bearer $API_TOKEN" -H 'Content-Type: application/json' -d "$request_body" https://api.cloudflare.com/client/v4/zones/YOUR_ZONE_ID/client_certificates | perl -npe 's/\\n/\n/g; s/"//g' > sensor.pem
 
 ```
 

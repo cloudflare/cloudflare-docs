@@ -78,7 +78,6 @@ The AND operator is defined using a semicolon (;) or AND keyword surrounded by w
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&dimensions=event,appID&since=2018-01-01T16:57:00Z" \
-   -H "X-Auth-Email: you@email.com" \
-   -H "X-Auth-Key: 0000" \
+   -H "Authorization: Bearer $API_TOKEN" \
    -H "Content-Type: application/json"
 ```

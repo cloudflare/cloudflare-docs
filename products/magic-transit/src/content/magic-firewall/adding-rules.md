@@ -15,8 +15,7 @@ API Example:
 ```
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000'
+-H "Authorization: Bearer $API_TOKEN"
 ```
 
 <Aside type='note' header='Note'>
@@ -43,8 +42,7 @@ API Example:
 ```
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
 -H 'Content-Type: application/json' \
--H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' \
+-H "Authorization: Bearer $API_TOKEN" \
 --data '{
   "name": "Example ruleset",
   "kind": "root",

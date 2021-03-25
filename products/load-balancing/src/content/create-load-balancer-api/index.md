@@ -368,8 +368,7 @@ This command returns a list of zones, each with an associated hostname and Cloud
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones?name=example.com&status=active&account.id=01a7362d577a6c3019a474fd6f485823&account.name=Demo Account&page=1&per_page=20&order=status&direction=desc&match=all" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json"
 
 ```

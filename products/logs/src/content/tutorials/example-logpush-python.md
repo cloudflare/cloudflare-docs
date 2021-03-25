@@ -7,12 +7,12 @@ order: 88
 
 ```python
 import json
+import os
 import requests
 
 url = "https://api.cloudflare.com/client/v4/"
 
-x_auth_email = "EMAIL_REDACTED"
-x_auth_key = "KEY_REDACTED"
+api_token = os.environ["API_TOKEN"]
 
 zone_id = "ZONE_REDACTED"
 destination_conf = "s3://BUCKET_REDACTED/logs?region=us-west-1"
@@ -20,8 +20,7 @@ destination_conf = "s3://BUCKET_REDACTED/logs?region=us-west-1"
 logpush_url = url + "/zones/%s/logpush" % zone_id
 
 headers = {
-  'X-Auth-Email': x_auth_email,
-  'X-Auth-Key': x_auth_key,
+  'Authorization': f'Bearer {api_token}',
   'Content-Type': 'application/json'
 }
 

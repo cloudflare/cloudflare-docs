@@ -55,7 +55,7 @@ You can send a `PATCH` request to request an immediate validation check on any c
 
 ```bash
 $ curl -sXPATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/7f09bb24-9ee0-49b3-98bb-11cccd664edb\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+    -H "Authorization: Bearer $API_TOKEN"\
     -H 'Content-Type: application/json' -d '{"ssl":{"method":"cname", "type":"dv"}}'
 
 {
@@ -81,7 +81,7 @@ Granularly remove one or more files from Cloudflare’s cache either by specifyi
 
 ```bash
 $ curl -sXDELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"\
-     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+     -H "Authorization: Bearer $API_TOKEN"\
      -H "Content-Type: application/json"\
      -d '{"hosts":["www.customer.com", "www.customer2.com"]}'
 ```

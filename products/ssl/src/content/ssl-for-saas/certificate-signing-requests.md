@@ -43,7 +43,7 @@ EOF
 
 ```bash
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+    -H "Authorization: Bearer $API_TOKEN"\
     -H 'Content-Type: application/json' -d "$request_body"
 
 {
@@ -72,7 +72,7 @@ Note that the ‘\n’ strings should be replaced with actual newline before pas
 
 ```bash
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+    -H "Authorization: Bearer $API_TOKEN"\
     -H 'Content-Type: application/json' -d "$request_body" | jq .result.csr |\
     perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
 ```
@@ -109,7 +109,7 @@ With the request body built, create the Custom Hostname with the supplied custom
 
 ```bash
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+    -H "Authorization: Bearer $API_TOKEN"\
     -H 'Content-Type: application/json'\
     -d "$request_body"
 
@@ -202,7 +202,7 @@ You may delete a CSR provided there are no custom certificates using the private
 
 ```bash
 $ curl -sXDELETE https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs/{csr_id}\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
+    -H "Authorization: Bearer $API_TOKEN"
 
 {
     "result": null,

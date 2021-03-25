@@ -15,8 +15,7 @@ Creates one or more firewall rules.
 
 ```bash
 curl -X POST \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '[
   {

@@ -30,7 +30,7 @@ Selecting Let’s Encrypt as a CA limits a certificate to txt validation_method,
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs/order" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+-H "Authorization: Bearer $API_TOKEN" \
 -H "Content-Type: application/json" \
 --data'{"Type":"advanced","hosts":["example.com","*.example.com","www.example.com"],"Validation_method":"txt","Validity_days":365,"Certificate_authority":"digicert","Cloudflare_branding":false}'
 
@@ -63,7 +63,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate
 
 ```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs/3822ff90-ea29-44df-9e55-21300bb9419b" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+-H "Authorization: Bearer $API_TOKEN" \
 -H "Content-Type: application/json"
 
 {
@@ -95,7 +95,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificat
 
 ```bash
 curl -X DELETE "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs/3822ff90-ea29-44df-9e55-21300bb9419b" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+-H "Authorization: Bearer $API_TOKEN" \
 -H "Content-Type: application/json"
 
 {
@@ -122,7 +122,7 @@ To [list all Advanced Certificates on the zone via API](https://api.cloudflare.c
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/:zoneid/ssl/certificate_packs?status=all" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+-H "Authorization: Bearer $API_TOKEN"\
 -H "Content-Type: application/json"
 ```
 
@@ -134,7 +134,7 @@ To [change the Cipher Suite Settings on the zone via the API](https://api.cloudf
 
 ```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/settings/ciphers" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+-H "Authorization: Bearer $API_TOKEN"\
 -H "Content-Type: application/json" \
 --data '{"value":["ECDHE-RSA-AES128-GCM-SHA256","AES128-SHA"]}'
 ```
@@ -147,7 +147,7 @@ To [list the Cipher Suite Settings on the zone via the API](https://api.cloudfla
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/:zoneid/settings/ciphers" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+-H "Authorization: Bearer $API_TOKEN" \
 -H "Content-Type: application/json"
 ```
 
@@ -159,7 +159,7 @@ To [change the Cipher Suite Settings on the zone via the API](https://api.cloudf
 
 ```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zoneid/settings/ciphers" \
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+-H "Authorization: Bearer $API_TOKEN" \
 -H "Content-Type: application/json" \
 --data '{"value":[]}'
 ```

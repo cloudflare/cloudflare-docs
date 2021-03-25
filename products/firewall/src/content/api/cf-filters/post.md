@@ -15,8 +15,7 @@ Creates one or more filters.
 
 ```bash
 curl -X POST \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
+     -H "Authorization: Bearer $API_TOKEN" \
      -H "Content-Type: application/json" \
      -d '[
 {"expression": "ip.src eq 93.184.216.0"},

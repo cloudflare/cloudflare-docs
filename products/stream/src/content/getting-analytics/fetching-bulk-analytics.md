@@ -232,6 +232,5 @@ Here are the steps to implementing pagination:
   1. Call next query by specifying uid_gt property and set it to the last video ID. This will return the next set of videos
 
 ## Limitations
- - Only Cloudflare API keys, not API tokens can be used with the Stream GraphQL API for now
  - Maximum query interval in a single query is 31 days
  - Maximum data retention period is 90 days
