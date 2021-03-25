@@ -23,6 +23,8 @@ For a full tour of Bot Analytics, see [our blog post](https://blog.cloudflare.co
 - **Requests by detection source**: Identify the most common detection engines used to score your traffic. Hover over a tooltip to learn more about each engine.
 - **Top requests by attribute**: View more detailed information on specific IP addresses and more.
 
+Bot Analytics shows up to 72 hours of data at a time and can display data up to 30 days old. Bot Analytics displays data in real time in most cases.
+
 <AnalyticsFeatures/>
 
 ## Common uses
