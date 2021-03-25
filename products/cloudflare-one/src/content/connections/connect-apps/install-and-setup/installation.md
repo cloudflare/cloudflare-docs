@@ -24,7 +24,7 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 Use the `deb` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` package in this example. 
 
-```sh
+```bash
 wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
 dpkg -i cloudflared-stable-linux-amd64.deb
 ```
@@ -33,7 +33,7 @@ dpkg -i cloudflared-stable-linux-amd64.deb
 
 Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example. 
 
-```sh
+```bash
 wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
 rpm -ivh cloudflared-stable-linux-amd64.rpm
 ```
@@ -51,7 +51,7 @@ $ go install github.com/cloudflare/cloudflared/cmd/cloudflared
 
 Depending on where you installed `cloudflared`, you can move it to a known path as well.
 
-```sh
+```bash
 mv /root/cloudflared/cloudflared /usr/bin/cloudflared
 ```
 
@@ -82,7 +82,7 @@ Once `cloudflared` is installed:
 4. Navigate to the same Downloads folder.
 5. Run the `cloudflared.exe` executable as an administrator to confirm the installation, replacing the path in the example below with the specifics of your directory:
 
-```sh
+```bash
 PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
 ```
 
@@ -107,7 +107,7 @@ $ go install github.com/cloudflare/cloudflared/cmd/cloudflared
 
 Depending on where you installed `cloudflared`, you can move it to a known path as well.
 
-```sh
+```bash
 mv /root/cloudflared/cloudflared /usr/bin/cloudflared
 ```
 
@@ -147,11 +147,15 @@ Windows systems require services to have a unique name and display name. You can
 
 First, install and configure `cloudflared`. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
 
-`sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"`
+```bash
+sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"
+```
 
 Proceed to create additional services with unique names. You can now start each unique service.
 
-`sc.exe start <unique-name>`
+```bash
+sc.exe start <unique-name>
+```
 
 ## Deprecated versions
 
