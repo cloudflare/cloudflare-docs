@@ -35,8 +35,15 @@ export class DurableObject {
 - `state`
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
+- `state.id` <Type>DurableObjectId</Type>
+  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
+
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
+
+- <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+
+  - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
 
 - `env`
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
@@ -97,6 +104,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
       - Key at which the list results should end, exclusive.
 
+    - <Code>prefix<ParamType>string</ParamType></Code>
+
+      - Restricts results to only include key-value pairs whose keys begin with the prefix.
+
     - <Code>reverse<ParamType>boolean</ParamType></Code>
 
       - If true, return results in descending lexicographic order instead of the default ascending order.
@@ -121,6 +132,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Definitions>
 
+- <Code>deleteAll()</Code> <Type>Promise</Type>
+
+  - Deletes all keys and associated values, effectively deallocating all storage used by the worker. Once `deleteAll()` has been called, no subsequent Durable Storage operations (including transactions and operations on transactions) may be executed until after the `deleteAll()` operation completes and the returned promise resolves. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
+
 </Definitions>
 
 ### `fetch()` handler method
@@ -128,6 +143,8 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 The `fetch()` method of a Durable Object namespace is called by the system when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other Workers, using a Durable Object namespace binding (see below).
 
 The method takes a [`Request`](/runtime-apis/request) as the parameter, and returns a [`Response`](/runtime-apis/response) (or a `Promise` for a `Response`).
+
+If the method fails with an uncaught exception, the exception will be thrown into the calling worker that made the `fetch()` request.
 
 --------------------------------
 
@@ -260,3 +277,5 @@ let response = await stub.fetch(url, options)
 ```
 
 The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/runtime-apis/fetch). However, instead of sending an HTTP request to the internet, the request is always sent to the Durable Object to which the stub points.
+
+Any uncaught exceptions thrown by the Durable Object's `fetch()` handler are propagated to the caller's `fetch()` promise.

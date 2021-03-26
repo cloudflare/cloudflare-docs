@@ -4,25 +4,30 @@ order: 0
 type: overview
 ---
 
-import ProductList from "./components/product-list.js"
+# Cloudflare for Teams documentation
 
 <ContentColumn>
 
-# Cloudflare for Teams documentation
+Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
 
-Your employees, partners, and customers need a network that is secure, fast and reliable to get work done. Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
+**Zero Trust access for all of your applications.**
 
-Cloudflare for Teams provides seamless access to any application and the Internet from any device, anywhere.
+* Authenticate users on our global edge network
+* Onboard third-party users seamlessly
+* Log every event and request
 
-If you want to learn more about Cloudflare for Teams, you can explore our:
+**A Secure Web Gateway to protect users and devices.**
 
-* [Teams tutorials](/tutorials) 
-* [Teams documentation](/learning)
+* Enforce your company’s Acceptable Use Policy (AUP)
+* Block risky sites with custom blocklists and built-in threat intel
+* Enhance visibility and protection into SaaS applications
 
-If you want to learn more about a specific Teams product, navigate to each product's developer documentation:
+**A fast and reliable [solution for remote browsing](https://developers.cloudflare.com/browser-isolation/).**
 
-## Cloudflare for Teams products
+* Execute all browser code in the cloud
+* Mitigate the impact of attacks
+* Seamless, lightning-fast end user experience
 
-<ProductList/>
+![Teams illustration](/static/documentation/teams-no-background.png)
 
-</ContentColumn>
+</ContentColumn> 

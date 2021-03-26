@@ -36,7 +36,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, check o
 
 </Aside>
 
-Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Vue application, Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 

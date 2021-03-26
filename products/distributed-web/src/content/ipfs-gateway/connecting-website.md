@@ -1,6 +1,5 @@
 ---
 order: 3
-hidden: true
 ---
 
 # Connecting Your Website
@@ -101,7 +100,7 @@ We'll go over how to do that now.
 First, go to the DNS settings for your domain. When you're there, add the
 following two records:
 
-1. CNAME for `your.website` pointing to `www.cloudflare-ipfs.com`
+1. CNAME for `your.website` pointing to `cloudflare-ipfs.com`
 2. TXT record for `_dnslink.your.website` with the value `dnslink=/ipfs/<your_hash_here>`
 
 Now any request to `your.website` will resolve to

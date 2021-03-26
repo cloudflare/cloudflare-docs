@@ -19,7 +19,7 @@ Switched to a new branch 'step5-loadbalance'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_record" "www-asia" {
-  domain  = "${var.domain}"
+  zone_id = var.zone_id
   name    = "www"
   value   = "198.51.100.15"
   type    = "A"
@@ -53,7 +53,7 @@ Resource actions are indicated with the following symbols:
 Terraform will perform the following actions:
 
   + cloudflare_record.www-asia
-      domain:      "example.com"
+      zone_id:     "e097e1136dc79bc1149e32a8a6bde5ef"
       name:        "www"
       proxied:     "true"
       type:        "A"
@@ -151,15 +151,15 @@ Switched to branch 'step5-loadbalance'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer_monitor" "get-root-https" {
-  expected_body = "alive"
+  expected_body  = "alive"
   expected_codes = "200"
-  method = "GET"
-  timeout = 5
-  path = "/"
-  interval = 60
-  retries = 2
-  check_regions = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
-  description = "GET / over HTTPS - expect 200"
+  method         = "GET"
+  timeout        = 5
+  path           = "/"
+  interval       = 60
+  retries        = 2
+  check_regions  = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
+  description    = "GET / over HTTPS - expect 200"
 }
 EOF
 ```
@@ -173,19 +173,19 @@ Note that we reference the monitor we added in the last step. When applying this
 ```sh
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer_pool" "www-servers" {
-  name = "www-servers"
-  monitor = "${cloudflare_load_balancer_monitor.get-root-https.id}"
+  name    = "www-servers"
+  monitor = cloudflare_load_balancer_monitor.get-root-https.id
   origins {
-    name = "www-us"
+    name    = "www-us"
     address = "203.0.113.10"
   }
   origins {
-    name = "www-asia"
     address = "198.51.100.15"
+    name    = "www-asia"
   }
-  description = "www origins"
-  enabled = true
-  minimum_origins = 1
+  description        = "www origins"
+  enabled            = true
+  minimum_origins    = 1
   notification_email = "you@example.com"
 }
 EOF
@@ -193,17 +193,17 @@ EOF
 
 ### iii. Define and create the load balancer
 
-Note that when you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://support.cloudflare.com/hc/en-us/articles/115004954407-How-Does-a-Load-Balancer-Interact-with-Existing-DNS-Records-). For example, when we create the "www.example.com" LB below, it will supersede the two www DNS records that you have previously defined. One benefit of  leaving this DNS records in place is that if you temporarily disable load balancing, connections to this hostname will still be possible as shown in Step #2 above.
+Note that when you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://support.cloudflare.com/hc/en-us/articles/115004954407-How-Does-a-Load-Balancer-Interact-with-Existing-DNS-Records-). For example, when we create the "www.example.com" LB below, it will supersede the two www DNS records that you have previously defined. One benefit of leaving this DNS records in place is that if you temporarily disable load balancing, connections to this hostname will still be possible as shown in Step #2 above.
 
 ```sh
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_load_balancer" "www-lb" {
-  zone = "example.com"
-  name = "www-lb"
-  default_pool_ids = ["${cloudflare_load_balancer_pool.www-servers.id}"]
-  fallback_pool_id = "${cloudflare_load_balancer_pool.www-servers.id}"
-  description = "example load balancer"
-  proxied = true
+  zone_id          = var.zone_id
+  name             = "www-lb"
+  default_pool_ids = [cloudflare_load_balancer_pool.www-servers.id]
+  fallback_pool_id = cloudflare_load_balancer_pool.www-servers.id
+  description      = "example load balancer"
+  proxied          = true
 }
 EOF
 ```
@@ -236,7 +236,7 @@ Terraform will perform the following actions:
       created_on:                 <computed>
       default_pool_ids.#:         <computed>
       description:                "example load balancer"
-      fallback_pool_id:           "${cloudflare_load_balancer_pool.www-servers.id}"
+      fallback_pool_id:           <computed>
       modified_on:                <computed>
       name:                       "www-lb"
       pop_pools.#:                <computed>
@@ -274,7 +274,7 @@ Terraform will perform the following actions:
       enabled:                    "true"
       minimum_origins:            "1"
       modified_on:                <computed>
-      monitor:                    "${cloudflare_load_balancer_monitor.get-root-https.id}"
+      monitor:                    <computed>
       name:                       "www-servers"
       notification_email:         "you@example.com"
       origins.#:                  "2"

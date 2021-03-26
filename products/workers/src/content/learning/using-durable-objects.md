@@ -71,13 +71,13 @@ Durable Objects gain access to a [persistent storage API](/runtime-apis/durable-
 ```js
 export class DurableObjectExample {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async fetch(request) {
         let ip = request.headers.get('CF-Connecting-IP');
         let data = await request.text();
-        let storagePromise = this.storage.put(ip, data);
+        let storagePromise = this.state.storage.put(ip, data);
         await storagePromise;
         return new Response(ip + ' stored ' + data);
     }
@@ -90,7 +90,7 @@ Each individual storage operation behaves like a database transaction. More comp
 ```js
 export class DurableObjectExample {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async fetch(request) {
@@ -98,7 +98,7 @@ export class DurableObjectExample {
         let ifMatch = request.headers.get('If-Match');
         let newValue = await request.text();
         let changedValue = false;
-        await this.storage.transaction(async txn => {
+        await this.state.storage.transaction(async txn => {
             let currentValue = await txn.get(key);
             if (currentValue != ifMatch && ifMatch != '*') {
                 txn.rollback();
@@ -132,11 +132,11 @@ This is shown in the [Counter example](#example---counter) below, which is parti
 ```js
 export class Counter {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async initialize() {
-        let stored = await this.storage.get("value");
+        let stored = await this.state.storage.get("value");
         // after initialization, future reads don't need to access storage!
         this.value = stored || 0;
     }
@@ -361,9 +361,9 @@ Currently, Durable Objects do not migrate between locations after initial creati
 
 Because of these factors, when using string-derived object IDs, you may find that request latency varies considerably between objects, while system-generated IDs will result in consistently low latency. Once our work is complete, you should be able to expect that variability exists only in initial creation latency for string-derived IDs.
 
-### Cross-object Storage Access
+### Enumerating objects
 
-The storage API is scoped to a single Durable Object.  It is not currently possible to access data stored in a Durable Object from a different Durable Object or external API. There is no support for listing objects or bulk imports or exports.
+There is currently no support for generating a list of all existing objects, nor any way to bulk export objects.
 
 ### Performance
 
@@ -395,12 +395,20 @@ async function handleRequest(request, env) {
 
 export class Counter {
     constructor(state, env) {
-        this.storage = state.storage;
+        this.state = state;
     }
 
     async initialize() {
-        let stored = await this.storage.get("value");
-        this.value = stored || 0;
+        try {
+            let stored = await this.state.storage.get("value");
+            this.value = stored || 0;
+        } catch (err) {
+            // If anything throws during initialization then we
+            // need to be sure that a future request will retry by
+            // creating another `initializePromise` below.
+            this.initializePromise = undefined;
+            throw err;
+        }
     }
 
     // Handle HTTP requests from clients.
@@ -417,11 +425,11 @@ export class Counter {
         switch (url.pathname) {
         case "/increment":
             currentValue = ++this.value;
-            await this.storage.put("value", this.value);
+            await this.state.storage.put("value", this.value);
             break;
         case "/decrement":
             currentValue = --this.value;
-            await this.storage.put("value", this.value);
+            await this.state.storage.put("value", this.value);
             break;
         case "/":
             // Just serve the current value. No storage calls needed!

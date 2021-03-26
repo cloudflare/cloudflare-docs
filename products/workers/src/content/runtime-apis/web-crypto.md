@@ -36,7 +36,7 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 <Definitions>
 
 - <Code>crypto.getRandomValues(buffer<ParamType>ArrayBuffer</ParamType>)</Code>
-  <Type>Promise&lt;ArrayBuffer></Type>
+  <Type>ArrayBuffer</Type>
 
   - Fills the passed ArrayBuffer with cryptographically sound random values.
 
@@ -298,3 +298,4 @@ __Footnotes:__
 
 - [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
 - [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)
+- [Example: signing requests](/examples/signing-requests)

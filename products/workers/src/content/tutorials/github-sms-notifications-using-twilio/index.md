@@ -1,6 +1,7 @@
 ---
 updated: 2020-08-25
 difficulty: Beginner
+type: "📝 Tutorial"
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"

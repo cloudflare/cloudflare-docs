@@ -16,15 +16,9 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 **⏲️Time to complete: ~5 minutes**
 
-## Configure Cloudflare Gateway
-
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/onboarding-gateway) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
-
-* Teams Free
-* Teams Standard
-* Gateway
-
-You can follow [these instructions](/secure-web-gateway/secure-dns-devices) to configure Gateway DNS filtering on roaming devices and [these instructions](/secure-web-gateway/secure-dns-network) for home or office networks.
+| Before you start |
+|---|
+| 1. [Add Gateway to your account](/setup) |
 
 ## Review Gateway events
 

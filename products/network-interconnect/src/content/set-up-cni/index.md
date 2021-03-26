@@ -11,8 +11,8 @@ To ensure smooth integration, Cloudflare Network Interconnect setup uses the onb
 
 - _[Configuration data](/set-up-cni/configuration-data)_ defines customer data required to enable Cloudflare Network Interconnect for your organization. The configuration details will depend on which type of cross-connect you choose:
 
-  - [private network interconnect](/network-interconnect/set-up-cni/configuration-data/#private-network-interconnect)
+  - [private network interconnect](/set-up-cni/configuration-data/#private-network-interconnect)
 
-  - [virtual partner network interconnect](/network-interconnect/set-up-cni/configuration-data/#virtual-partner-network-interconnect)
+  - [virtual partner network interconnect](/set-up-cni/configuration-data/#virtual-partner-network-interconnect)
 
-  - [Internet exchange point](/network-interconnect/set-up-cni/configuration-data/#internet-exchange-point)
+  - [Internet exchange point](/set-up-cni/configuration-data/#internet-exchange-point)

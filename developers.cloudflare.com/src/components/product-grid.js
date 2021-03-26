@@ -4,16 +4,14 @@ import "../css/components/product-grid.css"
 
 const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
-$["access"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/access.js").pathD
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
-$["argo-tunnel"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/argo-tunnel.js").pathD
+$["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
-$["gateway"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/gateway.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
 $["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
 $["internet"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/internet.js").pathD
@@ -28,9 +26,11 @@ $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resourc
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
+$["tenant"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/tenant.js").pathD
 $["terraform"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/terraform.js").pathD
 $["time-services"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/time-services.js").pathD
 $["waf"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waf.js").pathD
+$["waiting-room"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waiting-room.js").pathD
 $["warp-client"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/warp-client.js").pathD
 $["workers"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/workers.js").pathD
 
@@ -39,11 +39,6 @@ const products = [
     title: "API",
     path: "api",
     icon: "api",
-  },
-  {
-    title: "Access",
-    path: "access",
-    icon: "access",
   },
   {
     title: "Analytics",
@@ -55,16 +50,16 @@ const products = [
     href: "https://www.cloudflare.com/apps/docs",
     icon: "api", // TODO: add `apps` icon to https://github.com/cloudflare/cloudflare-brand-assets
   },
-  {
-    title: "Argo Tunnel",
-    path: "argo-tunnel",
-    icon: "argo-tunnel",
-  },
   // {
   //   title: "Cloudflare One",
   //   path: "cloudflare-one",
   //   icon: "cloudflare-one",
   // },
+  {
+    title: "Bots",
+    path: "bots",
+    icon: "bots",
+  },
   {
     title: "BYOIP",
     path: "byoip",
@@ -91,11 +86,6 @@ const products = [
     title: "Firewall Rules",
     path: "firewall",
     icon: "firewall",
-  },
-  {
-    title: "Gateway",
-    path: "gateway",
-    icon: "gateway",
   },
   {
     title: "HTTP/3",
@@ -170,6 +160,11 @@ const products = [
     icon: "stream",
   },
   {
+    title: "Tenant",
+    path: "tenant",
+    icon: "tenant",
+  },
+  {
     title: "Terraform",
     path: "terraform",
     icon: "terraform",
@@ -183,6 +178,11 @@ const products = [
     title: "WAF",
     path: "waf",
     icon: "waf",
+  },
+  {
+    title: "Waiting Room",
+    path: "waiting-room",
+    icon: "waiting-room",
   },
   {
     title: "WARP Client",

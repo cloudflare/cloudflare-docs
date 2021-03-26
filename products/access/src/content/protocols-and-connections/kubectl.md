@@ -4,6 +4,12 @@ order: 1
 
 # kubectl
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 <Aside>
 
 <b>Requirements</b>
@@ -85,4 +91,10 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 
 ```sh
 $ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
+```
+
+If you want to use Cloudflare Access to protect an Azure AKS cluster, exclude the [login + refresh-token endpoints](https://docs.microsoft.com/en-us/azure/aks/concepts-identity#webhook-and-api-server) from the `HTTPS_PROXY` first. This will prevent the login and refresh mechanisms from going through the proxy and failing.
+
+```sh
+$ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 NO_PROXY=login.microsoftonline.com kubectl"
 ```

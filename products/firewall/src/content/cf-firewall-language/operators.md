@@ -8,7 +8,7 @@ type: table
 The Cloudflare Firewall Rules language supports comparison and logical operators:
 
 - [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
-- [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an evaluation is evaluated.
+- [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
 [Grouping symbols](/cf-firewall-language/operators/#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
 

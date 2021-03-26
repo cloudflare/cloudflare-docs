@@ -23,7 +23,7 @@ Default values indicated by <Type>=value</Type>.
 - `$NAME` <Type>=worker</Type> <PropMeta>optional</PropMeta>
   - Name of the Workers project, setting both the directory name and `name` property in the generated `wrangler.toml` [configuration](/cli-wrangler/configuration) file.
 
-- `$TEMPLATE` <Type>=github.com/cloudflare/worker-template</Type> <PropMeta>optional</PropMeta>
+- `$TEMPLATE` <Type>=https://github.com/cloudflare/worker-template</Type> <PropMeta>optional</PropMeta>
   - GitHub URL of the [repo to use as the template](https://github.com/cloudflare/worker-template) for generating the project.
 
 - `--type=$TYPE` <Type>=webpack</Type> <PropMeta>optional</PropMeta>
@@ -63,7 +63,7 @@ Default values indicated by <Type>=value</Type>.
 
 ## build
 
-Build your project. This command looks at your `wrangler.toml` file and runs the build steps associated
+Build your project (if applicable). This command looks at your `wrangler.toml` file and runs the build steps associated
 with the`"type"` declared in your `wrangler.toml`.
 
 ```sh
@@ -964,7 +964,7 @@ y
 
 ```sh
 $ wrangler --help
-👷 ✨  wrangler 1.10.3
+👷 ✨  wrangler 1.12.3
 The Wrangler Team <wrangler@cloudflare.com>
 
 USAGE:
@@ -986,9 +986,10 @@ SUBCOMMANDS:
     preview         🔬  Preview your code temporarily on cloudflareworkers.com
     dev             👂  Start a local server for developing your worker
     publish         🆙  Publish your worker to the orange cloud
-    config          🕵️  Set up wrangler with your Cloudflare account
+    config          🕵️  Authenticate Wrangler with a Cloudflare API Token or Global API Key
     subdomain       👷  Configure your workers.dev subdomain
     whoami          🕵️  Retrieve your user info and test your auth config
     tail            🦚  Aggregate logs from production worker
+    login           🔓 Authenticate Wrangler with your Cloudflare username and password
     help            Prints this message or the help of the given subcommand(s)
 ```

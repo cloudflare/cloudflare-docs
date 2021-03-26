@@ -69,6 +69,14 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
 
+- <code>remove_bytes(<Type>bytes</Type>)</code> <Type>bytes</Type>
+
+  - Returns a new byte array with all the occurrences of the given bytes removed.
+
+  - <em>Example:</em><br />
+
+    <code class="InlineCode">remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
+
 - <code>upper(<Type>String</Type>)</code> <Type>String</Type>
 
   - Converts a string field to uppercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
@@ -161,8 +169,8 @@ The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a me
 For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
 
 ```java
-http.host = "download.example.com"
-AND not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
+http.host == "download.example.com"
+and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
 To review examples of firewall rules that use HMAC validation, see [_Common use cases_](/recipes/).
@@ -262,7 +270,7 @@ is_timed_hmac_valid_v0(
         http.request.uri,
         http.request.headers["timestamp"][0],
         "-",
-        http.request.headers["MAC"]),
+        http.request.headers["mac"][0]),
     100000,
     http.request.timestamp.sec,
     0
