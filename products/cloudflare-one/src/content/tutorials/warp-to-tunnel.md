@@ -10,12 +10,12 @@ You can use [Argo Tunnel](/connections/connect-apps) to connect applications and
 
 You can create and configure Argo Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). You can also use Argo Tunnel to connect any service that relies on a TCP-based protocol to Cloudflare's network. Users in your organization can then reach the service by enrolling into your organization's Cloudflare for Teams account and using the WARP agent.
 
-Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
+Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
 **🗺️ This tutorial covers how to:**
 
 * Start a secure, outbound-only, connection from a machine to Cloudflare
-* Assign the machine an RFC 1918 IP address or range
+* Assign the machine an IP that can consist of an RFC 1918 IP address or range
 * Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
 * Connect using any TCP-based protocol
 
@@ -72,7 +72,7 @@ cloudflared tunnel list
 
 ![List Tunnel](../static/secure-origin-connections/warp-to-tunnel/list-tunnel.png)
 
-Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. That range should use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918). The private IP space specified should match the private IP space of your subnet or environment where Argo Tunnel will send connections.
+Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Argo Tunnel will send connections.
 
 This example tells Argo Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
@@ -111,11 +111,11 @@ This example runs it from the command-line but we recommend running `cloudflared
 
 ![Config File](../static/secure-origin-connections/warp-to-tunnel/config-file.png)
 
-## Include RFC 1918 IP ranges in WARP
+## Route private IP ranges through WARP
 
 Users can reach this private service by logging into their Cloudflare for Teams account and the WARP agent.
 
-By default, Cloudflare WARP excludes traffic bound for RFC 1918 space as part of its [Split Tunnel feature](/tutorials/split-tunnel). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
+By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/tutorials/split-tunnel). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
 Navigate to the `Policies` page of the Gateway section in the Cloudflare for Teams dashboard. Click the **Settings** tab. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
