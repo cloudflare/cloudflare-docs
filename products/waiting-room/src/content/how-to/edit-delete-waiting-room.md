@@ -55,13 +55,13 @@ Click **Delete** in the dialog to confirm.
 
 [Replace](https://api.cloudflare.com#waiting-room-update-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
 
-```bashell
+```bash
 PUT zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
 [Update](https://api.cloudflare.com#waiting-room-patch-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
 
-```bashell
+```bash
 PATCH zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
@@ -71,6 +71,6 @@ You only need to include the parameters that you want to update in the `data` fi
 
 Delete a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com#waiting-room-delete-waiting-room) to the Cloudflare API base URL.
 
-```bashell
+```bash
 DELETE zones/{zone_identifier}/waiting_rooms/{identifier}
 ```

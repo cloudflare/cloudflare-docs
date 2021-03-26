@@ -33,7 +33,7 @@ The macOS application places log files in two locations based on what part of th
 ## How to remove the application
 We include an uninstall script as part of the macOS package that you originally used. To find and run it, run the following steps in a terminal window:
 
-```bash
+```sh
 $ cd /Applications/Cloudflare\ WARP.app/Contents/Resources
 $ ./uninstall.sh
 ```

@@ -34,7 +34,7 @@ the correct asset for your server from the latest release. For most people, this
 is the link that ends in `_linux-amd64.tar.gz`. Now we download that file to our
 server, extract the contents, install IPFS, and clean up:
 
-```bash
+```sh
 $ wget -q https://github.com/ipfs/go-ipfs/releases/download/v0.4.21/go-ipfs_v0.4.21_linux-amd64.tar.gz
 $ tar xf go-ipfs_v0.4.21_linux-amd64.tar.gz
 $ sudo mv go-ipfs/ipfs /usr/local/bin
@@ -79,7 +79,7 @@ WantedBy=multi-user.target
 Change the line "User=root" if you're not running the daemon as root, and then
 tell systemd about the new service:
 
-```bash
+```sh
 $ sudo systemctl daemon-reload
 $ sudo systemctl enable ipfs
 $ sudo systemctl start ipfs

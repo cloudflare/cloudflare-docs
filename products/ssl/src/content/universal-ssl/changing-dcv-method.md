@@ -116,7 +116,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verificat
 
 You can then take and set the values from `verification_info` for a CNAME record in your authoritative DNS. This can be validated by performing this type of manual DNS lookup using `dig`.
 
-```bash
+```sh
 $ dig _ca3-e82a555f7fe04fb394d2b14c7eb24946.example.com cname +short
 dcv.digicert.com.
 ```

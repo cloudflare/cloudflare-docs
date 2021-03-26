@@ -10,7 +10,7 @@ order: 4
 * upstart/sysvinit: `sudo tail -f /var/log/gokeyless.log`
 
 ## Enable debug logging
-```bash
+```sh
 $ cd /etc/keyless
 $ sudo -u keyless gokeyless --loglevel 0
 ```
@@ -37,7 +37,7 @@ If you run gokeyless with debug logging enabled, and you see logs like this:
 
 It likely indicates that the key server is not using an appropriate server.pem file, and the client is aborting the connection after the certificate exchange. The certificate must be signed by the keyless CA, and the SANs must include the hostname of the keyless server. Here is a valid example for a keyless server located at `11aa40b4a5db06d4889e48e2f.example.com` (note the Subject Alternative Name and Authority Key Identifier:
 
-```bash
+```sh
 $ openssl x509 -in server.pem -noout -text -certopt no_subject,no_header,no_version,no_serial,no_signame,no_validity,no_subject,no_issuer,no_pubkey,no_sigdump,no_aux | sed -e 's/^        //'
 
 X509v3 extensions:

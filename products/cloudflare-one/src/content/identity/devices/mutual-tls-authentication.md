@@ -134,13 +134,13 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
 3. Now, run the following command to generate the Root CA with those files.
 
-```bash
+```sh
 $ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 ```
 
 4. Within the directory, check its content to confirm the output was successful.
 
-```bash
+```sh
 $ ls
 ```
 
@@ -177,13 +177,13 @@ Returning to the terminal, generate a client certificate that will authenticate 
 ```
 2. Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
-```bash
+```sh
 $ cfssl gencert -ca=../mtls-test/ca.pem -ca-key=../mtls-test/ca-key.pem  -config=../mtls-test/ca-config.json -profile=client client-csr.json | cfssljson -bare client
 ```
 
 3. You can now test the client certificate with the following `cURL` command.
 
-```bash
+```sh
 $ curl -v --cert client.pem --key client-key.pem https://iot.widgetcorp.tech
 ```
 
@@ -199,7 +199,7 @@ The command adds the client certificate to the trusted store on your device. **O
 
 </Aside>
 
-```bash
+```sh
 $ open client.pem
 $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
 ```

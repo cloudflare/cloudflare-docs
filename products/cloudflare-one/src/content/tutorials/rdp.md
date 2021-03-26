@@ -97,7 +97,7 @@ copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\system
 
 Next, [create an Argo Tunnel](/connections/connect-apps/create-tunnel) with the command below.
 
-```bash
+```sh
 $ cloudflared tunnel create <NAME>
 ```
 
@@ -194,7 +194,7 @@ You can help end users connect without requiring the command line by providing t
 
 3. In the wizard that appears, paste in the following command with the hostname your team uses:
 
-```bash
+```sh
 $ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
 4. Click **Next** and complete the wizard.
@@ -221,12 +221,12 @@ chmod +x $var
 
 2. Check that everything is successful by running the following command:
 
-```bash
+```sh
 $ lsof -nP -iTCP:2244 | grep LISTEN
 ```
 If needed, you can kill the process by running the following command:
 
-```bash
+```sh
 $ sudo kill -9 [process id]
 ```
 

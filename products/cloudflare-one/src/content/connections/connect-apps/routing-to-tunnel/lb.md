@@ -28,7 +28,7 @@ You can add Argo Tunnel to an existing load Balancer pool directly from `cloudfl
 
 To do so, run the following command:
 
-```bash
+```sh
 $ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load balancer pool>
 ```
 

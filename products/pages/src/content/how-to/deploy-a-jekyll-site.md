@@ -8,13 +8,13 @@ Jekyll is written in Ruby, meaning that you'll need a functioning Ruby installat
 
 We recommend using [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on your computer. Follow the [`rbenv` install instructions](https://github.com/rbenv/rbenv#installation), and install a recent version of Ruby using `rbenv`:
 
-```bash
+```sh
 $ rbenv install 2.7.2
 ```
 
 With Ruby installed, you can install the `jekyll` Ruby gem:
 
-```bash
+```sh
 $ gem install jekyll
 ```
 
@@ -22,7 +22,7 @@ $ gem install jekyll
 
 With Jekyll installed, you can create a new project using `jekyll new`:
 
-```bash
+```sh
 $ jekyll new my-jekyll-site
 ```
 
@@ -47,7 +47,7 @@ Optionally, you can also use include a theme with your new Jekyll site if you'd 
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```bash
+```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

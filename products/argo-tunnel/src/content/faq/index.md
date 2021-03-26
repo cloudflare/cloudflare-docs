@@ -182,7 +182,7 @@ connections and prevent users (in possession of the tunnel credentials file) fro
 
 ### Did `cloudflared` run?
 
-```bash
+```sh
 $ kubectl logs -lapp=hello -c tunnel
 ```
 
@@ -190,7 +190,7 @@ Returns logs from the cluster in the container, tunnel, where `cloudflared` is r
 
 ### Did the cluster's deployment fail?
 
-```bash
+```sh
 $ kubectl describe po -lapp=hello
 ```
 

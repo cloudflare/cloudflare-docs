@@ -35,13 +35,13 @@ You can also download packages from [Cloudflare's package repository](https://pk
 
 Argo Tunnel can also be installed via [Homebrew](https://brew.sh):
 
-```bash
+```sh
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
 Install via Terminal:
 
-```bash
+```sh
 $ curl https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-darwin-amd64.tgz | tar xzC /usr/local/bin
 ```
 

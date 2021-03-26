@@ -36,7 +36,7 @@ The three validation methods below can be used to obtain a certificate in advanc
 
 This validation method allows your customer to add a TXT record to prove control of their hostname. To do so you should create a new custom hostname using `"method":"txt"` (rather than `"method":"http"`).
 
-```bash
+```sh
 $ curl -sX POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \
@@ -59,7 +59,7 @@ $ curl -sX POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
 
 After a few seconds, i.e., once the state has transition from `initializing` to `pending_validation`, request the status and you’ll see a payload similar to the following:
 
-```bash
+```sh
 $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/46f8849a-72c9-49e0-9e42-857297d89306" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
 {
@@ -83,7 +83,7 @@ You should then ask your customer to create a TXT record with name `another.exam
 
 If you’d like to request an immediate recheck, [rather than wait for the next retry](/ssl-for-saas/validation-backoff-schedule/), you can simply send a `PATCH` as follows:
 
-```bash
+```sh
 $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/46f8849a-72c9-49e0-9e42-857297d89306" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \
@@ -96,7 +96,7 @@ Email based validation will send an approval email to the contacts listed for a 
 
 First, create a new hostname using `"method":"email"`:
 
-```bash
+```sh
 $ curl -sX POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \
@@ -119,7 +119,7 @@ $ curl -sX POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
 
 Then, request the status to see the email addresses to which the approval email was sent. Note that any user that receives the email can complete the validation by following the instructions contained in the message body.
 
-```bash
+```sh
 $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/16798830-42c1-4e4f-82b4-4695ee8b62e4" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
 {
@@ -161,7 +161,7 @@ If you would like to serve the DCV tokens described above from your own origin, 
 
 First, make a request using `"method":"http"`:
 
-```bash
+```sh
 $ curl -sXPOST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \
@@ -183,7 +183,7 @@ $ curl -sXPOST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 
 Next, wait a few seconds for the status to transition from `initializing` to `pending_validation`, the step that obtains the random path and token from the CA, and then request status:
 
-```bash
+```sh
 $ curl -sXGET -H "X-Auth-Key: $MYAPIKEY" -H "X-Auth-Email: $MYEMAIL" https://api.cloudflare.com/client/v4/zones/$MYZONETAG/custom_hostnames/3aa0e60f-7622-47a4-8519-7a5fd7eb7145
 {
   "result": {
@@ -214,14 +214,14 @@ location "/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt" 
 
 Once that configuration is live, or something like it, test that the DCV text file is in place with `curl`:
 
-```bash
+```sh
 $ curl "http://http-preval.example.com/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt"
 ca3-be794c5f757b468eba805d1a705e44f6
 ```
 
 On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate. If you’d like to check immediately simply send a `PATCH` with the same payload as the initial `POST`:
 
-```bash
+```sh
 $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \
@@ -232,7 +232,7 @@ $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
 
 The last DCV method available is via a CNAME record. First, make a request using `"method":"cname"`:
 
-```bash
+```sh
 $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \

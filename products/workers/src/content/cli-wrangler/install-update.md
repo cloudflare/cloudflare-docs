@@ -8,13 +8,13 @@ order: 0
 
 ### Install with `npm`
 
-```bash
+```sh
 $ npm i @cloudflare/wrangler -g
 ```
 
 ### Install with `cargo`
 
-```bash
+```sh
 $ cargo install wrangler
 ```
 
@@ -72,12 +72,12 @@ To update [Wrangler](https://github.com/cloudflare/wrangler), follow the below i
 
 **Updating Wrangler with NPM:**
 
-```bash
+```sh
 $ npm uninstall -g @cloudflare/wrangler && npm install -g @cloudflare/wrangler
 ```
 
 **Updating Wrangler with Cargo:**
 
-```bash
+```sh
 $ cargo install wrangler --force
 ```

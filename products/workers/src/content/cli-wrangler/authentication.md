@@ -25,13 +25,13 @@ You can also configure your global user with environment variables. This is the 
 
 You can deploy with authentication tokens (recommended). Obtain `CF_ACCOUNT_ID` and `CF_API_TOKEN` from the Cloudflare dashboard and run:
 
-```bash
+```sh
 $ CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken wrangler publish
 ```
 
 Or you can deploy with your email and your global API key. Obtain `CF_EMAIL` and `CF_API_KEY` from the Cloudflare dashboard and run:
 
-```bash
+```sh
 $ CF_EMAIL=cloudflareEmail CF_API_KEY=veryLongAPI wrangler publish
 ```
 
@@ -69,7 +69,7 @@ You can also specify or override the Zone ID used by `wrangler publish` with the
 
 After getting your token or key, you can set up your default credentials on your local machine by running `wrangler config`
 
-```bash
+```sh
 $ wrangler config
 Enter API token:
 superlongapitoken
@@ -77,7 +77,7 @@ superlongapitoken
 
 Use the `--api-key` flag to instead configure with email and global API key:
 
-```bash
+```sh
 $ wrangler config --api-key
 Enter email:
 testuser@example.com

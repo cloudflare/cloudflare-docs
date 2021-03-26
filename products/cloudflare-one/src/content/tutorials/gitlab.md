@@ -34,7 +34,7 @@ This example uses a macOS machine to configure the Droplet. Copy the IP address 
 
 Open Terminal and run the following command, replacing the IP address with the IP assigned by Digital Ocean.
 
-```bash
+```sh
 $ ssh root@134.209.124.123
 ```
 
@@ -271,7 +271,7 @@ Host gitlab-ssh.widgetcorp.tech
 ```
 You can now test the SSH flow by attempting to clone the project created earlier.
 
-```bash
+```sh
 $ git clone git@gitlab-ssh.widgetcorp.tech:samrhea/demo
 ```
 

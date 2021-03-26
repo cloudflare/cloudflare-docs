@@ -10,7 +10,7 @@ order: 9
 
 View all certificates on a zone using a GET to the *custom_hostnames* endpoint.  Large numbers of results are paginated.  Change the _page_ parameter in your API call to pull additional pages.
 
-```bash
+```sh
 $ curl -sX GET https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?page=1\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json'
@@ -53,7 +53,7 @@ $ curl -sX GET https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostn
 
 To search for a certificate by *hostname*, add the hostname parameter to your query.  This is useful if you are unsure of the ID for a particular certificate or maintain many certificates.
 
-```bash
+```sh
 $ curl -sX GET https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname=app.example.com\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" -H 'Content-Type: application/json'
 
@@ -117,7 +117,7 @@ Standard response structure, with the following result value:
 }
 ```
 
-```bash
+```sh
 $ curl --location --request GET 'https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames/fallback_origin' \
 --header 'X-Auth-Email: EMAIL' \
 --header 'X-Auth-Key: APIKEY' \
@@ -148,7 +148,7 @@ Request schema:
 
 Response schema: same as GET response for success. If the request failed, includes errors and messages values.
 
-```bash
+```sh
 $ curl -X PUT "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames/fallback_origin"\
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
 -H "Content-Type: application/json"\

@@ -33,7 +33,7 @@ This section will cover:
 ## 1. Authenticate `cloudflared`
 1. Run the following command to authenticate cloudflared into your Cloudflare account.
 
-```bash
+```sh
 $ cloudflared tunnel login
 ```
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
@@ -55,7 +55,7 @@ For example, if you share the machine at `ssh.site.com`, build a policy to only 
 By default, the SSH protocol listens on port `22`. Confirm which port your infrastructure uses. You can use nonstandard ports, as well.
 Run the following command to connect the machine to Cloudflare, replacing the `ssh.site.com` and 22 values with your site and port.
 
-```bash
+```sh
 $ cloudflared tunnel --hostname
 ssh.site.com --url ssh://localhost:22
 ```
@@ -72,7 +72,7 @@ Cloudflare Access does not require any unique commands or SSH wrappers. The only
 
 1. To generate generic configuration settings, run the following command:
 
-```bash
+```sh
 $ cloudflared access ssh-config
 ```
 
@@ -87,7 +87,7 @@ Host [your hostname]
 
 2. Optionally, if you know the hostname, you can run the following command to generate the exact SSH configuration details.
 
-```bash
+```sh
 $ cloudflared access ssh-config --hostname ssh.site.com
 ```
 
@@ -103,7 +103,7 @@ Host ssh.site.com
 
 1. Run the following command to create a connection from the device to Cloudflare.
 
-```bash
+```sh
 $ ssh username@ssh.site.com
 ```
 
@@ -117,7 +117,7 @@ Note that Access matches based on the identity that precedes an email domain. **
 If you use SSH to reach a Git repository, you can continue to use the `git` command without any wrapper. You will still need to update your SSH configuration file using the instructions above.
 Once configured, you can run the following command to test the connection:
 
-```bash
+```sh
 $ git clone ssh -T username@git.site.com
 ```
 Replace `username` with your unix username.

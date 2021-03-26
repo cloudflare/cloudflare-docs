@@ -53,7 +53,7 @@ The path to remediating any certificates stuck in a Timed Out state is to send a
 
 You can send a `PATCH` request to request an immediate validation check on any certificate. Note that your PATCH data must only include the “ssl” section from the original request.
 
-```bash
+```sh
 $ curl -sXPATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/7f09bb24-9ee0-49b3-98bb-11cccd664edb\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json' -d '{"ssl":{"method":"cname", "type":"dv"}}'
@@ -79,7 +79,7 @@ $ curl -sXPATCH https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 
 Granularly remove one or more files from Cloudflare’s cache either by specifying the host.
 
-```bash
+```sh
 $ curl -sXDELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"\
      -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
      -H "Content-Type: application/json"\

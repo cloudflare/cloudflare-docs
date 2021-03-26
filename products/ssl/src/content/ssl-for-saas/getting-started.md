@@ -18,7 +18,7 @@ The fallback origin is used to route the traffic of your Custom Hostnames.  The 
     * __Zone ID__ (via the __Overview__ app of the Cloudflare dashboard). Alternatively, [retrieve a user’s zones and associated Zone IDs](https://api.cloudflare.com/#zone-list-zones) via the Cloudflare API.
 6. Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
 
-```bash
+```sh
 $ curl -XPUT
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames/fallback_origin"\
 -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
@@ -58,7 +58,7 @@ Once your account has been provisioned, you are ready to issue certificates. The
 
 In this example, HTTP based validation is used ("method":"http") to issue this certificate. This requires HTTP traffic to be proxied through Cloudflare’s edge already, i.e., the CNAME from `app.customer.com` must be in place to your zone. If the CNAME is not yet in place, Cloudflare will ask its CA partner to retry until the request can be completed; see the [Validation Backoff Schedule](/ssl-for-saas/validation-backoff-schedule/) for specific timings.
 
-```bash
+```sh
 $ curl -XPOST "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames"\
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
        -H "Content-Type: application/json"\

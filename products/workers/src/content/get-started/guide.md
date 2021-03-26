@@ -33,13 +33,13 @@ Installing `wrangler`, the Workers CLI, gives you the freedom to [generate](/cli
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), then run:
 
-```bash
+```sh
 $ npm install -g @cloudflare/wrangler
 ```
 
 Then run `wrangler --version` to confirm that the installation was successful:
 
-```bash
+```sh
 $ wrangler --version
 👷 ✨  wrangler 1.12.2
 ```
@@ -52,7 +52,7 @@ Now that Wrangler is installed, you'll need to give it an API Token for your Clo
 
 Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
 
-```bash
+```sh
 $ wrangler login
 Allow Wrangler to open a page in your browser? [y/n]
 y
@@ -202,7 +202,7 @@ In order to preview our Worker, we're going to need to configure our project by 
 
 Run the command `wrangler whoami` and copy your `Account ID`.
 
-```bash
+```sh
 $ wrangler whoami
 👋  You are logged in with an API Token, associated with the email '<Your Email>'!
 
@@ -248,7 +248,7 @@ To configure your project, we need to fill in a few missing fields in the `wrang
 
 You should have already filled in the `account_id` field in the last step. If you didn't, you can get your `Account ID` by running `wrangler whoami`.
 
-```bash
+```sh
 $ wrangler whoami
 👋  You are logged in with an API Token, associated with the email '<Your Email>'!
 

@@ -30,7 +30,7 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 You can install `cloudflared` on macOS systems via Homebrew:
 
-```bash
+```sh
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 

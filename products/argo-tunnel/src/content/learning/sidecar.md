@@ -60,13 +60,13 @@ to authenticate the tool with the corresponding Cloudflare account.
 Identify the path where the certificate was downloaded and convert it
 into a Kubernetes secret with the following command:
 
-```bash
+```sh
 $ kubectl create secret generic example.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
 
 Ensure the secret was generated successfully with the following command:
 
-```bash
+```sh
 $ kubectl get secret
 ```
 
@@ -201,7 +201,7 @@ definitions, the file sets arguments for `cloudflared`
 
 ### Did `cloudflared` run?
 
-```bash
+```sh
 $ kubectl logs -lapp=hello -c tunnel
 ```
 
@@ -209,7 +209,7 @@ Returns logs from the cluster in the container, tunnel, where `cloudflared` is r
 
 ### Did the cluster's deployment fail?
 
-```bash
+```sh
 $ kubectl describe po -lapp=hello
 ```
 

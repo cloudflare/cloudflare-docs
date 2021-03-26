@@ -99,7 +99,7 @@ addEventListener('fetch', event => {
 
 To validate the API before adding mTLS authentication, POST a random temperature reading:
 
-```bash
+```sh
 $ TEMPERATURE=$(echo $((361 + RANDOM %11)) | awk '{printf("%.2f",$1/10.0)}')
 $ TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
@@ -262,7 +262,7 @@ To configure the mobile app to securely request temperature data submitted by th
 
 For simplicity, this example embeds a “bootstrap” certificate and key in the application bundle as a PKCS#12-formatted file:
 
-```bash
+```sh
 $ openssl pkcs12 -export -out bootstrap-cert.pfx -inkey ios-key.pem -in ios.pem
 Enter Export Password:
 Verifying - Enter Export Password:

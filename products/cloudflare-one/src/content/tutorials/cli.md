@@ -23,7 +23,7 @@ Once you have installed `cloudflared`, you can use it to retrieve a Cloudflare A
 
 1. To generate a token, run the following command:
 
-```bash
+```sh
 $ cloudflared access login https://example.com
 ```
 
@@ -41,7 +41,7 @@ $ cloudflared access login https://example.com
 
 Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named _token_. You can invoke the wrapper as follows:
 
-```bash
+```sh
 $ cloudflared access curl http://example.com
 ```
 
@@ -55,7 +55,7 @@ Read on for other available commands.
 
 The `login` command initiates the login flow for an application behind Access.
 
-```bash
+```sh
 $ cloudflared access login http://example.com
 ```
 
@@ -63,7 +63,7 @@ $ cloudflared access login http://example.com
 
 The `curl` command invokes the client wrapper and includes the token in the request automatically.
 
-```bash
+```sh
 $ cloudflared access curl http://example.com
 ```
 
@@ -71,7 +71,7 @@ $ cloudflared access curl http://example.com
 
 The `token` command retrieves the token scoped to that specific application for use in other command-line tools.
 
-```bash
+```sh
 $ cloudflared access token -app=http://example.com
 ```
 
@@ -95,6 +95,6 @@ Set up a token as an environment variable as follows:
 
 Once you have exported the token to your environment, use the variable with the Cloudflare Access request header in the script to access a protected endpoint, as in the following example:
 
-```bash
+```sh
 $ curl -H "cf-access-token: $TOKEN" https://example.com/rest/api/2/item/foo-123
 ```

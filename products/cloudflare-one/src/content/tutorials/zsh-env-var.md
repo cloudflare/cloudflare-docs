@@ -31,7 +31,7 @@ Start by [downloading and installing](/connections/connect-apps/install-and-setu
 
 Once installed, you can use the `access login` command in `cloudflared` to generate the JWT for a given application.
 
-```bash
+```sh
 $ cloudflare access login https://jira.company.com
 ```
 
@@ -70,7 +70,7 @@ function login-jira() {
 
 Next, run the following command in your shell to update your profile.
 
-```bash
+```sh
 $ source ~/.zshrc
 ```
 
@@ -93,7 +93,7 @@ function login-jira() {
 
 Next, run the following command in your shell to update your profile.
 
-```bash
+```sh
 $ source ~/.bashrc
 ```
 
@@ -101,6 +101,6 @@ $ source ~/.bashrc
 
 Now, you can run the following command to login to Cloudflare Access. Instead of printing the token, the shell will store it as an environment variable that you can use.
 
-```bash
+```sh
 $ login-jira
 ```

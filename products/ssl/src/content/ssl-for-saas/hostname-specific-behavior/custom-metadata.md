@@ -22,7 +22,7 @@ Please speak with your Solutions Engineer to discuss additional logic and requir
 
 You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a PATCH request to the specific hostname ID to set metadata for that hostname, for example:
 
-```bash
+```sh
 $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id} /custom_hostnames/{hostname_id}"\
      -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
      -H "Content-Type: application/json"\

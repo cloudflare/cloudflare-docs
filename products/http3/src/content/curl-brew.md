@@ -32,7 +32,7 @@ so you need to add to your $PATH
 
 Check if curl with H3 support is built properly:
 
-```bash
+```sh
 $ curl --help | egrep 'alt-svc|http3'
     --alt-svc <file name> Enable alt-svc with this cache file
     --http3         Use HTTP v3
@@ -40,7 +40,7 @@ $ curl --help | egrep 'alt-svc|http3'
 
 Now, you can try curl on any HTTP/3 enabled sites.
 
-```bash
+```sh
 $ curl --http3 https://cloudflare-quic.com
 $ curl --http3 https://blog.cloudflare.com
 ```

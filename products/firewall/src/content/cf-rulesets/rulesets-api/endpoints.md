@@ -14,7 +14,7 @@ This feature is part of an early access experience for selected customers.
 
 To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
 
-```bashell
+```bash
 https://api.cloudflare.com/client/v4/
 
 ```

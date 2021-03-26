@@ -89,7 +89,7 @@ The following table lists several commonly used router vendors with links to MSS
 
 To verify that your routers have the correct MSS setting (1436 bytes) at your origin, run the following command on the servers egressing the prefixes you want to add to Magic Transit:
 
-```bash
+```sh
 $ curl 167.71.125.57:8080
 ```
 

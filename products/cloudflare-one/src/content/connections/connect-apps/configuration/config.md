@@ -35,7 +35,7 @@ tunnel: NAME-OR-ID
 
 You can use `--config` to point to a non-standard YAML file location:
 
-```bash
+```sh
 $ cloudflared tunnel --config tunnels/config.yml run
 ```
 

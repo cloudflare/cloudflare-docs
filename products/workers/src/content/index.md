@@ -21,7 +21,7 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI, ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). Then, run:
 
-```bash
+```sh
 $ npm install -g @cloudflare/wrangler
 ```
 

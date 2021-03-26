@@ -9,13 +9,13 @@ hidden: false
 
 Create a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com/#waiting-room-create-waiting-room) to the Cloudflare API base URL.
 
-```bashell
+```bash
 POST zones/{zone_identifier}/waiting_rooms
 ```
 
 The Cloudflare API base URL is:
 
-```bashell
+```bash
 https://api.cloudflare.com/client/v4
 ```
 
@@ -42,7 +42,7 @@ The following parameters are optional:
 
 The following example API request configures a waiting room with the same settings as the example shown in [_Create a waiting room using the Cloudflare dashboard_](/how-to/create-waiting-room/create-waiting-room-dashboard).
 
-```bashell
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: xxxxxxxx" \
@@ -59,7 +59,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 
 The response for the request above is:
 
-```bashell
+```bash
 {
   "success": true,
   "errors": [],
@@ -87,7 +87,7 @@ You can use the Waiting Room API to customize the web page served to visitors wh
 
 In the following PATCH request, the `custom_page_html` field contains the HTML code for the customized waiting room:
 
-```bashell
+```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"
      -H "X-Auth-Email: user@example.com"
      -H "X-Auth-Key: xxxxxxxx"
@@ -95,7 +95,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
      --data '{"custom_page_html":"<p>Include custom HTML here</p>"}'
 ```
 
-```bashell
+```bash
 {
   "success": true,
   "errors": [],
@@ -124,13 +124,13 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
 
 Before making an API request to configure a waiting room web page with customized HTML, you can preview your custom HTML by uploading it to a preview endpoint:
 
-```bashell
+```bash
 POST https://api.cloudflare.com/client/v4/zones/<zone_id>/waiting_rooms/preview
 ```
 
 In the request body, include the customized HTML content in the `custom_html` field:
 
-```bashell
+```bash
 {
     "custom_html": "<p>Include custom HTML here</p>"
 }
@@ -140,7 +140,7 @@ Note that you pass HTML content to the preview endpoint in the `custom_html` fie
 
 Example request:
 
-```bashell
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/preview"
      -H "X-Auth-Email: user@example.com"
      -H "X-Auth-Key: xxxxxxxx"
@@ -150,7 +150,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 
 The preview endpoint returns a temporary URL in the response body where you can preview your custom page:
 
-```bashell
+```bash
 {
   "result": {
     "preview_url": "https://waitingrooms.dev/preview/111111111111"
@@ -167,7 +167,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 After [generating a preview URL](https://api.cloudflare.com/#waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
-```bashell
+```bash
 GET https://waitingrooms.dev/preview/{preview-id}
 ```
 

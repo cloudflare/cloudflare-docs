@@ -5,7 +5,7 @@ Next.js is an open-source React framework for creating websites and apps. In thi
 ## Creating a new project
 
 Create a new project using npx
-```bash
+```sh
 $ npx create-next-app
 ```
 
@@ -13,7 +13,7 @@ $ npx create-next-app
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```bash
+```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

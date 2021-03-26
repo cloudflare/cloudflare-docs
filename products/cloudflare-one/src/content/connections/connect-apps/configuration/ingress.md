@@ -109,7 +109,7 @@ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 
 To validate the ingress rules in your configuration file, run:
 
-```bash
+```sh
 $ cloudflared tunnel ingress validate
 ```
 
@@ -119,7 +119,7 @@ This will ensure that the set of ingress rules specified in your config file is 
 
 To verify that `cloudflared` will proxy the right traffic to the right local service, use `cloudflared tunnel ingress rule`. This checks a URL against every rule, from first to last, and shows the first rule that matches. For example:
 
-```bash
+```sh
 $ cloudflared tunnel ingress rule https://foo.example.com
 Using rules from /usr/local/etc/cloudflared/config.yml
 Matched rule #3

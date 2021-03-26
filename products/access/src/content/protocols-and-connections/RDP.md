@@ -134,7 +134,7 @@ For example, if you share the desktop at `rdp.site.com`, that is the subdomain y
 
    * If you are **using an internal DNS and the target machine is running on a hostname**, you will need to modify the command to start the Tunnel without TLS verification to avoid certificate mismatches. For example, if the remote desktop server is available at `rdp.internal.com,` the following command can be run.
 
-```bash
+```sh
 $ cloudflared tunnel --hostname rdp.site.com --no-tls-verify --origin-server-name rdp.internal.com --url rdp://localhost:433
 ```
    * If you are using the configuration file created as part of the *Authenticate cloudflared process* above, you can start the service from the Windows services panel, or run:
@@ -161,7 +161,7 @@ To do so:
 
 2. Use this configuration when establishing the tunnel:
 
-```bash
+```sh
 $ cloudflared tunnel --hostname rdp.site.com --bastion
 ```
 
@@ -231,7 +231,7 @@ You can help end users connect without requiring the command line by providing t
 
 3. In the wizard that appears, paste in the following command with the hostname your team uses:
 
-```bash
+```sh
 $ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
 4. Click **Next** and complete the wizard.
@@ -258,12 +258,12 @@ chmod +x $var
 
 2. Check that everything is successful by running the following command:
 
-```bash
+```sh
 $ lsof -nP -iTCP:2244 | grep LISTEN
 ```
 If needed, you can kill the process by running the following command:
 
-```bash
+```sh
 $ sudo kill -9 [process id]
 ```
 

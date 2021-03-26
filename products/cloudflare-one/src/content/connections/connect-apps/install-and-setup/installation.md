@@ -42,7 +42,7 @@ rpm -ivh cloudflared-stable-linux-amd64.rpm
 
 You can also build the latest version of `cloudflared` from source with the following steps.
 
-```bash
+```sh
 $ git clone https://github.com/cloudflare/cloudflared.git
 $ cd cloudflared
 $ make cloudflared
@@ -63,7 +63,7 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 
 You can install `cloudflared` on macOS systems via Homebrew:
 
-```bash
+```sh
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
@@ -98,7 +98,7 @@ Instances of `cloudflared` do not automatically update on Windows. You will need
 
 You can also build the latest version of `cloudflared` from source with the following steps.
 
-```bash
+```sh
 $ git clone https://github.com/cloudflare/cloudflared.git
 $ cd cloudflared
 $ make cloudflared

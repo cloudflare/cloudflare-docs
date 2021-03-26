@@ -43,7 +43,7 @@ Then, run `cloudflared login` and select a domain to generate and download a cer
 
 Add the repository that holds the Helm chart:
 
-```bash
+```sh
 $ helm repo add cloudflare https://cloudflare.github.io/helm-charts
 $ helm repo update
 ```
@@ -52,7 +52,7 @@ The Helm chart that describes all the components is found [here][cflare-github-h
 
 Install the Controller with Helm:
 
-```bash
+```sh
 $ helm install --name anydomain --namespace default \
     --set rbac.create=true \
     --set controller.ingressClass=argo-tunnel \
@@ -116,7 +116,7 @@ spec:
 
 Deploy `echoserver` into your Kubernetes cluster:
 
-```bash
+```sh
 $ kubectl apply -f echo.yaml`
 ```
 > **Tip**: `-n` sets the namespace for deployment.
@@ -124,7 +124,7 @@ $ kubectl apply -f echo.yaml`
 ## Step Four: Create a Tunnel Secret
 Convert the domain certificate into a tunnel secret:
 
-```bash
+```sh
 $ kubectl create secret generic mydomain.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
 > **Tip**: `-n` sets the namespace for deployment.
@@ -170,7 +170,7 @@ spec:
 - the `host` must belong the domain certificate (tunnel secret)
 
 Deploy the Ingress:
-```bash
+```sh
 $ kubectl apply -f echo-tunnel.yaml
 ```
 > **Tip**: `-n` sets the namespace for deployment.
@@ -181,7 +181,7 @@ The ingress controller opens a tunnel between the Cloudflare edge and the Kubern
 The ingress controller opens a tunnel between the Cloudflare edge and the Kubernetes virtual service IP.
 
 Curl the tunnel:
-```bash
+```sh
 $ curl http://echo.mydomain.com
 ```
 

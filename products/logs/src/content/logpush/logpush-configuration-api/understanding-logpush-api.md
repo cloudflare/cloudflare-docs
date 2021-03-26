@@ -37,7 +37,7 @@ For concrete examples, see the tutorial [Manage Logpush with cURL](/tutorials/tu
 
 The Logpush API requires credentials like any other Cloudflare API.
 
-```bash
+```sh
 $ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" \
     'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 ```
@@ -48,7 +48,7 @@ Before creating a new job, ownership of the destination must be proven.
 
 To issue an ownership challenge token to your destination:
 
-```bash
+```sh
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership -d '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
@@ -96,7 +96,7 @@ For more information on the value for your cloud storage provider, consult the f
 
 To check if a destination is already in use:
 
-```bash
+```sh
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
 ```
 
@@ -147,7 +147,7 @@ The three options that you can customize are:
 
 To check if `logpull_options` is valid:
 
-```bash
+```sh
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339","dataset": "http_requests"}' | jq .
 ```
 

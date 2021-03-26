@@ -236,7 +236,7 @@ async function sendText(message){
 ```
 To make this work, we need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with `wrangler secret put` in the cli.
 
-```bash
+```sh
 $ wrangler secret put ACCOUNT_SID
 ```
 
@@ -276,7 +276,7 @@ async function githubWebhookHandler(request) {
 
 You made it :) Now, just use wrangler to deploy your script to Workers and test it out.
 
-```bash
+```sh
 $ wrangler publish
 ```
 

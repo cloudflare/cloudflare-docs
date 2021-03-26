@@ -8,7 +8,7 @@ In this guide, you'll create a new React application and deploy it using Cloudfl
 
 Create a new project using `npx`, giving it the title `my-react-app`.
 
-```bash
+```sh
 $ npx create-react-app my-react-app
 ```
 
@@ -16,7 +16,7 @@ $ npx create-react-app my-react-app
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```bash
+```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

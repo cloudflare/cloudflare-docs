@@ -18,7 +18,7 @@ All fields except for organizational_unit and key_type are required. If you do n
 
 [Common names are restricted to 64 characters, per RFC 5280](https://tools.ietf.org/html/rfc5280), while subject alternative names (SANs) can be up to 255 characters in length. You must specify at least one SAN, and the list of SANs should include the common name.
 
-```bash
+```sh
 $ request_body=$(< <(cat <<EOF
 {
   "country": "US",
@@ -41,7 +41,7 @@ EOF
 
 ### 2. Request a CSR that can be provided to your customer
 
-```bash
+```sh
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json' -d "$request_body"
@@ -70,7 +70,7 @@ $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
 
 Note that the ‘\n’ strings should be replaced with actual newline before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, e.g.,:
 
-```bash
+```sh
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json' -d "$request_body" | jq .result.csr |\
@@ -107,7 +107,7 @@ EOF
 
 With the request body built, create the Custom Hostname with the supplied custom certificate. Note that if you intend to use the certificate with multiple hostnames, you will need to make multiple API calls replacing the “hostname” field with each hostname you wish to create.
 
-```bash
+```sh
 $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json'\
@@ -200,7 +200,7 @@ Here is an example in an account which has two CSRs for the same hostnames—one
 
 You may delete a CSR provided there are no custom certificates using the private key that was generated for the CSR. If you attempt to delete a CSR whose private key is still in use, you will receive an error.
 
-```bash
+```sh
 $ curl -sXDELETE https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs/{csr_id}\
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
 

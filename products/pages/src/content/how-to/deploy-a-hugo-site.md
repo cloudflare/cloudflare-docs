@@ -12,7 +12,7 @@ First, install the Hugo CLI, using the specific instructions for your operating 
 
 Your Linux distro's package manager may include Hugo. If this is the case, you can install it directly using your distro's package manager -- for instance, in Ubuntu:
 
-```bash
+```sh
 $ sudo apt-get install hugo
 ```
 
@@ -22,7 +22,7 @@ If your package manager doesn't include Hugo or you'd like to download a release
 
 If you use the package manager [Homebrew](https://brew.sh), you can use `brew install` to install Hugo:
 
-```bash
+```sh
 $ brew install hugo
 ```
 
@@ -30,7 +30,7 @@ $ brew install hugo
 
 If you use the package manager [Chocolatey](https://chocolatey.org/), you can use `choco install` to install Hugo:
 
-```bash
+```sh
 $ choco install hugo --confirm
 ```
 
@@ -44,13 +44,13 @@ For more instruction on installing these releases, see [Hugo's install guide](ht
 
 With Hugo installed, you can create a new project using `hugo new`:
 
-```bash
+```sh
 $ hugo new site my-hugo-site
 ```
 
 Hugo sites use _themes_ to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, we'll pick the [Terminal theme](https://themes.gohugo.io/hugo-theme-terminal/) and install it:
 
-```bash
+```sh
 $ cd my-hugo-site
 $ git init
 $ git clone https://github.com/panr/hugo-theme-terminal.git themes/terminal
@@ -137,7 +137,7 @@ paginate = 5
 
 Finally, you can create a new post to give your Hugo site some initial content. Run the `hugo new` command to generate a new post:
 
-```bash
+```sh
 $ hugo new posts/hello-world.md
 ```
 
@@ -147,7 +147,7 @@ Inside of `hello-world.md`, you can add some initial content to flesh out your p
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```bash
+```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

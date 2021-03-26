@@ -58,7 +58,7 @@ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
 
 Run the following command to authenticate cloudflared into your Cloudflare account.
 
-```bash
+```sh
 $ cloudflared tunnel login
 ```
 
@@ -70,7 +70,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 
 Next, [create an Argo Tunnel](/connections/connect-apps/create-tunnel) with the command below.
 
-```bash
+```sh
 $ cloudflared tunnel create <NAME>
 ```
 
@@ -78,7 +78,7 @@ Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A sin
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
-```bash
+```sh
 $ cloudflared tunnel list
 ```
 
@@ -88,7 +88,7 @@ You can now [configure the Tunnel](https://developers.cloudflare.com/connections
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
-```bash
+```sh
 $ vim ~/.cloudflared/config.yml
 ```
 
@@ -146,7 +146,7 @@ $ brew install cloudflare/cloudflare/cloudflared
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```bash
+```sh
 $ cloudflared access tcp --hostname azure.widgetcorp.tech --url 127.0.0.1:1234
 ```
 
@@ -154,6 +154,6 @@ With this service running, you can run a `kubectl` command and `cloudflared` wil
 
 `kubeconfig` does not support proxy command configurations at this time, though the community has submitted plans to do so. In the interim, users can alias the cluster's API server to save time.
 
-```bash
+```sh
 $ alias kubeone="env HTTPS_PROXY=socks5://127.0.0.1:1234 kubectl"
 ```

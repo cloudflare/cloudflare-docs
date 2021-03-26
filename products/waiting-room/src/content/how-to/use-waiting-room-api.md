@@ -14,7 +14,7 @@ The [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting_rooms) pro
 
 To invoke a [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting-room-properties) operation, append the endpoint to the Cloudflare API base URL:
 
-```bashell
+```bash
 https://api.cloudflare.com/client/v4
 ```
 

@@ -38,7 +38,7 @@ Step 8: Click Apply.
 
 Step 1: In the command line, type:
 
-```bash
+```sh
 $ sudo vim /etc/resolv.conf
 ```
 

@@ -27,7 +27,7 @@ Argo Tunnels created in this method do not currently display in the Traffic tab 
 
 Run the following command to create a Tunnel.
 
-```bash
+```sh
 $ cloudflared tunnel create <NAME>
 ```
 
@@ -68,7 +68,7 @@ Note: the command requires the `cert.pem` file.
 
 You can delete an existing Tunnel with cloudflared. To delete a Tunnel, run the following command:
 
-```bash
+```sh
 $ cloudflared tunnel delete <NAME>
 ```
 
@@ -76,7 +76,7 @@ Note: the command requires the `cert.pem` file.
 
 If there are still active connections on that tunnel, then you will have to force the deletion with:
 
-```bash
+```sh
 $ cloudflared tunnel delete -f <NAME>
 ```
 

@@ -29,7 +29,7 @@ Rate limiting rules can match Custom Hostnames on a per-path or per-hostname bas
 
 If your zone has been granted the Custom Origin Server entitlement, you have the option of specifying a per-hostname origin via the API or UI. In the API example below we PATCH an existing custom hostname to use a custom origin server rather than the default proxy fallback. You can also [specify a `custom_origin_server` during issuance](/ssl-for-saas/issuing-certificates/).
 
-```bash
+```sh
 $ curl -sX PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
      -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
      -H "Content-Type: application/json" \
@@ -46,7 +46,7 @@ This value can also be set in the UI, where the same validation rules apply:
 
 In this API example, we PATCH an existing custom hostname to enable HTTP/2 (specifically), enforce a minimum TLS version of 1.1, and enable TLS v1.3:
 
-```bash
+```sh
 $ curl -sX PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
      -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
      -H "Content-Type: application/json" \

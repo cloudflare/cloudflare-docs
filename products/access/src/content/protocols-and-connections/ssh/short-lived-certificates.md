@@ -44,7 +44,7 @@ For example, if the user's identity in your Okta or GSuite provider is `jdoe@exa
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
-```bash
+```sh
 $ sudo adduser jdoe
 ```
 ## 4. **Save your public key**
@@ -53,13 +53,13 @@ $ sudo adduser jdoe
 
 2. Use the following command to change directories to the SSH configuration directory on the machine:
 
-```bash
+```sh
 $ cd /etc/ssh
 ```
 
 3. Once there, you can use the following command to both generate the file and open a text editor to input the public key.
 
-```bash
+```sh
 $ vim ca.pub
 ```
 
@@ -78,7 +78,7 @@ The first change requires that you uncomment a field already set in most default
 
 1. While staying within the `/etc/ssh` directory, open the `sshd_config` file.
 
-```bash
+```sh
 $ vim /etc/ssh/sshd_config
 ```
 2. Navigate to the row named `ubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
@@ -106,7 +106,7 @@ The change above will tell your SSH configuration to use the public key saved in
 
 Once you have modified your SSHD configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
-```bash
+```sh
 $ sudo service ssh restart
 $ sudo systemctl restart ssh
 ```
@@ -116,7 +116,7 @@ On the client side, follow the instructions [here](/ssh/ssh-guide/) to configure
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 
-```bash
+```sh
 $ cloudflared access ssh-config --hostname vm.example.com --short-lived-cert
 ```
 
