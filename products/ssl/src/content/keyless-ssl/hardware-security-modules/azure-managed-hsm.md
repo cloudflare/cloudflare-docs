@@ -30,7 +30,7 @@ Follow [these instructions](../../configuration#key-server) to deploy your keyle
 
 ## 3. Set up the Azure CLI
 
-Set up the Azure CLI where you will store the private key.
+Set up the Azure CLI (where you access the private key).
 
 For example, if you were using MacOS:
 ```
@@ -60,7 +60,7 @@ brew install azure-cli
     ```
     $ az keyvault role assignment create  --hsm-name KeylessHSM --assignee $(az vm identity show --name "hsmtestvm" --resource-group "HSMgroup" --query principalId -o tsv) --scope / --role "Managed HSM Crypto User"
     ```
-1. In the `gokeyless` YAML file, add the URI from **Step 2** under `private_key_stores`. See our [README](https://github.com/cloudflare/gokeyless/blob/5a7af439328ad77fbec14d5bbe14a12ef6890851/README.md#azure-key-store-or-managed-hsm) for an example.
+1. In the `gokeyless` YAML file, add the URI from **Step 2** under `private_key_stores`. See our [README](https://github.com/cloudflare/gokeyless/blob/master/README.md) for an example.
 
 ## 5. Restart gokeyless
 
