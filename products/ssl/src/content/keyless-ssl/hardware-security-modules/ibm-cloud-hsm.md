@@ -4,14 +4,14 @@ order: 6
 
 # IBM cloud HSM
 
-The example below was tested using <a href="https://console.bluemix.net/docs/infrastructure/hardware-security-modules/about.html#about-ibm-cloud-hsm">IBM Cloud HSM 7.0</a>, a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a750.
+The example below was tested using [IBM Cloud HSM 7.0](https://console.bluemix.net/docs/infrastructure/hardware-security-modules/about.html#about-ibm-cloud-hsm), a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a750.
 
 ---
 
 ## Before you start
 
 Make sure that you have:
-- Initialized <a href="https://console.bluemix.net/docs/infrastructure/hardware-security-modules/initialize_hsm.html#initializing-the-ibm-cloud-hsm">your device</a> 
+- Initialized [your device](https://console.bluemix.net/docs/infrastructure/hardware-security-modules/initialize_hsm.html#initializing-the-ibm-cloud-hsm)
 - Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
 ---

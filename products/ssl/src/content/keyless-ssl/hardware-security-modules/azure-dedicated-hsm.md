@@ -4,14 +4,14 @@ order: 2
 
 # Azure Dedicated HSM
 
-This tutorial uses <a href="https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/">Azure Dedicated HSM</a> — a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a790.
+This tutorial uses [Azure Dedicated HSM](https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/) — a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a790.
 
 ---
 
 ## Before you start
 
 Make sure you have:
-- Followed Microsoft's <a href="https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell">tutorial</a> for deploying HSMs into an existing virtual network using Powershell
+- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using Powershell
 - Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
 ---

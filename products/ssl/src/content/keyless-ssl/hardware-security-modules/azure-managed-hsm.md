@@ -4,14 +4,14 @@ order: 3
 
 # Azure Managed HSM
 
-This tutorial uses <a href="https://azure.microsoft.com/en-us/updates/akv-managed-hsm-public-preview/">Microsoft Azure’s Managed HSM</a> — a FIPS 140-2 Level 3 certified implementation — to deploy a VM with the Keyless SSL daemon.
+This tutorial uses [Microsoft Azure’s Managed HSM](https://azure.microsoft.com/en-us/updates/akv-managed-hsm-public-preview/) — a FIPS 140-2 Level 3 certified implementation — to deploy a VM with the Keyless SSL daemon.
 
 ---
 
 ## Before you start
 
 Make sure you have:
-- Followed Microsoft's <a href="https://docs.microsoft.com/en-us/azure/key-vault/managed-hsm/quick-create-cli">tutorial</a> for provisioning and activating the managed HSM
+- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/key-vault/managed-hsm/quick-create-cli) for provisioning and activating the managed HSM
 - Set up a VM for your key server
 
 ---
