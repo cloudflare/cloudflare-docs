@@ -30,7 +30,7 @@ Follow [these instructions](../../configuration#key-server) to deploy your keyle
 
 ## 3. Set up the Azure CLI
 
-Set up the Azure CLI (where you access the private key).
+Set up the Azure CLI (used to access the private key).
 
 For example, if you were using MacOS:
 ```
