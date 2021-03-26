@@ -8,7 +8,7 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 * Global Uniqueness guarantees that there will be a single Durable Object with a given id running at once, across the whole world.  Requests for a Durable Object id are routed by the Workers runtime to the Cloudflare point-of-presence that owns the Durable Object.
 
-* The transactional storage API provides strongly-consistent, key-value storage to the Durable Object.  Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may be processed out-of-order from how they arrived at the Object.
+* The transactional storage API provides strongly-consistent key-value storage to the Durable Object.  Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may be processed out-of-order from how they arrived at the Object.
 
 For a high-level introduction to Durable Objects, [see the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
 
@@ -327,21 +327,21 @@ async function handleRequest(request) {
 }
 ```
 
-Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/runtime-apis/durable-objects).
+Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/runtime-apis/durable-objects#accessing-a-durable-object-from-a-worker).
 
 <Aside header="String-derived IDs vs. system-generated IDs">
 
-In the above example, we used a string-derived object ID. You can also ask the system generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. [See the API reference docs for more information.](/runtime-apis/durable-objects)
+In the above example, we used a string-derived object ID. You can also ask the system generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. [See the API reference docs for more information.](/runtime-apis/durable-objects#accessing-a-durable-object-from-a-worker)
 
 </Aside>
 
-## Limitations during the Beta
+## Limitations
 
 Durable Objects is currently in early beta, and some planned features have not been enabled yet. Many of these limitations will be fixed before Durable Objects becomes generally available.
 
 ### Risk of Data Loss
 
-At this time, we are not ready to guarantee that data won't be lost. We don't expect data loss, but bugs are always possible, and we are still working on automatic backup and recovery.
+At this time, we are not ready to guarantee that data won't be lost. We don't expect data loss and do maintain regular backups, but bugs are always possible.
 
 For now, if you are storing data in Durable Objects that you can't stand to lose, you must arrange to make backups of that data into some other storage system. Do not rely on Durable Objects for storing production data during the beta period. (This is, of course, always best practice anyway, but it is especially important in the beta.)
 
@@ -351,21 +351,25 @@ Uniqueness is currently enforced upon starting a new event (such as receiving an
 
 In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself).
 
-### Creation and Routing
-
-When using string-derived object IDs, the Durable Object is constructed at a Cloudflare point-of-presence chosen based on a hash of the string. The chosen location has no relationship to the location where the object was requested; it could be on the opposite side of the world. In the future, these objects will be constructed nearby the location where they were first requested (although a global lookup will still be needed to verify that the same name hasn't been used on the other side of the world at the same time).
-
-When using system-generated IDs, the Durable Object is placed at a point-of-presence near where the ID was generated. However, not all Cloudflare locations support Durable Objects yet today, so the object may not be located in exactly the same PoP where it was requested.
-
-Currently, Durable Objects do not migrate between locations after initial creation. We are busy working on automatic migration and will be enabling it in the future.
-
-Because of these factors, when using string-derived object IDs, you may find that request latency varies considerably between objects, while system-generated IDs will result in consistently low latency. Once our work is complete, you should be able to expect that variability exists only in initial creation latency for string-derived IDs.
-
 ### Enumerating objects
 
 There is currently no support for generating a list of all existing objects, nor any way to bulk export objects.
 
+### Development tools
+
+[Wrangler tail](/cli-wrangler/commands#tail) and [Wrangler dev](/cli-wrangler/commands#dev) do not currently work with Durable Objects.
+
+The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
+
+### Object Location
+
+Not all Cloudflare locations support Durable Objects yet today, so objects may not be created in exactly the same point-of-presence where they are first requested.
+
+Currently, Durable Objects do not migrate between locations after initial creation. We will be enabling automatic migration in the future.
+
 ### Performance
+
+Using Durable Objects will often add response latency, as the request must be forwarded to the point-of-presence where the object is located.
 
 While Durable Objects already perform well for many kinds of tasks, we have lots of performance tuning to do. Expect performance (latency, throughput, overhead, etc.) to improve over the beta period -- and if you observe a performance problem, please tell us about it!
 
