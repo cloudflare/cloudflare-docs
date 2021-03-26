@@ -6,7 +6,7 @@ We support deploying any static HTML website to Cloudflare Pages. If you manage 
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```sh
+```bash
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

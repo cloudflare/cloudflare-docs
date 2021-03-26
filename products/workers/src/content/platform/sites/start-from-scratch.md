@@ -10,7 +10,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
 2. In your terminal run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. For example, I’ll create a project called my-site by running this command:
 
-  ```sh
+  ```bash
   $ wrangler generate --site my-site
   ```
 
@@ -24,7 +24,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
 4. You can preview your site by running:
 
-  ```sh
+  ```bash
   $ wrangler preview --watch
   ```
 
@@ -50,6 +50,6 @@ To start from scratch to create a Workers Site, follow these steps:
   Learn more about [configuring your project](/get-started/guide#6-configure-your-project-for-deployment).
 
 6. Run:
-  ```sh
+  ```bash
   $ wrangler publish
   ```

@@ -37,7 +37,7 @@ You can create DNS records from `cloudflared`, which will provision a CNAME reco
 
 To do so, run the following command.
 
-```sh
+```bash
 $ cloudflared tunnel route dns <UUID or NAME> www.app.com
 ```
 

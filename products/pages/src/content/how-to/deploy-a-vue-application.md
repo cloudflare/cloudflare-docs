@@ -8,7 +8,7 @@ In this guide, you'll create a new Vue application and deploy it using Cloudflar
 
 First, install the Vue CLI using NPM, and then run `vue create` to create a new project called `my-vue-app`:
 
-```sh
+```bash
 $ npm install -g @vue/cli
 $ vue create my-vue-app
 ```
@@ -17,7 +17,7 @@ $ vue create my-vue-app
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```sh
+```bash
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

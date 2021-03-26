@@ -26,7 +26,7 @@ Cloudflare’s command-line tool for managing Worker projects, Wrangler, has gre
 
 In the command line, generate your Worker project, passing in a project name (e.g. “todos”):
 
-```sh
+```bash
 ---
 header: Generate a project
 ---
@@ -77,7 +77,7 @@ To begin, we should understand how to populate our todo list with actual data. T
 
 To get started with KV, we need to set up a “namespace”. All of our cached data will be stored inside that namespace, and given just a bit of configuration, we can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID.
 
-```sh
+```bash
 ---
 header: Create a new KV namespace
 ---

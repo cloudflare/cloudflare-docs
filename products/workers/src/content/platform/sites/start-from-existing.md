@@ -18,7 +18,7 @@ Once you have a site generated, follow these steps:
 
 1. Run this Wrangler command in the root of your project’s directory:
 
-  ```sh
+  ```bash
   $ wrangler init --site my-static-site
   ```
 
@@ -43,7 +43,7 @@ Once you have a site generated, follow these steps:
 
 4. You can preview your site by running:
 
-  ```sh
+  ```bash
   $ wrangler preview --watch
   ```
 
@@ -64,6 +64,6 @@ Once you have a site generated, follow these steps:
 
 6. Run:
 
-  ```sh
+  ```bash
   $ wrangler publish
   ```

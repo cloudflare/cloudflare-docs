@@ -52,7 +52,7 @@ Download the version of `cloudflared` that matches your architecture from the re
 
 Place the `cloudflared` executable in a location accessible to the OS, for example:
 
-```sh
+```bash
 C:\Cloudflared\bin\cloudflared.exe
 ```
 
@@ -79,7 +79,7 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 Run the following command to authenticate cloudflared into your Cloudflare account.
 
-```sh
+```bash
 C:\Cloudflared\bin\cloudflared.exe login
 ```
 
@@ -97,7 +97,7 @@ copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\system
 
 Next, [create an Argo Tunnel](/connections/connect-apps/create-tunnel) with the command below.
 
-```sh
+```bash
 $ cloudflared tunnel create <NAME>
 ```
 
@@ -105,7 +105,7 @@ Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A sin
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
-```sh
+```bash
 C:\Cloudflared\bin\cloudflared.exe tunnel create <NAME>
 ```
 
@@ -155,7 +155,7 @@ Click **Save**.
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
 
-```sh
+```bash
 C:\Cloudflared\bin\cloudflared.exe tunnel run <NAME>
 ```
 
@@ -194,7 +194,7 @@ You can help end users connect without requiring the command line by providing t
 
 3. In the wizard that appears, paste in the following command with the hostname your team uses:
 
-```sh
+```bash
 $ cloudflared access rdp --hostname monday.example.com --url localhost:2244
 ```
 4. Click **Next** and complete the wizard.
@@ -221,12 +221,12 @@ chmod +x $var
 
 2. Check that everything is successful by running the following command:
 
-```sh
+```bash
 $ lsof -nP -iTCP:2244 | grep LISTEN
 ```
 If needed, you can kill the process by running the following command:
 
-```sh
+```bash
 $ sudo kill -9 [process id]
 ```
 

@@ -7,7 +7,7 @@ order: 2
 
 In the [first step](/tutorial/hello-world) of the tutorial, you created and applied some basic Cloudflare configuration. Terraform was able to apply this configuration to your account because you provided your email address and API token at the top of the `cloudflare.tf` file:
 
-```sh
+```bash
 $ head -n4 cloudflare.tf
 provider "cloudflare" {
   email = "you@example.com"
@@ -21,7 +21,7 @@ In this step of the tutorial, we’re going to store your configuration in GitHu
 
 As a good security practice we need to remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_TOKEN` environment variables, so all we need to do is:
 
-```sh
+```bash
 $ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
 $ sed -ie 's/^.*token =.*$/  # token pulled from $CLOUDFLARE_TOKEN/' cloudflare.tf
 
@@ -39,7 +39,7 @@ Note that you need to leave the empty provider definition in the file, so that T
 
 After completing the above step, it's a good idea to make sure that you can still authenticate to Cloudflare. By running `terraform plan` we can get Terraform to pull the current state (which requires a valid email and API key):
 
-```sh
+```bash
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -62,7 +62,7 @@ Now that credentials have been removed, it's time to initialize a git repository
 
 First we'll create the GitHub repository to store the config. This can be done via the GitHub UI or with a simple API call:
 
-```sh
+```bash
 $ export GITHUB_USER=your-github-user
 $ export GITHUB_TOKEN=your-github-token
 
@@ -75,7 +75,7 @@ git@github.com:$GITHUB_USER/cf-config.git
 
 Now we'll initialize a git repository and make our first commit:
 
-```sh
+```bash
 $ git init
 Initialized empty Git repository in /Users/username/cf-config/.git/
 
@@ -92,7 +92,7 @@ An astute reader may have noticed that we did _not_ commit the `.terraform` dire
 
 To prevent git from bugging us about these files, let's add them to a new .gitignore file, commit it, and push everything to GitHub:
 
-```sh
+```bash
 $ cat > .gitignore <<'EOF'
 .terraform/
 terraform.tfstate*

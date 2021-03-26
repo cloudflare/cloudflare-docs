@@ -48,7 +48,7 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
 1. Type this command in a terminal window to check the `cloudflared` version:
 
-    ```sh
+    ```bash
     $ cloudflared --version
     cloudflared version 2019.2.1 (built 2019-02-28-0010 UTC)
     ```
@@ -61,7 +61,7 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
 1. Run the following command to open a login page in your browser:
 
-    ```sh
+    ```bash
     $ cloudflared tunnel login
     ```
 
@@ -85,7 +85,7 @@ To set up Argo Tunnel, begin by using Argo Smart Routing:
 
     **Tip:** Sometimes firewalls or unusual network configuration can prevent `cloudflared` from automatically installing the certificate. If this occurs, your browser downloads the certificate as a file named `cert.pem`, and displays in your browser’s download window. Move that `cert.pem` file from your designated downloads folder to the `~/.cloudflared folder`. In a terminal window, copy and paste the following command to move the certificate to the `.cloudflared` directory on your system:
 
-    ```sh
+    ```bash
     $ mv cert.pem ~/.cloudflared/cert.pem
     ```
 

@@ -19,13 +19,13 @@ TryCloudflare will launch a process that generates a random subdomain on `tryclo
 2. Launch a web server that is available over localhost to `cloudflared`.
 3. Run the following terminal command to start a free tunnel.
 
-```sh
+```bash
 $ cloudflared tunnel
 ```
 
 The command above will default to port 8080; you can specify an alternate port with the --url flag.
 
-```sh
+```bash
 $ cloudflared tunnel --url http://localhost:7000
 ```
 

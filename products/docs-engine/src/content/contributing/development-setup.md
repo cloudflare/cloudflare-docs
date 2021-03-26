@@ -16,7 +16,7 @@ The basic steps for setting up a development are as follows.
 
   </Aside>
 
-  ```sh
+  ```bash
   ~/ $ git clone git@github.com:username/my-docs-site.git
   ```
 
@@ -28,20 +28,20 @@ The basic steps for setting up a development are as follows.
 
   </Aside>
 
-  ```sh
+  ```bash
   ~/ $ cd my-docs-site
   ~/my-docs-site $ npm install
   ```
 
 4. Run the engine’s [`bootstrap` command](https://github.com/cloudflare/cloudflare-docs-engine/blob/765bc30127b0e80b570aade7044036925928c3ea/bin/commands.sh#L19-L39):
 
-  ```sh
+  ```bash
   ~/my-docs-site $ npm run bootstrap
   ```
 
 7. Run the local development server:
 
-  ```sh
+  ```bash
   ~/my-docs-site $ npm run develop
   ```
 

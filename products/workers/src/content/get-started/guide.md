@@ -33,13 +33,13 @@ Installing `wrangler`, the Workers CLI, gives you the freedom to [generate](/cli
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), then run:
 
-```sh
+```bash
 $ npm install -g @cloudflare/wrangler
 ```
 
 Then run `wrangler --version` to confirm that the installation was successful:
 
-```sh
+```bash
 $ wrangler --version
 👷 ✨  wrangler 1.12.2
 ```
@@ -67,13 +67,13 @@ Open the browser, log into your account, and click the `Authorize Wrangler` butt
 
 Wrangler’s [`generate` subcommand](/cli-wrangler/commands#generate) will create a new project from a “starter” template—just a GitHub repo. With no [template argument](/cli-wrangler/commands#generate), Wrangler generates projects from the [default starter](https://github.com/cloudflare/worker-template). Let’s generate a new project, called `my-worker`:
 
-```sh
+```bash
 ~/ $ wrangler generate my-worker
 ```
 
 Wrangler will create a directory called `my-worker` and populate it with the contents of the starter template, in this case the default, and will automatically configure the `wrangler.toml` file in the project’s root with the `name = "my-worker"`.
 
-```sh
+```bash
 ~/ $ cd my-worker
 ~/my-worker $ ls
 CODE_OF_CONDUCT.md LICENSE_MIT        index.js           wrangler.toml
@@ -92,7 +92,7 @@ Visit the [Starters](/starters) page to see a complete list of our recommended s
 
 For example, to build a Workers project in TypeScript, you would instead run:
 
-```sh
+```bash
 ~/ $ wrangler generate my-typescript-worker https://github.com/EverlastingBugstopper/worker-typescript-template
 ```
 
@@ -182,7 +182,7 @@ In addition to standard request properties, the Workers platform populates the r
 
 For more complex routing, it can be helpful to use a library. The [Workers router starter](https://github.com/cloudflare/worker-template-router) template provides an API similar to ExpressJS for handling requests based on HTTP methods and paths:
 
-```sh
+```bash
 ~/ $ wrangler generate my-worker-with-router https://github.com/cloudflare/worker-template-router
 ```
 
@@ -226,7 +226,7 @@ account_id = "$yourAccountId"
 
 Once you've done that, you’re ready to preview your code. Run the `wrangler dev` command:
 
-```sh
+```bash
 ~/my-worker $ wrangler dev
 💁  watching "./"
 👂  Listening on http://127.0.0.1:8787
@@ -327,7 +327,7 @@ With our project configured, it’s time to publish it.
 
 To deploy to our workers.dev subdomain, we can run:
 
-```sh
+```bash
 ---
 header: Publish to workers.dev
 ---
@@ -344,7 +344,7 @@ __Note:__ When pushing to workers.dev project for the first time, you may initia
 
 To deploy to our production environment we set in our `wrangler.toml` in the optional configuration step, we can pass the `--env` flag to the command:
 
-```sh
+```bash
 ---
 header: Publish to example.com
 ---

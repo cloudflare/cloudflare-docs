@@ -180,7 +180,7 @@ spec:
 
 The MongoDB pod and the SSH jump host will share a Unix socket over an empty directory volume. The `entrypoint.sh` file run by the jump host, example below, will start an OpenSSH server.
 
-```sh
+```bash
 #!/bin/sh
 export TZ=America/Chicago
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

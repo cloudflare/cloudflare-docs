@@ -114,7 +114,7 @@ resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net_2" {
 
 Calling terraform `plan` now will attempt to create these resources as if they didn't exist which isn't exactly what we desire.
 
-```sh
+```bash
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -203,7 +203,7 @@ Soon cf-terraforming will also allow you to import tfstate for the same resource
 
 Hint: If you run cf-terraforming with `-v` to stdout, we will log the resource ids in Cloudflare which can help with running Terraform `import`.
 
-```sh
+```bash
 $ terraform import cloudflare_record.mitigateddos_net_mitigateddos_net mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47
 cloudflare_record.mitigateddos_net_mitigateddos_net: Importing from ID "mitigateddos.net/6702ceac85496311b1fa86a4ecc2fd47"...
 cloudflare_record.mitigateddos_net_mitigateddos_net: Import complete!
@@ -251,7 +251,7 @@ your Terraform state and will henceforth be managed by Terraform.
 
 Now when we run `terraform plan` it no longer wants to (re-)create the above records.
 
-```sh
+```bash
 $ terraform plan | grep changes
 No changes. Infrastructure is up-to-date.
 ```

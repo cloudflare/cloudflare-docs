@@ -25,7 +25,7 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 2. Add the `@cloudflare/kv-asset-handler` package to your project:
 
-  ```sh
+  ```bash
   $ npm i @cloudflare/kv-asset-handler
   ```
 
@@ -55,6 +55,6 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 4. You should now be all set you can run `preview` or `publish` as you would normally with your Worker project!
 
-  ```sh
+  ```bash
   $ wrangler publish
   ```

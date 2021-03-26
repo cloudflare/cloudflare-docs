@@ -6,7 +6,7 @@ Gatsby is an open-source React framework for creating websites and apps. In this
 
 First, install the `gatsby` CLI:
 
-```sh
+```bash
 $ npm install -g gatsby-cli
 ```
 
@@ -14,7 +14,7 @@ $ npm install -g gatsby-cli
 
 With Gatsby installed, you can create a new project using `gatsby new`. The `new` command accepts a GitHub URL for using an existing template. For now, we'll use the `gatsby-starter-lumen` template, but you can find more in [Gatsby's Starters section](https://www.gatsbyjs.com/starters/?v=2):
 
-```sh
+```bash
 $ gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lumen
 ```
 
@@ -22,7 +22,7 @@ $ gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lume
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
 
-```sh
+```bash
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main

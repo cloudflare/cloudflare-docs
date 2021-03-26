@@ -64,13 +64,13 @@ To generate a Kubernetes secret:
 
 2. Identify the path where the certificate was downloaded and convert it into a Kubernetes secret with the following command:
 
-```sh
+```bash
 $ kubectl create secret generic example.com --from-file="$HOME/.cloudflared/cert.pem"
 ```
 
 3. Ensure the secret was generated successfully with the following command:
 
-```sh
+```bash
 $ kubectl get secret
 ```
 

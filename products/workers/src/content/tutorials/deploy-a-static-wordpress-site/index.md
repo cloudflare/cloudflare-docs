@@ -47,7 +47,7 @@ With an export ready of our site, it’s time to get to work deploying it. To do
 
 Once Wrangler is installed and configured, we can create a new project for deploying our static WordPress site to Workers. To generate a new project run:
 
-```sh
+```bash
 ---
 header: Generate a new project
 ---
@@ -68,7 +68,7 @@ When deploying a website using Workers Sites, your static code – your HTML, CS
 
 Open the ZIP file downloaded from your WordPress static export, and extract the contents of the ZIP into the `public` folder:
 
-```sh
+```bash
 ---
 header: Copy files into the public directory
 ---
@@ -77,7 +77,7 @@ $ cp -R ~/Downloads/wp-static-html-output-<some-tag>/ ./public
 
 Your directory structure should look something like this:
 
-```sh
+```bash
 ---
 header: Listing the files in wp-static
 ---

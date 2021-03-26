@@ -19,7 +19,7 @@ Once you have installed `cloudflared`, you can use it to retrieve a Cloudflare A
 
 To generate a token, run the following command:
 
-```sh
+```bash
 $ cloudflared access login https://example.com
 ```
 
@@ -33,7 +33,7 @@ Once you have successfully authenticated, the browser returns the token to `clou
 
 Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named _token_. You can invoke the wrapper as follows:
 
-```sh
+```bash
 $ cloudflared access curl http://example.com
 ```
 
@@ -47,7 +47,7 @@ Read on for other available commands.
 
 The `login` command initiates the login flow for an application behind Access.
 
-```sh
+```bash
 $ cloudflared access login http://example.com
 ```
 
@@ -55,7 +55,7 @@ $ cloudflared access login http://example.com
 
 The `curl` command invokes the client wrapper and includes the token in the request automatically.
 
-```sh
+```bash
 $ cloudflared access curl http://example.com
 ```
 
@@ -63,7 +63,7 @@ $ cloudflared access curl http://example.com
 
 The `token` command retrieves the token scoped to that specific application for use in other command-line tools.
 
-```sh
+```bash
 $ cloudflared access token -app=http://example.com
 ```
 
@@ -75,19 +75,19 @@ Set up a token as an environment variable as follows:
 
 1. Run the following command to export the token to the shell environment:
 
-    ```sh
+    ```bash
     $ export TOKEN $(cloudflared access token -app=http://example.com
     ```
 
 2. Confirm the token was saved with the following:
 
-    ```sh
+    ```bash
     $ echo $TOKEN
     ```
 
 Once you have exported the token to your environment, use the variable with the Cloudflare Access request header in the script to access a protected endpoint, as in the following example:
 
-```sh
+```bash
 $ curl -H "cf-access-token: $TOKEN" https://example.com/rest/api/2/item/foo-123
 ```
 

@@ -31,13 +31,13 @@ Start by [downloading and installing](/connections/connect-apps/install-and-setu
 
 Once installed, you can use the `access login` command in `cloudflared` to generate the JWT for a given application.
 
-```sh
+```bash
 $ cloudflare access login https://jira.company.com
 ```
 
 `cloudflared` will print a URL that you can visit in a browser to authenticate to Cloudflare Access. If you are using a headless system, you can visit the URL in a different machine with a browser and the login will still return the JWT to `cloudflared`.
 
-```sh
+```bash
 Please open the following URL and log in with your Cloudflare account:
 
 <URL>
@@ -55,13 +55,13 @@ If you have an application where you frequently need to request a token, you can
 
 If you are using the Z shell, edit your existing `~/.zshrc` file or create one for the first time.
 
-```sh
+```bash
 vim ~/.zshrc
 ```
 
 You can add the following function to your file, replacing `https://jira.company.com` with the application you need. You can also rename the function to something shorter or more applicable to your application.
 
-```sh
+```bash
 function login-jira() {
   export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN
@@ -70,7 +70,7 @@ function login-jira() {
 
 Next, run the following command in your shell to update your profile.
 
-```sh
+```bash
 $ source ~/.zshrc
 ```
 
@@ -78,13 +78,13 @@ $ source ~/.zshrc
 
 If you are using Bash, edit your existing `~/.bashrc` file or create one for the first time.
 
-```sh
+```bash
 vim ~/.bashrc
 ```
 
 You can add the following function to your file, replacing `https://jira.company.com` with the application you need. You can also rename the function to something shorter or more applicable to your application.
 
-```sh
+```bash
 function login-jira() {
   export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN
@@ -93,7 +93,7 @@ function login-jira() {
 
 Next, run the following command in your shell to update your profile.
 
-```sh
+```bash
 $ source ~/.bashrc
 ```
 
@@ -101,6 +101,6 @@ $ source ~/.bashrc
 
 Now, you can run the following command to login to Cloudflare Access. Instead of printing the token, the shell will store it as an environment variable that you can use.
 
-```sh
+```bash
 $ login-jira
 ```

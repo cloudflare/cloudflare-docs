@@ -17,7 +17,7 @@ To begin, we'll create a new Sanity project, and create our first Sanity project
 
 To do this, we'll install the `@sanity/cli` client from NPM, and create a new project using `sanity init`:
 
-```sh
+```bash
 ---
 header: Installing the Sanity client and creating a new project
 ---
@@ -30,7 +30,7 @@ When you create a Sanity project, you can choose to use one of their pre-defined
 
 With your project created, you can navigate into the folder and start up the _studio_ locally:
 
-```sh
+```bash
 ---
 header: Starting the Sanity studio
 ---
@@ -46,7 +46,7 @@ The Sanity studio is where you can create new records for your dataset. By defau
 
 When you're ready to deploy your studio, you can run `sanity deploy` to choose a unique URL for your studio. This means that you (or anyone else you invite to manage your blog) can access the studio at a `yoururl.sanity.studio` domain.
 
-```sh
+```bash
 ---
 header: Deploying the studio
 ---
@@ -61,7 +61,7 @@ Once you've deployed your Sanity studio, you'll need to go into Sanity's managem
 
 Next, we'll create a Nuxt.js project. In a new terminal, use `create-nuxt-app` to set up a new Nuxt project:
 
-```sh
+```bash
 ---
 header: Creating a new Nuxt.js project
 ---
@@ -72,7 +72,7 @@ Importantly, you should ensure that you select a rendering mode of "Universal (S
 
 Once you've completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose NPM as your package manager, `npm run dev`):
 
-```sh
+```bash
 ---
 header: Starting a Nuxt.js development server
 ---
@@ -84,7 +84,7 @@ $ yarn dev
 
 With your Nuxt.js application spun up, it's time to add Sanity's `@sanity/nuxt` plugin to your Nuxt project:
 
-```sh
+```bash
 ---
 header: Adding @nuxt/sanity
 ---
@@ -93,7 +93,7 @@ $ yarn add @nuxtjs/sanity @sanity/client
 
 To configure the plugin in your Nuxt.js application, you'll need to provide some configuration details. The easiest way to do this it to copy the `sanity.json` folder from your studio into your application directory (though there are other methods, too: [check out the docs!](https://sanity.nuxtjs.org/quick-start)).
 
-```sh
+```bash
 ---
 header: Adding sanity.json
 ---
@@ -261,7 +261,7 @@ We've rendered the `post` title for our blog, but we're still missing the conten
 
 First, install the NPM package:
 
-```sh
+```bash
 ---
 header: Add sanity-blocks-vue-component package
 ---

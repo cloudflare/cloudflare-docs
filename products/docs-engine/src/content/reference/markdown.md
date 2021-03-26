@@ -434,14 +434,14 @@ async function handleRequest(request) {
 
 Header content other than [filenames](#filenames) can be specified with `header: ______`.
 
-```sh
+```bash
 ---
 header: Install the Workers CLI
 ---
 $ npm install -g @cloudflare/wrangler
 ```
 
-```sh
+```bash
 ---
 header: Configure the Workers CLI
 ---
@@ -454,7 +454,7 @@ By default, code blocks use a light theme when the page uses a light theme, and 
 
 Currently, we only recommend doing this for `sh`-type code blocks, and only when doing so helps differentiate it from neighboring `js` (other other non-`sh`) code blocks.
 
-```sh
+```bash
 ---
 theme: dark
 ---
@@ -462,7 +462,7 @@ theme: dark
 ```
 
 ``````txt
-```sh
+```bash
 ---
 theme: dark
 ---
@@ -485,13 +485,13 @@ const rewriter = new HTMLRewriter()
 To display an interactive shell (or “terminal”-style code block), use the standard Markdown code fences (\`\`\`) with the `sh` hint. For example:
 
 ``````md
-```sh
+```bash
 $ npm install -g @cloudflare/wrangler
 $ wrangler config
 ```
 ``````
 
-```sh
+```bash
 $ npm install -g @cloudflare/wrangler
 $ wrangler config
 ```
@@ -501,13 +501,13 @@ When the commands shown are directory-independent, all lines of entered text sho
 When commands require a specific working directory, add that directory before the line. For example:
 
 ``````md
-```sh
+```bash
 ~/ $ cd my-repo
 ~/my-repo $ npm install
 ```
 ``````
 
-```sh
+```bash
 ~/ $ cd my-repo
 ~/my-repo $ npm install
 ```

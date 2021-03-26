@@ -49,7 +49,7 @@ Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this 
 
 Argo Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
 
-```sh
+```bash
 sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
 sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
 ```
@@ -58,7 +58,7 @@ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
 
 Run the following command to authenticate cloudflared into your Cloudflare account.
 
-```sh
+```bash
 $ cloudflared tunnel login
 ```
 
@@ -70,7 +70,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 
 Next, [create an Argo Tunnel](/connections/connect-apps/create-tunnel) with the command below.
 
-```sh
+```bash
 $ cloudflared tunnel create <NAME>
 ```
 
@@ -78,7 +78,7 @@ Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A sin
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
-```sh
+```bash
 $ cloudflared tunnel list
 ```
 
@@ -88,7 +88,7 @@ You can now [configure the Tunnel](https://developers.cloudflare.com/connections
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
-```sh
+```bash
 $ vim ~/.cloudflared/config.yml
 ```
 
@@ -126,7 +126,7 @@ Click **Save**.
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
 
-```sh
+```bash
 cloudflared tunnel run <NAME>
 ```
 

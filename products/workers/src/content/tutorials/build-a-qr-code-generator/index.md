@@ -24,7 +24,7 @@ Cloudflare’s command-line tool for managing Worker projects, Wrangler, has gre
 
 In the command line, generate your Worker project, using Wrangler’s [worker-template](https://github.com/cloudflare/worker-template), and pass the project name “qr-code-generator”:
 
-```sh
+```bash
 ---
 header: Generating a new project with Wrangler
 ---
@@ -131,7 +131,7 @@ async function handleRequest(request) {
 
 All projects deployed to Cloudflare Workers support NPM packages, which makes it incredibly easy to rapidly build out _a lot_ of functionality in your serverless functions. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text, and encode it into a QR code, with support for generating the codes in a number of file formats (such as PNG, the default, and SVG), and configuring other aspects of the generated QR code. In the command-line, install and save `qr-image` to your project’s `package.json`:
 
-```sh
+```bash
 ---
 header: Installing the qr-image package
 ---
@@ -266,7 +266,7 @@ And with that, you’re finished writing the code for the QR code serverless fun
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, we’ll run `wrangler publish`, which will _build_ and _publish_ your code.
 
-```sh
+```bash
 ---
 header: Publishing your project
 ---

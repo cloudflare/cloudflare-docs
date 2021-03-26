@@ -8,13 +8,13 @@ order: 0
 
 ### Install with `npm`
 
-```sh
+```bash
 $ npm i @cloudflare/wrangler -g
 ```
 
 ### Install with `cargo`
 
-```sh
+```bash
 $ cargo install wrangler
 ```
 
@@ -32,7 +32,7 @@ Wrangler can be installed both through [npm](https://www.npmjs.com/get-npm) and 
 
 2. Install Wrangler by running:
 
-    ```sh
+    ```bash
     $ npm i @cloudflare/wrangler -g
     ```
 
@@ -42,7 +42,7 @@ Wrangler can be installed both through [npm](https://www.npmjs.com/get-npm) and 
 
     Rustup, a tool for installing Rust, will also install Cargo. On Linux and macOS systems, `rustup` can be installed as follows:
 
-    ```sh
+    ```bash
     $ curl https://sh.rustup.rs -sSf | sh
     ```
 
@@ -50,13 +50,13 @@ Wrangler can be installed both through [npm](https://www.npmjs.com/get-npm) and 
 
 2. Install `wrangler`:
 
-    ```sh
+    ```bash
     $ cargo install wrangler
     ```
 
     By default we vendor OpenSSL to make things easier when installing, but this can make the binary size a bit larger. If you want to use your system OpenSSL, provide the feature flag `sys-openssl` when running install.
 
-    ```sh
+    ```bash
     $ cargo install wrangler --features sys-openssl
     ```
 
@@ -72,12 +72,12 @@ To update [Wrangler](https://github.com/cloudflare/wrangler), follow the below i
 
 **Updating Wrangler with NPM:**
 
-```sh
+```bash
 $ npm uninstall -g @cloudflare/wrangler && npm install -g @cloudflare/wrangler
 ```
 
 **Updating Wrangler with Cargo:**
 
-```sh
+```bash
 $ cargo install wrangler --force
 ```

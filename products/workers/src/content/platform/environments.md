@@ -47,7 +47,7 @@ zone_id = "09876543210987654321"
 route = "example.com/*"
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to example.com/*
@@ -70,7 +70,7 @@ account_id = "12345678901234567890"
 workers_dev = true
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to https://my-worker.<your-subdomain>.workers.dev
@@ -109,19 +109,19 @@ In order to use environments with this configuration, you can pass the name of t
 
 With this configuration, Wrangler will behave in the following manner:
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to dev.example.com/*
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env staging
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to staging.example.com/*
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env production
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to example.com/*
@@ -159,13 +159,13 @@ workers_dev = true
 
 With this configuration, Wrangler will behave in the following manner:
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to example.com/*
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env staging
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to https://my-worker-staging.<your-subdomain>.workers.dev
@@ -193,19 +193,19 @@ name = "my-worker-staging"
 
 With this configuration, Wrangler will behave in the following manner:
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to https://my-worker-dev.<your-subdomain>.workers.dev
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env staging
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to https://my-worker-staging.<your-subdomain>.workers.dev
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env production
 ✨  Built successfully, built project size is 523 bytes.
 ✨  Successfully published your script to https://my-worker.<your-subdomain>.workers.dev
@@ -320,12 +320,12 @@ name = "my-worker"
 workers_dev = true
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 Error: ⚠️  Each name in your `wrangler.toml` must be unique, this name is duplicated: my-worker
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env staging
 Error: ⚠️  Each name in your `wrangler.toml` must be unique, this name is duplicated: my-worker
 ```
@@ -347,12 +347,12 @@ route = "staging.example.com/*"
 
 Wrangler will fail to publish to an environment where `route` is defined alongside `workers_dev = true`.
 
-```sh
+```bash
 ~/my-worker $ wrangler publish
 Error: ⚠️  Your environment should only include `workers_dev` or `route`. If you are trying to publish to workers.dev, remove `route` from your wrangler.toml, if you are trying to publish to your own domain, remove `workers_dev`.
 ```
 
-```sh
+```bash
 ~/my-worker $ wrangler publish --env staging
 Error: ⚠️  Your environment should only include `workers_dev` or `route`. If you are trying to publish to workers.dev, remove `route` from your wrangler.toml, if you are trying to publish to your own domain, remove `workers_dev`.
 ```

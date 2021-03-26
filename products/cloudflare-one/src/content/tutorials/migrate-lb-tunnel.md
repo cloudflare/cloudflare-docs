@@ -32,7 +32,7 @@ Next, create an origin pool for the load balancer. This will be a group of origi
 
 In Legacy mode, adding a new instance of `cloudflared` into a Load Balancer pool must be done from the command line tool itself. The `cloudflared` agent will start and create 4 separate connections, enrolling each of these into a load balancer pool.
 
-```sh
+```bash
 cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
 ```
 
@@ -51,7 +51,7 @@ To migrate to the Named Tunnel model, first [download and authenticate](/connect
 
 To begin, create a Named Tunnel with the following command.
 
-```sh
+```bash
 cloudflared tunnel create lisbon-app
 ```
 
@@ -75,7 +75,7 @@ You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Clo
 
 Run the following command, replacing `lisbon-app` with the name of your Tunnel.
 
-```sh
+```bash
 cloudflared tunnel run lisbon-app
 ```
 

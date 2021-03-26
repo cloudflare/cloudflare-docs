@@ -19,7 +19,7 @@ Cloudflare's command-line tool for managing Workers projects, Wrangler, has grea
 
 In the command line, generate your Workers project by passing in a project name (we'll use rustwasm-markdown-parser), and the template URL to base your project on.
 
-```sh
+```bash
 ~ $ wrangler generate rustwasm-markdown-parser https://github.com/cloudflare/rustwasm-worker-template/
 ```
 
@@ -31,7 +31,7 @@ Wrangler templates are just Git repositories, so if you want to create your own 
 
 You can test how your Workers function will look when it's deployed by using the preview service, which you can access with the `preview` command:
 
-```sh
+```bash
 rustwasm-markdown-parser $ wrangler preview --watch
 ```
 

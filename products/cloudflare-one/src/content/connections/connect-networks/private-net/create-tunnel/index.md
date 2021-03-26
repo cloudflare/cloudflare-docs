@@ -12,7 +12,7 @@ order: 3
 
 To create a Tunnel, run the following command:
 
-```sh
+```bash
 cloudflared tunnel create <NAME>
 ```
 
@@ -30,7 +30,7 @@ You can also view and manage the Tunnels generated. Click [here](/connections/co
 
 To map the Tunnel to a range of IPs, run the following command:
 
-```sh
+```bash
 cloudflared tunnel route ip add <CIDR> <NAME>
 ```
 

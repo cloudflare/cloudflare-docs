@@ -15,7 +15,7 @@ Either way, if you've determined you want to revert your configuration, all you 
 
 Before we figure out how far back in time we want to rollback, let's take a look at our (git) versioned history.
 
-```sh
+```bash
 $ git log
 commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
@@ -72,7 +72,7 @@ Another nice benefit of storing your Cloudflare configuration in git is that you
 
 To begin with, let's see what the last change we made was.
 
-```sh
+```bash
 $ git show
 commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
 Author: Me
@@ -115,7 +115,7 @@ index 0b39450..ef11d8a 100644
 
 Now let's look at the past few changes:
 
-```sh
+```bash
 $ git log -p -3
 
 ...
@@ -203,7 +203,7 @@ While you could always edit the config file directly and delete those entries, i
 
 ### i. Revert the branch to the previous commit
 
-```sh
+```bash
 $ git revert HEAD~1..HEAD
 [master f9a6f7d] Revert "Step 6 - Bug fix."
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -228,7 +228,7 @@ Date:   Wed Apr 18 22:04:52 2018 -0700
 
 As expected, Terraform is indicating it will remove the two Page Rules we created in the previous step.
 
-```sh
+```bash
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -270,7 +270,7 @@ can't guarantee that exactly these actions will be performed if
 
 The changes look good, so let's ask Terraform to roll our Cloudflare configuration back.
 
-```sh
+```bash
 $ terraform apply --auto-approve
 cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
 cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)

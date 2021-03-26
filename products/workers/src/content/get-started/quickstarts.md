@@ -11,7 +11,7 @@ import WorkerStarter from "../../components/worker-starter"
 
 Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
 
-```sh
+```bash
 $ wrangler generate <new-project-name> <github-repo-url>
 ```
 
