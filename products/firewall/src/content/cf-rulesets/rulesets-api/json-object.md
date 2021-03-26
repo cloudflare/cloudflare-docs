@@ -32,7 +32,7 @@ A fully populated ruleset object has the following JSON structure.
         "expression": "cf.zone.name eq \"example.com\" ",
         "last_updated": "2020-07-20T10:44:29.124515Z"
     }],
-    "last_updated": "2020-07-20T10:44:29.124515Z",
+    "last_updated": "2020-07-20T10:44:29.124515Z"
   }
 ```
 
