@@ -20,8 +20,8 @@ You can specify the rules of the ruleset when creating the ruleset — that is, 
 In the `data` field, include the following parameters.
 
 - `name` - The name for your ruleset. You cannot change the name after creating the Phase ruleset.
-- `kind` - Indicates the ruleset kind. The kind must be `root` for Phase rulesets at the account level and `zone` for Phase rulesets at the zone level. You cannot edit the kind value later.
-- `phase` - Indicates the Phase where you want to create (or update) the ruleset.
+- `kind` - Indicates the ruleset kind. The kind must be `root` for Phase rulesets at the account level and `zone` for Phase rulesets at the zone level. You cannot edit the `kind` value later.
+- `phase` - Indicates the Phase where you want to create the ruleset.
 - `description` - Optional. You can update this field when editing your Phase ruleset.
 
 ## Example
