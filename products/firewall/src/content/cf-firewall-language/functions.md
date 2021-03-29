@@ -135,7 +135,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 - <code>upper(<Type>String</Type>)</code> <Type>String</Type>
 
-  - Converts a string field to uppercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
+  - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
   - <em>Example:</em><br />
 
