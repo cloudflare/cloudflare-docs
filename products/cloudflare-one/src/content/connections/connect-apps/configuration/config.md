@@ -127,6 +127,14 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
 
+### `grace-period`
+
+| Syntax | Default |
+|--|--|
+| `grace-period` | `30s` |
+
+When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shutdown. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
+
 ### `metrics`
 
 | Syntax | Default | Environment Variable |
@@ -166,7 +174,7 @@ Specifies the verbosity of logging. The default `info` is not noisy, but you may
 | `transport-loglevel` | `warn` | `TUNNEL_PROTO_LOGLEVEL` |
 
 Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
-Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks. 
+Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks.
 
 ### `retries`
 
