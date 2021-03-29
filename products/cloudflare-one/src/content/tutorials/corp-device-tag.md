@@ -1,5 +1,5 @@
 ---
-updated: 2021-03-23
+updated: 2021-03-30
 category: 🔐 Zero Trust
 difficulty: Beginner
 hidden: true
@@ -39,11 +39,11 @@ Once saved, the serial number list will appear in your list view.
 
 Cloudflare Access relies on the Cloudflare for Teams agent, WARP, to gather the serial number of a device attempting to reach a policy.
 
-In order to allow users to authenticate, you must deploy the WARP agent in proxy mode and users must enroll into your Cloudflare for Teams account.
+In order to allow users to authenticate, you must [deploy the WARP agent](/tutorials/gw-rollout-guide#configure-device-policies) in proxy mode and [users must enroll](/tutorials/gw-rollout-guide#enroll-the-cloudflare-for-teams-agent-for-dns-filtering) into your Cloudflare for Teams account.
 
 ## Build a Zero Trust rule
 
-You can now add this requirement to existing or new applications.
+You can now add this corporate device requirement to existing or new applications. Navigate to `dash.teams.cloudflare.com` to begin.
 
 To add to an existing application, choose the specific resource from the `Applications` page in the Access section of the sidebar. Click **Edit**.
 
@@ -53,3 +53,10 @@ Select the **Rules** tab and edit the existing rule in place.
 
 ![Edit App](../static/zero-trust-security/corp-device/edit-app.png)
 
+Add a `Require` rule and choose `Device Posture - Serial Number List` from the drop down menu. Choose the list of devices to require and click **Save rule**.
+
+![Add Require](../static/zero-trust-security/corp-device/add-require.png)
+
+Once saved, any device attempting to reach the application in this example will both need to be in the `@cloudflare.com` domain and connecting from a device that uses Cloudflare WARP and presents a serial number in the list created.
+
+You can build this rule as a [reuseable policy](/tutorials/default-groups) to save time adding it to other applications.
