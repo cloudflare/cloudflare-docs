@@ -232,7 +232,7 @@ At the time of writing, Durable Object support in Wrangler is not yet available 
 The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/cli-wrangler), the Workers CLI. We recommend starting with one of our templates, which can be done by running:
 
 ```sh
-wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-rollup-esm
+$ wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-rollup-esm
 ```
 
 This will create a directory for your project with basic configuration and source files already set up. If you would prefer to use Webpack rather than Rollup or CommonJS modules rather than ES modules, you may want to look at the [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs) instead. Don't worry if you don't know anything about Rollup, Webpack, or the various module types -- all you have to do to use one of the templates is write JavaScript in the provided source file.
@@ -240,7 +240,7 @@ This will create a directory for your project with basic configuration and sourc
 If you'd like, you can immediately publish the generated project using this command, but the following sections will cover how to customize the configuration:
 
 ```sh
-wrangler publish --new-class Counter
+$ wrangler publish --new-class Counter
 ```
 
 ### Specifying the main module
@@ -272,7 +272,7 @@ before you can create and access Durable Objects associated with that class. Thi
 To allow creation of Durable Objects associated with an exported class, specify `--new-class`:
 
 ```sh
-wrangler publish --new-class DurableObjectExample
+$ wrangler publish --new-class DurableObjectExample
 ```
 
 Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
@@ -280,7 +280,7 @@ Note that after you've run `--new-class` for a given class name once, you do not
 If you want to delete the Durable Objects associated with an exported class, you can use `--delete-class`:
 
 ```sh
-wrangler publish --delete-class DurableObjectExample
+$ wrangler publish --delete-class DurableObjectExample
 ```
 
 <Aside type="warning" header="Important">
