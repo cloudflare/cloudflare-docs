@@ -1,7 +1,7 @@
 ---
 title: POST example
 alwaysopen: true
-order: 785
+order: 786
 ---
 
 # POST example
