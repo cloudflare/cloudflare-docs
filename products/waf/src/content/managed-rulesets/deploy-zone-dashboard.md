@@ -102,7 +102,7 @@ Do the following:
 
     If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the action and status you selected.
 
-    ![Modal asking whether to apply changes to new rules in selected tag or nat](../images/waf-apply-changes-modal.png)
+    ![Modal asking whether to apply changes to new rules in selected tag or not](../images/waf-apply-changes-modal.png)
     
     Select **Do not apply to new rules** to apply your configurations to the selected rules only.
 
