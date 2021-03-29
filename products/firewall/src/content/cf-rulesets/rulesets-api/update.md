@@ -50,8 +50,6 @@ PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 
 You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your PUT request.
 
-Cloudflare creates the ruleset for a Phase when you add a rule to it using a PUT request. You do not have to create a ruleset for a Phase beforehand using a POST request.
-
 </Aside>
 
 ## Example - Set the rules of a ruleset
