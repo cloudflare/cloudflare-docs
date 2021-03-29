@@ -202,7 +202,7 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 
 To enable Cloudflare for Teams to accept the claims and assertions sent from ADFS, follow these steps:
 
-1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
 1. Click *+ Add* under **Login Methods**, and select **SAML**.
 1. The **Add a SAML identity provider** card displays.
 

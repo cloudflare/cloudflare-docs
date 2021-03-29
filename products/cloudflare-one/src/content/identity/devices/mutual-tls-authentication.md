@@ -24,8 +24,6 @@ To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.clo
 
 2. Click **Add mTLS Certificate**.
 
-    ![Root CA](../../static/documentation/identity/devices/add-mtls.png)
-
 <Aside type='warning' header='Important'>
 
 The mTLS certificate is used **only** to verify the client certificate. It does **not** control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
@@ -48,7 +46,7 @@ If your zone is using an intermediate certificate in addition to the root certif
 
 The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
 
-![mTLS Policy](../../static/documentation/identity/devices/mtls-rule.png)
+![mTLS Policy](../../static/documentation/identity/devices/mtls-policy.png)
 
 |Option|Result|
 |-|-|

@@ -69,8 +69,9 @@ $ request_body=$(< <(cat <<EOF
 	"certificate": "$MYCERT",
 	"private_key": "$MYKEY",
 	"bundle_method":"ubiquitous",
-	"geo_restrictions":{"label":"us"}}'
+	"geo_restrictions":{"label":"us"}'
 }
+))
 ```
 You can also enable support for legacy clients which do not include SNI in the TLS handshake.
 
@@ -80,9 +81,10 @@ $ request_body=$(< <(cat <<EOF
 	"certificate": "$MYCERT",
 	"private_key": "$MYKEY",
 	"bundle_method":"ubiquitous",
-	"geo_restrictions":{"label":"us"}}',
+	"geo_restrictions":{"label":"us"}',
 	"type":"sni_custom"
 }
+))
 ```
 `sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.  
 

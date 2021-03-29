@@ -21,6 +21,7 @@ When you or your end users are using other Cloudflare services (eg. CDN, Spectru
 
 - Firewall rules that block traffic based on source IP address may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
 - You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
+- When using Magic Firewall, fragmented packets are reassembled into complete packets before they are inspected. As a result, you cannot create firewall rules for fragments.
 
 </Aside>
 

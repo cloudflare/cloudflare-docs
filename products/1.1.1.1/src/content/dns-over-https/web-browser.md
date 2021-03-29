@@ -14,9 +14,9 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 ## Google Chrome / Microsoft Edge / Brave
 
-1. Open Settings: In your address bar, type the following and hit Enter `chrome://flags/#dns-over-https`. It takes you to `Secure DNS lookups`
-2. [Enable DNS over HTTPS](https://www.chromium.org/developers/dns-over-https): Click on `Secure DNS lookups` radio button to enable DoH.
-3. Configure Cloudflare DNS: Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](https://1.1.1.1/dns/#setup-instructions).
+1. Open Settings: In your address bar, type the following and hit Enter `chrome://settings/security`.
+2. On the Advanced Tab: Click on `Use Secure DNS` radio button to enable DoH.
+3. By default, your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](https://1.1.1.1/dns/#setup-instructions).
 
 ## Safari
 

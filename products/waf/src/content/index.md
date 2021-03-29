@@ -12,4 +12,4 @@ The Cloudflare Web Application Firewall (WAF) provides both automatic protection
 
 <p><Button type="primary" href="/change-log">View change log</Button></p>
 
-</ContentColumn>
+</ContentColumn> 

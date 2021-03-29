@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "dependencies": {
+    "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git"
+  },
+  "scripts": {
+    "bootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh bootstrap",
+    "build": "node_modules/cloudflare-docs-engine/bin/commands.sh build",
+    "develop": "node_modules/cloudflare-docs-engine/bin/commands.sh develop",
+    "ghactionsbootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh ghactionsbootstrap",
+    "savechanges": "node_modules/cloudflare-docs-engine/bin/commands.sh savechanges",
+    "serve": "node_modules/cloudflare-docs-engine/bin/commands.sh serve"
+  }
+}

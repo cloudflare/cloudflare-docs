@@ -13,7 +13,7 @@ You can use [Argo Tunnel](/connections/connect-apps) to connect applications and
 * Start a secure, outbound-only, connection from a machine to Cloudflare for multiple applications
 * Give those applications hostnames where users can connect
 
-**⏲️Time to complete: ~10 minutes**
+**⏲️ Time to complete: ~10 minutes**
 
 ## Install `cloudflared`
 

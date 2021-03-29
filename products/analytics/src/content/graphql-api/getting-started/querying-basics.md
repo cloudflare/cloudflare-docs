@@ -91,14 +91,14 @@ header: Query response from firewallEventsAdaptive
         {
           "firewallEventsAdaptive": [
             {
-              "action": "simulate",
+              "action": "log",
               "clientRequestHTTPHost": "cloudflare.guru",
               "datetime": "2020-08-03T17:07:03Z",
               "rayName": "5bd1a1fc584357ed",
               "userAgent": "Mozilla/5.0 (compatible;Cloudflare-Healthchecks/1.0;+https://www.cloudflare.com/; healthcheck-id: 08c774cde2f3c385)"
             },
             {
-              "action": "simulate",
+              "action": "log",
               "clientRequestHTTPHost": "cloudflare.guru",
               "datetime": "2020-08-03T17:07:01Z",
               "rayName": "5bd1a1ef3bb5d296",
