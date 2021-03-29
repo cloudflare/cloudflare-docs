@@ -22,7 +22,3 @@ The examples in the topics below use overrides to customize the behavior of Mana
 * [Use ruleset and tag overrides to enable only Joomla rules](/cf-rulesets/common-use-cases/deploy-cmr-joomla-only/)
 * [Use ruleset and rule overrides to enable only selected rules](/cf-rulesets/common-use-cases/enable-selected-rules/)
 * [Deploy a Managed Ruleset with ruleset, tag, and rule overrides](/cf-rulesets/common-use-cases/override-ruleset-tag-rule/)
-
-You can deploy custom rulesets and Managed Rulesets in a single API request. The example below deploys a custom ruleset and a Managed Ruleset while preserving an existing rule.
-
-* [Deploy Managed Rulesets and a custom ruleset](/cf-rulesets/common-use-cases/deploy-custom-managed-use-case/)
