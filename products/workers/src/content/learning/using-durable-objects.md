@@ -229,15 +229,18 @@ At the time of writing, Durable Object support in Wrangler is not yet available 
 
 </Aside>
 
-The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/cli-wrangler), the Workers CLI. We recommend starting with one of our templates, which can be done by running:
+The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/cli-wrangler), the Workers CLI. We recommend starting with one of our templates, the simplest of which can be used by running:
 
 ```sh
-wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-rollup-esm
+wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-template
 ```
 
-This will create a directory for your project with basic configuration and source files already set up. If you would prefer to use Webpack rather than Rollup or CommonJS modules rather than ES modules, you may want to look at the [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs) instead. Don't worry if you don't know anything about Rollup, Webpack, or the various module types -- all you have to do to use one of the templates is write JavaScript in the provided source file.
+This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to be able to bundle external dependencies with your code using Rollup or Webpack, or to use CommonJS modules rather than ES modules, you may want to try one of our other starter templates instead:
 
-If you'd like, you can immediately publish the generated project using this command, but the following sections will cover how to customize the configuration:
+* [Durable Objects Rollup ES Modules template](https://github.com/cloudflare/durable-objects-rollup-esm)
+* [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
+
+The following sections will cover how to customize the configuration, but if you'd like you can immediately publish the generated project using this command:
 
 ```sh
 wrangler publish --new-class Counter
