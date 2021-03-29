@@ -2,7 +2,7 @@
 order: 23
 ---
 
-# Configure rulesets via API
+# Deploy rulesets via API
 
 Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to deploy and configure rulesets at the account level or at the zone level.
 
