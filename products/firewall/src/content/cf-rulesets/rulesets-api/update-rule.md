@@ -109,7 +109,7 @@ You can only use one of the arguments `before`, `after`, and `index` at a time.
 
 </Aside>
 
-You can reorder a rule without changing its definition by including only the position field in the PATCH request body. You can also update a rule definition and reorder it in the same PATCH request by including both the rule fields and the position field.
+You can reorder a rule without changing its definition by including only the `position` field in the PATCH request body. You can also update a rule definition and reorder it in the same PATCH request by including both the `rule` field and the `position` field.
 
 The following examples build upon the following (abbreviated) ruleset:
 
@@ -126,7 +126,7 @@ The following examples build upon the following (abbreviated) ruleset:
 
 ### Example #1
 
-The following request with the position field places rule `{rule-id-2}` as the first rule:
+The following request with the `position` field places rule `{rule-id-2}` as the first rule:
 
 ```json
 curl -X PATCH \
@@ -144,7 +144,7 @@ In this case, the new rule order would be:
 
 ### Example #2
 
-The following request with the position field places rule `{rule-id-2}` after rule 3:
+The following request with the `position` field places rule `{rule-id-2}` after rule 3:
 
 ```json
 curl -X PATCH \
@@ -162,7 +162,7 @@ In this case, the new rule order would be:
 
 ### Example #3
 
-The following request with the position field places rule `{rule-id-1}` in position 3, becoming the third rule in the ruleset:
+The following request with the `position` field places rule `{rule-id-1}` in position 3, becoming the third rule in the ruleset:
 
 ```json
 curl -X PATCH \
