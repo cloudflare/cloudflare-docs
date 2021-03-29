@@ -38,10 +38,10 @@ The Web Application Firewall provides the following [Phases](https://developers.
 
 These Phases exist both at the account level and at the zone level. Considering the available Phases and the two different levels, the WAF rules are evaluated in the following order:
 
-* Rules in the `http_request_firewall_custom` Phase at the **account** level
-* Rules in the `http_request_firewall_custom` Phase at the **zone** level
-* Rules in the `http_request_firewall_managed` Phase at **account** level
-* Rules in the `http_request_firewall_managed` Phase at the **zone** level
+1. Rules in the `http_request_firewall_custom` Phase at the **account** level
+1. Rules in the `http_request_firewall_custom` Phase at the **zone** level
+1. Rules in the `http_request_firewall_managed` Phase at **account** level
+1. Rules in the `http_request_firewall_managed` Phase at the **zone** level
 
 ## Deploying rulesets to Phases
 
