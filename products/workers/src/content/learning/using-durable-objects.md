@@ -232,7 +232,7 @@ At the time of writing, Durable Object support in Wrangler is not yet available 
 The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/cli-wrangler), the Workers CLI. We recommend starting with one of our templates, the simplest of which can be used by running:
 
 ```sh
-wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-template
+$ wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-template
 ```
 
 This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to be able to bundle external dependencies with your code using Rollup or Webpack, or to use CommonJS modules rather than ES modules, you may want to try one of our other starter templates instead:
@@ -243,7 +243,7 @@ This will create a directory for your project with basic configuration and a sin
 The following sections will cover how to customize the configuration, but if you'd like you can immediately publish the generated project using this command:
 
 ```sh
-wrangler publish --new-class Counter
+$ wrangler publish --new-class Counter
 ```
 
 ### Specifying the main module
@@ -275,7 +275,7 @@ before you can create and access Durable Objects associated with that class. Thi
 To allow creation of Durable Objects associated with an exported class, specify `--new-class`:
 
 ```sh
-wrangler publish --new-class DurableObjectExample
+$ wrangler publish --new-class DurableObjectExample
 ```
 
 Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
@@ -283,7 +283,7 @@ Note that after you've run `--new-class` for a given class name once, you do not
 If you want to delete the Durable Objects associated with an exported class, you can use `--delete-class`:
 
 ```sh
-wrangler publish --delete-class DurableObjectExample
+$ wrangler publish --delete-class DurableObjectExample
 ```
 
 <Aside type="warning" header="Important">
