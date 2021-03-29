@@ -1,10 +1,10 @@
 ---
-title: POST example
+title: Create ruleset
 alwaysopen: true
 order: 786
 ---
 
-# POST example
+# Create ruleset
 
 <Aside type='warning' header='Important'>
 
@@ -12,13 +12,23 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-## Create Ruleset
+Creates a ruleset of a given kind in the specified Phase. 
+
+Use one of the following endpoints when creating a ruleset.
 
 ```bash
-POST accounts/{account_id}/rulesets
+---
+header: Account-level endpoint
+---
+POST accounts/{account-id}/rulesets
 ```
 
-Creates a new ruleset.
+```bash
+---
+header: Zone-level endpoint
+---
+POST zones/{zone-id}/rulesets
+```
 
 The following parameters are required.
 
@@ -46,61 +56,131 @@ The following parameters are required.
     </tr>
     <tr>
       <td><code>kind</code></td>
-      <td>The kind of ruleset the JSON object represents</td>
+      <td>The kind of ruleset the JSON object represents.</td>
       <td>String</td>
       <td><p>Allowed values:
           <ul>
-            <li><em>root</em></li>
-            <li><em>custom</em></li>
+            <li><em>root</em> - creates a Phase ruleset at the account level</li>
+            <li><em>zone</em> - creates a Phase ruleset at the zone level</li>
+            <li><em>custom</em> - creates a custom ruleset</li>
           </ul>
-        </p><p>You can only create one root ruleset for your account.</p></td>
+        </p></td>
+    </tr>
+    <tr>
+      <td><code>phase</code></td>
+      <td>The name of the Phase where the ruleset will be created.</td>
+      <td>String</td>
+      <td>Check the specific Cloudflare product documentation for more information on the Phases where you can create custom rulesets.</td>
     </tr>
   </tbody>
 </table>
 
-Use the `rules` parameter to supply a list of rules that define the ruleset. For an object definition, see [Rulesets API: JSON Objects](/cf-rulesets/rulesets-api/json-object).
+Use the `rules` parameter to supply a list of rules that define the ruleset. For an object definition, see [Rulesets API: JSON Object](/cf-rulesets/rulesets-api/json-object).
 
-### Request
+## Example - Create a zone-level Phase ruleset
+
+This example creates a zone-level Phase ruleset at the `http_request_firewall_managed` Phase with a single rule that deploys a Managed Ruleset.
 
 ```bash
+---
+header: Request
+---
 curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" --data '
-{
-  "name": "Example ruleset",
-  "kind": "root",
-  "description": "Example ruleset description",
-  "rules": [
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
+-d '{
+    "name": "Zone-level Phase ruleset",
+    "kind": "zone",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "rules": [
     {
-    "action": "log",
-    "expression": "cf.zone.name eq \"example.com\""
-    }]
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+            "id": "{managed-ruleset-id}"
+        }
+    }],
+    "phase": "http_request_firewall_managed"
 }'
-
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
-  "result": {
-    "id": "{ruleset_id}",
-    "name": "Example ruleset",
-    "description": "Example ruleset description",
-    "kind": "root",
-    "version": "1",
-    "rules": [
-      {
-        "id": "{rule_id}",
+    "result": {
+        "id": "{ruleset-id}",
+        "name": "Zone-level Phase ruleset",
+        "description": "This ruleset deploys a Managed Ruleset.",
+        "kind": "zone",
         "version": "1",
+        "rules": [
+        {
+            "id": "{rule-id}",
+            "version": "1",
+            "action": "execute",
+            "expression": "true",
+            "action_parameters": {
+                "id": "{managed-ruleset-id}"
+            }
+            "last_updated": "2021-03-17T15:42:37.917815Z"
+        }],
+        "last_updated": "2021-03-17T15:42:37.917815Z",
+        "phase": "http_request_firewall_managed"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
+}
+```
+
+## Example - Create a custom ruleset
+
+This example creates a custom ruleset in the `http_request_firewall_custom` Phase with a single rule. Currently, custom rulesets must be created at the account level.
+
+```bash
+---
+header: Request
+---
+curl -X POST \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
+-d '{
+    "name": "Example custom ruleset",
+    "kind": "custom",
+    "description": "Example ruleset description",
+    "rules": [
+    {
         "action": "log",
-        "expression": "cf.zone.name eq \"example.com\"",
-        "last_updated": "2020-07-17T15:42:37.917815Z"
-      }
-    ],
-    "last_updated": "2020-07-17T15:42:37.917815Z",
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+        "expression": "cf.zone.name eq \"example.com\""
+    }],
+    "phase": "http_request_firewall_custom"
+}'
+```
+
+```bash
+---
+header: Response
+---
+{
+    "result": {
+        "id": "{ruleset-id}",
+        "name": "Example custom ruleset",
+        "description": "Example ruleset description",
+        "kind": "custom",
+        "version": "1",
+        "rules": [
+        {
+            "id": "{rule-id}",
+            "version": "1",
+            "action": "log",
+            "expression": "cf.zone.name eq \"example.com\"",
+            "last_updated": "2021-03-17T15:42:37.917815Z"
+        }],
+        "last_updated": "2021-03-17T15:42:37.917815Z",
+        "phase": "http_request_firewall_custom"
+    },
+    "success": true,
+    "errors": [],
+    "messages": []
 }
 ```
