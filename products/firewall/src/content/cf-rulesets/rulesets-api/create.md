@@ -1,7 +1,7 @@
 ---
 title: Create ruleset
 alwaysopen: true
-order: 786
+order: 784
 ---
 
 # Create ruleset
@@ -136,7 +136,7 @@ header: Response
 
 ## Example - Create a custom ruleset
 
-This example creates a custom ruleset in the `http_request_firewall_custom` Phase with a single rule. Currently, custom rulesets must be created at the account level.
+This example creates a custom ruleset in the `http_request_firewall_custom` Phase with a single rule.
 
 ```bash
 ---
