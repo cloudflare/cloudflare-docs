@@ -182,7 +182,9 @@ header: Request
 ---
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
--d '{ "description": "My custom ruleset" }'
+-d '{ 
+    "description": "My custom ruleset"
+}'
 ```
 
 ```json
