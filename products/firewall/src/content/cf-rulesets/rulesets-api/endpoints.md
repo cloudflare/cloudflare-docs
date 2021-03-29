@@ -12,7 +12,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-The Rulesets API provides specific endpoints for updating the rulesets of Phases so that you do not need to know the ruleset ID of the Phase beforehand. Instead, use the Phase name directly in the API endpoint.
+For some operations, you can use specific endpoints provided by the Rulesets API for managing the rulesets of Phases. These endpoints include the Phase name in the endpoint instead of the ruleset ID.
 
 For example, instead of using the following endpoint:
 
