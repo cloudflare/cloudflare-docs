@@ -139,7 +139,6 @@ The API returns a 404 HTTP Status Code under these conditions:
 
 * When a ruleset cannot be found.
 * When the specified ruleset is not a Managed Ruleset the calling account is entitled to deploy.
-* When you are trying to get the ruleset of a Phase and you have not added any rule to it yet. A Phase ruleset only exists after you add at least one rule to it.
 
 ### Example
 
