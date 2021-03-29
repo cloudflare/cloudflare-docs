@@ -24,9 +24,9 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 
 The response displays the following rulesets:
 
-- Managed Rulesets that you can deploy, indicated by `"kind": "managed"`
-- Rulesets for account-level Phases, if configured, indicated by `"kind": "root"`
-- Custom rulesets, if configured, indicated by `"kind": "custom"`
+* Managed Rulesets that you can deploy, indicated by `"kind": "managed"`
+* Rulesets for account-level Phases, if configured, indicated by `"kind": "root"`
+* Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
 ---
@@ -91,9 +91,9 @@ curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
 
 The response displays the following rulesets:
 
-- Managed rulesets you can deploy, indicated by `"kind": "managed"`
-- Rulesets for zone-level Phases, if configured, indicated by `"kind": "zone"`
-- Custom rulesets, if configured, indicated by `"kind": "custom"`
+* Managed rulesets you can deploy, indicated by `"kind": "managed"`
+* Rulesets for zone-level Phases, if configured, indicated by `"kind": "zone"`
+* Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
 ---

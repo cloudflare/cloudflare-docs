@@ -19,18 +19,19 @@ You can specify the rules of the ruleset when creating the ruleset — that is, 
 
 In the `data` field, include the following parameters.
 
-- `name` - The name for your ruleset. You cannot change the name after creating the Phase ruleset.
-- `kind` - Indicates the ruleset kind. The kind must be `root` for Phase rulesets at the account level and `zone` for Phase rulesets at the zone level. You cannot edit the `kind` value later.
-- `phase` - Indicates the Phase where you want to create the ruleset.
-- `description` - Optional. You can update this field when editing your Phase ruleset.
+* `name` - The name for your ruleset. You cannot change the name after creating the Phase ruleset.
+* `kind` - Indicates the ruleset kind. The kind must be `root` for Phase rulesets at the account level and `zone` for Phase rulesets at the zone level. You cannot edit the `kind` value later.
+* `phase` - Indicates the Phase where you want to create the ruleset.
+* `description` - Optional. You can update this field when editing your Phase ruleset.
 
 ## Example
 
 The following example creates a Phase ruleset at the account level for the `http_request_firewall_managed` Phase. It also defines a single rule in the ruleset that runs a Managed Ruleset for incoming requests for the `example.com` and `anotherexample.com` zones.
 
 Note the `kind` and `phase` field values:
-- `kind` is set to `root` because this is an account level Phase ruleset.
-- `phase` is set to `http_request_firewall_managed` which is the name of the desired Phase.
+
+* `kind` is set to `root` because this is an account level Phase ruleset.
+* `phase` is set to `http_request_firewall_managed` which is the name of the desired Phase.
 
 ```json
 ---

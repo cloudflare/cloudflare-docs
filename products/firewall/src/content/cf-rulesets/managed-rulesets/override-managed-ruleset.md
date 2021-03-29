@@ -20,9 +20,9 @@ For example, if you want to test a ruleset before enforcing it, you may want to 
 
 You can override a ruleset at three levels.
 
-- **Ruleset overrides** are for all rules in the specified rulesets.
-- **Tag overrides** are for all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to _Block_. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
-- **Rule overrides** are for specific rules in a Managed Ruleset, referenced by their Rule ID.
+* **Ruleset overrides** are for all rules in the specified rulesets.
+* **Tag overrides** are for all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to _Block_. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
+* **Rule overrides** are for specific rules in a Managed Ruleset, referenced by their Rule ID.
 
 To apply an override for a Managed Ruleset, execute the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation on your root ruleset and specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
 

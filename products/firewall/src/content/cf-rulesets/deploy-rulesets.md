@@ -15,9 +15,9 @@ Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy or execute a ruleset
 
 A rule that deploys a ruleset consists of:
 
-- The **ID of the ruleset** you want to deploy.
-- An **expression**.
-- An **action**. To deploy a ruleset, set the action to execute. The rules in the ruleset are executed when a request satisfies the expression.
+* The **ID of the ruleset** you want to deploy.
+* An **expression**.
+* An **action**. To deploy a ruleset, set the action to execute. The rules in the ruleset are executed when a request satisfies the expression.
 
 <Aside type='warning' header='Important'>
 

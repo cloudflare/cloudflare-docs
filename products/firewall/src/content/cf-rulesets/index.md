@@ -14,9 +14,9 @@ The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets
 
 There are several elements involved in the configuration and use of the Ruleset Engine. These elements are: 
 
-- **Phase** - Defines a stage in the life of a request where you can execute rulesets.
-- **Ruleset** - Defines a versioned set of rules. You can execute rulesets in a Phase.
-- **Rule** - Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
+* **Phase** - Defines a stage in the life of a request where you can execute rulesets.
+* **Ruleset** - Defines a versioned set of rules. You can execute rulesets in a Phase.
+* **Rule** - Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
 
 
 ## Phases 
