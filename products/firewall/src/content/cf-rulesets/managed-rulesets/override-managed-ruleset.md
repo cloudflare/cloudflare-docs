@@ -33,7 +33,7 @@ To apply an override for a Managed Ruleset, execute the [Update ruleset](/cf-rul
         "property-to-modify": "value",
         "property-to-modify": "value"
     }],
-    "catgegories": [
+    "categories": [
     {
         "property-to-modify": "value",
         "property-to-modify": "value"
