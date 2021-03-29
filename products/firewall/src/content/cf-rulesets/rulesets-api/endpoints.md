@@ -97,6 +97,27 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   </tbody>
 </table>
 
+## Create rulesets
+
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Verb</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody style="vertical-align:top">
+    <tr>
+      <td><a href="/cf-rulesets/rulesets-api/create">Create ruleset</a></td>
+      <td><code>POST</code></td>
+      <td>
+        <p>Creates a new ruleset.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## Update and deploy rulesets
 
 <table>
@@ -116,31 +137,10 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       </td>
     </tr>
     <tr>
-      <td><a href="/cf-rulesets/rulesets-api/update/#update-a-rule-in-a-ruleset">Update a rule in a ruleset</a></td>
+      <td><a href="/cf-rulesets/rulesets-api/update-rule">Update a rule in a ruleset</a></td>
       <td><code>PATCH</code></td>
       <td>
         <p>Updates the definition of a single rule within a ruleset.<br/>Allows you to change the order of a rule in a ruleset.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-## Create a custom ruleset
-
-<table>
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Verb</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody style="vertical-align:top">
-    <tr>
-      <td><a href="/cf-rulesets/rulesets-api/create">Create a custom ruleset</a></td>
-      <td><code>POST</code></td>
-      <td>
-        <p>Creates a new custom ruleset.</p>
       </td>
     </tr>
   </tbody>
