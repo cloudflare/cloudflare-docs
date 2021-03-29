@@ -1,7 +1,7 @@
 ---
 title: Update a rule in a ruleset
 alwaysopen: true
-order: 785
+order: 786
 ---
 
 # Update a rule in a ruleset
