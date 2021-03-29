@@ -71,7 +71,7 @@ header: Response
         "version": "1",
         "action": "challenge",
         "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "challenge not /api"
+        "description": "challenge not /api",
         "last_updated": "2021-03-18T18:25:08.122758Z",
         "ref": "{custom-rule-ref-2}",
         "enabled": true

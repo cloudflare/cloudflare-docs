@@ -122,7 +122,7 @@ header: Response
             "expression": "true",
             "action_parameters": {
                 "id": "{managed-ruleset-id}"
-            }
+            },
             "last_updated": "2021-03-17T15:42:37.917815Z"
         }],
         "last_updated": "2021-03-17T15:42:37.917815Z",
@@ -138,7 +138,7 @@ header: Response
 
 This example creates a custom ruleset in the `http_request_firewall_custom` Phase with a single rule.
 
-```bash
+```json
 ---
 header: Request
 ---
@@ -157,7 +157,7 @@ curl -X POST \
 }'
 ```
 
-```bash
+```json
 ---
 header: Response
 ---

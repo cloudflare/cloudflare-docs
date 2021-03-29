@@ -74,7 +74,7 @@ header: Response
             "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
             "action_parameters": {
                 "id": "{managed-ruleset-id}"
-            }
+            },
             "last_updated": "2021-03-17T15:42:37.917815Z"
         }],
         "last_updated": "2021-03-17T15:42:37.917815Z",
