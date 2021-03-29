@@ -66,7 +66,7 @@ curl -X PUT \
     {
         "action": "execute",
         "expression": "true",
-        "action_parameters:" {
+        "action_parameters": {
             "id": "{managed-ruleset-id}",
             "overrides": {
                 "rulesets": [
