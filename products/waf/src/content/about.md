@@ -3,7 +3,7 @@ title: About
 order: 1
 ---
 
-# About
+# About Cloudflare Web Application Firewall
 
 <Aside type='warning' header='Important'>
 
@@ -51,7 +51,7 @@ You can **deploy** the Managed Rulesets provided by WAF to the following Phases:
 
 <Aside type='note' header='Note'>
 
-When you deploy a Managed Ruleset in the dashboard, using the Managed Rules tab of the Firewall app, you are deploying that ruleset to the `http_request_firewall_managed` Phase of the selected zone. 
+When you deploy a Managed Ruleset in the dashboard using the **Managed Rules** tab of the Firewall app, you are deploying that ruleset to the `http_request_firewall_managed` Phase of the selected zone. 
 
 When you deploy a Managed Ruleset using **Firewall Rulesets** in the dashboard at the account level, you are deploying that ruleset to the `http_request_firewall_managed` Phase of the account. 
 
