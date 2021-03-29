@@ -30,4 +30,4 @@ To view available Managed Rulesets, see [View rulesets](/cf-rulesets/view-rulese
 
 To deploy a Managed Ruleset to a Phase, see [Deploy a Managed Ruleset](/cf-rulesets/managed-rulesets/deploy-managed-ruleset/).
 
-You cannot edit a managed ruleset, but you can customize Managed Ruleset behavior by using overrides when deploying it to a Phase. See [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
+You cannot edit a Managed Ruleset, but you can customize Managed Ruleset behavior by using overrides when deploying it to a Phase. See [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
