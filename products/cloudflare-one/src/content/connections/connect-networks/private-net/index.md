@@ -8,6 +8,12 @@ You can connect private networks and the services running in those networks to C
 
 Argo Tunnel runs a lightweight [daemon](/glossary#daemon) named ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your environment and the Cloudflare edge. Administrators define the IPs available in that environment and associate them with the Tunnel.
 
+<Aside>
+
+This deployment model does not currently support Server Message Block (SMB).
+
+</Aside>
+
 When users connect to an IP made available through Argo Tunnel, WARP sends their connection through Cloudflare's network to the corresponding Argo Tunnel.
 
 In order to connect private networks, you'll first need to:
