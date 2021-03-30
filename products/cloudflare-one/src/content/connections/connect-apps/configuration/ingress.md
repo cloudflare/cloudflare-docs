@@ -90,7 +90,7 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 |--|--|--|--|
 | HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |
 | HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead | `unix:/home/production/echo.sock` |
-| TCP, RDP, SSH, SMB, kubectl to a single address | TCP requests are proxied to your local service. [Learn more](/applications/non-HTTP). | `ssh://localhost:2222` |
+| TCP, RDP, SSH, SMB, kubectl to a single address | TCP requests are proxied to your local service. [Learn more](/applications/non-http). | `ssh://localhost:2222` |
 | TCP, RDP, SSH, SMB, kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
 | Hello World | Test server for validating your Argo Tunnel setup | `hello_world` |
 | HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
