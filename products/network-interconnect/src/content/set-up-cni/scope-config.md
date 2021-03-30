@@ -30,7 +30,7 @@ To set up a cross-connect in a metropolitan area network (MAN) that does not hav
 
 To establish a vPNI connection, provide the following information:
 
-- Locations to interconnect. You must choose locations supported by our [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/)
+- Locations to interconnect. You must choose locations supported by our [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
 - Preferred link size
 - Number of VLANs
 - Rate Limit
