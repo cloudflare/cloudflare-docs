@@ -11,7 +11,7 @@ Cloudflare supports two types of network interconnect: Private network interconn
 
 Private network interconnects (PNI) are available at any of our [private peering facilities](https://www.peeringdb.com/net/4224). 
 
-Choose a PNI if you are co-located with a data center. We also recommend a PNI if:
+Choose a PNI if you are co-located with a Cloudflare data center. We also recommend a PNI if:
 
 - Your link size is 10G or higher
 - You want higher throughput than a virtual connection
@@ -19,7 +19,7 @@ Choose a PNI if you are co-located with a data center. We also recommend a PNI i
 
 ### Limitations
 
-Private network interconnections can range from 10G to 100G. The smallest compatible link size for PNI is 10G, but customers with less than 10G traffic can use part of a 10G link.
+Private network interconnects can range from 10G to 100G. The smallest compatible link size for PNI is 10G, but customers with less than 10G traffic can use part of a 10G link.
 
 ## Virtual private network interconnect
 

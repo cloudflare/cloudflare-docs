@@ -9,7 +9,7 @@ The Cloudflare Infrastructure uses your information to configure the cross-conne
 
 ## Physical links
 
-To configure the network cross-connect for physical links, Cloudflare generates a Letter of Authorization (LOA)/service key and sends it to you. After you receive the LOA, you can
+To configure the network cross-connect for physical links, Cloudflare generates a Letter of Authorization (LOA)/service key and sends it to you. After you receive the LOA, you can:
 
 * Order cross-connects at the locations the LOA specifies.
 * Verify when the cross-connects are complete.
@@ -40,7 +40,7 @@ Equinix uses a request-based model, which means Equinix users must make a reques
 
 The image above shows the Equinix network interconnect from Cloudflare's perspective.
 
-![Equinix from user perspective](../static/equinix-cloudflare.png)
+![Equinix from user perspective](../static/equinix-customer.png)
 
 The image above shows the Equinix network interconnect from a user's perspective.
 
