@@ -12,10 +12,10 @@ After establishing your connection, the next steps include provisioning the Gene
 Cloudflare sends a set of IPs that you assign to your connection before Cloudflare establishes the BGP connection. The set of IPs will look similar to the example below.
 
 ```
-Cloudflare v4: 108.162.247.10/31
-iManage v4: 108.162.247.11/31
-Cloudflare v6: 2400:cb00:26:3::6ca2:f70a/127
-iManage v6: 2400:cb00:26:3::6ca2:f70b/127
+Cloudflare v4: 123.234.234.10/31
+Acme v4: 123.234.234.11/31
+Cloudflare v6: 1234:ab00:12:3::7ac2:d64a/127
+Acme: 1234:ab00:12:3::7ac2:d64b/127
 ```
 
 Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/set-up-cni/configure-x-connect), the ping tests confirm packets are flowing over the link.
