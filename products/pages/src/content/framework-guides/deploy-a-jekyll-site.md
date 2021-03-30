@@ -73,6 +73,16 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 </TableLayout>
 
+By default, Jekyll builds with `JEKYLL_ENV` set to `development`. For some features to work (e.g. the `google_analytics` feature of the default _minima_ theme) it must be set to `production`. To learn more, read [Jekyll Environment documentation](https://jekyllrb.com/docs/configuration/environments/). In Cloudflare Pages, select your GitHub repository that you created above then go to _Settings_ and select _Environment variables_. For the _Production_ environment, press the _Add Variables_ button, then provide the following information:
+
+<TableLayout>
+
+| Variable Name        | Value          |
+| -------------------- | -------------- |
+| `JEKYLL_ENV`         | `main`         |
+
+</TableLayout>
+
 Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site, before deploying it.
 
 <Aside>
