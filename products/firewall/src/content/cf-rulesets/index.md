@@ -86,7 +86,7 @@ For example, consider the following ruleset with four rules (R1, R2, R3, and R4)
 
 ![Rules execution example](../images/rulesets-rules-example.png)
 
-Rules can have additional features through specific Cloudflare products. You may have additional fields available for in rule expressions, perform additional actions, or configure additional behavior in a given Phase.
+Rules can have additional features through specific Cloudflare products. You may have additional fields available for rule expressions, perform additional actions, or configure additional behavior in a given Phase.
 
 ## Get started
 

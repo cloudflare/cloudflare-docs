@@ -12,9 +12,9 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-The following endpoints support both updating the **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset. 
+You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
-Use one of the following API endpoints to configure a ruleset at the account level or at the zone level.
+To configure a ruleset at the account or zone level, use one of the following API endpoints:
 
 ```bash
 ---
@@ -48,13 +48,13 @@ PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 
 <Aside type='warning' header='Important'>
 
-You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your PUT request.
+You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your `PUT` request.
 
 </Aside>
 
 ## Example - Set the rules of a ruleset
 
-Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every PUT request.
+Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every `PUT` request.
 
 ```json
 ---

@@ -14,7 +14,7 @@ This feature is part of an early access experience for selected customers.
 
 Applies one or more changes to an existing rule in a ruleset.
 
-Use one of the following API endpoints to update a single rule in a ruleset.
+Use one of the following API endpoints to update a single rule in a ruleset:
 
 ```bash
 ---
@@ -95,7 +95,7 @@ header: Response
 
 ## Change the order of a rule in a ruleset
 
-To reorder the rule in the list of ruleset rules, include a `position` field in the request, containing one of the following arguments:
+To reorder a rule in a list of ruleset rules, include a `position` field in the request, containing one of the following arguments:
 
 * `"before": "{rule-id}"` - Places the rule before rule `{rule-id}`. Use this argument with an empty rule ID value (`""`) to set the rule as the first rule in the ruleset.
 
@@ -109,7 +109,7 @@ You can only use one of the arguments `before`, `after`, and `index` at a time.
 
 </Aside>
 
-You can reorder a rule without changing its definition by including only the `position` field in the PATCH request body. You can also update a rule definition and reorder it in the same PATCH request by including both the `rule` field and the `position` field.
+You can reorder a rule without changing its definition by including only the `position` field in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` field and the `position` field.
 
 The following examples build upon the following (abbreviated) ruleset:
 

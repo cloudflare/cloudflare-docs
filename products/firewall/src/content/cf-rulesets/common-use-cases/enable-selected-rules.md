@@ -18,7 +18,7 @@ Use a ruleset override and a rule override in the ruleset of a Phase to deploy s
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the ruleset.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) to set an action for rules you want to deploy.
 
-The PUT request below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to deploy only two rules from a Managed Ruleset to the `http_request_firewall_managed` Phase at the account level.
+The `PUT` request below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to deploy only two rules from a Managed Ruleset to the `http_request_firewall_managed` Phase at the account level.
 
 ```json
 curl -s -X PUT \

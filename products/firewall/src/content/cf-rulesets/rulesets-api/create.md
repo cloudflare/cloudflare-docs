@@ -14,7 +14,7 @@ This feature is part of an early access experience for selected customers.
 
 Creates a ruleset of a given kind in the specified Phase. 
 
-Use one of the following endpoints when creating a ruleset.
+Use one of the following endpoints when creating a ruleset:
 
 ```bash
 ---
@@ -30,7 +30,7 @@ header: Zone-level endpoint
 POST zones/{zone-id}/rulesets
 ```
 
-The following parameters are required.
+The following parameters are required:
 
 <table>
   <thead>

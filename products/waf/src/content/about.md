@@ -15,7 +15,7 @@ The Cloudflare Web Application Firewall (WAF) checks incoming web requests and f
 
 The WAF includes [several Managed Rulesets](/managed-rulesets), provided by Cloudflare, that you can enable and configure. 
 
-When you enable these Managed Rulesets you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has an associated action by default, that varies according to the severity of the rule.
+When you enable these Managed Rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
 
 You can override the default action or disable one or more rules included in Managed Rulesets. To customize the rules behavior you define specific **configurations** or **overrides**.
 

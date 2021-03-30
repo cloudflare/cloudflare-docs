@@ -193,7 +193,7 @@ header: Response
             "ref": "{rule-2-ref}",
             "enabled": true
         },
-        (...)
+        // (...)
         ],
         "last_updated": "2021-03-18T14:42:40.972022Z",
         "phase": "http_request_firewall_managed"

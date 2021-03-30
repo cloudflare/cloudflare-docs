@@ -56,7 +56,7 @@ curl -X PUT \
 
 You can add more than one category override to a rule.
 
-The example below uses a PUT request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` Phase for a given zone (`{zone-id}`). Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses a `PUT` request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` Phase for a given zone (`{zone-id}`). Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 ```json
 curl -X PUT \

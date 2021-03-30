@@ -12,13 +12,13 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-To add rules to an existing custom ruleset, execute a PUT request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action.
+To add rules to an existing custom ruleset, execute a `PUT` request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action.
 
 <Aside type='info' header='Info'>
 
-When you modify a ruleset using a PUT request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules. 
+When you modify a ruleset using a `PUT` request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules. 
 
-If you are updating several rules at once, use the PUT request described in this section. It allows you to make changes to several rules in bulk, while changing the version number of the updated rules and of the ruleset only once. However, if you are updating a single rule, consider using the [Update rule](/cf-rulesets/rulesets-api/update-rule) method instead.
+If you are updating several rules at once, use the `PUT` request described in this section. It allows you to make changes to several rules in bulk, while changing the version number of the updated rules and of the ruleset only once. However, if you are updating a single rule, consider using the [Update rule](/cf-rulesets/rulesets-api/update-rule) method instead.
 
 </Aside>
 
@@ -83,7 +83,7 @@ header: Response
 
 ## Update rules in a custom ruleset
 
-To update one or more rules in a custom ruleset, execute a PUT request to the custom ruleset. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
+To update one or more rules in a custom ruleset, execute a `PUT` request to the custom ruleset. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
 
 The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
@@ -145,4 +145,4 @@ header: Response
 }
 ```
 
-The PUT request completely replaces the existing contents of the ruleset. If you omit an existing rule from the `rules` array, it will not appear in the new version of the ruleset.
+The `PUT` request completely replaces the existing contents of the ruleset. If you omit an existing rule from the `rules` array, it will not appear in the new version of the ruleset.

@@ -18,7 +18,7 @@ Before you begin:
 1. [Create a custom ruleset](/cf-rulesets/custom-rulesets/create-custom-ruleset) and keep the ID of the new custom ruleset.
 1. [Fetch the rules already present in the Phase](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep when you execute the request to deploy the custom ruleset.
 
-Execute a PUT request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` Phase that executes the rules in the custom ruleset when the zone name matches `example.com`.
+Execute a `PUT` request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` Phase that executes the rules in the custom ruleset when the zone name matches `example.com`.
 
 ```json
 ---
