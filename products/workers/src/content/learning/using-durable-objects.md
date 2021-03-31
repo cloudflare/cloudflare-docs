@@ -225,7 +225,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.1) for installation instructions and more information.
+At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.2) for installation instructions and more information.
 
 </Aside>
 
@@ -256,14 +256,14 @@ Durable Objects bindings can be configured in `wrangler.toml` by providing the c
 
 ```toml
 [durable_objects]
-classes = [
-  { binding = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
+bindings = [
+  { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
 ]
 ```
 The `[durable_objects]` section has 1 subsection:
 
-- `classes` - An array of tables, each table can contain the below fields.
-  - `binding` - Required, The binding name to use within your worker.
+- `bindings` - An array of tables, each table can contain the below fields.
+  - `name` - Required, The binding name to use within your worker.
   - `class_name` - Required, The class name you wish to bind to.
   - `script_name` - Optional, Defaults to the current project's script.
 
