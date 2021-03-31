@@ -2,7 +2,7 @@
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](https://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
