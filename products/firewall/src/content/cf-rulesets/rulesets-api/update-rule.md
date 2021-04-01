@@ -44,7 +44,7 @@ curl -X PATCH \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
 -d '{
     "action": "js_challenge",
-    "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score > 0",
+    "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
     "description": "challenge GB and FR or based on IP Reputation"
 }'
 
@@ -68,7 +68,7 @@ header: Response
                 "id": "{rule-id-1}",
                 "version": "2",
                 "action": "js_challenge",
-                "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score > 0",
+                "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
                 "description": "challenge GB and FR or based on IP Reputation",
                 "last_updated": "2021-03-22T12:54:58.144683Z",
                 "ref": "rule-ref-1",

@@ -32,7 +32,7 @@ curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
 -d '{
     "rules": [{
-        "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score > 0",
+        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
         "action": "challenge",
         "description": "challenge GB and FR or based on IP Reputation"
     },
@@ -60,7 +60,7 @@ header: Response
         "id": "{custom-rule-id-1}",
         "version": "1",
         "action": "challenge",
-        "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score \u003e 0",
+        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
         "description": "challenge GB and FR or based on IP Reputation",
         "last_updated": "2021-03-18T18:25:08.122758Z",
         "ref": "{custom-rule-ref-1}",
@@ -133,7 +133,7 @@ header: Response
             "id": "{custom-rule-id-1}",
             "version": "1",
             "action": "challenge",
-            "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score \u003e 0",
+            "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
             "description": "challenge GB and FR or based on IP Reputation",
             "last_updated": "2021-03-18T18:25:08.122758Z",
             "ref": "{custom-rule-id-1}",
