@@ -130,7 +130,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   </thead>
   <tbody style="vertical-align:top">
     <tr>
-      <td><a href="/cf-rulesets/rulesets-api/update/#update-a-ruleset">Update or deploy a ruleset</a></td>
+      <td><a href="/cf-rulesets/rulesets-api/update">Update or deploy a ruleset</a></td>
       <td><code>PUT</code></td>
       <td>
         <p>Updates the basic properties of a ruleset and the list of rules in the ruleset.<br/>Allows you to deploy Managed Rulesets.</p>
