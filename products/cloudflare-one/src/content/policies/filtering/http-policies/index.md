@@ -27,8 +27,8 @@ Just like actions on destinations in DNS policies, actions in HTTP policies allo
 
 These are the action types you can choose from:
 
-* **[Allow](/allow)** 
-* **[Block](/block)** 
+* **[Allow](#allow)** 
+* **[Block](#block)** 
 * **[Isolate](#isolate)**
 * **[Do Not Isolate](#do-not-isolate)**
 * **[Do Not Inspect](#do-not-inspect)**
