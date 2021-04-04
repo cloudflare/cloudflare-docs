@@ -8,7 +8,7 @@ Browser Isolation is enabled through Secure Web Gateway HTTP policies. By defaul
 
 1. Create a [Cloudflare for Teams account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Teams Standard or your Teams Enterprise plan.
 
-1. Download the latest version of the [WARP client](/warp).
+1. Download the latest version of the [WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp).
 
 1. Create a [Device enrollment policy](/connections/connect-devices/warp/device-enrollment).
 
