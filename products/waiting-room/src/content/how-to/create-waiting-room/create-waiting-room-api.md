@@ -83,7 +83,7 @@ The response for the request above is:
 
 ## Customize a Waiting Room web page using the Waiting Room API
 
-You can use the Waiting Room API to served to visitors when they are placed in a virtual waiting room.
+You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
 In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](../create-waiting-room-dashboard/customize-waiting-room#custom-waiting-room):
 
