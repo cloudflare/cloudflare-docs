@@ -243,7 +243,7 @@ If the response is an error, check the error message for a suggestion. If you’
 
 ### Create Pool 2
 
-To create a second pool, use the same command you did to create Pool 1, but give Pool 2 a different `name` and add a [per origin hostname override](/understand-basics/pools#per-origin-host-header-override) to **backup-server-4**.
+To create a second pool, use the same command you did to create Pool 1, but give Pool 2 a different `name` and add a [per origin hostname override](/understand-basics/pools#per-origin-host-header-override) to `backup-server-4`.
 
 **Request**
 
