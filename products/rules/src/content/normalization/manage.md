@@ -23,7 +23,6 @@ Do the following:
 
     ![Configure Normalization](../static/normalization/url-normalization-settings-card.png)
 
-
 ## Available settings
 
 The Cloudflare dashboard provides two components to manage URL Normalization:

@@ -2,7 +2,6 @@
 order: 3
 ---
 
-
 # URL Normalization
 
 Cloudflare provides a URL Normalization feature to modify the URLs of incoming requests so that they conform to a consistent formatting standard.
