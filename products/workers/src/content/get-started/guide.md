@@ -353,7 +353,7 @@ header: Publish to example.com
 
 For more information on environments, check out the [Wrangler documentation](/cli-wrangler/configuration#environments).
 
-You can also configure a GitHub repo to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/github-action-for-cloudflare-workers), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
+You can also configure a GitHub repo to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 
 --------------------------------
 
