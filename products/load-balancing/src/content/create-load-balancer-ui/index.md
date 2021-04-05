@@ -56,7 +56,7 @@ For more on pool configurations (active-active, active-passive), see [Load balan
     - A name (must be unique)
     - The origin server address 
     - A [**Weight**](/understand-basics/weighted-load-balancing)
-    - A hostname by selecting **Add host header** (optional)
+    - A [hostname](/understand-basics/pools#per-origin-host-header-override) by selecting **Add host header** (optional)
 
 1. On the origin pool, update the following information:
     - **Health Threshold**: Number of healthy origins for the pool as a whole to be considered *Healthy* and receive traffic based on pool order in a load balancer
