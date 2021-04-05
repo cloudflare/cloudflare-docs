@@ -1,25 +1,25 @@
 ---
-title: Manage Normalization in the dashboard
+title: Manage URL Normalization in the dashboard
 order: 31
 ---
 
-# Manage URL Normalization on the Cloudflare dashboard
+# Manage URL Normalization in the Cloudflare dashboard
 
-Use the **Rules** app in the Cloudflare dashboard to control URL Normalization settings.
+Use the **Rules** app in the Cloudflare dashboard to control [URL Normalization](/normalization) settings.
 
 ![Configure Normalization](../static/normalization/url-normalization-settings-link.png)
 
-To navigate to the URL Normalization settings:
+Do the following:
 
 1. Log in to the Cloudflare dashboard.
 
-1. Select the **Websites** tab and choose the site for which you want to create a new Transform Rule.
+1. Select the **Websites** tab and choose the site for which you want to configure URL Normalization.
 
 1. To open Transform Rules from the dashboard, click the **Rules** tile in the app bar, and then click the **Transform Rules** tab.
 
 1. Click the **Configure your settings** link in the **Transform rules** card.
 
-1. Enable or disable the [available settings](#available-settings) and click **Back**.
+1. Enable or disable the [available URL Normalization settings](#available-settings) and click **Back**.
 
     ![Configure Normalization](../static/normalization/url-normalization-settings-card.png)
 
@@ -46,7 +46,7 @@ The table below shows how URL Normalization settings affect incoming URLs before
 
 <TableWrap>
 
-Incoming URL | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to Origin
+Incoming URL | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin
 ---|---|---|---|---
 `www.example.com/hello`   | _On_  | _Off_ | `www.example.com/hello`   | `www.example.com/hello`
 `www.example.com/hello`   | _On_  | _On_  | `www.example.com/hello`   | `www.example.com/hello`

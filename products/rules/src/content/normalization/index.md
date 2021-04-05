@@ -20,7 +20,7 @@ Cloudflare URL Normalization is similar to [rfc3986](https://www.ietf.org/rfc/rf
 * These reserved characters are not encoded or decoded: `: / ? # [ ] @ ! $ & ' ( ) * + , ; =`
 * Other characters, for example literal byte values, are percent encoded.
 * Percent encoded representations are converted to upper case.
-* URL paths are normalized according to the Remove Dot Segments protocol. Deviations from this protocol include modifications to the following separators:
+* URL paths are normalized according to the [Remove Dot Segments](https://tools.ietf.org/html/rfc3986#section-5.2.4) protocol. Deviations from this protocol include modifications to the following separators:
     * `\` becomes `/`
     * `//` becomes `/` 
 
