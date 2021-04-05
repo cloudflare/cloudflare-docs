@@ -6,7 +6,7 @@ order: 5
 
 Your previous registrar has five days to release the domain after a successful transfer request. If your transfer has not completed within that timeframe, something has likely gone wrong. To resolve, we recommend you check the following settings and restart the transfer
 
- After five days, something has stopped the transfer. We recommend you check the following details and restart the transfer (you won’t be charged twice).
+ After five days, something has stopped the transfer. We recommend you check the following details and restart the transfer.
 
 --------
 
