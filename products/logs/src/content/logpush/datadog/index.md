@@ -25,10 +25,10 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
   * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
   * `<DATADOG-API-KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
-  * `service`, `host`, `ddsource`, `dtags`: Optional parameters allowed by Datadog
+  * `service`, `host`, `ddsource`, `ddtags`: Optional parameters allowed by Datadog
 
 ```bash
-"datadog://<DATADOG-ENDPOINT-URL>?header_DD-API_KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
+"datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
 ```
 
 * `dataset` - the category of logs you want to receive. See [Log fields](https://developers.cloudflare.com/logs/log-fields) for the full list of supported datasets. 

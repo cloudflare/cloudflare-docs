@@ -10,6 +10,36 @@ A Cloudflare load balancer is identified by the DNS hostname whose traffic you w
 
 ---
 
+## Common configurations
+
+### Active - Passive Failover
+
+An **active-passive failover** sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, your load balancer then re-directs traffic to the passive pool.
+
+This setup ensures uninterrupted service and helps with planned outtages, but it might lead to slower traffic overall.
+
+To set up a load balancer with **active-passive failover**:
+1. Create a load balancer with two origin pools (`primary` and `secondary`).
+1. In the list of origin pools, set the following order:
+    1. `primary`
+    1. `secondary`
+
+With this setup, your load balancer will direct all traffic to `primary` until `primary` has fewer available origins than specified in its **Health Threshold**. Only then will your load balancer direct traffic to `secondary`.
+
+In the event that all pools are marked down, Cloudflare uses the **fallback pool**, which is the option of last resort for successfully sending traffic to an origin. Since the fallback pool is a last resort, its health is not taken into account, and Cloudflare reports  its status as **No Health**. You can select the fallback pool via the API or in the Cloudflare dashboard. For more on working with fallback pools, see [_Traffic steering_](/understand-basics/traffic-steering).
+
+### Active - Active Failover
+
+An **active-active failover** distributes traffic to servers in the same pool until the pool reaches its failure threshold (configurable). At the point of failure, your load balancer would then re-direct traffic to the **fallback pool**.
+
+This setup speeds up overall requests, but is more vulnerable to planned or unplanned outtages.
+
+To set up a load balancer with **active-active failover**:
+1. Create a load balancer with a single origin pool (`primary`) with multiple origins (`origin-1` and `origin-2`).
+1. For equal traffic, choose the same **Weight** for each origin. For guidance on other configurations, see [Weighted load balancers](../weighted-load-balancing).
+
+With this setup, your load balancer will direct all traffic to `primary`, which then directs traffic to `origin-1` and `origin-2` according to their respective weights. If enough origins become so unhealthy that `primary` falls below its **Health Threshold**, traffic would then go to the **fallback pool**.
+
 ## Important notes
 
 ### Load balancing and existing DNS records
@@ -41,7 +71,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ### Session cookies
 
-**When using HTTP cookies to track and bind user sessions to a specific server**, configure Session Affinity to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
+**When using HTTP cookies to track and bind user sessions to a specific server**, configure [Session Affinity](../session-affinity) to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
 
 **For example, F5 BIG-IP load balancers set a session cookie at the beginning of a TCP connection** (if none exists) and then ignore all cookies from subsequent HTTP requests on the same TCP connection. This tends to break session affinity because Cloudflare sends multiple HTTP sessions on the same TCP connection. Configuring the load balancer to parse HTTP requests by cookie headers avoids this issue.
 

@@ -24,7 +24,7 @@ Advertisement blocking extensions installed in your local browser such as AdBloc
 
 ## Device / Browser support
 
-- Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera should work.
+- Modern Chromium, Google Chrome, Mozilla Firefox, Safari, Edge (Chromium) and Opera are supported.
 - Internet Explorer 11 and below is unsupported.
 - Brave Browser requires Site Shield and Cookie blocking to be disabled.
 
@@ -32,7 +32,7 @@ Advertisement blocking extensions installed in your local browser such as AdBloc
 
 We are still defining our minimum requirements but expect Browser Isolation to work on most modern web browsers. Under the hood the browser needs to support:
 
-- [Web Assembly](https://caniuse.com/?search=wasm)
+- [WebAssembly](https://caniuse.com/?search=wasm)
 - [WebRTC](https://caniuse.com/?search=webrtc)
 - [LocalStorage](https://caniuse.com/?search=localstorage)
 

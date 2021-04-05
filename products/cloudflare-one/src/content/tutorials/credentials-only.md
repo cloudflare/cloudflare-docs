@@ -14,7 +14,7 @@ You can use [Argo Tunnel](/connections/connect-apps) to connect applications and
 * Keep that connection running after deleting the initial authentication file
 * Give that application a hostname where users can reach the resource
 
-**⏲️Time to complete: ~20 minutes**
+**⏲️ Time to complete: ~20 minutes**
 
 ## Install `cloudflared`
 

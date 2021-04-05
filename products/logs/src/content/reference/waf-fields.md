@@ -19,7 +19,6 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 | <em><span style="font-weight: 400;">3</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
 | <em><span style="font-weight: 400;">4</span></em> | Challenge Drop | Unused |
 | <em><span style="font-weight: 400;">5</span></em> | Simulate | Take no action other than logging the event |
-| <em><span style="font-weight: 400;">6</span></em> | Log | Increment the anomaly score for OWASP rules. Records actions only if the total anomaly score for all matching OWASP rules exceeds the overall trigger threshold for an OWASP action (challenge, block, simulate) |
 
 </TableWrap>
 

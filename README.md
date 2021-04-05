@@ -33,10 +33,10 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Load Balancing          | load-balancing       | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             | [Prod](https://developers.cloudflare.com/load-balancing)       |
 | Logs                    | logs                 | [Test](https://logs.cloudflare-docs.workers.dev/logs)                                 | [Prod](https://developers.cloudflare.com/logs)                 |
 | Magic Transit           | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
-| Mobile SDK              | mobile-sdk           | [Test](https://mobile-sdk.cloudflare-docs.workers.dev/mobile-sdk)                     | [Prod](https://developers.cloudflare.com/mobile-sdk)           |
 | Network Interconnect    | network-interconnect | [Test](https://network-interconnect.cloudflare-docs.workers.dev/network-interconnect) | [Prod](https://developers.cloudflare.com/network-interconnect) |
 | Randomness Beacon       | randomness-beacon    | [Test](https://randomness-beacon.cloudflare-docs.workers.dev/randomness-beacon)       | [Prod](https://developers.cloudflare.com/randomness-beacon)    |
 | Registrar               | registrar            | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       | [Prod](https://developers.cloudflare.com/registrar)            |
+| Rules                   | rules                | [Test](https://rules.cloudflare-docs.workers.dev/rules)                               | [Prod](https://developers.cloudflare.com/rules)                |
 | Spectrum                | spectrum             | [Test](https://spectrum.cloudflare-docs.workers.dev/spectrum)                         | [Prod](https://developers.cloudflare.com/spectrum)             |
 | SSL                     | ssl                  | [Test](https://ssl.cloudflare-docs.workers.dev/ssl)                                   | [Prod](https://developers.cloudflare.com/ssl)                  |
 | Stream                  | stream               | [Test](https://stream.cloudflare-docs.workers.dev/stream)                             | [Prod](https://developers.cloudflare.com/stream)               |

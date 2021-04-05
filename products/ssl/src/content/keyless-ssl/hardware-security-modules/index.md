@@ -27,8 +27,11 @@ The key server communicates with HSMs via PKCS#11, so any HSM supporting the sta
 
 We’ve also tested with the following Cloud HSM offerings:
 
-* [AWS CloudHSM](https://aws.amazon.com/cloudhsm/)
-* [IBM Cloud HSM](https://console.bluemix.net/docs/infrastructure/hardware-security-modules/about.html#about-ibm-cloud-hsm)
+* [AWS CloudHSM](aws-cloud-hsm)
+* [IBM Cloud HSM](ibm-cloud-hsm)
+* [Azure Dedicated HSM](azure-dedicated-hsm)
+* [Azure Managed HSM](azure-managed-hsm)
+* [Google Cloud HSM](google-cloud-hsm)
 
 If you have deployed Keyless SSL with an HSM model not listed above, please email keyless@cloudflare.com with details.
 

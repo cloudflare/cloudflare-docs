@@ -11,6 +11,7 @@ This section addresses the most common issues you may come across when setting u
   <Button type="primary" href="/faq/gateway/">Gateway</Button>
   <Button type="primary" href="/faq/warp/">WARP client</Button>
   <Button type="primary" href="/faq/tunnel/">Argo Tunnel</Button>
+  <Button type="primary" href="/faq/browser-isolation/">Browser Isolation</Button>  
   <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button> 
 </ButtonGroup>
 
@@ -36,6 +37,10 @@ account, for example), Cloudflare rolls the user's API key. However, the certifi
 downloaded through `cloudflared` retains the older API key and can cause authentication
 failures. The user will need to login once more through `cloudflared` to regenerate the
 certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
+
+### What can cause a `websocket: bad handshake` error?
+
+If your Cloudflare account has Universal SSL enabled and the `SSL/TLS encryption mode` is set to `Off`, `cloudflared` will return a `"websocket: bad handshake"` error. To resolve, set the `SSL/TLS encryption mode` to any setting other than `Off`. 
 
 ### What are the ports and IPs used by `cloudflared`?
 
@@ -78,7 +83,7 @@ region2.argotunnel.com.	300	IN	A	198.41.200.113
 
 ### Can a user create an Argo Tunnel for an apex domain?
 
-No. Argo Tunnel will only create DNS records for subdomains.
+Yes. With [Named Tunnels](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) you can create a CNAME at the apex that points to the named tunnel.
 
 ### Does Argo Tunnel support Websockets?
 
@@ -106,7 +111,7 @@ Registered   | This is logged when Tunnel is started and connects to the Cloudfl
 Unregistered | This is logged when Tunnel is disconnected from the Cloudflare edge.
 CNAME add    | This is logged when Tunnel registers a new DNS (CNAME or AAAA) record for the tunneled application.
 
-#### How can origin servers be secured when using Tunnel?
+### How can origin servers be secured when using Tunnel?
 
 Tunnel can expose web applications to the internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:
 

@@ -19,8 +19,9 @@ tags:
  * @param {Request} request
  */
 async function redirect(request) {
-  // The `cf-ipcountry` header is not supported in the preview
-  const country = request.headers.get("cf-ipcountry")
+  // Use the cf object to obtain the country of the request
+  // more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
+  const country = request.cf.country
 
   if (country != null && country in countryMap) {
     const url = countryMap[country]

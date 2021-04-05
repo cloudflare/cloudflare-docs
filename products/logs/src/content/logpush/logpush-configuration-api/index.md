@@ -14,8 +14,10 @@ To get started:
 1. Set up a storage provider and grant Cloudflare access. For specific instructions:
 
    - [Enable Amazon S3](/logpush/aws-s3/)
+   - [Enable Datadog](/logpush/datadog/)
    - [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
    - [Enable Microsoft Azure](/logpush/azure/)
+   - [Enable Splunk](/logpush/splunk/)
    - [Enable Sumo Logic](/logpush/sumo-logic/)
    - [Enable S3-compatible endpoints](/logpush/s3-compatible-endpoints/)
 

@@ -79,9 +79,11 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 You can specify your cloud service provider destination via the required `destination_conf` parameter.
 
 * **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<region>[&sse=AES256]`
+* **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG-ENDPOINT-URL>?header_DD-API_KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>`
 * **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
-* **Microsoft Azure**: service-level SAS URL with `https` replaced by `azure` + optional directory added before query string; for example: `azure://[BlobContainerPath]/[dir]?[QueryString]`
-* **Sumo Logic**: HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://[SumoEndpoint]/receiver/v1/http/[UniqueHTTPCollectorCode]`
+* **Microsoft Azure**: service-level SAS URL with `https` replaced by `azure` + optional directory added before query string; for example: `azure://<BlobContainerPath>/[dir]?<QueryString>`
+* **Splunk**: Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>&header_Authorization=<SPLUNK-AUTH-TOKEN>`
+* **Sumo Logic**: HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SumoEndpoint>/receiver/v1/http/<UniqueHTTPCollectorCode>`
 
 For S3, Google Cloud Storage, and Azure, logs can be separated into daily subdirectories by using the special string `{DATE}` in the URL path; for example: `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256` or `azure://myblobcontainer/logs/{DATE}?[QueryString]`. It will be substituted with the date in `YYYYMMDD` format, like `20180523`.
 
@@ -124,7 +126,7 @@ See a detailed description of the [Logpush object JSON schema](/logpush/logpush-
 
 Logpush repeatedly pulls logs on your behalf and uploads them to your destination.
 
-Log options, such fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object schema](/logpush/logpush-configuration-api/job-json-schema/)*). If you're migrating from the Logpull API, `logpull_options` is simply the query  string for the API call. For example, the following query gets data from the Logpull API:
+Log options, such as fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object schema](/logpush/logpush-configuration-api/job-json-schema/)*). For example, the following query gets data from the Logpull API:
 
 ```bash
 curl -sv \
@@ -139,9 +141,9 @@ If you don't change any options, you will receive logs with default fields that 
 
 The three options that you can customize are:
 
-1. Fields; *see [Log fields](/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
-2. Sampling rate; value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
-3. Timestamp format; the format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
+1. Fields: See *[Log fields](/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
+2. Sampling rate: Value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
+3. Timestamp format: The format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
 
 To check if `logpull_options` is valid:
 

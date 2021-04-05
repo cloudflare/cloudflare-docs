@@ -24,7 +24,12 @@ Replacing long-lived API keys with short-lived certificates offers the following
 * Build Zero Trust rules to protect that resource
 * Replace long-lived SSH keys with short-lived certificates to authenticate users to the host
 
-**⏲️Time to complete: 45 minutes**
+**⏲️ Time to complete: 45 minutes**
+
+| Before you start |
+|---|
+| 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
+| 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
 
 ## Build a Zero Trust policy
 
