@@ -40,8 +40,10 @@ URL                                  | Normalized URL
 
 Consider a firewall rule that blocks requests whose URLs match `www.example.com/hello`. The rule would not block a request containing an encoded element `www.example.com/%68ello`. Normalizing incoming URLs at the edge helps simplify Cloudflare Firewall Rules expressions that use URLs.
 
-You can [Manage URL Normalization](/normalization/manage) in the Cloudflare dashboard.
-
 ## Availability
 
 URL Normalization is available in all Cloudflare plans.
+
+## Get started 
+
+You can [Manage URL Normalization](/normalization/manage) in the Cloudflare dashboard.
