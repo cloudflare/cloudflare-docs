@@ -14,7 +14,7 @@ To avoid an inconsistent user experience when rolling out application changes, y
 
 To temporarily ignore an origin server:
 
-1. Deliberately configure a monitor so that your origin will fail health checks and Cloudflare will consider the origin server unhealthy and route traffic away from it. For example, set the **Response Code** to an HTTP status code you know your server does not return. Alternatively, you could set a value for **Response Body** that will not match. For example, you can configure the Response Body in a monitor to look for specific text.
+1. Deliberately configure a monitor so that your origin will fail its health checks and Cloudflare will consider the origin server unhealthy and route traffic away from it. For example, set the **Response Code** to an HTTP status code you know your server does not return. Alternatively, you could set a value for **Response Body** that will not match. For example, you can configure the Response Body in a monitor to look for specific text.
 
   ![](../static/images/best-practices-1.png)
 
