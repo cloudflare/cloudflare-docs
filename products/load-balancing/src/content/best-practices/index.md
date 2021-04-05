@@ -14,7 +14,7 @@ To avoid an inconsistent user experience when rolling out application changes, y
 
 To temporarily ignore an origin server:
 
-1. Update the associated monitor so that your origin will fail health checks — which will route traffic away from that origin. This might include setting:
+1. Update the associated monitor so that your origin will fail health checks, which will route traffic away from that origin. This might include setting:
     - The **Response Code** to an HTTP status code you know your server does not return
     - An incorrect value for **Response Body**, such as a specific text string
 

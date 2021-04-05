@@ -38,7 +38,7 @@ To set up a load balancer with **active-active failover**:
 1. Create a load balancer with a single origin pool (`primary`) with multiple origins (`origin-1` and `origin-2`).
 1. For equal traffic, choose the same **Weight** for each origin. For guidance on other configurations, see [Weighted load balancers](../weighted-load-balancing).
 
-With this setup, your load balancer will direct all traffic to `primary`, which then directs traffic to `origin-1` and `origin-2` according to their respective weights. If enough origins become unhealthy that `primary` falls below its **Health Threshold**, traffic would then go to the **fallback pool**.
+With this setup, your load balancer will direct all traffic to `primary`, which then directs traffic to `origin-1` and `origin-2` according to their respective weights. If enough origins become so unhealthy that `primary` falls below its **Health Threshold**, traffic would then go to the **fallback pool**.
 
 ## Important notes
 
