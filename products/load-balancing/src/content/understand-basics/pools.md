@@ -215,6 +215,20 @@ Read only
 
 ---
 
+## Per origin Host header override
+
+To balance traffic across multiple hosts, add `Host` headers to individual origins within the same pool.
+
+For example, you might have a pool with origins hosted in multiple AppEngine projects or Amazon S3 buckets. You also might want to set up specific failover origins within a pool.
+
+Since these examples require specific hostnames per origin, your load balancer could not properly route traffic _without_ a `Host` header override.
+
+If you need an origin `Host` header override, add it when [creating](/create-load-balancer-ui#create-and-add-origin-pools) or editing a pool. For security reasons, this header also needs to be a subdomain of the overall zone. See [Configure Cloudflare and Heroku](https://support.cloudflare.com/hc/articles/205893698) for more details.
+
+For details about how origin and monitor `Host` headers interact, see [Host header prioritization](/understand-basics/monitors#host-header-prioritization).
+
+---
+
 ## Managing pools via the Cloudflare API
 
 ### Endpoints
