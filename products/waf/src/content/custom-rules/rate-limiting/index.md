@@ -1,0 +1,53 @@
+---
+order: 1
+---
+
+# Rate Limiting Rules
+
+Rate Limiting Rules allow you to define rate limits for incoming requests matching an expression, and the actions to take when those rate limits are reached.
+
+## Rule parameters 
+
+Like other rules evaluated by the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets), Rate Limiting Rules have an associated **expression** and an **action**. 
+
+The **expression** specifies the criteria where you are matching traffic on — the same as in Firewall Rules. The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of Rate Limiting Rules, the action is performed when the request rate specified in the rule is reached.
+
+Besides these two parameters, Rate Limiting Rules require the following additional parameters:
+
+* **Characteristics** - The set of parameters that define how Cloudflare tracks the request rate for this rule.
+* **Period** - The period of time to consider (in seconds) when evaluating the request rate.
+* **Requests per period** - The number of requests over the period of time that will trigger the Rate Limiting Rule.
+* **Mitigation timeout** - Once the request rate is reached, the Rate Limiting Rule blocks further requests for a period of time defined in this field.
+
+Check [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more details on these parameters.
+
+See [Determining the request rate](/custom-rules/rate-limiting/request-rate) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+
+## Rule execution order
+
+Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
+
+* [Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard), available in the **Firewall Rules** tab
+* Rate Limiting Rules (described in this section), available in the **Custom Rules** tab
+* [Managed Rulesets](#), available in the **Managed Rules** tab
+* Legacy Rate Limiting Rules, available in the **Tools** tab
+
+## Availability
+
+Cloudflare Rate Limiting Rules are available to all customers. Keep in mind that the number of rules you can have active on your account is based on your type of plan.
+
+This table outlines the features available with each customer plan:
+
+<TableWrap>
+
+Feature                    | Free | Pro | Business | Enterprise
+---------------------------|------|-----|----------|-----------
+Active Rate Limiting Rules | ??   | ??  | ??       | ??
+
+</TableWrap>
+
+## Getting started
+
+To configure Rate Limiting Rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, see [Manage Rate Limiting Rules in the dashboard](/custom-rules/rate-limiting/manage-dashboard).
+
+You can also configure Rate Limiting Rules using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api). See [Manage Rate Limiting Rules via API](/custom-rules/rate-limiting/manage-api) for more information.
