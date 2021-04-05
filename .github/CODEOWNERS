@@ -59,7 +59,7 @@ products/pages/ @cloudflare/workers-docs
 products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
 
 # Registrar
-products/registrar/ @TownLake
+products/registrar/ @TownLake @cloudflare/PCX
 
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
