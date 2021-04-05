@@ -289,7 +289,7 @@ For a list of origins that override a monitor's `Host` header:
 
 1. On a monitor, select **Edit**.
 1. Select **Advanced health check settings**.
-1. If you have an origin overrides, you will see **Origin host header overrides**.
+1. If you have origin overrides, you will see **Origin host header overrides**.
 
 ![List of origin host header overrides](../static/images/origin-host-header-override.png)
 
