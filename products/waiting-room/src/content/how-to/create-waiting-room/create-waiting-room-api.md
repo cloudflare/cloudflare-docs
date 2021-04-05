@@ -85,7 +85,7 @@ The response for the request above is:
 
 You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
-In the following PATCH request, the `custom_page_html` field contains the HTML code for the customized waiting room:
+In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](../create-waiting-room-dashboard/customize-waiting-room#custom-waiting-room):
 
 ```shell
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"
