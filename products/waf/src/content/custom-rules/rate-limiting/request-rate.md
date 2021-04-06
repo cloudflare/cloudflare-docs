@@ -50,7 +50,7 @@ Mitigation timeout: _10 minutes_
 
 The following diagram shows how Cloudflare handles four incoming requests in the context of the above Rate Limiting Rule.
 
-`TODO_ADD DIAGRAM HERE`
+![Rate Limiting Rule example diagram](../../static/custom-rules/rate-limiting-example.png)
 
 Since request 1 matches the rule expression, the Rate Limiting Rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the Rate Limiting Rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests per period**, the request is allowed.
 
