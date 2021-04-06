@@ -14,10 +14,10 @@ You can manage Rate Limiting Rules under the **Custom Rules** tab in the **Firew
 
 The Custom Rules interface allows you to:
 
-* Browse and filter Custom Rules
+* Browse and filter rules
 * Create Rate Limiting Rules
-* Edit and delete Custom Rules
-* Enable or disable Custom Rules
+* Edit and delete rules
+* Enable or disable rules
 
 ![Custom Rules tab](../../static/custom-rules/custom-rules-tab.png)
 
@@ -50,24 +50,24 @@ To create a new Rate Limiting Rule:
 1. To  save and deploy your rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 
 
-## Manage Rate Limiting Rules
+## Manage Custom Rules
 
-You can edit, delete, or enable/disable rules in the Custom rules card.
+You can edit, delete, or enable/disable rules in the Custom Rules card.
 
 ![Custom Rules card](../../static/custom-rules/custom-rules-card.png)
 
-### Enable or disable a Rate Limiting Rule
+### Enable or disable a rule
 
-To enable/disable a Rate Limiting Rule, click the _On_/_Off_ toggle button on the right of the rule you want to change.
+To enable/disable a rule, click the _On_/_Off_ toggle button on the right of the rule you want to change.
 
-### Edit a Rate Limiting Rule
+### Edit a rule
 
-To edit a Rate Limiting Rule:
+To edit a rule:
 
 1. Click **Edit** on the right of the rule you want to change. 
-1. Update the parameters of your Rate Limiting Rule.
+1. Update the rule parameters.
 1. Click **Save**.
 
-### Delete a Rate Limiting Rule
+### Delete a rule
 
-To delete a Rate Limiting Rule, click **Delete** on the right of the rule you want to delete and confirm the operation.
+To delete a rule, click **Delete** on the right of the rule you want to delete and confirm the operation.
