@@ -78,6 +78,8 @@ While every Cloudflare Pages site receives a custom subdomain during deployment,
 
 Click the "Set up a domain" button, and provide the domain that you'd like to serve your Cloudflare Pages site on. Depending on the domain, you'll need to configure nameservers or add a custom CNAME record to point the domain to your Cloudflare Pages site.
 
+Please note that any custom domains (or subdomains) you wish to resolve to your Cloudflare Pages site need to be added via the previous "Set up a domain" process. Manually adding a custom CNAME record pointing to your Cloudflare Pages site without first associating the domain (or subdomains) in the Cloudflare Pages dashboard will result in your domain failing to resolve at the CNAME record address and display a 522 error.
+
 #### Configure nameservers
 
 Configure your nameservers to point to Cloudflare's name servers. If your nameservers are succesfully pointed to Cloudflare, we'll proceed by creating a CNAME record for you!
