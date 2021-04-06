@@ -14,7 +14,7 @@ For a high-level introduction to Durable Objects, [see the announcement blog pos
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](https://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
@@ -225,7 +225,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.1) for installation instructions and more information.
+At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.2) for installation instructions and more information.
 
 </Aside>
 
@@ -256,14 +256,14 @@ Durable Objects bindings can be configured in `wrangler.toml` by providing the c
 
 ```toml
 [durable_objects]
-classes = [
-  { binding = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
+bindings = [
+  { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
 ]
 ```
 The `[durable_objects]` section has 1 subsection:
 
-- `classes` - An array of tables, each table can contain the below fields.
-  - `binding` - Required, The binding name to use within your worker.
+- `bindings` - An array of tables, each table can contain the below fields.
+  - `name` - Required, The binding name to use within your worker.
   - `class_name` - Required, The class name you wish to bind to.
   - `script_name` - Optional, Defaults to the current project's script.
 
@@ -371,23 +371,23 @@ export class Counter {
     }
 
     async initialize() {
-        try {
-            let stored = await this.state.storage.get("value");
-            this.value = stored || 0;
-        } catch (err) {
-            // If anything throws during initialization then we
-            // need to be sure that a future request will retry by
-            // creating another `initializePromise` below.
-            this.initializePromise = undefined;
-            throw err;
-        }
+        let stored = await this.state.storage.get("value");
+        this.value = stored || 0;
     }
 
     // Handle HTTP requests from clients.
     async fetch(request) {
         // Make sure we're fully initialized from storage.
         if (!this.initializePromise) {
-            this.initializePromise = this.initialize();
+            this.initializePromise = this.initialize().catch((err) => {
+                // If anything throws during initialization then we need to be
+                // sure sure that a future request will retry initialize().
+                // Note that the concurrency involved in resetting this shared
+                // promise on an error can be tricky to get right -- we don't
+                // recommend customizing it.
+                this.initializePromise = undefined;
+                throw err
+            });
         }
         await this.initializePromise;
 
