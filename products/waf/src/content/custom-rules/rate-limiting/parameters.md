@@ -28,7 +28,7 @@ The available Rate Limiting Rule parameters are the following:
         - `ip.src`
         - `ip.geoip.country`
         - `ip.geoip.asnum`
-        - `http.request.headers["<HEADER_NAME>"]`
+        - `http.request.headers["<header_name>"]`
 
 - `period` <Type>Number</Type>
     - The period of time to consider (in seconds) when evaluating the request rate.
