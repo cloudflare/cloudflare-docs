@@ -2,7 +2,7 @@
 
 ## Issues
 
-[Open an issue](https://github.com/cloudflare/cloudflare-docs/issues/new/) when something in the content is incorrect, out-of-date, or if the documentation doesn’t match the actual functionality. The items below are covered in our issue template.
+[Open an issue](https://github.com/cloudflare/cloudflare-docs/issues/new/choose) when something in the content is incorrect, out-of-date, or if the documentation doesn’t match the actual functionality. The items below are covered in our issue template.
 
 * What is the expected behavior?
     * Link to the documentation or explain the expected outcome of following the documentation.
