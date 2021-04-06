@@ -58,4 +58,4 @@ Request 2 matches the rule expression and therefore Cloudflare evaluates the Rat
 
 Request 3 matches the rule expression and the same values for rule characteristics. Therefore, Cloudflare increases the value of the existing counter, setting it to `2`. The counter value is now above the limit defined in **Requests per period**, and so request 2 gets blocked.
 
-Request 4 does not match the rule expression, since the value for the Content-Type header does not match the value in the expression. Therefore, Cloudflare counts this request in a separate counter, setting its value to `1`. Request 4 is allowed.
+Request 4 does not match the rule expression, since the value for the `Content-Type` header does not match the value in the expression. Therefore, Cloudflare does not create a new rule counter for this request. Request 4 is not evaluated in the context of this Rate Limiting Rule and is passed on to subsequent rules in the request evaluation workflow.
