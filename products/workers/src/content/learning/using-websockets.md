@@ -4,6 +4,12 @@ order: 9
 
 # Using WebSockets
 
+<Aside type="warning">
+
+We're looking for developers to experiment with WebSockets support in Cloudflare Workers, but WebSocket support generally remains in early access. Details such as pricing and limits are not yet available.
+
+</Aside>
+
 WebSockets allow you to communicate in real-time with your Cloudflare Workers serverless functions. In this guide, you'll learn the basics of WebSockets on Cloudflare Workers, both from the perspective of _writing_ WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a _client_.
 
 <Aside>WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.</Aside>
