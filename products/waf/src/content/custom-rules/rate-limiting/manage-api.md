@@ -16,13 +16,7 @@ You must deploy Rate Limiting Rules to the `http_request_firewall_custom` Phase 
 
 ## Create a Rate Limiting Rule
 
-Follow these steps to create a Rate Limiting Rule:
-
-1. Use the [List existing rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#list-existing-rulesets) method to check if the ruleset for the `http_request_firewall_custom` Phase at the zone level already exists.
-1. [Create the Phase ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) for the `http_request_firewall_custom` Phase, if it does not exist yet. 
-1. Add a rule to the Phase ruleset by issuing a `PUT` request (see example below). Remember to add any existing rules in the ruleset to the `rules` field in the request.
-
-The following example adds a Rate Limiting Rule to an existing Phase ruleset (`{ruleset-id}`). It keeps the existing rule by including the rule ID (`{existing-rule-1}`) in the request body.
+To create a Rate Limiting Rule, add a rule with a `ratelimit` field to the `http_request_firewall_custom` Phase ruleset by issuing a `PUT` request (see example below). Remember to add any existing rules in the ruleset to the request by including the rule ID in the request body.
 
 ```json
 ---
@@ -31,12 +25,9 @@ header: Request
 curl -X PUT \
   -H "X-Auth-Email: user@cloudflare.com" \
   -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
 -d '{
   "rules": [
-    {
-      "id": "{existing-rule-1}",
-    },
     {
       "description": "My rate limiting rule",
       "expression": "(http.request.uri.path matches \"^/api/\")",
@@ -69,10 +60,6 @@ header: Response
     "kind": "zone",
     "version": "5",
     "rules": [
-      {
-          "id": "{existing-rule-1}",
-          // (...)
-      },
       {
         "id": "{rate-limiting-rule-id}",
         "version": "1",
