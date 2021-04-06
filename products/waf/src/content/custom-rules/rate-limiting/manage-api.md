@@ -4,6 +4,11 @@ order: 15
 
 # Manage Rate Limiting Rules via API
 
+<Aside type='warning' header='Important'>
+
+This feature is only available for selected customers in the Enterprise plan.
+
+</Aside>
 Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to create a Rate Limiting Rule via API. A Rate Limiting Rule is similar to a regular rule handled by the Ruleset Engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more information on this field and its parameters.
 
 You must deploy Rate Limiting Rules to the `http_request_firewall_custom` Phase ruleset. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.

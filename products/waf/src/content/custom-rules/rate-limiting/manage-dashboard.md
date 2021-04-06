@@ -4,6 +4,12 @@ order: 13
 
 # Manage Rate Limiting Rules in the dashboard
 
+<Aside type='warning' header='Important'>
+
+This feature is only available for selected customers in the Enterprise plan.
+
+</Aside>
+
 You can manage Rate Limiting Rules under the **Custom Rules** tab in the **Firewall** app.
 
 The Custom Rules interface allows you to:

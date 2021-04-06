@@ -5,6 +5,12 @@ title: Common use cases
 
 # Common rate limiting use cases
  
+<Aside type='warning' header='Important'>
+
+This feature is only available for selected customers in the Enterprise plan.
+
+</Aside>
+
 The examples below include sample Rate Limiting Rule configurations that address common rate limiting use cases.
  
 ## Example 1

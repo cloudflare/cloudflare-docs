@@ -4,6 +4,12 @@ order: 17
 
 # Rate limiting parameters
 
+<Aside type='warning' header='Important'>
+
+This feature is only available for selected customers in the Enterprise plan.
+
+</Aside>
+
 The available Rate Limiting Rule parameters are the following:
 
 <Definitions>

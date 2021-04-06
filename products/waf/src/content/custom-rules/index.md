@@ -2,7 +2,13 @@
 order: 4
 ---
 
-# Custom Rules
+# Custom Rules - Beta
+
+<Aside type='warning' header='Important'>
+
+This feature is only available for selected customers in the Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
+
+</Aside>
 
 Custom Rules allow you to protect your website and your APIs from malicious or excessive incoming traffic.
 

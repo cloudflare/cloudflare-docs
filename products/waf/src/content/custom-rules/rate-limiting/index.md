@@ -4,6 +4,12 @@ order: 1
 
 # Rate Limiting Rules
 
+<Aside type='warning' header='Important'>
+
+This feature is only available for selected customers in the Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
+
+</Aside>
+
 Rate Limiting Rules allow you to define rate limits for incoming requests matching an expression, and the actions to take when those rate limits are reached.
 
 ## Rule parameters 
@@ -31,20 +37,6 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 * Rate Limiting Rules (described in this section), available in the **Custom Rules** tab
 * [Managed Rulesets](#), available in the **Managed Rules** tab
 * Legacy Rate Limiting Rules, available in the **Tools** tab
-
-## Availability
-
-Cloudflare Rate Limiting Rules are available to all customers. Keep in mind that the number of rules you can have active on your account is based on your type of plan.
-
-This table outlines the features available with each customer plan:
-
-<TableWrap>
-
-Feature                    | Free | Pro | Business | Enterprise
----------------------------|------|-----|----------|-----------
-Active Rate Limiting Rules | ??   | ??  | ??       | ??
-
-</TableWrap>
 
 ## Getting started
 
