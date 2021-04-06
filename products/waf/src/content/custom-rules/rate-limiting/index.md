@@ -16,7 +16,7 @@ Rate Limiting Rules allow you to define rate limits for incoming requests matchi
 
 Like other rules evaluated by Cloudflare's ruleset engine, Rate Limiting Rules have an associated **expression** and an **action**. 
 
-The **expression** specifies the criteria where you are matching traffic on — the same as in Firewall Rules. The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of Rate Limiting Rules, the action is performed when the request rate specified in the rule is reached.
+The **expression** specifies the criteria where you are matching traffic on — the same as in [Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of Rate Limiting Rules, the action is performed when the request rate specified in the rule is reached.
 
 Besides these two parameters, Rate Limiting Rules require the following additional parameters:
 
@@ -33,7 +33,7 @@ See [Determining the request rate](/custom-rules/rate-limiting/request-rate) to 
 
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
-* [Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard), available in the **Firewall Rules** tab
+* [Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules), available in the **Firewall Rules** tab
 * Rate Limiting Rules (described in this section), available in the **Custom Rules** tab
 * Managed Rulesets, available in the **Managed Rules** tab
 * Legacy Rate Limiting Rules, available in the **Tools** tab
