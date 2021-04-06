@@ -28,7 +28,9 @@ The following example adds a Rate Limiting Rule to an existing Phase ruleset (`{
 header: Request
 ---
 curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}"
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{
   "rules": [
     {
