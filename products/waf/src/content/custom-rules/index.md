@@ -20,7 +20,7 @@ You can use Custom Rules in the **Firewall** app to define the following rule ty
 
 <Aside type='warning' header='Important'>
 
-Currently, you can only create and manage Custom Firewall Rules using the API. They are not displayed in the **Custom Rules** tab.
+Currently, you can only create and manage Custom Firewall rules using the API. They are not displayed in the **Custom Rules** tab.
 
 </Aside>
 
