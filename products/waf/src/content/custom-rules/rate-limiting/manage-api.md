@@ -9,15 +9,16 @@ order: 15
 This feature is only available for selected customers in the Enterprise plan.
 
 </Aside>
-Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to create a Rate Limiting Rule via API. A Rate Limiting Rule is similar to a regular rule handled by the Ruleset Engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more information on this field and its parameters.
 
-You must deploy Rate Limiting Rules to the `http_request_firewall_custom` Phase ruleset. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
+Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to create a Rate Limiting Rule via API. A Rate Limiting Rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more information on this field and its parameters.
+
+You must deploy Rate Limiting Rules to the `http_request_firewall_custom` Phase ruleset.
 
 ## Create a Rate Limiting Rule
 
 Follow these steps to create a Rate Limiting Rule:
 
-1. Use the [List existing rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#list-existing-rulesets) method to check if the ruleset for the `http_request_firewall_custom` Phase already exists.
+1. Use the [List existing rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#list-existing-rulesets) method to check if the ruleset for the `http_request_firewall_custom` Phase at the zone level already exists.
 1. [Create the Phase ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) for the `http_request_firewall_custom` Phase, if it does not exist yet. 
 1. Add a rule to the Phase ruleset by issuing a `PUT` request (see example below). Remember to add any existing rules in the ruleset to the `rules` field in the request.
 
