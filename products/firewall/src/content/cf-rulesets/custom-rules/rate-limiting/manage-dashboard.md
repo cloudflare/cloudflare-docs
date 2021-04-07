@@ -19,7 +19,7 @@ The Custom Rules interface allows you to:
 * Edit and delete rules
 * Enable or disable rules
 
-![Custom Rules tab](../../static/custom-rules/custom-rules-tab.png)
+![Custom Rules tab](../../../images/custom-rules/custom-rules-tab.png)
 
 ## Create a Rate Limiting Rule
 
@@ -35,11 +35,11 @@ To create a new Rate Limiting Rule:
 
 1. In the **Create Firewall Rule** page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Rate Limiting Rule page](../../static/custom-rules/rate-limiting-create.png)
+    ![Create Rate Limiting Rule page](../../../images/custom-rules/rate-limiting-create.png)
 
 1. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-1. Under **With the same...**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination of the characteristics you select will have their own counter to determine the request rate. Check [Determining the request rate](/custom-rules/rate-limiting/request-rate) for more information.
+1. Under **With the same...**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination of the characteristics you select will have their own counter to determine the request rate. Check [Determining the request rate](/cf-rulesets/custom-rules/rate-limiting/request-rate) for more information.
 
 1. Under **And rate exceeds...**, define the rate limit and the time period to consider when determining the request rate.
 
@@ -54,7 +54,7 @@ To create a new Rate Limiting Rule:
 
 You can edit, delete, or enable/disable rules in the Custom Rules card.
 
-![Custom Rules card](../../static/custom-rules/custom-rules-card.png)
+![Custom Rules card](../../../images/custom-rules/custom-rules-card.png)
 
 ### Enable or disable a rule
 

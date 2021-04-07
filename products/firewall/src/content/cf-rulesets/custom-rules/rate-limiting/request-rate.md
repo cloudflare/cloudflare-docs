@@ -21,7 +21,7 @@ In this case, two incoming requests with the **same** value for the HTTP header 
 
 <Aside type='warning' header='Important'>
 
-The Cloudflare **data center ID** is a mandatory characteristic of every Rate Limiting Rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating Rate Limiting Rules via API](/custom-rules/rate-limiting/manage-api).
+The Cloudflare **data center ID** is a mandatory characteristic of every Rate Limiting Rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating Rate Limiting Rules via API](/cf-rulesets/custom-rules/rate-limiting/manage-api).
 
 </Aside>
 
@@ -51,7 +51,7 @@ Mitigation timeout: _10 minutes_
 
 The following diagram shows how Cloudflare handles four incoming requests in the context of the above Rate Limiting Rule.
 
-![Rate Limiting Rule example diagram](../../static/custom-rules/rate-limiting-example.png)
+![Rate Limiting Rule example diagram](../../../images/custom-rules/rate-limiting-example.png)
 
 Since request 1 matches the rule expression, the Rate Limiting Rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the Rate Limiting Rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests per period**, the request is allowed.
 
