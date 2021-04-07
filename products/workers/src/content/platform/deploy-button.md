@@ -26,14 +26,15 @@ on:
   push:
   pull_request:
   repository_dispatch:
-deploy:
-  runs-on: ubuntu-latest
-  timeout-minutes: 60
-  needs: test
-  steps:
-    - uses: actions/checkout@v2
-    - name: Publish
-      uses: cloudflare/wrangler-action@1.3.0
+jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      timeout-minutes: 60
+      needs: test
+      steps:
+        - uses: actions/checkout@v2
+        - name: Publish
+          uses: cloudflare/wrangler-action@1.3.0
 ```
 
 2. **Add support for `CF_API_TOKEN` and `CF_ACCOUNT_ID` in your workflow**:
