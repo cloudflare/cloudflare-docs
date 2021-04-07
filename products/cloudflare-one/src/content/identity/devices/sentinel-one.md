@@ -6,14 +6,12 @@ order: 3
 
 Cloudflare for Teams can check if [SentinelOne](https://www.sentinelone.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
-<TableWrap>
 
 | Prerequisites |
 | ------------- |
-| The WARP client installed on a user machine |
+| The WARP client installed on a user machine and updated to the latest version (minimum version required - Windows: 1.4.25.0, macOS: 1.4.27) |
 | SentinelOne installed on a user machine |
 
-</TableWrap>
 
 
 ## Configuring the Cloudflare integration
