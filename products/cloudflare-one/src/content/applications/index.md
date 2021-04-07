@@ -12,7 +12,7 @@ Learn how to secure your applications, and how to configure one dashboard for yo
 
 ## Connecting non-HTTP applications
 
-* [Connect through Acccss using a CLI](/tutorials/cli)
+* [Connect through Access using a CLI](/tutorials/cli)
 * [Connect through Access over RDP](/tutorials/rdp)
 * [Connect through Access over SSH](/tutorials/ssh)
 * [Connect through Access using kubectl](/tutorials/kubectl)
