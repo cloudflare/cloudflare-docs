@@ -85,34 +85,26 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
 
-Instead, the `Stream-Media-ID` HTTP header in the response should be used to retrieve the video ID.
+Instead, the `stream-media-id` HTTP header in the response should be used to retrieve the video ID.
 
-<Example>
-	
+For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream` with the TUS protocol, the response will contain a HTTP header like this:
+
 ```
-location: https://upload.videodelivery.net/tus/cab807e0c477d01baq20f66c3d1dfc26cf
-...
 stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
-tus-resumable: 1.0.0
-x-content-type-options: nosniff
-x-envoy-upstream-service-time: 260
-server: cloudflare
 ```
-
-</Example>
 
 ### Command-line example
 
 <Example>
 
-You will also need to download a tus client. This tutorial will use the [tus python client](https://github.com/tus/tus-py-client), available through pip, pythons's package manager.
+You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
 ```bash
 pip install -U tus.py
 ```
 
 ```bash
-tus-upload --chunk-size 5242880 --header Authorization "Bearer $TOKEN" $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+tus-upload --chunk-size 52428800 --header Authorization "Bearer $TOKEN" $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -122,7 +114,6 @@ In the beginning of the response from tus, you’ll see the endpoint for getting
     ...
 
 </Example>
-
 
 ### Golang Example
 
@@ -155,7 +146,7 @@ func main() {
 	headers.Add("Authorization", "Bearer $TOKEN")
 
 	config := &tus.Config{
-		ChunkSize:           5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
+		ChunkSize:           50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
 		Resume:              false,
 		OverridePatchMethod: false,
 		Store:               nil,
@@ -188,7 +179,6 @@ upload.Finished()
 
 Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functionality such as resuming uploads and getting more details about the progress of the upload.
 
-
 ### Node.js Example
 
 <Example>
@@ -212,13 +202,14 @@ var tus = require("tus-js-client");
 var path = __dirname + "/test.mp4";
 var file = fs.createReadStream(path);
 var size = fs.statSync(path).size;
+var mediaId = ''
 
 var options = {
   endpoint: "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream",
   headers: {
     'Authorization': 'Bearer $TOKEN',
   },
-  chunkSize: 5 * 1024 * 1024, // Cloudflare Stream requires a minimum chunk size of 5MB.
+  chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
   resume: true,
   metadata: {
     filename: "test.mp4",
@@ -235,10 +226,16 @@ var options = {
     console.log(bytesUploaded, bytesTotal, percentage + "%");
   },
   onSuccess: function () {
-    console.log("Upload finished:", upload.url);
-    var index = upload.url.lastIndexOf("/") + 1;
-    var mediaId = upload.url.substr(index)
-    console.log("Media id:", mediaId);
+    console.log("Upload finished");
+  },
+  onAfterResponse: function (req, res) {
+    return new Promise(resolve => {
+        var mediaIdHeader = res.getHeader("stream-media-id");
+        if (mediaIdHeader) {
+            mediaId = mediaIdHeader;
+        }
+        resolve()
+    })
   }
 };
 

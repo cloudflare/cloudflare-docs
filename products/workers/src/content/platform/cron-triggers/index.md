@@ -31,8 +31,8 @@ Field         | Values  | Characters
 Minute        | 0-59    | * , - /
 Hours         | 0-23    | * , - /
 Days of Month | 1-31    | * , - / L W
-Months        | 1-12, case-insensitive 3-letter abreviations ("JAN", "aug", etc.) | * , - /
-Weekdays      | 1-7, case-insensitive 3-letter abreviations ("MON", "fri", etc.)  | * , - / L #
+Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | * , - /
+Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | * , - / L #
 
 </TableWrap>
 

@@ -19,11 +19,12 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "",
-    apiKey: "",
+    indexName: "developers-cloudflare",
+    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    algoliaOptions: { 'facetFilters': '["project:cloudflare-one"]' }
   },
   siteMetadata: {
-    title: "Cloudflare for Teams tutorials",
+    title: "Cloudflare for Teams documentation",
     description: "Cloudflare One™ is the culmination of engineering and technical development guided by conversations with thousands of customers about the future of the corporate network. It provides secure, fast, reliable, cost-effective network services, integrated with leading identity management and endpoint security providers. These docs contain step-by-step, use case driven, tutorials to use Cloudflare One products.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/cloudflare-one",

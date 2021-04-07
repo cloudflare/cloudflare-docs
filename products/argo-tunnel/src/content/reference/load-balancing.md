@@ -4,6 +4,12 @@ order: 35
 
 # Load balancing
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 You can create a load balancer within Cloudflare which will direct traffic to
 Argo Tunnels which have been started on multiple machines or even on multiple continents.
 This is the recommended way to deploy high-availability tunnels in production, and allows
@@ -34,7 +40,7 @@ You can have a single pool in your load balancer, or create multiple pools to bu
 Each Argo Tunnel is composed of multiple connections which each get load balanced individually. You will see 4 origins
 in your load balancer configuration, but you will only be billed for one origin per Argo Tunnel.
 
-You'll generally want to add a health check which will perodically check your application through
+You'll generally want to add a health check which will periodically check your application through
 your tunnel. You can configure a health check through the load balancing API or UI. The one note is
 you should manually specify your Tunnel's hostname as the Host header:
 

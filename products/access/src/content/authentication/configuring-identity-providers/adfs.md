@@ -4,7 +4,11 @@ order: 12
 
 # SAML with Active Directory®
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language (SAML).
 
@@ -210,7 +214,7 @@ To Cloudflare to accept the claims and assertions sent from ADFS, so that you ca
 
 1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **SAML** icon.
 
-    ![Clloudflare Access Login Methods](../../static/adfs/adfs-19.png)
+    ![Cloudflare Access Login Methods](../../static/adfs/adfs-19.png)
 
     The **Add a SAML identity provider** card displays.
 

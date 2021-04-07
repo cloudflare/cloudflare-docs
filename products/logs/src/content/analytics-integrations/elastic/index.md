@@ -21,7 +21,7 @@ Before sending your Cloudflare log data to Elastic, make sure that you:
 
 <Aside type="note" header="Note">
 
-Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 194+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Elastic.
+Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Elastic.
 </Aside>
 
 ## Task 1 - Preparation

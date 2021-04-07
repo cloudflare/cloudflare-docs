@@ -4,6 +4,12 @@ order: 12
 
 # SAML with Centrify
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the #1 cause of breaches – privileged access abuse.
 
 ## Set up Centrify
@@ -23,7 +29,7 @@ To set up SAML with Centrify as your identity provider (IdP):
 1. Click the **Custom** tab.
 1. Next to the **SAML** icon click **Add**.
 
-    ![Centrify Settings Add Applicaiton details page](../../static/saml-centrify/saml-centrify-3.png)
+    ![Centrify Settings Add Application details page](../../static/saml-centrify/saml-centrify-3.png)
 
 1. Enter the required information for your application.
 1. Click **Save**.

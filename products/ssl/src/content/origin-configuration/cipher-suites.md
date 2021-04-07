@@ -25,5 +25,4 @@ ECDHE-RSA-AES256-SHA384|❌|❌|✅|❌
 AES256-SHA|✅|✅ |✅|❌
 DES-CBC3-SHA|✅|❌|❌|❌
 
-
 [^1]: *Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently, only specifying the symmetric ciphers, and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.*

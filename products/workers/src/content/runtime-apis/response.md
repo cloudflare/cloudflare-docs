@@ -44,10 +44,12 @@ Valid options for the `options` object include:
 
 <Definitions>
 
-- `body` <TypeLink href="/apis/streams">Readable Stream</TypeLink>
+- `body` <TypeLink href="/runtime-apis/streams">Readable Stream</TypeLink>
   - A simple getter to get the body contents.
 - `bodyUsed` <Type>boolean</Type>
   - A boolean indicating if the body was used in the response.
+- `encodeBody` <Type>string</Type>
+  - Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"auto"`.
 - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
   - The headers for the response.
 - `ok` <Type>boolean</Type>
@@ -74,7 +76,7 @@ Valid options for the `options` object include:
 <Definitions>
 
 - `clone()` <TypeLink href="#response">Response</TypeLink>
-  - Creates a clone of a [`Response`]("#response") object.
+  - Creates a clone of a [`Response`](#response) object.
 
 - `redirect()` <TypeLink href="#response">Response</TypeLink>
   - Creates a new response with a different URL.

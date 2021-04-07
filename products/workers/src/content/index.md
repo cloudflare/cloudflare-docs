@@ -11,7 +11,7 @@ type: overview
 Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 <ButtonGroup>
-  <Button type="primary" href="/learning/getting-started">Get started</Button>
+  <Button type="primary" href="/get-started/guide">Get started</Button>
   <Button type="secondary" href="/tutorials">View the tutorials</Button>
 </ButtonGroup>
 
@@ -59,7 +59,14 @@ async function handleRequest(request) {
 
 --------------------------------
 
+## Community
+
+You can [connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you’re building, and discuss the platform with other developers. 
+
+[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what's new in Cloudflare Workers.
+
+--------------------------------
+
 These docs are built with the [Cloudflare Docs Engine](https://developers.cloudflare.com/docs-engine/).
 
 </ContentColumn>
-

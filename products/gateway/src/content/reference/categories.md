@@ -4,6 +4,12 @@ order: 5
 
 # Categories
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security threats on the public internet, as well as specific categories of content. 
 To learn more about how to block one or more categories while setting up a Gateway policy, or to learn how to test if a policy you've set up is blocking the correct categories, check our [Blocking categories page](/getting-started/configuring-dns-policy/blocking-categories).
 
@@ -25,7 +31,6 @@ To learn more about how to block one or more categories while setting up a Gatew
 | Spyware | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge.|
 | Unreachable | Domains that resolve to unreachable IP addresses.|
 
-
 ## Content categories
 
 | Category | Definition |
@@ -35,7 +40,7 @@ To learn more about how to block one or more categories while setting up a Gatew
 |Deceptive Ads	|	Sites that spoof clicks, impressions, conversions for ads.|
 |Drugs	|	Sites related to the use and promotion of illegal drugs or illegal use of prescribed drugs.|
 |Education	|	Site hosting educational content that are not included in other categories like Science, Technology or Educational institutions.|
-|Entertainment	|	Sites that are hosting entertaining content that are not includeded in other categories like Comic books, Audio streaming, Video streaming etc.|
+|Entertainment	|	Sites that are hosting entertaining content that are not included in other categories like Comic books, Audio streaming, Video streaming etc.|
 |Gambling	|	Sites that are providing online gambling or are related to gambling.|
 |Government & Politics	|	Sites related to government and politics.|
 |Health	|	Sites containing information about health and fitness.|

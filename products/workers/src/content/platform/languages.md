@@ -62,6 +62,7 @@ You can also implement Workers with any language that can compile to JavaScript,
 | Reason/OCaml | [cloudflare/reason-worker-hello-world](https://github.com/cloudflare/reason-worker-hello-world) |
 | Perl         | [cloudflare/perl-worker-hello-world](https://github.com/cloudflare/perl-worker-hello-world)     |
 | PHP          | [cloudflare/php-worker-hello-world](https://github.com/cloudflare/php-worker-hello-world)       |
+| FSharp       | [fable-compiler/cfworker-hello-world](https://github.com/fable-compiler/cfworker-hello-world)   |
 
 </TableWrap>
 

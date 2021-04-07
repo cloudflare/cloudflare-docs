@@ -2,105 +2,143 @@
 order: 12
 ---
 
-# G Suite
+# Google Suite
 
-G Suite provides OpenID Connect (OIDC) Identity Provider support that you can use with many SaaS apps in the G Suite Marketplace, and adds support for SAML 2.0 (Security Assertion Markup Language) for more than 15 popular SaaS providers. Cloudflare Access supports G Suite as an IdP.
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
-<Aside>
-You must be an administrator for the G Suite organization you are connecting in order to connect your G Suite account to Cloudflare.
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
 </Aside>
 
-## Set up G Suite as your IdP
+You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/authentication/configuring-identity-providers/google), the steps below will allow you to pull group membership information from your Google Workspace account.
 
-Follow these steps to set up G Suite as your IdP.
+Once integrated, users will login with their Google Suite credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-1. Log in to the **Google Cloud** console at [https://console.cloud.google.com/](https://console.cloud.google.com/).
+1. Log in the Google Cloud Platform [console][https://console.cloud.google.com/]. This is separate from your Google Workspace console.
 
-    This console is separate from your G Suite Admin console.
+![GCP Console](../../static/gsuite/gcp-home.png)
 
-1. Create a new Google Cloud Platform (GCP) project.
-1. Enter **Cloudflare Access** in the **Project Name** field.
-1. Ensure that the setting in the **Location** field matches your G Suite domain.
+2. Click **Create Project** to create a new project. Name the project and click **Create**.
 
-    ![Access Location](../../static/gsuite/gcp-newproject.png)
+![Create Project](../../static/gsuite/create-project.png)
 
-   The GCP dashboard displays.
+You should now see a Dashboard for your project.
 
-1. Click **→ Go to APIs overview** in the APIs card.
+![Post Create](../../static/gsuite/post-create.png)
 
-    ![GCP dashboard APIs card](../../static/gsuite/gcp-projectdash-screen.png)
+3. On the left-hand side, select `APIs & Services` and click **Dashboard**.
 
-1. Follow the [Admin SDK link](https://console.cloud.google.com/apis/api/admin.googleapis.com/overview).
-1. Click **Enable**.
+![Click API](../../static/gsuite/click-api.png)
 
-    ![Enable admin API](../../static/gsuite/gsuite-admin-sdk.png)
+4. In the screen that loads, click **+ Enable APIs and Services** in the top toolbar.
 
-1. Return to the APIs overview page.
+![Enable API](../../static/gsuite/enable-api.png)
 
-1. Select **Credentials** in the left menu pane.
+5. The API Library will load. Search for `admin` in the search bar.
 
-    ![GCP dashboard APIs card](../../static/gsuite/gsuite-credentials.png)
+![API Library](../../static/gsuite/api-library.png)
 
-1. Click **Create credentials > OAuth client ID**.
+6. Select `Admin SDK API` by Google.
 
-1. Click **Configure Consent Screen**.
+![Admin SDK](../../static/gsuite/admin-sdk.png)
 
-1. In **User type**, select the *Internal* option.
+7. Click **Enable** on the Admin SDK API page.
 
-    ![API Credentials](../../static/gsuite/gsuite-int-ext.png)
+![Admin SDK](../../static/gsuite/enable-admin-sdk.png)
 
-1. Enter an **Application Name**.
-1. Scroll to the **Authorized Domains** field, and enter `cloudflareaccess.com`.
-1. Click **Save**.
+The Admin SDK will be added to your project.
 
-    The *Scopes* menu displays. No scopes typically need to be configured.
-1. Once the consent screen is configured, navigate to **Credentials**.
-1. Click **Create Credentials > OAuth Client ID**.
-1. Set the **Application type** as *Web Application*.
-1. Enter a name for your application.
+![Admin SDK](../../static/gsuite/post-enable.png)
 
-    ![OAuth Client Configuration](../../static/gsuite/gcp-create-oauth-client.png)
+8. Return to the APIs & Services page. Click **Credentials** in the navigation bar. You will see a warning that you need to configure a consent screen. Click **Configure Consent Screen**.
 
-1. In **Authorized JavaScript Origins**, enter the authentication domain from **Cloudflare Access**.
+![Configure Consent Screen](../../static/gsuite/configure-consent-screen.png)
 
-    Example: `https://EXAMPLE.cloudflareaccess.com`, where `EXAMPLE` is your account name in Access.
+9. Cloudflare Access will gather information about users in your Google Workspace account, but not other accounts. Toggle `Internal` to limit this to members in your account.
 
-1. In the **Authorized redirect URIs** field, enter your authentication domain, and add this to the end of the path: `/cdn-cgi/access/callback`
+![Internal Users](../../static/gsuite/consent-internal.png)
 
-    Example: `https://EXAMPLE.cloudflareaccess.com/cdn-cgi/access/callback`
+10. Input information about the application.
 
-1. A window displays with your **OAuth Client ID** and **Client Secret**.
-1. Copy these to enter later in your Access **Login Methods** section.
-1. Return to your G Suite Admin console.
-1. Click **More Controls** at the bottom of the window.
-1. Click **Security** to display the Security page.
+![App Domain](../../static/gsuite/consent-screen-app-name.png)
 
-    ![G Suite Security Badge](../../static/gsuite/gconsole-security.png)
+In this case, you are making an application available to your users and can add your team's contact information.
 
-1. Click **Advanced Settings > Manage API client access**.
+![Internal Users](../../static/gsuite/consent-screen-contact.png)
 
-    ![Manage API access](../../static/gsuite/gconsole-security-api-controls.png)
+You will not need to configure scopes in this screen and can leave these fields blank.
 
-1. Enter your copied Client ID in the **Client Name** field.
-1. Paste these URLs in the **One or More API Scopes** field:
+![Consent Screen Scope](../../static/gsuite/consent-screen-scope.png)
 
-    ```txt
-    https://www.googleapis.com/auth/admin.directory.group.member.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
-    ```
-    ![Manage API client access](../../static/gsuite/gconsole-security-api-domain-wide-new-client.png)
+The summary page will load and you can save and exit.
 
-1. Click **Authorize**.
-1. On the Teams dashboard, navigate to **Access > Authentication > Login Methods** and click **+Add**.
-1. Select **Google Suite**.
-1. Paste in the **Client ID** and **Client Secret**, and enter your G Suite domain.
+![Consent Screen Summary](../../static/gsuite/consent-screen-summary.png)
 
-    ![Add GSuite to Access](../../static/gsuite/add-gsuite-to-access.png)
+11. Return to the `Credentials` page. Click **+ Create Credentials**
 
-1. Click **Save**.
+![Create Credentials](../../static/gsuite/create-credentials.png)
 
-    On success, a confirmation displays that your connection works.
+12. Select **OAuth client ID**.
 
-    ![Cloudflare IdP Connection Success](../../static/gsuite/gsuite-9.png)
+![Select OAuth](../../static/gsuite/select-oauth.png)
+
+13. Select `Web application` as the Application type.
+
+![Create OAuth](../../static/gsuite/create-oauth.png)
+
+14. You will need to input your Cloudflare authentication domain. The domain will be structured in the following format:
+
+```
+https://<your-auth-domain-here>.cloudflareaccess.com
+```
+
+Input the authentication domain without any path in the `Authorized JavaScript origins` section. In the Authorized redirect URIs section, input your authentication domain with the path below.
+
+```
+https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
+```
+
+![Input Auth Domain](../../static/gsuite/input-auth-domain.png)
+
+Click **Create**.
+
+15. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should be kept securely and not shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
+
+![Secret Field](../../static/gsuite/secret-field.png)
+
+The Client ID will now appear in the `APIs & Services` page.
+
+![Client ID Visible](../../static/gsuite/client-id-visible.png)
+
+16. Navigate to the Cloudflare for Teams dashboard. In the `Authentication` page of the Access section, click **+ Add**.
+
+![Add IdP](../../static/gsuite/add-idp.png)
+
+17. Select `Google Suite`.
+
+![Add Google Suite](../../static/gsuite/add-gsuite.png)
+
+18. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account. Click **Save**.
+
+![Add Google Suite](../../static/gsuite/input-client.png)
+
+19. To complete setup, you must scroll below and visit the link generated. If you are not the Google Workspace administrator, share the link with the administrator.
+
+![Visit Link](../../static/gsuite/visit-link.png)
+
+20. The generated link will prompt you to login to your Google account and to authorize Cloudflare Access to view group information.
+
+![Authorize Groups](../../static/gsuite/authorize-groups.png)
+
+A success page will then load from Cloudflare Access.
+
+![Group Success](../../static/gsuite/group-success.png)
+
+21. You can now return to the list of identity providers in the `Authentication` page of the Cloudflare for Teams dashboard. Select Google Suite and click **Test**.
+
+Your user identity and group membership should return.
+
+![Connection Works](../../static/gsuite/connection-works.png)
 
 ## Example API Configuration
 
@@ -108,7 +146,7 @@ Follow these steps to set up G Suite as your IdP.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "apps_domain": "mycompany.com"
     },
     "type": "google-apps",

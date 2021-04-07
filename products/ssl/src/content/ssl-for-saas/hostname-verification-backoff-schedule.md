@@ -20,7 +20,6 @@ now() + min((floor(60 * pow(1.15, retry_attempt)) * INTERVAL '1 second'), INTERV
 
 The first 10 checks complete within 2 minutes and most checks complete in the first 4 hours.  The check back off is capped to a maximum of 4 hours to avoid exponential growth.  The back off behavior causes larger gaps between check intervals towards the end of the back off schedule:
 
-
 Retry Attempt|In Seconds|In Minutes|In Hours
 -----|-------|-------|-----
 0|60|1|0.016667

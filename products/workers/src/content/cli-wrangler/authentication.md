@@ -17,9 +17,7 @@ To set up `wrangler` to work with your Cloudflare user, use the following comman
 
 - 🔓`login`: a command that opens a Cloudflare account login page to authenticate Wrangler.
 - 🔧 `config`: an alternative to `login` that prompts you to enter your `email` and `api` key.
-- 🕵️‍♀️ `whoami`: run this command to confirm that your configuration is appropriately set up.
-  When successful, this command will print out your user information, including the type of plan you
-  are currently on.
+- 🕵️‍♀️ `whoami`: run this command to confirm that your configuration is appropriately set up. When successful, this command will print out your account email and your `account_id` needed for your project's `wrangler.toml`.
 
 ### Using environment variables
 
@@ -64,3 +62,25 @@ You can also specify or override the Zone ID used by `wrangler publish` with the
 \* __Warning:__ Treat your Global API Key like a password. It should not be stored in version control or in your code, use environment variables if possible.
 
 </Aside>
+
+--------------------------------
+
+## Use Tokens
+
+After getting your token or key, you can set up your default credentials on your local machine by running `wrangler config`
+
+```bash
+$ wrangler config
+Enter API token:
+superlongapitoken
+```
+
+Use the `--api-key` flag to instead configure with email and global API key:
+
+```bash
+$ wrangler config --api-key
+Enter email:
+testuser@example.com
+Enter global API key:
+superlongapikey
+```

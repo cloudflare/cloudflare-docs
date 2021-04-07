@@ -185,6 +185,8 @@ All properties of an incoming `Request` object (i.e. `event.request`) are read o
 
 In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s edge.
 
+All plans have access to:
+
 <Definitions>
 
 - `asn` <Type>string</Type>
@@ -193,27 +195,37 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 
 - `colo` <Type>string</Type>
 
-  - The three-letter airport code of the data center that the request hit, e.g. `"DFW"`.
-
-- `tlsCipher` <Type>string</Type>
-
-  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
+  - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
 
 - `country` <Type>string | null</Type>
 
   - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
 
+- `httpProtocol` <Type>string</Type>
+
+  - HTTP Protocol, e.g. `"HTTP/2"`.
+
+- `requestPriority` <Type>string | null</Type>
+
+  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
+
+- `tlsCipher` <Type>string</Type>
+
+  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
+
 - `tlsClientAuth` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Access. Object with the following properties: `certIssuerDNLegacy`, `certIssuerDN`, `certIssuerDNRFC2253`, `certSubjectDNLegacy`, `certVerified`, `certNotAfter`, `certSubjectDN`, `certFingerprintSHA1`, `certNotBefore`, `certSerial`, `certPresented`, `certSubjectDNRFC2253`.
+  - Only set when using Cloudflare Access or API Shield. Object with the following properties: `certIssuerDNLegacy`, `certIssuerDN`, `certIssuerDNRFC2253`, `certSubjectDNLegacy`, `certVerified`, `certNotAfter`, `certSubjectDN`, `certFingerprintSHA1`, `certNotBefore`, `certSerial`, `certPresented`, `certSubjectDNRFC2253`.
 
 - `tlsVersion` <Type>string</Type>
 
   - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
 
-- `requestPriority` <Type>string | null</Type>
+</Definitions>
 
-  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
+Business and Enterprise scripts have access to:
+
+<Definitions>
 
 - `city` <Type>string | null</Type>
 
@@ -222,10 +234,6 @@ In addition to the properties on the standard [`Request`](https://developer.mozi
 - `continent` <Type>string | null</Type>
 
   - Continent of the incoming request, e.g. `"NA"`.
-
-- `httpProtocol` <Type>string</Type>
-
-  - HTTP Protocol, e.g. `"HTTP/2"`.
 
 - `latitude` <Type>string | null</Type>
 
@@ -333,3 +341,10 @@ async function eventHandler(event){..}
 This code snippet will throw during script startup, and the `"fetch"` event
 listener will never be registered.
 
+--------------------------------
+
+## See also
+
+- [Examples: Modify request property](examples/modify-request-property)
+- [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
+- [Reference: `Response`](/runtime-apis/response)

@@ -32,7 +32,7 @@ Login to the Network Solutions account where the domain is registered. Navigate 
 ## Step 2: Unlock the domain and request authorization code
 In the **Details** section, select “Turn Off or Request Authorization Code” next to **Transfer Lock**. Once you hit “Continue”, you will need to acknowledge the Network Solutions’ transfer terms.
 
-After confirming the terms, you may be asked to complete survey questions. Once completed, click “Request Authorization Code”. You will need to select “Leave Domain Protect off” and then check the “Request Atuhorization Code” box. Once checked, click save.
+After confirming the terms, you may be asked to complete survey questions. Once completed, click “Request Authorization Code”. You will need to select “Leave Domain Protect off” and then check the “Request Authorization Code” box. Once checked, click save.
 
 Network Solutions will email the code to the registrant contact email on file for your domain.
 

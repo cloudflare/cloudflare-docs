@@ -4,6 +4,12 @@ order: 4
 
 # Deployment
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Deploying the Cloudflare WARP Client to support your Cloudflare for Teams configuration supports manual installs, simple deployment scripts, or advanced enterprise management tools, such as Microsoft Intune or Jamf.
 
 <Aside>
@@ -67,8 +73,3 @@ A DoH subdomain value is only required if you configure DNS Filtering.
 
 * **How do I obtain logs in the event of an issue with client?**
 The macOS and Windows clients installations each contain an application in their installed folders called warp-diag that can be used to obtain logs.
-
-
-
-
-

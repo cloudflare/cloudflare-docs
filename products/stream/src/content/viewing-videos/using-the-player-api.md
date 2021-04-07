@@ -4,7 +4,7 @@ order: 1
 
 # Using the player API
 
-The SDK provides an API for programatically controlling the player and listening for player events.
+The SDK provides an API for programmatically controlling the player and listening for player events.
 
 ## Example
 
@@ -22,7 +22,7 @@ The SDK provides an API for programatically controlling the player and listening
 
 <script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
 
-<!-- Your javascript code below-->
+<!-- Your JavaScript code below-->
 <script>
   const player = Stream(document.getElementById('stream-player'))
   player.addEventListener('play', () => {
@@ -96,7 +96,7 @@ The SDK provides an API for programatically controlling the player and listening
 
   - Returns whether the video is paused
 
-- `played` <Type>boolean</Type> <PropMeta>readonly</PropMeta>
+- `played` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">TimeRanges</TypeLink> <PropMeta>readonly</PropMeta>
 
   - An object conforming to the TimeRanges interface. This object is normalized, which means that ranges are ordered, don't overlap, aren't empty, and don't touch (adjacent ranges are folded into one bigger range).
 
@@ -106,7 +106,7 @@ The SDK provides an API for programatically controlling the player and listening
 
   <Aside>
 
-    The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligable.
+    The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
     </Aside>
 

@@ -4,10 +4,10 @@ order: 4
 
 # Advanced management
 
-This section will cover:
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
-* How to [set up CORS](/advanced-management/cors/)
-* How to [check for Device Posture](/advanced-management/device-posture/)
-* How to [revoke user sessions](/advanced-management/revoking-user-sessions/)
-* How to [validate JSON Web Tokens](/advanced-management/validating-json/)
-* How to [configure browser cookie settings](/advanced-management/browser-cookies/)
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
+<DirectoryListing path="/advanced-management"/>

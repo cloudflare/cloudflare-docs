@@ -39,10 +39,10 @@ Keys to configure per project in your `wrangler.toml`.
 <Definitions>
 
 - `name` <Type>inherited</Type> <PropMeta>required</PropMeta>
-  -  The name of your Worker script. If inherited, your environment name with be appended to the top level.
+  -  The name of your Worker script. If inherited, your environment name will be appended to the top level.
 
 - `type` <Type>top level</Type> <PropMeta>required</PropMeta>
-  -  Specifies how `wrangler build` will build your project. There are currently three options (`webpack`, `javascript`, and `rust`).
+  -  Specifies how `wrangler build` will build your project. There are currently three options — `webpack`, `javascript`, and `rust`. `javascript` skips building the project, `webpack` builds your project with webpack, and `rust` compiles the Rust in your project to WASM.
 
 - `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
   - This is the ID of the "zone" or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a [workers.dev](https://workers.dev) subdomain.
@@ -81,7 +81,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 ### vars
 
-Values to use in your Worker script as a text environment variables.
+Values to use in your Worker script as text environment variables.
 
 Usage:
 
@@ -107,7 +107,7 @@ __Note:__ Using secrets should be handled using [wrangler secret](/cli-wrangler/
 
 ### kv_namespaces
 
-KV namespaces bind to your Worker and reference in your script.
+KV namespaces bind to your Worker and may be referenced in your script.
 
 Usage:
 
@@ -173,7 +173,7 @@ You can also define your `site` using [alternative TOML syntax](https://github.c
 
 #### Storage Limits
 
-For very exceptionally large pages, Workers Sites might not work for you. There is a 10MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
+For very exceptionally large pages, Workers Sites might not work for you. There is a 25MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
 
 #### Ignoring Subsets of Static Assets
 

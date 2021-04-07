@@ -15,8 +15,9 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "",
-    apiKey: "",
+    indexName: "developers-cloudflare",
+    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    algoliaOptions: { 'facetFilters': '["project:time-services"]'}
   },
   siteMetadata: {
     title: "Cloudflare Time Services docs",

@@ -5,7 +5,6 @@ order: 60
 
 # Enable Google Cloud Storage
 
-
 Cloudflare uses Google Cloud Identity and Access Management (IAM) to gain access to your bucket. The Cloudflare IAM service account needs admin permission for the bucket.
 
 To enable Logpush to GCS:

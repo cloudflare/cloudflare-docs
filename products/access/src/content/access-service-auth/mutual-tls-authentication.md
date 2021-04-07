@@ -4,6 +4,12 @@ order: 2
 
 # Mutual TLS authentication
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 <Aside type='warning' header='Important'>
 
 Cloudflare Access can add mTLS to your application, but it requires a Cloudflare enterprise plan. To enforce mTLS in your application with Access, please contact your Cloudflare customer success manager.
@@ -49,7 +55,6 @@ If your zone is using an intermediate certificate in addition to the root certif
 The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
 
 ![mTLS Policy](../static/mtls-test/mtls-rule.png)
-
 
 |Option|Result|
 |-|-|
@@ -195,7 +200,6 @@ $ curl -v --cert client.pem --key client-key.pem https://iot.widgetcorp.tech
 The instructions here cover usage with a computer running MacOS.
 
 1. In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
-
 
 <Aside type='warning' header='Important'>
 

@@ -77,7 +77,7 @@ With these definitions in hand, let’s walk through an RSA handshake.
 
 Note that none of the messages in the handshake are encrypted with a session key; they are all sent in the clear.
 
-![rsa-handhsake](../static/ssl_handshake_rsa.jpg)
+![rsa-handshake](../static/ssl_handshake_rsa.jpg)
 
 ### Message 1: “Client Hello”
 
@@ -135,8 +135,8 @@ In order to start the Diffie-Hellman key exchange, the server needs to pick some
 
 ### Message 4: “Client Key Exchange”
 
-After validating that the certificate is trusted, and belongs to the site they are trying to reach, the client validates the digital signature sent from the server. They also send the client half of the Diffie-Hellman handshake (corresponding to gb above).
+After validating that the certificate is trusted, and belongs to the site they are trying to reach, the client validates the digital signature sent from the server. They also send the client half of the Diffie-Hellman handshake (corresponding to g<sup>b</sup> above).
 
-At this point, both sides can compute the pre-master secret from the Diffie-Hellman parameters (corresponding to gab above). With the pre-master secret and both client and server randoms, they can derive the same session key. They then exchange a short message to indicate that they the next message they send will be encrypted.
+At this point, both sides can compute the pre-master secret from the Diffie-Hellman parameters (corresponding to g<sup>ab</sup> above). With the pre-master secret and both client and server randoms, they can derive the same session key. They then exchange a short message to indicate that they the next message they send will be encrypted.
 
 Just like in the RSA handshake, this handshake is officially complete when the client and server exchange “Finished” messages. Any subsequent communication between the two parties are encrypted with the session key.

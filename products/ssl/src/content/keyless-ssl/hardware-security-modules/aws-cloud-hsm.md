@@ -6,11 +6,19 @@ order: 1
 
 <Aside type='note' header='Note'>
 
-In this example it is assumed that you have already [provisioned the AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) and installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html). The example imports an existing key pair, but you may prefer to [generate your key on the HSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/manage-keys.html).
+This example imports an existing key pair, but you may prefer to [generate your key on the HSM](https://docs.aws.amazon.com/cloudhsm/latest/userguide/manage-keys.html).
 
 </Aside>
 
---------
+---
+
+## Before you start
+
+Make sure you have:
+- Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) 
+- Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html)
+
+---
 
 ## 1. Import the public and private key to the HSM
 
@@ -70,7 +78,6 @@ add:
 ```yaml
 - uri: pkcs11:token=cavium;object=mykey?module-path=/opt/cloudhsm/lib/libcloudhsm_pkcs11_standard.so&pin-value=patrick:donahue&max-sessions=1
 ```
-
 
 With the config file saved, restart `gokeyless` and verify it started successfully.
 

@@ -4,6 +4,12 @@ order: 12
 
 # LinkedIn
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access allows your users to use LinkedIn as their identity provider (IdP).
 
 ## Set up LinkedIn as an IdP
@@ -72,7 +78,7 @@ To configure LinkedIn as an IdP:
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "linkedin",
     "name": "my example idp"

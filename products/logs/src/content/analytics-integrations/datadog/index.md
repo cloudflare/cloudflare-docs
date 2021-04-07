@@ -11,7 +11,7 @@ This tutorial explains how to analyze Cloudflare metrics using the [Cloudflare I
 
 Before viewing the Cloudflare dashboard in Datadog, note that this integration:
 
-- Is available to all Cloudflare customer plans (Fee, Pro, Business and Enterprise)
+- Is available to all Cloudflare customer plans (Free, Pro, Business and Enterprise)
 - Is based on the [Cloudflare Analytics API](https://api.cloudflare.com/#zone-analytics-dashboard)
 - Provides Cloudflare web traffic and DNS metrics only
 - Does not feature data coming from request logs stored in Cloudflare Logs
@@ -40,7 +40,7 @@ To install the Cloudflare App for Datadog:
 6. Click **Install Integration**.
    ![Datadog configure and install integration](../../static/images/datadog/screenshots/cloudflare-tile-datadog-fill-details.png)
 
-The Cloudflare App for Datadog should be installed now and you can view the dashaboard.
+The Cloudflare App for Datadog should be installed now and you can view the dashboard.
 
 ## Task 2 - View the dashboard
 
@@ -57,4 +57,4 @@ The dashboard displays the following metrics:
 - **Search Engine Bot Traffic**
 - **DNS** (DNS queries, response time, top hostnames, queries by type, stale vs. uncached queries)
 
-![cloudflare dashboard datadog](../../static/images/datadog/dashboards/cloudflare-dashboard-datadog.png)
+![Cloudflare dashboard datadog](../../static/images/datadog/dashboards/cloudflare-dashboard-datadog.png)

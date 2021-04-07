@@ -31,14 +31,16 @@ Upon creation you will get a RSA private key in PEM and JWK formats. Keys are cr
   "result": {
     "id": "$KEYID",
     "pem": "$PRIVATE_KEY_IN_PEM_FORMAT",
-    "jwk": "{PRIVATE-KEY-IN-JWK-FORMAT}",
-    "created": "{TIMESTAMP}"
+    "jwk": "$PRIVATE-KEY-IN-JWK-FORMAT",
+    "created": "$TIMESTAMP"
   },
   "success": true,
   "errors": [],
   "messages": []
 }
 ```
+
+The `pem` and `jwk` fields are base64-encoded, you must decode them before using them.
 
 ### Making a video require signed URLs
 
@@ -66,6 +68,8 @@ Restricting viewing can be done by updating the video's metadata.
 ### Signing unique tokens
 
 After creating a key, you can use it to sign unique signed tokens. These tokens can be used in place of video ids in the stream embed code.
+
+For security reasons, the key signing a token to view a video **must** be associated with the same account the video was uploaded to. For example, if you have a key owned by account A attempting to sign a token for a video owned by account B, that token will not be accepted.
 
 You can sign to assert these optional constraints on the token:
 
@@ -157,7 +161,6 @@ Once revoked all tokens created with that key will be invalidated.
   "messages": []
 }
 ```
-
 
 #### Other offline signing examples
 
@@ -344,7 +347,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ### Signed URLs
 
-Combining [signed URLs](/security/signed-urls/) with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
+Combining signed URLs with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
 
 To do so
 
@@ -360,18 +363,17 @@ If you are using CSP, you will need to add all subdomains of `cloudflarestream.c
 
     Content-Security-Policy: default-src 'self' *.cloudflarestream.com *.videodelivery.net
 
-If CSP is misconfigured your videos might not play or you might see an error similar to the one below in your browser's javascript console.
+If CSP is misconfigured your videos might not play or you might see an error similar to the one below in your browser's JavaScript console.
 
     Refused to load the script 'https://embed.cloudflarestream.com/embed/r4xu.fla9.latest.js' because it violates the following Content Security Policy directive: ...
 
 Read more about Content Security Policy at [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 
-
 ## Video access control
 
 Video Access Control allow you to define Rules to have finer-grained control over your content than signed URL tokens alone. They are primarily aimed at making tokens conditionally valid based on user information. Access Rules are specified on token payloads as the `accessRules` property containing an array of `Rule` objects.
 
-If you're not already familiar with signed URLs, it's recommended to <a href="/stream/security/signed-urls/">start here.</a>
+If you're not already familiar with signed URLs, <a href="#signed-urls--tokens">start here.</a>
 
 ### Rules
 

@@ -35,7 +35,7 @@ curl \
 -X POST \
 -d '{"url":"https://storage.googleapis.com/stream-example-bucket/video.mp4","meta":{"name":"My First Stream Video"}}' \
 -H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/copy
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/copy
 ```
 
 This cURL command tells the Stream API to download the MP4 file and make it available for streaming. When executed, you will see a response similar to this:
@@ -73,7 +73,7 @@ Use the video UID from the first step to poll the video:
 ```bash
 curl \
 -H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/$VIDEO_UID
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/$VIDEO_UID
 ```
 
 ```json
@@ -139,5 +139,5 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 
  - [Securing your Stream](/viewing-videos/securing-your-stream)
  - [Displaying thumbnails to your video](/viewing-videos/securing-your-stream)
- - [Programatically controling the video player](/viewing-videos/using-the-player-api)
+ - [Programmatically controlling the video player](/viewing-videos/using-the-player-api)
  - [Uploading without a API token](/uploading-videos/direct-creator-uploads)

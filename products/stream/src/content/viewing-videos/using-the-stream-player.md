@@ -41,7 +41,7 @@ Changing the `height` and `width` attributes on the `iframe` will change the pix
 To make an iframe responsive, it needs styles to enforce an aspect ratio by setting the `iframe` to `position: absolute;` and having it fill a container that uses a calculated `padding-top` percentage.
 
 ```html
-<!-- padding-top calcultion is height / width (assuming 16:9 aspect ratio) -->
+<!-- padding-top calculation is height / width (assuming 16:9 aspect ratio) -->
 <div style="position: relative; padding-top: 56.25%;">
   <iframe
     src="https://iframe.videodelivery.net/$VIDEOID"
@@ -88,7 +88,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
     <Notice>
 
-    The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligable.
+    The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
     </Notice>
 

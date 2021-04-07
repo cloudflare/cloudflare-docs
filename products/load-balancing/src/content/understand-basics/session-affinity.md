@@ -6,37 +6,33 @@ order: 16
 
 <Aside type='warning' header='Important'>
 
-Cloudflare supports only cookie-based session affinity. Other methods, such as TCP session affinity, are not supported.
+Cloudflare only supports cookie-based session affinity. Other methods, such as TCP session affinity, are not supported.
 
 </Aside>
 
 ## Overview
 
-Loading a website usually requires fetching multiple assets from a web server. Cloudflare Session Affinity minimizes redundant network requests by automatically directing requests from the same client to the same origin web server. Cloudflare sets a cookie on the initial response to the client. Using the cookie in subsequent client requests ensures those requests are sent to the same origin, unless the origin is unavailable.
+Session Affinity reduces network requests by automatically directing requests from the same client to the same origin web server:
 
-When enabled, Cloudflare Session Affinity does the following:
-
-- **When a client makes its first request**, Cloudflare sets a CFLib cookie on the client. The cookie encodes the origin to which the request will be forwarded.
+- **When a client makes its first request**, Cloudflare sets a `CFLib` cookie on the client that tracks the associated origin web server.
 - **Subsequent requests by the same client are forwarded to that origin** for the duration of the cookie and as long as the origin server remains healthy.
-- **If the cookie expires or the origin server is unhealthy**, Cloudflare sets a new cookie encoding the appropriate failover origin.
+- **If the cookie expires or the origin server is unhealthy**, Cloudflare sets a new cookie tracking the new failover origin.
 
-All sessions default to 23 hours unless a custom session TTL is specified (in seconds) between 30 minutes and 7 days. A Session Affinity Cookie is required to honor the TTL. The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
+All sessions default to 23 hours unless you set a custom session *Time to live* (TTL).
+
+The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
 
 ---
 
 ## Enabling Session Affinity from the Cloudflare dashboard
 
-To enable Session Affinity, use the **Session Affinity** panel in the **Load Balancing** app.
-
 ### Configuring Session Affinity for a new load balancer
 
-You can enable **Session Affinity** when you [create a load balancer](/create-load-balancer-ui), during the first step of the Create Load Balancer wizard.
+Enable Session Affinity when you [create a load balancer](/create-load-balancer-ui), during the **Hostname** step.
 
-To enable session affinity, click the **By Cloudflare cookie only** radio button and toggle Session Affinity:
-
-![Configure Session Affinity](../static/images/session-affinity-1.png)
-
-The **Client IP fallback** option behaves the same as the cookie option except the client IP address is used as a fallback when no session affinity cookie is provided.
+If you enable Session Affinity, choose one of the following options:
+- **By Cloudflare cookie only**: Sets a `CFLib` cookie to track the associated origin web server
+- **By Cloudflare cookie and Client IP fallback**: Sets a `CFLib` cookie, but also uses the client IP address when no session affinity cookie is provided
 
 <Aside type='warning' header='Important'>
 
@@ -46,9 +42,12 @@ Session Affinity with Client IP fallback is not supported for load balancers in 
 
 ### Configuring Session Affinity for an existing load balancer
 
-You can configure session affinity for an existing load balancer from the Load Balancing dashboard. Click the **Edit** button associated with the load balancer to open the **Edit Load Balancer** view and access the **Session Affinity** option.
+Configure session affinity for an existing load balancer from the Load Balancing dashboard. 
 
-![Load balancing card Edit option](../static/images/session-affinity-2.png)
+On a specific load balancer:
+1. Select **Edit**.
+1. Go to the **Hostname** step.
+1. Enable **Session Affinity** and choose a tracking option.
 
 ### Origin Drain
 

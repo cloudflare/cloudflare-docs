@@ -4,6 +4,12 @@ order: 4
 
 # iOS
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 <Aside>
 
 **Before you start**  
@@ -75,7 +81,6 @@ Then ask your users to complete the following steps:
 1. Tap **DNS settings**.
 1. Enter the DoH Sub Domain and tap **Back** until you are back at the home screen.
 
-
 ### Manually configure a Cloudflare for Teams device registration
 If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
@@ -85,4 +90,3 @@ If your organization uses Teams Access policies to control device registration, 
 1. Tap **Login with Cloudflare for Teams**.
 1. Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
 1. Complete the authentication steps required by your organization.
-

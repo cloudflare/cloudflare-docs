@@ -24,7 +24,7 @@ The basic steps for setting up a development are as follows.
 
   <Aside header="Note for Cloudflare employees">
 
-  When contributing to [@cloudflare/cloudflare-docs](http://github.com/cloudflare/cloudflare-docs) specifically, you’ll need to `cd` into the sub-folder for your product (`products/[productName]` inside the repo).
+  When contributing to [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) specifically, you’ll need to `cd` into the sub-folder for your product (`products/[productName]` inside the repo).
 
   </Aside>
 
@@ -47,7 +47,7 @@ The basic steps for setting up a development are as follows.
 
 8. Open up `localhost:8000` in your browser to see your docs site.
 
-At this point, you can make changes to the Markdown files inside the contect directory (e.g. `my-docs-site/src/content`) to build or improve your docs site.
+At this point, you can make changes to the Markdown files inside the content directory (e.g. `my-docs-site/src/content`) to build or improve your docs site.
 
 <Aside header="Note">
 

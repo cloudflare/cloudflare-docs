@@ -8,7 +8,6 @@ You can add watermarks to videos uploaded using the Stream API.
 
 To add watermarks to your videos, first create a watermark profile. A watermark profile describes the image you would like to be used as a watermark and the position of that image. Once you have a watermark profile, you can use it as an option when uploading videos.
 
-
 ## Quick start
 
 Watermark profile has many customizable options. However, the default parameters generally work for most cases. Please see "Profiles" below for more details.
@@ -237,7 +236,6 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 ```
 
 `watermark` will be `null` if no watermark was specified.
-
 
 ## Get a watermark profile
 To view a watermark profile that you created:

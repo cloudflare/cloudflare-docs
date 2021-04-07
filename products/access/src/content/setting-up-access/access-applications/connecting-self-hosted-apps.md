@@ -5,8 +5,13 @@ order: 1
 
 # Connecting Self-Hosted Applications
 
-Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer using your existing identity providers to control who has access to your applications.
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
+Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer using your existing identity providers to control who has access to your applications.
 
 ## 1. Add and configure your app
 
@@ -64,5 +69,3 @@ The **Setup section** allows you to configure CORS settings. To learn more about
  Click **Add application**.
 
 Your application is now connected to Access, and will appear in your Applications list.
-
-

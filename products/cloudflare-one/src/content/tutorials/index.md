@@ -1,7 +1,11 @@
 ---
-order: 0
+type: overview
+hideChildren: true
+order: 2
 ---
 
-# Teams tutorials
+import DocsTutorial from "../components/content-table"
 
-<DirectoryListing path="/secure-origin-connections"/>
+# Tutorials
+
+<DocsTutorial/>

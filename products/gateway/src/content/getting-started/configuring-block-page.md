@@ -4,6 +4,12 @@ order: 5
 
 # Configure a block page
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 When trying to visit a blocked website, users will see a default browser error page like this one:  
 
 ![No block page](../static/no-block-page.png)
@@ -19,7 +25,6 @@ To enable a block page using Gateway's policy engine, you will have to follow a 
 1. **Enable** the block page.
 2. **Download** the Cloudflare certificate.
 3. **Add** the certificate to your system.
-
 
 ## 1. Enable block page
 
@@ -80,8 +85,3 @@ Follow the instructions below to finish configuring the block page:
 ## See the block page
 When you visit a blocked website you will now see the following block page:
 ![Block page](../static/cert-block-page.png)
-
-
-
-
-

@@ -15,5 +15,5 @@ order: 3
 
 <ButtonGroup>
   <Button type="secondary" href="/contributing/content/formatting">← Formatting</Button>
-  <Button type="secondary" href="/contributing/content/working-with-github">Working with Github →</Button>
+  <Button type="secondary" href="/contributing/content/working-with-github">Working with GitHub →</Button>
 </ButtonGroup>

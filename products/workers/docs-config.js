@@ -17,10 +17,15 @@ module.exports = {
       title: "Pricing",
       url: "https://workers.cloudflare.com/#plans"
     },
+    {
+      title: "Discord",
+      url: "https://discord.gg/cloudflaredev"
+    },
   ],
   search: {
-    indexName: "cloudflare-workers-v2",
-    apiKey: "9c24e56570a37c30bba608dad543d1d8",
+    indexName: "developers-cloudflare",
+    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    algoliaOptions: { 'facetFilters': '["project:workers"]'}
   },
   siteMetadata: {
     title: "Cloudflare Workers docs",

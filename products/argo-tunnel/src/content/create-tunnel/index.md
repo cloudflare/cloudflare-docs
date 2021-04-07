@@ -1,17 +1,29 @@
 ---
-order: 2
+order: 3
 ---
 
 # Create a Tunnel
+
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 | Before you start |
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
-| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 3. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 4. [Understand the overview for using Argo Tunnels](/getting-started/high-level-steps) |
 
 ## Create a Tunnel
+
+<Aside>
+
+Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard. These connections will be added to the dashboard in a future release.
+
+</Aside>
 
 Run the following command to create a Tunnel.
 

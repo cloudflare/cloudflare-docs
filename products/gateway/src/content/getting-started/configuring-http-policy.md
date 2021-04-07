@@ -4,9 +4,15 @@ order: 2
 
 # Configure an HTTP policy
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 <Aside>
 
-This feature is only available on the **Teams Enterprise plan**. For more information, see the Cloudflare for Teams [pricing page](https://www.cloudflare.com/teams-pricing/).
+This feature is not available on the Teams free plan. For more information, see the [Cloudflare for Teams pricing page](https://www.cloudflare.com/teams-pricing/).
 
 </Aside>
 
@@ -38,6 +44,6 @@ Check out the [L7 firewall reference section](/reference/policy/#l7-firewall) fo
 
 ## Enable L7 filtering
 
-At the bottom of the `HTTP` policies page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
+In the settings (Gateway → Policies → Settings) page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
 
 Do not enable filtering without first [configuring certificates](https://developers.cloudflare.com/gateway/policies/configure-block-page/#add-certificate-to-your-system) on the devices enrolled, otherwise you will prevent those devices from connecting to the Internet.

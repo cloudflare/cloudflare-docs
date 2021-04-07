@@ -4,12 +4,17 @@ order: 3
 
 # JSON Web Tokens
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 To fully secure your application, you must ensure that no one can access your origin server directly and bypass the zero trust security checks Cloudflare Access enforces for the hostname. For example, if someone discovers an exposed external IP they can bypass Cloudflare and attack the origin directly.
 
 Cloudflare signs a JSON Web Token (JWT) when users or services authenticate through Cloudflare Access.
 
 Two tokens are generated:
-
 
 * **Auth Domain Token**: a token stored at the auth domain that prevents a user from needing to login to each application. The token is stored as a cookie at your account's authentication domain, for example, `https://my-auth-domain.cloudflareaccess.com`.
 
@@ -24,11 +29,9 @@ If you want to learn more about how Access works with JWT, read our [Access with
 | **Only validate tokens using the external endpoint, rather than saving the public key as a hard-coded value.** Cloudflare signs both tokens with a key pair that you can validate using the corresponding public certificate, available at an external endpoint. As a security best practice, Cloudflare rotates the key pair in use periodically. |  |
 | **Do not only look for the first certificate of the two in the list.** The ordering of which certificate is current will change. It is possible that clock skew between your server and Cloudflare's would result in a failure when validating a token's IAT or NBF fields. A grace period can help prevent downtime if that is the case.  |
 
-
 ## Manual verification
 
 <Aside>
-
 
 <b>Before you start</b>
 
@@ -42,7 +45,7 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
     curl -s https://<your auth domain>/cdn-cgi/access/certs | jq .keys[0] | lokey to pem -----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA01SvMv4TgFIECQgzHaRL DGVaKhRQHjgdiSOpbqhHQMdcNtBIM0HAQbrs7YS6sQCCdZC5wCvlq3xgqdU5J6k YI5OCSsIWXKkobAl6PbXHdN0bJximeiHGa3O0hMREP6RKBoI6ayNmZ3WlVGWY 6ie47KGqN69l7fPKyZvszb4GdpxE0r8gllZZwIuPjzlghXRlrkaP48ucQwo+tq PSSdDdW57TCFmy+G547W5iWZWJIeNkfVu9t6FktvCwSZ1ekum3X7IQcd0O0DWSR Aj9tzNDPkzOeSFxmQkKpWs8Qw7ZBIfLOsO3DCH6VPNhS2cqhw1AAMunh8alDKQU aQIDAQAB -----END PUBLIC KEY-----
     ```
 
-    If an error occurs while running `lokey`, install the [python six](https://pypi.python.org/pypi/six) library, and try again:
+    If an error occurs while running `lokey`, install the [Python six](https://pypi.python.org/pypi/six) library, and try again:
 
     ```sh
     $ pip install six==1.10.0
@@ -57,7 +60,6 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 ## Programmatic verification
 
 <Aside>
-
 
 <b>Before you start</b>
 
@@ -216,6 +218,5 @@ if __name__ == '__main__':
 ## Support Additional OIDC Claims with your JWT
 
 Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under Optional Configurations
-
 
 ![jwt and oidc](../static/jwt-oidc.png)

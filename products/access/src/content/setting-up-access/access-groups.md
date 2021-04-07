@@ -5,6 +5,12 @@ hidden: true
 
 # Access Groups
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Access Groups define a set of users that can be added to an Access policy. You can reuse Access Groups to quickly create policies and apply them to the same set of users.
 
 Access Groups are distinct from groups in your identity provider, like Okta groups. Access Groups can contain a mix of individual users, groups from identity providers, and service authentication options like service tokens.

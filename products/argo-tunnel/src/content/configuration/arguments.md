@@ -4,6 +4,12 @@ order: 1
 
 # Arguments
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 ## Tunnel commands
 
 All tunnel-related commands are prefixed with `tunnel`. For example:
@@ -95,7 +101,6 @@ The connection from your machine to Cloudflare's Edge is still encrypted and ver
 
 Address to query for usage metrics.
 
-
 ### `--metrics-update-freq`
 
 | Syntax | Default | Environment Variable |
@@ -120,7 +125,6 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 
 Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available options: `panic` `fatal` `error` `warn` `info` `debug`
 
-
 ### `--proto-loglevel`
 
 | Syntax | Default | Environment Variable |
@@ -136,7 +140,6 @@ Specifies the verbosity of the HTTP/2 protocol logging. Any value below `warn` i
 | `--retries value` | `5` | `TUNNEL_RETRIES` |
 
 Maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default) so increasing this value significantly is not recommended.
-
 
 ### `--pidfile`
 

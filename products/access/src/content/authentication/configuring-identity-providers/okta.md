@@ -4,90 +4,86 @@ order: 12
 
 # Okta
 
-Okta provides cloud software that helps companies manage secure user authentication, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate Okta as an IdP.
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
-## Set up Okta as your IdP
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
 
-To set up Okta as your IdP:
+</Aside>
 
-1. In your Okta dashboard, choose **Applications** from the menu.
-1. Click **Add Application**.
+You can integrate Okta with Cloudflare Access to allow users to reach applications protected by Access with their Okta account.
 
-    ![Okta Applications](../../static/okta/ok-ent1.png)
+1. In your Okta dashboard, click **Admin**.
 
-1. On the **Add Application** card click **Create New App**.
+![Okta Applications](../../static/okta/click-admin.png)
 
-    ![Okta Add Application card](../../static/okta/ok-ent2.png)
+2. Select the `Applications` tab in the Admin dashboard.
 
-1. On the **Create a New Application Integration** card, select **OpenID Connect** as the **Sign on method**.
+![Admin Dash](../../static/okta/select-admin.png)
 
-    ![Okta Create a New Application Integration card](../../static/okta/ok-ent3.png)
+3. Click **Add Application** on the next page.
 
-1. Click **Create**.
+![Add App](../../static/okta/add-app.png)
 
-    The _Create OpenID Connect Integration_ card displays.
+4. Click **Create New App** in the top right corner.
 
-    ![Create OpenID Connect Integration card](../../static/okta/ok-ent4.png)
+![Create New App](../../static/okta/create-new-app.png)
 
-1. In the **Login redirect URIs** field enter your authorization domain, and include this  callback at the end of the path: `/cdn-cgi/access/callback`.
+5. Choose `Web` as the Platform and toggle `OpenID Connect`. Click **Create**.
 
-    **Tip**: You can find your organization’s authorization domain in Cloudflare Access. It begins with a subdomain unique to your organization and ends with the domain `cloudflareaccess.com`, including the callback path specified above.
+![Create New App](../../static/okta/web-app.png)
 
-1. Click **Save**.
+6. You can name the application to be any value. In the `Login redirect URIs` field, input the callback URL of your Cloudflare authentication domain.
 
-    The completed application page displays.
+The domain will be structured in the following format:
 
-    ![Okta Settings Sign On Methods card](../../static/okta/ok-ent5.png)
+```
+https://<your-auth-domain-here>.cloudflareaccess.com
+```
 
-1. Scroll to the **OpenID Connect Token** section and click **Edit**.
+In the URI field, input your authentication domain with the path below.
 
-    The **OpenID Connect ID Token** card displays.
+```
+https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 
-    ![OpenID Connect ID Token card](../../static/okta/ok-ent6-correct.png)
+```
 
-1. Scroll to the **Groups claim filter** field, switch **Starts with** to **Regex**, and enter  `.*` in the field on the right.
-1. Click **Save**.
-1. Select the **General** tab.
+![Create New App](../../static/okta/add-uri.png)
 
-    The _General Settings_ card displays.
+7. Once saved, choose the `Sign On` tab from the application view.
 
-    ![Okta General Settings card](../../static/okta/ok-ent7.png)
+![Create New App](../../static/okta/app-view.png)
 
-1. Scroll to _Client Credentials_ and copy your **Client ID** and **Client Secret**.
-1. In **Cloudflare Access**, scroll to **Login Methods**, click **Add** and select the **Okta** icon.
+8. Scroll down to the `OpenID ConnectID Token`.
 
-   ![Cloudflare Access Login Methods](../../static/okta/ok-ent8.png)
+![Scroll Down](../../static/okta/scroll-down.png)
 
-   The **Add a Okta identity provider** card displays.
-2. Paste in your copied **Client ID** and **Client secret**.
+9. Click **Edit** and edit the Groups claim filter to `Starts with` and the value `.*`.
 
-    ![Cloudflare Access Add a Okta identity provider card](../../static/okta/ok-ent9.png)
+![Scroll Down](../../static/okta/edit-groups.png)
 
-3. In the Okta dashboard, click **Assign > Assign to Groups**.
+10. Next, click the `Assignments` tab.
 
-    ![Okta Cloudflare Access App card](../../static/okta/ok-ent10.png)
+![Assignments Tab](../../static/okta/assignments-tab.png)
 
-4. Create your assignments.
+11. Click **Assign** and assign the application to all users in your organization.
 
-    ![Okta Assign Cloudflare Access Apps to Groups](../../static/okta/ok-ent11.png)
+![Assign App](../../static/okta/assign-app.png)
 
-5. Click **Done**.
+12. Return to the `General` tab. Scroll down to find your credentials. Copy the ID and secret.
 
-   You return to the Cloudflare Access App card.
+![Credentials](../../static/okta/credentials.png)
 
-    ![Okta Cloudflare Access App card](../../static/okta/ok-ent12.png)
+13. Visit the Cloudflare for Teams dashboard and navigate to the `Authentication` page of the Access section. Click **+Add** to add a new identity provider. Choose `Okta`.
 
-6. In **Cloudflare Access** scroll to **Access Policies** and click **Create Access Policy**.
-7. In the **Property** fields, select the appropriate Property type, specify your Okta groups and users, and select **Allow** in the **Permission** drop-down list.
+![Choose Okta](../../static/okta/choose-okta.png)
 
-    ![Cloudflare Create Access Policy card](../../static/okta/ok-ent13.png)
+14. Input the ID, secret, and the Okta account URL. Click **Save**.
 
-8. Click **Save**.
-9. On the **Login Methods** card, click **Save and test**.
+![Input](../../static/okta/input-credentials.png)
 
-    On successful connection to your Okta IdP, a confirmation displays.
+15. In the application list, you can now test the connection by clicking the **Test** button.
 
-    ![Successful connection to your IdP](../../static/okta/ok-ent14.png)
+![Test](../../static/okta/with-mfa.png)
 
 ## Example API Configuration
 
@@ -95,7 +91,7 @@ To set up Okta as your IdP:
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "okta_account": "https://dev-abc123.oktapreview.com",
     },
     "type": "okta",

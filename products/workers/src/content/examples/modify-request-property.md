@@ -35,7 +35,7 @@ async function handleRequest(request) {
     body: JSON.stringify({ bar: "foo" }),
     // Change the redirect mode.
     redirect: "follow",
-    //Change headers, note this method will erase existing headers
+    // Change headers, note this method will erase existing headers
     headers: {
       "Content-Type": "application/json",
     },

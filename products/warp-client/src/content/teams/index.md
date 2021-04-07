@@ -5,6 +5,12 @@ hidden: true
 
 # Teams deployment
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 ## Getting started
 Deploying the Cloudflare WARP Client to support your Cloudflare for Teams configuration supports manual installs, simple deployment scripts, or advanced enterprise management tools, such as Microsoft Intune or Jamf.
 
@@ -15,4 +21,3 @@ Already have Cloudflare for Teams configured and want to dive right in? Before y
 * [Obtained your Cloudflare for Teams auth domain](https://developers.cloudflare.com/access/glossary#auth-domain).
 
 Once you have completed these steps, read the instructions included in this section, based on the client you would like to deploy.
-

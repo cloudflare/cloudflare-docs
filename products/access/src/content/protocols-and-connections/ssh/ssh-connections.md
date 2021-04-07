@@ -2,12 +2,15 @@
 order: 0
 ---
 
-# SSH Connections
+# SSH connections
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 <Aside>
-
 
 <b>Requirements</b>
 
@@ -20,14 +23,14 @@ order: 0
 Secure Shell (SSH) protocol allows users to connect to infrastructure to perform activities like remote command execution.
 
 This section will cover:
-* Connecting your remote server to Cloudflare
-* Connecting via Access-protected SSH from a remote machine
+* [Connecting your remote server to Cloudflare](#connect-the-remote-server-to-cloudflare)
+* [Connecting via Access-protected SSH from a remote machine](#connect-from-a-client-machine)
 
 **NOTE**: If you have an origin that serves both SSH and HTTP requests, you need to place those services on separate domains or subdomains. Otherwise, errors occur when attempting to access the machine over different protocols. For example, requests made in a web browser will route over SSH and fail.
 
 # Connect the remote server to Cloudflare
 
-## 1. Authenticate The Cloudflare Daemon
+## 1. Authenticate `cloudflared`
 1. Run the following command to authenticate cloudflared into your Cloudflare account.
 
 ```sh
@@ -57,7 +60,6 @@ $ cloudflared tunnel --hostname
 ssh.site.com --url ssh://localhost:22
 ```
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
-
 
 **Common issues**
 Ensure that the machine's firewall permits egress on ports `22`, `80`, `443`, otherwise cloudflared will return an error.

@@ -4,71 +4,97 @@ order: 12
 
 # Google
 
-Cloudflare Access can integrate with Google as an IdP. Use these steps to configure Google as your IdP.
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
-## Configure Google as your IdP
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
 
-1. Sign into the [API Manager](https://console.developers.google.com/projectselector/apis/credentials?pli=1) in the Google Cloud console.
-1. Click **Create** to begin a new project in Google Cloud.
+</Aside>
 
-    ![Google Credentials](../../static/google/goog1.png)
+You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration will allow any user with a Google account to login (if the Access policy allows them to reach the resource). Unlike the instructions for [Google Workspace](/authentication/configuring-identity-providers/gsuite), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
-    The **New Project** card displays.
+1. Visit the Google Cloud Platform console. Create a new project.
 
-1. Enter a name for your project.
-1. Click **Create**.
+![Create Project](../../static/google/create-project.png)
 
-    ![Google New Project](../../static/google/goog2.png)
-    The _Credentials_ window displays.
+2. Name the project and click **Create**.
 
-1. In the **APIs Credentials** card, click **Create credentials > OAuth client ID**.
+![Name Project](../../static/google/name-project.png)
 
-    ![Google API Credentials](../../static/google/goog3.png)
-    The _Create client ID_ window displays.
+3. On the project home page that loads, select `APIs & Services` from the sidebar and click **Dashboard**.
 
-1. Click **Configure consent screen**.
+![Name Project](../../static/google/click-api-dash.png)
 
-    ![Google Create Client ID](../../static/google/goog4.png)
-    The _OAuth consent screen_ tab displays.
+4. You will first need to configure a consent screen. Click **Configure Consent Screen** at the top of the page.
 
-1. Enter a name in the **Product name shown to users** field.
-1. Click **Save**.
+![Click Consent](../../static/google/click-configure-consent.png)
 
-    ![Google OAuth consent screen](../../static/google/goog5.png)
-    The _Create client ID_ window displays.
+5. Choose `External` as the User Type. Since this application is not being created in a Google Workspace account, the only types of users are external.
 
-    ![Google Create client ID](../../static/google/goog6.png)
+![Choose External](../../static/google/choose-external.png)
 
-1. In **Application type**, select **Web application**.
-1. Enter a **Name** for your application.
-1. Enter your account’s authorization domain in the **Authorized Javascript origins** field.
+6. Name the application and add a support email (GCP will require you to add an email in your account).
 
-    You can find this in the **Authorization Domain** section of the **Cloudflare Access** app.
+![Name App](../../static/google/name-app.png)
 
-    The domain is something like, `https://xyz.cloudflareaccess.com`.
+You will also be prompted to input contact fields.
 
-1. Under **Authorized redirect URIs**, enter your authorization domain and add this to the end of the path:
+![Contact Fields](../../static/google/contact-fields.png)
 
-    ```txt
-    /cdn-cgi/access/callback
-    ```
+7. In the `Scopes` section, we recommend adding the `userinfo.email` scope. This is not required for the integration to work, but will indicate to users authenticating what information is being gathered.
 
-1. Click **Create**.
+![Scopes](../../static/google/scopes.png)
 
-    The OAuth client card displays.
+You do not need to add test users.
 
-    ![Google OAuth client card](../../static/google/goog7.png)
+![Test Users](../../static/google/test-users.png)
 
-1. Copy your client ID and client secret.
-1. Paste the ID and secret in the **Cloudflare** dashboard.
+You can review the summary information and return to the dashboard at the bottom of the page.
 
-    **Tip**: If there is no connection to Google, restart the project form.
+![Summary](../../static/google/consent-screen-summary.png)
 
-1. Click **Save and Test** on the Cloudflare dashboard.
+8. Return to the `APIs & Services` page and click **+ Create Credentials**. Select `OAuth client ID`.
 
-     On successful connection to your identity provider, a confirmation window displays.
+![Create OAuth](../../static/google/create-oauth.png)
 
-    ![Cloudflare IdP Connection Success](../../static/google/goog8.png)
+9. Name the application.
+
+![Name OAuth](../../static/google/name-oauth.png)
+
+10. You will need to input your Cloudflare authentication domain. The domain will be structured in the following format:
+
+```
+https://<your-auth-domain-here>.cloudflareaccess.com
+```
+
+Input the authentication domain without any path in the `Authorized JavaScript origins` section. In the Authorized redirect URIs section, input your authentication domain with the path below.
+
+```
+https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
+```
+
+![Auth Domain](../../static/google/auth-domain.png)
+
+11. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should be kept securely and not shared. For the purposes of this tutorial, the secret field is kept visible. Copy both values.
+
+![Secret Field](../../static/google/oauth-created.png)
+
+16. Navigate to the Cloudflare for Teams dashboard. In the `Authentication` page of the Access section, click **+ Add**.
+
+![Add IdP](../../static/google/add-idp.png)
+
+17. Select `Google`.
+
+![Add Google](../../static/google/add-google.png)
+
+18. Input the Client ID and Client Secret fields generated previously. Click **Save**.
+
+![Add Google Suite](../../static/google/input-client.png)
+
+21. You can now return to the list of identity providers in the `Authentication` page of the Cloudflare for Teams dashboard. Select Google Suite and click **Test**.
+
+Your user identity should return.
+
+![Connection Works](../../static/google/connection-works.png)
 
 ## Example API Config
 
@@ -76,7 +102,7 @@ Cloudflare Access can integrate with Google as an IdP. Use these steps to config
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
     },
     "type": "google",
     "name": "my example idp"

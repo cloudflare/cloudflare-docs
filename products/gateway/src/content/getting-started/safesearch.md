@@ -4,13 +4,19 @@ order: 6
 
 # Enable SafeSearch
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 SafeSearch is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
 You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo.
 
 To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 
-1. Navigate to the **Policies** tab. If you don't have a policy, create one following [these instructions](/getting-startedfiguring-dns-policy).
+1. Navigate to the **Policies** tab. If you don't have a policy, create one following [these instructions](/getting-started/configuring-dns-policy).
 
 2. Navigate to the **Overview** tab.
 
@@ -19,7 +25,6 @@ To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 4. Enable the switch inside the **SafeSearch** card.
 
 ![SafeSearch Card](../static/safesearch-card.png)
-
 
 5. Hit **Save**.
 

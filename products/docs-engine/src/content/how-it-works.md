@@ -26,7 +26,7 @@ Each docs site built with the engine needs the following structure:
 
 For a repo holding a single docs site, everything but the content should be in the root, as is the case with the [Docs Engine minimal example](https://github.com/adamschwartz/docs-engine-example/tree/c45fa9f0a8affc68baf5d3517f8b890ba0522531).
 
-However, these files can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/master/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
+However, these files can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/production/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
 
 ### 1. package.json
 
@@ -145,7 +145,7 @@ Some helpful things to know:
 
 - If you want to create reusable “partials” that don’t generate pages, start the file names with `_`. See [an example in the Workers docs](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/_partials/_tutorials-before-you-start.md). Then you can [import them](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-slackbot/index.md#L6-L10) as you would any other MDX component.
 
-Learn more about the [content framework](/contributing/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
+Learn more about the [content framework](/contributing/content/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
 
 --------------------------------
 

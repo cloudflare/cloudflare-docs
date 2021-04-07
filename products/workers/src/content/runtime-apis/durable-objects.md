@@ -2,7 +2,7 @@
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](http://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
@@ -35,8 +35,15 @@ export class DurableObject {
 - `state`
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
+- `state.id` <Type>DurableObjectId</Type>
+  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
+
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
+
+- <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+
+  - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
 
 - `env`
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
@@ -97,6 +104,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
       - Key at which the list results should end, exclusive.
 
+    - <Code>prefix<ParamType>string</ParamType></Code>
+
+      - Restricts results to only include key-value pairs whose keys begin with the prefix.
+
     - <Code>reverse<ParamType>boolean</ParamType></Code>
 
       - If true, return results in descending lexicographic order instead of the default ascending order.
@@ -106,7 +117,6 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
       - Maximum number of key-value pairs to return.
 
     </Definitions>
-
 
 - <Code>transaction(closure<ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
 
@@ -122,6 +132,10 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Definitions>
 
+- <Code>deleteAll()</Code> <Type>Promise</Type>
+
+  - Deletes all keys and associated values, effectively deallocating all storage used by the worker. Once `deleteAll()` has been called, no subsequent Durable Storage operations (including transactions and operations on transactions) may be executed until after the `deleteAll()` operation completes and the returned promise resolves. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
+
 </Definitions>
 
 ### `fetch()` handler method
@@ -129,6 +143,8 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 The `fetch()` method of a Durable Object namespace is called by the system when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other Workers, using a Durable Object namespace binding (see below).
 
 The method takes a [`Request`](/runtime-apis/request) as the parameter, and returns a [`Response`](/runtime-apis/response) (or a `Promise` for a `Response`).
+
+If the method fails with an uncaught exception, the exception will be thrown into the calling worker that made the `fetch()` request.
 
 --------------------------------
 
@@ -151,6 +167,20 @@ When generating an ID randomly, you need to store the ID somewhere in order to b
 Unique IDs are unguessable, therefore they can be used in URL-based access control, sometimes known as "anyone with the link can access."
 
 To store the ID in external storage, use its `.toString()` method to convert it into a hex string, and `OBJECT_NAMESPACE.idFromString()` to convert the string back into an ID later.
+
+#### Restricting objects to a jurisdiction
+
+Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations. You must specify the jurisdiction when generating the Durable Object's id.
+
+```js
+let id = OBJECT_NAMESPACE.newUniqueId({jurisdiction: "eu"})
+```
+
+Creates a new object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with ids created by `newUniqueId()` and are not currently compatible with ids created by `idFromName(name)`.
+
+Note that objects that are constrained to a jurisdiction may still be accessed by your Workers from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
+
+The only jurisdiction currently supported is `eu` (the European Union).
 
 <Aside header="Unique IDs perform best">
 
@@ -177,11 +207,9 @@ This method derives a unique object ID from the given name string. It will alway
 
 <Aside header="Name-derived IDs require global lookups at creation">
 
-The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same object at the same time. In order to guarantee that only one instance of the object is created worldwide, the system must check whether the object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds.
+The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same object at the same time. In order to guarantee that only one instance of the object is created worldwide, the system must check whether the object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds. After this check, the object will be instantiated near where it was first requested.
 
-After the object has been accessed the first time, information will be cached around the world so that subsequent lookups can be faster.
-
-**Beta note:** We are still working on caching and automatic migration of objects. During the beta period, each named object is located in a random location in either North America or Europe. Thus, different named objects may have variable latency characteristics. This will improve soon.
+After the object has been accessed the first time, location information will be cached around the world so that subsequent lookups can be faster.
 
 </Aside>
 
@@ -202,7 +230,7 @@ let id = OBJECT_NAMESPACE.idFromString(hexId)
 
 This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as as a string.
 
-A stringified object ID is a 64-digit hexidecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
+A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
 
 ### Obtaining an Object Stub
 
@@ -247,3 +275,5 @@ let response = await stub.fetch(url, options)
 ```
 
 The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/runtime-apis/fetch). However, instead of sending an HTTP request to the internet, the request is always sent to the Durable Object to which the stub points.
+
+Any uncaught exceptions thrown by the Durable Object's `fetch()` handler are propagated to the caller's `fetch()` promise.
