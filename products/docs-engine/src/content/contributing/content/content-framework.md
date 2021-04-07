@@ -12,9 +12,9 @@ This page provides an overview of how best to contribute to Cloudflare’s docum
 
 Whether you’re adding a new page or just updating an existing one, it’s important to understand the philosophy behind our choice of information architecture.
 
-### Divio’s documentation system
+### Diátaxis documentation system
 
-Our content structure was heavily inspired by the [Divio’s documentation system](https://documentation.divio.com), which recommends dividing docs into four categories:
+Our content structure was heavily inspired by the [Diátaxis documentation system](https://diataxis.fr/), which recommends dividing docs into four categories:
 
 <strong>
 
@@ -25,7 +25,7 @@ Our content structure was heavily inspired by the [Divio’s documentation syste
 
 </strong>
 
-We highly recommend reading their [introduction to the system](https://documentation.divio.com/introduction) to help familiarize yourself with the philosophy around why this is so effective.
+We highly recommend reading the [introduction to the system](https://diataxis.fr/introduction) to help familiarize yourself with the philosophy around why this is so effective.
 
 For convenience, we’ll reproduce a key table here:
 
@@ -44,7 +44,7 @@ For convenience, we’ll reproduce a key table here:
 
 <p style={{margin:"-.5em 0 1.5em",fontSize:".9em"}}>
 
-Source: [Divio documentation system introduction](https://documentation.divio.com/introduction)
+Source: [Diátaxis documentation system introduction](https://diataxis.fr/introduction)
 
 </p>
 
@@ -83,7 +83,7 @@ Cloudflare documentation should be practical and approachable.
 
 ### Writing technical reference
 
-When writing documentation as part of a technical reference (e.g. [runtime API](https://developers.cloudflare.com/workers/runtime-apis) doc), follow these additional guidelines ([from Divio](https://documentation.divio.com/reference/#reference)):
+When writing documentation as part of a technical reference (e.g. [runtime API](https://developers.cloudflare.com/workers/runtime-apis) doc), follow these additional guidelines ([from the Diátaxis framework](https://diataxis.fr/reference/)):
 
 - **Structure the documentation around the codebase.** When documenting a set of APIs, for example, name and organize the files to match the codebase’s naming and folder structure. This helps ensure consistency when communicating with users, who may see and interact with codebase, and helps maintainers see where documentation is missing or needs to be updated.
 
