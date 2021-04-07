@@ -7,7 +7,7 @@ title: Common use cases
  
 <Aside type='warning' header='Important'>
 
-This feature is only available for selected customers in the Enterprise plan.
+This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 

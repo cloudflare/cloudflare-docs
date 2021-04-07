@@ -6,7 +6,7 @@ order: 790
 
 <Aside type='warning' header='Important'>
 
-This feature is only available for selected customers in the Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
+This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
 </Aside>
 
