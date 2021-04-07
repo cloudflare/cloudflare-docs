@@ -16,7 +16,9 @@ You must deploy Rate Limiting Rules to the `http_request_firewall_custom` Phase 
 
 ## Create a Rate Limiting Rule
 
-To create a Rate Limiting Rule, add a rule with a `ratelimit` field to the `http_request_firewall_custom` Phase ruleset by issuing a `PUT` request (see example below). Remember to add any existing rules in the ruleset to the request by including the rule ID in the request body.
+To create a Rate Limiting Rule, add a rule with a `ratelimit` field to the `http_request_firewall_custom` Phase ruleset by issuing a `PUT` request (see example below). 
+
+Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate limiting rules must appear at the end of the rules list.
 
 ```json
 ---
