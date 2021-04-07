@@ -6,7 +6,7 @@ order: 14
 
 ## Overview
 
-Weighted load balancing allows the user to set a relative weight for each origin server in a pool. These weights determine the percentage of traffic sent to available origins within a pool. If an origin becomes unhealthy, traffic will be rebalanced to the remaining available origins according to their respective weights.
+Use weighted load balancing to send specific percentages of traffic to available origins within a pool. If an origin becomes unhealthy, traffic will be rebalanced to available origins according to their respective weights.
 
 ---
 
@@ -46,15 +46,13 @@ A significant amount of traffic is required for the distribution to converge on 
 
 ## Configuring weights from the Load Balancing dashboard
 
-Users can configure origin weights when they set up a load balancer or from the **Load Balancing** dashboard in the **Traffic** app.
-
-![](../static/images/weighted-load-balancing-1.png)
+Configure origin weights when you [create a load balancer](/create-load-balancer-ui) or from the **Load Balancing** dashboard in the **Traffic** app.
 
 ---
 
 ## Configuring weights via the Cloudflare API
 
-Origin weight is a property of origin server objects, which are associated with pools. To configure the weight of an origin server with the Cloudflare API, use the Update Pools command to set the `weight` property of the origin.
+To configure the weight of an origin server with the Cloudflare API, include the `weight` property when using the Update Pools command.
 
 The example below uses the Update Pools command—`POST /user/load_balancers/pools`—to create a pool named _examplepool_ and set weights for each of three origins.
 

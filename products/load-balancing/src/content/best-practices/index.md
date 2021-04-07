@@ -14,23 +14,21 @@ To avoid an inconsistent user experience when rolling out application changes, y
 
 To temporarily ignore an origin server:
 
-1. Deliberately configure a monitor so that your origin will fail health checks and Cloudflare will consider the origin server unhealthy and route traffic away from it. For example, set the **Response Code** to an HTTP status code you know your server does not return. Alternatively, you could set a value for **Response Body** that will not match. For example, you can configure the Response Body in a monitor to look for specific text.
-
-  ![](../static/images/best-practices-1.png)
+1. Update the associated monitor so that your origin will fail health checks, which will route traffic away from that origin. This might include setting:
+    - The **Response Code** to an HTTP status code you know your server does not return
+    - An incorrect value for **Response Body**, such as a specific text string
 
 1. Confirm the origin server is not receiving traffic. Load Balancing will issue a notification email that the origin is down.
 
 1. Upgrade the origin and test that the change is working as you intended.
 
-1. Reenable load balancing for the upgraded origin server by restoring the values you modified in Step 1 to those expected for a healthy origin.
+1. Re-enable load balancing for the upgraded origin server by restoring the values you modified in Step 1 to those expected for a healthy origin.
 
 1. Repeat these steps for the other origins across which you are balancing application traffic.
 
-This process lets you make controlled changes to your origin servers without disrupting users.
-
 ### Using the Cloudflare API to temporarily set origin status to _disabled_
 
-You can automate this process with the [Load Balancing Cloudflare API](https://api.cloudflare.com/#load-balancer-pools-modify-a-pool) by setting the status of an origin server to “disabled” so that Load Balancing does not route traffic to the origin while you are upgrading it.
+Automate this process with the [Load Balancing Cloudflare API](https://api.cloudflare.com/#load-balancer-pools-modify-a-pool) by setting the status of an origin server to `disabled`.
 
 To temporarily set origin status to _disabled_, use the Update Load Balancer command to set the `enabled` property for that origin object to `false`, as in the example below:
 

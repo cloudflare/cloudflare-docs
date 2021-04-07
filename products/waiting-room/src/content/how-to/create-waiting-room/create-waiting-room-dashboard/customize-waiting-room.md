@@ -38,7 +38,8 @@ The template text contains [code to display the wait time](#display-wait-time). 
 
 1. Click **Import** to upload a HTML file from your computer.
 1. Select the file in the dialog and click **Open**.
-The file displays in the text box. You can make further edits in the text box. Include the [code to display the wait time](#display-wait-time) to display the estimated queue time on the waiting room page.
+
+Make further edits in the text box. Include the [code to display the wait time](#display-wait-time) to display the estimated queue time on the waiting room page or create your own custom page using [available variables](#available-variables).
 
 ### Display wait time
 
@@ -77,6 +78,18 @@ The following script within the `<body>` section after `<main>` fetches the wait
       remainingEl.innerText = remainingString;
     </script>
 ```
+
+### Available variables
+
+When you create a waiting room with custom HTML, you can use the following variables:
+- **waitTime**: An `integer` showing the user's estimated wait time in minutes.
+- **waitTimeFormatted**: An English `string` showing a user's estimated wait time:
+  - If `waitTime` is between 0 and 59, string will be `X minutes`
+  - If `waitTime` is between 60 - 119, string will be `More than 1 hour`
+  - If `waitTime` is more than 1440, string will be `More than a day`
+- **waitTimeKnown**: A `boolean` value. Not available when the queue is full or **queue all** is enabled.
+- **queueIsFull**: A `boolean` value. Changes to `True` when the queue is longer than 24 hours.
+
 
 ## Preview waiting room
 

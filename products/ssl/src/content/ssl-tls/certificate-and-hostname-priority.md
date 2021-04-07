@@ -42,12 +42,15 @@ Additionally, a Cloudflare zone using the SSL for SaaS product (a SaaS provider)
 The following describes how Cloudflare routes the traffic for a specific hostname, assuming each exists and is proxied (orange-clouded).
 
 Exact hostname match
-New Custom Hostname (Belonging to a SaaS Provider)
-Legacy Custom Hostname (Belonging to a SaaS Provider)
-DNS (Belonging to the logical DNS zone)
+
+* New Custom Hostname (Belonging to a SaaS Provider)
+* Legacy Custom Hostname (Belonging to a SaaS Provider)
+* DNS (Belonging to the logical DNS zone)
+
 Wildcard hostname match
-DNS (Belonging to the logical DNS zone)
-New Custom Hostname (Belonging to a SaaS Provider)
+
+* DNS (Belonging to the logical DNS zone)
+* New Custom Hostname (Belonging to a SaaS Provider)
 
 Any hostname whose RR is not proxied (is grey-clouded) for a zone on Cloudflare, that zone’s settings are not applied and any settings configured at the origin for the RR are applied instead. This origin could be another zone on Cloudflare or any other server connected to the Internet.
 

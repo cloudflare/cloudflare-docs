@@ -16,7 +16,6 @@ The onboarding process to set up Magic Transit with [Cloudflare Network Intercon
 3. Order the cross-connects you want to use with CNI. You can use any of the following:
     * **Private network interconnects (PNI)** - Available at any of our [private peering facilities](https://www.peeringdb.com/net/4224).
     * **Virtual private network interconnects (vPNI)** - Allows you to easily connect with Cloudflare at any of our interconnection platform locations.
-    * **Internet exchange point (IXP)** interconnects - Allow you to establish a link with Cloudflare at any of the [more than 200 IXPs](https://bgp.he.net/AS13335#_ix) in which we participate.
 
 4. Send Cloudflare confirmation after the cross-connects are set up.
 
@@ -30,7 +29,7 @@ The onboarding process to set up Magic Transit with [Cloudflare Network Intercon
 
 Each step can take 1–7 business days.
 
-For more details on the CNI onboarding process, see [_Set up Cloudflare Network Interconnect: Onboarding_](https://developers.cloudflare.com/network-interconnect/set-up-cni/onboarding).
+For more details on the CNI onboarding process, see [_Set up Cloudflare Network Interconnect: Onboarding_](https://developers.cloudflare.com/network-interconnect/set-up-cni).
 
 ## Guidelines
 

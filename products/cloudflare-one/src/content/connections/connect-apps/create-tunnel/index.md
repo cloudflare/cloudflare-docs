@@ -46,7 +46,7 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 `cloudflared` can list all created Tunnels in your account, as well as those actively connected to Cloudflare, by running the following command:
 
 ```sh
-cloudflared tunnel list
+$ cloudflared tunnel list
 ```
 
 Note: the command requires the `cert.pem` file.

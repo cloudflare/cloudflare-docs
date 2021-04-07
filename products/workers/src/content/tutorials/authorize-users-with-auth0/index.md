@@ -796,7 +796,7 @@ Given an example configuration and deployment of `https://my-auth.signalnerve.co
 
 2. Configure your `wrangler.toml` to associate your Workers script with a zone
 
-Associating a configured zone from your Cloudflare account is covered in the section [“Configure for deploying to a registered domain”](/learning/getting-started#optional-configure-for-deploying-to-a-registered-domain) section of [Getting started](/learning/getting-started). In the “Publish” section of this guide, we’ll cover how to configure the file `wrangler.toml` to deploy to workers.dev — make sure you read the [Getting started](/learning/getting-started#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
+Associating a configured zone from your Cloudflare account is covered in the section [“Configure for deploying to a registered domain”](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Getting started](/get-started/guide). In the “Publish” section of this guide, we’ll cover how to configure the file `wrangler.toml` to deploy to workers.dev — make sure you read the [Getting started](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
 
 In particular, you’ll need to ensure that you have `zone_id` and `route` keys in your `wrangler.toml`, and `workers_dev` disabled. You may also choose to entirely remove the `[site]` block from your `wrangler.toml`, which will stop `wrangler` from uploading the contents of your project’s `public` folder to Workers KV:
 
@@ -828,7 +828,7 @@ We’re finally ready to deploy our application to Workers. Before we can succes
 
 ### Configuring `wrangler.toml`
 
-The `wrangler.toml` generated as part of your application tells wrangler how and where to deploy your application. Using the [“Configuring your project” section of the Getting started](/learning/getting-started#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your application to your Cloudflare account:
+The `wrangler.toml` generated as part of your application tells wrangler how and where to deploy your application. Using the [“Configuring your project” section of the Getting started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your application to your Cloudflare account:
 
 ```toml
 ---

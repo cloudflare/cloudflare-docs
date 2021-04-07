@@ -146,13 +146,11 @@ Make sure IP is accurate, and if it is check if there is an ISP or hosting provi
 
 ### Cause
 
-If you're using the Cloudflare API and receive a Quota Exceeded error, you have tried to create more objects than you are allowed. For example, if you are limited to 5 monitors and you attempt to create a sixth monitor object, you will see this error returned by the API. The Cloudflare dashboard will not allow you to create more objects. See the example below:
+You will receive this error if you attempt to create more objects (monitors, pools, or origins) than are included in your plan.
 
-#### Dashboard
+If using the dashboard, you will not be able to create additional objects.
 
-![](../static/images/troubleshooting-1.png)
-
-#### API
+If you're using the **Cloudflare API**, you will receive this error message.
 
 ```
 {
