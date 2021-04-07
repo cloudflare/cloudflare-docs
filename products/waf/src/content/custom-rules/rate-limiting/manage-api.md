@@ -38,7 +38,7 @@ curl -X PUT \
         "characteristics": [
           "cf.colo.id",
           "ip.src",
-          "http.request.headers[\"X-API-Key\"]"
+          "http.request.headers[\"x-api-key\"]"
         ],
         "period": 60,
         "requests_per_period": 100,
@@ -69,7 +69,7 @@ header: Response
         "ratelimit": {
           "characteristics": [
             "cf.colo.id",
-            "http.request.headers[\"X-API-Key\"]",
+            "http.request.headers[\"x-api-key\"]",
             "ip.src"
           ],
           "period": 60,
