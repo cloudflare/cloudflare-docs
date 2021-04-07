@@ -1,5 +1,6 @@
 ---
 order: 11
+type: overview
 ---
 
 # Determining the request rate

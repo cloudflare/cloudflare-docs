@@ -1,5 +1,6 @@
 ---
 order: 15
+type: overview
 ---
 
 # Manage Rate Limiting Rules via API

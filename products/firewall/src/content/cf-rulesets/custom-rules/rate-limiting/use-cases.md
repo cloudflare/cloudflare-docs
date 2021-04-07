@@ -30,7 +30,7 @@ Rule characteristics:
 
 ## Example 2
 
-The following rule performs rate limiting on incoming requests with a given base URI path, counting on the IP address and the provided API key.
+The following rule performs rate limiting on incoming requests with a given base URI path, incrementing on the IP address and the provided API key.
  
 <Example>
 

@@ -31,7 +31,7 @@ To create a new Rate Limiting Rule:
 
 1. Click the **Firewall** tile in the app bar, and then click the **Custom Rules** tab.
 
-1. Click **Create Rate Limiting** rule.
+1. Click **Create Rate Limiting rule**.
 
 1. In the **Create Firewall Rule** page that displays, enter a descriptive name for the rule in **Rule name**.
 
@@ -39,7 +39,7 @@ To create a new Rate Limiting Rule:
 
 1. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-1. Under **With the same...**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination of the characteristics you select will have their own counter to determine the request rate. Check [Determining the request rate](/cf-rulesets/custom-rules/rate-limiting/request-rate) for more information.
+1. Under **With the same...**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Check [Determining the request rate](/cf-rulesets/custom-rules/rate-limiting/request-rate) for more information.
 
 1. Under **And rate exceeds...**, define the rate limit and the time period to consider when determining the request rate.
 
