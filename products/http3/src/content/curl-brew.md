@@ -24,7 +24,8 @@ Run the following commands to install required dependencies and to build curl wi
 - Build curl with quiche:
 
   ```sh
-  $ brew install --HEAD -s https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
+  $ curl -O https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
+  $ brew install --HEAD -s curl.rb
   ```
 
 At the end curl binary will be installed on "/usr/local/opt/curl/bin",
