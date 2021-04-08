@@ -66,6 +66,17 @@ let [client, server] = Object.values(new WebsocketPair())
 
 Close the WebSocket connection.
 
+#### Parameters
+
+<Definitions>
+
+- <Code>code<ParamType>integer</ParamType></Code> <PropMeta>optional</PropMeta>
+  - An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
+- <Code>reason<ParamType>string</ParamType></Code> <PropMeta>optional</PropMeta>
+  - A human-readable string indicating why the WebSocket connection was closed.
+
+</Definitions>
+
 ### send
 
 - <Code>send(message<ParamType>string</ParamType>)</Code>
