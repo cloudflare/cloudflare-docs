@@ -4,12 +4,6 @@ order: 210
 
 # Manage Transform Rules
 
-<Aside type="warning" header="Important">
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 **Transform Rules** is a feature of **Rules** in the Cloudflare dashboard.
 
 As depicted in the image below, the **Transform Rules** dashboard interface lets you:
