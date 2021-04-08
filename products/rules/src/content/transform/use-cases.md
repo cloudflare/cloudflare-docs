@@ -4,12 +4,6 @@ order: 220
 
 # Common use cases
 
-<Aside type="warning" header="Important">
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 The following common use cases illustrate how to perform rewrites of URL components with Transform Rules.
 
 ## Rewrite path of welcome page for United Kingdom and Portugal visitors
