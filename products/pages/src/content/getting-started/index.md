@@ -16,7 +16,7 @@ You'll be signing up for a Cloudflare account. You may also want a custom domain
 
 ### Sign in to Cloudflare Pages
 
-To begin, go to https://pages.dev and sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
+To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
 
 ### Connect to GitHub
 
