@@ -37,11 +37,11 @@ The **Rules List** gives you an overview of the configured Transform Rules for t
 
 ![Transform Rules tab](../static/transform/overview.png)
 
-## Entitlements
+## Availability
 
 Cloudflare Transform Rules are available to all customers. Keep in mind that support for regular expressions is based on your plan type.
 
-This table outlines the Transform Rules features and entitlements available with each customer plan:
+This table outlines the Transform Rules features available with each customer plan:
 
 <TableWrap>
 
