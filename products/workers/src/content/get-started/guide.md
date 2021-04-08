@@ -88,7 +88,7 @@ route = ""
 zone_id = ""
 ```
 
-Visit the [Starters](/starters) page to see a complete list of our recommended starter templates.
+Visit the [Quick Starts](/quickstarts) page to see a complete list of our recommended starter templates.
 
 For example, to build a Workers project in TypeScript, you would instead run:
 
