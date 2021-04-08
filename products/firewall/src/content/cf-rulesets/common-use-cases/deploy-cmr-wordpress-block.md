@@ -19,27 +19,67 @@ Follow the steps below to deploy a Managed Ruleset and override rules for a spec
 
 The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to execute the steps in a single `PUT` request.
 
-* Add a rule to the ruleset of the `http_request_firewall_managed` Phase that applies the **Cloudflare Managed Ruleset** to requests for `example.com`.
+* Add a rule to the ruleset of the `http_request_firewall_managed` Phase that applies the **Cloudflare Managed Ruleset**.
 * Override rules with the `wordpress` tag to set the action to `block`. All other rules use the default action provided by the ruleset issuer.
+
+<details>
+<summary>Example: Use tag overrides to set WordPress rules to Block at the zone level</summary>
 
 ```json
 curl -X PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
-    "rules": [
+  "rules": [
     {
-        "action": "execute",
-        "expression": "cf.zone.name eq \"example.com\"",
-        "action_parameters": {
-            "id": "{managed-ruleset-id}",
-            "overrides": {
-                "categories": [
-                {
-                    "category": "wordpress",
-                    "action": "block"
-                }]
+      "action": "execute",
+      "expression": "true",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}",
+        "overrides": {
+          "categories": [
+            {
+              "category": "wordpress",
+              "action": "block"
             }
+          ]
         }
-    }]
+      }
+    }
+  ]
 }'
 ```
+
+</details>
+
+<details>
+<summary>Example: Use tag overrides to set WordPress rules to Block at the account level</summary>
+
+```json
+curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
+  "rules": [
+    {
+      "action": "execute",
+      "expression": "cf.zone.name eq \"example.com\"",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}",
+        "overrides": {
+          "categories": [
+            {
+              "category": "wordpress",
+              "action": "block"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}'
+```
+
+</details>
