@@ -7,7 +7,7 @@ WebSockets allow you to communicate in real-time with your Cloudflare Workers se
 ## Constructor
 
 ```js
-// { 0: <Websocket>, 1: <Websocket> }
+// { 0: <WebSocket>, 1: <WebSocket> }
 let websocketPair = new WebsocketPair()
 ```
 
@@ -62,7 +62,7 @@ let [client, server] = Object.values(new WebsocketPair())
 
 ### close
 
-- <Code>close()</Code>
+- <Code>close(code<ParamType>number</ParamType>, reason<ParamType>string</ParamType>)</Code>
 
 Close the WebSocket connection.
 

@@ -97,6 +97,6 @@ For an example of this in practice, see the [`websocket-template`](https://githu
 
 ## Durable Objects and WebSocket state
 
-WebSockets are effectively stateless, meaning that they can't practically be used for full applications or anything that requires broader coordination of states between clients. 
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you'll need to create a Durable Object so clients send messages to a single-point-of-coordination. 
 
 The solution to this is _Durable Objects_, our coordinated state tool for Cloudflare Workers, which is often used in parallel with WebSockets to effectively allow WebSockets to be re-instantiated with persistent state over multiple clients and connections. Check out our [Durable Objects](/learning/using-durable-objects) learning page to get started.
