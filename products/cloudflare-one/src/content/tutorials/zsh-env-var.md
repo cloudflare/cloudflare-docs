@@ -8,7 +8,7 @@ difficulty: Advanced
 
 You can use [Argo Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections.
 
-You can also secure those applications with [Cloudflare Access](/applications/self-hosted-apps). With Cloudflare Access, you can build Zero Trust rules which restrict who can reach your application based on signals like identity, multifactor method, device posture, and geography.
+You can also secure those applications with [Cloudflare Access](/applications/configure-apps/self-hosted-apps). With Cloudflare Access, you can build Zero Trust rules which restrict who can reach your application based on signals like identity, multifactor method, device posture, and geography.
 
 When users authenticate to the applications secured by Cloudflare Access, Cloudflare generates a JSON Web Token (JWT) that contains the user's information and permits the user to reach the application. In web-based use cases, the browser stores the JWT as a cookie.
 
@@ -37,7 +37,7 @@ $ cloudflare access login https://jira.company.com
 
 `cloudflared` will print a URL that you can visit in a browser to authenticate to Cloudflare Access. If you are using a headless system, you can visit the URL in a different machine with a browser and the login will still return the JWT to `cloudflared`.
 
-```sh
+```text
 Please open the following URL and log in with your Cloudflare account:
 
 <URL>
@@ -56,12 +56,12 @@ If you have an application where you frequently need to request a token, you can
 If you are using the Z shell, edit your existing `~/.zshrc` file or create one for the first time.
 
 ```sh
-vim ~/.zshrc
+$ vim ~/.zshrc
 ```
 
 You can add the following function to your file, replacing `https://jira.company.com` with the application you need. You can also rename the function to something shorter or more applicable to your application.
 
-```sh
+```bash
 function login-jira() {
   export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN
@@ -84,7 +84,7 @@ vim ~/.bashrc
 
 You can add the following function to your file, replacing `https://jira.company.com` with the application you need. You can also rename the function to something shorter or more applicable to your application.
 
-```sh
+```bash
 function login-jira() {
   export JIRA_TOKEN=$(cloudflared access login https://jira.cfops.it/ | sed '/^[[:space:]]*$/d' | tail -n 1)
   echo $JIRA_TOKEN

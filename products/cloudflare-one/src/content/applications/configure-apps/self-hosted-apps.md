@@ -2,20 +2,7 @@
 order: 1
 ---
 
-# Web applications
-
-You can protect two types of web applications: SaaS and self-hosted.
-
-**SaaS applications** consist of applications your team relies on that are not hosted by your organization. Examples include Salesforce and Workday. To secure SaaS applications, you must integrate Cloudflare Access with the SaaS application's SSO configuration.
-
-**Self-hosted applications** consist of internal applications that you host in your own environment. These can the data center versions of tools like the Atlassian suite or applications created by your own team. To secure self-hosted applications, you must use Cloudflare's authoritative DNS and [connect the application](/connections/connect-apps) to Cloudflare.
-
-<ButtonGroup>
-  <Button type="primary" href="/applications/configure-apps/saas-apps/">Guide to SaaS applications</Button>
-  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Guide to self-hosted applications</Button>
-</ButtonGroup>
-
-## Protect self-hosted applications
+# Self-hosted applications
 
 <Aside>
 
@@ -52,6 +39,10 @@ The session duration will determine the minimum frequency a user will be prompte
 ![Set application name](../../static/documentation/applications/application-name.png)
 
 5. From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
+
+<Aside>
+  When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the <a href="/applications/configure-apps/app-paths#using-wildcards-in-subdomains-and-paths">Application paths</a> page.
+</Aside>
 
 6. Scroll down to the **Application logo** card to configure your application logo.
 To add a custom logo, click **Custom** and input a link to your desired image.

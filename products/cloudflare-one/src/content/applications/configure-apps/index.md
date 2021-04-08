@@ -1,12 +1,10 @@
 ---
 order: 0
-type: overview
-hideChildren: true
 ---
 
 <ContentColumn>
 
-# Web applications
+# Add web applications
 
 You can protect two types of web applications: SaaS and self-hosted.
 
@@ -14,9 +12,7 @@ You can protect two types of web applications: SaaS and self-hosted.
 
 **Self-hosted applications** consist of internal applications that you host in your own environment. These can be the data center versions of tools like the Atlassian suite or applications created by your own team. To secure self-hosted applications, you must use Cloudflare's authoritative DNS and [connect the application](/connections/connect-apps) to Cloudflare.
 
-<ButtonGroup>
-  <Button type="primary" href="/applications/configure-apps/saas-apps/">Guide to SaaS applications</Button>
-  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Guide to self-hosted applications</Button>
-</ButtonGroup>
+<DirectoryListing path="/applications/configure-apps"/>
+
 
 </ContentColumn>

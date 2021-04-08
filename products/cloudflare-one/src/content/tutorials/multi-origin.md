@@ -6,14 +6,16 @@ difficulty: Advanced
 
 # Connect multiple HTTP origins
 
-You can use [Argo Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections. You can deploy a single instance of `cloudflared` to proxy traffic to multiple destinations for multiple hostnames.
+You can use [Argo Tunnel](/connections/connect-apps) to connect one or more applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections. Instead of pointing a DNS record to a public IP address and relying on IP-based network firewall rules, Argo Tunnel ensures traffic to your origin server passes through Cloudflare's network where firewall or Zero Trust rules can be applied.
+
+You can deploy a single instance of `cloudflared` to proxy traffic to a single service with a single hostname or multiple destinations for multiple hostnames.
 
 **🗺️ This tutorial covers how to:**
 
 * Start a secure, outbound-only, connection from a machine to Cloudflare for multiple applications
 * Give those applications hostnames where users can connect
 
-**⏲️ Time to complete: ~10 minutes**
+**⏲️ Time to complete: 10 minutes**
 
 ## Install `cloudflared`
 
@@ -30,7 +32,7 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 `$ cloudflared login`
 
-The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
+The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. The authentication is account-wide and you can use the same authentication flow for multiple hostnames in your account regardless of which you choose in this step.
 
 ![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
 
@@ -54,13 +56,13 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Configure `cloudflared`
 
-You can now [configure](/connections/connect-apps/configuration) `cloudflared` to route traffic to both applications for multiple hostnames using [ingress rules](/connections/connect-apps/configuration/ingress). You must use a configuration file to do so.
+You can now [configure](/connections/connect-apps/configuration) `cloudflared` to route traffic to both applications for one or many hostnames using [ingress rules](/connections/connect-apps/configuration/ingress).
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 
 `$ vim ~/.cloudflared/config.yml`
 
-The `tunnel` and `credentials-file` value can be copied from the output of the last command.
+The `tunnel` and `credentials-file` value can be copied from the output of the `tunnel create` command or by running `cloudflared tunnel list` and choosing the Tunnel you intend to use.
 
 ```yml
 tunnel: 5157d321-5933-4b30-938b-d889ca87e11b
@@ -90,7 +92,9 @@ At this point, you have created and configured your Argo Tunnel connection. You 
 
 `$ cloudflared tunnel run`
 
-## Create DNS records
+We recommend running `cloudflared` [as a service](/connections/connect-apps/run-tunnel/run-as-service) in production. You can also run `cloudflared` [with the Cloudflare Load Balancer](/tutorials/migrate-lb-tunnel) alongside traditional, IP-exposed, origin servers during a migration for a zero-downtime cutover.
+
+## Create or modify DNS records
 
 You can now [route traffic](/connections/connect-apps/routing-to-tunnel) to your Tunnel, and on to both applications, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
 
