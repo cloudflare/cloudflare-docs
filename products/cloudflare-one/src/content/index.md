@@ -22,7 +22,7 @@ Cloudflare for Teams replaces legacy security perimeters with our global edge, m
 * Block risky sites with custom blocklists and built-in threat intel
 * Enhance visibility and protection into SaaS applications
 
-**A fast and reliable [solution for remote browsing](https://developers.cloudflare.com/browser-isolation/).**
+**A fast and reliable solution for remote browsing.**
 
 * Execute all browser code in the cloud
 * Mitigate the impact of attacks
