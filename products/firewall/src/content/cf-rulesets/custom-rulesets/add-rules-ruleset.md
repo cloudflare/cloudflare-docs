@@ -1,7 +1,7 @@
 ---
 title: Add rules to a custom ruleset
 alwaysopen: true
-order: 752
+order: 762
 ---
 
 # Add rules to a custom ruleset
@@ -12,30 +12,49 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-To add rules to an existing custom ruleset, execute a PUT request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action. The rules use the same format as firewall rules.
+To add rules to an existing custom ruleset, execute a `PUT` request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action.
+
+<Aside type='info' header='Info'>
+
+When you modify a ruleset using a `PUT` request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules. 
+
+If you are updating several rules at once, use the `PUT` request described in this section. It allows you to make changes to several rules in bulk, while changing the version number of the updated rules and of the ruleset only once. However, if you are updating a single rule, consider using the [Update rule](/cf-rulesets/rulesets-api/update-rule) method instead.
+
+</Aside>
 
 The following request adds two rules to a custom ruleset.
 
 ```json
-curl -X "PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
-    -d '{
-        "rules": [{
-            "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score > 0",
-            "action": "challenge",
-            "description": "challenge GB and FR or based on IP Reputation"
-        },
-        {
-           "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-           "action": "challenge",
-           "description": "challenge not /api"
-        }]
+---
+header: Request
+---
+curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
+-d '{
+  "rules": [
+    {
+      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+      "action": "challenge",
+      "description": "challenge GB and FR or based on IP Reputation"
+    },
+    {
+      "expression": "not http.request.uri.path matches \"^/api/.*$\"",
+      "action": "challenge",
+      "description": "challenge not /api"
+    }
+  ]
 }'
-
 ```
 
-The response returns the `id` of the new rules:
+The response includes the rule ID of the new rules in the `id` field:
 
 ```json
+---
+header: Response
+---
+{
   "result": {
     "id": "{custom-ruleset-id}",
     "name": "Custom Ruleset 1",
@@ -46,10 +65,10 @@ The response returns the `id` of the new rules:
         "id": "{custom-rule-id-1}",
         "version": "1",
         "action": "challenge",
-        "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score \u003e 0",
+        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
         "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2020-11-18T23:23:00.876749Z",
-        "ref": "{custom-rule-id-1}",
+        "last_updated": "2021-03-18T18:25:08.122758Z",
+        "ref": "{custom-rule-ref-1}",
         "enabled": true
       },
       {
@@ -57,40 +76,56 @@ The response returns the `id` of the new rules:
         "version": "1",
         "action": "challenge",
         "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "challenge not /api"
-        "last_updated": "2020-11-18T23:23:00.876749Z",
-        "ref": "{custom-rule-id-2}",
+        "description": "challenge not /api",
+        "last_updated": "2021-03-18T18:25:08.122758Z",
+        "ref": "{custom-rule-ref-2}",
         "enabled": true
       }
-    ]
-  }
+    ],
+    "last_updated": "2021-03-18T18:25:08.122758Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-To update a rule, execute a PUT request to the custom ruleset. Include the `id` of the rule  you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version, and you must include the `id` for the rules you want to keep.
+## Update rules in a custom ruleset
 
-The following request edits a rule in a custom ruleset and updates the order of execution of the rules.
+To update one or more rules in a custom ruleset, execute a `PUT` request to the custom ruleset. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
+
+The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id-2}" \
-    -d'
-{
-        "rules": [
-          {
-            "id": "{custom-rule-id-2}",
-             "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-             "action": "js_challenge",
-             "description": "js_challenge not /api"
-        },
-          {
-            "id": "{custom-rule-id-1}"}]`}
+---
+header: Request
+---
+curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
+-d '{
+  "rules": [
+    {
+      "id": "{custom-rule-id-2}",
+      "expression": "not http.request.uri.path matches \"^/api/.*$\"",
+      "action": "js_challenge",
+      "description": "js_challenge when not /api"
+    },
+    {
+      "id": "{custom-rule-id-1}"
+    }
+  ]
 }'
-
 ```
 
 The response returns the modified custom ruleset. Note that the updated rule and ruleset version number increment.
 
 ```json
+---
+header: Response
+---
 {
   "result": {
     "id": "{custom-ruleset-id}",
@@ -103,8 +138,8 @@ The response returns the modified custom ruleset. Note that the updated rule and
         "version": "2",
         "action": "js_challenge",
         "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "js_challenge not /api",
-        "last_updated": "2020-11-09T10:48:04.057775Z",
+        "description": "js_challenge when not /api",
+        "last_updated": "2021-03-18T18:30:08.122758Z",
         "ref": "{custom-rule-id-2}",
         "enabled": true
       },
@@ -112,67 +147,20 @@ The response returns the modified custom ruleset. Note that the updated rule and
         "id": "{custom-rule-id-1}",
         "version": "1",
         "action": "challenge",
-        "expression": "(ip.geoip.country eq \"GB\" and ip.geoip.country eq \"FR\")  or cf.threat_score \u003e 0",
+        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
         "description": "challenge GB and FR or based on IP Reputation",
-        "last_updated": "2020-11-18T23:23:00.876749Z",
+        "last_updated": "2021-03-18T18:25:08.122758Z",
         "ref": "{custom-rule-id-1}",
         "enabled": true
       }
-    ]
-  }
+    ],
+    "last_updated": "2021-03-18T18:30:08.122758Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-The PUT request completely replaces the existing contents of the ruleset. If you omit an existing rule from the `rules[]` array, it will not appear in the new version of the ruleset.
-
-The following request updates a ruleset (`{custom-ruleset-id}`) that contains two rules: `{custom-rule-id-1}` and `{custom-rule-id-2}`.
-
-```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
-    -d'
-{
-        "rules": [{
-                "expression": "ip.src in {2001:DB8::/32}",
-                "action": "allow",
-                "description": "Do not challenge requests from office"
-        },
-		{
-                "id": "{custom-rule-id-2}"
-        }]
-}'
-```
-
-The PUT request adds a new rule (`{custom-rule-id-3}`), keeps one rule already in the ruleset (`{custom-rule-id-2}`), and deletes one existing rule (`{custom-rule-id-1}`):
-
-```json
-{
-  "result": {
-    "id": "f82ccda3d21f4a02825d3fe45b5e1c10",
-    "name": "Custom Ruleset 1",
-    "kind": "custom",
-    "version": "4",
-    "rules": [
-      {
-        "id": "{custom-rule-id-3}",
-        "version": "1",
-        "action": "allow",
-        "expression": "ip.src in {2001:DB8::/32}",
-        "description": "do not challenge login from office",
-        "last_updated": "2020-11-09T10:50:57.381574Z",
-        "ref": "d815135f604f400bbef0e51010f64a3b",
-        "enabled": true
-      },
-      {
-        "id": "{custom-rule-id-2}",
-        "version": "2",
-        "action": "js_challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "js_challenge not /api",
-        "last_updated": "2020-11-09T10:48:04.057775Z",
-        "ref": "0cf6e3f29fe743e7ae6587acf3e3c8fa",
-        "enabled": true
-      }
-    ]
-  }
-}
-```
+The `PUT` request completely replaces the existing contents of the ruleset. If you omit an existing rule from the `rules` array, it will not appear in the new version of the ruleset.

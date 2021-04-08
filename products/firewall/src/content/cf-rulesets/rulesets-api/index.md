@@ -12,7 +12,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-The Rulesets API provides an interface for managing the deployment of managed rulesets from your root ruleset. A managed ruleset contains a list of rules and actions. From the root ruleset, you configure rules to filter all traffic for your account and deploy managed rulesets for a specified domain.
+The Rulesets API provides an interface for managing and deploying rulesets.
 
 ## Get started
 
