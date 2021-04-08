@@ -33,8 +33,8 @@ When an incoming WebSocket request reaches the Workers function, it will contain
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get("Upgrade")
-  if (!upgradeHeader || upgradeHeader !== "websocket") {
-    return new Response("Expected websocket", { status: 400 })
+  if (upgradeHeader !== "websocket") {
+    return new Response("Expected Upgrade: websocket", { status: 426 })
   }
 }
 ```
