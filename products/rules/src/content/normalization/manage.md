@@ -7,7 +7,7 @@ order: 31
 
 Use the **Rules** app in the Cloudflare dashboard to control [URL Normalization](/normalization) settings.
 
-![Configure Normalization](../static/normalization/url-normalization-settings-link.png)
+![Configure Normalization](../static/normalization/url-normalization-settings.png)
 
 Do the following:
 
@@ -15,13 +15,9 @@ Do the following:
 
 1. Select the **Websites** tab and choose the site for which you want to configure URL Normalization.
 
-1. To open Transform Rules from the dashboard, click the **Rules** tile in the app bar, and then click the **Transform Rules** tab.
+1. Click the **Rules** tile in the app bar, and then click the **Settings** tab.
 
-1. Click the **Configure your settings** link in the **Transform rules** card.
-
-1. Enable or disable the [available URL Normalization settings](#available-settings) and click **Back**.
-
-    ![Configure Normalization](../static/normalization/url-normalization-settings-card.png)
+1. Under **Configure Normalization**, enable or disable the [available URL Normalization settings](#available-settings).
 
 ## Available settings
 
