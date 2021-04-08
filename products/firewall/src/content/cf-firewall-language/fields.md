@@ -723,7 +723,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
 
 <Aside type='warning' header='Important'>
 
-Access to HTTP body fields requires a Cloudflare Enterprise plan.
+Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
