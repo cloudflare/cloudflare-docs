@@ -13,8 +13,8 @@ When you enable URL Normalization, all incoming URLs are normalized before they 
 Cloudflare URL Normalization is similar to [rfc3986](https://www.ietf.org/rfc/rfc3986.txt), and modifies separators, encoded elements, and literal bytes in incoming URLs as follows:
 
 * The following unreserved characters are percent decoded:
-    * Alphabetical characters: `a`-`z`, `A`-`Z` (`%41`-`%5A` and `%61`-`%7A`)
-    * Digit characters: `0`-`9` (`%30`-`%39`)
+    * Alphabetical characters: `a`-`z`, `A`-`Z` (decoded from `%41`-`%5A` and `%61`-`%7A`)
+    * Digit characters: `0`-`9` (decoded from `%30`-`%39`)
     * hyphen `-` (`%2D`), period `.` (`%2E`), underscore `_` (`%5F`), and tilde `~` (`%7E`)
 * These reserved characters are not encoded or decoded: `: / ? # [ ] @ ! $ & ' ( ) * + , ; =`
 * Other characters, for example literal byte values, are percent encoded.
