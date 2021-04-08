@@ -61,13 +61,17 @@ Use this API method to set the rules of a ruleset. You must include all the rule
 header: Request
 ---
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
 -d '{
-    "rules": [{
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "action": "challenge",
-        "description": "challenge not /api"
-    }]
+  "rules": [
+    {
+      "expression": "not http.request.uri.path matches \"^/api/.*$\"",
+      "action": "challenge",
+      "description": "challenge not /api"
+    }
+  ]
 }'
 ```
 
@@ -75,13 +79,14 @@ curl -X PUT \
 ---
 header: Response
 ---
-"result": {
+{
+  "result": {
     "id": "{ruleset-id}",
     "name": "Custom Ruleset 1",
     "kind": "custom",
     "version": "2",
     "rules": [
-    {
+      {
         "id": "{custom-rule-id-2}",
         "version": "1",
         "action": "challenge",
@@ -90,9 +95,14 @@ header: Response
         "last_updated": "2021-03-18T18:25:08.122758Z",
         "ref": "{custom-rule-ref-2}",
         "enabled": true
-    }],
+      }
+    ],
     "last_updated": "2021-03-18T18:25:08.122758Z",
     "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -107,17 +117,20 @@ This example deploys a Managed Ruleset to the zone-level `http_request_firewall_
 header: Request
 ---
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
-    "rules": [
+  "rules": [
     {
-        "action": "execute",
-        "action_parameters": {
-            "id": "{managed-ruleset-id}"
-        },
-        "expression": "true",
-        "description": "Execute Cloudflare Managed Ruleset on my Phase ruleset"
-    }]
+      "action": "execute",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}"
+      },
+      "expression": "true",
+      "description": "Execute Cloudflare Managed Ruleset on my Phase ruleset"
+    }
+  ]
 }'
 ```
 
@@ -126,34 +139,34 @@ curl -X PUT \
 header: Response
 ---
 {
-    "result": {
-        "id": "{phase-ruleset-id}",
-        "name": "Zone-level Phase ruleset",
-        "description": "",
-        "kind": "zone",
-        "version": "4",
-        "rules": [
-            {
-                "id": "{rule-id-1}",
-                "version": "1",
-                "action": "execute",
-                "action_parameters": {
-                    "id": "{managed-ruleset-id}",
-                    "version": "latest"
-                },
-                "expression": "true",
-                "description": "Execute Cloudflare Managed Ruleset on my Phase ruleset",
-                "last_updated": "2021-03-21T11:02:08.769537Z",
-                "ref": "{rule-ref-1}",
-                "enabled": true
-            }
-        ],
+  "result": {
+    "id": "{phase-ruleset-id}",
+    "name": "Zone-level Phase ruleset",
+    "description": "",
+    "kind": "zone",
+    "version": "4",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}",
+          "version": "latest"
+        },
+        "expression": "true",
+        "description": "Execute Cloudflare Managed Ruleset on my Phase ruleset",
         "last_updated": "2021-03-21T11:02:08.769537Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{rule-ref-1}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-03-21T11:02:08.769537Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -181,9 +194,11 @@ You cannot update the description or the rules in a Managed Ruleset. You can onl
 header: Request
 ---
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
 -d '{ 
-    "description": "My custom ruleset"
+  "description": "My custom ruleset"
 }'
 ```
 
@@ -192,21 +207,21 @@ curl -X PUT \
 header: Response
 ---
 {
-    "result": {
-        "id": "{ruleset-id}",
-        "name": "Custom Ruleset 1",
-        "description": "My custom ruleset",
-        "kind": "custom",
-        "version": "2",
-        "rules": [
-            // (...)
-        ],
-        "last_updated": "2021-03-20T10:49:11.006109Z",
-        "phase": "http_request_firewall_custom"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Custom Ruleset 1",
+    "description": "My custom ruleset",
+    "kind": "custom",
+    "version": "2",
+    "rules": [
+      // (...)
+    ],
+    "last_updated": "2021-03-20T10:49:11.006109Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

@@ -18,12 +18,15 @@ The following `POST` request creates a new custom ruleset. Set the `kind` field 
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
+curl -X POST \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
 -d '{
-    "name": "Custom Ruleset 1",
-    "description": "My First Custom Ruleset",
-    "kind": "custom",
-    "phase": "http_request_firewall_custom"
+  "name": "Custom Ruleset 1",
+  "description": "My First Custom Ruleset",
+  "kind": "custom",
+  "phase": "http_request_firewall_custom"
 }'
 ```
 
@@ -34,19 +37,19 @@ The response includes the ruleset ID of the new custom ruleset in the `id` field
 header: Response
 ---
 {
-    "result": {
-        "id": "f82ccda3d21f4a02825d3fe45b5e1c10",
-        "name": "Custom Ruleset 1",
-        "description": "My First Custom Ruleset",
-        "kind": "custom",
-        "version": "1",
-        "last_updated": "2021-03-09T10:27:30.636197Z",
-        "phase": "http_request_firewall_custom"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+  "result": {
+    "id": "f82ccda3d21f4a02825d3fe45b5e1c10",
+    "name": "Custom Ruleset 1",
+    "description": "My First Custom Ruleset",
+    "kind": "custom",
+    "version": "1",
+    "last_updated": "2021-03-09T10:27:30.636197Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-After creating a custom ruleset, you can [add rules to a custom ruleset](/cf-rulesets/custom-rulesets/add-rules-ruleset/).
+After creating a custom ruleset, you can [add rules to a custom ruleset](/cf-rulesets/custom-rulesets/add-rules-ruleset).

@@ -81,25 +81,28 @@ Use the `rules` parameter to supply a list of rules that define the ruleset. For
 
 This example creates a zone-level Phase ruleset at the `http_request_firewall_managed` Phase with a single rule that deploys a Managed Ruleset.
 
-```bash
+```json
 ---
 header: Request
 ---
 curl -X POST \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
 -d '{
-    "name": "Zone-level Phase ruleset",
-    "kind": "zone",
-    "description": "This ruleset deploys a Managed Ruleset.",
-    "rules": [
+  "name": "Zone-level Phase ruleset",
+  "kind": "zone",
+  "description": "This ruleset deploys a Managed Ruleset.",
+  "rules": [
     {
-        "action": "execute",
-        "expression": "true",
-        "action_parameters": {
-            "id": "{managed-ruleset-id}"
-        }
-    }],
-    "phase": "http_request_firewall_managed"
+      "action": "execute",
+      "expression": "true",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}"
+      }
+    }
+  ],
+  "phase": "http_request_firewall_managed"
 }'
 ```
 
@@ -108,29 +111,30 @@ curl -X POST \
 header: Response
 ---
 {
-    "result": {
-        "id": "{ruleset-id}",
-        "name": "Zone-level Phase ruleset",
-        "description": "This ruleset deploys a Managed Ruleset.",
-        "kind": "zone",
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Zone-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "kind": "zone",
+    "version": "1",
+    "rules": [
+      {
+        "id": "{rule-id}",
         "version": "1",
-        "rules": [
-        {
-            "id": "{rule-id}",
-            "version": "1",
-            "action": "execute",
-            "expression": "true",
-            "action_parameters": {
-                "id": "{managed-ruleset-id}"
-            },
-            "last_updated": "2021-03-17T15:42:37.917815Z"
-        }],
-        "last_updated": "2021-03-17T15:42:37.917815Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
+      }
+    ],
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -143,17 +147,20 @@ This example creates a custom ruleset in the `http_request_firewall_custom` Phas
 header: Request
 ---
 curl -X POST \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
 -d '{
-    "name": "Example custom ruleset",
-    "kind": "custom",
-    "description": "Example ruleset description",
-    "rules": [
+  "name": "Example custom ruleset",
+  "kind": "custom",
+  "description": "Example ruleset description",
+  "rules": [
     {
-        "action": "log",
-        "expression": "cf.zone.name eq \"example.com\""
-    }],
-    "phase": "http_request_firewall_custom"
+      "action": "log",
+      "expression": "cf.zone.name eq \"example.com\""
+    }
+  ],
+  "phase": "http_request_firewall_custom"
 }'
 ```
 
@@ -162,25 +169,26 @@ curl -X POST \
 header: Response
 ---
 {
-    "result": {
-        "id": "{ruleset-id}",
-        "name": "Example custom ruleset",
-        "description": "Example ruleset description",
-        "kind": "custom",
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Example custom ruleset",
+    "description": "Example ruleset description",
+    "kind": "custom",
+    "version": "1",
+    "rules": [
+      {
+        "id": "{rule-id}",
         "version": "1",
-        "rules": [
-        {
-            "id": "{rule-id}",
-            "version": "1",
-            "action": "log",
-            "expression": "cf.zone.name eq \"example.com\"",
-            "last_updated": "2021-03-17T15:42:37.917815Z"
-        }],
-        "last_updated": "2021-03-17T15:42:37.917815Z",
-        "phase": "http_request_firewall_custom"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "action": "log",
+        "expression": "cf.zone.name eq \"example.com\"",
+        "last_updated": "2021-03-17T15:42:37.917815Z"
+      }
+    ],
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```

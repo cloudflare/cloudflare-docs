@@ -25,22 +25,26 @@ Execute a `PUT` request to deploy the custom ruleset. The request creates rules 
 header: Request
 ---
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
 -d '{
-    "rules": [{
-        "action":"execute",
-        "description":"Add custom ruleset",
-        "expression": "cf.zone.name == \"example.com\"",
-        "action_parameters": {
-            "id":"{custom-ruleset-id}"
-        }
+  "rules": [
+    {
+      "action":"execute",
+      "description":"Add custom ruleset",
+      "expression": "cf.zone.name == \"example.com\"",
+      "action_parameters": {
+        "id":"{custom-ruleset-id}"
+      }
     },
     {
-        "id": "{existing-phase-rule-id-1}"
+      "id": "{existing-phase-rule-id-1}"
     },
     {
-        "id": "{existing-phase-rule-id-2}"
-    }]
+      "id": "{existing-phase-rule-id-2}"
+    }
+  ]
 }'
 ```
 
@@ -51,54 +55,58 @@ The response displays the rules in your Phase.
 header: Response
 ---
 {
-    "result": {
-        "id": "{account-phase-ruleset-id}",
-        "name": "http_request_firewall_custom Phase Ruleset for my account",
-        "description":"Add custom ruleset",
-        "kind": "root",
-        "version": "3",
-        "rules": [
-        {
-            "id": "{phase-rule-id}",
-            "version": "1",
-            "action": "execute",
-            "action_parameters": {
-                "id": "{custom-ruleset-id}",
-                "version": "latest"
-            },
-            "expression": "cf.zone.name == \"example.com\"",
-            "last_updated": "2021-03-18T18:35:14.135697Z",
-            "ref": "{root-rule-id}",
-            "enabled": true
+  "result": {
+    "id": "{account-phase-ruleset-id}",
+    "name": "http_request_firewall_custom Phase Ruleset for my account",
+    "description":"Add custom ruleset",
+    "kind": "root",
+    "version": "3",
+    "rules": [
+      {
+        "id": "{phase-rule-id}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{custom-ruleset-id}",
+          "version": "latest"
         },
-        {
-            "id": "{existing-phase-rule-id-1}",
-            "version": "1",
-            "action": "execute",
-            "action_parameters": {
-                "id": "{id-of-ruleset-that-existing-rule-id-1-deploys}",
-                "version": "latest"
-            },
-            "expression": "cf.zone.name eq  \"example.com\"",
-            "last_updated": "2021-03-16T15:51:49.180378Z",
-            "ref": "{existing-phase-rule-ref-1}",
-            "enabled": true
-        },
-        {
-            "id": "{existing-phase-rule-id-2}",
-            "version": "1",
-            "action": "execute",
-            "action_parameters": {
-                "id": "{id-of-ruleset-that-existing-rule-id-2-deploys}",
-                "version": "latest"
-            },
-            "expression": "cf.zone.name eq  \"example.com\"",
-            "last_updated": "2021-03-16T15:50:29.861157Z",
-            "ref": "{existing-phase-rule-ref}",
-            "enabled": true
-        }],
+        "expression": "cf.zone.name == \"example.com\"",
         "last_updated": "2021-03-18T18:35:14.135697Z",
-        "phase": "http_request_firewall_custom"
-    }
+        "ref": "{root-rule-id}",
+        "enabled": true
+      },
+      {
+        "id": "{existing-phase-rule-id-1}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{id-of-ruleset-that-existing-rule-id-1-deploys}",
+          "version": "latest"
+        },
+        "expression": "cf.zone.name eq  \"example.com\"",
+        "last_updated": "2021-03-16T15:51:49.180378Z",
+        "ref": "{existing-phase-rule-ref-1}",
+        "enabled": true
+      },
+      {
+        "id": "{existing-phase-rule-id-2}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{id-of-ruleset-that-existing-rule-id-2-deploys}",
+          "version": "latest"
+        },
+        "expression": "cf.zone.name eq  \"example.com\"",
+        "last_updated": "2021-03-16T15:50:29.861157Z",
+        "ref": "{existing-phase-rule-ref}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-03-18T18:35:14.135697Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```

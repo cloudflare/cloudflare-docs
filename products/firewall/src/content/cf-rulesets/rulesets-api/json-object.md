@@ -18,21 +18,22 @@ A fully populated ruleset object has the following JSON structure.
 
 ```json
 {
-    "id": "ruleset-id",
-    "name": "Example Ruleset",
-    "description": "Description of Example Ruleset",
-    "kind": "custom",
-    "version": "2",
-    "phase": "http_request_firewall_custom", 
-    "rules": [
+  "id": "ruleset-id",
+  "name": "Example Ruleset",
+  "description": "Description of Example Ruleset",
+  "kind": "custom",
+  "version": "2",
+  "phase": "http_request_firewall_custom", 
+  "rules": [
     {
-        "id": "rule-id",
-        "version": "2",
-        "action": "block",
-        "expression": "cf.zone.name eq \"example.com\" ",
-        "last_updated": "2020-07-20T10:44:29.124515Z"
-    }],
-    "last_updated": "2020-07-20T10:44:29.124515Z"
+      "id": "rule-id",
+      "version": "2",
+      "action": "block",
+      "expression": "cf.zone.name eq \"example.com\" ",
+      "last_updated": "2020-07-20T10:44:29.124515Z"
+    }
+  ],
+  "last_updated": "2020-07-20T10:44:29.124515Z"
 }
 ```
 
@@ -116,15 +117,15 @@ A fully populated rule JSON object has the following structure:
 
 ```json
 {
-    "id": "rule-id",
-    "version": "2",
-    "action": "block",
-    "categories": [
-        "wordpress"
-    ],
-    "expression": "cf.zone.name eq \"example.com\"",
-    "last_updated": "2020-07-20T10:44:29.124515Z",
-    "enabled": true    
+  "id": "rule-id",
+  "version": "2",
+  "action": "block",
+  "categories": [
+    "wordpress"
+  ],
+  "expression": "cf.zone.name eq \"example.com\"",
+  "last_updated": "2020-07-20T10:44:29.124515Z",
+  "enabled": true    
 }
 ```
 

@@ -55,9 +55,9 @@ The result does not include the rules in the ruleset (the `rules` field is `null
 header: Request
 ---
 curl -X GET \
-    -H "X-Auth-Email: user@cloudflare.com" \
-    -H "X-Auth-Key: REDACTED" \
-    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
 ```
 
 ```json
@@ -65,31 +65,29 @@ curl -X GET \
 header: Response
 ---
 {
-    "result": [
-        {
-            "id": "{phase-ruleset-id}",
-            "name": "Account-level Phase Ruleset 1",
-            "description": "",
-            "kind": "root",
-            "version": "5",
-            "rules": null,
-            "last_updated": "2021-03-18T18:30:08.122758Z",
-            "phase": "http_request_firewall_managed"
-        },
-        {
-            "id": "{managed-ruleset-id}",
-            "name": "Cloudflare Managed Ruleset",
-            "description": "Managed Ruleset created by Cloudflare",
-            "kind": "managed",
-            "version": "4",
-            "rules": null,
-            "last_updated": "2021-03-19T16:54:32.942986Z",
-            "phase": "http_request_firewall_managed"
-        }
-    ],
-    "success": true,
-    "errors": [],
-    "messages": []
+  "result": [
+    {
+      "id": "{phase-ruleset-id}",
+      "name": "Account-level Phase Ruleset 1",
+      "description": "",
+      "kind": "root",
+      "version": "5",
+      "last_updated": "2021-03-18T18:30:08.122758Z",
+      "phase": "http_request_firewall_managed"
+    },
+    {
+      "id": "{managed-ruleset-id}",
+      "name": "Cloudflare Managed Ruleset",
+      "description": "Managed Ruleset created by Cloudflare",
+      "kind": "managed",
+      "version": "4",
+      "last_updated": "2021-03-19T16:54:32.942986Z",
+      "phase": "http_request_firewall_managed"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -147,9 +145,9 @@ The API returns a 404 HTTP Status Code under these conditions:
 header: Request
 ---
 curl -X GET \
-    -H "X-Auth-Email: user@cloudflare.com" \
-    -H "X-Auth-Key: REDACTED" \
-    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}"
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}"
 ```
 
 ```json
@@ -157,37 +155,37 @@ curl -X GET \
 header: Response
 ---
 {
-    "result": {
-        "id": "{managed-ruleset-id}",
-        "name": "Cloudflare Managed Ruleset",
-        "description": "Managed Ruleset created by Cloudflare",
-        "kind": "managed",
-        "version": "4",
-        "rules": [
-            {
-                "id": "{rule-id-1}",
-                "version": "3",
-                "action": "log",
-                "categories": [
-                    "cve-2014-5265",
-                    "cve-2014-5266",
-                    "cve-2014-5267",
-                    "dos",
-                    "drupal",
-                    "wordpress"
-                ],
-                "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-                "last_updated": "2021-03-19T16:54:32.942986Z",
-                "ref": "{rule-ref-1}",
-                "enabled": true
-            }
+  "result": {
+    "id": "{managed-ruleset-id}",
+    "name": "Cloudflare Managed Ruleset",
+    "description": "Managed Ruleset created by Cloudflare",
+    "kind": "managed",
+    "version": "4",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "3",
+        "action": "log",
+        "categories": [
+          "cve-2014-5265",
+          "cve-2014-5266",
+          "cve-2014-5267",
+          "dos",
+          "drupal",
+          "wordpress"
         ],
+        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2021-03-19T16:54:32.942986Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{rule-ref-1}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-03-19T16:54:32.942986Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -238,9 +236,9 @@ When the specified Phase ruleset does not exist, this API method returns an empt
 header: Request
 ---
 curl -X GET \
-    -H "X-Auth-Email: user@cloudflare.com" \
-    -H "X-Auth-Key: REDACTED" \
-    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}/versions"
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}/versions"
 ```
 
 ```json
@@ -248,31 +246,29 @@ curl -X GET \
 header: Response
 ---
 {
-    "result": [
-        {
-            "id": "{custom-ruleset-id}",
-            "name": "Custom Ruleset 1",
-            "description": "My custom ruleset",
-            "kind": "custom",
-            "version": "1",
-            "rules": null,
-            "last_updated": "2021-02-17T11:15:13.128705Z",
-            "phase": "http_request_firewall_custom"
-        },
-        {
-            "id": "{custom-ruleset-id}",
-            "name": "Custom Ruleset 1",
-            "description": "My updated custom ruleset",
-            "kind": "custom",
-            "version": "2",
-            "rules": null,
-            "last_updated": "2021-02-17T11:24:06.869326Z",
-            "phase": "http_request_firewall_custom"
-        }
-    ],
-    "success": true,
-    "errors": [],
-    "messages": []
+  "result": [
+    {
+      "id": "{custom-ruleset-id}",
+      "name": "Custom Ruleset 1",
+      "description": "My custom ruleset",
+      "kind": "custom",
+      "version": "1",
+      "last_updated": "2021-02-17T11:15:13.128705Z",
+      "phase": "http_request_firewall_custom"
+    },
+    {
+      "id": "{custom-ruleset-id}",
+      "name": "Custom Ruleset 1",
+      "description": "My updated custom ruleset",
+      "kind": "custom",
+      "version": "2",
+      "last_updated": "2021-02-17T11:24:06.869326Z",
+      "phase": "http_request_firewall_custom"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -321,9 +317,9 @@ When the specified Phase ruleset does not exist, this API method returns returns
 header: Request
 ---
 curl -X GET \
-    -H "X-Auth-Email: user@cloudflare.com" \
-    -H "X-Auth-Key: REDACTED" \
-    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}"
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}"
 ```
 
 ```json
@@ -331,29 +327,29 @@ curl -X GET \
 header: Response
 ---
 {
-    "result": {
-        "id": "{custom-ruleset-id}",
-        "name": "Custom Ruleset 1",
-        "description": "My updated custom ruleset",
-        "kind": "custom",
-        "version": "2",
-        "rules": [
-            {
-                "id": "{rule-id-1}",
-                "version": "1",
-                "action": "challenge",
-                "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-                "last_updated": "2021-02-17T11:24:06.869326Z",
-                "ref": "{rule-ref-1}",
-                "enabled": true
-            }
-        ],
+  "result": {
+    "id": "{custom-ruleset-id}",
+    "name": "Custom Ruleset 1",
+    "description": "My updated custom ruleset",
+    "kind": "custom",
+    "version": "2",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "1",
+        "action": "challenge",
+        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
         "last_updated": "2021-02-17T11:24:06.869326Z",
-        "phase": "http_request_firewall_custom"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{rule-ref-1}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-02-17T11:24:06.869326Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -378,9 +374,9 @@ GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_cat
 header: Request
 ---
 curl -X GET \
-    -H "X-Auth-Email: user@cloudflare.com" \
-    -H "X-Auth-Key: REDACTED" \
-    "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_category/wordpress"
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_category/wordpress"
 ```
 
 ```json
@@ -388,51 +384,51 @@ curl -X GET \
 header: Response
 ---
 {
-    "result": {
-        "id": "{managed-ruleset-id}",
-        "name": "Cloudflare Managed Ruleset",
-        "description": "Managed Ruleset created by Cloudflare",
-        "kind": "managed",
-        "version": "4",
-        "rules": [
-            {
-                "id": "{rule-id-1}",
-                "version": "3",
-                "action": "log",
-                "categories": [
-                    "cve-2014-5265",
-                    "cve-2014-5266",
-                    "cve-2014-5267",
-                    "dos",
-                    "drupal",
-                    "wordpress"
-                ],
-                "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-                "last_updated": "2021-03-19T16:54:32.942986Z",
-                "ref": "{rule-ref-1}",
-                "enabled": true
-            },
-            {
-                "id": "{rule-id-2}",
-                "version": "3",
-                "action": "block",
-                "categories": [
-                    "broken-access-control",
-                    "cve-2018-12895",
-                    "wordpress"
-                ],
-                "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
-                "last_updated": "2021-03-19T16:54:32.942986Z",
-                "ref": "{rule-ref-2}",
-                "enabled": true
-            },
-            // (...)
-       ],
+  "result": {
+    "id": "{managed-ruleset-id}",
+    "name": "Cloudflare Managed Ruleset",
+    "description": "Managed Ruleset created by Cloudflare",
+    "kind": "managed",
+    "version": "4",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "3",
+        "action": "log",
+        "categories": [
+          "cve-2014-5265",
+          "cve-2014-5266",
+          "cve-2014-5267",
+          "dos",
+          "drupal",
+          "wordpress"
+        ],
+        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2021-03-19T16:54:32.942986Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{rule-ref-1}",
+        "enabled": true
+      },
+      {
+        "id": "{rule-id-2}",
+        "version": "3",
+        "action": "block",
+        "categories": [
+          "broken-access-control",
+          "cve-2018-12895",
+          "wordpress"
+        ],
+        "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+        "last_updated": "2021-03-19T16:54:32.942986Z",
+        "ref": "{rule-ref-2}",
+        "enabled": true
+      },
+      // (...)
+    ],
+    "last_updated": "2021-03-19T16:54:32.942986Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```

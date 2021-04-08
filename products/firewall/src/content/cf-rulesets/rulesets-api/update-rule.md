@@ -41,13 +41,14 @@ To update the definition of a rule, include the new rule definition in the reque
 header: Request
 ---
 curl -X PATCH \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
 -d '{
-    "action": "js_challenge",
-    "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-    "description": "challenge GB and FR or based on IP Reputation"
+  "action": "js_challenge",
+  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+  "description": "challenge GB and FR or based on IP Reputation"
 }'
-
 ```
 
 The response includes the complete ruleset after updating the rule.
@@ -57,39 +58,39 @@ The response includes the complete ruleset after updating the rule.
 header: Response
 ---
 {
-    "result": {
-        "id": "{ruleset-id}",
-        "name": "Custom Ruleset 1",
-        "description": "My first custom ruleset",
-        "kind": "custom",
-        "version": "11",
-        "rules": [
-            {
-                "id": "{rule-id-1}",
-                "version": "2",
-                "action": "js_challenge",
-                "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
-                "description": "challenge GB and FR or based on IP Reputation",
-                "last_updated": "2021-03-22T12:54:58.144683Z",
-                "ref": "rule-ref-1",
-                "enabled": true
-            },
-            {
-                "id": "{rule-id-2}",
-                "version": "1",
-                "action": "challenge",
-                "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-                "last_updated": "2020-11-23T11:36:24.192361Z",
-                "ref": "{rule-ref-2}",
-                "enabled": true
-            }
-        ],
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Custom Ruleset 1",
+    "description": "My first custom ruleset",
+    "kind": "custom",
+    "version": "11",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "2",
+        "action": "js_challenge",
+        "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score > 0",
+        "description": "challenge GB and FR or based on IP Reputation",
         "last_updated": "2021-03-22T12:54:58.144683Z",
-        "phase": "http_request_firewall_custom"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "rule-ref-1",
+        "enabled": true
+      },
+      {
+        "id": "{rule-id-2}",
+        "version": "1",
+        "action": "challenge",
+        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
+        "last_updated": "2020-11-23T11:36:24.192361Z",
+        "ref": "{rule-ref-2}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-03-22T12:54:58.144683Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -115,12 +116,12 @@ The following examples build upon the following (abbreviated) ruleset:
 
 ```json
 {
-    "rules": [
-        { "id": "{rule-id-1}" },
-        { "id": "{rule-id-2}" },
-        { "id": "{rule-id-3}" },
-        { "id": "{rule-id-4}" }
-    ]
+  "rules": [
+    { "id": "{rule-id-1}" },
+    { "id": "{rule-id-2}" },
+    { "id": "{rule-id-3}" },
+    { "id": "{rule-id-4}" }
+  ]
 }
 ```
 
@@ -130,12 +131,13 @@ The following request with the `position` field places rule `{rule-id-2}` as the
 
 ```json
 curl -X PATCH \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-2}" \
 -d '{
-    "position": 
-    {
-        "before": ""
-    }
+  "position": {
+    "before": ""
+  }
 }
 ```
 In this case, the new rule order would be:
@@ -148,11 +150,13 @@ The following request with the `position` field places rule `{rule-id-2}` after 
 
 ```json
 curl -X PATCH \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-2}" \
 -d '{
-    "position": {
-        "after": "{rule-id-3}"
-    }
+  "position": {
+    "after": "{rule-id-3}"
+  }
 }
 ```
 
@@ -166,11 +170,13 @@ The following request with the `position` field places rule `{rule-id-1}` in pos
 
 ```json
 curl -X PATCH \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
 -d '{
-    "position": {
-        "index": 3
-    }
+  "position": {
+    "index": 3
+  }
 }
 ```
 

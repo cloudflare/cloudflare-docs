@@ -19,7 +19,10 @@ You can list the available rulesets for an account, zone, or Phase. You can also
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
+curl -X GET \
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
 ```
 
 The response displays the following rulesets:
@@ -33,50 +36,47 @@ The response displays the following rulesets:
 header: Response
 ---
 {
-    "result": [
+  "result": [
     {
-        "id": "{custom-ruleset-id}",
-        "name": "Custom Ruleset 1",
-        "description": "My custom ruleset",
-        "kind": "custom",
-        "version": "10",
-        "rules": null,
-        "last_updated": "2020-11-23T11:36:24.192361Z",
-        "phase": "http_request_firewall_custom"
+      "id": "{custom-ruleset-id}",
+      "name": "Custom Ruleset 1",
+      "description": "My custom ruleset",
+      "kind": "custom",
+      "version": "10",
+      "last_updated": "2020-11-23T11:36:24.192361Z",
+      "phase": "http_request_firewall_custom"
     },
     {
-        "id": "{account-level-phase-ruleset-id}",
-        "name": "Account-level Ruleset for http_request_firewall_managed Phase",
-        "description": "Account level ruleset for executing one or more Managed Rulesets",
-        "kind": "root",
-        "version": "2",
-        "rules": null,
-        "last_updated": "2021-03-12T14:06:41.323932Z",
-        "phase": "http_request_firewall_managed"
+      "id": "{account-level-phase-ruleset-id}",
+      "name": "Account-level Ruleset for http_request_firewall_managed Phase",
+      "description": "Account level ruleset for executing one or more Managed Rulesets",
+      "kind": "root",
+      "version": "2",
+      "last_updated": "2021-03-12T14:06:41.323932Z",
+      "phase": "http_request_firewall_managed"
     },
     {
-        "id": "{cloudflare-managed-ruleset-id}",
-        "name": "Cloudflare Managed Ruleset",
-        "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
-        "kind": "managed",
-        "version": "5",
-        "rules": null,
-        "last_updated": "2021-03-18T14:42:40.972022Z",
-        "phase": "http_request_firewall_managed"
+      "id": "{cloudflare-managed-ruleset-id}",
+      "name": "Cloudflare Managed Ruleset",
+      "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
+      "kind": "managed",
+      "version": "5",
+      "last_updated": "2021-03-18T14:42:40.972022Z",
+      "phase": "http_request_firewall_managed"
     },
     {
-        "id": "{cloudflare-owasp-core-ruleset-id}",
-        "name": "Cloudflare OWASP Core Ruleset",
-        "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
-        "kind": "managed",
-        "version": "3",
-        "rules": null,
-        "last_updated": "2021-03-18T14:42:42.993211Z",
-        "phase": "http_request_firewall_managed"
-    }],
-    "success": true,
-    "errors": [],
-    "messages": []
+      "id": "{cloudflare-owasp-core-ruleset-id}",
+      "name": "Cloudflare OWASP Core Ruleset",
+      "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
+      "kind": "managed",
+      "version": "3",
+      "last_updated": "2021-03-18T14:42:42.993211Z",
+      "phase": "http_request_firewall_managed"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -86,7 +86,10 @@ header: Response
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
+curl -X GET \
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
 ```
 
 The response displays the following rulesets:
@@ -100,40 +103,38 @@ The response displays the following rulesets:
 header: Response
 ---
 {
-    "result": [
+  "result": [
     {
-        "id": "{zone-level-phase-ruleset-id}",
-        "name": "Zone-level Ruleset 1",
-        "description": "Ruleset for http_request_firewall_managed Phase at the zone level",
-        "kind": "zone",
-        "version": "2",
-        "rules": null,
-        "last_updated": "2021-03-12T14:11:59.754817Z",
-        "phase": "http_request_firewall_managed"
+      "id": "{zone-level-phase-ruleset-id}",
+      "name": "Zone-level Ruleset 1",
+      "description": "Ruleset for http_request_firewall_managed Phase at the zone level",
+      "kind": "zone",
+      "version": "2",
+      "last_updated": "2021-03-12T14:11:59.754817Z",
+      "phase": "http_request_firewall_managed"
     },
     {
-        "id": "{cloudflare-managed-ruleset-id}",
-        "name": "Cloudflare Managed Ruleset",
-        "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
-        "kind": "managed",
-        "version": "2",
-        "rules": null,
-        "last_updated": "2021-03-18T14:42:40.972022Z",
-        "phase": "http_request_firewall_managed"
+      "id": "{cloudflare-managed-ruleset-id}",
+      "name": "Cloudflare Managed Ruleset",
+      "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
+      "kind": "managed",
+      "version": "2",
+      "last_updated": "2021-03-18T14:42:40.972022Z",
+      "phase": "http_request_firewall_managed"
     },
     {
-        "id": "{cloudflare-owasp-core-ruleset-id}",
-        "name": "Cloudflare OWASP Core Ruleset",
-        "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
-        "kind": "managed",
-        "version": "3",
-        "rules": null,
-        "last_updated": "2021-03-18T14:42:42.993211Z",
-        "phase": "http_request_firewall_managed"
-    }],
-    "success": true,
-    "errors": [],
-    "messages": []
+      "id": "{cloudflare-owasp-core-ruleset-id}",
+      "name": "Cloudflare OWASP Core Ruleset",
+      "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
+      "kind": "managed",
+      "version": "3",
+      "last_updated": "2021-03-18T14:42:42.993211Z",
+      "phase": "http_request_firewall_managed"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -147,7 +148,10 @@ The following example lists the rules in version `2` of a Managed Ruleset (the m
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2"
+curl -X GET \
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2"
 ```
 
 ```json
@@ -155,52 +159,52 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets
 header: Response
 ---
 {
-    "result": {
-        "id": "{managed-ruleset-id}",
-        "name": "Cloudflare Managed Ruleset",
-        "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
-        "kind": "managed",
-        "version": "2",
-        "rules": [
-        {
-            "id": "{rule-1-id}",
-            "version": "1",
-            "action": "log",
-            "categories": [
-                "cve-2014-5265",
-                "cve-2014-5266",
-                "cve-2014-5267",
-                "dos",
-                "drupal",
-                "wordpress"
-            ],
-            "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-            "last_updated": "2021-03-18T14:42:40.972022Z",
-            "ref": "{rule-1-ref}",
-            "enabled": true
-        },
-        {
-            "id": "{rule-2-id}",
-            "version": "1",
-            "action": "block",
-            "categories": [
-                "broken-access-control",
-                "cve-2018-12895",
-                "wordpress"
-            ],
-            "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
-            "last_updated": "2021-03-18T14:42:40.972022Z",
-            "ref": "{rule-2-ref}",
-            "enabled": true
-        },
-        // (...)
+  "result": {
+    "id": "{managed-ruleset-id}",
+    "name": "Cloudflare Managed Ruleset",
+    "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
+    "kind": "managed",
+    "version": "2",
+    "rules": [
+      {
+        "id": "{rule-1-id}",
+        "version": "1",
+        "action": "log",
+        "categories": [
+          "cve-2014-5265",
+          "cve-2014-5266",
+          "cve-2014-5267",
+          "dos",
+          "drupal",
+          "wordpress"
         ],
+        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2021-03-18T14:42:40.972022Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{rule-1-ref}",
+        "enabled": true
+      },
+      {
+        "id": "{rule-2-id}",
+        "version": "1",
+        "action": "block",
+        "categories": [
+          "broken-access-control",
+          "cve-2018-12895",
+          "wordpress"
+        ],
+        "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+        "last_updated": "2021-03-18T14:42:40.972022Z",
+        "ref": "{rule-2-ref}",
+        "enabled": true
+      },
+      // (...)
+    ],
+    "last_updated": "2021-03-18T14:42:40.972022Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

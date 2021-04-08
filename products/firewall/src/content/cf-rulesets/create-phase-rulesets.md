@@ -38,20 +38,23 @@ Note the `kind` and `phase` field values:
 header: Request
 ---
 curl -X POST \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
 -d '{
-    "name": "Account-level Phase ruleset",
-    "kind": "root",
-    "description": "This ruleset deploys a Managed Ruleset for example.com and anotherexample.com.",
-    "rules": [
+  "name": "Account-level Phase ruleset",
+  "kind": "root",
+  "description": "This ruleset deploys a Managed Ruleset for example.com and anotherexample.com.",
+  "rules": [
     {
-        "action": "execute",
-        "action_parameters": {
-            "id": "{managed-ruleset-id}"
-        },
-        "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}"
-    }],
-    "phase": "http_request_firewall_managed"
+      "action": "execute",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}"
+      },
+      "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}"
+    }
+  ],
+  "phase": "http_request_firewall_managed"
 }'
 ```
 
@@ -60,29 +63,30 @@ curl -X POST \
 header: Response
 ---
 {
-    "result": {
-        "id": "{ruleset-id}",
-        "name": "Account-level Phase ruleset",
-        "description": "This ruleset deploys a Managed Ruleset for example.com and anotherexample.com.",
-        "kind": "root",
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Account-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset for example.com and anotherexample.com.",
+    "kind": "root",
+    "version": "1",
+    "rules": [
+      {
+        "id": "{rule-id}",
         "version": "1",
-        "rules": [
-        {
-            "id": "{rule-id}",
-            "version": "1",
-            "action": "execute",
-            "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
-            "action_parameters": {
-                "id": "{managed-ruleset-id}"
-            },
-            "last_updated": "2021-03-17T15:42:37.917815Z"
-        }],
-        "last_updated": "2021-03-17T15:42:37.917815Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "action": "execute",
+        "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
+      }
+    ],
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

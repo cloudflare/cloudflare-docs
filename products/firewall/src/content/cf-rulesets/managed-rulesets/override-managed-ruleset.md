@@ -28,21 +28,24 @@ To apply an override for a Managed Ruleset, execute the [Update ruleset](/cf-rul
 
 ```json
 "overrides": {
-    "rulesets": [
+  "rulesets": [
     {
-        "property-to-modify": "value",
-        "property-to-modify": "value"
-    }],
-    "categories": [
+      "property-to-modify": "value",
+      "property-to-modify": "value"
+    }
+  ],
+  "categories": [
     {
-        "property-to-modify": "value",
-        "property-to-modify": "value"
-    }],
-    "rules": [
+      "property-to-modify": "value",
+      "property-to-modify": "value"
+    }
+  ],
+  "rules": [
     {
-        "property-to-modify": "value",
-        "property-to-modify": "value"
-    }]
+      "property-to-modify": "value",
+      "property-to-modify": "value"
+    }
+  ]
 }
 ```
 
@@ -59,23 +62,28 @@ The following request deploys a Managed Ruleset to the `http_request_firewall_ma
 
 ```json
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
-    "description": "Managed rule behavior set to log action",
-    "rules": [{
-        "action": "execute",
-        "expression": "cf.zone.name eq \"example.com\"",
-        "action_parameters": {
-            "id": "{managed-ruleset-id}",
-            "overrides": {
-                "rulesets": [
-                {
-                    "action": "log",
-                    "enabled": "true"
-                }]
+  "description": "Managed rule behavior set to log action",
+  "rules": [
+    {
+      "action": "execute",
+      "expression": "cf.zone.name eq \"example.com\"",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}",
+        "overrides": {
+          "rulesets": [
+            {
+              "action": "log",
+              "enabled": "true"
             }
+          ]
         }
-    }]
+      }
+    }
+  ]
 }'
 ```
 

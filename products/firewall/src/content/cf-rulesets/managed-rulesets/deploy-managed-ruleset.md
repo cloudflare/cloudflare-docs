@@ -32,17 +32,20 @@ The following example deploys a Managed Ruleset to the `http_request_firewall_ma
 header: Request
 ---
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
-    "rules": [
+  "rules": [
     {
-        "action": "execute",
-        "action_parameters": {
-            "id": "{cloudflare-managed-ruleset-id}"
-        },
-        "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
-        "description": "Execute Cloudflare Managed Ruleset on my account-level Phase ruleset"
-    }]
+      "action": "execute",
+      "action_parameters": {
+        "id": "{cloudflare-managed-ruleset-id}"
+      },
+      "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
+      "description": "Execute Cloudflare Managed Ruleset on my account-level Phase ruleset"
+    }
+  ]
 }'
 ```
 
@@ -51,34 +54,34 @@ curl -X PUT \
 header: Response
 ---
 {
-    "result": {
-        "id": "{ruleset-id}",
-        "name": "http_request_firewall_managed Account-level Ruleset",
-        "description": "",
-        "kind": "root",
-        "version": "5",
-        "rules": [
-            {
-                "id": "{rule-id}",
-                "version": "1",
-                "action": "execute",
-                "action_parameters": {
-                    "id": "{cloudflare-managed-ruleset-id}",
-                    "version": "latest"
-                },
-                "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
-                "description": "Execute Cloudflare Managed Ruleset on my account-level Phase ruleset",
-                "last_updated": "2021-03-18T18:30:08.122758Z",
-                "ref": "{rule-ref}",
-                "enabled": true
-            }
-        ],
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "http_request_firewall_managed Account-level Ruleset",
+    "description": "",
+    "kind": "root",
+    "version": "5",
+    "rules": [
+      {
+        "id": "{rule-id}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{cloudflare-managed-ruleset-id}",
+          "version": "latest"
+        },
+        "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
+        "description": "Execute Cloudflare Managed Ruleset on my account-level Phase ruleset",
         "last_updated": "2021-03-18T18:30:08.122758Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{rule-ref}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-03-18T18:30:08.122758Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -106,17 +109,20 @@ The following example deploys a Managed Ruleset to the `http_request_firewall_ma
 header: Request
 ---
 curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
-    "rules": [
+  "rules": [
     {
-        "action": "execute",
-        "action_parameters": {
-            "id": "{cloudflare-managed-ruleset-id}"
-        },
-        "expression": "true",
-        "description": "Execute Cloudflare Managed Ruleset on my zone ruleset"
-    }]
+      "action": "execute",
+      "action_parameters": {
+        "id": "{cloudflare-managed-ruleset-id}"
+      },
+      "expression": "true",
+      "description": "Execute Cloudflare Managed Ruleset on my zone ruleset"
+    }
+  ]
 }'
 ```
 
@@ -125,34 +131,34 @@ curl -X PUT \
 header: Response
 ---
 {
-    "result": {
-        "id": "{zone-level-phase-ruleset-id}",
-        "name": "Zone-level Ruleset 1",
-        "description": "",
-        "kind": "zone",
-        "version": "3",
-        "rules": [
-            {
-                "id": "{rule-id-1}",
-                "version": "1",
-                "action": "execute",
-                "action_parameters": {
-                    "id": "{cloudflare-managed-ruleset-id}",
-                    "version": "latest"
-                },
-                "expression": "true",
-                "description": "Execute Cloudflare Managed Ruleset on my zone ruleset",
-                "last_updated": "2021-03-18T18:08:14.003361Z",
-                "ref": "{ruleset-ref-1}",
-                "enabled": true
-            }
-        ],
+  "result": {
+    "id": "{zone-level-phase-ruleset-id}",
+    "name": "Zone-level Ruleset 1",
+    "description": "",
+    "kind": "zone",
+    "version": "3",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{cloudflare-managed-ruleset-id}",
+          "version": "latest"
+        },
+        "expression": "true",
+        "description": "Execute Cloudflare Managed Ruleset on my zone ruleset",
         "last_updated": "2021-03-18T18:08:14.003361Z",
-        "phase": "http_request_firewall_managed"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
+        "ref": "{ruleset-ref-1}",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-03-18T18:08:14.003361Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
