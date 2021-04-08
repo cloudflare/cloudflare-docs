@@ -1,5 +1,6 @@
 ---
 title: Create Phase rulesets
+type: overview
 order: 720
 ---
 
@@ -24,13 +25,89 @@ In the `data` field, include the following parameters.
 * `phase` - Indicates the Phase where you want to create the ruleset.
 * `description` - Optional. You can update this field when editing your Phase ruleset.
 
-## Example
+## Examples
 
-The following example creates a Phase ruleset at the account level for the `http_request_firewall_managed` Phase. It also defines a single rule in the ruleset that runs a Managed Ruleset for incoming requests for the `example.com` and `anotherexample.com` zones.
+<details>
+<summary>Example: Create Phase ruleset at the zone level</summary>
+<div>
+
+The following example creates a Phase ruleset at the zone level for the `http_request_firewall_managed` Phase. It also defines a single rule in the ruleset that runs a Managed Ruleset for incoming requests.
+
+Note the `kind`, `phase`, and `expression` field values:
+
+* `kind` is set to `zone` because this is a zone-level Phase ruleset.
+* `phase` is set to `http_request_firewall_managed` which is the name of the desired Phase.
+* `expression` is set to `true` because the endpoint already sets the context for a specific zone (`{zone-id}`).
+
+```json
+---
+header: Request
+---
+curl -X POST \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
+-d '{
+  "name": "Zone-level Phase ruleset",
+  "kind": "zone",
+  "description": "This ruleset deploys a Managed Ruleset.",
+  "rules": [
+    {
+      "action": "execute",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}"
+      },
+      "expression": "true"
+    }
+  ],
+  "phase": "http_request_firewall_managed"
+}'
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Zone-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "kind": "zone",
+    "version": "1",
+    "rules": [
+      {
+        "id": "{rule-id}",
+        "version": "1",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
+      }
+    ],
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Example: Create Phase ruleset at the account level</summary>
+<div>
+
+The following example creates a Phase ruleset at the account level for the `http_request_firewall_managed` Phase. It also defines a single rule in the ruleset that runs a Managed Ruleset for incoming requests addressed at `example.com` or `anotherexample.com`.
 
 Note the `kind` and `phase` field values:
 
-* `kind` is set to `root` because this is an account level Phase ruleset.
+* `kind` is set to `root` because this is an account-level Phase ruleset.
 * `phase` is set to `http_request_firewall_managed` which is the name of the desired Phase.
 
 ```json
@@ -89,5 +166,8 @@ header: Response
   "messages": []
 }
 ```
+
+</div>
+</details>
 
 To add a rule that deploys a ruleset, refer to [Deploy rulesets](/cf-rulesets/deploy-rulesets).

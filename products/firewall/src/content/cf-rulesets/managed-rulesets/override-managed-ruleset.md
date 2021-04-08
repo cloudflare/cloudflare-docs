@@ -56,15 +56,53 @@ You can override the following rule properties:
 * `action` (block, challenge, log)
 * `enabled` (true, false)
 
-## Example
+## Examples
 
-The following request deploys a Managed Ruleset to the `http_request_firewall_managed` Phase at the account level and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
+The following request deploys a Managed Ruleset to the `http_request_firewall_managed` Phase and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
+
+<details>
+<summary>Example: Deploy a Managed Ruleset to a Phase at the zone level</summary>
+<div>
 
 ```json
 curl -X PUT \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
+  "description": "Managed rule behavior set to log action",
+  "rules": [
+    {
+      "action": "execute",
+      "expression": "true",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}",
+        "overrides": {
+          "rulesets": [
+            {
+              "action": "log",
+              "enabled": "true"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}'
+```
+
+</div>
+</details>
+
+<details>
+<summary>Example: Deploy a Managed Ruleset to a Phase at the account level</summary>
+<div>
+
+```json
+curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
   "description": "Managed rule behavior set to log action",
   "rules": [
@@ -86,5 +124,8 @@ curl -X PUT \
   ]
 }'
 ```
+
+</div>
+</details>
 
 For additional examples of configuring overrides, see [Workflow examples](/cf-rulesets/common-use-cases).

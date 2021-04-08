@@ -26,6 +26,7 @@ The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) e
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
+<div>
 
 ```json
 curl -X PUT \
@@ -62,10 +63,12 @@ curl -X PUT \
 * `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
 * `"overrides": {"category": joomla", "action": "block"}` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
+</div>
 </details>
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the account level</summary>
+<div>
 
 ```json
 curl -X PUT \
@@ -102,6 +105,7 @@ curl -X PUT \
 * `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
 * `"overrides": {"category": joomla", "action": "block"}` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
+</div>
 </details>
 
 You can add more than one category override to a rule.
@@ -110,6 +114,7 @@ The example below uses a `PUT` request to add two overrides to the deployment of
 
 <details>
 <summary>Example: Add more than one category override at the zone level</summary>
+<div>
 
 ```json
 curl -X PUT \
@@ -147,10 +152,12 @@ curl -X PUT \
 }'
 ```
 
+</div>
 </details>
 
 <details>
 <summary>Example: Add more than one category override at the account level</summary>
+<div>
 
 ```json
 curl -X PUT \
@@ -188,6 +195,7 @@ curl -X PUT \
 }'
 ```
 
+</div>
 </details>
 
 The order of the overrides in the root ruleset affects whether rules in the deployed Managed Ruleset are enabled or disabled. Overrides placed later in the list take precedence over earlier overrides. Consider four rules from the Managed Ruleset in the code above that have different combinations of `category` tags.

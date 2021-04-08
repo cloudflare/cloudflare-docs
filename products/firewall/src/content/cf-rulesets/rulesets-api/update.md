@@ -63,13 +63,15 @@ header: Request
 curl -X PUT \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{
   "rules": [
     {
-      "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-      "action": "challenge",
-      "description": "challenge not /api"
+      "action": "execute",
+      "action_parameters": {
+        "id": "{managed-ruleset-id}"
+      },
+      "expression": "true"
     }
   ]
 }'
@@ -82,23 +84,24 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Custom Ruleset 1",
-    "kind": "custom",
-    "version": "2",
+    "name": "Zone-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "kind": "zone",
+    "version": "4",
     "rules": [
       {
-        "id": "{custom-rule-id-2}",
-        "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "description": "challenge not /api",
-        "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "{custom-rule-ref-2}",
-        "enabled": true
+        "id": "{rule-id}",
+        "version": "2",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-03-18T18:25:08.122758Z",
-    "phase": "http_request_firewall_custom"
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
   },
   "success": true,
   "errors": [],
@@ -196,9 +199,9 @@ header: Request
 curl -X PUT \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{ 
-  "description": "My custom ruleset"
+  "description": "My updated zone ruleset"
 }'
 ```
 
@@ -209,15 +212,15 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Custom Ruleset 1",
-    "description": "My custom ruleset",
-    "kind": "custom",
-    "version": "2",
+    "name": "Zone Ruleset",
+    "description": "My updated zone ruleset",
+    "kind": "zone",
+    "version": "4",
     "rules": [
       // (...)
     ],
-    "last_updated": "2021-03-20T10:49:11.006109Z",
-    "phase": "http_request_firewall_custom"
+    "last_updated": "2021-03-30T10:49:11.006109Z",
+    "phase": "http_request_firewall_managed"
   },
   "success": true,
   "errors": [],

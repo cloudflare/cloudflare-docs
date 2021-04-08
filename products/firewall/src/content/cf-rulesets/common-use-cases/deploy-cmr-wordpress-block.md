@@ -24,6 +24,7 @@ The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) o
 
 <details>
 <summary>Example: Use tag overrides to set WordPress rules to Block at the zone level</summary>
+<div>
 
 ```json
 curl -X PUT \
@@ -51,10 +52,12 @@ curl -X PUT \
 }'
 ```
 
+</div>
 </details>
 
 <details>
 <summary>Example: Use tag overrides to set WordPress rules to Block at the account level</summary>
+<div>
 
 ```json
 curl -X PUT \
@@ -82,4 +85,5 @@ curl -X PUT \
 }'
 ```
 
+</div>
 </details>

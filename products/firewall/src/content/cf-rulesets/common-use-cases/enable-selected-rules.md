@@ -20,6 +20,7 @@ Use a ruleset override and a rule override in the ruleset of a Phase to deploy s
 
 <details>
 <summary>Example: Deploy ruleset and rule overrides at the zone level</summary>
+<div>
 
 The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation at the zone level to deploy only two rules from a Managed Ruleset to the `http_request_firewall_managed` Phase.
 
@@ -64,10 +65,12 @@ curl -X PUT \
 }'
 ```
 
-<div>
+</div>
+</details>
 
 <details>
 <summary>Example: Deploy ruleset and rule overrides at the account level</summary>
+<div>
 
 The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation at the account level to deploy only two rules from a Managed Ruleset to the `http_request_firewall_managed` Phase.
 
@@ -112,4 +115,5 @@ curl -X PUT \
 }'
 ```
 
-<div>
+</div>
+</details>

@@ -1,5 +1,6 @@
 ---
 title: Deploy rulesets
+type: overview
 order: 740
 ---
 

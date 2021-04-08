@@ -57,7 +57,7 @@ header: Request
 curl -X GET \
   -H "X-Auth-Email: user@cloudflare.com" \
   -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
 ```
 
 ```json
@@ -68,20 +68,11 @@ header: Response
   "result": [
     {
       "id": "{phase-ruleset-id}",
-      "name": "Account-level Phase Ruleset 1",
+      "name": "Zone-level Phase ruleset",
       "description": "",
-      "kind": "root",
+      "kind": "zone",
       "version": "5",
       "last_updated": "2021-03-18T18:30:08.122758Z",
-      "phase": "http_request_firewall_managed"
-    },
-    {
-      "id": "{managed-ruleset-id}",
-      "name": "Cloudflare Managed Ruleset",
-      "description": "Managed Ruleset created by Cloudflare",
-      "kind": "managed",
-      "version": "4",
-      "last_updated": "2021-03-19T16:54:32.942986Z",
       "phase": "http_request_firewall_managed"
     }
   ],
@@ -147,7 +138,7 @@ header: Request
 curl -X GET \
   -H "X-Auth-Email: user@cloudflare.com" \
   -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}"
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}"
 ```
 
 ```json
@@ -156,31 +147,24 @@ header: Response
 ---
 {
   "result": {
-    "id": "{managed-ruleset-id}",
-    "name": "Cloudflare Managed Ruleset",
-    "description": "Managed Ruleset created by Cloudflare",
-    "kind": "managed",
-    "version": "4",
+    "id": "{ruleset-id}",
+    "name": "Zone-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "kind": "zone",
+    "version": "3",
     "rules": [
       {
-        "id": "{rule-id-1}",
-        "version": "3",
-        "action": "log",
-        "categories": [
-          "cve-2014-5265",
-          "cve-2014-5266",
-          "cve-2014-5267",
-          "dos",
-          "drupal",
-          "wordpress"
-        ],
-        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-        "last_updated": "2021-03-19T16:54:32.942986Z",
-        "ref": "{rule-ref-1}",
-        "enabled": true
+        "id": "{rule-id}",
+        "version": "1",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-03-19T16:54:32.942986Z",
+    "last_updated": "2021-03-17T15:42:37.917815Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -238,7 +222,7 @@ header: Request
 curl -X GET \
   -H "X-Auth-Email: user@cloudflare.com" \
   -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}/versions"
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/versions"
 ```
 
 ```json
@@ -248,22 +232,22 @@ header: Response
 {
   "result": [
     {
-      "id": "{custom-ruleset-id}",
-      "name": "Custom Ruleset 1",
-      "description": "My custom ruleset",
-      "kind": "custom",
+      "id": "{ruleset-id}",
+      "name": "Zone Ruleset 1",
+      "description": "",
+      "kind": "zone",
       "version": "1",
       "last_updated": "2021-02-17T11:15:13.128705Z",
-      "phase": "http_request_firewall_custom"
+      "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{custom-ruleset-id}",
-      "name": "Custom Ruleset 1",
-      "description": "My updated custom ruleset",
-      "kind": "custom",
+      "id": "{ruleset-id}",
+      "name": "Zone Ruleset 1",
+      "description": "",
+      "kind": "zone",
       "version": "2",
       "last_updated": "2021-02-17T11:24:06.869326Z",
-      "phase": "http_request_firewall_custom"
+      "phase": "http_request_firewall_managed"
     }
   ],
   "success": true,
@@ -319,7 +303,7 @@ header: Request
 curl -X GET \
   -H "X-Auth-Email: user@cloudflare.com" \
   -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}"
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}"
 ```
 
 ```json
@@ -328,24 +312,25 @@ header: Response
 ---
 {
   "result": {
-    "id": "{custom-ruleset-id}",
-    "name": "Custom Ruleset 1",
-    "description": "My updated custom ruleset",
-    "kind": "custom",
-    "version": "2",
+    "id": "{ruleset-id}",
+    "name": "Zone-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "kind": "zone",
+    "version": "3",
     "rules": [
       {
-        "id": "{rule-id-1}",
+        "id": "{rule-id}",
         "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "last_updated": "2021-02-17T11:24:06.869326Z",
-        "ref": "{rule-ref-1}",
-        "enabled": true
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-02-17T11:24:06.869326Z",
-    "phase": "http_request_firewall_custom"
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
   },
   "success": true,
   "errors": [],

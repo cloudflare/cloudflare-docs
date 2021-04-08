@@ -1,5 +1,6 @@
 ---
 title: Work with Managed Rulesets
+type: overview
 alwaysopen: true
 order: 750
 ---
