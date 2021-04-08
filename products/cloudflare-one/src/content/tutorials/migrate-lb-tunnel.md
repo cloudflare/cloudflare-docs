@@ -18,6 +18,8 @@ If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel d
 
 **⏲️ Time to complete: 10 minutes**
 
+See additional documentation for working with [Kubernetes](/cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes).
+
 ## Creating a Legacy Argo Tunnel with Cloudflare Load Balancer
 
 This tutorial starts by documenting the steps to create a Legacy Argo Tunnel with Cloudflare Load Balancer so that those can be compared to the migration steps. If you would prefer to start the migration now, please [skip ahead](#create-a-named-tunnel).
