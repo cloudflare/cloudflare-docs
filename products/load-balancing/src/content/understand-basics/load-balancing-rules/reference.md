@@ -153,7 +153,7 @@ Load Balancing expressions support these comparison operators:
         </td>
       </tr>
       <tr>
-        <td>Matches<br />RE2 regex</td>
+        <td>Matches<br />regex</td>
         <td><code class="InlineCode">matches</code></td>
         <td>&#x2705;</td>
         <td>&#10060;</td>
