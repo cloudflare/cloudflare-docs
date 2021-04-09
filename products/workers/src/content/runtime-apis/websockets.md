@@ -71,7 +71,7 @@ Close the WebSocket connection.
 <Definitions>
 
 - <Code>code<ParamType>integer</ParamType></Code> <PropMeta>optional</PropMeta>
-  - An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
+  - An integer indicating the close code sent by the server. This should match an option from the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes">list of status codes</a> provided by the WebSocket spec.
 - <Code>reason<ParamType>string</ParamType></Code> <PropMeta>optional</PropMeta>
   - A human-readable string indicating why the WebSocket connection was closed.
 
@@ -88,7 +88,7 @@ Send a message to the other WebSocket in this WebSocket pair.
 <Definitions>
 
 - <Code>message<ParamType>string</ParamType></Code>
-  - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for instance, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using `JSON.stringify`, and parsed in the client.
+  - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for instance, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
 
 </Definitions>
 

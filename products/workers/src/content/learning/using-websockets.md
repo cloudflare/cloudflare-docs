@@ -21,11 +21,12 @@ WebSocket servers in Cloudflare Workers allow you to receive messages from a cli
 A client can make a WebSocket request in the browser by instantiating a new instance of `WebSocket`, passing in the URL for your Workers function:
 
 ```js
-const websocket = new WebSocket("wss://example-websocket.signalnerve.workers.dev)
+// In client-side JavaScript, connect to your Workers function using WebSockets
+const websocket = new WebSocket("wss://example-websocket.signalnerve.workers.dev")
 ```
 
 <Aside>
-For more details about creating and working with WebSockets in the client, see "Writing a WebSocket client".
+For more details about creating and working with WebSockets in the client, see <a href="#writing-a-websocket-client">"Writing a WebSocket client"</a>.
 </Aside>
 
 When an incoming WebSocket request reaches the Workers function, it will contain an `Upgrade` header, set to the string value `websocket`. Check for this header before continuing to instantiate a WebSocket:
@@ -45,7 +46,7 @@ Once you've appropriately checked for the `Upgrade` header, you can create a new
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get("Upgrade")
   if (!upgradeHeader || upgradeHeader !== "websocket") {
-    return new Response("Expected websocket", { status: 400 })
+    return new Response("Expected Upgrade: websocket", { status: 426 })
   }
 
   const webSocketPair = new WebSocketPair()
@@ -58,13 +59,7 @@ async function handleRequest(request) {
 }
 ```
 
-<Aside>
-The WebsocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. It's common to grab the two WebSockets from this pair using `Object.values` and ES6 destructuring, as seen in the below example:
-
-```js
-let [client, server] = Object.values(new WebsocketPair())
-```
-</Aside>
+The WebsocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. It's common to grab the two WebSockets from this pair using `Object.values` and ES6 destructuring, as seen in the below example.
 
 With your `client` Websocket returned back to the client, you now need to handle the `server` WebSocket. To begin receiving messages on your Workers function, call `accept` on the `server` WebSocket:
 
@@ -93,10 +88,10 @@ websocket.addEventListener("message", message => {
 })
 ```
 
-For an example of this in practice, see the [`websocket-template`](https://github.com/cloudflare/websocket-template) that we provide to get started with WebSockets. 
+For an example of this in practice, see the [`websocket-template`](https://github.com/cloudflare/websocket-template) that we provide to get started with WebSockets.
 
 ## Durable Objects and WebSocket state
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you'll need to create a Durable Object so clients send messages to a single-point-of-coordination. 
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you'll need to create a Durable Object so clients send messages to a single-point-of-coordination.
 
 The solution to this is _Durable Objects_, our coordinated state tool for Cloudflare Workers, which is often used in parallel with WebSockets to effectively allow WebSockets to be re-instantiated with persistent state over multiple clients and connections. Check out our [Durable Objects](/learning/using-durable-objects) learning page to get started.
