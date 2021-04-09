@@ -381,7 +381,7 @@ export class Counter {
         if (!this.initializePromise) {
             this.initializePromise = this.initialize().catch((err) => {
                 // If anything throws during initialization then we need to be
-                // sure sure that a future request will retry initialize().
+                // sure that a future request will retry initialize().
                 // Note that the concurrency involved in resetting this shared
                 // promise on an error can be tricky to get right -- we don't
                 // recommend customizing it.
