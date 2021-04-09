@@ -6,11 +6,13 @@ order: 9
 
 <Aside type="warning">
 
-We're looking for developers to experiment with WebSockets support in Cloudflare Workers, but WebSocket support generally remains in early access. Details such as pricing and limits are not yet available.
+Details such as pricing and limits on Websockets are not yet available. We're looking for developers to experiment with WebSockets support in Cloudflare Workers, but WebSocket support generally remains in early access.
 
 </Aside>
 
 WebSockets allow you to communicate in real-time with your Cloudflare Workers serverless functions. In this guide, you'll learn the basics of WebSockets on Cloudflare Workers, both from the perspective of _writing_ WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a _client_.
+
+WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
 <Aside>WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.</Aside>
 
@@ -72,7 +74,7 @@ WebSockets emit a number of [Events](/workers/runtime-apis/websockets#events) th
 
 ```js
 server.addEventListener("message", message => {
-  console.log(message.data)
+  console.log(message)
 })
 ```
 
@@ -84,7 +86,7 @@ Writing WebSocket clients that communicate with your Workers function is a two-s
 const websocket = new WebSocket("wss://websocket-example.signalnerve.workers.dev)
 websocket.addEventListener("message", message => {
   console.log("Message received from server")
-  console.log(message.data)
+  console.log(message)
 })
 ```
 
