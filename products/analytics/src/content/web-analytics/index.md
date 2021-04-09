@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Web Analytics
-order: 2
+order: 1
 ---
 
 # Overview

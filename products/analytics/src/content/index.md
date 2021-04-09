@@ -3,7 +3,7 @@ title: Welcome
 order: 0
 ---
 
-#
+# Overview
 
 ## GraphQL Analytics API
 
