@@ -30,7 +30,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 ### Why isn't my regular expression pattern matching working?
 
-If you are using a regular expression, we recommend you test it against an _RE2_ testing tool like [Regular Expressions 101](https://regex101.com).
+If you are using a regular expression, we recommend you test it against a testing tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
 Also, note that _http.request.method_ fields requires all-caps for method names.
 
