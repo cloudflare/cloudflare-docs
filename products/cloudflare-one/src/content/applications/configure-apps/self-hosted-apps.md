@@ -84,7 +84,7 @@ The **Setup section** allows you to configure a few advanced settings for your a
 
  ![Cookies and cloudflared settings](../../static/documentation/applications/cookie-cloudflared.png)
 
-1. Configure **`cloudflared` settings**. For more information, read more about [automatic `cloudflared` authentication](/applications/non-http/#automatic-cloudflared-authentication).
+1. Configure **`cloudflared` settings**. For more information, read more about [automatic `cloudflared` authentication](/applications/non-http#automatic-cloudflared-authentication).
 
 1. Once you've configured the settings as needed, click **Add application**.
 
