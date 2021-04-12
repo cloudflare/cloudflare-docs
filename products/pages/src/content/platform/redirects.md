@@ -11,19 +11,15 @@ Redirects can be stated as such with one redirect per line in the form:
 ---
 filename: _redirects
 ---
-# These are valid:
 /home301 / 301
 /home302 / 302
 /querystrings /?query=string 301
 /twitch https://twitch.tv
 /trailing /trailing/ 301
 /notrailing/ /nottrailing 301
-
-# This is invalid
-https://lol.com https://zombo.com
 ```
  
-There is a limit of 100 redirects and a 1000 character limit per redirect line. Incorrectly formatted lines in the file are ignored. The redirects file is parsed top to bottom. If there are multiple redirects for the same source, the topmost redirect is applied. 
+There is a limit of 100 redirects and a 1000 character limit per redirect line. Incorrectly formatted lines in the file are ignored. If there are multiple redirects for the same source, the topmost redirect is applied. 
 
 We currently offer limited support for advanced redirects. More support will be added in the future.
 
@@ -42,8 +38,7 @@ We currently offer limited support for advanced redirects. More support will be 
 
 </TableWrap>
 
-## How do redirects differ from rewrites?
 
-URL redirects send users to a new destination URL address. This means the URL displayed in their browser changes to the new destination URL.
+## See also
 
-Rewrites serve the content of the new destination but keep the original URL in the browser. Learn more by reading our blog post about how to use [rewrites using transform rules](https://blog.cloudflare.com/introducing-transform-rules-with-url-rewriting-at-the-edge/).
+- [Transform Rules](https://developers.cloudflare.com/rules/transform)
