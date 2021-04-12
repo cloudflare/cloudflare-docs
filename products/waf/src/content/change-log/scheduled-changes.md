@@ -44,7 +44,7 @@ order: 1
                 100038
             </td>
             <td>
-                Rule Improvement
+                Improve Information Disclosure Coverage
             </td>
             <td>
                 Block
