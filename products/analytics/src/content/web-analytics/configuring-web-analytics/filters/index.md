@@ -5,7 +5,7 @@ order: 40
 
 # Filters
 
-To filter the data shown, click Add filter. You can also filter Page views and Visits by Referer, Host, Country, Path, Browser, Operating system, or Device type by clicking on each.
+To filter the data shown, click **Add filter**. You can also filter Page views and Visits by Referer, Host, Country, Path, Browser, Operating system, or Device type by clicking on each.
 
  ![Web Analytics add filter](../../../static/images/dash-web_analytics-filters.png)
 

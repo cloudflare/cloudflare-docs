@@ -7,7 +7,7 @@ order: 30
 
 View your website’s page views and visits by switching between views on the graph.
 
- ![Web Analytics dash overview](../../../static/images/hc-dash-web_analytics-overview.png)
+ ![Web Analytics dash overview](../../../static/images/dash-web_analytics-overview.png)
 
 <ul>
 <li>Page views - A successful HTTP response with a content-type of HTML.</li>
