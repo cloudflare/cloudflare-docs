@@ -1,6 +1,6 @@
 # Known issues
 
-**Cloudflare Pages is currently in open beta.** Here are some known bugs and issues that we're aware of:
+Here are some known bugs and issues that we're aware of with Cloudflare Pages:
 
 - Deleting a project with a custom URL may show the old build at that URL. You'll need to delete the Cloudflare DNS record for that custom domain to remove that old build.
 - No direct support for running routes or redirects in Pages (however, if your project contains a 404.html file, that's served first. If not, then your /index.html file is served)
