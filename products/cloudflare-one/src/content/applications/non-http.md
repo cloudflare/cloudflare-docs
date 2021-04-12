@@ -14,6 +14,11 @@ You can connect applications to Cloudflare for Teams over a number of different 
 
 ## Automatic `cloudflared` authentication
 
+<Aside>
+
+This should only be enabled if a [service token](/identity/service-auth/service-tokens) cannot be used for your automated service. 
+</Aside>
+
 <TableWrap>
 
 | Before you start |
@@ -31,11 +36,4 @@ displaying this page:
 To avoid seeing this page every time you authenticate through `cloudflared`, you can toggle on *Enable automatic `cloudflared` authentication* when adding a [self-hosted application](/applications/configure-apps/self-hosted-apps#protect-self-hosted-applications).
 
 This option will still prompt a browser window in the background, but the authentication will be automatic.
-
-<Aside>
-
-This should only be enabled if a [service token](/identity/service-auth/service-tokens) cannot be used for your automated service. 
-</Aside>
-
-
 
