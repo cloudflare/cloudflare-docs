@@ -27,7 +27,7 @@ Cloudflare for Teams can check if [SentinelOne](https://www.sentinelone.com/) is
 
     * **Name:** A unique identifier for this SentinelOne device posture check
     * **Operating system:** You’ll need to configure one posture check per operating system (Mac and Windows currently supported)
-    * **Application Path:** Fill with the path where SentinelOne is installed on your device
+    * **Application Path:** Enter the path where SentinelOne is installed on your device
     * **Certificate thumbprint (optional):** The thumbprint of your SentinelOne instance’s certificate.
     * **SHA256 checksum (optional):** Used to validate the SHA256 signature of your SentinelOne instance.
 
