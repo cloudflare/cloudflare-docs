@@ -35,8 +35,8 @@ $ cd packages
 $ wrangler generate my-api
 $ wrangler generate my-site --site
 
-# If you have existing projects
-$ git clone https://github.com/signalnerve/my-cool-project.git
+# If you have existing projects, you can clone them into the directory:
+$ git clone https://github.com/cloudflare/worker-template.git
 ```
 
 This approach to managing your Workers projects can become incredibly powerful when you begin to share dependencies between the projects. Imagine that your codebase has a pre-defined set of API handlers that you want to re-use between our public and private APIs, in the packages `public-api` and `private-api`:
