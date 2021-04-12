@@ -13,13 +13,7 @@ let websocketPair = new WebsocketPair()
 
 The WebsocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. 
 
-You can easily retrieve both WebSockets from the WebsocketPair using `Object.values`:
-
-```js
-let websocketPair = Object.values(new WebsocketPair())
-```
-
-These WebSockets are commonly referred to as `client` and `server`. In the below example, we use ES6 destructuring of the above array to retrieve the WebSockets as `client` and `server`:
+These WebSockets are commonly referred to as `client` and `server`. In the below example, we combine `Object.values` and ES6 destructuring to retrieve the WebSockets as `client` and `server`:
 
 ```js
 let [client, server] = Object.values(new WebsocketPair())

@@ -6,13 +6,13 @@ order: 9
 
 <Aside type="warning">
 
-Details such as pricing and limits on Websockets are not yet available. We're looking for developers to experiment with WebSockets support in Cloudflare Workers, but WebSocket support generally remains in early access.
+Details such as pricing and limits on Websockets are not yet available. We're looking for developers to experiment with WebSocket support in Cloudflare Workers, but WebSocket support generally remains in early access.
 
 </Aside>
 
 WebSockets allow you to communicate in real-time with your Cloudflare Workers serverless functions. In this guide, you'll learn the basics of WebSockets on Cloudflare Workers, both from the perspective of _writing_ WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a _client_.
 
-WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
+WebSockets are open connections sustained between the client and the origin server. Inside a WebSocket connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSocket connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
 <Aside>WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.</Aside>
 
@@ -36,7 +36,7 @@ When an incoming WebSocket request reaches the Workers function, it will contain
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get("Upgrade")
-  if (upgradeHeader !== "websocket") {
+  if (!upgradeHeader || upgradeHeader !== "websocket") {
     return new Response("Expected Upgrade: websocket", { status: 426 })
   }
 }
@@ -80,7 +80,7 @@ server.addEventListener("message", message => {
 
 ## Writing a WebSocket Client
 
-Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach events to it, just like we did on the server:
+Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it, just like we did on the server:
 
 ```js
 const websocket = new WebSocket("wss://websocket-example.signalnerve.workers.dev)
@@ -90,10 +90,20 @@ websocket.addEventListener("message", message => {
 })
 ```
 
+WebSocket clients can send messages back to the server using the [`send`](/runtime-apis/websockets#send) function:
+
+```js
+websocket.send("MESSAGE")
+```
+
+When the WebSocket interaction is complete, the client can close the connection using [`close`](/runtime-apis/websockets#close):
+
+```js
+websocket.close()
+```
+
 For an example of this in practice, see the [`websocket-template`](https://github.com/cloudflare/websocket-template) that we provide to get started with WebSockets.
 
 ## Durable Objects and WebSocket state
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you'll need to create a Durable Object so clients send messages to a single-point-of-coordination.
-
-The solution to this is _Durable Objects_, our coordinated state tool for Cloudflare Workers, which is often used in parallel with WebSockets to effectively allow WebSockets to be re-instantiated with persistent state over multiple clients and connections. Check out our [Durable Objects](/learning/using-durable-objects) learning page to get started.
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you'll need to create a _Durable Object_ so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Check out our [Durable Objects](/learning/using-durable-objects) learning page to get started.
