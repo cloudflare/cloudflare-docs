@@ -46,7 +46,7 @@ Not all zone-level Phases support all types of rulesets, even if they are presen
 
 </Aside>
 
-The result does not include the rules in the ruleset (the `rules` field is `null`). Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how you can obtain the list of rules.
+The result does not include the list of rules in the ruleset. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
 
 ### Example
 
