@@ -17,12 +17,12 @@ You can create a list by:
 
 ## Creating a list from a CSV file
 
-If you'd like to test how this feature works, here is a [sample CSV file](../../static/documentation/list-test.csv). You can upload it to the Teams dashboard following the instructions below:
+If you'd like to test how this feature works, here is a [sample CSV file](../static/documentation/list-test.csv). You can upload it to the Teams dashboard following the instructions below:
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway > Lists**.
 1. Click **Upload CSV**.
 
-  ![Upload CSV](../../static/documentation/policies/upload-csv.png)
+  ![Upload CSV](../static/documentation/policies/upload-csv.png)
 
 1. Next, specify a **List name**, enter an optional description, and choose URLs as the **List type**.
 1. Drag and drop a file into the CSV File window, or click **Select a file**.
@@ -35,7 +35,7 @@ Your list will now appear in the Lists page.
 1. On the Teams dashboard, navigate to **Gateway > Lists**.
 1. Click **Create manual list**.
 
-  ![Manual list](../../static/documentation/policies/upload-csv.png)
+  ![Manual list](../static/documentation/policies/upload-csv.png)
 
 1. Next, specify a **List name**, enter an optional description, and choose URLs as the **List type**.
 1. Enter your elements manually in the *Add entries* field.
