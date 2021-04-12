@@ -5,8 +5,7 @@ order: 40
 
 # Core Web Vitals
 
-Core Web Vitals are higher-level metrics designed by Google to capture the user experience 
-more completely. Three “core” Web Vitals metrics are measured: Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. 
+Core Web Vitals are higher-level metrics designed by Google to capture the user experience more completely. Three “core” Web Vitals metrics are measured: Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. 
 
 Cloudflare Web Analytics offers more detail to the Core Web Vitals by allowing you to filter by group, URL, Browser, OS, or Country in the Cloudflare dashboard. 
 
