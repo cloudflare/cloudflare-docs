@@ -8,4 +8,4 @@ Transferring a domain to a new registrar informs the registry that they should i
 
 This section contains transfer instructions for some of the largest registrars as well as generic details.
 
-Before following the transfer steps for a particular registrar to transfer a domain to Cloudflare, the domain must already be set up to use Cloudflare. This can be done by clicking the Add a Site button on the main page of your Cloudflare account and changing your DNS servers to Cloudflare's in your original registrar domain management.
+Before transfering a domain to Cloudflare, you need to set up Cloudflare on your the domain. This involves [creating an account and adding your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers](https://support.cloudflare.com/hc/articles/205195708).
