@@ -63,19 +63,49 @@ async function handleRequest(request) {
 
 An Object is returned from the `WebSocketPair` constructor, with the `0` and `1` keys each holding a WebSocket value. It's common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
 
-With your `client` Websocket returned back to the client, you now need to handle the `server` WebSocket. To begin receiving messages on your Workers function, call `accept` on the `server` WebSocket:
+In order to begin communicating with the `client` WebSocket in your Worker, call `accept` on the `server` WebSocket. This will tell the Workers runtime that it should listen for WebSocket data and keep the connection open with your `client` WebSocket:
 
 ```js
-const [client, server] = Object.values(new WebSocketPair())
-server.accept()
+async function handleRequest(request) {
+  const upgradeHeader = request.headers.get("Upgrade")
+  if (!upgradeHeader || upgradeHeader !== "websocket") {
+    return new Response("Expected Upgrade: websocket", { status: 426 })
+  }
+
+  const webSocketPair = new WebSocketPair()
+  const [client, server] = Object.values(webSocketPair)
+
+  server.accept()
+
+  return new Response(null, {
+    status: 101,
+    webSocket: client
+  })
+}
 ```
 
 WebSockets emit a number of [Events](/workers/runtime-apis/websockets#events) that can be connected to using `addEventListener`. In the below example, we hook into the `message` event and emit a `console.log` with the data from it:
 
 ```js
-server.addEventListener("message", message => {
-  console.log(message)
-})
+async function handleRequest(request) {
+  const upgradeHeader = request.headers.get("Upgrade")
+  if (!upgradeHeader || upgradeHeader !== "websocket") {
+    return new Response("Expected Upgrade: websocket", { status: 426 })
+  }
+
+  const webSocketPair = new WebSocketPair()
+  const [client, server] = Object.values(webSocketPair)
+
+  server.accept()
+  server.addEventListener("message", event => {
+    console.log(event.data)
+  })
+
+  return new Response(null, {
+    status: 101,
+    webSocket: client
+  })
+}
 ```
 
 ## Writing a WebSocket Client
