@@ -37,13 +37,13 @@ Using a wildcard in the *subdomain* field **does not cover the apex domain**.
 
 ### Protect all paths of an apex domain
 
-Using a wildcard in the *path* field **does not cover the apex domain**.
+Using a wildcard in the *path* field **does cover the apex domain**.
 
 <TableWrap>
 
 | Wildcard | Covers | Doesn't cover |
 | -------- | ------ | ------------- |
-| `example.com/*` | `example.com/alpha`, `example.com/beta` | `example.com`,`alpha.example.com` |
+| `example.com/*` | `example.com`, `example.com/alpha`, `example.com/beta` | `alpha.example.com` |
 
 </TableWrap>
 
