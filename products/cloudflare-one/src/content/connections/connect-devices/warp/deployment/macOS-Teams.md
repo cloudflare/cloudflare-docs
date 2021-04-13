@@ -18,7 +18,7 @@ Next, choose how you want to deploy the WARP Client in your organization:
 
 ## Automated configuration (Jamf, Intune, Script)
 
-The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a .mobileconfig 
+The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
 
 Here is an example plist file with the accepted arguments: 
 
@@ -41,7 +41,7 @@ Here is an example plist file with the accepted arguments:
 </plist>
 ```
 
-Here is an example .mobileconfig file with the accepted arguments:
+Here is an example `.mobileconfig` file with the accepted arguments:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -121,7 +121,7 @@ For a description of each argument and what it means, see [deployment parameters
  % plutil -convert binary1 com.cloudflare.warp.plist
  ```
 
-[Click here](../../../../static/documentation/connections/CloudflareWARP.mobileconfig) to download this example .mobileconfig. Note you may need to run `uuidgen` from your macOS terminal and replace the default value used for *PayloadUUID* above with the one genereated.
+[Click here](../../../../static/documentation/connections/CloudflareWARP.mobileconfig) to download this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
 
 ### Example configuration in Jamf
 
@@ -159,7 +159,7 @@ The following sections will walk you through each of these steps.
 1. Enter a name for your new profile, such as *Cloudflare for Teams*.
 1. Scroll down the options list and click on **Application & Custom Settings**.
 1. Click **Configure**.
-1. In *Preference Domain* enter `com.cloudflare.warp`
+1. In *Preference Domain*, enter `com.cloudflare.warp`.
 1. Upload a valid plist file. You can start with our example above and modify for your organization.
 1. Click **Save**.
 1. Navigate to **Scope** to configure which devices in your organization should receive this profile.
