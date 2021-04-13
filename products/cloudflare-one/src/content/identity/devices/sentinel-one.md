@@ -27,7 +27,7 @@ Cloudflare for Teams can check if [SentinelOne](https://www.sentinelone.com/) is
 
     * **Name:** A unique identifier for this SentinelOne device posture check
     * **Operating system:** You’ll need to configure one posture check per operating system (macOS and Windows currently supported)
-    * **Application Path:** Application Path: Enter the full path to the CrowdStrike process to be checked (for example, `c:\program files\SentinelOne\SentinelOne.exe`)
+    * **Application Path:** Enter the full path to the SentinelOne process to be checked (for example, `c:\program files\SentinelOne\SentinelOne.exe`)
     * **Certificate thumbprint (optional):** The thumbprint of the publishing certificate used to sign the binary. This proves the binary came from SentinelOne and is the recommended way to validated the process
     * **SHA256 checksum (optional):** Used to validate the SHA256 signature of the binary. This verified that binary exactly matches the one you expect to be there. Note: do not fill out this field unless you strictly control updates to SentinelOne, as this will change between versions
 
