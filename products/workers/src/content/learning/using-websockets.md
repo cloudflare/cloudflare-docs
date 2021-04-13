@@ -83,7 +83,7 @@ server.addEventListener("message", message => {
 Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it, just like we did on the server:
 
 ```js
-const websocket = new WebSocket("wss://websocket-example.signalnerve.workers.dev)
+const websocket = new WebSocket("wss://websocket-example.signalnerve.workers.dev")
 websocket.addEventListener("message", message => {
   console.log("Message received from server")
   console.log(message)
