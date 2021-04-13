@@ -14,18 +14,30 @@ Cloudflare iterates over the CNAME chain starting from the hostname.  The value 
 
 ### Partial setup
 
-1. Add a CNAME to your authoritative DNS to point to the fallback origin:
+#### If using Cloudflare for a partial setup
 
-```txt
-app.example.com CNAME proxy-fallback.saasprovider.com
-```
-2. Add a CNAME to Cloudflare DNS for your domain:
+1. Add a CNAME record to Cloudflare DNS for your domain:
 
-```txt
-proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudflare.net
-```
+  ```txt
+  app.example.com CNAME proxy-fallback.saasprovider.com
+  ```
 
-To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME.  The final CNAME must contain `<zone_name>.cdn.cloudflare.net`
+1. Add a CNAME record to your authoritative DNS to point to the fallback origin:
+
+  ```txt
+  proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudflare.net
+  ```
+
+<Aside type="warning" header="Warning:">To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.</Aside>
+
+#### If using another DNS provider
+
+1. Log into your authoritative DNS provider.
+1. Add a CNAME record to point to the fallback origin owned by the SaaS provider.
+
+  ```txt
+  app.example.com CNAME proxy-fallback.saasprovider.com
+  ```
 
 ## Apex verification
 
@@ -145,7 +157,7 @@ Applicable hostname verification status includes:
 </tr>
 <tr>
 <td>Delete</td>
-<td>Custom Hostname was deleted from the zone.  Occurs when status is <em>Moved</em> for more than 7 days.</td>
+<td>Custom Hostname was deleted from the zone. Occurs when status is <em>Moved</em> for more than 7 days.</td>
 </tr>
 </tbody>
 </table>
