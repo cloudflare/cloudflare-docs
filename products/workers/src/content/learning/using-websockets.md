@@ -42,7 +42,7 @@ async function handleRequest(request) {
 }
 ```
 
-Once you've appropriately checked for the `Upgrade` header, you can create a new instance of WebSocketPair, which contains _server_ and _client_ WebSockets. One of these WebSockets should be handled by the Workers function (which we'll do shortly), and the other should be returned as part of a `Response` with status 101, indicating the "Switching protocols" response:
+Once you've appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains _server_ and _client_ WebSockets. One of these WebSockets should be handled by the Workers function (which we'll do shortly), and the other should be returned as part of a `Response` with status 101, indicating the "Switching protocols" response:
 
 ```js
 async function handleRequest(request) {
@@ -52,7 +52,7 @@ async function handleRequest(request) {
   }
 
   const webSocketPair = new WebSocketPair()
-  const client, server = webSocketPair[0], webSocketPair[1]
+  const client = webSocketPair[0], server = webSocketPair[1]
 
   return new Response(null, {
     status: 101,
@@ -61,7 +61,7 @@ async function handleRequest(request) {
 }
 ```
 
-An Object is returned from the `WebSocketPair` constructor, with the `0` and `1` keys each holding a WebSocket value. It's common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
+An Object is returned from the `WebSocketPair` constructor, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It's common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
 
 In order to begin communicating with the `client` WebSocket in your Worker, call `accept` on the `server` WebSocket. This will tell the Workers runtime that it should listen for WebSocket data and keep the connection open with your `client` WebSocket:
 
