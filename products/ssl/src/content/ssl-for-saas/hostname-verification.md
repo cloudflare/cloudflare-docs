@@ -14,7 +14,7 @@ Cloudflare iterates over the CNAME chain starting from the hostname.  The value 
 
 ### Partial setup
 
-#### If using Cloudflare for DNS or CDN
+#### If using Cloudflare for a partial setup
 
 1. Add a CNAME record to Cloudflare DNS for your domain:
 
@@ -30,7 +30,7 @@ Cloudflare iterates over the CNAME chain starting from the hostname.  The value 
 
 <Aside type="warning" header="Warning:">To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.</Aside>
 
-#### If not using Cloudflare for DNS or CDN
+#### If using another DNS provider
 
 1. Go to your authoritative DNS provider.
 1. Add a CNAME record to point to the fallback origin owned by the SaaS provider.
