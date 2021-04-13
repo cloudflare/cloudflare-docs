@@ -10,12 +10,17 @@ Cloudflare Web Analytics enables measuring SPAs automatically by overriding the 
 
 To disable measuring SPAs, add the "spa" option with a false value in the data attribute as shown below.
 
-```bash
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon=' {"token": "42e216b9090ru59384ygu891dce9eecde", "spa": false} '></script>
+```html
+<script 
+  defer src='https://static.cloudflareinsights.com/beacon.min.js' 
+  data-cf-beacon=' {"token": "42e216b9090ru59384ygu891dce9eecde", "spa": false} '
+  ></script>
 ```
 
 If you are using Google Tag Manager (GTM), use the query string to pass the spa option instead.
 
-```bash
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=42e216b9090ru59384ygu891dce9eecde&spa=false'></script>
+```html
+<script 
+  defer src='https://static.cloudflareinsights.com/beacon.min.js?token=42e216b9090ru59384ygu891dce9eecde&spa=false'
+  ></script>
 ```
