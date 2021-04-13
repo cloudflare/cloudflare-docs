@@ -98,12 +98,12 @@ Be sure that you have the following:
 
 Monitors are configurations that describe how to run health checks on your origin servers. When a monitor is attached to a pool, Cloudflare will run health checks on that pool’s origin servers from our data centers around the world. Because monitors exist independently, you can attach them to multiple pools. This way you can make a change to a single monitor and automatically update the health check policy for every pool that uses it.
 
-Use the Create Monitor command to create a new monitor, as in the example below. If you are using virtual hosting, it is important to define a `host` value for the `header` property so that your web server knows which virtual host to serve. In most cases, this will be the same hostname as the one you intend the load balancer to manage—the same one you will use to name the load balancer. (See _[Monitors](/understand-basics/monitors/)_ for a full list of monitor properties and available commands.)
+Use the [Create Monitor](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor) command to create a new monitor, as in the example below. If you are using virtual hosting, it is important to define a `host` value for the `header` property so that your web server knows which virtual host to serve. In most cases, this will be the same hostname as the one you intend the load balancer to manage—the same one you will use to name the load balancer. (See [Monitors](/understand-basics/monitors/) for a full list of monitor properties and available commands.)
 
 **Request example**
 
 ```json
-# POST https://api.cloudflare.com/client/v4/user/load_balancers/monitors
+// POST /accounts/:account_id/load-balancers/monitors
 {
   "type": "https",
   "description": "www.example.com Health Check",
@@ -137,8 +137,8 @@ Use the Create Monitor command to create a new monitor, as in the example below.
   "messages": [],
   "result": {
     "id": "f1aba936b94213e5b8dca0c0dbf1f9cc",
-    "created_on": "2014-01-01T05:20:00.12345Z",
-    "modified_on": "2014-01-01T05:20:00.12345Z",
+    "created_on": "2021-01-01T05:20:00.12345Z",
+    "modified_on": "2021-01-01T05:20:00.12345Z",
     "type": "https",
     "description": "www.example.com Health Check",
     "method": "GET",
@@ -174,19 +174,19 @@ A Cloudflare pool represents a group of origin servers, each identified by their
 Before you continue, gather the following:
 
 - The IP addresses or hostnames of your origin servers
-- The ID of the monitor you just created. (Use the List Monitors command, `GET /load_balancers/monitors`, to fetch the Monitor ID.)
+- The ID of the monitor you just created. (Use the List Monitors command, `GET /accounts/:account_id/load_balancers/monitors`, to fetch the Monitor ID.)
 - An email address for receiving health check notifications
 
 ### Create Pool 1
 
-Use the Create Pool command on the Cloudflare API to create a new pool, as in the example below. Set the `origins` array to supply a list of origin server objects. In this example, use the two origin servers you reserved for this exercise. (See _[Pools](/understand-basics/pools/)_ for a list of pool properties and available commands.)
+Use the [Create Pool](https://api.cloudflare.com/#account-load-balancer-pools-create-pool) command on the Cloudflare API to create a new pool, as in the example below. Set the `origins` array to supply a list of origin server objects. In this example, use the two origin servers you reserved for this exercise. (See [Pools](/understand-basics/pools/) for a list of pool properties and available commands.)
 
 Setting the pool’s `monitor` property will attach your monitor to the pool and enable health checks. For this example, use the Monitor ID you generated in the previous step.
 
 **Request**
 
 ```js
-// POST https://api.cloudflare.com/client/v4/user/load_balancers/pools
+// POST /accounts/:account_id/load_balancers/pools
 {
   "name": "primary-dc-1",
   "description": "Primary data center - Provider XYZ",
@@ -212,8 +212,8 @@ Setting the pool’s `monitor` property will attach your monitor to the pool and
 {
   "result": {
     "id": "17b5962d775c646f3f9725cbc7a53df4",
-    "created_on": "2014-01-01T05:20:00.12345Z",
-    "modified_on": "2014-01-01T05:20:00.12345Z",
+    "created_on": "2021-01-01T05:20:00.12345Z",
+    "modified_on": "2021-01-01T05:20:00.12345Z",
     "description": "Primary data center - Provider XYZ",
     "name": "primary-dc-1",
     "enabled": true,
@@ -248,7 +248,7 @@ To create a second pool, use the same command you did to create Pool 1, but give
 **Request**
 
 ```js
-// POST https://api.cloudflare.com/client/v4/user/load_balancers/pools"
+// POST /accounts/:account_id/load_balancers/pools"
 {
   "name": "secondary-dc-1",
   "description": "Secondary data center - Provider QRS",
@@ -282,12 +282,12 @@ Now that you’ve created your pools and attached a monitor, Cloudflare will ini
 
 ## Step 3: Validate pool health
 
-Use the List Pools command to verify you have configured your monitor and pools correctly. The value for the `healthy` property should be `true`, indicating that health checks are configured and the pool is available.
+Use the [List Pools](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) command to verify you have configured your monitor and pools correctly. The value for the `healthy` property should be `true`, indicating that health checks are configured and the pool is available.
 
 **Request**
 
 ```js
-// /load_balancers/pools *OR* GET /load_balancers/pools/:pool_id
+// GET /accounts/:account_id/load_balancers/pools *OR* GET /accounts/:account_id/load_balancers/pools/:pool_id
 {
   // ...
   "healthy": true
@@ -317,7 +317,7 @@ Use the List Pools command to verify you have configured your monitor and pools 
         ]
       }
     },
-    // Each Cloudflare Point-of-Presence will be listed here.
+    // Each Cloudflare data center will be listed here.
   },
   "success": true,
   "errors": [],
@@ -327,7 +327,7 @@ Use the List Pools command to verify you have configured your monitor and pools 
 
 The response breaks down results for each Cloudflare PoP, as well as the origin servers associated with them.
 
-For most use cases, using the List Pools command—`GET /load_balancers/pools`—is sufficient. Responses from the Pool Health Details command—`GET pools/:pool_id/health`—can be verbose, so it’s a better tool for drilling into isolated failures.
+For most use cases, using the List Pools command—`GET /accounts/:account_id/load_balancers/pools`—is sufficient. Responses from the Pool Health Details command — `GET /accounts/:account_id/load_balancers/pools/:pool_id/health` — can be verbose, so it’s a better tool for examining isolated failures.
 
 ---
 
@@ -399,9 +399,9 @@ Notice that the response includes data not only for example.com but also for eac
       ],
       "original_registrar": "GoDaddy",
       "original_dnshost": "NameCheap",
-      "created_on": "2014-01-01T05:20:00.12345Z",
-      "modified_on": "2014-01-01T05:20:00.12345Z",
-      "activated_on": "2014-01-02T00:01:00.12345Z",
+      "created_on": "2021-01-01T05:20:00.12345Z",
+      "modified_on": "2021-01-01T05:20:00.12345Z",
+      "activated_on": "2021-01-02T00:01:00.12345Z",
       "owner": {
         "id": {},
         "email": {},
@@ -477,8 +477,8 @@ Use the Create Load Balancer command to create your new load balancer, as in the
   "messages": [],
   "result": {
     "id": "699d98642c564d2e855e9661899b7252",
-    "created_on": "2014-01-01T05:20:00.12345Z",
-    "modified_on": "2014-01-01T05:20:00.12345Z",
+    "created_on": "2021-01-01T05:20:00.12345Z",
+    "modified_on": "2021-01-01T05:20:00.12345Z",
     "description": "Load Balancer for www.example.com",
     "name": "www.example.com",
     "enabled": true,
