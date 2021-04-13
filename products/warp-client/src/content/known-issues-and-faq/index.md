@@ -19,10 +19,6 @@ order: 6
 
 * Applications or sites that rely on location information to enforce content licensing agreements (certain games, video streaming, music streaming, radio streaming, etc.) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
 
-* *Android users* may experience an issue where they are unable to progress through the onboarding screens after initially installing our app. This has been traced down to a 3rd party app with a hidden window trying to stay in focus. Please temporarily stop other running applications to progress through these screens.
-
-* Windows users in certain Cloudflare for Teams configurations may see a SSL/CERT error even when the required certificate is already installed. You can work around this issue by quitting the application and re-launching via the Windows Start menu.
-
 ---------------------
 
 <div id="frequently-asked-questions-faq">
@@ -30,24 +26,11 @@ order: 6
 ## Frequently asked questions (FAQ)
 </div>
 
-* [WARP Client doesn't work with other VPN or Security products that include VPN-like functionalities](#vpn-conflict)
 * [Why am I not connecting to a closer Cloudflare point of presence?](#i-have-a-closer-colo)
 * [Why is my public IP address sometimes visible?](#public-ip)
 * [My throughput has dropped while using WARP](#throughput-drop-with-warp)
 
 ---------------------
-
-<div id="vpn-conflict">
-
-#### WARP Client doesn't work with other VPN or Security products that include VPN-like functionalities
-</div>
-
-At its core, Cloudflare WARP is also a VPN client. Because of this, our application can not function at the same time another VPN is active on the system. Examples of VPN products that our client can't work alongside:
-* Kaspersky Internet Security
-* Nord VPN
-* Mullvad VPN
-* Cisco AnyConnect
-* etc.
 
 <div id="i-have-a-closer-colo">
 
