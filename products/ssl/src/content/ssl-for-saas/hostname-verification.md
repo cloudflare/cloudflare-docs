@@ -32,7 +32,7 @@ Cloudflare iterates over the CNAME chain starting from the hostname.  The value 
 
 #### If using another DNS provider
 
-1. Go to your authoritative DNS provider.
+1. Log into your authoritative DNS provider.
 1. Add a CNAME record to point to the fallback origin owned by the SaaS provider.
 
   ```txt
