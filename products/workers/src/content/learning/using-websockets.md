@@ -61,7 +61,7 @@ async function handleRequest(request) {
 }
 ```
 
-The WebsocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. It's common to grab the two WebSockets from this pair using `Object.values` and ES6 destructuring, as seen in the below example.
+An Object is returned from the `WebSocketPair` constructor, with the `0` and `1` keys each holding a WebSocket value. It's common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
 
 With your `client` Websocket returned back to the client, you now need to handle the `server` WebSocket. To begin receiving messages on your Workers function, call `accept` on the `server` WebSocket:
 
@@ -84,9 +84,9 @@ Writing WebSocket clients that communicate with your Workers function is a two-s
 
 ```js
 const websocket = new WebSocket("wss://websocket-example.signalnerve.workers.dev")
-websocket.addEventListener("message", message => {
+websocket.addEventListener("message", event => {
   console.log("Message received from server")
-  console.log(message)
+  console.log(event.data)
 })
 ```
 
