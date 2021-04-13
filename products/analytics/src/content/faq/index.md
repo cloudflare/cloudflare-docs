@@ -11,9 +11,9 @@ order: 40
 
 This error usually occurs when the hostname of the site loading the analytics does not match the name of the analytics site configured in the dashboard. Double-check that they are identical. 
 
-Cloudflare matches hostnames based on a postfix. For example, if you set up analytics for "example.com", we'll allow analytics from "www.example.com," "blog.staging.example.com," and "fooexample.com". However, we won't allow analytics from "example.com.br".
+Cloudflare matches hostnames based on a postfix. For example, if you set up analytics for "example.com", we'll allow analytics from "www.example.com," "blog.staging.example.com," and "fooexample.com." However, we won't allow analytics from "example.com.br."
 
-You may also see this error if the site does not send a "Referer" or "Origin" header. The "Referer" header is required (don't try to use the 'Referrer-policy" header instead). We have a change in-flight now that only the "Origin" header will be required – we believe there is no way to disable that in the browser.
+You may also see this error if the site does not send a "Referer" or "Origin" header. The "Referer" header is required (don't try to use the "Referrer-policy" header instead). We have a change in-flight now that only the "Origin" header will be required – we believe there is no way to disable that in the browser.
 
 ### Can I track more than one website with Web Analytics?
 
@@ -37,7 +37,7 @@ Cloudflare Web Analytics is designed primarily for customers who do not use Clou
 Cloudflare is actively working to expose performance information in the Web Analytics dashboard.
 Cloudflare customers who proxy their traffic can preview what this looks like by enabling Browser Insights. The Web Analytics experience will be similar.
 
-### Can I see server-side analytics by URL?)
+### Can I see server-side analytics by URL?
 Web Analytics only displays client-side analytics. All Cloudflare customers who proxy their traffic also get analytics based on traffic at their edge.
 
 Currently users on Pro, Business, and Enterprise plans get advanced HTTP traffic analytics, which is the only way to see features like a breakdown of traffic by URL based on server-side analytics. 
