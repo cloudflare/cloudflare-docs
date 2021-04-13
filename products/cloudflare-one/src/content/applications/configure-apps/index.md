@@ -2,7 +2,6 @@
 order: 0
 ---
 
-<ContentColumn>
 
 # Add web applications
 
@@ -14,5 +13,3 @@ You can protect two types of web applications: SaaS and self-hosted.
 
 <DirectoryListing path="/applications/configure-apps"/>
 
-
-</ContentColumn>
