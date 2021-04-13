@@ -108,7 +108,7 @@ filename: nuxt.config.js
 ---
 {
   buildModules: [
-    "@nuxtjs/sanity"
+    "@nuxtjs/sanity/module"
   ]
 }
 ```
