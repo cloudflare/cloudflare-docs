@@ -47,17 +47,17 @@ $ git push -u origin main
 
 You can deploy your site to Pages by going to the [Cloudflare dashboard](https://dash.cloudflare.com/) and clicking the "Create a project" button.
 
-You will be asked to authorize access to your GitHub account, if you haven't already done so. Cloudflare needs this so that it can monitor and deploy your projects from source. You may narrow access to specific repositories if you prefer this approach; however, you will have to update this list as you attach more repositories to Cloudflare Pages.
+You will be asked to authorize access to your GitHub account, if you haven't already done so. Cloudflare needs this so that it can monitor and deploy your projects from source. You may narrow access to specific repositories if you prefer; however, you will have to update this list as you attach more repositories to Cloudflare Pages.
 
 Select the new GitHub repository that you created above and, in the configuration section, provide the following information:
 
 <TableLayout>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main` |
+| Configuration option | Value                            |
+| -------------------- | -------------------------------- |
+| Production branch    | `main`                           |
 | Build command        | `npm run build -- -c production` |
-| Build directory      | `dist/my-angular-app` |
+| Build directory      | `dist/my-angular-app`            |
 
 </TableLayout>
 
