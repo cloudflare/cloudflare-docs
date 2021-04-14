@@ -77,7 +77,7 @@ You cannot use wildcards to partially match subdomain and path names. Using aste
 
 | Wildcard | Does NOT cover |
 | -------- | ------ | 
-| `example.com/cat-.*` | `example.com/cat`, `example.com/cat-food` |
+| `example.com/cat-*` | `example.com/cat`, `example.com/cat-food` |
 | `*ing.example.com` | `ing.example.com`, `engineering.example.com`|
 
 </Aside>
