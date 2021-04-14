@@ -1,8 +1,8 @@
 # Deploy an Angular application
 
-React is an incredibly popular framework for building reactive and powerful frontend applications, built by the open-source team at Facebook.
+Angular is an incredibly popular framework for building reactive and powerful frontend applications.
 
-In this guide, you'll create a new React application and deploy it using Cloudflare Pages. We'll be using `create-react-app`, a batteries-included tool for generating new React applications.
+In this guide, you'll create a new Angular application and deploy it using Cloudflare Pages. We'll be using Angular CLI, a batteries-included tool for generating new Angular applications.
 
 ## Setting up a new project
 
