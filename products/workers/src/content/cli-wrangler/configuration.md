@@ -91,7 +91,7 @@ Keys to configure per project in your `wrangler.toml`.
   - Configures cron triggers for executing a Worker on a schedule
 
 - `usage_model` <Type>top level</Type> <PropMeta>optional</PropMeta>
-  - Specifies the [Usage Model](/platform/pricing#usage-models) for your Worker. There are two options - [`bundled`](/platform/limits#bundled-usage-model) and [`unbound`](/platform/limits#unbound-usage-model). If omitted, the Usage Model is set to the [default configured in the Workers dashboard](https://dash.cloudflare.com/?account=workers/default-usage-model).
+  - Specifies the [Usage Model](/platform/pricing#usage-models) for your Worker. There are two options - [`bundled`](/platform/limits#bundled-usage-model) and [`unbound`](/platform/limits#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
 </Definitions>
 

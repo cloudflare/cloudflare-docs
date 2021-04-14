@@ -24,7 +24,7 @@ By default, when an account is first upgraded to the Paid plan, the default Usag
 
 <TableWrap>
 
-| Plan     | Bundled requests | Unbound requests | Unbound duration<sup>1</sup> | Unbound egress data transfer<sup>2</sup> |
+|          | Bundled requests | Unbound requests | Unbound duration<sup>1</sup> | Unbound egress data transfer<sup>2</sup> |
 | -------- | ---------------- | ---------------- | ---------------------------- | ---------------------------------------- |
 | Included | 10 million       | 1 million        | 400,000 GB-s                 | 5 GB                                     |
 | +        | $0.50/million    | $0.15/million    | $12.50/million GB-s          | $0.045/GB                                |
@@ -38,23 +38,23 @@ By default, when an account is first upgraded to the Paid plan, the default Usag
 
 #### Example 1
 
-If your Worker executed 1.5 million times, used a total of 200,000 GB-s, and sent a total egress data of approximately 6 GB, the estimated costs in a month would be:
+If an Unbound Worker executed 1.5 million times, used a total of 200,000 GB-s, and sent a total egress data of approximately 6 GB, the estimated cost in a month would be:
 
-Total = ~$0.12 USD + Minimum $5/mo usage = $5.12
+Total = ~$0.12 USD + Minimum $5/mo usage = **$5.12**
 
-- Requests = `(1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075`
-- Duration = `(200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00`
-- Egress data transfer = `(6 GB - included 5 GB) x 0.045 = $0.045`
+- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
+- (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$0.00**
+- (6 GB - included 5 GB) x 0.045 = **$0.045**
 
 #### Example 2
 
-If your Worker executed 5 million times, used a total of 800,000 GB-s, and sent a total egress data of approximately 20 GB, the estimated costs in a month would be:
+If an Unbound Worker executed 5 million times, used a total of 800,000 GB-s, and sent a total egress data of approximately 20 GB, the estimated cost in a month would be:
 
-Total = ~$6.27 + Minimum $5/mo usage = $11.27
+Total = ~$6.27 + Minimum $5/mo usage = **$11.27**
 
-- Requests = `(5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $0.60`
-- Duration = `(800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00`
-- Egress data transfer = `(20 GB - included 5 GB) x $0.045 = $0.675`
+- (5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = **$0.60**
+- (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = **$5.00**
+- (20 GB - included 5 GB) x $0.045 = **$0.675**
 
 ### Default Usage Model
 
@@ -80,7 +80,7 @@ To avoid these limits, you can subscribe to the [Workers Paid plan](#pricing). U
 
 <TableWrap>
 
-| Plan     | Storage  | Reads/month   | Writes/month | Deletes/month | Lists/month |
+|          | Storage  | Reads/month   | Writes/month | Deletes/month | Lists/month |
 | -------- | -------- | ------------- | ------------ | ------------- | ----------- |
 | Included | 1 GB     | 10 million    | 1 million    | 1 million     | 1 million   |
 | +        | $0.50/GB | $0.50/million | $5/million   | $5/million    | $5/million  |
