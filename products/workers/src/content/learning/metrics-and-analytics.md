@@ -6,7 +6,7 @@ order: 11
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers Metrics and zone-based Workers analytics. Workers metrics can help you diagnose issues and understand your Workers workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, the Workers tab in the zone can help you understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
 
---------------------------------
+---
 
 ## Workers metrics
 
@@ -51,11 +51,21 @@ To further investigate exceptions, you can use [wrangler tail](/cli-wrangler/com
 
 The CPU time chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). You can [learn more about interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). In some cases, higher quantiles may appear to exceed [CPU time limits](/platform/limits#cpu-runtime) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
 
+### Duration
+
+The duration chart shows historical [duration](/platform/limits#duration) per Worker execution. The data is broken down into relevant quantiles, similar to the CPU time chart. You can [learn more about interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). Understanding duration on your Worker is especially useful when you are intending to do a significant amount of computation on the Worker itself.
+
+Workers on the [Bundled Usage Model](/platform/pricing#usage-models) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like `fetch` requests, and waiting on responses.
+
+### Egress data
+
+The egress data chart shows the total amount of data sent out of the Worker over the selected time period. The data is broken into `subrequest` and `response body` to help with understanding when and where the data is being sent out from. If you are sending data to members of the [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/), the values shown in this chart may not align with the usage costs at the end of the month. For more information billing see the [pricing docs](/platform/pricing#usage-models).
+
 ### Metrics retention
 
 Worker script metrics can be inspected for up to 3 months in the past in maximum increments of 1 week. The dashboard includes the charts and information described below.
 
---------------------------------
+---
 
 ## Zone analytics
 
@@ -82,7 +92,7 @@ This chart shows historical requests for all scripts on a zone broken down by HT
 
 This chart shows historical data for all scripts on a zone broken down by successful requests, failed requests, and subrequests. These request types are categorized by HTTP status code where 200-level requests are successful and 400 to 500-level requests are failed.
 
---------------------------------
+---
 
 ## GraphQL
 
