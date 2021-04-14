@@ -18,7 +18,7 @@ Before you can configure Schema Validation for an API, you must obtain its API S
 
 To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
-1. Log in to your Cloudflare account Home page and click the zone containing the host you want to protect with mTLS.
+1. Log in to your Cloudflare account Home page and click the zone containing the host for which you want to configure Schema Validation.
 
 1. Click the **Firewall** app.
 
