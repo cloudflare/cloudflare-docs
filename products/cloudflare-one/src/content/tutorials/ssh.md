@@ -134,6 +134,8 @@ We recommend that you run `cloudflared` [as a service](/connections/connect-apps
 
 ## Connect from a client machine
 
+### Native Terminal
+
 You can now connect from a client machine using `cloudflared`.
 
 This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command using Homebrew.
@@ -156,3 +158,13 @@ Host azure.widgetcorp.tech
 ```
 
 You can now test the SSH flow by running a command to reach the service. When the command is run, `cloudflared` will launch a browser window to prompt you to authenticate with your identity provider before establishing the connection from your terminal.
+
+### Browser-rendered terminal
+
+Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
+
+To enable, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable browser rendering` to on.
+
+![Auto Auth](../static/documentation/applications/render-browser.png)
+
+Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.

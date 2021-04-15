@@ -3,7 +3,7 @@ order: 0
 ---
 
 
-# Add web applications
+# Web applications
 
 You can protect two types of web applications: SaaS and self-hosted.
 
