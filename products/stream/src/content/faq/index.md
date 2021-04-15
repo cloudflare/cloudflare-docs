@@ -63,7 +63,7 @@ Mobile Platform   | Version
 Chrome on Android | Supported on Chrome and Firefox for Android 4.0+ and all browsers for Android 4.1+
 UC Browser on Android | Supported on version 11.8+
 Samsung Internet | Supported on 5+
-iOS               | Supported on iOS 8+
+Safari on iOS    | Supported on iOS 8+. Speed selector supported when not in fullscreen.
 Windows           | Supported on Windows Phone 8+
 
 </TableWrap>
