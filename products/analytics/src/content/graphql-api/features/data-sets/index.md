@@ -43,9 +43,10 @@ Beta data sets are available to Enterprise customers for testing and exploration
 
 <TableWrap>
 
-| Data set (product) | Node                                                                                                   |
-| :----------------- | :----------------------------------------------------------------------------------------------------- |
-| Browser Insights   | `browserInsightsAdaptiveGroups` `browserInsightsResourceAdaptiveGroups` `webVitalsAdaptiveGroups`      |
+| Data set (product) | Node                                                                                                        |
+| :----------------- | :---------------------------------------------------------------------------------------------------------- |
+| Browser Insights   | `browserInsightsAdaptiveGroups` `browserInsightsResourceAdaptiveGroups` `webVitalsAdaptiveGroups`           |
+| Web Analytics      | `rumPageloadEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumWebVitalsEventsAdaptiveGroups`   |
 
 </TableWrap>
 
