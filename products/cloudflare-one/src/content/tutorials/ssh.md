@@ -161,7 +161,7 @@ You can now test the SSH flow by running a command to reach the service. When th
 
 ### Browser-rendered terminal
 
-Cloudflare can render certain a terminal for your SSS session in your browser without the need for client software or end user configuration changes.
+Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
 To enable, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable browser rendering` to on.
 

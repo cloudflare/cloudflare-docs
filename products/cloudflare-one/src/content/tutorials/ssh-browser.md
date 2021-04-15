@@ -3,9 +3,9 @@ updated: 2021-04-15
 category: 🔐 Zero Trust
 ---
 
-# Render a terminal in the browser for SSH connections
+# Render an SSH client in a browser
 
-Cloudflare can render certain a terminal for your SSS session in your browser without the need for client software or end user configuration changes.
+Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
 Administrators can deploy Cloudflare Tunnel to connect one or more machines available over SSH to Cloudflare's network. Zero Trust rules can then be applied and enforced at Cloudflare's edge. When users authenticate through those rules, they can start an SSH session in their browser.
 
