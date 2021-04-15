@@ -93,17 +93,9 @@ If the IP Access Rules toggle is enabled for a Spectrum application, then Cloudf
 
 ## Edge TLS Termination
 
-Spectrum offers four modes of TLS termination: 'Passthrough', 'Flexible', 'Full', and 'Full (Strict)'.
+If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at Edge. Edge TLS Termination toggle applies only to TCP applications.
 
-'Passthrough' disables TLS termination at the edge. This is the required setting if the underlying traffic is not encrypted with TLS. If the connection is encrypted, 'Passthrough' allows traffic to flow from client to origin using the TLS session negotiated directly with the origin.
-
-'Flexible' enables termination of the client connection at the edge, but does not enable TLS from Cloudflare to your origin. Traffic will be sent over an encrypted connection from the client to Cloudflare, but not from Cloudflare to the origin.
-
-'Full' specifies that traffic from Cloudflare to the origin will also be encrypted but without certificate validation. When set to 'Full (Strict)', traffic from Cloudflare to the origin will also be encrypted with strict validation of the origin certificate.
-
-TLS traffic can still be sent through Spectrum with TLS set to 'Passthrough'. Cloudflare will not terminate it. Instead, it will act as a pure passthrough.
-
-Spectrum supports versions TLS 1.1, TLS 1.2, and TLS 1.3.
+TLS versions supported by Spectrum: TLS 1.1, TLS 1.2, and TLS 1.3.
 
 --------------------------------
 
