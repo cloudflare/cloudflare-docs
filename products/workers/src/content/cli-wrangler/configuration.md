@@ -44,15 +44,19 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `type` <Type>top level</Type> <PropMeta>required</PropMeta>
 
-  - Specifies how `wrangler build` will build your project. There are currently three options — `webpack`, `javascript`, and `rust`. `javascript` skips building the project, `webpack` builds your project with webpack, and `rust` compiles the Rust in your project to WASM.
+  - Specifies how `wrangler build` will build your project. There are three options: `javascript`, `webpack`, and `rust`. `javascript` checks for a build command specified in the `[build]` section, `webpack` builds your project using webpack v4, and `rust` compiles the Rust in your project to WebAssembly.
 
-- `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
-
-  - This is the ID of the "zone" or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a [workers.dev](https://workers.dev) subdomain.
+<Aside>
+  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`[build]`](#build) section.
+</Aside>
 
 - `account_id` <Type>inherited</Type> <PropMeta>required</PropMeta>
 
   - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CF_ACCOUNT_ID` environment variable.
+
+- `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
+
+  - This is the ID of the "zone" or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a [workers.dev](https://workers.dev) subdomain.
 
 - `workers_dev` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -265,7 +269,7 @@ Usage:
 crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
 ```
 
-- `crons` optional
+- `crons` <PropMeta>optional</PropMeta>
   - A set of cron expressions, where each expression is a separate schedule to run the Worker on.
 
 ### dev
@@ -276,8 +280,8 @@ Usage:
 
 ```toml
 [dev]
-port=9000
-local_protocol="https"
+port = 9000
+local_protocol = "https"
 ```
 
 <Definitions>
@@ -299,6 +303,161 @@ local_protocol="https"
 
 </Definitions>
 
+### build
+
+Customize the command used to build your project. There are two configurations based on the format of your Worker: `service-worker` and `modules` _(in beta)_.
+
+#### Service Workers
+
+This section is for customizing Workers with the `service-worker` format. If you're not familar, these are Workers that use `addEventListener` and look like the following:
+
+```js
+addEventListener('fetch', function (event) {
+  event.respondWith(new Response("I'm a service Worker!"))
+})
+```
+
+Usage:
+
+```toml
+[build]
+upload.format = "service-worker"
+command = "npm install && npm run build"
+```
+
+<Definitions>
+
+- `upload.format` <PropMeta>required</PropMeta>
+
+  - The format of the Worker script, must be "service-worker"
+
+- `command` <PropMeta>optional</PropMeta>
+
+  - The command to build your project which is executed in the shell of your machine: `sh` for Linux and MacOS, and `cmd` for Windows. You can also use shell operators such as `&&` and `|`
+
+- `cwd` <PropMeta>optional</PropMeta>
+
+  - The working directory for commands, defaults to the project root directory
+
+- `watch_dir` <PropMeta>optional</PropMeta>
+
+  - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory
+
+</Definitions>
+
+<Aside>
+
+  **Note:** Make sure the `main` field in your `package.json` references the Worker script you want to publish.
+
+</Aside>
+
+#### ES Modules
+
+ES modules, also known as [ECMAScript modules](https://nodejs.org/api/esm.html#esm_introduction), are scripts that use `import` and `export` semantics. If your account has opt-in to the [Durable Objects](/learning/using-durable-objects) open beta, then you have access to the `modules` format, since it's required to use Durable Objects. 
+
+```js
+import html from './index.html'
+
+export default {
+  async fetch(request, env) {
+    const headers = { 'Content-Type': 'text/html;charset=UTF-8' }
+    return new Response(html, { headers })
+  }
+}
+```
+
+In the future, ES modules will become the default experience for creating Workers. Until then, we are still working on "full" support, so consider this as a beta feature.
+
+Usage:
+
+```toml
+[build]
+command = "npm install && npm run build"
+
+[build.upload]
+format = "modules"
+main = "./worker.mjs"
+```
+
+##### `[build]`
+
+<Definitions>
+
+- `command` <PropMeta>optional</PropMeta>
+
+  - The command to build your project which is executed in the shell of your machine: `sh` for Linux and MacOS, and `cmd` for Windows. You can also use shell operators such as `&&` and `|`
+
+- `cwd` <PropMeta>optional</PropMeta>
+
+  - The working directory for commands, defaults to the project root directory
+
+- `watch_dir` <PropMeta>optional</PropMeta>
+
+  - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory
+
+</Definitions>
+
+##### `[build.upload]`
+
+<Definitions>
+
+- `format` <PropMeta>required</PropMeta>
+
+  - The format of the Worker script, must be `"modules"`
+
+- `dir` <PropMeta>optional</PropMeta>
+
+  - The upload directory for modules, defaults to "dist" relative to the project root directory
+
+- `main` <PropMeta>required</PropMeta>
+
+  - The relative path of the main module from `dir`, including the `./`. The main module must be an ES module. For projects with a build script, this usually refers to the output of your JavaScript bundler
+  
+<Aside>
+
+  **Note:** If your project is written using CommonJS modules, you will need to re-export using an ES module. See the [modules-webpack-commonjs](https://github.com/cloudflare/modules-webpack-commonjs) template as an example.
+
+</Aside>
+
+- `rules` <PropMeta>optional</PropMeta>
+
+  - An ordered list of rules that define which modules to import
+
+  - Defaults:
+
+    ```toml
+    rules = [
+      {type = "ESModule", globs = ["**/*.mjs"]},
+      {type = "CommonJS", globs = ["**/*.js", "**/*.cjs"]}
+    ]
+    ```
+
+  - <Definitions>
+
+    - `type` <PropMeta>required</PropMeta>
+
+      - The module type, see the table below for acceptable options
+
+      <TableWrap>
+
+        | `type`       | JavaScript class     | 
+        | ------------ | -------------------- |
+        | ESModule     | -                    |
+        | CommonJS     | -                    |
+        | Text         | `String`             |
+        | Data         | `ArrayBuffer`        | 
+        | CompiledWasm | `WebAssembly.Module` |
+
+      </TableWrap>
+
+    - `globs` <PropMeta>required</PropMeta>
+
+      - Unix-style [glob rules](https://gulpjs.com/docs/en/getting-started/explaining-globs/) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the relative path without `./`. Rules are evaluated in order, starting at the top.
+
+    </Definitions>
+
+</Definitions>
+
 ---
 
 ## Example
@@ -310,7 +469,7 @@ To illustrate how these levels are applied, here is a wrangler.toml using multip
 filename: wrangler.toml
 ---
 # top level configuration
-type = "webpack"
+type = "javascript"
 name = "my-worker-dev"
 account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
@@ -320,6 +479,10 @@ kv_namespaces = [
   { binding = "FOO", id = "b941aabb520e61dcaaeaa64b4d8f8358", preview_id = "03c8c8dd3b032b0528f6547d0e1a83f3" },
   { binding = "BAR", id = "90e6f6abd5b4f981c748c532844461ae", preview_id = "e5011a026c5032c09af62c55ecc3f438" }
 ]
+
+[build]
+command = "webpack"
+upload.format = "service-worker"
 
 [site]
 bucket = "./public"
