@@ -1,6 +1,6 @@
 ---
 title: Migration guides
-order: 10
+order: 60
 ---
 
 # Migration guides
