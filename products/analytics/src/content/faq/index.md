@@ -17,7 +17,7 @@ You may also see this error if the site does not send a "Referer" or "Origin" he
 
 ### Can I track more than one website with Web Analytics?
 
-Yes. Right now there's a soft limit of 10 sites per account, but that can be adjusted through Entitlements.
+Yes. Right now there's a soft limit of 10 sites per account, but that can be adjusted by contacting Cloudflare support.
 
 ### The analytics beacon is blocked by ad-blockers (including adblockplus, Brave, DuckDuckGo extension, etc). Why is that?
 
@@ -33,10 +33,6 @@ Existing Cloudflare customers can access analytics collected from our edge on th
 
 Cloudflare Web Analytics is designed primarily for customers who do not use Cloudflare's proxy to measure their web traffic. However, in the future we may add the option for orange-cloud users to automatically add the beacon if they'd like to measure web traffic using the beacon. 
 
-### I noticed the beacon is collecting performance data. Is there a way to see the data being collected?
-Cloudflare is actively working to expose performance information in the Web Analytics dashboard.
-Cloudflare customers who proxy their traffic can preview what this looks like by enabling Browser Insights. The Web Analytics experience will be similar.
-
 ### Can I see server-side analytics by URL?
 Web Analytics only displays client-side analytics. All Cloudflare customers who proxy their traffic also get analytics based on traffic at their edge.
 
@@ -48,12 +44,12 @@ Not yet, but we plan to support AMP soon.
 ### Can I add Web Analytics to my site using a tag manager like Google Tag Manager (GTM)?
 Yes. Instead of embedding the script using a tag manager as shown here:
 ```bash
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "$ANALYTICS_TOKEN"}'></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "$SITE_TOKEN"}'></script>
 ```
 
 Add the following script:
 ```bash
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=$ANALYTICS_TOKEN'></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN'></script>
 ```
 
 ### Does Cloudflare Web Analytics support UTM parameters?
