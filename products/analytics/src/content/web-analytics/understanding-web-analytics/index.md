@@ -15,6 +15,4 @@ View your website’s page views, visits, page load time, and Core Web Vitals by
 <li>Core Web Vitals - Higher-level metrics designed by Google to capture the user experience more completely. </li>
 </ul>
 
-Refer to [Core Web Vitals](/understanding-web-analytics/core-web-vitals) for more information about Core Web Vitals.
-
 ![Web Analytics dash overview](../../static/images/dash-web_analytics-overview.png)
