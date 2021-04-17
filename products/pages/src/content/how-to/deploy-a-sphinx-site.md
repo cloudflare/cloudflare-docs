@@ -117,7 +117,7 @@ docs [here](https://www.sphinx-doc.org/en/master/usage/quickstart.html).
 Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can
 push your local application to GitHub:
 
-```sh
+```shell
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main
