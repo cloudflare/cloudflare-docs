@@ -90,7 +90,7 @@ module.exports = {
 
 <Aside>
 
-**Important:** Remember to commit and push these changes to your GitHub!
+**Important:** Remember to commit and push these changes to your GitHub repository!
 
 </Aside>
 
