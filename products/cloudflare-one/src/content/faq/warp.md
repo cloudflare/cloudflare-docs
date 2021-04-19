@@ -22,7 +22,7 @@ This section addresses the most common issues you may come across when setting u
 
 * After editing Split Tunnel or Local Domain fallback values in the Teams Dashboard you must quit the client and re-start it for the values to be picked up.
 
-* iOS/Android MDM configurations MUST include a `gateway_unique_id` as it is failing to come down automatically with your `organization`.
+* You must include a `gateway_unique_id` in iOS/Android MDM configurations, as it is failing to come down automatically with your `organization`.
 
 * Android is missing the MDM parameters for `auto_connect` and `switch_locked`.
 
