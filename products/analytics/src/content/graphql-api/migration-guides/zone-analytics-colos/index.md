@@ -2,12 +2,13 @@
 title: Zone Analytics Colos Endpoint to GraphQL Analytics
 order: 12
 ---
+# Zone Analytics Colos Endpoint to GraphQL Analytics
 
 This guide shows how you might migrate from the deprecated (and soon to be
 sunset) zone analytics API to the GraphQL API. It provides an example for a
 plausible use-case of the colos endpoint, then shows how that use-case is
 translated to the GraphQL API. It also explores features of the GraphQL API
-which make it more powerful than the API which it replaces.
+that make it more powerful than the API it replaces.
 
 In this example, we want to calculate the number of requests for a particular
 colo, broken down by the hour in which the requests occurred. Referring to the
