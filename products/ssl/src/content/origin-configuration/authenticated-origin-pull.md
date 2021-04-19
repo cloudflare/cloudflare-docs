@@ -37,7 +37,7 @@ Authenticated Origin Pull does not work in **SSL** mode _Off_ (not secure) or _F
 
 --------
 
-## Zone-Level Authenticated Origin Pull using Cloudflare certificates {#zone-level}
+## Zone-Level Authenticated Origin Pull using Cloudflare certificates
 
 Cloudflare uses the following CA to sign certificates for the Authenticated Origin Pull service:
 
