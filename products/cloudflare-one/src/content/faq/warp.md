@@ -24,7 +24,7 @@ This section addresses the most common issues you may come across when setting u
 
 * iOS/Android MDM configurations MUST include a `gateway_unique_id` as it is failing to come down automatically with your `organization`.
 
-* Android is missing the MDM paramters for `auto_connect` and `switch_locked`
+* Android is missing the MDM parameters for `auto_connect` and `switch_locked`.
 
 
 ### Frequently asked questions (FAQ)
