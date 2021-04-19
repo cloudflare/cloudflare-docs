@@ -189,7 +189,7 @@ The following [API call enables Authenticated origin pull at zone level](https:/
 
 --------
 
-## Per-Hostname Authenticated Origin Pull using customer certificates {#per-hostname}
+## Per-Hostname Authenticated Origin Pull using customer certificates
 
 When enabling Authenticated Origin Pull per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server.  Customers can use client certificates from their Private PKI to authenticate connections from Cloudflare.
 
