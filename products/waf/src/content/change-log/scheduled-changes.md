@@ -30,28 +30,5 @@ order: 1
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                2021-04-12
-            </td>
-            <td>
-                2021-04-19
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                100038
-            </td>
-            <td>
-                Improve Information Disclosure Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
     </tbody>
 </table></TableWrap>
