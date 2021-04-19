@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 416 375" fill="currentColor">
+  <title>Cloudflare Workers logo (monochromatic)</title>
+  <path d="M107 5l49 89-45 81c-4 8-4 17 0 25l45 81-49 89c-9-5-17-12-22-21L7 214c-9-17-9-36 0-53L85 26c5-9 13-16 22-21zM331 26l78 135c9 17 9 36 0 53l-78 135c-9 16-26 26-45 26h-78l97-175c4-8 4-17 0-25L208 0h78c19 0 36 10 45 26z"/>
+  <path opacity=".5" d="M130 375c-8 0-16-2-23-5l96-174c3-5 3-12 0-17L107 5c7-3 15-5 23-5h78l97 175c4 8 4 17 0 25l-97 175h-78z"/>
+</svg>

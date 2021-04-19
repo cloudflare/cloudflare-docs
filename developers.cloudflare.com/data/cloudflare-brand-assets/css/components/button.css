@@ -1,0 +1,165 @@
+.Button {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  line-height: var(--button-line-height);
+  padding: var(--button-top-padding) var(--button-horizontal-padding) var(--button-bottom-padding);
+  border-radius: var(--button-border-radius);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+
+  --active-box-shadow-color: transparent;
+  --active-box-shadow: inset 0 .0625em .1875em var(--active-box-shadow-color);
+
+  --active-overlay-box-shadow-color: transparent;
+  --active-overlay-box-shadow: inset 0 0 0 9999em var(--active-overlay-box-shadow-color);
+
+  --hover-box-shadow-color: transparent;
+  --hover-box-shadow: inset 0 0 0 9999em var(--hover-box-shadow-color);
+
+  --focus-box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+
+  --border-color: transparent;
+  --border-box-shadow: inset 0 0 0 1px var(--border-color);
+
+  --shadow-box-shadow: 0 1px 1px rgba(var(--shadow-color-rgb), .075),
+    0 .1333em .26667em rgba(var(--shadow-color-rgb), .075),
+    0 .2222em .66667em 0 rgba(var(--shadow-color-rgb), .075),
+    0 .4444em 1.3333em 0 rgba(var(--shadow-color-rgb), .075);
+
+  --box-shadow: 0 0 0 0 transparent;
+
+  box-shadow:
+    var(--active-box-shadow),
+    var(--active-overlay-box-shadow),
+    var(--hover-box-shadow),
+    var(--focus-box-shadow),
+    var(--border-box-shadow),
+    var(--box-shadow);
+
+  --box-shadow-transition-duration: .3s;
+  transition: box-shadow var(--box-shadow-transition-duration) ease;
+}
+
+.Button[disabled] {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+@media (hover: hover) {
+  .Button:hover {
+    --hover-box-shadow-color: rgb(255, 255, 255, .2);
+  }
+
+  [theme="dark"] .Button:hover {
+    --hover-box-shadow-color: rgb(255, 255, 255, .05);
+  }
+}
+
+.Button:not([disabled]):active {
+  --box-shadow-transition-duration: 0s;
+  --hover-box-shadow-color: transparent;
+  --box-shadow: 0 0 0 0 transparent;
+  --active-overlay-box-shadow-color: rgb(0, 0, 0, .08);
+  --active-box-shadow-color: rgb(0, 0, 0, .2);
+}
+
+@media (hover: none) {
+  .Button:not([disabled]):active {
+    --active-overlay-box-shadow-color: rgb(0, 0, 0, .3);
+  }
+}
+
+[js-focus-visible-polyfill-available] .Button:focus {
+  outline: none;
+}
+
+.Button[is-focus-visible] {
+  --box-shadow-transition-duration: 0s;
+}
+
+.Button:not([is-focus-visible]) {
+  --focus-size: 0;
+}
+
+/* https://github.com/cloudflare/cloudflare-docs-engine/issues/305 */
+@-moz-document url-prefix() {
+  .Button:not([is-focus-visible]) {
+    --focus-color: transparent;
+  }
+}
+
+.Button-is-primary {
+  --box-shadow: var(--shadow-box-shadow);
+
+  background: linear-gradient(25deg,
+    rgb(var(--cloudflare-logo-orange-rgb)),
+    rgb(var(--cloudflare-logo-light-orange-rgb))
+  );
+
+  color: #fff;
+}
+
+.Button-is-secondary {
+  background: var(--gray-9);
+}
+
+[theme="dark"] .Button-is-secondary {
+  background: var(--gray-05);
+}
+
+.Button-is-secondary-orange {
+  --color-rgb: var(--orange-3-rgb);
+  background: rgba(var(--cloudflare-logo-light-orange-rgb), .12);
+  color: rgb(var(--color-rgb));
+}
+
+[theme="dark"] .Button-is-secondary-orange {
+  --color-rgb: var(--orange-7-rgb);
+}
+
+[theme="light"] .Button-is-secondary-orange:not([disabled]):active {
+  --active-box-shadow-color: rgba(var(--color-rgb), .4);
+}
+
+.Button-is-docs-primary {
+  background: var(--orange-5);
+  color: #fff;
+}
+
+[theme="dark"] .Button-is-docs-primary {
+  --border-color: rgba(var(--orange-rgb), .7);
+  color: inherit;
+  background: transparent;
+}
+
+.Button-is-docs-secondary {
+  background: var(--gray-9);
+}
+
+[theme="dark"] .Button-is-docs-secondary {
+  --border-color: rgba(var(--color-rgb), .3);
+  color: inherit;
+  background: transparent;
+}
+
+[theme="dark"] .Button-is-docs-secondary[is-focus-visible] {
+  --border-color: rgba(var(--orange-rgb), .7);
+}
+
+.Button-is-white {
+  background: #fff;
+}
+
+.Button-is-inverted {
+  background: var(--color);
+  color: var(--background-color);
+}

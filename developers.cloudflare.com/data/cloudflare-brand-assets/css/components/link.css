@@ -1,0 +1,57 @@
+.Link {
+  text-decoration: none;
+  color: inherit;
+  --accent-color: var(--orange);
+  --underline-size: -.16em;
+  --underline-color: var(--accent-color);
+  --underline-shadow: inset 0 var(--underline-size) var(--underline-color);
+  --focus-size: 3px;
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  box-shadow: var(--focus-shadow), var(--underline-shadow);
+}
+
+.Link-is-blue   { --accent-color: var(--blue-6)   }
+.Link-is-cyan   { --accent-color: var(--cyan-6)   }
+.Link-is-gray   { --accent-color: var(--gray-6)   }
+.Link-is-green  { --accent-color: var(--green-6)  }
+.Link-is-gold   { --accent-color: var(--gold-6)   }
+.Link-is-orange { --accent-color: var(--orange)   }
+.Link-is-indigo { --accent-color: var(--indigo-6) }
+.Link-is-violet { --accent-color: var(--violet-6) }
+
+@media (hover: hover) {
+  .Link:hover {
+    color: var(--accent-color);
+  }
+}
+
+.Link-is-juicy {
+  padding: .5em;
+  margin: -.5em;
+}
+
+.Link-without-underline,
+.Link-with-left-arrow,
+.Link-with-right-arrow {
+  --underline-size: 0;
+}
+
+.Link-with-left-arrow::before {
+  content: "←\00a0";
+}
+
+.Link-with-right-arrow::after {
+  content: "\00a0→";
+}
+
+[js-focus-visible-polyfill-available] .Link:focus {
+  outline: none;
+}
+
+.Link[is-focus-visible] {
+  --underline-size: 0;
+}
+
+.Link:not([is-focus-visible]) {
+  --focus-size: 0;
+}

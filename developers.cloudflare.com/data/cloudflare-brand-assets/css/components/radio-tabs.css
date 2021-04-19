@@ -1,0 +1,72 @@
+.RadioTabs {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.RadioTabs--input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.RadioTabs--tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 1em 1.5em;
+  text-align: center;
+  background: var(--tab-background-color);
+  cursor: pointer;
+  --focus-box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  --box-shadow: 0 0 0 0 transparent;
+  box-shadow: var(--focus-box-shadow), var(--box-shadow);
+}
+
+[js-focus-visible-polyfill-available] .RadioTabs--input:focus + .RadioTabs--tab {
+  outline: none;
+}
+
+.RadioTabs--input:not([is-focus-visible]) + .RadioTabs--tab {
+  --focus-size: 0;
+}
+
+.RadioTabs--input:checked + .RadioTabs--tab {
+  background: transparent;
+  color: inherit;
+  z-index: 1;
+}
+
+.RadioTabs--tab-panel {
+  display: none;
+  padding: 1em;
+  order: 99;
+}
+
+.RadioTabs--input:checked + .RadioTabs--tab + .RadioTabs--tab-panel {
+  display: block;
+  width: 100%;
+}
+
+.RadioTabs-pill-style .RadioTabs--tab {
+  padding: .5em 1.5em;
+  border-radius: 999em;
+  --box-shadow-color: transparent;
+  --box-shadow: inset 0 .15em .225em var(--box-shadow-color);
+  box-shadow: var(--focus-box-shadow), var(--box-shadow);
+}
+
+.RadioTabs-pill-style .RadioTabs--tab-panel {
+  padding: 1.25em 0 0;
+}
+
+.RadioTabs-pill-style .RadioTabs--tab ~ .RadioTabs--tab {
+  margin-left: 1em;
+}
+
+.RadioTabs-pill-style .RadioTabs--input:checked + .RadioTabs--tab {
+  background: var(--green-4); /* TODO - move to theme colors? */
+  --box-shadow-color: rgba(0, 0, 0, .2);
+  color: #fff;
+}

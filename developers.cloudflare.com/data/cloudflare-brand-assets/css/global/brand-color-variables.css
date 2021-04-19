@@ -1,0 +1,142 @@
+html {
+  /* From https://component-library.com */
+
+  /* Cloudflare logo */
+  --cloudflare-logo-gray-rgb: 64, 64, 65;
+  --cloudflare-logo-orange-rgb: 243, 128, 32;
+  --cloudflare-logo-light-orange-rgb: 248, 173, 76;
+
+  /* Marketing colors */
+  --orange-rgb: var(--cloudflare-logo-orange-rgb);
+  --orange: rgb(var(--orange-rgb));
+  --orange-for-use-as-selection-color: #ef9530; /* Adjust brand orange to account for the browser’s automatic tinting/adjusting. (For example if you specify #fff you end up with something closer to #a4a4a4.) */
+  --light-blue-rgb: 79, 140, 200;
+  --light-blue: rgb(var(--light-blue-rgb));
+  --blue-rgb: 0, 81, 127;
+  --blue: rgb(var(--blue-rgb));
+
+  /* Color scales */
+  --red-0:    #430c15; --red-0-rgb:    67, 12, 21;
+  --red-1:    #711423; --red-1-rgb:    113, 20, 35;
+  --red-2:    #a01c32; --red-2-rgb:    160, 28, 50;
+  --red-3:    #bf223c; --red-3-rgb:    191, 34, 60;
+  --red-4:    #da304c; --red-4-rgb:    218, 48, 76;
+  --red-5:    #e35f75; --red-5-rgb:    227, 95, 117;
+  --red-6:    #ec93a2; --red-6-rgb:    236, 147, 162;
+  --red-7:    #f3bac3; --red-7-rgb:    243, 186, 195;
+  --red-8:    #f9dce1; --red-8-rgb:    249, 220, 225;
+  --red-9:    #fcf0f2; --red-9-rgb:    252, 240, 242;
+  --orange-0: #341a04; --orange-0-rgb: 52, 26, 4;
+  --orange-1: #5b2c06; --orange-1-rgb: 91, 44, 6;
+  --orange-2: #813f09; --orange-2-rgb: 129, 63, 9;
+  --orange-3: #a24f0b; --orange-3-rgb: 162, 79, 11;
+  --orange-4: #b6590d; --orange-4-rgb: 182, 89, 13;
+  --orange-5: #e06d10; --orange-5-rgb: 224, 109, 16;
+  --orange-6: #f4a15d; --orange-6-rgb: 244, 161, 93;
+  --orange-7: #f8c296; --orange-7-rgb: 248, 194, 150;
+  --orange-8: #fbdbc1; --orange-8-rgb: 251, 219, 193;
+  --orange-9: #fdf1e7; --orange-9-rgb: 253, 241, 231;
+  --gold-0:   #2c1c02; --gold-0-rgb:   44, 28, 2;
+  --gold-1:   #573905; --gold-1-rgb:   87, 57, 5;
+  --gold-2:   #744c06; --gold-2-rgb:   116, 76, 6;
+  --gold-3:   #8e5c07; --gold-3-rgb:   142, 92, 7;
+  --gold-4:   #a26a09; --gold-4-rgb:   162, 106, 9;
+  --gold-5:   #c7820a; --gold-5-rgb:   199, 130, 10;
+  --gold-6:   #f4a929; --gold-6-rgb:   244, 169, 41;
+  --gold-7:   #f8cd81; --gold-7-rgb:   248, 205, 129;
+  --gold-8:   #fbe2b6; --gold-8-rgb:   251, 226, 182;
+  --gold-9:   #fdf3e2; --gold-9-rgb:   253, 243, 226;
+  --green-0:  #0f2417; --green-0-rgb:  15, 36, 23;
+  --green-1:  #1c422b; --green-1-rgb:  28, 66, 43;
+  --green-2:  #285d3d; --green-2-rgb:  40, 93, 61;
+  --green-3:  #31724b; --green-3-rgb:  49, 114, 75;
+  --green-4:  #398557; --green-4-rgb:  57, 133, 87;
+  --green-5:  #46a46c; --green-5-rgb:  70, 164, 108;
+  --green-6:  #79c698; --green-6-rgb:  121, 198, 152;
+  --green-7:  #b0ddc2; --green-7-rgb:  176, 221, 194;
+  --green-8:  #d8eee1; --green-8-rgb:  216, 238, 225;
+  --green-9:  #eff8f3; --green-9-rgb:  239, 248, 243;
+  --cyan-0:   #0c2427; --cyan-0-rgb:   12, 36, 39;
+  --cyan-1:   #164249; --cyan-1-rgb:   22, 66, 73;
+  --cyan-2:   #1d5962; --cyan-2-rgb:   29, 89, 98;
+  --cyan-3:   #26727e; --cyan-3-rgb:   38, 114, 126;
+  --cyan-4:   #2b818e; --cyan-4-rgb:   43, 129, 142;
+  --cyan-5:   #35a0b1; --cyan-5-rgb:   53, 160, 177;
+  --cyan-6:   #66c3d1; --cyan-6-rgb:   102, 195, 209;
+  --cyan-7:   #a5dce4; --cyan-7-rgb:   165, 220, 228;
+  --cyan-8:   #d0edf1; --cyan-8-rgb:   208, 237, 241;
+  --cyan-9:   #e9f7f9; --cyan-9-rgb:   233, 247, 249;
+  --blue-0:   #0c2231; --blue-0-rgb:   12, 34, 49;
+  --blue-1:   #163d57; --blue-1-rgb:   22, 61, 87;
+  --blue-2:   #1f567a; --blue-2-rgb:   31, 86, 122;
+  --blue-3:   #276d9b; --blue-3-rgb:   39, 109, 155;
+  --blue-4:   #2c7cb0; --blue-4-rgb:   44, 124, 176;
+  --blue-5:   #479ad1; --blue-5-rgb:   71, 154, 209;
+  --blue-6:   #7cb7de; --blue-6-rgb:   124, 183, 222;
+  --blue-7:   #add2eb; --blue-7-rgb:   173, 210, 235;
+  --blue-8:   #d6e9f5; --blue-8-rgb:   214, 233, 245;
+  --blue-9:   #ebf4fa; --blue-9-rgb:   235, 244, 250;
+  --indigo-0: #181e34; --indigo-0-rgb: 24, 30, 52;
+  --indigo-1: #2c365e; --indigo-1-rgb: 44, 54, 94;
+  --indigo-2: #404e88; --indigo-2-rgb: 64, 78, 136;
+  --indigo-3: #5062aa; --indigo-3-rgb: 80, 98, 170;
+  --indigo-4: #6373b6; --indigo-4-rgb: 99, 115, 182;
+  --indigo-5: #8794c7; --indigo-5-rgb: 135, 148, 199;
+  --indigo-6: #a5aed5; --indigo-6-rgb: 165, 174, 213;
+  --indigo-7: #c8cde5; --indigo-7-rgb: 200, 205, 229;
+  --indigo-8: #e0e3f0; --indigo-8-rgb: 224, 227, 240;
+  --indigo-9: #f1f3f8; --indigo-9-rgb: 241, 243, 248;
+  --violet-0: #2d1832; --violet-0-rgb: 45, 24, 50;
+  --violet-1: #502b5a; --violet-1-rgb: 80, 43, 90;
+  --violet-2: #753f83; --violet-2-rgb: 117, 63, 131;
+  --violet-3: #8e4c9e; --violet-3-rgb: 142, 76, 158;
+  --violet-4: #9f5bb0; --violet-4-rgb: 159, 91, 176;
+  --violet-5: #b683c3; --violet-5-rgb: 182, 131, 195;
+  --violet-6: #c9a2d2; --violet-6-rgb: 201, 162, 210;
+  --violet-7: #dbc1e1; --violet-7-rgb: 219, 193, 225;
+  --violet-8: #ebddee; --violet-8-rgb: 235, 221, 238;
+  --violet-9: #f7f1f8; --violet-9-rgb: 247, 241, 248;
+
+  --gray-00-rgb: 23, 23, 24;    --gray-00: rgb(var(--gray-00-rgb));
+  --gray-0F-rgb: 25, 27, 29;    --gray-0F: rgb(var(--gray-0F-rgb));
+  --gray-0-rgb:  29, 31, 32;    --gray-0:  rgb(var(--gray-0-rgb));
+  --gray-05-rgb: 36, 38, 40;    --gray-05: rgb(var(--gray-05-rgb));
+  --gray-1-rgb:  54, 57, 58;    --gray-1:  rgb(var(--gray-1-rgb));
+  --gray-2-rgb:  78, 82, 85;    --gray-2:  rgb(var(--gray-2-rgb));
+  --gray-3-rgb:  98, 103, 106;  --gray-3:  rgb(var(--gray-3-rgb));
+  --gray-4-rgb:  114, 119, 123; --gray-4:  rgb(var(--gray-4-rgb));
+  --gray-5-rgb:  146, 151, 155; --gray-5:  rgb(var(--gray-5-rgb));
+  --gray-6-rgb:  183, 187, 189; --gray-6:  rgb(var(--gray-6-rgb));
+  --gray-7-rgb:  213, 215, 216; --gray-7:  rgb(var(--gray-7-rgb));
+  --gray-8-rgb:  234, 235, 235; --gray-8:  rgb(var(--gray-8-rgb));
+  --gray-9-rgb:  243, 243, 244; --gray-9:  rgb(var(--gray-9-rgb));
+  --gray-A-rgb:  247, 247, 248; --gray-A:  rgb(var(--gray-A-rgb));
+
+  /* Code colors – derived in part from https://tinyurl.com/hsl-color-experiment */
+  --code-gray:   #a7a7a3;
+  --code-red:    hsl(  9, 77%, 70%);
+  --code-orange: hsl( 27, 95%, 66%);
+  --code-gold:   hsl( 46, 98%, 70%);
+  --code-green:  hsl(150, 50%, 56%);
+  --code-blue:   hsl(203, 77%, 70%);
+  --code-cyan:   hsl(187, 85%, 70%);
+  --code-indigo: hsl(224, 72%, 70%);
+  --code-lilac:  hsl(292, 55%, 70%);
+  --code-violet: hsl(261, 53%, 70%);
+
+  --code-gray-light-theme:   var(--gray-3);
+  --code-red-light-theme:    hsl(  9, 100%, 28%);
+  --code-orange-light-theme: hsl( 27, 100%, 35%);
+  --code-gold-light-theme:   hsl( 28, 100%, 35%);
+  --code-green-light-theme:  hsl(150, 100%, 24%);
+  --code-blue-light-theme:   hsl(203, 100%, 28%);
+  --code-cyan-light-theme:   hsl(187, 100%, 24%);
+  --code-indigo-light-theme: hsl(224, 100%, 28%);
+  --code-lilac-light-theme:  hsl(292, 100%, 28%);
+  --code-violet-light-theme: hsl(261, 100%, 28%);
+
+  --diff-indicator-red: var(--code-red);
+  --diff-indicator-green: var(--code-green);
+  --diff-indicator-red-light-theme: #eb0052;
+  --diff-indicator-green-light-theme: #00cc66;
+}

@@ -1,0 +1,35 @@
+html {
+  --html-font-size: 17px;
+  --line-height: 1.5;
+  --form-field-line-height: 1.3;
+  --focus-size: .1875em;
+  --button-top-padding: .55em;
+  --button-bottom-padding: .65em;
+  --button-horizontal-padding: .9em;
+  --button-line-height: var(--form-field-line-height);
+  --button-border-radius: .375em;
+  --section-vertical-padding: 6em;
+  --header-height: 4.5rem;
+  --code-font-size: .9em;
+  --inline-code-font-size: .85em;
+}
+
+@media (max-width: 1280px) {
+  html {
+    --html-font-size: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    --section-vertical-padding: 4em;
+  }
+}
+
+@media (max-width: 414px) {
+  html {
+    --header-height: 4rem;
+    --code-font-size: .8em;
+    --inline-code-font-size: var(--code-font-size);
+  }
+}

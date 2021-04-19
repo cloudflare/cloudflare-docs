@@ -1,3 +1,5 @@
+const {products} = require('./src/currentProductsList')
+
 // See: https://www.gatsbyjs.org/docs/node-apis/
 
 // https://www.gatsbyjs.org/docs/add-custom-webpack-config/
@@ -7,7 +9,6 @@ exports.onCreateWebpackConfig = ({
   plugins,
 }) => {
   const config = getConfig()
-
   // Hides "[HMR] ..." logs in devtools
   if (config.entry.commons) {
     config.entry.commons = config.entry.commons.map(path => (
@@ -47,8 +48,27 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-
 const path = require("path")
+exports.sourceNodes = ({actions, createContentDigest, createNodeId}) => {
+  const {  createNode  } = actions
+
+   products.forEach((product) => {
+     if(product.icon !== undefined) {
+       createNode({
+           title:product.title,
+           path: product.path,
+           pathD: require(`./data/cloudflare-brand-assets/resources/product-icons/${product.icon}`).pathD,
+           icon: product.icon,
+           id: createNodeId(`${product.icon}`),
+           wrap: product.wrap ? product.wrap : false,
+           internal: {
+             type: 'typeProduct',
+             contentDigest: createContentDigest(product),
+           },
+         })
+     }
+  })
+}
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions

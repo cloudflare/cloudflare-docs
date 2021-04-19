@@ -1,0 +1,20 @@
+.DefinitionList {
+  margin: 0;
+}
+
+.DefinitionList--term {
+  font-size: .9em;
+  margin-bottom: .125em;
+  color: var(--gray-4);
+}
+
+.DefinitionList--definition {
+  font-size: 1em;
+  display: block;
+  max-width: 100%;
+  margin-left: 0;
+}
+
+.DefinitionList--definition:not(:last-child) {
+  margin-bottom: 1em;
+}

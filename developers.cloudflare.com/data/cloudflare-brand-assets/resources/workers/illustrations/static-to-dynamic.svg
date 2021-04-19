@@ -1,0 +1,55 @@
+<svg width="182px" height="160px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 182 160">
+  <defs>
+    <path id="b" d="M17.3 20H76l10 60-10 60H17.2C11 140 6 135 6 128.7V31.3C6 25 11 20 17.3 20z"/>
+    <filter id="a" width="120.6%" height="113.8%" x="-10.3%" y="-4.4%" filterUnits="objectBoundingBox">
+      <feOffset dy="3" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.3"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.041 0 0 0 0 0.041 0 0 0 0 0.071 0 0 0 0.267 0"/>
+    </filter>
+    <path id="d" d="M91 20h61.5c1.9 0 3.8.8 5.2 2.1l16 15.5A7.5 7.5 0 0 1 176 43v85.8c0 6.2-5 11.2-11.3 11.2H91l10-60-10-60z"/>
+    <filter id="c" width="119.4%" height="113.8%" x="-9.7%" y="-4.4%" filterUnits="objectBoundingBox">
+      <feOffset dy="3" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.3"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.041 0 0 0 0 0.041 0 0 0 0 0.071 0 0 0 0.267 0"/>
+    </filter>
+    <linearGradient id="e" x1="83.9%" x2="30.9%" y1="-304%" y2="334.2%">
+      <stop offset="0%" stop-color="#FAAE40"/>
+      <stop offset="100%" stop-color="#F38020"/>
+    </linearGradient>
+    <linearGradient id="h" x1="259.1%" x2="-101.4%" y1="70.2%" y2="73.5%">
+      <stop offset="0%" stop-color="#FAAE40"/>
+      <stop offset="100%" stop-color="#F38020"/>
+    </linearGradient>
+    <path id="g" d="M89.3 10h2c1 0 1.8.7 2 1.7L104 80l-10.7 68.3a2 2 0 0 1-2 1.7h-2a2 2 0 0 1-2-2.3L98 80 87.4 12.3a2 2 0 0 1 2-2.3z"/>
+    <filter id="f" width="154%" height="106.4%" x="-27%" y="-2.1%" filterUnits="objectBoundingBox">
+      <feOffset dy="1.5" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="1.3"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.0392156863 0 0 0 0 0.0392156863 0 0 0 0 0.0705882353 0 0 0 0.27 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="#000" filter="url(#a)" xlink:href="#b"/>
+    <use fill="#f4f4f7" xlink:href="#b"/>
+    <use fill="#000" filter="url(#c)" xlink:href="#d"/>
+    <use fill="#feecd6" xlink:href="#d"/>
+    <path fill="#f2d0a6" d="M152 20h.7a6 6 0 0 1 4.2 1.7l17.3 16.5a6 6 0 0 1 1.8 4.4v.4h-16a8 8 0 0 1-8-8V20z"/>
+    <rect width="23" height="6" x="22" y="57" fill="#d7dadf" rx="2"/>
+    <rect width="13" height="6" x="18" y="45" fill="#d7dadf" rx="2"/>
+    <rect width="45" height="6" x="116" y="69" fill="url(#e)" rx="2"/>
+    <rect width="13" height="6" x="109" y="45" fill="url(#e)" rx="2"/>
+    <rect width="28" height="6" x="122" y="81" fill="url(#e)" rx="2"/>
+    <rect width="20" height="6" x="116" y="105" fill="url(#e)" rx="2"/>
+    <rect width="37" height="6" x="18" y="117" fill="#d7dadf" rx="2"/>
+    <rect width="45" height="6" x="25" y="69" fill="#d7dadf" rx="2"/>
+    <rect width="20" height="6" x="25" y="105" fill="#d7dadf" rx="2"/>
+    <rect width="43" height="6" x="31" y="93" fill="#d7dadf" rx="2"/>
+    <rect width="28" height="6" x="31" y="81" fill="#d7dadf" rx="2"/>
+    <rect width="23" height="6" x="113" y="57" fill="#f2d0a6" rx="2"/>
+    <rect width="37" height="6" x="109" y="117" fill="#f2d0a6" rx="2"/>
+    <rect width="43" height="6" x="122" y="93" fill="#f2d0a6" rx="2"/>
+    <g>
+      <use fill="#000" filter="url(#f)" xlink:href="#g"/>
+      <use fill="url(#h)" xlink:href="#g"/>
+    </g>
+  </g>
+</svg>

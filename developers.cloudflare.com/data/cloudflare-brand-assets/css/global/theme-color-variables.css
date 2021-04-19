@@ -1,0 +1,36 @@
+html[theme="light"] {
+  --color-rgb: var(--gray-0-rgb);
+  --color: rgb(var(--color-rgb));
+  --cloudflare-logo-wordmark-color: rgb(var(--cloudflare-logo-gray-rgb));
+  --background-color-rgb: 255, 255, 255;
+  --background-color: rgb(var(--background-color-rgb));
+  --focus-color: rgba(var(--orange-rgb), .5);
+  --selection-background-color: var(--orange-for-use-as-selection-color);
+  --selection-color: #fff;
+  --code-block-color: #fff;
+  --code-block-background-color: var(--color);
+  --code-block-background-color-light-theme: var(--gray-9);
+  --code-block-scrollbar-color: rgba(255, 255, 255, .25);
+  --tab-background-color: var(--gray-9);
+  --shadow-color-rgb: var(--color-rgb);
+  --section-tiger-stripe-background-color: var(--gray-9);
+  --deemphasized-color: var(--gray-1);
+}
+
+html[theme="dark"] {
+  --color-rgb: 255, 255, 255;
+  --color: rgb(var(--color-rgb));
+  --cloudflare-logo-wordmark-color: rgb(var(--cloudflare-logo-gray-rgb));
+  --background-color-rgb: var(--gray-0-rgb);
+  --background-color: rgb(var(--background-color-rgb));
+  --focus-color: rgba(var(--orange-rgb), .5);
+  --selection-background-color: #ff9e40; /* If we were to use var(--orange) what we would get would end up looking too red. This is because the browser automatically tints/alters lighter selection background colors. For example if you specify #fff you end up with something closer to #a4a4a4. So we specify a more saturated and lighter orange to componensate such that the final composited color is as close rgb(var(--orange-rgb)) as possible */
+  --selection-color: rgb(var(--color-rgb));
+  --code-block-color: rgb(var(--color-rgb));
+  --code-block-background-color: var(--gray-05);
+  --code-block-scrollbar-color: rgba(255, 255, 255, .25);
+  --tab-background-color: var(--gray-1);
+  --shadow-color-rgb: 0, 0, 0;
+  --section-tiger-stripe-background-color: var(--gray-05);
+  --deemphasized-color: var(--gray-7);
+}

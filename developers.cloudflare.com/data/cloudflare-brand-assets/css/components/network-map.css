@@ -1,0 +1,20 @@
+.NetworkMap--land {
+  fill: rgba(var(--gray-7-rgb), .8);
+}
+
+[theme="dark"] .NetworkMap--land {
+  fill: rgba(var(--gray-2-rgb), .7);
+}
+
+.NetworkMap--datacenters {
+  fill: var(--orange);
+  stroke: var(--orange-1);
+  stroke-width: 2px;
+  paint-order: stroke;
+  opacity: .85;
+}
+
+[theme="dark"] .NetworkMap--datacenters {
+  stroke: var(--background-color);
+  stroke-width: 3px;
+}

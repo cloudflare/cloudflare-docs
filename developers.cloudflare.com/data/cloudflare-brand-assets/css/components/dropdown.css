@@ -1,0 +1,89 @@
+.Dropdown {
+  position: relative;
+}
+
+.Dropdown--dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: .5em 0;
+  background: var(--background-color);
+  border-radius: .3125em;
+  pointer-events: none;
+  opacity: 0;
+  --dropdown-focus-size: var(--focus-size);
+  --focus-shadow: 0 0 0 var(--dropdown-focus-size) var(--focus-color);
+  --box-shadow: 0 0 0 1px rgba(var(--shadow-color-rgb), .075), 0 .3em 2em rgb(var(--shadow-color-rgb), .1);
+  box-shadow: var(--box-shadow), var(--focus-shadow);
+  transform: scaleX(.5) scaleY(.5) perspective(1px);
+  transform-origin: top left;
+  transition: opacity .1s, box-shadow .3s, transform .3s;
+}
+
+[theme="dark"] .Dropdown--dropdown {
+  background: var(--gray-1);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1em)) or (backdrop-filter: blur(1em))) {
+  .Dropdown--dropdown {
+    background: rgba(var(--background-color-rgb), .8);
+    -webkit-backdrop-filter: saturate(200%) blur(1.25em);
+    backdrop-filter: saturate(200%) blur(1.25em);
+  }
+
+  [theme="dark"] .Dropdown--dropdown {
+    background: rgba(var(--gray-1-rgb), .7);
+  }
+}
+
+.Dropdown[data-expanded="true"] .Dropdown--dropdown {
+  opacity: 1;
+  pointer-events: all;
+  transform: scaleX(1) scaleY(1) perspective(1px);
+  --spring-easing: cubic-bezier(.175, .885, .4, 1.1);
+  transition: opacity .2s ease-out, box-shadow .3s, transform .2s var(--spring-easing);
+}
+
+[js-focus-visible-polyfill-available] .Dropdown--dropdown:focus {
+  outline: none;
+}
+
+.Dropdown--dropdown:not([is-focus-visible]) {
+  --dropdown-focus-size: 0;
+}
+
+.Dropdown--list,
+.Dropdown--item {
+  padding: 0;
+  list-style: none;
+}
+
+.Dropdown--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: .25em 1.5em;
+  white-space: nowrap;
+  max-width: calc(100vw - 2em);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  --focus-size: 3px;
+  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+.Dropdown--link:hover {
+  color: var(--orange);
+  background: rgba(var(--orange-rgb), .05);
+}
+
+[theme="dark"] .Dropdown--link:hover {
+  background: rgba(var(--color-rgb), .05);
+}
+
+[js-focus-visible-polyfill-available] .Dropdown--link:focus {
+  outline: none;
+}
+
+.Dropdown--link:not([is-focus-visible]) {
+  --focus-size: 0;
+}
