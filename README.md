@@ -26,10 +26,11 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Docs Engine             | docs-engine          | [Test](https://docs-engine.cloudflare-docs.workers.dev/docs-engine)                   | [Prod](https://developers.cloudflare.com/docs-engine)          |
 | Events                  | events               | [Test](https://events.cloudflare-docs.workers.dev/events)                             | [Prod](https://developers.cloudflare.com/events)               |
 | Firewall                | firewall             | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         | [Prod](https://developers.cloudflare.com/firewall)             |
+| Fundamentals            | fundamentals         | [Test](https://fundamentals.cloudflare-docs.workers.dev/fundamentals) 
+[Prod](https://developers.cloudflare.com/fundamentals)         |
 | Gateway                 | gateway              | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           | [Prod](https://developers.cloudflare.com/gateway)              |
 | HTTP/3                  | http3                | [Test](https://http3.cloudflare-docs.workers.dev/http3)                               | [Prod](https://developers.cloudflare.com/http3)                |
 | Image Resizing          | images               | [Test](https://images.cloudflare-docs.workers.dev/images)                             | [Prod](https://developers.cloudflare.com/images)               |
-| Life of a Request       | internet             | [Test](https://internet.cloudflare-docs.workers.dev/internet)                         | [Prod](https://developers.cloudflare.com/internet)             |
 | Load Balancing          | load-balancing       | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             | [Prod](https://developers.cloudflare.com/load-balancing)       |
 | Logs                    | logs                 | [Test](https://logs.cloudflare-docs.workers.dev/logs)                                 | [Prod](https://developers.cloudflare.com/logs)                 |
 | Magic Transit           | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
