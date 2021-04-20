@@ -5,11 +5,11 @@ order: 10
 
 # httpRequestsByColoGroups to httpRequestsAdaptiveGroups
 
-This guide shares considerations when migrating from the deprecated `httpRequestsByColoGroups` API to the `httpRequestsAdaptiveGroups` API.
+This guide shares considerations when migrating from the deprecated `httpRequestsByColoGroups` GraphQL API node to the `httpRequestsAdaptiveGroups` GraphQL API node.
 
 Below is a query from the Cloudflare dashboard that shows how to access number of requests per colocation, bandwidth, and unique visitors with `httpRequestsAdaptiveGroups`.
 
-```code
+```graphql
 query {
     ZapTimeseriesBydatetimeFifteenMinutesGroupedBycoloCode($zoneTag: string, $filter: ZoneHttpRequestsAdaptiveGroupsFilter_InputObject) {
   viewer {
