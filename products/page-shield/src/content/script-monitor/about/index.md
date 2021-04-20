@@ -13,7 +13,7 @@ Your application runs a lot of code, much of it that you did not write yourself.
 
 But, more code brings greater security risks. Attackers can add or change existing scripts to steal payment or personal information. When you have a lot of code on your website — particularly code you did not write yourself — it is difficult to prevent [these attacks](https://sansec.io/what-is-magecart).
 
-## How Script Monitor functions
+## How Script Monitor works
 
 <ScriptMDefinition/>
 
@@ -22,6 +22,12 @@ Script Monitor does this by sampling your domain traffic. Based on a percentage 
 Since lists are based on sampling, there may be a small delay between script deployment and appearance.
 
 Future versions of Script Monitor should improve notification and detection capabilities and add the ability to block scripts.
+
+## Who has access to Script Monitor?
+
+Script Monitor is currently in closed beta testing for Business and Enterprise clients.
+
+If you are interested in joining the closed beta, complete the [signup form](https://www.cloudflare.com/waf/page-shield/).
 
 ## Get started
 
