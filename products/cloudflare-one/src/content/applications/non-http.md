@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Add non-HTTP applications
+# Non-HTTP applications
 
 You can connect applications to Cloudflare for Teams over a number of different protocols.
 
@@ -12,11 +12,22 @@ You can connect applications to Cloudflare for Teams over a number of different 
 * [Connect through Access using kubectl](/tutorials/kubectl)
 * [Connect through Access over SMB](/tutorials/smb)
 
+## Rendering in the browser
+
+Cloudflare can render certain non-web applications in your browser without the need for client software or end user configuration changes. Cloudflare currently supports rendering a terminal for SSH connections in a user's browser.
+
+To enable, follow the instructions [here](/tutorials/ssh) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable browser rendering` to on.
+
+![Auto Auth](../static/documentation/applications/render-browser.png)
+
+Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
+
 ## Automatic `cloudflared` authentication
 
 <Aside>
 
-This should only be enabled if a [service token](/identity/service-auth/service-tokens) cannot be used for your automated service. 
+This should only be enabled if a [service token](/identity/service-auth/service-tokens) cannot be used for your automated service.
+
 </Aside>
 
 <TableWrap>
@@ -33,7 +44,8 @@ displaying this page:
 
 ![Access browser page](../static/documentation/applications/non-http/access-page.png)
 
-To avoid seeing this page every time you authenticate through `cloudflared`, you can toggle on *Enable automatic `cloudflared` authentication* when adding a [self-hosted application](/applications/configure-apps/self-hosted-apps#protect-self-hosted-applications).
+To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
+
+![Auto Auth](../static/documentation/applications/auto-cfd-auth.png)
 
 This option will still prompt a browser window in the background, but the authentication will be automatic.
-

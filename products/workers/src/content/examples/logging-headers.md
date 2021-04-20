@@ -15,7 +15,6 @@ tags:
 
 ```js
 async function handleRequest(request) {
-  let requestHeaders = JSON.stringify([...request.headers])
   console.log(new Map(request.headers))
 
   return new Response("Hello world")

@@ -19,7 +19,8 @@ Once `cloudflared` has been installed and authenticated, you will need 3 high-le
 
 1. [Create a Tunnel](/connections/connect-networks/private-net/create-tunnel)
 2. [Configure IPs in WARP](/connections/connect-devices/warp/exclude-traffic)
-2. [Run your Tunnel](/connections/connect-apps/run-tunnel)
+3. [Run your Tunnel](/connections/connect-apps/run-tunnel)
+4. [Enroll clients to connect](/connect-devices/warp/device-enrollment)
 
 Be sure to check out our [Tutorials](/tutorials), where you can also find
 best practices for managing Tunnels as an administrator.
