@@ -148,11 +148,11 @@ Applicable hostname verification status includes:
 <tbody>
 <tr>
 <td>Pending</td>
-<td>Custom Hostname is pending hostname verification.</td>
+<td>Custom hostname is pending hostname verification.</td>
 </tr>
 <tr>
 <td>Active</td>
-<td>Custom Hostname has completed hostname verification and is active.</td>
+<td>Custom hostname has completed hostname verification and is active.</td>
 </tr>
 <tr>
 <td>Active re-deploying</td>
@@ -164,11 +164,11 @@ Applicable hostname verification status includes:
 </tr>
 <tr>
 <td>Moved</td>
-<td>Custom Hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule.</td>
+<td>Custom hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule.</td>
 </tr>
 <tr>
 <td>Deleted</td>
-<td>Custom Hostname was deleted from the zone. Occurs when status is <em>Moved</em> for more than 7 days.</td>
+<td>Custom hostname was deleted from the zone. Occurs when status is <em>Moved</em> for more than 7 days.</td>
 </tr>
 </tbody>
 </table>
