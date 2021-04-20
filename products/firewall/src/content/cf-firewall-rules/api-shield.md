@@ -7,7 +7,7 @@ order: 250
 Cloudflare API Shield allows you to secure your APIs using the following security solutions:
 
 - **Mutual TLS (mTLS)** - Blocks traffic from devices that do not have a valid client SSL/TLS certificate with an API Shield rule.
-- **Schema Validation (Beta)** - Protects your origin from invalid API requests or a malicious payload by matching each request with the provided schema.
+- **Schema Validation** - Protects your origin from invalid API requests or a malicious payload by matching each request with the provided schema.
 
 ## A positive security model for APIs
 
@@ -53,7 +53,7 @@ When using Yubikeys, the browser may prompt for unlocking the key due to a probl
 
 </Aside>
 
-## Schema Validation - Beta
+## Schema Validation
 
 <Aside type='note'>
 
@@ -71,10 +71,8 @@ To configure Schema Validation for one or more hosts using the dashboard, check 
 
 <Aside type='warning'>
 
-**Notes about the current Beta:**
+**Important**
 
-- The only available action for requests whose validations fail is _Log_.
-- You cannot edit an API Shield. If you need to make changes, delete the existing shield and create a new one.
-- API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
+Currently, API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 
 </Aside>
