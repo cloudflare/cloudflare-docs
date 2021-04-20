@@ -5,4 +5,4 @@ order: 0
 
 # Cloudflare Fundamentals
 
-Bleep blop bloop > placeholder text
+Cloudflare Fundamentals provides information about features that span Cloudflare products. 
