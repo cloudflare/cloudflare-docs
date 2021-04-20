@@ -8,9 +8,11 @@ You can connect applications, servers, and other resources to Cloudflare's netwo
 
 ![Tunnel Diagram](../../static/documentation/connections/connect-apps/tun-diagram.png)
 
-Argo Tunnel runs a lightweight [daemon](/glossary#daemon) ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your web server and the Cloudflare edge. When Cloudflare receives a request for your chosen hostname, it proxies the request through those connections to `cloudflared`. In turn, `cloudflared` proxies the request to your applications.
+Argo Tunnel runs a lightweight [daemon](/glossary#daemon) ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your service and the Cloudflare edge. When Cloudflare receives a request for your chosen hostname, it proxies the request through those connections to `cloudflared`. In turn, `cloudflared` proxies the request to your applications.
 
 This forces any requests to access your applications to go through Cloudflare. This way, you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation, and authenticated with Access if you’ve enabled those features for your account. 
+
+Argo Tunnel can connect HTTP web servers, [SSH servers](/tutorials/ssh), [remote desktops](/tutorials/rdp), and other protocols. Additionally, a single connector, the `cloudflared` daemon, can connect multiple applications of different types.
 
 In order to create and manage Tunnels, you'll first need to:
 

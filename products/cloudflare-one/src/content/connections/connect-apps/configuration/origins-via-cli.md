@@ -1,5 +1,6 @@
 ---
 order: 20
+hidden: true
 ---
 
 # Legacy: configuring origins via CLI

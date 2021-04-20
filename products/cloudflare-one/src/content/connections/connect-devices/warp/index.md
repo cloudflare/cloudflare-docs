@@ -32,3 +32,7 @@ You can proxy all traffic leaving devices through Cloudflare for HTTP inspection
 2. [Enroll a device](/connections/connect-devices/warp/device-enrollment).
 3. [Install](/connections/connect-devices/warp/install-cloudflare-cert) the Cloudflare root certificate on the devices.
 4. [Enable web inspection](/connections/connect-devices/warp/control-proxy) in the Cloudflare for Teams dashboard.
+
+## Port Handling
+
+By default, WARP allows traffic on any port other than 25.

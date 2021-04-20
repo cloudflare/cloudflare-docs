@@ -11,6 +11,7 @@ This section addresses the most common issues you may come across when setting u
   <Button type="primary" href="/faq/gateway/">Gateway</Button>
   <Button type="primary" href="/faq/warp/">WARP client</Button>
   <Button type="primary" href="/faq/tunnel/">Argo Tunnel</Button>
+  <Button type="primary" href="/faq/browser-isolation/">Browser Isolation</Button>  
   <Button type="primary" href="/faq/self-diagnostics/">Self diagnostics</Button> 
 </ButtonGroup>
 
@@ -28,7 +29,7 @@ Yes. Each location has a unique IPv6 address. You can use that IPv6 address to s
 
 ### How can I report a false positive?
 
-If your domain is unexpectedly blocked, you can use [this form](https://developers.cloudflare.com/cloudflare-one/faq/gateway/) to get the URL reviewed. 
+If your domain is unexpectedly blocked, you can use [this form](https://radar.cloudflare.com/categorization-feedback/) to get the URL reviewed. 
 
 ## Policies
 

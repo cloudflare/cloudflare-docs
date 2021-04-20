@@ -20,7 +20,7 @@ products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
-products/docs-engine/ @adamschwartz
+products/docs-engine/ @cloudflare/PCX
 
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
@@ -44,7 +44,7 @@ products/internet/ @ConzorKingKong @cloudflare/PCX
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
 
 # Logs
-products/logs/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
+products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
@@ -59,7 +59,7 @@ products/pages/ @cloudflare/workers-docs
 products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
 
 # Registrar
-products/registrar/ @TownLake
+products/registrar/ @TownLake @cloudflare/PCX
 
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
