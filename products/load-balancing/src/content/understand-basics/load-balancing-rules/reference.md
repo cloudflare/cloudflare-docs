@@ -1,22 +1,77 @@
 ---
 title: Supported fields and operators
 order: 50
-type: table
 ---
 
 # Supported fields and operators
 
+The fields available for load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer. 
 
+If you use the wrong type of fields, you might see unexpected behavior from load balancing rules. For best results, always use the fields associated with your traffic's proxy status.
 
-Before you create load balancer rules, find out whether Cloudflare proxies the traffic going through that load balancer. Certain fields are only supported for proxied traffic, meaning that you might see unexpected behavior 
+![select load balancer fields based on the proxy status header](../../static/images/proxy-status.png)
 
+## Fields supported regardless of proxy
 
-If you use unsupported fields, you might see unexpected behavior in your load balancing rules.
+Regardless of whether your traffic is proxied, you have access to the following fields:
+<table style="width:100%">
+  <thead>
+    <tr>
+      <th style="width:20%">Name in Expression Builder</th>
+      <th style="width:40%">Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr>
+      <td>IP address</td>
+      <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
+      <td>
+         <p>The client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
+         <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">93.184.216.34</code>
+         </p>
+      </td>
+    </tr>
+    <tr>
+      <td>Load Balancer Region</td>
+      <td valign="top"><code>cf.load_balancer.region</code><br /><Type>bytes</Type></td>
+      <td>
+        <p>The <a href="../../traffic-steering#geo-steering">region name</a> of the data center processing the request.</p>
+      </td>
+    </tr>
+    <tr>
+      <td>Load Balancer Name</td>
+      <td valign="top"><code>cf.load_balancer.name</code><br /><Type>bytes</Type></td>
+      <td>
+        <p>The name of the load balancer executing these rules.</p>
+        <p>Example value:
+         <br /><code class="InlineCode">lb.example.com</code>
+         </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-## Proxied only fields
+## Proxied traffic
 
-Load Balancing expressions support these fields when your Cloudflare proxies your traffic:
+If your traffic is proxied, you have access to all the fields listed under **Proxied Only** and [**Both**](#fields-supported-regardless-of-proxy), such as:
+- `Request Method`
+- `URI`
+- `Timestamp`
+- `Header`
 
+For the most up to date list of these fields, [create a load balancing rule](../create-rules) in the UI.
+
+If you need more details about the field type or properties, look for each field in our [Firewall rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-language/fields).
+
+## Unproxied traffic
+
+If your traffic is not proxied through Cloudflare, you have access to all the fields listed under **Unproxied only** and [**Both**](#fields-supported-regardless-of-proxy).
+
+Cloudflare Load Balancers support the following unproxied fields:
 <table style="width:100%">
   <thead>
     <tr>
@@ -27,47 +82,37 @@ Load Balancing expressions support these fields when your Cloudflare proxies you
   </thead>
   <tbody>
     <tr>
-      <td>HTTP version</td>
-      <td valign="top"><code>http.request.version</code><br /><Type>Number</Type></td>
+      <td>Query Type</td>
+      <td valign="top"><code>dns.qry.type</code><br /><Type>Int</Type></td>
       <td>
-        <p>The version of the HTTP protocol used. Use this field when you require different checks for different versions.
+        <p>The numeric value of the <a href= "https://en.wikipedia.org/wiki/List_of_DNS_record_types">DNS query type</a>
         </p>
-        <p>Example Values:
+        <p>Example Values:</p>
           <ul>
-              <li><code class="InlineCode">HTTP/1.1</code></li>
-              <li><code class="InlineCode">HTTP/3</code></li>
+              <li><code class="InlineCode">1 (A record)</code></li>
+              <li><code class="InlineCode">28 (AAAA record)</code></li>
           </ul>
-        </p>
       </td>
     </tr>
       <tr>
-      <td>URI</td>
-      <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
+      <td>Question</td>
+      <td valign="top"><code>dns.qry.typ</code><br /><Type>boolean</Type></td>
       <td>
-        <p>The absolute URI of the request.</p>
-        <p>Example value:
-        <br /><code class="InlineCode">/articles/index?section=539061&expand=comments</code>
-        </p>
+        <p>A boolean indicating that the received DNS message was a question</p>
       </td>
     </tr>
     <tr>
-      <td>URI path</td>
-      <td valign="top"><code>http.request.uri.path</code><br /><Type>String</Type></td>
+      <td>Query Name</td>
+      <td valign="top"><code>dns.qry.name</code><br /><Type>Bytes</Type></td>
       <td>
-        <p>The URI path of the request.</p>
-        <p>Example value:<br />
-        <code class="InlineCode">/articles/index</code>
-        </p>
+        <p>The byte of the query name asked, such as <code>example.com</code> </p>
       </td>
     </tr>
     <tr>
-      <td>URI query string</td>
-      <td valign="top"><code class>http.request.uri.query</code><br /><Type>String</Type></td>
+      <td>Query Name Length</td>
+      <td valign="top"><code class>dns.qry.name.len</code><br /><Type>Int</Type></td>
       <td>
-        <p>The entire query string for the request, without the <code class="InlineCode">?</code> delimiter.
-        </p>
-        <p>Example value:
-        <br /><code class="InlineCode">section=539061&expand=comments</code>
+        <p>The length in bytes of the query name.
         </p>
       </td>
     </tr>  
