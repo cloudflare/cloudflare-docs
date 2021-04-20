@@ -382,7 +382,7 @@ jobs:
           npm install
           mkdir .docs
           npm run ghactionsbootstrap
-          npm run build        
+          npm run build
 
   build-gateway:
     runs-on: ubuntu-latest
