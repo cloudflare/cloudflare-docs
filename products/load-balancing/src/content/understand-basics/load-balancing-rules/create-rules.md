@@ -66,7 +66,7 @@ After creating a rule, [build a Load Balancing expression](#build-a-load-balanci
 
 1. Continue editing the expression as necessary.
 
-1. Choose a Load Balancing action of either **Respond with fixed response** or **Override** a current Load Balancer setting when the rule matches.
+1. Choose a Load Balancing action of either **Respond with fixed response** or **Override** a current Load Balancer setting when the rule matches. For a full list of override actions, see [Actions](../actions).
 
 1. [Optional] Click **Add another action**.
 
@@ -78,7 +78,7 @@ After configuring a Load Balancing action, [save the Load Balancing rule and con
 
 <Aside type='warning' header='Warning'>
 
-Unless you save **not only** the new rule **but also** the load balancer configuration, your rule and any configuration changes are lost.
+To save a new load balancer rule, make sure to save both the rule **and** the overall load balancer configuration.
 
 </Aside>
 
