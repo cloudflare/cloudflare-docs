@@ -97,6 +97,7 @@ Cloudflare sends GET requests to the *http_url* using *User-Agent: Cloudflare Cu
 }
 ```
 
+## Error codes
 Various hostname verification errors include:
 
 <TableWrap>
@@ -132,6 +133,8 @@ Various hostname verification errors include:
 </table>
 </TableWrap>
 
+## Verification statuses
+
 Applicable hostname verification status includes:
 
 <TableWrap>
@@ -145,19 +148,27 @@ Applicable hostname verification status includes:
 <tbody>
 <tr>
 <td>Pending</td>
-<td>Custom Hostname is pending hostname verification.</td>
+<td>Custom hostname is pending hostname verification.</td>
 </tr>
 <tr>
 <td>Active</td>
-<td>Custom Hostname has completed hostname verification and is active.</td>
+<td>Custom hostname has completed hostname verification and is active.</td>
+</tr>
+<tr>
+<td>Active re-deploying</td>
+<td>Customer hostname is active and the changes have been processed.</td>
+</tr>
+<tr>
+<td>Blocked</td>
+<td>Custom hostname cannot be added to Cloudflare at this time. If you are an Enterprise customer, please contact your Customer Success Manager. Otherwise, please email abusereply@cloudflare.com with the name of the web property and a detailed explanation of your association with this web property.</td>
 </tr>
 <tr>
 <td>Moved</td>
-<td>Custom Hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule.</td>
+<td>Custom hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule.</td>
 </tr>
 <tr>
-<td>Delete</td>
-<td>Custom Hostname was deleted from the zone. Occurs when status is <em>Moved</em> for more than 7 days.</td>
+<td>Deleted</td>
+<td>Custom hostname was deleted from the zone. Occurs when status is <em>Moved</em> for more than 7 days.</td>
 </tr>
 </tbody>
 </table>
