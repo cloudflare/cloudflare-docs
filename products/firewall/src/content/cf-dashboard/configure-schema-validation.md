@@ -79,7 +79,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
 1. In the **Endpoint action** dropdown, select the action that API Shield will perform for every request targeting a protected endpoint that fails Schema Validation.
 
-1. In the **Fallthrough action** dropdown, select the action to perform for incoming requests addressed at other (non-protected) API endpoints. This includes any endpoints with API Schema definitions that API Shield does not support.
+1. In the **Fallthrough action** dropdown, select the action to perform for incoming requests addressed at other (non-protected) API endpoints.
 
     <Aside type='warning'>
     
