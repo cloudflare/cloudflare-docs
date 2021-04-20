@@ -1,7 +1,7 @@
 module.exports = {
   product: "Page Shield",
   pathPrefix: "/page-shield",
-  productIconKey: "firewall",
+  productIconKey: "page-shield",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/page-shield",
   externalLinks: [

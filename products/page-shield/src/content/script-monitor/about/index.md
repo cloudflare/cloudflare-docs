@@ -17,7 +17,7 @@ But, more code brings greater security risks. Attackers can add or change existi
 
 <ScriptMDefinition/>
 
-Script Monitor does this by sampling your domain traffic. Based on a percentage of your traffic, it creates a list of all scripts running on your domain.
+Based on a percentage of your traffic, Script Monitor creates a list of all scripts running on your domain.
 
 Since lists are based on sampling, there may be a small delay between script deployment and appearance.
 
@@ -25,7 +25,7 @@ Future versions of Script Monitor should improve notification and detection capa
 
 ## Who has access to Script Monitor?
 
-Script Monitor is currently in closed beta testing for Business and Enterprise clients.
+Script Monitor is currently in closed beta testing for Business and Enterprise customers.
 
 If you are interested in joining the closed beta, complete the [signup form](https://www.cloudflare.com/waf/page-shield/).
 
