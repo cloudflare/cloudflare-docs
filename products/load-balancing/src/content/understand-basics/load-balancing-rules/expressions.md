@@ -47,7 +47,7 @@ For more, see [_Supported fields and operators_](/understand-basics/load-balanci
 
 A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
 
-The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `stream1`:
+The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `webserver`:
 
 ```sql
 (http.request.uri.path contains "/content") 

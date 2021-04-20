@@ -6,9 +6,16 @@ type: table
 
 # Supported fields and operators
 
-## Fields
 
-Load Balancing expressions support these fields:
+
+Before you create load balancer rules, find out whether Cloudflare proxies the traffic going through that load balancer. Certain fields are only supported for proxied traffic, meaning that you might see unexpected behavior 
+
+
+If you use unsupported fields, you might see unexpected behavior in your load balancing rules.
+
+## Proxied only fields
+
+Load Balancing expressions support these fields when your Cloudflare proxies your traffic:
 
 <table style="width:100%">
   <thead>
@@ -33,19 +40,7 @@ Load Balancing expressions support these fields:
         </p>
       </td>
     </tr>
-    <tr>
-      <td>IP address</td>
-      <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
-      <td>
-         <p>The client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
-         <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
-         </p>
-         <p>Example value:
-         <br /><code class="InlineCode">93.184.216.34</code>
-         </p>
-      </td>
-    </tr>
-    <tr>
+      <tr>
       <td>URI</td>
       <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
       <td>
@@ -75,7 +70,7 @@ Load Balancing expressions support these fields:
         <br /><code class="InlineCode">section=539061&expand=comments</code>
         </p>
       </td>
-    </tr>
+    </tr>  
   </tbody>
 </table>
 
