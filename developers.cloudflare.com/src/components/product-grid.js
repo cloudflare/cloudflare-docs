@@ -103,6 +103,7 @@ const products = [
     title: "Cloudflare Fundamentals",
     path: "fundamentals",
     icon: "fundamentals",
+    wrap: true
   },
   {
     title: "Load Balancing",
