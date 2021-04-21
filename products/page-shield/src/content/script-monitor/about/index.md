@@ -29,6 +29,10 @@ Script Monitor is currently in closed beta testing for Business and Enterprise c
 
 If you are interested in joining the closed beta, complete the [signup form](https://www.cloudflare.com/waf/page-shield/).
 
+## Learn more
+
+For more background on Script Monitor, check out our [introductory blog post](https://blog.cloudflare.com/introducing-page-shield/).
+
 ## Get started
 
 To get started with Script Monitor, see our [setup guide](../get-started).
