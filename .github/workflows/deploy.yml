@@ -23,11 +23,11 @@ jobs:
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
+      fundamentals: ${{ steps.filter.outputs.fundamentals }}
       gateway: ${{ steps.filter.outputs.gateway }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
       images: ${{ steps.filter.outputs.images }}
-      internet: ${{ steps.filter.outputs.internet }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
@@ -36,6 +36,7 @@ jobs:
       page-shield: ${{ steps.filter.outputs.page-shield }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
+      rules: ${{ steps.filter.outputs.rules }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -78,6 +79,8 @@ jobs:
               - 'products/events/**'
             firewall:
               - 'products/firewall/**'
+            fundamentals:
+              - 'products/fundamentals/**'
             gateway:
               - 'products/gateway/**'
             browser-isolation:
@@ -86,8 +89,6 @@ jobs:
               - 'products/http3/**'
             images:
               - 'products/images/**'
-            internet:
-              - 'products/internet/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
@@ -104,6 +105,8 @@ jobs:
               - 'products/randomness-beacon/**'
             registrar:
               - 'products/registrar/**'
+            rules:
+              - 'products/rules/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -560,6 +563,40 @@ jobs:
           workingDirectory: "products/firewall"
           environment: "production"
           wranglerVersion: '1.13.0'
+  
+  deploy-fundamentals:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.fundamentals == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/fundamentals
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/fundamentals"
+          wranglerVersion: '1.13.0'
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/fundamentals"
+          environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-gateway:
     runs-on: ubuntu-latest
@@ -694,40 +731,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/images"
-          environment: "production"
-          wranglerVersion: '1.13.0'
-
-  deploy-internet:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.internet == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/internet
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-        env:
-          WORKERS_ENV: development
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/internet"
-          wranglerVersion: '1.13.0'
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/internet"
           environment: "production"
           wranglerVersion: '1.13.0'
 
@@ -1002,6 +1005,38 @@ jobs:
           workingDirectory: "products/registrar"
           environment: "production"
           wranglerVersion: '1.13.0'
+
+  deploy-rules:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.rules == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/rules
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/rules"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/rules"
+          environment: "production"
 
   deploy-spectrum:
     runs-on: ubuntu-latest

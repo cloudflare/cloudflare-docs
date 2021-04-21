@@ -6,7 +6,7 @@ order: 5
 
 Your previous registrar has five days to release the domain after a successful transfer request. If your transfer has not completed within that timeframe, something has likely gone wrong. To resolve, we recommend you check the following settings and restart the transfer
 
- After five days, something has stopped the transfer. We recommend you check the following details and restart the transfer (you won’t be charged twice).
+ After five days, something has stopped the transfer. We recommend you check the following details and restart the transfer.
 
 --------
 
@@ -31,6 +31,6 @@ Some registrars, including GoDaddy and NameCheap, can prohibit transfer requests
 --------
 
 ## Restarting your transfer
-In the Cloudflare Overview page for your domain, you can find the details of your registration in the column on the right side of the page. In that card, `Domain Registration` select the button “Cancel and Retry”. You will not be charged twice for your transfer. Once you initiate the retry, you will need to reenter your auth code and confirm your WHOIS information.
+In the Cloudflare Overview page for your domain, you can find the details of your registration in the column on the right side of the page. In that card, `Domain Registration` select the button “Cancel and Retry”. Once you initiate the retry, you will need to reenter your auth code and confirm your WHOIS information.
 
 Most issues with a stalled transfer can be resolved by checking these details and restarting the transfer from the UI.

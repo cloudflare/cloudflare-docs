@@ -1,0 +1,284 @@
+,article_title,contentful_id,updatedAt,num_total_images,num_updated_images,outdated_images,outdated_topics,num_total_topics,num_updated_topics,total_sentences,total_words,reading_difficulty,num_passive_voice,bad_links,positive_feedback,total_feedback
+205195708,Changing your domain nameservers to Cloudflare,7lu0k9HJAKUuJzVGAjLtBH,2021-03-25,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/5RgcL9QrReuwcADbxcdL0A,Overview | Confirm traffic is proxied to Cloudflare | Related resources,5.0,2.0,16.0,734.0,9.01,8.0,,519,985
+360035387431,Frequently asked questions about Cloudflare bot products,2KkRIkmQWsYS5JMg95b7y5,2021-03-25,0.0,0.0,,,3.0,3.0,15.0,652.0,8.72,5.0,,21,31
+360052685432,Cloudflare Web Analytics,7KIx0SPM2fUWKRMImCvN5g,2021-03-25,2.0,2.0,,,5.0,5.0,18.0,659.0,8.21,5.0,,18,44
+206049798,Setting up Response Buffering,5I5UUbCcxLFRbOQFc4TvGa,2021-03-25,0.0,0.0,,,2.0,2.0,7.0,112.0,7.65,0.0,,9,13
+227253688,Understanding Opportunistic Encryption,11Y3g6EbXLMq27QWqYSFNW,2021-03-25,0.0,0.0,,,2.0,2.0,4.0,100.0,8.8,1.0,,40,61
+200168036,Will Mirage and Polish optimize off-site resources?,4lFwhdlMvhUk7F7Dc1WsMY,2021-03-25,0.0,0.0,,,1.0,1.0,1.0,18.0,8.73,0.0,,10,22
+115003014192,2xx Success,79nLPEa5lFCQTd5n2zepXq,2021-03-25,0.0,0.0,,,7.0,7.0,10.0,450.0,9.09,5.0,,55,79
+202032590,Using Cloudflare with vBulletin forums,2ROJl3QT8r71eI6fzUe3tz,2021-03-25,0.0,0.0,,,2.0,2.0,9.0,136.0,8.31,2.0,,14,23
+115000350252,Using Cloudflare with Wix Website Builder,4rb4ysdkVf4CxkYgobaJA9,2021-03-24,0.0,0.0,,,1.0,1.0,1.0,64.0,9.05,0.0,,22,35
+200171456,How many API calls can I make?,ky623JKIC5bksrJdgQbG4,2021-03-24,0.0,0.0,,,1.0,1.0,1.0,17.0,8.04,1.0,,79,96
+200168806,I activated through a hosting partner. Can I still use the free Cloudflare IPv6 Compatibility?,2ETSL3GgkROYjrNMpjwzcj,2021-03-24,0.0,0.0,,,1.0,1.0,1.0,43.0,9.77,1.0,,66,85
+200169316,Why doesn't my RSS feed show images?,6pQ59eOqfKy0NKiAYWHBTD,2021-03-24,0.0,0.0,,,2.0,2.0,8.0,120.0,7.13,2.0,,30,46
+115000308492,Will Cloudflare Apps make my site slower?,2aMNiH4WJT5C3p16rV5vco,2021-03-24,0.0,0.0,,,1.0,1.0,3.0,194.0,10.83,5.0,,227,308
+200170466,Managing Custom SSL certificates,49ldWsKYZlkoL9W1QYlhQu,2021-03-23,0.0,0.0,,,8.0,8.0,33.0,1165.0,8.23,18.0,,144,265
+360033554452,Deleting a Cloudflare account,6THd7Rv4EtcF6oEupTOKqX,2021-03-23,1.0,1.0,,Related resources,4.0,3.0,18.0,390.0,7.98,6.0,,37,219
+200169376,Can I use Cloudflare and Varnish together?,3Ww5CeQl3bZI4IM3RXc7db,2021-03-23,0.0,0.0,,,1.0,1.0,5.0,108.0,7.31,2.0,,11,33
+200170156,Understanding the Cloudflare Cookies,23u2lIrvvQtGPJWjmXar77,2021-03-22,0.0,0.0,,,8.0,8.0,34.0,1390.0,8.47,30.0,,205,297
+360020615111,Configuring a CNAME setup,4TaZAAaMr4WTSmz85vsYRj,2021-03-19,1.0,1.0,,,4.0,4.0,19.0,564.0,7.99,12.0,,507,707
+360026016272,Glossary of SSL terms,2pX7pJM6phCwyiHe6F59P0,2021-03-18,0.0,0.0,,,2.0,2.0,25.0,691.0,8.81,11.0,,2220,4406
+360058639551,WordPress.com and Cloudflare,4XdWPzsj8WmQxYbbOkpWp5,2021-03-17,1.0,1.0,,,3.0,3.0,38.0,628.0,7.39,5.0,,0,0
+225894428,Purchasing Additional Page Rules,jqu2L4Agn0lC6sI0xipCB,2021-03-17,1.0,1.0,,,1.0,1.0,13.0,230.0,6.71,1.0,,3,9
+115000546328,Troubleshooting Cloudflare Rate Limiting,1SM2hahkiuGl3otBtxBVzS,2021-03-16,0.0,0.0,,Related resources,3.0,2.0,12.0,377.0,9.04,7.0,,8,21
+360049822312,Understanding Automatic Platform Optimization (APO) with WordPress,7bmJIYul8BGreT67yZhRg8,2021-03-11,0.0,0.0,,,10.0,10.0,56.0,1908.0,7.58,21.0,,33,74
+115002205227,What is AMP and how can I use it?,6vc9YOaQIIIZnxSMRPMSfW,2021-03-11,0.0,0.0,,,1.0,1.0,3.0,150.0,9.69,2.0,,14,23
+200170786,Restoring original visitor IPs,7kbhyln3mExmPc6hXqnD8V,2021-03-09,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/4idE1j6rXHZnTdt7yq1wEr,,5.0,5.0,46.0,2498.0,8.56,24.0,,552,983
+360044640572,Understanding Cache Analytics,2kyuIVHsMevEeT44GFkWdT,2021-03-08,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/5ZBkv8Mw28gdUDWI14WdFC | https://app.contentful.com/spaces/slt3lc6tev37/assets/NyTj2p0x0iDqlYP69o43S,Related resources | Example reports for troubleshooting cache performance | Overview,4.0,1.0,15.0,709.0,8.88,4.0,,5,7
+360057976851,Delivering Videos with Cloudflare,6dLGIRtkyGL9NuVFdKOpGg,2021-03-05,1.0,1.0,,,4.0,4.0,21.0,963.0,8.53,7.0,,0,1
+200172906,Troubleshooting surges or spikes in web traffic,fBHOCiB8ybhLKVvIiyiag,2021-03-01,0.0,0.0,,,6.0,6.0,8.0,535.0,9.91,1.0,,418,789
+200170026,Understanding Cloudflare Hotlink Protection,19wO7PBsHFEC2hhxyUYRSS,2021-02-25,0.0,0.0,,Related resources,3.0,2.0,6.0,225.0,9.21,6.0,http://example.com/logo.png,215,319
+200172476,Contacting Cloudflare Support,43373jeSc2plfK5dttvB1d,2021-02-24,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/7EzQIekjPg11VhIMZyH1pJ,,4.0,4.0,22.0,837.0,9.38,7.0,,5286,10190
+360024520152,Understanding Cloudflare Firewall Analytics,F7I0p9mJda6NXk4A4m0P2,2021-02-22,8.0,2.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/2eodetzwOHaiN0wxCfDRDe | https://app.contentful.com/spaces/slt3lc6tev37/assets/3esaA3zGSKYgToiY0ZFQZO | https://app.contentful.com/spaces/slt3lc6tev37/assets/3uoO4HwHmCqTFgfp2JN5Rz | https://app.contentful.com/spaces/slt3lc6tev37/assets/5Zf3Cns4SvjW0VHYgDfaNE | https://app.contentful.com/spaces/slt3lc6tev37/assets/6YZDEmw4mzE2hT2bpdwhvc | https://app.contentful.com/spaces/slt3lc6tev37/assets/EM8nP7aucLlSEdpriA6KY,Filter firewall analytics | Print or download PDF firewall analytics report | Related resources | Export activity log data | Select visible columns in the activity log,11.0,6.0,25.0,1235.0,8.93,12.0,,82,140
+200169156,Identifying network ports compatible with Cloudflare's proxy,AERKuYtqearnfMgzHPDve,2021-02-11,0.0,0.0,,,2.0,2.0,4.0,151.0,9.59,2.0,,236,332
+360007897072,Billing for Cloudflare Access,2gKcF3Jea9oiIp2FcNBCRs,2021-02-11,1.0,1.0,,,5.0,5.0,18.0,730.0,8.05,8.0,,53,88
+360047356332,Billing for Cloudflare for Teams,5KtcTfjU14hFunRtgcMmE1,2021-02-11,1.0,1.0,,,4.0,4.0,23.0,856.0,8.01,7.0,,5,10
+360001793351,About Cloudflare Access,1q3pKQxsaKL9QPEUHVlodJ,2021-02-11,0.0,0.0,,,2.0,2.0,3.0,192.0,11.98,2.0,,32,71
+360021621972,Exposing applications running on Microsoft Azure with Cloudflare Argo Tunnel,3X0HWytq22c0kjXKUxZ2yh,2021-02-11,0.0,0.0,,,5.0,5.0,13.0,495.0,8.98,6.0,,3,7
+360047880631,Getting Started with Cloudflare: Product Demos,4dyF6elfRQEMBFO5GmCwj3,2021-02-11,0.0,0.0,,,7.0,7.0,10.0,648.0,10.12,6.0,,35,51
+115000224552,Configuring Argo through the UI,6iYSgfISPxc4u9WSjCHJuU,2021-02-11,0.0,0.0,,,1.0,1.0,14.0,388.0,8.35,5.0,,20,65
+115000310792,Configuring CAA Records,58n2CeqwTt5FXYzFjLTB0T,2021-02-11,2.0,2.0,,,3.0,3.0,19.0,462.0,7.03,6.0,,46,67
+115002911927,Caching HTML with Drupal,5Qihg0W13Dj0vYmtvAuKAY,2021-02-10,1.0,1.0,,,4.0,4.0,14.0,324.0,7.42,3.0,,8,19
+228503147,Speed Up WordPress and Improve Performance,2Se9WWaRPIVbQ09LHdWgu4,2021-02-10,0.0,0.0,,,1.0,1.0,15.0,504.0,8.6,6.0,,92,153
+360054452251,Deprecation notice: Cloudflare Mobile SDK,227m6pCsC8SjVHN8yEEcXt,2021-02-10,0.0,0.0,,,1.0,1.0,6.0,203.0,7.72,1.0,,11,13
+360052428572,Updates to Security Events in Cloudflare Logs,GwCuJrsDkAw2v8CWSzilb,2021-02-10,0.0,0.0,,,3.0,3.0,11.0,625.0,9.18,13.0,,32,38
+204144518,SSL FAQ,3LhKEUy7Yfu7szvrVdbsWP,2021-02-08,0.0,0.0,,,17.0,17.0,11.0,1190.0,11.44,16.0,,129,211
+200169496,Is Cloudflare compatible with Bad Behavior?,3Us5wU3lWvq8dt9OAMASfj,2021-02-08,1.0,1.0,,,1.0,1.0,3.0,55.0,8.79,0.0,,24,29
+204964927,"How does Cloudflare calculate ""Total threats stopped""?",3QGAWZTA70QukRwnzQNSPO,2021-02-08,0.0,0.0,,,1.0,1.0,5.0,157.0,9.12,3.0,,19,39
+115002722267,Install the Cloudflare Grafana Plugin,nusglyGHfDzmQo5Y0PRG9,2021-02-08,5.0,5.0,,,4.0,4.0,12.0,411.0,7.45,1.0,,25,30
+200172556,When does Cloudflare crawl my site?,3oEfsON8arsaaQVRnz9ZTg,2021-02-08,0.0,0.0,,,1.0,1.0,11.0,174.0,8.12,3.0,,21,34
+231369048,Using Cloudflare with a personal domain on Medium,6vMPTAdjeUlnSa2ba0YoMW,2021-02-08,0.0,0.0,,,1.0,1.0,18.0,328.0,7.13,7.0,,15,35
+218377098,WordPress Jetpack and Cloudflare,76aw9nPhoY9XTid01QIy8V,2021-02-08,0.0,0.0,,,1.0,1.0,8.0,230.0,8.84,4.0,,18,36
+360022014111,Understanding Keyless SSL,7gmUYH4Tche5Hl0PWUTcTX,2021-02-08,0.0,0.0,,,4.0,4.0,13.0,380.0,9.77,3.0,,22,34
+219178057,Configuring Cloudflare Mirage,K9733w1s8TXtvtu57AUUk,2021-02-05,2.0,2.0,,,4.0,4.0,14.0,356.0,8.17,6.0,,15,29
+360021902391,Enabling Cloudflare SSL on Azure Storage Static Web Hosting Applications,5QLyJZvwr2tJacIOEijkfC,2021-02-05,0.0,0.0,,,6.0,6.0,12.0,508.0,8.44,5.0,,9,25
+115004180727,Using Cloudflare with your Magento 1 online store,2Mbq6fy1z5o91POesLdRnU,2021-02-05,0.0,0.0,,,1.0,1.0,13.0,386.0,8.46,2.0,,12,20
+201883834,Using Cloudflare and Drupal: Five Easy Recommended Steps,1mHXlC2ZBlZxAnC0fn9EiL,2021-02-05,0.0,0.0,,,1.0,1.0,12.0,635.0,8.95,2.0,,16,26
+200169356,How do I use WordPress Multi-Site (WPMU) With Cloudflare?,1EsivacuybYXsb9YW5TyEK,2021-02-05,0.0,0.0,,,1.0,1.0,8.0,189.0,8.39,2.0,,18,49
+115002374208,How do I get Google CDN Interconnect discount using Cloudflare?,1TyS3mAl7qiHJhVfU6EvhQ,2021-02-05,0.0,0.0,,,1.0,1.0,1.0,127.0,13.67,1.0,,35,69
+200168336,Understanding Cloudflare Mobile Redirect,1eubkZGjlM1yT1D1L8YJJg,2021-02-05,1.0,1.0,,,5.0,5.0,14.0,302.0,8.16,2.0,,62,97
+200169906,Troubleshooting missing images,6SMKfpqdgl5QrNIUIiLCQp,2021-02-05,0.0,0.0,,,2.0,2.0,2.0,90.0,10.4,0.0,,90,199
+200169526,Disabling Cloudflare features on admin pages for content management systems like WordPress,3gFrGJxa5IP9A3NnoNN7UA,2021-02-05,1.0,1.0,,,1.0,1.0,8.0,136.0,7.61,0.0,,62,91
+206973867,Status code metrics in Cloudflare Site Analytics,7l1ZvEtcRNhLPop87ABEsL,2021-02-05,2.0,2.0,,,6.0,6.0,10.0,599.0,9.53,11.0,,81,132
+360021806811,Getting Started with Cloudflare Caching,3vynl2MPm3PKm6jj2aEM7p,2021-02-05,0.0,0.0,,,5.0,5.0,2.0,189.0,13.09,1.0,,56,81
+214820528,Validating a Let’s Encrypt Certificate on a Site Already Active on Cloudflare,1qQEQlM0x7PY8smaxmuFQm,2021-02-05,0.0,0.0,,,3.0,3.0,5.0,437.0,11.47,9.0,,52,151
+206652947,Using Page Rules to Re-Write Host Headers,4ob3A6gQL5h7Z4Ge3lTUQ1,2021-02-05,1.0,1.0,,,1.0,1.0,6.0,175.0,8.05,5.0,,27,97
+200170476,Troubleshooting mixed content errors,396IcAuiYDhYAGEs500Upf,2021-02-05,7.0,7.0,,,4.0,4.0,13.0,476.0,8.83,1.0,,65,142
+227342487,"What settings are applied when I click ""Optimize Cloudflare for WordPress"" in Cloudflare's WordPress plugin?",2J6AmHXoHQ3mp9VUAwLFF5,2021-02-05,1.0,1.0,,,1.0,1.0,1.0,99.0,13.81,0.0,,153,232
+360021801151,Getting Started with Cloudflare DNS,3BQi8vuNZVUXJSVyyunrHJ,2021-02-05,0.0,0.0,,,5.0,5.0,5.0,333.0,11.58,5.0,,140,241
+200172336,Creating Page Rules,1VOPFhe42nX09lBON3DVqe,2021-02-05,0.0,0.0,,,2.0,2.0,5.0,175.0,7.81,2.0,,524,1062
+115003014512,4xx Client Error,7FyuEV1ZgJFJMT9LmFyytA,2021-02-05,0.0,0.0,,,1.0,1.0,24.0,1430.0,9.23,27.0,,38,82
+218616807,Understanding DNS Firewall,73JEnIyfGeHSI2lVWTFKE4,2021-02-04,1.0,1.0,,,7.0,7.0,14.0,532.0,8.31,4.0,,18,35
+218616817,Configuring DNS Firewall,2U6bUzavUcnHu46osT4B18,2021-02-04,0.0,0.0,,,4.0,4.0,19.0,307.0,7.77,3.0,,33,46
+200168346,Best practices for Railgun and a Load Balancer,yleqR2ntARHLKpdN7xG7P,2021-02-04,3.0,3.0,,,3.0,3.0,12.0,879.0,9.89,21.0,,13,16
+218048207,Does Cloudflare support SignalR?,4VRBy5u1an61KnLRrf42oN,2021-02-04,0.0,0.0,,,1.0,1.0,1.0,58.0,11.38,1.0,,10,14
+115001255631,Argo Analytics,6SekQh66ciQlNPwZzETkNo,2021-02-04,3.0,3.0,,,1.0,1.0,9.0,296.0,8.46,3.0,,8,19
+115004180627,Problems logging into Magento 1 Admin Panel,7CYBTzgiZjSERDVuHJubYp,2021-02-04,0.0,0.0,,,1.0,1.0,8.0,158.0,7.21,0.0,,12,21
+360016143912,How do I get discounted data transfer with my cloud provider?,5gk32cxgIcOJbl2K8S5ORT,2021-02-03,0.0,0.0,,,5.0,5.0,14.0,461.0,8.01,1.0,,11,15
+360029367652,Understanding Amp Real URL,7vhfXcJ92wsO2eSZKnvewa,2021-02-03,1.0,1.0,,,3.0,3.0,6.0,409.0,10.61,1.0,,7,15
+360031777052,Caution when enabling Query String Sort with WordPress admin pages,4dEtzppF1vbkQ8bCRIp2jz,2021-02-03,2.0,2.0,,,4.0,4.0,10.0,563.0,10.02,8.0,,5,11
+201997250,Cloudflare and Joomla: Recommended First Steps,1xxdpiGBRXitTQKAuOJ8wm,2021-02-03,0.0,0.0,,,6.0,6.0,13.0,646.0,8.96,2.0,,8,21
+204183088,Understanding HSTS (HTTP Strict Transport Security),41ooppxxhXa1LW7pmJiENP,2021-02-03,0.0,0.0,,,5.0,5.0,15.0,526.0,8.5,14.0,,34,49
+360046106112,Understanding the CSAM Scanning Tool,744oHdeF6EmWo5jO1E6TYb,2021-02-03,1.0,1.0,,,5.0,5.0,15.0,583.0,8.08,13.0,,8,11
+360007553512,Cloudflare analytics with Workers,01Alq7Xcwu8t8VBqf33PGp,2021-02-03,0.0,0.0,,,4.0,4.0,7.0,406.0,8.58,7.0,,60,87
+206776707,Does Cloudflare Do Prefetching?,3ctLINusiMSQoT8S5XueSA,2021-02-03,0.0,0.0,,,5.0,5.0,7.0,272.0,8.29,6.0,,10,21
+200169566,Troubleshooting Cloudflare domains blocked by China,1z2LfdNR5uHVKybnSsSOs5,2021-02-03,0.0,0.0,,,1.0,1.0,1.0,107.0,13.53,3.0,http://www.greatfirewallofchina.org/,71,121
+204191238,What are the types of Threats?,KdRrkACXxhbox7fAzOCbF,2021-02-03,0.0,0.0,,,1.0,1.0,20.0,626.0,7.58,11.0,,63,79
+115003384591,Using Kubernetes on GKE and AWS with Cloudflare Load Balancer,1wLvMWOEILi0MyHFuunV7n,2021-02-02,3.0,3.0,,,6.0,6.0,85.0,2763.0,7.29,34.0,,14,25
+115002323852,Using Cloudflare API with Postman Collections,545iHpS3UyMdmsoJpdh1e4,2021-02-02,6.0,6.0,,,1.0,1.0,6.0,241.0,8.44,0.0,https://api.cloudflare.com ,17,26
+115002816808,How do I enable HTTP/2 Server Push in WordPress,4Om5E2UYyEarpil56oZZry,2021-02-02,3.0,3.0,,,1.0,1.0,3.0,179.0,10.13,3.0,,34,54
+200172356,Why isn't a Page Rule working?,4bMTVl85aG5qS0NuHHSmOF,2021-02-02,0.0,0.0,,,1.0,1.0,2.0,110.0,8.38,1.0,,33,174
+200168886,How do I add a WordPress.com Custom Domain Mapping site to Cloudflare?,3WcFS8hvgkwFZD9VGKFUkq,2021-02-02,0.0,0.0,,,1.0,1.0,5.0,195.0,7.27,2.0,,62,94
+115001661191,Cloudflare PHP API Binding,6nzwvlEkF9fEZNECsjGNXx,2021-02-02,5.0,5.0,,,8.0,8.0,7.0,520.0,10.68,3.0,,28,41
+115003011091,3xx Redirection,2m7DGD0bmLeLFyNjoSzfsz,2021-02-02,0.0,0.0,,,1.0,1.0,11.0,680.0,9.21,12.0,,39,61
+200168086,Does Cloudflare compress resources?,2iZqXI3mLPNIs4sq3bxDre,2021-02-02,0.0,0.0,,,2.0,2.0,3.0,135.0,9.48,2.0,,15,27
+200171036,What does Scrape Shield do?,2QSbvvqzzFvQgb0az8hrIu,2021-02-02,1.0,1.0,,,1.0,1.0,1.0,60.0,11.06,0.0,,48,82
+200170036,What does Server Side Excludes (SSE) do?,MqNfPBkIk6V5qafyjKurT,2021-02-02,1.0,1.0,,,1.0,1.0,3.0,130.0,8.33,1.0,,101,153
+216532638,Understanding Custom SSL certificate packs,1oZSJz0oIhvn0SzJFMuFP7,2021-02-02,0.0,0.0,,,2.0,2.0,5.0,187.0,9.2,1.0,,24,38
+200169876,Why isn't Auto Minify working?,6qC38hF0cUYBgXT0L0Wu5r,2021-02-02,0.0,0.0,,,1.0,1.0,6.0,342.0,8.76,6.0,,32,59
+360020348832,Understanding a CNAME Setup,6wKR3HEInLJ8pLYLFVEggg,2021-02-02,2.0,2.0,,Limitations,6.0,5.0,19.0,564.0,7.99,12.0,,507,707
+200170166,Best Practices: DDoS preventative measures,11JZ1iFxV2TOROjRdlMtl4,2021-01-29,0.0,0.0,,Related resources,2.0,1.0,10.0,438.0,9.05,1.0,,204,262
+219336007,Using Railgun with Origin CA Certificates,8KQam8A3hNavIh6B3eDrt,2021-01-27,0.0,0.0,,,1.0,1.0,3.0,258.0,10.83,5.0,,873,1307
+236166048,Caching Static HTML with WordPress/WooCommerce,2BACM5vyFewxPD1lLi9xeP,2021-01-27,0.0,0.0,,,3.0,3.0,12.0,360.0,7.98,3.0,,132,347
+200170566,Troubleshooting SSL errors,3m8vnea6VzzDcQtvJ1tl4r,2021-01-27,0.0,0.0,,,7.0,7.0,17.0,934.0,9.05,5.0,,175,529
+200169006,Setting up Custom Nameservers at Cloudflare,7aoXEjjtJ19KdZk8kB6f6f,2021-01-27,0.0,0.0,,,3.0,3.0,6.0,192.0,8.59,3.0,,60,189
+218444227,Increase Logging for Railgun,18YbFRHfq4my3mpECehk5Z,2021-01-27,0.0,0.0,,,1.0,1.0,5.0,216.0,9.65,4.0,,1682,2314
+115003206852,Understanding Origin Cache-Control,7hBjQrHgcFCXuyshMdEgC4,2021-01-27,0.0,0.0,,,5.0,5.0,23.0,1350.0,8.9,35.0,,47,73
+200168236,Configuring Cloudflare IP Geolocation,5r2m6aern5u4VYHxHNrC8L,2021-01-27,1.0,1.0,,,5.0,5.0,10.0,360.0,9.44,5.0,,146,197
+217912538,My DNS doesn't work,1DgXdId4AoX3Nl1B1hQ3LW,2021-01-27,0.0,0.0,,,3.0,3.0,3.0,299.0,12.39,4.0,,204,665
+200168056,What does Rocket Loader do?,4RTFe4ubwNenILLslAHzKK,2021-01-27,0.0,0.0,,,1.0,1.0,3.0,206.0,11.18,0.0,,182,249
+115000219871,Troubleshooting redirect loop errors  ,5nNrOTk2scXlAeV01YHQLx,2021-01-27,0.0,0.0,,,4.0,4.0,10.0,451.0,9.17,3.0,,179,354
+200169806,Troubleshooting crawl errors,7JPFjXjm8eyxnYNNvZQV5P,2021-01-26,0.0,0.0,,,5.0,5.0,18.0,651.0,8.99,4.0,,107,200
+360047358211,Connecting PagerDuty to Cloudflare,Dh26ZiIsHUTWYjNI5lw8m,2021-01-25,0.0,0.0,,,6.0,6.0,9.0,396.0,8.61,9.0,,31,41
+115003013892,1xx Informational,1rErapMmL87vqXiBBOlv7o,2021-01-25,0.0,0.0,,,1.0,1.0,16.0,349.0,7.89,9.0,,144,221
+360021111972,Troubleshooting DNSSEC,3vQwNwppdek4qO9A7bWN0i,2021-01-25,3.0,3.0,,,6.0,6.0,11.0,837.0,9.81,19.0,,28,63
+200168276,Understanding Browser Cache TTL,5fRQBqn7ScYkXxYonnTri,2021-01-25,0.0,0.0,,,3.0,3.0,8.0,311.0,8.66,0.0,,111,140
+203295200,End-to-end HTTPS with Cloudflare - Part 2: SSL certificates,1h7SUGMfRwDNDjY4wm5NXn,2021-01-25,0.0,0.0,,,5.0,5.0,13.0,607.0,9.49,5.0,,163,265
+360023040812,Best Practice: Caching Everything While Ignoring Query Strings,2Lc8mPPaCnIcY7xQlvLCTM,2021-01-22,1.0,1.0,,,5.0,5.0,11.0,587.0,8.98,8.0,,5,16
+200168396,What will Cloudflare compress?,4BBe0b6p7v7XylTZL8891u,2021-01-22,0.0,0.0,,,2.0,2.0,4.0,174.0,9.89,2.0,,107,127
+224509547,Recommended Page Rules to Consider,2mLLlOoYDZN3bEI0A79qL5,2021-01-22,0.0,0.0,,,1.0,1.0,5.0,475.0,11.09,0.0,,70,100
+115003014432,HTTP Status Codes,6fsPAShR1kg8loP9dBJ53p,2021-01-22,0.0,0.0,,,4.0,4.0,10.0,267.0,8.91,2.0,,174,255
+360020296512,DNS Troubleshooting FAQ,6MuxPExLK0VpTmAE0w7jq3,2021-01-22,0.0,0.0,,,5.0,5.0,9.0,541.0,8.98,7.0,,58,145
+360021357131,Delegating Subdomains Outside of Cloudflare,4wv20efowbdHY4CHPmtbtw,2021-01-22,0.0,0.0,,,3.0,3.0,6.0,187.0,9.39,3.0,,130,213
+200504045,Using Cloudflare with your API,1XeSP0QkCrRb63BqmeHyby,2021-01-22,0.0,0.0,,,1.0,1.0,14.0,617.0,8.71,8.0,,76,102
+200168196,"How do I minify HTML, CSS and JavaScript to optimize my site?",3vzeK0vFcHz16D2kAm2tL3,2021-01-22,1.0,1.0,,,1.0,1.0,5.0,147.0,8.11,1.0,,158,202
+200172316,How do I include or exclude a specific URL from Cloudflare's page rules?,M8Q5qXWh0mTdSyNzM060l,2021-01-22,0.0,0.0,,,1.0,1.0,7.0,271.0,8.59,4.0,,57,116
+204899617,Authenticated Origin Pulls,3v58WPE3dNxUiKHQiJ29eG,2021-01-22,3.0,3.0,,,6.0,6.0,7.0,468.0,9.79,6.0,,150,260
+203041594,"Cloudflare SSL cipher, browser, and protocol support",1xEMBLbvs2LSiAt6XMTQ4B,2021-01-22,0.0,0.0,,SHA-256 ECDSA Certificate Chain (Digicert) | Digicert intermediates and roots for signing Cloudflare Certificates | Related resources | SHA-256 RSA Certificate Chain (Digicert) | Cloudflare TLS/SSL protocol support | dash.crypto,8.0,2.0,17.0,956.0,9.45,8.0,,80,155
+205893698,Configure Cloudflare and Heroku over HTTPS,5FEwoWRE6fvIod9ffjUUoM,2021-01-21,0.0,0.0,,,5.0,5.0,12.0,644.0,8.62,7.0,,108,174
+360021023712,Best Practices: Speed up your Site with Custom Caching via Cloudflare Page Rules,bGZEyI2GfS09DOAfYpgAq,2021-01-21,0.0,0.0,,,4.0,4.0,18.0,672.0,8.03,3.0,,28,47
+200169436,How can I have Rocket Loader ignore specific JavaScripts?,6hULmdxMRBKCYBILGO5MV5,2021-01-21,0.0,0.0,,,1.0,1.0,1.0,136.0,13.2,2.0,,125,237
+228009108,Managing Dedicated SSL Certificates,3QHMSpgBOfxhqNZ7TY53qf,2021-01-21,2.0,2.0,,,6.0,6.0,27.0,715.0,7.71,6.0,,186,373
+360028146432,Understanding Cloudflare Image Resizing,1t7m71ZzTpx960wP3Ywo3U,2021-01-21,1.0,1.0,,,6.0,6.0,13.0,507.0,9.0,6.0,,7,18
+115003687931,Warning about exposing your origin IP address via DNS records,J8uBXMQ2PsA54loXo70A3,2021-01-21,0.0,0.0,,,3.0,3.0,11.0,541.0,8.23,8.0,,95,272
+200168856,Importing and exporting DNS records,2j7ZG9bpZo1JwSTewS1my2,2021-01-21,0.0,0.0,,,3.0,3.0,3.0,217.0,10.28,5.0,,68,160
+200169466,Using Cloudflare with WebSockets,6Gnqk6V0UkaAmPp7cSAcgY,2021-01-21,0.0,0.0,,,9.0,9.0,13.0,524.0,8.98,6.0,,132,211
+200168406,What is Railgun?,3NIOJd6GXLKJjNHUEOHzgI,2021-01-15,0.0,0.0,,,9.0,9.0,41.0,2089.0,8.61,39.0,,523,893
+204151138,Understanding Universal SSL,UqaWbKsO3SCaMgElMbBmZ,2021-01-15,0.0,0.0,,,4.0,4.0,13.0,683.0,9.71,8.0,,179,319
+227227647,Understanding Automatic HTTPS Rewrites,7quGNe53yt9UHexn7XTR4l,2021-01-15,0.0,0.0,,,3.0,3.0,4.0,227.0,10.0,5.0,,129,210
+360031379012,Understanding Certificate Transparency Monitoring,32p45W8l4u2Ey52c0Kda1q,2021-01-15,0.0,0.0,,,4.0,4.0,21.0,575.0,8.42,13.0,,35,46
+200172616,Using Cloudflare with Google Analytics,7J2PgD6flx1bPxSCV77xCv,2021-01-15,0.0,0.0,,,2.0,2.0,2.0,107.0,9.97,1.0,,85,110
+217720788,Troubleshooting issues sharing to Facebook,3xo1wly2FDT8pIH7ruwE6w,2021-01-15,0.0,0.0,,,1.0,1.0,4.0,194.0,9.46,1.0,,92,154
+115000479507,Managing Cloudflare Origin CA certificates,6NsG6X8u8ff5axYrETn7CM,2021-01-15,0.0,0.0,,,7.0,7.0,24.0,1026.0,8.91,6.0,,343,633
+360006660072,Understanding and configuring DNSSEC in Cloudflare DNS,3Yeagcu6ZdsDVnFnpOl2Eq,2021-01-12,0.0,0.0,,,5.0,5.0,32.0,1161.0,7.75,7.0,,92,156
+205359838,I cannot add my domain to Cloudflare...,55cUscg9kgLkW9Ph6gHaSF,2021-01-12,0.0,0.0,,,4.0,4.0,8.0,620.0,10.45,17.0,,101,439
+360017421192,Cloudflare DNS FAQ,1QP08KEa23boEDpStBbrbu,2021-01-11,0.0,0.0,,,22.0,22.0,37.0,1612.0,7.54,25.0,,119,222
+200172286,Configuring URL forwarding or redirects with Cloudflare Page Rules,7xYjuHs21SBczAhzFwZmVg,2021-01-08,1.0,1.0,,,4.0,4.0,9.0,462.0,8.61,6.0,,160,352
+236168808,Caching Static HTML with Magento (Business and Enterprise only),2I3sKNVmTQwmyc8X6RgZpW,2021-01-07,2.0,2.0,,,4.0,4.0,22.0,777.0,7.94,7.0,,20,39
+360029779472,Troubleshooting Cloudflare 1XXX errors,27gqVLl29B2XaYhlm301nU,2021-01-07,0.0,0.0,,,25.0,25.0,35.0,2141.0,8.9,17.0,,54117,78439
+200170986,How does Cloudflare handle HTTP Request headers?,3gdzhmSG5DEfL4eKyN4fku,2021-01-05,0.0,0.0,,,2.0,2.0,12.0,466.0,8.34,7.0,,110,182
+360026135951,Understanding Cloudflare sales tax,23VsTzgALRNOXYfE6biAFU,2020-12-22,0.0,0.0,,Overview | Russian value-added tax (VAT) | US State sales tax,5.0,2.0,6.0,344.0,9.6,11.0,,27,47
+200172516,Understanding Cloudflare's CDN,7tLKPAy273OVGjLiAgpTMh,2020-12-22,0.0,0.0,,Related resources | Understand Cloudflare's default cache behavior | Understand file extensions cached by default | Overview,5.0,1.0,17.0,894.0,9.11,13.0,,392,576
+218411427,Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial),4HCD5LBqbScmatw6ng5fvc,2020-12-17,0.0,0.0,,,8.0,8.0,49.0,2110.0,7.79,13.0,,268,526
+360020524512,Manage dynamic IPs in Cloudflare DNS programmatically,3dV3Lt9K8JsPBoCYWdZBvZ,2020-12-17,0.0,0.0,,,4.0,4.0,8.0,275.0,9.76,2.0,,2922,4230
+200170016,What is Email Address Obfuscation?,6VNH0SOqumec4kANwxcCGP,2020-12-15,0.0,0.0,,,4.0,4.0,5.0,340.0,9.61,3.0,,1907,2815
+360053216191,Understanding Cloudflare DDoS alerts,7bHkcFN0azxaopjxFPLQlw,2020-12-04,5.0,5.0,,,3.0,3.0,18.0,444.0,7.67,3.0,,20,38
+360053233231,Understanding Cloudflare DDoS reports,5Eb1Mof4EPS1fGMCb2kaw,2020-12-04,3.0,3.0,,,3.0,3.0,7.0,260.0,10.08,0.0,,29,40
+200169626,Identifying subdomains compatible with Cloudflare's proxy,34v4CgIqAQXFSzN3Bcp01f,2020-12-03,0.0,0.0,,Related resources,2.0,1.0,7.0,370.0,9.29,1.0,,328,566
+203471284,Updating your Cloudflare email and password,1FYSM9Or7tBWlqBHgcLYLF,2020-12-03,3.0,3.0,,,4.0,4.0,25.0,558.0,6.92,4.0,,288,591
+115003614752,Multi-Factor Email Authentication,375mkqUP0BozDg8ej2SlFE,2020-12-03,2.0,2.0,,,3.0,3.0,6.0,251.0,9.42,6.0,,17,61
+360019910671,Transferring and renewing domains with Cloudflare Registrar,5X0cZwiiZNLsfQWSYyNEt5,2020-12-03,0.0,0.0,,Transfer a domain to Cloudflare | Related resources | Renew domains via Cloudflare Registrar | Before getting started,7.0,3.0,24.0,940.0,8.35,11.0,,23,91
+200167836,Managing API Tokens and Keys,7fviieI3tn4itV5YmgfjLe,2020-10-19,7.0,2.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/01EbnJkEtcbBuT6Mu1DFW1 | https://app.contentful.com/spaces/slt3lc6tev37/assets/12h5RcBpg3sK1iy9YAkQGZ | https://app.contentful.com/spaces/slt3lc6tev37/assets/1Kv17ZkY1DljzrH2gE4QED | https://app.contentful.com/spaces/slt3lc6tev37/assets/7BqtIDh3m9eOCWyoi3fdCc | https://app.contentful.com/spaces/slt3lc6tev37/assets/YSCNsV3bYgkxr235GGICx,View API Key | Roll API token | Overview | Generate API token,6.0,2.0,35.0,768.0,7.54,7.0,,186,303
+205043158,PCI compliance and Cloudflare SSL/TLS,3xpmc8J6QVS5M4Qt5F82K1,2020-10-19,0.0,0.0,,Related resources | dash.crypto,6.0,4.0,18.0,617.0,9.05,5.0,,26,42
+227634427,Using the Cloudflare plugin with WordPress,3sZV35XdAFPP2Ygs8GuSi9,2020-10-13,0.0,0.0,,,6.0,6.0,6.0,456.0,10.76,2.0,,94,174
+360050691831,Understanding Network Error Logging,1xaHHxGbF73D3oNPYUjGl5,2020-10-12,1.0,1.0,,,2.0,2.0,3.0,373.0,13.77,6.0,,14,23
+200168076,Understanding Cloudflare HTTP/2 and HTTP/3 Support,5Pw8HUJWdY6YjKu0wep6sR,2020-10-09,0.0,0.0,,Related resources | Server Push | HTTP/2,5.0,2.0,9.0,398.0,9.69,5.0,,18,28
+203464660,Using Cloudflare with Shopify,6YE4qokjYk2e9PwjRd0bg3,2020-10-08,1.0,1.0,,,4.0,4.0,13.0,399.0,8.56,3.0,,16,68
+360026440252,Understanding Subdomain Support,1HzrBnz6Mr9CJvCt3Dd47a,2020-10-08,0.0,0.0,,Related resources,5.0,4.0,20.0,1012.0,8.11,9.0,,94,160
+360019093151,Managing DNS records in Cloudflare,1t52YbT0dZEGdecFRG8wMt,2020-10-04,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1LXOtXS4OSmByrd15YFgoE,Adding DNS records | Deleting DNS Records | What is DNS?,4.0,1.0,66.0,1608.0,7.06,19.0,,2584,4285
+360050483011,Understanding Cloudflare gRPC support,6YWiJkYMJtLFDHptne1ds1,2020-10-02,0.0,0.0,,,4.0,4.0,5.0,243.0,10.46,5.0,,35,52
+200170196,Responding to DDoS attacks,64Iyyickjb4Pe6wKkP6b5h,2020-09-29,0.0,0.0,,Step 1: Enable Under Attack Mode | Overview | Step 2: Enable the Web Application Firewall (WAF) | Step 3: Challenge or block traffic via the Firewall ap,7.0,3.0,31.0,988.0,8.47,11.0,,317,559
+360033929991,Cloudflare Browser Insights,4Cq9qCLuiYOknGMnOyp1MR,2020-09-28,5.0,3.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/263PZruYdhfonwwJQm12Zi | https://app.contentful.com/spaces/slt3lc6tev37/assets/2G5HeeL82ByXPMatdhYbVQ,,6.0,6.0,28.0,1051.0,8.55,13.0,,66,76
+200170236,Updating Cloudflare billing information,2YUQjWbz0E9DZaYIWRtFnB,2020-09-24,7.0,4.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/24ehzBT8ANJDBPAt3NxtWD | https://app.contentful.com/spaces/slt3lc6tev37/assets/44IVtNFDsQcleoJrq1Ovu1 | https://app.contentful.com/spaces/slt3lc6tev37/assets/6qQqdOVeU1bye1NldlTVh0,Relevant resources | Update your billing address,5.0,3.0,45.0,932.0,6.46,8.0,,13,72
+115003011431,Troubleshooting Cloudflare 5XX errors,6s9gqgXgDtNDtIDrSOJkeM,2020-09-17,3.0,1.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/2BPhw2fUEiOLLFaHqCIsTP | https://app.contentful.com/spaces/slt3lc6tev37/assets/CTIa7Nqay9uZoBZnh7ao7,,15.0,15.0,35.0,2416.0,9.27,23.0,,147838,224361
+200168436,Understanding Cloudflare Always Online,3A0dgG5X4GVGRrvlG3Lkum,2020-09-17,2.0,2.0,,,5.0,5.0,22.0,915.0,8.2,9.0,,138,215
+360001356152,Configuring Secondary DNS,6TKEJ3HElncUyC3xVKPpGp,2020-09-16,0.0,0.0,,Related resources,5.0,4.0,15.0,1096.0,9.69,14.0,,82,143
+115000224192,Billing for Argo,1BXEKMhlWMN6iChs61dZkn,2020-09-15,0.0,0.0,,,2.0,2.0,8.0,260.0,8.71,9.0,,236,365
+200167946,Managing Cloudflare account access,37hTIKJa61HxjVsiGrWlTt,2020-09-15,2.0,1.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/32CSNJ7pGZO7ZMwuMaWgC2,Overview | Revoke account membership | Add account members,3.0,0.0,19.0,332.0,7.02,4.0,,148,372
+360038696631,Understanding Cloudflare Network Analytics,6IJQjIAYvms0QJy1wOEftt,2020-09-15,5.0,5.0,,Related resources,10.0,9.0,27.0,1684.0,9.18,17.0,,13,15
+227172348,Understanding TLS 1.3,1k3ulKZeNVvFwvczjcbuNR,2020-09-14,2.0,2.0,,,2.0,2.0,11.0,426.0,8.74,4.0,,43,52
+206776727,Understanding the True-Client-IP Header,5LxBipCh9kpLDFLxrY74Hc,2020-09-14,1.0,1.0,,,2.0,2.0,5.0,141.0,8.49,1.0,,17,56
+115002708027,Cloudflare WordPress Plugin: Automatic Cache Management ,4xHJAr2lFIWEWCcLWkshTY,2020-09-11,0.0,0.0,,,2.0,2.0,7.0,158.0,7.95,2.0,,33,50
+360048153211,Billing for Cloudflare Gateway,2ihrOfb6DcLPFDOVGns8es,2020-08-17,1.0,1.0,,,5.0,5.0,21.0,746.0,7.79,8.0,,14,18
+360038068952,About Cloudflare Load Balancing,6G0i4jQJbgxHUtspCNInHa,2020-08-12,0.0,0.0,,Learn more,2.0,1.0,4.0,218.0,10.82,0.0,,10,12
+360025829831,Cloudflare Billing Policy,1irUmrk2eZVpLRfF2DecF3,2020-08-06,0.0,0.0,,Related resources | Upgrade or downgrade Cloudflare paid plans | Billing and payment for Enterprise plans | Approved payment methods,5.0,1.0,14.0,746.0,8.37,16.0,,97,242
+360003205452,Using Minimum TLS Version in Cloudflare SSL/TLS,6mcPMfI4CetW721bgo5JCY,2020-07-13,0.0,0.0,,Related resources | dash.crypto,5.0,3.0,8.0,486.0,10.42,5.0,,50,68
+360017801091,Understanding Cloudflare Stream,3nx5AdIpKqrWDsqE2BmBRA,2020-07-01,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1iVFEJrAP87leKiizU7VWY | https://app.contentful.com/spaces/slt3lc6tev37/assets/5KyXRaSlRJal6QdYCf4Jvy | https://app.contentful.com/spaces/slt3lc6tev37/assets/5WlN6QXRYhtOb0AE6WgAG8,Enable Cloudflare Stream | Cancel Cloudflare Stream | Overview,4.0,1.0,16.0,343.0,8.56,2.0,,14,33
+200169246,Purging cached resources from Cloudflare,2KHWNOZftacEJui9ZMhmls,2020-06-29,0.0,0.0,,Purge everything | Related resources | Purge using Cache-Tags (Cloudflare Enterprise only),7.0,4.0,42.0,1302.0,7.37,13.0,,167,262
+201897700,Allowing Cloudflare IP addresses,70GFuWo09ZrrIo2vMdotdz,2020-06-21,0.0,0.0,,Related resources,3.0,2.0,8.0,305.0,8.42,1.0,,233,413
+217074967,Configuring IP Access Rules,7CVWRtQiD3NH12uznZnT5i,2020-06-21,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/6p2zj3jEsbRzda6lGAxKIb,Two-letter country codes | Related resources | Types of Access Rules | Address range examples | Add an IP Access Rule | Overview,7.0,1.0,15.0,1210.0,11.59,6.0,,302,493
+360044797871,Understanding Advanced Certificate Manager,4VrfzwH9Ecf5jJZWHftwjU,2020-06-10,0.0,0.0,,Related resources | Create a certificate with the Advanced Certificate Manager | Overview,3.0,0.0,1.0,181.0,17.18,1.0,,29,46
+200172706,Configuring Custom Pages (Error and Challenge),6TOcSgyKLt7dygqAP696QH,2020-06-09,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/3W29J0cdgb2GR3DqqDXlM5 | https://app.contentful.com/spaces/slt3lc6tev37/assets/3ffyewmPBxtiLMNWRHZbOG,Step 2: Select your custom error tokens | Overview | Related Resources | Step 4: Publish your custom page | Step 3: Style your custom page  | Troubleshoot common custom pages issues,7.0,1.0,13.0,902.0,9.44,1.0,,2225,3851
+360043842472,Configuring cache TTL by status code,6ryRaDk5PEwMljou4ey5Np,2020-05-29,0.0,0.0,,Related resources | Overview | Set cache TTL by response status via a Cloudflare Worker | Set cache TTL by response status via the Cloudflare dashboard,4.0,0.0,5.0,258.0,9.2,3.0,,13,19
+200172016,Understanding the Cloudflare Web Application Firewall (WAF),6mFwXjakK2NEjxxsowJIkW,2020-05-20,0.0,0.0,,Cloudflare Managed Ruleset | Related resources | Overview,5.0,2.0,19.0,1251.0,9.87,16.0,,83,111
+115000310832,Certification Authority Authorization (CAA) FAQ,5MVHBCn87cZgQVcO6WaHWG,2020-05-19,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/30YTDLuQvb4hGRxDKbXZVn,Why must I disable Universal SSL if my CAA records exclude Universal SSL issuance? | What are the dangers of setting CAA records? | What is CAA? | What records are added to keep Universal SSL enabled? | How do I re-enable Universal SSL? | How does Cloudflare evaluate CAA records? | What happens when Universal SSL is disabled?,7.0,0.0,12.0,478.0,8.19,10.0,,56,107
+206190798,Using Resolve Override in Page Rules,5fEq1N2V9OsbuYZWPWwP2C,2020-05-13,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1PEa9ANzZSUfE6eUmH6lui | https://app.contentful.com/spaces/slt3lc6tev37/assets/2Is81TERXc52RgslhxJKuM | https://app.contentful.com/spaces/slt3lc6tev37/assets/35lXHvgYI0SiRhNE0ySwZm,Overview | Configure Resolve Override in Page Rules,2.0,0.0,10.0,201.0,7.14,4.0,,22,58
+360020991331,Adding vendor-specific DNS records to Cloudflare,5J2zagltrZIpMV6qg74bg9,2020-05-05,0.0,0.0,,Related resources | Adding DNS records for vendors,2.0,0.0,36.0,1357.0,7.87,9.0,,55,136
+360042815891,Understanding domain status,1jEbvC9EocSL3ZcoXRPHJ1,2020-04-27,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1Ux3i9QMPr99wYdKPY5Xw3,Overview | Related resources,2.0,0.0,6.0,257.0,9.26,10.0,,78,130
+360042380772,Partner Plugin Supportability,1spYERTEn0Mg1st1ViEmZv,2020-04-27,0.0,0.0,,,1.0,1.0,2.0,92.0,9.85,4.0,,7,22
+360041721872,Billing for Spectrum,3SmzI4QtYPnS4DAu261xjW,2020-04-24,0.0,0.0,,Related Resources,3.0,2.0,10.0,391.0,8.25,4.0,,32,71
+360016450871,Billing for Cloudflare Stream,2TqCwtrcqPTiyz6lz92yvO,2020-04-21,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/19DohJrOXh4kCykYSmw6ME,Cloudflare Stream billing | Related resources | Overview | Cloudflare Stream billable minutes,4.0,0.0,13.0,444.0,8.25,5.0,,10,20
+360042169091,Understanding Secondary DNS Override,5eoieJpEzK4eJJE1EoDBFT,2020-04-13,0.0,0.0,,Related resources | Overview | Set up Secondary DNS Override,3.0,0.0,9.0,517.0,8.75,8.0,,80,132
+360024787372,End-to-end HTTPS with Cloudflare - Part 1: conceptual overview,5y9gXXg7r0PguhnrgUfRah,2020-04-06,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/34xd1mOl6rY52cbvovdrCw | https://app.contentful.com/spaces/slt3lc6tev37/assets/5N11QatntpI73CWkYf43gs | https://app.contentful.com/spaces/slt3lc6tev37/assets/5WyIeNev5nnyJ4bVfPOrHl,Step 2 - Configure an SSL certificate at your origin web server | Related resources | Overview | Step 1 - Choose a Cloudflare SSL certificate,4.0,0.0,11.0,392.0,8.94,1.0,,1952,2868
+360016473712,Cloudflare Firewall Rules,2o4PAUz8UeydfyHSddTbb8,2020-04-06,0.0,0.0,,Overview,1.0,0.0,2.0,112.0,11.05,0.0,,42,88
+115004555148,Understanding Billing for Add-on Services,4PZRcE2ydgcMao88rXbUHR,2020-04-02,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/2T9w46jwZkswMHs8pYoHvX | https://app.contentful.com/spaces/slt3lc6tev37/assets/4trEalAL532h4RKgmvUwP | https://app.contentful.com/spaces/slt3lc6tev37/assets/7oBTVtTMxEBaH0N3lMdHPP,Usage-Based billing notifications | Overview,2.0,0.0,20.0,335.0,7.29,3.0,,27,40
+200167906,Securing user access with two-factor authentication (2FA),2nOgnnAEcRFlL9p3Yx9Gto,2020-04-01,11.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1eniermL2ywYPrjanCm4Ld | https://app.contentful.com/spaces/slt3lc6tev37/assets/2Aw21opl1RWvQkRzeJDqZu | https://app.contentful.com/spaces/slt3lc6tev37/assets/2ESdKovuAOYylLL5AEWJ7K | https://app.contentful.com/spaces/slt3lc6tev37/assets/2SKFnWqsdKCAP8JbXS0Zvk | https://app.contentful.com/spaces/slt3lc6tev37/assets/3Y2s47N7gPEhSs2t7KoQVT | https://app.contentful.com/spaces/slt3lc6tev37/assets/4cchBBRpbKsPW3Xs4vyue0 | https://app.contentful.com/spaces/slt3lc6tev37/assets/4kD0hbFJ1Amaz5a12CFm4L | https://app.contentful.com/spaces/slt3lc6tev37/assets/5yUuqjHPIUoX7AuUmlLLp2 | https://app.contentful.com/spaces/slt3lc6tev37/assets/60DqIkKGGcKwfxd5kgKTaj | https://app.contentful.com/spaces/slt3lc6tev37/assets/6iTxU31nCKKZdwgCbVA1jB | https://app.contentful.com/spaces/slt3lc6tev37/assets/t48t5EubjX9XbC6Ocs4Lb,Disable two-factor authentication for your Cloudflare account | Overview |  Enable two-factor authentication for your Cloudflare account | Restore lost access to Cloudflare two-factor authentication | Regenerate backup codes | Configure TOTP mobile app authentication for two-factor Cloudflare login | Configure security key authentication for two-factor Cloudflare login | Related resources | Before getting started,9.0,0.0,57.0,1335.0,6.74,11.0,,311,561
+115004290387,Creating Cache Keys,YwRs9MYGj5d7CLX9kLLXv,2020-03-27,0.0,0.0,,Purge a Cache Key resource | Overview | Related resources | Create a Custom Cache Key | Understand the Cache Key settings,5.0,0.0,14.0,1393.0,11.1,21.0,,18,31
+205610698,Understanding Cloudflare invoices,56O8x6xxX6vCweBTzpNpT1,2020-03-17,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/2dc9JGQo47kUcE6j8EHDA | https://app.contentful.com/spaces/slt3lc6tev37/assets/44IVtNFDsQcleoJrq1Ovu1 | https://app.contentful.com/spaces/slt3lc6tev37/assets/7zaQsZuZdGT2JPOh45SkgQ,Email invoices from Cloudflare | Overview | Troubleshooting invoice issues | Download invoice from Cloudflare dashboard | Related resources,5.0,0.0,21.0,640.0,7.22,9.0,,62,145
+360033922371,Changing your Cloudflare plan type,34ytprA26v9bIvtjkSM1jN,2020-03-12,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/6B5sFsOQkHlxvymvrtURYG,Related resources,3.0,2.0,14.0,345.0,7.6,5.0,,18,79
+360037465932,Preventing site downtime,5EAUqQ2pHvnldqV5JFTNvJ,2020-03-09,0.0,0.0,,Passive Origin Monitoring | Overview | Zero-Downtime Failover | Related resources,6.0,2.0,10.0,734.0,10.59,7.0,,106,201
+360039824852,Cloudflare and the Cloud: Conceptual overview videos,6ArgyshETE7GhSP6Yefy0s,2020-03-04,0.0,0.0,,Caching: content delivery close to your users | The cloud: a remotely accessible network of servers | WAF: monitor and block unwanted HTTP traffic | The hybrid cloud: mixed public and private or on-premise infrastructure | Overview | Botnets: malware-infected network of devices  | Bots: automated indexing and scraping,7.0,0.0,6.0,369.0,10.58,4.0,,85,119
+200170416,End-to-end HTTPS with Cloudflare - Part 3: SSL options,7tPvGT5yBa2NNVRFQQIAh2,2020-03-04,4.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1ZEJtXrDQElYtSt0ds4eHN | https://app.contentful.com/spaces/slt3lc6tev37/assets/34xd1mOl6rY52cbvovdrCw | https://app.contentful.com/spaces/slt3lc6tev37/assets/71zk4biNrzl8eSIwz12Ok9 | https://app.contentful.com/spaces/slt3lc6tev37/assets/AVQoALCTVYbAL2sYeBfl6,Off | Overview | Full (strict) | Flexible | Full,7.0,2.0,33.0,815.0,6.99,14.0,,2256,3821
+200170056,Understanding the Cloudflare Security Level,3aSfU9pcb7JiAdgb43NSty,2020-03-02,0.0,0.0,,Related resources,2.0,1.0,3.0,368.0,12.65,2.0,,187,232
+228214387,Getting Started with Cloudflare Partners,27xBYTP7EjTDIxPfV4Uotl,2020-02-26,0.0,0.0,,Related resources | Become a partner,4.0,2.0,4.0,213.0,12.26,0.0,,76,114
+203306930,Understanding Cloudflare Tor support and Onion Routing,1aQwaRBWrJhbHzJWI6ALy4,2020-02-24,0.0,0.0,,,1.0,1.0,4.0,245.0,10.54,3.0,,52,111
+360000607372,Using Cloudflare Polish to compress images,23w9RLpQ3xmJPZZUKgVGWZ,2020-02-13,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1FthWwsI1cjNlWYQjT0dhv,Polish Compression Options | Activate Polish | Overview,4.0,1.0,26.0,696.0,8.0,13.0,,39,75
+218505467,Using ETag Headers with Cloudflare,a9l4oVRnumdVVI4k28C4M,2020-02-12,0.0,0.0,,Overview | Related resources,2.0,0.0,5.0,317.0,9.67,3.0,,15,33
+202775670,Customizing Cloudflare's cache,7LWJdFAbmfybJgvbfN3ePV,2020-02-12,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/3ufF7Pv7q0vcrIBipVkmK3,Example configurations to customize caching | Related resources | Cache additional content at Cloudflare | Overview,4.0,0.0,12.0,499.0,8.8,7.0,,206,375
+115001595131,Understanding Cloudflare Zone Lockdown,1VvES6aeCtVrdYwYqmNIKO,2020-02-12,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/2xOUOxtconb5Z0nEpLDAcF | https://app.contentful.com/spaces/slt3lc6tev37/assets/7FTi0rsAhariDncFP7pQK2,Overview,1.0,0.0,4.0,219.0,10.24,2.0,,106,163
+115001856951,Understanding Cloudflare User Agent Blocking,4o2FrlJ5JkWDbmMU5y2OTX,2020-02-12,0.0,0.0,,Related resources | Overview | Create a User Agent Blocking rule,3.0,0.0,10.0,157.0,8.84,3.0,,14,42
+115001635128,Configuring Cloudflare Rate Limiting,u7YpqGOzd2hN0itcDa7NC,2020-02-12,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/3XfZaPPj3U37FfiZrhZmJn | https://app.contentful.com/spaces/slt3lc6tev37/assets/6fmZ9n3VV2RwmYpNzfmWyP | https://app.contentful.com/spaces/slt3lc6tev37/assets/6okhM2o1oAHa2iWEeuoJ4h,Task 1: Configure a basic Rate Limiting rule | Task 4: Configure the Bypass option (Enterprise plans only) | Components of a Rate Limiting rule | Related resources | Task 2: Configure Advanced Criteria (only Business and Enterprise plans) | Task 3: Configure Advanced Response (only Business and Enterprise plans) | Identify rate-limit thresholds,10.0,3.0,42.0,1793.0,7.93,21.0,,84,179
+200170136,Understanding Cloudflare Challenge Passage (Captcha),7ggRDqdfML8NuIiRFTivT5,2020-02-12,0.0,0.0,,Set the Challenge Passage | Related resources,3.0,1.0,10.0,432.0,8.92,9.0,,87,211
+200170076,Understanding Cloudflare Under Attack mode (advanced DDOS protection),2fEKjJEb8BxdiJIC3zMZ41,2020-02-12,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/55EYMR81XJCIG5uxLjQQOx,Enable Cloudflare Under Attack mode | Overview | Related resources,3.0,0.0,2.0,190.0,12.42,3.0,,200,277
+115001376488,Configuring Token Authentication,6mcqgR1MkmGdyW31FfobMW,2020-02-12,0.0,0.0,,Option 1: Configure using Cloudflare Workers | Option 2: Configure using Firewall Rules | Overview | Implement token creation,4.0,0.0,12.0,607.0,8.85,2.0,,10,17
+218344877,Troubleshooting failed payments,4jTCixmJVbVcyBtdHiVUPY,2020-02-11,0.0,0.0,,Related resources | Overview | Common reasons for failed payments,3.0,0.0,10.0,378.0,9.02,6.0,,14,118
+200167776, Canceling Cloudflare subscriptions,7801wyKe1rt5Kz8ucBY5Ds,2020-02-11,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1ewXkKTLkradQUYP5DZERL | https://app.contentful.com/spaces/slt3lc6tev37/assets/1nfg6RGbGR0XDYMAZm8VYc,Related resources | Overview | Step 1: Disable the Cloudflare subscription | Step 2: Cancel the subscription in your billing profile,4.0,0.0,18.0,401.0,7.38,4.0,,50,410
+360039129071,Securing a compromised Cloudflare Account,2TS8k0ylaYwQd9lsFjEfQx,2020-01-23,0.0,0.0,,Overview,1.0,0.0,1.0,52.0,11.63,1.0,,56,124
+204615358,Moving domains between Cloudflare accounts,4CfkJ1jL7iYUYSeZvtasll,2020-01-21,0.0,0.0,,Related resources | Transfer your domain,4.0,2.0,13.0,519.0,8.02,5.0,,68,274
+360038570912,Understanding Cloudflare for Campaigns,3O2sqwPSXgtwEnydWHVc2x,2020-01-17,0.0,0.0,,Related resources,2.0,1.0,2.0,221.0,14.55,1.0,,35,44
+205065067,Setting up Multi-User accounts on Cloudflare,3L7d8bruOKP6bVWyyiZ3Y2,2020-01-15,2.0,1.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/23xsEU9jd3fWMmp2rMaKnq,Change Super Administrator  | User roles and permissions | Related resources | Set up a Multi-User account | Overview,5.0,0.0,20.0,702.0,7.43,7.0,,113,200
+360038470312,Understanding SameSite cookie interaction with Cloudflare,1lTfyadCCftGBAtqsopbGk,2020-01-15,0.0,0.0,,Related resources | Known issues with SameSite and cf_clearance cookies | Overview,3.0,0.0,5.0,340.0,10.12,4.0,,14,36
+203118044,Gathering information for troubleshooting sites,3b3lEPBGMMUt7ZIZmgBFx4,2020-01-07,0.0,0.0,,Add the CF-RAY header to your logs | Identify the Cloudflare data center serving your request | Overview | Related resources | Generate a HAR file | Temporarily pause Cloudflare | Perform a traceroute,8.0,1.0,56.0,1462.0,8.22,9.0,,8336,14557
+200172856,Troubleshooting and optimizing site speed,7MGHrmWOsxyjLrFrAF0DpI,2020-01-06,0.0,0.0,,Test directly to your origin web server | Test performance with Webpagetest.org | Review page load speed results | Related resources | Overview | Optimize site performance | Test with Cloudflare,7.0,0.0,23.0,777.0,8.3,6.0,,327,652
+360020739772,Using Cloudflare Logs (ELS) to Investigate DDoS Traffic (Enterprise Only),15nbRpr1fI2beB0QqHjImw,2020-01-06,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1MKfoRN8NRopliwk78OIYR | https://app.contentful.com/spaces/slt3lc6tev37/assets/3jZfwyJZpGu8wGDuXECSNg,Step 3: Sort the logs | Overview | Step 1: Gather the information you need before querying Cloudflare Logs | Example workflow,5.0,1.0,13.0,936.0,9.39,8.0,,99,163
+203020124,Recovering from a hacked site,1ZbIkUV5eeCalsaqngwqjq,2020-01-03,0.0,0.0,,Overview | Related resources,2.0,0.0,4.0,237.0,11.1,3.0,,34,65
+115002059131,Understanding your site protection options,ZpoGnIVyl4Ga5uzNJ779E,2020-01-03,0.0,0.0,,Rate Limiting | Forwarding URL | Security Level | Token Authentication | Zone (URL) Lockdown | Overview | User-Agent Blocking Rules  | Custom WAF Rule | IP Access Rules,11.0,2.0,11.0,885.0,10.88,10.0,,38,64
+200172676,Understanding Cloudflare DDoS protection,1wqc7nAWpRdo1f8A7bIhHW,2020-01-03,0.0,0.0,,Related resources | Determine if you are under DDoS attack | Is Cloudflare attacking me?,4.0,1.0,19.0,585.0,8.24,4.0,,143,241
+360014881471,Avoiding Web Cache Poisoning Attacks,5mmHkETxs6K3sjVVpGY19O,2020-01-03,0.0,0.0,,Recommendations for avoiding cache poisoning | Overview,2.0,0.0,5.0,337.0,10.54,5.0,,37,51
+205177068,How does Cloudflare work?,5TPf5AeVIwIEj5D3AsRABI,2020-01-02,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/4dU0nSnEmP03K11rxZ3RZP,Related resources,2.0,1.0,12.0,490.0,9.4,2.0,,250,364
+205075117,Understanding the Cloudflare dashboard,7A2fR0KitoLu59ekYJ0uAv,2020-01-02,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/17kbAxnMhT793bdHE8Ez5V,Performance | Insights  | Flexibility | Summary of Cloudflare dashboard apps | Related resources,7.0,2.0,8.0,599.0,12.73,1.0,,36,78
+360027989951,Getting Started with Cloudflare,52WdlQZEydI2VLGpIKCq53,2020-01-02,0.0,0.0,,Best practices for active Cloudflare domains | Overview,2.0,0.0,5.0,217.0,10.36,2.0,,146,201
+115000304671,Billing for Cloudflare Apps,4k8rYBuf5vrcxL07k6BJiz,2019-12-31,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/3OiY1yOCxbUe7JmjOvwzDe,Overview,1.0,0.0,2.0,76.0,8.42,4.0,,25,37
+360000841472,Adding Multiple Sites to Cloudflare via Automation,1Xyrl9zaN5i9lyXD5S5e2o,2019-12-31,0.0,0.0,,Overview | Add domains via flarectl (Cloudflare's CLI tool) | Prerequisites | Add domains via the API | Common issues,5.0,0.0,10.0,719.0,10.08,6.0,,3785,4701
+115002833612,Understanding Cloudflare Audit Logs,7md5xEOfc8Zii0XukEnf3J,2019-12-31,0.0,0.0,,Overview | Retention,2.0,0.0,2.0,238.0,12.87,3.0,,28,73
+360004817612,Cloudflare and the GDPR,47umTiBOwRJ93GRptGafef,2019-12-31,0.0,0.0,,Overview,1.0,0.0,2.0,74.0,9.95,1.0,,53,76
+360034558071,Cloudflare Glossary: Account and Billing,40eXHMoNng0PoNqHW4DyTx,2019-12-31,0.0,0.0,,Overview | Related resources,2.0,0.0,14.0,448.0,9.17,6.0,,115,201
+360033554252,Removing a domain from Cloudflare,7uJilDiQyvoLBvvgJ8jXvj,2019-12-30,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/35H6LylYK86dt3jikxL4fx | https://app.contentful.com/spaces/slt3lc6tev37/assets/4fpGsREUsRa20rlfgD7Ksz,Related resources | Before removing your domain | Remove a domain activated in Cloudflare,3.0,0.0,10.0,216.0,8.35,2.0,,74,184
+360037983412,Configuring an Amazon Web Services static site to use Cloudflare,1aZWbB2D3KJgwOvQaQxytW,2019-12-28,0.0,0.0,,Overview | Upload static content to your S3 bucket | Troubleshooting | Configure your AWS S3 buckets | Configure bucket policies to allow Cloudflare IP addresses | Set up your site on Cloudflare,6.0,0.0,19.0,903.0,7.91,2.0,,19,69
+115005254367,Billing for Cloudflare Load Balancing,TjVmDoC4FF9UnDiwnFdNu,2019-12-27,0.0,0.0,,Overview | Load Balancing billable usage,3.0,1.0,9.0,438.0,9.3,7.0,,51,96
+360033455752,Viewing and revoking active Cloudflare dashboard sessions,2m3iDdEpHGKt8Jq37ftVwt,2019-12-26,2.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/3MoJCTUAYS7QctK4UV8dVD | https://app.contentful.com/spaces/slt3lc6tev37/assets/4I36pBQh6Sc4xG7MsFThZn,Revoke active sessions | Overview | View active sessions | Related resources,4.0,0.0,4.0,269.0,10.14,3.0,,180,232
+115001992652,Using Privacy Pass with Cloudflare,54YYnrNNcEn4fgNhKj8Yf8,2019-12-26,0.0,0.0,,,1.0,1.0,2.0,276.0,13.64,13.0,,38,93
+200170086,Understanding the Cloudflare Browser Integrity Check,5lSYGONFmYAcIkQ8JUHB8y,2019-12-26,0.0,0.0,,Related resources | Overview,2.0,0.0,1.0,124.0,14.38,1.0,,89,132
+360018646972,Securing Cloudflare Stream videos,5NIsAusxPHItA8v8T1d1hn,2019-12-23,0.0,0.0,,Enable Signed URLs | Restrict domains that can embed Stream video | Related resources | Overview,4.0,0.0,10.0,326.0,7.91,3.0,,65,78
+201720164,Creating a Cloudflare account and adding a website,7ipOHPXidUe5MF9Dz1m1xr,2019-12-20,0.0,0.0,,Related resources | Add a domain to Cloudflare | Overview | Create a Cloudflare account,4.0,0.0,18.0,366.0,7.7,2.0,,799,1153
+229666767,Understanding and configuring Cloudflare's IPv6 support,14aS8To5Mr1qlAjoXvnCOS,2019-12-20,0.0,0.0,,Configure IPv6 compatibility | IPv6 support overview | Troubleshoot an IPv6 network issue | Enable Pseudo IPv4 | Related resources,5.0,0.0,9.0,428.0,10.14,3.0,,24,46
+360035249292,Approving Cloudflare employee edit permissions to your account,3ePF3mh9CW6TYmgpZHk8kc,2019-12-19,0.0,0.0,,Related resources | Overview,2.0,0.0,1.0,127.0,14.8,3.0,,49,73
+360037857831,Understanding Cloudflare Account Analytics (beta),44UmTy172II7Sx6advX90s,2019-12-13,7.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1Af8N5J43pixI6itO2jieI | https://app.contentful.com/spaces/slt3lc6tev37/assets/1B8mRwpMpAPpWsEKtiTarK | https://app.contentful.com/spaces/slt3lc6tev37/assets/1CISgLSweXODrfmByqPgb2 | https://app.contentful.com/spaces/slt3lc6tev37/assets/1TnkUZesLTrYAPz7tPCaZR | https://app.contentful.com/spaces/slt3lc6tev37/assets/3hcMZRHjaF4EBpLLFj6oI0 | https://app.contentful.com/spaces/slt3lc6tev37/assets/7ErlY90D4RD6dsbcO2NiRb | https://app.contentful.com/spaces/slt3lc6tev37/assets/NxF6XTXVN3K7cOOVZRl8P,Review your account metrics | View your account analytics | Overview,4.0,1.0,4.0,480.0,12.87,3.0,,28,56
+360000062871,Understanding Cloudflare Load Balancing Analytics,2GD83I7QAJ3HfKDFSvRa7K,2019-12-12,3.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/3NZwW1GQXB7rJC4sFmYZly | https://app.contentful.com/spaces/slt3lc6tev37/assets/3uCHcmqH8yPquQvIKFHf2g | https://app.contentful.com/spaces/slt3lc6tev37/assets/7sQLAOzCUzZk3XtcQrmPIF,Related resources | Review your load balancing metrics | Access load balancing analytics via the Cloudflare GraphQL Analytics API | Access Load Balancing Analytics | Overview,5.0,0.0,11.0,715.0,10.16,2.0,,5,13
+360037684251,Understanding Cloudflare Site Analytics,3k7rV6fa19IKd1oqebwMmr,2019-12-12,2.0,2.0,,,4.0,4.0,25.0,962.0,8.05,6.0,,22,48
+360023792171,Getting Started with Cloudflare SSL,4QNhyFgjnVnFikRK6gn2CV,2019-12-11,0.0,0.0,,Enhance your SSL security | Learn the basics | Troubleshoot | Customize your SSL settings,4.0,0.0,6.0,479.0,11.19,2.0,,456,704
+360037345072,Getting Started with Cloudflare: Video Tutorials,2IWNw5StnfbSUOMl4gXdYV,2019-12-11,0.0,0.0,,Overview | Add a domain to Cloudflare | Add MX records to Cloudflare | Security overview | Change domain nameservers to Cloudflare | Performance overview,6.0,0.0,7.0,224.0,8.6,2.0,,1645,2087
+360037684111,Cloudflare Analytics: A quick overview,2udPjqQSnAf2tTBGkmPlwp,2019-12-10,0.0,0.0,,Understand how Cloudflare captures and processes Analytics data | About missing metrics | Understand apparent data discrepancies | About the Cloudflare Analytics product line,4.0,0.0,16.0,658.0,8.88,2.0,,44,56
+115000272247,Billing for Cloudflare Rate Limiting,1E6hnHnu6KU25KKMA9GZ8o,2019-12-03,0.0,0.0,,Rate Limiting billable usage | Overview,2.0,0.0,15.0,562.0,7.49,17.0,,70,124
+360027710672,Troubleshooting FAQ for new Cloudflare customers,3r1z2s8FBBXFNbTdC0sbAR,2019-12-03,0.0,0.0,,Related resources,2.0,1.0,3.0,142.0,10.53,2.0,,57,130
+360028158352,Reporting abuse to Cloudflare,4laBTnUuQ097czLZMb7os2,2019-11-27,0.0,0.0,,Overview | DMCA complaints | Trademark infringement | Phishing | Child exploitation material | Malware | Related resources,7.0,0.0,8.0,422.0,10.11,4.0,,94,272
+206776797,Understanding Query String Sort,7o1G3i5jmE5lCKk8vH80uS,2019-11-27,0.0,0.0,,Enable Query String Sort | Overview | Related resources,3.0,0.0,1.0,161.0,16.35,2.0,,19,25
+200308847,Using cross-origin resource sharing (CORS) with Cloudflare,7mUTCIRFWbMcS6Cl9nZUAs,2019-11-26,0.0,0.0,,Related resources | Adding or changing CORS headers | Overview,3.0,0.0,10.0,283.0,8.49,3.0,,49,125
+212794707,General best practices for load balancing at your origin with Cloudflare,7DWYTsRVxS9vcfOmbto0hX,2019-11-26,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/6zzfmKzxUkoqkZMh7SOTEm,Related resources | Overview,2.0,0.0,6.0,468.0,10.81,6.0,,33,53
+231109348,Improving Google SEO with Cloudflare,7g0bUQtbwoxzgXGnOg6Pbb,2019-11-26,0.0,0.0,,Related resources | Improve SEO rankings | Common misconceptions around Cloudflare and SEO | Overview,4.0,0.0,18.0,470.0,9.46,6.0,,91,176
+200168876,Email undeliverable when using Cloudflare,4pfd3a9K9Oc4QsAYNommRy,2019-11-23,0.0,0.0,,Best practices for MX records on Cloudflare | Troubleshooting tips,2.0,0.0,8.0,363.0,8.67,3.0,,174,542
+217371987,Managing Custom Hostnames (SSL for SaaS),6kBHPv4xvMxPOWD7c3Uj7G,2019-11-23,0.0,0.0,,Add a Custom Hostname | Related resources,6.0,4.0,30.0,1111.0,8.36,10.0,https://developers.cloudflare.com/ssl/ssl-for-saas/validation-methods/,81,132
+209156358,Choosing between Cloudflare and Yunjiasu,1YLFAPQCWHyErSBMezJvUc,2019-11-23,0.0,0.0,,Related resources | Overview,2.0,0.0,4.0,179.0,8.68,1.0,,27,55
+209714777,Understanding and configuring an ICP number,6KklyZj1ifhexbcI3h4M5Z,2019-11-22,1.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/1OwoyXgfec0zU96S6TSbtM,ICP number types | Related resources | ICP application process | Overview | Required documents,5.0,0.0,9.0,394.0,9.18,8.0,,16,32
+216672448,Cloudflare Logs (formerly ELS),7L2JnOZmE0V2DebShLUpob,2019-11-22,0.0,0.0,,,1.0,1.0,6.0,155.0,10.86,0.0,,72,131
+230054288,Customer Incident Management Policy,3Rpd7nQfWsdr6erYnBsTO3,2019-11-22,0.0,0.0,,Scope | Problem review | Post-Mortem reviews  | Purpose | Standard Operating Procedure | Background | Definitions | Incident Communications,10.0,2.0,9.0,2723.0,21.55,69.0,,14,26
+360029615592,Understanding Cloudflare Analytics Partnerships and Integrations (Enterprise only),4d5tgMuArsIujZLL7bJM1D,2019-11-22,0.0,0.0,,Integrations | Analytics partners,4.0,2.0,7.0,350.0,8.97,2.0,,22,33
+221327488,Why was my domain deleted from Cloudflare?,6rp5dII4WECNz0ehUGHlEb,2019-11-19,0.0,0.0,,Recover a deleted domain | Step 1 - Check Audit Logs in your Cloudflare account | Step 3 - Check whether domain resolution uses Cloudflare nameservers | Overview | Related resources | Step 2 - Check whether domain registration lists Cloudflare nameservers,6.0,0.0,15.0,613.0,8.58,8.0,,46,130
+200168246,Understanding Cloudflare Development Mode,6sp77NQy9qXPPTkZa4dyFc,2019-11-19,0.0,0.0,,Overview | Related resources,2.0,0.0,2.0,98.0,11.2,0.0,,1125,1469
+360027744552,Using Cloudflare Stream with WordPress,5vW4ewoiLN9zeuiRrvCZyA,2019-11-15,4.0,0.0,https://app.contentful.com/spaces/slt3lc6tev37/assets/26W5tNFwMfTovnmRGO0j8 | https://app.contentful.com/spaces/slt3lc6tev37/assets/3UxYJxxMbgiTdYmOJmQ3p6 | https://app.contentful.com/spaces/slt3lc6tev37/assets/5MB6fOfco3DSP5b05RQ3Dt | https://app.contentful.com/spaces/slt3lc6tev37/assets/6WUqRr6I5N7VG5MVuXJM5P,Overview | Before getting started | Upload video with Cloudflare Stream WordPress plugin | Configure Cloudflare Stream WordPress plugin | Related resources,5.0,0.0,7.0,215.0,7.65,1.0,,10,18
+229373388,Understand Cache by Device Type (Enterprise plans only),75jxVV7bfbkcXmc7ELniQI,2019-11-14,0.0,0.0,,Overview,1.0,0.0,8.0,183.0,8.32,0.0,,34,72
+200168256,Understand Cloudflare Caching Level,38I4b3qeSlRD8CGpmCpWjs,2019-11-14,0.0,0.0,,Overview,1.0,0.0,2.0,93.0,9.83,0.0,,155,316
+360036015571,How quickly does Cloudflare push customer configuration changes?,13w1bLxInNywkI7ijc9n2o,2019-11-08,0.0,0.0,,About Cloudflare Quicksilver,1.0,0.0,8.0,599.0,12.73,1.0,,36,78
+216537517,Using Content Security Policy (CSP) with Cloudflare,4PbfBJMXkbkLlOOtI1lIS8,2019-10-28,0.0,0.0,,Overview | CSP compatibility with Cloudflare features | Related resources,3.0,0.0,3.0,163.0,11.93,0.0,,45,98
+202312014,Project Galileo,5s0fscwaKrdDtQbNKSBaOC,2019-10-15,0.0,0.0,,Related resources | About Project Galileo ,2.0,0.0,4.0,124.0,10.87,1.0,,16,29
+360032879131,Athenian Project,6i5M2F5yhOMo35NyETjwE3,2019-10-15,0.0,0.0,,,2.0,2.0,3.0,117.0,11.21,1.0,,31,45

@@ -1,5 +1,6 @@
 ---
 order: 710
+type: overview
 ---
 
 # View rulesets
@@ -10,196 +11,275 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-## View all rulesets
+## View available rulesets
 
-Use the `/rulesets` endpoint to view your root ruleset, custom rulesets, and a list of managed rulesets that you are entitled to deploy.
+You can list the available rulesets for a zone, account, or Phase. 
 
-```
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
+<details>
+<summary>Example: View available rulesets at the zone level</summary>
+<div>
 
+```bash
+---
+header: Request
+---
+curl -X GET \
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
 ```
 
 The response displays the following rulesets:
-* Managed rulesets you can use indicated by `kind: managed` 
-* Root ruleset, if configured, indicated by `kind: root`.
-  To create a root ruleset, see [configure the root ruleset for your account](/cf-rulesets/configure-root-ruleset/).
-* Custom rulesets, if configured, indicated by `kind: custom`.
+
+* Managed rulesets you can deploy, indicated by `"kind": "managed"`
+* Rulesets for zone-level Phases, if configured, indicated by `"kind": "zone"`
+* Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
+---
+header: Response
+---
+{
+  "result": [
     {
-      "id": "{Cloudflare_managed_ruleset_id}",
+      "id": "{zone-level-phase-ruleset-id}",
+      "name": "Zone-level Ruleset 1",
+      "description": "Ruleset for http_request_firewall_managed Phase at the zone level",
+      "kind": "zone",
+      "version": "2",
+      "last_updated": "2021-03-12T14:11:59.754817Z",
+      "phase": "http_request_firewall_managed"
+    },
+    {
+      "id": "{cloudflare-managed-ruleset-id}",
       "name": "Cloudflare Managed Ruleset",
       "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
       "kind": "managed",
-      "shareable_entitlement_name": "fw_global_rulesets_read_managed_allowed",
-      "version": "3",
-      "last_updated": "2020-10-08T16:37:33.758753Z",
-      "phase": "http_request_main"
+      "version": "2",
+      "last_updated": "2021-03-18T14:42:40.972022Z",
+      "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{Cloudflare_owasp_ruleset_id)",
+      "id": "{cloudflare-owasp-core-ruleset-id}",
       "name": "Cloudflare OWASP Core Ruleset",
       "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
       "kind": "managed",
-      "shareable_entitlement_name": "fw_global_rulesets_read_managed_allowed",
-      "version": "4",
-      "last_updated": "2020-10-08T16:38:09.370328Z",
-      "phase": "http_request_main"
-    },
-    {
-      "id": "{root-ruleset-id}",
-      "name": "My account root ruleset",
-      "kind": "root",
-      "version": "1",
-      "last_updated": "2020-10-09T09:05:39.938107Z",
-      "phase": "http_request_main"
+      "version": "3",
+      "last_updated": "2021-03-18T14:42:42.993211Z",
+      "phase": "http_request_firewall_managed"
     }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Example: View available rulesets at the account level</summary>
+<div>
+
+```bash
+---
+header: Request
+---
+curl -X GET \
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
+```
+
+The response displays the following rulesets:
+
+* Managed Rulesets that you can deploy, indicated by `"kind": "managed"`
+* Rulesets for account-level Phases, if configured, indicated by `"kind": "root"`
+* Custom rulesets, if configured, indicated by `"kind": "custom"`
+
+```json
+---
+header: Response
+---
+{
+  "result": [
     {
       "id": "{custom-ruleset-id}",
       "name": "Custom Ruleset 1",
+      "description": "My custom ruleset",
       "kind": "custom",
+      "version": "10",
+      "last_updated": "2020-11-23T11:36:24.192361Z",
+      "phase": "http_request_firewall_custom"
+    },
+    {
+      "id": "{account-level-phase-ruleset-id}",
+      "name": "Account-level Ruleset for http_request_firewall_managed Phase",
+      "description": "Account level ruleset for executing one or more Managed Rulesets",
+      "kind": "root",
       "version": "2",
-      "last_updated": "2020-11-10T11:24:06.869326Z",
-      "phase": "http_request_main"
+      "last_updated": "2021-03-12T14:06:41.323932Z",
+      "phase": "http_request_firewall_managed"
+    },
+    {
+      "id": "{cloudflare-managed-ruleset-id}",
+      "name": "Cloudflare Managed Ruleset",
+      "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
+      "kind": "managed",
+      "version": "5",
+      "last_updated": "2021-03-18T14:42:40.972022Z",
+      "phase": "http_request_firewall_managed"
+    },
+    {
+      "id": "{cloudflare-owasp-core-ruleset-id}",
+      "name": "Cloudflare OWASP Core Ruleset",
+      "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
+      "kind": "managed",
+      "version": "3",
+      "last_updated": "2021-03-18T14:42:42.993211Z",
+      "phase": "http_request_firewall_managed"
     }
-
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 
-## View the rules in a ruleset
+</div>
+</details>
 
-Use the following endpoint to view the rules in a ruleset.
+## View the rules included in a ruleset
 
-```
-/rulesets/{ruleset-id}/versions/{version-number}
+You can view all versions in Phase rulesets (both account-level and zone-level) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
 
-```
+<details>
+<summary>Example: View rules in a Phase ruleset at the zone level</summary>
+<div>
 
-You can view all versions of your root ruleset and custom rulesets, but you can only view the most recent version of managed rulesets.
-
-## View the rules in a custom  ruleset
-
-The example below fetches version two of a custom ruleset.
-
-```
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}/versions/2"
-
-```
-
-The response lists the rules in your custom ruleset.
-
-```json
-  "result": {
-    "id": "{custom-ruleset-id}",
-    "name": "Custom Ruleset 1",
-    "kind": "custom",
-    "version": "2",
-    "rules": [
-      {
-        "id": "{custom-rule-id}",
-        "version": "1",
-        "action": "challenge",
-        "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-        "last_updated": "2020-11-10T11:24:06.869326Z",
-        "ref": "{custom-rule-id}",
-        "enabled": true
-      }
-    ]
-  }
-
-```
-
-## View the rules in a managed ruleset
-
-The example below fetches version three of a managed ruleset.
-
-```
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{managed-ruleset-id}/versions/3"
-
-```
-
-The response lists the rules, including their associated categories. The following code displays one of the rules in a managed ruleset.
-
-```json
-  "result": {
-    "id": "{managed-ruleset-id}",
-    "name": "Managed Ruleset name",
-    "kind": "managed",
-    "shareable_entitlement_name": "cf_ruleset_name",
-    "version": "3",
-    "rules": [
-        {
-        "id": "{managed-rule-id}",
-        "version": "2",
-        "action": "block",
-        "categories": [
-          "deserialization",
-          "drupal",
-          "magento",
-          "php"
-        ],
-        "description": "Drupal, Magento, PHP - Deserialization",
-        "last_updated": "2020-11-05T18:02:53.922856Z",
-        "ref": "{managed-rule-id}",
-        "enabled": true
-      }]}
-```
-
-## View managed rules tagged with a category
-
-Use the following endpoint to fetch a list of rules in a managed ruleset tagged with a specific category.
+The following example lists the rules in version `2` of the `http_request_firewall_managed` Phase ruleset at the zone level.
 
 ```bash
-/rulesets/{managed-ruleset-id}/{version-number}/by_category/{category-name}
-
-```
-
-The example below fetches the rules tagged with the `dos` category in two of a managed ruleset.
-
-```bash
+---
+header: Request
+---
 curl -X GET \
-    "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset-id}/versions/2/by_category/dos"
-
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2"
 ```
 
-The response shows the managed ruleset but only displays rules tagged with the `dos` category:
-
 ```json
+---
+header: Response
+---
 {
   "result": {
-    "id": "{ruleset_id}",
-    "name": "Cloudflare Managed Ruleset",
-    "description": "Created by the Cloudflare security team",
-    "kind": "managed",
-    "shareable_entitlement_name": "fw_global_rulesets_read_managed_allowed",
+    "id": "{ruleset-id}",
+    "name": "Zone-level Phase ruleset",
+    "description": "This ruleset deploys a Managed Ruleset.",
+    "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule_id}",
+        "id": "{rule-id}",
+        "version": "1",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
+      }
+    ],
+    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Example: View rules in a Managed Ruleset</summary>
+<div>
+
+The following example lists the rules in version `2` of a Managed Ruleset (the most recent version of that ruleset).
+
+```bash
+---
+header: Request
+---
+curl -X GET \
+  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{managed-ruleset-id}/versions/2"
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "{managed-ruleset-id}",
+    "name": "Cloudflare Managed Ruleset",
+    "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
+    "kind": "managed",
+    "version": "2",
+    "rules": [
+      {
+        "id": "{rule-1-id}",
         "version": "1",
         "action": "log",
         "categories": [
+          "cve-2014-5265",
+          "cve-2014-5266",
+          "cve-2014-5267",
           "dos",
           "drupal",
           "wordpress"
         ],
-        "last_updated": "2020-10-12T09:01:43.772617Z",
-        "ref": "{ref-id}",
+        "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
+        "last_updated": "2021-03-18T14:42:40.972022Z",
+        "ref": "{rule-1-ref}",
         "enabled": true
       },
       {
-        "id": "{rule_id}",
+        "id": "{rule-2-id}",
         "version": "1",
         "action": "block",
         "categories": [
-          "dos",
-          "header",
-          "microsoft-iis"
+          "broken-access-control",
+          "cve-2018-12895",
+          "wordpress"
         ],
-        "last_updated": "2020-10-12T09:01:43.772617Z",
-        "ref": "{ref-id}",
+        "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
+        "last_updated": "2021-03-18T14:42:40.972022Z",
+        "ref": "{rule-2-ref}",
         "enabled": true
-      }
-    ]
-  }
+      },
+      // (...)
+    ],
+    "last_updated": "2021-03-18T14:42:40.972022Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
+
+Each rule in a Managed Ruleset can have associated tags or categories, listed in the `categories` field.
+
+</div>
+</details>
+
+---
+
+For more information on the available API methods for viewing rulesets, check [List and view rulesets](/cf-rulesets/rulesets-api/view).

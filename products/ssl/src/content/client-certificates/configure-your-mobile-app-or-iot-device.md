@@ -7,10 +7,10 @@ order: 3
 To configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield), follow this workflow:
 
 * [Create Cloudflare-issued certificates](#create-cloudflare-issued-certificates).
-* [Enable mutual Transport Layer Security (mTLS)](#enable-mtls).
-* [Configure API Shield](#configure-api-shield-to-require-client-certificates) to require the use of Cloudflare-issued certificates.
 * [Embed the certificate in your mobile app](#embed-the-client-certificate-in-your-mobile-app).
 * [Embed the certificate on your IoT device](#embed-the-client-certificate-on-your-iot-device).
+* [Enable mutual Transport Layer Security (mTLS)](#enable-mtls).
+* [Configure API Shield](#configure-api-shield-to-require-client-certificates) to require the use of Cloudflare-issued certificates.
 
 This walkthrough uses the example of a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS retrieves those readings and displays them.
 
@@ -256,22 +256,6 @@ $ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-T
 
 --------
 
-## Enable mTLS
-
-Having created Cloudflare-issued certificates, the next step is to enable mTLS for the hosts you want to protect with API Shield.
-
-For instructions, see [_Enable mutual Transport Layer Security_](/client-certificates/enable-mtls).
-
---------
-
-## Configure API Shield to require client certificates
-
-To configure API Shield to require client certificates, [create an API Shield rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-api-shield-rule):
-
-![create api shield clip](../static/create-api-shield-clip-1.gif)
-
---------
-
 ## Embed the client certificate in your mobile app
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
@@ -345,3 +329,17 @@ Cloudflare API Shield [IoT device demonstration]
 Request body:  {"temperature": "36.5", "time": "2020-09-28T15:56:45Z"}
 Response status code: 201
 ```
+
+--------
+
+## Enable mTLS
+
+After creating Cloudflare-issued certificates, the next step is to enable mTLS for the hosts you want to protect with API Shield.
+
+For instructions, see [_Enable mutual Transport Layer Security_](/client-certificates/enable-mtls).
+
+--------
+
+## Configure API Shield to require client certificates
+
+To configure API Shield to require client certificates, [create a mTLS rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule).

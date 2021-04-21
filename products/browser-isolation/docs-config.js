@@ -11,11 +11,11 @@ module.exports = {
     search: {
         indexName: "",
         apiKey: "",
-        algoliaOptions: { 'facetFilters': ''}
+        algoliaOptions: { 'facetFilters': '' }
     },
     siteMetadata: {
-        title: "Browser Isolation Beta",
-        description: "Cloudflare Browser Isolation Beta",
+        title: "Browser Isolation",
+        description: "Cloudflare Browser Isolation",
         author: "@cloudflare",
         url: "https://developers.cloudflare.com/browser-isolation",
         image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",

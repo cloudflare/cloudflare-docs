@@ -38,7 +38,7 @@ Below are some standard build commands and directories for popular frameworks an
 
 ## Environment variables
 
-If your project make use of environment variables to build your site, you can provide custom environment variables via the Pages UI.
+If your project makes use of environment variables to build your site, you can provide custom environment variables via the Pages UI.
 
 ## Language support and tools
 

@@ -90,8 +90,8 @@ When configuring Access to use Azure groups, you must input the `Object Id`.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
-        "directory_id": "<your azure directory uuid",
+        "client_secret": "<your client secret>",
+        "directory_id": "<your azure directory uuid>",
         "support_groups": true
     },
     "type": "azureAD",

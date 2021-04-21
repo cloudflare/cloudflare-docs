@@ -32,7 +32,7 @@ To set up Keycloak (SAML) as your identity provider:
 
     ![Mapper](../../static/documentation/identity/keycloak/protocol-mapper.png)
 
-1. Next, you'll need to integrate with Cloudflare Access. On the Teams dashboard, navigate to **Access > Authentication**.
+1. Next, you'll need to integrate with Cloudflare Access. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
 1. Under **Login methods**, click *+ Add*.
 

@@ -51,11 +51,11 @@ To immediately terminate all active sessions for a specific application:
 
 1. On the Teams dashboard, navigate to **Access > Applications** and locate the application for which you would like to revoke active sessions.
 
-2. Click **Edit** for that application.
+1. Click **Edit** for that application.
 
-3. In the Overview page, click **Revoke existing tokens**.
+1. In the Overview page, click **Revoke existing tokens**.
 
-![revoke-users](../../static/documentation/identity/users/revoke-app.png)
+  ![revoke-users](../../static/documentation/identity/users/revoke-token.png)
 
 Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
 
@@ -94,11 +94,14 @@ All three settings can be enabled in an Application’s settings menu.
 To reach the settings menu:
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+
 1. Locate the application for which you would like to enable these settings.
+
 1. Click **Edit**.
+
 1. Select **Settings**.
 
-![Settings menu](../../static/documentation/identity/users/browser-cookies.png)
+![Settings menu](../../static/documentation/identity/users/cookies.png)
 
 ### HTTP Only
 

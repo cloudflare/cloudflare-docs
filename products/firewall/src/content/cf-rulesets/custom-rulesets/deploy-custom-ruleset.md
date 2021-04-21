@@ -1,10 +1,10 @@
 ---
-title: Deploy a custom ruleset from your root ruleset
+title: Deploy a custom ruleset
 alwaysopen: true
-order: 753
+order: 763
 ---
 
-# Deploy a custom ruleset from your root ruleset
+# Deploy a custom ruleset
 
 <Aside type='warning' header='Important'>
 
@@ -12,48 +12,58 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-**Before you begin**:
-* Create a root ruleset if you do not already have one.
-* Create a custom ruleset.
-* Fetch the IDs of the root and custom rulesets you want to deploy.
-* Fetch the rules in your root ruleset. You must include all existing rules you want to keep when you execute the request to deploy the custom ruleset.
+Before you begin:
 
-The PUT request deploys custom rulesets. The request creates rules in the root ruleset that executes rules in the custom ruleset when zone names match `example.com`.
+1. Obtain the name of the Phase where you want to deploy the custom ruleset.
+1. [Create a custom ruleset](/cf-rulesets/custom-rulesets/create-custom-ruleset) and keep the ID of the new custom ruleset.
+1. [Fetch the rules already present in the Phase ruleset](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep when you execute the request to deploy the custom ruleset.
+
+Execute a `PUT` request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` Phase that executes the rules in the custom ruleset when the zone name matches `example.com`.
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{root-ruleset-id}" \
-    -d'
-{
-     "rules": [{
-                    "action":"execute",
-                    "description":"Add custom ruleset",
-                    "expression": "cf.zone.name == \"example.com\"",
-                    "action_parameters": {
-                        "id":"{custom-ruleset-id}"
-                     }
+---
+header: Request
+---
+curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
+-d '{
+  "rules": [
+    {
+      "action":"execute",
+      "description":"Add custom ruleset",
+      "expression": "cf.zone.name == \"example.com\"",
+      "action_parameters": {
+        "id":"{custom-ruleset-id}"
+      }
     },
-		{
-                "id": "{existing-root-rule-id-1}"
-     },
-  	{
-                "id": "{existing-root-rule-id-2}"
-     }]
+    {
+      "id": "{existing-phase-rule-id-1}"
+    },
+    {
+      "id": "{existing-phase-rule-id-2}"
+    }
+  ]
 }'
 ```
 
-The response displays the rules in your root ruleset.
+The response displays the rules in your Phase.
 
 ```json
+---
+header: Response
+---
 {
   "result": {
-    "id": "{root-ruleset-id}",
-    "name": "Root Ruleset for my account",
+    "id": "{account-phase-ruleset-id}",
+    "name": "http_request_firewall_custom Phase Ruleset for my account",
     "description":"Add custom ruleset",
     "kind": "root",
     "version": "3",
     "rules": [
       {
-        "id": "{root-rule-id}",
+        "id": "{phase-rule-id}",
         "version": "1",
         "action": "execute",
         "action_parameters": {
@@ -61,12 +71,12 @@ The response displays the rules in your root ruleset.
           "version": "latest"
         },
         "expression": "cf.zone.name == \"example.com\"",
-        "last_updated": "2020-11-09T10:32:14.135697Z",
+        "last_updated": "2021-03-18T18:35:14.135697Z",
         "ref": "{root-rule-id}",
         "enabled": true
       },
       {
-        "id": "{existing-root-rule-id-1}",
+        "id": "{existing-phase-rule-id-1}",
         "version": "1",
         "action": "execute",
         "action_parameters": {
@@ -74,12 +84,12 @@ The response displays the rules in your root ruleset.
           "version": "latest"
         },
         "expression": "cf.zone.name eq  \"example.com\"",
-        "last_updated": "2020-11-20T15:51:49.180378Z",
-        "ref": "{existing-root-rule-id-1}",
+        "last_updated": "2021-03-16T15:51:49.180378Z",
+        "ref": "{existing-phase-rule-ref-1}",
         "enabled": true
       },
       {
-        "id": "{existing-root-rule-id-2}",
+        "id": "{existing-phase-rule-id-2}",
         "version": "1",
         "action": "execute",
         "action_parameters": {
@@ -87,11 +97,16 @@ The response displays the rules in your root ruleset.
           "version": "latest"
         },
         "expression": "cf.zone.name eq  \"example.com\"",
-        "last_updated": "2020-11-20T15:50:29.861157Z",
-        "ref": "{existing-root-rule-id-2}",
+        "last_updated": "2021-03-16T15:50:29.861157Z",
+        "ref": "{existing-phase-rule-ref}",
         "enabled": true
       }
-    ]
-  }
+    ],
+    "last_updated": "2021-03-18T18:35:14.135697Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```

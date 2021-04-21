@@ -20,6 +20,24 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 </TableWrap>
 
+### `.deb` install
+
+Use the `deb` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` package in this example. 
+
+```bash
+wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
+dpkg -i cloudflared-stable-linux-amd64.deb
+```
+
+### `.rpm` install
+
+Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example. 
+
+```bash
+wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
+rpm -ivh cloudflared-stable-linux-amd64.rpm
+```
+
 ### Build from source
 
 You can also build the latest version of `cloudflared` from source with the following steps.
@@ -33,7 +51,7 @@ $ go install github.com/cloudflare/cloudflared/cmd/cloudflared
 
 Depending on where you installed `cloudflared`, you can move it to a known path as well.
 
-```sh
+```bash
 mv /root/cloudflared/cloudflared /usr/bin/cloudflared
 ```
 
@@ -64,15 +82,34 @@ Once `cloudflared` is installed:
 4. Navigate to the same Downloads folder.
 5. Run the `cloudflared.exe` executable as an administrator to confirm the installation, replacing the path in the example below with the specifics of your directory:
 
-```sh
+```bash
 PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
 ```
 
 The command above should output the version of `cloudflared` if successfully installed.
 
 <Aside>
+
 Instances of `cloudflared` do not automatically update on Windows. You will need to perform manual updates.
+
 </Aside>
+
+## Build from source
+
+You can also build the latest version of `cloudflared` from source with the following steps.
+
+```sh
+$ git clone https://github.com/cloudflare/cloudflared.git
+$ cd cloudflared
+$ make cloudflared
+$ go install github.com/cloudflare/cloudflared/cmd/cloudflared
+```
+
+Depending on where you installed `cloudflared`, you can move it to a known path as well.
+
+```bash
+mv /root/cloudflared/cloudflared /usr/bin/cloudflared
+```
 
 ## Updating `cloudflared`
 
@@ -86,7 +123,7 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 ### Updating with Cloudflare Load Balancer
 
-We recommend this option if you are currently using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
+You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
 
 1. Install a new instance of `cloudflared` and [create](connections/connect-apps/create-tunnel) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
@@ -95,6 +132,8 @@ We recommend this option if you are currently using Cloudflare's Load Balancer p
 5. Once confirmed, you can remove the older version from the Load Balancer pool.
 
 ### Updating with multiple `cloudflared` instances
+
+If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
 1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Argo Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
@@ -108,11 +147,15 @@ Windows systems require services to have a unique name and display name. You can
 
 First, install and configure `cloudflared`. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
 
-`sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"`
+```bash
+sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"
+```
 
 Proceed to create additional services with unique names. You can now start each unique service.
 
-`sc.exe start <unique-name>`
+```bash
+sc.exe start <unique-name>
+```
 
 ## Deprecated versions
 

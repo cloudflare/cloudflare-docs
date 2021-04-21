@@ -9,11 +9,11 @@ When Terraform makes calls to Cloudflare's API to create new resources as illust
 
 If you've configured Cloudflare through other means, e.g., by logging into the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not (yet) have these resource IDs in the state file. To manage this preexisting configuration you will need to first i) reproduce the configuration in your config file and; ii) import resources one-by-one by providing their IDs and resource names.
 
-## Introducing Cf-Terraforming
+## Introducing cf-terraforming
 
 To help with this process, we have published a library called [cf-terraforming](https://github.com/cloudflare/cf-terraforming). Our goal with cf-terraforming is to make it easy for existing Cloudflare customers to get going with Terraform. Currently, cf-terraforming helps to generate terraform config state by fetching all the resources of a specified type from the account and/or zone of your choosing. Let's try it out.
 
-First, `go get` cf-terraforming with `go get -u github.com/cloudflare/cf-terraforming/...`
+First, `go get` cf-terraforming with `GO111MODULE=on go get -u github.com/cloudflare/cf-terraforming/...`
 
 You can use `cf-terraforming` or `cf-terraforming -h` to view the help file, but to use cf-terraforming there are 4 things to specify:
 

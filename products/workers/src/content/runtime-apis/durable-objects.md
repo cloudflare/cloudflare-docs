@@ -2,7 +2,7 @@
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](https://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
@@ -207,11 +207,9 @@ This method derives a unique object ID from the given name string. It will alway
 
 <Aside header="Name-derived IDs require global lookups at creation">
 
-The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same object at the same time. In order to guarantee that only one instance of the object is created worldwide, the system must check whether the object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds.
+The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same object at the same time. In order to guarantee that only one instance of the object is created worldwide, the system must check whether the object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds. After this check, the object will be instantiated near where it was first requested.
 
-After the object has been accessed the first time, information will be cached around the world so that subsequent lookups can be faster.
-
-**Beta note:** We are still working on caching and automatic migration of objects. During the beta period, each named object is located in a random location in either North America or Europe. Thus, different named objects may have variable latency characteristics. This will improve soon.
+After the object has been accessed the first time, location information will be cached around the world so that subsequent lookups can be faster.
 
 </Aside>
 

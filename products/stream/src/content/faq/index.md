@@ -6,7 +6,7 @@ order: 6
 
 ## What formats and quality levels are delivered through Cloudflare Stream?
 
-Cloudflare decides on which bitrate, resolution and codec is best for you. We deliver all videos to industry standard H264 codec. We use to few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
+Cloudflare decides on which bitrate, resolution and codec is best for you. We deliver all videos to industry standard H264 codec. We use a few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
 
 ## Can I download original video files from Stream?
 
@@ -63,7 +63,7 @@ Mobile Platform   | Version
 Chrome on Android | Supported on Chrome and Firefox for Android 4.0+ and all browsers for Android 4.1+
 UC Browser on Android | Supported on version 11.8+
 Samsung Internet | Supported on 5+
-iOS               | Supported on iOS 8+
+Safari on iOS    | Supported on iOS 8+. Speed selector supported when not in fullscreen.
 Windows           | Supported on Windows Phone 8+
 
 </TableWrap>

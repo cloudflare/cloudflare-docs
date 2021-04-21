@@ -8,8 +8,7 @@ order: 2
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
-| 4. [Install `cloudflared`](/connections/connect-apps/install-and-setup/installation) |
+| 3. [Install `cloudflared`](/connections/connect-apps/install-and-setup/installation) |
 
 Follow these steps to authenticate `cloudflared`:
 
@@ -23,13 +22,15 @@ $ cloudflared tunnel login
 
   If running on a headless system, copy the link and paste it into a browser.
 
-3. Once authenticated, Cloudflare will return a certificate file, `cert.pem`, that will give this instance of `cloudflared` the ability to:
+3. Choose any hostname in your account. Cloudflare will issue credentials that are account-wide in scope; you do not need to pick a specific hostname where you plan to connect the Tunnel.
+
+4. Once authenticated, Cloudflare will return a certificate file, `cert.pem`, that will give this instance of `cloudflared` the ability to:
     * Create and delete Tunnels
     * Modify DNS records in your account
 
  The file is **required** if you want to:
    * Create new Tunnels
-   * Change DNS routing from `cloudflared`
+   * Configure routing from `cloudflared`
 
  The file is **not required** if you want to:
    * Run an existing Tunnel

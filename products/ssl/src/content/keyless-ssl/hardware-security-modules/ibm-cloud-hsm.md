@@ -1,15 +1,20 @@
 ---
-order: 5
+order: 6
 ---
 
 # IBM cloud HSM
 
-<Aside type='note' header='Note'>
+The example below was tested using [IBM Cloud HSM 7.0](https://console.bluemix.net/docs/infrastructure/hardware-security-modules/about.html#about-ibm-cloud-hsm), a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a750.
 
-The example below was tested using <a href="https://console.bluemix.net/docs/infrastructure/hardware-security-modules/about.html#about-ibm-cloud-hsm">IBM Cloud HSM 7.0</a>, a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a750. It is assumed that you have already <a href="https://console.bluemix.net/docs/infrastructure/hardware-security-modules/initialize_hsm.html#initializing-the-ibm-cloud-hsm">initialized your device</a> and installed the SafeNet client software.
-</Aside>
+---
 
---------
+## Before you start
+
+Make sure that you have:
+- Initialized [your device](https://console.bluemix.net/docs/infrastructure/hardware-security-modules/initialize_hsm.html#initializing-the-ibm-cloud-hsm)
+- Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
+
+---
 
 ## 1. Create, assign, and initialize a new partition
 
