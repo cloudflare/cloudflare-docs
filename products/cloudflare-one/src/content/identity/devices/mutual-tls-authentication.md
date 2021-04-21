@@ -14,21 +14,24 @@ Mutual TLS (mTLS) authentication ensures that traffic is both secure and trusted
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
+Currently, mTLS does not work with HTTP3 traffic.
+
 ![mTLS Diagram](../../static/documentation/identity/devices/mtls.png)
 
+
 ## Add mTLS authentication to your Access configuration
-
-To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
-
-1. Navigate to **Service Auth > Mutual TLS**.
-
-2. Click **Add mTLS Certificate**.
 
 <Aside type='warning' header='Important'>
 
 The mTLS certificate is used **only** to verify the client certificate. It does **not** control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
 </Aside>
+
+To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
+
+1. Navigate to **Service Auth > Mutual TLS**.
+
+2. Click **Add mTLS Certificate**.
 
 3. Paste the content of the `ca.pem` file in the Certificate content field.
 
