@@ -65,7 +65,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 
 For the most up to date list of these fields, [create a load balancing rule](../create-rules) in the UI.
 
-If you need more details about the field type or properties, look for each field in our [Firewall rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-language/fields).
+For more details about the field type or properties, look for each field in our [Firewall rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-language/fields).
 
 ## Unproxied traffic
 

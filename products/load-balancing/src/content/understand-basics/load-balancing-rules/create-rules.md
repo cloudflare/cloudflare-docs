@@ -25,13 +25,13 @@ Create and manage [Load Balancing rules](/understand-basics/load-balancing-rules
 
 1. Log in to your Cloudflare Account and select a domain.
 
-1. Select **Traffic**, then **Load Balancing**.
+1. Select **Traffic** > **Load Balancing**.
 
   ![Load Balancing tab in the Traffic app](../../static/images/load-balancing-tab.png)
 
 1. Edit an existing load balancer or [create a new load balancer](/create-load-balancer-ui).
 
-1. Once in the Load Balancer workflow, select **Custom Rules**.
+1. From the Load Balancer workflow, select **Custom Rules**.
 
 1. Select **Create Custom Rule**.
 
@@ -121,7 +121,7 @@ To save a new load balancer rule, make sure to save both the rule **and** the ov
 
 </Aside>
 
-1. Once you are finished creating your rule, select **Save and Deploy** or **Save as Draft**.
+1. After you create your rule, select **Save and Deploy** or **Save as Draft**.
 
 1. Select **Next** and review your changes:
 

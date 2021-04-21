@@ -176,9 +176,9 @@ Select **Next** to continue.
 
 ### 5. Create custom Load Balancing rules
 
-Customize the behavior of load balancer using load balancing rules. For example, you could select an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
+Customize the behavior of load balancer using load balancing rules. For example, select an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
 
-For a walkthrough, see [Creating Load Balancing rules](/understand-basics/load-balancing-rules/create-rules).
+For a walkthrough, see [Create Load Balancing rules](/understand-basics/load-balancing-rules/create-rules).
 
 ---
 
