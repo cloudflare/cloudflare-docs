@@ -160,7 +160,7 @@ Just like you can choose to block a domain and all subdomains, you can block an 
 | --- | --- | --- | --- |
 | DNS Domain | Matches Regex | `[.]net` | Block |
 
-Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the internet.
+Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the Internet.
 
 ## Block Page
 
