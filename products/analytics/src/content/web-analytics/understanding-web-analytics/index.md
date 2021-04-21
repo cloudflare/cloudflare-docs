@@ -5,7 +5,9 @@ order: 30
 
 # Understanding Cloudflare Web Analytics
 
-View your website’s page views, visits, page load time, and Core Web Vitals by switching between views on the graph.
+View your website’s page views, visits, [page load time](page-load-time-summary/index.md), and [Core Web Vitals](core-web-vitals/index.md) by switching between views on the graph. You can also sort data by various [dimensions](dimensions/index.md)
+
+## High-Level Metrics
 
 <ul>
 <li>Visits - A a page view that originated from a different website or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
