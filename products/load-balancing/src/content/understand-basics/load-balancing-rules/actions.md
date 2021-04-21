@@ -1,15 +1,14 @@
 ---
 title: Actions
 order: 30
+type: overview
 ---
 
 # Load Balancing actions
 
-## Overview
+Add `actions` to customize how your load balancer responds to certain HTTP requests.
 
-Actions tell Cloudflare how to handle HTTP requests that match a Load Balancing expression.
-
-A single Load Balancing rule can include more than one action.
+Each load balancing rule includes one or more actions.
 
 ## Supported Actions
 
@@ -32,7 +31,7 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
     <tr>
       <td><em>Override</em></td>
       <td><em>Session affinity</em></td>
-      <td>Set the session affinity for the request. You can customize cookie behavior and session time-to-live (TTL).</td>
+      <td>Set the <a href="../../session-affinity">session affinity</a> for the request. You can customize cookie behavior and session time-to-live (TTL).</td>
     </tr>
     <tr>
       <td><em>Override</em></td>

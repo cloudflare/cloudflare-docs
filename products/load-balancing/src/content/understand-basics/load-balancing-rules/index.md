@@ -6,7 +6,7 @@ order: 17
 
 Use Load Balancing rules to customize the behavior of your [load balancer](/understand-basics/load-balancers). For example, create a Load Balancing rule that selects an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
 
-You can [create Load Balancing rules](/understand-basics/load-balancing-rules/create-rules), using the **Create Custom Rule** dialog whenever you create or edit a load balancer in the **Traffic** app:
+You can [create Load Balancing rules](/understand-basics/load-balancing-rules/create-rules) whenever you create or edit a load balancer in **Traffic**.
 
 ![Create Custom Rule card in Traffic app](../../static/images/traffic-app-create-custom-rule.png)
 
