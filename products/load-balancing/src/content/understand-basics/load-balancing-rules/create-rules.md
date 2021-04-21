@@ -1,97 +1,130 @@
 ---
-title: Creating rules
+title: Create rules
 order: 40
 ---
 
-# Creating Load Balancing rules
+# Create Load Balancing rules
 
 ## Overview
 
 Create and manage [Load Balancing rules](/understand-basics/load-balancing-rules) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow in the **Traffic** app.
 
-Create a Load Balancing rule in the Cloudflare dashboard via the following:
+---
 
-1. [Create a new rule](#create-a-new-load-balancing-rule)
-1. [Build an expression for the rule](#build-a-load-balancing-expression)
-1. [Save the rule and the load balancer configuration](#save-a-load-balancing-rule-and-configuration)
+## Before you begin
+
+- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to more or less fields for your load balancing rules. For more details, see [Supported fields and expressions](../reference). 
 
 ---
 
-## Create a new Load Balancing rule
+## Workflow
 
-1. Log in to your Cloudflare Account and click the site to manage.
+---
 
-1. In the Cloudflare dashboard, click the **Traffic** app, then select the **Load Balancing** tab.
+### 1. Create a new Load Balancing rule
+
+1. Log in to your Cloudflare Account and select a domain.
+
+1. Select **Traffic** > **Load Balancing**.
 
   ![Load Balancing tab in the Traffic app](../../static/images/load-balancing-tab.png)
 
-1. To add a rule to an existing load balancer, click the **Edit** link associated with that specific load balancer. Otherwise, click **Create Load Balancer** and follow the workflow in [_Create a load balancer in the Cloudflare dashboard_](/create-load-balancer-ui).
-  
-  The **Edit Load Balancer** page displays:
+1. Edit an existing load balancer or [create a new load balancer](/create-load-balancer-ui).
 
-  ![Edit Load Balancer page in Traffic app](../../static/images/edit-load-balancer-hostname.png)
+1. From the Load Balancer workflow, select **Custom Rules**.
 
-1. In the breadcrumb links for the Edit Load Balancer workflow, click **Custom Rules**.
-
-  The **Custom Rules** card displays:
-  ![Edit Load Balancer page in Traffic app](../../static/images/edit-load-balancer-custom-rules.png)
-
-1. Click **Create Custom Rule**.
-
-1. In the **Create Custom Rule** dialog that appears, supply a descriptive name via the **Rule name** input. The example below uses "Select pool by URI path and query."
-
-  ![Screenshot, Create Custom Rule dialog](../../static/images/create-custom-rule.png)
-
-After creating a rule, [build a Load Balancing expression](#build-a-load-balancing-expression) that defines when the rule triggers.
+1. Select **Create Custom Rule**.
 
 ---
 
-## Build a Load Balancing expression
+### 2. Build a Load Balancing expression
 
-1. In the **Create Custom Rule** Expression builder, under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. This example uses _URI path_. For more details, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/reference).
+---
+
+<Example>
+
+  This example routes certain content requests from our webserver to a different origin pool.
+
+  <strong>When incoming requests match</strong>:
+
+  <table style="width:100%">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Operator</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>URI Path</td>
+        <td>contains</td>
+        <td><code>/content</code></td>
+      </tr>
+    <tr>
+        <td>URI Query String</td>
+        <td>contains</td>
+        <td><code>webserver</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <strong>Then</strong>:
+
+  <table style="width:100%">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Options</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Overrides</td>
+        <td>Origin pools</td>
+        <td><code>Server1</code></td>
+      </tr>
+    </tbody>
+  </table>
+</Example>
+
+---
+
+1. In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](/understand-basics/load-balancing-rules/reference).
 
   ![Screenshot, Create Custom Rule dialog, choose Field](../../static/images/create-custom-rule-field.png)
 
-1. To select a comparison operator, use the **Operator** drop-down list. This example uses the `contains` operator.
+1. In the **Operator** drop-down list, choose an operator. For more details, see [Operators](/understand-basics/load-balancing-rules/reference#operators).
 
-1. Enter the value to match. When the field represents an enumeration, **Value** is a drop-down list. Otherwise, **Value** is a text input. The example below matches requests where the URI path contains `/content`:
+1. Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
 
   ![Screenshot, Create Custom Rule dialog, choose Value](../../static/images/create-custom-rule-value.png)
 
-1. [Optional] To create a compound expression using logical operators, click the **And** or **Or** button.
-
-  A new expression displays. Edit the expression. The below example uses the `and` operator and adds the requirement that the URI query string contain `webserver`:
+1. [Optional] To create a compound expression using logical operators, select **And** or **Or**.
 
   ![Screenshot, Create Custom Rule dialog, add logical operator](../../static/images/create-custom-rule-compound-expression.png)
 
-1. Continue editing the expression as necessary.
+1. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, see [Actions](../actions).
 
-1. Choose a Load Balancing action of either **Respond with fixed response** or **Override** a current Load Balancer setting when the rule matches.
+ ![Add an action to complete your load balancing rule](../../static/images/lb-rule-action.png)
 
-1. [Optional] Click **Add another action**.
-
-After configuring a Load Balancing action, [save the Load Balancing rule and configuration](#save-a-load-balancing-rule-and-configuration).
+1. [Optional] Select **Add another override**.
 
 ---
 
-## Save a Load Balancing rule and configuration
+### 3. Save a Load Balancing rule and configuration
 
 <Aside type='warning' header='Warning'>
 
-Unless you save **not only** the new rule **but also** the load balancer configuration, your rule and any configuration changes are lost.
+To save a new load balancer rule, make sure to save both the rule **and** the overall load balancer configuration.
 
 </Aside>
 
-1. In the **Create Custom Rule** dialog, click **Deploy**. If unready to deploy your rule, click **Save as draft**.
+1. After you create your rule, select **Save and Deploy** or **Save as Draft**.
 
-  The **Custom Rules** card displays, and your new rule is listed:
-
-  ![Screenshot, Custom Rules list](../../static/images/custom-rules-list.png)
-
-1. Click **Next** and review your changes:
+1. Select **Next** and review your changes:
 
     ![Screenshot, Edit Load Balancer, Review](../../static/images/edit-load-balancer-review.png)
 
-1. Click **Save**.
-
-When the save completes, the **Load Balancing** page displays.
+1. Select **Save**.
