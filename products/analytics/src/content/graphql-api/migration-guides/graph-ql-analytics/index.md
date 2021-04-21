@@ -375,10 +375,10 @@ Example response:
 This query says:
 
 - Given the indicated zones, `limit`, and time range,
-- Fetch `count`, `sum(edgeResponseBytes)`, and `visits` data center analytics for each `coloCode`.
+- Fetch `count`, `sum(edgeResponseBytes)`, and `visits` data center analytics by `coloCode`.
 
 A few points to note:
 
-- Instead of `requests`, the `httpRequestsAdaptiveGroups` query reports `count`, which means number of requests per data center.
+- Instead of `requests`, the `httpRequestsAdaptiveGroups` query reports `count`, which indicates the number of requests per data center.
 - The `httpRequestsAdaptiveGroups` query reports `sum(edgeResponseBytes)` instead of `bandwidth`. Although `httpRequestsByColoGroups` reported this metric as `bandwidth`, calling it `bandwidth` was not an accurate representation of the returned data. 
 - `unique visitors per colocation` is not supported in `httpRequestsAdaptiveGroups`, but the `httpRequestsAdaptiveGroups` API does support `visits`. A visit is defined as a page view that originated from a different website or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
