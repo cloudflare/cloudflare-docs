@@ -174,11 +174,11 @@ Select **Next** to continue.
 
 ---
 
-### 5. Create custom Load Balancing rules (Beta)
+### 5. Create custom Load Balancing rules
 
-Load Balancing rules allow you to customize the behavior of your Cloudflare [load balancer](/understand-basics/load-balancers). For example, use Load Balancing rules to select an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
+Customize the behavior of load balancer using load balancing rules. For example, select an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
 
-For a walkthrough, see [_Creating Load Balancing rules_](/understand-basics/load-balancing-rules/create-rules).
+For a walkthrough, see [Create Load Balancing rules](/understand-basics/load-balancing-rules/create-rules).
 
 ---
 
