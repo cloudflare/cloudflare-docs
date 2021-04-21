@@ -5,7 +5,7 @@ order: 30
 
 # Understanding Cloudflare Web Analytics
 
-View your website’s page views, visits, [page load time](page-load-time-summary/index.md), and [Core Web Vitals](core-web-vitals/index.md) by switching between views on the graph. You can also sort data by various [dimensions](dimensions/index.md)
+View your website’s page views, visits, [page load time](understanding-web-analytics/page-load-time-summary), and [Core Web Vitals](understanding-web-analytics/core-web-vitals) by switching between views on the graph. You can also sort data by various [dimensions](understanding-web-analytics/dimensions)
 
 ## High-Level Metrics
 

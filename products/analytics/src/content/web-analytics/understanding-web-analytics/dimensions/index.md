@@ -16,4 +16,4 @@ Break down and sort Web Analytics by various dimensions.
 <li>Device Types - The device visitors use to access a page (desktop, mobile, tablet, etc).</li>
 </ul>
 
-![Web Analytics dimensions](../../static/images/dash-web_analytics-dimensions.png)
+![Web Analytics dimensions](../../../static/images/dash-web_analytics-dimensions.png)
