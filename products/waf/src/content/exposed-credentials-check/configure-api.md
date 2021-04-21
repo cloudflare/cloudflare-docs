@@ -48,23 +48,23 @@ There’s a rule match for the exposed credentials check when both the rule expr
 
 To check for exposed credentials in a custom rule, include the field `exposed_credential_check` in the rule definition. This field requires the following options:
 
-* `username_expression` - Expression that selects the user ID used in the credentials check. This field can have up to 1024 characters.
-* `password_expression` - Expression that selects the password used in the credentials check. This field can have up to 1024 characters.
+* `username_expression` — Expression that selects the user ID used in the credentials check. This field can have up to 1024 characters.
+* `password_expression` — Expression that selects the password used in the credentials check. This field can have up to 1024 characters.
 
 <Aside type='warning' header='Important'>
 
 These options have a few additional limitations:
 
-* The expression must evaluate to a string.
+* Each expression must evaluate to a string.
 * You can only use the `upper()`, `lower()`, and `url_decode()` functions, and you cannot nest these functions.
 
 </Aside>
 
-You can use the `exposed_credential_check` field in rules with one of the following actions: `log`, `block`, `challenge`, or `js_challenge` and `rewrite`. 
+You can use the `exposed_credential_check` field in rules with one of the following actions: `rewrite`, `log`, `block`, `challenge`, or `js_challenge`. 
 
 To create and deploy a custom ruleset, follow the workflow described in [Work with custom rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets). 
 
-## Example
+### Example
 
 The following `POST` example creates a new custom ruleset with a rule that checks for exposed credentials. There is only a rule match if both the rule expression and the `exposed_credential_check` result are `true`.
 

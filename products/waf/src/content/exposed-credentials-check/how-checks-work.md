@@ -1,6 +1,5 @@
 ---
 order: 31
-type: overview
 ---
 
 # How exposed credentials checks work

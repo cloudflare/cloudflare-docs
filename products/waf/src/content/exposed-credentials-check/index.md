@@ -20,11 +20,11 @@ Cloudflare updates the databases of exposed credentials supporting the exposed c
 
 The WAF can perform one of the following actions when it detects exposed credentials:
 
-* _CF-Exposed Credentials Header_ - Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
-* _Log_ - Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare Logs. Recommended for validating a rule before committing to a more severe action.
-* _Block_ - Blocks HTTP requests containing exposed credentials.
-* _JS Challenge_ - Presents a Cloudflare JavaScript Captcha challenge to the clients making HTTP requests with exposed credentials.
-* _Challenge (Captcha)_ - Presents a Captcha challenge to the clients making HTTP requests with exposed credentials.
+* _CF-Exposed Credentials Header_ — Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
+* _Log_ — Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare Logs. Recommended for validating a rule before committing to a more severe action.
+* _Block_ — Blocks HTTP requests containing exposed credentials.
+* _JS Challenge_ — Presents a Cloudflare JavaScript Captcha challenge to the clients making HTTP requests with exposed credentials.
+* _Challenge (Captcha)_ — Presents a Captcha challenge to the clients making HTTP requests with exposed credentials.
 
 
 <Aside type='warning' header='Important'>
@@ -73,7 +73,7 @@ You can also check for exposed credentials in custom rules. One common use case 
 
 To check for exposed credentials in a custom rule, include the exposed credentials check in the rule definition and specify how to obtain the username and password values from the HTTP request.
 
-Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to include exposed credentials check in a custom rule. For more information, see [Create a custom rule checking for exposed credentials](/exposed-credentials-check#create-a-custom-rule-checking-for-exposed-credentials).
+Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to include exposed credentials check in a custom rule. For more information, see [Create a custom rule checking for exposed credentials](/exposed-credentials-check/configure-api#create-a-custom-rule-checking-for-exposed-credentials).
 
 <Aside type='note' header='Note'>
 
