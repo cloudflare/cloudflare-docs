@@ -15,7 +15,7 @@ For example, the following rule blocks `POST` requests to the `/login.php` URI w
 **Rule #1**
 
 Rule expression:<br/>
-`http.request.method == "POST" and http.request.uri = "/login.php"`
+`http.request.method == "POST" and http.request.uri == "/login.php"`
 
 Exposed credentials check with the following configuration:
 * Username expression: `http.request.body.form["user_id"]`
