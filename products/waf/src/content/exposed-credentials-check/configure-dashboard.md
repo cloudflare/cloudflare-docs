@@ -1,6 +1,5 @@
 ---
-title: Configure credentials check in the dashboard
-order: 32
+order: 2
 ---
 
 # Configure exposed credentials check in the dashboard

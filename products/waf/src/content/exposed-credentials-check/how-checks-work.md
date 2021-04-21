@@ -1,5 +1,5 @@
 ---
-order: 31
+order: 1
 ---
 
 # How exposed credentials checks work

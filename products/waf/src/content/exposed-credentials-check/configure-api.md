@@ -1,6 +1,5 @@
 ---
-title: Configure exposed credentials check via API
-order: 33
+order: 3
 ---
 
 # Configure exposed credentials check via API

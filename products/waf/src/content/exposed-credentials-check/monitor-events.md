@@ -1,5 +1,5 @@
 ---
-order: 35
+order: 5
 ---
 
 # Monitor exposed credentials events

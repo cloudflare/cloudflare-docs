@@ -1,6 +1,6 @@
 ---
 title: Test your configuration
-order: 34
+order: 4
 ---
 
 # Test your exposed credentials checks configuration
