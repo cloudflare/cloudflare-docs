@@ -31,7 +31,7 @@ order: 941
                 Cloudflare Specials
             </td>
             <td>
-                100188
+                100188A
             </td>
             <td>
                 CVE-2021-22893 Pulse Secure Vendor Workaround
