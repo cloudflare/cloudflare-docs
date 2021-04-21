@@ -75,6 +75,7 @@ You can sign to assert these optional constraints on the token:
 
 - `exp` - expiration; a unix epoch timestamp **after** which the token will not be accepted.
 - `nbf` - notBefore; a unix epoch timestamp **before** which the token will not be accepted.
+- `downloadable` - a boolean, mp4 downloads requiring signed URLs will not accept this token unless this value is true. For more details, see the [download documentation](../download-videos)
 - `accessRules` - Video Access Control; these allow making the token conditionally accepted on a variety of factors. For more details, see [their documentation](#video-access-control)
 
 ### Playback using signed tokens
