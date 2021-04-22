@@ -11,7 +11,7 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 ## 1. **Secure a server behind Cloudflare Access**.
 
-To protect a resource behind Cloudflare Access, first follow [these instructions](/applications/non-HTTP/ssh/ssh-connections) to secure the server.
+To protect a resource behind Cloudflare Access, first follow [these instructions](/tutorials/ssh) to secure the server.
 
 ## 2. **Generate a short-lived certificate public key**.
 
