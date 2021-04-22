@@ -14,6 +14,3 @@ Cloudflare Web Analytics offers more detail to the Core Web Vitals by allowing y
 Each metric is assigned a rating of Good, Needs Improvement, or Poor based on [Google’s methodology and testing](https://web.dev/defining-core-web-vitals-thresholds/).
 
 To improve your Core Web Vitals score, review each metric’s documentation: [Largest Contentful Paint](https://web.dev/optimize-lcp/), [First Input Delay](https://web.dev/optimize-fid/), [Cumulative Layout Shift](https://web.dev/optimize-cls/)
-
-
-
