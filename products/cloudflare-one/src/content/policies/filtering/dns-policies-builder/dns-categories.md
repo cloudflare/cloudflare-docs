@@ -2,19 +2,21 @@
 order: 5
 ---
 
-# Categories
+# DNS Categories
 
 Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security risks on the public Internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security risks and content categories.
 
 You can block security risks and content categories by creating DNS policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.  
 
-## Security risk categories
+## DNS Security Categories
 
 <Aside>
 
 If you wish to block a hostname or URL that belongs to a security risk category, you need to block that category. If the security risk category is not configured as blocked, requests to that hostname or URL will appear in your Gateway logs as allowed requests.
 
 </Aside>
+
+<TableWrap>
 
 | Category | Definition |
 | -------- | ---------- |
@@ -32,19 +34,11 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 | Spyware | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge.|
 | Unreachable | Domains that resolve to unreachable IP addresses.|
 
-### Block security risk categories
+</TableWrap>
 
-1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
-2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
-3. Navigate to the **Security risks** tab.
+## DNS Content Categories
 
-![Security risks page](../../../static/documentation/policies/security-risks.png)
-
-4. Select all the security risk categories you want your policy to block.
-5. Click **Save** to finalize your changes.
-
-
-## Content categories
+<TableWrap>
 
 | Category | Definition |
 | -------- | ---------- |
@@ -78,16 +72,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 |Violence	|	Sites hosting and/or promoting violent content.|
 |Weather	|	Sites related to weather.|
 
-### Blocking content categories
-
-1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
-2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
-3. Navigate to the **Content categories** tab.
-
-![Content categories page](../../../static/documentation/policies/content-categories.png)
-
-4. Select all the content categories you want your policy to block.
-5. Click **Save** to finalize your changes.
+</TableWrap>
 
 ## Test a policy
 
