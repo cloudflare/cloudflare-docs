@@ -4,8 +4,6 @@ order: 12
 
 # Traffic steering
 
-## Overview
-
 Load Balancing provides several traffic steering modes, which allow customers to optimize how load balancers route traffic.
 
 Configure traffic steering from the Load Balancing dashboard — in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel — or via the Cloudflare API. Available steering options include standard failover (**Off**), Dynamic steering, Geo steering, and Random.
@@ -140,3 +138,21 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
   </tr>
   </tbody>
 </table>
+
+## GPS Steering
+
+Choose **GPS Steering** to route visitors or internal services to the closest physical data center.
+
+To use GPS steering on a load balancer, you first need to add GPS coordinates to each origin pool:
+1. Within a domain, go to **Traffic** > **Load Balancing**.
+1. Select **Manage Pools**.
+1. On a pool, select **Edit**.
+1. Select **Configure co-ordinates for GPS Steering**.
+1. Enter the latitude and longitude or drag a marker on the map.
+1. Select **Save**.
+
+Once your origin pools have GPS coordinates, you can add those pools to a load balancer and use **GPS Steering**.
+
+<Aside type="warning" header="Warning:">
+  For accurate GPS Steering, add GPS coordinates to all pools within the same load balancer.
+</Aside>
