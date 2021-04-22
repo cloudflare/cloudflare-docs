@@ -7,13 +7,11 @@ order: 41
 
 Break down and filter Web Analytics by various dimensions.
 
-<ul>
-<li>Referers - The external links referring visits to a page.</li>
-<li>Paths - The links within your site referring visits to a page.</li>
-<li>Hosts - The domain of the site's URL.</li>
-<li>Browsers - The web browsers visitors use to access a page.</li>
-<li>Operating Systems - The operating system visitors use to access a page.</li>
-<li>Device Types - The device visitors use to access a page (desktop, mobile, tablet, etc).</li>
-</ul>
+* Referers - The external links referring visits to a page.
+* Paths - The links within your site referring visits to a page.
+* Hosts - The domain of the site's URL.
+* Browsers - The web browsers visitors use to access a page.
+* Operating Systems - The operating system visitors use to access a page.
+* Device Types - The device visitors use to access a page (for example, desktop, mobile, or tablet).
 
 ![Web Analytics dimensions](../../../static/images/dash-web_analytics-dimensions.png)
