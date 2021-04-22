@@ -7,70 +7,30 @@ order: 10
 
 This guide shares considerations when migrating from the deprecated `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes to the `httpRequestsAdaptiveGroups` GraphQL API node.
 
-Previously you accessed the top five data centers by the number of requests with the deprecated `httpRequests1mByColoGroups` GraphQL API node like in the following example:
+Previously you accessed data for the five data centers that had the most number of requests with the deprecated `httpRequests1mByColoGroups` GraphQL API node as in the following example:
 
 ```graphql
 {
-  viewer {
-    zones(filter: {zoneTag: <ZONE_ID>}) {
-      httpRequests1mGroups(
-        orderBy: [datetimeMinute_ASC], 
-        limit: 100, 
-        filter: {
-          datetime_geq: "2019-09-08T20:00:00Z", 
-          datetime_lt: "2019-09-08T20:02:00Z"
-          }
-        ) {
-        dimensions {
-          datetimeMinute
+    viewer {
+        zones(filter: {zoneTag: $zoneTag}) {
+            series: httpRequests1mByColoGroups(
+                limit: 5,
+                orderBy: [ sum_requests_DESC ],
+                filter: {
+                    datetime_geq: $start
+                    datetime_lt: $end
+                }
+            ) {
+                sum {
+                    requests
+                    bytes
+                }
+                dimensions {
+                    coloCode
+                }
+            }
         }
-        sum {
-          browserMap {
-            pageViews
-            uaBrowserFamily
-          }
-          bytes
-          cachedBytes
-          cachedRequests
-          contentTypeMap {
-            bytes
-            requests
-            edgeResponseContentTypeName
-          }
-          clientSSLMap {
-            requests
-            clientSSLProtocol
-          }
-          countryMap {
-            bytes
-            requests
-            threats
-            clientCountryName
-          }
-          encryptedBytes
-          encryptedRequests
-          ipClassMap {
-            requests
-            ipType
-          }
-          pageViews
-          requests
-          responseStatusMap {
-            requests
-            edgeResponseStatus
-          }
-          threats
-          threatPathingMap {
-            requests
-            threatPathingName
-          }
-        }
-        uniq {
-          uniques
-        }
-      }
     }
-  }
 }
 ```
 
@@ -81,172 +41,50 @@ Example response:
     "viewer": {
       "zones": [
         {
-          "httpRequests1mGroups": [
+          "series": [
             {
               "dimensions": {
-                "datetimeMinute": "2019-09-08T20:00:00Z"
+                "coloCode": "LHR"
               },
               "sum": {
-                "browserMap": [
-                  {
-                    "pageViews": 1,
-                    "uaBrowserFamily": "PingdomBot"
-                  }
-                ],
-                "bytes": 312740,
-                "cachedBytes": 309930,
-                "cachedRequests": 12,
-                "clientSSLMap": [
-                  {
-                    "clientSSLProtocol": "none",
-                    "requests": 2
-                  },
-                  {
-                    "clientSSLProtocol": "TLSv1.2",
-                    "requests": 13
-                  }
-                ],
-                "contentTypeMap": [
-                  {
-                    "bytes": 280590,
-                    "edgeResponseContentTypeName": "png",
-                    "requests": 3
-                  },
-                  {
-                    "bytes": 32150,
-                    "edgeResponseContentTypeName": "html",
-                    "requests": 12
-                  }
-                ],
-                "countryMap": [
-                  {
-                    "bytes": 10797,
-                    "clientCountryName": "CN",
-                    "requests": 6,
-                    "threats": 6
-                  },
-                  {
-                    "bytes": 98224,
-                    "clientCountryName": "IE",
-                    "requests": 1,
-                    "threats": 0
-                  },
-                  {
-                    "bytes": 185176,
-                    "clientCountryName": "US",
-                    "requests": 3,
-                    "threats": 0
-                  },
-                  {
-                    "bytes": 18543,
-                    "clientCountryName": "VN",
-                    "requests": 5,
-                    "threats": 0
-                  }
-                ],
-                "encryptedBytes": 309276,
-                "encryptedRequests": 13,
-                "ipClassMap": [
-                  {
-                    "ipType": "monitoringService",
-                    "requests": 4
-                  },
-                  {
-                    "ipType": "noRecord",
-                    "requests": 11
-                  }
-                ],
-                "pageViews": 1,
-                "requests": 15,
-                "responseStatusMap": [
-                  {
-                    "edgeResponseStatus": 200,
-                    "requests": 4
-                  },
-                  {
-                    "edgeResponseStatus": 403,
-                    "requests": 11
-                  }
-                ],
-                "threatPathingMap": [
-                  {
-                    "requests": 6,
-                    "threatPathingName": "user.ban.ctry"
-                  }
-                ],
-                "threats": 6
-              },
-              "uniq": {
-                "uniques": 11
+                "bytes": 18260055,
+                "requests": 4404
               }
             },
             {
               "dimensions": {
-                "datetimeMinute": "2019-09-08T20:01:00Z"
+                "coloCode": "AMS"
               },
               "sum": {
-                "browserMap": [
-                  {
-                    "pageViews": 1,
-                    "uaBrowserFamily": "PingdomBot"
-                  }
-                ],
-                "bytes": 283399,
-                "cachedBytes": 280590,
-                "cachedRequests": 1,
-                "clientSSLMap": [
-                  {
-                    "clientSSLProtocol": "TLSv1.2",
-                    "requests": 4
-                  }
-                ],
-                "contentTypeMap": [
-                  {
-                    "bytes": 280590,
-                    "edgeResponseContentTypeName": "png",
-                    "requests": 3
-                  },
-                  {
-                    "bytes": 2809,
-                    "edgeResponseContentTypeName": "html",
-                    "requests": 1
-                  }
-                ],
-                "countryMap": [
-                  {
-                    "bytes": 101033,
-                    "clientCountryName": "CA",
-                    "requests": 2,
-                    "threats": 0
-                  },
-                  {
-                    "bytes": 182366,
-                    "clientCountryName": "US",
-                    "requests": 2,
-                    "threats": 0
-                  }
-                ],
-                "encryptedBytes": 283399,
-                "encryptedRequests": 4,
-                "ipClassMap": [
-                  {
-                    "ipType": "monitoringService",
-                    "requests": 4
-                  }
-                ],
-                "pageViews": 1,
-                "requests": 4,
-                "responseStatusMap": [
-                  {
-                    "edgeResponseStatus": 200,
-                    "requests": 4
-                  }
-                ],
-                "threatPathingMap": [],
-                "threats": 0
+                "bytes": 17563009,
+                "requests": 4302
+              }
+            },
+            {
+              "dimensions": {
+                "coloCode": "CDG"
               },
-              "uniq": {
-                "uniques": 4
+              "sum": {
+                "bytes": 17200434,
+                "requests": 4032
+              }
+            },
+            {
+              "dimensions": {
+                "coloCode": "PTY"
+              },
+              "sum": {
+                "bytes": 10400209,
+                "requests": 2707
+              }
+            },
+            {
+              "dimensions": {
+                "coloCode": "JIB"
+              },
+              "sum": {
+                "bytes": 9040105,
+                "requests": 2601
               }
             }
           ]
@@ -258,34 +96,34 @@ Example response:
 }
 ```
 
-With the deprecation of the `httpRequestsByColoGroups` GraphQL API node, the query to access the same data (`count`, `sum(edgeResponseBytes)`, and `visits` in the `httpRequestsAdaptiveGroups` GraphQL API node) looks like the following example: 
+With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes, the query to access the same data (`count`, `sum(edgeResponseBytes)`, and `visits` in the `httpRequestsAdaptiveGroups` GraphQL API node) looks like the following example:
 
 ```graphql
 {
-  viewer {
-    zones(filter: {zoneTag: $zoneTag}) {
-      series: httpRequestsAdaptiveGroups(
-        limit: 5,
-        orderBy: [ sum_visits_DESC ],
-        filter: {
-          datetimeFifteenMinutes_geq: $start
-          datetimeFifteenMinutes_lt: $end
+    viewer {
+        zones(filter: {zoneTag: $zoneTag}) {
+            series: httpRequestsAdaptiveGroups(
+                limit: 5,
+                orderBy: [ count_DESC ],
+                filter: {
+                    datetime_geq: $start
+                    datetime_lt: $end
+                }
+            ) {
+                count
+                avg {
+                    sampleInterval
+                }
+                sum {
+                    visits
+                    edgeResponseBytes
+                }
+                dimensions {
+                    coloCode
+                }
+            }
         }
-      ) {
-        count
-        avg {
-          sampleInterval
-        }
-        sum {
-          edgeResponseBytes
-          visits
-        }
-        dimensions {
-          metric: coloCode
-        }
-      }
     }
-  }
 }
 ```
 
@@ -301,65 +139,65 @@ Example response:
               "avg": {
                 "sampleInterval": 10
               },
-              "count": 7700,
+              "count": 4350,
               "dimensions": {
-                "metric": "AMS"
+                "coloCode": "LHR"
               },
               "sum": {
-                "edgeResponseBytes": 50078910,
-                "visits": 5700
+                "edgeResponseBytes": 17860000,
+                "visits": 4120
               }
             },
             {
               "avg": {
                 "sampleInterval": 10
               },
-              "count": 7300,
+              "count": 4210,
               "dimensions": {
-                "metric": "CDG"
+                "coloCode": "AMS"
               },
               "sum": {
-                "edgeResponseBytes": 47685220,
-                "visits": 5230
+                "edgeResponseBytes": 17110000,
+                "visits": 3910
               }
             },
             {
               "avg": {
                 "sampleInterval": 10
               },
-              "count": 7530,
+              "count": 3890,
               "dimensions": {
-                "metric": "LHR"
+                "coloCode": "CDG"
               },
               "sum": {
-                "edgeResponseBytes": 46665180,
-                "visits": 5220
+                "edgeResponseBytes": 17050000,
+                "visits": 3700
               }
             },
             {
               "avg": {
                 "sampleInterval": 10
               },
-              "count": 5200,
+              "count": 2550,
               "dimensions": {
-                "metric": "EZE"
+                "coloCode": "PTY"
               },
               "sum": {
-                "edgeResponseBytes": 32085270,
-                "visits": 3360
+                "edgeResponseBytes": 10286000,
+                "visits": 2130
               }
             },
             {
               "avg": {
                 "sampleInterval": 10
               },
-              "count": 5170,
+              "count": 2410,
               "dimensions": {
-                "metric": "PTY"
+                "coloCode": "JIB"
               },
               "sum": {
-                "edgeResponseBytes": 31573240,
-                "visits": 3220
+                "edgeResponseBytes": 9029000,
+                "visits": 2080
               }
             }
           ]
@@ -371,14 +209,15 @@ Example response:
 }
 ```
 
-
 This query says:
 
 - Given the indicated zones, `limit`, and time range,
-- Fetch `count`, `sum(edgeResponseBytes)`, and `visits` data center analytics by `coloCode`.
+- Fetch the total number of requests (as `count`), the total amount of response
+  bytes (as `edgeResponseBytes` of `sum` object), and the total number of
+  `visits` per data center (as `metric` of `dimensions` object).
 
 A few points to note:
 
 - Instead of `requests`, the `httpRequestsAdaptiveGroups` query reports `count`, which indicates the number of requests per data center.
-- The `httpRequestsAdaptiveGroups` query reports `sum(edgeResponseBytes)` instead of `bandwidth`. Although `httpRequestsByColoGroups` reported this metric as `bandwidth`, calling it `bandwidth` was not an accurate representation of the returned data. 
+- The `httpRequestsAdaptiveGroups` node reports `sum(edgeResponseBytes)` instead of `bandwidth`. Although `httpRequestsByColoGroups` reported this metric as `bandwidth`, calling it `bandwidth` was not an accurate representation of the returned data. 
 - `unique visitors per colocation` is not supported in `httpRequestsAdaptiveGroups`, but the `httpRequestsAdaptiveGroups` API does support `visits`. A visit is defined as a page view that originated from a different website or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
