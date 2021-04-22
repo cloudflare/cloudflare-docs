@@ -1,5 +1,6 @@
 ---
 order: 390
+type: overview
 ---
 
 # Configure Schema Validation
@@ -14,7 +15,7 @@ Use the **API Shield** interface to configure API Schema Validation which valida
 
 Before you can configure Schema Validation for an API, you must obtain its API Schema file. API Shield supports API Schemas using OpenAPI Specification v3. The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
 
-## Use the API Shield interface
+## Create an API Shield with Schema Validation
 
 To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
@@ -70,17 +71,19 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     </Aside>
 
-1. After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and what will be the action taken for non-compliant and unprotected requests.
+1. After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and what will be the actions taken for non-compliant and unprotected requests.
 
     ![API Shield Review endpoints wizard step](../images/api-shield-review-endpoints-step.png)
 
-    The API Shield rule will validate all incoming requests addressed at the endpoints listed in the **Protected** section. The several columns in the table list the validations deployed for each endpoint, according to the information described in the API Schema file. The **Action** column indicates the action taken by API Shield for incoming requests that fail Schema Validation.
+    The API Shield rule will validate all incoming requests addressed at the endpoints listed in **API Schema endpoints**. The several columns in the table list the validations deployed for each endpoint, according to the information described in the API Schema file.
 
-    The **Unprotected** section lists endpoints that API Shield will not protect. This list includes any endpoints with API Schema definitions that API Shield does not support. There’s an additional validation for handling requests addressed to any other endpoints or URLs other than the ones described in the schema file. The **Action** column indicates the action taken by API Shield for all incoming requests addressed at these unprotected API endpoints.
+1. In the **Endpoint action** dropdown, select the action that API Shield will perform for every request targeting a protected endpoint that fails Schema Validation.
+
+1. In the **Fallthrough action** dropdown, select the action to perform for incoming requests addressed at other (non-protected) API endpoints.
 
     <Aside type='warning'>
     
-    Currently, request body validations are not supported. Additionally, the only available action is _Log_.
+    Currently, request body validations are not supported.
 
     </Aside>
 

@@ -4,7 +4,7 @@ order: 5
 
 # Categories
 
-Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security risks on the public internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security risks and content categories.
+Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security risks on the public Internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security risks and content categories.
 
 You can block security risks and content categories by creating DNS policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.  
 
