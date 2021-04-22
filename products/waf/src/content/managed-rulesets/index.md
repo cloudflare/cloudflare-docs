@@ -22,6 +22,10 @@ Cloudflare provides the following Managed Rulesets in the WAF:
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='https://support.cloudflare.com/hc/articles/200172016#sJbboLurEVhipzWYJQnyz'>Cloudflare OWASP Core Ruleset</a></td>
       <td>Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.</td>
     </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Data Loss Prevention (Beta)</td>
+      <td>Created by Cloudflare to address common data loss threats. These rules run on the response Phase and monitor download of files or specific sensitive data — for example, financial and personally identifiable information.</td>
+    </tr>
   </tbody>
 </table></TableWrap>
 
