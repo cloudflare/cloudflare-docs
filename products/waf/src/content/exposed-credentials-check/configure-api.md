@@ -35,12 +35,6 @@ For more information on defining overrides for Managed Rulesets using the Rulese
 
 ## Create a custom rule checking for exposed credentials
 
-<Aside type='warning' header='Important'>
-
-This feature is only available on an Enterprise plan.
-
-</Aside>
-
 You can create rules that check for exposed credentials using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
 
 There’s a rule match for the exposed credentials check when both the rule expression and the result from the exposed credentials check are true.

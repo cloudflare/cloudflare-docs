@@ -4,6 +4,12 @@ order: 3
 
 # Automated exposed credentials check - Beta
 
+<Aside type='warning'>
+
+This feature is only available for selected customers on an Enterprise plan.
+
+</Aside>
+
 Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
 
 Cloudflare offers you automated checks for exposed credentials using Cloudflare Web Application Firewall (WAF).
@@ -25,7 +31,6 @@ The WAF can perform one of the following actions when it detects exposed credent
 * _Block_ — Blocks HTTP requests containing exposed credentials.
 * _JS Challenge_ — Presents a Cloudflare JavaScript Captcha challenge to the clients making HTTP requests with exposed credentials.
 * _Challenge (Captcha)_ — Presents a Captcha challenge to the clients making HTTP requests with exposed credentials.
-
 
 <Aside type='warning' header='Important'>
 
@@ -63,7 +68,7 @@ You can turn the Managed Ruleset on/off and customize the action performed by ea
 
 ## Exposed credentials checks in custom rules
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
 Currently, exposed credentials checks in custom rules are only available via API.
 
