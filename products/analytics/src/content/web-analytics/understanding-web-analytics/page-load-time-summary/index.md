@@ -1,5 +1,5 @@
 ---
-title: Page Load Time Summary
+title: Page load time summary
 order: 42
 ---
 
