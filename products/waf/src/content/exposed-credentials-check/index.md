@@ -59,7 +59,7 @@ The default action for the rules in the Exposed Credentials Check Managed Rulese
 
 <Aside type='note' header='Note'>
 
-The Managed Ruleset contains an additional rule that blocks HTTP requests already containing the `Exposed-Credential-Check` HTTP header used by the _CF-Exposed Credentials Header_ action. These requests could be used to trick the origin into believing that a request contained (or didn't contain) exposed credentials.
+The Managed Ruleset contains an additional rule that blocks HTTP requests already containing the `Exposed-Credential-Check` HTTP header used by the _CF-Exposed Credentials Header_ action. These requests could be used to trick the origin into believing that a request contained (or did not contain) exposed credentials.
 
 </Aside>
 

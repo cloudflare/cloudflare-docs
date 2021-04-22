@@ -2,7 +2,7 @@
 order: 2
 ---
 
-# Configure exposed credentials check in the dashboard
+# Configure exposed credentials checks in the dashboard
 
 <Aside type='warning' header='Important'>
 

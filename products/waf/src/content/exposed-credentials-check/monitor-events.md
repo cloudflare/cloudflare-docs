@@ -10,7 +10,7 @@ Check for exposed credentials events in the Firewall Analytics dashboard (**Over
 
 <Aside type='warning' header='Important'>
 
-These events are only logged after you activate the Exposed Credentials Check Managed Ruleset or create a custom rule checking for exposed credentials.
+Exposed credentials events are only logged after you activate the Exposed Credentials Check Managed Ruleset or create a custom rule checking for exposed credentials.
 
 The log entries will not contain the values of the exposed credentials (username, email, or password). However, log entries will contain the values of the fields in the rule expression that triggered the rule. These values might be the values of credential fields, depending on your rule configuration.
 
