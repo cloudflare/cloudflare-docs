@@ -218,6 +218,6 @@ This query says:
 
 A few points to note:
 
-- Instead of `requests`, the `httpRequestsAdaptiveGroups` query reports `count`, which indicates the number of requests per data center.
-- The `httpRequestsAdaptiveGroups` node reports `sum(edgeResponseBytes)` instead of `bandwidth`. Although `httpRequestsByColoGroups` reported this metric as `bandwidth`, calling it `bandwidth` was not an accurate representation of the returned data. 
+- Instead of `requests`, the `httpRequestsAdaptiveGroups` node reports `count`, which indicates the number of requests per data center.
+- The `httpRequestsAdaptiveGroups` node reports `sum(edgeResponseBytes)` instead of `bandwidth`. Although this metric was frequently referred to as `bandwidth`, calling it `bandwidth` was not an accurate representation of the returned data. 
 - `unique visitors per colocation` is not supported in `httpRequestsAdaptiveGroups`, but the `httpRequestsAdaptiveGroups` API does support `visits`. A visit is defined as a page view that originated from a different website or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
