@@ -2,11 +2,11 @@
 order: 3
 ---
 
-# Configure exposed credentials check via API
+# Configure exposed credentials checks via API
+
+Configure exposed credentials checks using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api). You can deploy the Exposed Credentials Check Managed Ruleset and create custom rules that check for exposed credentials.
 
 ## Deploy the Exposed Credentials Check Managed Ruleset
-
-Use the Rulesets API to deploy the Exposed Credentials Check Managed Ruleset.
 
 <Aside type='warning' header='Important'>
 
