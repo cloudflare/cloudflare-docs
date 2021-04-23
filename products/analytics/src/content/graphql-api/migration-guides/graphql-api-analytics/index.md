@@ -7,7 +7,7 @@ order: 10
 
 This guide shares considerations when migrating from the deprecated `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes to the `httpRequestsAdaptiveGroups` GraphQL API node.
 
-For example, if you wanted to see which five data centers had the most number of requests, the total number of those requests, and the total amount of response bytes, in the past you used the  `httpRequests1mByColoGroups` GraphQL API node as in the following example:
+For example, if you wanted to see which five data centers had the most number of requests, the total number of those requests, and the total amount of data transfer, in the past you used the  `httpRequests1mByColoGroups` GraphQL API node as in the following example:
 
 ```graphql
 {
@@ -219,7 +219,7 @@ This query says:
 
 A few points to note:
 
-- Adding the `requestSource` filter for `eyeball` returns request, response byte, and visit data about only the end users of your website.
+- Adding the `requestSource` filter for `eyeball` returns request, data transfer, and visit data about only the end users of your website.
 - Instead of `requests`, the `httpRequestsAdaptiveGroups` node reports `count`, which indicates the number of requests per data center.
 - To measure data transfer, use `sum(edgeResponseBytes)`. Note that in the old API this was called `bandwidth` even though it actually measured data transfer.
 - `unique visitors per colocation` is not supported in `httpRequestsAdaptiveGroups`, but the `httpRequestsAdaptiveGroups` API does support `visits`. A visit is defined as a page view that originated from a different website or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
