@@ -2,7 +2,7 @@
 order: 5
 ---
 
-# Audit logs
+# Access Audit logs
 
 Cloudflare Access generates two types of audit logs:
 * **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
