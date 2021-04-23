@@ -60,6 +60,7 @@ You can delete an existing Tunnel with cloudflared. To delete a Tunnel, run the 
 ```sh
 $ cloudflared tunnel delete <NAME>
 ```
+
 <Aside>
 
 The command requires the `cert.pem` file.
