@@ -23,7 +23,7 @@ As a good security practice we need to remove your Cloudflare credentials from a
 
 ```sh
 $ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
-$ sed -ie 's/^.*token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
+$ sed -ie 's/^.*api_token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
 
 $ head -n4 cloudflare.tf
 provider "cloudflare" {
