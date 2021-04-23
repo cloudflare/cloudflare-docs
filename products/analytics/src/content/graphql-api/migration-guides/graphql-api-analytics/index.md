@@ -213,8 +213,7 @@ Example response:
 This query says:
 
 - Given the indicated zones, `limit`, and time range,
-- Fetch the total number of requests (as `count`), the total amount of response
-  bytes (as `edgeResponseBytes` of `sum` object), and the total number of
+- Fetch the total number of requests (as `count`), the total amount of data transfer (as `edgeResponseBytes` of `sum` object), and the total number of
   `visits` per data center.
 
 A few points to note:
