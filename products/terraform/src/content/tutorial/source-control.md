@@ -11,7 +11,7 @@ In the [first step](/tutorial/hello-world) of the tutorial, you created and appl
 $ head -n4 cloudflare.tf
 provider "cloudflare" {
   email = "you@example.com"
-  token = "your-api-token"
+  api_token = "your-api-token"
 }
 ```
 
