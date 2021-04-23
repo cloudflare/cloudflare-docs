@@ -34,21 +34,31 @@ You can also activate or deactivate scoring rules by overriding the paranoia lev
 
 </Aside>
 
-## Matched payload logging
+## Payload logging for WAF rulesets
 
+<Aside type='warning'>
 
-To accomplish this, while ensuring end-user privacy, we built encrypted WAF matched payload logging. This feature will log only the specific component of the request the WAF has deemed malicious — and it is encrypted using a customer-provided key to ensure that no Cloudflare employee can examine the data*. Additionally, the crypto uses an exciting new standard — developed in part by Cloudflare — called Hybrid Public Key Encryption (HPKE).
+This feature is only available for customers on an Enterprise plan.
 
-*All Cloudflare logs are encrypted at rest. This feature implements a second layer of encryption for the specific matched fields so that only the customer can decrypt it.
+</Aside>
 
+The WAF allows you to log the request payload that triggered a specific rule. This feature is especially useful when diagnosing the behavior of WAF rules. Since the request values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later on.
 
+<Aside type='note'>
 
-Once enabled, encrypted payloads for the rulesets configured with payload logging will be available:
+All Cloudflare logs are encrypted at rest. Encrypting the payload information adds a second layer of encryption for the matched request fields that triggered a WAF rule.
 
-* in the security event log (as download from the UI)
+</Aside>
+
+You can enable payload logging per ruleset. When enabling this feature, you must configure the public key used to encrypt the logged payload. Generate a key pair directly in the browser or provide your own public key for this purpose.
+
+Once enabled, you can view the encrypted payloads for the rulesets with this feature enabled:
+
+* in Firewall Analytics
 * in the Firewall Events log
-* in the Firewall Analytics UI
+* in the security event log
 
+You can decrypt the payload content when viewing it in the browser by entering your private key.
 
 <Aside type='warning' header='Important'>
 
@@ -103,6 +113,8 @@ Do the following:
 
 After generating the key pair, copy the public key value and enter it in the payload logging configuration.
 
+### View the payload log
+OR
 ### Decrypt the payload in the dashboard
 
 ### Decrypt the payload using the command line
