@@ -12,7 +12,7 @@ order: 2
 
 Every website must have a certificate to be trusted by major browsers. A certificate is a proof of identity — it says that you are who you say you are. These certificates help browsers like Google Chrome "know" that a connection is secure before presenting content. Certificates are recorded in public **CT logs**, such as Google’s Argon log and Cloudflare’s Nimbus log.
 
-If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you an email whenever your domain is recognized in a CT log. Usually, these certificates are legitimate and do not require further action. We send emails so you can double check for yourself.
+If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you an email whenever your domain is recognized in a CT log. Usually, these certificates are legitimate and do not require further action. We send emails so you can double-check for yourself.
 
 In rare cases, you may believe a certificate is illegitimate. This is when you should [take action](#how-to-take-action).
 
