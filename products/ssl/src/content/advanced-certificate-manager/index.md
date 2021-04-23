@@ -5,7 +5,21 @@ type: overview
 
 # Advanced Certificate Manager
 
-Advanced Certificate Manager is a flexible and customizable way to issue and manage certificates in Cloudflare.  Advanced Certificate Manager defines several certificate options:
+Advanced Certificate Manager is a flexible and customizable way to issue and manage certificates in Cloudflare.
+
+Use Advanced Certificate Manager when the Universal certificate does not meet your business requirements but you still want Cloudflare to manage the SSL certificate issuance and renewal. For example, use Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
+
+<ButtonGroup>
+  <Button type="primary" href="#features-of-advanced-certificate-manager">Features</Button>
+  <Button type="secondary" href="#common-api-commands">Common API commands</Button>
+  <Button type="secondary" href="#create-a-certificate-in-the-dashboard">Create in dashboard</Button>
+</ButtonGroup>
+
+---
+
+## Features of Advanced Certificate Manager
+
+Advanced Certificate Manager defines several certificate options:
 
 - Add up to 100 edge certificates per zone.
 - Include the zone apex and less than 50 hosts as covered hostnames.
@@ -14,8 +28,6 @@ Advanced Certificate Manager is a flexible and customizable way to issue and man
 - Choose the Certificate Authority to issue the certificate (Let’s Encrypt or Digicert).
 - Select a custom trust store for origin authentication.
 - Control cipher suites used for TLS.
-
-Use the Advanced Certificate Manager when the Universal certificate does not meet your business requirements but you still want Cloudflare to manage the SSL certificate issuance and renewal. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 
 <Aside type='warning' header='Important'>
 
