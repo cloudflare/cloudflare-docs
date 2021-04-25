@@ -99,8 +99,8 @@ The change above will tell your SSH configuration to use the public key saved in
 Once you have modified your SSHD configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
 ```sh
-$ sudo service ssh restart
-$ sudo systemctl restart ssh
+$ sudo service sshd restart
+$ sudo systemctl restart sshd
 ```
 
 ## 7. Connect as a user
