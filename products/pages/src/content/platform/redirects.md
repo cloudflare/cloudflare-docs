@@ -32,7 +32,7 @@ We currently offer limited support for advanced redirects. More support will be 
 | Splats                          | No      | /blog/* /blog/:splat                                                     |
 | Placeholders                    | No      | /blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug            |
 | Query Parameters                | No      | /shop id=:id /blog/:id 301                                               |
-| Force(shadowing)                | No      | /workers/ /workers/index.html 200!                                       |
+| Force (shadowing)                | No      | /workers/ /workers/index.html 200!                                       |
 | Domain-level redirects          | No      | workers.example.com/* workers.example.com/blog/:splat 301 |
 | Redirect by country or language | No      | / /us 302 Country=us                                                     |
 
