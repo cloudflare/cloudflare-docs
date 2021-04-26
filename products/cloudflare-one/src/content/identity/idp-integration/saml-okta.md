@@ -41,7 +41,7 @@ To set up SAML with Okta as your identity provider:
 1. In the **Single sign on URL** and the **Audience URI** **(SP Entity ID)** fields, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 1. Select the value to pass from the **Name ID** drop-down list.
@@ -96,10 +96,10 @@ To get your Cloudflare metadata file:
 1. Download your unique SAML metadata file at the following URL:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace `your-team-name`  with your [team name](/glossary#team-name).
+    Replace `<your-team-name>`  with your [team name](/glossary#team-name).
 
 1. Save the file in XML format.
 1. Upload the XML document to your **Okta **account.

@@ -59,11 +59,11 @@ Rules with Override actions allow you to respond to all DNS queries for a given 
 
 SafeSearch is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
-You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. To enable SafeSearch, you can create the following rule:
+You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following rule:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| (None) | (None) | (None) | SafeSearch |
+| DNS Domain | Is | `google.com` | SafeSearch |
 
 #### Test SafeSearch
 
@@ -91,11 +91,11 @@ DuckDuckGo will return `safe.duckduckgo.com`.
 
 ### YouTube Restricted Mode
 
-Similarly, you can enforce YouTube Restricted mode by choosing the Youtube Restricted Mode action. YouTube Restricted Mode is an automated filter for adult and offensive content that's built into YouTube.
+Similarly, you can enforce YouTube Restricted mode by choosing the Youtube Restricted Mode action. YouTube Restricted Mode is an automated filter for adult and offensive content that's built into YouTube. To enable Youtube Restricted Mode, you could set up a rule like the following:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| (None) | (None) | (None) | YouTube Restricted Mode |
+| DNS Domain | Is | `youtube.com` | YouTube Restricted |
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
 
