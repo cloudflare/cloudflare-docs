@@ -53,6 +53,8 @@ Example request using cURL:
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
+-H "X-Auth-Email: user@example.com" \
+-H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
 -d '{"name":"<DOMAIN_NAME>",
 "destination_conf":"splunk://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>&header_Authorization=<SPLUNK-AUTH-TOKEN>",  "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset":"http_requests"}' | jq .
 ```
