@@ -60,7 +60,7 @@ To set up JumpCloud SAML as your identity provider:
 1. Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `your-team-name` is your Cloudflare [team name](/glossary#team-name):
 
     ```text
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 1. Under **SAML SUBJECT NAMEID**, choose **email**.

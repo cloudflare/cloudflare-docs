@@ -253,7 +253,7 @@ To get your Cloudflare metadata file:
 ```json
 {
     "config": {
-        "issuer_url": "https://your-team-name.cloudflareaccess.com/",
+        "issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
         "sso_target_url": "https://adfs.example.com/adfs/ls/",
         "attributes": ["email"],
         "email_attribute_name": "",
