@@ -16,7 +16,7 @@ Cloudflare offers you automated checks for exposed credentials using Cloudflare 
  
 The WAF provides two mechanisms for this check:
 
-* The **Exposed Credentials Check Managed Ruleset**, containing predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
+* The **Exposed Credentials Check Managed Ruleset**, which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
 
 * The ability to write **custom rules** for a zone that check for exposed credentials according to your criteria for specific applications.
 
@@ -40,7 +40,7 @@ Cloudflare recommends that you only use the following actions: _CF-Exposed Crede
 
 ## The Exposed Credentials Check Managed Ruleset 
 
-Cloudflare WAF includes an Exposed Credentials Check Managed Ruleset, a set of pre-configured rules for well-known CMS applications which include the following:
+Cloudflare WAF includes an Exposed Credentials Check Managed Ruleset, a set of pre-configured rules for well-known CMS applications that include the following:
 
 * WordPress
 * Joomla

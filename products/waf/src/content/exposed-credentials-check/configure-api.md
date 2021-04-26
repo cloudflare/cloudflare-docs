@@ -22,7 +22,7 @@ To deploy the Managed Ruleset for a given zone, do the following:
     * The ruleset ID of the Exposed Credentials Check Managed Ruleset
 1. If the `http_request_firewall_managed` Phase ruleset does not exist, create it using the Create ruleset method.
 1. Use the [View ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#view-a-specific-ruleset) method to get the rules already associated with the Phase ruleset where you want to deploy the Managed Ruleset.
-1. Use the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method to add a rule to the Phase ruleset deploying the Exposed Credentials Check Managed Ruleset. Make sure you include in the existing rules in the Phase ruleset in your `PUT` request.
+1. Use the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method to add a rule to the Phase ruleset deploying the Exposed Credentials Check Managed Ruleset. Make sure you include the existing rules in the Phase ruleset in your `PUT` request.
 
 For more information on deploying a Managed Ruleset, check [Deploy a Managed Ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/deploy-managed-ruleset).
 
@@ -37,7 +37,7 @@ For more information on defining overrides for Managed Rulesets using the Rulese
 
 You can create rules that check for exposed credentials using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
 
-There’s a rule match for the exposed credentials check when both the rule expression and the result from the exposed credentials check are true.
+A rule with exposed credentials check has a match when both the rule expression and the result from the exposed credentials check are true.
 
 To check for exposed credentials in a custom rule, include the field `exposed_credential_check` in the rule definition. This field requires the following options:
 
@@ -46,7 +46,7 @@ To check for exposed credentials in a custom rule, include the field `exposed_cr
 
 <Aside type='warning' header='Important'>
 
-These options have a few additional limitations:
+These options have additional requirements:
 
 * Each expression must evaluate to a string.
 * You can only use the `upper()`, `lower()`, and `url_decode()` functions, and you cannot nest these functions.
@@ -59,7 +59,7 @@ To create and deploy a custom ruleset, follow the workflow described in [Work wi
 
 ### Example
 
-The following `POST` example creates a new custom ruleset with a rule that checks for exposed credentials. There is only a rule match if both the rule expression and the `exposed_credential_check` result are `true`.
+The following `POST` example creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`.
 
 ```json
 curl -X POST \
