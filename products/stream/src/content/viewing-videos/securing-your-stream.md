@@ -98,6 +98,9 @@ Replace the video ID with the signed token to use it.
 
 We offer a utility at `https://util.cloudflarestream.com/sign` to generate tokens when getting familiar with signed URLs.
 
+- `exp` - If not set, defaults to one hour after issuing.
+- `nbf` - If not set, defaults to one hour before issuing.
+
 ```sh
 curl -X POST "https://util.cloudflarestream.com/sign/$VIDEOID" -d "{\"id\": \"$KEYID\", \"pem\": \"$PRIVATE_KEY_IN_PEM_FORMAT\",\"nbf\":1537453165,\"exp\":1537460365}"
 ```
