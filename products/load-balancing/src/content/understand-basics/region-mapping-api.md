@@ -1,6 +1,9 @@
 ---
+title: Region Mapping API
 order: 20
 ---
+
+import RegionMapping from "../_partials/_region-mapping.md"
 
 # Region Mapping API
 
@@ -16,22 +19,8 @@ There are two main optional parameters for the Region Mapping API:
 - country_code is a string containing a two-letter alpha-2 country code per ISO 3166-1. For example: /load_balancers/regions?country_code=US
 - subdivision_code is a string containing a two-letter subdivision code for the U.S. and Canada per ISO 3166-2. For example: /load_balancers/regions?subdivision_code=CA
 
-For additional details and examples on using the Region Mapping API, see [Cloudflare’s API documentation](https://api.cloudflare.com/#load-balancer-region-country-mapping-list-regions).
+For additional details and examples on using the Region Mapping API, see [Cloudflare’s API documentation](https://api.cloudflare.com/#load-balancer-regions-properties).
 
 ## List of Load Balancer regions
 
-|Region code|Region name|
-|---|---|
-|EEU|Eastern Europe|
-|ENAM|Eastern North America|
-|ME|Middle East|
-|NAF|Northern Africa|
-|NEAS|Northeast Asia|
-|NSAM|Northern South America|
-|OC|Oceania|
-|SAF|Southern Africa|
-|SAS|Southern Asia|
-|SEAS|Southeast Asia|
-|SSAM|Southern South America|
-|WEU|Western Europe|
-|WNAM|Western North America|
+<RegionMapping/>

@@ -25,7 +25,7 @@ To set up Signed AuthN requests:
 1. Go to this URL to find the certificate:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/public-cert
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```
 
     <Aside>
@@ -49,5 +49,5 @@ To set up Signed AuthN requests:
     This is an example format:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/public-cert
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```

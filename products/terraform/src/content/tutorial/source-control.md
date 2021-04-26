@@ -11,7 +11,7 @@ In the [first step](/tutorial/hello-world) of the tutorial, you created and appl
 $ head -n4 cloudflare.tf
 provider "cloudflare" {
   email = "you@example.com"
-  token = "your-api-key"
+  api_token = "your-api-token"
 }
 ```
 
@@ -19,25 +19,25 @@ In this step of the tutorial, we’re going to store your configuration in GitHu
 
 ## 1. Using Environment Variables for Authentication
 
-As a good security practice we need to remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_TOKEN` environment variables, so all we need to do is:
+As a good security practice we need to remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_TOKEN` environment variables, so all we need to do is:
 
 ```sh
 $ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
-$ sed -ie 's/^.*token =.*$/  # token pulled from $CLOUDFLARE_TOKEN/' cloudflare.tf
+$ sed -ie 's/^.*api_token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
 
 $ head -n4 cloudflare.tf
 provider "cloudflare" {
   # email pulled from $CLOUDFLARE_EMAIL
-  # token pulled from $CLOUDFLARE_TOKEN
+  # token pulled from $CLOUDFLARE_API_TOKEN
 }
 
 $ export CLOUDFLARE_EMAIL=you@example.com
-$ export CLOUDFLARE_TOKEN=your-api-key
+$ export CLOUDFLARE_API_TOKEN=your-api-token
 ```
 
 Note that you need to leave the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. In a future tutorial, we'll discuss some of the more [advanced options](https://www.terraform.io/docs/providers/cloudflare/index.html#argument-reference) that can be used with the provider.
 
-After completing the above step, it's a good idea to make sure that you can still authenticate to Cloudflare. By running `terraform plan` we can get Terraform to pull the current state (which requires a valid email and API key):
+After completing the above step, it's a good idea to make sure that you can still authenticate to Cloudflare. By running `terraform plan` we can get Terraform to pull the current state (which requires a valid email and API token):
 
 ```sh
 $ terraform plan

@@ -101,7 +101,9 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
 
 1. Select **Save**.
 
-<Aside type='note' header='Tip'>
+---
+
+<Example>
     An example monitor might be:
     <table style='table-layout:fixed; width:70%'>
       <thead>
@@ -145,7 +147,9 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
         </tr>
       </tbody>
     </table>
-  </Aside>
+</Example>
+
+---
 
 #### B. Configure the monitor
 
