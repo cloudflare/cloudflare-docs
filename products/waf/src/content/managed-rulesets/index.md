@@ -119,4 +119,18 @@ OR
 
 ### Decrypt the payload using the command line
 
+SOURCE: https://blog.cloudflare.com/encrypt-waf-payloads-hpke/
 
+
+Decrypting payloads can be done via the dashboard from the Security Events log, or by using the command line utility, as shown below.
+
+Once you enable payload logging, payloads will be available in the logs as encrypted Base64 blobs within the `metadata` field:
+
+```
+"metadata": [
+  {
+    "key": "encrypted_matched_data",
+    "Value": "AdfVn7odpamJGeFAGj0iW2oTtoXOjVnTFT2x4l+cHKJsEQAAAAAAAAB+zDygjV2aUI92FV4cHMkp+4u37JHnH4fUkRqasPYaCgk="
+  }
+]
+```
