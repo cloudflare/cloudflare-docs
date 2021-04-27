@@ -12,13 +12,13 @@ This page includes examples of URL Rewrite Rules and HTTP Header Modification Ru
 
 The following use cases illustrate how to perform URL rewrites with Transform Rules:
 
-* [Rewrite path of welcome page for visitors of specific countries](#rewrite-path-of-welcome-page-for-visitors-of-specific-countries)
+* [Rewrite path of welcome page for visitors in specific countries](#rewrite-path-of-welcome-page-for-visitors-in-specific-countries)
 * [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
 * [Rewrite path of archived blog posts](#rewrite-path-of-archived-blog-posts)
 * [Rewrite path of moved section of a website](#rewrite-path-of-moved-section-of-a-website)
 * [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
 
-### Rewrite path of welcome page for visitors of specific countries
+### Rewrite path of welcome page for visitors in specific countries
 
 To have a welcome page in two languages, create two URL Rewrite Rules with a static rewrite of the path component:
 

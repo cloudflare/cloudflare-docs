@@ -7,7 +7,7 @@ order: 2
 
 Transform Rules allow you to make adjustments to incoming requests at the edge before they go through any other Cloudflare products.
 
-There are two types of Transform Rules that perform different actions:
+There are two types of Transform Rules:
 
 * URL Rewrite Rules:
     * Rewrite the **path** of the URL of an HTTP request
@@ -28,7 +28,7 @@ To configure Transform Rules in the dashboard, use the **Transform Rules** tab i
 
 ## URL Rewrite Rules
 
-A URL Rewrite Rule can perform a **static rewrite** or a **dynamic rewrite**. Static rewrites replace a given part of a request URL (path or query string) with a static string. Dynamic rewrites allow you to support more advanced scenarios where you use an [expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions) to define the resulting path or query string.
+A URL Rewrite Rule can perform a **static rewrite** or a **dynamic rewrite**. Static rewrites replace a given part of a request URL (path or query string) with a static string. Dynamic rewrites support more advanced scenarios where you use an [expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions) to define the resulting path or query string.
 
 To create a URL Rewrite Rule in the dashboard, see [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule).
 
@@ -40,7 +40,7 @@ A **rewrite** is a server-side operation that occurs before a web server has ful
 
 A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can see the URL changing when the redirect occurs.
 
-You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge, without reaching your web server. URL Rewrite Rules run in the `http_request_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
+You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge without reaching your web server. URL Rewrite Rules run in the `http_request_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
 
 Check [Configuring URL forwarding or redirects with Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/200172286) in the Support KB to learn more about configuring redirects.
 
@@ -60,11 +60,11 @@ You can manipulate the headers of incoming HTTP requests through HTTP Header Mod
 * Set the value of an HTTP header according to an expression, overwriting its previous value or adding a new header to the request.
 * Remove an HTTP header from the request (remove all HTTP headers with the provided name).
 
-<Aside type='warning' label='Important'>
+<Aside type='warning' label='Limitations'>
 
-You cannot modify or remove HTTP headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP header, which you can remove.
+* You cannot modify or remove HTTP headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP header, which you can remove.
 
-**Beta limitation:** Currently, you can only set the value of an HTTP Header using string values. You cannot use integer, IP, or boolean values such as `cf.bot_management.score`, `ip.src`, or `cf.bot_management.verified_bot`.
+* During the **Beta**, you can only set the value of an HTTP Header using string values. You cannot use integer, IP, or boolean values such as `cf.bot_management.score`, `ip.src`, or `cf.bot_management.verified_bot`.
 
 </Aside>
 
@@ -90,7 +90,11 @@ Regular expression support            | No   | No  | Yes      | Yes
 
 </TableWrap>
 
-**Note:** During Beta, each plan has separate quotas for URL Rewrite Rules and HTTP Header Modification Rules. After Beta, these quotas will be unified in a single Transform Rules quota per plan.
+<Aside type='note' label='Note'>
+
+During Beta, each plan has separate quotas for URL Rewrite Rules and HTTP Header Modification Rules. After Beta, these quotas will be unified in a single Transform Rules quota per plan.
+
+</Aside>
 
 ---
 

@@ -11,13 +11,15 @@ This feature is available in **Beta**.
 
 </Aside>
 
-To create a new HTTP Header Modification Rule:
- 
+Create HTTP Header Modification Rules in the **Transform Rules** tab under Rules. See [Common use cases](/transform/use-cases#http-header-modification-examples) for example rule definitions.
+
+Do the following:
+
 1. Log in to the Cloudflare dashboard.
 
 1. Select the **Websites** tab and choose the site for which you want to create a new HTTP Header Modification Rule.
 
-1. Click the **Rules** tile in the app bar, and then click the **Transform Rules** tab.
+1. Select **Rules** > **Transform Rules**.
 
     ![Transform Rules tab](../static/transform/overview.png)
 
@@ -27,7 +29,7 @@ To create a new HTTP Header Modification Rule:
  
 1. In the page that displays, enter a descriptive name for the URL Rewrite Rule in **Rule name**.
 
-1. Under **When incoming requests match**, define the rule expression using either the Expression Builder inputs and dropdowns or the Expression Editor. For more information on Expression Builder and Expression Editor, see [Expression Builder and Editor](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor) in the Firewall documentation.
+1. Under **When incoming requests match**, define the [rule expression](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
 
     <Aside type='note'>
 
@@ -35,10 +37,10 @@ To create a new HTTP Header Modification Rule:
 
     </Aside>
 
-1. Select an action for your Header Modification Rule from the dropdown under **Modify header**. Select one of the following options:
+1. For **Modify header**, select one of the following options:
  
-    * _Set static_ — Sets the value of an HTTP header to a static string value. Overrides the value of an existing HTTP header with the same name, or adds a new HTTP header if it does not exist.
-    * _Set dynamic_ — Sets the value of an HTTP header according to the provided expression. Overrides the value of an existing HTTP header with the same name, or adds a new HTTP header if it does not exist.
+    * _Set static_ — Sets the value of an HTTP header to a static string value. Overrides the value of an existing HTTP header with the same name or adds a new HTTP header if it does not exist.
+    * _Set dynamic_ — Sets the value of an HTTP header according to the provided expression. Overrides the value of an existing HTTP header with the same name or adds a new HTTP header if it does not exist.
     * _Remove_ — Removes the HTTP header with the provided name, if it exists.
  
 1. Enter the name of the HTTP header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
