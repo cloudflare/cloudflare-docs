@@ -5,37 +5,74 @@ order: 2
 
 # About Transform Rules
 
-Transform Rules allow you to make adjustments to incoming requests at the edge before they go through any other Cloudflare products. 
+Transform Rules allow you to make adjustments to incoming requests at the edge before they go through any other Cloudflare products.
 
-You can perform the following actions:
+There are two types of Transform Rules:
 
-- Rewrite the **path** of the URL of an HTTP request
-- Rewrite the **query string** of the URL of an HTTP request
+* URL Rewrite Rules:
+    * Rewrite the **path** of the URL of an HTTP request
+    * Rewrite the **query string** of the URL of an HTTP request
+* HTTP Header Modification Rules:
+    * Set the value of a **header** of an HTTP request
+    * Remove a **header** of an HTTP request
 
-A Transform Rule can perform a **static rewrite** or a **dynamic rewrite**. Static rewrites replace a given part of a request URL (path or query string) with a static string. Dynamic rewrites allow you to support more advanced scenarios where you use an [expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions) to define the resulting path or query string.
+To configure Transform Rules in the dashboard, use the **Transform Rules** tab in Rules.
 
-To configure Transform Rules from the Cloudflare dashboard, use the **Transform Rules** tab in Rules. For more, see [Manage Transform Rules](/transform/manage).
+<ButtonGroup>
+  <Button type="primary" href="/transform/create-url-rewrite-rule">Create a URL Rewrite Rule</Button>
+  <Button type="primary" href="/transform/create-header-modification-rule">Create a Header Modification Rule</Button>
+  <Button type="secondary" href="/transform/use-cases">Examples</Button>
+</ButtonGroup>
 
-## Rewrites and redirects 
+---
+
+## URL Rewrite Rules
+
+A URL Rewrite Rule can perform a **static rewrite** or a **dynamic rewrite**. Static rewrites replace a given part of a request URL (path or query string) with a static string. Dynamic rewrites support more advanced scenarios where you use an [expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions) to define the resulting path or query string.
+
+To create a URL Rewrite Rule in the dashboard, see [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule).
+
+### Rewrites and redirects 
 
 You can manipulate the URL of a request through different operations, namely through rewrites and redirects. 
 
 A **rewrite** is a server-side operation that occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change. 
 
 A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can see the URL changing when the redirect occurs.
-You can configure Transform Rules in the dashboard to perform rewrites at the edge, without reaching your web server. 
 
-<Aside type='note' header='Note'>
+You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge without reaching your web server. URL Rewrite Rules run in the `http_request_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
 
 Check [Configuring URL forwarding or redirects with Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/200172286) in the Support KB to learn more about configuring redirects.
 
+---
+
+## HTTP Header Modification Rules
+
+<Aside type="note">
+
+This feature is available in **Beta**.
+
 </Aside>
 
-## Transform Rules tab
+You can manipulate the headers of incoming HTTP requests through HTTP Header Modification Rules. Through these rules you can:
 
-The **Rules List** gives you an overview of the configured Transform Rules for the current zone and allows you to manage these rules in a single convenient location.
+* Set the value of an HTTP header to a literal string value, overwriting its previous value or adding a new header to the request.
+* Set the value of an HTTP header according to an expression, overwriting its previous value or adding a new header to the request.
+* Remove an HTTP header from the request (remove all HTTP headers with the provided name).
 
-![Transform Rules tab](../static/transform/overview.png)
+<Aside type='warning' label='Limitations'>
+
+* You cannot modify or remove HTTP headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP header, which you can remove.
+
+* During the **Beta**, you can only set the value of an HTTP Header using string values. You cannot use integer, IP, or boolean values such as `cf.bot_management.score`, `ip.src`, or `cf.bot_management.verified_bot`.
+
+</Aside>
+
+HTTP Header Modification Rules run in the `http_request_late_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
+
+To create an HTTP Header Modification Rule in the dashboard, see [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule).
+
+---
 
 ## Availability
 
@@ -45,20 +82,29 @@ This table outlines the Transform Rules features available with each customer pl
 
 <TableWrap>
 
-Feature                    | Free | Pro | Business | Enterprise
----------------------------|------|-----|----------|-----------
-Active rules               | 2    | 5   | 10       | 20
-Regular expression support | No   | No  | Yes      | Yes
+Feature                               | Free | Pro | Business | Enterprise
+--------------------------------------|------|-----|----------|-----------
+Active URL Rewrite Rules              | 2    | 5   | 10       | 20
+Active HTTP Header Modification Rules | 2    | 5   | 10       | 20
+Regular expression support            | No   | No  | Yes      | Yes
 
 </TableWrap>
 
+<Aside type='note' label='Note'>
+
+During Beta, each plan has separate quotas for URL Rewrite Rules and HTTP Header Modification Rules. After Beta, these quotas will be unified in a single Transform Rules quota per plan.
+
+</Aside>
+
+---
+
 ## Get started
 
-Review the [difference between rewrites and redirects](#rewrites-and-redirects) to understand the actions you can perform with a Transform Rule.
+To get started building your own Transform Rules, see:
 
-To get started building your own Transform Rules, see [Manage Transform Rules](/transform/manage).
+* [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule)
+* [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule)
 
-Those eager to dive straight into the technical details can refer to these topics:
+For common Transform Rule scenarios, see [Common use cases](/transform/use-cases).
 
-- [Common use cases](/transform/use-cases)
-- Transform Rules language – Check [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language), since the language of Transform Rules is the same as the Firewall Rules language.
+Check [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language) for more information on building expressions for Transform Rules, since the language is the same as the Firewall Rules language.
