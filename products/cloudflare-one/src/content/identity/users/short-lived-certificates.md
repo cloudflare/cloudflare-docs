@@ -105,7 +105,7 @@ $ sudo service ssh restart
 $ sudo systemctl restart ssh
 ```
 
-### Centos/RHEL
+### CentOS/RHEL
 
 ```sh
 $ sudo service sshd restart
