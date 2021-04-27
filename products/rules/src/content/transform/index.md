@@ -16,7 +16,15 @@ There are two types of Transform Rules that perform different actions:
     * Set the value of a **header** of an HTTP request
     * Remove a **header** of an HTTP request
 
-To configure Transform Rules from the Cloudflare dashboard, use the **Transform Rules** tab in Rules. For more information, see [Manage Transform Rules](/transform/manage).
+To configure Transform Rules in the dashboard, use the **Transform Rules** tab in Rules.
+
+<ButtonGroup>
+  <Button type="primary" href="/transform/create-url-rewrite-rule">Create a URL Rewrite Rule</Button>
+  <Button type="primary" href="/transform/create-header-modification-rule">Create a Header Modification Rule</Button>
+  <Button type="secondary" href="/transform/use-cases">Examples</Button>
+</ButtonGroup>
+
+---
 
 ## URL Rewrite Rules
 
@@ -35,6 +43,8 @@ A **redirect** is a client-side operation that occurs after the web server has l
 You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge, without reaching your web server. URL Rewrite Rules run in the `http_request_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
 
 Check [Configuring URL forwarding or redirects with Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/200172286) in the Support KB to learn more about configuring redirects.
+
+---
 
 ## HTTP Header Modification Rules
 
@@ -62,6 +72,8 @@ HTTP Header Modification Rules run in the `http_request_late_transform` Phase of
 
 To create an HTTP Header Modification Rule in the dashboard, see [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule).
 
+---
+
 ## Availability
 
 Cloudflare Transform Rules are available to all customers. Keep in mind that support for regular expressions is based on your plan type.
@@ -79,6 +91,8 @@ Regular expression support            | No   | No  | Yes      | Yes
 </TableWrap>
 
 **Note:** During Beta, each plan has separate quotas for URL Rewrite Rules and HTTP Header Modification Rules. After Beta, these quotas will be unified in a single Transform Rules quota per plan.
+
+---
 
 ## Get started
 
