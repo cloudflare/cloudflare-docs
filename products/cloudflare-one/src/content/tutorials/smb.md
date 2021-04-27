@@ -13,10 +13,12 @@ You can set up this connection by downloading and installing the Cloudflare daem
 1. [How to connect the machine hosting the file share to Cloudflare](#host-machine)
 2. [How to connect from a client machine](#client-machine)
 
-**Before you start** 
-* Create a Cloudflare account
-* [Add an active zone to Cloudflare](https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-* [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/installation) on the host and client machines
+## Before you start
+1. Create a Cloudflare account
+1. [Add an active zone to Cloudflare](https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1. [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/installation) on the host and client machines
+
+---
 
 ## Connect the machine hosting the file share to Cloudflare
 
