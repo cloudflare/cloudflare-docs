@@ -119,7 +119,7 @@ Run `Notepad.exe` as an administrator. Next, configure the Tunnel, replacing the
 
 ```yaml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
-credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+credentials-file: C:\Users\%USERNAME%\.cloudflared\6ff42ae2-765d-4adf-8112-31c55c1551ef.json
 
 ingress:
   - hostname: azure.widgetcorp.tech
@@ -132,7 +132,7 @@ ingress:
 Save the file to the following location:
 
 ```bash
-C:\Windows\System32\config\systemprofile\.cloudflared\config.yml`
+C:\Windows\System32\config\systemprofile\.cloudflared\config.yml
 ```
 
 ## Route to the Tunnel
