@@ -1,5 +1,5 @@
 ---
-updated: 2021-04-15
+updated: 2021-04-27
 category: 🔐 Zero Trust
 ---
 
@@ -13,12 +13,14 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 * Render a terminal in your browser for SSH connections
 
-**⏲️ Time to complete: 30 minutes**
+**⏲️ Time to complete:**
 
-**Before you start**
+30 minutes
 
-* [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-* [Connect your machine to Cloudflare](/tutorials/ssh) and apply Zero Trust rules
+## Before you start
+
+1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1. [Connect your machine to Cloudflare](/tutorials/ssh) and apply Zero Trust rules
 
 ---
 
