@@ -1,9 +1,9 @@
 ---
-title: Getting Started
+title: Get Started
 order: 4
 ---
 
-# Getting Started with APO
+# Get Started with APO
 
 Before you can begin using APO on your WordPress site, complete the following tasks in the order shown below.
 
