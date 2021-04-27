@@ -4,11 +4,13 @@ order: 22
 
 # Common use cases
 
-This page includes examples of URL Rewrite Rules and HTTP Header Modification Rules that address common use cases. 
+This page includes examples of URL Rewrite Rules and HTTP Header Modification Rules that address common use cases.
 
-## URL rewrite use cases
+---
 
-The following common use cases illustrate how to perform URL rewrites with Transform Rules:
+## URL rewrite examples
+
+The following use cases illustrate how to perform URL rewrites with Transform Rules:
 
 * [Rewrite path of welcome page for visitors of specific countries](#rewrite-path-of-welcome-page-for-visitors-of-specific-countries)
 * [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
@@ -153,7 +155,9 @@ The `concat()` and `regex_replace()` functions can appear only **once** in a rew
 
 </Aside>
 
-## HTTP header modification use cases
+---
+
+## HTTP header modification examples
 
 <Aside type="note">
 
@@ -161,14 +165,14 @@ HTTP Header Modification Rules are available in **Beta**.
 
 </Aside>
 
-The following common use cases illustrate how to perform HTTP header modifications with Transform Rules:
+The following examples illustrate how to perform HTTP header modifications with Transform Rules:
 
 * [Add an HTTP header with a static value](#add-an-http-header-with-a-static-value)
 * [Add an HTTP header with the current URI path](#add-an-http-header-with-the-current-uri-path)
 * [Remove an HTTP header](#remove-an-http-header)
 
 ### Add an HTTP header with a static value
- 
+
 The following HTTP Header Modification Rule adds an HTTP header named `X-Source` with a static value (`Cloudflare`):
 
 <Example>
@@ -180,7 +184,7 @@ starts_with(http.request.uri.path, "/en/")
 ```
 
 Selected operation under **Modify header**: _Set static_
- 
+
 **Header name**: `X-Source`
 
 **Value**: `Cloudflare`

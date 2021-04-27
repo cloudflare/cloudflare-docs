@@ -1,6 +1,6 @@
 ---
 title: Create a Header Modification Rule
-order: 3
+order: 2
 ---
 
 # Create an HTTP Header Modification Rule

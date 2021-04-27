@@ -1,18 +1,18 @@
 ---
-order: 1
+order: 3
 ---
 
 # Manage Transform Rules
 
 **Transform Rules** is a feature of **Rules** in the Cloudflare dashboard.
 
-As depicted in the image below, the **Transform Rules** dashboard interface lets you:
+The **Transform Rules** dashboard interface lets you:
 
-- **Create** new URL Rewrite Rules and HTTP Header Modification Rules.
+- Create new URL Rewrite Rules and HTTP Header Modification Rules.
 - See a list of existing rules (both active and paused).
 - Activate or pause rules (turn on or off).
-- **Edit** rules.
-- **Delete** rules.
+- Edit rules.
+- Delete rules.
 - Reorder rules.
 
 ![Available operations in Transform Rules tab](../static/transform/transform-rules-tab.png)
@@ -20,10 +20,10 @@ As depicted in the image below, the **Transform Rules** dashboard interface lets
 ## Create rules
 
 In the **Transform Rules** tab you can:
- 
+
 * [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule)
 * [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule)
- 
+
 See each linked section for details on creating each rule type.
 
 ## Manage rules
