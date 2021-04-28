@@ -2,6 +2,7 @@
 title: Pro
 order: 1
 type: document
+content-type: Reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
