@@ -4,9 +4,9 @@ Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/ru
 
 When creating a URL Rewrite Rule via API, make sure you:
 
-* set the rule action to `rewrite`
-* define the [URL rewrite parameters](#url-rewrite-parameters) in the `action_parameters` field according to the type of URL rewrite (static or dynamic)
-* deploy the rule to the `http_request_transform` Phase at the zone level
+* Set the rule action to `rewrite`
+* Define the [URL rewrite parameters](#url-rewrite-parameters) in the `action_parameters` field according to the type of URL rewrite (static or dynamic)
+* Deploy the rule to the `http_request_transform` Phase at the zone level
 
 ## Create a URL Rewrite Rule
 
@@ -14,9 +14,12 @@ Follow this workflow to create a URL Rewrite Rule for a given zone via API:
 
 1. Use the [List existing rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_transform` Phase at the zone level.
 
-1. If the Phase ruleset does not exist, create it using the [Create ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) method (a `POST` request) with the zone-level endpoint. In the new ruleset properties, set `kind` to `zone` and `phase` to `http_request_transform`.
+1. If the Phase ruleset does not exist, create it using the [Create ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) method with the zone-level endpoint. In the new ruleset properties, set the following values:
 
-1. Use the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method (a `PUT` request) to add a URL Rewrite Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) request mentioned in the previous step.
+    * **kind**: `zone`
+    * **phase**: `http_request_transform`
+
+1. Use the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method to add a URL Rewrite Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) request mentioned in the previous step.
 
 ### Examples
 
@@ -24,7 +27,7 @@ Follow this workflow to create a URL Rewrite Rule for a given zone via API:
 <summary>Example: Add a rule that performs a static URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single URL Rewrite Rule — performing a static rewrite of the URI path — using a `PUT` request:
+The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single URL Rewrite Rule — performing a static rewrite of the URI path — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
 
 ```json
 ---
@@ -99,7 +102,7 @@ header: Response
 <summary>Example: Add a rule that performs a dynamic URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single URL Rewrite Rule — performing a dynamic rewrite of the URI path — using a `PUT` request:
+The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single URL Rewrite Rule — performing a dynamic rewrite of the URI path — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
 
 ```json
 ---
@@ -179,7 +182,9 @@ Create a [static or dynamic URL rewrite](/transform#url-rewrite-rules) based on 
 * Define the `value` parameter to specify a static URL rewrite.
 * Define the `expression` parameter to specify the expression that defines the dynamic URL rewrite to perform.
 
-The full syntax of the `action_parameters` field for a **static** URL Rewrite Rule that rewrites both the URI path and the query string is the following:
+### Static URL Rewrite Rules
+
+The full syntax of the `action_parameters` field for a static URL Rewrite Rule that rewrites both the URI path and the query string is the following:
 
 ```json
 "action_parameters": {
@@ -196,7 +201,9 @@ The full syntax of the `action_parameters` field for a **static** URL Rewrite Ru
 
 If you are only rewriting the URI path or the query string, omit the `query` or `path` parameter, respectively.
 
-The full syntax of the `action_parameters` field for a **dynamic** URL Rewrite Rule that rewrites both the URI path and the query string is the following:
+### Dynamic URL Rewrite Rules
+
+The full syntax of the `action_parameters` field for a dynamic URL Rewrite Rule that rewrites both the URI path and the query string is the following:
 
 ```json
 "action_parameters": {
@@ -212,6 +219,8 @@ The full syntax of the `action_parameters` field for a **dynamic** URL Rewrite R
 ```
 
 If you are only rewriting the URI path or the query string, omit the `query` or `path` parameter, respectively.
+
+### Different URL rewrite types in the same rule
 
 The same rule can have different types of URL rewrites for the URI path and the query string. For example, a single rule can perform a **dynamic** URL rewrite of the URI path and a **static** URL rewrite of the query string. The syntax of such a rule would be the following:
 
