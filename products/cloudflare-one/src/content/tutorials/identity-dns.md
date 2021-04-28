@@ -1,5 +1,5 @@
 ---
-updated: 2021-04-15
+updated: 2021-04-27
 category: 🛡️ Web Gateway
 ---
 
