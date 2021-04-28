@@ -4,13 +4,27 @@ order: 22
 
 # Common use cases
 
-The following common use cases illustrate how to perform rewrites of URL components with Transform Rules.
+This page includes examples of URL Rewrite Rules and HTTP Header Modification Rules that address common use cases.
 
-## Rewrite path of welcome page for United Kingdom and Portugal visitors
+---
 
-If you want to have a welcome page in two languages, create two Transform Rules with a static rewrite of the path component:
+## URL rewrite examples
 
-**Rule #1**
+The following use cases illustrate how to perform URL rewrites with Transform Rules:
+
+* [Rewrite path of welcome page for visitors in specific countries](#rewrite-path-of-welcome-page-for-visitors-in-specific-countries)
+* [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
+* [Rewrite path of archived blog posts](#rewrite-path-of-archived-blog-posts)
+* [Rewrite path of moved section of a website](#rewrite-path-of-moved-section-of-a-website)
+* [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
+
+### Rewrite path of welcome page for visitors in specific countries
+
+To have a welcome page in two languages, create two URL Rewrite Rules with a static rewrite of the path component:
+
+**URL Rewrite Rule #1**
+
+<Example>
 
 Text in **Expression Editor**:
 
@@ -23,8 +37,11 @@ Text after **Path** > **Rewrite to...** > _Static_:
 ```txt
 /welcome-gb.html
 ```
- 
-**Rule #2**
+</Example>
+
+**URL Rewrite Rule #2**
+
+<Example>
 
 Text in **Expression Editor**:
 
@@ -38,11 +55,13 @@ Text after **Path** > **Rewrite to...** > _Static_:
 /welcome-pt.html
 ```
 
-## Rewrite URL query string of blog visitors
+</Example>
 
-To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a Transform Rule with the following settings:
+### Rewrite URL query string of blog visitors
 
-**Rule #1**
+To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a URL Rewrite Rule with the following settings:
+
+<Example>
 
 Text in **Expression Editor**:
 
@@ -56,15 +75,17 @@ Text after **Query** > **Rewrite to...** > _Static_:
 sort-by=date
 ```
 
+</Example>
+
 Additionally, set the path rewrite action of the same rule to _Preserve_ so that the URL path doesn’t change.
 
 ![Rule configuration for query rewrite in the blog example](../static/transform/use-case-blog.png)
 
-## Rewrite path of archived blog posts
+### Rewrite path of archived blog posts
 
-To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new Transform Rule and define a dynamic URL path rewrite using an expression:
+To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new URL Rewrite Rule and define a dynamic URL path rewrite using an expression:
 
-**Rule #1**
+<Example>
 
 Text in **Expression Editor**:
 
@@ -78,13 +99,15 @@ Text after **Path** > **Rewrite to...** > _Dynamic_:
 concat("/archive", http.request.uri.path)
 ```
 
+</Example>
+
 The filter uses the `starts_with()` function all paths starting with `/news/2012/`. The dynamic path rewrite uses the `concat()` function to concatenate a prefix to the original URL path of the HTTP request.
 
-## Rewrite path of moved section of a website
+### Rewrite path of moved section of a website
 
-To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Use the `regex_replace()` function for this purpose:
+To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Create a URL Rewrite Rule and use the `regex_replace()` function for this purpose:
 
-**Rule #1**
+<Example>
 
 Text in **Expression Editor**:
 
@@ -98,11 +121,15 @@ Text after **Path** > **Rewrite to...** > _Dynamic_:
 regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
 ```
 
+</Example>
+
 The `regex_replace()` function matches the path component on a regular expression (`^/blog/`) and then provides a replacement for that match (`/marketing/`).
 
-## Rewrite blog archive URLs to support a new URL format
+### Rewrite blog archive URLs to support a new URL format
 
-To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following Transform Rule:
+To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following URL Rewrite Rule:
+
+<Example>
 
 Text in **Expression Editor**:
 
@@ -116,12 +143,88 @@ Text after **Path** > **Rewrite to...** > _Dynamic_:
 regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")
 ```
 
-The function `regex_replace()` also allows you to extract parts of the URL using regular expressions’ capture groups. Create capture groups by putting part of the regular expression in parentheses. You can then reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
+</Example>
+
+The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
 
 <Aside type="warning" header="Notes">
 
-You can only use the fields under [`http.request.uri`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#uri-argument-and-value-fields) and [`http.request.headers`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) in rewrite expressions.
+Use only the fields under [`http.request.uri`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#uri-argument-and-value-fields) and [`http.request.headers`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) in rewrite expressions.
 
-You can only call the functions `concat()` and `regex_replace()` functions **once** in a rewrite expression. For more on these functions, see [Transformation functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions#transformation-functions).
+The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, see [Transformation functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions#transformation-functions).
 
 </Aside>
+
+---
+
+## HTTP header modification examples
+
+<Aside type="note">
+
+HTTP Header Modification Rules are available in **Beta**.
+
+</Aside>
+
+The following examples illustrate how to perform HTTP header modifications with Transform Rules:
+
+* [Add an HTTP header with a static value](#add-an-http-header-with-a-static-value)
+* [Add an HTTP header with the current URI path](#add-an-http-header-with-the-current-uri-path)
+* [Remove an HTTP header](#remove-an-http-header)
+
+### Add an HTTP header with a static value
+
+The following HTTP Header Modification Rule adds an HTTP header named `X-Source` with a static value (`Cloudflare`):
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+starts_with(http.request.uri.path, "/en/")
+```
+
+Selected operation under **Modify header**: _Set static_
+
+**Header name**: `X-Source`
+
+**Value**: `Cloudflare`
+
+</Example>
+
+### Add an HTTP header with the current URI path
+ 
+The following HTTP Header Modification Rule adds an HTTP header named `X-Path` with the current URI path:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+starts_with(http.request.uri.path, "/en/")
+```
+
+Selected operation under **Modify header**: _Set dynamic_
+ 
+**Header name**: `X-Path`
+
+**Value**: `http.request.uri.path`
+
+</Example>
+
+### Remove an HTTP header
+ 
+The following HTTP Header Modification Rule removes the `cf-connecting-ip` HTTP header from the request:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+starts_with(http.request.uri.path, "/private/")
+```
+
+Selected operation under **Modify header**: _Remove_
+ 
+**Header name**: `cf-connecting-ip`
+
+</Example>

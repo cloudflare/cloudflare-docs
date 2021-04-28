@@ -27,7 +27,9 @@ This guide walks through an end-to-end Gateway deployment that includes both mod
 1. Deploy HTTP filtering rules for roaming users in a phased rollout
 1. Enable HTTP filtering globally
 
-**⏲️ Time to complete: 45 minutes**
+**⏲️ Time to complete:**
+
+45 minutes
 
 ## Choose a Cloudflare for Teams plan
 

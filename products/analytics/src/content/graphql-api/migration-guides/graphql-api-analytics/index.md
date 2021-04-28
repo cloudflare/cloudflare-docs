@@ -34,7 +34,7 @@ For example, if you wanted to see which five data centers had the most number of
 }
 ```
 
-Example response:
+**Example response**
 ```json
 {
   "data": {
@@ -96,8 +96,10 @@ Example response:
 }
 ```
 
-With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes, the query to access the same data (`count`, `sum(edgeResponseBytes)`, and `visits` in the `httpRequestsAdaptiveGroups` GraphQL API node) now looks like the following example:
+## `httpRequestsAdaptiveGroups` GraphQL API node
+With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes, use the `httpRequestsAdaptiveGroups` GraphQL API node to access the same data (`count`, `sum(edgeResponseBytes)`, and `visits`).
 
+**Request**
 ```graphql
 {
     viewer {
@@ -128,7 +130,7 @@ With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByCo
 }
 ```
 
-Example response:
+**Example response**
 ```json
 {
   "data": {
@@ -213,8 +215,7 @@ Example response:
 This query says:
 
 - Given the indicated zones, `limit`, and time range,
-- Fetch the total number of requests (as `count`), the total amount of data transfer (as `edgeResponseBytes` of `sum` object), and the total number of
-  `visits` per data center.
+- Fetch the total number of requests (as `count`), the total amount of data transfer (as `edgeResponseBytes` of `sum` object), and the total number of `visits` per data center.
 
 A few points to note:
 

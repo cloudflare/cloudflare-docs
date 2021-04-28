@@ -13,11 +13,13 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 * Connect a machine to Cloudflare's network using an SSH connection
 * Connect from a client machine
 
-**⏲️ Time to complete: 30 minutes**
+**⏲️ Time to complete:**
 
-**Before you start**
+30 minutes
 
-* [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+## Before you start
+
+1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 
 ---
 

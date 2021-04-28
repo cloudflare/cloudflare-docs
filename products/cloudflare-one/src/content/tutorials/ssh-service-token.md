@@ -15,7 +15,9 @@ This walkthrough extends a [previous guide](/tutorials/gitlab) that describes co
 * Add a rule to an existing Access policy to allow `cloudflared` to reach the resource using the service token
 * Configure the `cloudflared` command to connect to the protected resource
 
-**⏲️ Time to complete: 1 hour**
+**⏲️ Time to complete:**
+
+1 hour
 
 ---
 
