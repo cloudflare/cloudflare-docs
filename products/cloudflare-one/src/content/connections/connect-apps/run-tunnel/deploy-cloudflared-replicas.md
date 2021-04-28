@@ -26,7 +26,7 @@ To deploy multiple `cloudflared` replicas:
 
  This will generate a unique `connector_id` for `cloudflared`.
 
-1. In a separate window, run the same command to initialize another cloudflared
+1. In a separate window, run the same command to initialize another `cloudflared` instance:
 
  ```sh
  $ cloudflared tunnel run <NAME>
