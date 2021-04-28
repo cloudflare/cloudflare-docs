@@ -1,6 +1,7 @@
 ---
 title: Business
 order: 2
+content-type: reference
 ---
 
 import AnalyticsFeatures from "../_partials/_analytics-features.md"

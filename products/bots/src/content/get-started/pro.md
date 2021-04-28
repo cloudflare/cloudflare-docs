@@ -1,6 +1,7 @@
 ---
 title: Pro
 order: 1
+content-type: how to
 ---
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"

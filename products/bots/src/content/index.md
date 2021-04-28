@@ -1,6 +1,7 @@
 ---
 title: Welcome
 order: 0
+content-type: landing page
 ---
 
 # Bot Management
