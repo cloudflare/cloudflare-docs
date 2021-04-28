@@ -1,8 +1,9 @@
 ---
+title: Create a URL Rewrite Rule
 order: 1
 ---
 
-# Create a URL Rewrite Rule
+# Create a URL Rewrite Rule in the dashboard
 
 Create URL Rewrite Rules in the **Transform Rules** tab under Rules. See [Common use cases](/transform/use-cases#url-rewrite-examples) for example rule definitions.
 
