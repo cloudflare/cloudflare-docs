@@ -39,7 +39,7 @@ In general, simple expressions use this pattern:
 <field> <operator> <value>
 ```
 
-For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
+For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/reference).
 
 ---
 
