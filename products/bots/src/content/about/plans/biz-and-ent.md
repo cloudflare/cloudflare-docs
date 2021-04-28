@@ -2,6 +2,7 @@
 title: Business
 order: 2
 type: document
+content-type: Reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
