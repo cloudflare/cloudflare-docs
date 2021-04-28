@@ -1,7 +1,6 @@
 ---
 title: Troubleshooting
 order: 10
-content-type: FAQ
 ---
 
 # Troubleshooting

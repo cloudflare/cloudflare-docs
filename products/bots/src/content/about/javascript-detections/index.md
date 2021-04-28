@@ -2,7 +2,6 @@
 title: JavaScript detections
 order: 4
 type: overview
-content-type: configuration
 ---
 # JavaScript detections for bots
 

@@ -2,7 +2,6 @@
 title: Enterprise Bot Management
 order: 3
 type: document
-content-type: Reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"

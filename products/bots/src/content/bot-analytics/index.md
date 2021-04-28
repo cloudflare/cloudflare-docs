@@ -1,7 +1,6 @@
 ---
 title: Bot Analytics
 order: 4
-content-type: doc structure
 ---
 
 # Bot Analytics

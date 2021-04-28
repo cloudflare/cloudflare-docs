@@ -2,7 +2,6 @@
 title: Plans
 order: 1
 type: overview
-content-type: Reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"

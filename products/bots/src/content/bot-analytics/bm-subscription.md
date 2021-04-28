@@ -1,7 +1,6 @@
 ---
 title: Enterprise Bot Management
 order: 3
-content-type: reference
 ---
 
 import AnalyticsFeatures from "../_partials/_analytics-features.md"
