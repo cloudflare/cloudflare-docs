@@ -41,15 +41,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": "false"
-            }
-          ],
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
-              "action": "block"
+              "action": "block",
+              "enabled": true
             }
           ]
         }
@@ -60,8 +57,8 @@ curl -X PUT \
 ```
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a Phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone-id}`).
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"overrides": {"category": joomla", "action": "block"}` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -83,15 +80,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": "false"
-            }
-          ],
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
-              "action": "block"
+              "action": "block",
+              "enabled": true
             }
           ]
         }
@@ -102,8 +96,8 @@ curl -X PUT \
 ```
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a Phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"overrides": {"category": joomla", "action": "block"}` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -129,16 +123,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": false
-            }
-          ],
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
-              "enabled": true,
-              "action": "log"
+              "action": "log",
+              "enabled": true
             },
             {
               "category": "wordpress",
@@ -172,16 +162,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": false
-            }
-          ],
+          "enabled": false,          
           "categories": [
             {
               "category": "joomla",
-              "enabled": true,
-              "action": "log"
+              "action": "log",
+              "enabled": true
             },
             {
               "category": "wordpress",
