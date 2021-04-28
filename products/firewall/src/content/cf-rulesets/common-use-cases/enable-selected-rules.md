@@ -45,12 +45,12 @@ curl -X PUT \
         "overrides": {
           "enabled": false,          
           "rules": [
-            { 
+            {
               "id": "{rule-id-1}",
               "action": "block",
               "enabled": true
             },
-            { 
+            {
               "id": "{rule-id-2}",
               "action": "log",
               "enabled": true              
