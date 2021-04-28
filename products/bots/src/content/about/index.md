@@ -1,6 +1,7 @@
 ---
 title: About
 order: 1
+content-type: landing page
 ---
 
 import GetStarted from "../_partials/_plan-get-started.md"
