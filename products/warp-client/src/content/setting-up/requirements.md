@@ -10,7 +10,7 @@ order: 1
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Windows 8, Windows 10</td>
+      <td>Windows 8+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
@@ -38,11 +38,11 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>High Sierra, Catalina</td>
+      <td>High Sierra+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td>Intel & M1</td>
     </tr>
     <tr>
       <td><strong>HD Space</strong></td>
