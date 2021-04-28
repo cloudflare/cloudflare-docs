@@ -182,7 +182,7 @@ Create a [static or dynamic URL rewrite](/transform#url-rewrite-rules) based on 
 * Define the `value` parameter to specify a static URL rewrite.
 * Define the `expression` parameter to specify the expression that defines the dynamic URL rewrite to perform.
 
-### Static URL Rewrite Rules
+### Static URL rewrite parameters
 
 The full syntax of the `action_parameters` field for a static URL Rewrite Rule that rewrites both the URI path and the query string is the following:
 
@@ -201,7 +201,7 @@ The full syntax of the `action_parameters` field for a static URL Rewrite Rule t
 
 If you are only rewriting the URI path or the query string, omit the `query` or `path` parameter, respectively.
 
-### Dynamic URL Rewrite Rules
+### Dynamic URL rewrite parameters
 
 The full syntax of the `action_parameters` field for a dynamic URL Rewrite Rule that rewrites both the URI path and the query string is the following:
 
