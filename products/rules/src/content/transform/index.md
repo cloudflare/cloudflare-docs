@@ -30,7 +30,9 @@ To configure Transform Rules in the dashboard, use the **Transform Rules** tab i
 
 A URL Rewrite Rule can perform a **static rewrite** or a **dynamic rewrite**. Static rewrites replace a given part of a request URL (path or query string) with a static string. Dynamic rewrites support more advanced scenarios where you use an [expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions) to define the resulting path or query string.
 
-To create a URL Rewrite Rule in the dashboard, see [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule).
+To create a URL Rewrite Rule in the dashboard, see [Create a URL Rewrite Rule in the dashboard](/transform/create-url-rewrite-rule).
+
+To create a URL Rewrite Rule via API, see [Create a URL Rewrite Rule via API](/transform/api/url-rewrite-rule).
 
 ### Rewrites and redirects 
 
@@ -104,6 +106,8 @@ To get started building your own Transform Rules, see:
 
 * [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule)
 * [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule)
+
+You can also [create Transform Rules via API](/transform/api).
 
 For common Transform Rule scenarios, see [Common use cases](/transform/use-cases).
 
