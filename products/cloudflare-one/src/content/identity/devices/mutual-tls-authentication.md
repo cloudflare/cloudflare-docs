@@ -29,7 +29,7 @@ The mTLS certificate is used **only** to verify the client certificate. It does 
 
 To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
 
-1. Navigate to **Service Auth > Mutual TLS**.
+1. Navigate to **Configuration > Service Auth > Mutual TLS**.
 
 2. Click **Add mTLS Certificate**.
 
