@@ -58,7 +58,7 @@ curl -X PUT \
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a Phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone-id}`).
 * `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"categories": [{"category": joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -97,7 +97,7 @@ curl -X PUT \
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a Phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
 * `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"categories": [{"category": joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
