@@ -2,7 +2,7 @@
 title: Free
 order: 0
 type: document
-content-type: Reference
+pcx-content-type: Reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
