@@ -72,7 +72,9 @@ You can manipulate the headers of incoming HTTP requests through HTTP Header Mod
 
 HTTP Header Modification Rules run in the `http_request_late_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
 
-To create an HTTP Header Modification Rule in the dashboard, see [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule).
+To create an HTTP Header Modification Rule in the dashboard, see [Create an HTTP Header Modification Rule in the dashboard](/transform/create-header-modification-rule).
+
+To create an HTTP Header Modification Rule via API, see [Create an HTTP Header Modification Rule via API](/transform/api/header-modification-rule).
 
 ---
 
