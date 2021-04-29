@@ -101,7 +101,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `build` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](configuration#build) for more details.
+  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](#build) for more details.
 
 
 </Definitions>
