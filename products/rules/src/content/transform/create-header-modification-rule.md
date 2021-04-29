@@ -3,7 +3,7 @@ title: Create a Header Modification Rule
 order: 2
 ---
 
-# Create an HTTP Header Modification Rule
+# Create an HTTP Header Modification Rule in the dashboard
 
 <Aside type="note">
 
