@@ -101,7 +101,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `build` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](configuration#build) for more details
+  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](configuration#build) for more details.
 
 
 </Definitions>
@@ -366,7 +366,9 @@ Cloudflare Workers now supports uploading scripts as a collection of modules, in
 
 <Aside>
 
-  **Note:** You'll need to opt-in to the [Durable Objects](/learning/using-durable-objects) open beta, to have access to the `modules` format, since it's required to use Durable Objects.
+  **Note:** You currently need to opt-in to the [Durable Objects](/learning/using-durable-objects)
+  open beta to be able to use the `modules` format. This restriction will be removed as modules are
+  better supported in the Workers Dashboard.
 
 </Aside>
 
@@ -378,7 +380,7 @@ export default {
   // * waitUntil() and passThroughOnException() are accessible from ctx instead
   // * request.cf is currently not available
   // env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
-  // will be exposed under, instead of them being placed in global scope.
+  // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
     const headers = { 'Content-Type': 'text/html;charset=UTF-8' }
     return new Response(html, { headers })

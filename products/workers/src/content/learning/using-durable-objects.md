@@ -250,7 +250,7 @@ $ wrangler publish --new-class Counter
 
 ### Specifying the main module
 
-Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. See the [modules section of the custom builds documentation](/cli-wrangler/configuration#modules) for more detauls
+Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. See the [modules section of the custom builds documentation](/cli-wrangler/configuration#modules) for more details.
 
 ### Configuring Durable Object bindings
 
