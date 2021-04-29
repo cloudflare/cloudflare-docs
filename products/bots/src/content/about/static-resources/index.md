@@ -1,7 +1,7 @@
 ---
 title: Static resource protection
 order: 3
-content-type: configuration
+pcx-content-type: configuration
 
 ---
 

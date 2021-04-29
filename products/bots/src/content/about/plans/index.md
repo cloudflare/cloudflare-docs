@@ -2,7 +2,7 @@
 title: Plans
 order: 1
 type: overview
-content-type: Reference
+pcx-content-type: reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
