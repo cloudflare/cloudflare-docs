@@ -167,7 +167,9 @@ As mentioned above, Durable Objects do not receive requests directly from the In
 
 When a Worker talks to a Durable Object, it does so through a "stub" object. The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [Requests](/runtime-apis/request) to the instance.
 
-Note that in the example below, we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for Durable Objects. The fetch handler in this example implements the Worker that talks to the Durable Object. We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
+The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the service-workers syntax.
+
+We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. As you saw above, we wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
@@ -248,7 +250,7 @@ $ wrangler publish --new-class Counter
 
 ### Specifying the main module
 
-Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using "module" key in the `package.json` file in the project.
+Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. See the [modules section of the custom builds documentation](/cli-wrangler/configuration#modules) for more details.
 
 ### Configuring Durable Object bindings
 
