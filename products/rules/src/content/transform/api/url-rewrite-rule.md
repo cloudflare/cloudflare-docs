@@ -1,3 +1,8 @@
+---
+title: Create a URL Rewrite Rule
+order: 1
+---
+
 # Create a URL Rewrite Rule via API
 
 Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to create URL Rewrite Rules via API. Define the rewrite configuration in the `action_parameters` field. See [Common use cases](/transform/use-cases) for example rule definitions.
