@@ -1,6 +1,6 @@
 ---
 title: Building custom views
-order: 10
+order: 20
 ---
 
 # Building custom views
@@ -10,7 +10,7 @@ The Cloudflare dashboard is built on our APIs, which are available at [https://a
 For example, to see how we implemented the API calls from the **Analytics** tab of the dashboard:
 
 1. Navigate to the **Analytics** application on the dashboard.
-1. Open the developer tools for your web browser, like [Chrome's developer tools](https://developer.chrome.com/docs/devtools/open/).`
+1. Open the developer tools for your web browser, like [Chrome's developer tools](https://developer.chrome.com/docs/devtools/open/).
 1. Switch to the **Network** tab of the developer tools and search for *graphql*.
 1. Reload the page to capture the results.
 1. Review the API calls and their responses.
