@@ -24,7 +24,9 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 * Manage the list in the Teams dashboard
 * Use the list in a Gateway policy
 
-**⏲️ Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
 
 ## Upload a CSV
 
