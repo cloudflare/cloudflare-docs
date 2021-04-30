@@ -27,7 +27,7 @@ To view the content of the payload in clear text, do one of the following:
 
 <Aside type='warning' header='Important'>
 
-All Cloudflare logs are encrypted at rest. Encrypting the payload information adds a second layer of encryption for the matched values that triggered a WAF rule.
+All Cloudflare logs are encrypted at rest. Encrypting the payload content adds a second layer of encryption for the matched values that triggered a WAF rule.
 
 Make sure you store your private key safely. If you lose the private key, configure payload logging with a new public key. The payload of new requests will be encrypted with the new public key.
 

@@ -18,6 +18,6 @@ View the content of the matched rule payload in the dashboard by entering your p
 
     ![Enter private key to decrypt payload](../../images/transform-rules/payload-decrypt-popup.png)
 
-If the private key you entered can decrypt the payload successfully, the **Payload match** card displays the matched payload content in clear text.
+If the private key you entered decrypts the encrypted payload successfully, the **Payload match** card displays the matched payload content in clear text.
 
 ![View the decrypted payload in the dashboard](../../images/transform-rules/payload-decrypted.png)
