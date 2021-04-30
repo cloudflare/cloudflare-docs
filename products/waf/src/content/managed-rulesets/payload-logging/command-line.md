@@ -28,7 +28,7 @@ Do the following:
     ~ $ cd matched-data-cli
     ```
 
-1. Run the following command: 
+1. Run the following command:
 
     ```sh
     ~/matched-data-cli $ ./matched-data-cli generate-key-pair
@@ -40,10 +40,9 @@ Do the following:
 
 After generating the key pair, copy the public key value and enter it in the [payload logging configuration](/managed-rulesets/payload-logging/configure).
 
-
 ## Decrypt the payload content using the command line
 
-Using the [`matched-data-cli`](https://github.com/cloudflare/matched-data-cli) tool to decrypt a payload in the command line.
+Use the `matched-data-cli` tool to decrypt a payload in the command line.
 
 1. Download the `matched-data-cli` tool for your platform from the [Releases](https://github.com/cloudflare/matched-data-cli/releases) page on GitHub, under **Assets**.
 
@@ -97,4 +96,3 @@ The format of the encrypted payload can change over time. The `matched-data-cli`
 To fix this error, download a newer version of the tool from the [Releases](https://github.com/cloudflare/matched-data-cli/releases) page on GitHub and try again.
 
 </Aside>
-

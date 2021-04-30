@@ -1,7 +1,6 @@
 ---
-order: 1
 title: Configure payload logging
-type: overview
+order: 1
 ---
 
 # Configure payload logging in the dashboard
@@ -22,7 +21,6 @@ Configure payload logging for a ruleset in the ruleset configuration page.
 
 1. Click **Next**.
 
-1. If you generated a key pair in the browser, copy the displayed private key and **store it safely**. You will use this private key later to [decrypt payloads](/managed-rulesets/payload-logging/view).
+1. If you generated a key pair in the browser, copy the displayed private key and **store it safely**. You will use this private key later to [view the decrypted payloads](/managed-rulesets/payload-logging/view).
 
 1. Click **Done**.
-

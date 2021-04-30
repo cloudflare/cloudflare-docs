@@ -32,18 +32,3 @@ Alternatively, decrypt the payload using the `matched-data-cli` tool. See [Decry
 * Cloudflare staff will never ask for the private key.
 
 </Aside>
-
-
-
-## Payload in the logs
-
-Once you enable payload logging, payloads will be available in the logs as encrypted Base64 blobs within the `metadata` field:
-
-```json
-"metadata": [
-  {
-    "key": "encrypted_matched_data",
-    "Value": "AdfVn7odpamJGeFAGj0iW2oTtoXOjVnTFT2x4l+cHKJsEQAAAAAAAAB+zDygjV2aUI92FV4cHMkp+4u37JHnH4fUkRqasPYaCgk="
-  }
-]
-```
