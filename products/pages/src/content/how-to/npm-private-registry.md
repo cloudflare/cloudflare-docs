@@ -1,6 +1,6 @@
 # Install Private Packages
 
-Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough may focus specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
+Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough may focus specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
 
 We'll be adjusting the [Environment Variables](/platform/build-configuration#environment-variables) in our Pages project's settings. An existing website can be modified at any time, but new projects can be initialized with these settings, too. Either way, altering the project settings won't be reflected ***until its next deployment***.
 
@@ -42,7 +42,7 @@ Simply add a new [Environment Variable](/platform/build-configuration#environmen
 
 </Aside>
 
-That's it! By default, `npm` looks for an environment variable named `NPM_TOKEN` and _because_ we didn't define a [custom registry endpoint](#custom-registry-endpoints), the npm registry is assumed. Local development should continue to work as expected, provided that you and your teammates are authenticated with npm accounts (see `npm whoami` and `npm login`) that have been granted access to the private package(s).
+By default, `npm` looks for an environment variable named `NPM_TOKEN` and _because_ we didn't define a [custom registry endpoint](#custom-registry-endpoints), the npm registry is assumed. Local development should continue to work as expected, provided that you and your teammates are authenticated with npm accounts (see `npm whoami` and `npm login`) that have been granted access to the private package(s).
 
 
 ## Custom Registry Endpoints
