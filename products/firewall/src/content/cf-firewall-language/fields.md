@@ -200,6 +200,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">GB</code>
          </p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr>
@@ -209,6 +210,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr>
@@ -220,6 +222,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <br />
          <code class="InlineCode">GB-SWK</code>
          </p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr>

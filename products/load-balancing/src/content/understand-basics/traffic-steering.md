@@ -55,24 +55,24 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
 
 For more details on working with regions and region codes, see [Region Mapping API](../region-mapping-api).
 
-## GPS Steering
+## Proximity Steering
 
-Choose **GPS Steering** to route visitors or internal services to the closest physical data center.
+Choose **Proximity Steering** to route visitors or internal services to the closest physical data center.
 
-To use GPS steering on a load balancer, you first need to add GPS coordinates to each origin pool.
+To use proximity steering on a load balancer, you first need to add GPS coordinates to each origin pool.
 
-### When to add GPS steering
+### When to add proximity steering
 
 - For new pools, add GPS coordinates when you create a pool.
 - For existing pools, add GPS coordinates when [managing pools](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/pools) or in the **Add Traffic Steering** step of creating a load balancer.
 
-### How to add GPS steering
+### How to add proximity steering
 
 To add coordinates when creating or editing a pool:
-1. Select **Configure co-ordinates for GPS Steering**.
+1. Select **Configure co-ordinates for Proximity Steering**.
 1. Enter the latitude and longitude or drag a marker on the map.
 1. Select **Save**.
 
 <Aside type="warning" header="Warning:">
-  For accurate GPS Steering, add GPS coordinates to all pools within the same load balancer.
+  For accurate proximity steering, add GPS coordinates to all pools within the same load balancer.
 </Aside>

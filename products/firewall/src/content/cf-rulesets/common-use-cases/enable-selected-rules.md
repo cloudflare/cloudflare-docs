@@ -27,8 +27,8 @@ The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/
 In this example:
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the Phase to apply a Managed Ruleset to requests for the specified zone (`{zone-id}`).
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-* `"overrides": {"rules": [{"id": "{rule-id-1}", "action": "block"}, {"id": "{rule-id-2}", "action": "block"}]}` defines a list of overrides at the rule level to enable two individual rules.
+* `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+* `"rules": [{"id": "{rule-id-1}", "action": "block", "enabled": true}, {"id": "{rule-id-2}", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
 ```json
 curl -X PUT \
@@ -43,19 +43,17 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": "false"
-            }
-          ],
+          "enabled": false,          
           "rules": [
             {
               "id": "{rule-id-1}",
-              "action": "block"
+              "action": "block",
+              "enabled": true
             },
             {
               "id": "{rule-id-2}",
-              "action": "log"
+              "action": "log",
+              "enabled": true              
             }
           ]
         }
@@ -77,8 +75,8 @@ The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/
 In this example:
 
 * `"id": "{managed-ruleset-id}"` adds a rule to the Phase to apply a Managed Ruleset to requests for `example.com`.
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-* `"overrides": {"rules": [{"id": "{rule-id-1}", "action": "block"}, {"id": "{rule-id-2}", "action": "block"}]}` defines a list of overrides at the rule level to enable two individual rules.
+* `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+* `"rules": [{"id": "{rule-id-1}", "action": "block", "enabled": true}, {"id": "{rule-id-2}", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
 ```json
 curl -X PUT \
@@ -93,19 +91,17 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": "false"
-            }
-          ],
+          "enabled": false,
           "rules": [
             {
               "id": "{rule-id-1}",
-              "action": "block"
+              "action": "block",
+              "enabled": true
             },
             {
               "id": "{rule-id-2}",
-              "action": "log"
+              "action": "log",
+              "enabled": true
             }
           ]
         }

@@ -15,7 +15,9 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 * Create a list of approved countries where a team operates
 * Require that users connecting to self-hosted or SaaS applications connect from those countries
 
-**⏲️ Time to complete: ~5 minutes**
+**⏲️ Time to complete:**
+
+5 minutes
 
 ## Create an approved country list
 

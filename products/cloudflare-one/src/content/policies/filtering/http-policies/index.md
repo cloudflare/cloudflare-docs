@@ -12,7 +12,7 @@ Install the <a href="/connections/connect-devices/warp/install-cloudflare-cert">
 
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
-![Gateway flow HTTP](../../../static/documentation/policies/gateway-flow-3.jpg)
+![Gateway flow HTTP](../../../static/documentation/policies/gateway-identity-diagram.jpg)
 
 Build an HTTP policy by configuring the following elements:
 
