@@ -260,19 +260,19 @@ After you've added your report, you will notice that not all report components r
 
 To update Data Studio with fields added to BigQuery, refresh fields for the data source.
 
-1. Open the Data Studio Cloudflare Dashboard in **Edit** mode.
+1. In Data Studio, open the Cloudflare dashboard in **Edit** mode.
 
 2. Expand the **Resource** menu and select **Manage added data sources**.
 
 3. Click the **EDIT** action for the data source that you want to update.
 
-4. Click **REFRESH FIELDS** below the table. A window with Field changes found in BigQuery will pop up.
+4. Click **REFRESH FIELDS** below the table. A window with **Field changes found** in BigQuery will pop up.
 
 5. To add the new fields, click **APPLY**.
 
-You can also create custom fields directly in Data Studio:
+You can also create custom fields directly in Data Studio.
 
-1. Open the Data Studio Cloudflare Dashboard in **Edit** mode.
+1. In Data Studio, open the Cloudflare dashboard in **Edit** mode.
 
 2. Expand the **Resource** menu and select **Manage added data sources**.
 
