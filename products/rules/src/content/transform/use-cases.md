@@ -4,7 +4,7 @@ order: 5
 
 # Common use cases
 
-This page includes examples of URL Rewrite Rules and HTTP Header Modification Rules that address common use cases.
+This page includes examples of URL Rewrite Rules and HTTP Request Header Modification Rules that address common use cases.
 
 ---
 
@@ -37,6 +37,7 @@ Text after **Path** > **Rewrite to...** > _Static_:
 ```txt
 /welcome-gb.html
 ```
+
 </Example>
 
 **URL Rewrite Rule #2**
@@ -157,23 +158,23 @@ The `concat()` and `regex_replace()` functions can appear only **once** in a rew
 
 ---
 
-## HTTP header modification examples
+## HTTP request header modification examples
 
 <Aside type="note">
 
-HTTP Header Modification Rules are available in **Beta**.
+HTTP Request Header Modification Rules are available in **Beta**.
 
 </Aside>
 
-The following examples illustrate how to perform HTTP header modifications with Transform Rules:
+The following examples illustrate how to perform header modifications with Transform Rules:
 
-* [Add an HTTP header with a static value](#add-an-http-header-with-a-static-value)
-* [Add an HTTP header with the current URI path](#add-an-http-header-with-the-current-uri-path)
-* [Remove an HTTP header](#remove-an-http-header)
+* [Add an HTTP request header with a static value](#add-an-http-request-header-with-a-static-value)
+* [Add an HTTP request header with the current URI path](#add-an-http-request-header-with-the-current-uri-path)
+* [Remove an HTTP request header](#remove-an-http-request-header)
 
-### Add an HTTP header with a static value
+### Add an HTTP request header with a static value
 
-The following HTTP Header Modification Rule adds an HTTP header named `X-Source` with a static value (`Cloudflare`):
+The following HTTP Request Header Modification Rule adds a header named `X-Source` with a static value (`Cloudflare`) to the request:
 
 <Example>
 
@@ -191,9 +192,9 @@ Selected operation under **Modify header**: _Set static_
 
 </Example>
 
-### Add an HTTP header with the current URI path
- 
-The following HTTP Header Modification Rule adds an HTTP header named `X-Path` with the current URI path:
+### Add an HTTP request header with the current URI path
+
+The following HTTP Request Header Modification Rule adds a header named `X-Path` with the current URI path to the request:
 
 <Example>
 
@@ -204,16 +205,16 @@ starts_with(http.request.uri.path, "/en/")
 ```
 
 Selected operation under **Modify header**: _Set dynamic_
- 
+
 **Header name**: `X-Path`
 
 **Value**: `http.request.uri.path`
 
 </Example>
 
-### Remove an HTTP header
- 
-The following HTTP Header Modification Rule removes the `cf-connecting-ip` HTTP header from the request:
+### Remove an HTTP request header
+
+The following HTTP Request Header Modification Rule removes the `cf-connecting-ip` header from the request:
 
 <Example>
 

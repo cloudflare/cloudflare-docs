@@ -8,12 +8,12 @@ order: 3
 
 The **Transform Rules** dashboard interface lets you:
 
-- Create new URL Rewrite Rules and HTTP Header Modification Rules.
-- See a list of existing rules (both active and paused).
-- Activate or pause rules (turn on or off).
-- Edit rules.
-- Delete rules.
-- Reorder rules.
+* Create new URL Rewrite Rules and HTTP Request Header Modification Rules.
+* See a list of existing rules (both active and paused).
+* Activate or pause rules (turn on or off).
+* Edit rules.
+* Delete rules.
+* Reorder rules.
 
 ![Available operations in Transform Rules tab](../static/transform/transform-rules-tab.png)
 
@@ -22,7 +22,7 @@ The **Transform Rules** dashboard interface lets you:
 In the **Transform Rules** tab you can:
 
 * [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule)
-* [Create an HTTP Header Modification Rule](/transform/create-header-modification-rule)
+* [Create an HTTP Request Header Modification Rule](/transform/create-header-modification-rule)
 
 See each linked section for details on creating each rule type.
 
