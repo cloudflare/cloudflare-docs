@@ -30,7 +30,7 @@ function getCookie(request, key) {
 
   // Search for the cookie key in the header.
   const str = request.headers.get('Cookie'),
-     search = `${key}=`
+     search = `${key}=`,
      starts = str.indexOf(search)
 
   // The cookie could not be found.
