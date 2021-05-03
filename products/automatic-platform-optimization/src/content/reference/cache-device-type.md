@@ -1,19 +1,19 @@
 ---
-title: Cache by Device Type
-order: 17
+title: Cache by device type
+order: 12
 ---
 
-# Cache by Device Type
+# Cache by device type
 
-APO cache by device type provides all of the same benefits of Cloudflare's cache while targeting visitors with content appropriate to their device. Cloudflare evaluates the User-Agent header in the HTTP request to identify the device type. We identify each device type with a case insensitive match to the regex below:
+APO cache by device type provides all of the same benefits of Cloudflare's cache while targeting visitors with content appropriate to their device. Cloudflare evaluates the `User-Agent` header in the HTTP request to identify the device type. Cloudflare then identifies each device type with a case insensitive match to the regex below:
 
 - **Mobile**: `(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera\ mini|avantgo|mobilesafari|docomo)`
 - **Tablet**: `(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))`
 - **Desktop**: Everything else not matched above.
 
-To enable caching by device type, enable the setting from the Cloudflare dashboard's APO card or in from the WordPress plugin version 3.8.7 or later.
+To enable caching by device type, enable the setting from the Cloudflare dashboard's APO card or from the WordPress plugin version 3.8.7 or later.
 
-Once enabled, Cloudflare sends a `CF-Device-Type HTTP` header to your origin with a value of either `mobile`, `tablet`, `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
+Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
 <Aside>
 
@@ -23,4 +23,4 @@ Changing Cache By Device Type setting will invalidate Cache.
 
 The Cloudflare for WordPress plugin automatically purges all cache variations for updated pages.
 
-For a the list of plugins that require enabling APO Cache By Device Type, [Plugin compatibility](/about/plugin-compatibility).
+For a list of plugins that require enabling APO Cache By Device Type, [Plugin compatibility](/about/plugin-compatibility).

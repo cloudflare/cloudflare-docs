@@ -1,9 +1,9 @@
 ---
-title: Test Current Speed
+title: Test current speed
 order: 2
 ---
 
-# Test Current Speed
+# Test current speed
 
 Before you begin using APO, we recommend testing your current site speed. Your site speed results give your website a letter grade and performance rating.
 

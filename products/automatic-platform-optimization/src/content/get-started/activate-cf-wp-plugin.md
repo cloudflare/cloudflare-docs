@@ -18,14 +18,16 @@ For users on the free plan, be sure to purchase APO before installing the WordPr
 
 The easiest way to begin using APO is directly from Cloudflare’s WordPress plugin. Before you can use APO, you must first install and activate the plugin and then activate APO.
 
-1. Navigate and log into your WordPress account.
+1. Navigate and log in to your WordPress account.
 1. Select **Plugins** > **Add new**.
-1. In the search field, enter **Cloudflare**.
+1. In the search field, enter `Cloudflare`.
 1. Locate the Cloudflare plugin and select **Install now**.
 1. After the plugin finishes installing, select **Activate**. The Cloudflare plugin now displays in your Plugins list.
 
 <Aside type="warning">
 
-We recommend turning off plugins such as WP Rocket Cache Plugin, W3 Total Cache, or similar plugins when first setting up APO. After confirming APO is working, we recommend testing whether turning on the plugins listed above improves results or causes unexpected behavior. In many cases, using APO along with other caching plugins can cause unexpected results.
+Cloudflare recommends turning off plugins such as WP Rocket Cache Plugin, W3 Total Cache, or similar plugins when first setting up APO. After confirming APO is working, we recommend testing whether turning on the plugins listed above improves results or causes unexpected behavior. In many cases, using APO along with other caching plugins can cause unexpected results.
+
+We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 Total Cache, or similar plugins after APO activation.
 
 </Aside>

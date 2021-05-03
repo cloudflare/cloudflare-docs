@@ -1,6 +1,6 @@
 ---
 title: FAQs
-order: 12
+order: 15
 ---
 
 # Frequently Asked Questions
@@ -13,12 +13,12 @@ No, you don't need create Edge Cache TTL page rules. When the WordPress plugin i
 
 No. APO ignores Origin Cache Control for caching on the Edge, but APO serves original Origin Cache Control to the client. 
 
-## Why are my browser cache cache control headers missing with APO?
+## Why are my browser cache control headers missing with APO?
 
-The browser cache control headers may be missing with APO if you set your browser to cache TTL to "respect existing headers. For example:
+The browser cache control headers may be missing with APO if you set your browser to cache TTL to "respect existing headers." For example:
 
 ```
-curl -sv -o /dev/null https://example.com/ -H 'Accept: text/html' 2>&1 | grep cache-control
+$ curl -sv -o /dev/null https://example.com/ -H 'Accept: text/html' 2>&1 | grep cache-control
 < cache-control: max-age=86400, stale-while-revalidate=86400, stale-if-error=86400
 ```
 
@@ -61,7 +61,7 @@ The following cookies always bypass cache:
 - `wp-`
 - `xf_`
 
-The following supported plugins are bypassed on cookie.
+The list below includes supported plugins that are bypassed on cookie.
 
 - [Big Commerce for WordPress](https://wordpress.org/plugins/bigcommerce/)
 - [Easy Digital Downloads](https://wordpress.org/plugins/easy-digital-downloads/)
@@ -74,6 +74,6 @@ The following supported plugins are bypassed on cookie.
 
 ## Can I customize query string caching with APO?
 
-You can use one of the support query strings from the list below.
+You can use one of the supported query strings from the list below.
 
 `/^fbclid|ref|mc_(cid|eid)|utm_(source|medium|campaign|term|content|expid)|gclid|fb_(action_ids|action_types|source)|age-verified|ao_noptimize|usqp|cn-reloaded|_ga|_ke$/`

@@ -32,4 +32,19 @@ Copy and paste your API token into a document saved on your computer to easily r
 1. Select **Save API Credentials**.
 1. For **Apply Recommended Cloudflare Settings for WordPress**, select **Apply**.
 1. For **Automatic Platform Optimization**, switch the toggle to **On** to enable APO.
-1. For **Purge Cache**, select **Purge Cache** and then **Purge Everything**.
+
+## Verify APO works
+
+You can check whether or not APO is working by verifying APO headers are present. When APO is working, three headers are present: `CF-Cache-Status`, `cf-apo-via`, `cf-edge-cache`.
+
+1. Visit [Uptrends.com](https://www.uptrends.com/tools/http-response-header-check).
+1. In the text field, enter the URL for your WordPress homepage including the `https://www.`.
+1. Select **Start test**. The **Response Headers** table displays.
+1. Locate the three header responses and their description. APO is working correctly when the headers exactly match the headers below.
+
+- `CF-Cache-Status` | `HIT`
+  - The `cf-cache-status` header displays if the asset the cache or was considered dynamic and served from the origin.
+- `cf-apo-via` | `cache`
+  - The `cf-apo-via` header returns the APO status for the given request.
+- `cf-edge-cache` | `cache, platform=wordpress`
+  - The `cf-edge-cache` headers confirms the WordPress plugin is installed and enabled.

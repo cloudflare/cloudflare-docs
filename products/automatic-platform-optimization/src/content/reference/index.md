@@ -1,10 +1,11 @@
 ---
 title: Reference
-order: 14
+order: 9
 ---
 
 # Reference 
 
-- [Query Parameters and Cached Responses](/reference/query-parameters)
+- [Query Parameters and cached responses](/reference/query-parameters)
 - [Page Rule integration with APO](/reference/page-rule-integration)
-- [Cache by Device Type](/reference/cache-device-type)
+- [Cache by device type](/reference/cache-device-type)
+- [Subdomains and subdirectories](/reference/subdomain-subdirectories)

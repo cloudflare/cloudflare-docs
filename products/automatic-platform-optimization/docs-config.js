@@ -3,7 +3,7 @@ module.exports = {
   pathPrefix: "/automatic-platform-optimization",
   productIconKey: "automatic-platform-optimization",
   contentRepo: "cloudflare/cloudflare-docs",
-  contentRepoFolder: "productsautomatic-platform-optimization",
+  contentRepoFolder: "products/automatic-platform-optimization",
   externalLinks: [
     {
       title: "Cloudflare homepage",
@@ -25,7 +25,7 @@ module.exports = {
   },
   siteMetadata: {
     title: "Cloudflare Automatic Platform Optimization",
-    description: "Magic Transit delivers network functions at Cloudflare scale—DDoS protection, traffic acceleration, and much more from every Cloudflare data center—for on-premise, cloud-hosted, and hybrid networks.",
+    description: "With Automatic Platform Optimization, Cloudflare serves your entire site from our edge network, ensuring customers see improved performance when visiting your site.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/automatic-platform-optimization",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="

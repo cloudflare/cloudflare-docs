@@ -1,16 +1,16 @@
 ---
 title: Subdomains and subdirectories
-order: 10
+order: 13
 ---
 
 # Subdomains and subdirectories
 
 ## Run APO on a subdomain
 
-After you enable APO, you configure it to run on the subdomain that uses WordPress. For example, if you have a website called `www.mysite.com` which includes a subdomain running WordPress called `shop.mysite.com`, you would configure APO to run on the shop.mysite.com subdomain.
+After you enable APO, you configure it to run on the subdomain that uses WordPress. For example, if you have a website called `www.mysite.com` which includes a subdomain running WordPress called `shop.mysite.com`, you would configure APO to run on the `shop.mysite.com` subdomain.
 
 1. Install version 3.8.7 or later of the Cloudflare WordPress plugin.
-1. Log in using **Global key**. (You can only use an API token for the root domain.)
+1. Log in using **Global key**. (You can only use a Global key for the subdomain.)
 1. Enable APO. The subdomain displays in the list of hostnames in the card.
 1. Repeat the process for each subdomain to enable APO.
 
@@ -34,7 +34,7 @@ If you choose to run APO only on a subdirectory, the rest of the domain should b
 
 The `cf-edge-cache: no-cache` instructs the APO service to bypass caching for non-WordPress parts of the site. You can implement this option with Cloudflare Workers using the example below.
 
-```
+```js 
   addEventListener("fetch", (event) => {
      event.respondWith(handleRequest(event.request));
     });

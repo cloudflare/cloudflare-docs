@@ -29,13 +29,13 @@ We recommend keeping this browser tab or window open and opening a new tab or wi
 
 ## Update your nameserver with your domain registrar
 
-1. Log into the administrator account for your domain registrar.
+1. Log in to the administrator account for your domain registrar.
 1. Navigate to DNS Management.
 1. Locate your nameserver information. Your nameservers should match the information from Step 3 of Lookup domain name registration.
 1. Replace the existing nameserver information with the Cloudflare nameservers from Step 4 of Create the custom nameserver with Cloudflare.
 
-<aside>
+<Aside type="note>
 
 You may be prompted to confirm the nameserver change with your domain registrar. Confirm or continue after making the update.
 
-</aside>
+</Aside>

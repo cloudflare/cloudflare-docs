@@ -1,9 +1,9 @@
 ---
-title: Plugin Compatibility
+title: Plugin compatibility
 order: 3
 ---
 
-# Plugin Compatibility
+# Plugin compatibility
 
 Currently, WordPress offers over 50,000 plugins for download. As a result, testing the compatibility between APO and every available plugin is impossible. However, Cloudflare has a list of officially supported plugins and a list of plugins known to cause issues when APO is enabled.
 
@@ -29,6 +29,7 @@ For questions about a specific plugin not shown in the list, create a thread in 
 - [Easy Social Share Buttons](https://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476)
 - [Jetpack (Mobile Theme)](https://wordpress.org/plugins/jetpack/)
 - [wiziApp](https://wordpress.org/plugins/wiziapp-create-your-own-native-iphone-app)
+- [WPML](https://wpml.org/)
 
 ## Plugins and services that may cause issues
 
