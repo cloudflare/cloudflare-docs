@@ -124,7 +124,7 @@ The Binding Cookie is an additional cookie created when a user successfully auth
 
 The [SameSite](https://web.dev/samesite-cookies-explained/) Attribute selector is a cookie attribute that restricts the cookie to only being sent if the cookie’s defined site matches the site being requested in the browser. This adds protection against CSRF attacks.
 
-The selector options are<sup>[[1](#source)]</sup>:
+The [selector options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) are:
 * **None** - Cookies will be sent in all contexts, i.e sending cross-origin is allowed.
 * **Lax** - Cookies are allowed to be sent with top-level navigations and will be sent along with GET requests initiated by third party websites.
 * **Strict** - Cookies will only be sent in a first-party context and not be sent along with requests initiated by third party websites.
@@ -133,7 +133,3 @@ See [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/
 
 #### When not to use SameSite
 * If you have additional sites or applications that rely on a specific application’s authorization cookie.
-
-#### References
-
-###### 1. <a name="source"></a> Source: [SameSite Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
