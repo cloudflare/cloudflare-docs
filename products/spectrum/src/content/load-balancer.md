@@ -54,29 +54,19 @@ Below is the procedure to enable a Cloudflare Load Balancer with Spectrum using 
 
 ## Weights
 
-Origin Weights allow you to have origins that do not have the same capacity or if you want to split traffic amongst hosts for any other reason.
+[Origin Weights](https://developers.cloudflare.com/load-balancing/understand-basics/weighted-load-balancing) allow you to have origins that do not have the same capacity or if you want to split traffic amongst hosts for any other reason.
 
 Weight is configured within a load balancer pool will be honored with load balancing through Spectrum. If configured, Cloudflare will distribute traffic amongst the available origins within a pool according to the relative weights assigned to each origin.
-
-For further information on weighted steering, see the [knowledge base article](https://support.cloudflare.com/hc/en-us/articles/360001372131-Load-Balancing-Configurable-Origin-Weights).
 
 --------------------------------
 
 ## Steering modes
 
-All steering modes are available for transport load balancing through Spectrum: You can choose standard failover, dynamic steering, or geo steering:
-
-### Failover
-
-In this mode, the Cloudflare Load Balancer will fail over amongst pools listed in a given load balancer configuration as they are marked down by health checks. If all pools are marked down, Cloudflare will send traffic to the fallback pool. The fallback pool is the last pool in the list in the dashboard or specifically nominated via a parameter in the API. If no health checks are configured, Cloudflare will send to the primary pool exclusively.
-
-#### Dynamic steering
-
-[Dynamic steering](https://blog.cloudflare.com/i-wanna-go-fast-load-balancing-dynamic-steering/) is a way of directing traffic to the fastest pool for a given user. In this mode, the Cloudflare load balancer will select the fastest pool for the given Cloudflare Region or PoP (Enterprise only) through health check data. If there is no health check data for a given colo or region, the load balancer will select a pool in failover order. It is important to note that with TCP health checks, latency calculated may not be representative of true latency to origin if you are terminating TCP at a cloud provider edge location.
-
-### Geo Steering
-
-[Geo Steering](https://support.cloudflare.com/hc/en-us/articles/115000540888-Load-Balancing-Geographic-Regions) allows you to specify pools for a given Region or PoP (ENT only). In this configuration, Cloudflare will direct traffic from specified Cloudflare locations to configured pools. You may configure multiple pools, and the load balancer will use them in failover order. If this steering mode is selected and there is no configuration for a region or pool, the load balancer will use the default failover order.
+All steering modes are available for transport load balancing through Spectrum:
+- [Standard failover](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
+- [Dynamic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
+- [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#geo-steering): Traffic goes to specific geographic region or — for Enterprise customers only — specific data centers.
+- [Proximity steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#proximity-steering): Traffic goes to the closest physical data center.
 
 --------------------------------
 
