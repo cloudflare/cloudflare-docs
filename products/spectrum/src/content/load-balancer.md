@@ -65,7 +65,7 @@ Weight is configured within a load balancer pool will be honored with load balan
 All steering modes are available for transport load balancing through Spectrum:
 - [Standard failover](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
 - [Dynamic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
-- [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#geo-steering): Traffic goes to specific geographic region or — for Enterprise customers only — specific data centers.
+- [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#geo-steering): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
 - [Proximity steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#proximity-steering): Traffic goes to the closest physical data center.
 
 --------------------------------
