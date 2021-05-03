@@ -34,7 +34,7 @@ You can combine individual addresses and CIDR ranges in the same list.
 
 <Aside type='note' header='Note'>
 
-To specify a IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
+To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
 
 For example, instead of `2001:8a0:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
 
