@@ -5,18 +5,8 @@ order: 5
 
 # Android mobile client
 
-## Installation requirements
-<table>
-  <tbody>
-    <tr>
-      <td><strong>OS Ver</strong></td>
-      <td>5.0+</td>
-    </tr>
-  </tbody>
-</table>
-
 ## Steps to download
-[Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone), or search for “1.1.1.1: Faster & Safer Internet”.
+Download the app from the Google Play store by following this [link](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone). Alternatively, you can search for *1.1.1.1: Faster & Safer Internet* on your preferred search engine.
 
 ## How to remove the application
 1. Find the application on the home screen.
