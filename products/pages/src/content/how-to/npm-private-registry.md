@@ -47,7 +47,7 @@ By default, `npm` looks for an environment variable named `NPM_TOKEN` and _becau
 
 ## Custom Registry Endpoints
 
-When multiple registries are in use, a project will need to define its own root-level [`.npmrc`](https://docs.npmjs.com/cli/v7/configuring-npm/npmrc) configuration file. An exampile `.npmrc` file may look like this:
+When multiple registries are in use, a project will need to define its own root-level [`.npmrc`](https://docs.npmjs.com/cli/v7/configuring-npm/npmrc) configuration file. An example `.npmrc` file may look like this:
 
 ```ini
 @foobar:registry=https://npm.pkg.github.com
