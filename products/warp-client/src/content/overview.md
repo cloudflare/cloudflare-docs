@@ -1,12 +1,9 @@
 ---
+title: Overview
 order: 1
 ---
 
-# WARP Client for everyone
-
-Using 1.1.1.1 allows you to enjoy a private browsing experience. By combining 1.1.1.1 with WARP, you can ensure that all communication happening through your device is private.
-
-Cloudflare WARP supports the following operational modes:
+Cloudflare WARP supports the following services depending on how you configure it.
 
 ### WARP Modes
 
