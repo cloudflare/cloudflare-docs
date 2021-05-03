@@ -1,26 +1,14 @@
 ---
-order: 3
-hidden: true
+order: 1
 ---
 
-# Installation
+# Deployment
 
-Review [Installation Requirements](/setting-up/requirements/) to ensure your device meets the minimum requirements for our application.
+Before installing and setting up the WARP Client, ensure that your device meets the [system requirements](/setting-up/requirements) needed for client installation.
 
-## Windows
-* [Download Windows Installer](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi)
-* [Windows Installation Instruction](/setting-up/windows/)
-* [Teams Deployment for Windows](/teams/Windows-Teams/)
+If your device meets the system requirements, follow the setup instructions for your device:
 
-## macOS
-* [Download macOS Installer](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)
-* [macOS Installation Instruction](/setting-up/macOS/)
-* [Teams Deployment for macOS](/teams/macOS-Teams/)
-
-## iOS
-* [Download via iOS App Store](https://apps.apple.com/us/app/id1423538627)
-* [iOS Installation Instruction](/setting-up/iOS/)
-
-## Android
-* [Download via Android App Store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone)
-* [Android Installation Instruction](/setting-up/android/)
+* [Windows](/setting-up/windows/)
+* [macOS](/setting-up/macOS/)
+* [iOS](/setting-up/iOS/)
+* [Android](/setting-up/android/)
