@@ -5,15 +5,25 @@ order: 12
 
 # Accessing the data Cloudflare collects
 
-Access your Cloudflare data through analytics on Cloudflare dashboard, through Logs, or through the GraphQL APIs.
+Access metadata about the Cloudflare network through analytics on Cloudflare dashboard, through Logs, or through the GraphQL APIs.
 
 ## Analytics
 
 Access the following analytics from the Cloudflare Dashboard:
 
-* Site Analytics
-  * **Analytics** application - Aggregated traffic, security, and performance metrics for each orange-clouded domain
-  * In-product - The analytics available within each product on the dash, like the Events summary, Events by service, and Top events by source data in Firewall
+* Zone Analytics - Analytics gathered by each Cloudflare product, which are available within the **Analytics** application and within individual product applications
+  * **Analytics** application - Aggregated traffic, security, and performance metrics for each orange-clouded domain. Data available on the **Analytics** application includes:
+    * Traffic - Visits, Page views, Requests, and Data transfer
+    * Security - Total Threats, Top Crawlers/Bots, Rate Limiting, Total Threats Stopped
+    * Performance - Origin Performance, Bandwidth Saved
+    * DNS - DNS Queries by Response Code, Record Type, and Cloudflare Data Center
+    * Workers - Workers per zone, Workers KV per account
+  * In-product - The analytics available within each product on the dash, like the Events summary, Events by service, and Top events by source data in Firewall. Data available in-product includes:
+    * Firewall Events, [Bot Analytics](https://developers.cloudflare.com/bots/bot-analytics)
+    * Browser Insights within the **Speed** application
+    * Cache Requests and Data transfer
+    * Load Balancing Analytics and Health Check Analytics within the **Traffic** application
+* Account Analytics - Sum of traffic to all your sites
 * Network Analytics - Visualized packet and bit-level data that provides near real-time visibility into network and transport-layer traffic patterns and DDoS attacks. This data is also available via the [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api) for Enterprise customers.
 * [Web Analytics](https://developers.cloudflare.com/analytics/web-analytics) - Privacy-first analytics for your website that doesn't require changing your DNS or using Cloudflare’s proxy
 
