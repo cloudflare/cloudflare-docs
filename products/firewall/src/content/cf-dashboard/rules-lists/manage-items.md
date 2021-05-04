@@ -38,8 +38,8 @@ To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the la
 
 For example, instead of `2001:8a0:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
 
-* `684d:1111:0222:3333:0000:0000:0000:0000/64`
-* `684d:1111:0222:3333::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+* `2001:8a0:6a0b:1a01:0000:0000:0000:0000/64`
+* `2001:8a0:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
 </Aside>
 
