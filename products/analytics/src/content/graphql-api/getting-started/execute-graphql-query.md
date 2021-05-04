@@ -33,8 +33,8 @@ Email="user@domain.com"
 back_seconds=60*60*24  # 24 hours
 end_epoch=$(date +'%s')
 let start_epoch=$end_epoch-$back_seconds
-start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%m:%SZ')
-end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%m:%SZ')
+start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%M:%SZ')
+end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%M:%SZ')
  
 PAYLOAD='{ "query":
   "query {
