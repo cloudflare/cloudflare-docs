@@ -1,6 +1,6 @@
 # Install Private Packages
 
-Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough may focus specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
+Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough focuses specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
 
 We'll be adjusting the [Environment Variables](/platform/build-configuration#environment-variables) in our Pages project's settings. An existing website can be modified at any time, but new projects can be initialized with these settings, too. Either way, altering the project settings won't be reflected ***until its next deployment***.
 
