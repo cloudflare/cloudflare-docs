@@ -159,7 +159,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-[Documentation for WebSockets on Workers is here](using-websockets).
+For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
