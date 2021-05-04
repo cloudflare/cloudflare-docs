@@ -16,7 +16,7 @@ We take each file in your site and upload it to our globally distributed network
 
 ## File size
 
-The maximum file size for a Cloudflare Pages site asset is 25mb.
+The maximum file size for a Cloudflare Pages site asset is 25MB.
 
 ## Preview deployments
 

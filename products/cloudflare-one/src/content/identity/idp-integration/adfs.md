@@ -73,7 +73,7 @@ To create a Relying Party Trust:
 14. In the **Relying party SAML 2.0 SSO service URL** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 15. Click **Next**.
@@ -220,7 +220,7 @@ To enable Cloudflare for Teams to accept the claims and assertions sent from ADF
 1. In the **IdP Entity ID or Issuer URL** field, enter your [team domain](/glossary#team-domain), and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 1. Under **Signing certificate**, paste the exported certificate.
@@ -237,10 +237,10 @@ Some IdPs allow administrators to upload metadata files from their SP (service p
 
 To get your Cloudflare metadata file:
 
-1. Download your unique SAML metadata file at the following URL (replace `your-team-name` in this example with your own [team name](/glossary#team-name)):
+1. Download your unique SAML metadata file at the following URL (replace `<your-team-name>` in this example with your own [team name](/glossary#team-name)):
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
@@ -253,7 +253,7 @@ To get your Cloudflare metadata file:
 ```json
 {
     "config": {
-        "issuer_url": "https://your-team-name.cloudflareaccess.com/",
+        "issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
         "sso_target_url": "https://adfs.example.com/adfs/ls/",
         "attributes": ["email"],
         "email_attribute_name": "",

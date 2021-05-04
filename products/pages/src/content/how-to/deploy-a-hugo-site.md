@@ -167,7 +167,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 
 </TableLayout>
 
-Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `create-react-app`, your project dependencies, and building your site, before deploying it.
+Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `hugo`, your project dependencies, and building your site, before deploying it.
 
 <Aside>
 

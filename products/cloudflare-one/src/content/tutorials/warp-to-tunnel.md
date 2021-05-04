@@ -26,7 +26,9 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
 </Aside>
 
-**⏲️ Time to complete: 45 minutes**
+**⏲️ Time to complete:**
+
+45 minutes
 
 ## Install `cloudflared`
 

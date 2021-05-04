@@ -18,7 +18,7 @@ First, `go get` cf-terraforming with `GO111MODULE=on go get -u github.com/cloudf
 You can use `cf-terraforming` or `cf-terraforming -h` to view the help file, but to use cf-terraforming there are 4 things to specify:
 
 1. Your Cloudflare user email - `--email` or `-e`
-2. Your Cloudflare API key - `--key` or `-k`
+2. Your Cloudflare API token - `--token` or `-t`
 3. The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`
   * Specifying an account will generate configuration for all resources from all zones in that account.
 4. The Cloudflare resources to generate config
@@ -59,7 +59,7 @@ If you don't have a Terraform configuration file defined, all you need is the pr
 ```tf
 provider 'cloudflare' {
  # Cloudflare email saved in $CLOUDFLARE_EMAIL
- # Cloudflare API key saved in $CLOUDFLARE_TOKEN
+ # Cloudflare API token saved in $CLOUDFLARE_API_TOKEN
 }
 ```
 
@@ -69,7 +69,7 @@ We start by making a call to Cf-Terraforming to enumerate the Terraform configur
 
 Note: The below command assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
 ```
-$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_TOKEN -z 1109d899a5ff5fd74bc01e581693685a record > importing-example.tf
+$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a record > importing-example.tf
 ```
 
 If output to standard out, the result would look like the below. In this case we directly imported the configuration into our Terraform configuration file `importing-state.tf`.

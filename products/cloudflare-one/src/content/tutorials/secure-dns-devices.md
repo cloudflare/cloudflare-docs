@@ -13,11 +13,11 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 * Create a DNS filtering policy that secures devices by blocking malicious hostnames
 * Apply that policy to devices on any network
 
-**⏲️ Time to complete: ~45 minutes**
+**⏲️ Time to complete:**
 
-| Before you start |
-|---|
-| 1. [Add Gateway to your account](/setup) |
+45 minutes
+
+1. [Add Gateway to your account](/setup)
 
 ## Create a default location
 

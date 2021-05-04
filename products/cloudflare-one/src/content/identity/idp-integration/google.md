@@ -59,7 +59,7 @@ You can integrate Google authentication with Cloudflare Access without a Google 
 1. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
  ![Team Domain](../../static/documentation/identity/google/auth-domain.png)

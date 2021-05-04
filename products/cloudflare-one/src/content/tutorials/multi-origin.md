@@ -15,7 +15,11 @@ You can deploy a single instance of `cloudflared` to proxy traffic to a single s
 * Start a secure, outbound-only, connection from a machine to Cloudflare for multiple applications
 * Give those applications hostnames where users can connect
 
-**⏲️ Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
+
+---
 
 ## Install `cloudflared`
 

@@ -27,25 +27,29 @@ You can override a ruleset at three levels.
 To apply an override for a Managed Ruleset, execute the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation on your root ruleset and specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
 
 ```json
-"overrides": {
-  "rulesets": [
-    {
-      "property-to-modify": "value",
-      "property-to-modify": "value"
-    }
-  ],
-  "categories": [
-    {
-      "property-to-modify": "value",
-      "property-to-modify": "value"
-    }
-  ],
-  "rules": [
-    {
-      "property-to-modify": "value",
-      "property-to-modify": "value"
-    }
-  ]
+"action_parameters": {
+  "id": "{ruleset-id}",
+  "overrides": {
+    // ruleset overrides
+    "property-to-modify": "value",
+    "property-to-modify": "value",
+    // tag overrides
+    "categories": [
+      {
+        "category": "{tag-name}",
+        "property-to-modify": "value",
+        "property-to-modify": "value"
+      }
+    ],
+    // rule overrides
+    "rules": [
+      {
+        "id": "{rule-id}",
+        "property-to-modify": "value",
+        "property-to-modify": "value"
+      }
+    ]
+  }
 }
 ```
 
@@ -53,8 +57,8 @@ Specific overrides take precedence over more general ones, and rule overrides ta
 
 You can override the following rule properties:
 
-* `action` (block, challenge, log)
-* `enabled` (true, false)
+* `"action"` (`"block"`, `"challenge"`, `"log"`)
+* `"enabled"` (`true`, `false`)
 
 ## Examples
 
@@ -78,12 +82,8 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "action": "log",
-              "enabled": "true"
-            }
-          ]
+          "action": "log",
+          "enabled": true
         }
       }
     }
@@ -112,12 +112,8 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "action": "log",
-              "enabled": "true"
-            }
-          ]
+          "action": "log",
+          "enabled": true
         }
       }
     }
