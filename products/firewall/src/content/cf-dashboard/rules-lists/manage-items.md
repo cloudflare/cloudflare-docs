@@ -24,7 +24,24 @@ You cannot download a list in CSV format from the dashboard. If you need to down
 
 ## Add items to a list
 
-Rules Lists support IPv4 and IPv6 addresses as well as CIDR ranges, and you can combine them in the same list.
+Rules Lists support:
+
+* Individual IPv4 addresses
+* IPv4 CIDR ranges with a prefix from `/8` to `/32`
+* IPv6 CIDR ranges with a prefix from `/4` to `/64`
+
+You can combine individual addresses and CIDR ranges in the same list.
+
+<Aside type='note' header='Note'>
+
+To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
+
+For example, instead of `2001:8a0:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
+
+* `2001:8a0:6a0b:1a01:0000:0000:0000:0000/64`
+* `2001:8a0:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+
+</Aside>
 
 You can use uppercase or lowercase characters for IPv6 addresses in lists. However, when you save the list, uppercase characters are converted to lowercase.
 
