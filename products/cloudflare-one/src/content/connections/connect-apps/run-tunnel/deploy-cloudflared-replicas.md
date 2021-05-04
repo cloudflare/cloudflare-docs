@@ -10,13 +10,11 @@ To deploy multiple instances in this replica model, you can create and configure
 
 To deploy multiple `cloudflared` replicas:
 
-1. Run the following command: 
+1. Run the following command:
 
   ```sh
   $ cloudflared tunnel create <NAME>
   ```
-
- This will generate a unique `connector_id` for `cloudflared`.
 
 1. Next, run your newly created Named Tunnel.
 
@@ -37,9 +35,9 @@ To deploy multiple `cloudflared` replicas:
 1. Next, run `tunnel info` to show each `cloudflared` running your tunnel:
 
  ```sh
- $ cloudflared tunnel info <NAME> 
+ $ cloudflared tunnel info <NAME>
  ```
 
- This will output your Tunnel UUID as well as your two newly generated connector IDs for each instance of `cloudflared` running through your Tunnel. With this command, you can also see that your Tunnel is now being served by 8 connections, and your setup is complete. 
+ This will output your Tunnel UUID as well as your two newly generated connector IDs for each instance of `cloudflared` running through your Tunnel. With this command, you can also see that your Tunnel is now being served by 8 connections, and your setup is complete.
 
-Now you can run the same Tunnel across various `cloudflared` processes for up to 100 connections per Tunnel. 
+Now you can run the same Tunnel across various `cloudflared` processes for up to 100 connections per Tunnel.
