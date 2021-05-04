@@ -13,5 +13,5 @@ The Cloudflare WARP Client allows individuals or organizations to have a faster,
 
 <ButtonGroup>
   <Button type="primary" href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp">For Teams</Button>
-  <Button type="primary" href="/warp-for-everyone/">For Everyone</Button>
+  <Button type="primary" href="/overview">For Everyone</Button>
 </ButtonGroup>
