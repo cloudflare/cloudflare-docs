@@ -4,7 +4,7 @@ order: 0
 
 # Using the Stream player
 
-The Stream player can be placed on a web page in an iframe element with the video UID (or [signed URL](/security/signed-urls/)) replacing `$VIDEOID` in the example below.
+The Stream player can be placed on a web page in an iframe element with the video UID (or [signed URL](/viewing-videos/securing-your-stream)) replacing `$VIDEOID` in the example below.
 
 ```html
 <iframe
@@ -64,15 +64,25 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
-    <Notice>
+    <Aside>
 
-    Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+      Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
-    </Notice>
+    </Aside>
 
 - `controls` <PropMeta>default: `true`</PropMeta>
 
   - Shows video controls such as buttons for play/pause, volume controls.
+
+- `defaultTextTrack`
+
+  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/uploading-videos/adding-captions). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+
+    <Aside>
+
+      This will _only_ work once during initialization. Beyond that point the user has full control over their text track settings.
+
+    </Aside>
 
 - `loop` <PropMeta>default: `false`</PropMeta>
 
@@ -86,11 +96,11 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - This enumerated option is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may specify the value `preload="auto"` to preload the beginning of the video. Not including the option or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
 
-    <Notice>
+    <Aside>
 
-    The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
+      The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
-    </Notice>
+    </Aside>
 
 - `poster` <PropMeta>defaults to the first frame of the video</PropMeta>
 
