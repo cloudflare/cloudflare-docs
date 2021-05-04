@@ -70,7 +70,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Doxygen     | Version 1.8.6                   |                      |
 | Emacs       | 25                              |                      |
 | Gutenberg   |                                 |                      |
-| Hugo        | Version 0.54                    |                      |
+| Hugo        | Version 0.54                    | `HUGO_VERSION`       |
 | GNU Make    | Version 3.8.1                   |                      |
 | ImageMagick | Version 6.7.7                   |                      |
 | jq          | Version 1.5                     |                      |
