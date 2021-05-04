@@ -1,6 +1,6 @@
 ---
 title: Android
-order: 5
+order: 7
 ---
 
 # Android mobile client

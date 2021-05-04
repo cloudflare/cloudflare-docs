@@ -1,6 +1,6 @@
 ---
 title: Requirements
-order: 1
+order: 3
 ---
 
 # Installation requirements

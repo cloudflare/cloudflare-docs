@@ -1,6 +1,6 @@
 ---
 title: Windows
-order: 2
+order: 4
 ---
 
 # Windows desktop client
