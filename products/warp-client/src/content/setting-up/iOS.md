@@ -1,6 +1,6 @@
 ---
 title: iOS
-order: 4
+order: 6
 ---
 
 # iOS mobile client
