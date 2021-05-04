@@ -1,6 +1,6 @@
 ---
 title: macOS
-order: 3
+order: 5
 ---
 
 # macOS desktop client
