@@ -32,7 +32,7 @@ There are three steps to creating and using a Durable Object:
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
-The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter contains any bindings you have associated with the Worker when you uploaded it.
+The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
 ```js
 export class DurableObjectExample {
@@ -40,6 +40,8 @@ export class DurableObjectExample {
     }
 }
 ```
+
+Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -159,7 +161,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-Full documentation for WebSockets will be coming soon, but for now check out this [heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo) that runs in Durable Objects to see how it works.
+For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
