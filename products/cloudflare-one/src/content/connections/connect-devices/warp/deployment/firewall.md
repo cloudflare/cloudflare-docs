@@ -3,7 +3,7 @@ order: 10
 title: Firewall Considerations
 ---
 # WARP with Firewall
-If your organization utilizes a firewall or other policy to restrict internet traffic, you may need to make changes to allow WARP to connect.
+If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 
 ## WARP Ingress IP
 The Ingress IPs are the set of IP addresses that WARP Clients will connected to. All traffic from your device to the Cloudflare edge is done via these IP addresses:
