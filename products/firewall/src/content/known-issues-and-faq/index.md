@@ -378,3 +378,20 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 This happens when a request goes through a Cloudflare Worker.
 
 In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.
+
+### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
+
+No. The _Challenge (Captcha)_ and _JavaScript Challenge_ actions only support HTML requests.
+
+Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX.
+
+When an XHR or AJAX request triggers one of the _Challenge_ actions, the resulting request will have the following status code:
+
+* HTTP status code 403 for _Challenge (Captcha)_
+* HTTP status code 503 for _JavaScript Challenge_
+
+Your application can use these status codes to handle the case of challenges being issued unexpectedly.
+
+### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
+
+No. The (js)challengeFailed are request we observe and under special circumstances could not pass the challenge. However, oftentimes we cannot attribute failed challenges back to a firewall rule or do not observe a request when a challenge is failed. Therefore this action should be used with caution. A reliable indicator is the CSR or JSCR ( solved / issued ).
