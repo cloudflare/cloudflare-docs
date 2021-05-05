@@ -48,7 +48,7 @@ This table summarizes the object properties:
       </tr>
       <tr>
         <td><code>filter</code><br /><Type>Object</Type></td>
-        <td>A <a href='/api/cf-filters/json'>Cloudflare Filter object</a> that contains an expression for evaluating this rule.</td>
+        <td>A <a href='/api/cf-filters/json-object'>Cloudflare Filter object</a> that contains an expression for evaluating this rule.</td>
         <td></td>
       </tr>
       <tr>
