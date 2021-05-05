@@ -162,7 +162,7 @@ The `concat()` and `regex_replace()` functions can appear only **once** in a rew
 
 <Aside type="note">
 
-HTTP Request Header Modification Rules are available in **Beta**.
+HTTP Request Header Modification Rules are available in Beta.
 
 </Aside>
 
