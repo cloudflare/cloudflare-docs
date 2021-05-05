@@ -12,7 +12,7 @@ order: 5
 1. Double-click on the `Cloudflare_WARP.pkg` file that is extracted.
 1. Follow instructions in the installer to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
-![macOS Menu Bar](../../static/macOSMenuBar.png)
+![macOS Menu Bar](../static/macOSMenuBar.png)
 
 ## What we place on your device
 
@@ -40,6 +40,6 @@ $ ./uninstall.sh
 
 <Aside>
 
-__Note:__ You may be prompted for your credentials to remove the application.
+__Note:__ You may be prompted to provide your credentials while removing the application.
 
 </Aside>
