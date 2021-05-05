@@ -2,7 +2,7 @@
 order: 10
 title: Firewall Considerations
 ---
-
+# WARP with Firewall
 If your organization utilizes a firewall or other policy to restrict internet traffic, you may need to make changes to allow WARP to connect.
 
 ## WARP Ingress IP
