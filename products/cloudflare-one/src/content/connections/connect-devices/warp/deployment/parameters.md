@@ -71,7 +71,9 @@ This field is only required to enforce DNS policies when deploying the client in
 - `true`  The user is prevented from turning off the switch.
 
 **Warning**
-You must also include `auto_connect` with at least a value of 0 on new deployments or cleints will be deployed in the off state without a way for users to manually enable.
+<Aside>
+On new deployments, you must also include the `auto_connect` parameter with at least a value of 0. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
+</Aside>
 
 <Aside> 
   This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
