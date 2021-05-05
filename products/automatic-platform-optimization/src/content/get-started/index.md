@@ -5,6 +5,6 @@ order: 4
 
 # Get started with APO
 
-Before you confifugre APO for your WordPress site, complete the following tasks.
+Before you configure APO for your WordPress site, complete the following tasks.
 
 <DirectoryListing path="/get-started"/>

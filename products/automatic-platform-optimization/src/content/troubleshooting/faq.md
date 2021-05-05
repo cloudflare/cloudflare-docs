@@ -7,7 +7,7 @@ order: 15
 
 ## Do I still need to create "Edge Cache TTL" page rules with "Cache Level: Cache Everything"?
 
-No, you don't need create Edge Cache TTL page rules. When the WordPress plugin is installed, APO automatically caches content for 30 days and invalidates on change within 30 seconds. However, because APO now supports cache-related page rules, make sure existing page rules don't affect the resources served by APO or KV.
+No, you don't need create Edge Cache TTL page rules. When the WordPress plugin is installed, APO automatically caches content for 30 days and invalidates on change within 30 seconds. However, because APO now supports cache-related page rules, make sure existing page rules don't affect the resources served by APO.
 
 ## Does Origin Cache Control override APO?
 
@@ -38,42 +38,6 @@ Yes, this is expected behavior because the requests must contain `accept: "text/
 
 Yes, Google Fonts are also optimized when APO is activated. You can confirm the optimization by checking the font URLs. For example, the URL will change from `https://fonts.gstatic.com/s/...` to `https://example.com/fonts.gstatic.com/s/...` when the site loads. For proxied fonts, the `cf-apo-via:proxy` header is returned.
 
-##  Which cookies will force APO to bypass cache and contact the origin?
-
-The following cookies always bypass cache:
-
-- `auth`
-- `cart`
-- `comment_`
-- `csrf`
-- `edd_`
-- `jwt`
-- `jetpack`
-- `login`
-- `sess`
-- `session`
-- `tk`
-- `tok`
-- `token`
-- `user`
-- `woocommerce_`
-- `wordpress`
-- `wp-`
-- `xf_`
-
-The list below includes supported plugins that are bypassed on cookie.
-
-- [Big Commerce for WordPress](https://wordpress.org/plugins/bigcommerce/)
-- [Easy Digital Downloads](https://wordpress.org/plugins/easy-digital-downloads/)
-- [WooCommerce](https://wordpress.org/plugins/woocommerce/)
-- [Jetpack](https://wordpress.org/plugins/jetpack/)
-- [YITH WooCommerce Wishlist](https://wordpress.org/plugins/yith-woocommerce-wishlist/)
-- [WP EasyCart](https://wordpress.org/plugins/wp-easycart/)
-- [Ecwid Ecommerce Shopping Cart](https://wordpress.org/plugins/ecwid-shopping-cart/)
-- [WP eCommerce](https://wordpress.org/plugins/wp-e-commerce/)
-
 ## Can I customize query string caching with APO?
 
-You can use one of the supported query strings from the list below.
-
-`/^fbclid|ref|mc_(cid|eid)|utm_(source|medium|campaign|term|content|expid)|gclid|fb_(action_ids|action_types|source)|age-verified|ao_noptimize|usqp|cn-reloaded|_ga|_ke$/`
+For more information on query parameters, see [Query parameters and cached responses](/reference/query-parameters).
