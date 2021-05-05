@@ -2,7 +2,7 @@
 order: 790
 ---
 
-# Custom Rules - Beta
+# Custom Rules (Beta)
 
 <Aside type='warning' header='Important'>
 

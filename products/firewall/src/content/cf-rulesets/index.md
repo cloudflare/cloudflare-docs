@@ -2,7 +2,7 @@
 order: 700
 ---
 
-# Ruleset Engine - Beta
+# Ruleset Engine (Beta)
 
 <Aside type="warning" header="Important">
 
