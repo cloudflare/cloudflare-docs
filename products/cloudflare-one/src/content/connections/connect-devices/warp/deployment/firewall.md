@@ -6,7 +6,7 @@ title: Firewall Considerations
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 
 ## WARP Ingress IP
-The Ingress IPs are the set of IP addresses that WARP Clients will connected to. All traffic from your device to the Cloudflare edge is done via these IP addresses:
+These are the IP addresses that the WARP client will connect to. All traffic from your device to the Cloudflare edge will go through these IP addresses.
 - IPv4 Range: 162.159.192.0/24
 - IPv6 Range: 2606:4700:d0::/48
 
