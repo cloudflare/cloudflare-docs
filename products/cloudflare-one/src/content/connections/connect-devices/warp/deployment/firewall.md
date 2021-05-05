@@ -21,7 +21,7 @@ In late May 2021 the ingress change for Cloudflare for Teams WARP Customers will
 </Aside>
 
 ## UDP Ports
-WARP utilizes UDP for all of it's communication. UDP Port required for WARP: UDP 2408. 
+WARP utilizes UDP for all of its communications. UDP Port required for WARP: UDP 2408. 
 
 ## Creating firewall rules
 If your organization does not currently allow Inbound/Outbound communication over the IP addresses and ports described above you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
