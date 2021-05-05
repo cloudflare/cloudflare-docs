@@ -74,7 +74,7 @@ This field is only required to enforce DNS policies when deploying the client in
 You must also include `auto_connect` with at least a value of 0 on new deployments or cleints will be deployed in the off state without a way for users to manually enable.
 
 <Aside> 
-  This parameter replaces the old enabled property which can no longer be used in conjunction with the new switch_locked and auto_connect. If you want to use switch_locked and/or auto_connect you must stop using enabled.
+  This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 </Aside>
 
 
