@@ -91,7 +91,7 @@ You must also include `auto_connect` with at least a value of 0 on new deploymen
 - `1-1440`  Turn switch back on automatically after the specified number of minutes.
 
 <Aside> 
-  This parameter replaces the old enabled property which can no longer be used in conjunction with the new switch_locked and auto_connect. If you want to use switch_locked and/or auto_connect you must stop using enabled.
+  This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 </Aside>
 
 ### `support_url`
