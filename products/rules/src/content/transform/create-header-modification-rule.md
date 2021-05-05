@@ -7,7 +7,7 @@ order: 2
 
 <Aside type="note">
 
-This feature is available in **Beta**.
+This feature is available in Beta.
 
 </Aside>
 
@@ -33,7 +33,7 @@ Do the following:
 
     <Aside type='note'>
 
-    Check the [available fields and functions](#available-fields-and-functions-for-setting-http-request-header-values) during the Beta.
+    Check the [available fields and functions](#available-fields-and-functions-for-setting-http-request-header-values) during Beta.
 
     </Aside>
 

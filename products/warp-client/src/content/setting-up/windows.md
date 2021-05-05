@@ -11,7 +11,7 @@ order: 4
 1. Double-click on `Cloudflare_WARP_Release-x64.msi`.
 1. Follow the instructions in the installer to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
-  ![Windows system tray](../../static/windowsSysTray.png)
+  ![Windows system tray](../static/windowsSysTray.png)
 
 ## What we place on your device
 

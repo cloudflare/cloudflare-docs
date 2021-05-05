@@ -52,7 +52,7 @@ Check [Configuring URL forwarding or redirects with Cloudflare Page Rules](https
 
 <Aside type="note">
 
-This feature is available in **Beta**.
+This feature is available in Beta.
 
 </Aside>
 
@@ -66,7 +66,7 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 
 * You cannot modify or remove HTTP request headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
 
-* During the **Beta**, you can only set the value of an HTTP request header using string values. You cannot use integer, IP, or boolean values such as `cf.bot_management.score`, `ip.src`, or `cf.bot_management.verified_bot`.
+* During Beta, you can only set the value of an HTTP request header using string values. You cannot use integer, IP, or boolean values such as `cf.bot_management.score`, `ip.src`, or `cf.bot_management.verified_bot`.
 
 </Aside>
 
