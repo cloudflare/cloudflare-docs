@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Exempt partners from Hotlink Protection
 
 <Aside type='note' header='Note'>
