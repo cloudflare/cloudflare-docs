@@ -1,7 +1,7 @@
 ---
 title: Bot Analytics
 order: 4
-pcx-content-type: doc structure
+pcx-content-type: navigation
 ---
 
 # Bot Analytics

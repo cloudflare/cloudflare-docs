@@ -1,7 +1,7 @@
 ---
 title: Get started
 order: 3
-pcx-content-type: doc structure
+pcx-content-type: navigation
 ---
 
 # Get started
