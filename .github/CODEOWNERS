@@ -20,7 +20,7 @@ products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
-products/docs-engine/ @adamschwartz
+products/docs-engine/ @cloudflare/PCX
 
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
@@ -59,7 +59,10 @@ products/pages/ @cloudflare/workers-docs
 products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
 
 # Registrar
-products/registrar/ @TownLake
+products/registrar/ @TownLake @cloudflare/PCX
+
+# Rules
+products/rules/ @cloudflare/PCX
 
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX

@@ -62,7 +62,7 @@ ingress:
 
 ## Supported protocols
 
-In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](https://developers.cloudflare.com/access/protocols-and-connections).
+In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](/applications/non-http).
 
 You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Argo Tunnel protocol.
 
@@ -93,8 +93,7 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
 | SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
 | RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
-| TCP, SSH, RDP, SMB, kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
-| TCP, RDP, SSH, SMB, kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
+| kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
 | Hello World | Test server for validating your Argo Tunnel setup | `hello_world` |
 | HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
 

@@ -4,7 +4,7 @@ order: 1
 
 # Configuration file
 
-You can run `cloudflared` with a configuration file, which contains keys and values to configure `cloudflared`'s behaviour.
+You can run `cloudflared` with a configuration file, which contains keys and values to configure `cloudflared`'s behavior.
 The configuration file format uses [YAML syntax](http://www.yaml.org/start.html).
 
 ## Example file

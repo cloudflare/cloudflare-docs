@@ -1,10 +1,6 @@
 # Known issues
 
-**Cloudflare Pages is currently in open beta.** Here are some known bugs and issues that we're aware of:
-
-- Deleting a project with a custom URL may show the old build at that URL. You'll need to delete the Cloudflare DNS record for that custom domain to remove that old build.
-- No direct support for running routes or redirects in Pages (however, if your project contains a 404.html file, that's served first. If not, then your /index.html file is served)
-- No Access integration yet to protect preview URLs.
+Here are some known bugs and issues that we're aware of with Cloudflare Pages:
 - Source code hosting tools besides GitHub—for instance, BitBucket or Gitlab—are not currently supported.
 - Pages currently only supports a single project per repository. Monorepos or repositories with multiple codebases/applications currently can't deploy more than one project to Pages at a time.
 - Once you've selected a GitHub repository for your Pages application, it can't be changed. Please remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.

@@ -6,7 +6,7 @@
 | ClientBytes | The number of bytes read from the client by the Spectrum service | int |
 | ClientCountry | Country of the client IP address | string |
 | ClientIP | Client IP address | string |
-| ClientMatchedIpFirewall | Whether the connection matched any IP Firewall rules; <em>UNKNOWN</em> \| <em>ALLOW</em> \| <em>BLOCK_ERROR</em> \| <em>BLOCK_IP</em> \| <em>BLOCK_COUNTRY</em> \| <em>BLOCK_ASN</em> \| <em>WHITELIST_IP</em> \| <em>WHITELIST_COUNTRY</em> \| <em>WHITELIST_ASN</em> | string |
+| ClientMatchedIpFirewall | Whether the connection matched any IP Firewall rules. UNKNOWN = No match or Firewall not enabled for spectrum; <em>UNKNOWN</em> \| <em>ALLOW</em> \| <em>BLOCK_ERROR</em> \| <em>BLOCK_IP</em> \| <em>BLOCK_COUNTRY</em> \| <em>BLOCK_ASN</em> \| <em>WHITELIST_IP</em> \| <em>WHITELIST_COUNTRY</em> \| <em>WHITELIST_ASN</em> | string |
 | ClientPort | Client port | int |
 | ClientProto | Transport protocol used by client; <em>tcp</em> \| <em>udp</em> \| <em>unix</em> | string |
 | ClientTcpRtt | The TCP round-trip time in nanoseconds between the client and Spectrum | int |

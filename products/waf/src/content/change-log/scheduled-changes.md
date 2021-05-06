@@ -2,9 +2,7 @@
 type: table
 order: 1
 ---
-
 # Scheduled changes
-
 <TableWrap><table style="width: 100%">
     <thead>
         <tr>
@@ -31,6 +29,6 @@ order: 1
             </th>
         </tr>
     </thead>
-        <tbody>
+    <tbody>
     </tbody>
 </table></TableWrap>

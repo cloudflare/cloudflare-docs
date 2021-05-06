@@ -21,7 +21,7 @@ Once successful, you will receive an email from Cloudflare and be able to manage
 --------
 
 ## What happens if I entered the wrong auth code?
-If you input the incorrect authentication code, please return to the Domain Registration page or the Overview page for your site. You can use the available input field to reenter your authentication code. You will not be charged twice.
+If you input the incorrect authentication code, please return to the Domain Registration page or the Overview page for your site. You can use the available input field to reenter your authentication code.
 
 --------
 
@@ -30,7 +30,7 @@ Domain transfers sometimes fail. We’re here to help you address what failed so
 
 First, please make sure that you entered the auth code for that domain. If you need to reenter it, you can do so from the transfer launch page or the overview page for that site.
 
-Second, you can reattempt the transfer from the transfer launch page. You will not be charged twice.
+Second, you can reattempt the transfer from the transfer launch page.
 
 If you can’t seem to resolve the issue, please open a support ticket and we’ll help investigate.
 

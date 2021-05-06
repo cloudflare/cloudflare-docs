@@ -14,7 +14,7 @@ For a high-level introduction to Durable Objects, [see the announcement blog pos
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](https://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
@@ -32,7 +32,7 @@ There are three steps to creating and using a Durable Object:
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
-The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter contains any bindings you have associated with the Worker when you uploaded it.
+The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
 ```js
 export class DurableObjectExample {
@@ -40,6 +40,8 @@ export class DurableObjectExample {
     }
 }
 ```
+
+Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -159,7 +161,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-Full documentation for WebSockets will be coming soon, but for now check out this [heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo) that runs in Durable Objects to see how it works.
+For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -167,7 +169,9 @@ As mentioned above, Durable Objects do not receive requests directly from the In
 
 When a Worker talks to a Durable Object, it does so through a "stub" object. The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [Requests](/runtime-apis/request) to the instance.
 
-Note that in the example below, we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for Durable Objects. The fetch handler in this example implements the Worker that talks to the Durable Object. We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
+The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the service-workers syntax.
+
+We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. As you saw above, we wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
@@ -225,7 +229,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.1) for installation instructions and more information.
+At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.2) for installation instructions and more information.
 
 </Aside>
 
@@ -248,7 +252,7 @@ $ wrangler publish --new-class Counter
 
 ### Specifying the main module
 
-Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using "module" key in the `package.json` file in the project.
+Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. See the [modules section of the custom builds documentation](/cli-wrangler/configuration#modules) for more details.
 
 ### Configuring Durable Object bindings
 
@@ -256,14 +260,14 @@ Durable Objects bindings can be configured in `wrangler.toml` by providing the c
 
 ```toml
 [durable_objects]
-classes = [
-  { binding = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
+bindings = [
+  { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
 ]
 ```
 The `[durable_objects]` section has 1 subsection:
 
-- `classes` - An array of tables, each table can contain the below fields.
-  - `binding` - Required, The binding name to use within your worker.
+- `bindings` - An array of tables, each table can contain the below fields.
+  - `name` - Required, The binding name to use within your worker.
   - `class_name` - Required, The class name you wish to bind to.
   - `script_name` - Optional, Defaults to the current project's script.
 
@@ -371,23 +375,23 @@ export class Counter {
     }
 
     async initialize() {
-        try {
-            let stored = await this.state.storage.get("value");
-            this.value = stored || 0;
-        } catch (err) {
-            // If anything throws during initialization then we
-            // need to be sure that a future request will retry by
-            // creating another `initializePromise` below.
-            this.initializePromise = undefined;
-            throw err;
-        }
+        let stored = await this.state.storage.get("value");
+        this.value = stored || 0;
     }
 
     // Handle HTTP requests from clients.
     async fetch(request) {
         // Make sure we're fully initialized from storage.
         if (!this.initializePromise) {
-            this.initializePromise = this.initialize();
+            this.initializePromise = this.initialize().catch((err) => {
+                // If anything throws during initialization then we need to be
+                // sure that a future request will retry initialize().
+                // Note that the concurrency involved in resetting this shared
+                // promise on an error can be tricky to get right -- we don't
+                // recommend customizing it.
+                this.initializePromise = undefined;
+                throw err
+            });
         }
         await this.initializePromise;
 

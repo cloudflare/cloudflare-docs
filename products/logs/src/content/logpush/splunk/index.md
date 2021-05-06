@@ -53,6 +53,8 @@ Example request using cURL:
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
+-H "X-Auth-Email: user@example.com" \
+-H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
 -d '{"name":"<DOMAIN_NAME>",
 "destination_conf":"splunk://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>&header_Authorization=<SPLUNK-AUTH-TOKEN>",  "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset":"http_requests"}' | jq .
 ```
@@ -141,4 +143,4 @@ curl  "https://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-v
 No. Cloudflare expects the HEC network port to be configured to :443 or :8088. 
 
 ### Does this integrate with the Cloudflare Splunk App?
-Yes. See [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App. 
+Yes. See [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.

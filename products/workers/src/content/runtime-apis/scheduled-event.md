@@ -16,6 +16,9 @@ addEventListener("scheduled", event => {
 
 <Definitions>
 
+- `event.cron` <Type>string</Type>
+    - The value of the [Cron Trigger](/platform/cron-triggers) that started the the `ScheduledEvent`.
+
 - `event.type` <Type>string</Type>
     - The type of event. This will always return `"scheduled"`.
 

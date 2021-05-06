@@ -16,11 +16,11 @@ You'll be signing up for a Cloudflare account. You may also want a custom domain
 
 ### Sign in to Cloudflare Pages
 
-To begin, sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
+To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
 
 ### Connect to GitHub
 
-Signing in with GitHub allows Cloudflare Pages to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. When you sign in, you'll also have the option of specifying any GitHub organizations that you'd like to connect to Cloudflare Pages. This allows you to deploy both public and private repositories for your own account, as well as repositories for your company or organization.
+Signing in with GitHub allows [Cloudflare Pages](https://pages.dev) to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. When you sign in, you'll also have the option of specifying any GitHub organizations that you'd like to connect to Cloudflare Pages. This allows you to deploy both public and private repositories for your own account, as well as repositories for your company or organization.
 
 ## Configuration and deployment
 

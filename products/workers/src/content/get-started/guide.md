@@ -88,7 +88,7 @@ route = ""
 zone_id = ""
 ```
 
-Visit the [Starters](/starters) page to see a complete list of our recommended starter templates.
+Visit the [Quick Starts](/get-started/quickstarts) page to see a complete list of our recommended starter templates.
 
 For example, to build a Workers project in TypeScript, you would instead run:
 
@@ -132,7 +132,7 @@ Let’s break this down:
 
 1. An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/runtime-apis/request) object which is a representation of the HTTP request that triggered the FetchEvent.
 
-2. The call to [`.respondWith()`](/runtime-apis/fetch-event#methods) lets us intercept the request in order send back a custom response (in this case, the plain text “Hello worker!”).
+2. The call to [`.respondWith()`](/runtime-apis/fetch-event#methods) lets us intercept the request in order to send back a custom response (in this case, the plain text “Hello worker!”).
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/runtime-apis/response) or `Promise<Response>` that determines the response.
 
@@ -353,7 +353,7 @@ header: Publish to example.com
 
 For more information on environments, check out the [Wrangler documentation](/cli-wrangler/configuration#environments).
 
-You can also configure a GitHub repo to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/github-action-for-cloudflare-workers), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
+You can also configure a GitHub repo to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 
 --------------------------------
 
