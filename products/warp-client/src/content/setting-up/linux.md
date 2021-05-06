@@ -37,6 +37,6 @@ The Linux client supports all 1.1.1.1 for Familes modes wither either WARP on or
 A complete list of all supported commands can be found by running `warp-cli --help`
 
 ## Feedback
-Logs required to debug WARP issues can be found by running `sudo warp-diag` which will place a `warp-debugging-info.zip` file in the path where you ran the command from.
+You can find logs required to debug WARP issues by running `sudo warp-diag`. This will place a `warp-debugging-info.zip` file in the path from which you ran the command.
 
 To report bugs or provide feedback to the team use the command `sudo warp-diag feedback` which will submit a support ticket.
