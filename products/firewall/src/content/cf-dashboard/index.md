@@ -1,5 +1,6 @@
 ---
 title: Manage rules in the dashboard
+pcx-content-type: navigation
 order: 300
 ---
 

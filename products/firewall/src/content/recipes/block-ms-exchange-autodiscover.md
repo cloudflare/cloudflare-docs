@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Block Microsoft Exchange Autodiscover requests
 
 In some cases, Microsoft Exchange Autodiscover service requests can be “noisy,” triggering large numbers of HTTP 404 (Page Not Found) errors.

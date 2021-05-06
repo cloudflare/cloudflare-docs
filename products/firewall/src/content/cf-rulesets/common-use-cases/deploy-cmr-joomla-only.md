@@ -1,5 +1,6 @@
 ---
 title: Enable only Joomla rules
+pcx-content-type: configuration
 alwaysopen: true
 order: 772
 ---

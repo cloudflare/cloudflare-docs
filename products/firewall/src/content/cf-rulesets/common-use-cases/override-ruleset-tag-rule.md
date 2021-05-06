@@ -1,5 +1,6 @@
 ---
 title: Deploy a Managed Ruleset with ruleset, tag, and rule overrides
+pcx-content-type: configuration
 alwaysopen: true
 order: 774
 ---

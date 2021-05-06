@@ -1,5 +1,6 @@
 ---
 title: List and view rulesets
+pcx-content-type: reference
 alwaysopen: true
 order: 783
 ---

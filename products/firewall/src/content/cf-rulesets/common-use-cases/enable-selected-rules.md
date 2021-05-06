@@ -1,5 +1,6 @@
 ---
 title: Enable only selected rules
+pcx-content-type: configuration
 alwaysopen: true
 order: 773
 ---

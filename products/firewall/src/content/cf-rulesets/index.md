@@ -1,4 +1,5 @@
 ---
+pcx-content-type: concept
 order: 700
 ---
 
@@ -12,18 +13,17 @@ This feature is part of an early access experience for selected customers.
 
 The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is the same syntax used in custom Firewall Rules. Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
 
-There are several elements involved in the configuration and use of the Ruleset Engine. These elements are: 
+There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
 
-* **Phase** - Defines a stage in the life of a request where you can execute rulesets.
-* **Ruleset** - Defines a versioned set of rules. You can execute rulesets in a Phase.
-* **Rule** - Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
+* **Phase** — Defines a stage in the life of a request where you can execute rulesets.
+* **Ruleset** — Defines a versioned set of rules. You can execute rulesets in a Phase.
+* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
 
-
-## Phases 
+## Phases
 
 A Phase defines a stage or entry point in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and you cannot modify them.
 
-At a conceptual level, a Phase is also a ruleset. You deploy rulesets to a Phase by adding rules to the Phase ruleset. 
+At a conceptual level, a Phase is also a ruleset. You deploy rulesets to a Phase by adding rules to the Phase ruleset.
 
 Phases exist at two levels: at the **account** level and at the **zone** level. For the same Phase, rules defined at the account level run **before** the rules defined at the zone level.
 
@@ -39,7 +39,6 @@ The following diagram outlines the request handling process where requests go th
 
 Cloudflare products are specific to one or more Phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable Phases.
 
-
 ## Rulesets
 
 A ruleset is a versioned set of rules. Cloudflare creates a new version of the ruleset each time you modify it. You execute rulesets by deploying them to a Phase.
@@ -54,17 +53,15 @@ Since Phases behave just like rulesets, they also have a type. In the Rulesets A
 
 Cloudflare creates a new version of the ruleset every time there is a change to that ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset, the most recent version of the ruleset is selected by default.
 
-
 ### Managed Rulesets
 
 Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a Phase. Only Cloudflare can modify these rulesets.
 
-The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults. 
+The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
 There are several Cloudflare products that provide you with Managed Rulesets. Check each product’s documentation for details on the available Managed Rulesets.
 
 For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
-
 
 ### Custom rulesets
 

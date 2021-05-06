@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Block requests based on IP reputation
 
 A powerful feature of Firewall Rules is its support for Cloudflare’s IP reputation score. To block requests based on IP reputation, use the `cf.threat_score` field, which can contain a score from 0 to 100. Reputation scores are collected from [Project Honeypot](https://www.projecthoneypot.org/).

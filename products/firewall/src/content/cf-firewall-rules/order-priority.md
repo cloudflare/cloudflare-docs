@@ -1,5 +1,6 @@
 ---
 title: Order and priority
+pcx-content-type: concept
 order: 230
 ---
 
@@ -12,7 +13,7 @@ import firewallRulesOrderAndPriority3 from '../images/firewall-rules-order-and-p
 
 Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below (click the image to view a larger version). For example, Firewall Rules only evaluates requests that first clear IP Access Rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
 
-![](../images/firewall-rules-order-and-priority-1.png)
+![Firewall Rules order and priority](../images/firewall-rules-order-and-priority-1.png)
 
 By default, Cloudflare evaluates firewall rules in **list order**, where rules are evaluated in the order they appear in the Firewall Rules **Rules List**. List ordering is convenient when working with small numbers of rules because you can manage their order by dragging and dropping them into position. However, as the number of rules grows, managing rules in list order becomes difficult. This is where priority order comes into play.
 

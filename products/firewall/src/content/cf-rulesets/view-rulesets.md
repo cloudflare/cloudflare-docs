@@ -1,4 +1,5 @@
 ---
+pcx-content-type: how to
 order: 710
 type: overview
 ---
@@ -13,7 +14,7 @@ This feature is part of an early access experience for selected customers.
 
 ## View available rulesets
 
-You can list the available rulesets for a zone, account, or Phase. 
+You can list the available rulesets for a zone, account, or Phase.
 
 <details>
 <summary>Example: View available rulesets at the zone level</summary>

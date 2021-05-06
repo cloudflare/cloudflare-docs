@@ -1,5 +1,6 @@
 ---
 title: Endpoints
+pcx-content-type: reference
 order: 495
 ---
 
@@ -69,7 +70,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
 
 ## Manage items in a list
 
-Nearly all of the operations for managing items in a Rules List are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
+Nearly all the operations for managing items in a Rules List are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 
 Asynchronous Rules Lists operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get Bulk Operation](https://api.cloudflare.com/#rules-lists-get-bulk-operation) endpoint and specify the ID of the operation you want to monitor.
 

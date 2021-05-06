@@ -1,9 +1,10 @@
 ---
+pcx-content-type: reference
 order: 610
 type: table
 ---
 
-# Operators & grouping symbols
+# Operators and grouping symbols
 
 The Cloudflare Firewall Rules language supports comparison and logical operators:
 
