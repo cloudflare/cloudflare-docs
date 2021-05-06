@@ -1,9 +1,9 @@
 ---
-title: Work with Cloudflare Waiting Rooms
-alwaysopen: true
-weight: 150
-hidden: false
+order: 2
+pcx-content-type: landing page
 ---
+
+# Work with Waiting Rooms
 
 ## Before you begin
 

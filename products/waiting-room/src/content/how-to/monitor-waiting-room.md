@@ -1,8 +1,6 @@
 ---
-title: Monitor Waiting Room status
-alwaysopen: true
-weight: 280
-hidden: false
+order: 2
+pcx-content-type: how to
 ---
 
 # Monitor Waiting Room status

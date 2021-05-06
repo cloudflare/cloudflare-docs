@@ -1,7 +1,6 @@
 ---
-title: Use the Waiting Room API
-alwaysopen: true
-weight: 180
+order: 5
+pcx-content-type: reference
 ---
 
 # Using the Waiting Room API

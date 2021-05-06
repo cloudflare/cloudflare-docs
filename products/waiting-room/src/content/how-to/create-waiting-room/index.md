@@ -1,8 +1,6 @@
 ---
-title: Create a Waiting Room
-alwaysopen: true
-weight: 250
-hidden: false
+order: 1
+pcx-content-type: navigation
 ---
 
 # Create a Waiting Room
