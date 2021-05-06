@@ -14,7 +14,7 @@ order: 6
 ## Using WARP
 
 ### warp-cli
-This is the primary command line interface with using WARP. 
+The command line interface is the primary way to use WARP.
 
 ### Initial Connection
 To connect for the very first time you must call `register` first:
