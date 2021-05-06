@@ -8,7 +8,7 @@ order: 6
 ## Steps to install
 1. Find the [setup repository](https://pkg.cloudflare.com/).
 1. Install the `cloudflare-warp` package depending on your distro:
-    1. **apt-based OS** (ex. Ubuntu) `sudo apt install cloudflare-warp`
+    1. **apt-based OS** (e.g., Ubuntu) `sudo apt install cloudflare-warp`
     2. **yum-based OS** (ex. Centos or RHEL) `sudo yum install cloudflare-warp`
 
 ## Using WARP
