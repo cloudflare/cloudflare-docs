@@ -71,3 +71,9 @@ Domain registrars may be able to **suspend** potentially malicious domains. If, 
 There are other ways to combat malicious certificates. You can warn your visitors with an on-site notification, ask browser makers (Google for Chrome, etc.) to block these domains, or you can [contact us to help combat malicious certificates](https://support.cloudflare.com/hc/articles/200172476).
 
 If someone is attempting to impersonate you online, you should absolutely take action. This is usually difficult to recognize, so exercise caution. **Remember: the vast majority of certificates are not malicious. Only take action if you believe something is wrong.**
+
+## HTTP Public Key Pinning
+
+Certificate Transparency Monitoring addresses the same problems as HTTP Public Key Pinning (HPKP), but with [fewer technical issues](https://scotthelme.co.uk/im-giving-up-on-hpkp/).
+
+Cloudflare does not offer or support HPKP and advises against using it with Dedicated & Universal SSL.

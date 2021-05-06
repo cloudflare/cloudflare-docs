@@ -67,7 +67,7 @@ You can install `cloudflared` on macOS systems via Homebrew:
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, you can download the latest Darwin amd64 release directly.
+Alternatively, you can [download the latest Darwin amd64 release directly](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-darwin-amd64.zip).
 
 ## Windows
 
