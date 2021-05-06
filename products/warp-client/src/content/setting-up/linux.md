@@ -13,7 +13,6 @@ order: 6
 
 ## Using WARP
 
-### warp-cli
 The command line interface is the primary way to use WARP.
 
 ### Initial Connection
