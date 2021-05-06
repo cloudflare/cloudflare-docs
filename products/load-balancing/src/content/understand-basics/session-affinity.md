@@ -1,5 +1,6 @@
 ---
 order: 16
+pcx-content-type: reference
 ---
 
 # Session affinity

@@ -1,5 +1,6 @@
 ---
 order: 40
+pcx-content-type: best practices
 ---
 
 # Best practices

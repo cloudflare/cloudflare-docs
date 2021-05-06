@@ -1,6 +1,6 @@
 ---
-title: Supported fields and operators
 order: 50
+pcx-content-type: reference
 ---
 
 # Supported fields and operators

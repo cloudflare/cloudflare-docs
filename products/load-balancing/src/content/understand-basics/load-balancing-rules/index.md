@@ -1,5 +1,6 @@
 ---
 order: 17
+pcx-content-type: concept
 ---
 
 # Load Balancing rules

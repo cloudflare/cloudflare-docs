@@ -1,6 +1,7 @@
 ---
 title: Create via API
 order: 30
+pcx-content-type: tutorial
 ---
 
 # Create a load balancer via the API

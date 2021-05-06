@@ -1,6 +1,7 @@
 ---
 title: Create via Cloudflare dashboard
 order: 20
+pcx-content-type: tutorial
 ---
 
 # Create a load balancer in the Cloudflare dashboard

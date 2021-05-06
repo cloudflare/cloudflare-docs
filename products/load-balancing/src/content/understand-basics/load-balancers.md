@@ -1,5 +1,6 @@
 ---
 order: 11
+pcx-content-type: concept
 ---
 
 # Load balancers

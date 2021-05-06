@@ -1,6 +1,7 @@
 ---
 title: Create rules
 order: 40
+pcx-content-type: how to
 ---
 
 # Create Load Balancing rules
