@@ -2,6 +2,7 @@
 title: Welcome
 type: overview
 order: 0
+pcx-content-type: landing page
 ---
 
 # Page Shield

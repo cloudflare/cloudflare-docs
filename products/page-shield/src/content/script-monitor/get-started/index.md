@@ -1,6 +1,7 @@
 ---
 title: Get started
 order: 0
+pcx-content-type: how to
 ---
 
 # Get started with Script Monitor

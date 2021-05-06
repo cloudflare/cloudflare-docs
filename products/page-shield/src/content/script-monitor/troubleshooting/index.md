@@ -1,6 +1,7 @@
 ---
 title: Troubleshooting
 order: 0
+pcx-content-type: faq
 ---
 
 # Troubleshooting Script Monitor
