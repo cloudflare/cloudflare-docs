@@ -129,7 +129,7 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-Load Balancing expressions also support grouping symbols, which allow you to organize expressions, enforce operator precedence, and nest expressions. For examples and usage, see [_Grouping symbols_](/cf-firewall-language/operators/#grouping-symbols) in the Firewall Rules documentation.
+Load Balancing expressions also support grouping symbols, which allow you to organize expressions, enforce operator precedence, and nest expressions. For examples and usage, see [_Grouping symbols_](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#grouping-symbols) in the Firewall Rules documentation.
 
 ### Comparison operators
 
