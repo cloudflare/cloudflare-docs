@@ -10,5 +10,6 @@ If your device meets the system requirements, follow the setup instructions for 
 
 * [Windows](/setting-up/windows/)
 * [macOS](/setting-up/macOS/)
+* [Linux](/setting-up/linux/)
 * [iOS](/setting-up/iOS/)
 * [Android](/setting-up/android/)
