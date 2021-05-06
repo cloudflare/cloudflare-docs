@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content-type: landing page
+pcx-content-type: tutorial
 ---
 
 # Work with Waiting Rooms

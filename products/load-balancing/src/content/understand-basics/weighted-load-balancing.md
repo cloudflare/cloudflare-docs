@@ -1,6 +1,6 @@
 ---
 order: 14
-pcx-content-type: concept
+pcx-content-type: reference
 ---
 
 # Weighted load balancing
