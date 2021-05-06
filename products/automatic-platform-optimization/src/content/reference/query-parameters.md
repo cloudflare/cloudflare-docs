@@ -38,7 +38,7 @@ APO serves cached content as long as the query parameters in the URL are one of 
 - `epik`
 - `ck_subscriber_id`
 
-## Cookies that always bypass cache
+## Cookies prefixes that always bypass cache
 
 - `wp-`
 - `wordpress`
