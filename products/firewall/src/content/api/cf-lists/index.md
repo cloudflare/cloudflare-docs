@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx-content-type: navigation
 order: 485
 ---
 
