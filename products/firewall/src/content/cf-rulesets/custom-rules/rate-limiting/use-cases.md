@@ -1,6 +1,6 @@
 ---
 title: Common use cases
-pcx-content-type: reference
+pcx-content-type: configuration
 order: 19
 ---
 
