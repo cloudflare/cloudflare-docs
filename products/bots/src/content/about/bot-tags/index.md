@@ -8,7 +8,7 @@ pcx-content-type: reference
 
 Bot Tags provide more detail about bot-related requests.
 
-Use these tags to learn more about your bot traffic and — with this information — better inform security settings.
+Use these tags to learn more about your bot traffic and better inform security settings.
 
 ## Potential values
 
