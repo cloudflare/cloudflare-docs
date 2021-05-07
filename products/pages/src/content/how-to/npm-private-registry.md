@@ -66,7 +66,7 @@ Here, all packages under the `@foobar` scope are directed towards the GitHub Pac
 Your Pages project must then have the matching [Environment Variables](/platform/build-configuration#environment-variables) defined for all environments. In our example, that means `TOKEN_FOR_NPM` must contain [the read-only npm token](#registry-access-token) value and `TOKEN_FOR_GITHUB` must contain its own [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token#creating-a-token).
 
 
-### Pages vs Local Installation
+### Managing Multiple Environments
 
 In the event that your local development no longer works with your new `.npmrc` file, you will need to add some additional changes:
 
