@@ -416,5 +416,4 @@ Make sure you are looking at the correct request.
 
 Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a CAPTCHA.
 
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule.
-These actions state that "previously a rule had matched a request with the action set to _Challenge (Captcha)_ or _JS Challenge_ and now that challenge was answered".
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Challenge (Captcha)_ or _JS Challenge_ and now that challenge was answered".
