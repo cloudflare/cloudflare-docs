@@ -2,12 +2,17 @@
 order: 6
 ---
 
-# Access Groups Management
+# Access groups management
+
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 This section addresses a few common group configurations and best practices.
 
 For a basic overview of how to create and edit Groups on the dashboard, please see the [Access Groups](/getting-started/access-groups/) page in the Setup section.
-
 
 ## Criteria for Group Rules
 
@@ -28,7 +33,6 @@ Here is a list of membership types and examples:
 * **Any Access Service Token** - The request will need to present the headers for any service token created for this account
 * **Service Token** - The request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — Employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
-
 
 ## Using Groups For IP-Based Rules
 

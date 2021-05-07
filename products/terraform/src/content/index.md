@@ -22,6 +22,6 @@ See [Installing Terraform](/installing/).
 
 ## Issues
 
-Report Terraform config issues via [GitHub](https://github.com/terraform-providers/terraform-provider-cloudflare/issues).
+Report Terraform config issues via [GitHub](https://github.com/cloudflare/terraform-provider-cloudflare/issues/new/choose).
 
 </ContentColumn>

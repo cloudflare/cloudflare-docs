@@ -4,6 +4,12 @@ order: 2
 
 # iOS Setup Instructions (MDM)
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 <Aside>
 
 Note that if you were using 1.1.1.1 for Families in the mobile app, you will at first need to disable 1.1.1.1 for Families.
@@ -105,7 +111,7 @@ The contents of the file will look like below:
 </plist>
 ```
 
-Use a texteditor to replace the string `gateway_unique_id` with the 10 character unique subdomain from the DNS over HTTPS hostnname for your location that you got from the previous section. Please make sure that you don't change any other parts of the file.
+Use a texteditor to replace the string `gateway_unique_id` with the 10 character unique subdomain from the DNS over HTTPS hostname for your location that you got from the previous section. Please make sure that you don't change any other parts of the file.
 
 After you save the file, use your preferred MDM tool to deploy the configuration change to your fleet of corporate mobile devices.
 

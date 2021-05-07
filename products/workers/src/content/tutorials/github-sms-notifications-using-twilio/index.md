@@ -1,6 +1,7 @@
 ---
 updated: 2020-08-25
 difficulty: Beginner
+type: "📝 Tutorial"
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
@@ -66,7 +67,7 @@ Finally, click "Add webhook" to finish our configuration.
 
 ## Parsing the Response
 
-With your local environment setup, we will now parse the repo update with your worker. If you get stuck, you can refer to the finished [index.js](https://GitHub.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
+With your local environment setup, we will now parse the repo update with your worker. If you get stuck, you can refer to the finished [index.js](https://github.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
 
 Your generated `index.js` should look like this below:
 

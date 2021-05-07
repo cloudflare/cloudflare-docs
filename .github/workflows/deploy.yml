@@ -331,6 +331,38 @@ jobs:
           environment: "production"
           wranglerVersion: '1.13.0'
 
+ deploy-automatic-platform-optimization:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.automatic-platform-optimization == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/automatic-platform-optimization
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/automatic-platform-optimization"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/automatic-platform-optimization"
+          environment: "production"
+
   deploy-bots:
     runs-on: ubuntu-latest
     needs: changes
@@ -364,38 +396,6 @@ jobs:
           workingDirectory: "products/bots"
           environment: "production"
           wranglerVersion: '1.13.0'
-
-  deploy-automatic-platform-optimization:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.automatic-platform-optimization == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/automatic-platform-optimization
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-        env:
-          WORKERS_ENV: development
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/automatic-platform-optimization"
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/automatic-platform-optimization"
-          environment: "production"
 
   deploy-byoip:
     runs-on: ubuntu-latest

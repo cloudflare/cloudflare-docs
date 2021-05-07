@@ -4,6 +4,12 @@ order: 4
 
 # RDP
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 <Aside>
 
 <b>Requirements</b>
@@ -71,7 +77,6 @@ C:\Cloudflared\bin\cloudflared.exe login
   2. `cloudflared` will open a browser window where you will be asked to login to your Cloudflare account.
 
   If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
-
 
   3. Once you login, Cloudflare will display the applications that you added to your account. Select the site where you want to create a subdomain to represent the remote desktop.
 
@@ -189,7 +194,6 @@ cloudflared will need to be installed on each user device that will connect.
 ### 2. Connect To The Remote Desktop
 
 1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
-
 
 ```bash
 \cloudflared.exe access rdp --hostname rdp.site.com --url localhost:2244

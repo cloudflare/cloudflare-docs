@@ -37,7 +37,7 @@ Authenticated Origin Pull does not work in **SSL** mode _Off_ (not secure) or _F
 
 --------
 
-## Zone-Level Authenticated Origin Pull using Cloudflare certificates {#zone-level}
+## Zone-Level Authenticated Origin Pull using Cloudflare certificates
 
 Cloudflare uses the following CA to sign certificates for the Authenticated Origin Pull service:
 
@@ -131,7 +131,13 @@ To enable Authenticated Origin Pull globally on a zone:
 4. Build the payload:
 
     ```bash
-    $ request_body=$(< <(cat <<EOF { "certificate": "$MYCERT", "private_key": "$MYKEY" } } EOF ))
+    $ request_body=$(< <(cat <<EOF
+    {
+    "certificate": "$MYCERT",
+    "private_key": "$MYKEY"
+    }
+    EOF
+    ))
     ```
 
 5. [Upload the client certificate and private key via the Cloudflare API](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate):
@@ -183,7 +189,7 @@ The following [API call enables Authenticated origin pull at zone level](https:/
 
 --------
 
-## Per-Hostname Authenticated Origin Pull using customer certificates {#per-hostname}
+## Per-Hostname Authenticated Origin Pull using customer certificates
 
 When enabling Authenticated Origin Pull per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server.  Customers can use client certificates from their Private PKI to authenticate connections from Cloudflare.
 
@@ -215,7 +221,13 @@ To upload a client certificate in Cloudflare:
 4. Build the payload:
 
     ```bash
-    $ request_body=$(< <(cat <<EOF { "certificate": "$MYCERT", "private_key": "$MYKEY" } } EOF ))
+    $ request_body=$(< <(cat <<EOF
+    {
+    "certificate": "$MYCERT",
+    "private_key": "$MYKEY"
+    }
+    EOF
+    ))
     ```
 
 5. Upload the [client certificate and private key via the Cloudflare API](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate):

@@ -4,13 +4,16 @@ order: 50
 
 # DNS record
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 | Before you start |
 |---|
-| 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
-| 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
-| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
-| 5. [Create an Argo Tunnel](/create-tunnel) |
+| 1. [Create an Argo Tunnel](/create-tunnel) |
+| 2. [Configure the Tunnel](/configuration) |
 
 ## Route traffic from the Cloudflare dashboard
 
@@ -22,14 +25,11 @@ Unlike publicly routable IP addresses, the subdomain will only proxy traffic for
 2. Create a new CNAME record and input the subdomain of your Tunnel into the Target field.
 3. Click **Save**.
 
-
 ![DNS tab](../static/img/dns/dns-record.png)
-
 
 The DNS record is distinct from the state of the Tunnel. You can create DNS records that point to a Tunnel that is not currently running. If the Tunnel stops running, the DNS record will not be deleted. If you point the DNS record to a Tunnel not currently running visitors will see a 1016 error message.
 
-Additionally, you can create multiple DNS records that point to the same Tunnel subdomain.
-
+Additionally, you can create multiple DNS records that point to the same Tunnel subdomain. If you are routing traffic from multiple hostnames to multiple services, you will need to create a CNAME entry for each hostname. The CNAME entries will share the same target.
 
 ## Route traffic from the command line
 

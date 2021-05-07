@@ -31,11 +31,9 @@ Once your transfer to Cloudflare completes, we will redact your WHOIS informatio
 --------
 
 ## Initiate your transfer
-When you log in to your Cloudflare account, the first screen will display all sites you have on Cloudflare. You can start transfers to Cloudflare from this page. Select `Start Transferring Now` or click `Domain Registration` in the top navigation bar and Cloudflare will review your domains to determine which are eligible for transfer.
+To initiate your transfer, go to the [Registrar section](https://dash.cloudflare.com/?to=/:account/domains/transfer) of your account.
 
-![Cloudflare dashboard navbar screenshot](../static/navbar.png)
-
-On the next page, Cloudflare will display the zones available for transfer, those with transfers in progress, and sites unavailable for transfer.
+Cloudflare will display the zones available for transfer, those with transfers in progress, and sites unavailable for transfer.
 
 You’ll also be presented with the price for each transfer. When you transfer a domain, you are also required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting the “x”.
 
@@ -53,7 +51,7 @@ You will not be billed at this step. Cloudflare will only bill your card when yo
 --------
 
 ## Input your authorization code
-In the next page, you’ll need to input the authorization code for each domain you are transferring. You will also need to unlock each domain so that Cloudflare can process your request. For more information about transfering out from your current registrar, see the Transfer Instructions section.
+In the next page, you’ll need to input the authorization code for each domain you are transferring. You will also need to unlock each domain so that Cloudflare can process your request. For more information about transferring out from your current registrar, see the Transfer Instructions section.
 
 ![Authorization input screenshot](../static/input-field.png)
 

@@ -16,8 +16,12 @@ First we’ll create a initial Terraform config file. Any files ending in `.tf` 
 ```sh
 $ cat > cloudflare.tf <<'EOF'
 provider "cloudflare" {
-  email = "you@example.com"
+  email   = "you@example.com"
   api_key = "your-api-key"
+}
+
+variable "zone_id" {
+  default = "e097e1136dc79bc1149e32a8a6bde5ef"
 }
 
 variable "domain" {
@@ -25,7 +29,7 @@ variable "domain" {
 }
 
 resource "cloudflare_record" "www" {
-  domain  = var.domain
+  zone_id = var.zone_id
   name    = "www"
   value   = "203.0.113.10"
   type    = "A"
@@ -71,10 +75,10 @@ When you run terraform init, any plugins required, such as the Cloudflare Terraf
 ```sh
 $ find .terraform/
 .terraform/
-.terraform//plugins
-.terraform//plugins/darwin_amd64
-.terraform//plugins/darwin_amd64/lock.json
-.terraform//plugins/darwin_amd64/terraform-provider-cloudflare_v1.0.0_x4
+.terraform/plugins
+.terraform/plugins/darwin_amd64
+.terraform/plugins/darwin_amd64/lock.json
+.terraform/plugins/darwin_amd64/terraform-provider-cloudflare_v1.0.0_x4
 ```
 
 ## 3. Reviewing the execution plan
@@ -98,7 +102,7 @@ Terraform will perform the following actions:
   + cloudflare_record.www
       id:          <computed>
       created_on:  <computed>
-      domain:      "example.com"
+      domain:      <computed>
       hostname:    <computed>
       metadata.%:  <computed>
       modified_on: <computed>
@@ -108,7 +112,7 @@ Terraform will perform the following actions:
       ttl:         <computed>
       type:        "A"
       value:       "203.0.113.10"
-      zone_id:     <computed>
+      zone_id:     "e097e1136dc79bc1149e32a8a6bde5ef"
 
 
 Plan: 1 to add, 0 to change, 0 to destroy.
@@ -120,7 +124,7 @@ can’t guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-As you can see in the above “execution plan”, Terraform is going to create a new DNS record, as requested. Values that you’ve explicitly specified are displayed, e.g., the value of the A record—203.0.113.10—while values that are derived based on other API calls, e.g., looking up the zone_id, or returned after the object is created, are displayed as `<computed>`.
+As you can see in the above “execution plan”, Terraform is going to create a new DNS record, as requested. Values that you’ve explicitly specified are displayed, e.g., the value of the A record—203.0.113.10—while values that are derived based on other API calls, e.g., looking up the `metadata`, or returned after the object is created, are displayed as `<computed>`.
 
 ## 4. Applying your changes
 
@@ -175,7 +179,7 @@ cloudflare_record.www:
   ttl = 1
   type = A
   value = 203.0.113.10
-  zone_id = e2e6391340be87a3726f91fc4148b122
+  zone_id = e097e1136dc79bc1149e32a8a6bde5ef
 ```
 
 ```sh

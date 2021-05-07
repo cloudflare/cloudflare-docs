@@ -4,6 +4,12 @@ order: 100
 
 # Command-line arguments
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 * [Tunnel command](#tunnel-command)
 * [Login command](#login-command)
 * [Service command](#service-command)
@@ -19,7 +25,6 @@ All tunnel-related commands are prefixed with 'tunnel'. For example:
 ```bash
 cloudflared tunnel --url localhost:5555 --hostname x.example.com
 ```
-
 
 <div id="config">
 
@@ -373,11 +378,9 @@ Install or uninstall cloudflared as a system service. The details of service ins
 
 `cloudflared update`
 
-Looks for a new version on the offical download server. If a new version exists, updates the agent binary and quits. Otherwise, does nothing.
+Looks for a new version on the official download server. If a new version exists, updates the agent binary and quits. Otherwise, does nothing.
 
 To determine if an update happened in a script, check for error code 64.
-
-
 
 <style dangerouslyInsertInnerHTML={{__html: `
 h2 {

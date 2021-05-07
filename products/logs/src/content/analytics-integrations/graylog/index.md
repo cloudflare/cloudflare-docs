@@ -5,7 +5,7 @@ order: 101
 
 # Graylog
 
-This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using [Graylog](https://go.graylog.com/cloudflare).
+This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using [Graylog](https://github.com/Graylog2/graylog-s3-lambda/blob/master/content-packs/cloudflare/cloudflare-logpush-content-pack.json).
 
 ## Overview
 
@@ -23,7 +23,7 @@ Before sending your Cloudflare log data to Graylog, make sure that you:
 
 <Aside type="note" header="Note">
 
-Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 195+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. All timestamp formats are supported by Graylog.
+Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. All timestamp formats are supported by Graylog.
 </Aside>
 
 ## Task 1 - Preparation
@@ -31,7 +31,7 @@ Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from
 Before getting Cloudflare logs into Graylog:
 
 1. Configure Cloudflare [Logpush](https://developers.cloudflare.com/logs/logpush/) to push logs with all desired fields to an AWS S3 bucket of your choice.
-2. Download the latest Graylog Integration for Cloudflare from the Graylog website: [https://go.graylog.com/cloudflare](https://go.graylog.com/cloudflare).
+2. Download the latest Graylog Integration for Cloudflare from the Graylog website: [https://go.graylog.com/cloudflare](https://github.com/Graylog2/graylog-s3-lambda/blob/master/content-packs/cloudflare/cloudflare-logpush-content-pack.json).
 3. Decompress the zip file.
 
 Once decompressed, the integration package includes:

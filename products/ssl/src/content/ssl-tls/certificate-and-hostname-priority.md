@@ -16,7 +16,6 @@ For any given hostname, Cloudflare uses the following logical order to determine
 - Cloudflare deploys the highest priority certificate (see table below)  in case the hostnames are the same between different certificates.
 - Cloudflare deploys the most recent certificate in case two certificates of the same type and hostname exist.
 
-
 | Priority | Certificate Type|
 | --- | --- |
 | 1 | [Custom Legacy](/custom-certificates/)|
@@ -43,12 +42,15 @@ Additionally, a Cloudflare zone using the SSL for SaaS product (a SaaS provider)
 The following describes how Cloudflare routes the traffic for a specific hostname, assuming each exists and is proxied (orange-clouded).
 
 Exact hostname match
-New Custom Hostname (Belonging to a SaaS Provider)
-Legacy Custom Hostname (Belonging to a SaaS Provider)
-DNS (Belonging to the logical DNS zone)
+
+* New Custom Hostname (Belonging to a SaaS Provider)
+* Legacy Custom Hostname (Belonging to a SaaS Provider)
+* DNS (Belonging to the logical DNS zone)
+
 Wildcard hostname match
-DNS (Belonging to the logical DNS zone)
-New Custom Hostname (Belonging to a SaaS Provider)
+
+* DNS (Belonging to the logical DNS zone)
+* New Custom Hostname (Belonging to a SaaS Provider)
 
 Any hostname whose RR is not proxied (is grey-clouded) for a zone on Cloudflare, that zone’s settings are not applied and any settings configured at the origin for the RR are applied instead. This origin could be another zone on Cloudflare or any other server connected to the Internet.
 
@@ -69,4 +71,3 @@ Customer1 uses Cloudflare for authoritative DNS for the zone *shop.example.com*.
 - If Customer1 wants to regain control of their zone, Customer 1 contacts Customer2 and requests them to delete the Custom Hostname record. Another  possibility is to grey-cloud the record.
 - If Customer1 is already proxying a new Custom Hostname for *www.example.com*, Customer2 creates and verifies *www.example.com* so traffic starts routing over Customer2’s zone.  Since this new Custom Hostname is the last one validated, the new custom hostname on Customer1’s zone enters a *moved* status.
 - If Customer1 is already proxying a legacy Custom Hostname for *www.example.com* and Customer2 creates and verifies a new wildcard Custom Hostname for _*.example.com_, traffic is routed to Customer1’s zone while the _www.example.com_ CNAME points to Customer1.
-

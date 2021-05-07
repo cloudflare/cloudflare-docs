@@ -36,9 +36,9 @@ const statusCode = 301
 
 async function handleRequest(request) {
   const url = new URL(request.url)
-  const { pathname, search, hash } = url
+  const { pathname, search } = url
 
-  const destinationURL = base + pathname + search + hash
+  const destinationURL = base + pathname + search
 
   return Response.redirect(destinationURL, statusCode)
 }

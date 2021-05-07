@@ -1,11 +1,12 @@
 ---
 updated: 2020-08-03
 difficulty: Intermediate
+type: "📝 Tutorial"
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
 
-# Localize a website
+# Localize a website with HTMLRewriter
 
 <TutorialsBeforeYouStart/>
 
@@ -13,7 +14,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 The [`HTMLRewriter`](/runtime-apis/html-rewriter) class (currently in beta) built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML at the edge, giving developers the ability to efficiently and transparently customize their Workers applications.
 
-In this tutorial, we’ll build an example internationalization and localization engine (commonly referred to as “i18n” and “l10n”) for your application, server the content of your site, and automatically translate the content based your visitors’ location in the world.
+In this tutorial, we’ll build an example internationalization and localization engine (commonly referred to as “i18n” and “l10n”) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
 ![Demo Image](./media/i18n.jpg)
 
@@ -249,7 +250,7 @@ async function handleEvent(event) {
 
 Our simple i18n tool built on Cloudflare Workers is complete, and it’s time to deploy it to your domain!
 
-It’s super easy (and quick) to deploy sites to your Workers.dev subdomain, but the `wrangler.toml` configuration file in your project needs a little bit of setup before you can deploy your project. First, you’ll need to add your Cloudflare [account ID](/learning/getting-started#6a-obtaining-your-account-id-and-zone-id). Set this ID at the top part of your project’s `wrangler.toml`:
+It’s super easy (and quick) to deploy sites to your Workers.dev subdomain, but the `wrangler.toml` configuration file in your project needs a little bit of setup before you can deploy your project. First, you’ll need to add your Cloudflare [account ID](/get-started/guide#6a-obtaining-your-account-id-and-zone-id). Set this ID at the top part of your project’s `wrangler.toml`:
 
 ```toml
 ---

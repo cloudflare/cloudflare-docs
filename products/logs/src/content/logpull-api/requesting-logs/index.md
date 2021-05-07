@@ -38,7 +38,6 @@ https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/rayids/<ray_id>?[&fiel
 
 The following table describes the parameters available:
 
-
 <TableWrap>
 
 | Parameter | Description | Applies to | Required? |
@@ -51,7 +50,6 @@ The following table describes the parameters available:
 | <em>timestamps</em> | <p>- Format in which timestamp fields will be returned</p> <p>- Value options are: <em>unixnano</em> (default), <em>unix</em>, <em>rfc3339</em></p> <p>- Timestamps retuned as integers for <em>unix</em> and <em>unixnano</em> and as strings for <em>rfc3339</em></p> | <p>/logs/received</p> <p>/logs/rayids</p> | No |
 
 </TableWrap>
-
 
 <Aside type="note" header="Note">
 

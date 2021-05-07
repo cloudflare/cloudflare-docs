@@ -1,6 +1,7 @@
 ---
 updated: 2020-04-15
 difficulty: Beginner
+type: "📝 Tutorial"
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
@@ -142,11 +143,11 @@ filename: index.js
 highlight: [1, 2, 6]
 ---
 const BUCKET_NAME = "my-bucket"
-const BUCKET_URL = `http://storage.googleapis.com/${bucketName}`
+const BUCKET_URL = `http://storage.googleapis.com/${BUCKET_NAME}`
 
 function serveAsset(event) {
   const url = new URL(event.request.url)
-  return fetch(`${bucketUrl}${url.pathname}`)
+  return fetch(`${BUCKET_URL}${url.pathname}`)
 }
 ```
 

@@ -30,7 +30,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 ### Why isn't my regular expression pattern matching working?
 
-If you are using a regular expression, we recommend you test it against an _RE2_ testing tool like [Regular Expressions 101](https://regex101.com).
+If you are using a regular expression, we recommend you test it against a testing tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
 Also, note that _http.request.method_ fields requires all-caps for method names.
 
@@ -104,6 +104,14 @@ Cloudflare plans to expand its list of known bots in the near future.
             </td>
             <td>
                 <p>Baidu search engine bots</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>better uptime</p>
+            </td>
+            <td>
+                <p>Bot for monitoring website uptime</p>
             </td>
         </tr>
         <tr>
@@ -364,3 +372,9 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
   </tbody>
 </table>
 </TableWrap>
+
+### Why does a Firewall Event display a Cloudflare IP address even though other fields match the client details?
+
+This happens when a request goes through a Cloudflare Worker.
+
+In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.

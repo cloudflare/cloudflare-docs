@@ -19,9 +19,9 @@ Switched to a new branch 'step6-pagerule'
 
 $ cat >> cloudflare.tf <<'EOF'
 resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
-  zone = "${var.domain}"
-  target = "www.${var.domain}/expensive-db-call"
-  priority = 10
+  zone_id  = var.zone_id
+  target   = "www.${var.domain}/expensive-db-call"
+  priority = 1
 
   actions = {
     security_level = "under_attack",
@@ -29,9 +29,9 @@ resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
 }
 
 resource "cloudflare_page_rule" "redirect-to-new-db-page" {
-  zone = "${var.domain}"
-  target = "www.${var.domain}/old-location.php"
-  priority = 10
+  zone_id  = var.zone_id
+  target   = "www.${var.domain}/old-location.php"
+  priority = 2
 
   actions = {
     forwarding_url {
@@ -77,7 +77,7 @@ Terraform will perform the following actions:
       actions.0.disable_performance:          "false"
       actions.0.disable_security:             "false"
       actions.0.security_level:               "under_attack"
-      priority:                               "10"
+      priority:                               "1"
       status:                                 "active"
       target:                                 "www.example.com/expensive-db-call"
       zone:                                   "example.com"
@@ -93,7 +93,7 @@ Terraform will perform the following actions:
       actions.0.forwarding_url.#:             "1"
       actions.0.forwarding_url.0.status_code: "301"
       actions.0.forwarding_url.0.url:         "https://www.example.com/expensive-db-call"
-      priority:                               "10"
+      priority:                               "2"
       status:                                 "active"
       target:                                 "www.example.com/old-location.php"
       zone:                                   "example.com"
@@ -154,7 +154,7 @@ cloudflare_page_rule.redirect-to-new-db-page: Creating...
   actions.0.forwarding_url.#:             "0" => "1"
   actions.0.forwarding_url.0.status_code: "" => "301"
   actions.0.forwarding_url.0.url:         "" => "https://www.example.com/expensive-db-call"
-  priority:                               "" => "10"
+  priority:                               "" => "2"
   status:                                 "" => "active"
   target:                                 "" => "www.example.com/old-location.php"
   zone:                                   "" => "example.com"
@@ -166,7 +166,7 @@ cloudflare_page_rule.increase-security-on-expensive-page: Creating...
   actions.0.disable_performance: "" => "false"
   actions.0.disable_security:    "" => "false"
   actions.0.security_level:      "" => "under_attack"
-  priority:                      "" => "10"
+  priority:                      "" => "1"
   status:                        "" => "active"
   target:                        "" => "www.example.com/expensive-db-call"
   zone:                          "" => "example.com"

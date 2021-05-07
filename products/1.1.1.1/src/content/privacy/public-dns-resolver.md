@@ -28,7 +28,6 @@ The 1.1.1.1 public DNS resolver was designed for privacy first, and Cloudflare c
 
 Frankly, we don’t want to know what any one person is doing on the Internet — it’s none of our business — and we’ve taken the technical steps to ensure we can’t.
 
-
 We wanted to put our money where our mouth was, so we retained one of the top four accounting firms to audit our practices and publish a public report confirming we're doing what we said we would. The report is available [here](https://www.cloudflare.com/compliance/).
 
 ## LIMITED DATA SHARING WITH APNIC
@@ -105,12 +104,12 @@ Cloudflare will only store the following aggregated data:
 * Number of queries, number of queries with EDNS, number of bytes and time in answers quantiles (e.g. 50 percentile) by day, month, Cloudflare data center, and by IPv4 vs IPv6.
 * Number of queries, response codes and response code quantiles (e.g. 50 percentile) by day, region, name and type.
 
-Cloudflare may store the aggregated data described above indefinitely in order to assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
+Cloudflare may store the aggregated data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 
 ## WHAT ABOUT REQUESTS FOR CONTENT BLOCKING?
 
 Cloudflare does not block or filter any content through the 1.1.1.1 Public DNS Resolver, which is designed for direct, fast DNS resolution, not for blocking or filtering content. Cloudflare does block and filter malware and adult content through 1.1.1.1 for Families, which is designed to help individuals protect their home networks.
 
-In general, Cloudflare views government or civil requests to block content at the DNS level as  ineffective, inefficient, and overbroad. Because such a block would apply globally to all users of the resolver, regardless of where they are located, it would affect end users outside of the blocking government’s jurisdiction. A government request to block content through a globally available public recursive resolver like the 1.1.1.1 Public DNS Resolver and 1.1.1.1 for Families therefore should be evaluated as a request to block content globally.  
+In general, Cloudflare views government or civil requests to block content at the DNS level as ineffective, inefficient, and overboard. Because such a block would apply globally to all users of the resolver, regardless of where they are located, it would affect end users outside of the blocking government’s jurisdiction. A government request to block content through a globally available public recursive resolver like the 1.1.1.1 Public DNS Resolver and 1.1.1.1 for Families therefore should be evaluated as a request to block content globally.  
 
 Given the broad extraterritorial effect, if Cloudflare were to receive written requests from law enforcement and government agencies to block access to domains or content through the 1.1.1.1 Public DNS Resolver or to block access to domains or content through 1.1.1.1 for Families that is outside the scope of the filtering in that product, Cloudflare would pursue its legal remedies before complying with such a request. We also commit to documenting any government request to block access in our semi-annual transparency report, unless legally prohibited from doing so.

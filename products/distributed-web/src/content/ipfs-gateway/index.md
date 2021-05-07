@@ -9,9 +9,8 @@ the InterPlanetary File System \(IPFS\) quickly and easily, without downloading
 any special software or giving up any storage space on your computer.
 
 Cloudflare's gateway is hosted at https://cloudflare-ipfs.com/. You can find the
-basics on IPFS and how to serve your website through our gateway there. These
+basics on IPFS and [how to serve your website](/ipfs-gateway/connecting-website) through our gateway there. These
 docs are going to get further into the weeds.
-
 
 ## Refresher on IPFS
 
@@ -68,7 +67,6 @@ The speed and reliability advantages of IPFS come from the fact that many people
 can upload the same data, and then downloads will be spread between all of them.
 If any one of them goes offline or decides to stop hosting the data, the others
 can pick up the slack.
-
 
 ### Directories
 

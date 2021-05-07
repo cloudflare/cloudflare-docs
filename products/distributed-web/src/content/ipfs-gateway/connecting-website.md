@@ -1,6 +1,5 @@
 ---
 order: 3
-hidden: true
 ---
 
 # Connecting Your Website
@@ -40,8 +39,7 @@ network, you have to make a choice. You can either pay a service to upload the
 content and keep it there as long as you pay your bill, or you can run your own
 IPFS node.
 
-If you opt to pay someone else, there are pinning services like
-[eternum.io](https://eternum.io) and [ipfsstore.it](https://ipfsstore.it) which charge a few
+If you opt to pay someone else, there are pinning services that charge a few
 cents per month per gigabyte of storage and have a simple UI for uploading your
 content. These services are arguably the simplest option, but they don’t give
 you much flexibility.
@@ -50,7 +48,7 @@ Alternatively, you can run an IPFS node on a dedicated server or a VPS, and pin
 your content there. We'll run through how to do that here.
 
 First off, if you haven’t already, download IPFS by following the instructions
-[here](https://docs.ipfs.io/guides/guides/install/).
+[here](https://docs.ipfs.io/install/).
 
 Once you've downloaded the IPFS software, open a terminal window and connect
 your IPFS node to the network by typing:
@@ -101,7 +99,7 @@ We'll go over how to do that now.
 First, go to the DNS settings for your domain. When you're there, add the
 following two records:
 
-1. CNAME for `your.website` pointing to `www.cloudflare-ipfs.com`
+1. CNAME for `your.website` pointing to `cloudflare-ipfs.com`
 2. TXT record for `_dnslink.your.website` with the value `dnslink=/ipfs/<your_hash_here>`
 
 Now any request to `your.website` will resolve to

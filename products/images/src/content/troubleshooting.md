@@ -30,7 +30,12 @@ When resizing fails, the response body contains an error message explaining the 
 * 9504, 9505 & 9510 — Unable to contact origin. The origin server may be down or overloaded.
 * 9524 — `/cdn-cgi/image/` resizing service could not perform resizing, probably because the image URL was intercepted by a Worker.
 * 9511 — Image format not supported.
-* 9424, 9516, 9517, 9518, 9522 & 9523 — Internal errors. Please contact support if you encounter these errors.
+* 9522 — Exceeded processing limit. This may happen briefly after purging an entire zone or when requesting files with huge dimensions. If the problem persists, please contact support.
+* 9424, 9516, 9517, 9518 & 9523 — Internal errors. Please contact support if you encounter these errors.
+
+## Limits
+
+Maximum image size is 100 megapixels (e.g. 10000&times;10000 pixels large). Maximum file size is 70MB.
 
 ## Authorization and cookies are not supported
 
@@ -38,10 +43,12 @@ Image requests to the origin will be anonymized (no cookies, no auth, no custom 
 
 You can use unguessable URLs for images (e.g. with long random IDs) and/or handle cookie-based authentication in a Worker that manages image resizing.
 
-## Purging
+## Caching and purging
 
 Changes to image dimensions or other resizing options should always take effect immediately — no purging necessary.
 
-Responses from Workers are not cached, so purging of *Worker URLs* doesn’t do anything. Resized image variants are cached together under their source’s URL. When purging, use the (full-size) source image’s URL, rather than URLs of the Worker that did resizing.
+Image requests consists of two parts: running Worker code, and image processing. The Worker code is always executed and uncached. Results of image processing are cached for one hour or longer if origin server's `Cache-Control` header allows.
 
-If the origin server sends an `Etag` HTTP header, the resized images will have an `Etag` HTTP header that has a format `cf-<gibberish>:<etag of original image>`. You can compare the second part with the `Etag` header of the source image URL to check if the resized image is up to date.
+Because responses from Workers themselves are not cached at the edge, purging of *Worker URLs* doesn’t do anything. Resized image variants are cached together under their source’s URL. When purging, use the (full-size) source image’s URL, rather than URLs of the Worker that requested resizing.
+
+If the origin server sends an `Etag` HTTP header, the resized images will have an `Etag` HTTP header that has a format `cf-<gibberish>:<etag of the original image>`. You can compare the second part with the `Etag` header of the source image URL to check if the resized image is up to date.

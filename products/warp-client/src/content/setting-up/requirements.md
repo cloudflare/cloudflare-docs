@@ -1,6 +1,6 @@
 ---
 title: Requirements
-order: 1
+order: 3
 ---
 
 # Installation requirements
@@ -10,7 +10,7 @@ order: 1
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Windows 8, Windows 10</td>
+      <td>Windows 8+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
@@ -38,11 +38,11 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>High Sierra, Catalina</td>
+      <td>High Sierra+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td>Intel & M1</td>
     </tr>
     <tr>
       <td><strong>HD Space</strong></td>
@@ -60,6 +60,34 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
 </table>
 
 __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)__
+
+## Linux
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Distributions</strong></td>
+      <td>Ubuntu, Redhat Enterprise Linux, Centos</td>
+    </tr>
+    <tr>
+      <td><strong>OS Type</strong></td>
+      <td>x64</td>
+    </tr>
+    <tr>
+      <td><strong>HD Space</strong></td>
+      <td>200MB</td>
+    </tr>
+    <tr>
+      <td><strong>Memory</strong></td>
+      <td>35MB</td>
+    </tr>
+    <tr>
+      <td><strong>Network Types</strong></td>
+      <td>WIFI or LAN</td>
+    </tr>
+  </tbody>
+</table>
+
+__[cloudflare-warp package repository](https://pkg.cloudflare.com/)__
 
 ## iOS
 <table>

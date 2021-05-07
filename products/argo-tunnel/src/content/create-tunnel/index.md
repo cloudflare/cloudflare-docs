@@ -1,21 +1,35 @@
 ---
-order: 2
+order: 3
 ---
 
-# Create and run a Tunnel
+# Create a Tunnel
+
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 | Before you start |
 |---|
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)  |
-| 4. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 3. [Install `cloudflared` and authenticate the software](/getting-started) |
+| 4. [Understand the overview for using Argo Tunnels](/getting-started/high-level-steps) |
 
 ## Create a Tunnel
 
+<Aside>
+
+Argo Tunnels created in this method do not currently display in the Traffic tab of the Cloudflare dashboard. These connections will be added to the dashboard in a future release.
+
+</Aside>
+
 Run the following command to create a Tunnel.
 
- `cloudflared tunnel create <NAME>`
+```sh
+$ cloudflared tunnel create <NAME>
+```
 
 Replace `<NAME>` with the name you want to give to the Tunnel. The name assigned can be any string and does not need to relate to the hostname where traffic will be served.
 
@@ -38,41 +52,13 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 
 </TableWrap>
 
-## Run a Tunnel
-
-Once created, you can run the Argo Tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. To begin, run the Tunnel with the following command.
-
-`cloudflared tunnel --config path/config.yaml run <NAME>`
-
-If you have deleted the `cert.pem` file, you must specify the UUID instead of the name.
-
-`cloudflared tunnel --config path/config.yaml run <UUID>`
-
-You can also specify the Tunnel name or UUID inside of the configuration file, in which case the command below will invoke the `run` command for that Tunnel.
-
-`cloudflared tunnel --config path/config.yaml run`
-
-If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
-
-When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [Ingress Rules](/routing-to-tunnel/ingress).
-
-You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route _all_ traffic to the given URL.
-
-`cloudflared tunnel run --url localhost:3000 <NAME or UUID>`
-
-![Run tunnels](../static/img/create-tunnel/rt1.png)
-
-Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the routing instructions.
-
-You can also:
-* [Run a tunnel as a Kubernetes sidecar](/create-tunnel/kubernetes-sidecar-model/)
-* [Run a tunnel as a service](/create-tunnel/run-as-service)
-
 ## List available Tunnels
 
 `cloudflared` can list all created Tunnels in your account, as well as those actively connected to Cloudflare, by running the following command:
 
-`cloudflared tunnel list`
+```sh
+cloudflared tunnel list
+```
 
 Note: the command requires the `cert.pem` file.
 
@@ -82,13 +68,17 @@ Note: the command requires the `cert.pem` file.
 
 You can delete an existing Tunnel with cloudflared. To delete a Tunnel, run the following command:
 
-`cloudflared tunnel delete <NAME>`
+```sh
+$ cloudflared tunnel delete <NAME>
+```
 
 Note: the command requires the `cert.pem` file.
 
 If there are still active connections on that tunnel, then you will have to force the deletion with:
 
-`cloudflared tunnel delete -f <NAME>`
+```sh
+$ cloudflared tunnel delete -f <NAME>
+```
 
 This will cause those connections to be dropped.
 

@@ -13,7 +13,7 @@ A JSON response for the [Filters API](https://api.cloudflare.com/#filters-proper
     "id": "6f58318e7fa2477a23112e8118c66f61",
     "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\""
     "paused": true,
-    "description": "Wordpress login paths",
+    "description": "WordPress login paths",
     "ref": ""
 }
 ```

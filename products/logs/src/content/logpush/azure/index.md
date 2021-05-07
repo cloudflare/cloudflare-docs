@@ -5,9 +5,7 @@ order: 62
 
 # Enable Microsoft Azure
 
-
 Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You'll need to provide *Write* permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
-
 
 To enable Logpush to Azure:
 

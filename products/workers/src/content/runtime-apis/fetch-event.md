@@ -32,7 +32,7 @@ When a Workers script receives a request, the Workers runtime triggers a FetchEv
 
 <Definitions>
 
--  <Code>event.respondWith(response<TypeLink href="/runtime-apis/request">Request</TypeLink>|<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
+-  <Code>event.respondWith(response<TypeLink href="/runtime-apis/response">Response</TypeLink>|<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
 
     - Intercept the request and send a custom response. _If no event handler calls `respondWith()` the runtime attempts to request the origin as if no Worker script exists. If no origin is setup (e.g. workers.dev sites), then the Workers script must call `respondWith()` for a valid response._
 

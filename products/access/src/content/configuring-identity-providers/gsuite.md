@@ -4,7 +4,11 @@ order: 12
 
 # G Suite
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 G Suite provides OpenID Connect (OIDC) Identity Provider support that you can use with many SaaS apps in the G Suite Marketplace, and adds support for SAML 2.0 (Security Assertion Markup Language) for more than 15 popular SaaS providers. Cloudflare Access supports G Suite as an IdP.
 
@@ -55,7 +59,7 @@ Use these steps to set up G Suite as your IdP.
    - App Name (you can write e.g. Cloudflare Access)
    - User support email (pick from dropdown)
    - As **Authorized domains** enter `cloudflareaccess.com`.
-   - In Developexr contact information you can write the same address as in support email.
+   - In Developer contact information you can write the same address as in support email.
 
 1. Click **Save and continue**, skip Scopes (there is nothing to do) and check Summary.
 
@@ -105,7 +109,7 @@ Use these steps to set up G Suite as your IdP.
 1. In the Cloudflare Access **Configuration** panel, enter your Google domain, including the TLD (e.g.: my-project.com).
 1. Click **Save and Test**.
 
-   On success, a confirmirmation displays that your connection works.
+   On success, a confirmation displays that your connection works.
 
    ![Cloudflare IdP Connection Success](../static/gsuite/gsuite-9.png)
 
@@ -115,7 +119,7 @@ Use these steps to set up G Suite as your IdP.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "apps_domain": "mycompany.com"
     },
     "type": "google-apps",

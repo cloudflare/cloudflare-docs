@@ -4,6 +4,12 @@ order: 15
 
 # Mutual TLS client headers
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare makes client certificate details available to be passed as request headers to your origin. To begin, configure your policy for mTLS enforcement using the instructions provided in [_Adding mTLS authentication to your Access configuration_](/service-auth/mtls/).
 
 ## Valid variables
@@ -30,7 +36,6 @@ Cloudflare Access will always set headers on each request. The system will not r
 ## Configure Cloudflare Workers
 
 1. Enable Workers for the zone.
-
 
 Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing apps without configuring or maintaining infrastructure. In our example, Workers listen for requests to your origin and pass the required variables from the client certificate.
 

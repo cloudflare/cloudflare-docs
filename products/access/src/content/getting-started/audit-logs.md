@@ -4,6 +4,12 @@ order: 5
 
 # Audit Logs
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access generates two types of audit logs:
 * **Authentication audit logs** maintain a record of authentication events.
 * **Per-request audit logs** record HTTP requests to protected URI paths.
@@ -30,9 +36,7 @@ Access provides the following view types of the logs:
 https://api.cloudflare.com/client/v4/accounts/<account_id>/access/logs/access_requests?direction=desc&limit=15&page=1
 ```
 
-
 Access authentication logs contain the following fields:
-
 
 | Field | Description |
 |-------|-------------|
@@ -108,4 +112,3 @@ Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Acc
 For instructions on setting up Logpush, see [Manage the Logpush API](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/).
 
 For more on exporting per-request Access logs, see [Understanding the Logpush API](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/understanding-logpush-api/).
-

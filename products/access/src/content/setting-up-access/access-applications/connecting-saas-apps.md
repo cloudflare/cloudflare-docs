@@ -5,6 +5,12 @@ order: 1
 
 # Connecting SaaS Applications
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, we ensure that users cannot login to SaaS applications without first meeting the criteria you want to introduce.
 
 ## 1. Add and configure your app
@@ -65,7 +71,6 @@ To begin using your application through Access, your last step is to integrate y
    * Your Access Entity ID or Issuer
    * Your Public key  
 
-
    with your SAML SSO-compliant application.  
 
    **Take note of these fields before you click `Done`**.
@@ -73,6 +78,3 @@ To begin using your application through Access, your last step is to integrate y
 ![Setup SaaS application](../../static/summary/setup-saas.png)
 
 5. Click **Done** to see your application listed on your Applications tab.
-
-
-

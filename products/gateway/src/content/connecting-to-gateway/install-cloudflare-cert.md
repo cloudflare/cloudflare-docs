@@ -4,6 +4,12 @@ order: 0
 
 # Install the Cloudflare root certificate
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 
 ## Download the Cloudflare root certificate
@@ -62,20 +68,19 @@ To install the certificate in Keychain Access:
 
 The root certificate is now installed and ready to be used.
 
-
 ### iOS
 
 1. Download the Cloudflare certificate [here](../static/Cloudflare_CA.crt).
 
  The device will show a message: *This website is trying to open Settings to how you a configuration profile. Do you want to allow this?*
 
-![ios download](../static/ios_cert_download.jpg)
+![iOS download](../static/ios_cert_download.jpg)
 
 2. Tap **Allow**.
 
 3. Navigate to **Settings** > **General** > **Profile** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
-![ios profile](../static/ios_cert_profile.jpg)
+![iOS profile](../static/ios_cert_profile.jpg)
 
 4. Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
@@ -91,13 +96,13 @@ The root certificate is now installed and ready to be used.
 
  The installed root certificates will be displayed in the *Enable full trust for root certificates* section.
 
- ![ios cert trust](../static/ios_cert_trust1.jpg)
+ ![iOS cert trust](../static/ios_cert_trust1.jpg)
 
 8. Tap the slide button next to the Cloudflare certificate you just installed.
 
 9. A confirmation dialogue will appear. Tap **Continue**.
 
- ![ios cert confirm](../static/ios_cert_trust2.jpg)
+ ![iOS cert confirm](../static/ios_cert_trust2.jpg)
 
 The root certificate is now installed and ready to be used.
 
@@ -119,7 +124,7 @@ Windows offers two options to install the certificate, each having a different i
 
 4. The **Certificate** window will appear. Click **Install Certificate**.
 
-![windows install cert](../static/windows_install_cert.png)
+![Windows install cert](../static/windows_install_cert.png)
 
 5. Now choose a Store Location.
 
@@ -131,11 +136,11 @@ Windows offers two options to install the certificate, each having a different i
 
 9. Click **OK**.
 
-![windows cert location](../static/windows_cert_location.png)
+![Windows cert location](../static/windows_cert_location.png)
 
 10. Click **Finish**.
 
-![windows cert install complete](../static/windows_cert_install_finished.png)
+![Windows cert install complete](../static/windows_cert_install_finished.png)
 
 The root certificate is now installed and ready to be used.
 
@@ -147,30 +152,30 @@ The root certificate is now installed and ready to be used.
 
 3. Select **Security**.
 
-![android settings](../static/android_security_settings.png)
+![Android settings](../static/android_security_settings.png)
 
 4. Tap **Advanced** > **Encryption & Credentials**.
 
-![android encrypt settings](../static/android_advanced_encrypt.png)
+![Android encrypt settings](../static/android_advanced_encrypt.png)
 
-![android cred settings](../static/android_advanced_encrypt2.png)
+![Android cred settings](../static/android_advanced_encrypt2.png)
 
 5. Tap **Install a certificate**.
 
-![android install cert](../static/android_install_cert.png)
+![Android install cert](../static/android_install_cert.png)
 
 6. Tap **CA certificate**.
 
-![android ca cert](../static/android_ca_cert.png)
+![Android ca cert](../static/android_ca_cert.png)
 
 7. Tap **Install Anyway**.
 
-![android install anyway](../static/android_install_anyway.png)
+![Android install anyway](../static/android_install_anyway.png)
 
 8. Verify your identity through the fingerprint, or by inserting the pin code.
 
 9. Select the certificate you want to install.
 
-![android choose cert](../static/android_choose_certificate.png)
+![Android choose cert](../static/android_choose_certificate.png)
 
 The root certificate is now installed and ready to be used.

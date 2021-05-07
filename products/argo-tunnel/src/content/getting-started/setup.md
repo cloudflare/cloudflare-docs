@@ -1,8 +1,14 @@
 ---
-order: 1
+order: 2
 ---
 
 # Setup
+
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 | Before you start |
 |---|
@@ -10,7 +16,6 @@ order: 1
 | 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
 | 3. [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI) |
 | 4. [Install `cloudflared`](/getting-started/installation/) |
-
 
 Follow these steps to set up Cloudflare Argo Tunnel:
 
@@ -35,4 +40,3 @@ The file is required if you want to:
 The file is not required if you want to:
   * Run an existing Tunnel
   * Manage routing from the Cloudflare dashboard
-

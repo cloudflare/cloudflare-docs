@@ -1,9 +1,16 @@
 ---
-order: 1
+order: 2
 ---
 
 # Getting started
 
-This section covers how to [install](/getting-started/installation) and [set up](/getting-started/installation) `cloudflared`.
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
 
-<DirectoryListing path="/getting-started"/>
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
+This section covers:
+ * How to [install](/getting-started/installation) `cloudflared`.
+ * [Set up](/getting-started/setup) `cloudflared`.
+ * [Overview to using Argo Tunnels](/getting-started/high-level-steps).

@@ -4,12 +4,8 @@ order: 5
 
 # Mozilla Firefox
 
-Firefox has begun supporting HTTP/3 in nightly builds. Firefox nightly is an official experimental channel that provides binaries to allow you to test new features such as HTTP/3. **Nightly builds may have some stability issues that you should keep in mind when testing**.
+Firefox Nightly supports HTTP/3. The experimental Firefox Nightly builds are released, well, nightly. They may have some stability issues that you should keep in mind when testing. You can install it alongside regular Firefox; the Firefox Nightly installer can be found [here](https://www.mozilla.org/en-US/firefox/channel/desktop/).
 
-HTTP/3 is not enabled by default. It can be enabled by toggling network.http.http3.enabled value to true in about:config,
+## Running
 
-## Installation
-
-Only Firefox nightly builds currently support HTTP/3. To install the latest, [download](https://www.mozilla.org/en-US/firefox/channel/desktop/) the installer and run it.
-
-Launch browser advanced preferences by entering about:config in the URL section. Search the preference network.http.http3.enabled and make it to true.
+Firefox's HTTP/3 is not enabled by default. It can be enabled by toggling the `network.http.http3.enabled` value to true in `about:config`,

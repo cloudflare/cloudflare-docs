@@ -19,7 +19,7 @@ async function handleRequest(request) {
 
   // Only use the path for the cache key, removing query strings
   // and always store using HTTPS e.g. https://www.example.com/file-uri-here
-  const someCustomKey = "https://${url.hostname}${url.pathname}"
+  const someCustomKey = `https://${url.hostname}${url.pathname}`
 
   let response = await fetch(request, {
     cf: {
@@ -34,7 +34,7 @@ async function handleRequest(request) {
   // Reconstruct the Response object to make its headers mutable.
   response = new Response(response.body, response)
 
-  //Set cache control headers to cache on browser for 25 minutes
+  // Set cache control headers to cache on browser for 25 minutes
   response.headers.set("Cache-Control", "max-age=1500")
   return response
 }

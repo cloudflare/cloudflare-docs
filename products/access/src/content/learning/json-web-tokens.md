@@ -2,7 +2,13 @@
 order: 6
 ---
 
-# Access with JSON Web Tokens
+# Access with JSON web tokens
+
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
 
 Cloudflare Access uses JSON Web Tokens (JWTs), and their contents, to confirm a user’s identity before allowing or denying access to sensitive resources. Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
 
@@ -19,7 +25,7 @@ When users authenticate, Cloudflare signs two distinct JWTs.
 
 The content in the JWT is available for teams to validate independently, as well.
 
-## JWT Contents
+## JWT contents
 
 JWTs contain three Base64-URL, separated by dots:
 * Header
@@ -94,7 +100,7 @@ You can set the Session Duration on the Settings page of the Edit Access Policy 
 
 Click **Revoke existing tokens** to revoke JWTs associated with the selected policy.
 
-## Groups Within A JWT
+## Groups within a JWT
 
 The JWT created by Cloudflare Access contains the user identity and also a mechanism for your application to identify the user's SSO group membership. For example, your application can validate that a given user is a member of an Okta or AzureAD group like `Finance-Team` or `Eng`.
 

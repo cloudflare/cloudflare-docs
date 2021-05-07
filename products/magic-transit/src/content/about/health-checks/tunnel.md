@@ -39,7 +39,7 @@ Magic Transit uses tunnel health check packets to prioritize and steer traffic a
 
 There are three tunnel health states: **_Healthy_** tunnels are preferred to **_Degraded_** tunnels, and _Degraded_ tunnels are preferred to those that are **_Down_**.
 
-Magic Transit steers traffic to tunnels based on priorities you set when you [assign-tunnel-route-priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the [onboarding process](/set-up/onboarding).
+Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the [onboarding process](/set-up/onboarding).
 
 Tunnel routes with lower values have priority over those with higher values.
 
@@ -48,8 +48,6 @@ Tunnel routes with lower values have priority over those with higher values.
 Since Cloudflare does not synchronize the health checks among edge servers and the Internet is not homogenous, Cloudflare edge servers may be able to reach the origin infrastructure from some locations at a given time but not others.
 
 As a result, tunnel health may be in different states in different parts of the world at the same time. In our example, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
-
-This is by design, so that health check probes arrive continuously at the origin router. Doing so ensures that failure discovery and steering changes occur within 60 seconds.
 
 </Aside>
 
@@ -76,7 +74,9 @@ Tunnels in a _Degraded_ state transition to _Healthy_ when the failure rate for 
 
 Magic Transit’s tunnel health check system allows a tunnel to transition quickly from _Healthy_ to _Degraded_ or _Down_ but only slowly from _Degraded_ or _Down_ to _Healthy_. This [hysteresis](https://en.wikipedia.org/wiki/Hysteresis) dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
+<Aside type="note" header="Note">
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority, even when all configured tunnels are in an unhealthy state.
+</Aside>
 
 ### Example
 

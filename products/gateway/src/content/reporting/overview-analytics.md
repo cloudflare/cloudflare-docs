@@ -4,6 +4,12 @@ order: 1
 
 # Overview Page
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 You can use the Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or a time.
 
 - [Filter analytics by time](#filter-analytics-by-time)

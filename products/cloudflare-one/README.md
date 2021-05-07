@@ -1,4 +1,4 @@
-# Cloudflare for Teams tutorials
+# Cloudflare for Teams docs
 
 [View docs →](https://developers.cloudflare.com/cloudflare-one)
 
