@@ -1,8 +1,10 @@
 ---
+title: FAQ
 order: 6
+pcx-content-type: faq
 ---
 
-# FAQ
+# Frequently asked questions about Cloudflare Stream
 
 ## What formats and quality levels are delivered through Cloudflare Stream?
 

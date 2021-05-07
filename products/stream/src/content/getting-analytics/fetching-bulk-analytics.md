@@ -1,3 +1,7 @@
+---
+pcx-content-type: reference
+---
+
 # Fetching bulk analytics
 
 Stream has a GraphQL analytics API that can be used to get bulk analytics for all videos in your account with one HTTP request.

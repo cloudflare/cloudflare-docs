@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: reference
 ---
 
 # Using own player
