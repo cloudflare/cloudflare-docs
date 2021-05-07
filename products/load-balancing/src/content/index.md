@@ -1,6 +1,7 @@
 ---
 title: Welcome
 order: 1
+pcx-content-type: landing page
 ---
 
 # Cloudflare Load Balancing docs

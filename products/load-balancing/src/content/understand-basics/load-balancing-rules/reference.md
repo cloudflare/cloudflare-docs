@@ -1,9 +1,10 @@
 ---
 title: Supported fields and operators
 order: 50
+pcx-content-type: reference
 ---
 
-# Supported fields and operators
+# Supported fields and operators for load balancer rules
 
 The fields available for load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer. 
 
@@ -129,7 +130,7 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-Load Balancing expressions also support grouping symbols, which allow you to organize expressions, enforce operator precedence, and nest expressions. For examples and usage, see [_Grouping symbols_](/cf-firewall-language/operators/#grouping-symbols) in the Firewall Rules documentation.
+Load Balancing expressions also support grouping symbols, which allow you to organize expressions, enforce operator precedence, and nest expressions. For examples and usage, see [_Grouping symbols_](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#grouping-symbols) in the Firewall Rules documentation.
 
 ### Comparison operators
 

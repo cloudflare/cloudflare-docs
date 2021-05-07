@@ -1,10 +1,9 @@
 ---
 title: Create a Waiting Room
-alwaysopen: true
-weight: 250
-hidden: false
+order: 1
+pcx-content-type: navigation
 ---
 
-# Create a Waiting Room
+# Create a Cloudflare Waiting Room
 
 You can create a waiting room using the [Waiting Room API](/how-to/create-waiting-room/create-waiting-room-api/) or the **Traffic** App in the [Cloudflare dashboard](/how-to/create-waiting-room/create-waiting-room-dashboard/).

@@ -1,8 +1,6 @@
 ---
-title: Update and delete Cloudflare Waiting Rooms
-alwaysopen: false
-weight: 260
-hidden: false
+order: 4
+pcx-content-type: how to
 ---
 
 # Update and delete Waiting Rooms
