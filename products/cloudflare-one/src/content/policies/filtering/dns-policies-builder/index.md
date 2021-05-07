@@ -17,7 +17,7 @@ Build a DNS policy by configuring the following elements:
 * [Operators](#operators)
 
 <Aside>
-Unless a more specific selector is configured in a rule (e.g., user email or source IP address for a registered location), then the rule will be evaluated against all DNS queries that reach Gateway from your organization.
+Unless a more specific selector is configured in a policy (e.g., user email or source IP address for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 </Aside>
 
 ## Actions
@@ -33,7 +33,7 @@ These are the action types you can choose from:
 
 ### Allow
 
-Rules with Allow actions allow DNS queries you specify within the Selectors and Value fields. For example, the following configuration allows DNS queries to domains we categorize as belonging to the Education content category:
+Policies with Allow actions allow DNS queries you specify within the Selectors and Value fields. For example, the following configuration allows DNS queries to domains we categorize as belonging to the Education content category:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -41,7 +41,7 @@ Rules with Allow actions allow DNS queries you specify within the Selectors and 
 
 ### Block
 
-Rules with Block actions block DNS queries you specify within the Selectors and Value fields. For example, the following configuration blocks DNS queries to domains we categorize as belonging to the Adult Themes content category:
+Policies with Block actions block DNS queries you specify within the Selectors and Value fields. For example, the following configuration blocks DNS queries to domains we categorize as belonging to the Adult Themes content category:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -49,7 +49,7 @@ Rules with Block actions block DNS queries you specify within the Selectors and 
 
 ### Override
 
-Rules with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of 1.2.3.4 for all queries to www.example.com with the following rule:
+Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of 1.2.3.4 for all queries to www.example.com with the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -59,7 +59,7 @@ Rules with Override actions allow you to respond to all DNS queries for a given 
 
 SafeSearch is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
-You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following rule:
+You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -91,7 +91,7 @@ DuckDuckGo will return `safe.duckduckgo.com`.
 
 ### YouTube Restricted Mode
 
-Similarly, you can enforce YouTube Restricted mode by choosing the Youtube Restricted Mode action. YouTube Restricted Mode is an automated filter for adult and offensive content that's built into YouTube. To enable Youtube Restricted Mode, you could set up a rule like the following:
+Similarly, you can enforce YouTube Restricted mode by choosing the Youtube Restricted Mode action. YouTube Restricted Mode is an automated filter for adult and offensive content that's built into YouTube. To enable Youtube Restricted Mode, you could set up a policy like the following:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -99,7 +99,11 @@ Similarly, you can enforce YouTube Restricted mode by choosing the Youtube Restr
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
 
-## Selectors
+## Expressions
+
+Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. 
+
+### Selectors
 
 Gateway matches DNS traffic against the following selectors, or criteria:
 
@@ -131,7 +135,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 For more detailed information on DNS categories, see the [DNS categories page](/policies/filtering/dns-policies-builder/dns-categories).
 
-## Operators
+### Operators
 
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
 
@@ -144,17 +148,17 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 |  matches regex        | regex evaluates to true         |
 |  does not match regex |  all except when regex evals to true   |
 
-### Blocking a subdomain
+## Blocking a subdomain
 
-To block a domain and all subdomains, you can create the following rule:
+To block a domain and all subdomains, you can create the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
 | DNS Domain | Is | `example.com` | Block |
 
-### Blocking a top-level domain
+## Blocking a top-level domain
 
-Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by creating a rule. For example, if you wish to block all domains and subdomains registered as a `.net`, create the following rule:
+Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by creating a policy. For example, if you wish to block all domains and subdomains registered as a `.net`, create the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -162,7 +166,7 @@ Just like you can choose to block a domain and all subdomains, you can block an 
 
 Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the Internet.
 
-## Block Page
+## Custom block page
 
-When choosing the Block action, toggle this setting to respond to queries with a block page. If disabled, Gateway will respond to blocked queries with `0.0.0.0`.
+When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`.
 
