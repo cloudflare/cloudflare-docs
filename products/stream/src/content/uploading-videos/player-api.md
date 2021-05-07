@@ -72,7 +72,7 @@ Multiple attributes can be used together, added one after each other like this:
 
 <Definitions>
 
-- `play()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ Promise">Promise</TypeLink>
+- `play()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</TypeLink>
 
   - Start video playback.
 
