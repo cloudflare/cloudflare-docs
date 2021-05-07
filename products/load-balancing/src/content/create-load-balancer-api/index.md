@@ -4,7 +4,7 @@ order: 30
 pcx-content-type: tutorial
 ---
 
-# Create a load balancer via the API
+# Create a Cloudflare load balancer via the API
 
 ## Overview
 

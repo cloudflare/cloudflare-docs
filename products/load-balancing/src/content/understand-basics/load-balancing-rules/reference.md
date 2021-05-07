@@ -1,9 +1,10 @@
 ---
+title: Supported fields and operators
 order: 50
 pcx-content-type: reference
 ---
 
-# Supported fields and operators
+# Supported fields and operators for Cloudflare Load Balancing
 
 The fields available for load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer. 
 

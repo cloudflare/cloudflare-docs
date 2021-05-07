@@ -5,7 +5,7 @@ order: 0
 pcx-content-type: landing page
 ---
 
-# Page Shield
+# Cloudflare Page Shield
 
 Page Shield helps you detect attacks happening in your end users' browsers.
 

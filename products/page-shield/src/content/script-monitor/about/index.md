@@ -6,7 +6,7 @@ pcx-content-type: landing page
 
 import ScriptMDefinition from "../../_partials/_script-monitor-definition.md"
 
-# About Script Monitor
+# About Cloudflare Script Monitor
 
 ## Why Script Monitor?
 

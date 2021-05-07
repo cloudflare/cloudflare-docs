@@ -1,9 +1,10 @@
 ---
+title: Troubleshooting
 order: 50
 pcx-content-type: faq
 ---
 
-# Troubleshooting
+# Troubleshoot Cloudflare load balancers
 
 ## Overview
 
