@@ -35,8 +35,8 @@ The following values may be present in the `BotTags` log field:
 
 To enable bot tags, include the `BotTags` log field when using our [Logpush service](https://developers.cloudflare.com/logs/logpush).
 
-## Current limitations
+## Current features
 
-Currently, Bot Tags are only available in log fields. Additionally, we only have space to show 14 [potential values](#potential-values).
+Currently, Bot Tags are only available in log fields.
 
 Future work will add more values and extend Bot Tags to other Cloudflare products.
