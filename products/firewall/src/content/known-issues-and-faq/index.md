@@ -381,7 +381,7 @@ In this case, Cloudflare considers the client details, including its IP address,
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
-No. The _Challenge (Captcha)_ and _JavaScript Challenge_ actions only support HTML requests.
+No. The _Challenge (Captcha)_ and _JS Challenge_ actions only support HTML requests.
 
 Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX.
 
@@ -394,4 +394,27 @@ Your application can use these status codes to handle the case of challenges bei
 
 ### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
-No. The (js)challengeFailed are request we observe and under special circumstances could not pass the challenge. However, oftentimes we cannot attribute failed challenges back to a firewall rule or do not observe a request when a challenge is failed. Therefore this action should be used with caution. A reliable indicator is the CSR or JSCR ( solved / issued ).
+No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a firewall rule. Additionally, the Firewall may not have a record of every request with a failed challenge.
+
+Therefore, consider these actions with caution. A reliable indicator is the CSR (Challenge Solve Rate) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
+
+### Why don't I see any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
+
+Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are actually being answered.
+
+There are multiple reasons for this:
+
+* Users give up on a challenge.
+* Users try to solve a challenge but cannot provide an answer.
+* Users keep refreshing the challenge to get a challenge they can solve, and they don't submit answers.
+* Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
+* Cloudflare receives a malformed challenge answer.
+
+### Why do I see matches for a Firewall Rule that was not supposed to match the request?
+
+Make sure you are looking at the correct request.
+
+Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a CAPTCHA.
+
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule.
+These actions state that "previously a rule had matched a request with the action set to _Challenge (Captcha)_ or _JS Challenge_ and now that challenge was answered".
