@@ -1,9 +1,10 @@
 ---
-title: Work with Cloudflare Waiting Rooms
-alwaysopen: true
-weight: 150
-hidden: false
+title: Set up Waiting Rooms
+order: 2
+pcx-content-type: tutorial
 ---
+
+# Set up a Cloudflare Waiting Room
 
 ## Before you begin
 

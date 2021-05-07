@@ -1,8 +1,10 @@
 ---
+title: Troubleshooting
 order: 50
+pcx-content-type: faq
 ---
 
-# Troubleshooting
+# Troubleshoot Cloudflare load balancers
 
 ## Overview
 
@@ -168,7 +170,7 @@ If you're using the **Cloudflare API**, you will receive this error message.
 
 ### Solution
 
-- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their Customer Success Manager or contact support@cloudflare.com to discuss this issue.
+- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their Customer Success Manager or [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to discuss this issue.
 - Self-service customers upgrade their Load Balancing subscription with more origin servers to increase load balancing capacity.
 
 ---

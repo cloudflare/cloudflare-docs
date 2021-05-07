@@ -1,9 +1,6 @@
 ---
-title: About Cloudflare Waiting Room
-alwaysopen: true
-weight: 1
-hidden: false
-showNew: false
+order: 1
+pcx-content-type: landing page
 ---
 
 # About Cloudflare Waiting Room

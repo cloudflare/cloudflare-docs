@@ -1,9 +1,10 @@
 ---
 title: Get started
 order: 0
+pcx-content-type: how to
 ---
 
-# Get started with Script Monitor
+# Get started with Cloudflare Script Monitor
 
 ## Activate Script Monitor
 

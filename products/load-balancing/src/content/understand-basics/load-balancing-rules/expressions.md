@@ -1,6 +1,7 @@
 ---
 title: Expressions
 order: 20
+pcx-content-type: reference
 ---
 
 # Load Balancing expressions
