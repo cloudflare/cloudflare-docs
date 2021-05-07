@@ -385,7 +385,7 @@ When an XHR or AJAX request triggers one of the _Challenge_ actions, the resulti
 * HTTP status code 403 for _Challenge (Captcha)_
 * HTTP status code 503 for _JS Challenge_
 
-Your application can use these status codes to handle the case of challenges being issued unexpectedly.
+Your application can use these status codes to handle unexpected challenges.
 
 ## Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
@@ -393,15 +393,15 @@ No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for o
 
 Therefore, consider these actions with caution. A reliable indicator is the CSR (Challenge Solve Rate) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
-## Why don't I see any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
+## Why would I not see any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 
-Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are actually being answered.
+Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
 
 There are multiple reasons for this:
 
 * Users give up on a challenge.
 * Users try to solve a challenge but cannot provide an answer.
-* Users keep refreshing the challenge to get a challenge they can solve, and they don't submit answers.
+* Users keep refreshing the challenge but never submit an answer.
 * Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 * Cloudflare receives a malformed challenge answer.
 
