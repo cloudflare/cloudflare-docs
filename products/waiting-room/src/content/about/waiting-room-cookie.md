@@ -2,7 +2,7 @@
 pcx-content-type: reference
 ---
 
-# Waiting Room cookie
+# Cloudflare Waiting Room cookie
 
 <Aside type='warning' header='Important'>
 

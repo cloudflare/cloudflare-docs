@@ -1,9 +1,10 @@
 ---
+title: Set up Waiting Rooms
 order: 2
 pcx-content-type: tutorial
 ---
 
-# Work with Waiting Rooms
+# Set up a Cloudflare Waiting Room
 
 ## Before you begin
 
