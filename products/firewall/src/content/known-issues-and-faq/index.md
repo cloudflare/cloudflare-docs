@@ -388,7 +388,7 @@ Challenges presented to users display an intermediate page where they must prove
 When an XHR or AJAX request triggers one of the _Challenge_ actions, the resulting request will have the following status code:
 
 * HTTP status code 403 for _Challenge (Captcha)_
-* HTTP status code 503 for _JavaScript Challenge_
+* HTTP status code 503 for _JS Challenge_
 
 Your application can use these status codes to handle the case of challenges being issued unexpectedly.
 
