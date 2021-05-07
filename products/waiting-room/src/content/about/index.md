@@ -25,5 +25,5 @@ You can set up, manage, and monitor your waiting rooms in the **Traffic** app on
 ## Prerequisites
 
 * Cloudflare’s CDN is required to use the Waiting Room feature.
-* Configure a [proxied DNS record or a proxied load balancer](/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname: a DNS record is not auto-configured after a waiting room is created.
+* Configure a [proxied DNS record or a proxied load balancer](https://developers.cloudflare.com/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname: a DNS record is not auto-configured after a waiting room is created.
 * Visitors must enable cookies. Refer to [_Waiting room cookie_](/about/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
