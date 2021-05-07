@@ -1,6 +1,7 @@
 ---
 title: Letter of Authorization
 order: 10
+pcx-content-type: concept
 ---
 
 # Letter of Authorization (LOA)

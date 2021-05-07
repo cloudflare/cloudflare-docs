@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: reference
 ---
 
 # Using the player API
