@@ -331,7 +331,7 @@ jobs:
           environment: "production"
           wranglerVersion: '1.13.0'
 
- deploy-automatic-platform-optimization:
+  deploy-automatic-platform-optimization:
     runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.automatic-platform-optimization == 'true' }}
@@ -356,12 +356,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/automatic-platform-optimization"
+          wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/automatic-platform-optimization"
           environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-bots:
     runs-on: ubuntu-latest
