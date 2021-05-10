@@ -2,9 +2,9 @@
 order: 6
 ---
 
-# Anti-Virus scanning
+# AV scanning
 
-Cloudflare Gateway protects users as they navigate the Internet. When you download or upload a file to an origin on the Internet, that file could potentially contain malicious code that, if executed on your machine, may cause the device to perform undesired behavior. To prevent this, Cloudflare Gateway allows admins to enable Anti-Virus (AV) scanning of files that are uploaded and/or downloaded by users as the file passes through Gateway. 
+Cloudflare Gateway protects users as they navigate the Internet. When you download or upload a file to an origin on the Internet, that file could potentially contain malicious code that, if executed on your machine, may cause the device to perform undesired behavior. To prevent this, Cloudflare Gateway allows admins to enable **Anti-Virus (AV) scanning** of files that are uploaded and/or downloaded by users as the file passes through Gateway. 
 
 AV scanning of files requires organizations to enable HTTP traffic filtering.
 
