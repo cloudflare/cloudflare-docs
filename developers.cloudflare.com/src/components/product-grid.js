@@ -57,6 +57,7 @@ const products = [
     title: "Automatic Platform Optimization",
     path: "automatic-platform-optimization",
     icon: "automatic-platform-optimization",
+    wrap: true,
   },
   // {
   //   title: "Cloudflare One",
