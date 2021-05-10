@@ -14,7 +14,7 @@ import BotsJSD from "../../_partials/_bots-jsd.md"
 import BotCookie from "../../_partials/_bots-cookie.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
-# Plans
+# Cloudflare bot plans
 
 <PlanIntro/>
 
