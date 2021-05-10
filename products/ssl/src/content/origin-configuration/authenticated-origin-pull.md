@@ -62,6 +62,9 @@ Authenticated Origin Pull does not work in **SSL** mode _Off_ (not secure) or _F
 ### Zone-Level — Cloudflare certificates
 
 Cloudflare uses the following CA to sign certificates for the Authenticated Origin Pull service:
+<details>
+<summary>Certificate value</summary>
+<div>
 
 `-----BEGIN CERTIFICATE-----
 MIIGCjCCA/KgAwIBAgIIV5G6lVbCLmEwDQYJKoZIhvcNAQENBQAwgZAxCzAJBgNV
@@ -99,6 +102,9 @@ AnOzKgZk4RzZPNAxCXERVxajn/FLcOhglVAKo5H0ac+AitlQ0ip55D2/mf8o72tM
 fVQ6VpyjEXdiIXWUq/o=
 -----END CERTIFICATE-----`
 
+</div>
+</details>
+
 To enable Authenticated Origin Pull globally on a zone:
 
 1. Install the above certificate at the origin web server to authenticate all connections.
@@ -109,23 +115,22 @@ To enable Authenticated Origin Pull globally on a zone:
     - For the API, [change the TLS Client Auth setting](https://api.cloudflare.com/#zone-settings-change-tls-client-auth-setting):
 
         ```bash
-            curl -X PATCH https://api.cloudflare.com/client/v4/zones/:zone//settings/tls_client_auth
-
-            \
-            -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
-            -H "Content-Type: application/json" \
-            --data '{"value":"on"}'
-            {
-                "result": {
-                    "id": "tls_client_auth",
-                    "value": "on",
-                    "modified_on": "2020-01-15T17:57:27.363409Z",
-                    "editable": true
-                },
-                "success": true,
-                "errors": [],
-            }
-                    ```
+        curl -X PATCH https://api.cloudflare.com/client/v4/zones/:zone/settings/tls_client_auth \
+        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+        -H "Content-Type: application/json" \
+        --data '{"value":"on"}'
+            
+        {
+            "result": {
+                "id": "tls_client_auth",
+                "value": "on",
+                "modified_on": "2020-01-15T17:57:27.363409Z",
+                "editable": true
+            },
+            "success": true,
+            "errors": [],
+        }
+        ```
 
 --------
 
