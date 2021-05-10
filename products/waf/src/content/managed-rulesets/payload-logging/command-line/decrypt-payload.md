@@ -34,7 +34,7 @@ Use the `matched-data-cli` tool to decrypt a payload in the command line.
     ~/matched-data-cli $ ./matched-data-cli decrypt -d $ENCRYPTED_PAYLOAD -k $PRIVATE_KEY
     ```
 
-    **Do not** replace any text in this command, since it uses the environment variables you defined.
+    Do not replace any text in this command, since it uses the environment variables you defined.
 
 ## Example
 

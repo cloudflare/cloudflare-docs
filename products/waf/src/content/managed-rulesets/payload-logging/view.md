@@ -14,7 +14,13 @@ View the content of the matched rule payload in the dashboard by entering your p
 
     ![Firewall event with payload match available](../../images/transform-rules/payload-logging-example.png)
 
-1. Enter your private key in the pop-up window and select **Decrypt**. The decryption occurs in the browser without any server-side processing.
+1. Enter your private key in the pop-up window and select **Decrypt**.
+
+    <Aside type='note'>
+
+    The private key is not sent to a Cloudflare server. The decryption occurs entirely in the browser.
+
+    </Aside>
 
     ![Enter private key to decrypt payload](../../images/transform-rules/payload-decrypt-popup.png)
 

@@ -14,7 +14,7 @@ The WAF allows you to log the request information that triggered a specific rule
 
 Each ruleset has its own payload logging configuration. To enable the feature, configure a public key to encrypt the logged payload by doing one of the following:
 
-* Generate a key pair directly in the dashboard (Cloudflare will save the generated public key)
+* Generate a key pair directly in the dashboard (Cloudflare will **only** save the generated public key)
 * Enter your own public key
 
 Once enabled, the WAF saves the payload of any rule matches for the ruleset configured with payload logging, encrypting the payload with your public key.
