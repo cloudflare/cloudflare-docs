@@ -6,11 +6,11 @@ type: overview
 
 # Generate a key pair in the command line
 
-Generate a public/private key pair using the [`matched-data-cli`](https://github.com/cloudflare/matched-data-cli) command-line tool provided by Cloudflare. After generating a key pair, enter the generated public key in the payload logging configuration.
+Generate a public/private key pair using the Cloudflare [`matched-data-cli`](https://github.com/cloudflare/matched-data-cli) command-line tool. After generating a key pair, enter the generated public key in the payload logging configuration.
 
 Do the following:
 
-1. Download the `matched-data-cli` tool for your platform from the [Releases](https://github.com/cloudflare/matched-data-cli/releases) page on GitHub, under **Assets**.
+1. [Download](https://github.com/cloudflare/matched-data-cli/releases) the `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
 
 1. Extract the content of the downloaded `.tar.gz` file to a local folder.
 
