@@ -58,7 +58,7 @@ The policy must be built with a hostname that was associated in the certificate 
 
 8. Save the rule.
 
-9. On the **Edit Application** page, navigate to **Applications > Overview**.
+9. On the **Edit Application** page, navigate to **Application > Overview**.
 
 10. Set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
 
