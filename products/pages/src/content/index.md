@@ -1,5 +1,5 @@
 ---
-title: Welcome
+title: Overview
 order: 0
 type: overview
 ---
