@@ -76,7 +76,7 @@ Once you activate a Custom Hostname, you can remove the TXT record.
 
 ## HTTP
 
-Each API call to create a Custom Hostname also provides an HTTP ownership_verification record. Compared to TXT verification, HTTP verification doesn’t require your customer to change their DNS. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
+Each API call to create a Custom Hostname also provides an HTTP ownership_verification record. Compared to TXT verification, HTTP verification doesn’t require your customer to change their DNS. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from the zone's origin server allows hostname verification before proxying domain traffic through Cloudflare.
 
 To get and use an HTTP ownership_verification record:
 
