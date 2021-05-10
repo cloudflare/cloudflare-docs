@@ -6,6 +6,7 @@ const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
+$["automatic-platform-optimization"]   = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/automatic-platform-optimization.js").pathD
 $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
@@ -51,6 +52,12 @@ const products = [
     title: "Apps",
     href: "https://www.cloudflare.com/apps/docs",
     icon: "api", // TODO: add `apps` icon to https://github.com/cloudflare/cloudflare-brand-assets
+  },
+  {
+    title: "Automatic Platform Optimization",
+    path: "automatic-platform-optimization",
+    icon: "automatic-platform-optimization",
+    wrap: true,
   },
   // {
   //   title: "Cloudflare One",
