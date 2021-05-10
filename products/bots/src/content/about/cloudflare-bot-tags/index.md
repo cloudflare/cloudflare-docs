@@ -15,21 +15,21 @@ Use these tags to learn more about your bot traffic and better inform security s
 Once you [enable Bot Tags](#enable-bot-tags), you can see more information about bot requests, such as whether a request came from a verified bot (like Bing) or a category of verified bot (like SearchEngine). 
 
 The following values may be present in the `BotTags` log field:
-- None
-- Api
-- Proxy
-- Google
-- Bing
-- GoogleAds
-- GoogleMedia
-- GoogleImageProxy
-- Pinterest
-- NewRelic
-- Baidu
-- Apple
-- Yandex
-- SearchEngine
-- Advertising
+- none
+- api
+- proxy
+- google
+- bing
+- googleAds
+- googleMedia
+- googleImageProxy
+- pinterest
+- newRelic
+- baidu
+- apple
+- yandex
+- searchEngine
+- advertising
 
 ## Enable bot tags
 
