@@ -128,7 +128,7 @@ To enable Authenticated Origin Pull globally on a zone:
                 "editable": true
             },
             "success": true,
-            "errors": [],
+            "errors": []
         }
         ```
 
@@ -201,23 +201,22 @@ To enable Authenticated Origin Pull globally on a zone:
 
 1. Enable **Authenticated Origin Pulls**:
     - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pools** and select **On**.
-    - For the API, use the [following command](https://api.cloudflare.com/#zone-settings-change-tls-client-auth-setting):
+    - For the API, [set the enablement for a zone](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
 
         ```bash
-            curl -X PUT https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth/settings
-
-            \
-            -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
-            -H "Content-Type: application/json" \
-            --data '{"enabled":true}'
-            {
+        curl -X PUT https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth/settings \
+        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
+        -H "Content-Type: application/json" \
+        --data '{"enabled":true}'
+        
+        {
             "success": true,
             "errors": [],
             "messages": [],
             "result": {
                 "enabled": true
-            }
-            }
+                }
+        }
         ```
 
 --------
