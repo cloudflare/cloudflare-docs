@@ -4,9 +4,9 @@ order: 3
 
 # Authenticated origin pull
 
-Authenticated origin pulls add an extra layer of security to your domain. 
+Authenticated origin pulls add an extra layer of security to your domain.
 
-These authenticated pulls become particularly important when you start using the Cloudflare Web Application Firewall (WAF), because you can make sure that **all traffic** is evaluated before reaching your origin server.
+This authentication becomes particularly important with the Cloudflare Web Application Firewall (WAF). Together with the WAF, you can make sure that **all traffic** is evaluated before reaching your origin server.
 
 <ButtonGroup>
     <Button type="primary" href="#set-up-authenticated-origin-pulls">Get started</Button>
@@ -25,7 +25,7 @@ Authenticated Origin Pull is incompatible with Railgun.
 
 When visitors request content from your domain, Cloudflare first attempts to serve content from the cache. Failing that, Cloudflare sends a request — or an `origin pull` — back to your origin web server to get the content.
 
-Authenticated origin pulls make sure that all of these `origin pulls` come from Cloudflare. Put another way, authenticated origin pulls ensure that any HTTPS requests outside of Cloudflare are blocked from reaching your origin. It's a great way to enhance security.
+Authenticated origin pulls make sure that all of these `origin pulls` come from Cloudflare. Put another way, authenticated origin pulls ensure that any HTTPS requests outside of Cloudflare are blocked from reaching your origin.
 
 <Aside type='note' header='Note'>
 
@@ -106,24 +106,26 @@ To enable Authenticated Origin Pull globally on a zone:
 1. Configure the origin web server to accept client certificates.
 1. Enable **Authenticated Origin Pulls**:
     - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pools** and select **On**.
-    - For the API, use the [following command](https://api.cloudflare.com/#zone-settings-change-tls-client-auth-setting):
+    - For the API, [change the TLS Client Auth setting](https://api.cloudflare.com/#zone-settings-change-tls-client-auth-setting):
 
         ```bash
-            curl -X PUT https://api.cloudflare.com/client/v4/zones/:zone/origin_tls_client_auth/settings
+            curl -X PATCH https://api.cloudflare.com/client/v4/zones/:zone//settings/tls_client_auth
 
             \
             -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
             -H "Content-Type: application/json" \
-            --data '{"enabled":true}'
+            --data '{"value":"on"}'
             {
-            "success": true,
-            "errors": [],
-            "messages": [],
-            "result": {
-                "enabled": true
+                "result": {
+                    "id": "tls_client_auth",
+                    "value": "on",
+                    "modified_on": "2020-01-15T17:57:27.363409Z",
+                    "editable": true
+                },
+                "success": true,
+                "errors": [],
             }
-            }
-        ```
+                    ```
 
 --------
 
