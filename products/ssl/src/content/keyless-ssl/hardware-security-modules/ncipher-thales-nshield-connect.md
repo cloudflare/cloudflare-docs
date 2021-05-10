@@ -2,7 +2,7 @@
 order: 5
 ---
 
-# nCipher (Thales) nShield Connect
+# Entrust nShield Connect
 
 <Aside type='note' header='Note'>
 
