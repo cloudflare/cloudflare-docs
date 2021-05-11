@@ -59,7 +59,7 @@ Each device connected to the Internet has a unique IP address which other machin
 
 ## DNS over HTTPS
 
-With [DNS over HTTPS](/connections/connect-devices/agentless/dns-over-https) (DoH), DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
+With [DNS over HTTPS](/connections/connect-devices/agentless/dns-over-https) (DoH), DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DNS over TLS](#dns-over-tls), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
 
 ## DoH subdomain
 
@@ -76,13 +76,11 @@ Each location in Teams has a unique DoH subdomain (previously known as a *unique
 ## hostname
 The name given to a server or node on a network. In most cases, the public DNS name of a server.
 
-## IdP
-*identity provider*
+## identity provider
 
 An identity provider (IdP or IDP) stores and manages users' digital identities. Think of an IdP as being like a guest list, but for digital and cloud-hosted applications instead of an event. An IdP may check user identities via username-password combinations and other factors, or it may simply provide a list of user identities that another service provider (like an SSO) checks.
 
-## JWT
-*JSON web token*
+## JSON web token
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
