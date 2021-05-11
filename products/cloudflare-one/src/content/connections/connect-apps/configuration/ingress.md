@@ -305,4 +305,4 @@ Default: `""`
 This configures what type of proxy will be started. Valid options are
 
  - "" for the regular proxy
- - "socks" for a SOCKS5 proxy. See [kubectl](https://developers.cloudflare.com/access/other-protocols/kubectl) for more.
+ - "socks" for a SOCKS5 proxy. See this [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.

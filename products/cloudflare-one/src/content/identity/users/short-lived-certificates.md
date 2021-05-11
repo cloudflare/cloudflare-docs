@@ -116,7 +116,7 @@ $ sudo systemctl restart sshd
 
 ### Configure your client SSH config
 
-On the client side, follow [these instructions](/applications/non-HTTP/ssh/ssh-connections/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
+On the client side, follow [this tutorial](/tutorials/ssh) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 

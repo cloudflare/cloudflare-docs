@@ -43,7 +43,7 @@ Cloudflare Access will reject the user, even if they successfully login to the i
 
 ## Adding authentication methods into the JWT
 
-When users authenticate with their identity provider, the identity provider then shares their username with Cloudflare Access. Cloudflare Access then writes that value into the [JSON Web Token (JWT)](/glossary#jwt) generated for the user.
+When users authenticate with their identity provider, the identity provider then shares their username with Cloudflare Access. Cloudflare Access then writes that value into the [JSON Web Token (JWT)](/glossary#json-web-token) generated for the user.
 
 Certain identity providers can also share the multifactor authentication (MFA) method presented by the user to login. Cloudflare Access can add these values into the JWT and force. For example, if the user authenticated with their password and a physical hard key, the identity provider can send a confirmation to Cloudflare Access. 
 
