@@ -31,6 +31,9 @@ Yes. Each location has a unique IPv6 address. You can use that IPv6 address to s
 
 If your domain is unexpectedly blocked, you can use [this form](https://radar.cloudflare.com/categorization-feedback/) to get the URL reviewed. 
 
+### Firefox shows network protocol violation when using Teams Client
+You may have to disable DNS over HTTPs setting in Firefox. Navigate to Firefox Preferences > scroll down to Network Settings > Uncheck Enable DNS over HTTPS > OK
+
 ## Policies
 
 ### You're using a regex in your HTTP policy, but it doesn't seem to be matching traffic as expected.
