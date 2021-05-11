@@ -48,7 +48,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 <Aside>
 
-  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`build`](configuration#build) section.
+  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`build`](#build) section.
 
 </Aside>
 
