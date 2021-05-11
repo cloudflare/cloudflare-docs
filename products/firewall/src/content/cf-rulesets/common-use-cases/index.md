@@ -12,7 +12,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-You cannot edit Managed Rulesets, but you can add overrides to Managed Rulesets deployed to a Phase. Overrides take precedence over the default behavior of the Managed Ruleset.
+You cannot edit Managed Rulesets, but you can add overrides to Managed Rulesets deployed to a phase. Overrides take precedence over the default behavior of the Managed Ruleset.
 
 For more information on overriding Managed Rulesets, see [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset/).
 

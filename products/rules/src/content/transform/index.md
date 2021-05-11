@@ -42,7 +42,7 @@ A **rewrite** is a server-side operation that occurs before a web server has ful
 
 A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can see the URL changing when the redirect occurs.
 
-You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge without reaching your web server. URL Rewrite Rules run in the `http_request_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
+You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge without reaching your web server. URL Rewrite Rules run in the `http_request_transform` phase of Cloudflare's request handling workflow. For more information on phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
 
 Check [Configuring URL forwarding or redirects with Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/200172286) in the Support KB to learn more about configuring redirects.
 
@@ -70,7 +70,7 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 
 </Aside>
 
-HTTP Request Header Modification Rules run in the `http_request_late_transform` Phase of Cloudflare's request handling workflow. For more information on Phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
+HTTP Request Header Modification Rules run in the `http_request_late_transform` phase of Cloudflare's request handling workflow. For more information on phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
 
 To create an HTTP Request Header Modification Rule in the dashboard, see [Create an HTTP Request Header Modification Rule in the dashboard](/transform/create-header-modification-rule).
 

@@ -24,4 +24,4 @@ Currently, you can only create and manage Custom Firewall rules using the API. T
 
 </Aside>
 
-Custom Rules are built upon the ruleset engine which you can use to define rules and actions in several Cloudflare products. Custom Rules are deployed to the `http_request_firewall_custom` Phase ruleset.
+Custom Rules are built upon the ruleset engine which you can use to define rules and actions in several Cloudflare products. Custom Rules are deployed to the `http_request_firewall_custom` phase ruleset.
