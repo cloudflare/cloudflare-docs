@@ -82,9 +82,7 @@ The generated MP4 download files can be retrieved via the link in the download A
 ### cURL example
 
 ```bash
-curl -L \
--H "Authorization: Bearer $TOKEN" \
-https://videodelivery.net/$VIDEOID/downloads/default.mp4 > download.mp4
+curl -L https://videodelivery.net/$VIDEOID/downloads/default.mp4 > download.mp4
 ```
 
 ## Securing video downloads
