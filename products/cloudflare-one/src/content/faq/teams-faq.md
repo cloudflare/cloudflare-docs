@@ -219,12 +219,15 @@ Argo Tunnel was previously named Warp during the beta phase. As Warp was added t
 ## Troubleshooting
 
 ### I see a website is blocked, and it shouldn't be.
+
 If you believe a domain has been incorrectly blocked, you can use [this form](https://radar.cloudflare.com/categorization-feedback/) to get the URL reviewed.
 
 ### I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
+
 Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, see our documentation about [CORS settings](/policies/zero-trust/cors#list-of-cors-settings).
 
 ### I see untrusted certificate warnings for every page and I am unable to browse the Internet.
+
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 To install the Cloudflare root certificate, follow the steps found [here](/connections/connect-devices/warp/install-cloudflare-cert).
 
@@ -259,9 +262,11 @@ You may not see analytics on the Overview page for the following reasons:
 * **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
 ### I see a `websocket: bad handshake` error.
+
 If your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to Off, cloudflared will return a "websocket: bad handshake" error. To resolve, set the SSL/TLS encryption mode to any setting other than Off.
 
 ### ​I see a "No Browsers Available" alert.
+
 If you encounter this error please [file feedback](https://developers.cloudflare.com/cloudflare-one/connections/connect-browsers/known-limitations#submitting-feedback) via the WARP client and we will investigate.
 
 ### ​I see a "Maximum Sessions Reached" alert.
@@ -271,11 +276,13 @@ A browser isolation session is a connection from your local browser to a remote 
 Safari is more susceptible to presenting this error. See [workaround](/connections/connect-browsers/known-limitations#safari).
 
 ### Why do mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system?
+
 The mobile application may leverage certificate pinning. This is a security mechanism used to prevent man-in-the-middle (MITM) attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it's trusted by the system, the application will refuse to connect.
 Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
 ### My tunnel fails to authenticate. 
+
 To start using Argo Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`. The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
 
 * The public key of the origin certificate for that hostname
