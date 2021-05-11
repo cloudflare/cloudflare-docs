@@ -1,0 +1,105 @@
+---
+updated: 2021-05-10
+category: 🌐 Connections
+---
+
+# Run the same Tunnel across many `cloudflared` processes
+
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, `cloudflared`, to create those connections.
+
+The same Tunnel can also represent multiple, redundant instances of `cloudflared`, giving you the ability to scale instances dynamically in a replica model.
+
+In this tutorial, we will walkthrough running an app in a Kubernetes [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and then running `cloudflared` in a separate [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+
+This architecture allows `cloudflared` instances to proxy internet traffic into whichever Kubernetes Service it was configured to. Alternatively, if your cluster already has an ingress controller (e.g. Envoy), you can use `cloudflared` to expose the ingress controller to internet traffic.
+
+**🗺️ This tutorial covers how to:**
+
+* Deploy `cloudflared` in a replica model
+* Proxy traffic into a Kubernetes service with Tunnel
+
+**⏲️ Time to complete: 45 minutes**
+
+## Install `cloudflared`
+
+Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the lightweight Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+
+```sh 
+$ brew install cloudflare/cloudflare/cloudflared
+```
+
+## Login to to Cloudflare
+
+Once installed, you can use the `tunnel login` command in `cloudflared` to obtain a certificate.
+
+```sh
+$ cloudflare tunnel login
+```
+
+## Create your Tunnel
+
+In the example below, simply change <example-tunnel> to the name you wish to assign to your tunnel.
+
+```sh
+$ cloudflared tunnel create example-tunnel
+INFO[2020-09-05T10:48:34+01:00] Writing tunnel credentials to /Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json. cloudflared chose this file based on where your origin certificate was found.
+INFO[2020-09-05T10:48:34+01:00] Keep this file secret. To revoke these credentials, delete the tunnel.
+INFO[2020-09-05T10:48:34+01:00] Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
+```
+
+## Upload the Tunnel credentials file to Kubernetes 
+
+Next, you will need to upload the credential file which was generated to Kubernetes as a secret. You will also need to provide the filepath that the Tunnel credentials file was created under as well. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
+
+```sh
+$ kubectl create secret generic tunnel-credentials \
+--from-file=credentials.json=/Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json
+```
+
+## Associate your Tunnel with a DNS record
+
+Go to the Cloudflare dashboard and navigate to the [DNS tab](https://dash.cloudflare.com/dns). Now create a CNAME targeting `.cfargotunnel.com`. In this example the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`. 
+
+You can also create multiple CNAME records targeting the same tunnel if desired.
+
+<img width="1024" alt="create-cname" src="https://user-images.githubusercontent.com/39502846/117745787-ccaaed80-b1d0-11eb-92bf-1ad0a6d85093.png">
+
+Alternatively, you can also perform this step from the command line by running `cloudflared route dns <tunnel> <hostname>`. For example, `cloudflared tunnel route dns example-tunnel tunnel.example.com`. You can use a similar method to route traffic to `cloudflared` from a [Cloudflare Load Balancer](https://www.cloudflare.com/load-balancing/), see [docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) for details.
+  
+## Deploy `cloudflared` 
+
+Now, we'll deploy `cloudflared` by applying its manifest. This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared`'s running in this deployment. Then, those `cloudflared` instances will proxy the request to your app's Service.
+
+```sh
+$ kubectl apply -f cloudflared.yaml
+deployment.apps/cloudflared created
+configmap/cloudflared configured
+```
+
+## Examine status of your pod
+
+```
+    $ kubectl get pods
+    NAME                                  READY   STATUS    RESTARTS   AGE
+    cloudflared-57746f77fd-frc99          1/1     Running   0          12m
+    cloudflared-57746f77fd-xht8n          1/1     Running   0          12m
+    httpbin-deployment-67f749774f-42tqj   1/1     Running   0          20h
+    $ kubectl logs $(kubectl get pod -l app=cloudflared -o jsonpath="{.items[0].metadata.name}")
+    2021-05-04T17:39:49Z INF Starting tunnel tunnelID=ef824aef-7557-4b41-a398-4684585177ad
+    2021-05-04T17:39:49Z INF Version
+    2021-05-04T17:39:49Z INF GOOS: linux, GOVersion: go1.15.7, GoArch: amd64
+    2021-05-04T17:39:49Z INF Settings: map[config:/etc/cloudflared/config/config.yaml cred-file:/etc/cloudflared/creds/credentials.json credentials-file:/etc/cloudflared/creds/credentials.json metrics:0.0.0.0:2000 no-autoupdate:true]
+    2021-05-04T17:39:49Z INF Generated Connector ID: 4c5dc5d3-8e10-480e-ac74-e385e591553e
+    2021-05-04T17:39:49Z INF Initial protocol h2mux
+    2021-05-04T17:39:49Z INF Starting metrics server on [::]:2000/metrics
+    2021-05-04T17:39:49Z INF Connection 1daced2f-466c-4610-8ba6-7642a8ddec68 registered connIndex=0 location=MCI
+    2021-05-04T17:39:50Z INF Connection 1a5276bc-3313-4bb7-a677-d93deccab24f registered connIndex=1 location=DFW
+    2021-05-04T17:39:51Z INF Connection aa7adacc-e855-4b11-bf41-e113419b7ef4 registered connIndex=2 location=MCI
+    2021-05-04T17:39:51Z INF Connection a8055c76-2a90-4be5-8dc9-ebaa5c58fb5f registered connIndex=3 location=DFW
+```
+
+## Visit your hostname
+
+And you'll see the httpbin welcome page. 
+
+We love to hear your feedback! Join a discussion with other community members at https://community.cloudflare.com/c/performance/argo-tunnel
