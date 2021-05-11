@@ -4,7 +4,7 @@ order: 12
 
 # Google Suite
 
-You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/authentication/configuring-identity-providers/google), the steps below will allow you to pull group membership information from your Google Workspace account.
+You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/identity/idp-integration/google), the steps below will allow you to pull group membership information from your Google Workspace account.
 
 Once integrated, users will login with their Google Suite credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 

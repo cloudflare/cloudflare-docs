@@ -57,10 +57,9 @@ DNS filtering is the process of using the Domain Name System to block malicious 
 
 Each device connected to the Internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as 192.168.1.1 (in IPv4), or more complex newer alphanumeric IP addresses such as 2400:cb00:2048:1::c629:d7a2 (in IPv6).
 
-## [DoH](/connections/connect-without-agent/DNS/dns-over-https)
-*DNS over HTTPS*
+## DNS over HTTPS
 
-With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
+With [DNS over HTTPS](/connections/connect-devices/agentless/dns-over-https) (DoH), DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
 
 ## DoH subdomain
 
@@ -70,10 +69,9 @@ Each location in Teams has a unique DoH subdomain (previously known as a *unique
 | ----------------------- | ------------- |
 | `https://9y65g5srsm.cloudflare-gateway.com/dns-query` | `9y65g5srsm` |
 
-## [DoT](/connections/connect-without-agent/DNS/dns-over-tls)
-*DNS over TLS*
+## DNS over TLS
 
-DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications. (TLS is also known as "SSL.") DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
+[DNS over TLS](/connections/connect-devices/agentless/dns-over-tls) (DoT), is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications (TLS is also known as "SSL"). DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
 
 ## hostname
 The name given to a server or node on a network. In most cases, the public DNS name of a server.
