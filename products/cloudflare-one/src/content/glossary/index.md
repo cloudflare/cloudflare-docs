@@ -38,6 +38,10 @@ Authenticated Origin Pulls let origin web servers validate that a web request ca
 | Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) |
 |---|---|
 
+## certificate pinning
+
+Certificate pinning is a security mechanism used to prevent man-in-the-middle (MITM) attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it's trusted by the system, the application will refuse to connect.
+
 ## cloudflared
 
 `cloudflared` is the software that powers [Argo Tunnel](#argo-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
