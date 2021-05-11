@@ -5,13 +5,13 @@ category: 🌐 Connections
 
 # Run the same Tunnel across many `cloudflared` processes
 
-You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, `cloudflared`, to create those connections.
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
 
-The same Tunnel can also represent multiple, redundant instances of `cloudflared`, giving you the ability to scale instances dynamically in a replica model.
+The same tunnel can be run from multiple instances of `cloudflared`, giving you the ability to run many `cloudflared` replicas to scale your system when incoming traffic changes.
 
-In this tutorial, we will walkthrough running an app in a Kubernetes [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and then running `cloudflared` in a separate [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+In this tutorial, we will walk through running an app in a Kubernetes [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and then running `cloudflared` in a separate [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 
-This architecture allows `cloudflared` instances to proxy internet traffic into whichever Kubernetes Service it was configured to. Alternatively, if your cluster already has an ingress controller (e.g. Envoy), you can use `cloudflared` to expose the ingress controller to internet traffic.
+This architecture allows `cloudflared` instances to proxy internet traffic into whichever Kubernetes Service it was configured to.
 
 **🗺️ This tutorial covers how to:**
 
@@ -22,13 +22,9 @@ This architecture allows `cloudflared` instances to proxy internet traffic into 
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the lightweight Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the lightweight Cloudflare Tunnel daemon, `cloudflared`. Reference our installation guide for instructions on how to install `cloudflared` on your operating system. 
 
-```sh 
-$ brew install cloudflare/cloudflare/cloudflared
-```
-
-## Login to to Cloudflare
+## Login to Cloudflare
 
 Once installed, you can use the `tunnel login` command in `cloudflared` to obtain a certificate.
 
