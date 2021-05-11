@@ -1,15 +1,16 @@
 ---
-updated: 2021-05-10
+updated: 2021-05-11
 category: 🌐 Connections
+Difficulty: Advanced
 ---
 
 # Run the same Tunnel across many `cloudflared` processes
 
 You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Tunnel relies on a piece of software, [cloudflared](https://github.com/cloudflare/cloudflared), to create those connections.
 
-The same tunnel can be run from multiple instances of `cloudflared`, giving you the ability to run many `cloudflared` replicas to scale your system when incoming traffic changes.
+The same Tunnel can be run from multiple instances of `cloudflared`, giving you the ability to run many `cloudflared` replicas to scale your system when incoming traffic changes.
 
-In this tutorial, we will walk through running an app in a Kubernetes [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and then running `cloudflared` in a separate [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+In this tutorial, we will walk through running an application as a Kubernetes [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and then running `cloudflared` in a separate [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 
 This architecture allows `cloudflared` instances to proxy internet traffic into whichever Kubernetes Service it was configured to.
 
@@ -29,23 +30,23 @@ Start by [downloading and installing](/connections/connect-apps/install-and-setu
 Once installed, you can use the `tunnel login` command in `cloudflared` to obtain a certificate.
 
 ```sh
-$ cloudflare tunnel login
+$ cloudflared tunnel login
 ```
 
 ## Create your Tunnel
 
-In the example below, simply change <example-tunnel> to the name you wish to assign to your tunnel.
+In the example below, simply change `<example-tunnel>` to the name you wish to assign to your Tunnel.
 
 ```sh
 $ cloudflared tunnel create example-tunnel
-INFO[2020-09-05T10:48:34+01:00] Writing tunnel credentials to /Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json. cloudflared chose this file based on where your origin certificate was found.
-INFO[2020-09-05T10:48:34+01:00] Keep this file secret. To revoke these credentials, delete the tunnel.
-INFO[2020-09-05T10:48:34+01:00] Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
+Tunnel credentials written to /Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json. cloudflared chose this file based on where your origin certificate was found. Keep this file secret. To revoke these credentials, delete the tunnel.
+
+Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
 ```
 
 ## Upload the Tunnel credentials file to Kubernetes 
 
-Next, you will need to upload the credential file which was generated to Kubernetes as a secret. You will also need to provide the filepath that the Tunnel credentials file was created under as well. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
+Next, you will upload the generated Tunnel credential file as a secret to your Kubernetes cluster. You will also need to provide the filepath that the Tunnel credentials file was created under as well. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
 
 ```sh
 $ kubectl create secret generic tunnel-credentials \
@@ -56,7 +57,7 @@ $ kubectl create secret generic tunnel-credentials \
 
 Go to the Cloudflare dashboard and navigate to the [DNS tab](https://dash.cloudflare.com/dns). Now create a CNAME targeting `.cfargotunnel.com`. In this example the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`. 
 
-You can also create multiple CNAME records targeting the same tunnel if desired.
+You can also create multiple CNAME records targeting the same Tunnel if desired.
 
 <img width="1024" alt="create-cname" src="https://user-images.githubusercontent.com/39502846/117745787-ccaaed80-b1d0-11eb-92bf-1ad0a6d85093.png">
 
@@ -64,7 +65,7 @@ Alternatively, you can also perform this step from the command line by running `
   
 ## Deploy `cloudflared` 
 
-Now, we'll deploy `cloudflared` by applying its manifest. This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared`'s running in this deployment. Then, those `cloudflared` instances will proxy the request to your app's Service.
+Now, we'll deploy `cloudflared` by applying its [manifest](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml). This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared`'s running in this deployment. Then, those `cloudflared` instances will proxy the request to your [application's Service](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/app.yaml).
 
 ```sh
 $ kubectl apply -f cloudflared.yaml
@@ -96,6 +97,8 @@ configmap/cloudflared configured
 
 ## Visit your hostname
 
-And you'll see the httpbin welcome page. 
+At this point, you'll see the httpbin welcome page.  
 
-We love to hear your feedback! Join a discussion with other community members at https://community.cloudflare.com/c/performance/argo-tunnel
+In this tutorial, we've covered how the same Tunnel can be run in many `cloudflared` processes. You can also use this knowledge to support elastic scaling, graceful `cloudflared` restarts, and rolling upgrades in the future.
+
+We love to hear your feedback! Join the discussion in our [community](https://community.cloudflare.com/c/performance/argo-tunnel).
