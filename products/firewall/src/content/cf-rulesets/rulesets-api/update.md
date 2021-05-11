@@ -30,18 +30,18 @@ header: Zone-level endpoint
 PUT /zones/{zone-id}/rulesets/{root-ruleset-id}
 ```
 
-Alternatively, you can use one of the following endpoints when updating the ruleset of a Phase:
+Alternatively, you can use one of the following endpoints when updating the ruleset of a phase:
 
 ```bash
 ---
-header: Account-level Phase endpoint
+header: Account-level phase endpoint
 ---
 PUT /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint
 ```
 
 ```bash
 ---
-header: Zone-level Phase endpoint
+header: Zone-level phase endpoint
 ---
 PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 ```
@@ -84,7 +84,7 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level Phase ruleset",
+    "name": "Zone-level phase ruleset",
     "description": "This ruleset deploys a Managed Ruleset.",
     "kind": "zone",
     "version": "4",
@@ -111,9 +111,9 @@ header: Response
 
 ## Example - Deploy a ruleset
 
-To deploy a ruleset, create a rule with the `action` field set to `execute` and add the ruleset ID to the `action_parameters` field in the `id` parameter. You deploy rulesets to a Phase.
+To deploy a ruleset, create a rule with the `action` field set to `execute` and add the ruleset ID to the `action_parameters` field in the `id` parameter. You deploy rulesets to a phase.
 
-This example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` Phase of a zone (`{zone-id}`).
+This example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
 
 ```json
 ---
@@ -131,7 +131,7 @@ curl -X PUT \
         "id": "{managed-ruleset-id}"
       },
       "expression": "true",
-      "description": "Execute Cloudflare Managed Ruleset on my Phase ruleset"
+      "description": "Execute Cloudflare Managed Ruleset on my phase ruleset"
     }
   ]
 }'
@@ -144,7 +144,7 @@ header: Response
 {
   "result": {
     "id": "{phase-ruleset-id}",
-    "name": "Zone-level Phase ruleset",
+    "name": "Zone-level phase ruleset",
     "description": "",
     "kind": "zone",
     "version": "4",
@@ -158,7 +158,7 @@ header: Response
           "version": "latest"
         },
         "expression": "true",
-        "description": "Execute Cloudflare Managed Ruleset on my Phase ruleset",
+        "description": "Execute Cloudflare Managed Ruleset on my phase ruleset",
         "last_updated": "2021-03-21T11:02:08.769537Z",
         "ref": "{rule-ref-1}",
         "enabled": true
@@ -175,7 +175,7 @@ header: Response
 
 <Aside type='warning' header='Important'>
 
-You must set the `expression` field to `true` when deploying a ruleset to a zone-level Phase.
+You must set the `expression` field to `true` when deploying a ruleset to a zone-level phase.
 
 </Aside>
 
@@ -184,7 +184,7 @@ For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets
 
 ## Example - Update ruleset description
 
-You can use this API method to update the description of an existing ruleset. 
+You can use this API method to update the description of an existing ruleset.
 
 <Aside type='warning' header='Important'>
 
