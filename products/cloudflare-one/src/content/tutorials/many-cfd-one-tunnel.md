@@ -12,7 +12,7 @@ The same Tunnel can be run from multiple instances of `cloudflared`, giving you 
 
 In this tutorial, we will walk through running an application as a Kubernetes [Service](https://kubernetes.io/docs/concepts/services-networking/service/), and then running `cloudflared` in a separate [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
 
-This architecture allows `cloudflared` instances to proxy internet traffic into whichever Kubernetes Service it was configured to.
+This architecture allows `cloudflared` instances to proxy Internet traffic into whichever Kubernetes Service it was configured to.
 
 **🗺️ This tutorial covers how to:**
 
@@ -46,7 +46,7 @@ Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
 
 ## Upload the Tunnel credentials file to Kubernetes 
 
-Next, you will upload the generated Tunnel credential file as a secret to your Kubernetes cluster. You will also need to provide the filepath that the Tunnel credentials file was created under as well. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
+Next, you will upload the generated Tunnel credential file as a secret to your Kubernetes cluster. You will also need to provide the filepath that the Tunnel credentials file was created under. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
 
 ```sh
 $ kubectl create secret generic tunnel-credentials \
@@ -55,17 +55,17 @@ $ kubectl create secret generic tunnel-credentials \
 
 ## Associate your Tunnel with a DNS record
 
-Go to the Cloudflare dashboard and navigate to the [DNS tab](https://dash.cloudflare.com/dns). Now create a CNAME targeting `.cfargotunnel.com`. In this example the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`. 
+1. Go to the Cloudflare dashboard.
+2. Navigate to the [DNS tab](https://dash.cloudflare.com/dns).
+3. Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`. 
 
-You can also create multiple CNAME records targeting the same Tunnel if desired.
+You can also create multiple CNAME records targeting the same Tunnel, if desired.
 
-<img width="1024" alt="create-cname" src="https://user-images.githubusercontent.com/39502846/117745787-ccaaed80-b1d0-11eb-92bf-1ad0a6d85093.png">
-
-Alternatively, you can also perform this step from the command line by running `cloudflared route dns <tunnel> <hostname>`. For example, `cloudflared tunnel route dns example-tunnel tunnel.example.com`. You can use a similar method to route traffic to `cloudflared` from a [Cloudflare Load Balancer](https://www.cloudflare.com/load-balancing/), see [docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) for details.
+Alternatively, you can perform this step from the command line by running `cloudflared route dns <tunnel> <hostname>`. For example, `cloudflared tunnel route dns example-tunnel tunnel.example.com`. You can use a similar method to route traffic to `cloudflared` from a [Cloudflare Load Balancer](https://www.cloudflare.com/load-balancing/), see [docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) for details.
   
 ## Deploy `cloudflared` 
 
-Now, we'll deploy `cloudflared` by applying its [manifest](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml). This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared`'s running in this deployment. Then, those `cloudflared` instances will proxy the request to your [application's Service](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/app.yaml).
+Now, we'll deploy `cloudflared` by applying its [manifest](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml). This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared` instances running in this deployment. Then, those `cloudflared` instances will proxy the request to your [application's Service](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/app.yaml).
 
 ```sh
 $ kubectl apply -f cloudflared.yaml
