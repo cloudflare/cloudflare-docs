@@ -13,11 +13,11 @@ This feature is only available for selected customers on an Enterprise plan.
 
 Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a Rate Limiting Rule via API. A Rate Limiting Rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/cf-rulesets/custom-rules/rate-limiting/parameters) for more information on this field and its parameters.
 
-You must deploy Rate Limiting Rules to the `http_request_firewall_custom` Phase ruleset.
+You must deploy Rate Limiting Rules to the `http_request_firewall_custom` phase ruleset.
 
 ## Create a Rate Limiting Rule
 
-To create a Rate Limiting Rule, add a rule with a `ratelimit` field to the `http_request_firewall_custom` Phase ruleset by issuing a `PUT` request (see example below). 
+To create a Rate Limiting Rule, add a rule with a `ratelimit` field to the `http_request_firewall_custom` phase ruleset by issuing a `PUT` request (see example below).
 
 Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate limiting rules must appear at the end of the rules list.
 

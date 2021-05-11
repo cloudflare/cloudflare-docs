@@ -8,13 +8,13 @@ Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/ru
 
 ## Deploying Managed Rulesets
 
-You can deploy Managed Rulesets to the `http_request_firewall_managed` Phase supported by the Cloudflare WAF, both at the account level and at the zone level. You can also define overrides to customize the behavior of the rules included in a Managed Ruleset.
+You can deploy Managed Rulesets to the `http_request_firewall_managed` phase supported by the Cloudflare WAF, both at the account level and at the zone level. You can also define overrides to customize the behavior of the rules included in a Managed Ruleset.
 
 <Aside type='warning' header='Important'>
 
-There are a few requirements when deploying Managed Rulesets to the `http_request_firewall_managed` Phase at the **zone** level:
+There are a few requirements when deploying Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
 
-* The zone-level Phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
+* The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
 
 * You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
 
@@ -24,11 +24,11 @@ To learn more about deploying Managed Rulesets and configuring overrides using t
 
 ## Deploying custom rulesets
 
-You can create custom rulesets in the `http_request_firewall_custom` Phase at the account level. After creating a custom ruleset, you can deploy it to a Phase at the account level by creating an `execute` rule in the Phase. 
+You can create custom rulesets in the `http_request_firewall_custom` phase at the account level. After creating a custom ruleset, you can deploy it to a phase at the account level by creating an `execute` rule in the phase.
 
 <Aside type='warning' header='Important'>
 
-Currently, you can only deploy custom rulesets to a Phase at the account level.
+Currently, you can only deploy custom rulesets to a phase at the account level.
 
 </Aside>
 
