@@ -6,6 +6,6 @@ order: 3
 
 import ContentTable from "../components/content-table"
 
-# How To
+# Framework Guides
 
-<ContentTable path="how-to" />
+<ContentTable path="framework-guides" />
