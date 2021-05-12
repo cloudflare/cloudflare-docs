@@ -1,5 +1,6 @@
 ---
 title: Change log
+pcx-content-type: concept
 order: 5
 ---
 
