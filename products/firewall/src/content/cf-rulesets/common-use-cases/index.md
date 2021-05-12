@@ -1,6 +1,6 @@
 ---
 title: Workflow examples
-pcx-content-type: landing-page
+pcx-content-type: navigation
 alwaysopen: true
 order: 770
 ---

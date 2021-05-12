@@ -1,6 +1,6 @@
 ---
 title: Work with Managed Rulesets
-pcx-content-type: landing-page
+pcx-content-type: navigation
 type: overview
 alwaysopen: true
 order: 750

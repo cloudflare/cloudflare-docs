@@ -1,6 +1,6 @@
 ---
 title: Rulesets API
-pcx-content-type: landing-page
+pcx-content-type: navigation
 alwaysopen: false
 order: 780
 ---
