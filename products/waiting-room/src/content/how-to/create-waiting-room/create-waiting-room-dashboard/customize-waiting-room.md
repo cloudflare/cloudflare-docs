@@ -1,8 +1,6 @@
 ---
-title: Customize a Waiting Room
-alwaysopen: false
-weight: 256
-hidden: false
+order: 1
+pcx-content-type: how to
 ---
 
 # Customize a Waiting Room

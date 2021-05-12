@@ -1,5 +1,6 @@
 ---
 order: 18
+pcx-content-type: concept
 ---
 
 # Monitors

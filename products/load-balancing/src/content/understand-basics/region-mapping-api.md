@@ -1,11 +1,12 @@
 ---
 title: Region Mapping API
 order: 20
+pcx-content-type: reference
 ---
 
 import RegionMapping from "../_partials/_region-mapping.md"
 
-# Region Mapping API
+# Cloudflare Region Mapping API
 
 ## Overview
 

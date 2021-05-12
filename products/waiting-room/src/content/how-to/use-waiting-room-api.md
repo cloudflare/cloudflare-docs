@@ -1,10 +1,10 @@
 ---
-title: Use the Waiting Room API
-alwaysopen: true
-weight: 180
+title: Waiting Room API
+order: 5
+pcx-content-type: reference
 ---
 
-# Using the Waiting Room API
+# Use the Cloudflare Waiting Room API
 
 [Cloudflare Waiting Rooms](/about) redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 

@@ -19,8 +19,6 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 Make sure you create [Zero Trust policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use Argo Tunnel. If you do not wish to use Argo Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
 
-
-
 ### 1. Add your application
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
@@ -52,9 +50,13 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 
   ![Set application logo](../../static/documentation/applications/app-logo-sh.png)
 
+  <Aside>
+  If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+  </Aside>
+
 1. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
-![Select identity providers](../../static/documentation/applications/saas-idp.png)
+ ![Select identity providers](../../static/documentation/applications/saas-idp.png)
 
 1. Click **Next**.
 

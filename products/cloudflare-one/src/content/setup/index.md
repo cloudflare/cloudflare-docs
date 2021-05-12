@@ -36,8 +36,6 @@ Let's walk through the setup flow!
 
 1. Choose a payment plan.
 
- ![Choose payment plan](../static/documentation/quickstart/step-3.png)
-
 1. Click **Next**. We'll show you a summary of the payment plan you've selected; you now have the opportunity to go back and choose a different plan or click **Proceed to payment**.
 
  ![Enter payment details](../static/documentation/quickstart/step-4.png)

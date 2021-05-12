@@ -1,11 +1,9 @@
 ---
-title: Access the Cloudflare Waiting Rooms Dashboard
-alwaysopen: true
-weight: 170
-hidden: false
+order: 0
+pcx-content-type: how to
 ---
 
-# Accessing Waiting Rooms in the Cloudflare dashboardd
+# Access Waiting Rooms via the dashboard
 
 Use Cloudflare Waiting Room to create a holding area where users can queue to access a high-traffic area of your enterprise website. For an introduction, see [_About Waiting Room_](/about/).
 

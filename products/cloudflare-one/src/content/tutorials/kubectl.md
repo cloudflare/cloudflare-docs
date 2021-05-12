@@ -25,7 +25,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 ## Create a Zero Trust policy
 
-First, navigate to the Cloudflare for Teams dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
+First, navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
 
 ![App List](../static/zero-trust-security/ssh/app-list.png)
 
@@ -86,7 +86,7 @@ $ cloudflared tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](https://developers.cloudflare.com/connections/connect-apps/configuration) to serve traffic.
+You can now [configure the Tunnel](/connections/connect-apps/configuration) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 

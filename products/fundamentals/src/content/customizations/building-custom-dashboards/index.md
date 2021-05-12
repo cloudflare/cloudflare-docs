@@ -1,6 +1,6 @@
 ---
 title: Building custom views
-order: 20
+order: 10
 ---
 
 # Building custom views

@@ -8,7 +8,7 @@ type: overview
 
 <Aside type='warning'>
 
-This feature is only available for customers in the Enterprise plan.
+This feature is only available for customers on an Enterprise plan.
 
 </Aside>
 

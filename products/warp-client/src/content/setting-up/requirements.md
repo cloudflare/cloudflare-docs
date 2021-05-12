@@ -61,6 +61,34 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
 
 __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)__
 
+## Linux
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Distributions</strong></td>
+      <td>Ubuntu, Redhat Enterprise Linux, Centos</td>
+    </tr>
+    <tr>
+      <td><strong>OS Type</strong></td>
+      <td>x64</td>
+    </tr>
+    <tr>
+      <td><strong>HD Space</strong></td>
+      <td>200MB</td>
+    </tr>
+    <tr>
+      <td><strong>Memory</strong></td>
+      <td>35MB</td>
+    </tr>
+    <tr>
+      <td><strong>Network Types</strong></td>
+      <td>WIFI or LAN</td>
+    </tr>
+  </tbody>
+</table>
+
+__[cloudflare-warp package repository](https://pkg.cloudflare.com/)__
+
 ## iOS
 <table>
   <tbody>

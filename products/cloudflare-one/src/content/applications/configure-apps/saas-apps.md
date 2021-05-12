@@ -30,6 +30,10 @@ You can either:
   * Select **Default** if you want to show the SaaS application’s logo.
   * Select **Custom** if you want to assign a custom logo to the application.
 
+  <Aside>
+  If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+  </Aside>
+
 ![SaaS logo](../../static/documentation/applications/saas-logo.png)
 
 8. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.

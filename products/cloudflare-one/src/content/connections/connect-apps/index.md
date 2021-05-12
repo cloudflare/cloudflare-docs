@@ -29,3 +29,26 @@ Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3
 
 Be sure to check out our [Tutorials](/tutorials), where you can also find
 best practices for managing Tunnels as an administrator.
+
+## Traffic encryption between Argo Tunnel and HTTPs origin servers
+
+`cloudflared` performs its own SSL termination that is distinct from the origin.
+
+The data in transit between the Cloudflare network and the instance of `cloudflared` is encrypted according to the stages below:
+
+**`cloudflared` to Cloudflare**
+
+* When `cloudflared` reaches out to the Cloudflare network, the daemon validates a TLS server name for `cftunnel.com`.
+* The certificate is issued from a Cloudflare-managed root CA.
+
+Details for this flow are available in the `cloudflared` [repository](https://github.com/cloudflare/cloudflared/blob/2020.2.0/tlsconfig/certreloader.go#L124).
+
+**`cloudflared` to origin**
+
+* `cloudflared` trusts the system's certificate pool. If you need to add an additional CA, you can do so by setting the `--origin-ca-pool` flag.
+* On Windows systems, the system certificate pool is not supported by the Go standard library used by `cloudflared`. As a result, Windows users will always need to set the `--origin-ca-pool` flag.
+* `cloudflared` uses the Go HTTP client to connect to the origin. The daemon connects to the URL specified with the `--url` flag, which determines the TLS server name.
+* When the Cloudflare network proxies a request through `cloudflared` to the origin, `cloudflared` converts this stream to an HTTP/1.1 [request](https://github.com/cloudflare/cloudflared/blob/2020.2.0/origin/tunnel.go#L591).
+* `cloudflared` then issues the request and [receives](https://github.com/cloudflare/cloudflared/blob/2020.2.0/origin/tunnel.go#L642) an HTTP/1.1 response from the origin, in plaintext, which is encrypted and sent back to the Cloudflare network.
+
+Details for this flow are available in the `cloudflared` [repository](https://github.com/cloudflare/cloudflared/blob/2020.2.0/cmd/cloudflared/tunnel/configuration.go#L204).

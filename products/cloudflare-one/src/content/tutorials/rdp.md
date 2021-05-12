@@ -110,7 +110,7 @@ C:\Cloudflared\bin\cloudflared.exe tunnel create <NAME>
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](https://developers.cloudflare.com/connections/connect-apps/configuration) to serve traffic.
+You can now [configure the Tunnel](/connections/connect-apps/configuration) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 

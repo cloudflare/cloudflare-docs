@@ -40,7 +40,7 @@ Bot Management customers can use Bot Analytics to:
 
 ## API
 
-Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, and bot *decisions* (*automated*, *likely automated*, etc.).
+Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, [Bot Tags](../../about/cloudflare-bot-tags), and bot *decisions* (*automated*, *likely automated*, etc.).
 
 Read the [GraphQL Analytics API documentation](https://developers.cloudflare.com/analytics/graphql-api) for more information about GraphQL and basic querying.
 

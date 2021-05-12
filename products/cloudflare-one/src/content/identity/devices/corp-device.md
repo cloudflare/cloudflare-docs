@@ -16,7 +16,7 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
 </Aside>
 
-1. On the [Teams dashboard](dash.teams.cloudflare.com), navigate to **Configuration > Lists**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Lists**.
 
 1. Click **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's API endpoint.
 
