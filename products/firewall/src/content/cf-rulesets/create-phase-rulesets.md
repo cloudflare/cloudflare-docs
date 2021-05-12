@@ -1,6 +1,6 @@
 ---
 title: Create phase rulesets
-pcx-content-type: how to
+pcx-content-type: how-to
 type: overview
 order: 720
 ---

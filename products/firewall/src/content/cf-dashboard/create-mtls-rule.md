@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how to
+pcx-content-type: how-to
 order: 380
 ---
 

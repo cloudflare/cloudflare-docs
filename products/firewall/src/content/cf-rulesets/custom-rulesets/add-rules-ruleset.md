@@ -1,6 +1,6 @@
 ---
 title: Add rules to a custom ruleset
-pcx-content-type: how to
+pcx-content-type: how-to
 alwaysopen: true
 order: 762
 ---

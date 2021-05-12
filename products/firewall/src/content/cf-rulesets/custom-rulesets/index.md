@@ -1,6 +1,6 @@
 ---
 title: Work with custom rulesets
-pcx-content-type: landing page
+pcx-content-type: landing-page
 alwaysopen: true
 order: 760
 ---

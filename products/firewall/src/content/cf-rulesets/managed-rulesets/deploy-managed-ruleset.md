@@ -1,6 +1,6 @@
 ---
 title: Deploy a Managed Ruleset
-pcx-content-type: how to
+pcx-content-type: how-to
 alwaysopen: true
 order: 751
 ---

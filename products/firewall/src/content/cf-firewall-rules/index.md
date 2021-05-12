@@ -1,6 +1,6 @@
 ---
 title: About
-pcx-content-type: landing page
+pcx-content-type: landing-page
 order: 200
 ---
 
