@@ -1,5 +1,6 @@
 ---
 title: User Guide
+pcx-content-type: concept
 order: 0
 ---
 
