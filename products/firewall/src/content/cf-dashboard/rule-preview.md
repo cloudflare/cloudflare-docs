@@ -1,6 +1,6 @@
 ---
 title: Preview rules
-pcx-content-type: reference
+pcx-content-type: interim
 type: table
 order: 330
 ---
