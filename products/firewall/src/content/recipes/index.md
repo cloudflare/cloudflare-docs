@@ -1,5 +1,5 @@
 ---
-pcx-content-type: landing-page
+pcx-content-type: navigation
 order: 500
 ---
 
