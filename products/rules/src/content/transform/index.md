@@ -94,6 +94,8 @@ Regular expression support                    | No   | No  | Yes      | Yes
 
 </TableWrap>
 
+A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/hc/articles/205065067#12345682) or one of the Administrator roles to access Transform Rules.
+
 <Aside type='note' label='Note'>
 
 During Beta, each plan has separate quotas for URL Rewrite Rules and HTTP Request Header Modification Rules. After Beta, these quotas will be unified in a single Transform Rules quota per plan.
