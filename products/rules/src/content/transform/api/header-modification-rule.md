@@ -133,9 +133,9 @@ curl -X PUT \
       "action": "rewrite",
       "action_parameters": {
         "headers": {
-          "X-Path": {
+          "X-Bot-Score": {
             "operation": "set",
-            "expression": "http.request.uri.path"
+            "expression": "to_string(cf.bot_management.score)"
           }
         }
       }
@@ -164,9 +164,9 @@ header: Response
         "action": "rewrite",
         "action_parameters": {
           "headers": {
-            "X-Path": {
+            "X-Bot-Score": {
               "operation": "set",
-              "expression": "http.request.uri.path"
+              "expression": "to_string(cf.bot_management.score)"
             }
           }
         },
