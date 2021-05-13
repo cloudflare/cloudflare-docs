@@ -1,6 +1,7 @@
 ---
 order: 100
 type: overview
+pcx-content-type: navigation
 hideChildren: true
 ---
 

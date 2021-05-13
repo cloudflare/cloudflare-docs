@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: faq
 ---
 
 [❮ Back to FAQ](/faq)
