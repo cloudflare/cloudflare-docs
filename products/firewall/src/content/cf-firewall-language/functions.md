@@ -137,9 +137,12 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
   - Returns the string representation of an Integer, Boolean, or IP address value.
 
-  - _Examples:_<br />
-    `to_string(cf.bot_management.score) == '5'`<br />
-    `to_string(ssl) == 'true'`
+  - _Examples:_
+
+    ```txt
+    to_string(cf.bot_management.score) == '5'
+    to_string(ssl) == 'true'
+    ```
 
     <Aside type='warning'>
 
