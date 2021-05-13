@@ -27,6 +27,31 @@ Use Cloudflare’s API and edge network — which spans 200 cities in more than 
 <HeroBlockGrid>
   <div>
     <HeroBlock>
+      <h2>Cloudflare Workers</h2>
+      <p>Serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.</p>
+      <ul>
+        <li><p><a href="https://developers.cloudflare.com/workers/learning/getting-started">Getting Started</a></p></li>
+        <li><p><a href="https://developers.cloudflare.com/workers/starters">Starter Templates</a></p></li>
+        <li><p><a href="https://developers.cloudflare.com/workers/tutorials">Workers Tutorials</a></p></li>
+        <li><p><a href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Playground</a></p></li>
+      </ul>
+    </HeroBlock>
+  </div>
+
+  <div>
+    <HeroBlock>
+      <h2>Integrate &amp; Automate</h2>
+      <p>Use Cloudflare’s API to do just about anything you can do on cloudflare.com via the customer dashboard. Get the most out of Cloudflare for Teams products which integrate together.</p>
+      <ul>
+        <li><p><a href="https://api.cloudflare.com/">API docs</a></p></li>
+        <li><p><a href="https://cloudflare.com/integrations/">Integration resources</a></p></li>
+        <li><p><a href="https://developers.cloudflare.com/cloudflare-one/">Cloudflare for Teams</a></p></li>
+      </ul>
+    </HeroBlock>
+  </div>
+  
+  <div>
+    <HeroBlock>
       <h2>Serverlist Newsletter</h2>
       <p>The Serverlist is a Cloudflare-curated newsletter about all things serverless. You can expect to get the latest scoop on the serverless space, get your hands dirty with new developer tutorials, engage in conversations with other serverless developers, and find upcoming meetups and conferences to attend.</p>
       <p><a class="Button Button-is-docs-secondary" href="https://blog.cloudflare.com/serverlist/">Subscribe</a></p>

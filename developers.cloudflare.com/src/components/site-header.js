@@ -27,9 +27,6 @@ const SiteHeader = () => (
       </div>
 
       <div className="SiteHeader--nav">
-        <Link className="SiteHeader--nav-link" to="/docs">
-          <span>Docs</span>
-        </Link>
         <Link className="SiteHeader--nav-link" to="/sponsorships">
           <span>Sponsorships</span>
         </Link>
