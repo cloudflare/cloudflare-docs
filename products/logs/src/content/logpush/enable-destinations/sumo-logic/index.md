@@ -1,6 +1,7 @@
 ---
 title: Enable Sumo Logic
 order: 65
+pcx-content-type: how-to
 ---
 
 # Enable Sumo Logic

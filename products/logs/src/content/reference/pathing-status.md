@@ -1,6 +1,7 @@
 ---
 title: Pathing status
 order: 122
+pcx-content-type: reference
 ---
 
 # Pathing status

@@ -1,6 +1,7 @@
 ---
 title: WAF fields
 order: 123
+pcx-content-type: reference
 ---
 
 # WAF fields

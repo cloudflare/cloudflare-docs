@@ -1,6 +1,7 @@
 ---
 title: Manage via the Cloudflare UI
 order: 45
+pcx-content-type: how-to
 ---
 
 # Manage via the Cloudflare UI

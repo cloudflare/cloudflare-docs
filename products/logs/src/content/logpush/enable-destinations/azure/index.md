@@ -1,6 +1,7 @@
 ---
 title: Enable Microsoft Azure
 order: 62
+pcx-content-type: how-to
 ---
 
 # Enable Microsoft Azure

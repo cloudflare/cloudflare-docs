@@ -1,6 +1,7 @@
 ---
 title: Enable Splunk
 order: 63
+pcx-content-type: how-to
 ---
 
 # Enable Logpush to Splunk

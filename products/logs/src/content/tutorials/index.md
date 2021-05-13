@@ -1,6 +1,7 @@
 ---
 title: Tutorials and examples
 order: 80
+pcx-content-type: navigation
 ---
 
 # Tutorials and examples

@@ -1,6 +1,7 @@
 ---
 title: Understanding the basics
-order: 12
+order: 11
+pcx-content-type: concept
 ---
 
 # Understanding the basics

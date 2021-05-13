@@ -1,6 +1,7 @@
 ---
 title: Enabling log retention
-order: 11
+order: 12
+pcx-content-type: interim
 ---
 
 # Enabling log retention

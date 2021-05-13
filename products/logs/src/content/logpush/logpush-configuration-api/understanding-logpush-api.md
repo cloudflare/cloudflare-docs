@@ -1,6 +1,7 @@
 ---
 title: Understanding the Logpush API
 order: 61
+pcx-content-type: concept
 ---
 
 # Understanding the Logpush API

@@ -1,13 +1,14 @@
 ---
 title: Manage via the Logpush API
-order: 50
+order: 46
+pcx-content-type: how-to
 ---
 
 # Manage via the Logpush API
 
 The **Cloudflare Logpush API** allows you to configure and manage jobs via create, retrieve, update, and delete operations (CRUD).
 
-With Logpush, you can create a job to upload logs of your HTTP requests, Spectrum events, or Firewall events in batches as soon as possible to your cloud service provider. The API allows one job per data set per domain.
+With Logpush, you can create a job to upload logs of the metadata Cloudflare collects in batches as soon as possible to your cloud service provider. The API allows one job per data set per domain.
 
 To get started:
 

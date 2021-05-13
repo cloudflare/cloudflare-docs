@@ -1,6 +1,7 @@
 ---
 title: Reference
 order: 120
+pcx-content-type: navigation
 ---
 
 # Reference

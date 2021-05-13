@@ -1,9 +1,11 @@
 ---
-title: FAQs
+title: FAQ
 order: 130
+pcx-content-type: faq
+
 ---
 
-# FAQs
+# FAQ
 
 ## General FAQ
 

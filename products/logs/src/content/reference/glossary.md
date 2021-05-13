@@ -1,6 +1,7 @@
 ---
 title: Glossary
 order: 121
+pcx-content-type: interim
 ---
 
 # Glossary

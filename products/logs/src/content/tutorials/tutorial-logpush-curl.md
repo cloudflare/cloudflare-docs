@@ -1,6 +1,7 @@
 ---
 title: Manage Logpush with cURL
 order: 87
+pcx-content-type: tutorial
 ---
 
 # Manage Logpush with cURL

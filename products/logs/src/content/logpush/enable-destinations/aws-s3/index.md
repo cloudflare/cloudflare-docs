@@ -1,6 +1,7 @@
 ---
 title: Enable Amazon S3
 order: 55
+pcx-content-type: how-to
 ---
 
 # Enable Amazon S3

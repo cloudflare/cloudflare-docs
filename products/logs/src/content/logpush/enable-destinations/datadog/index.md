@@ -1,6 +1,7 @@
 ---
 title: Enable Datadog
 order: 58
+pcx-content-type: how-to
 ---
 
 # Enable Logpush to Datadog
