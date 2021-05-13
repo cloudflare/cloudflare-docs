@@ -1,5 +1,6 @@
 ---
 title: Configure payload logging
+pcx-content-type: how-to
 order: 1
 ---
 
