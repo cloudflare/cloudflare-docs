@@ -8,10 +8,10 @@ hideChildren: true
 # FAQ
 
 <ContentColumn>
+  
+Below you'll find answers to commonly asked questions on Cloudflare for Teams, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
 
-Below you'll find answers to the most commonly asked questions on Cloudflare for Teams, how it works, how to set it up, and how to troubleshoot issues and errors users may come across when using the product to secure their traffic and applications.
-
-If you can't find the answer you're looking for, head over to our [community page](https://community.cloudflare.com/), post your question and join the discussion. 
+If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there.  
 
 </ContentColumn>
 
@@ -21,7 +21,7 @@ If you can't find the answer you're looking for, head over to our [community pag
 
 For extra guidance on experiencing Teams for the first time.
 
-<Button type="primary" href="/faq/getting-started-with-teams/">Getting started  ❯</Button>
+<Button type="primary" href="/faq/teams-getting-started-faq/">Getting started  ❯</Button>
 
 ## General
 
@@ -29,11 +29,11 @@ For general questions on Cloudflare for Teams and how it works.
 
 <Button type="primary"  href="/faq/teams-general-faq/">General  ❯</Button>
 
-## Authentication
+## Identity
 
 For questions on identity providers and accessing applications behind Teams.
 
-<Button type="primary" href="/faq/teams-authentication-faq/">Authentication ❯</Button>
+<Button type="primary" href="/faq/teams-authentication-faq/">Identity ❯</Button>
 
 ## Policies
 
