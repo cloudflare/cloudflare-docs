@@ -1,5 +1,6 @@
 ---
 title: Test your configuration
+pcx-content-type: reference
 order: 4
 ---
 

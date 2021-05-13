@@ -1,5 +1,6 @@
 ---
 title: Deploy Managed Rulesets for a zone
+pcx-content-type: how-to
 order: 21
 ---
 
