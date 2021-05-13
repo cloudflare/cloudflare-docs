@@ -2,7 +2,7 @@
 order: 2
 ---
 
-[❮ Back to FAQs](/faq)
+[❮ Back to FAQ](/faq)
 
 # General
 

@@ -2,7 +2,7 @@
 order: 3
 ---
 
-[❮ Back to FAQ](/faq-copy)
+[❮ Back to FAQ](/faq)
 
 # Tunnels
 

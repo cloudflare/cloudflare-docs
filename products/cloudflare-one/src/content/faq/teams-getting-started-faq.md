@@ -2,7 +2,7 @@
 order: 1
 ---
 
-[❮ Back to FAQs](/faq)
+[❮ Back to FAQ](/faq)
 
 # Getting started with Teams
 
