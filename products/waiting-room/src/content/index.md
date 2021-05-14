@@ -1,6 +1,7 @@
 ---
 title: Welcome
 order: 0
+pcx-content-type: landing page
 ---
 
 # Cloudflare Waiting Room documentation

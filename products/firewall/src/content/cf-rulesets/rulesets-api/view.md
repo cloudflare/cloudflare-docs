@@ -36,13 +36,13 @@ header: Zone-level endpoint
 GET /zones/{zone-id}/rulesets
 ```
 
-The result includes rulesets across all Phases at a given level (account or zone). The `phase` field in each result element indicates the Phase where that ruleset is defined.
+The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
 Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy at the specified zone.
 
 <Aside type='warning' header='Important'>
 
-Not all zone-level Phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on what ruleset types are allowed in that product’s supported Phases.
+Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on what ruleset types are allowed in that product’s supported phases.
 
 </Aside>
 
@@ -68,7 +68,7 @@ header: Response
   "result": [
     {
       "id": "{phase-ruleset-id}",
-      "name": "Zone-level Phase ruleset",
+      "name": "Zone-level phase ruleset",
       "description": "",
       "kind": "zone",
       "version": "5",
@@ -102,22 +102,22 @@ GET /zones/{zone-id}/rulesets/{ruleset-id}
 
 <Aside type='warning' header='Important'>
 
-Note: You can only use the zone-level endpoint for zone-level rulesets, that is, Phases where `kind` is set to `zone`.
+Note: You can only use the zone-level endpoint for zone-level rulesets, that is, phases where `kind` is set to `zone`.
 
 </Aside>
 
-You can also use the following specific endpoints for viewing the ruleset of a Phase:
+You can also use the following specific endpoints for viewing the ruleset of a phase:
 
 ```bash
 ---
-header: Account-level Phase endpoint
+header: Account-level phase endpoint
 ---
 GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint
 ```
 
 ```bash
 ---
-header: Zone-level Phase endpoint
+header: Zone-level phase endpoint
 ---
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 ```
@@ -148,7 +148,7 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level Phase ruleset",
+    "name": "Zone-level phase ruleset",
     "description": "This ruleset deploys a Managed Ruleset.",
     "kind": "zone",
     "version": "3",
@@ -193,25 +193,25 @@ header: Zone-level endpoint
 GET /zones/{zone-id}/rulesets/{ruleset-id}/versions
 ```
 
-The result contains the ruleset properties of each version but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
+The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
-You can also use the following specific endpoints for the ruleset of a Phase:
+You can also use the following specific endpoints for the ruleset of a phase:
 
 ```bash
 ---
-header: Account-level Phase endpoint
+header: Account-level phase endpoint
 ---
 GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions
 ```
 
 ```bash
 ---
-header: Zone-level Phase endpoint
+header: Zone-level phase endpoint
 ---
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions
 ```
 
-When the specified Phase ruleset does not exist, this API method returns an empty array in the `result` field.
+When the specified phase ruleset does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
 
@@ -276,23 +276,23 @@ header: Zone-level endpoint
 GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}
 ```
 
-You can also use the following specific endpoints for the ruleset of a Phase:
+You can also use the following specific endpoints for the ruleset of a phase:
 
 ```bash
 ---
-header: Account-level Phase endpoint
+header: Account-level phase endpoint
 ---
 GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
 ```
 
 ```bash
 ---
-header: Zone-level Phase endpoint
+header: Zone-level phase endpoint
 ---
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
 ```
 
-When the specified Phase ruleset does not exist, this API method returns returns a 404 HTTP Status Code.
+When the specified phase ruleset does not exist, this API method returns a 404 HTTP Status Code.
 
 ### Example
 
@@ -313,7 +313,7 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level Phase ruleset",
+    "name": "Zone-level phase ruleset",
     "description": "This ruleset deploys a Managed Ruleset.",
     "kind": "zone",
     "version": "3",

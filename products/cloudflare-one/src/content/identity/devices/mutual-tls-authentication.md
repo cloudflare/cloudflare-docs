@@ -49,12 +49,20 @@ If your zone is using an intermediate certificate in addition to the root certif
 
 The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
 
-![mTLS Policy](../../static/documentation/identity/devices/mtls-policy.png)
+![mTLS Policy](../../static/documentation/identity/devices/create-mtls-rule.png)
 
 |Option|Result|
 |-|-|
 |**Common Name**|Only client certificates with a specific common name will be allowed to proceed.|
 |**Valid Certificate**|Any client certificate that can authenticate with the Root CA will be allowed to proceed.|
+
+8. Save the rule.
+
+9. On the **Edit Application** page, navigate to **Application > Overview**.
+
+10. Set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
+
+ ![mTLS session duration](../../static/documentation/identity/devices/mutual-tls-session-duration.png)
 
 ## Test using cURL
 

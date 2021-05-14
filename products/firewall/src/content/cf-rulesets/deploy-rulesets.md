@@ -12,7 +12,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy or execute a ruleset. Add a rule with `"action": "execute"` to a Phase, specifying the Ruleset ID as an action parameter. This rule executes the ruleset. Use a separate rule for each ruleset you want to deploy.
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy or execute a ruleset. Add a rule with `"action": "execute"` to a phase, specifying the Ruleset ID as an action parameter. This rule executes the ruleset. Use a separate rule for each ruleset you want to deploy.
 
 A rule that deploys a ruleset consists of:
 
@@ -22,18 +22,18 @@ A rule that deploys a ruleset consists of:
 
 <Aside type='warning' header='Important'>
 
-When deploying a ruleset to a Phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to deploy a ruleset in a Phase at the account level is `cf.zone.name`. The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
+When deploying a ruleset to a phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to deploy a ruleset in a phase at the account level is `cf.zone.name`. The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
 
-When deploying a ruleset to a Phase at the **zone** level, you must set the expression to `true`. 
+When deploying a ruleset to a phase at the **zone** level, you must set the expression to `true`. 
 
 </Aside>
 
 
 ## Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` Phase of a given zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
 
-When deploying to a zone-level Phase, you must set `expression` to `true`, since the zone scope is already defined in the endpoint.
+When deploying to a zone-level phase, you must set `expression` to `true`, since the zone scope is already defined in the endpoint.
 
 ```json
 ---

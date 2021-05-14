@@ -13,7 +13,7 @@ This feature is part of an early access experience for selected customers.
 
 ## View available rulesets
 
-You can list the available rulesets for a zone, account, or Phase. 
+You can list the available rulesets for a zone, account, or phase.
 
 <details>
 <summary>Example: View available rulesets at the zone level</summary>
@@ -31,8 +31,8 @@ curl -X GET \
 
 The response displays the following rulesets:
 
-* Managed rulesets you can deploy, indicated by `"kind": "managed"`
-* Rulesets for zone-level Phases, if configured, indicated by `"kind": "zone"`
+* Managed Rulesets you can deploy, indicated by `"kind": "managed"`
+* Rulesets for zone-level phases, if configured, indicated by `"kind": "zone"`
 * Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
@@ -44,7 +44,7 @@ header: Response
     {
       "id": "{zone-level-phase-ruleset-id}",
       "name": "Zone-level Ruleset 1",
-      "description": "Ruleset for http_request_firewall_managed Phase at the zone level",
+      "description": "Ruleset for http_request_firewall_managed phase at the zone level",
       "kind": "zone",
       "version": "2",
       "last_updated": "2021-03-12T14:11:59.754817Z",
@@ -95,7 +95,7 @@ curl -X GET \
 The response displays the following rulesets:
 
 * Managed Rulesets that you can deploy, indicated by `"kind": "managed"`
-* Rulesets for account-level Phases, if configured, indicated by `"kind": "root"`
+* Rulesets for account-level phases, if configured, indicated by `"kind": "root"`
 * Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
@@ -115,8 +115,8 @@ header: Response
     },
     {
       "id": "{account-level-phase-ruleset-id}",
-      "name": "Account-level Ruleset for http_request_firewall_managed Phase",
-      "description": "Account level ruleset for executing one or more Managed Rulesets",
+      "name": "Account-level ruleset for http_request_firewall_managed phase",
+      "description": "Account-level ruleset for executing one or more Managed Rulesets",
       "kind": "root",
       "version": "2",
       "last_updated": "2021-03-12T14:06:41.323932Z",
@@ -152,13 +152,13 @@ header: Response
 
 ## View the rules included in a ruleset
 
-You can view all versions in Phase rulesets (both account-level and zone-level) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
+You can view all versions in phase rulesets (both account-level and zone-level) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
 
 <details>
-<summary>Example: View rules in a Phase ruleset at the zone level</summary>
+<summary>Example: View rules in a phase ruleset at the zone level</summary>
 <div>
 
-The following example lists the rules in version `2` of the `http_request_firewall_managed` Phase ruleset at the zone level.
+The following example lists the rules in version `2` of the `http_request_firewall_managed` phase ruleset at the zone level.
 
 ```bash
 ---
@@ -177,7 +177,7 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level Phase ruleset",
+    "name": "Zone-level phase ruleset",
     "description": "This ruleset deploys a Managed Ruleset.",
     "kind": "zone",
     "version": "2",

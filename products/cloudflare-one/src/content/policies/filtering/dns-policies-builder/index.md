@@ -115,6 +115,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 * DNS Resolver IP
 * [DNS Security Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-security-categories)
 * DNS Src IP
+* Location
 * User Email
 * User Group Emails
 * User Group IDs
@@ -127,9 +128,10 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 | -------- | ----------- |
 | DNS Domain | Use this selector to match against a domain and all subdomains—for example, if you want to block example.com and all subdomains of example.com. |
 | DNS Host | Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com. |
-| DNS Query Rtype | This selector allows you to choose the DNS resource record type that you’d like to apply policies against—for example, you can choose to block A records for a domain but not MX records. |
-| DNS Resolver IP | This selector allows you to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. |
+| DNS Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against—for example, you can choose to block A records for a domain but not MX records. |
+| DNS Resolver IP | Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. |
 | DNS Src IP | Use this selector to apply DNS policies to a specific source IP address that queries arrived to Gateway from—for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway |
+| Location | Use this selector to apply DNS policies to a specific location or set of locations. |
 
 </TableWrap>
 

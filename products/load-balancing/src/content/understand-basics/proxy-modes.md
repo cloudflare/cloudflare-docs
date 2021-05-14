@@ -1,5 +1,6 @@
 ---
 order: 15
+pcx-content-type: reference
 ---
 
 # Proxy modes

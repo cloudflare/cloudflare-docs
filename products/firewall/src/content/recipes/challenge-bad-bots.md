@@ -12,7 +12,7 @@ Scores range from 1 through 99. Low scores indicate the request comes from a scr
 
 These examples use:
 - `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to target requests from bots
-- `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected/)
+- `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected)
 
 ## Suggested rules
 

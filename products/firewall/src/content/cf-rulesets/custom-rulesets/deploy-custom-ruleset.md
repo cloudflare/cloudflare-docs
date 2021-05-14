@@ -14,11 +14,11 @@ This feature is part of an early access experience for selected customers.
 
 Before you begin:
 
-1. Obtain the name of the Phase where you want to deploy the custom ruleset.
+1. Obtain the name of the phase where you want to deploy the custom ruleset.
 1. [Create a custom ruleset](/cf-rulesets/custom-rulesets/create-custom-ruleset) and keep the ID of the new custom ruleset.
-1. [Fetch the rules already present in the Phase ruleset](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep when you execute the request to deploy the custom ruleset.
+1. [Fetch the rules already present in the phase ruleset](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep when you execute the request to deploy the custom ruleset.
 
-Execute a `PUT` request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` Phase that executes the rules in the custom ruleset when the zone name matches `example.com`.
+Execute a `PUT` request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` phase that executes the rules in the custom ruleset when the zone name matches `example.com`.
 
 ```json
 ---
@@ -48,7 +48,7 @@ curl -X PUT \
 }'
 ```
 
-The response displays the rules in your Phase.
+The response displays the rules in your phase.
 
 ```json
 ---
@@ -57,7 +57,7 @@ header: Response
 {
   "result": {
     "id": "{account-phase-ruleset-id}",
-    "name": "http_request_firewall_custom Phase Ruleset for my account",
+    "name": "http_request_firewall_custom phase Ruleset for my account",
     "description":"Add custom ruleset",
     "kind": "root",
     "version": "3",

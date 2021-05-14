@@ -62,10 +62,10 @@ You can override the following rule properties:
 
 ## Examples
 
-The following request deploys a Managed Ruleset to the `http_request_firewall_managed` Phase and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
+The following request deploys a Managed Ruleset to the `http_request_firewall_managed` phase and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
 
 <details>
-<summary>Example: Deploy a Managed Ruleset to a Phase at the zone level</summary>
+<summary>Example: Deploy a Managed Ruleset to a phase at the zone level</summary>
 <div>
 
 ```json
@@ -95,7 +95,7 @@ curl -X PUT \
 </details>
 
 <details>
-<summary>Example: Deploy a Managed Ruleset to a Phase at the account level</summary>
+<summary>Example: Deploy a Managed Ruleset to a phase at the account level</summary>
 <div>
 
 ```json
