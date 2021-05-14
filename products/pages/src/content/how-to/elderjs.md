@@ -1,6 +1,6 @@
 # Deploy an Elder.js site
 
-[Elder.js](https://github.com/elderjs/elderjs) is an SEO-focused framework for building static sites with [Svelte](/how-to/svelte).
+[Elder.js](https://elderguide.com/tech/elderjs/) is an SEO-focused framework for building static sites with [Svelte](/how-to/svelte).
 
 In this guide, you'll create a new Elder.js application and deploy it using Cloudflare Pages.
 
