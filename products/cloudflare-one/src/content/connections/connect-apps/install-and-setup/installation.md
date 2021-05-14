@@ -22,7 +22,7 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 ### `.deb` install
 
-Use the `deb` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` package in this example. 
+Use the `deb` package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` package in this example. 
 
 ```bash
 wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
