@@ -34,3 +34,16 @@ All values are per organization.
 | DNS Logpush jobs | 5 |
 
 </TableWrap>
+
+## Argo Tunnel limitations
+
+All values are per account.
+
+<TableWrap>
+
+| Feature | Limit |
+| ------- | ----- | 
+| Number of concurrently running Tunnels | 1000 |
+
+</TableWrap>
+

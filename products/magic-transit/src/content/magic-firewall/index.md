@@ -13,6 +13,8 @@ allow or deny any traffic in or out of your network.
 
 Access to the API is controlled by the `#waf:read` and `#waf:write` permissions.
 
+Magic Firewall allows you to define skip and block rules on any packet characteristics including source and destination IP, source and destination port, protocol, packet length, and bit field match.
+
 Start by [adding a rule](/magic-firewall/adding-rules)!
 
 <Aside type='warning' header='Important'>

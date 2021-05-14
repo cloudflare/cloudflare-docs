@@ -33,7 +33,7 @@ $ scoop install zola
 Your Linux distro's package manager may include Zola. If this is the case, you can install it directly using your distro's package manager -- for instance, using `pkg`:
 
 ```sh
-$ pkg install hugo
+$ pkg install zola
 ```
 
 If your package manager doesn't include Zola or you'd like to download a release directly, see the "Manual" section below.

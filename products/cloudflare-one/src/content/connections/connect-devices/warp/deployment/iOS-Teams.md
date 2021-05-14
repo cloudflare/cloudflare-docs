@@ -23,16 +23,18 @@ The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Inter
 To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments: 
 
 ```xml
-<key>organization</key>
-<string>yourorganization</string>
-<key>enable</key>
-<true />
-<key>gateway_unique_id</key>
-<string>your_gateway_doh_subdomain</string>
-<key>service_mode</key>
-<string>warp</string>
-<key>support_url</key>
-<string>https://support.example.com</string>
+<dict>
+    <key>organization</key>
+    <string>yourorganization</string>
+    <key>auto_connect</key> 
+    <integer>1</integer>
+    <key>switch_locked</key> 
+    <false />
+    <key>service_mode</key>
+    <string>warp</string>
+    <key>support_url</key>
+    <string>https://support.example.com</string>
+</dict>
 ```
 For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
 

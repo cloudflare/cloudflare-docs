@@ -6,7 +6,27 @@ Workers KV is a global, low-latency, key-value data store. It supports exception
 
 Learn more about [How KV works](/learning/how-kv-works).
 
+To use Workers KV you must create a KV namespace and bind it to your worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
+
 --------------------------------
+
+## Using KV with Durable Objects
+
+The docs below assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
+
+```js
+export class DurableObject {
+  constructor(state, env) {
+    this.state = state
+    this.env = env
+  }
+
+  async fetch(request) {
+    const valueFromKV = await this.env.NAMESPACE.get('someKey')
+    return new Response(valueFromKV)
+  }
+}
+```
 
 ## Methods
 

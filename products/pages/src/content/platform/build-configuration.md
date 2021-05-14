@@ -38,7 +38,7 @@ Below are some standard build commands and directories for popular frameworks an
 
 ## Environment variables
 
-If your project make use of environment variables to build your site, you can provide custom environment variables via the Pages UI.
+If your project makes use of environment variables to build your site, you can provide custom environment variables via the Pages UI.
 
 ## Language support and tools
 
@@ -70,7 +70,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Doxygen     | Version 1.8.6                   |                      |
 | Emacs       | 25                              |                      |
 | Gutenberg   | (requires environment variable) | `GUTENBERG_VERSION`  |
-| Hugo        | Version 0.54                    |                      |
+| Hugo        | Version 0.54                    | `HUGO_VERSION`       |
 | GNU Make    | Version 3.8.1                   |                      |
 | ImageMagick | Version 6.7.7                   |                      |
 | jq          | Version 1.5                     |                      |

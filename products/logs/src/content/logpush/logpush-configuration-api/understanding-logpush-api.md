@@ -119,14 +119,14 @@ There can be only 1 job writing to each unique destination. For S3 and GCS, a de
 
 <Aside type="info" header="Info">
 
-See a detailed description of the [Logpush object JSON schema](/logpush/logpush-configuration-api/job-json-schema/).
+See a detailed description of the [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
 </Aside>
 
 ## Options
 
 Logpush repeatedly pulls logs on your behalf and uploads them to your destination.
 
-Log options, such as fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object schema](/logpush/logpush-configuration-api/job-json-schema/)*). For example, the following query gets data from the Logpull API:
+Log options, such as fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)*). For example, the following query gets data from the Logpull API:
 
 ```bash
 curl -sv \

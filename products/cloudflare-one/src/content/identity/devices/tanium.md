@@ -1,3 +1,7 @@
+---
+order: 3
+---
+
 # Tanium
 
 Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource.

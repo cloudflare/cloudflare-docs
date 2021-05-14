@@ -28,7 +28,9 @@ Click on **View all activity** to see a full list of the user’s login events.
 Wokplace records show the amount of unique sessions the user has initiated from a given country in the current billing period. To view workplace records:
 
 1. In the Users page, locate the user whose workplace records you want to see.
+
 1. Click **View**.
+
 1. In the **User details** section, under the **Most recent location** field, click on the View all button. 
 
  ![Workplace records](../static/documentation/logs/workplace-records.png)

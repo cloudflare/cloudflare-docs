@@ -14,7 +14,9 @@ You can use [Argo Tunnel](/connections/connect-apps) to connect applications and
 * Keep that connection running after deleting the initial authentication file
 * Give that application a hostname where users can reach the resource
 
-**⏲️ Time to complete: ~20 minutes**
+**⏲️ Time to complete:**
+
+20 minutes
 
 ## Install `cloudflared`
 
@@ -56,7 +58,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/connections/connect-apps/create-a-tunnel).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/connections/connect-apps/create-tunnel).
 
 ## Configure `cloudflared`
 

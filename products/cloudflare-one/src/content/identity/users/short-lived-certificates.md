@@ -9,11 +9,9 @@ Cloudflare Access can replace traditional SSH key models with short-lived certif
 
 Cloudflare Access removes the burden on the end user of generating a key, while also improving security of access to infrastructure with ephemeral certificates.
 
-![New Drop](../../../static/documentation/applications/non-http/slc-cert-gen.png)
-
 ## 1. **Secure a server behind Cloudflare Access**.
 
-To protect a resource behind Cloudflare Access, first follow [these instructions](/applications/non-HTTP/ssh/ssh-connections) to secure the server.
+To protect a resource behind Cloudflare Access, first follow [these instructions](/tutorials/ssh) to secure the server.
 
 ## 2. **Generate a short-lived certificate public key**.
 
@@ -21,14 +19,14 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 2. In the drop-down, choose the application that represents the resource you secured in Step 1.
 
-    ![New Cert](../../../static/documentation/applications/non-http/slc-create.png)
+    ![New Cert](../../static/documentation/applications/non-http/slc-create.png)
 
 3. Click **Generate certificate**. A row will appear with a public key scoped to your application.
 
 4. Save the key or keep it somewhere convenient for configuring your server.
     You can return to copy this public key any time in the Service Auth dashboard.
 
-    ![Pub Key Cert](../../../static/documentation/applications/non-http/slc-detail.png)
+    ![Pub Key Cert](../../static/documentation/applications/non-http/slc-detail.png)
 
 ## 3. **Ensure Unix usernames match user SSO identities**
 
@@ -100,13 +98,25 @@ The change above will tell your SSH configuration to use the public key saved in
 
 Once you have modified your SSHD configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
+### Debian/Ubuntu
+
 ```sh
 $ sudo service ssh restart
 $ sudo systemctl restart ssh
 ```
 
-## 7. Configure your client SSH config
-On the client side, follow [these instructions](/applications/non-HTTP/ssh/ssh-connections/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
+### CentOS/RHEL
+
+```sh
+$ sudo service sshd restart
+$ sudo systemctl restart sshd
+```
+
+## 7. Connect as a user
+
+### Configure your client SSH config
+
+On the client side, follow [this tutorial](/tutorials/ssh) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 
@@ -127,3 +137,7 @@ Host cfpipe-vm.example.com
     IdentityFile ~/.cloudflared/vm.example.com-cf_key
     CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub
  ```
+
+### Connect through a browser-based terminal
+
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/tutorials/ssh-browser).

@@ -14,11 +14,14 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 * Review the reason a domain was blocked in Cloudflare Radar
 * Submit categorization feedback
 
-**⏲️Time to complete: ~5 minutes**
+**⏲️Time to complete:**
 
-| Before you start |
-|---|
-| 1. [Add Gateway to your account](/setup) |
+5 minutes
+
+## Before you start
+1. [Add Gateway to your account](/setup)
+
+---
 
 ## Review Gateway events
 

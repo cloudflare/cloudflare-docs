@@ -38,6 +38,10 @@ Authenticated Origin Pulls let origin web servers validate that a web request ca
 | Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) |
 |---|---|
 
+## certificate pinning
+
+Certificate pinning is a security mechanism used to prevent man-in-the-middle (MITM) attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it's trusted by the system, the application will refuse to connect.
+
 ## cloudflared
 
 `cloudflared` is the software that powers [Argo Tunnel](#argo-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
@@ -53,10 +57,9 @@ DNS filtering is the process of using the Domain Name System to block malicious 
 
 Each device connected to the Internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as 192.168.1.1 (in IPv4), or more complex newer alphanumeric IP addresses such as 2400:cb00:2048:1::c629:d7a2 (in IPv6).
 
-## [DoH](/connections/connect-without-agent/DNS/dns-over-https)
-*DNS over HTTPS*
+## DNS over HTTPS
 
-With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
+With [DNS over HTTPS](/connections/connect-devices/agentless/dns-over-https) (DoH), DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DNS over TLS](#dns-over-tls), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
 
 ## DoH subdomain
 
@@ -66,21 +69,18 @@ Each location in Teams has a unique DoH subdomain (previously known as a *unique
 | ----------------------- | ------------- |
 | `https://9y65g5srsm.cloudflare-gateway.com/dns-query` | `9y65g5srsm` |
 
-## [DoT](/connections/connect-without-agent/DNS/dns-over-tls)
-*DNS over TLS*
+## DNS over TLS
 
-DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications. (TLS is also known as "SSL.") DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
+[DNS over TLS](/connections/connect-devices/agentless/dns-over-tls) (DoT), is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications (TLS is also known as "SSL"). DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
 
 ## hostname
 The name given to a server or node on a network. In most cases, the public DNS name of a server.
 
-## IdP
-*identity provider*
+## identity provider
 
 An identity provider (IdP or IDP) stores and manages users' digital identities. Think of an IdP as being like a guest list, but for digital and cloud-hosted applications instead of an event. An IdP may check user identities via username-password combinations and other factors, or it may simply provide a list of user identities that another service provider (like an SSO) checks.
 
-## JWT
-*JSON web token*
+## JSON web token
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
@@ -153,14 +153,14 @@ Secure Shell (SSH) protocol allows users to connect to infrastructure to perform
 A technology which combines several different application login screens into one. With SSO, a user only has to enter their login credentials (username, password, etc.) one time on a single page to access all of their SaaS applications.
 
 ## team domain
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `your-team-name.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them. 
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them. 
 
 ## team name
 The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under the **Authentication** tab.
 
 | team domain | team name |
 |-------------|-----------|
-| `your-team-name.cloudflareaccess.com` | `your-team-name` |
+| `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
 
 ## Terraform
 [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building Cloudflare resources.

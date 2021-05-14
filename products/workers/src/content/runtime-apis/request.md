@@ -221,12 +221,6 @@ All plans have access to:
 
   - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
 
-</Definitions>
-
-Business and Enterprise scripts have access to:
-
-<Definitions>
-
 - `city` <Type>string | null</Type>
 
   - City of the incoming request, e.g. `"Austin"`.

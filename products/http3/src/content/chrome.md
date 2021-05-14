@@ -6,7 +6,7 @@ order: 2
 
 Google supports HTTP/3 in Stable and Chrome Canary release channels. Canary channel builds are more regularly updated but may have some stability issues that you should keep in mind when testing. You can install both versions side-by-side; the Canary installer can be found [here](https://www.google.com/chrome/canary/).
 
-HTTP/3 is not enabled by default. Chrome must be launched with the `--enable-quic --quic-version=h3-27` flags to work.
+HTTP/3 is not enabled by default. Chrome must be launched with the `--enable-quic --quic-version=h3-29` flags to work.
 
 ## Running
 

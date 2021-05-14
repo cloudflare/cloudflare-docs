@@ -28,7 +28,7 @@ Note in this example that the first and last `"` characters in `"token-type=\"JW
 
 Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](https://developers.cloudflare.com/firewall/cf-firewall-language/operators/#comparison-operators), which supports [Google RE2 regular expressions](https://support.google.com/a/answer/1371417?hl=en) so that you can capture multiple variants of a value with a single expression.
+Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](https://developers.cloudflare.com/firewall/cf-firewall-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
 
 ## Boolean values
 

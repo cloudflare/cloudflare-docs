@@ -29,7 +29,7 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 1. You can name the application to be any value. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
  ![Create New App](../../static/documentation/identity/okta/add-uri.png)

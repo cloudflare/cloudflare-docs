@@ -14,7 +14,9 @@ You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance 
 * Build policies with Cloudflare Access to control who can reach GitLab
 * Connect over HTTP and SSH through Cloudflare
 
-**⏲️ Time to complete: 1 hour**
+**⏲️ Time to complete:**
+
+1 hour
 
 ---
 

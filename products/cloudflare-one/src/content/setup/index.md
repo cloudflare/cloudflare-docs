@@ -36,8 +36,6 @@ Let's walk through the setup flow!
 
 1. Choose a payment plan.
 
- ![Choose payment plan](../static/documentation/quickstart/step-3.png)
-
 1. Click **Next**. We'll show you a summary of the payment plan you've selected; you now have the opportunity to go back and choose a different plan or click **Proceed to payment**.
 
  ![Enter payment details](../static/documentation/quickstart/step-4.png)
@@ -51,7 +49,7 @@ Let's walk through the setup flow!
  For example, if you've purchased one of the Teams bundle plans, you can:
 
  * [Add your first location](/connections/connect-networks)
- * [Add your first application](/applications/configure-applications)
+ * [Add your first application](/applications/configure-apps)
  * [Customize your login page](/identity/login-page)
 
  And so much more. Happy exploring!

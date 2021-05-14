@@ -50,7 +50,7 @@ Restricting viewing can be done by updating the video's metadata.
 
 ```javascript
 
-// curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d '{"uid": "$VIDEOID", "requireSignedURLs": true }'
+// curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d "{\"uid\": \"$VIDEOID\", \"requireSignedURLs\": true }"
 
 {
   "result": {
@@ -75,6 +75,7 @@ You can sign to assert these optional constraints on the token:
 
 - `exp` - expiration; a unix epoch timestamp **after** which the token will not be accepted.
 - `nbf` - notBefore; a unix epoch timestamp **before** which the token will not be accepted.
+- `downloadable` - a boolean, mp4 downloads requiring signed URLs will not accept this token unless this value is true. For more details, see the [download documentation](../download-videos)
 - `accessRules` - Video Access Control; these allow making the token conditionally accepted on a variety of factors. For more details, see [their documentation](#video-access-control)
 
 ### Playback using signed tokens
@@ -98,8 +99,11 @@ Replace the video ID with the signed token to use it.
 
 We offer a utility at `https://util.cloudflarestream.com/sign` to generate tokens when getting familiar with signed URLs.
 
-```javascript
-curl -X POST "https://util.cloudflarestream.com/sign/$VIDEOID" -d '{"id": "$KEYID", "pem": "$PRIVATE_KEY_IN_PEM_FORMAT","nbf":1537453165,"exp":1537460365}'
+- `exp` - If not set, defaults to one hour after issuing.
+- `nbf` - If not set, defaults to one hour before issuing.
+
+```sh
+curl -X POST "https://util.cloudflarestream.com/sign/$VIDEOID" -d "{\"id\": \"$KEYID\", \"pem\": \"$PRIVATE_KEY_IN_PEM_FORMAT\",\"nbf\":1537453165,\"exp\":1537460365}"
 ```
 
 This endpoint accepts JSON bodies with the output from [Creating a signing key](#creating-a-signing-key) or any object with `pem` and `kid` attributes. To add a constraint, include it as a property of the body.
@@ -337,10 +341,10 @@ In the dashboard, you will see a text box by each video labeled `Enter allowed o
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
 
-```bash
+```sh
 curl -X POST \
 -H "Authorization: Bearer $TOKEN" \
--d '{"uid": "$VIDEOID", "allowedOrigins": ["example.com"]}' \
+-d "{\"uid\": \"$VIDEOID\", \"allowedOrigins\": [\"example.com\"]}" \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 
 ```
