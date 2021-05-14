@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this tutorial, we'll build a blog application using Nuxt.js and Sanity.io, and deploy it on Cloudflare Pages. Nuxt.js is a powerful static site generator built on the frontend framework Vue.js, and Sanity.io is a headless CMS tool built for managing your application's data without needing to maintain a database.
+In this tutorial, we'll build a blog application using Nuxt.js and Sanity.io and deploy it on Cloudflare Pages. Nuxt.js is a powerful static site generator built on the frontend framework Vue.js, and Sanity.io is a headless CMS tool built for managing your application's data without needing to maintain a database.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ In this tutorial, we'll build a blog application using Nuxt.js and Sanity.io, an
 
 ## Creating a new Sanity project
 
-To begin, we'll create a new Sanity project, and create our first Sanity project. We'll use one of Sanity's templates, the _blog_ template, but if you'd like to do something differently, you can modify the schema or pick a custom template.
+To begin, we'll create a new Sanity project. We'll use one of Sanity's templates, the _blog_ template, but if you'd like to do something differently, you can modify the schema or pick a custom template.
 
 ### Installing Sanity and configuring your dataset
 
@@ -24,7 +24,7 @@ header: Installing the Sanity client and creating a new project
 $ npm install -g @sanity/cli && sanity init
 ```
 
-When you create a Sanity project, you can choose to use one of their pre-defined schemas. Schemas describe the shape of your data in your Sanity dataset -- if you were to starting a brand new project, you may choose to initialize the schema from scratch, but for now, select the "Blog" schema.
+When you create a Sanity project, you can choose to use one of their pre-defined schemas. Schemas describe the shape of your data in your Sanity dataset -- if you were to start a brand new project, you may choose to initialize the schema from scratch, but for now, select the "Blog" schema.
 
 ### Inspecting your schema
 
@@ -115,7 +115,7 @@ filename: nuxt.config.js
 
 ### Setting up components
 
-With Sanity configured in your application, you can begin using it to render your blog. We'll set up a few pages to pull data from your Sanity API, and render it. Note that if you aren't familiar with Nuxt, it's recommended that you check out the [Nuxt guide](https://nuxtjs.org/guide), which will teach you some fundamentals concepts around building applications with Nuxt.
+With Sanity configured in your application, you can begin using it to render your blog. We'll set up a few pages to pull data from your Sanity API and render it. Note that if you aren't familiar with Nuxt, it's recommended that you check out the [Nuxt guide](https://nuxtjs.org/guide), which will teach you some fundamentals concepts around building applications with Nuxt.
 
 ### Setting up the index page
 

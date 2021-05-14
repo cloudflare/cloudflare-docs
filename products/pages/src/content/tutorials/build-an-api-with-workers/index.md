@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this tutorial, we'll build an API on Cloudflare Workers that can be used by your Pages application. Workers serves as a great companion to your frontend applications on Cloudflare Pages. In this tutorial, we'll build a simple JSON API that returns blog posts that can be retrieved and rendered in a front-end application.
+In this tutorial, we'll build an API on Cloudflare Workers that can be used by your Pages application. Workers serve as a great companion to your frontend applications on Cloudflare Pages. In this tutorial, we'll build a simple JSON API that returns blog posts that can be retrieved and rendered in a frontend application.
 
 This tutorial contains two, separate applications: the backend, a serverless API deployed on Cloudflare Workers, and the frontend, built with React and deployed using Cloudflare Pages.
 
