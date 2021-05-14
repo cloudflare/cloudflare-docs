@@ -34,13 +34,13 @@ Parameter | Description
 `wan.port` | The port on which to listen for WAN connections. Defaults to 2408.
 `stderr.file` | Name of log file to write stderr messages to. Useful for debugging crashes.
 `log.level` | The maximum level of log message to output. 0 = errors only; 1 = informational messages; 5 = debugging. The default is 0.
-`syslog.addr` | The network address (hostname:port) of the syslog server to connect to using UDP, or a path for a connection using a Unix domain socket. Defaults to the empty string which means that the system configured syslog will be used via a Unix domain socket.
+`syslog.addr` | The network address (`hostname:port`) of the syslog server to connect to using UDP, or a path for a connection using a Unix domain socket. Defaults to the empty string which means that the system configured syslog will be used via a Unix domain socket.
 `lan.timeout` | The number of seconds to wait while trying to connect to a web server or for a read from the server. Defaults to 30.
-`wan.tls` | Whether to use TLS for the WAN connection. Defaults to 1 and should only be set to 0 for testing. If no certificate files are provided, but `wan.tls=1` and `activate.server` is non-empty rg-listener will attempt to acquire a certificate from the activation server.
-`memcached.servers` | Space separated list of memcached servers in host:port format that will be used for caching. There is not default and this must be set.
+`wan.tls` | Whether to use TLS for the WAN connection. Defaults to 1 and should only be set to 0 for testing. If no certificate files are provided, but `wan.tls=1` and `activate.server` is non-empty, `rg-listener` will attempt to acquire a certificate from the activation server.
+`memcached.servers` | Space separated list of memcached servers in `host:port` format that will be used for caching. There is not default and this must be set.
 `memcached.timeout` | The maximum amount of time (in ms) to wait for retrieval of a cached page from memcached. The default is 100.
 `memcached.expiration` | The expiration time of individual memcached items in seconds. The default is 600 seconds (10 minutes). If set to 0 then the expiration time is infinite.
-`memcached.connect` | The host:port for the memcached server. Defaults to `127.0.0.1:11211`.
+`memcached.connect` | The `host:port` for the memcached server. Defaults to `127.0.0.1:11211`.
 `memcached.limit` | The maximum size (in bytes) of pages that will be stored in memcached. Defaults to 100,000.
 `stats.enabled` | Determines whether statistics are gathered or not. Defaults to 0 (set to 1 for statistics output).
 `stats.url` | Sets the URL (e.g. `http://stats.example.com:9090/`) to periodically POST stats to. Defaults to empty for disabled.
@@ -51,7 +51,7 @@ Parameter | Description
 `cert.file` | Name of file containing the certificate presented by this server to connections. No default.
 `key.file` | Name of file containing the private key for the `cert.file`. No default.
 `validate.cert` | Whether to validate the certificate presented when making a TLS connection. Defaults to 1 (meaning perform the validation).
-`map.file` | Name of a file containing domain=ip pairs that is used to override DNS and the `CF-ORIGIN-IP` setting. Defaults to no file.
+`map.file` | Name of a file containing `domain=ip` pairs that is used to override DNS and the `CF-ORIGIN-IP` setting. Defaults to no file.
 `activation.railgun_host` | The public facing, resolvable, hostname through which the CF CDN can connect to this rg-listener. DNS lookups are done at request-time. Use in place of `activation.public_ip`.
 `activation.public_ip` | The external IP (or a hostname which resolves to the IP) of your Railgun instance used for activation and automatic DNS record updates. No Default.
 `activation.token` | 32 character hash used for activation (see https://www.cloudflare.com/a/account/my-account). No default.

@@ -13,7 +13,7 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 ## Adding a Railgun
 Navigate to the [Railgun listing page](https://www.cloudflare.com/a/account/my-account/) and enter the descriptive title of your choosing and press the `Add` button.
 
-Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page. Start the Railgun daemon so that it can proceed with activation. If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on. If the Railgun fails to activate, check your logs for errors and [contact support](support@cloudflare.com) if the issue persists.
+Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page. Start the Railgun daemon so that it can proceed with activation. If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on. If the Railgun fails to activate, check your logs for errors and [contact support](mailto:support@cloudflare.com) if the issue persists.
 
 ## Enabling Railgun
 Navigate to the Railgun Settings section of the Speed page for your domain for your domain and select the desired Railgun from the drop-down menu. Then switch the toggle to ‘On.’
@@ -23,7 +23,7 @@ Railgun can report statistics via syslog, JSON via a HTTP POST request, or throu
 
 If `stats.listen` is set to a non-empty `host:post` string, Railgun will spawn a local HTTP server and listen on that interface awaiting a `GET /` HTTP request. The response will be JSON-encoded statistics. The statistics returned will change according to `stats.interval`. If the Railgun statistics port is not protected via a firewall, the host portion should be set to a loopback interface (e.g., `127.0.0.1` or `localhost`) to prevent external access. An example response follows:
 
-```
+```txt
 $ curl -v http://127.0.0.1:22408/
 
 > GET / HTTP/1.1

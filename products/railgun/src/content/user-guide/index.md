@@ -2,7 +2,7 @@
 title: User Guide
 type: overview
 order: 1
-pcx-content-type: landing page
+pcx-content-type: getting-started
 ---
 
 # Introduction
