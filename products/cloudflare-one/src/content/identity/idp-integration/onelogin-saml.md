@@ -49,7 +49,7 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO](../../static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
 
 1. Click *+ Add* under **Login Methods**, and select SAML.
 
@@ -73,10 +73,10 @@ OneLogin SAML allows administrators to upload metadata files from the service pr
 
 To add a metadata file to your OneLogin SAML configuration:
 
-1. Download your unique SAML metadata file at the following URL, replacing `your-team-name` with your [team name](/glossary#team-name):
+1. Download your unique SAML metadata file at the following URL, replacing `<your-team-name>` with your [team name](/glossary#team-name):
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
     The link returns a web page with your SAML SP data in XML format.

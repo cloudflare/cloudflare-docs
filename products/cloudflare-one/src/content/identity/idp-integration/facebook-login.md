@@ -43,7 +43,7 @@ Use these steps to set up Facebook as your identity provider.
 
     ![Facebook Settings](../../static/documentation/identity/facebook/fb6.png)
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Configuration > Authentication**.
 1. Click *+ Add* under **Login Methods**, and select Facebook as your IdP. 
 
 1. Copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
@@ -58,7 +58,7 @@ Use these steps to set up Facebook as your identity provider.
 1. In the **Valid OAuth redirect URIs** field, enter your [team domain](/glossary#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
     
 1. Click **Save Changes**.
@@ -72,7 +72,7 @@ To test that your connection is working, navigate to **Authentication > Login me
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "facebook",
     "name": "my example idp"

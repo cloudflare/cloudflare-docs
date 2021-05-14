@@ -14,7 +14,11 @@ Cloudflare Access provides a user-facing portal, the [Access App Launcher](https
 * Visit the Access App Launcher as an end user
 * Review login diagnostics as an end user
 
-**⏲️Time to complete: 10 minutes**
+**⏲️Time to complete:**
+
+10 minutes
+
+---
 
 ## Configure Cloudflare Access App Launcher
 
@@ -36,7 +40,7 @@ Once you have defined at least one rule, click **Save application**.
 
 ## Visiting the Access App Launcher
 
-The Cloudflare Access App Launcher is availabe to users at your [team domain](/glossary#team-domain). When users visit that domain, they will be prompted to login. Once authenticated, Cloudflare Access will display the applications they can access.
+The Cloudflare Access App Launcher is available to users at your [team domain](/glossary#team-domain). When users visit that domain, they will be prompted to login. Once authenticated, Cloudflare Access will display the applications they can access.
 
 ![Add Rule](../static/zero-trust-security/user-diagnostics/app-launcher.png)
 

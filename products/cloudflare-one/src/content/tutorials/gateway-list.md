@@ -12,16 +12,11 @@ You can upload and manage lists of objects to use in Gateway rules. These lists 
 |---|---|
 |Hostname|`foo.app.com`|
 |URL|`https://foo.app.com/admin`|
-|IP|`100.64.0.1`|
-|email|`user@company.com`|
+|Email| `user@cloudflare.com` |
+
 
 You can then use these lists in Gateway policies to block, allow, isolate or exclude from decryption.
 
-<Aside>
-
-`IP` and `email` lists are currently in beta.
-
-</Aside>
 
 **🗺️ This walkthrough covers how to:**
 
@@ -29,7 +24,9 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 * Manage the list in the Teams dashboard
 * Use the list in a Gateway policy
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
 
 ## Upload a CSV
 

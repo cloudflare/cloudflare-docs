@@ -14,7 +14,9 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to blo
 * Create a Gateway policy to block URLs that contain a hostname for certain users
 * Review the block events in the Gateway logs
 
-**⏲️Time to complete: 25 minutes**
+**⏲️Time to complete:**
+
+25 minutes
 
 ## Add Cloudflare Gateway
 

@@ -4,7 +4,7 @@ order: 12
 
 # Google Suite
 
-You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/authentication/configuring-identity-providers/google), the steps below will allow you to pull group membership information from your Google Workspace account.
+You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/identity/idp-integration/google), the steps below will allow you to pull group membership information from your Google Workspace account.
 
 Once integrated, users will login with their Google Suite credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
@@ -81,7 +81,7 @@ Once integrated, users will login with their Google Suite credentials to reach r
 1. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
  ![Input Team Domain](../../static/documentation/identity/gsuite/input-auth-domain.png)
@@ -132,7 +132,7 @@ Once integrated, users will login with their Google Suite credentials to reach r
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "apps_domain": "mycompany.com"
     },
     "type": "google-apps",

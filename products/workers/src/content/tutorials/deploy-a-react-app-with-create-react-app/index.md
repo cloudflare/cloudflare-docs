@@ -52,7 +52,7 @@ The `init --site` command will provide the scaffolding necessary to deploy your 
 
 ## Configure and publish
 
-To prepare your application for deployment, open up the newly-created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [“Configuring your project” section of Getting started](/learning/getting-started#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
+To prepare your application for deployment, open up the newly-created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [“Configuring your project” section of Getting started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
 
 The `bucket` key in your `wrangler.toml` indicates the “build” folder that Sites will deploy to Workers. While many front-end application and static site generators use the folder `public`, `create-react-app` uses the folder `build`. Let’s change the `bucket` key in `wrangler.toml` to `build`:
 

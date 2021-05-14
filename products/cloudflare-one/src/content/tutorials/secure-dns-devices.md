@@ -13,15 +13,11 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 * Create a DNS filtering policy that secures devices by blocking malicious hostnames
 * Apply that policy to devices on any network
 
-**⏲️Time to complete: ~45 minutes**
+**⏲️ Time to complete:**
 
-## Configure Cloudflare Gateway
+45 minutes
 
-Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
-
-* Teams Free
-* Teams Standard
-* Gateway
+1. [Add Gateway to your account](/setup)
 
 ## Create a default location
 

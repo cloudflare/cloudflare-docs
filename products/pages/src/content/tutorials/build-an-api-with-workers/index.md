@@ -6,7 +6,7 @@ In this tutorial, we'll build an API on Cloudflare Workers that can be used by y
 
 This tutorial contains two, separate applications: the backend, a serverless API deployed on Cloudflare Workers, and the frontend, built with React and deployed using Cloudflare Pages.
 
-If you're interested in a more comprehensive approach to building applications like this, you may benefit from moving from a serverless API for your content to a headless CMS — see our headless CMS tutorial to learn more!
+If you're interested in a more comprehensive approach to building applications like this, you may benefit from moving from a serverless API for your content to a headless CMS — see our [headless CMS tutorial] to learn more!
 
 ## Deploying a serverless API
 
@@ -425,4 +425,6 @@ In this tutorial, you built a full blog application by combining a frontend depl
 - Blog frontend: https://github.com/signalnerve/blog-frontend
 - Serverless API: https://github.com/signalnerve/serverless-api
 
-If you enjoyed this tutorial, check out our headless CMS tutorial!
+If you enjoyed this tutorial, check out our [headless CMS tutorial]!
+
+[headless CMS tutorial]:https://developers.cloudflare.com/pages/tutorials/build-a-blog-using-nuxt-and-sanity

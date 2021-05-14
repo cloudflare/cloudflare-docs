@@ -10,7 +10,7 @@ To use a Rules List in the [Expression Builder](/cf-dashboard/create-edit-delete
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
-   ![Using Lists in a firewall rule](../../images/lists-fw-rule-builder-editor.png)
+   ![Managed open proxies list](../../images/cf-open-proxies-list.png)
 
 1. Select a Rules List from the **Value** drop-down list.
 
@@ -30,3 +30,13 @@ This expression filters requests from IP addresses that are in a Rules List name
 Note that names for Rules Lists can only include lowercase letters, numbers, and the underscore (`_`) character.
 
 For more on creating lists, see [_Use Rules Lists: Manage lists_](/cf-dashboard/rules-lists/manage-lists).
+
+To create a new rule via API using the Cloudflare Open Proxies Managed List use the following expression:
+
+`(ip.src in $cf.open_proxies)`
+
+<Aside type='warning' header='Important'>
+
+Access to the  Open Proxy List requires a Cloudflare Enterprise plan.
+
+</Aside>

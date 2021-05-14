@@ -15,6 +15,10 @@ Expressions can be more complex by joining multiple clauses via a logical operat
 
 ```ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)```
 
+# Capabilities
+
+You can use Magic Firewall to skip or block packets based on source or destination IP, source or destination port, protocol, packet length, or bit field match.
+
 # Restrictions
 
 Wirefilter comparisons support CIDR notation, but only inside sets.  For example:

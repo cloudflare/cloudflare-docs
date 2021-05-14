@@ -238,10 +238,13 @@ If you are using [kv_namespaces](/cli-wrangler/configuration#kv_namespaces) with
 Starts a log tailing session for a deployed Worker.
 
 ```sh
-$ wrangler tail [--port $PORT] [--metrics-port $PORT]
+$ wrangler tail [--format $FORMAT] [--port $PORT] [--metrics-port $PORT]
 ```
 
 <Definitions>
+
+- `--format $FORMAT` <Type>json|pretty</Type>
+  - The format of the log entries
 
 - `--port $PORT` <Type>int</Type>
   - The port for your local log server

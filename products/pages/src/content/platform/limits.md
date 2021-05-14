@@ -4,7 +4,7 @@ Below, we've listed the limits for users using the Cloudflare Pages free plan. F
 
 ## Builds
 
-Each time you push new code to your GitHub repository, we'll build and deploy your site. You can deploy up to 500 times per month on the free plan. Check out the Pro and Business plans on our [pricing page](https://pages.cloudflare.com/#plans) if you need to deploy more frequently!
+Each time you push new code to your GitHub repository, we'll build and deploy your site. You can deploy up to 500 times per month on the free plan. Check out the Pro and Business plans on our [pricing page](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently!
 
 ## Custom domains
 
@@ -16,7 +16,7 @@ We take each file in your site and upload it to our globally distributed network
 
 ## File size
 
-The maximum file size for a Cloudflare Pages site asset is 25Mb.
+The maximum file size for a Cloudflare Pages site asset is 25MB.
 
 ## Preview deployments
 
@@ -28,4 +28,5 @@ Your Pages site can be managed by an unlimited number of users via the Cloudflar
 
 ## Sites
 
-Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, we may temporarily disable your ability to create new Pages projects if you're deploying a large number of applications in a short amount of time. Please email workers-support@cloudflare.com if you need this restriction removed.
+Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, we may temporarily disable your ability to create new Pages projects, if you're deploying a large number of applications in a short amount of time. Please email workers-support@cloudflare.com if you need this restriction removed.
+

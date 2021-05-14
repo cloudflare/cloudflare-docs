@@ -41,11 +41,11 @@ Cloudflare WARP (known in the Google Play store as [1.1.1.1: Faster & Safer Inte
 ## Manual configuration
 
 If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
-* If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH Subdomain](#manually-configure-a-gateway-doh-subdomain).
+* If your organization uses Gateway DNS filtering, users will need to manually configure a [DoH subdomain](/glossary#doh-subdomain).
 * If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
 ### Manually configure a Gateway DoH subdomain
-If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
+If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway [DoH subdomain](/glossary#doh-subdomain) field. 
 
 Then ask your users to complete the following steps:
 

@@ -13,6 +13,8 @@ allow or deny any traffic in or out of your network.
 
 Access to the API is controlled by the `#waf:read` and `#waf:write` permissions.
 
+Magic Firewall allows you to define skip and block rules on any packet characteristics including source and destination IP, source and destination port, protocol, packet length, and bit field match.
+
 Start by [adding a rule](/magic-firewall/adding-rules)!
 
 <Aside type='warning' header='Important'>
@@ -21,6 +23,7 @@ When you or your end users are using other Cloudflare services (eg. CDN, Spectru
 
 - Firewall rules that block traffic based on source IP address may not work as intended, since rules are evaluated after Cloudflare terminates the incoming TCP connections.
 - You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
+- When using Magic Firewall, fragmented packets are reassembled into complete packets before they are inspected. As a result, you cannot create firewall rules for fragments.
 
 </Aside>
 

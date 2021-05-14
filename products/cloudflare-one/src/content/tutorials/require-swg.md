@@ -15,11 +15,11 @@ You can build rules in Cloudflare Access that require users to connect through y
 * View enrolled devices
 * Build a rule in Access to require Cloudflare Gateway
 
-**⏲️Time to complete: 40 minutes**
+**⏲️Time to complete:**
 
-## Configure Cloudflare Access
+40 minutes
 
-Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
+---
 
 ## Add Cloudflare Gateway
 

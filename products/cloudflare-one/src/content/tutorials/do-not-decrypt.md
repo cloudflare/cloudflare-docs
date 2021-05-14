@@ -15,12 +15,14 @@ Cloudflare for Teams has compiled a list of resources that rely on this mechanis
 * Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
 * Configure that policies precedence in your Gateway configuration
 
-**Before you start:**
+**⏲️ Time to complete:**
 
-1. [Connect devices](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp) to Cloudflare's edge with the WARP client and [install the root certificate](/connections/connect-devices/warp/install-cloudflare-cert)
+5 minutes
+
+## Before you start
+
+1. [Connect devices](/connections/connect-devices/warp) to Cloudflare's edge with the WARP client and [install the root certificate](/connections/connect-devices/warp/install-cloudflare-cert)
 1. [ Enable web inspection](/connections/connect-devices/warp/control-proxy)
-
-**⏲️ Time to complete: 5 minutes**
 
 ## Build the policy
 

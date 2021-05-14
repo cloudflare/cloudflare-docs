@@ -1,8 +1,7 @@
 ---
 title: Suspend or force all traffic to waiting rooms
-alwaysopen: true
-weight: 270
-hidden: false
+order: 3
+pcx-content-type: configuration
 ---
 
 # Control Waiting Room traffic

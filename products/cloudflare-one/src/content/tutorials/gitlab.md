@@ -14,7 +14,9 @@ You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance 
 * Build policies with Cloudflare Access to control who can reach GitLab
 * Connect over HTTP and SSH through Cloudflare
 
-**⏲️ Time to complete: 1 hour**
+**⏲️ Time to complete:**
+
+1 hour
 
 ---
 
@@ -171,7 +173,7 @@ You use the text editor of your choice to edit the configuration file. The examp
 vim ~/.cloudflared/config.yml
 ```
 
-Next,
+Next, configure the Tunnel to serve traffic.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef

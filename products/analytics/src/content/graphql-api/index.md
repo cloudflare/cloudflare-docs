@@ -1,6 +1,6 @@
 ---
 title: GraphQL Analytics API
-order: 1
+order: 2
 ---
 
 # GraphQL Analytics API

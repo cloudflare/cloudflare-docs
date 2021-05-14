@@ -14,7 +14,7 @@ The first step you need to take in order to require Gateway or WARP is to add a 
 
 To do that:
 
-1. Log in to your [Teams dashboard](https://dash.teams.cloudflare.com/) and navigate to **Access > Authentication > Device Posture**.
+1. On your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 1. Select **Gateway** if you’d like to require all traffic to flow through your Gateway instance. Select **WARP** if you’d like to require all traffic to flow through Cloudflare’s VPN.
 
 ![Device Posture](../../static/documentation/identity/devices/device-posture.png)

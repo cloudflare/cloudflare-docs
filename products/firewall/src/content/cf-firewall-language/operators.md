@@ -128,7 +128,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       </td>
     </tr>
     <tr>
-      <td>Matches<br />RE2 regex</td>
+      <td>Matches<br />regex</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
       <td>&#x2705;</td>

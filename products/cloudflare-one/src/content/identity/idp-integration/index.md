@@ -15,11 +15,11 @@ Cloudflare Access supports social identity providers that do not require adminis
 
 ## Set up IdPs on the Teams dashboard
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Authentication**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Authentication**.
 
 2. In the **Login methods** card, click *+Add*.
 
-![Login methods](../../static/documentation/identity/login-methods-card.png)
+![Login methods](../../static/documentation/identity/login-methods-auth.png)
 
 3. Select the identity provider you want to add. You can add multiple providers of the same type.
 
@@ -33,11 +33,11 @@ If you do not see your identity provider listed, but they support SAML or OAuth,
 
 4. Once you have filled in the necessary fields, click **Save**.
 
+Your IdP will now be listed in the **Login methods** card.
+
 ## Test IdPs on the Teams dashboard
 
-To test if an IdP is correctly configured, click on **Authentication** > **Login Methods** > **Test**. This will attempt to connect to the IdP to verify if a valid connection is established.
-
-![Test and Edit IdPs](../../static/documentation/identity/auth-home.png)
+To test if an IdP is correctly configured, navigate to **Configuration** > **Authentication**. Next, click **Test** next to the IdP you'd like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected
 

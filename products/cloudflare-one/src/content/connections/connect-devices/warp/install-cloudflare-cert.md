@@ -307,3 +307,14 @@ The command to install the certificate with Python on Windows automatically incl
 ![Android choose cert](../../../static/documentation/connections/android_choose_certificate.png)
 
 The root certificate is now installed and ready to be used.
+
+<Aside>
+
+Common dev tools provide the option to trust root certificates. To trust the Cloudflare root certificate, run the following command and update it with the location for your Cloudflare root certificate:
+
+ ```
+  pip install --cert=/usr/local/share/ca-certificates/mycert.pem
+ ```
+If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate.
+
+</Aside>

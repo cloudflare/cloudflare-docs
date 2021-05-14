@@ -58,7 +58,7 @@ Group criteria help define whether to include or exclude a team member from a  g
 * **Service Token** - The request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — Employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 
-## Using groups For IP-based rules
+## Using groups for IP-based rules
 
 We recommend using groups to define any IP address-based rules you configure in policies. Keeping IP addresses in one place allows you to modify or remove addresses once, rather than in each policy, and reduces the potential for mistakes.
 

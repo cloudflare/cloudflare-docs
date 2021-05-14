@@ -10,7 +10,7 @@ For a basic overview of how to create, edit, and delete Policies on the dashboar
 
 ## Allow
 
-All rule actions must have at least one Include. Add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application.
+All rule actions must have at least one *Include*. Add a *Require* rule in the same policy action to enforce additional checks. Finally, if the policy contains an *Exclude* rule, users meeting that definition are prevented from reaching the application.
 
 | Action | Rule | Criteria |
 | ------ | ---- | -------- |
@@ -28,13 +28,12 @@ All rule actions must have at least one Include. Add a Require rule in the same 
 
 ## Block
 
-This action explicitly prevents users from reaching an application behind Access. Block actions enforce similar behavior to allow actions that contain an Exclude rule without the need to allow specific users.
-
 <Aside type='warning' header='Important'>
 
 An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
-
 </Aside>
+
+This action explicitly prevents users from reaching an application behind Access. Block actions enforce similar behavior to allow actions that contain an Exclude rule without the need to allow specific users.
 
 | Action | Rule | Criteria |
 | ------ | ---- | -------- |
@@ -45,11 +44,29 @@ An Exclude rule will allow any user meeting that criteria to access an applicati
 
 ## Bypass
 
-Use this rule action to bypass Access for a specific path of the application, a subset of users or for the entire application. The bypass rule action disables any Access enforcement for traffic that meets the defined rule criteria.
+<Aside type='warning' header='Important'>
 
-Let’s take an example website secured with Access with a third-party service that needs access to a specific endpoint. You can configure traffic to bypass Access and access that endpoint. You can also allowlist a range of IP addresses to bypass Access or allow all traffic by setting the rule to include everyone.
+Use Bypass rules carefully, as they <b>disable any Access enforcement</b> for traffic that meets the defined rule criteria.
+</Aside>
 
-If the service does not publish its IP range or it changes periodically, you can choose to include Everyone in the Bypass action so that any request can access the specified path.
+The bypass rule action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
+
+A *Bypass* rule based on IP ranges for an internal application could look like this, where you can input your office's IP addresses in the `Value` field: 
+
+| Action | Rule | Criteria | Value |
+| ------ | ---- | -------- | ----- | 
+| Bypass  | Include | IP ranges | `192.xxx.xxx.xxx` |
+
+This means Access won’t be enforced on the set of IP addresses you’ve specified.  To complete the setup, you need an additional rule to ensure that anyone asking to access your application from a different IP address will only be granted access if they only meet certain criteria, like email addresses ending with a given domain.
+
+To do so, set up an additional *Allow* rule like the following:
+
+
+| Action | Rule | Criteria | Value |
+| ------ | ---- | -------- | ----- | 
+| Allow  | Include | Emails ending in | `@contractors.com`, `@company.com` |
+
+This ensures that everyone connecting from outside your specified IP range will be prompted to authenticate.
 
 ## Service Auth
 Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.

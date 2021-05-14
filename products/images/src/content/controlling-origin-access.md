@@ -30,7 +30,7 @@ __Warning:__ When testing image resizing, please deploy the script, and test it 
 
 </Aside>
 
-## Hiding the image sever
+## Hiding the image server
 
 ```js
 async function handleRequest(request) {
