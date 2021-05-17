@@ -36,25 +36,75 @@ Once you have downloaded the script, run it with the following command-line argu
 - `-o <results>`: File to store the per-session statistics.
 - `URL`: Endpoint protected by a Cloudflare Waiting Room.
 
+<details>
+  <summary>Example script run</summary>
+  <div>
+    <strong>Request</strong>
+
+    simulate_requests -s .1 -n 60 -m 60 -o results https://example.com/tickets/1234/
+
+<strong>Response</strong>
+
+    Sending 600 requests to https://example.com/tickets/1234/ at a rate of 10.00 per second. Or 600 per minute.
+
+    Wed 10 Mar 2021 10:48:59 AM CST
+    ...................................................................................................................a.aa.aa.a..
+    Wed 10 Mar 2021 10:50:00 AM CST
+
+    Now doing 1 request per second for 60 seconds.
+    babdacdbeacbc.abbedcbacbddaccdaeebbcabedccaebddbcacedb.cadcedbacabcbeacbbabdcdbaaebddcbcabeeadbcbacadedabbaacd.dabecbabbdecbdaegehgjkfjifggfihjhghhfhifkfj.gjighhgfiihgdihkffiejgjjigggjkijkk
+    Wed 10 Mar 2021 10:51:01 AM CST
+
+    Waiting for jobs to finish
+    hgiibjjjjcjhjgbgiggikihhjcihhhhlkkknmjjmmjnnonokklmmklnmonmlonoompollplommpmmpolpoqmponngoonqjimqmgjmmnkmogmqoiqpoqolmmqonghpppjpiopoopqomkqnnqgnmqnnppopnqrpptqtrrrrpsrqtrusrtsvusvsrrvstttrvsvsvussrtuwtvrtsvtrvsqunrmtrrrsqnqptvsuqturwsvstnmwuwtusvsvwsouspqtuuvsvrvwtwssvqtuuuwspvoxyzyyvwvzwxyxyyAzyyzABxBBzyxyxxBBACzzyxAvwsyzxztzvuvtCACyvxstuutvCw
+    Wed 10 Mar 2021 10:54:22 AM CST
+
+</div>
+</details>
+
 As the script runs, you will see a letter output to the command line for each user session that advanced past the waiting room. This letter represents how long each user session waited:
 - 0 seconds: `.`
 - 0 - 10 seconds: `a`
 - 10 - 20 seconds: `b`
 - 20 - 30 seconds: `c`
+
+...
 - 260 - 270 seconds: `A`
 - 270 - 280 seconds: `B`
-- > 620 seconds: `!`
+
+...
+- Greater than 620 seconds: `!`
 
 ## 3. Analyze results
 
 Once the script finishes running, it creates a CSV file with the following fields:
-- **job**: Fixed string and sequence number. Either `main` for phase 1 or `post` for phase 2.
-- **status**: Status of the last response of the session:
-    - 0: curl command received an HTTP status code of `200`.
-    - 1: curl command did not receive any HTTP status codes, which typically means the curl command itself failed.
-    - 2: curl command received an HTTP status code of something other than `200`.
-- **wait_time**: Number of seconds the user waited in the waiting room.
-- **wr_cnt_before**: Number of users in the waiting room when the session first started.
-- **wr_cnt_after**: Number of users in the waiting room when the session made it past the Waiting Room.
-- **start_time**: Time when the session first started (in UNIX epoch seconds).
-- **end_time**: Time when the session made it past the Waiting Room (in UNIX epoch seconds).
+
+<details>
+  <summary>CSV fields</summary>
+  <div>
+    <ul>
+        <li><strong>job</strong>: Fixed string and sequence number. Either <strong>main</strong> for phase 1 or <strong>post</strong> for phase 2.</li>
+       <li><strong>status</strong>: Status of the last response of the session:</li>
+       <ul>
+            <li>0: curl command received an HTTP status code of <code>200</code>.</li>
+            <li>1: curl command did not receive any HTTP status codes, which typically means the curl command itself failed.</li>
+            <li>2: curl command received an HTTP status code of something other than <code>200</code>.</li>
+        </ul>
+        <li><strong>wait_time</strong>: Number of seconds the user waited in the waiting room.</li>
+       <li><strong>wr_cnt_before</strong>: Number of users in the waiting room when the session first started.</li>
+       <li><strong>wr_cnt_after</strong>: Number of users in the waiting room when the session made it past the Waiting Room.</li>
+       <li><strong>start_time</strong>: Time when the session first started (in UNIX epoch seconds).</li>
+       <li><strong>end_time</strong>: Time when the session made it past the Waiting Room (in UNIX epoch seconds).</li>
+    </ul>
+</div>
+</details>
+
+To visualize your results, open your CSV file within a spreadsheet application. For example, here is a basic chart that shows the amount of time a user waited verses the time they first tried to get to the web service:
+
+![Visualize waiting room test data by using a graphing tool](../static/test-waiting-room.png)
+
+In this example, you can clearly see when the script entered the second phase — with a reduced rate of new users per second — leading to decreased wait times.
+
+## 4. Adjust Waiting Room
+
+Based on the results of your test, you may want to adjust the settings of your Waiting Room.
