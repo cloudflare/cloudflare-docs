@@ -1,25 +1,28 @@
 ---
 title: Connections, Enabling and Disabling
-type: overview
+type: document
 order: 12
+pcx-content-type: configuration
 ---
 
 # Connections, Enabling and Disabling
 
-After a Railgun has been activated, it can be exposed to a particular domain with the [suggestion_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-suggestion_set) API call. [suggestion_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-suggestion_set) also accepts the `auto_enabled` parameter to assign and enable Railgun for the domain globally in a single API call. If `auto_enabled` is not set to `1`, then the connection needed to enable Railgun for the domain must be made manually using the [conn_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_set) method. [conn_setmode_enabled](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_setmode_enabled) and [conn_setmode_disabled](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain globally. [zone_conn_get_active](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-zone_conn_get_active) can be used to view active Railgun connections.
+After a Railgun has been activated, it can be exposed to a particular domain with the [suggestion_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-suggestion_set) API call. [suggestion_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-suggestion_set) also accepts the `auto_enabled` parameter to assign and enable Railgun for the domain globally in a single API call. If `auto_enabled` is not set to `1`, then the connection needed to enable Railgun for the domain must be made manually using the [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_set) method. [conn_setmode_enabled](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_setmode_enabled) and [conn_setmode_disabled](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain globally. [zone_conn_get_active](/user-guide/optimized-partner-api/listing-viewing-details#post-zone_conn_get_active) can be used to view active Railgun connections.
+
+## POST suggestion_set
 
 `POST /api/v2/railgun/suggestion_set`
 
-Expose a verified Railgun to a domain via the Cloudflare Settings user-interface. This method allows an end-user to select and enable the specified Railgun within the Cloudflare Settings user-interface. If `auto_enabled` is set to `0`, it is also necessary to perform a [conn_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_set) for the Railgun in order to setup a connection with the domain.
+Expose a verified Railgun to a domain via the Cloudflare Settings user-interface. This method allows an end-user to select and enable the specified Railgun within the Cloudflare Settings user-interface. If `auto_enabled` is set to `0`, it is also necessary to perform a [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_set) for the Railgun in order to setup a connection with the domain.
 
-## Form Parameters:
+### Form Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 * **auto_enabled** – Railgun operation mode, `1` for active `0` for inactive
 
-## Example request:
+### Example request:
 ```txt
 POST /api/v2/railgun/suggestion_set HTTP/1.1
 Host: www.cloudflare.com
@@ -34,7 +37,7 @@ auto_enabled=0
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -49,18 +52,20 @@ Content-Type: application/json
 }
 ```
 
+## GET suggestion_set
+
 `GET /api/v2/railgun/suggestion_set`
 
-Expose a verified Railgun to a domain via the Cloudflare Settings user-interface. This method allows an end-user to select and enable the specified Railgun within the Cloudflare Settings user-interface. If `auto_enabled` is set to `0`, it is also necessary to perform a [conn_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_set) for the Railgun in order to setup a connection with the domain.
+Expose a verified Railgun to a domain via the Cloudflare Settings user-interface. This method allows an end-user to select and enable the specified Railgun within the Cloudflare Settings user-interface. If `auto_enabled` is set to `0`, it is also necessary to perform a [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_set) for the Railgun in order to setup a connection with the domain.
 
-## Query Parameters:
+### Query Parameters:
 	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 * **auto_enabled** – Railgun operation mode, `1` for active `0` for inactive
 
-## Example request:
+### Example request:
 ```txt
 GET /api/v2/railgun/suggestion_set?host_key=&rtkn=&z=&mode= HTTP/1.1
 Host: www.cloudflare.com
@@ -75,7 +80,7 @@ auto_enabled=0
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -90,18 +95,20 @@ Content-Type: application/json
 }
 ```
 
+## POST conn_set
+
 `POST /api/v2/railgun/conn_set`
 
 Establish a connection between a domain and a Railgun without requiring the domain’s user to utilize the Cloudflare Settings user-interface to change or deactivate it. The `mode` parameter can be set to `1` in order to enable the Railgun globally if `conn_set` succeeds.
 
-## Form Parameters:
+### Form Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 * **mode** – Railgun operation mode, `1` for active `0` for inactive
 
-## Example request:
+### Example request:
 ```txt
 POST /api/v2/railgun/conn_set HTTP/1.1
 Host: www.cloudflare.com
@@ -116,7 +123,7 @@ mode=0
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -132,18 +139,20 @@ Content-Type: application/json
 }
 ```
 
+## GET conn_set
+
 `GET /api/v2/railgun/conn_set`
 
 Establish a connection between a domain and a Railgun without requiring the domain’s user to utilize the Cloudflare Settings user-interface to change or deactivate it. The `mode` parameter can be set to `1` in order to enable the Railgun globally if `conn_set` succeeds.
 
-## Query Parameters:
+### Query Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 * **mode** – Railgun operation mode, `1` for active `0` for inactive
 
-## Example request:
+### Example request:
 ```txt
 GET /api/v2/railgun/conn_set?host_key=&rtkn=&z=&mode= HTTP/1.1
 Host: www.cloudflare.com
@@ -158,7 +167,7 @@ mode=0
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -174,17 +183,19 @@ Content-Type: application/json
 }
 ```
 
+## POST conn_setmode_enabled
+
 `POST /api/v2/railgun/conn_setmode_enabled`
 
 Enable a Railgun. If request is successful, the specified Railgun will be enabled and traffic for the specified domain will be proxied through Railgun.
 
-## Form Parameters:
+### Form Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-## Example request:
+### Example request:
 ```txt
 POST /api/v2/railgun/conn_setmode_enabled HTTP/1.1
 Host: www.cloudflare.com
@@ -198,7 +209,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -213,17 +224,19 @@ Content-Type: application/json
 }
 ```
 
+## GET conn_setmode_enabled
+
 `GET /api/v2/railgun/conn_setmode_enabled`
 
 Enable a Railgun. If request is successful, the specified Railgun will be enabled and traffic for the specified domain will be proxied through Railgun.
 
-## Query Parameters:
+### Query Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-## Example request:
+### Example request:
 ```txt
 GET /api/v2/railgun/conn_setmode_enabled?host_key=&rtkn=&z= HTTP/1.1
 Host: www.cloudflare.com
@@ -237,7 +250,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -252,17 +265,19 @@ Content-Type: application/json
 }
 ```
 
+## POST conn_setmode_disabled
+
 `POST /api/v2/railgun/conn_setmode_disabled`
 
 Disable a Railgun. If request is successful, the specified Railgun will be disabled and traffic for the specified domain will no longer use Railgun.
 
-## Form Parameters:
+### Form Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-## Example request:
+### Example request:
 ```txt
 POST /api/v2/railgun/conn_setmode_disabled HTTP/1.1
 Host: www.cloudflare.com
@@ -276,7 +291,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -291,17 +306,19 @@ Content-Type: application/json
 }
 ```
 
+## GET conn_setmode_disabled
+
 `GET /api/v2/railgun/conn_setmode_disabled`
 
 Disable a Railgun. If request is successful, the specified Railgun will be disabled and traffic for the specified domain will no longer use Railgun.
 
-## Query Parameters:
+### Query Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-## Example request:
+### Example request:
 ```txt
 GET /api/v2/railgun/conn_setmode_disabled?host_key=&rtkn=&z= HTTP/1.1
 Host: www.cloudflare.com
@@ -315,7 +332,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -330,17 +347,19 @@ Content-Type: application/json
 }
 ```
 
+## POST conn_delete
+
 `POST /api/v2/railgun/conn_delete`
 
-Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_set).
+Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_set).
 
-## Form Parameters:
+### Form Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-## Example request:
+### Example request:
 ```txt
 POST /api/v2/railgun/conn_delete HTTP/1.1
 Host: www.cloudflare.com
@@ -354,7 +373,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -369,17 +388,19 @@ Content-Type: application/json
 }
 ```
 
+## GET conn_delete
+
 `GET /api/v2/railgun/conn_delete`
 
-Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn_set](https://www.cloudflare.com/docs/railgun/api/partner_api.html#post--api-v2-railgun-conn_set).
+Remove a connection between a domain and a Railgun. This API call will allow a connected Railgun to be assigned to a different domain. Removing the connection of an enabled Railgun and domain will disable Railgun for the domain until a new connection is made with [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#post-conn_set).
 
-## Query Parameters:
+### Query Parameters:
  	
 * **host_key** – Host API key
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-## Example request:
+### Example request:
 ```txt
 GET /api/v2/railgun/conn_delete?host_key=&rtkn=&z= HTTP/1.1
 Host: www.cloudflare.com
@@ -393,7 +414,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-## Example response:
+### Example response:
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json

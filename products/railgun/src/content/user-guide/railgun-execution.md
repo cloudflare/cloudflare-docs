@@ -1,7 +1,8 @@
 ---
 title: Railgun Execution
-type: overview
+type: document
 order: 3
+pcx-content-type: configuration
 ---
 
 # Railgun Execution

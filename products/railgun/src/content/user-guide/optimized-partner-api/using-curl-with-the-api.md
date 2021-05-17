@@ -1,7 +1,8 @@
 ---
 title: Using cURL with the API
-type: overview
+type: document
 order: 14
+pcx-content-type: configuration
 ---
 
 # Using cURL with the API

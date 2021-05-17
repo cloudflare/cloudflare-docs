@@ -1,8 +1,8 @@
 ---
 title: User Guide
-type: overview
+type: document
 order: 1
-pcx-content-type: getting-started
+pcx-content-type: reference
 ---
 
 # Introduction

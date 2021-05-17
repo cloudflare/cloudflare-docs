@@ -1,7 +1,8 @@
 ---
 title: Installation
-type: overview
+type: document
 order: 2
+pcx-content-type: tutorial
 ---
 
 # Installation
@@ -139,7 +140,7 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 ## Going live
 It is recommended that you consult the [Testing Railgun](/user-guide/installation#testing-railgun) section before enabling it for all visitors to your site.
 
-When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [`GET /api/v2/railgun/conn_set`](/user-guide/optimized-partner-api/conections-enabling-disabling) with `mode` set to `0` or [`GET /api/v2/railgun/conn_setmode_enabled`](/user-guide/optimized-partner-api/conections-enabling-disabling) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
+When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#get-conn_set) with `mode` set to `0` or [conn_setmode_enabled](/user-guide/optimized-partner-api/conections-enabling-disabling#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
 
 ## Potential problems
 If you notice consistent 523, 524 or other error responses, please check the [System Status Map](https://www.cloudflarestatus.com/) and [contact support](https://support.cloudflare.com/) as needed. Railgun will fall-back to direct HTTP requests if our endpoints can’t contact your Railgun daemon, but consistent error responses may indicate a system or origin server problem. When contacting support, please provide a screenshot of ```http://www.yourdomain.com/cdn-cgi/trace``` if you are able, or a [traceroute](https://support.cloudflare.com/hc/en-us/articles/200169336-How-do-I-run-a-traceroute-) to your domain so we know which datacenter your requests are hitting. You can then [pause](https://support.cloudflare.com/hc/en-us/articles/200169176-How-do-I-temporarily-deactivate-Cloudflare-) Cloudflare via the website to disable the service and resume normal website traffic.

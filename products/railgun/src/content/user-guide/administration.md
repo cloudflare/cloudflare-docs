@@ -1,7 +1,8 @@
 ---
 title: Administration
-type: overview
+type: document
 order: 4
+pcx-content-type: tutorial
 ---
 # Administration
 
