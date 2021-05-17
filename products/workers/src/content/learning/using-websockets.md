@@ -20,7 +20,7 @@ WebSockets are open connections sustained between the client and the origin serv
 
 <Aside>
 
-__Note:__ The `wrangler dev` tool currently does not support connecting to Workers via the WebSocket protocol. Support for WebSocket support in `wrangler dev` is tracked in [this GitHub issue](https://github.com/cloudflare/wrangler/issues/1910).
+__Note:__ The `wrangler dev` tool currently does not support connecting to Workers via the WebSocket protocol. Support for WebSockets in `wrangler dev` is tracked in [this GitHub issue](https://github.com/cloudflare/wrangler/issues/1910).
 
 </Aside>
 
