@@ -1,5 +1,6 @@
 ---
 title: Create a Request Header Modification Rule
+pcx-content-type: interim
 order: 2
 ---
 
