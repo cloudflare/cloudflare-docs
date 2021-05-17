@@ -1,4 +1,5 @@
 ---
+pcx-content-type: configuration
 order: 5
 ---
 
