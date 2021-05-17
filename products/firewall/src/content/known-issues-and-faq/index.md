@@ -1,5 +1,6 @@
 ---
 title: Frequently asked questions
+pcx-content-type: faq
 weight: 700
 ---
 

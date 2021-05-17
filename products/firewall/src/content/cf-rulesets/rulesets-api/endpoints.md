@@ -1,5 +1,6 @@
 ---
 title: Endpoints
+pcx-content-type: reference
 alwaysopen: true
 order: 782
 ---

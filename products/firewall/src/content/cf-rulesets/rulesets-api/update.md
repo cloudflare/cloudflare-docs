@@ -1,5 +1,6 @@
 ---
 title: Update and deploy rulesets
+pcx-content-type: reference
 alwaysopen: true
 order: 785
 ---
