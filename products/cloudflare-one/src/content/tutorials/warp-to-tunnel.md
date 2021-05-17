@@ -4,9 +4,9 @@ category: 🌐 Connections
 difficulty: Advanced
 ---
 
-# Connect from WARP to a private network on Cloudflare using Argo Tunnel
+# Connect from WARP to a private network on Cloudflare using Cloudflare Tunnel
 
-You can use [Argo Tunnel](/connections/connect-apps) to connect applications and services to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections.
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and services to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections.
 
 You can create and configure Argo Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). You can also use Argo Tunnel to connect any service that relies on a TCP-based protocol to Cloudflare's network. Users in your organization can then reach the service by enrolling into your organization's Cloudflare for Teams account and using the WARP agent.
 

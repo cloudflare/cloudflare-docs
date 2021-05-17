@@ -6,11 +6,11 @@ difficulty: Beginner
 
 # Share development environments
 
-You can use Cloudflare's reverse proxy and [Argo Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers.
+You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers.
 
-Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Argo Tunnel. Argo Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
+Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Argo Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Argo Tunnel to quickly share projects you are working on with team members. In this example, you can use Argo Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
+You can use Cloudflare Tunnel to quickly share projects you are working on with team members. In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
 
 **🗺️ This tutorial covers how to:**
 
@@ -51,7 +51,7 @@ Once you click one of the sites in your account, Cloudflare will download a cert
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose.
 

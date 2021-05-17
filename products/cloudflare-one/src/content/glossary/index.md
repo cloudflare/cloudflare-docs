@@ -13,7 +13,7 @@ Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead o
 ## [Cloudflare Gateway](https://www.cloudflare.com/en-gb/teams/gateway/)
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
-## [Argo Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
+## [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
 A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
@@ -44,9 +44,10 @@ Certificate pinning is a security mechanism used to prevent man-in-the-middle (M
 
 ## cloudflared
 
-`cloudflared` is the software that powers [Argo Tunnel](#argo-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
+`cloudflared` is the software that powers [Cloudflare Tunnel](#cloudflare-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
 ## daemon
+
 A program that performs tasks without active management or maintenance.
 
 ## DNS filtering
