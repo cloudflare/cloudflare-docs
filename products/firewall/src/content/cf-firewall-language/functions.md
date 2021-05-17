@@ -134,6 +134,23 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     </Aside>
 
+- <code>to_string(<Type>Integer | Boolean | IP address</Type>)</code> <Type>String</Type>
+
+  - Returns the string representation of an Integer, Boolean, or IP address value.
+
+  - _Examples:_
+
+    ```txt
+    to_string(cf.bot_management.score) == '5'
+    to_string(ssl) == 'true'
+    ```
+
+    <Aside type='warning'>
+
+    **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform).
+
+    </Aside>
+
 - <code>upper(<Type>String</Type>)</code> <Type>String</Type>
 
   - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.

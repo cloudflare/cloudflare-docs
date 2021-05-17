@@ -170,7 +170,7 @@ HTTP Request Header Modification Rules are available in Beta.
 The following examples illustrate how to perform header modifications with Transform Rules:
 
 * [Add an HTTP request header with a static value](#add-an-http-request-header-with-a-static-value)
-* [Add an HTTP request header with the current URI path](#add-an-http-request-header-with-the-current-uri-path)
+* [Add an HTTP request header with the current bot score](#add-an-http-request-header-with-the-current-bot-score)
 * [Remove an HTTP request header](#remove-an-http-request-header)
 
 ### Add an HTTP request header with a static value
@@ -193,9 +193,9 @@ Selected operation under **Modify header**: _Set static_
 
 </Example>
 
-### Add an HTTP request header with the current URI path
+### Add an HTTP request header with the current bot score
 
-The following HTTP Request Header Modification Rule adds a header named `X-Path` with the current URI path to the request:
+The following HTTP Request Header Modification Rule adds a header named `X-Bot-Score` with the current bot score to the request:
 
 <Example>
 
@@ -207,9 +207,9 @@ starts_with(http.request.uri.path, "/en/")
 
 Selected operation under **Modify header**: _Set dynamic_
 
-**Header name**: `X-Path`
+**Header name**: `X-Bot-Score`
 
-**Value**: `http.request.uri.path`
+**Value**: `to_string(cf.bot_management.score)`
 
 </Example>
 
