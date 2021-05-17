@@ -1,6 +1,7 @@
 ---
 title: Configure BGP and GRE
 order: 5
+pcx-content-type: tutorial
 ---
 
 # Configure the BGP and GRE
