@@ -31,14 +31,14 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
             <td>
                 <ul>
                     <li>Dual core processor</li>
-                    <li>4GB RAM</li>
+                    <li>4 GB RAM</li>
                     <li>64-bit Architecture</li>
                 </ul>
             </td>
             <td>
                 <ul>
                     <li>Quad core processor</li>
-                    <li>8GB RAM</li>
+                    <li>8 GB RAM</li>
                     <li>64-bit Architecture</li>
                 </ul>
             </td>
@@ -47,12 +47,12 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
             <td><strong>Software</strong></td>
             <td>
                 <ul>
-                    <li>Memcache &gt;= 1.4 with at least 512MB of storage (&gt;1GB recommended)</li>
+                    <li>Memcache &gt;= 1.4 with at least 512 MB of storage (&gt;1 GB recommended)</li>
                 </ul>
             </td>
             <td>
                 <ul>
-                    <li>Memcache &gt;= 1.4 with at least 1GB of storage (&gt;2GB recommended)</li>
+                    <li>Memcache &gt;= 1.4 with at least 1 GB of storage (&gt;2 GB recommended)</li>
                 </ul>
             </td>
         </tr>
