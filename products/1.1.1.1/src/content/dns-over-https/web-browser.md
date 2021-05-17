@@ -16,6 +16,12 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 ## Google Chrome 
 
+<Aside>
+
+This setting may already be enabled on Chrome by default.
+
+</Aside>
+
 1. Click on the three-dot menu at in the top-right corner of your browser window.
 1. Click **Settings**.
 1. Navigate to **Privacy and security > Security**.
