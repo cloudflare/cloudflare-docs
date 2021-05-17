@@ -59,7 +59,7 @@ If you'd like to isolate **all security threats**, you can set up a policy with 
 
 | Selector | Operator | Value | Action |
 | - | - | - | - |
-| Security Threats | In | `All security threats` | Isolate
+| Security Threats | In | All security threats | Isolate
 
 If instead you need to isolate **specific hostnames**, you can list the domains you'd like to isolate traffic to:
 
@@ -71,7 +71,7 @@ If you would like to isolate an **entire domain name**, you can use a regular ex
 
 | Selector | Operator | Value | Action |
 | - | - | - | - |
-| Host | matches regex | `example\.com\|.*\.example\.com` | Isolate
+| Host | matches regex | `example\.com|.*\.example\.com` | Isolate
 
 <Aside type='note' header='Isolate identity providers for applications'>
 
