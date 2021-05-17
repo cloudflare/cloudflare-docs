@@ -20,15 +20,12 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
 ## Requirements
 
 <TableWrap>
-<table>
-    <thead valign="bottom">
+    <table>
         <tr>
             <th>&nbsp;</th>
             <th>Business and Enterprise Users</th>
             <th>Optimized Partners</th>
         </tr>
-    </thead>
-    <tbody valign="top">
         <tr>
             <td><strong>Hardware</strong></td>
             <td>
@@ -80,8 +77,7 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
             </td>
             <td>&nbsp;</td>
         </tr>
-    </tbody>
-</table>
+    </table>
 </TableWrap>
 
 ## Support
