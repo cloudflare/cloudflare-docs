@@ -1,6 +1,7 @@
 ---
 title: Subdomains and subdirectories
 order: 13
+pcx-content-type: tutorial
 ---
 
 # Subdomains and subdirectories
