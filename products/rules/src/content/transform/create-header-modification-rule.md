@@ -109,4 +109,6 @@ During the Beta, the available fields when setting an HTTP request header value 
 * `ip.geoip.*`
 * `ssl`
 
-Expressions that define HTTP request header values can include functions. For more information, check [Functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions) in the Firewall documentation.
+Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
+
+For more information on the available functions, check [Functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions) in the Firewall documentation.
