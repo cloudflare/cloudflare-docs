@@ -1,4 +1,5 @@
 ---
+title: Scope your configuration
 order: 3
 pcx-content-type: tutorial
 ---
