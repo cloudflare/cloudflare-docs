@@ -1,7 +1,7 @@
 ---
 title: Connections, Enabling and Disabling
 type: document
-order: 8
+order: 9
 pcx-content-type: configuration
 ---
 

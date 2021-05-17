@@ -1,7 +1,7 @@
 ---
 title: Installation
 type: document
-order: 2
+order: 3
 pcx-content-type: tutorial
 ---
 

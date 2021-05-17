@@ -1,6 +1,6 @@
 ---
 title: Licence and Changelog
 type: overview
-order: 15
+order: 16
 ---
 License information and ChangeLog.

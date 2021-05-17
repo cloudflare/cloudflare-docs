@@ -14,7 +14,6 @@ General documentation for end-users
 
 <DirectoryListing path="/user-guide"/>
 
-
 ## Miscellaneous Notes
 License information and ChangeLog:
 <DirectoryListing path="/miscellaneous-notes"/>

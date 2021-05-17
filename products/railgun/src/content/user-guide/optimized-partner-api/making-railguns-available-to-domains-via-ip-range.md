@@ -1,7 +1,7 @@
 ---
 title: Making Railguns available to domains via IP range(s)
 type: document
-order: 13
+order: 14
 pcx-content-type: configuration
 ---
 

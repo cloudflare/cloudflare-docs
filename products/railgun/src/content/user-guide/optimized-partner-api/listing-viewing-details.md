@@ -1,7 +1,7 @@
 ---
 title: Listing and Viewing Railgun Details
 type: document
-order: 11
+order: 12
 pcx-content-type: configuration
 ---
 

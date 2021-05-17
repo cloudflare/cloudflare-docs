@@ -1,7 +1,7 @@
 ---
 title: Creation, Activation, and Deletion
 type: document
-order: 6
+order: 7
 pcx-content-type: configuration
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Optimized Partner API
 type: overview
-order: 9
+order: 10
 pcx-content-type: landing page
 ---
 

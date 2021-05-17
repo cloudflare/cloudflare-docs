@@ -1,7 +1,7 @@
 ---
 title: Client API
 type: overview
-order: 5
+order: 6
 pcx-content-type: landing page
 ---
 
