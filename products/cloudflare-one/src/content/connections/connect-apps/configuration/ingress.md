@@ -1,5 +1,5 @@
 ---
-order: 20
+order: 11
 ---
 
 # Ingress rules
@@ -62,7 +62,7 @@ ingress:
 
 ## Supported protocols
 
-In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](https://developers.cloudflare.com/access/protocols-and-connections).
+In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](/applications/non-http).
 
 You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Argo Tunnel protocol.
 
@@ -90,8 +90,10 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 |--|--|--|--|
 | HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |
 | HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead | `unix:/home/production/echo.sock` |
-| TCP, RDP, SSH, SMB, kubectl to a single address | TCP requests are proxied to your local service. [Learn more](/applications/non-HTTP). | `ssh://localhost:2222` |
-| TCP, RDP, SSH, SMB, kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
+| TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
+| SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
+| RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
+| kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
 | Hello World | Test server for validating your Argo Tunnel setup | `hello_world` |
 | HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
 
@@ -174,7 +176,7 @@ You can use the following configuration options inside of an ingress rule.
 
 <div id="connectTimeout">
 
-## connectTimeout
+### connectTimeout
 </div>
 
 Default: `30s`
@@ -184,7 +186,7 @@ establish TLS, which is controlled by [tlsTimeout]({{< ref "#tlsTimeout" >}}).
 
 <div id="tlsTimeout">
 
-## tlsTimeout
+### tlsTimeout
 </div>
 
 Default: `10s`
@@ -193,7 +195,7 @@ Timeout for completing a TLS handshake to your origin server, if you have chosen
 
 <div id="tcpKeepAlive">
 
-## tcpKeepAlive
+### tcpKeepAlive
 </div>
 
 Default: `30s`
@@ -202,7 +204,7 @@ The timeout after which a TCP keepalive packet is sent on a connection between T
 
 <div id="noHappyEyeballs">
 
-## noHappyEyeballs
+### noHappyEyeballs
 </div>
 
 Default: `false`
@@ -211,7 +213,7 @@ Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local netw
 
 <div id="keepAliveConnections">
 
-## keepAliveConnections
+### keepAliveConnections
 </div>
 
 Default: `100`
@@ -220,7 +222,7 @@ Maximum number of idle keepalive connections between Tunnel and your origin. Thi
 
 <div id="keepAliveTimeout">
 
-## keepAliveTimeout
+### keepAliveTimeout
 </div>
 
 Default: `1m30s`
@@ -229,7 +231,7 @@ Timeout after which an idle keepalive connection can be discarded.
 
 <div id="httpHostHeader">
 
-## httpHostHeader
+### httpHostHeader
 </div>
 
 Default: `""`
@@ -238,7 +240,7 @@ Sets the HTTP Host header on requests sent to the local service.
 
 <div id="originServerName">
 
-## originServerName
+### originServerName
 </div>
 
 Default: `""`
@@ -247,7 +249,7 @@ Hostname that `cloudflared` should expect from your origin server certificate.
 
 <div id="caPool">
 
-## caPool
+### caPool
 </div>
 
 Default: `""`
@@ -256,7 +258,7 @@ Path to the CA for the certificate of your origin. This option should be used on
 
 <div id="noTLSVerify">
 
-## noTLSVerify
+### noTLSVerify
 </div>
 
 Default: `false`
@@ -265,7 +267,7 @@ Disables TLS verification of the certificate presented by your origin. Will allo
 
 <div id="disableChunkedEncoding">
 
-## disableChunkedEncoding
+### disableChunkedEncoding
 </div>
 
 Default: `false`
@@ -274,7 +276,7 @@ Disables chunked transfer encoding. Useful if you are running a WSGI server.
 
 <div id="proxyAddress">
 
-## proxyAddress
+### proxyAddress
 </div>
 
 Default: `127.0.0.1`
@@ -284,7 +286,7 @@ This configures the listen address for that proxy.
 
 <div id="proxyPort">
 
-## proxyPort
+### proxyPort
 </div>
 
 Default: `0`
@@ -294,7 +296,7 @@ This configures the listen port for that proxy. If set to zero, an unused port w
 
 <div id="proxyType">
 
-## proxyType
+### proxyType
 </div>
 
 Default: `""`
@@ -303,4 +305,4 @@ Default: `""`
 This configures what type of proxy will be started. Valid options are
 
  - "" for the regular proxy
- - "socks" for a SOCKS5 proxy. See [kubectl](https://developers.cloudflare.com/access/other-protocols/kubectl) for more.
+ - "socks" for a SOCKS5 proxy. See this [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.

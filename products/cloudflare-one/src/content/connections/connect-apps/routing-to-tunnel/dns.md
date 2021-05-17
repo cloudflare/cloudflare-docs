@@ -38,3 +38,7 @@ $ cloudflared tunnel route dns <UUID or NAME> www.app.com
 The command will create a CNAME record that points to the Tunnel subdomain, but will not proxy traffic if the Tunnel is not currently running.
 
 Note: this command requires the `cert.pem` file.
+
+## Optional: Configure additional Cloudflare settings
+
+The application will default to the Cloudflare settings of the hostname in your account that includes the Argo Tunnel DNS record, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.

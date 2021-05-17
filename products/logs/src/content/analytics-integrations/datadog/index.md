@@ -11,7 +11,7 @@ This tutorial explains how to analyze Cloudflare metrics using the [Cloudflare I
 
 Before viewing the Cloudflare dashboard in Datadog, note that this integration:
 
-- Is available to all Cloudflare customer plans (Fee, Pro, Business and Enterprise)
+- Is available to all Cloudflare customer plans (Free, Pro, Business and Enterprise)
 - Is based on the [Cloudflare Analytics API](https://api.cloudflare.com/#zone-analytics-dashboard)
 - Provides Cloudflare web traffic and DNS metrics only
 - Does not feature data coming from request logs stored in Cloudflare Logs

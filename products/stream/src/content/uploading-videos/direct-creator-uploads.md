@@ -229,15 +229,15 @@ Once you have the tokenized URL, you can pass it to the tus client to begin the 
 
 To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field. 
 
-## Using the Upload-Metadata header
+### Upload-Metadata header syntax
 
-You can apply the same constraints as Direct Creator Upload via basic upload: requiresignedurls, expiry and maxDurationSeconds. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
+You can apply the same constraints as Direct Creator Upload via basic upload when using tus. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
 Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces. 
 
 In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
 
-```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls```
+```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'```
 
 *NjAw* is the base64 encoded value for "600" (or 10 minutes). 
 

@@ -16,7 +16,13 @@ If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel d
 * Migrate a Legacy Argo Tunnel deployment to Named Argo Tunnel model
 * Use Cloudflare Load Balancer to perform a zero downtime migration
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
+
+See additional documentation for working with [Kubernetes](/connections/connect-apps/routing-to-tunnel/kubernetes).
+
+---
 
 ## Creating a Legacy Argo Tunnel with Cloudflare Load Balancer
 
@@ -33,7 +39,7 @@ Next, create an origin pool for the load balancer. This will be a group of origi
 In Legacy mode, adding a new instance of `cloudflared` into a Load Balancer pool must be done from the command line tool itself. The `cloudflared` agent will start and create 4 separate connections, enrolling each of these into a load balancer pool.
 
 ```sh
-cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
+$ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
 ```
 
 ![Create LB](../static/secure-origin-connections/migrate-lb-tunnel/classic-tunnel-lb-ui.png)
@@ -52,7 +58,7 @@ To migrate to the Named Tunnel model, first [download and authenticate](/connect
 To begin, create a Named Tunnel with the following command.
 
 ```sh
-cloudflared tunnel create lisbon-app
+$ cloudflared tunnel create lisbon-app
 ```
 
 ![Create LB](../static/secure-origin-connections/migrate-lb-tunnel/tunnel-create.png)
@@ -76,7 +82,7 @@ You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Clo
 Run the following command, replacing `lisbon-app` with the name of your Tunnel.
 
 ```sh
-cloudflared tunnel run lisbon-app
+$ cloudflared tunnel run lisbon-app
 ```
 
 ![Create LB](../static/secure-origin-connections/migrate-lb-tunnel/tunnel-run.png)

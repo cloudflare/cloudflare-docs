@@ -195,7 +195,7 @@ All plans have access to:
 
 - `colo` <Type>string</Type>
 
-  - The three-letter airport code of the data center that the request hit, e.g. `"DFW"`.
+  - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
 
 - `country` <Type>string | null</Type>
 
@@ -215,17 +215,11 @@ All plans have access to:
 
 - `tlsClientAuth` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Access. Object with the following properties: `certIssuerDNLegacy`, `certIssuerDN`, `certIssuerDNRFC2253`, `certSubjectDNLegacy`, `certVerified`, `certNotAfter`, `certSubjectDN`, `certFingerprintSHA1`, `certNotBefore`, `certSerial`, `certPresented`, `certSubjectDNRFC2253`.
+  - Only set when using Cloudflare Access or API Shield. Object with the following properties: `certIssuerDNLegacy`, `certIssuerDN`, `certIssuerDNRFC2253`, `certSubjectDNLegacy`, `certVerified`, `certNotAfter`, `certSubjectDN`, `certFingerprintSHA1`, `certNotBefore`, `certSerial`, `certPresented`, `certSubjectDNRFC2253`.
 
 - `tlsVersion` <Type>string</Type>
 
   - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
-
-</Definitions>
-
-Business and Enterprise scripts have access to:
-
-<Definitions>
 
 - `city` <Type>string | null</Type>
 
@@ -340,3 +334,11 @@ async function eventHandler(event){..}
 
 This code snippet will throw during script startup, and the `"fetch"` event
 listener will never be registered.
+
+--------------------------------
+
+## See also
+
+- [Examples: Modify request property](examples/modify-request-property)
+- [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
+- [Reference: `Response`](/runtime-apis/response)

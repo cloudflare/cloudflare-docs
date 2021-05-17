@@ -34,6 +34,6 @@ Cloudflare minimizes privacy leakage by only sending minimal query name to autho
 
 For decreased latency, reduced privacy leakage of queries and lower load on the DNS system, 1.1.1.1 upstreams to [locally hosted root zone files](https://blog.cloudflare.com/f-root/).
 
-## Whitelisting 1.1.1.1
+## Allowlisting 1.1.1.1
 
-Authoritative DNS providers may want to whitelist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to whitelist is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).
+Authoritative DNS providers may want to allowlist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to allowlist is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).

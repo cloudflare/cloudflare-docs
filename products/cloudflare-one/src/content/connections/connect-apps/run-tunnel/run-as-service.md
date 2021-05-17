@@ -202,7 +202,7 @@ C:\> sc start cloudflared tunnel run
 If you are a Powershell user, run this command instead:
 
 ```
-PS C:> Start-Service cloudflared tunnel run
+PS C:> $Service = Get-Service cloudflared ; $Service.start(@('tunnel','run'))
 ```
 
 <Aside>

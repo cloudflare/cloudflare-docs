@@ -4,7 +4,7 @@ order: 0
 
 # SSO integration
 
-Teams allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
+Cloudflare for Teams allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
 
 Adding an identity provider as a login method requires configuration both on the [Teams dashboard](https://dash.teams.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 
@@ -15,11 +15,11 @@ Cloudflare Access supports social identity providers that do not require adminis
 
 ## Set up IdPs on the Teams dashboard
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Authentication**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Authentication**.
 
 2. In the **Login methods** card, click *+Add*.
 
-![Login methods](../../static/documentation/identity/login-methods-card.png)
+![Login methods](../../static/documentation/identity/login-methods-auth.png)
 
 3. Select the identity provider you want to add. You can add multiple providers of the same type.
 
@@ -33,11 +33,11 @@ If you do not see your identity provider listed, but they support SAML or OAuth,
 
 4. Once you have filled in the necessary fields, click **Save**.
 
+Your IdP will now be listed in the **Login methods** card.
+
 ## Test IdPs on the Teams dashboard
 
-To test if an IdP is correctly configured, click on **Authentication** > **Login Methods** > **Test**. This will attempt to connect to the IdP to verify if a valid connection is established.
-
-![Test and Edit IdPs](../../static/documentation/identity/auth-home.png)
+To test if an IdP is correctly configured, navigate to **Configuration** > **Authentication**. Next, click **Test** next to the IdP you'd like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected
 

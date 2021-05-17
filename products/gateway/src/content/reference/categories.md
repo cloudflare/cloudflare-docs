@@ -4,6 +4,12 @@ order: 5
 
 # Categories
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security threats on the public internet, as well as specific categories of content. 
 To learn more about how to block one or more categories while setting up a Gateway policy, or to learn how to test if a policy you've set up is blocking the correct categories, check our [Blocking categories page](/getting-started/configuring-dns-policy/blocking-categories).
 

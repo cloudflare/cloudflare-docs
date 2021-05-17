@@ -4,6 +4,12 @@ order: 12
 
 # Google
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access can integrate with Google as an IdP. Use these steps to configure Google as your IdP.
 
 ## Configure Google as your IdP
@@ -76,7 +82,7 @@ Cloudflare Access can integrate with Google as an IdP. Use these steps to config
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
     },
     "type": "google",
     "name": "my example idp"

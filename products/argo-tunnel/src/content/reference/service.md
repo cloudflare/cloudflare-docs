@@ -4,6 +4,12 @@ order: 30
 
 # Automatically starting Argo Tunnel
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
 By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](../reference/config.md), but at a minimum you should set `hostname` and `url`.

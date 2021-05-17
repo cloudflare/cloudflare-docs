@@ -4,6 +4,12 @@ order: 40
 
 # Multiple hostnames
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Argo Tunnel has a 1-1 relationship of tunnel to hostname. Tunnels can only accept traffic for one hostname for each instance of Tunnel. Typically if you want to run Tunnel for multiple hostnames, such as foo.example.com and bar.example.com, you need to run multiple Tunnel clients side by side.
 
 There is one way to workaround this and run one Tunnel instance that can accept traffic across multiple hostnames, if the hostnames are on the same domain and same Level. (aka foo.example.com can be CNAME'd to bar.example.com, but not foo.com or foo.bar.example.com)

@@ -74,7 +74,9 @@ Tunnels in a _Degraded_ state transition to _Healthy_ when the failure rate for 
 
 Magic Transit’s tunnel health check system allows a tunnel to transition quickly from _Healthy_ to _Degraded_ or _Down_ but only slowly from _Degraded_ or _Down_ to _Healthy_. This [hysteresis](https://en.wikipedia.org/wiki/Hysteresis) dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
+<Aside type="note" header="Note">
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority, even when all configured tunnels are in an unhealthy state.
+</Aside>
 
 ### Example
 

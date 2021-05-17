@@ -1,5 +1,5 @@
 ---
-updated: 2020-01-26
+updated: 2021-01-26
 category: 🔐 Zero Trust
 ---
 
@@ -7,7 +7,7 @@ category: 🔐 Zero Trust
 
 You can use Cloudflare Access to require team members to connect to self-hosted or SaaS applications from a list of approved countries.
 
-Before you build the rule, you'll need to follow [these instructions](https://developers.cloudflare.com/cloudflare-one/setup) to set up Cloudflare Access in your account.
+Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
 **🗺️ This walkthrough covers how to:**
 
@@ -15,7 +15,9 @@ Before you build the rule, you'll need to follow [these instructions](https://de
 * Use that rule when adding an application to Cloudflare Access
 * Combine that default rule with other rules for additional customization
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
 
 ## Create a default group
 
@@ -23,7 +25,7 @@ Navigate to the `Groups` page in the `My Teams` section of the Cloudflare for Te
 
 ![Initial Groups](../static/zero-trust-security/default-groups/group-list-start.png)
 
-Groups contain criteria that you can reuse in Access policies. Additionally, groups allow you to nest certain operators within rules in the Access policy.
+Groups contain criteria that you can reuse in your [Zero Trust policies](/policies/zero-trust). Additionally, groups allow you to nest certain operators within rules in the Access policy.
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators.
 
@@ -71,6 +73,6 @@ Finally, you can add manual one-off rules at the bottom of the page.
 
 Click **Next** to finish creating the application.
 
-## Change a Group once and update all applications
+## Change a group once and update all applications
 
 Going forward, you can make edits once to the default group that will apply to any application that uses the group. For example, if a third contractor is added to the team you can add them to any application that uses the default group by editing the group itself.

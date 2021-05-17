@@ -1,5 +1,5 @@
 # 1.1.1.1
-products/1.1.1.1/ @abracchi-tw
+products/1.1.1.1/ @abracchi-tw @cloudflare/PCX
 
 # Access
 products/access/ @cloudflare/access-docs @cloudflare/PCX
@@ -20,7 +20,7 @@ products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
-products/docs-engine/ @adamschwartz
+products/docs-engine/ @cloudflare/PCX
 
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
@@ -44,25 +44,25 @@ products/internet/ @ConzorKingKong @cloudflare/PCX
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
 
 # Logs
-products/logs/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
+products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
-
-# Mobile SDK
-products/mobile-sdk/ @cloudflare/sdk @lalkaka @cloudflare/PCX
 
 # Network Interconnect
 products/network-interconnect @ConzorKingKong @cloudflare/PCX
 
 # Pages
-products/pages/ @cloudflare/workers-docs
+products/pages/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Randomness Beacon
 products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
 
 # Registrar
-products/registrar/ @TownLake
+products/registrar/ @TownLake @cloudflare/PCX
+
+# Rules
+products/rules/ @cloudflare/PCX
 
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
@@ -89,4 +89,4 @@ products/waf/ @cloudflare/firewall @cloudflare/PCX
 products/warp-client/ @abracchi-tw
 
 # Workers
-products/workers/ @cloudflare/workers-docs
+products/workers/ @cloudflare/workers-docs @cloudflare/PCX

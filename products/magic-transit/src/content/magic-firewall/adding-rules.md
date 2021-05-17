@@ -5,6 +5,8 @@ order:  2
 
 # Adding rules
 
+To view examples for root rulesets, review the the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
+
 ## Step 1: Check if you already have an existing root ruleset
 
 If you're a new Magic Transit customer, you may not have a root ruleset created for your account.

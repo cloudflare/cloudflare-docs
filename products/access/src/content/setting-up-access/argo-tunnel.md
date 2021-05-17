@@ -4,6 +4,12 @@ order: 12
 
 # Cloudflare Argo Tunnel
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Access lets you control who can reach your website. Cloudflare handles the requests based on your Access policies to evaluate user credentials. To ensure that Cloudflare proxies all traffic, lock down your origin to only accept Cloudflare IPs.
 
 ![Access Generic](../static/summary/network-diagram.png)

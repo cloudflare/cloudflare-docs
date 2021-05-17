@@ -4,6 +4,12 @@ order: 2
 
 # PuTTY clients
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) is a free implementation of SSH for Windows and Unix platforms. This is a guide on how to configure your machine to use PuTTy to connect to an SSH host secured with Cloudflare Access.
 
 ## Before you begin

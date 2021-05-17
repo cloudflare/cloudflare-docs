@@ -3,6 +3,12 @@ title: "Why Cloudflare?"
 hidden: true
 ---
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 To make infrastructure safer, and web properties faster, Cloudflare built out one of the world’s largest and most sophisticated networks. Cloudflare for Teams builds on that same platform, and all of its unique advantages.
 
 ## Fast

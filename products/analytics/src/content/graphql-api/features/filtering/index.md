@@ -105,7 +105,7 @@ The `like` operator is available for string comparisons and supports the `%` cha
   myQuery(
     filter: {
       clientCountry: "UK" # all objects having client country equal to "UK"
-      datetime_gt: "2018-01-01 10:00:00" # all object having datetime greater than "2018-01-01 10:00:00"
+      datetime_gt: "2018-01-01T10:00:00Z" # all object having datetime greater than "2018-01-01T10:00:00Z"
     }
   )
 }
@@ -118,7 +118,7 @@ The following GraphQL example shows how to filter a specific node. The SQL equiv
 ##### GraphQL {#001}
 
 ```graphql
-httpRequests1hGroups(filter: {datetime: "2018-01-01 10:00:00"}) {
+httpRequests1hGroups(filter: {datetime: "2018-01-01T10:00:00Z"}) {
     ...
 }
 ```
@@ -126,7 +126,7 @@ httpRequests1hGroups(filter: {datetime: "2018-01-01 10:00:00"}) {
 ##### SQL {#002}
 
 ```sql
-WHERE datetime="2018-01-01 10:00:00"
+WHERE datetime="2018-01-01T10:00:00Z"
   AND ((clientCountryName = "UK") OR (clientCountryName = "US"))
 ```
 
@@ -137,7 +137,7 @@ The following GraphQL example shows how to apply a filter to a multiple fields, 
 ##### GraphQL {#003}
 
 ```graphql
-httpRequests1hGroups(filter: {datetime_gt: "2018-01-01 10:00:00", datetime_lt: "2018-01-01 11:00:00"}) {
+httpRequests1hGroups(filter: {datetime_gt: "2018-01-01T10:00:00Z", datetime_lt: "2018-01-01T11:00:00Z"}) {
     ...
 }
 ```
@@ -145,7 +145,7 @@ httpRequests1hGroups(filter: {datetime_gt: "2018-01-01 10:00:00", datetime_lt: "
 ##### SQL {#004}
 
 ```sql
-WHERE (datetime > "2018-01-01 10:00:00") AND (datetime < "2018-01-01 10:00:00")
+WHERE (datetime > "2018-01-01T10:00:00Z") AND (datetime < "2018-01-01T10:00:00Z")
 ```
 
 #### Filter using the `OR` operator
@@ -156,7 +156,7 @@ The following GraphQL example demonstrates using the `OR` operator in a filter. 
 
 ```graphql
 httpRequests1hGroups(filter: {
-    datetime: "2018-01-01 10:00:00",
+    datetime: "2018-01-01T10:00:00Z",
     OR:[{clientCountryName: "US"}, {clientCountryName: "UK"}]) {
     ...
 }
@@ -165,7 +165,7 @@ httpRequests1hGroups(filter: {
 ##### SQL {#006}
 
 ```sql
-WHERE datetime="2018-01-01 10:00:00"
+WHERE datetime="2018-01-01T10:00:00Z"
   AND ((clientCountryName = "UK") OR (clientCountryName = "US"))
 ```
 

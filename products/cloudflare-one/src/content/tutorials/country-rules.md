@@ -8,20 +8,22 @@ difficulty: Beginner
 
 You can use Cloudflare Access to require team members to connect to self-hosted or SaaS applications from a list of approved countries.
 
-Before you build the rule, you'll need to follow [these instructions](https://developers.cloudflare.com/access/getting-started/access-setup) to set up Cloudflare Access in your account.
+Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
 **🗺️ This walkthrough covers how to:**
 
 * Create a list of approved countries where a team operates
 * Require that users connecting to self-hosted or SaaS applications connect from those countries
 
-**⏲️Time to complete: ~5 minutes**
+**⏲️ Time to complete:**
+
+5 minutes
 
 ## Create an approved country list
 
 Navigate to the `Groups` page in the `My Teams` section of the Cloudflare for Teams dashboard. Click `Add a Group`.
 
-Groups contain criteria that you can reuse in Access policies. Additionally, groups can allow you to nest certain operators inside of rules in the Access policy.
+Groups contain criteria that you can reuse in [Zero Trust policies](/policies/zero-trust). Additionally, groups can allow you to nest certain operators inside of rules in the [Zero Trust policy](/policies/zero-trust).
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators. Since you cannot connect from multiple countries at the same time, you must use a group to define a list of options that can be used inside of a `Require` rule in the policy.
 
@@ -37,7 +39,7 @@ Click `Save`.
 
 ## Build a policy
 
-You can now build Access policies that will require at least one country in the approved countries list. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
+You can now build [Zero Trust policies](/policies/zero-trust) that will require at least one country in the approved countries list. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
 
 ![Apps](../static/zero-trust-security/country-rules/app-list.png)
 

@@ -2,22 +2,11 @@
 order: 1
 ---
 
-# Web applications
-
-You can protect two types of web applications: SaaS and self-hosted.
-
-**SaaS applications** consist of applications your team relies on that are not hosted by your organization. Examples include Salesforce and Workday. To secure SaaS applications, you must integrate Cloudflare Access with the SaaS application's SSO configuration.
-
-**Self-hosted applications** consist of internal applications that you host in your own environment. These can the data center versions of tools like the Atlassian suite or applications created by your own team. To secure self-hosted applications, you must use Cloudflare's authoritative DNS and [connect the application](/connections/connect-apps) to Cloudflare.
-
-<ButtonGroup>
-  <Button type="primary" href="/applications/configure-apps/saas-apps/">SaaS applications</Button>
-  <Button type="primary" href="/applications/configure-apps/self-hosted-apps/">Self-hosted applications</Button>
-</ButtonGroup>
-
-## Protect SaaS applications
+# SaaS applications
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
+
+![SaaS applications diagram](../../static/documentation/applications/diagram-saas.jpg)
 
 ### 1. Add your application
 
@@ -40,6 +29,10 @@ SaaS applications store this information in different ways.
 You can either:
   * Select **Default** if you want to show the SaaS application’s logo.
   * Select **Custom** if you want to assign a custom logo to the application.
+
+  <Aside>
+  If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+  </Aside>
 
 ![SaaS logo](../../static/documentation/applications/saas-logo.png)
 

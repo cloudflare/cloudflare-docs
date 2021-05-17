@@ -5,6 +5,12 @@ order: 100
 
 # Free Program
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 We know that organizations and individuals around the world depend on Cloudflare and our network.
 
 We recognize that this emergency has put a strain on the infrastructure of companies around the world as more employees work from home. Cloudflare [has made](https://blog.cloudflare.com/cloudflare-for-teams-free-for-small-businesses-during-coronavirus-emergency/) our Cloudflare for Teams platform, which helps support secure and efficient remote work, free through September 1. This offer includes Cloudflare Access, Argo Tunnel, and Cloudflare Gateway.

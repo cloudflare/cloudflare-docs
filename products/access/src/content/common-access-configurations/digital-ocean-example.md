@@ -4,6 +4,12 @@ order: 2
 
 # DigitalOcean® and virtual infrastructure
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 [DigitalOcean](https://cloud.digitalocean.com/login) is a cloud infrastructure provider with a user-friendly UI that creates and manages virtual infrastructure. DigitalOcean refers to the virtual servers provided as _droplets_. This is the general workflow for protecting a DigitalOcean droplet behind Cloudflare Access.
 
 ## Create your droplet

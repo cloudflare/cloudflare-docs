@@ -4,6 +4,12 @@ order: 12
 
 # Okta
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Okta provides cloud software that helps companies manage secure user authentication, and helps developers build identity controls into applications, website web services, and devices. Cloudflare Access can integrate Okta as an IdP.
 
 ## Set up Okta as your IdP
@@ -95,7 +101,7 @@ To set up Okta as your IdP:
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "okta_account": "https://dev-abc123.oktapreview.com",
     },
     "type": "okta",

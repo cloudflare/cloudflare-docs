@@ -58,9 +58,9 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
 
 <Definitions>
-	
+
 - `name`
-	
+
   - Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
 
 - `requiresignedurls`

@@ -59,11 +59,11 @@ Intune is now configured to deploy the Cloudflare WARP Client.
 
 If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 
-* If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH subdomain](#manually-configure-a-gateway-doh-subdomain).
-* If your organization uses Access policies to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
+* If your organization uses Gateway DNS filtering, users will need to configure a [DoH subdomain](/glossary#doh-subdomain).
+* If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
-### Manually configure a Gateway DoH Subdomain
-If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
+### Manually configure a Gateway DoH subdomain
+If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway [DoH subdomain](/glossary#doh-subdomain) field.
 
 Then ask your users to complete the following steps:
 
@@ -77,14 +77,14 @@ Then ask your users to complete the following steps:
 ![Preferences UI in the connection tab with the Change button circled](../../../../static/documentation/connections/windows_GatewayButton.png)
 
 ### Manually configure a Cloudflare for Teams device registration
-If your organization uses Teams Access policies to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
+If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or is using the Gateway L7 Filtering and user or device-specific [Secure Web Gateway policies](/policies/filtering), your users will need to login to Cloudflare for Teams by following these instructions:
 
 1. Click on the Cloudflare Logo in the System Tray.
 1. Select the gear icon.
 1. Next, click **Preferences**.
 1. Select the **Account** tab.
 1. Click **Login with Cloudflare for Teams**.
-1. Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
+1. Enter your [team name](/glossary#team-name).
 1. Complete the authentication steps required by your organization.
 
 ![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/windows_TeamsButton.png)

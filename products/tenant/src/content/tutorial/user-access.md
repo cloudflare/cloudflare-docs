@@ -14,7 +14,7 @@ The first method gives customers control over all aspects of Cloudflare, while t
 
 ## 1. Direct Cloudflare dashboard access
 
-If you want to give customers access to their individual accounts then its no different then if you were inviting a teammate to help manage your account. This can be done in our dashboard through the members tab in the account management area or by making the below API call.
+If you want to give customers access to their individual accounts then it's no different than if you were inviting a teammate to help manage your account. This can be done in our dashboard through the members tab in the account management area or by making the below API call.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id>/members' -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<customer-email>", "roles": ["<user-role>"] }'
@@ -22,7 +22,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id
 
 In most cases the user-role to use is that of the `Administrator` role which is id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles` in the case of ENT customers whom have access to our full set of user roles.
 
-Once the invite is sent, the user will receive an invite to gain access to the account. If they don't already have a Cloudflare user then we will take them through the process to create one. Once created they will be given access to the acecount and any zones already created.
+Once the invite is sent, the user will receive an invite to gain access to the account. If they don't already have a Cloudflare user then we will take them through the process to create one. Once created, they will be given access to the acecount and any zones already created.
 
 ## 2. Build an interface for customers to use
 

@@ -92,7 +92,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 After you've created an application, you can start creating policies and attaching them to applications:
 ```
 resource "cloudflare_access_policy" "cf_policy" {
-  application_id = cf_app.id
+  application_id = cloudflare_access_application.cf_app.id
   zone_id        = var.zone_id
   name           = "Example Policy"
   precedence     = "1"

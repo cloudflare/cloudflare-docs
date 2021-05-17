@@ -8,7 +8,7 @@ The **Authentication > Login** tab lets you customize your end users' login expe
 
 This means you can:
 * Choose your preferred [login methods](#login-methods)
-* Specify your [auth domain](#auth-domain)
+* Specify your [team domain](/glossary#team-domain)
 * Customize your [login page](#login-page)
 
 ## Login methods
@@ -17,13 +17,13 @@ Use the **Login Methods** card to add new login methods, or edit/test any login 
 
 ![Login Methods](../static/documentation/identity/devices/login-methods.png)
 
-## Auth domain
+## Team domain
 
-Use the **Auth domain** card to edit your auth domain. To do so, click **Edit** and input your desired domain name.
+Use the **Team domain** card to edit your team domain. To do so, click **Edit** and input your desired domain name.
 
  This domain is shared across all sites in your Cloudflare account where you have configured Access.
 
-![Auth Domain](../static/documentation/identity/devices/auth-domain.png)
+![Team Domain](../static/documentation/identity/devices/auth-domain.png)
 
 ## Login page
 

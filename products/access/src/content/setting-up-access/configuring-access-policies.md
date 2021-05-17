@@ -4,6 +4,12 @@ order: 2
 
 # Configuring Access policies
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Access policies allow you to protect an entire website or a particular URI (the application resource). You can use policies to define users or groups who can or cannot access the application resource.
 
 You can configure an access policy for an apex domain, a particular subdomain, or all subdomains using a wildcard policy. Similarly, you can apply an access policy to an entire website or protect a specific path. When protecting the entire website, leave the **path** field empty. You specify paths, for example `/admin`, as well.

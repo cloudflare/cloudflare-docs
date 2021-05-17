@@ -1,5 +1,6 @@
 ---
-order: 18
+order: 19
+pcx-content-type: reference
 ---
 # Load Balancing logs
 

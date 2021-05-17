@@ -4,6 +4,12 @@ order: 4
 
 # Adding a domain to the allow list
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 ## Why add a domain to the Allow list
 Sometimes you may want to allow a domain when that domain belongs to a category you are blocking.
 

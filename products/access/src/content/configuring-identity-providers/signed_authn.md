@@ -4,6 +4,12 @@ order: 12
 
 # Signed AuthN Requests with SAML
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 In a SAML request flow, Cloudflare Access functions as the service provider (SP) to the identity provider (IdP). Cloudflare Access sends a SAML request to your IdP. The signing certificate that you upload from your SAML provider verifies the response.
 
 In some cases, administrators need to verify that the request from the SP is authentic. By validating both the requests from the SP and the responses from the IdP, teams can ensure that operations in the SAML relationship are signed in both directions.

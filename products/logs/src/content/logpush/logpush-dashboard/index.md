@@ -32,38 +32,35 @@ To enable the Clouflare Logpush service:
 
 6. Under **Select service**, pick your cloud service provider and click **Next**
 
-<Aside type="note" header="Note">
+7. Complete the steps below based on your provider, then continue to *step 8*
 
-Complete either *step 7*, *8*, *9*, or *10* below based on you provider, then continue to *step 11*
-</Aside>
-
-7. For **Amazon S3**, enter or select the following:
-    * **Bucket path**
-    * **Daily subfolders**
-    * **Bucket region**
-    **Encryption constraint in bucket policy**
-    * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
+   * For **Amazon S3**, enter or select the following:
+     * **Bucket path**
+     * **Daily subfolders**
+     * **Bucket region**
+     * **Encryption constraint in bucket policy**
+     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
         * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**
 
-8. For **Google Cloud Storage**, enter or select the following:
-    * **Bucket path**
-    * **Daily subfolders**
-    * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
-        * See *step 2* in [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
+   * For **Google Cloud Storage**, enter or select the following:
+     * **Bucket path**
+     * **Daily subfolders**
+     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
+       * See *step 2* in [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
 
-9. For **Microsoft Azure**, enter or select the following:
-    * **SAS URL**
-        * See [Enable Microsoft Azure](/logpush/azure/) for instructions on creating this URL
-    * **Blob container subpath (optional)**
-    * **Daily subfolders**
+   * For **Microsoft Azure**, enter or select the following:
+     * **SAS URL**
+       * See [Enable Microsoft Azure](/logpush/azure/) for instructions on creating this URL
+     * **Blob container subpath (optional)**
+     * **Daily subfolders**
 
-10. For **Sumo Logic**, enter or select the following:
-    * **HTTP Source Address**
-        * See [Enable Sumo Logic](/logpush/sumo-logic/) for instructions on getting this address
+   * For **Sumo Logic**, enter or select the following:
+     * **HTTP Source Address**
+       * See [Enable Sumo Logic](/logpush/sumo-logic/) for instructions on getting this address
 
-11. In the Cloudflare dashboard, click **Validate access**
+8.  In the Cloudflare dashboard, click **Validate access**
 
-12. Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership**
+9.  Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership**
 
 <Aside type="note" header="Note">
 
@@ -75,8 +72,8 @@ Tips for seeing the token:
 
 </Aside>
 
-13. Next in the **Customize log** screen, select the data set in which you're interested (currently `HTTP requests` or `Spectrum events`). You can keep the default fields to include in your log or make changes. You can add or remove fields at a later time by modifying your settings in **Logs** > **Logpush** (select the wrench icon).
+10. Next in the **Customize log** screen, select the data set in which you're interested (currently `HTTP requests` or `Spectrum events`). You can keep the default fields to include in your log or make changes. You can add or remove fields at a later time by modifying your settings in **Logs** > **Logpush** (select the wrench icon).
 
-14. To finish enabling Logpush, click **Save and Start Pushing**
+11. To finish enabling Logpush, click **Save and Start Pushing**
 
 Once connected, Cloudflare lists the provider you just configured under **Logs** > **Logpush**. This is where you can make changes or remove the provider.

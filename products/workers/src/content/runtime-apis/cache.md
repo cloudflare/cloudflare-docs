@@ -176,3 +176,5 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 - [How the Cache works](/learning/how-the-cache-works)
 - [Configure your CDN](/tutorials/configure-your-cdn)
+- [Example: using the Cache API](/examples/cache-api)
+- [Example: caching POST requests](/examples/cache-post-request)

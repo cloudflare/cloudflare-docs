@@ -4,6 +4,12 @@ order: 6
 
 # Example configurations
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Cloudflare Access can be configured to support a number of common use cases as your organization migrates from a VPN to Cloudflare’s zero trust model. This section provides examples of common scenarios.
 
 <TableWrap>

@@ -1,14 +1,15 @@
 ---
+pcx-content-type: reference
 order: 610
 type: table
 ---
 
-# Operators & grouping symbols
+# Operators and grouping symbols
 
 The Cloudflare Firewall Rules language supports comparison and logical operators:
 
 - [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
-- [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an evaluation is evaluated.
+- [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
 [Grouping symbols](/cf-firewall-language/operators/#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
 
@@ -128,7 +129,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       </td>
     </tr>
     <tr>
-      <td>Matches<br />RE2 regex</td>
+      <td>Matches<br />regex</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
       <td>&#x2705;</td>

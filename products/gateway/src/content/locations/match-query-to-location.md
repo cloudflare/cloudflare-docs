@@ -4,6 +4,12 @@ order: 3
 
 # Determining a location
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 Gateway uses different ways to match a DNS query to [locations](/locations) depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
 ![Determine location](../static/gateway-determine-location-dns.png)

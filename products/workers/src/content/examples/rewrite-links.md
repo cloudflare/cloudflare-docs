@@ -5,6 +5,7 @@ summary: Rewrite URL links in HTML using the HTMLRewriter. This is useful for JA
 tags:
   - HTML
   - JAMstack
+  - HTMLRewriter
 ---
 
 # Rewrite links

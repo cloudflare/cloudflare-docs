@@ -4,6 +4,12 @@ order: 1
 
 # Bypass policy configurations
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 When an Access policy includes the _Bypass_ decision, requests that satisfy the policy are exempt from evaluation—they  _bypass_ Cloudflare Access. This behavior is useful in cases where you want to expose specific resources to third-party services, such as WordPress and Let's Encrypt in the examples below.
 
 <div class="notices important">

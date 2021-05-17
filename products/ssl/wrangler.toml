@@ -2,7 +2,6 @@ name = "ssl"
 type = "webpack"
 account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 workers_dev = true
-kv-namespaces = [{ binding = "REDIRECTS_DEV", id = "59ccb75f5e064cd78291ad48c8c4bad0", preview_id = "59ccb75f5e064cd78291ad48c8c4bad0" }]
 
 [env.production]
 workers_dev = false

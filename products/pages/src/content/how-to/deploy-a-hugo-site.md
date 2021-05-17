@@ -155,7 +155,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
 
 <TableLayout>
 
@@ -167,7 +167,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 
 </TableLayout>
 
-Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `create-react-app`, your project dependencies, and building your site, before deploying it.
+Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `hugo`, your project dependencies, and building your site, before deploying it.
 
 <Aside>
 
@@ -176,6 +176,12 @@ For the complete guide to deploying your first site to Cloudflare Pages, check o
 </Aside>
 
 Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+
+## Using a specific Hugo version
+
+You can set the environment variable `HUGO_VERSION` under Settings to use a specific version of Hugo.
+
+For example, `HUGO_VERSION`: `0.81.0`
 
 ## Learn more
 

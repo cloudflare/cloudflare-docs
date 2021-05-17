@@ -15,7 +15,7 @@ tags:
 
 ```js
 const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/"
-const PROTECTED_TYPE = "images/"
+const PROTECTED_TYPE = "image/"
 
 async function handleRequest(request) {
   // Fetch the original request

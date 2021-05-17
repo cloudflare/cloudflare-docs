@@ -24,11 +24,19 @@ Replacing long-lived API keys with short-lived certificates offers the following
 * Build Zero Trust rules to protect that resource
 * Replace long-lived SSH keys with short-lived certificates to authenticate users to the host
 
-**⏲️Time to complete: 45 minutes**
+**⏲️ Time to complete:**
 
-## Build a Cloudflare Access policy
+45 minutes
 
-First, build a Cloudflare Access policy to enforce Zero Trust rules whenever any user attempts to connect to the resources being protected. Building the Access policy first ensures that resources are not connected to Cloudflare for a period of time before an Access policy can be added.
+## Before you start
+1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+
+---
+
+## Build a Zero Trust policy
+
+First, build a Zero Trust policy to enforce rules whenever any user attempts to connect to the resources being protected. Building the Zero Trust policy first ensures that resources are not connected to Cloudflare for a period of time before a Zero Trust policy can be added.
 
 In the Cloudflare for Teams dashboard, open the `Applications` page of the `Access` section. Select the "Self-hosted" option.
 
@@ -51,7 +59,7 @@ First, [install and authenticate](/connections/connect-apps/install-and-setup) a
 Next, create a new Argo Tunnel with the following command. You can replace `ssh-pool` with any name.
 
 ```sh
-cloudflared tunnel create ssh-pool
+$ cloudflared tunnel create ssh-pool
 ```
 
 `cloudflared` will create the Tunneland generate a UUID and corresponding credentials file.
@@ -84,7 +92,7 @@ ingress:
 You can now run the Tunnel with the following command.
 
 ```sh
-cloudflared tunnel run ssh-pool
+$ cloudflared tunnel run ssh-pool
 ```
 
 ## Configure a DNS record and route to the server
@@ -93,7 +101,7 @@ You can now configure a DNS record for the Tunnel you have created. Navigate to 
 
 Open the `DNS` page and click **+Add record**. Select `CNAME` for `Type` and in the `Target` field input the UUID value of your Tunnel followed by `.cfargotunnel.com`. In this example, that value is:
 
-```sh
+```
 79a60ee2-9a98-4f5f-96c7-76c88b2075be.cfargotunnel.com
 ```
 
@@ -115,7 +123,7 @@ Cloudflare Access will display the public key and an audience tag for the genera
 
 You must now configure your SSH host to rely on the generated certificate. In your `sshd` configuration, set the following values:
 
-```sh
+```
 PubkeyAuthentication yes
 TrustedUserCAKeys /etc/ssh/ca.pub
 ```
@@ -129,12 +137,12 @@ Users can now modify their SSH configuration files to connect over SSH. This is 
 Instruct users to download `cloudflared` and run the following command, replacing the hostname in this example with the one that you created.
 
 ```sh
-cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-lived-cert
+$ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-lived-cert
 ```
 
 `cloudflared` will generate the required lines to append to the SSH configuration file, similar to the example output below.
 
-```sh
+```
 Host ssh-bastion.widgetcorp.tech
   ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1' 
 

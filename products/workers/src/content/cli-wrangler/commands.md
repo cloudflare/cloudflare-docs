@@ -23,7 +23,7 @@ Default values indicated by <Type>=value</Type>.
 - `$NAME` <Type>=worker</Type> <PropMeta>optional</PropMeta>
   - Name of the Workers project, setting both the directory name and `name` property in the generated `wrangler.toml` [configuration](/cli-wrangler/configuration) file.
 
-- `$TEMPLATE` <Type>=github.com/cloudflare/worker-template</Type> <PropMeta>optional</PropMeta>
+- `$TEMPLATE` <Type>=https://github.com/cloudflare/worker-template</Type> <PropMeta>optional</PropMeta>
   - GitHub URL of the [repo to use as the template](https://github.com/cloudflare/worker-template) for generating the project.
 
 - `--type=$TYPE` <Type>=webpack</Type> <PropMeta>optional</PropMeta>
@@ -238,10 +238,13 @@ If you are using [kv_namespaces](/cli-wrangler/configuration#kv_namespaces) with
 Starts a log tailing session for a deployed Worker.
 
 ```sh
-$ wrangler tail [--port $PORT] [--metrics-port $PORT]
+$ wrangler tail [--format $FORMAT] [--port $PORT] [--metrics-port $PORT]
 ```
 
 <Definitions>
+
+- `--format $FORMAT` <Type>json|pretty</Type>
+  - The format of the log entries
 
 - `--port $PORT` <Type>int</Type>
   - The port for your local log server

@@ -22,7 +22,7 @@ When users log in to an application protected by Access, Access generates two se
 
 | Token | Description | Storage |
 |---|---|---|
-| **Global session token**| Establishes the maximum amount of time for a user’s Access session | Your Cloudflare auth domain  `<auth_domain>.cloudflareaccess.com` |
+| **Global session token**| Establishes the maximum amount of time for a user’s Access session | Your Cloudflare [team domain](/glossary#team-domain) |
 | **Application token** | Establishes a session for a specific application | The hostname of the application protected |
 
 </TableWrap>
@@ -51,11 +51,11 @@ To immediately terminate all active sessions for a specific application:
 
 1. On the Teams dashboard, navigate to **Access > Applications** and locate the application for which you would like to revoke active sessions.
 
-2. Click **Edit** for that application.
+1. Click **Edit** for that application.
 
-3. In the Overview page, click **Revoke existing tokens**.
+1. In the Overview page, click **Revoke existing tokens**.
 
-![revoke-users](../../static/documentation/identity/users/revoke-app.png)
+  ![revoke-users](../../static/documentation/identity/users/revoke-token.png)
 
 Unless there are changes to rules in the policy, users can generate a new token during authentication if their profile in your identity provider is still active.
 
@@ -67,15 +67,15 @@ If you want to permanently revoke a user's access:
 
 1. Disable their account in your IdP so that they cannot authenticate, then revoke their Access user session.
 
-2. On the Teams dashboard, navigate to **Logs** > **Users**.
+2. On the Teams dashboard, navigate to **My Team** > **Users**.
 
  Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
 
-![revoke-users](../../static/documentation/identity/users/user-list.png)
+![revoke-users](../../static/documentation/identity/users/connected-user-list.png)
 
 3. Click **Revoke session** and confirm.
 
-![revoke-users](../../static/documentation/identity/users/confirm-revoke.png)
+![revoke-users](../../static/documentation/identity/users/revoke-user-session.png)
 
 ### Subsequent Logins
 
@@ -94,11 +94,14 @@ All three settings can be enabled in an Application’s settings menu.
 To reach the settings menu:
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+
 1. Locate the application for which you would like to enable these settings.
+
 1. Click **Edit**.
+
 1. Select **Settings**.
 
-![Settings menu](../../static/documentation/identity/users/browser-cookies.png)
+![Settings menu](../../static/documentation/identity/users/cookies.png)
 
 ### HTTP Only
 

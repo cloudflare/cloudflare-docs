@@ -4,6 +4,12 @@ order: 110
 
 # Common Errors
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 ## HTTP 502
 
 A 502 Error means that the Cloudflare edge can establish a connection with the `cloudflared` client, but the `cloudflared` client is not able to establish a connection with the web server. If you see this error, you should double check that your web server is running on the same port you told `cloudflared` when starting Tunnel.

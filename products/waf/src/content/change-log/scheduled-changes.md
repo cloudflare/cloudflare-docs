@@ -2,9 +2,7 @@
 type: table
 order: 1
 ---
-
 # Scheduled changes
-
 <TableWrap><table style="width: 100%">
     <thead>
         <tr>

@@ -14,7 +14,7 @@ Once you have created a Tunnel and decided how to route traffic to that Tunnel, 
 
 `cloudflared tunnel --config path/config.yaml run <NAME>`
 
-If you have deleted the `cert.pem` file, you must specify the UUID instead of the name.
+You can also use the UUID of the Tunnel instead of the Name value.
 
 `cloudflared tunnel --config path/config.yaml run <UUID>`
 

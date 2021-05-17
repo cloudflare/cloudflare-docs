@@ -104,7 +104,7 @@ Cloudflare will only store the following aggregated data:
 * Number of queries, number of queries with EDNS, number of bytes and time in answers quantiles (e.g. 50 percentile) by day, month, Cloudflare data center, and by IPv4 vs IPv6.
 * Number of queries, response codes and response code quantiles (e.g. 50 percentile) by day, region, name and type.
 
-Cloudflare may store the aggregated data described above indefinitely in order to assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
+Cloudflare may store the aggregated data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 
 ## WHAT ABOUT REQUESTS FOR CONTENT BLOCKING?
 

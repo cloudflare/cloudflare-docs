@@ -4,6 +4,12 @@ order: 3
 
 # Troubleshooting Locations
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 ### Your source IPv4 address is taken
 ![Source IP taken](../static/source-ip-taken.png)
 You may see this if you are connected to a network where someone else in the same network signed up for Cloudflare Gateway before you did.

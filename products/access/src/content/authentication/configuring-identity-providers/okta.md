@@ -4,6 +4,12 @@ order: 12
 
 # Okta
 
+<Aside type='warning' header='⚠️ THIS PAGE IS OUTDATED'>
+
+We're no longer maintaining this page. **It will be deleted on Feb 8, 2021**. Please visit the new [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/teams-docs-changes) instead.
+
+</Aside>
+
 You can integrate Okta with Cloudflare Access to allow users to reach applications protected by Access with their Okta account.
 
 1. In your Okta dashboard, click **Admin**.
@@ -85,7 +91,7 @@ https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "okta_account": "https://dev-abc123.oktapreview.com",
     },
     "type": "okta",

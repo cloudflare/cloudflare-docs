@@ -9,13 +9,14 @@ You may use the below template when creating an LOA document.
 ```txt
 [COMPANY LETTERHEAD]
 
-LETTER OF AUTHORIZATION
+LETTER OF AUTHORIZATION ("LOA")
 
 [DATE]
 
-To whom it may concern,
 
-This letter serves as authorization for Cloudflare, Inc. with AS[CF TO PROVIDE] to advertise the following IP address blocks/ Originating ASNs:
+To whom it may concern:
+
+[COMPANY NAME] (the "Company") authorizes Cloudflare, Inc. with AS[CF TO PROVIDE] to advertise the following IP address blocks / originating ASNs:
 
 - - - - - - - - - - - - - - - - - - -
 [Subnet & Originating ASN]
@@ -23,20 +24,19 @@ This letter serves as authorization for Cloudflare, Inc. with AS[CF TO PROVIDE] 
 [Subnet & Originating ASN]
 - - - - - - - - - - - - - - - - - - -
 
-As a representative of the company [COMPANY] that is the owner of the subnet and/or ASN, I hereby declare that I'm authorized by to represent and sign for this LOA.
+As a representative of the Company that is the owner of the aforementioned IP address blocks / originating ASNs, I hereby declare that I am authorized to sign this LOA on the Company’s behalf.
 
 Should you have any questions please email me at [E-MAIL ADDRESS], or call: [TELEPHONE NUMBER]
 
 Regards,
 
-[Name typed]
+
+[SIGNATURE]
 
 
-[Signature]
-
-
-[Company stamp]
-[Title]
-[Phone number]
-[All other company information you have]
+[NAME TYPED]
+[TITLE]
+[COMPANY NAME]
+[COMPANY ADDRESS]
+[COMPANY STAMP]
 ```

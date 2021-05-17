@@ -15,7 +15,7 @@ The information stored is broken down based on the following categories (click f
 
 ## Errors
 
-These occur for requests that didn't pass any of the sanity checks performed by the Cloudflare network. Example cases include:
+These occur for requests that didn't pass any of the validation performed by the Cloudflare network. Example cases include:
 
 - Whenever Cloudflare is unable to look up a domain or zone
 - An attempt to improperly use the IP for an origin server

@@ -12,11 +12,13 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 * Build a policy in Gateway to block entire TLDs
 
-**⏲️Time to complete: 5 minutes**
+**⏲️Time to complete:**
+
+5 minutes
 
 ## Configure Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](https://developers.cloudflare.com/gateway/getting-started/onboarding-gateway) to set up Cloudflare Gateway in your account. TLD blocking is available on any plan.
+Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. TLD blocking is available on any plan.
 
 ## Block by TLD
 

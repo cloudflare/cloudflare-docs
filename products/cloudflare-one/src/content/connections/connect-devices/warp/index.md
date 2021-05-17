@@ -4,9 +4,9 @@ order: 0
 
 # WARP client
 
-You can use Cloudflare WARP client to connect devices to Cloudflare for DNS filtering or Secure Web Gateway filtering. The WARP client can be deployed in the following modes:
+You can use Cloudflare WARP client to connect devices to Cloudflare for DNS or HTTP filtering. The WARP client can be deployed in the following modes:
 
-|Mode|Description|DNS Filtering|HTTP Filtering|
+|Mode|Description|DNS filtering|HTTP filtering|
 |---|---|---|---|
 |DNS only|DoH-based filtering|Yes|No|
 |DNS with WARP+|DoH-based filtering with encrypted WARP+ traffic|Yes|No|
@@ -28,7 +28,11 @@ Alternatively, you can deploy Cloudflare DNS filtering on [networks](/connection
 
 You can proxy all traffic leaving devices through Cloudflare for HTTP inspection and filtering using the Cloudflare WARP client. To begin, follow the steps below:
 
-1. Determine which devices can enroll.
-2. [Deploy](/connections/connect-devices/warp/deployment) Cloudflare WARP to devices.
+1. [Determine which devices](/connections/connect-devices/warp/device-enrollment) can enroll or deploy the agent [with an MDM provider](/connections/connect-devices/warp/deployment).
+2. [Enroll a device](/connections/connect-devices/warp/device-enrollment).
 3. [Install](/connections/connect-devices/warp/install-cloudflare-cert) the Cloudflare root certificate on the devices.
-4. Enable web inspection in the Cloudflare for Teams dashboard.
+4. [Enable web inspection](/connections/connect-devices/warp/control-proxy) in the Cloudflare for Teams dashboard.
+
+## Port Handling
+
+By default, WARP allows traffic on any port other than 25.
