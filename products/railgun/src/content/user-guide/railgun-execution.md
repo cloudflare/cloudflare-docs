@@ -21,7 +21,7 @@ Both programs write a log file containing detailed information about operation. 
 
 Option | Description
 ---------|----------
-`-config[=\| ]PATH` | The path to the rg.config configuration file to use
+`-config[=\| ]PATH` | The path to the `rg.config` configuration file to use
 `-version` | Output version information and exit
 </TableWrap>
 
@@ -47,7 +47,7 @@ Parameter | Description
 `stats.url` | Sets the URL (e.g. `http://stats.example.com:9090/`) to periodically POST stats to. Defaults to empty for disabled.
 `stats.log` | Determines whether stats are periodically written to syslog. Defaults to 0 (set to 1 for logged statistics).
 `stats.interval` | How often (in minutes) stats are generated (and logged and POSTed to the `stats.url`). Default is 1 indicating every minute.
-`stats.listen` | host:port on which to listen and create a simple HTTP JSON API through which stats can be read via a `GET /`. Defaults to empty for disabled.
+`stats.listen` | `host:port` on which to listen and create a simple HTTP JSON API through which stats can be read via a `GET /`. Defaults to empty for disabled.
 `pid.file` | The name of a file into which the PID will be written. Defaults to an empty string which means that no PID file is created.
 `cert.file` | Name of file containing the certificate presented by this server to connections. No default.
 `key.file` | Name of file containing the private key for the `cert.file`. No default.

@@ -17,7 +17,7 @@ Navigate to the [Railgun listing page](https://www.cloudflare.com/a/account/my-a
 Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page. Start the Railgun daemon so that it can proceed with activation. If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on. If the Railgun fails to activate, check your logs for errors and [contact support](mailto:support@cloudflare.com) if the issue persists.
 
 ## Enabling Railgun
-Navigate to the Railgun Settings section of the Speed page for your domain for your domain and select the desired Railgun from the drop-down menu. Then switch the toggle to ‘On.’
+Navigate to the Railgun Settings section of the Speed page for your domain for your domain and select the desired Railgun from the drop-down menu. Then switch the toggle to `On`.
 
 ## Collecting and Reporting Statistics
 Railgun can report statistics via syslog, JSON via a HTTP POST request, or through its own simple HTTP server when enabled. To enable statistics collection, first set `stats.enabled` to 1 within the main Railgun configuration file (`railgun.conf`). To enable syslog statistics reporting, set `stats.log` to 1. To enable reporting via an HTTP POST request of JSON data to the specified URL, set `stats.url` to a valid URL. `stats.interval` determines how frequently stats will be logged or POSTed in minutes.
