@@ -86,7 +86,7 @@ Configure your nameservers to point to Cloudflare's name servers. If your namese
 
 If you don't want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages.
 
-To ensure a custom domain is added successfully, you must go through the "Set up a custom domain" process described above". Manually adding a custom CNAME record pointing to your Cloudflare Pages site without first associating the domain (or subdomains) in the Cloudflare Pages dashboard will result in your domain failing to resolve at the CNAME record address and display a 522 error.
+To ensure a custom domain is added successfully, you must go through the "Set up a custom domain" process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a 522 error.
 
 | Domain       | CNAME              |
 | ------------ | ------------------ |
