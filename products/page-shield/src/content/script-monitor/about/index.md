@@ -1,7 +1,7 @@
 ---
 title: About
 order: 0
-pcx-content-type: landing page
+pcx-content-type: concept
 ---
 
 import ScriptMDefinition from "../../_partials/_script-monitor-definition.md"

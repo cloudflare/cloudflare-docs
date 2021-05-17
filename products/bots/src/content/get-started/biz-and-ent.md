@@ -1,7 +1,7 @@
 ---
 title: Business
 order: 2
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"

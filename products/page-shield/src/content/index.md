@@ -2,7 +2,7 @@
 title: Welcome
 type: overview
 order: 0
-pcx-content-type: landing page
+pcx-content-type: landing-page
 ---
 
 # Cloudflare Page Shield

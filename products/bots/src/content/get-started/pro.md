@@ -1,7 +1,7 @@
 ---
 title: Pro
 order: 1
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
