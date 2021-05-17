@@ -1,5 +1,6 @@
 ---
 title: Work with Managed Rulesets
+pcx-content-type: navigation
 type: overview
 alwaysopen: true
 order: 750
@@ -15,7 +16,7 @@ This feature is part of an early access experience for selected customers.
 
 Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a phase. Only Cloudflare can modify these rulesets.
 
-The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults. 
+The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
 <Aside type='note' header='Note'>
 

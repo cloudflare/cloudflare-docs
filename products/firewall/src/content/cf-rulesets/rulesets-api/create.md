@@ -1,5 +1,6 @@
 ---
 title: Create ruleset
+pcx-content-type: reference
 alwaysopen: true
 order: 784
 ---

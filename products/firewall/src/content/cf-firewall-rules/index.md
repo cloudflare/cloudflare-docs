@@ -1,5 +1,6 @@
 ---
 title: About
+pcx-content-type: concept
 order: 200
 ---
 
@@ -17,7 +18,7 @@ It is a simple concept, but like the Wireshark Display Filter language that insp
 
 ## Working with Firewall Rules
 
-To configure Firewall Rules from the the Cloudflare dashboard, use the **Firewall Rules** tab in the **Firewall** app. For more, see [_Manage rules in the Cloudflare dashboard_](/cf-dashboard).
+To configure Firewall Rules from the Cloudflare dashboard, use the **Firewall Rules** tab in the **Firewall** app. For more, see [_Manage rules in the Cloudflare dashboard_](/cf-dashboard).
 
 To configure Firewall Rules with the Cloudflare API, use the Firewall Rules API. Use the Cloudflare Filters API to manage expressions. For more, see [_Manage rules via the APIs_](/api).
 
