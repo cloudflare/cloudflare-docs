@@ -19,8 +19,13 @@ Yes. Cloudflare Tunnel has full support for Websockets.
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from cloudflared. The parameters below can be configured for egress traffic inside of a firewall.
 
+**Edge connections**
 - TCP port 7844 (HTTPS)
 - IPs are those behind **region1.argotunnel.com** and **region2.argotunnel.com** \*
+
+**API requests**
+- TCP port 443 (HTTPS)
+- IPs are those behind **api.cloudflare.com** \*
 
 Below the output of `dig` commands towards the above hostnames:
 
@@ -47,6 +52,16 @@ region2.argotunnel.com.	300	IN	A	198.41.200.233
 region2.argotunnel.com.	300	IN	A	198.41.200.13
 region2.argotunnel.com.	300	IN	A	198.41.200.53
 region2.argotunnel.com.	300	IN	A	198.41.200.113
+
+...
+
+$ dig api.cloudflare.com
+
+...
+
+;; ANSWER SECTION:
+api.cloudflare.com.     41      IN      A       104.19.193.29
+api.cloudflare.com.     41      IN      A       104.19.192.29
 
 ...
 ```
