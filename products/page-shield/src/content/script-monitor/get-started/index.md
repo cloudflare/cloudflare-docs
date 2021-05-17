@@ -1,7 +1,7 @@
 ---
 title: Get started
 order: 0
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Get started with Cloudflare Script Monitor

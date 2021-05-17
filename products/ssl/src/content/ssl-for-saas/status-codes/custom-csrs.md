@@ -1,6 +1,7 @@
 ---
 title: Custom CSRs
 order: 2
+pcx-content-type: reference
 ---
 
 # Custom Certificate Signing Requests

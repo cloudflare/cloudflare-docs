@@ -1,6 +1,6 @@
 ---
 order: 0
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Access Waiting Rooms via the dashboard
