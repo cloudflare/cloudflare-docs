@@ -1,4 +1,5 @@
 ---
+pcx-content-type: concept
 order: 700
 ---
 
@@ -17,7 +18,6 @@ There are several elements involved in the configuration and use of the Ruleset 
 * **Phase** — Defines a stage in the life of a request where you can execute rulesets.
 * **Ruleset** — Defines a versioned set of rules. You can execute rulesets in a phase.
 * **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
-
 
 ## Phases
 
@@ -39,7 +39,6 @@ The following diagram outlines the request handling process where requests go th
 
 Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
 
-
 ## Rulesets
 
 A ruleset is a versioned set of rules. Cloudflare creates a new version of the ruleset each time you modify it. You execute rulesets by deploying them to a phase.
@@ -54,7 +53,6 @@ Since phases behave just like rulesets, they also have a type. In the Rulesets A
 
 Cloudflare creates a new version of the ruleset every time there is a change to that ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset, the most recent version of the ruleset is selected by default.
 
-
 ### Managed Rulesets
 
 Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a phase. Only Cloudflare can modify these rulesets.
@@ -64,7 +62,6 @@ The rules in a Managed Ruleset have a default action and status. However, you ca
 There are several Cloudflare products that provide you with Managed Rulesets. Check each product’s documentation for details on the available Managed Rulesets.
 
 For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
-
 
 ### Custom rulesets
 

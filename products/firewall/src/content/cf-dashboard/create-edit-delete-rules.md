@@ -1,5 +1,6 @@
 ---
 title: Create, edit, and delete rules
+pcx-content-type: how-to
 order: 310
 ---
 

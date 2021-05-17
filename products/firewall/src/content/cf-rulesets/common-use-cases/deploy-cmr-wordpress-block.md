@@ -1,5 +1,6 @@
 ---
 title: Set WordPress rules to Block
+pcx-content-type: configuration
 alwaysopen: true
 order: 771
 ---
