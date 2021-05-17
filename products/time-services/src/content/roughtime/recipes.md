@@ -1,4 +1,5 @@
 ---
+pcx-content-type: how-to
 order: 2
 ---
 
@@ -109,7 +110,7 @@ if skew > 10*time.Second {
 See our
 [GitHub](https://github.com/cloudflare/roughtime/tree/master/recipes/alerter.go)
 for a fully fleshed out alerter. (It has been tested on Ubuntu 18.04.) Run this
-as a cron job to periodically check that you're clock is in sync.
+as a cron job to periodically check that your clock is in sync.
 
 ## Using multiple sources
 
