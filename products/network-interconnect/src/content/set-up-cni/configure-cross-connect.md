@@ -1,5 +1,5 @@
 ---
-title: Configure cross-connect
+title: Configure the cross-connect
 order: 4
 pcx-content-type: tutorial
 ---
