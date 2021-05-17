@@ -1,5 +1,6 @@
 ---
 order: 6
+pcx-content-type: tutorial
 ---
 
 # Certificate signing requests
@@ -42,7 +43,7 @@ EOF
 ### 2. Request a CSR that can be provided to your customer
 
 ```bash
-$ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
+$ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json' -d "$request_body"
 
@@ -71,7 +72,7 @@ $ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
 Note that the ‘\n’ strings should be replaced with actual newline before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, e.g.,:
 
 ```bash
-$ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs\
+$ curl -sXPOST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json' -d "$request_body" | jq .result.csr |\
     perl -npe s'/\\n/\n/g; s/"//g' > csr.txt

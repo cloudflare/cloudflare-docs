@@ -1,6 +1,7 @@
 ---
 title: Deprecation - Version 1
 order: 10
+pcx-content-type: reference
 ---
 
 # Deprecation notice for SSL for SaaS - Version 1

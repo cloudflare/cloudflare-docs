@@ -1,5 +1,6 @@
 ---
 order: 6
+pcx-content-type: tutorial
 ---
 
 # IBM cloud HSM

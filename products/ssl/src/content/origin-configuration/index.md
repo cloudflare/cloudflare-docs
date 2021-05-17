@@ -1,11 +1,10 @@
 ---
 order: 7
+pcx-content-type: navigation
 ---
 
 # Origin configuration
 
-Cloudflare supports SSL/TLS when connecting to customers’ origin servers.
+Learn more about SSL/TLS protection options for your origin servers:
 
-[Free SSL certificates for your origin](/origin-configuration/origin-ca) can be issued using Cloudflare’s Origin CA.
-
-[Control over the scheme and certificate validation options](/origin-configuration/ssl-modes) used for the origin connection are described in SSL modes.
+<DirectoryListing path="/origin-configuration"/>
