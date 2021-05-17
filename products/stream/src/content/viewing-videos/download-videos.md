@@ -38,7 +38,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/downloads
   "result": {
     "default": {
       "status": "inprogress",
-      "url": "https://videodelivery.net/$VIDEOID/downloads/default.mp4"
+      "url": "https://videodelivery.net/$VIDEOID/downloads/default.mp4",
+      "percentComplete": 75.0
     }
   },
   "success": true,
@@ -66,7 +67,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/downloads
   "result": {
     "default": {
       "status": "ready",
-      "url": "https://videodelivery.net/$VIDEOID/downloads/default.mp4"
+      "url": "https://videodelivery.net/$VIDEOID/downloads/default.mp4",
+      "percentComplete": 100.0
     }
   },
   "success": true,
