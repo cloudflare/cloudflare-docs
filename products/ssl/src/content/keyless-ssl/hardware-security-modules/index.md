@@ -23,7 +23,7 @@ The key server communicates with HSMs via PKCS#11, so any HSM supporting the sta
 
 * [Gemalto SafeNet Luna](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/fips-common-criteria-validations/)
 * [SoftHSMv2](https://github.com/opendnssec/SoftHSMv2)
-* [Thales nShield Connect](https://www.thalesesecurity.com/products/general-purpose-hsms/nshield-connect)
+* [Entrust nShield Connect](https://www.entrust.com/digital-security/hsm)
 * [YubiKey Neo](https://www.yubico.com/product/yubikey-neo/)
 
 We’ve also tested with the following Cloud HSM offerings:
