@@ -14,7 +14,7 @@ Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead o
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
 ## [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
-A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
+Cloudflare Tunnel (formerly *Argo Tunnel*) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
 Teams customers can use the Cloudflare WARP application to connect corporate desktops to Cloudflare Gateway for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, with security filtering available to the connection.
@@ -167,7 +167,9 @@ The customizable portion of your [team domain](#team-domain). You can change thi
 [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building Cloudflare resources.
 
 ## Tunnel certificate
-The Argo Tunnel software, `cloudflared`, generates a certificate when you login with your Cloudflare account. The certificate consists of a [service token](#service-token) and [origin certificate](#origin-certificate).
+
+The Cloudflare Tunnel software, `cloudflared`, generates a certificate when you login with your Cloudflare account. The certificate consists of a [service token](#service-token) and [origin certificate](#origin-certificate).
 
 ## Zero Trust Security
+
 An IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. No single specific technology is associated with zero trust architecture; it is a holistic approach to network security that incorporates several different principles and technologies.

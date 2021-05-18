@@ -38,4 +38,4 @@ Isolation policies, like all HTTP policies, are evaluated in stages. When a user
 Isolation policies are applied to requests that include Accept: `text/html*`. This allows Browser Isolation policies to co-exist with API and command line requests.
 
 ## Can Access enforce policies on a specific nonstandard port?
-No. Cloudflare Access cannot enforce a policy that would contain a port appended to the URL. However, you can use Cloudflare Argo Tunnel to point traffic to non-standard ports. For example, if Jira is available at port `8443` on your origin, you can proxy traffic to that port via Argo Tunnel.
+No. Cloudflare Access cannot enforce a policy that would contain a port appended to the URL. However, you can use Cloudflare Tunnel to point traffic to non-standard ports. For example, if Jira is available at port `8443` on your origin, you can proxy traffic to that port via Cloudflare Tunnel.

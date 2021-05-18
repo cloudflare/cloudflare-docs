@@ -73,11 +73,11 @@ To allow these applications to function normally, administrators can configure b
 
 ## My tunnel fails to authenticate. 
 
-To start using Argo Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`. The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
+To start using Cloudflare Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`. The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
 
 * The public key of the origin certificate for that hostname
 * The private key of the origin certificate for that domain
-* A token that is unique to Argo Tunnel
+* A token that is unique to Cloudflare Tunnel
 
 Those three components are bundled into a single PEM file that is downloaded one time during that login flow. The host certificate is valid for the root domain and any subdomain one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to create DNS records for your domain in Cloudflare.
 
