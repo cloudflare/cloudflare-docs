@@ -1,4 +1,4 @@
-# Cloudflare Firewall Rules docs
+# Cloudflare Railgun docs
  
 [View docs →](https://developers.cloudflare.com/railgun)
  
