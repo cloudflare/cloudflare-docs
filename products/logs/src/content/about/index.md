@@ -1,9 +1,12 @@
 ---
+title: Logpush
 order: 40
 pcx-content-type: concept
 ---
 
-# About Logpush
+# Logpush
+
+## About Logpush
 
 Push logs of Cloudflare's datasets to your cloud service in batches. Logpush is available to customers on Cloudflare's Enterprise plan.
 

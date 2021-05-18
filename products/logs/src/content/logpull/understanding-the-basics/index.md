@@ -6,10 +6,6 @@ pcx-content-type: concept
 
 # Understanding the basics
 
-## Data retention period
-
-You can query for logs starting from 1 minute in the past (relative to the actual time that you're making the query) and going back at least 3 days and up to 7 days.
-
 ## Access pattern
 
 The basic access pattern is *give me all the logs for zone Z for minute M* where the minute *M* refers to the time the log entries were written to disk in Cloudflare's log aggregation system.
@@ -53,3 +49,7 @@ Below is a sample log with default fields:
     "RayID": "3a6050bcbe121a87"
 }
 ```
+
+## Data retention period
+
+You can query for logs starting from 1 minute in the past (relative to the actual time that you're making the query) and going back at least 3 days and up to 7 days.

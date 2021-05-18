@@ -14,6 +14,4 @@ Learn to manage and analyze your Cloudflare Logs with the following resources.
 
 ### Logpush
 
-- [Manage Logpush with cURL](/tutorials/tutorial-logpush-curl/)
-- [Logpush using Python (example)](/tutorials/example-logpush-python/)
-- [Analyze logs with Google Cloud Platform](/analytics-integrations/google-cloud/)
+- [Bot management dashboard](/tutorials/bot-management-dashboard/)
