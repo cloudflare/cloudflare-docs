@@ -5,7 +5,7 @@ order: 100
 
 # Analytics Integrations
 
-You can analyze Cloudflare Logs data with the following analytics platforms:
+You can analyze [Cloudflare Logs](https://developers.cloudflare.com/logs/) data with the following analytics platforms:
 
 - [Datadog](/analytics-integrations/datadog/)
 - [Elastic](/analytics-integrations/elastic/)

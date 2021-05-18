@@ -1,10 +1,9 @@
 ---
-title: Tutorials and examples
 order: 80
 pcx-content-type: navigation
 ---
 
-# Tutorials and examples
+# Tutorials
 
 Learn to manage and analyze your Cloudflare Logs with the following resources.
 
