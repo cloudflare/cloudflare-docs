@@ -115,8 +115,8 @@ To get and use an HTTP ownership_verification record:
 
   ```
   location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
-        return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
-    }
+    return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
+  }
   ```
   </div>
   </details>
