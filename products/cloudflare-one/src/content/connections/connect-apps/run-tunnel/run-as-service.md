@@ -38,7 +38,7 @@ If you do not have a configuration file, you will need to create a config.yml fi
 
 <Aside>
 
-The above arguments are required for pre-configured Cloudflare Tunnel deployments. If you are using legacy Cloudflare Tunnel, without names, you can append the `--legacy` flag when running cloudflared tunnel install command.
+The above arguments are required for pre-configured Cloudflare Tunnel deployments. If you are using legacy Tunnels, without names, you can append the `--legacy` flag when running `cloudflared` tunnel install command.
 
 </Aside>
 
