@@ -4,7 +4,7 @@ order: 4
 pcx-content-type: navigation
 ---
 
-# Bot Analytics
+# Cloudflare Bot Analytics
 
 Business and Enterprise customers can use **Bot Analytics** to dynamically examine bot traffic.
 

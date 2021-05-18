@@ -1,4 +1,5 @@
 ---
+pcx-content-type: concept
 order: 790
 ---
 
@@ -14,9 +15,9 @@ Custom Rules allow you to protect your website and your APIs from malicious or e
 
 You can use Custom Rules in the **Firewall** app to define the following rule types:
 
-* [**Rate Limiting Rules**](/cf-rulesets/custom-rules/rate-limiting) - Check for excessive incoming traffic and apply mitigation actions.
+* [**Rate Limiting Rules**](/cf-rulesets/custom-rules/rate-limiting) — Check for excessive incoming traffic and apply mitigation actions.
 
-* **Custom Firewall rules** - Control incoming traffic by filtering requests. You can block or challenge incoming requests according to rules you define.
+* **Custom Firewall rules** — Control incoming traffic by filtering requests. You can block or challenge incoming requests according to rules you define.
 
 <Aside type='warning' header='Important'>
 
@@ -24,4 +25,4 @@ Currently, you can only create and manage Custom Firewall rules using the API. T
 
 </Aside>
 
-Custom Rules are built upon the ruleset engine which you can use to define rules and actions in several Cloudflare products. Custom Rules are deployed to the `http_request_firewall_custom` Phase ruleset.
+Custom Rules are built upon the ruleset engine which you can use to define rules and actions in several Cloudflare products. Custom Rules are deployed to the `http_request_firewall_custom` phase ruleset.

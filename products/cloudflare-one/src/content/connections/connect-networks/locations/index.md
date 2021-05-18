@@ -66,14 +66,13 @@ When you create a location, your location will receive a unique IPv6 address. Cl
 
 On your router/device/forwarder/daemon forward DNS queries to the corresponding IPv6 address for the location.
 
-See how you can start sending DNS queries by visiting the [setup instructions](/connections/connect-networks/locations/setup-instructions/).
+See how you can start sending DNS queries by visiting the [setup instructions](/connections/connect-networks/locations/configuring-a-location/).
 
 ### DNS over TLS
 
 Each location has a unique hostname for DNS over TLS.
 
 Cloudflare Gateway will identify your location based on the DNS over TLS hostname.
-
 
  ![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
 
@@ -84,8 +83,6 @@ Each location has a unique hostname for DNS over HTTPS.
 Cloudflare Gateway will identify your location based on the DNS over HTTPS hostname.
 
 ![DNS over HTTPS hostname](../../../static/documentation/policies/location-with-dns-over-https-hostname.png)
-
-See how you can start sending DNS queries over HTTPS using [Firefox](/connections/connect-networks/locations/setup-instructions/firefox).
 
 #### DoH subdomain
 

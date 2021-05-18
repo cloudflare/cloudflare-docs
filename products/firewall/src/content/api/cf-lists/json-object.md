@@ -1,5 +1,6 @@
 ---
 title: JSON object
+pcx-content-type: reference
 order: 490
 ---
 

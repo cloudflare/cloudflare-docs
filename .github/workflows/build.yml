@@ -14,6 +14,7 @@ jobs:
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
       argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
+      automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
@@ -63,6 +64,8 @@ jobs:
               - 'products/api/**'
             argo-tunnel:
               - 'products/argo-tunnel/**'
+            automatic-platform-optimization:
+              - 'products/automatic-platform-optimization/**'
             bots:
               - 'products/bots/**'
             byoip:
@@ -237,6 +240,26 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
+
+
+  build-automatic-platform-optimization:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.automatic-platform-optimization == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/automatic-platform-optimization
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build  
 
   build-bots:
     runs-on: ubuntu-latest

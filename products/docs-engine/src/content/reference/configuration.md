@@ -36,16 +36,17 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
   - An array of objects each specifying a `title` <Type>string</Type> and `url` <Type>string</Type>. Used to construct the external links menu inside the sidebar nav on desktop.
 
 - `search` <Type>object</Type> <PropMeta>required</PropMeta>
-  - Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, e.g.:
+  - Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, and `search.algoliaOptions` to the default empty filter, e.g.:
 
     ```js
     search: {
       indexName: "",
-      apiKey: ""
+      apiKey: "",
+      algoliaOptions: { "facetFilters": "" }
     }
     ```
 
-    For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/e72247549d20f649786251d0368de19560d1bbb2/products/workers/docs-config.js#L21-L24).
+    For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/df657d2ef2983999128b9f83116080225bcdb8f2/products/workers/docs-config.js#L25-L29).
 
 - `siteMetadata` <Type>object</Type> <PropMeta>required</PropMeta>
   - A proxy to the Gatsby [property of the same name](https://www.gatsbyjs.com/docs/gatsby-config/#sitemetadata). Sub-properties:

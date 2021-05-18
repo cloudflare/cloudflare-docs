@@ -1,5 +1,6 @@
 ---
 title: Create rules via API
+pcx-content-type: navigation
 order: 4
 ---
 

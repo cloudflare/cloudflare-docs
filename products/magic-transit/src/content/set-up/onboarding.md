@@ -5,8 +5,6 @@ order: 1
 
 # Magic Transit onboarding
 
-![Onboarding timeline](../static/mt-onboarding-timeline.png)
-
 The onboarding process, from scoping to going live, typically takes about 10 business days, and Cloudflare can significantly accelerate this timeline in active-attack scenarios.
 
 Throughout the onboarding process, Cloudflare partners closely with your organization to accomplish the following tasks:
@@ -31,7 +29,7 @@ Cloudflare sets up Anycast tunnels for Magic Transit based on configuration deta
 
 Once Cloudflare has staged the tunnels, we validate tunnel connectivity, LOA, IRR, and maximum segment size (MSS) configurations.
 
-To ensure that the integration is ready to go live the following week, complete this step by close of business Friday.
+To ensure that the integration is ready to go live the following week, complete this step by close of business Thursday.
 
 *Duration:* ~4 business days
 
@@ -59,7 +57,7 @@ When using [Cloudflare Network Interconnect](/network-interconnect/) with Magic 
 
 </Aside>
 
-*Duration:* ~2 business days
+*Duration:* ~5 business days
 
 ## Go live and announce prefixes
 

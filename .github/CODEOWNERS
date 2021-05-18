@@ -1,5 +1,5 @@
 # 1.1.1.1
-products/1.1.1.1/ @abracchi-tw
+products/1.1.1.1/ @abracchi-tw @cloudflare/PCX
 
 # Access
 products/access/ @cloudflare/access-docs @cloudflare/PCX
@@ -53,7 +53,7 @@ products/magic-transit/ @annikagarbers @cloudflare/PCX
 products/network-interconnect @ConzorKingKong @cloudflare/PCX
 
 # Pages
-products/pages/ @cloudflare/workers-docs
+products/pages/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Randomness Beacon
 products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
@@ -89,4 +89,4 @@ products/waf/ @cloudflare/firewall @cloudflare/PCX
 products/warp-client/ @abracchi-tw
 
 # Workers
-products/workers/ @cloudflare/workers-docs
+products/workers/ @cloudflare/workers-docs @cloudflare/PCX
