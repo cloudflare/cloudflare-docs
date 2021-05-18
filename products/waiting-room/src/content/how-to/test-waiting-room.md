@@ -5,9 +5,9 @@ pcx-content-type: tutorial
 
 # Test a Waiting Room
 
-Test out your Waiting Room to make sure it behaves as expected before rolling it out to live traffic.
+Follow this tutorial to make sure your Waiting Room queues and admits users as expected.
 
-<Aside>
+<Aside type="warning" header="Warning:">
 This tutorial uses an open-sourced load testing tool that is not created or supported by Cloudflare.
 </Aside>
 
@@ -25,25 +25,25 @@ Before you start this tutorial, make sure you have:
 
 First, download the [sample script](https://github.com/kcantrel/test-cf-waitingroom/blob/master/simulate_requests) from GitHub.
 
-This script simulates users entering a waiting room. It divides traffic into two phases to allow testing wait time as load diminishes or increases.
+This script simulates users entering a waiting room. It divides traffic into two phases (`Phase 1` and `Phase 2`) so you can test wait times as load diminishes or increases.
 
 ## 2. Run sample script
 
 Once you have downloaded the script, run it with the following command-line arguments:
 -  `-n <num_secs_p1>`: Number of seconds to send requests during phase 1.
-- `-m <num_secs_p2>`: Number of seconds to send requests during phase 2, which is fixed at 1 RPS.
-- `-s <sleep_time_p1>`: Amount of time to sleep between requests during phase 1. Fractional time accepted (e.g. .3).
+- `-m <num_secs_p2>`: Number of seconds to send requests during phase 2, which is fixed at 1 request per second.
+- `-s <sleep_time_p1>`: Amount of time to sleep between requests during phase 1. Fractional time accepted, such as `.3`).
 - `-o <results>`: File to store the per-session statistics.
 - `URL`: Endpoint protected by a Cloudflare Waiting Room.
 
 <details>
   <summary>Example script run</summary>
   <div>
-    <strong>Request</strong>
+    <strong>Function</strong>
 
     simulate_requests -s .1 -n 60 -m 60 -o results https://example.com/tickets/1234/
 
-<strong>Response</strong>
+<strong>Output</strong>
 
     Sending 600 requests to https://example.com/tickets/1234/ at a rate of 10.00 per second. Or 600 per minute.
 
@@ -62,12 +62,11 @@ Once you have downloaded the script, run it with the following command-line argu
 </div>
 </details>
 
-As the script runs, you will see a letter output to the command line for each user session that advanced past the waiting room. This letter represents how long each user session waited:
+As the script runs, you will see letters appear in to the command line. Each letter represents a user session that advanced past the waiting room. The specific letter value corresponds to the waiting time for each user session:
 - 0 seconds: `.`
 - 0 - 10 seconds: `a`
 - 10 - 20 seconds: `b`
 - 20 - 30 seconds: `c`
-
 ...
 - 260 - 270 seconds: `A`
 - 270 - 280 seconds: `B`
@@ -80,7 +79,7 @@ As the script runs, you will see a letter output to the command line for each us
 Once the script finishes running, it creates a CSV file with the following fields:
 
 <details>
-  <summary>CSV fields</summary>
+  <summary>Fields in CSV file</summary>
   <div>
     <ul>
         <li><strong>job</strong>: Fixed string and sequence number. Either <strong>main</strong> for phase 1 or <strong>post</strong> for phase 2.</li>
@@ -105,6 +104,6 @@ To visualize your results, open your CSV file within a spreadsheet application. 
 
 In this example, you can clearly see when the script entered the second phase — with a reduced rate of new users per second — leading to decreased wait times.
 
-## 4. Adjust Waiting Room
+## 4. Adjust Waiting Room (optional)
 
-Based on the results of your test, you may want to adjust the settings of your Waiting Room.
+Based on the results of your test, you may want to adjust [the settings](../create-waiting-room/create-waiting-room-dashboard/configure-settings) of your Waiting Room.
