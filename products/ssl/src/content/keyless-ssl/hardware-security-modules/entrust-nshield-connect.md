@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: tutorial
 ---
 
-# nCipher (Thales) nShield Connect
+# Entrust nShield Connect
 
 <Aside type='note' header='Note'>
 
