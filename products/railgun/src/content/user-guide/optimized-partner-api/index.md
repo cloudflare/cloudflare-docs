@@ -2,7 +2,7 @@
 title: Optimized Partner API
 type: overview
 order: 10
-pcx-content-type: landing page
+pcx-content-type: reference
 ---
 
 # Optimized Partner API

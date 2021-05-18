@@ -2,7 +2,7 @@
 title: User Guide
 type: document
 order: 1
-pcx-content-type: reference
+pcx-content-type: navigation
 ---
 
 # General documentation for end-users

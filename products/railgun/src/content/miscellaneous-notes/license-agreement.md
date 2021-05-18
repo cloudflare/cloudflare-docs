@@ -2,6 +2,7 @@
 title: License Agreement
 type: document
 order: 17
+pcx-content-type: reference
 ---
 
 # License
