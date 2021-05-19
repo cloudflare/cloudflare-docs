@@ -48,7 +48,7 @@ The few seconds Cloudflare requires to iterate over the CNAME can cause a slight
 
 ## TXT
 
-Each API call to create a Custom Hostname provides a TXT *ownership_verification* record for your customer to add to their DNS for ownership validation of the Custom Hostname.
+Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) provides a TXT *ownership_verification* record for your customer to add to their DNS for ownership validation of the Custom Hostname.
 
 ```json
 {
@@ -77,26 +77,54 @@ Once you activate a Custom Hostname, you can remove the TXT record.
 
 ## HTTP
 
-Each API call to create a Custom Hostname also provides an HTTP ownership_verification record. Compared to TXT verification, HTTP verification doesn’t require your customer to change their DNS. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
+Each API call to create a Custom Hostname also provides an HTTP *ownership_verification* record. Compared to TXT verification, HTTP verification doesn’t require your customer to change their DNS. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from the zone's origin server allows hostname verification before proxying domain traffic through Cloudflare.
 
-Cloudflare sends GET requests to the *http_url* using *User-Agent: Cloudflare Custom Hostname Verification*
+To get and use an HTTP ownership_verification record:
 
-```json
-{
-  "result": [
-    {
-      "id": "24c8c68e-bec2-49b6-868e-f06373780630",
-      "hostname": "app.example.com",
-      // ...
-      "ownership_verification_http": {
-        "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
-        "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
-      },
-      "created_at": "2020-03-04T20:06:04.117122Z"
-    }
-  ]
-}
-```
+1. Make an API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+
+1. In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
+
+  <details>
+  <summary>Example response (truncated)</summary>
+  <div>
+
+  ```json
+  {
+    "result": [
+      {
+        "id": "24c8c68e-bec2-49b6-868e-f06373780630",
+        "hostname": "app.example.com",
+        // ...
+        "ownership_verification_http": {
+          "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
+          "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
+        },
+        "created_at": "2020-03-04T20:06:04.117122Z"
+      }
+    ]
+  }
+  ```
+  </div>
+  </details>
+
+1. Store the `http_url` and `http_body` on your origin web server.
+
+  <details>
+  <summary>Example configuration</summary>
+  <div>
+
+  ```
+  location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
+    return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
+  }
+  ```
+  </div>
+  </details>
+
+1. After a few minutes, you will see the hostname validation become **Active** in the UI.
+
+<Aside>Cloudflare sends GET requests to the <code>http_url</code> using <code>User-Agent: Cloudflare Custom Hostname Verification</code>.</Aside>
 
 ## Error codes
 Various hostname verification errors include:
