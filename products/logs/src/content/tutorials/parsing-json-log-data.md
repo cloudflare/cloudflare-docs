@@ -1,5 +1,4 @@
 ---
-title: Parse Cloudflare Logs JSON data
 order: 85
 pcx-content-type: interim
 ---

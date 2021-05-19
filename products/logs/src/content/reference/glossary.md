@@ -1,5 +1,4 @@
 ---
-title: Glossary
 order: 121
 pcx-content-type: interim
 ---
@@ -8,7 +7,7 @@ pcx-content-type: interim
 
 ## Terminology categories
 
-### General Terms
+### General Te
 
 #### Request
 

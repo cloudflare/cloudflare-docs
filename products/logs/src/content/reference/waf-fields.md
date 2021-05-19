@@ -1,5 +1,4 @@
 ---
-title: WAF fields
 order: 123
 pcx-content-type: reference
 ---
@@ -8,7 +7,7 @@ pcx-content-type: reference
 
 The Web Application Firewall (WAF) contains rules managed by Cloudflare to block requests that contain malicious content.
 
-## WAFAction
+## WAF Action
 
 <TableWrap>
 

@@ -1,8 +1,6 @@
 ---
-title: FAQ
 order: 130
 pcx-content-type: faq
-
 ---
 
 # FAQ

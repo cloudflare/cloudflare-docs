@@ -1,5 +1,4 @@
 ---
-title: Bot Management Dashboard
 order: 90
 pcx-content-type: tutorial
 ---

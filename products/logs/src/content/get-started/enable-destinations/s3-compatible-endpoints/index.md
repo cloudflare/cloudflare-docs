@@ -1,5 +1,4 @@
 ---
-title: Enable S3-compatible endpoints
 order: 56
 pcx-content-type: how-to
 ---

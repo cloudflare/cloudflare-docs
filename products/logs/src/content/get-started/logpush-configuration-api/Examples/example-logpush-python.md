@@ -1,5 +1,4 @@
 ---
-title: Logpush using Python (example)
 order: 88
 pcx-content-type: interim
 ---

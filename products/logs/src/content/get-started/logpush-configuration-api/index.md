@@ -1,5 +1,4 @@
 ---
-title: Manage via the Logpush API
 order: 46
 pcx-content-type: how-to
 ---
@@ -14,13 +13,13 @@ To get started:
 
 1. Set up a storage provider and grant Cloudflare access. For specific instructions:
 
-   - [Enable Amazon S3](/logpush/aws-s3/)
-   - [Enable Datadog](/logpush/datadog/)
-   - [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
-   - [Enable Microsoft Azure](/logpush/azure/)
-   - [Enable Splunk](/logpush/splunk/)
-   - [Enable Sumo Logic](/logpush/sumo-logic/)
-   - [Enable S3-compatible endpoints](/logpush/s3-compatible-endpoints/)
+   - [Enable Amazon S3](/logs/get-started/enable-destinations/aws-s3/)
+   - [Enable Datadog](/logs/get-started/enable-destinations/datadog/)
+   - [Enable Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/)
+   - [Enable Microsoft Azure](/logs/get-started/enable-destinations/azure/)
+   - [Enable Splunk](/logs/get-started/enable-destinations/splunk/)
+   - [Enable Sumo Logic](/logs/get-started/enable-destinations/sumo-logic/)
+   - [Enable S3-compatible endpoints](/logs/get-started/enable-destinations/s3-compatible-endpoints/)
 
 2. Have your Cloudflare API credentials and other information handy, including:
 
@@ -31,6 +30,4 @@ To get started:
 
 Next, to configure your Logpush job via the API, consult the following resources:
 
-- [Understanding the Logpush API](/logpush/logpush-configuration-api/understanding-logpush-api/)
-- [Tutorial - Manage Logpush with cURL](/tutorials/tutorial-logpush-curl/)
-- [Example - Logpush using Python](/tutorials/example-logpush-python/)
+<DirectoryListing path="/get-started/logpush-configuration-api"/>

@@ -4,7 +4,7 @@ order: 65
 pcx-content-type: how-to
 ---
 
-# Enable Sumo Logic
+# Enable Logpush to Sumo Logic
 
 Cloudflare can send logs to a Hosted Collector with "HTTP Logs & Metrics" as the source. Once you've set up a collector, you simply provide the HTTP Source Address (a unique URL) to which logs can be posted.
 

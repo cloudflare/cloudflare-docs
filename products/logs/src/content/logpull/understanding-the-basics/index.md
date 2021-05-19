@@ -1,5 +1,4 @@
 ---
-title: Understanding the basics
 order: 11
 pcx-content-type: concept
 ---
@@ -52,4 +51,4 @@ Below is a sample log with default fields:
 
 ## Data retention period
 
-You can query for logs starting from 1 minute in the past (relative to the actual time that you're making the query) and going back at least 3 days and up to 7 days.
+You can query for logs starting from 1 minute in the past (relative to the actual time that you make the query) and going back at least 3 days and up to 7 days.

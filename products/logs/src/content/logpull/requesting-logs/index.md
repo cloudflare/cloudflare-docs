@@ -1,5 +1,4 @@
 ---
-title: Requesting logs
 order: 14
 pcx-content-type: interim
 ---

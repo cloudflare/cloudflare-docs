@@ -1,5 +1,4 @@
 ---
-title: Manage via the Cloudflare UI
 order: 45
 pcx-content-type: how-to
 ---
@@ -12,10 +11,10 @@ Before enabling **Cloudflare Logpush**, make sure that you have already configur
 
 Learn  how to set up a destination for:
 
-* [Amazon S3](/logpush/aws-s3/)
-* [Google Cloud Storage](/logpush/google-cloud-storage/)
-* [Microsoft Azure](/logpush/azure/)
-* [Sumo Logic](/logpush/sumo-logic/)
+* [Amazon S3](/logs/get-started/enable-destinations/aws-s3/)
+* [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/)
+* [Microsoft Azure](/logs/get-started/enable-destinations/azure/)
+* [Sumo Logic](/logs/get-started/enable-destinations/sumo-logic/)
 
 </Aside>
 
@@ -47,17 +46,17 @@ To enable the Clouflare Logpush service:
      * **Bucket path**
      * **Daily subfolders**
      * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a Cloudflare IAM user (if you did not add it already):
-       * See *step 2* in [Enable Google Cloud Storage](/logpush/google-cloud-storage/)
+       * See *step 2* in [Enable Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/)
 
    * For **Microsoft Azure**, enter or select the following:
      * **SAS URL**
-       * See [Enable Microsoft Azure](/logpush/azure/) for instructions on creating this URL
+       * See [Enable Microsoft Azure](/logs/get-started/enable-destinations/azure/) for instructions on creating this URL
      * **Blob container subpath (optional)**
      * **Daily subfolders**
 
    * For **Sumo Logic**, enter or select the following:
      * **HTTP Source Address**
-       * See [Enable Sumo Logic](/logpush/sumo-logic/) for instructions on getting this address
+       * See [Enable Sumo Logic](/logs/get-started/enable-destinations/sumo-logic/) for instructions on getting this address
 
 8.  In the Cloudflare dashboard, click **Validate access**
 

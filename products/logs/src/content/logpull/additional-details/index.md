@@ -1,6 +1,6 @@
 ---
-title: Additional details
 order: 18
+pcx-content-type: reference
 ---
 
 # Additional details

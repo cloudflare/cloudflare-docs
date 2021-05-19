@@ -1,5 +1,4 @@
 ---
-title: Enabling log retention
 order: 12
 pcx-content-type: interim
 ---

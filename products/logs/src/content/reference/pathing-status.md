@@ -1,5 +1,4 @@
 ---
-title: Pathing status
 order: 122
 pcx-content-type: reference
 ---
@@ -10,11 +9,13 @@ pcx-content-type: reference
 
 Cloudflare issues the following **Edge Pathing Statuses**:
 
-- EdgePathingSrc (pathing source): The stage that made the routing decision
-- EdgePathingOp (pathing operation): The specific action or operation taken
-- EdgePathingStatus (pathing status): Additional information complementing the **EdgePathingOp**
+- **EdgePathingSrc** (pathing source): The stage that made the routing decision
+- **EdgePathingOp** (pathing operation): The specific action or operation taken
+- **EdgePathingStatus** (pathing status): Additional information complementing the **EdgePathingOp**
 
-***EdgePathingSrc*** refers to the system that last handled the request before an error occurred or the request was passed to the cache server. Typically, this will be the macro/reputation list. Possible pathing sources include:
+### EdgePathingSrc
+
+**EdgePathingSrc** refers to the system that last handled the request before an error occurred or the request was passed to the cache server. Typically, this will be the macro/reputation list. Possible pathing sources include:
 
 * *err*
 * *sslv* (SSL verification checker)
@@ -33,7 +34,9 @@ $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 93 macro
 ```
 
-***EdgePathingOp*** indicates how the request was handled. *wl* is a request that passed all checks and went to your origin server. Other possible values are:
+### EdgePathingOp
+
+**EdgePathingOp** indicates how the request was handled. *wl* is a request that passed all checks and went to your origin server. Other possible values are:
 
 * *errHost* (host header mismatch, DNS errors, etc.)
 * *ban* (blocked by IP address, range, etc.)
@@ -49,7 +52,9 @@ $ jq -r .EdgePathingOp logs.json | sort -n | uniq -c | sort -n | tail
 97 wl
 ```
 
-***EdgePathingStatus*** is the value *EdgePathingSrc* returns. With a pathing source of *macro*, *user*, or *err*, the pathing status indicates the list where the IP address was found. *nr* is the most common value and it means that the request was not flagged by a security check. Some values indicate the class of user; for example, *se* means search engine. Others indicate whether the visitor saw an error or a captcha, such as, *captchaNew* or *jschlOK*.
+### EdgePathingStatus
+
+**EdgePathingStatus** is the value *EdgePathingSrc* returns. With a pathing source of *macro*, *user*, or *err*, the pathing status indicates the list where the IP address was found. *nr* is the most common value and it means that the request was not flagged by a security check. Some values indicate the class of user; for example, *se* means search engine. Others indicate whether the visitor saw an error or a captcha, such as, *captchaNew* or *jschlOK*.
 
 For example:
 
