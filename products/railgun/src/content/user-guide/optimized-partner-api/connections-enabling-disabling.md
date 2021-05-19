@@ -22,7 +22,9 @@ Expose a verified Railgun to a domain via the Cloudflare Settings user-interface
 * **rtkn** – Railgun token
 * **auto_enabled** – Railgun operation mode, `1` for active `0` for inactive
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/suggestion_set HTTP/1.1
@@ -38,7 +40,12 @@ auto_enabled=0
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -54,6 +61,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET suggestion_set
 
 `GET /api/v2/railgun/suggestion_set`
@@ -67,7 +77,9 @@ Expose a verified Railgun to a domain via the Cloudflare Settings user-interface
 * **rtkn** – Railgun token
 * **auto_enabled** – Railgun operation mode, `1` for active `0` for inactive
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/suggestion_set?host_key=&rtkn=&z=&mode= HTTP/1.1
@@ -83,7 +95,12 @@ auto_enabled=0
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -99,6 +116,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST conn_set
 
 `POST /api/v2/railgun/conn_set`
@@ -112,7 +132,9 @@ Establish a connection between a domain and a Railgun without requiring the doma
 * **rtkn** – Railgun token
 * **mode** – Railgun operation mode, `1` for active `0` for inactive
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/conn_set HTTP/1.1
@@ -128,7 +150,12 @@ mode=0
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -145,6 +172,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET conn_set
 
 `GET /api/v2/railgun/conn_set`
@@ -158,7 +188,9 @@ Establish a connection between a domain and a Railgun without requiring the doma
 * **rtkn** – Railgun token
 * **mode** – Railgun operation mode, `1` for active `0` for inactive
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/conn_set?host_key=&rtkn=&z=&mode= HTTP/1.1
@@ -174,7 +206,12 @@ mode=0
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -191,6 +228,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST conn_setmode_enabled
 
 `POST /api/v2/railgun/conn_setmode_enabled`
@@ -203,7 +243,9 @@ Enable a Railgun. If request is successful, the specified Railgun will be enable
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/conn_setmode_enabled HTTP/1.1
@@ -218,7 +260,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -234,6 +281,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET conn_setmode_enabled
 
 `GET /api/v2/railgun/conn_setmode_enabled`
@@ -246,7 +296,9 @@ Enable a Railgun. If request is successful, the specified Railgun will be enable
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/conn_setmode_enabled?host_key=&rtkn=&z= HTTP/1.1
@@ -261,7 +313,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -277,6 +334,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST conn_setmode_disabled
 
 `POST /api/v2/railgun/conn_setmode_disabled`
@@ -289,7 +349,9 @@ Disable a Railgun. If request is successful, the specified Railgun will be disab
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/conn_setmode_disabled HTTP/1.1
@@ -304,7 +366,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -320,6 +387,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET conn_setmode_disabled
 
 `GET /api/v2/railgun/conn_setmode_disabled`
@@ -332,7 +402,9 @@ Disable a Railgun. If request is successful, the specified Railgun will be disab
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/conn_setmode_disabled?host_key=&rtkn=&z= HTTP/1.1
@@ -347,7 +419,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -363,6 +440,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST conn_delete
 
 `POST /api/v2/railgun/conn_delete`
@@ -375,7 +455,9 @@ Remove a connection between a domain and a Railgun. This API call will allow a c
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/conn_delete HTTP/1.1
@@ -390,7 +472,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -406,6 +493,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET conn_delete
 
 `GET /api/v2/railgun/conn_delete`
@@ -418,7 +508,9 @@ Remove a connection between a domain and a Railgun. This API call will allow a c
 * **z** – Domain name
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/conn_delete?host_key=&rtkn=&z= HTTP/1.1
@@ -433,7 +525,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -448,3 +545,6 @@ Content-Type: application/json
      "result": "success"
 }
 ```
+
+</div>
+</details>

@@ -22,7 +22,9 @@ Create a Railgun. If request is successful, a new Railgun is added to a host acc
 * **name** – Name of Railgun (optional)
 * **pubname** – Name of Railgun shown to users (optional)
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/init HTTP/1.1
@@ -37,7 +39,12 @@ name=my-railgun
 pubname=My%20Railgun
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -56,6 +63,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET init
 
 `GET /api/v2/railgun/init`
@@ -68,7 +78,9 @@ Create a Railgun. If request is successful, a new Railgun is added to a host acc
 * **name** – Name of Railgun (optional)
 * **pubname** – Name of Railgun shown to users (optional)
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/init?host_key=&pubname=&name= HTTP/1.1
@@ -83,7 +95,12 @@ name=my-railgun
 pubname=My%20Railgun
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -102,6 +119,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST delete
 
 `POST /api/v2/railgun/delete`
@@ -113,7 +133,9 @@ Delete a Railgun. If request is successful, the Railgun with a token matching `r
 * **host_key** – Host API key
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/delete HTTP/1.1
@@ -127,7 +149,12 @@ host_key=e111dff66d1fddfda6a888c9992d4366
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -143,6 +170,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET delete
 
 `GET /api/v2/railgun/delete`
@@ -154,7 +184,9 @@ Delete a Railgun. If request is successful, the Railgun with a token matching `r
 * **host_key** – Host API key
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/delete?host_key=&rtkn= HTTP/1.1
@@ -168,7 +200,12 @@ host_key=e111dff66d1fddfda6a888c9992d4366
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -183,3 +220,6 @@ Content-Type: application/json
      "result": "success"
 }
 ```
+
+</div>
+</details>

@@ -26,7 +26,9 @@ For internal reasons, Cloudflare restricts the netmask range of 8 < netmask < 32
 * **rtkn** – Railgun token
 * **ipr** – One or more Railgun IP addresses/ranges. Use JSON array format.
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/ipr_set HTTP/1.1
@@ -40,7 +42,12 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ipr=["203.0.0.0/8","208.0.0.0/8","207.0.0.7","BE81::02C3:B44F:FE1E:8329/112"]
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -55,3 +62,6 @@ Content-Type: application/json
     "result": "success"
 }
 ```
+
+</div>
+</details>

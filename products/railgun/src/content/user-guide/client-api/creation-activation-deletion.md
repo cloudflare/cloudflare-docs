@@ -22,7 +22,9 @@ Create a Railgun. If request is successful, a new Railgun is added to a user acc
 * **name** – Name of Railgun
 * **pubname ** – Name of Railgun shown to users
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/init HTTP/1.1
@@ -38,7 +40,12 @@ pubname=My%20Railgun
 name=my-railgun
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -57,6 +64,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET init
 
 `GET /api/v2/railgun/init`
@@ -70,7 +80,9 @@ Create a Railgun. If request is successful, a new Railgun is added to a user acc
 * **name** – Name of Railgun
 * **pubname** – Name of Railgun shown to users
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/init?email=&tkn=&pubname=&name= HTTP/1.1
@@ -86,7 +98,12 @@ pubname=My%20Railgun
 name=my-railgun
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -105,6 +122,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST delete
 
 `POST /api/v2/railgun/delete`
@@ -117,7 +137,9 @@ Delete a Railgun. If request is successful, the Railgun with a token matching `r
 * **tkn** – User API token
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/delete HTTP/1.1
@@ -132,7 +154,12 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -148,6 +175,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET delete
 
 `GET /api/v2/railgun/delete`
@@ -160,7 +190,9 @@ Delete a Railgun. If request is successful, the Railgun with a token matching `r
 * **tkn** – User API token
 * **rtkn** – Railgun token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/delete?email=&tkn=&rtkn= HTTP/1.1
@@ -175,7 +207,12 @@ tkn=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5pp
 rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -190,3 +227,6 @@ Content-Type: application/json
      "result": "success"
 }
 ```
+
+</div>
+</details>

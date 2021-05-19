@@ -19,7 +19,9 @@ Assign a Railgun to a domain
  	
 * **host_key** – Host API key
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/host_get_all HTTP/1.1
@@ -33,7 +35,12 @@ Example form parameters
 host_key=e111dff66d1fddfda6a888c9992d4366
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -103,6 +110,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET host_get_all
 
 `GET /api/v2/railgun/host_get_all`
@@ -113,7 +123,9 @@ Assign a Railgun to a domain
  	
 * **host_key** – Host API key
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/host_get_all?host_key= HTTP/1.1
@@ -126,7 +138,12 @@ Example query string parameters:
 host_key=e111dff66d1fddfda6a888c9992d4366
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -196,6 +213,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## POST zone_conn_get_active
 
 `POST /api/v2/railgun/zone_conn_get_active`
@@ -207,7 +227,9 @@ List all active Railgun connections for a domain.
 * **email** – User account email
 * **tkn** – User API token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 POST /api/v2/railgun/zone_conn_get_active HTTP/1.1
@@ -221,7 +243,12 @@ host_key=e111dff66d1fddfda6a888c9992d4366
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -245,6 +272,9 @@ Content-Type: application/json
 }
 ```
 
+</div>
+</details>
+
 ## GET zone_conn_get_active
 
 `GET /api/v2/railgun/zone_conn_get_active`
@@ -256,7 +286,9 @@ List all active Railgun connections for a domain.
 * **email** – User account email
 * **tkn** – User API token
 
-### Example request
+<details>
+<summary>Example request</summary>
+<div>
 
 ```txt
 GET /api/v2/railgun/zone_conn_get_active?host_key=&z= HTTP/1.1
@@ -270,7 +302,12 @@ host_key=e111dff66d1fddfda6a888c9992d4366
 z=example.com
 ```
 
-### Example response
+</div>
+</details>
+
+<details>
+<summary>Example response</summary>
+<div>
 
 ```json
 HTTP/1.1 200 OK
@@ -293,3 +330,6 @@ Content-Type: application/json
     "result": "success"
 }
 ```
+
+</div>
+</details>
