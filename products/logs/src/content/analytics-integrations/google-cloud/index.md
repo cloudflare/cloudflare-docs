@@ -100,7 +100,7 @@ To add fields in BigQuery, edit the schema.
 
 1. Open BigQuery.
 
-2. In the menu, expand **cloudflare-se-analytics**.
+2. In the menu, expand **your-project-name**.
 
 3. Expand **cloudflare_data** and click **cf_analytics_logs**.
 
@@ -280,7 +280,7 @@ You can also create custom fields directly in Data Studio.
 
 4. Click **ADD A FIELD** above the table.
 
-5. Enter a formula in the Formula editor.
+5. Enter a formula in the **Formula** editor.
 
 6. Click **SAVE**.
 
