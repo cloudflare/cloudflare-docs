@@ -42,7 +42,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -89,7 +89,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -133,7 +133,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -178,7 +178,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -223,7 +223,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -268,7 +268,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -313,7 +313,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -358,7 +358,7 @@ z=example.com
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 

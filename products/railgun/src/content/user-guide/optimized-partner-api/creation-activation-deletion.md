@@ -39,7 +39,7 @@ pubname=My%20Railgun
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -85,7 +85,7 @@ pubname=My%20Railgun
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -129,7 +129,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
@@ -170,7 +170,7 @@ rtkn=7h8i9j0k1l2m3n4o5p6q7r8id9h0j1l
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 

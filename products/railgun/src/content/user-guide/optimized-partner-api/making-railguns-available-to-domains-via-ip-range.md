@@ -42,7 +42,7 @@ ipr=["203.0.0.0/8","208.0.0.0/8","207.0.0.7","BE81::02C3:B44F:FE1E:8329/112"]
 
 ### Example response
 
-```
+```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 
