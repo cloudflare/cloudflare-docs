@@ -142,7 +142,7 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Tx [ab18927f79... FnPush]
 Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 ```
 
-** Railgun will produce 5xx messages when the rg-listener service is unable to reach the origin web server. ** Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that us just by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports 80 and 443 in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
+**Railgun will produce 5xx messages when the rg-listener service is unable to reach the origin web server.** Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that us just by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports 80 and 443 in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
 
 ## Going live
 
@@ -154,7 +154,7 @@ When you wish to go live, Enterprise and Business users should select the desire
 
 If you notice consistent 523, 524 or other error responses, please check the [System Status Map](https://www.cloudflarestatus.com/) and [contact support](https://support.cloudflare.com/) as needed. Railgun will fall-back to direct HTTP requests if our endpoints can’t contact your Railgun daemon, but consistent error responses may indicate a system or origin server problem. When contacting support, please provide a screenshot of ```http://www.yourdomain.com/cdn-cgi/trace``` if you are able, or a [traceroute](https://support.cloudflare.com/hc/en-us/articles/200169336-How-do-I-run-a-traceroute-) to your domain so we know which datacenter your requests are hitting. You can then [pause](https://support.cloudflare.com/hc/en-us/articles/200169176-How-do-I-temporarily-deactivate-Cloudflare-) Cloudflare via the website to disable the service and resume normal website traffic.
 
-Railgun does not perform DNS queries when it receives a request for maximum efficiency and to prevent tampering. This means that the daemon is unaware of NAT routing or firewalls. NAT does not allow for addressing a public interface from within the associated LAN and Railgun requests will timeout and produce 502 errors. ** This can be corrected by setting up a static IP mapping. ** You can set that either through the hosts file for your system (usually at the path /etc/hosts) or through the `railgun-nat.conf` file in the same directory as the `railgun.conf` file. Please contact support if you require assistance with the NAT configuration file.
+Railgun does not perform DNS queries when it receives a request for maximum efficiency and to prevent tampering. This means that the daemon is unaware of NAT routing or firewalls. NAT does not allow for addressing a public interface from within the associated LAN and Railgun requests will timeout and produce 502 errors. **This can be corrected by setting up a static IP mapping.** You can set that either through the hosts file for your system (usually at the path /etc/hosts) or through the `railgun-nat.conf` file in the same directory as the `railgun.conf` file. Please contact support if you require assistance with the NAT configuration file.
 
 ## Common issues
 
@@ -164,19 +164,19 @@ This commonly occurs when Railgun cannot reach your origin web server over port 
 
 ---
 
-** Railgun is returning a ** `connection failed 127.0.0.1:443/welcome.cloudflare.com: x509: certificate is valid for www.cloudflare.com, not welcome.cloudflare.com` ** error. **
+**Railgun is returning a** `connection failed 127.0.0.1:443/welcome.cloudflare.com: x509: certificate is valid for www.cloudflare.com, not welcome.cloudflare.com` **error.**
 
 Your origin webserver should have a certificate matching its hostname. If you are on an internal network and are aware of the risks, you can set `validate.cert = 0` in `railgun.conf` to turn off certificate validation (not recommended).
 
 ---
 
-** I’m seeing ** `bad Content-Length: "-1"` ** . **
+**I’m seeing** `bad Content-Length: "-1"` **.**
 
 Railgun expects that all POST, PUT, PATCH (and other non-idempotent methods) requests have either a `Content-Length` header or a `Transfer-Encoding: chunked` header present.
 
 ---
 
-** There are errors containing ** `memcached: connection failed` (Unix socket) ** or ** `dial tcp 127.0.0.1:11211: i/o timeout` (TCP) ** in the logs. **
+**There are errors containing** `memcached: connection failed` (Unix socket) **or** `dial tcp 127.0.0.1:11211: i/o timeout` (TCP) **in the logs.**
 
 Railgun cannot connect to the memcached server. These errors should not cause visible errors, but will cause Railgun to stream (and not compress) responses.
 
@@ -184,7 +184,7 @@ You should confirm that memcached is running, is accepting connections, and conf
 
 ---
 
-** How can I tell what the compression ratio for a request is? **
+**How can I tell what the compression ratio for a request is?**
 
 `rg-diag` is installed alongside Railgun, and allows you to decode the `Cf-Railgun` header — e.g.
 
