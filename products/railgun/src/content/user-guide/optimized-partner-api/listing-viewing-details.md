@@ -1,11 +1,12 @@
 ---
-title: Listing and Viewing Railgun Details
+title: Listing and viewing Railgun details
 type: document
 order: 12
 pcx-content-type: configuration
 ---
 
-# Listing and Viewing Railgun Details
+# Listing and viewing Railgun details
+
 The following API calls can be used to determine details and the status or one or more Railguns assigned to an account. These calls are sometimes needed to determine the unique `rtkn` or `id` assigned to a Railgun.
 
 ## POST host_get_all
@@ -14,23 +15,26 @@ The following API calls can be used to determine details and the status or one o
 
 Assign a Railgun to a domain
 
-### Form Parameters:
+### Form parameters
  	
 * **host_key** – Host API key
 
-### Example request:
+### Example request
+
 ```txt
 POST /api/v2/railgun/host_get_all HTTP/1.1
 Host: www.cloudflare.com
 Accept: */*
 Content-Type: application/x-www-form-urlencoded
 
-Example form parameters:
+Example form parameters
+
 
 host_key=e111dff66d1fddfda6a888c9992d4366
 ```
 
-### Example response:
+### Example response
+
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -105,11 +109,12 @@ Content-Type: application/json
 
 Assign a Railgun to a domain
 
-### Query Parameters:
+### Query parameters
  	
 * **host_key** – Host API key
 
-### Example request:
+### Example request
+
 ```txt
 GET /api/v2/railgun/host_get_all?host_key= HTTP/1.1
 Host: www.cloudflare.com
@@ -121,7 +126,8 @@ Example query string parameters:
 host_key=e111dff66d1fddfda6a888c9992d4366
 ```
 
-### Example response:
+### Example response
+
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -196,12 +202,13 @@ Content-Type: application/json
 
 List all active Railgun connections for a domain.
 
-### Form Parameters:
+### Form parameters
 
 * **email** – User account email
 * **tkn** – User API token
 
-### Example request:
+### Example request
+
 ```txt
 POST /api/v2/railgun/zone_conn_get_active HTTP/1.1
 Host: www.cloudflare.com
@@ -214,7 +221,8 @@ host_key=e111dff66d1fddfda6a888c9992d4366
 z=example.com
 ```
 
-### Example response:
+### Example response
+
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -243,12 +251,13 @@ Content-Type: application/json
 
 List all active Railgun connections for a domain.
 
-### Form Parameters:
+### Form parameters
  	
 * **email** – User account email
 * **tkn** – User API token
 
-### Example request:
+### Example request
+
 ```txt
 GET /api/v2/railgun/zone_conn_get_active?host_key=&z= HTTP/1.1
 Host: www.cloudflare.com
@@ -261,7 +270,8 @@ host_key=e111dff66d1fddfda6a888c9992d4366
 z=example.com
 ```
 
-### Example response:
+### Example response
+
 ```
 HTTP/1.1 200 OK
 Content-Type: application/json

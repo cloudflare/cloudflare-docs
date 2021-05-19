@@ -81,6 +81,7 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
 </TableWrap>
 
 ## Support
+
 Support requests can be made through normal channels via [email](mailto:support@cloudflare.com) or https://support.cloudflare.com.
 
 Where possible you should provide:
@@ -91,6 +92,7 @@ Where possible you should provide:
 Providing the IP address or hostname of your Railgun server will also allow our Support team to test connectivity remotely. Please let us know if you have firewalled your Railgun server when lodging support request.
 
 ## Implementation Details
+
 Railgun works by recognizing that uncacheable web pages do not change very rapidly. For example, we captured the CNN homepage HTML once, then again after five minutes and then again after one hour. The page sizes were 92,516, five minutes later still 92,516 and one hour later 93,727.
 
 CNN sets the caching on this page to 60 seconds. After one minute it’s necessary to download the entire page again. But looking inside the page itself not much has changed. In fact, the change between versions is on order of 100s of bytes out of almost 100k. Here’s a screenshot of one of the small binary differences between the CNN home page at five minute intervals. The yellow bytes have changed, the rest have not:

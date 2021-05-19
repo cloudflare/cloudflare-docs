@@ -1,11 +1,11 @@
 ---
-title: Railgun Execution
+title: Railgun execution
 type: document
 order: 4
-pcx-content-type: configuration
+pcx-content-type: reference
 ---
 
-# Railgun Execution
+# Railgun execution
 
 Railgun consists of two programs: `rg-listener` and `rg-sender`. `rg-listener` is to be installed at a hosting provider or end-user environment and listens for WAN connections. `rg-sender` is to be installed at Cloudflare locations and establishes connections across the WAN.
 
@@ -71,17 +71,22 @@ Parameter | Description
 </TableWrap>
 
 ## Running
+
 1. Create a `rg.config` file containing the parameters above.
 2. Start memcached and then run `rg-listener` with the `-config` option set to the path of the `rg.config` file. Errors on start will output to stderr.
 
 ## Signal Handling
+
 Railgun handles some signals for easier daemon control.
 
 ### SIGHUP
+
 Reload configuration file. Certain configuration options cannot be dynamically changed and require a full restart. The following parameters can be changed at runtime: compress.data, lan.timeout, log.level, map.file, memcached.expiration, memcached.limit, memcached.servers, memcached.timeout, stats.url, syslog.addr, validate.cert
 
 ### SIGQUIT
+
 Perform a graceful shutdown without dropping active connections. Upon successful shutdown, deactivate the Railgun matching the `activation.token` via the Cloudflare API until the instance is restarted.
 
 ### SIGUSR2
+
 Perform a binary upgrade by spawning a new child, and then terminating the previously running parent process. This signal is automatically sent during the post-install for binary yum/apt package upgrades.

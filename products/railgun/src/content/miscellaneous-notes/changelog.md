@@ -1,11 +1,12 @@
 ---
-title: ChangeLog
+title: Changelog
 type: overview
 order: 18
 pcx-content-type: reference
 ---
 
-# ChangeLog
+# Changelog
+
 ```
 * Apr 23 2018 Cloudflare Inc <help@cloudflare.com> - 5.3.3
 - Uses go 1.10.1
