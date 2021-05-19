@@ -148,7 +148,7 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 
 It is recommended that you consult the [Testing Railgun](/user-guide/installation#testing-railgun) section before enabling it for all visitors to your site.
 
-When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn_set](/user-guide/optimized-partner-api/conections-enabling-disabling#get-conn_set) with `mode` set to `0` or [conn_setmode_enabled](/user-guide/optimized-partner-api/conections-enabling-disabling#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
+When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn_set](/user-guide/optimized-partner-api/connections-enabling-disabling#get-conn_set) with `mode` set to `0` or [conn_setmode_enabled](/user-guide/optimized-partner-api/connections-enabling-disabling#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
 
 ## Potential problems
 
