@@ -1,5 +1,5 @@
 ---
-title: Test your configuration
+title: Test your exposed credentials checks configuration
 pcx-content-type: reference
 order: 4
 ---
