@@ -33,7 +33,7 @@ Railgun can report statistics via syslog, JSON via a HTTP POST request, or throu
 
 If `stats.listen` is set to a non-empty `host:post` string, Railgun will spawn a local HTTP server and listen on that interface awaiting a `GET /` HTTP request. The response will be JSON-encoded statistics. The statistics returned will change according to `stats.interval`. If the Railgun statistics port is not protected via a firewall, the host portion should be set to a loopback interface (e.g., `127.0.0.1` or `localhost`) to prevent external access. An example response follows:
 
-```txt
+```sh
 $ curl -v http://127.0.0.1:22408/
 
 > GET / HTTP/1.1
