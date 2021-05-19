@@ -32,8 +32,8 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
 ```
 
-* `dataset` - the category of logs you want to receive. See [Log fields](https://developers.cloudflare.com/logs/log-fields) for the full list of supported datasets. 
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/understanding-logpush-api#options)
+* `dataset` - the category of logs you want to receive. See [Log fields](/reference/log-fields) for the full list of supported datasets. 
+* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options)
 
 Example request using cURL:
 

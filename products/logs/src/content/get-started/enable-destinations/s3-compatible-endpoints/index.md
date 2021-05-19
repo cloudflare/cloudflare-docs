@@ -15,7 +15,7 @@ Cloudflare Logpush now supports S3-compatible destinations in an API-only beta, 
 * [Linode Object Storage](https://www.linode.com/products/object-storage/)
 * On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
-For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](https://developers.cloudflare.com/logs/logpush) documentation.
+For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](/get-started/) documentation.
 
 To set up S3-compatible endpoints:
 1. Create a job with the appropriate endpoint URL and authentication parameters
@@ -44,7 +44,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 </Aside>
 
 * `dataset` - the category of logs you want to receive; either `http_requests` (default), `spectrum_events` or `firewall_events`
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/understanding-logpush-api#options)
+* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options)
 
 Example request using cURL:
 

@@ -13,13 +13,13 @@ To get started:
 
 1. Set up a storage provider and grant Cloudflare access. For specific instructions:
 
-   - [Enable Amazon S3](/logs/get-started/enable-destinations/aws-s3/)
-   - [Enable Datadog](/logs/get-started/enable-destinations/datadog/)
-   - [Enable Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/)
-   - [Enable Microsoft Azure](/logs/get-started/enable-destinations/azure/)
-   - [Enable Splunk](/logs/get-started/enable-destinations/splunk/)
-   - [Enable Sumo Logic](/logs/get-started/enable-destinations/sumo-logic/)
-   - [Enable S3-compatible endpoints](/logs/get-started/enable-destinations/s3-compatible-endpoints/)
+   - [Enable Amazon S3](/get-started/enable-destinations/aws-s3/)
+   - [Enable Datadog](/get-started/enable-destinations/datadog/)
+   - [Enable Google Cloud Storage](/get-started/enable-destinations/google-cloud-storage/)
+   - [Enable Microsoft Azure](/get-started/enable-destinations/azure/)
+   - [Enable Splunk](/get-started/enable-destinations/splunk/)
+   - [Enable Sumo Logic](/get-started/enable-destinations/sumo-logic/)
+   - [Enable S3-compatible endpoints](/get-started/enable-destinations/s3-compatible-endpoints/)
 
 2. Have your Cloudflare API credentials and other information handy, including:
 

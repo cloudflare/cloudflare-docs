@@ -28,7 +28,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   * `<SPLUNK-ENDPOINT-URL>`: The Splunk raw HTTP Event Collector URL with port. Example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
       * Cloudflare expects the HEC network port to be configured to :443 or :8088. 
       * Cloudflare expects the Splunk endpoint to be /services/collector/raw while configuring and setting up the Logpush job.  
-      * Ensure you've enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/logs/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
+      * Ensure you've enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
   * `<SPLUNK-CHANNEL-ID>`: A unique channel ID. This is a random GUID that you can generate by:
       * Using an online tool like the [GUID generator](https://www.guidgenerator.com/) 
       * Using command line.  Example: `python -c 'import uuid; print(uuid.uuid4())'` 
@@ -47,7 +47,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 * `dataset` - The category of logs you want to receive, which is either `http_requests` (default), `spectrum_events`, or `firewall_events`.
 
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`
+* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`
 
 Example request using cURL:
 
