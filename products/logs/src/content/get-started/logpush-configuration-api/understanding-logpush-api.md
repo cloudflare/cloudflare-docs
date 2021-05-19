@@ -135,7 +135,7 @@ curl -sv \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 
-In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logpull-api/requesting-logs/#parameters)* for more info.
+In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logpull/requesting-logs/#parameters)* for more info.
 
 If you don't change any options, you will receive logs with default fields that are unsampled (i.e., `sample=1`).
 

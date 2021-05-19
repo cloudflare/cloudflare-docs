@@ -7,7 +7,7 @@ pcx-content-type: interim
 
 ## Terminology categories
 
-### General Te
+### General Terms
 
 #### Request
 
