@@ -1,5 +1,6 @@
 ---
 order: 9
+pcx-content-type: reference
 ---
 
 # Common API calls

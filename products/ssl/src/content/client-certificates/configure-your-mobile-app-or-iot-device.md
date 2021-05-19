@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: tutorial
 ---
 
 # Configure your mobile app or IoT device

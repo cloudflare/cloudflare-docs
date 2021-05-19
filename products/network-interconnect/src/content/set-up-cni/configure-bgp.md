@@ -1,6 +1,7 @@
 ---
 title: Configure BGP and GRE
 order: 5
+pcx-content-type: tutorial
 ---
 
 # Configure the BGP and GRE
@@ -18,7 +19,7 @@ Cloudflare v6: 1234:ab00:12:3::7ac2:d64a/127
 Acme: 1234:ab00:12:3::7ac2:d64b/127
 ```
 
-Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/set-up-cni/configure-x-connect), the ping tests confirm packets are flowing over the link.
+Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/set-up-cni/configure-cross-connect), the ping tests confirm packets are flowing over the link.
 
 If you have a virtual link via Megaport, the IP provisioning may fail if you have not configured the VLAN with the VLAN provided by your Customer Success Manager.
 
@@ -38,4 +39,4 @@ After you accept the BGP session, traffic begins flowing over the CNI. To confir
 
 ## Go live
 
-When traffic begins flowing over the connection, you are fully set up with CNI!
+When traffic begins flowing over the connection, you are fully set up with CNI.

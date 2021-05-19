@@ -1,6 +1,7 @@
 ---
 title: Types of Interconnect
 order: 1
+pcx-content-type: reference
 ---
 
 # Types of interconnect
