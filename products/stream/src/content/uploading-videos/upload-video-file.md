@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Upload video file
@@ -69,7 +70,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `allowedorigins`
 
-  - A comma separated strings containing the domains. This will set the [allowed origins setting](/viewing-your-videos/securing-your-stream) for the video.
+  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](../../viewing-videos/securing-your-stream#security-considerations) for the video.
 
 - `thumbnailtimestamppct`
 
