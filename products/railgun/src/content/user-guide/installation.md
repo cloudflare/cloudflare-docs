@@ -61,7 +61,7 @@ If you will be using Railgun in combination with a website hosted behind the sam
 
 Railgun requires an activation step in order to use. To activate, you will need to update the configuration file with the external IP address or a hostname which resolves to the external IP of your Railgun instance for `activation.public_ip` and your activation token for `activation.token`. You can determine the external IP address of a server with the following command:
 
-```
+```sh
 $ curl icanhazip.com
 ```
 
@@ -69,7 +69,7 @@ By default, Railgun will listen on all interfaces, although it is good practice 
 
 Business and Enterprise users can find the Railgun activation token listed on the [Account Settings page](https://www.cloudflare.com/a/account/my-account). Details on this page can be found in the Administration documentation. Optimized Partners must use the [init](/user-guide/optimized-partner-api/manage-railguns#get-init) API method to acquire an activation token (`rtkn`). Business and Enterprise users should add a Railgun on the listing page, if you haven’t already. It can be named anything you like. After adding a Railgun, the token will be listed on the page and you can toggle the Railgun to ‘On.’ The token is a 32 character hash of numbers and letters. Copy this hash into the `activation.token` option in your Railgun configuration file. If your public IP and activation token are properly configured, the first time you start Railgun it will register and download a newly generated SSL certificate to encrypt traffic. To make sure that activation works properly, check your logs for a successful activation response when starting Railgun:
 
-```
+```sh
 $  tail -f /var/log/messages
 Oct 27 22:29:41 www rg-listener: [Activation] Activation POST completed.
 Oct 27 22:29:41 www rg-listener: [Activation] Assigned Railgun ID: 1
@@ -83,7 +83,7 @@ The newly generated certificate is signed against the port2408.net domain and ou
 
 You should start the service in the manner that your operating system recommends. This is likely either by using the init script directly, or by invoking the service command:
 
-```
+```sh
 (GNU/Linux)
 $ /etc/init.d/railgun start
 Starting railgun:                                          [  OK  ]
@@ -94,7 +94,7 @@ Starting railgun:                                          [  OK  ]
 
 After running the init script, there should be an `rg-listener` process listening on the configured port (2408 by default). You can use netstat to make sure:
 
-```
+```sh
 (GNU/Linux)
 $ netstat -plnt | grep 2408
 tcp        0      0 :::2408                     :::*                        LISTEN      2981/rg-listener
@@ -102,7 +102,7 @@ tcp        0      0 :::2408                     :::*                        LIST
 
 Provided that your port is open to Cloudflare traffic, it’s time for testing. If you don’t see the process running, then there may be an issue with activation or your configuration. The Railgun panic log, which is written to `/var/log/railgun/panic.log` by default, may contain more information. You can also attempt to start Railgun without the init script to see if any errors are present at start:
 
-```
+```sh
 (GNU/Linux)
 $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 ```
@@ -112,7 +112,7 @@ Once you have configured Railgun, you can test its operation using the `Test` bu
 
 The log file can also be used to monitor results. By default, we log only errors. For testing, you need to raise the `log.level` option from 0 to 5 in your Railgun configuration and then restart the service. You can then tail the logs to watch the requests being processed:
 
-```
+```sh
 $  tail -f /var/log/messages
 Oct 27 23:35:57 www railgun[199.27.130.135:22114]: Handling new WAN connection
 Oct 27 23:35:57 www railgun[199.27.130.135:22114]: Rx [0000000000... FnPing 2012-10-27 23:37:55.872617 +0000 UTC]
