@@ -32,6 +32,7 @@ jobs:
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
+      railgun: ${{ steps.filter.outputs.railgun }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
@@ -102,6 +103,8 @@ jobs:
               - 'products/pages/**'
             page-shield:
               - 'products/page-shield/**'
+            railgun:
+              - 'products/railgun/**'
             randomness-beacon:
               - 'products/randomness-beacon/**'
             registrar:
@@ -601,6 +604,26 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
+
+
+build-railgun:
+  runs-on: ubuntu-latest
+  needs: changes
+  if: ${{ needs.changes.outputs.railgun == 'true' }}
+  defaults:
+    run:
+      shell: bash
+      working-directory: products/railgun
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14.2.0
+    - run: |
+        npm install
+        mkdir .docs
+        npm run ghactionsbootstrap
+        npm run build
 
   build-randomness-beacon:
     runs-on: ubuntu-latest
