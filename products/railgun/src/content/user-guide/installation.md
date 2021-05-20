@@ -181,7 +181,7 @@ You should confirm that memcached is running, is accepting connections, and conf
 
 **How can I tell what the compression ratio for a request is?**
 
-`rg-diag` is installed alongside Railgun, and allows you to decode the `Cf-Railgun` header — e.g.
+`rg-diag` is installed alongside Railgun, and allows you to decode the `Cf-Railgun` header — example:
 
 ```sh
 $ bin/rg-diag -decode="151df128a1 2.05 0.009465 0031 5360"
