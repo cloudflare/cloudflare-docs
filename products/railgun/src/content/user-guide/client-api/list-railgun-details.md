@@ -11,7 +11,7 @@ The following API calls can be used to determine details and the status or one o
 
 `POST /api/v2/railgun/user_get_all`
 
-Assign a Railgun to a domain
+Assign a Railgun to a domain.
 
 ### Form parameters
  	
@@ -116,7 +116,7 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/user_get_all`
 
-Assign a Railgun to a domain
+Assign a Railgun to a domain.
 
 ### Query parameters
  	
