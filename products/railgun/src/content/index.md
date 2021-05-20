@@ -11,10 +11,8 @@ Railgun is a WAN optimization technology developed by Cloudflare and is availabl
 
 ## User’s guide
 
-General documentation for end-users
 <DirectoryListing path="/user-guide"/>
 
 ## Miscellaneous notes
 
-License information and changelog:
 <DirectoryListing path="/miscellaneous-notes"/>
