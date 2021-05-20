@@ -105,7 +105,7 @@ Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A sin
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
 ```sh
-C:\Cloudflared\bin\cloudflared.exe tunnel create <NAME>
+C:\Cloudflared\bin\cloudflared.exe tunnel list
 ```
 
 ## Configure the Tunnel
