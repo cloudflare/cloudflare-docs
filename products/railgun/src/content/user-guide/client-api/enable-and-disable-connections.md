@@ -11,7 +11,7 @@ After a Railgun has been activated, it can be assigned to a particular domain wi
 
 `POST /api/v2/railgun/conn_set`
 
-Establish a connection between a domain and a Railgun
+Establish a connection between a domain and a Railgun.
 
 ### Form parameters
  	
@@ -68,7 +68,7 @@ Content-Type: application/json
 
 `GET /api/v2/railgun/conn_set`
 
-Establish a connection between a domain and a Railgun
+Establish a connection between a domain and a Railgun.
 
 ### Query parameters
  	
