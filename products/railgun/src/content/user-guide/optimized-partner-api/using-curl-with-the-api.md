@@ -9,7 +9,7 @@ Here is how to create, activate, assign, and enable a Railgun using cURL and the
 
 1. Look up the `user_key` for the domain to add a Railgun to. This can be done using the [user_lookup](http://www.cloudflare.com/docs/host-api.html#s3.2.3) Host API method and the user’s email address or unique ID:
 
-```
+```json
 $ curl -s 'https://api.cloudflare.com/host-gw.html?act=user_lookup&host_key=YOUR_HOST_API_KEY&cloudflare_email=user@example.com'
 
 {
