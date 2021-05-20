@@ -1,6 +1,5 @@
 ---
 title: User guide
-type: document
 order: 1
 pcx-content-type: navigation
 ---

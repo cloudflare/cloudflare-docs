@@ -1,6 +1,5 @@
 ---
 title: List Railgun details
-type: document
 order: 8
 pcx-content-type: configuration
 ---

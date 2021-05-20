@@ -1,6 +1,5 @@
 ---
 title: Railgun execution
-type: document
 order: 4
 pcx-content-type: reference
 ---

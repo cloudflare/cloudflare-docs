@@ -1,6 +1,5 @@
 ---
 title: Manage Railguns
-type: document
 order: 11
 pcx-content-type: configuration
 ---

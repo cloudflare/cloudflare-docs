@@ -1,6 +1,5 @@
 ---
 title: Introduction
-type: document
 order: 2
 pcx-content-type: reference
 ---

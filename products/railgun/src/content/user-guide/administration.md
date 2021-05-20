@@ -1,6 +1,5 @@
 ---
 title: Administration
-type: document
 order: 5
 pcx-content-type: how-to
 ---

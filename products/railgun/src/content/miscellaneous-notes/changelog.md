@@ -1,6 +1,5 @@
 ---
 title: Changelog
-type: overview
 order: 18
 pcx-content-type: reference
 ---

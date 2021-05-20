@@ -1,6 +1,5 @@
 ---
 title: Enable and disable connections
-type: document
 order: 9
 pcx-content-type: configuration
 ---

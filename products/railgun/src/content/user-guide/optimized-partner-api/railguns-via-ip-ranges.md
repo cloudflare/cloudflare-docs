@@ -1,6 +1,5 @@
 ---
 title: Railguns via IP ranges
-type: document
 order: 14
 pcx-content-type: configuration
 ---
