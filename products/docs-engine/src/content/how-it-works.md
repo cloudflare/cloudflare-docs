@@ -24,7 +24,7 @@ Each docs site built with the engine needs the following structure:
 4. A `.gitignore` which ignores at least `.docs`, `dist/worker.js`, and `node_modules`.
 5. Content in `src/content/` — A single `index.md` will do.
 
-For a repo holding a single docs site, everything but the content should be in the root, as is the case with the [Docs Engine minimal example](https://github.com/adamschwartz/docs-engine-example/tree/c45fa9f0a8affc68baf5d3517f8b890ba0522531).
+For a repo holding a single docs site, everything but the content should be in the root.
 
 However, these files can also be placed inside any sub-folder of your project. When doing this, you’ll need to then customize the `contentRepoFolder` property in `docs-config.js`, which is how the [products inside @cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs/tree/production/products) are all set up, e.g. the [Workers product](https://github.com/cloudflare/cloudflare-docs/blob/1efd366c25bc1bdd1a40f7bc4737310c6b00d15e/products/workers/docs-config.js#L6).
 
@@ -61,31 +61,33 @@ You’ll also need a `docs-config.js` file, which is used to customize the proje
 filename: docs-config.js
 ---
 module.exports = {
-  product: "Example",
-  pathPrefix: "",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
-  contentRepo: "adamschwartz/docs-engine-example",
+  product: "Docs Engine",
+  pathPrefix: "/docs-engine",
+  productIconKey: "docs-engine",
+  contentRepo: "cloudflare/cloudflare-docs",
+  contentRepoFolder: "products/docs-engine",
   externalLinks: [
     {
       title: "Docs Engine on GitHub",
       url: "https://github.com/cloudflare/cloudflare-docs-engine"
     },
     {
-      title: "example.com",
-      url: "https://example.com"
+      title: "Cloudflare Developer documentation",
+      url: "https://developers.cloudflare.com/docs"
     },
   ],
   search: {
     indexName: "",
     apiKey: "",
+    algoliaOptions: { "facetFilters": "" }
   },
   siteMetadata: {
-    title: "Example docs",
-    description: "These docs are an example of of a docs site built with the Cloudflare Docs Engine.",
-    author: "@adamschwartz",
-    url: "https://docs-engine-example.adam.workers.dev/",
+    title: "Cloudflare Docs Engine docs",
+    description: "Documentation for the open-source Cloudflare Documentation engine which powers Cloudflare's open-source documentation.",
+    author: "@cloudflare",
+    url: "http://developers.cloudflare.com/docs-engine",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",
-  },
+  }
 }
 ```
 
@@ -146,24 +148,6 @@ Some helpful things to know:
 - If you want to create reusable “partials” that don’t generate pages, start the file names with `_`. See [an example in the Workers docs](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/_partials/_tutorials-before-you-start.md). Then you can [import them](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-slackbot/index.md#L6-L10) as you would any other MDX component.
 
 Learn more about the [content framework](/contributing/content/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
-
---------------------------------
-
-## Example site
-
-Here’s a minimal example site built with Docs Engine:
-
-<div className="docs-engine-example-demo"><div><div>
-<Demo src="https://docs-engine-example.adam.workers.dev" title="Docs Engine example site" aspectRatio={16/9}/>
-<style dangerouslySetInnerHTML={{__html:`
-  .docs-engine-example-demo { position: relative; pointer-events: none; overflow: hidden }
-  @media (max-width: 1430px) { .docs-engine-example-demo {display: none } /* Fix MDX parsing */ }
-  .docs-engine-example-demo > div {width: 200%; height: 400px; }
-  .docs-engine-example-demo > div > div {transform: scale(.5); transform-origin: 0 0; }
-`}}/>
-</div></div></div>
-
-__[Open demo](https://docs-engine-example.adam.workers.dev)__ · ([GitHub](https://github.com/adamschwartz/docs-engine-example))
 
 --------------------------------
 
