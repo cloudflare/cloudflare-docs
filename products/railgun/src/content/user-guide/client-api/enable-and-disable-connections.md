@@ -124,6 +124,7 @@ Content-Type: application/json
 </details>
 
 ## POST conn_setmode_enabled
+
 `POST /api/v2/railgun/conn_setmode_enabled`
 
 Enable a Railgun. If request is successful, the specified Railgun will be enabled and traffic for the specified domain will be proxied through Railgun.
