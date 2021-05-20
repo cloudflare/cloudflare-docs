@@ -145,7 +145,7 @@ const products = [
   },
   {
     title: "Railgun",
-    href: "https://www.cloudflare.com/docs/railgun/",
+    path: "railgun",
     icon: "railgun",
   },
   {
