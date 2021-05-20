@@ -102,4 +102,4 @@ curl -s \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
-*See [HTTP request fields](/log-fields/#http-requests)* for the currently available fields.
+*See [HTTP request fields](/reference/log-fields/#http-requests)* for the currently available fields.
