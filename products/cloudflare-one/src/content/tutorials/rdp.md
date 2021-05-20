@@ -45,7 +45,7 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 ## Install `cloudflared`
 
-Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 Download the version of `cloudflared` that matches your architecture from the releases [available here](https://github.com/cloudflare/cloudflared/releases).
 
@@ -92,15 +92,15 @@ Copy the file to the `systemprofile` directory created previously.
 copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
 ```
 
-## Create an Argo Tunnel
+## Create a Tunnel
 
-Next, [create an Argo Tunnel](/connections/connect-apps/create-tunnel) with the command below.
+Next, [create a Tunnel](/connections/connect-apps/create-tunnel) with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
 ```
 
-Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A single Argo Tunnel can also serve traffic for multiple hostnames to multiple services in your environment, including a mix of connection types like SSH and HTTP.
+Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A single Tunnel can also serve traffic for multiple hostnames to multiple services in your environment, including a mix of connection types like SSH and HTTP.
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
@@ -246,6 +246,6 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `224
 
 ## Video Guides
 
-In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Argo Tunnel.
+In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Cloudflare Tunnel.
 
 <StreamVideo id="2a3073fb7881b4fcba4b9e3709dfaacf"/>

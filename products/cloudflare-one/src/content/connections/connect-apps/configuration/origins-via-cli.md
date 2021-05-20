@@ -76,7 +76,7 @@ Disables chunked transfer encoding; useful if you are running a WSGI server.
 |--|--|
 | `--hello-world` | `TUNNEL_HELLO_WORLD` |
 
-Use the established tunnel to expose a `Hello world` HTTP server for testing Argo Tunnel. Mutually exclusive with the `--url argument`.
+Use the established tunnel to expose a `Hello world` HTTP server for testing Cloudflare Tunnel. Mutually exclusive with the `--url argument`.
 
 ### `--proxy-connect-timeout`
 
