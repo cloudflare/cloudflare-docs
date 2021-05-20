@@ -1,6 +1,6 @@
 ---
 title: Overview
-type: overview
+type: document
 order: 0
 pcx-content-type: landing-page
 ---
