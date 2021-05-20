@@ -39,13 +39,13 @@ Once this has been set up, run the following command as root:
 
 ### RPM-based
 
-```
+```sh
 $ yum install railgun-stable
 ```
 
 ### DEB-based
 
-```
+```sh
 $ apt-get install railgun-stable
 ```
 
