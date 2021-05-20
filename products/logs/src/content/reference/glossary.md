@@ -136,9 +136,9 @@ Challenge based on user configurations set for visitor’s IP in either the **We
 
 No record was found about this request/IP to classify it somewhere else.
 
-#### Whitelist
+#### Allowlist
 
-The request has been sent from a whitelisted IP address.
+The request has been sent from an allowlisted IP address.
 
 #### SearchEngine
 

@@ -7,7 +7,7 @@ category: 🔐 Zero Trust
 
 The Server Message Block (SMB) protocol allows users to access, read, and write to shared files. Cloudflare for Teams provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to shared files over SMB without being on a virtual private network (VPN).
 
-You can set up this connection by downloading and installing the Cloudflare daemon, `cloudflared`, on the machine hosting the file share and on the client machine. `cloudflared` will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. SMB traffic will then be proxied over this connection using [Argo Tunnel](https://www.cloudflare.com/products/argo-tunnel/). 
+You can set up this connection by downloading and installing the Cloudflare daemon, `cloudflared`, on the machine hosting the file share and on the client machine. `cloudflared` will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. SMB traffic will then be proxied over this connection using [Cloudflare Tunnel](https://www.cloudflare.com/products/argo-tunnel/). 
 
 🗺️ This walkthrough covers how to:
 1. [How to connect the machine hosting the file share to Cloudflare](#host-machine)

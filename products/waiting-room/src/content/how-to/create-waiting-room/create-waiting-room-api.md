@@ -1,8 +1,6 @@
 ---
-title: Create a Waiting Room via the API
-alwaysopen: true
-weight: 260
-hidden: false
+order: 1
+pcx-content-type: tutorial
 ---
 
 # Create a Waiting Room via the API

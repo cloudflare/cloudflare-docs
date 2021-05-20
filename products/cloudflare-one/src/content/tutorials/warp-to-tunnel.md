@@ -4,11 +4,11 @@ category: 🌐 Connections
 difficulty: Advanced
 ---
 
-# Connect from WARP to a private network on Cloudflare using Argo Tunnel
+# Connect from WARP to a private network on Cloudflare using Cloudflare Tunnel
 
-You can use [Argo Tunnel](/connections/connect-apps) to connect applications and services to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections.
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and services to Cloudflare's network. Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections.
 
-You can create and configure Argo Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). You can also use Argo Tunnel to connect any service that relies on a TCP-based protocol to Cloudflare's network. Users in your organization can then reach the service by enrolling into your organization's Cloudflare for Teams account and using the WARP agent.
+You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). You can also use Cloudflare Tunnel to connect any service that relies on a TCP-based protocol to Cloudflare's network. Users in your organization can then reach the service by enrolling into your organization's Cloudflare for Teams account and using the WARP agent.
 
 Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
@@ -32,7 +32,7 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -46,7 +46,7 @@ The command will launch a browser window and prompt you to login with your Cloud
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
-You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
+You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
@@ -56,9 +56,9 @@ You can now use `cloudflared` to control Argo Tunnel connections in your Cloudfl
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge.
+You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge.
 
-Begin by [creating an Argo Tunnel](/connections/connect-apps/create-tunnel) with an associated name. This example uses the name `grafana`.
+Begin by [creating a Tunnel](/connections/connect-apps/create-tunnel) with an associated name. This example uses the name `grafana`.
 
 ```bash
 cloudflared tunnel create grafana
@@ -74,9 +74,9 @@ cloudflared tunnel list
 
 ![List Tunnel](../static/secure-origin-connections/warp-to-tunnel/list-tunnel.png)
 
-Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Argo Tunnel will send connections.
+Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
-This example tells Argo Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
+This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
 ```bash
 cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -125,7 +125,7 @@ Navigate to the `Policies` page of the Gateway section in the Cloudflare for Tea
 
 ## Connect via WARP
 
-Users can now connect over this private network by [enrolling their devices into the WARP agent](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp) in the same account as the Argo Tunnel configuration. They must use the `Gateway with WARP` mode. A specific tutorial for enrollment is also [available](https://developers.cloudflare.com/cloudflare-one/tutorials/block-football-users).
+Users can now connect over this private network by [enrolling their devices into the WARP agent](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp) in the same account as the Cloudflare Tunnel configuration. They must use the `Gateway with WARP` mode. A specific tutorial for enrollment is also [available](https://developers.cloudflare.com/cloudflare-one/tutorials/block-football-users).
 
 Once enrolled, they will be able to connect to the private IPs configured for HTTP traffic in this example or arbitrary TCP traffic.
 

@@ -1,10 +1,11 @@
 ---
 order: 1
+pcx-content-type: interim
 ---
 
 # Client certificates
 
-Use Cloudflare’s public key infrastructure (PKI) to create client certificates. You can use these certificates with Cloudflare [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield) to enforce mutual Transport Layer security (mTLS) encryption.
+Use Cloudflare public key infrastructure (PKI) to create client certificates. You can use these certificates with Cloudflare [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield) to enforce mutual Transport Layer security (mTLS) encryption.
 
 To use API Shield to protect your API or web application, you must do the following:
 

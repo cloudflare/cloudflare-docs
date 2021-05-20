@@ -1,5 +1,6 @@
 ---
 title: Update a rule in a ruleset
+pcx-content-type: reference
 alwaysopen: true
 order: 786
 ---

@@ -1,8 +1,6 @@
 ---
-title: Configure settings from the Cloudflare dashboard
-alwaysopen: false
-weight: 254
-hidden: false
+order: 0
+pcx-content-type: configuration
 ---
 
 # Configure settings from the Cloudflare dashboard

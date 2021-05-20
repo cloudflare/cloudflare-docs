@@ -1,4 +1,5 @@
 ---
+pcx-content-type: how-to
 order: 13
 ---
 
@@ -47,8 +48,7 @@ To create a new Rate Limiting Rule:
 
 1. Under **For...**, select the mitigation timeout. This is the time period during which Cloudflare applies the select action once the request rate is reached.
 
-1. To  save and deploy your rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
-
+1. To save and deploy your rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 
 ## Manage Custom Rules
 
