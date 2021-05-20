@@ -1,6 +1,6 @@
 ---
 order: 11
-pcx-content-type: concept
+pcx-content-type: interim
 ---
 
 # Understanding the basics
