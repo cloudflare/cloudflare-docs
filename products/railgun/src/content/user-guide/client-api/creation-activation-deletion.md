@@ -1,5 +1,5 @@
 ---
-title: Creation, activation, and deletion
+title: Manage Railguns
 type: document
 order: 7
 pcx-content-type: configuration
