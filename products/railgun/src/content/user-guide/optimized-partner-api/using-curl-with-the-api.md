@@ -35,7 +35,7 @@ $ curl -s 'https://api.cloudflare.com/host-gw.html?act=user_lookup&host_key=YOUR
 
 2. Next, call the `init` API method to create a new Railgun using the `host_key` and `user_key`:
 
-```
+```json
 $ curl 'https://www.cloudflare.com/api/v2/railgun/init?host_key=YOUR_HOST_API_KEY&pubname=My%20Railgun'
 
 {
@@ -53,7 +53,7 @@ $ curl 'https://www.cloudflare.com/api/v2/railgun/init?host_key=YOUR_HOST_API_KE
 
 3. The Railgun daemon should then be started so that it may complete the activation process, which should be logged via syslog after startup:
 
-```
+```sh
 $  tail -f /var/log/messages
 Oct 27 22:29:41 www railgun[Activation]: Activation POST completed.
 Oct 27 22:29:41 www railgun[Activation]: Assigned Railgun ID: 1
