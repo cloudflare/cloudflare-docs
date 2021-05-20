@@ -1,5 +1,4 @@
 ---
-title: Manage Railguns
 order: 11
 pcx-content-type: configuration
 ---

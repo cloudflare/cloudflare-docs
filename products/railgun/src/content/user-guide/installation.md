@@ -1,5 +1,4 @@
 ---
-title: Installation
 order: 3
 pcx-content-type: tutorial
 ---

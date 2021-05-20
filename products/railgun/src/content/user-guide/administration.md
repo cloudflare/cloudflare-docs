@@ -1,5 +1,4 @@
 ---
-title: Administration
 order: 5
 pcx-content-type: how-to
 ---

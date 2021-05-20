@@ -1,5 +1,4 @@
 ---
-title: Using cURL with the API
 order: 15
 pcx-content-type: configuration
 ---

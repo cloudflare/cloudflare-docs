@@ -1,5 +1,4 @@
 ---
-title: Optimized partner API
 order: 10
 pcx-content-type: reference
 ---

@@ -1,5 +1,4 @@
 ---
-title: Enable and disable connections
 order: 13
 pcx-content-type: configuration
 ---

@@ -1,5 +1,4 @@
 ---
-title: Railgun execution
 order: 4
 pcx-content-type: reference
 ---

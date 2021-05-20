@@ -1,5 +1,4 @@
 ---
-title: Railguns via IP ranges
 order: 14
 pcx-content-type: configuration
 ---

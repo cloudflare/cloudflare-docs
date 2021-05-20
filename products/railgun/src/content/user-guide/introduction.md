@@ -1,5 +1,4 @@
 ---
-title: Introduction
 order: 2
 pcx-content-type: reference
 ---

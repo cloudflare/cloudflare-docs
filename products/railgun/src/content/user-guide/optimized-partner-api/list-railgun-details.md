@@ -1,5 +1,4 @@
 ---
-title: List Railgun details
 order: 12
 pcx-content-type: configuration
 ---

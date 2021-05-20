@@ -1,5 +1,4 @@
 ---
-title: Changelog
 order: 18
 pcx-content-type: reference
 ---
