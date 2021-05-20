@@ -5,7 +5,7 @@ order: 8
 pcx-content-type: configuration
 ---
 
-# Listing and viewing Railgun details
+# List Railgun details
 
 The following API calls can be used to determine details and the status or one or more Railguns assigned to an account. These calls are sometimes needed to determine the unique `rtkn` or `id` assigned to a Railgun.
 
