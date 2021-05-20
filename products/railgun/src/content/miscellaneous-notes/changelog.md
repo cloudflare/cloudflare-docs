@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Changelog
 
-```
+```txt
 * Apr 23 2018 Cloudflare Inc <help@cloudflare.com> - 5.3.3
 - Uses go 1.10.1
 
