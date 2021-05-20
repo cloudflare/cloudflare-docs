@@ -8,10 +8,10 @@ hideChildren: true
 # FAQ
 
 <ContentColumn>
-  
-Below you'll find answers to commonly asked questions on Cloudflare for Teams, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
 
-If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there.  
+Below you'll find answers to the most commonly asked questions on Cloudflare for Teams, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
+
+If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there. 
 
 </ContentColumn>
 

@@ -4,7 +4,7 @@ order: 11
 
 # Ingress rules
 
-You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Argo Tunnel.
+You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Tunnel.
 
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
 By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/config), you can specify which local services a request should be proxied to.
@@ -64,7 +64,7 @@ ingress:
 
 In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](/applications/non-http).
 
-You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Argo Tunnel protocol.
+You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Cloudflare Tunnel protocol.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -94,7 +94,7 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
 | RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
 | kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
-| Hello World | Test server for validating your Argo Tunnel setup | `hello_world` |
+| Hello World | Test server for validating your Cloudflare Tunnel setup | `hello_world` |
 | HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
 
 ## Single-service configuration
