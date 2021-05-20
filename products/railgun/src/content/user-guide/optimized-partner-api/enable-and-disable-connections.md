@@ -1,11 +1,11 @@
 ---
-title: Connections, enabling and disabling
+title: Enable and disable connections
 type: document
 order: 13
 pcx-content-type: configuration
 ---
 
-# Connections, enabling and disabling
+# Enable and disable connections
 
 After a Railgun has been activated, it can be exposed to a particular domain with the [suggestion_set](/user-guide/optimized-partner-api/connections-enabling-disabling#post-suggestion_set) API call. [suggestion_set](/user-guide/optimized-partner-api/connections-enabling-disabling#post-suggestion_set) also accepts the `auto_enabled` parameter to assign and enable Railgun for the domain globally in a single API call. If `auto_enabled` is not set to `1`, then the connection needed to enable Railgun for the domain must be made manually using the [conn_set](/user-guide/optimized-partner-api/connections-enabling-disabling#post-conn_set) method. [conn_setmode_enabled](/user-guide/optimized-partner-api/connections-enabling-disabling#post-conn_setmode_enabled) and [conn_setmode_disabled](/user-guide/optimized-partner-api/connections-enabling-disabling#post-conn_setmode_disabled) can be used to toggle Railgun on or off for the domain globally. [zone_conn_get_active](/user-guide/optimized-partner-api/listing-viewing-details#post-zone_conn_get_active) can be used to view active Railgun connections.
 

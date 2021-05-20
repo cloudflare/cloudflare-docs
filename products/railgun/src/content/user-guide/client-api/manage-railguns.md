@@ -5,7 +5,7 @@ order: 7
 pcx-content-type: configuration
 ---
 
-# Creation, activation, and deletion
+# Manage Railguns
 
 Creating and activating a Railgun requires two API calls. First, a Railgun must be initialized using the `init` call. The activation API call is made by Railgun when the daemon is started and does not need to be made by a user.
 
@@ -20,7 +20,7 @@ Create a Railgun. If request is successful, a new Railgun is added to a user acc
 * **email** – User account email
 * **tkn** – User API token
 * **name** – Name of Railgun
-* **pubname ** – Name of Railgun shown to users
+* **pubname** – Name of Railgun shown to users
 
 <details>
 <summary>Example request</summary>

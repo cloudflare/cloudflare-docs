@@ -1,11 +1,11 @@
 ---
-title: Making Railguns available to domains via IP range(s)
+title: Railguns via IP ranges
 type: document
 order: 14
 pcx-content-type: configuration
 ---
 
-# Making Railguns available to domains via IP range(s)
+# Railguns via IP ranges
 
 It is possible to make a Railgun available to domains via IP ranges. This can be done by setting one or more IP range(s) that a Railgun will use. Once the Railgun IP Range(s) have been set, any domains that have origin IP(s) that fall within a Railgun’s IP Range(s) will have the ability to select and enable the Railgun.
 
