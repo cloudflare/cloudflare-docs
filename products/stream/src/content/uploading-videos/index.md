@@ -4,6 +4,6 @@ order: 1
 pcx-content-type: navigation
 ---
 
-# Upload videos to Cloudflare Stream
+# Upload videos
 
 <DirectoryListing path="/uploading-videos"/>
