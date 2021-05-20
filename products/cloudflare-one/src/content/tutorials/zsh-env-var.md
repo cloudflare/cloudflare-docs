@@ -6,7 +6,7 @@ difficulty: Advanced
 
 # Output an app's token to a variable with one command
 
-You can use [Argo Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections.
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections.
 
 You can also secure those applications with [Cloudflare Access](/applications/configure-apps/self-hosted-apps). With Cloudflare Access, you can build Zero Trust rules which restrict who can reach your application based on signals like identity, multifactor method, device posture, and geography.
 
@@ -27,7 +27,7 @@ You can also use `cloudflared` to quickly gather the JWT from an application and
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 

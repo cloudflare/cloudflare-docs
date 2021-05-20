@@ -4,7 +4,7 @@ order: 1
 
 # Install `cloudflared`
 
-Argo Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 
 Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/releases). Downloads are available as standalone binaries or packages like Debian and RPM.
 
@@ -123,9 +123,9 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 ### Updating with Cloudflare Load Balancer
 
-You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
+You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
 
-1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Argo Tunnel.
+1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. [Add the address](/connections/connect-apps/routing-to-tunnel/lb) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4. Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
@@ -135,7 +135,7 @@ You can update `cloudflared` without downtime by using Cloudflare's Load Balance
 
 If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
-1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Argo Tunnel.
+1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. In the Cloudflare DNS dashboard, [replace](/connections/connect-apps/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4. Remove the now-inactive instance of `cloudflared`.
