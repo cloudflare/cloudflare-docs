@@ -1,7 +1,7 @@
 ---
 title: Configure
 order: 3
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Configure dynamic advertisement

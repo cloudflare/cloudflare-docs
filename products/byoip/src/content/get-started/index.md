@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Get started with Cloudflare BYOIP
@@ -15,8 +15,8 @@ First, all customers must ensure their [Internet Routing Registry (IRR)](/irr-re
 
 Secondly, Cloudflare must receive a [Letter of Authorization](/loa) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
 
-Optionally, if you use the RPKI protocol to sign your routes, Cloudflare can support you there as well. Just let your account team know if you’re interested in using RPKI!
+Optionally, if you use the RPKI protocol to sign your routes, Cloudflare can support you there as well. Just let your account team know if you’re interested in using RPKI.
 
-Please see the subsequent sections to learn more.
+See the subsequent sections to learn more.
 
-Once onboarded, BGP announcements for customer prefixes can be controlled with the [Dynamic Advertisement API](/dynamic-advertisement). This API has other useful features and can also be used via the Cloudflare dashboard.
+Once onboarded, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement API](/dynamic-advertisement). This API has other useful features and can also be used via the Cloudflare dashboard.
