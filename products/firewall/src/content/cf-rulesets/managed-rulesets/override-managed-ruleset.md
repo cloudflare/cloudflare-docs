@@ -1,5 +1,6 @@
 ---
 title: Override a Managed Ruleset
+pcx-content-type: how-to
 alwaysopen: true
 order: 752
 ---

@@ -76,6 +76,42 @@ Also, verify that the data now appears in your table in **BigQuery** by navigati
 
 If everything is configured correctly, you can now query any request or visualize data with Google Data Studio or any other analytics tool that supports BigQuery as an input source.
 
+### Add fields in Google Cloud Function
+
+To add fields in Cloud Function, edit the `schema.json` file.
+
+1. Open Google Cloud Function.
+
+2. Select the function you want to update.
+
+3. Click **EDIT** on the Function details page.
+
+4. Select `schema.json` from the list of files.
+
+5. In the file editor, enter the `name`, `type`, and `mode` of any fields you would like to add. Follow the format shown in the file.
+
+6. Click **Deploy**.
+
+To debug in Cloud Function, click **VIEW LOGS** on the Function details page. This will take you to the Logs Viewer, where any errors will appear.
+
+### Add fields in BigQuery
+
+To add fields in BigQuery, edit the schema.
+
+1. Open BigQuery.
+
+2. In the menu, expand **your-project-name**.
+
+3. Expand **cloudflare_data** and click **cf_analytics_logs**.
+
+4. Select the **Schema** tab.
+
+5. Scroll to the bottom of the page, and click **Edit schema**.
+
+6. On the pop-up page, click **Add field**. Enter the field **Name** and select the field **Type** and **Mode** from the dropdowns.
+
+7. Click **Save**.
+
 ## Task 2 - Analyze log data with Google Data Studio
 
 To analyze and visualize logs, you can use **Google Data Studio** or any other 3rd party services that supports Google BigQuery as an input source.
@@ -219,6 +255,34 @@ To create a report for your log data based on the Cloudflare template:
 ### Refreshing fields and filters manually
 
 After you've added your report, you will notice that not all report components render successfully. To fix this, you need to resolve any errors related to invalid dimensions, metrics, or filters that appear in the affected report components.
+
+#### Update Data Studio with new fields
+
+To update Data Studio with fields added to BigQuery, refresh fields for the data source.
+
+1. In Data Studio, open the Cloudflare dashboard in **Edit** mode.
+
+2. Expand the **Resource** menu and select **Manage added data sources**.
+
+3. Click the **EDIT** action for the data source that you want to update.
+
+4. Click **REFRESH FIELDS** below the table. A window with **Field changes found** in BigQuery will pop up.
+
+5. To add the new fields, click **APPLY**.
+
+You can also create custom fields directly in Data Studio.
+
+1. In Data Studio, open the Cloudflare dashboard in **Edit** mode.
+
+2. Expand the **Resource** menu and select **Manage added data sources**.
+
+3. Click the **EDIT** action for the data source that you want to add a custom field to.
+
+4. Click **ADD A FIELD** above the table.
+
+5. Enter a formula in the **Formula** editor.
+
+6. Click **SAVE**.
 
 #### Fix invalid metric or dimension errors
 

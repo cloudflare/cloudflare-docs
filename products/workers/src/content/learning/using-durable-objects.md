@@ -307,6 +307,10 @@ $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.work
 
 As you write Durable Objects, you can find more helpful details in the [Durable Objects runtime API documentation](/runtime-apis/durable-objects).
 
+## Limits
+
+See the [Durable Objects section of the Limits page](/platform/limits#durable-objects) for current relevant usage limits.
+
 ## Limitations
 
 Durable Objects is currently in early beta, and some planned features have not been enabled yet. Many of these limitations will be fixed before Durable Objects becomes generally available.

@@ -6,11 +6,11 @@ difficulty: Beginner
 
 # Share development environments
 
-You can use Cloudflare's reverse proxy and [Argo Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers.
+You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers.
 
-Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Argo Tunnel. Argo Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
+Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Cloudflare Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Argo Tunnel to quickly share projects you are working on with team members. In this example, you can use Argo Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
+You can use Cloudflare Tunnel to quickly share projects you are working on with team members. In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
 
 **🗺️ This tutorial covers how to:**
 
@@ -33,7 +33,7 @@ In this example, the new website is a [Hugo site](https://gohugo.io/getting-star
 
 ![New Hugo](../static/secure-origin-connections/share-new-site/hugo-new.png)
 
-To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -45,13 +45,13 @@ The command will launch a browser window and prompt you to login with your Cloud
 
 ![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
 
-Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
+Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose.
 
@@ -77,9 +77,9 @@ tunnel: 5157d321-5933-4b30-938b-d889ca87e11b
 credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e11b.json
 ```
 
-## Run Argo Tunnel
+## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Argo Tunnel connection. You can now [run that](https://developers.cloudflare.com/argo-tunnel/create-tunnel) Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run that](https://developers.cloudflare.com/argo-tunnel/create-tunnel) Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 
@@ -111,7 +111,7 @@ Choose self-hosted from the options presented.
 
 ![App Picker](../static/secure-origin-connections/share-new-site/self-hosted.png)
 
-In the policy builder, add the subdomain of your new DNS record that represents your Argo Tunnel connection.
+In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
 ![App Picker](../static/secure-origin-connections/share-new-site/configure-app.png)
 
