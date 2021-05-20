@@ -1,5 +1,5 @@
 # 1.1.1.1
-products/1.1.1.1/ @abracchi-tw @cloudflare/PCX
+products/1.1.1.1/ @cloudflare/PCX
 
 # Access
 products/access/ @cloudflare/access-docs @cloudflare/PCX
@@ -11,10 +11,22 @@ products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
 products/api/ @cloudflare/sdk @cloudflare/PCX
 
 # Argo Tunnel
-products/argo-tunnel/ @abracchi-tw
+products/argo-tunnel/ @cloudflare/PCX
+
+# APO
+products/automatic-platform-optimization/ @cloudflare/PCX
+
+# Browser Isolation
+products/browser-isolation/ @cloudflare/PCX
 
 # BYOIP
 products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
+
+# Cloudflare One
+products/cloudflare-one/ @cloudflare/PCX
+
+# Developers homepage
+developers.cloudflare.com/ @cloudflare/PCX
 
 # Distributed Web
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
@@ -28,17 +40,17 @@ products/events/ @ConzorKingKong @cloudflare/PCX
 # Firewall Rules
 products/firewall/ @cloudflare/firewall @cloudflare/PCX
 
+# Fundamentals
+products/fundamentals/ @cloudflare/PCX
+
 # Gateway
-products/gateway/ @abracchi-tw
+products/gateway/ @cloudflare/PCX
 
 # HTTP/3
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
 # Image Resizing
 products/images/ @kornel @cloudflare/PCX
-
-# The Life of a Request
-products/internet/ @ConzorKingKong @cloudflare/PCX
 
 # Load Balancing
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
@@ -55,11 +67,17 @@ products/network-interconnect @ConzorKingKong @cloudflare/PCX
 # Pages
 products/pages/ @cloudflare/workers-docs @cloudflare/PCX
 
+# Page Shield
+products/page-shield/ @cloudflare/PCX
+
+# Railgun
+products/railgun/ @cloudflare/PCX
+
 # Randomness Beacon
 products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
 
 # Registrar
-products/registrar/ @TownLake @cloudflare/PCX
+products/registrar/ @cloudflare/PCX
 
 # Rules
 products/rules/ @cloudflare/PCX
@@ -85,8 +103,11 @@ products/time-services/ @lukevalenta @wbl @armfazh @cloudflare/PCX
 # WAF
 products/waf/ @cloudflare/firewall @cloudflare/PCX
 
+# Waiting Room
+products/waiting-room/ @cloudflare/PCX
+
 # Warp Client
-products/warp-client/ @abracchi-tw
+products/warp-client/ @cloudflare/PCX
 
 # Workers
 products/workers/ @cloudflare/workers-docs @cloudflare/PCX
