@@ -183,8 +183,8 @@ You should confirm that memcached is running, is accepting connections, and conf
 
 `rg-diag` is installed alongside Railgun, and allows you to decode the `Cf-Railgun` header — e.g.
 
-```
-% bin/rg-diag -decode="151df128a1 2.05 0.009465 0031 5360"
+```sh
+$ bin/rg-diag -decode="151df128a1 2.05 0.009465 0031 5360"
 
 Compression ratio 2.05%
 Railgun version 5360
