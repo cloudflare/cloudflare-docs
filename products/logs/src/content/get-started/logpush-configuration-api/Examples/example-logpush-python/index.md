@@ -1,10 +1,9 @@
 ---
-title: example-logpush-python
 order: 88
 pcx-content-type: interim
 ---
 
-# Logpush using Python (example)
+# Manage Logpush with Python
 
 ```python
 import json
