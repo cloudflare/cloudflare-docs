@@ -18,9 +18,9 @@ If you haven’t used Cloudflare Logs before, visit our [Logs documentation](/) 
 Before getting started, make sure that you:
 
 - Have a Cloudflare Enterprise account with Cloudflare Logs and Bot Management enabled
-- Configure [Logpush](/logpush/) or [Logpull](/logpull/)
+- Configure [Logpush](/about/) or [Logpull](/logpull/)
 - Have enabled the [_EdgePathingSrc_ and _EdgePathingStatus_](/reference/pathing-status/) fields in Cloudflare Logs to ensure bot requests are captured
-- Are familiar with [Cloudflare Bot Management](https://support.cloudflare.com/hc/articles/360027519452)
+- Are familiar with [Cloudflare Bot Management](https://developers.cloudflare.com/bots/)
 - Follow your analytics provider’s guides for getting logs from AWS S3 or Google Cloud Platform into your analytics platform
 
 <Aside type="note" header="Note">
