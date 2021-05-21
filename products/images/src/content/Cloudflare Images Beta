@@ -46,7 +46,7 @@ If the upload is successful, you can expect a JSON response body similar to this
       "variants": [
          {
             "name": "default",
-            "url": "https://imagedelivery.net/MTt4OTd0b0w5ajZxR0pLaXRldlBtaFhhO2FiZGVnaA=="
+            "url": "https://imagedelivery.net/default/MTt4OTd0b0w5ajZxR0pLaXRldlBtaFhhO2FiZGVnaA=="
          }
       ]
    },
