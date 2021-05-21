@@ -16,8 +16,9 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 ## Before you begin
 
 Before you start this tutorial, make sure you have:
-- Fulfilled all the [prerequisites](../../about#prerequisites)
-- Previously [created a Waiting Room](../create-waiting-room) that uses the default response template. If you used a custom response template, you may have to update the [sample script](#1-download-sample-script).
+- Fulfilled all the [prerequisites](../../about#prerequisites).
+- Previously [created a Waiting Room](../create-waiting-room).
+- If you [customized the design](../create-waiting-room/create-waiting-room-dashboard/customize-waiting-room) of your waiting room, updated the [sample script](#1-download-sample-script) to ensure it captures when a "simulated user" enters and is released from your waiting room.
 
 ---
 
@@ -25,14 +26,14 @@ Before you start this tutorial, make sure you have:
 
 First, download the [sample script](https://github.com/kcantrel/test-cf-waitingroom/blob/master/simulate_requests) from GitHub.
 
-This script simulates users entering a waiting room. It divides traffic into two phases (`Phase 1` and `Phase 2`) so you can test wait times as load diminishes or increases.
+This script simulates users entering a waiting room. It divides traffic into two phases (`Phase 1` and `Phase 2`) so you can test wait times as load increases and then decreases.
 
 ## 2. Run sample script
 
 Once you have downloaded the script, run it with the following command-line arguments:
 -  `-n <num_secs_p1>`: Number of seconds to send requests during phase 1.
 - `-m <num_secs_p2>`: Number of seconds to send requests during phase 2, which is fixed at 1 request per second.
-- `-s <sleep_time_p1>`: Amount of time to sleep between requests during phase 1. Fractional time accepted, such as `.3`).
+- `-s <sleep_time_p1>`: Amount of time to sleep between requests during phase 1 (fractional time accepted, such as `.3`).
 - `-o <results>`: File to store the per-session statistics.
 - `URL`: Endpoint protected by a Cloudflare Waiting Room.
 
@@ -62,17 +63,21 @@ Once you have downloaded the script, run it with the following command-line argu
 </div>
 </details>
 
-As the script runs, you will see letters appear in to the command line. Each letter represents a user session that advanced past the waiting room. The specific letter value corresponds to the waiting time for each user session:
-- 0 seconds: `.`
-- 0 - 10 seconds: `a`
-- 10 - 20 seconds: `b`
-- 20 - 30 seconds: `c`
-...
-- 260 - 270 seconds: `A`
-- 270 - 280 seconds: `B`
-
-...
-- Greater than 620 seconds: `!`
+As the script runs, it will output characters with each character representing:
+- A user session that advanced past the waiting room
+- The amount of time the user spent in the waiting room:
+  - 0 seconds: `.`
+  - 10 seconds: `a`
+  - 20 seconds: `b`
+  - 30 seconds: `c`<br/>
+    ...
+  - 260 seconds: `A`
+  - 270 seconds: `B`<br/>
+    ...
+  - 530 seconds: `0`
+  - 540 seconds: `1`<br/>
+    ...
+  - Greater than 620 seconds: `!`
 
 ## 3. Analyze results
 
@@ -82,7 +87,7 @@ Once the script finishes running, it creates a CSV file with the following field
   <summary>Fields in CSV file</summary>
   <div>
     <ul>
-        <li><strong>job</strong>: Fixed string and sequence number. Either <strong>main</strong> for phase 1 or <strong>post</strong> for phase 2.</li>
+        <li><strong>job</strong>: The fixed string will either be <strong>main</strong> for phase 1 or <strong>post</strong> for phase 2.</li>
        <li><strong>status</strong>: Status of the last response of the session:</li>
        <ul>
             <li>0: curl command received an HTTP status code of <code>200</code>.</li>
