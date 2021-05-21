@@ -17,7 +17,7 @@ To review scripts tracked by Script Monitor:
 1. Review your scripts.
 1. To filter scripts, use the following options:
     - **Search**: Search for a specific URL
-    - **Host**: Look for scripts with specific hostnames
+    - **Host**: Look for scripts appearing on specific hostnames
     - **Exclude**: Remove specific URLs from the results
 
 <Aside type="note" header="Note:">
