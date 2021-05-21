@@ -3,6 +3,6 @@ order: 47
 pcx-content-type: navigation
 ---
 
-# Logpush Examples
+# Logpush examples
 
 <DirectoryListing path="/get-started/logpush-configuration-api/examples"/>
