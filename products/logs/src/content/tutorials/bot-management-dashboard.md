@@ -102,7 +102,7 @@ The following images demonstrate some of the dashboards available.
 **Elastic** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/elastic/))
 ![Cloudflare Bot Management in Elastic](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-elastic.png)
 
-**Google Data Studio** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/)google-cloud/))
+**Google Data Studio** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/google-cloud/))
 ![Cloudflare Bot Management in Google Data Studio page 1](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-google-data-studio-page-1.png)
 ![Cloudflare Bot Management in Google Data Studio page 2](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-google-data-studio-page-2.png)
 
