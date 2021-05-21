@@ -13,4 +13,6 @@ These batches contain no more than 100,000 records per file. That limit may be r
 
 Prior to mid-2020, Logpush sent logs once every five minutes (referred to as Logpush v1). The change to more frequent log pushing allows Cloudflare to deliver information to you as close to real time as possible in smaller files. You may receive log files that contain fewer lines - that’s expected. If you have legacy Logpush jobs configured to the old settings, use the Logpush API to upgrade your job to Logpush v2.
 
-[Get started](/get-started/)
+<ButtonGroup>
+  <Button type="primary" href="/get-started">Get started</Button>
+</ButtonGroup>
