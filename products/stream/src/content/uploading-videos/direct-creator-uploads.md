@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: interim
 ---
 
 # Direct creator uploads
