@@ -62,7 +62,7 @@ Oct 27 22:29:41 www railgun[Activation]: Acquired cert from server
 
 4. Next, the `suggestion_set` method is called with `auto_enabled` set to `0` in order to expose the Railgun to the domain. Setting `auto_enabled` to `0` will not enable Railgun for the domain, it will only expose the Railgun instance to the domain within Cloudflare Settings. To expose, associate, and enable Railgun in a single API call, set `auto_enabled` to `1`.
 
-```
+```sh
 $ curl 'https://www.cloudflare.com/api/v2/railgun/suggestion_set?host_key=YOUR_HOST_API_KEY&z=example.com&rtkn=30_CHARACTER_RTKN&auto_enabled=0'
 
 {
