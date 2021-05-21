@@ -1,5 +1,4 @@
 ---
-type: overview
 title: Images (beta)
 order: 7
 ---
