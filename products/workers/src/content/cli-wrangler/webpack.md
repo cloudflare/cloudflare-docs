@@ -6,6 +6,13 @@ order: 4
 
 Out of the box, Wrangler allows you to develop modern ES6 applications with support for modules. This is because of the 🧙‍♂️ magic of [webpack](https://webpack.js.org/). This document describes how Wrangler uses webpack to build your Workers, and how you can bring your own configuration.
 
+
+<Aside>
+
+Wrangler's built-in webpack build only supports webpack 4. If you want to use webpack 5, or another bundler like ESBuild or Rollup, you'll want to setup [custom builds](configuration#build) in your `wrangler.toml`.
+
+</Aside>
+
 <Aside>
 
 __Note:__ You must set `type = "webpack"` in your `wrangler.toml` in order for Wrangler to use webpack to bundle your worker scripts. No other types will build your script with webpack.

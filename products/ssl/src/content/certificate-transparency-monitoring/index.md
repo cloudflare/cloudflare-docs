@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: concept
 ---
 
 # Certificate transparency monitoring
@@ -24,7 +25,7 @@ Alerts are turned off by default. If you want to receive alerts, go to [SSL/TLS]
 
 Features vary by plan:
 - **Free** and **Pro** customers will see a toggle to turn **On** or **Off**. Emails will go to all Cloudflare account members.
-- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias (ct-alerts@yourcompany.com).
+- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias.
 
 To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
 
@@ -52,7 +53,7 @@ Only Certificate Authorities can revoke malicious certificates. If you believe a
 
 - [DigiCert support](https://www.digicert.com/support/#Contact)
 
-- [GlobalSign support](https://www.globalsign.com/en/company/contact/support/)
+- [GlobalSign support](https://support.globalsign.com/)
 
 - [GoDaddy support](https://www.godaddy.com/contact-us?sp_hp=B)
 
@@ -71,3 +72,9 @@ Domain registrars may be able to **suspend** potentially malicious domains. If, 
 There are other ways to combat malicious certificates. You can warn your visitors with an on-site notification, ask browser makers (Google for Chrome, etc.) to block these domains, or you can [contact us to help combat malicious certificates](https://support.cloudflare.com/hc/articles/200172476).
 
 If someone is attempting to impersonate you online, you should absolutely take action. This is usually difficult to recognize, so exercise caution. **Remember: the vast majority of certificates are not malicious. Only take action if you believe something is wrong.**
+
+## HTTP Public Key Pinning
+
+Certificate Transparency Monitoring addresses the same problems as HTTP Public Key Pinning (HPKP), but with [fewer technical issues](https://scotthelme.co.uk/im-giving-up-on-hpkp/).
+
+Cloudflare does not offer or support HPKP and advises against using it with Dedicated & Universal SSL.

@@ -1,4 +1,5 @@
 ---
+pcx-content-type: reference
 order: 640
 ---
 
@@ -130,6 +131,23 @@ The Cloudflare Firewall Rules language supports these transformation functions:
     <Aside type='warning'>
     
     **Warning:** You can only use the `starts_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+
+    </Aside>
+
+- <code>to_string(<Type>Integer | Boolean | IP address</Type>)</code> <Type>String</Type>
+
+  - Returns the string representation of an Integer, Boolean, or IP address value.
+
+  - _Examples:_
+
+    ```txt
+    to_string(cf.bot_management.score) == '5'
+    to_string(ssl) == 'true'
+    ```
+
+    <Aside type='warning'>
+
+    **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
 

@@ -1,4 +1,5 @@
 ---
+pcx-content-type: reference
 order: 610
 ---
 
@@ -200,6 +201,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">GB</code>
          </p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr>
@@ -209,6 +211,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr>
@@ -220,6 +223,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <br />
          <code class="InlineCode">GB-SWK</code>
          </p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr>
@@ -245,7 +249,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='warning' header='Important'>
 
-Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields require a Cloudflare Enterprise plan with [Bot Management](/bots/get-started/bm-subscription) enabled.
+Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields require a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) enabled.
 
 </Aside>
 

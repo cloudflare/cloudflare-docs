@@ -13,7 +13,9 @@ These instructions are not meant for configuring a service to run against an API
 
 * Connect to resources secured by Cloudflare Access from a CLI
 
-**⏲️ Time to complete: 30 minutes**
+**⏲️ Time to complete:**
+
+30 minutes
 
 ---
 

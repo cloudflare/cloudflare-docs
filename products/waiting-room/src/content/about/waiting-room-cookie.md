@@ -1,11 +1,8 @@
 ---
-title: Waiting Room cookie
-alwaysopen: true
-weight: 110
-hidden: false
+pcx-content-type: reference
 ---
 
-# Waiting Room cookie
+# Cloudflare Waiting Room cookie
 
 <Aside type='warning' header='Important'>
 

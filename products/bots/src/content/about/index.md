@@ -1,11 +1,12 @@
 ---
 title: About
 order: 1
+pcx-content-type: concept
 ---
 
 import GetStarted from "../_partials/_plan-get-started.md"
 
-# Cloudflare’s Bot Products
+# Cloudflare bot products
 
 While Cloudflare offers several products that mitigate and identify bot traffic, this section reviews our _bot-specific products_, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
 

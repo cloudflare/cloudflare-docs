@@ -10,11 +10,14 @@ difficulty: Intermediate
 * Configure Salesforce as a SaaS application in Teams
 * Force logins to Salesforce through Cloudflare's Zero Trust rules
 
-**⏲️ Time to complete: 15 minutes**
+**⏲️ Time to complete:**
 
-| Before you start |
-|---|
-| 1. You'll need admin access to a Salesforce account |
+15 minutes
+
+## Before you start
+1. You'll need admin access to a Salesforce account
+
+---
 
 ## Set up Salesforce as a SaaS application in Teams
 

@@ -8,15 +8,41 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 ## Mozilla Firefox
 
-1. [Open Preferences](https://support.mozilla.org/en-US/kb/firefox-options-preferences-and-settings): Click on the `hamburger` icon at the top right corner of your browser, and click on `Preferences`.
-2. [Open Connection Settings](https://support.mozilla.org/en-US/kb/connection-settings-firefox): Scroll down to access `Network Settings`. Click on the `Settings` button.
-3. Enable DNS over HTTPS: Click `Enable DNS over HTTPS`. By default, it resolves to Cloudflare DNS.
+1. Click the hamburger menu at the top-right corner of your browser window.
+1. Click **Preferences**.
+1. In the **General** menu, scroll down to access `Network Settings`.
+1. Click on the `Settings` button.
+1. Click **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
 
-## Google Chrome / Microsoft Edge / Brave
+## Google Chrome 
 
-1. Open Settings: In your address bar, type the following and hit Enter `chrome://settings/security`.
-2. On the Advanced Tab: Click on `Use Secure DNS` radio button to enable DoH.
-3. By default, your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](https://1.1.1.1/dns/#setup-instructions).
+<Aside>
+
+This setting may already be enabled on Chrome by default.
+
+</Aside>
+
+1. Click on the three-dot menu at in the top-right corner of your browser window.
+1. Click **Settings**.
+1. Navigate to **Privacy and security > Security**.
+1. Enable the **Use secure DNS** switch.
+
+Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](https://1.1.1.1/dns/#setup-instructions).
+
+## Microsoft Edge
+
+1. Go to `edge://settings/privacy`.
+1. Scroll down to the **Security** section.
+1. Make sure the **Use secure DNS** option is checked and enabled.
+1. Choose *Cloudflare (1.1.1.1)* as a service provider.
+
+## Brave
+
+1. Click the hamburger menu at the top-right corner of your browser window.
+1. Navigate to **Settings**.
+1. Navigate to **Privacy and security > Security**.
+1. Enable the **Use secure DNS**.
+1. Choose *Cloudflare (1.1.1.1)* as a service provider.
 
 ## Safari
 

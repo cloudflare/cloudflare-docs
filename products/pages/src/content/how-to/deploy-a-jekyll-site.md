@@ -1,6 +1,6 @@
 # Deploy a Jekyll site
 
-Jekyll is a simple, blog-aware, static site generator. In this guide, you'll create a new Jekyll application and deploy it using Cloudflare Pages. We'll be the `jekyll` CLI to create a new Jekyll site.
+Jekyll is an open-source React framework for creating websites and apps. In this guide, you'll create a new Jekyll application and deploy it using Cloudflare Pages. We'll be using the `jekyll` CLI to create a new Jekyll site.
 
 ## Installing Jekyll
 
@@ -41,7 +41,7 @@ You should create a base `index.html` in your newly created folder so that your 
 </html>
 ```
 
-Optionally, you can also use include a theme with your new Jekyll site if you'd like to start with great styling defaults. For instance, the [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
+Optionally, you can also use a theme with your new Jekyll site if you'd like to start with great styling defaults. For instance, the [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
 
 ## Creating a GitHub repository
 
@@ -57,7 +57,7 @@ If you're migrating an existing Jekyll project to Pages, you should confirm that
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
 
 <TableLayout>
 

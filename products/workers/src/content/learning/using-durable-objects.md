@@ -32,7 +32,7 @@ There are three steps to creating and using a Durable Object:
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
-The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter contains any bindings you have associated with the Worker when you uploaded it.
+The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
 ```js
 export class DurableObjectExample {
@@ -40,6 +40,8 @@ export class DurableObjectExample {
     }
 }
 ```
+
+Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -159,7 +161,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-Full documentation for WebSockets will be coming soon, but for now check out this [heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo) that runs in Durable Objects to see how it works.
+For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -167,7 +169,9 @@ As mentioned above, Durable Objects do not receive requests directly from the In
 
 When a Worker talks to a Durable Object, it does so through a "stub" object. The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [Requests](/runtime-apis/request) to the instance.
 
-Note that in the example below, we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for Durable Objects. The fetch handler in this example implements the Worker that talks to the Durable Object. We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
+The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the service-workers syntax.
+
+We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. As you saw above, we wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
@@ -248,7 +252,7 @@ $ wrangler publish --new-class Counter
 
 ### Specifying the main module
 
-Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using "module" key in the `package.json` file in the project.
+Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. See the [modules section of the custom builds documentation](/cli-wrangler/configuration#modules) for more details.
 
 ### Configuring Durable Object bindings
 
@@ -302,6 +306,10 @@ $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.work
 ```
 
 As you write Durable Objects, you can find more helpful details in the [Durable Objects runtime API documentation](/runtime-apis/durable-objects).
+
+## Limits
+
+See the [Durable Objects section of the Limits page](/platform/limits#durable-objects) for current relevant usage limits.
 
 ## Limitations
 

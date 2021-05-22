@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Upload video file
@@ -58,9 +59,9 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
 
 <Definitions>
-	
+
 - `name`
-	
+
   - Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
 
 - `requiresignedurls`
@@ -69,7 +70,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `allowedorigins`
 
-  - A comma separated strings containing the domains. This will set the [allowed origins setting](/viewing-your-videos/securing-your-stream) for the video.
+  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](../../viewing-videos/securing-your-stream#security-considerations) for the video.
 
 - `thumbnailtimestamppct`
 

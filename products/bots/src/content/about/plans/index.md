@@ -2,12 +2,13 @@
 title: Plans
 order: 1
 type: overview
+pcx-content-type: navigation
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
-# Plans
+# Cloudflare bot plans
 
 <PlanIntro/>
 

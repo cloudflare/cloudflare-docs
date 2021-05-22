@@ -5,13 +5,18 @@ order: 40
 
 # Build your own Analytics dashboard
 
-In this example, we're going to see how to use the GraphQL Analytics API to build your own dashboard. This tutorial walks you through building a simple line chart for your Cloudflare zone, using a bit of HTML, JavaScript, AJAX and chart.js.
+In this example, we're going to see how to use the GraphQL Analytics API to build your own dashboard. This tutorial walks you through building a simple line chart for your Cloudflare zone using a bit of HTML, JavaScript, AJAX, and chart.js.
 
 ![GraphQL recipe](../static/graphQL-recipe-cacheVisual.gif)
 
-The following code will build a page with all the requirement to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button.
+The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button.
 
 ## Code
+
+<Aside type='note' header='Note'>
+
+Cloudflare's [GraphQL endpoint](https://api.cloudflare.com/client/v4/graphql) does not set any CORS headers. Add an endpoint that can proxy the requests back to the API to avoid encountering CORS errors. In the following example, this hostname is referred to as **api.yourdomain.com**.
+</Aside>
 
 ```html
 <!DOCTYPE html>
