@@ -11,7 +11,7 @@ Welcome to the brand new **Cloudflare for Teams documentation**.
 Starting on **February 8, 2021**, this space will replace the separate, independent documentation for:
 * **Cloudflare Access**
 * **Cloudflare Gateway**
-* **Argo Tunnel**
+* **Cloudflare Tunnel**
 * **WARP client for Teams**
 
 

@@ -12,15 +12,7 @@ To enable Script Monitor:
 1. In your dashboard, go to **Firewall** > **Page Shield**.
 1. For **Script Monitor**, select **On**.
 
-## Monitor domain scripts
-
-Once you have activated Script Monitor, review the **Script Monitor dashboard** to see which scripts are running on your domain. Scripts on the dashboard appear in close to real time, so use the dashboard when proactively looking for scripts.
-
-If you see unexpected scripts on the dashboard, check them for signs of malicious activity.
-
-<Aside type="note" header="Note:">
-If you recently activated Script Monitor, you may see a delay in reporting.
-</Aside>
+For more guidance on using the Script Monitor dashboard, see [Monitor scripts](../use-dashboard)
 
 ## Configure alerts
 

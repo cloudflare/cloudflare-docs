@@ -4,7 +4,7 @@ order: 40
 
 # Kubernetes
 
-You can deploy Argo Tunnel to route traffic to Kubernetes clusters. Cloudflare no longer maintains an ingress controller, but we recommend two options for connecting Kubernetes clusters to Cloudflare without introducing downtime caused by application restarts or `cloudflared` updates.
+You can deploy Cloudflare Tunnel to route traffic to Kubernetes clusters. Cloudflare no longer maintains an ingress controller, but we recommend two options for connecting Kubernetes clusters to Cloudflare without introducing downtime caused by application restarts or `cloudflared` updates.
 
 Both options rely on Cloudflare's Load Balancer to send traffic for a single hostname to two or more instances of `cloudflared`, allowing you to update or modify `cloudflared` without downtime. Those instances of `cloudflared` should point to a service or ingress controller that runs in front of your Kubernetes cluster.
 
@@ -23,7 +23,7 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 
 4. Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to the service IP of the upstream service. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
 
-5. In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/connections/connect-apps/routing-to-tunnel/lb) to the two or more Argo Tunnel connections.
+5. In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/connections/connect-apps/routing-to-tunnel/lb) to the two or more Cloudflare Tunnel connections.
 
 Once configured, you can update `cloudflared` by updating one deployment and then proceeding to the next one once you've verified the newly updated cloudflared pod is running and connected.
 
@@ -35,4 +35,4 @@ Once configured, you can update `cloudflared` by updating one deployment and the
 
 3. Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to an ingress controller. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
 
-4. In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/connections/connect-apps/routing-to-tunnel/lb) to the two or more Argo Tunnel connections.
+4. In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/connections/connect-apps/routing-to-tunnel/lb) to the two or more Cloudflare Tunnel connections.

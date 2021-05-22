@@ -5,7 +5,7 @@ category: 🌐 Connections
 
 # Migrate to Named Tunnels with Load Balancer
 
-Cloudflare Argo Tunnel is available in two deployment modes: "Legacy" Argo Tunnel and "Named" Argo Tunnel. [Named Argo Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
+Cloudflare Tunnel is available in two deployment modes: "Legacy" Tunnel and "Named" Argo Tunnel. [Named Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
 
 Unlike Legacy mode, Named Argo Tunnels give users the ability to manage routing in the Cloudflare dashboard and to run `cloudflared` once for [multiple services](https://blog.cloudflare.com/many-services-one-cloudflared/).
 

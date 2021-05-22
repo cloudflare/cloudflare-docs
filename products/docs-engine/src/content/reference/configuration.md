@@ -76,49 +76,6 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
 
 ## Examples
 
-Here’s the `docs-config.js` file for the [example project](https://github.com/adamschwartz/docs-engine-example):
-
-```js
----
-filename: docs-config.js
----
-module.exports = {
-  product: "Example",
-  pathPrefix: "",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
-  contentRepo: "adamschwartz/docs-engine-example",
-  externalLinks: [
-    {
-      title: "Adam Schwartz website",
-      url: "https://adamschwartz.co"
-    },
-    {
-      title: "Docs Engine on GitHub",
-      url: "https://github.com/adamschwartz/cloudflare-docs-engine"
-    },
-    {
-      title: "example.com",
-      url: "https://example.com"
-    },
-  ],
-  search: {
-    indexName: "",
-    apiKey: "",
-  },
-  siteMetadata: {
-    title: "Example docs",
-    description: "These docs are an example of of a docs site built with https://github.com/cloudflare/workers-docs-engine.",
-    author: "@adamschwartz",
-    url: "http://adamschwartz.co/docs-engine-example",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",
-  },
-}
-```
-
-([Source](https://github.com/adamschwartz/docs-engine-example/blob/c45fa9f0a8affc68baf5d3517f8b890ba0522531/docs-config.js))
-
---------------------------------
-
 Here’s the `docs-config.js` file for [these docs](https://github.com/cloudflare/cloudflare-docs/tree/production/products/docs-engine):
 
 ```js

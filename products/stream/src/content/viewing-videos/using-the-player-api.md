@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: reference
 ---
 
 # Using the player API
@@ -40,7 +41,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 
 <Definitions>
 
-- `play()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ Promise">Promise</TypeLink>
+- `play()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</TypeLink>
 
   - Start video playback.
 

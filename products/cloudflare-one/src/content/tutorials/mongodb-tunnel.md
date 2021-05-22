@@ -6,7 +6,7 @@ difficulty: Advanced
 
 # MongoDB SSH
 
-You can build Zero Trust rules to secure connections to MongoDB deployments using Cloudflare Access and Argo Tunnel. Argo Tunnel requires a lightweight daemon, `cloudflared`, running alongisde the deployment and as on the client side.
+You can build Zero Trust rules to secure connections to MongoDB deployments using Cloudflare Access and Cloudflare Tunnel. Cloudflare Tunnel requires a lightweight daemon, `cloudflared`, running alongisde the deployment and as on the client side.
 
 In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB deployment running on Kubernetes. The deployment example is structured to connect [Compass](https://www.mongodb.com/products/compass) to the MongoDB instance. The MongoDB Kubernetes deployment runs both the MongoDB database service and `cloudflared` as a ingress service that operates like a jump host.
 
@@ -14,7 +14,7 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 * Create a Cloudflare Access rule to secure a MongoDB deployment
 * Configure a StatefulSet and service definition for the deployment
-* Configure an Argo Tunnel connection to Cloudflare's edge
+* Configure an Cloudflare Tunnel connection to Cloudflare's edge
 * Create an SSH configuration file for the client
 
 **⏲️ Time to complete:**
@@ -198,9 +198,9 @@ do sleep 30;
 done;
 ```
 
-## Configure Argo Tunnel
+## Configure Cloudflare Tunnel
 
-Next, you can use `cloudflared` to connect to Cloudflare's Edge using Argo Tunnel. Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`.
+Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`.
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
@@ -212,13 +212,13 @@ The command will launch a browser window and prompt you to login with your Cloud
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
-You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
+You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
 ### Create a Tunnel
 
-You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -236,7 +236,7 @@ If you are done creating Tunnels, you can delete the `cert.pem` file, leave only
 
 Store the `JSON` file as a Kubernetes secret.
 
-### Configure Argo Tunnel
+### Configure Cloudflare Tunnel
 
 The previous setps used `cloudflared` to generate a credentials file for your Cloudflare account. When run as a service alongside the MongoDB Kubernetes deployment you will need to use a Docker image of `cloudflared`. Cloudflare makes an [official image available](https://hub.docker.com/r/cloudflare/cloudflared) in DockerHub.
 
