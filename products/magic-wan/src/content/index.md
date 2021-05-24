@@ -1,7 +1,7 @@
 ---
-title: Welcome
+title: Overview
 order: 0
-pcx-content-type: configuration
+pcx-content-type: landing-page
 ---
 
 # Cloudflare Magic WAN

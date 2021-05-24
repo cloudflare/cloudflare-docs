@@ -1,7 +1,7 @@
 ---
 title: Set Up Magic WAN
 order: 1
-pcx-content-type: landing-page
+pcx-content-type: navigation
 ---
 
 # Set up Magic WAN
