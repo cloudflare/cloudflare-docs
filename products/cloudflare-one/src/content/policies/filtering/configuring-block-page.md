@@ -104,7 +104,7 @@ All of these elements will display in addition to two fields specific to the pol
 
 * **The Rule ID**, which will make it easier for admins to debug possible policy issues in relation to blocked websites.
 
-To apply customizations to your block page, navigate to the **Block Page** card under **Settings > General**.
+To apply customizations to your block page, navigate to the **Block page** card under **Settings > General**.
 
 
  ![Block page](../../static/documentation/policies/customize-settings-page.png)
