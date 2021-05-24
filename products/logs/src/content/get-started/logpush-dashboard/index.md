@@ -18,7 +18,7 @@ Learn  how to set up a destination for:
 
 </Aside>
 
-To enable the Clouflare Logpush service:
+To enable the Cloudflare Logpush service:
 
 1. Log in to the Cloudflare dashboard
 
