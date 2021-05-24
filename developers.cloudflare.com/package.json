@@ -6,7 +6,7 @@
   "author": "Cloudflare <github@cloudflare.com>",
   "dependencies": {
     "@adaptivelink/pops": "0.2.25",
-    "@cloudflare/cloudflare-brand-assets": "4.7.5",
+    "@cloudflare/cloudflare-brand-assets": "4.7.6",
     "@material-ui/core": "4.11.0",
     "@mdx-js/mdx": "1.6.6",
     "@mdx-js/react": "1.6.6",
