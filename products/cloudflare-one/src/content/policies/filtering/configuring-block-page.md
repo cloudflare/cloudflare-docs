@@ -17,10 +17,7 @@ To configure a block page:
 
 ## Download the Cloudflare certificate
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Account**.
-1. Scroll down to find the **Certificates** card.
-
-  ![Download certificate](../../static/documentation/policies/update-certificates-page.png)
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Account > Certificates**.
 
 1. Click on **Download**.
 
@@ -41,8 +38,6 @@ Now you'll need to add the certificate to your system. This ensures your web bro
  ![Keychain](../../static/documentation/policies/cert-click-on-trust.png)
 
 1. Select **Always Trust** from the drop-down menu for **When using this certificate**.
-
- ![Always trust](../../static/documentation/policies/cert-select-always-trust.png)
 
 1. Close the menu.
 
