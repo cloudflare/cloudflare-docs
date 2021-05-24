@@ -50,7 +50,7 @@ order: 1
                 Block
             </td>
             <td>
-                N/A
+                Disabled
             </td>
         </tr>
      </tbody>
