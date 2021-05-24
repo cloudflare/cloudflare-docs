@@ -1,7 +1,7 @@
 module.exports = {
   product: "Magic WAN",
   pathPrefix: "/magic-wan",
-  productIconKey: "magic-transit",
+  productIconKey: "magic-wan",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/magic-wan",
   externalLinks: [
