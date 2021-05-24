@@ -273,17 +273,17 @@ In a real-world deployment, a bootstrap certificate should only be used in conju
 
 ### Embed the client certificates in an Android app
 
-The following is an example of how you may use a client certificate in an Android app to make HTTPS calls. You'll need to add the following permission in ``AndroidManifest.xml`` to allow for internet connection.
+The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You'll need to add the following permission in ``AndroidManifest.xml`` to allow internet connection.
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
-For demonstration purposes, the certificate in this example is stored in ``app/src/main/res/raw/cert.pem`` and the private key is stored in ``app/src/main/res/raw/key.pem``. You may store these files in other secure manners. 
+For demonstration purposes, the certificate in this example is stored in ``app/src/main/res/raw/cert.pem`` and the private key is stored in ``app/src/main/res/raw/key.pem``. You may also store these files in other secure manners. 
 
 The following example uses an ``OkHttpClient``, but you may also use other clients such as ``HttpURLConnection`` in similar ways. The key is to use the ``SSLSocketFactory``.
 ```java
 private OkHttpClient setUpClient() {
     try {
-        final String SECRET = "secret"; // You may also store this string somewhere more secure.
+        final String SECRET = "secret"; // You may also store this String somewhere more secure.
         CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
 
         // Get private key
