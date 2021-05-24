@@ -53,4 +53,5 @@ order: 1
                 N/A
             </td>
         </tr>
+     </tbody>
 </table></TableWrap>
