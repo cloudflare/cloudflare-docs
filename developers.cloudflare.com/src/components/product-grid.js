@@ -19,6 +19,7 @@ $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resourc
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
+$["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-wan.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
@@ -126,6 +127,11 @@ const products = [
     title: "Magic Transit",
     path: "magic-transit",
     icon: "magic-transit",
+  },
+  {
+    title: "Magic WAN",
+    path: "magic-wan",
+    icon: "magic-wan",
   },
   {
     title: "Network Interconnect",
