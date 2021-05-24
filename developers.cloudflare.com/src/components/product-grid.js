@@ -6,6 +6,7 @@ const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
+$["api-security"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
 $["automatic-platform-optimization"]   = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/automatic-platform-optimization.js").pathD
 $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
@@ -43,6 +44,11 @@ const products = [
     title: "API",
     path: "api",
     icon: "api",
+  },
+  {
+    title: "API Security",
+    path: "api-security",
+    icon: "page-shield",
   },
   {
     title: "Analytics",
