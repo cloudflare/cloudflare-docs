@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Troubleshooting
 
-If your query returns an error even after configuring and embedding the client SSL certificate, consider checking the following settings.
+If your query returns an error even after configuring and embedding a client SSL certificate, consider checking the following settings.
 
 --------
 
@@ -19,7 +19,7 @@ If the SSL/TLS handshake cannot be completed, check whether the certificate and 
 --------
 
 ## Check mTLS host enablement 
-On your dashboard, click the **SSL/TLS** tab, and then click **Client Certificates**. Check whether mTLS has been enabled for the correct host. The host should match the API endpoint that you want to protect. For example, if your API endpoint is "api.trackers.ninja/time", then you should add "api.trackers.ninja" under "Hosts".
+On your dashboard, click the **SSL/TLS** tab, and then click **Client Certificates**. Check whether mTLS has been enabled for the correct host. The host should match the API endpoint that you want to protect. For example, if your API endpoint is ``api.trackers.ninja/time``, then you should add ``api.trackers.ninja`` under “Hosts”.
     ![Client Certificates host enablement](../static/client-certificates-host-enablement.png)
 
 --------
