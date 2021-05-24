@@ -1,60 +1,9 @@
 ---
-order: 3
+order: 6
 pcx-content-type: tutorial
 ---
 
-# Installation
-
-## Preparing the Environment
-
-There are no dependencies to install Railgun. The only external requirement is a Memcached instance for Railgun to use as a cache backend. However, you should ensure that the latest CA certificate bundle is installed for your Operating System as it will be used to connect securely back to Cloudflare during activation. CentOS, Red Hat, Debian, and Ubuntu users should make sure that the `ca-certificates` package is installed and up-to-date via `yum` or `apt`.
-
-Users of [mod_cloudflare](https://www.cloudflare.com/resources-downloads), an Apache module which displays a visitor’s true source IP, should update their Apache configuration to include the IP of their Railgun instance as a trusted proxy. If Apache and Railgun run on the same server, the following line is needed within your Apache configuration (typically, `/etc/apache2/httpd.conf` or `/etc/httpd/httpd.conf`):
-
-```
-CloudFlareRemoteIPTrustedProxy 127.0.0.1
-```
-
-If Railgun and Apache are on two separate machines, configure mod_cloudflare to use the source IP of Railgun. This may be on a NATed address or the public IP, depending on your network configuration.
-
-```
-CloudFlareRemoteIPTrustedProxy 192.168.1.100
-```
-
-Railgun runs on port 2408 via TCP by default and this port will need to be open to connections from Cloudflare [IPs](https://www.cloudflare.com/ips). If you are unfamiliar with networking, please reach out to your hosting provider to determine the proper way to open the port for your environment. You can script out adding rules for software firewalls as follows (use with caution):
-
-```sh
-$ for i in `curl https://www.cloudflare.com/ips-v4`; do ufw allow proto tcp from $i to any port 2408; done
-$ for i in `curl https://www.cloudflare.com/ips-v4`; do iptables -I INPUT -p tcp -s $i --dport 2408 -j ACCEPT; done
-```
-
-For users with very restrictive firewall egress (outbound) policies, outbound TCP port 443 will also need to be allowed for Railgun activation to function properly. In addition, you will need to allow Railgun to make outbound connections to your web server on any ports that it listens on.
-
-## Installation Overview
-
-### Package Repository
-
-Railgun is available only for 64-bit systems. The best way of installing Railgun is via the [Package Repository](https://pkg.cloudflare.com/). Run the commands mentioned on the Package Repository page in order to set this up. Debian, CentOS, Red Hat Enterprise Linux, and Amazon Linux users may utilize the Railgun binary package repository. Ubuntu and Debian users will be automatically subscribed to the APT repo after installing one of the packages linked below. Other users will need to install the `cloudflare-release` RPM as described on the repository home page. Installation of that RPM will install the repository and GPG key.
-
-Once this has been set up, run the following command as root:
-
-### RPM-based
-
-```sh
-$ yum install railgun-stable
-```
-
-### DEB-based
-
-```sh
-$ apt-get install railgun-stable
-```
-
-### System Startup
-
-Installing the package will automatically add `/etc/init.d/railgun` to be started on boot on GNU/Linux.
-
-## Configuration and activation
+# Configuration and activation
 
 Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most important directives are `wan.port`, which specifies the port Railgun listens on, `memcached.servers`, a space separated list of `host:port` memcached instances for Railgun to utilize. It is also possible to specify the full path to a single socket file for memcached. Using a socket file is recommended for best performance if your memcached does not require network communication. Make sure at least one memcached instance is defined. Full details on the available options [can be found in the Railgul Execution docs](/user-guide/railgun-execution).
 
@@ -146,51 +95,3 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 It is recommended that you consult the [Testing Railgun](/user-guide/installation#testing-railgun) section before enabling it for all visitors to your site.
 
 When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn_set](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_set) with `mode` set to `0` or [conn_setmode_enabled](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
-
-## Potential problems
-
-If you notice consistent 523, 524 or other error responses, please check the [System Status Map](https://www.cloudflarestatus.com/) and [contact support](https://support.cloudflare.com/) as needed. Railgun will fall-back to direct HTTP requests if our endpoints can’t contact your Railgun daemon, but consistent error responses may indicate a system or origin server problem. When contacting support, please provide a screenshot of ```http://www.yourdomain.com/cdn-cgi/trace``` if you are able, or a [traceroute](https://support.cloudflare.com/hc/en-us/articles/200169336-How-do-I-run-a-traceroute-) to your domain so we know which datacenter your requests are hitting. You can then [pause](https://support.cloudflare.com/hc/en-us/articles/200169176-How-do-I-temporarily-deactivate-Cloudflare-) Cloudflare via the website to disable the service and resume normal website traffic.
-
-Railgun does not perform DNS queries when it receives a request for maximum efficiency and to prevent tampering. This means that the daemon is unaware of NAT routing or firewalls. NAT does not allow for addressing a public interface from within the associated LAN and Railgun requests will timeout and produce 502 errors. **This can be corrected by setting up a static IP mapping.** You can set that either through the hosts file for your system (usually at the path /etc/hosts) or through the `railgun-nat.conf` file in the same directory as the `railgun.conf` file. Please contact support if you require assistance with the NAT configuration file.
-
-## Common issues
-
-**Railgun is returning a HTTP 502 in its error logs.**
-
-This commonly occurs when Railgun cannot reach your origin web server over port 443 (or port 80) within 30 seconds. Verify that the server your Railgun instance is on can connect via `telnet <host> 443`.
-
----
-
-**Railgun is returning a** `connection failed 127.0.0.1:443/welcome.cloudflare.com: x509: certificate is valid for www.cloudflare.com, not welcome.cloudflare.com` **error.**
-
-Your origin webserver should have a certificate matching its hostname. If you are on an internal network and are aware of the risks, you can set `validate.cert = 0` in `railgun.conf` to turn off certificate validation (not recommended).
-
----
-
-**I’m seeing** `bad Content-Length: "-1"` **.**
-
-Railgun expects that all POST, PUT, PATCH (and other non-idempotent methods) requests have either a `Content-Length` header or a `Transfer-Encoding: chunked` header present.
-
----
-
-**There are errors containing** `memcached: connection failed` (Unix socket) **or** `dial tcp 127.0.0.1:11211: i/o timeout` (TCP) **in the logs.**
-
-Railgun cannot connect to the memcached server. These errors should not cause visible errors, but will cause Railgun to stream (and not compress) responses.
-
-You should confirm that memcached is running, is accepting connections, and confirm the state of your memcached server via the memcached `stats` command.
-
----
-
-**How can I tell what the compression ratio for a request is?**
-
-`rg-diag` is installed alongside Railgun, and allows you to decode the `Cf-Railgun` header — example:
-
-```sh
-$ bin/rg-diag -decode="151df128a1 2.05 0.009465 0031 5360"
-
-Compression ratio 2.05%
-Railgun version 5360
-Railgun Flag map.file used to change IP
-Railgun Flag rg-sender sent dictionary
-Railgun Flag rg-listener found dictionary
-```

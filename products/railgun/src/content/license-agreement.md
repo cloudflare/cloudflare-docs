@@ -1,6 +1,6 @@
 ---
 title: License agreement
-order: 17
+order: 20
 pcx-content-type: reference
 ---
 
