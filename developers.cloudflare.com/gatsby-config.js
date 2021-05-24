@@ -29,6 +29,7 @@ const products = [
   "logs",
   "magic-transit",
   "network-interconnect",
+  "railgun",
   "randomness-beacon",
   "registrar",
   "spectrum",
