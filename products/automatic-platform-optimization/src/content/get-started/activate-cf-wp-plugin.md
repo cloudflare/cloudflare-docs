@@ -1,7 +1,7 @@
 ---
 title: Activate the Cloudflare WordPress plugin
 order: 7
-pcx-content-type: how-to
+pcx-content-type: tutorial
 ---
 
 # Activate the Cloudflare WordPress plugin

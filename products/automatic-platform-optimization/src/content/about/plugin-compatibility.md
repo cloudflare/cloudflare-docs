@@ -1,7 +1,7 @@
 ---
 title: Plugin compatibility
 order: 3
-pcx-content-type: tutorial
+pcx-content-type: reference
 ---
 
 # Plugin compatibility

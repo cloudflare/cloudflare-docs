@@ -1,7 +1,7 @@
 ---
 title: Test current speed
 order: 2
-pcx-content-type: tutorial
+pcx-content-type: how-to
 ---
 
 # Test current speed

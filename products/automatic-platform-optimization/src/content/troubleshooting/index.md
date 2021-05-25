@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 order: 14
-pcx-content-type: best-practices
+pcx-content-type: interim
 ---
 
 # Troubleshooting
