@@ -1,5 +1,7 @@
 ---
+title: Frequently asked questions
 order: 4
+pcx-content-type: faq
 ---
 
 # Transfer FAQ
@@ -39,4 +41,10 @@ If you can’t seem to resolve the issue, please open a support ticket and we’
 ## 60 day window requirement
 ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, we will be unable to process your transfer immediately.
 
-You can continue to leave the domain “In Progress” and we will continue to attempt to process the transfer until the 60 day window passes.
+You can leave the domain “In Progress” and we will attempt to process the transfer until the 60 day window passes.
+
+--------
+
+## Why am I not able to start a transfer?
+
+If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when initiating a domain transfer.
