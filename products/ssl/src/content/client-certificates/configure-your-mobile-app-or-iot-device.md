@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 3
 pcx-content-type: tutorial
 ---
 
