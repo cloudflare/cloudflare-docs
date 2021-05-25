@@ -15,13 +15,14 @@ Cloudflare Analytics builds the following data sets from sampled data:
 
 <TableWrap>
 
-| Data set              | Nodes                                                                          |
-| :-------------------- | :----------------------------------------------------------------------------- |
-| Firewall Activity Log | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                  |
-| Firewall Analytics    | `firewallEventsAdaptiveGroups`                                                 |
-| Firewall Rule Preview | `firewallRulePreviewGroups`                                                    |
-| Network Analytics     | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups` |
-| Workers Metrics       | `workersInvocationsAdaptive`                                                   |
+| Data set                  | Nodes                                                                          |
+| :-------------------------| :----------------------------------------------------------------------------- |
+| Firewall Activity Log     | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                  |
+| Firewall Analytics        | `firewallEventsAdaptiveGroups`                                                 |
+| Firewall Rule Preview     | `firewallRulePreviewGroups`                                                    |
+| Network Analytics         | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups` |
+| Workers Metrics           | `workersInvocationsAdaptive`                                                   |
+| Magic Firewall Analytics  | `magicFirewallSamplesAdaptiveGroups`                                           |
 
 </TableWrap>
 
