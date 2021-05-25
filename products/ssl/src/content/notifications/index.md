@@ -20,7 +20,7 @@ To set up notifications:
 1. Select an alert type.
 1. Fill in the required information and select **Create**.
 
-To edit, delete, or disable a notifications, you would also go to [account notifications](https://dash.cloudflare.com/?to=/:account/notifications).
+To edit, delete, or disable notifications, you can also go to [account notifications](https://dash.cloudflare.com/?to=/:account/notifications).
 
 ## Respond to notifications
 
