@@ -126,12 +126,27 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 | Selector | Description |
 | -------- | ----------- |
+| DNS Subdomain | Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`. |
 | DNS Domain | Use this selector to match against a domain and all subdomains—for example, if you want to block example.com and all subdomains of example.com. |
 | DNS Host | Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com. |
 | DNS Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against—for example, you can choose to block A records for a domain but not MX records. |
 | DNS Resolver IP | Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. |
 | DNS Src IP | Use this selector to apply DNS policies to a specific source IP address that queries arrived to Gateway from—for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway |
 | Location | Use this selector to apply DNS policies to a specific location or set of locations. |
+
+</TableWrap>
+
+These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams client and the user to be enrolled in the organization via the Teams client:
+
+<TableWrap>
+
+| Selector | Description |
+| -------- | ----------- |
+| User Email | Use this selector to create identity-based DNS rules based on a user’s email. |
+| User Group Emails | Use this selector to create identity-based DNS rules based on an IdP group email address of which the user is configured as a member in the IdP. |
+| User Group IDs | Use this selector to create identity-based DNS rules based on an IdP group ID of which the user is configured as a member in the IdP. |
+| User Group Names | Use this selector to create identity-based DNS rules based on an IdP group name of which the user is configured as a member in the IdP. | 
+| User Name | Use this selector to create identity-based DNS rules based on an IdP username for a particular user in the IdP. |
 
 </TableWrap>
 

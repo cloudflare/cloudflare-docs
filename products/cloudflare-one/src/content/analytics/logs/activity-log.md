@@ -60,3 +60,9 @@ When you click on the row, you can see information related to the identity that 
 | **Policy details** | The policy corresponding to the decision Gateway made based on the traffic criteria of the request. |
 
 </TableWrap>
+
+### Isolate requests
+
+When a user creates a policy to isolate traffic, the initial request that triggers isolation will be logged as an `Isolate` decision and the `is_isolated` field will return `false`. This is because that initial request is not isolated yet — but it initiates an isolated session.
+
+Since the request is generated in an isolated browser, the result is rendered in the isolated browser and rendered back to the user securely. This request and all subsequent requests in the isolated browser are logged to include the terminal Gateway action that gets applied (e.g. Allow / Block) and the `is_isolated` field as `true`. 
