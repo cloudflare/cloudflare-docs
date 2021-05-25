@@ -36,7 +36,7 @@ The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is
 
 <p><var>CSR</var> = <var>number of challenges solved</var> / <var>number of challenges issued</var></p>
 
-Hover the CSR value to reveal the number of issued and solved CAPTCHA challenges:
+Hover over the CSR value to reveal the number of issued and solved CAPTCHA challenges:
 
 ![Revealing the number of issued vs. solved CAPTCHA challenges](../images/firewall-rules-csr-hover.png)
 
