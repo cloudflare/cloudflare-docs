@@ -21,7 +21,7 @@ Make sure you create [Zero Trust policies](/policies/zero-trust) before connecti
 
 ### 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 
