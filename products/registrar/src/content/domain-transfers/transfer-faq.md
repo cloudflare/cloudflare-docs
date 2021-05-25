@@ -41,7 +41,7 @@ If you can’t seem to resolve the issue, please open a support ticket and we’
 ## 60 day window requirement
 ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, we will be unable to process your transfer immediately.
 
-You can continue to leave the domain “In Progress” and we will continue to attempt to process the transfer until the 60 day window passes.
+You can leave the domain “In Progress” and we will attempt to process the transfer until the 60 day window passes.
 
 --------
 
