@@ -1,6 +1,7 @@
 ---
 title: FAQs
 order: 15
+pcx-content-type: faq
 ---
 
 # Frequently Asked Questions

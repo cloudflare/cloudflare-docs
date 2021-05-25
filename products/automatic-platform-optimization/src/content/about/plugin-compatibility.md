@@ -1,6 +1,7 @@
 ---
 title: Plugin compatibility
 order: 3
+pcx-content-type: reference
 ---
 
 # Plugin compatibility

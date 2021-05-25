@@ -1,6 +1,7 @@
 ---
 title: Page Rule integration with APO
 order: 11
+pcx-content-type: reference
 ---
 
 # Page Rule integration with APO
