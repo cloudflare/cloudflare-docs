@@ -5,6 +5,7 @@ pcx-content-type: how-to
 ---
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
+import RulesetEngine from "../_partials/_bfm-ruleset-engine.md"
 
 # Get started with Super Bot Fight Mode (Business)
 
@@ -28,3 +29,7 @@ Super Bot Fight Mode is included in your Business or Enterprise subscription. Wh
 ## Analytics
 
 For more on analytics, see [Bot Analytics](/bot-analytics/biz-and-ent/).
+
+## Ruleset Engine
+
+<RulesetEngine/>
