@@ -142,11 +142,11 @@ These selectors require Gateway with WARP mode to be enabled in the Cloudflare f
 
 | Selector | Description |
 | -------- | ----------- |
-| User Email | Use this selector to create identity-based DNS rules that leverage a user’s email. |
-| User Group Emails | Use this selector to create identity-based DNS rules that leverage an IdP group email address of which the user is configured as a member in the IdP. |
-| User Group IDs | Use this selector to create identity-based DNS rules that leverage an IdP group ID of which  the user is configured as a member in the IdP. |
-| User Group Names | Use this selector to create identity-based DNS rules that leverage an IdP group name of which  the user is configured as a member in the IdP. | 
-| User Name | Use this selector to create identity-based DNS rules that leverage an IdP user name for a particular user in the IdP. |
+| User Email | Use this selector to create identity-based DNS rules based on a user’s email. |
+| User Group Emails | Use this selector to create identity-based DNS rules based on an IdP group email address of which the user is configured as a member in the IdP. |
+| User Group IDs | Use this selector to create identity-based DNS rules based on an IdP group ID of which the user is configured as a member in the IdP. |
+| User Group Names | Use this selector to create identity-based DNS rules based on an IdP group name of which the user is configured as a member in the IdP. | 
+| User Name | Use this selector to create identity-based DNS rules based on an IdP username for a particular user in the IdP. |
 
 </TableWrap>
 
