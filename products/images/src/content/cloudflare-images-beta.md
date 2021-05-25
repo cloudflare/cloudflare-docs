@@ -5,8 +5,6 @@ order: 7
 
 # Cloudflare Images API (beta)
 
-<ContentColumn>
-
 Cloudflare Images API provides an end-to-end solution to build your image pipeline.  It aims to answer the most common challenges associated with building and maintaining your image infrastructure:
 
 1. “Where do we store images?”
@@ -57,15 +55,13 @@ If the upload is successful, you can expect a JSON response body similar to this
 
 ## Displaying Images
 
-When you upload an image, you will see a `url` property that can be used to serve the image. 
+When you upload an image, you will see a `url` property that can be used to serve the image.
   
-Currently, all images are auto-optimized based on device type. In future, we will be introducing custom variants so you can configure exactly how you'd like the image to be optimized. 
+Currently, all images are auto-optimized based on device type. In future, we will be introducing custom variants so you can configure exactly how you'd like the image to be optimized.
 
-## Displaying Images
-
-When you upload an image, you will see a `url` property that can be used to serve the image. 
+When you upload an image, you will see a `url` property that can be used to serve the image.
   
-Currently, all images are auto-optimized based on device type. In future, we will be introducing custom variants so you can configure exactly how you'd like the image to be optimized. 
+Currently, all images are auto-optimized based on device type. In future, we will be introducing custom variants so you can configure exactly how you'd like the image to be optimized.
 
 ### Default Variant
 The `default` variant has the following preconfigured settings based on device type:
@@ -75,7 +71,6 @@ The `default` variant has the following preconfigured settings based on device t
    * Tablet: format =. auto, fit = scale-down, height = 1080, width: 1920, metadata = none, quality = 85
 
 If the device type cannot be inferred, the default variant will use the `Desktop` subvariant.
-
 
 ## Deleting Images
 ```bash
@@ -112,5 +107,3 @@ We're just getting started with Cloudflare Images. Here are some of the features
 | Signed URL Support | Require a signed URL for access to your images |
 
 </TableWrap>
-
-</ContentColumn>
