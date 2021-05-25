@@ -5,7 +5,7 @@ pcx-content-type: how-to
 ---
 
 import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
-import RulesetEngine from "../_partials/_bfm_ruleset_engine.md"
+import RulesetEngine from "../_partials/_bfm-ruleset-engine.md"
 
 # Get started with Super Bot Fight Mode (Pro)
 
