@@ -29,7 +29,7 @@ You may check the mTLS rules by clicking the **Firewall** tab on your dashboard 
     ![Firewall mTLS rules](../static/firewall-mtls-rules.png)
 
 Click the edit button (circled in red in the screenshot above) on a Firewall rule to check whether the Expression Preview is correct and whether the hostname matches your API endpoint. For example, for the API endpoint ``api.trackers.ninja/time``, the rule should look like this:
-```
+```txt
 (http.host in {"api.trackers.ninja"} and not cf.tls_client_auth.cert_verified) 
 ```
 To edit the rule, either use the user interface or click "Edit expression".

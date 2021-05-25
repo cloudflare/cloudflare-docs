@@ -271,7 +271,7 @@ Verifying - Enter Export Password:
 
 In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
 
-### Embed the client certificates in an Android app
+### Embed the client certificate in an Android app
 
 The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You'll need to add the following permission in ``AndroidManifest.xml`` to allow internet connection.
 ```xml
