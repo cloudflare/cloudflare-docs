@@ -273,7 +273,7 @@ In a real-world deployment, a bootstrap certificate should only be used in conju
 
 ### Embed the client certificate in an Android app
 
-The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You'll need to add the following permission in ``AndroidManifest.xml`` to allow internet connection.
+The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in ``AndroidManifest.xml`` to allow an Internet connection.
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
