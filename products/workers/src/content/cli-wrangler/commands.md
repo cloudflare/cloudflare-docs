@@ -265,12 +265,13 @@ Wrangler tail uses cloudflared under the hood. If you are already using cloudfla
 
 <Aside type="warning" header="Issues with existing cloudflared configuration">
 
-Wrangler tail will not work with existing cloudflared configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844)
+`wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844).
 
-To apply a temporary fix, rename your cloudflared config to allow Wranger tail to work correctly. 
+To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
 
 ```sh
-# Move file when you are moving it to get Wrangler tail. This will temporarily disable cloudflared. 
+# Move file when you are moving it to get Wrangler tail. 
+# This will temporarily disable cloudflared. 
 $ mv ~/.cloudflared/config.yml ~/.cloudflared/config.yml.disabled
 
 # Move file back when you need to get cloudflared
