@@ -270,11 +270,11 @@ Wrangler tail uses cloudflared under the hood. If you are already using cloudfla
 To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
 
 ```sh
-# Move file when you are moving it to get Wrangler tail. 
-# This will temporarily disable cloudflared. 
+# Move config file when using `wrangler tail`. 
+# This will temporarily disable `cloudflared`. 
 $ mv ~/.cloudflared/config.yml ~/.cloudflared/config.yml.disabled
 
-# Move file back when you need to get cloudflared
+# Move file back when you need to use `cloudflared`.
 $ mv ~/.cloudflared/config.yml.disabled ~/.cloudflared/config.yml
 ```
 
