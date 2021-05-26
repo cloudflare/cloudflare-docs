@@ -114,7 +114,7 @@ async function handleRequest(request) {
 }
 ```
 
-## Writing a WebSocket Client
+### Connecting to the WebSocket server from a client
 
 Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it, just like we did on the server:
 
@@ -139,6 +139,42 @@ websocket.close()
 ```
 
 For an example of this in practice, see the [`websocket-template`](https://github.com/cloudflare/websocket-template) that we provide to get started with WebSockets.
+
+## Writing a WebSocket client
+
+A Worker can also establish a WebSocket connection to a remote server. 
+
+We do not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the upgrade header set.
+
+```js
+async function websocket(url) {
+  // Make a fetch request including `Upgrade: websocket` header.
+  // The Workers Runtime will automatically handle other requirements
+  // of the WebSocket protocol, like the Sec-WebSocket-Key header.
+  let resp = await fetch(url, {
+    headers: {
+      "Upgrade": "websocket"
+    }
+  });
+
+  // If the WebSocket handshake completed successfully, then the
+  // response has a `webSocket` property.
+  let ws = resp.webSocket;
+  if (!ws) {
+    throw new Error("server didn't accept WebSocket");
+  }
+
+  // Call accept() to indicate that you'll be handling the socket here
+  // in JavaScript, as opposed to returning it on to a client.
+  ws.accept();
+
+  // Now you can send and receive messages like before.
+  ws.send("hello");
+  ws.addEventListener("message", msg => {
+    console.log(msg.data);
+  });
+}
+```
 
 ## Durable Objects and WebSocket state
 
