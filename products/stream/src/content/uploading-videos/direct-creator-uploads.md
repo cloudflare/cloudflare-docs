@@ -26,7 +26,7 @@ body of the `POST` request:
   - `maxDurationSeconds` <Type>integer</Type> <PropMeta>required</PropMeta>
     - Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
 
-  - `expiry` <Type>string (date)</Type> <PropMeta>default: now + 6 hours</PropMeta>
+  - `expiry` <Type>string (date)</Type> <PropMeta>default: now + 30 minutes</PropMeta>
     - Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
 
 </Definitions>
