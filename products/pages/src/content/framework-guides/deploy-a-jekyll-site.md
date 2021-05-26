@@ -61,7 +61,7 @@ If you're migrating an existing Jekyll project to Pages, you should confirm that
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following options:
 
 <TableLayout>
 
@@ -73,7 +73,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 </TableLayout>
 
-By default, Jekyll builds with `JEKYLL_ENV` set to `development`. For some features to work (e.g. the `google_analytics` feature of the default _minima_ theme) it must be set to `production`. To learn more, read [Jekyll Environment documentation](https://jekyllrb.com/docs/configuration/environments/). In Cloudflare Pages, select your GitHub repository that you created above then go to _Settings_ and select _Environment variables_. For the _Production_ environment, press the _Add Variables_ button, then provide the following information:
+By default, Jekyll builds with `JEKYLL_ENV` set to `development`. For some features to work (e.g. the `google_analytics` feature of the default _minima_ theme) it must be set to `production`. To learn more, read [Jekyll Environment documentation](https://jekyllrb.com/docs/configuration/environments/). In Cloudflare Pages, select your GitHub repository that you created above then go to _Settings_ and select _Environment variables_. For the _Production_ environment, press the _Add Variables_ button, then provide the following environment variable:
 
 <TableLayout>
 
