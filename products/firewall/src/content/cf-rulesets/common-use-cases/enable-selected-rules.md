@@ -15,7 +15,7 @@ This feature is part of an early access experience for selected customers.
 
 Use a ruleset override and a rule override in the ruleset of a phase to deploy selected rules in a Managed Ruleset.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a phase to deploy a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/execute-rulesets) to the ruleset of a phase to deploy a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the ruleset.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) to set an action for the rules you want to deploy.
 

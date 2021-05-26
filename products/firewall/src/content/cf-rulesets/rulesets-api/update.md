@@ -180,7 +180,7 @@ You must set the `expression` field to `true` when deploying a ruleset to a zone
 
 </Aside>
 
-For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
+For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/execute-rulesets).
 
 
 ## Example - Update ruleset description

@@ -17,7 +17,7 @@ Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy Managed Rulesets and
 
 Follow the steps below to deploy Managed Rulesets that enable rules tagged with `joomla`.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a phase that deploys a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/execute-rulesets) to the ruleset of a phase that deploys a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. Configure a tag override that enables only the rules with a given tag.
 

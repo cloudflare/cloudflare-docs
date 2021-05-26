@@ -171,4 +171,4 @@ header: Response
 </div>
 </details>
 
-To add a rule that deploys a ruleset, refer to [Deploy rulesets](/cf-rulesets/deploy-rulesets).
+To add a rule that executes a ruleset, refer to [Execute rulesets](/cf-rulesets/execute-rulesets).
