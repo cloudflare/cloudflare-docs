@@ -27,7 +27,7 @@ Currently, Cloudflare Images API requires use of your auth key and email. Suppor
 Once you have access to Images, you can upload pictures by call the /images endpoint:
 
 ```bash
-curl api.cloudflare.com/client/v4/account/$account_tag/images/v1 \
+curl api.cloudflare.com/client/v4/accounts/$account_tag/images/v1 \
 -H "X-Auth-Key:$auth_key" \
 -H "X-Auth-Email:$auth_email"
 -F file=@./logo.png
