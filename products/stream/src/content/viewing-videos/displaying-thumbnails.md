@@ -19,7 +19,7 @@ https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.
 
 </Example>
 
-Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/) are required, you must use signed URL instead of video IDs.
+Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/)  are required, you must use signed URL instead of video IDs.
 
 ```html
 <iframe

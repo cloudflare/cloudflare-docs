@@ -14,7 +14,7 @@ Signed URLs are controlled by you and can be set to expire after a set time peri
 To implement signed URLs
 
 1. Create a key
-1. Make a video require signed URLs
+1. Make a video require signed URLS
 1. Sign tokens to use in embed code
 
 These steps are detailed below.
@@ -23,7 +23,7 @@ You can [revoke a key](#revoking-keys) anytime for any reason.
 
 ### Creating a signing key
 
-Upon creation you will get a RSA private key in PEM and JWK formats. Keys are created, used, and deleted independently of videos. Every key can sign any of your videos.
+Upon creation you will get a RSA private key in PEM and JWK formats. Keys are created, used and deleted independently of videos. Every key can sign any of your videos.
 
 ```javascript
 // curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys"
@@ -50,11 +50,8 @@ Since video ids are effectively public within signed URLs, you will need to turn
 Restricting viewing can be done by updating the video's metadata.
 
 ```javascript
----
-highlight: [8]
----
 
-// curl -X POST -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d "{\"uid\": \"$VIDEOID\", \"requireSignedURLs\": true }"
+// curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID" -H "Content-Type: application/json" -d "{\"uid\": \"$VIDEOID\", \"requireSignedURLs\": true }"
 
 {
   "result": {
@@ -99,56 +96,18 @@ Replace the video ID with the signed token to use it.
 
 #### Get started with a signing utility
 
-<Aside>
+*Using this signing utility in production is not recommended.*
 
-It is recommend that you sign your own tokens if you want more control over your signing tokens.
-
-</Aside>
-
-We offer a signing utility at `https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/token` to generate a token for a video when getting familiar with signed URLs. If called without a body, it will return a signed token with default values.
+We offer a utility at `https://util.cloudflarestream.com/sign` to generate tokens when getting familiar with signed URLs.
 
 - `exp` - If not set, defaults to one hour after issuing.
 - `nbf` - If not set, defaults to one hour before issuing.
 
-##### Example with default values
-
-```javascript
-// curl -X POST -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/token"
-
-{
-  "result": {
-    "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImNkYzkzNTk4MmY4MDc1ZjJlZjk2MTA2ZDg1ZmNkODM4In0.eyJraWQiOiJjZGM5MzU5ODJmODA3NWYyZWY5NjEwNmQ4NWZjZDgzOCIsImV4cCI6IjE2MjE4ODk2NTciLCJuYmYiOiIxNjIxODgyNDU3In0.iHGMvwOh2-SuqUG7kp2GeLXyKvMavP-I2rYCni9odNwms7imW429bM2tKs3G9INms8gSc7fzm8hNEYWOhGHWRBaaCs3U9H4DRWaFOvn0sJWLBitGuF_YaZM5O6fqJPTAwhgFKdikyk9zVzHrIJ0PfBL0NsTgwDxLkJjEAEULQJpiQU1DNm0w5ctasdbw77YtDwdZ01g924Dm6jIsWolW0Ic0AevCLyVdg501Ki9hSF7kYST0egcll47jmoMMni7ujQCJI1XEAOas32DdjnMvU8vXrYbaHk1m1oXlm319rDYghOHed9kr293KM7ivtZNlhYceSzOpyAmqNFS7mearyQ"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
+```sh
+curl -X POST "https://util.cloudflarestream.com/sign/$VIDEOID" -d "{\"id\": \"$KEYID\", \"pem\": \"$PRIVATE_KEY_IN_PEM_FORMAT\",\"nbf\":1537453165,\"exp\":1537460365}"
 ```
 
-The utility also takes a body, which accepts all the constraints defined [above](#signing-unique-tokens). If you've [created a signing key](#creating-a-signing-key), the `id` and `pem` fields from the response can be passed into the body to use a specific signing key. For more details about the allowed fields, see the [API docs](https://api.cloudflare.com/#stream-videos-create-a-signed-url-token-for-a-video).
-
-##### Example using custom constraints
-
-```javascript
-// curl -X POST \
-// -H "Authorization: Bearer $TOKEN" \
-// "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/token" \
-// --data '{"id":"'$KEYID'","pem":"'$BASE64_PRIVATE_KEY_IN_PEM_FORMAT'","exp":1621555515,"nbf":1621548315,"downloadable":false,"accessRules":[{"type":"ip.geoip.country","country":["US","MX"],"action":"block"},{"type":"ip.src","ip":["93.184.216.0/24","2400:cb00::/32"],"action":"allow"},{"type":"any","action":"block"}]}'
-
-{
-  "result": {
-    "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjkzNjk3MDlmOTdmYTdmYjg3ODQzZDZjMzA1NzRjNDgyIn0.eyJraWQiOiI5MzY5NzA5Zjk3ZmE3ZmI4Nzg0M2Q2YzMwNTc0YzQ4MiIsImV4cCI6IjE2MjE1NTU1MTUiLCJuYmYiOiIxNjIxNTQ4MzE1IiwiYWNjZXNzUnVsZXMiOlt7ImFjdGlvbiI6ImJsb2NrIiwidHlwZSI6ImlwLmdlb2lwLmNvdW50cnkiLCJjb3VudHJ5IjpbIlVTIiwiTVgiXX0seyJhY3Rpb24iOiJhbGxvdyIsInR5cGUiOiJpcC5zcmMiLCJpcCI6WyI5My4xODQuMjE2LjAvMjQiLCIyNDAwOmNiMDA6MDowOjA6MDowOjAvMzIiXX0seyJhY3Rpb24iOiJibG9jayIsInR5cGUiOiJhbnkifV0sImRvd25sb2FkYWJsZSI6dHJ1ZX0.iUvRj-lToPqNeax7ZPWktNsq0UJ_f66bKhojlAurN0NmnZe6N1HzJ2JnLgspA3VEfQ3YbiNMDEDCdIoRJy0WHAnjEp3DhUIvOWDGU_aALwDJV2SyY8gztiwKV03jr7hGAlDqnPElFXzuPLnmVWEEVoz2jizo7TVhpRF3BVhM6kUhPPZX9shifl7aTlJCiP9fb-4H-A5IOM35wQoOJotZYDoAzxpiUAOxI0KhFz8McjzA4eWgwPGHgT64qqaVTHEEpOoTyNmUlEFKCp07Kw2r9fLgfuYifJZ0BfG4ET3IA3RbMhJVjvwB1uH0GUg4Zw0tcS-HtbK3-GQby49-4nrulw"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-Tokens generated with the signing utility have some constraints, which are listed below.
-
-- `exp` cannot be greater than 24 hours in the future from when the token is signed
-- Tokens signed without providing a key ID and private key in PEM format may be revoked for security purposes
+This endpoint accepts JSON bodies with the output from [Creating a signing key](#creating-a-signing-key) or any object with `pem` and `kid` attributes. To add a constraint, include it as a property of the body.
 
 #### Signing tokens in production
 
