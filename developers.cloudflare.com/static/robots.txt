@@ -7,6 +7,7 @@ Sitemap: https://developers.cloudflare.com/onedot/sitemap.xml
 Sitemap: https://developers.cloudflare.com/access/sitemap.xml
 Sitemap: https://developers.cloudflare.com/analytics/sitemap.xml
 Sitemap: https://developers.cloudflare.com/api/sitemap.xml
+Sitemap: https://developers.cloudflare.com/api-security/sitemap.xml
 Sitemap: https://developers.cloudflare.com/argo-tunnel/sitemap.xml
 Sitemap: https://developers.cloudflare.com/automatic-platform-optimization/sitemap.xml
 Sitemap: https://developers.cloudflare.com/bots/sitemap.xml
