@@ -4,14 +4,11 @@ Disallow: /browser-isolation
 
 Sitemap: https://developers.cloudflare.com/developers/sitemap.xml
 Sitemap: https://developers.cloudflare.com/onedot/sitemap.xml
-Sitemap: https://developers.cloudflare.com/access/sitemap.xml
 Sitemap: https://developers.cloudflare.com/analytics/sitemap.xml
 Sitemap: https://developers.cloudflare.com/api/sitemap.xml
 Sitemap: https://developers.cloudflare.com/api-security/sitemap.xml
-Sitemap: https://developers.cloudflare.com/argo-tunnel/sitemap.xml
 Sitemap: https://developers.cloudflare.com/automatic-platform-optimization/sitemap.xml
 Sitemap: https://developers.cloudflare.com/bots/sitemap.xml
-Sitemap: https://developers.cloudflare.com/browser-isolation/sitemap.xml
 Sitemap: https://developers.cloudflare.com/byoip/sitemap.xml
 Sitemap: https://developers.cloudflare.com/cloudflare-one/sitemap.xml
 Sitemap: https://developers.cloudflare.com/distributed-web/sitemap.xml
@@ -19,7 +16,6 @@ Sitemap: https://developers.cloudflare.com/docs-engine/sitemap.xml
 Sitemap: https://developers.cloudflare.com/events/sitemap.xml
 Sitemap: https://developers.cloudflare.com/firewall/sitemap.xml
 Sitemap: https://developers.cloudflare.com/fundamentals/sitemap.xml
-Sitemap: https://developers.cloudflare.com/gateway/sitemap.xml
 Sitemap: https://developers.cloudflare.com/http3/sitemap.xml
 Sitemap: https://developers.cloudflare.com/images/sitemap.xml
 Sitemap: https://developers.cloudflare.com/load-balancing/sitemap.xml
