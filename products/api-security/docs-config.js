@@ -14,7 +14,7 @@ module.exports = {
     indexName: "developers-cloudflare",
     apiKey: "b23088ab4d346409f9d3ece6606344c3",
     algoliaOptions: { 'facetFilters': '["project:api-security"]'}
-},
+  },
   siteMetadata: {
     title: "Cloudflare API Security docs",
     description: "Protect your APIs from simple and sophisticated attacks using Cloudflare API Security products.",
