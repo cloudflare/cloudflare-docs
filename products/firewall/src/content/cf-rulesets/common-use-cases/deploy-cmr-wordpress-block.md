@@ -13,9 +13,9 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Follow the steps below to deploy a Managed Ruleset and override rules for a specific tag.
+Follow the steps below to create a rule that executes a Managed Ruleset and defines an override for rules with a specific tag.
 
-1. [Add a rule](/cf-rulesets/execute-rulesets) to a phase to deploy a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/execute-rulesets) to a phase entry point that executes a Managed Ruleset.
 1. [Configure a tag override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets a specified action for all rules with a given tag.
 
 The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to execute the steps in a single `PUT` request.
