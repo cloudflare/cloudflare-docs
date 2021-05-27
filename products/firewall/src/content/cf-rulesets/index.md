@@ -11,23 +11,21 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is the same syntax used in custom Firewall Rules. Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
+The Cloudflare Ruleset Engine allows you to create and execute rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is the same syntax used in custom Firewall Rules. Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
 
 There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
 
 * **Phase** — Defines a stage in the life of a request where you can execute rulesets.
 * **Ruleset** — Defines a versioned set of rules. You can execute rulesets in a phase.
-* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
+* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action executes a ruleset.
 
 ## Phases
 
-A phase defines a stage or entry point in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and you cannot modify them.
+A phase defines a stage in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and you cannot modify them.
 
-At a conceptual level, a phase is also a ruleset. You deploy rulesets to a phase by adding rules to the phase ruleset.
+Phases exist at two levels: at the **account** level and at the **zone** level. For the same phase, rules defined at the account level execute **before** the rules defined at the zone level.
 
-Phases exist at two levels: at the **account** level and at the **zone** level. For the same phase, rules defined at the account level run **before** the rules defined at the zone level.
-
-<Aside type="warning" header="Important">
+<Aside type="note">
 
 Currently, phases at the account level are only available in Enterprise plans.
 
@@ -37,31 +35,36 @@ The following diagram outlines the request handling process where requests go th
 
 ![Requests going through the available phases](../images/rulesets-phases.png)
 
+Phases have an **entry point** at the account and zone levels. An entry point contains a list of ordered rules to execute in the phase.
+
 Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
 
 ## Rulesets
 
-A ruleset is a versioned set of rules. Cloudflare creates a new version of the ruleset each time you modify it. You execute rulesets by deploying them to a phase.
+A ruleset is an ordered set of rules that you can apply to traffic at the edge. Rulesets belong to a phase and can only be executed in the same phase. To execute a ruleset in a phase, add a rule with the `execute` action to the phase entry point.
 
-There are several types of rulesets. Cloudflare provides **Managed Rulesets** that you can deploy. Additionally, you can create and manage your own **custom rulesets**. Specific Cloudflare products may provide other types of rulesets.
+Rulesets are versioned. Each ruleset modification creates a new version of the ruleset. You can have several versions of a ruleset in use at the same time. When you execute a ruleset, the most recent version of the ruleset is selected by default.
+
+There are several types of rulesets. Cloudflare provides **Managed Rulesets** that you can execute. Additionally, you can create and manage your own **custom rulesets**. Specific Cloudflare products may provide other types of rulesets.
 
 <Aside type="note" header="Note">
 
-Since phases behave just like rulesets, they also have a type. In the Rulesets API, you can check the ruleset type in the `kind` field. Account-level phases have a `root` ruleset type, while zone-level phases have a `zone` ruleset type.
+Phase entry points also have a type, just like rulesets. You can check the ruleset/entry point type in the `kind` field:
+
+* Phase entry points at the account level have `kind: 'root'`
+* Phase entry points at the zone level have `kind: 'zone'`
 
 </Aside>
 
-Cloudflare creates a new version of the ruleset every time there is a change to that ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset, the most recent version of the ruleset is selected by default.
-
 ### Managed Rulesets
 
-Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a phase. Only Cloudflare can modify these rulesets.
+Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can execute in a phase. Only Cloudflare can modify these rulesets.
 
 The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
 There are several Cloudflare products that provide you with Managed Rulesets. Check each product’s documentation for details on the available Managed Rulesets.
 
-For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
+For more information on executing Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
 
 ### Custom rulesets
 
@@ -71,9 +74,9 @@ Currently, custom rulesets are only supported by the Cloudflare WAF.
 
 </Aside>
 
-You can create custom rulesets at the account level where you can define your own set of rules. After creating a custom ruleset, you can deploy it to a phase.
+Use custom rulesets to define your own sets of rules. After creating a custom ruleset, you can execute it in a phase.
 
-For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/cf-rulesets/custom-rulesets).
+For more information on creating and executing custom rulesets, check [Work with custom rulesets](/cf-rulesets/custom-rulesets).
 
 ## Rules
 
@@ -89,6 +92,6 @@ Rules can have additional features through specific Cloudflare products. You may
 
 To view existing rulesets and their properties, see [View rulesets](/cf-rulesets/view-rulesets).
 
-For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
+For more information on executing Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
 
-For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/cf-rulesets/custom-rulesets).
+For more information on creating and executing custom rulesets, check [Work with custom rulesets](/cf-rulesets/custom-rulesets).

@@ -1,11 +1,11 @@
 ---
-title: Deploy rulesets
+title: Execute rulesets
 pcx-content-type: how-to
 type: overview
 order: 740
 ---
 
-# Deploy rulesets
+# Execute rulesets
 
 <Aside type='warning' header='Important'>
 
@@ -13,27 +13,27 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy or execute a ruleset. Add a rule with `"action": "execute"` to a phase, specifying the Ruleset ID as an action parameter. This rule executes the ruleset. Use a separate rule for each ruleset you want to deploy.
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to execute a ruleset. Add a rule with `"action": "execute"` to a phase entry point, specifying the Ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to execute.
 
-A rule that deploys a ruleset consists of:
+A rule that executes a ruleset consists of:
 
-* The **ID of the ruleset** you want to deploy.
+* The **ID of the ruleset** you want to execute.
 * An **expression**.
-* An **action**. To deploy a ruleset, set the action to execute. The rules in the ruleset are executed when a request satisfies the expression.
+* An **action**. To execute a ruleset, set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
 
 <Aside type='warning' header='Important'>
 
-When deploying a ruleset to a phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to deploy a ruleset in a phase at the account level is `cf.zone.name`. The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
+When executing a ruleset in a phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to execute a ruleset in a phase at the account level is `cf.zone.name`. The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
 
-When deploying a ruleset to a phase at the **zone** level, you must set the expression to `true`. 
+When executing a ruleset in a phase at the **zone** level, you must set the expression to `true`.
 
 </Aside>
 
 ## Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
+The following example executes a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
 
-When deploying to a zone-level phase, you must set `expression` to `true`, since the zone scope is already defined in the endpoint.
+When executing a ruleset in a zone-level phase, you must set `expression` to `true`.
 
 ```json
 ---
@@ -95,6 +95,6 @@ header: Response
 
 Check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information on working with Managed Rulesets and custom rulesets.
 
-For more information on the available API endpoints for editing and deploying rulesets, check [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
+For more information on the available API endpoints for editing and executing rulesets, check [Update and execute rulesets](/cf-rulesets/rulesets-api/update).
 
-For examples of deploying rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).
+For examples of executing rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).
