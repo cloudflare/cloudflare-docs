@@ -17,7 +17,7 @@ To add rules to an existing custom ruleset, execute a `PUT` request to the custo
 
 <Aside type='info' header='Info'>
 
-When you modify a ruleset using a `PUT` request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules. 
+When you modify a ruleset using a `PUT` request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules.
 
 If you are updating several rules at once, use the `PUT` request described in this section. It allows you to make changes to several rules in bulk, while changing the version number of the updated rules and of the ruleset only once. However, if you are updating a single rule, consider using the [Update rule](/cf-rulesets/rulesets-api/update-rule) method instead.
 

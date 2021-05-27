@@ -1,11 +1,10 @@
 ---
-title: Deploy a custom ruleset
 pcx-content-type: how-to
 alwaysopen: true
 order: 763
 ---
 
-# Deploy a custom ruleset
+# Execute a custom ruleset
 
 <Aside type='warning' header='Important'>
 
@@ -15,11 +14,11 @@ This feature is part of an early access experience for selected customers.
 
 Before you begin:
 
-1. Obtain the name of the phase where you want to deploy the custom ruleset.
+1. Obtain the name of the phase where you want to execute the custom ruleset.
 1. [Create a custom ruleset](/cf-rulesets/custom-rulesets/create-custom-ruleset) and keep the ID of the new custom ruleset.
-1. [Fetch the rules already present in the phase ruleset](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep when you execute the request to deploy the custom ruleset.
+1. [Fetch the rules already present in the phase entry point](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep in the `PUT` request that configures the execution of the custom ruleset.
 
-Execute a `PUT` request to deploy the custom ruleset. The request creates rules in the `http_request_firewall_custom` phase that executes the rules in the custom ruleset when the zone name matches `example.com`.
+Issue a `PUT` request that adds a rule to execute the custom ruleset when the zone name matches `example.com`.
 
 ```json
 ---
@@ -33,7 +32,7 @@ curl -X PUT \
   "rules": [
     {
       "action":"execute",
-      "description":"Add custom ruleset",
+      "description":"Execute custom ruleset",
       "expression": "cf.zone.name == \"example.com\"",
       "action_parameters": {
         "id":"{custom-ruleset-id}"
@@ -58,8 +57,8 @@ header: Response
 {
   "result": {
     "id": "{account-phase-ruleset-id}",
-    "name": "http_request_firewall_custom phase Ruleset for my account",
-    "description":"Add custom ruleset",
+    "name": "http_request_firewall_custom phase entry point for my account",
+    "description": "Execute several rulesets",
     "kind": "root",
     "version": "3",
     "rules": [
@@ -67,6 +66,7 @@ header: Response
         "id": "{phase-rule-id}",
         "version": "1",
         "action": "execute",
+        "description":"Execute custom ruleset",
         "action_parameters": {
           "id": "{custom-ruleset-id}",
           "version": "latest"
@@ -81,7 +81,7 @@ header: Response
         "version": "1",
         "action": "execute",
         "action_parameters": {
-          "id": "{id-of-ruleset-that-existing-rule-id-1-deploys}",
+          "id": "{id-of-ruleset-executed-by-existing-rule-id}",
           "version": "latest"
         },
         "expression": "cf.zone.name eq  \"example.com\"",
@@ -94,7 +94,7 @@ header: Response
         "version": "1",
         "action": "execute",
         "action_parameters": {
-          "id": "{id-of-ruleset-that-existing-rule-id-2-deploys}",
+          "id": "{id-of-ruleset-executed-by-existing-rule-id-2}",
           "version": "latest"
         },
         "expression": "cf.zone.name eq  \"example.com\"",

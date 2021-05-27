@@ -15,7 +15,7 @@ Also, custom rulesets are currently only supported by the Cloudflare WAF.
 
 </Aside>
 
-Use the following workflow to deploy a custom ruleset at the account level.
+Use the following workflow to configure the execution of a custom ruleset at the account level:
 
 1. [Create a custom ruleset](/cf-rulesets/custom-rulesets/create-custom-ruleset/).
 1. [Add rules to your custom ruleset](/cf-rulesets/custom-rulesets/add-rules-ruleset/).
