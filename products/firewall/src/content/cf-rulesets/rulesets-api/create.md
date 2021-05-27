@@ -13,9 +13,9 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Creates a ruleset of a given kind in the specified phase.
+Creates a ruleset of a given kind in the specified phase. Allows you to create phase entry points.
 
-Use one of the following endpoints when creating a ruleset:
+Use one of the following endpoints when creating a ruleset or a phase entry point:
 
 ```bash
 ---
@@ -61,8 +61,8 @@ The following parameters are required:
       <td>String</td>
       <td><p>Allowed values:
           <ul>
-            <li><em>root</em> - creates a phase ruleset at the account level</li>
-            <li><em>zone</em> - creates a phase ruleset at the zone level</li>
+            <li><em>root</em> - creates a phase entry point at the account level</li>
+            <li><em>zone</em> - creates a phase entry point at the zone level</li>
             <li><em>custom</em> - creates a custom ruleset</li>
           </ul>
         </p></td>
@@ -71,7 +71,7 @@ The following parameters are required:
       <td><code>phase</code></td>
       <td>The name of the phase where the ruleset will be created.</td>
       <td>String</td>
-      <td>Check the specific Cloudflare product documentation for more information on the phases where you can create custom rulesets.</td>
+      <td>Check the specific Cloudflare product documentation for more information on the phases where you can create rulesets or entry points.</td>
     </tr>
   </tbody>
 </table>
@@ -80,7 +80,7 @@ Use the `rules` parameter to supply a list of rules that define the ruleset. For
 
 ## Example - Create a zone-level phase ruleset
 
-This example creates a zone-level phase ruleset at the `http_request_firewall_managed` phase with a single rule that deploys a Managed Ruleset.
+This example creates a zone-level phase entry point at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
 
 ```json
 ---
@@ -91,9 +91,9 @@ curl -X POST \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
 -d '{
-  "name": "Zone-level phase ruleset",
+  "name": "Zone-level phase entry point",
   "kind": "zone",
-  "description": "This ruleset deploys a Managed Ruleset.",
+  "description": "This ruleset executes a Managed Ruleset.",
   "rules": [
     {
       "action": "execute",
@@ -114,8 +114,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
-    "description": "This ruleset deploys a Managed Ruleset.",
+    "name": "Zone-level phase entry point",
+    "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "1",
     "rules": [
@@ -141,7 +141,7 @@ header: Response
 
 ## Example - Create a custom ruleset
 
-This example creates a custom ruleset in the `http_request_firewall_custom` phase with a single rule.
+This example creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
 ```json
 ---

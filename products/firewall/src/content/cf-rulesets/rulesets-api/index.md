@@ -13,8 +13,8 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-The Rulesets API provides an interface for managing and deploying rulesets.
+The Rulesets API provides an interface for managing and configuring the execution of rulesets.
 
 ## Get started
 
-To get started, review the Rulesets [JSON object](/cf-rulesets/rulesets-api/json-object/) and [Endpoints](/cf-rulesets/rulesets-api/endpoints/).
+To get started, review the Rulesets [JSON object](/cf-rulesets/rulesets-api/json-object/) and the available [Endpoints](/cf-rulesets/rulesets-api/endpoints/).

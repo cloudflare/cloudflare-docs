@@ -158,7 +158,7 @@ The JSON object properties for a rule are defined as follows:
       <td><code>action</code></td>
       <td>Defines what happens when there’s a match for the rule expression.</td>
       <td>String</td>
-      <td>The available actions depend on the phase where the rule's ruleset is deployed.</td>
+      <td>The available actions depend on the phase where the rule's ruleset is executed.</td>
     </tr>
     <tr>
       <td><code>categories</code></td>
@@ -170,7 +170,7 @@ The JSON object properties for a rule are defined as follows:
       <td><code>expression</code></td>
       <td>Criteria defining when there is a match for the current rule.</td>
       <td>String</td>
-      <td>The fields and functions you can use in a rule expression depend on the phase where the rule's ruleset is deployed.</td>
+      <td>The fields and functions you can use in a rule expression depend on the phase where the rule's ruleset is executed.</td>
     </tr>
     <tr>
       <td><code>last_updated</code></td>

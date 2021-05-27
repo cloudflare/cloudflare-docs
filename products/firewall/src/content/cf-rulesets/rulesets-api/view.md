@@ -39,11 +39,11 @@ GET /zones/{zone-id}/rulesets
 
 The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
-Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy at the specified zone.
+Also, the list of rulesets at the zone level includes the account-level rulesets you may want to execute in the specified zone.
 
 <Aside type='warning' header='Important'>
 
-Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on what ruleset types are allowed in that product’s supported phases.
+Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on which ruleset types are allowed in that product’s supported phases.
 
 </Aside>
 
@@ -69,7 +69,7 @@ header: Response
   "result": [
     {
       "id": "{phase-ruleset-id}",
-      "name": "Zone-level phase ruleset",
+      "name": "Zone-level phase entry point",
       "description": "",
       "kind": "zone",
       "version": "5",
@@ -103,11 +103,11 @@ GET /zones/{zone-id}/rulesets/{ruleset-id}
 
 <Aside type='warning' header='Important'>
 
-Note: You can only use the zone-level endpoint for zone-level rulesets, that is, phases where `kind` is set to `zone`.
+Note: You can only use the zone-level endpoint for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
 
 </Aside>
 
-You can also use the following specific endpoints for viewing the ruleset of a phase:
+You can also use the following specific endpoints for viewing the ruleset of a phase entry point:
 
 ```bash
 ---
@@ -128,7 +128,7 @@ Returns the ruleset with the specified Ruleset ID.
 The API returns a 404 HTTP Status Code under these conditions:
 
 * When a ruleset cannot be found.
-* When the specified ruleset is not a Managed Ruleset the calling account is entitled to deploy.
+* When the specified ruleset is not a Managed Ruleset the calling account is entitled to execute.
 
 ### Example
 
@@ -149,8 +149,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
-    "description": "This ruleset deploys a Managed Ruleset.",
+    "name": "Zone-level phase entry point",
+    "description": "Executes a Managed Ruleset.",
     "kind": "zone",
     "version": "3",
     "rules": [
@@ -196,7 +196,7 @@ GET /zones/{zone-id}/rulesets/{ruleset-id}/versions
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
-You can also use the following specific endpoints for the ruleset of a phase:
+You can also use the following specific endpoints to obtain all the versions of a phase entry point:
 
 ```bash
 ---
@@ -212,7 +212,7 @@ header: Zone-level phase endpoint
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions
 ```
 
-When the specified phase ruleset does not exist, this API method returns an empty array in the `result` field.
+When the specified phase entry point does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
 
@@ -277,7 +277,7 @@ header: Zone-level endpoint
 GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}
 ```
 
-You can also use the following specific endpoints for the ruleset of a phase:
+You can also use the following endpoints for viewing a specific version of a phase entry point:
 
 ```bash
 ---
@@ -293,7 +293,7 @@ header: Zone-level phase endpoint
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
 ```
 
-When the specified phase ruleset does not exist, this API method returns a 404 HTTP Status Code.
+When the specified phase entry point does not exist, this API method returns a 404 HTTP Status Code.
 
 ### Example
 
@@ -314,8 +314,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
-    "description": "This ruleset deploys a Managed Ruleset.",
+    "name": "Zone-level phase entry point",
+    "description": "Executes a Managed Ruleset.",
     "kind": "zone",
     "version": "3",
     "rules": [
@@ -341,7 +341,7 @@ header: Response
 
 <Aside type='note' header='Note'>
 
-When you view a specific version of a Managed Ruleset, each rule listed in the result has one or more associated categories/tags and it does not contain an expression.
+When you view a specific version of a Managed Ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
 
 </Aside>
 

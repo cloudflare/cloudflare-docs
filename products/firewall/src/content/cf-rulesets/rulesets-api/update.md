@@ -1,11 +1,11 @@
 ---
-title: Update and deploy rulesets
+title: Update and execute rulesets
 pcx-content-type: reference
 alwaysopen: true
 order: 785
 ---
 
-# Update and deploy rulesets
+# Update and execute rulesets
 
 <Aside type='warning' header='Important'>
 
@@ -13,7 +13,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
+You can use the API to update **basic properties** of a ruleset or phase entry point (currently only the description) and the **list of rules** in the ruleset/entry point.
 
 To configure a ruleset at the account or zone level, use one of the following API endpoints:
 
@@ -31,7 +31,7 @@ header: Zone-level endpoint
 PUT /zones/{zone-id}/rulesets/{root-ruleset-id}
 ```
 
-Alternatively, you can use one of the following endpoints when updating the ruleset of a phase:
+Alternatively, you can use one of the following endpoints when updating a phase entry point:
 
 ```bash
 ---
@@ -85,8 +85,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
-    "description": "This ruleset deploys a Managed Ruleset.",
+    "name": "Zone-level phase entry point",
+    "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "4",
     "rules": [
@@ -110,11 +110,11 @@ header: Response
 }
 ```
 
-## Example - Deploy a ruleset
+## Example - Execute a ruleset
 
-To deploy a ruleset, create a rule with the `action` field set to `execute` and add the ruleset ID to the `action_parameters` field in the `id` parameter. You deploy rulesets to a phase.
+To execute a ruleset, create a rule with the `action` field set to `execute` and add the ruleset ID to the `action_parameters` field in the `id` parameter. You execute rulesets in a phase.
 
-This example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
+This example executes a Managed Ruleset in the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
 
 ```json
 ---
@@ -132,7 +132,7 @@ curl -X PUT \
         "id": "{managed-ruleset-id}"
       },
       "expression": "true",
-      "description": "Execute Cloudflare Managed Ruleset on my phase ruleset"
+      "description": "Execute Cloudflare Managed Ruleset on my phase entry point"
     }
   ]
 }'
@@ -145,7 +145,7 @@ header: Response
 {
   "result": {
     "id": "{phase-ruleset-id}",
-    "name": "Zone-level phase ruleset",
+    "name": "Zone-level phase entry point",
     "description": "",
     "kind": "zone",
     "version": "4",
@@ -159,7 +159,7 @@ header: Response
           "version": "latest"
         },
         "expression": "true",
-        "description": "Execute Cloudflare Managed Ruleset on my phase ruleset",
+        "description": "Execute Cloudflare Managed Ruleset on my phase entry point",
         "last_updated": "2021-03-21T11:02:08.769537Z",
         "ref": "{rule-ref-1}",
         "enabled": true
@@ -176,16 +176,16 @@ header: Response
 
 <Aside type='warning' header='Important'>
 
-You must set the `expression` field to `true` when deploying a ruleset to a zone-level phase.
+You must set the `expression` field to `true` when executing a ruleset in a zone-level phase entry point.
 
 </Aside>
 
-For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/execute-rulesets).
+For more information on executing rulesets, check [Execute rulesets](/cf-rulesets/execute-rulesets).
 
 
 ## Example - Update ruleset description
 
-You can use this API method to update the description of an existing ruleset.
+You can use this API method to update the description of an existing ruleset or phase entry point.
 
 <Aside type='warning' header='Important'>
 
@@ -202,7 +202,7 @@ curl -X PUT \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{ 
-  "description": "My updated zone ruleset"
+  "description": "My updated phase entry point"
 }'
 ```
 
@@ -213,8 +213,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone Ruleset",
-    "description": "My updated zone ruleset",
+    "name": "Zone entry point",
+    "description": "My updated phase entry point",
     "kind": "zone",
     "version": "4",
     "rules": [
