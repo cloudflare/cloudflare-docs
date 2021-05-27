@@ -66,3 +66,27 @@ When you click on the row, you can see information related to the identity that 
 When a user creates a policy to isolate traffic, the initial request that triggers isolation will be logged as an `Isolate` decision and the `is_isolated` field will return `false`. This is because that initial request is not isolated yet — but it initiates an isolated session.
 
 Since the request is generated in an isolated browser, the result is rendered in the isolated browser and rendered back to the user securely. This request and all subsequent requests in the isolated browser are logged to include the terminal Gateway action that gets applied (e.g. Allow / Block) and the `is_isolated` field as `true`. 
+
+## Cloudflare logpush integration
+
+<Aside>
+
+This feature is only available on the Teams Enterprise plan.
+
+</Aside>
+
+You can configure the automatic export of logs from Cloudflare Gateway to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed. This feature builds on Cloudflare's Logpush Service. To enable this feature on the Teams dashboard:
+
+1. Navigate to **Logs > Logpush**.
+1. Click **Connect a service**.
+1. Enter a **Job name**.
+1. From the drop-down menu, choose whether to export the *Gateway DNS* or the *Gateway HTTP* dataset.
+1. Next, select the data fields you want to export.
+1. In the **Advanced settings** card, choose the timestamp format you prefer, and whether you want to enable logs sampling.
+1. Click **Next**.
+1. Select the service you want to export your Gateway logs to. 
+1. Next, follow the service-specific instructions on the Teams UI to validate your destination.
+
+The setup of your logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination. 
+
+You can configure multiple destinations and monitor for any issues by returning to the Logpush page.
