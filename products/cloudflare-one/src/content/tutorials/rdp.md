@@ -78,7 +78,7 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 1. Run the following command to authenticate cloudflared into your Cloudflare account.
 
- ```bash
+ ```txt
  C:\Cloudflared\bin\cloudflared.exe login
  ```
 
@@ -90,7 +90,7 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 1. Copy the file to the `systemprofile` directory created previously.
 
- ```bash
+ ```txt
  copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
  ```
 
@@ -106,7 +106,7 @@ Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A sin
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
-```bash
+```txt
 C:\Cloudflared\bin\cloudflared.exe tunnel list
 ```
 
@@ -132,7 +132,7 @@ You can now [configure the Tunnel](/connections/connect-apps/configuration) to s
 
 1. Save the file to the following location:
 
- ```bash
+ ```txt
  C:\Windows\System32\config\systemprofile\.cloudflared\config.yml
  ```
 
@@ -156,7 +156,7 @@ Click **Save**.
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
 
- ```bash
+ ```txt
  C:\Cloudflared\bin\cloudflared.exe tunnel run <NAME>
  ```
 
@@ -173,7 +173,7 @@ cloudflared will need to be installed on each user device that will connect.
 
 1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
- ```bash
+ ```txt
  C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:2244
  ```
 
@@ -195,7 +195,7 @@ You can help end users connect without requiring the command line by providing t
 
 1. In the wizard that appears, paste in the path to your `cloudflared.exe` file, followed by this command with the hostname your team uses:
 
- ```bash
+ ```txt
  C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:2244
  ```
 1. Click **Next** and complete the wizard.
@@ -214,7 +214,7 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 
 1. The command below can be saved as a `.command` file that can be launched on login:
 
- ```bash
+ ```txt
  var=/Applications/CF-RDP-Tunnel.command &&
  echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var &&
  chmod +x $var
