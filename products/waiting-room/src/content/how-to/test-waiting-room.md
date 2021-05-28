@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: tutorial
 ---
 
-# Test a Waiting Room
+# Test a waiting room
 
 Follow this tutorial to ensure your Waiting Room queues and admits users as expected.
 
@@ -111,4 +111,4 @@ In this example, you can clearly see when the script entered the second phase â€
 
 ## 4. Adjust Waiting Room (optional)
 
-Based on the results of your test, you may want to adjust [the settings](../create-waiting-room/create-waiting-room-dashboard/configure-settings) of your Waiting Room.
+Based on the results of your test, you may want to adjust [the settings](/reference/configuration-settings) of your Waiting Room.

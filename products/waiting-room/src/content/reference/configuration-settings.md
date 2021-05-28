@@ -1,14 +1,9 @@
 ---
-order: 0
-type: overview
-pcx-content-type: configuration
+order: 1
+pcx-content-type: reference
 ---
 
-# Configure settings from the Cloudflare dashboard
-
-To configure settings for a waiting room, select the **Settings** tab in the **Create Waiting Room** page.
-
-![Waiting Rooms Settings](../../../static/wr-create-waiting-room-settings.png)
+# Configuration settings
 
 The table below describes the **Settings** fields that you can configure in the dashboard, and indicates the equivalent Waiting Room API parameter for each setting.
 
@@ -53,20 +48,20 @@ The table below describes the **Settings** fields that you can configure in the 
       <td><code>total_active_users</code></td>
       <td>Yes</td>
       <td>The maximum number of active sessions allowed in <code>host/path</code> at a given time.</td>
-      <td>Set to 75% to 80% of origin traffic capacity and adjust as needed. Adjustments may affect estimated wait time shown to end users.</td>
+      <td>Set to 75% of origin traffic capacity and adjust as needed. Adjustments may affect estimated wait time shown to end users.</td>
     </tr>
     <tr>
       <td>New users per minute</td>
       <td><code>new_users_per_minute</code></td>
       <td>Yes</td>
-      <td>Amount of new users per minute that can be allowed into <code>host/path</code>, less than or equal to target concurrent users.</td>
+      <td>Not the rate of new users added, but a <a href="#new-users-per-minute">threshold</a> of users per minute that can be allowed into <code>host/path</code>, less than or equal to target concurrent users.</td>
       <td></td>
     </tr>
     <tr>
       <td>Session duration</td>
       <td><code>session_duration</code></td>
       <td>No</td>
-      <td>The amount of time in minutes that a user who left <code>host/path</code> can come directly back without having to go into the Waiting Room.</td>
+      <td>The amount of time in minutes (between 1 and 30) that a user who left <code>host/path</code> can come <a href="#session-duration">directly back</a> without having to go into the Waiting Room. Defaults to 5 minutes.</td>
       <td></td>
     </tr>
     <tr>
@@ -84,6 +79,20 @@ The table below describes the **Settings** fields that you can configure in the 
 You can configure only one Waiting Room per `host/path` combination.
 </Aside>
 
-## Next steps
+## Additional details
 
-Click **Next** or the **Customization** tab to modify the waiting room page design.
+### New users per minute
+
+When you configure `new users per minute`, this value **is not** the number of users added per minute.
+
+Instead, it is the threshold of users allowed per minute (less than or equal to the number of `total active users`).
+
+### Session duration
+
+Session duration improves user experience in two ways.
+
+First, it prevents visitors from having to pass through a waiting room twice for the same transaction. For example, a visitor might want to make a purchase at `example.com`. There's a lot of traffic at `example.com`, so they queue in the waiting room before entering the online store. After a period of time, they leave the waiting room and enter the online store. They make a purchase and leave the online store.
+
+However, they forgot to add a note to the order or request a receipt. As long as their [session cookie](/about/waiting-room-cookie) is still valid (for the length of time specified by the `session duration`), they can re-enter your application without having to re-queue in the waiting room.
+
+Second, session duration lets your waiting room create a dynamic outflow from your application (in addition to dynamic inflow). A user's session cookie expires after a period of inactivity, meaning that new spots can open up as soon as space becomes available and estimated wait times are lower and more accurate.

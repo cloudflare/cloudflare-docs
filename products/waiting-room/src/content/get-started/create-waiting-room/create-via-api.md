@@ -1,9 +1,10 @@
 ---
+title: Create via API
 order: 1
 pcx-content-type: tutorial
 ---
 
-# Create a Waiting Room via the API
+# Create a waiting room via the API
 
 Create a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com/#waiting-room-create-waiting-room) to the Cloudflare API base URL.
 
@@ -172,3 +173,4 @@ GET https://waitingrooms.dev/preview/{preview-id}
 The link in the response displays the content of the `custom_page_html` field, rendered with [mustache](https://mustache.github.io).
 
 Use the optional `force_queue` query parameter to preview the waiting room web page when all traffic is force-queued.
+
