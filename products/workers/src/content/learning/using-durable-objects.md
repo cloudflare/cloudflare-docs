@@ -229,7 +229,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.2) for installation instructions and more information.
+You must use [Wrangler version 1.17 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
 </Aside>
 
@@ -284,7 +284,7 @@ $ wrangler publish --new-class DurableObjectExample
 
 Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
 
-If you want to delete the Durable Objects associated with an exported class, you can use `--delete-class`:
+If you want to delete the Durable Objects associated with an exported class, remove the corresponding binding from wrangler.toml, then use `--delete-class`:
 
 ```sh
 $ wrangler publish --delete-class DurableObjectExample
