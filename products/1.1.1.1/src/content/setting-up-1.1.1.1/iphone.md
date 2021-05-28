@@ -22,14 +22,14 @@ Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
 1. Remove any IP addresses that may be already listed and in their place add:
 
-```txt
-1.1.1.1
-1.0.0.1
-2606:4700:4700::1111
-2606:4700:4700::1001
-```
+    ```txt
+    1.1.1.1
+    1.0.0.1
+    2606:4700:4700::1111
+    2606:4700:4700::1001
+    ```
 
-8. Click Save.
+1. Click Save.
 
 ## Using DNS Override iOS App
 

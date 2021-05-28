@@ -14,9 +14,9 @@ Follow this quick guide to start using 1.1.1.1 on Microsoft  Azure.
 
 1. Select **DNS Servers**, then **Custom**, and add two entries:
 
-```txt
-1.1.1.1
-1.0.0.1
-```
+    ```txt
+    1.1.1.1
+    1.0.0.1
+    ```
 
-5. Click **Save**.
+1. Click **Save**.

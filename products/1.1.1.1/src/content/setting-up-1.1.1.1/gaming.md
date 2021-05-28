@@ -32,14 +32,14 @@ Follow the instructions below to setup 1.1.1.1 on your gaming consoles.
 
 1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
-```txt
-2606:4700:4700::1111
-2606:4700:4700::1001
-```
+    ```txt
+    2606:4700:4700::1111
+    2606:4700:4700::1001
+    ```
 
-12. Set MTU Settings to Automatic
+1. Set MTU Settings to Automatic
 
-13. Set Proxy Server to Do Not Use
+1. Set Proxy Server to Do Not Use
 
 ## Xbox One
 
@@ -57,12 +57,12 @@ Follow the instructions below to setup 1.1.1.1 on your gaming consoles.
 
 1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
-```txt
-2606:4700:4700::1111
-2606:4700:4700::1001
-```
+    ```txt
+    2606:4700:4700::1111
+    2606:4700:4700::1001
+    ```
 
-8. When you are done, you will be shown a confirmation screen. Press the B button to save.
+1. When you are done, you will be shown a confirmation screen. Press the B button to save.
 
 ## Nintendo
 
@@ -86,9 +86,9 @@ The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Ni
 
 1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
-```txt
-2606:4700:4700::1111
-2606:4700:4700::1001
-```
+    ```txt
+    2606:4700:4700::1111
+    2606:4700:4700::1001
+    ```
 
-10. Click Save then OK
+1. Click Save then OK

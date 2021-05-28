@@ -14,7 +14,7 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 1. Click on the `Settings` button.
 1. Click **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
 
-## Google Chrome 
+## Google Chrome
 
 <Aside>
 
