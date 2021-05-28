@@ -1,5 +1,6 @@
 ---
 order: 0
+type: overview
 pcx-content-type: configuration
 ---
 
@@ -14,58 +15,66 @@ The table below describes the **Settings** fields that you can configure in the 
 <table style="width:100%">
   <thead>
     <tr>
-      <td colspan="2" style="width:40%"><strong>Settings</strong></td>
-      <td colspan="2" style="width:60%"><strong>Notes</strong></td>
+      <td colspan="2" style="width:30%"><strong>Settings</strong></td>
+      <td colspan="2" style="width:70%"><strong>Notes</strong></td>
     </tr>
     <tr>
-      <td style="width:20%"><strong>Dashboard Setting</strong></td>
-      <td style="width:20%"><strong>API parameter</strong></td>
-      <td style="width:20%"><strong>Required or optional</strong></td>
-      <td style="width:40%"><strong>Description</strong></td>
+      <td style="width:15%"><strong>Dashboard Setting</strong></td>
+      <td style="width:15%"><strong>API parameter</strong></td>
+      <td style="width:15%"><strong>Required?</strong></td>
+      <td style="width:30%"><strong>Description</strong></td>
+      <td style="width:25%"><strong>Best practices</strong></td>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Name</td>
       <td><code>name</code></td>
-      <td>Required</td>
+      <td>Yes</td>
       <td>Unique waiting room name.</td>
+      <td></td>
     </tr>
     <tr>
       <td>Hostname</td>
       <td><code>host</code></td>
-      <td>Required</td>
-      <td>Host name for which the waiting room will be applied (no wildcards).Do not include http:// or https://.</td>
+      <td>Yes</td>
+      <td>Host name for which the waiting room will be applied (no wildcards).</td>
+      <td>Do not include <code>http://</code> or <code>https://</code>.</td>
     </tr>
     <tr>
       <td>Path</td>
       <td><code>path</code></td>
-      <td>Optional</td>
-      <td>Specific path within the host where the waiting room will be applied. The waiting room will be enabled for all subpaths. Wildcards and query parameters are not supported.</td>
+      <td>No</td>
+      <td>Case-sensitive path of the waiting room. The waiting room will be enabled for all subpaths. Wildcards and query parameters are not supported.</td>
+      <td>If your server does not allow letter casing, use numbers in your <code>path</code> or redirect traffic with a Page Rule.</td>
     </tr>
     <tr>
       <td>Total active users</td>
       <td><code>total_active_users</code></td>
-      <td>Required</td>
-      <td>The maximum number of active sessions allowed in <code>host/path</code> at a given time. The maximum recommended value is 80% to 85% of the traffic capacity that your origin can handle.</td>
+      <td>Yes</td>
+      <td>The maximum number of active sessions allowed in <code>host/path</code> at a given time.</td>
+      <td>Set to 75% to 80% of origin traffic capacity and adjust as needed. Adjustments may affect estimated wait time shown to end users.</td>
     </tr>
     <tr>
       <td>New users per minute</td>
       <td><code>new_users_per_minute</code></td>
-      <td>Required</td>
-      <td>Amount of new users per minute that can be allowed into <code>host/path</code>: less than or equal to target concurrent users.</td>
+      <td>Yes</td>
+      <td>Amount of new users per minute that can be allowed into <code>host/path</code>, less than or equal to target concurrent users.</td>
+      <td></td>
     </tr>
     <tr>
       <td>Session duration</td>
       <td><code>session_duration</code></td>
-      <td>Optional</td>
+      <td>No</td>
       <td>The amount of time in minutes that a user who left <code>host/path</code> can come directly back without having to go into the Waiting Room.</td>
+      <td></td>
     </tr>
     <tr>
       <td>Description</td>
       <td><code>description</code></td>
-      <td>Optional</td>
+      <td>No</td>
       <td>Description of the Waiting Room.</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

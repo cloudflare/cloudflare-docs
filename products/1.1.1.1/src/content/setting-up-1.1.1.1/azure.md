@@ -6,17 +6,17 @@ order: 2
 
 Follow this quick guide to start using 1.1.1.1 on Microsoft  Azure.
 
-Step 1: Log into your Azure portal.
+1. Log into your Azure portal.
 
-Step 2: From the Azure portal side menu, select **Virtual Networks**.
+1. From the Azure portal side menu, select **Virtual Networks**.
 
-Step 3: Navigate to the virtual network associated with your virtual machine (VM).
+1. Navigate to the virtual network associated with your virtual machine (VM).
 
-Step 4: Select **DNS Servers**, then **Custom**, and add two entries:
+1. Select **DNS Servers**, then **Custom**, and add two entries:
 
-```txt
-1.1.1.1
-1.0.0.1
-```
+    ```txt
+    1.1.1.1
+    1.0.0.1
+    ```
 
-Step 5: Click **Save**.
+1. Click **Save**.

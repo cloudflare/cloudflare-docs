@@ -48,7 +48,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 <Aside>
 
-  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`build`](configuration#build) section.
+  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`build`](#build) section.
 
 </Aside>
 
@@ -330,15 +330,14 @@ Usage:
 
 ```toml
 [build]
-upload.format = "service-worker"
 command = "npm install && npm run build"
+[build.upload]
+format = "service-worker"
 ```
 
+#### `[build]`
+
 <Definitions>
-
-- `upload.format` <PropMeta>required</PropMeta>
-
-  - The format of the Worker script, must be "service-worker"
 
 - `command` <PropMeta>optional</PropMeta>
 
@@ -352,6 +351,16 @@ command = "npm install && npm run build"
 
   - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory
 
+</Definitions>
+
+#### `[build.upload]`
+
+<Definitions>
+  
+  - `format` <PropMeta>required</PropMeta>
+
+    - The format of the Worker script, must be "service-worker"
+  
 </Definitions>
 
 <Aside>
@@ -520,7 +529,8 @@ kv_namespaces = [
 
 [build]
 command = "webpack"
-upload.format = "service-worker"
+[build.upload]
+format = "service-worker"
 
 [site]
 bucket = "./public"

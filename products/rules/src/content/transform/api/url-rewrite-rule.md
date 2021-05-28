@@ -1,5 +1,6 @@
 ---
 title: Create a URL Rewrite Rule
+pcx-content-type: interim
 order: 1
 ---
 

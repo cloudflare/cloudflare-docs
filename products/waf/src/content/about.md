@@ -1,5 +1,6 @@
 ---
 title: About
+pcx-content-type: concept
 order: 1
 ---
 

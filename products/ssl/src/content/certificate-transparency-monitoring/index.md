@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: concept
 ---
 
 # Certificate transparency monitoring
@@ -24,7 +25,7 @@ Alerts are turned off by default. If you want to receive alerts, go to [SSL/TLS]
 
 Features vary by plan:
 - **Free** and **Pro** customers will see a toggle to turn **On** or **Off**. Emails will go to all Cloudflare account members.
-- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias (ct-alerts@yourcompany.com).
+- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias.
 
 To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
 
@@ -52,7 +53,7 @@ Only Certificate Authorities can revoke malicious certificates. If you believe a
 
 - [DigiCert support](https://www.digicert.com/support/#Contact)
 
-- [GlobalSign support](https://www.globalsign.com/en/company/contact/support/)
+- [GlobalSign support](https://support.globalsign.com/)
 
 - [GoDaddy support](https://www.godaddy.com/contact-us?sp_hp=B)
 

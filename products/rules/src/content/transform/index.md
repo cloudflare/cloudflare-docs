@@ -1,5 +1,6 @@
 ---
 title: Transform Rules
+pcx-content-type: concept
 order: 2
 ---
 
@@ -93,6 +94,8 @@ Active HTTP Request Header Modification Rules | 2    | 5   | 10       | 20
 Regular expression support                    | No   | No  | Yes      | Yes
 
 </TableWrap>
+
+A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/hc/articles/205065067#12345682) or one of the Administrator roles to access Transform Rules.
 
 <Aside type='note' label='Note'>
 

@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Customize a Waiting Room

@@ -1,6 +1,6 @@
 ---
-title: Bot Management Dashboard
 order: 90
+pcx-content-type: tutorial
 ---
 
 # Bot Management Dashboard
@@ -18,14 +18,14 @@ If you haven’t used Cloudflare Logs before, visit our [Logs documentation](/) 
 Before getting started, make sure that you:
 
 - Have a Cloudflare Enterprise account with Cloudflare Logs and Bot Management enabled
-- Configure [Logpush](/logpush/) or [Logpull](/logpull-api/)
+- Configure [Logpush](/get-started/) or [Logpull](/logpull/)
 - Have enabled the [_EdgePathingSrc_ and _EdgePathingStatus_](/reference/pathing-status/) fields in Cloudflare Logs to ensure bot requests are captured
-- Are familiar with [Cloudflare Bot Management](https://support.cloudflare.com/hc/articles/360027519452)
+- Are familiar with [Cloudflare Bot Management](https://developers.cloudflare.com/bots/)
 - Follow your analytics provider’s guides for getting logs from AWS S3 or Google Cloud Platform into your analytics platform
 
 <Aside type="note" header="Note">
 
-You can also refer to our [tutorials for enabling logs and dashboards for several analytics providers](/analytics-integrations/).
+You can also refer to our [tutorials for enabling logs and dashboards for several analytics providers](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations).
 </Aside>
 
 ## Task 1 - Configure Cloudflare to Detect Bot Traffic
@@ -48,7 +48,7 @@ Before proceeding, make sure that you’ve enabled Cloudflare Bot Management for
 
 The Cloudflare Bot Management Dashboard is already available in Elastic, Google Data Studio, Looker, Splunk, and Sumo Logic. If you use any of those platforms, you do not need to do anything else to view these existing dashboards.
 
-See the [Analytics Integrations](/analytics-integrations/) and [Analyze log data with Google Cloud](/analytics-integrations/google-cloud/) sections for details.
+See the [Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations) and [Analyze log data with Google Cloud](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk)google-cloud/) sections for details.
 
 ### Viewing dashboards for other platforms
 
@@ -99,22 +99,22 @@ The columns are:
 
 The following images demonstrate some of the dashboards available.
 
-**Elastic** ([_Learn more_](/analytics-integrations/elastic/))
+**Elastic** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/elastic/))
 ![Cloudflare Bot Management in Elastic](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-elastic.png)
 
-**Google Data Studio** ([_Learn more_](/analytics-integrations/google-cloud/))
+**Google Data Studio** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/google-cloud/))
 ![Cloudflare Bot Management in Google Data Studio page 1](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-google-data-studio-page-1.png)
 ![Cloudflare Bot Management in Google Data Studio page 2](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-google-data-studio-page-2.png)
 
-**Graylog** ([_Learn more_](/analytics-integrations/graylog/))
+**Graylog** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/graylog/))
 ![Cloudflare Bot Management in Graylog](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-Graylog.png)
 
-**Looker** ([_Learn more_](/analytics-integrations/looker/))
+**Looker** ([_Learn more_]((https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations)looker/))
 ![Cloudflare Bot Management in Looker](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-Looker.png)
 
-**Splunk** ([_Learn more_](/analytics-integrations/splunk/))
+**Splunk** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk/))
 ![Cloudflare Bot Management in Splunk page 1](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-splunk-page-1.png)
 ![Cloudflare Bot Management in Splunk page 2](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-splunk-page-2.png)
 
-**Sumo Logic** ([_Learn more_](/analytics-integrations/sumo-logic/))
+**Sumo Logic** ([_Learn more_](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/sumo-logic/))
 ![Cloudflare Bot Management in Sumo Logic](../static/images/bot-management/dashboards/cloudflare-bot-management-dashboard-sumo-Logic.png)

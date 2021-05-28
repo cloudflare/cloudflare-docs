@@ -6,7 +6,7 @@ difficulty: Advanced
 
 # Connect multiple HTTP origins
 
-You can use [Argo Tunnel](/connections/connect-apps) to connect one or more applications and servers to Cloudflare's network. Argo Tunnel relies on a piece of software, `cloudflared`, to create those connections. Instead of pointing a DNS record to a public IP address and relying on IP-based network firewall rules, Argo Tunnel ensures traffic to your origin server passes through Cloudflare's network where firewall or Zero Trust rules can be applied.
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect one or more applications and servers to Cloudflare's network. Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections. Instead of pointing a DNS record to a public IP address and relying on IP-based network firewall rules, Cloudflare Tunnel ensures traffic to your origin server passes through Cloudflare's network where firewall or Zero Trust rules can be applied.
 
 You can deploy a single instance of `cloudflared` to proxy traffic to a single service with a single hostname or multiple destinations for multiple hostnames.
 
@@ -28,7 +28,7 @@ In this example, two resources are running and need to be connected to the Inter
 * a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313`.
 * Grafana, a charting application. Grafana is available at `localhost:3000`
 
-Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -42,13 +42,13 @@ The command will launch a browser window and prompt you to login with your Cloud
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
-You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
+You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -90,9 +90,9 @@ You can run the following command to validate the configuration file before you 
 
 If you are using the credentials file without the `cert.pem` file, you must specify the Tunnel ID in the `tunnel:` value. You cannot use the Name alone with the credentials file.
 
-## Run Argo Tunnel
+## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Argo Tunnel connection. You can now [run](/connections/connect-apps/run-tunnel) that Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run](/connections/connect-apps/run-tunnel) that Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 
