@@ -7,6 +7,8 @@ pcx-content-type: how-to
 
 You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/waiting-room-dashboard) or the [API](/reference/waiting-room-api).
 
+<Aside>For details about updating an active waiting room, see [Best practices](/reference/best-practices)</Aside>
+
 ## Using the dashboard
 
 ### Edit a waiting room

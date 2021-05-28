@@ -101,7 +101,7 @@ When you create a waiting room with custom HTML, you can use the following varia
 
 To preview the appearance of a waiting room:
 1. In your application, go to **Traffic** > **Waiting Rooms**.
-1. Either [create a waiting room](../../get-started/create-waiting-room/create-via-dashboard) or [edit an existing one](../edit-delete-waiting-room).
+1. Either [create a waiting room](../create-via-dashboard) or [edit an existing one](../edit-delete-waiting-room).
 1. Go to the **Review** step.
 1. Click **Preview Waiting Room**:
   * Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.

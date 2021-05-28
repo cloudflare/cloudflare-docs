@@ -55,7 +55,7 @@ The table below describes the **Settings** fields that you can configure in the 
       <td><code>new_users_per_minute</code></td>
       <td>Yes</td>
       <td>Not the rate of new users added, but a <a href="#new-users-per-minute">threshold</a> of users per minute that can be allowed into <code>host/path</code>, less than or equal to target concurrent users.</td>
-      <td></td>
+      <td>Set to 100% of peak traffic to ensure users are only queued when necessary</td>
     </tr>
     <tr>
       <td>Session duration</td>
@@ -85,7 +85,7 @@ You can configure only one Waiting Room per `host/path` combination.
 
 When you configure `new users per minute`, this value **is not** the number of users added per minute.
 
-Instead, it is the threshold of users allowed per minute (less than or equal to the number of `total active users`).
+Instead, it is the threshold of users allowed per minute (less than or equal to the number of `total active users`). You should set this value at 100% of your expected peak traffic to ensure users are only queued when necessary.
 
 ### Session duration
 
