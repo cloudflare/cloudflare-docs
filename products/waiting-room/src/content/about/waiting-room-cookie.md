@@ -14,7 +14,7 @@ A waiting room only uses the `__cfwaitingroom` cookie when a visitor requests ac
 ## Cookie expiration time
 
 * While a visitor stays in a waiting room, the `__cfwaitingroom` cookie is set to expire in 24 hours.
-* When the visitor accesses the application, the `__cfwaitingroom` cookie expires after an interval (specified by [session_duration](../../reference/configuration-settings#session-duration)).
+* When the visitor accesses the application, the `__cfwaitingroom` cookie expires after an interval (specified by [session_duration](/reference/configuration-settings#session-duration)).
 
 ## Cookie function
 
@@ -22,4 +22,4 @@ The `__cfwaitingroom` cookie is used to:
 
 * Track a user's position in the waiting room queue and serve them in the correct order.
 * Monitor each visitor's duration in the application to provide an accurate entry time to visitors queueing in the waiting room.
-* To allow re-entry for a period of time (specified by [session_duration](../../reference/configuration-settings#session-duration)) without going back in the waiting room.
+* To allow re-entry for a period of time (specified by [session_duration](/reference/configuration-settings#session-duration)) without going back in the waiting room.

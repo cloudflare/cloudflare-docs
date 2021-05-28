@@ -20,13 +20,13 @@ Cloudflare offers options to customize the appearance of your waiting room:
 ## Default waiting room
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
 
-![Choose default waiting room](../../../static/default-form.png)
+![Choose default waiting room](../static/default-form.png)
 
 ## Custom waiting room
 
 To customize a waiting room, click **Custom Waiting Room**.
 
-![Choose custom waiting room](../../../static/custom-form.png)
+![Choose custom waiting room](../static/custom-form.png)
 
 You can edit the HTML code directly in the text box:
 
@@ -109,4 +109,4 @@ To preview the appearance of a waiting room:
 
 ## Troubleshooting
 
-If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close a tag with the appropriate `/{element}`.
+If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with it's appropriate closing tag (the tag name with a `/`).

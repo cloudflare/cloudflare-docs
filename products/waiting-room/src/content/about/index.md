@@ -6,16 +6,23 @@ pcx-content-type: concept
 
 # About Cloudflare Waiting Room
 
-Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down.
+Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down:
+- If a page is not experiencing heavy traffic, a visitor goes straight to the page.
+- If page traffic crosses a [user-defined threshold](/reference/configuration-settings#session-duration), a visitor goes to a virtual waiting room until it's their turn to access the page. 
 
-It does this by redirecting visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic. When the amount of traffic to a host/path combination on your site exceeds a user-defined threshold, all subsequent requests are queued in a Waiting Room. A [cookie](/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
+![Waiting room process flow](../static/waiting-room-process-flow.png)
 
-Furthermore, Cloudflare Waiting Room improves customer experience and confidence in your website:
+A [cookie](/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
+
+## Benefits
+
+Cloudflare Waiting Room improves customer experience and confidence in your website:
 
 * Instead of seeing error pages, site visitors see a page informing them that they are in a Waiting Room.
 * You can [customize the Waiting Room](../how-to/customize-waiting-room) to use your own website branding and style, enhancing visitors' trust.
 * The Waiting Room page provides an estimated wait time for visitors and automatically refreshes the browser page to update the estimated time.
 * Once a site visitor reaches the application from the Waiting Room, they are given [known-user status](/reference/configuration-settings#session-duration) so they can leave the site and re-enter without needing to queue again.
+* Because waiting rooms support dynamic inflow and [outflow](/reference/configuration-settings#session-duration), new spots appear more quickly and estimated wait times are lower and more accurate.
 
 ## Availability
 

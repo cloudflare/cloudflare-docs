@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Edit and delete waiting rooms
 
-You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/waiting-room-dashboard) or the API.
+You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/waiting-room-dashboard) or the [API](/reference/waiting-room-api).
 
 ## Using the dashboard
 
@@ -14,7 +14,7 @@ You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/wa
 1. In your application, go to **Traffic** > **Waiting Rooms**.
 1. On a record, click **Edit**.
 1. Click **Settings**.
-1. Edit the settings. For a description of settings, refer to [Configure settings](/reference/configuration-settings/).
+1. Edit the settings. For a description of settings, refer to [Configuration settings](/reference/configuration-settings/).
 1. Click **Next**. If you have access to [customized templates](../customize-waiting-room), you also could adjust the template.
 9. Once you get to **Review**, click **Save**.
 

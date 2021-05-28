@@ -6,6 +6,6 @@ pcx-content-type: navigation
 
 # Common tasks
 
-When working with Cloudflare Waiting Rooms, you may want to perform the following actions:
+When working with Cloudflare Waiting Rooms, you can perform the following actions:
 
 <DirectoryListing path="/how-to"/>
