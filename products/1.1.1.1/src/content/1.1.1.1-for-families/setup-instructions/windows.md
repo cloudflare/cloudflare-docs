@@ -19,7 +19,7 @@ order: 3
     * **1.0.0.2**
 1. Click OK.
 
-# IPv6
+### IPv6
 1. Click on the Start menu, then click on Control Panel.
 1. Click on Network and Internet.
 1. Click on Change Adapter Settings.
@@ -48,7 +48,7 @@ order: 3
     * **1.0.0.3**
 1. Click OK.
 
-# IPv6
+### IPv6
 1. Click on the Start menu, then click on Control Panel.
 1. Click on Network and Internet.
 1. Click on Change Adapter Settings.
