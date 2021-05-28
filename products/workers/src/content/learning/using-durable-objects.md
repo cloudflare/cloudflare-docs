@@ -284,7 +284,7 @@ $ wrangler publish --new-class DurableObjectExample
 
 Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
 
-If you want to delete the Durable Objects associated with an exported class, you can use `--delete-class`:
+If you want to delete the Durable Objects associated with an exported class, remove the corresponding binding from wrangler.toml, then use `--delete-class`:
 
 ```sh
 $ wrangler publish --delete-class DurableObjectExample
