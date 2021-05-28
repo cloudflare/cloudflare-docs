@@ -4,7 +4,7 @@ order: 12
 
 # Google Suite
 
-<Aside title="Note">
+<Aside header="Note">
 
 You don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
