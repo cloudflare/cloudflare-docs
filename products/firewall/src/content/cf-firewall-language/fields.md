@@ -26,7 +26,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 <Aside type='warning' header='Important'>
 
-Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code` and `ip.geoip.subdivision_2_iso_code` fields require a Cloudflare Business or Enterprise plan.
+Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
 </Aside>
 
@@ -254,7 +254,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='warning' header='Important'>
 
-Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields require a Cloudflare Enterprise plan with [Bot Management](/bots/get-started/bm-subscription) enabled.
+Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields requires a Cloudflare Enterprise plan with [Bot Management](/bots/get-started/bm-subscription) enabled.
 
 </Aside>
 
