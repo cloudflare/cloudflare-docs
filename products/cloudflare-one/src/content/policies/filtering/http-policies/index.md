@@ -53,7 +53,7 @@ Rules with Block actions block outbound traffic from reaching destinations you s
 
 ### Isolate
 
-When a HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
+When an HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
 
 If you'd like to isolate **all security threats**, you can set up a policy with the following configuration:
 
@@ -104,6 +104,12 @@ The *Do Not Inspect* action is only available when matching against the host cri
 The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
 
 ## Selectors
+
+<Aside>
+
+Policies created using the URL selector are case-sensitive.
+
+</Aside>
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Host**

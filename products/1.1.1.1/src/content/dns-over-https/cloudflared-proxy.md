@@ -10,14 +10,16 @@ There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1
 
 We've open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-Step 1: Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1. Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 
-Step 2: Verify that the `cloudflared` daemon is installed
+1. Verify that the `cloudflared` daemon is installed
 
+    ```bash
     cloudflared --version
     cloudflared version 2020.11.11 (built 2020-11-25-1643 UTC)
+    ```
 
-Step 3: Start the DNS proxy on an address and port in your network. If you don't
+1. Start the DNS proxy on an address and port in your network. If you don't
 specify an address and port, it will start listening on `localhost:53`. DNS (53)
 is a privileged port, so for the initial demo we will use a different port:
 
@@ -27,13 +29,15 @@ is a privileged port, so for the initial demo we will use a different port:
     INFO[2020-12-04T19:58:57Z] Starting metrics server on 127.0.0.1:44841/metrics
     INFO[2020-12-04T19:58:57Z] Starting DNS over HTTPS proxy server on: dns://localhost:5553
 
-Step 4: You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
+1. You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
 
+    ```bash
     dig +short @127.0.0.1 -p5553 cloudflare.com AAAA
     2606:4700::6810:85e5
     2606:4700::6810:84e5
+    ```
 
-Step 5: Set up cloudflared as a service so it starts on user login. On many
+1. Set up cloudflared as a service so it starts on user login. On many
 Linux distributions, this can be done with:
 
     sudo tee /etc/systemd/system/cloudflared-proxy-dns.service >/dev/null <<EOF
@@ -53,35 +57,42 @@ Linux distributions, this can be done with:
     EOF
     sudo systemctl enable --now cloudflared-proxy-dns
 
-Step 6: Change your system DNS servers to use 127.0.0.1. On Linux, one can
+1. Change your system DNS servers to use 127.0.0.1. On Linux, one can
 modify `/etc/resolv.conf`:
 
     sudo rm -f /etc/resolv.conf
     echo nameserver 127.0.0.1 | sudo tee /etc/resolv.conf >/dev/null
 
-Step 7: Finally verify it locally with:
+1. Finally verify it locally with:
 
+    ```bash
     dig +short @127.0.0.1 cloudflare.com AAAA
     2606:4700::6810:85e5
     2606:4700::6810:84e5
+    ```
 
 ## dnscrypt-proxy
 
 The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1, and other services. It includes more advanced features, such as load balancing and local filtering.
 
-Step 1: Install the dnscrypt-proxy. You can [find the instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+1. Install the dnscrypt-proxy. You can [find the instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
 
-Step 2: Verify that the `dnscrypt-proxy` is installed, and at least version 2.0
+1. Verify that the `dnscrypt-proxy` is installed, and at least version 2.0
 
+    ```bash
     dnscrypt-proxy -version
     2.0.8
+    ```
 
-Step 3: Set up the configuration file using the [official instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#setting-up-dnscrypt-proxy), and add 'cloudflare' and 'cloudflare-ipv6' to the server list in `dnscrypt-proxy.toml`
+1. Set up the configuration file using the [official instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#setting-up-dnscrypt-proxy), and add 'cloudflare' and 'cloudflare-ipv6' to the server list in `dnscrypt-proxy.toml`
 
+    ```bash
     server_names = ['cloudflare', 'cloudflare-ipv6']
+    ```
 
-Step 4: Make sure that nothing else is running on `localhost:53`, and check that everything works as expected
+1. Make sure that nothing else is running on `localhost:53`, and check that everything works as expected
 
+    ```bash
     dnscrypt-proxy -resolve cloudflare-dns.com
     Resolving [cloudflare-dns.com]
 
@@ -90,5 +101,6 @@ Step 4: Make sure that nothing else is running on `localhost:53`, and check that
     IP addresses:   2400:cb00:2048:1::6810:6f19, 2400:cb00:2048:1::6810:7019, 104.16.111.25, 104.16.112.25
     TXT records:    -
     Resolver IP:    172.68.140.217
+    ```
 
-Step 5: Register it as a system service using the [instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#installing-as-a-system-service-windows-linux-macos)
+1. Register it as a system service using the [instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#installing-as-a-system-service-windows-linux-macos)

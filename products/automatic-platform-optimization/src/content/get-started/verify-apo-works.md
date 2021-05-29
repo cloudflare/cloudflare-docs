@@ -1,6 +1,7 @@
 ---
 title: Verify APO works
 order: 8
+pcx-content-type: tutorial
 ---
 
 # Verify APO works

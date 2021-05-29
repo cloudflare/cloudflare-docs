@@ -16,6 +16,9 @@ products/argo-tunnel/ @cloudflare/PCX
 # APO
 products/automatic-platform-optimization/ @cloudflare/PCX
 
+# Bot management
+products/bots/ @cloudflare/PCX
+
 # Browser Isolation
 products/browser-isolation/ @cloudflare/PCX
 

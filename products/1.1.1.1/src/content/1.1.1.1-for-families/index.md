@@ -4,7 +4,7 @@ order: 3
 
 # 1.1.1.1 for Families
 
-1.1.1.1 for Families is the easiest way to add a layer of protection to your home network, and protect it from malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1 two years ago.
+1.1.1.1 for Families is the easiest way to add a layer of protection to your home network, and protect it from malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1 two years ago.
 
 1.1.1.1 for Families has two default options: one that blocks malware and the other that blocks malware and adult content. You choose which setting you want depending on which IP address you configure.
 
