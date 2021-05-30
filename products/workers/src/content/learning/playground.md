@@ -4,7 +4,7 @@ order: 1
 
 # Playground
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It doesn’t require _any_ setup. It’s just a simple, instant way to preview and test a Workers script directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It doesn’t require _any_ setup. It’s just a sandbox which gives an instant way to preview and test a Workers script directly in the browser against any site.
 
 <p><Button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Launch playground</Button></p>
 
@@ -24,7 +24,7 @@ async function handleRequest(request) {
 }
 ```
 
-It’s essentially the simplest Worker script you can write.
+Yay! You have written your first Worker script.
 
 Essentially what’s going on here is that when the Worker receives a request, `handleRequest` is called, and it responds with a text [response](/runtime-apis/response) of `"Hello world"`.
 
