@@ -199,7 +199,7 @@ is_timed_hmac_valid_v0(
    <String field as MessageMAC>,
    <Integer literal as ttl>,
    <Integer as currentTimeStamp>,
-   <Optional Integer literal as lengthOfSeperator, default: 0>,
+   <Optional Integer literal as lengthOfSeparator, default: 0>,
    <Optional String literal as flags>
 ) -> <Bool as result>
 ```
