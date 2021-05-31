@@ -304,7 +304,7 @@ For more information, see [HMAC Validation: Overview](#overview).
 
 </Aside>
 
-#### Simple case
+### Simple case
 
 Consider the case where the MessageMAC is contained entirely within a single field, as in this example URI path:
 
@@ -331,7 +331,7 @@ is_timed_hmac_valid_v0(
 )
 ```
 
-#### Concatenated MessageMAC argument
+### Concatenated MessageMAC argument
 
 To compose a MessageMAC from more than one field, use the `concat()` function.
 
