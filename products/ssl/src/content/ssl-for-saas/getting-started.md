@@ -16,14 +16,14 @@ The fallback origin is where the traffic of your Custom Hostnames will be routed
 ![Add a CNAME record](..//static/ssl-for-sass-dns.png)
 4. Upgrade your zone to an Enterprise plan, and contact your Customer Success Manager to enable SSL for SaaS Certificates.
 5. Set the **Fallback Origin** via either the dashboard or API.
-    * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined via step 2 above and click **Add**.
-    ![Add a fallback origin on dashboard](..//static/ssl-for-sass-add-fallback.png)
+    * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined in step 2 above and click **Add**.
+    ![Add a fallback origin on dashboard](..//static/ssl-for-saas-add-fallback.png)
 
     * Via API: 
-        * (a) Retrieve your zone’s
+        (a) Retrieve your zone’s
             * __[Global API Key](https://support.cloudflare.com/hc/articles/200167836#12345682)__, and
             * __Zone ID__ (via the __Overview__ app of the Cloudflare dashboard). Alternatively, [retrieve a user’s zones and associated Zone IDs](https://api.cloudflare.com/#zone-list-zones) via the Cloudflare API.
-        * Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
+        (b) Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
 
         ```bash
         $ curl -XPUT
@@ -69,9 +69,22 @@ In this example, HTTP based validation is used ("method":"http") to issue this c
 $ curl -XPOST "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames"\
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
        -H "Content-Type: application/json"\
-       -d '{"hostname":"app.example.com", "ssl":{"method":"http","type":"dv"}}'
+       -d '{"hostname":"app.customer.com", "ssl":{"method":"http","type":"dv"}}'
 ```
 
 Note that it’s possible to serve these HTTP records from your own web servers, in advance of placing the CNAME. The payload returned includes the path where the CA will look for the challenge along with the body that should be returned.
 
+Alternatively, you may also issue certificates to custom hostnames via the dashboard. 
+1. Navigate to **SSL/TLS** > **Custom Hostnames** and click **Add Custom Hostname**.
+1. Add your customer's hostname `app.customer.com` and set the relevant options. Click **Add Custom Hostname**.
+![Add a custom hostname](..//static/ssl-for-saas-custom-hostname.png)
+1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” after a while. If you see an error stating “custom hostname does not CNAME to this zone”, you need to set the DNS record at the customer's domain.
+
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge. With a CNAME in place, the entire process—from validation to issuance to edge deployment—completes in approximately 90 seconds.
+
+## Setting CNAME from customer's domain to fallback origin
+For the SSL for SaaS Certificate to be deployed, your customer needs to set up a CNAME record at their DNS provider, pointing to your CNAME target configured in step 3 above. For example:
+```txt
+app CNAME john.customers.saasprovider.com
+```
+This routes traffic from `app.customer.com` to your origin.
