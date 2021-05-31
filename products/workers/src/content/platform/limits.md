@@ -156,7 +156,7 @@ There is no limit on the real runtime for a Workers script. As long as the clien
 
 ## Duration
 
-Duration is the measurement of wall-clock time. This is measured in Gigabytes per second (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
+Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
 
 For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduledevent), it executes for 4 seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
