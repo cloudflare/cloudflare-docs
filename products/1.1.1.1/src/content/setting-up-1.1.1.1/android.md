@@ -12,6 +12,7 @@ of Android, it does not need to be configured for each new Wi-Fi network.
 
 Follow these steps to configure your device to use 1.1.1.1.
 
+
 1. Go to **Settings** > **Network & internet** > **Advanced** > **Private DNS**.
 
 1. Select the **Private DNS** provider hostname option.
@@ -34,11 +35,12 @@ Follow this quick guide to start using 1.1.1.1 on your Android.
 
 1. Click **Modify Network**.
 
-2. Click the check box **Show Advanced Options**.
+1. Click the check box **Show Advanced Options**.
 
-3. Change the IP Settings to **Static**.
+1. Change the IP Settings to **Static**.
 
-4. Remove any IP addresses that may be already listed and in their place add:
+1. Remove any IP addresses that may be already listed and in their place add:
+
 
     ```txt
     1.1.1.1
@@ -47,4 +49,4 @@ Follow this quick guide to start using 1.1.1.1 on your Android.
     2606:4700:4700::1001
     ```
 
-5. Click **Save**. You may need to disconnect from the Wi-Fi and reconnect for the changes to take place.
+1. Click **Save**. You may need to disconnect from the Wi-Fi and reconnect for the changes to take place.

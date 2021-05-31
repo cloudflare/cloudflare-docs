@@ -392,7 +392,7 @@ Your application can use these status codes to handle unexpected challenges.
 
 No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a Firewall rule. Additionally, the Firewall may not have a record of every request with a failed challenge.
 
-Therefore, consider these actions with caution. A reliable indicator is the CSR (Challenge Solve Rate) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
+Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/cf-firewall-rules#challenge-solve-rate-csr) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
 ## Why would I not see any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 

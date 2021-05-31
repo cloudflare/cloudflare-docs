@@ -16,6 +16,7 @@ Follow this quick guide to start using 1.1.1.1 for Families on your router.
    * Ubiquiti routers typically use [http://unifi.ubnt.com](http://unifi.ubnt.com)
 
 1. Enter the router password.
+
 1. Find the place in the admin console where DNS settings are set.
 1. Replace the existing addresses with:
 

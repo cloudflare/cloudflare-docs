@@ -48,3 +48,9 @@ You can leave the domain “In Progress” and we will attempt to process the tr
 ## Why am I not able to start a transfer?
 
 If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when initiating a domain transfer.
+
+--------
+
+## Premium Domains
+
+Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.

@@ -36,8 +36,7 @@ is a privileged port, so for the initial demo we will use a different port:
     2606:4700::6810:84e5
     ```
 
-1. Set up `cloudflared` as a service so it starts on user login. On many
-Linux distributions, this can be done with:
+1. Set up `cloudflared` as a service so it starts on user login. On many Linux distributions, this can be done with:
 
     sudo tee /etc/systemd/system/cloudflared-proxy-dns.service >/dev/null <<EOF
     [Unit]
@@ -56,8 +55,7 @@ Linux distributions, this can be done with:
     EOF
     sudo systemctl enable --now cloudflared-proxy-dns
 
-1. Change your system DNS servers to use `127.0.0.1`. On Linux, you can
-modify `/etc/resolv.conf`:
+1. Change your system DNS servers to use `127.0.0.1`. On Linux, you can modify `/etc/resolv.conf`:
 
     sudo rm -f /etc/resolv.conf
     echo nameserver 127.0.0.1 | sudo tee /etc/resolv.conf >/dev/null
@@ -89,7 +87,6 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
     ```
 
 1. Make sure that nothing else is running on `localhost:53`, and check that everything works as expected:
-
     ```bash
     dnscrypt-proxy -resolve cloudflare-dns.com
     Resolving [cloudflare-dns.com]
