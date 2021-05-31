@@ -47,7 +47,7 @@ Your API key can be found in the Cloudflare dashboard under ‘My Profile → AP
 
 ![Accessing an account’s Global API Key](..//static/accessing-global-api-key.png)
 
-The zone tag and API key can also be found in the **Overview** tabe of the dashboard:
+The zone tag and API key can also be found in the **Overview** tab of the dashboard:
 
 ![Obtaining a zone’s ID](..//static/obtaining-zone-id.png)
 
