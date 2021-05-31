@@ -19,14 +19,10 @@ The fallback origin is where the traffic of your Custom Hostnames will be routed
     * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined in step 2 above and click **Add**.
     ![Add a fallback origin on dashboard](..//static/ssl-for-saas-add-fallback.png)
 
-    * Via API: 
-        (a) Retrieve your zone’s
-            * __[Global API Key](https://support.cloudflare.com/hc/articles/200167836#12345682)__, and
-            * __Zone ID__ (via the __Overview__ app of the Cloudflare dashboard). Alternatively, [retrieve a user’s zones and associated Zone IDs](https://api.cloudflare.com/#zone-list-zones) via the Cloudflare API.
-        (b) Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
+    * Via API: Retrieve your [Global API Key and Zone ID](#api-key-and-zone-id). Then, set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
 
         ```bash
-        $ curl -XPUT
+        $ curl -XPUT \
         "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames/fallback_origin"\
         -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
         -H "Content-Type: application/json"\
@@ -47,15 +43,15 @@ Each Custom Hostname requires successful Certificate Validation and Hostname Ver
 
 ## API key and zone ID
 
-Your API key can be found in the Cloudflare dashboard under ‘My Profile → Global API Key’.
+Your API key can be found in the Cloudflare dashboard under ‘My Profile → API Tokens → Global API Key’.
 
 ![Accessing an account’s Global API Key](..//static/accessing-global-api-key.png)
 
-The zone tag and API key can also be found in the ‘Overview’ tile of the UI:
+The zone tag and API key can also be found in the **Overview** tabe of the dashboard:
 
 ![Obtaining a zone’s ID](..//static/obtaining-zone-id.png)
 
-Additionally you can retrieve a list of user’s zones and their associated IDs via an API call. List all zones for a user: https://api.cloudflare.com/#zone-list-zones.
+Additionally, you can retrieve a list of user’s zones and their associated IDs via an API call. List all zones for a user: https://api.cloudflare.com/#zone-list-zones.
 
 --------
 
@@ -63,7 +59,7 @@ Additionally you can retrieve a list of user’s zones and their associated IDs 
 
 Once your account has been provisioned, you are ready to issue certificates. The call below will provision a request for certificates to be issued for `app.customer.com`, which represents your end customer.
 
-In this example, HTTP based validation is used ("method":"http") to issue this certificate. This requires HTTP traffic to be proxied through Cloudflare’s edge already, i.e., the CNAME from `app.customer.com` must be in place to your zone. If the CNAME is not yet in place, Cloudflare will ask its CA partner to retry until the request can be completed; see the [Validation Backoff Schedule](/ssl-for-saas/validation-backoff-schedule/) for specific timings.
+In this example, HTTP based validation is used ("method":"http") to issue this certificate. This requires HTTP traffic to be proxied through Cloudflare’s edge already, i.e., the CNAME from `app.customer.com` must be [in place to your zone](#setting-cname-at-customer-domain)). If the CNAME is not yet in place, Cloudflare will ask its CA partner to retry until the request can be completed; see the [Validation Backoff Schedule](/ssl-for-saas/validation-backoff-schedule/) for specific timings.
 
 ```bash
 $ curl -XPOST "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames"\
@@ -78,12 +74,14 @@ Alternatively, you may also issue certificates to custom hostnames via the dashb
 1. Navigate to **SSL/TLS** > **Custom Hostnames** and click **Add Custom Hostname**.
 1. Add your customer's hostname `app.customer.com` and set the relevant options. Click **Add Custom Hostname**.
 ![Add a custom hostname](..//static/ssl-for-saas-custom-hostname.png)
-1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” after a while. If you see an error stating “custom hostname does not CNAME to this zone”, you need to set the DNS record at the customer's domain.
+1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” after a while. If you see an error stating “custom hostname does not CNAME to this zone”, you need to [set the DNS record at the customer's domain](#setting-cname-at-customer-domain).
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge. With a CNAME in place, the entire process—from validation to issuance to edge deployment—completes in approximately 90 seconds.
 
-## Setting CNAME from customer's domain to fallback origin
-For the SSL for SaaS Certificate to be deployed, your customer needs to set up a CNAME record at their DNS provider, pointing to your CNAME target configured in step 3 above. For example:
+--------
+
+## Setting CNAME at customer domain
+Your customer needs to set up a CNAME record at their DNS provider, pointing to your CNAME target configured in step 3 [above](#configure-zone-with-proxy-fallback-origin). For example:
 ```txt
 app CNAME john.customers.saasprovider.com
 ```
