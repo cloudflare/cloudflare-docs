@@ -13,15 +13,15 @@ We've open sourced a Golang DoH client you can use to get started. Follow this q
 1. Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 1. Verify that the `cloudflared` daemon is installed:
 
-    ```bash
-    cloudflared --version
+    ```sh
+    $ cloudflared --version
     cloudflared version 2020.11.11 (built 2020-11-25-1643 UTC)
     ```
 
 1. Start the DNS proxy on an address and port in your network. If you don't specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so for the initial demo we will use a different port:
 
-    ```txt
-    cloudflared proxy-dns --port 5553
+    ```sh
+    $ cloudflared proxy-dns --port 5553
     INFO[2020-12-04T19:58:57Z] Adding DNS upstream - url: https://1.1.1.1/dns-query
     INFO[2020-12-04T19:58:57Z] Adding DNS upstream - url: https://1.0.0.1/dns-query
     INFO[2020-12-04T19:58:57Z] Starting metrics server on 127.0.0.1:44841/metrics
@@ -30,15 +30,16 @@ We've open sourced a Golang DoH client you can use to get started. Follow this q
 
 1. You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
 
-    ```bash
-    dig +short @127.0.0.1 -p5553 cloudflare.com AAAA
+    ```sh
+    $ dig +short @127.0.0.1 -p5553 cloudflare.com AAAA
     2606:4700::6810:85e5
     2606:4700::6810:84e5
     ```
 
 1. Set up `cloudflared` as a service so it starts on user login. On many Linux distributions, this can be done with:
 
-    sudo tee /etc/systemd/system/cloudflared-proxy-dns.service >/dev/null <<EOF
+    ```bash
+    $ sudo tee /etc/systemd/system/cloudflared-proxy-dns.service >/dev/null <<EOF
     [Unit]
     Description=DNS over HTTPS (DoH) proxy client
     Wants=network-online.target nss-lookup.target
@@ -53,17 +54,21 @@ We've open sourced a Golang DoH client you can use to get started. Follow this q
     [Install]
     WantedBy=multi-user.target
     EOF
-    sudo systemctl enable --now cloudflared-proxy-dns
+
+    $ sudo systemctl enable --now cloudflared-proxy-dns
+    ```
 
 1. Change your system DNS servers to use `127.0.0.1`. On Linux, you can modify `/etc/resolv.conf`:
 
-    sudo rm -f /etc/resolv.conf
-    echo nameserver 127.0.0.1 | sudo tee /etc/resolv.conf >/dev/null
+    ```sh
+    $ sudo rm -f /etc/resolv.conf
+    $ echo nameserver 127.0.0.1 | sudo tee /etc/resolv.conf >/dev/null
+    ```
 
-1. Finally verify it locally with:
+1. Finally, verify it locally with:
 
-    ```bash
-    dig +short @127.0.0.1 cloudflare.com AAAA
+    ```sh
+    $ dig +short @127.0.0.1 cloudflare.com AAAA
     2606:4700::6810:85e5
     2606:4700::6810:84e5
     ```
@@ -82,7 +87,7 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
 
 1. Set up the configuration file using the [official instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#setting-up-dnscrypt-proxy), and add `cloudflare` and `cloudflare-ipv6` to the server list in `dnscrypt-proxy.toml`:
 
-    ```bash
+    ```toml
     server_names = ['cloudflare', 'cloudflare-ipv6']
     ```
 
@@ -99,4 +104,4 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
     Resolver IP:    172.68.140.217
     ```
 
-2. Register it as a system service according to the [dnscrypt-proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+1. Register it as a system service according to the [dnscrypt-proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).

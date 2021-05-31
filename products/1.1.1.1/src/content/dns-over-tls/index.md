@@ -23,33 +23,35 @@ A stub resolver (the DNS client on a device that talks to the DNS resolver) conn
 
 ## Example
 
-    $ kdig -d @1.1.1.1 +tls-ca +tls-host=cloudflare-dns.com  example.com
-    ;; DEBUG: Querying for owner(example.com.), class(1), type(1), server(1.1.1.1), port(853), protocol(TCP)
-    ;; DEBUG: TLS, imported 170 system certificates
-    ;; DEBUG: TLS, received certificate hierarchy:
-    ;; DEBUG:  #1, C=US,ST=CA,L=San Francisco,O=Cloudflare\, Inc.,CN=\*.cloudflare-dns.com
-    ;; DEBUG:      SHA-256 PIN: yioEpqeR4WtDwE9YxNVnCEkTxIjx6EEIwFSQW+lJsbc=
-    ;; DEBUG:  #2, C=US,O=DigiCert Inc,CN=DigiCert ECC Secure Server CA
-    ;; DEBUG:      SHA-256 PIN: PZXN3lRAy+8tBKk2Ox6F7jIlnzr2Yzmwqc3JnyfXoCw=
-    ;; DEBUG: TLS, skipping certificate PIN check
-    ;; DEBUG: TLS, The certificate is trusted.
-    ;; TLS session (TLS1.3)-(ECDHE-SECP256R1)-(ECDSA-SECP256R1-SHA256)-(AES-256-GC
-    ;; ->>HEADER<<- opcode: QUERY; status: NOERROR; id: 58548
-    ;; Flags: qr rd ra; QUERY: 1; ANSWER: 1; AUTHORITY: 0; ADDITIONAL: 1
+```sh
+$ kdig -d @1.1.1.1 +tls-ca +tls-host=cloudflare-dns.com  example.com
+;; DEBUG: Querying for owner(example.com.), class(1), type(1), server(1.1.1.1), port(853), protocol(TCP)
+;; DEBUG: TLS, imported 170 system certificates
+;; DEBUG: TLS, received certificate hierarchy:
+;; DEBUG:  #1, C=US,ST=CA,L=San Francisco,O=Cloudflare\, Inc.,CN=\*.cloudflare-dns.com
+;; DEBUG:      SHA-256 PIN: yioEpqeR4WtDwE9YxNVnCEkTxIjx6EEIwFSQW+lJsbc=
+;; DEBUG:  #2, C=US,O=DigiCert Inc,CN=DigiCert ECC Secure Server CA
+;; DEBUG:      SHA-256 PIN: PZXN3lRAy+8tBKk2Ox6F7jIlnzr2Yzmwqc3JnyfXoCw=
+;; DEBUG: TLS, skipping certificate PIN check
+;; DEBUG: TLS, The certificate is trusted.
+;; TLS session (TLS1.3)-(ECDHE-SECP256R1)-(ECDSA-SECP256R1-SHA256)-(AES-256-GC
+;; ->>HEADER<<- opcode: QUERY; status: NOERROR; id: 58548
+;; Flags: qr rd ra; QUERY: 1; ANSWER: 1; AUTHORITY: 0; ADDITIONAL: 1
 
-    ;; EDNS PSEUDOSECTION:
-    ;; Version: 0; flags: ; UDP size: 1536 B; ext-rcode: NOERROR
-    ;; PADDING: 408 B
+;; EDNS PSEUDOSECTION:
+;; Version: 0; flags: ; UDP size: 1536 B; ext-rcode: NOERROR
+;; PADDING: 408 B
 
-    ;; QUESTION SECTION:
-    ;; example.com.        		IN	A
+;; QUESTION SECTION:
+;; example.com.        		IN	A
 
-    ;; ANSWER SECTION:
-    example.com.        	2347	IN	A	93.184.216.34
+;; ANSWER SECTION:
+example.com.        	2347	IN	A	93.184.216.34
 
-    ;; Received 468 B
-    ;; Time 2018-03-31 15:20:57 PDT
-    ;; From 1.1.1.1@853(TCP) in 12.6 ms
+;; Received 468 B
+;; Time 2018-03-31 15:20:57 PDT
+;; From 1.1.1.1@853(TCP) in 12.6 ms
+```
 
 ## Supported TLS versions
 
