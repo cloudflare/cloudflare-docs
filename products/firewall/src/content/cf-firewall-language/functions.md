@@ -292,7 +292,7 @@ and is composed of these parentheses-delimited expressions:
   </tbody>
 </table>
 
-For details on generating a MessageMAC, see [_Implement token creation_](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#6P9Gz7kmyxQrpL6r6iPKQR)
+For details on generating a MessageMAC, see [_Implement token creation_](https://support.cloudflare.com/hc/articles/115001376488#6P9Gz7kmyxQrpL6r6iPKQR).
 
 ## HMAC validation examples
 
