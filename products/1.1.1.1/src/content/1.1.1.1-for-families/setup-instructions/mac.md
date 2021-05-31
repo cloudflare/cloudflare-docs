@@ -12,8 +12,12 @@ order: 2
 1. Click on the **Network** icon.
 1. Click **Advanced**.
 1. Select the **DNS** tab. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
-    * `1.1.1.2`
-    * `1.0.0.2`
+
+    ```txt
+    1.1.1.2
+    1.0.0.2
+    ```
+
 1. Click **OK**.
 1. Click **Apply**.
 
@@ -23,8 +27,12 @@ order: 2
 1. Click on the **Network** icon.
 1. Click **Advanced**.
 1. Select the **DNS** tab. Remove any IP addresses that may be already listed and in their place add the IPv6 addresses listed below:
-    * `2606:4700:4700::1112`
-    * `2606:4700:4700::1002`
+
+    ```txt
+    2606:4700:4700::1112
+    2606:4700:4700::1002
+    ```
+
 1. Click **OK**.
 1. Click **Apply**.
 
@@ -36,8 +44,12 @@ order: 2
 1. Click on the **Network** icon.
 1. Click **Advanced**.
 1. Select the **DNS** tab. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
-    * `1.1.1.3`
-    * `1.0.0.3`
+
+    ```txt
+    1.1.1.3
+    1.0.0.3
+    ```
+
 1. Click **OK**.
 1. Click **Apply**.
 
@@ -47,7 +59,11 @@ order: 2
 1. Click on the **Network** icon.
 1. Click **Advanced**.
 1. Select the **DNS** tab. Remove any IP addresses that may be already listed and in their place add the IPv6 addresses we listed below:
-    * `2606:4700:4700::1113`
-    * `2606:4700:4700::1003`
-1. Click **OK**.
-1. Click **Apply**.
+
+    ```txt
+    2606:4700:4700::1113
+    2606:4700:4700::1003
+    ```
+
+2. Click **OK**.
+3. Click **Apply**.
