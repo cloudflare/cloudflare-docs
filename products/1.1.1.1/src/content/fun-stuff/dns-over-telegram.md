@@ -11,35 +11,32 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 1. Click **Contacts**.
 1. Search for `onedotonedotonedotonedotbot`.
 
-    ![search](../static/search.png)
+    <div class="medium-img"><img alt="Search" src="../static/search.png"/></div>
 
 1. When the 1.1.1.1 bot appears in the search results, click on it.
 1. Then press **Start**.
 
-    ![search](../static/click-start.png)
+    <div class="medium-img"><img alt="Search" src="../static/click-start.png"/></div>
 
 1. You can send a single domain name, which will default to returning the AAAA record. For example:
 
-    ![search](../static/example-com.png)
+    <div class="medium-img"><img alt="Search" src="../static/example-com.png"/></div>
 
 Or you can send a record type followed by a domain name. The record types supported are:
 
-```txt
-A
-AAAA
-CAA
-CNAME
-DS
-DNSKEY
-MX
-NS
-NSEC
-NSEC3
-RRSIG
-SOA
-TXT
-```
+* A
+* AAAA
+* CAA
+* CNAME
+* DS
+*  DNSKEY
+*  MX
+*  NS
+*  NSEC
+*  NSEC3
+*  RRSIG
+*  SOA
+*  TXT
 
 Example:
-
-![search](../static/aaaa-example-com.png)
+<div class="medium-img"><img alt="Search" src="../static/aaaa-example-com.png"/></div>
