@@ -8,24 +8,30 @@ pcx-content-type: tutorial
 --------
 
 ## Configure zone with proxy fallback origin
-The fallback origin is used to route the traffic of your Custom Hostnames.  The fallback record is the value of the DNS record you set up via step 2 below.
+The fallback origin is where the traffic of your Custom Hostnames will be routed to.  The fallback record is the value of the DNS record you set up via step 2 below.
 
 1. Sign up your desired zone at [www.cloudflare.com](https://www.cloudflare.com) and select the Free plan.
-2. Add a DNS record pointing to the origin (fallback origin) for Cloudflare to send custom hostname traffic. This hostname is not provided to customers.  Name the hostname according to your naming convention.  For example: `proxy-fallback.saasprovider.com`.
+2. Under the **DNS** tab on the dashboard, add a DNS record pointing to the origin IP address (fallback origin) for Cloudflare to send custom hostname traffic. This hostname is not provided to customers.  Name the hostname according to your naming convention.  For example: `proxy-fallback.saasprovider.com`.
 3. Set up an additional DNS CNAME record to serve as the CNAME target for your end customers.  CNAME this record to your fallback origin, and use a more user-friendly CNAME target for customers.  This record can optionally be a wildcard, e.g. `*.customers.saasprovider.com`.
-4. Upgrade your zone to an Enterprise plan.
-5. Retrieve your zone’s
-    * __[Global API Key](https://support.cloudflare.com/hc/articles/200167836#12345682)__, and
-    * __Zone ID__ (via the __Overview__ app of the Cloudflare dashboard). Alternatively, [retrieve a user’s zones and associated Zone IDs](https://api.cloudflare.com/#zone-list-zones) via the Cloudflare API.
-6. Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
+![Add a CNAME record](..//static/ssl-for-sass-dns.png)
+4. Upgrade your zone to an Enterprise plan, and contact your Customer Success Manager to enable SSL for SaaS Certificates.
+5. Set the **Fallback Origin** via either the dashboard or API.
+    * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined via step 2 above and click **Add**.
+    ![Add a fallback origin on dashboard](..//static/ssl-for-sass-add-fallback.png)
 
-```bash
-$ curl -XPUT
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames/fallback_origin"\
--H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
--H "Content-Type: application/json"\
--d '{"origin":"proxy-fallback.saasprovider.com"}'
-```
+    * Via API: 
+        * (a) Retrieve your zone’s
+            * __[Global API Key](https://support.cloudflare.com/hc/articles/200167836#12345682)__, and
+            * __Zone ID__ (via the __Overview__ app of the Cloudflare dashboard). Alternatively, [retrieve a user’s zones and associated Zone IDs](https://api.cloudflare.com/#zone-list-zones) via the Cloudflare API.
+        * Set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
+
+        ```bash
+        $ curl -XPUT
+        "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_hostnames/fallback_origin"\
+        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
+        -H "Content-Type: application/json"\
+        -d '{"origin":"proxy-fallback.saasprovider.com"}'
+        ```
 
 --------
 
