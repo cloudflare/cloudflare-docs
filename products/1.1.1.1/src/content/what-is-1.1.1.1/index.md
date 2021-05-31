@@ -24,4 +24,4 @@ The resolver then asks the TLD’s servers where it can find the domain it is lo
 
 Once the resolver has the final IP address, it returns the answer to the computer that asked.
 
-This whole system - with the servers that host the information (they are called authoritative DNS) and the servers that seek the information (the DNS resolvers) is called the Domain Name System (DNS). DNS is like Google Maps for the Internet. It translates the name of places to addresses so that you can figure out how to get there.
+This whole system — with the servers that host the information (they are called authoritative DNS) and the servers that seek the information (the DNS resolvers) — is called the Domain Name System (DNS). DNS is like Google Maps for the Internet. It translates the name of places to addresses so that you can figure out how to get there.
