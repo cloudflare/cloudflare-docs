@@ -18,8 +18,6 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 ## IPv6
 
-It’s not 1995.
-
 1.1.1.1 has full IPv6 support.
 
 ## Purge cache

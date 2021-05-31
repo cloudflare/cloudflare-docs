@@ -22,7 +22,7 @@ Also, if you use the Tor Browser, you can head to the resolver's address to see 
 
 </Aside>
 
-**Tip:** if you ever forget the `dns4torblahblahblah.onion` address, you can simply use cURL:
+**Tip:** If you ever forget the `dns4torblahblahblah.onion` address, use cURL:
 
 	curl -sI https://tor.cloudflare-dns.com | grep -i alt-svc
 	alt-svc: h2="dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443"; ma=315360000; persist=1

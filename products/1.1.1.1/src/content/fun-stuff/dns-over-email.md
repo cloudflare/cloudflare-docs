@@ -4,8 +4,6 @@ order: 3
 
 # DNS over email
 
-Ah, the classic yet revolutionary DNS over email.
-
 To receive DNS responses over email, send an email to `lookup@resolver.email`. The DNS query goes in the body of the message.
 
 You can send a single domain (defaults to AAAA).

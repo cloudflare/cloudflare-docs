@@ -17,7 +17,7 @@ Follow these steps to configure your device to use 1.1.1.1.
 
 1. Select the **Private DNS** provider hostname option.
 
-1. Enter `one.one.one.one` or `1dot1dot1dot1.cloudflare-dns.com` and hit Save.
+1. Enter `one.one.one.one` or `1dot1dot1dot1.cloudflare-dns.com` and hit **Save**.
 
 1. Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is enabled.
 
@@ -40,7 +40,6 @@ Follow this quick guide to start using 1.1.1.1 on your Android.
 1. Change the IP Settings to **Static**.
 
 1. Remove any IP addresses that may be already listed and in their place add:
-
 
     ```txt
     1.1.1.1

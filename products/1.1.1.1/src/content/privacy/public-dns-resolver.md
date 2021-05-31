@@ -87,8 +87,8 @@ The following subrequest data is included in the Public Resolver Logs:
 * subrequest.queryName
 * subrequest.queryType
 * subrequest.responseCode
-* subreqest.responseCount
-* subreqeust.recordType
+* subrequest.responseCount
+* subrequest.recordType
 * subrequest.recordData
 * subrequest.error
 
@@ -96,7 +96,7 @@ Except for the limited aggregated data generated using the Public Resolver Logs 
 
 Cloudflare will only store the following aggregated data:
 
-* Total number of queries with different protocol settings (e.g tcp/udp/dnssec) by Cloudflare PoP
+* Total number of queries with different protocol settings (for example, tcp/udp/dnssec) by Cloudflare PoP
 * Response code/time quantiles with different protocol settings by Cloudflare PoP
 * Total Number of Requests Processed by Cloudflare PoP
 * Aggregate List of All Domain Names Requested, aggregate number of requests and timestamp of first time requested

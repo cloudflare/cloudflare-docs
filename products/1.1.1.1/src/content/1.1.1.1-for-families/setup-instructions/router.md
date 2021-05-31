@@ -27,7 +27,7 @@ Follow this quick guide to start using 1.1.1.1 for Families on your router.
   2606:4700:4700::1002
   ```
 
-1. Save and exit.
+1. Save the updated settings.
 
 ### Using DNS-Over-TLS on OpenWRT
 
@@ -108,7 +108,7 @@ Follow this quick guide to start using 1.1.1.1 for Families on your router.
   2606:4700:4700::1003
   ```
 
-1. Save and exit.
+1. Save the updated settings.
 
 ### Ubiquiti UniFi Controller
 

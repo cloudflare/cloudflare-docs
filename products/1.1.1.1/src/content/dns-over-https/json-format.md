@@ -6,7 +6,7 @@ order: 3
 
 Cloudflare's DNS over HTTPS endpoint also supports JSON format for querying DNS data. For lack of an agreed upon JSON schema for DNS over HTTPS in the IETF, Cloudflare has chosen to follow the same schema as Google's DNS over HTTPS resolver.
 
-JSON formatted queries are sent using a `GET` request. When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (application/dns-json).
+JSON formatted queries are sent using a `GET` request. When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (`application/dns-json`).
 
 Supported Parameters:
 
@@ -27,28 +27,30 @@ Example Request:
 
 Example Response:
 
+```json
+{
+  "Status": 0,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": true,
+  "CD": false,
+  "Question": [
     {
-      "Status": 0,
-      "TC": false,
-      "RD": true,
-      "RA": true,
-      "AD": true,
-      "CD": false,
-      "Question": [
-        {
-          "name": "example.com.",
-          "type": 28
-        }
-      ],
-      "Answer": [
-        {
-          "name": "example.com.",
-          "type": 28,
-          "TTL": 1726,
-          "data": "2606:2800:220:1:248:1893:25c8:1946"
-        }
-      ]
+      "name": "example.com.",
+      "type": 28
     }
+  ],
+  "Answer": [
+    {
+      "name": "example.com.",
+      "type": 28,
+      "TTL": 1726,
+      "data": "2606:2800:220:1:248:1893:25c8:1946"
+    }
+  ]
+}
+```
 
 The following table has more information on each response field:
 
