@@ -1,6 +1,7 @@
 ---
 title: Troubleshooting
 order: 14
+pcx-content-type: interim
 ---
 
 # Troubleshooting

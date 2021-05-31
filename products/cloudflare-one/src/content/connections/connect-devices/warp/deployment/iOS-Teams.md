@@ -86,3 +86,10 @@ If your organization uses [Zero Trust policies](/policies/zero-trust) to control
 1. Tap **Login with Cloudflare for Teams**.
 1. Enter your [team name](/glossary#team-name).
 1. Complete the authentication steps required by your organization.
+
+## Delete the WARP client
+
+1. Find the 1.1.1.1 application on the home screen.
+1. Touch and hold on the application tile.
+1. Tap **Remove App**.
+1. Select **Delete App**.

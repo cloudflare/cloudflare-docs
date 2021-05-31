@@ -35,7 +35,7 @@ order: 1
                 2021-05-17
             </td>
             <td>
-                2021-05-24
+                2021-06-01
             </td>
             <td>
                 Wordpress
@@ -58,7 +58,7 @@ order: 1
                 2021-05-17
             </td>
             <td>
-                2021-05-24
+                2021-06-01
             </td>
             <td>
                 Wordpress
@@ -81,7 +81,7 @@ order: 1
                 2021-05-17
             </td>
             <td>
-                2021-05-24
+                2021-06-01
             </td>
             <td>
                 Wordpress
@@ -104,7 +104,7 @@ order: 1
                 2021-05-17
             </td>
             <td>
-                2021-05-24
+                2021-06-01
             </td>
             <td>
                 Drupal
@@ -127,7 +127,7 @@ order: 1
                 2021-05-17
             </td>
             <td>
-                2021-05-24
+                2021-06-01
             </td>
             <td>
                 PHP
@@ -150,7 +150,7 @@ order: 1
                 2021-05-17
             </td>
             <td>
-                2021-05-24
+                2021-06-01
             </td>
             <td>
                 PHP
@@ -166,6 +166,29 @@ order: 1
             </td>
             <td>
                 Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-05-24
+            </td>
+            <td>
+                2021-06-01
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                100245
+            </td>
+            <td>
+                Remove 100245 (Wordpress - Broken Access Control - Update Script).  Superseded by WP0023
+            </td>
+            <td>
+                Block
+            </td>
+            <td>
+                Disabled
             </td>
         </tr>
     </tbody>

@@ -263,6 +263,23 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/argo-tunnel/quickstart/) for Argo Tunnel.
 `wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) that listens for incoming log requests from your Worker.
 
+<Aside type="warning" header="Issues with existing cloudflared configuration">
+
+`wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844).
+
+To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
+
+```sh
+# Move config file when using `wrangler tail`. 
+# This will temporarily disable `cloudflared`. 
+$ mv ~/.cloudflared/config.yml ~/.cloudflared/config.yml.disabled
+
+# Move file back when you need to use `cloudflared`.
+$ mv ~/.cloudflared/config.yml.disabled ~/.cloudflared/config.yml
+```
+
+</Aside>
+
 --------------------------------
 
 ## preview

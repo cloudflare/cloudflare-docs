@@ -12,7 +12,12 @@ To add a location to Teams:
 
 1. Choose a name for your location.
 
-1. If the location you are sending requests from is only using IPv6 or sending all DNS requests using DNS over HTTPS, click **Delete** on the right side of the IPv4 address field, as the field is not required.
+1. You may not need the IPv4 address field if: 
+ * The location you're adding only uses IPv6
+ * Users will be sending all DNS requests from this location using DNS over HTTPS via a browser
+ * You will be deploying the [WARP client](/connections/connect-devices/warp)
+ 
+ If any of the above apply to your case, click **Delete** to the right of the IPv4 field.
 
    <Aside>
 

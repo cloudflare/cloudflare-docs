@@ -88,3 +88,10 @@ If your organization uses [Zero Trust policies](/policies/zero-trust) to control
 1. Complete the authentication steps required by your organization.
 
 ![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/windows_TeamsButton.png)
+
+## Remove the WARP client application
+
+1. Navigate to Windows Settings (Windows Key + I).
+1. Click **Apps**.
+1. Click **App & Features**.
+1. Scroll to find the Cloudflare WARP application and click **Uninstall**.

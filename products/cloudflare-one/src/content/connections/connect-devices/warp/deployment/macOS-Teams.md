@@ -201,3 +201,17 @@ If your organization uses [Zero Trust policies](/policies/zero-trust) to control
 7. Complete the authentication steps required by your organization.
 
 
+## Remove the WARP client application
+
+We include an uninstall script as part of the macOS package that you originally used. Use the following commands to find and run the script:
+
+```sh
+$ cd /Applications/Cloudflare\ WARP.app/Contents/Resources
+$ ./uninstall.sh
+```
+
+<Aside>
+
+You may be prompted to provide your credentials while removing the application.
+
+</Aside>

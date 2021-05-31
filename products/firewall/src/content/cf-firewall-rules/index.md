@@ -28,19 +28,36 @@ You can also manage Firewall Rules through Terraform. For more, see [_Getting St
 
 The **Rules List** gives you a snapshot of recent activity and allows you to manage firewall rules in a single convenient location (see image below).
 
-![Firewall Rules tab](../images/firewall-rules-introduction-1.png)
+![Firewall Rules tab](../images/cf-firewall-rules-panel.png)
+
+#### Challenge Solve Rate (CSR)
+
+The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with _Challenge (Captcha)_ or _JS Challenge_ actions, and it is calculated as follows:
+
+<p><var>CSR</var> = <var>number of challenges solved</var> / <var>number of challenges issued</var></p>
+
+Hover over the CSR value to reveal the number of issued and solved CAPTCHA challenges:
+
+![Revealing the number of issued vs. solved CAPTCHA challenges](../images/firewall-rules-csr-hover.png)
+
+A low CSR value means that Cloudflare is issuing a low number of CAPTCHA challenges to actual humans, since these are the solved challenges.
+
+You should aim for a low Challenge Solve Rate. Review the CSR value of your CAPTCHA rules periodically and adjust them if necessary:
+
+* If the rate is higher than expected, for example regarding a Bot Management rule, consider relaxing the rule criteria so that you issue fewer challenges to human visitors.
+* If the rate is 0%, no CAPTCHA challenges are being solved. This means that you have no human visitors whose requests match the rule filter. Consider changing the rule action to _Block_.
 
 ### Expression Builder
 
 Both the **Create Firewall** and **Edit Firewall** panels include the visual **Expression Builder** (outlined below, in orange), which is an excellent tool to start with.
 
-![Expression Builder](../images/firewall-rules-introduction-2.png)
+![Expression Builder](../images/firewall-rules-intro-exp-builder.png)
 
 ### Expression Editor
 
 Advanced users will appreciate the **Expression Editor** (shown below), which trades the visual simplicity of the builder for the raw power of the [Cloudflare Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language). The editor also supports advanced features, such as grouping symbols, for constructing highly sophisticated, targeted rules.
 
-![Expression Editor](../images/firewall-rules-introduction-3.png)
+![Expression Editor](../images/firewall-rules-intro-exp-editor.png)
 
 ### Firewall Rules APIs
 
