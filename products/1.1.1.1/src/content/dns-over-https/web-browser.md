@@ -50,5 +50,5 @@ As of today, Safari does not support DNS over HTTPS.
 
 ## How to check if my browser is configured correctly?
 
-1. Visit [1.1.1.1 help page](https://1.1.1.1/help)
-1. Verify that `Using DNS over HTTPS (DoH)` is `Yes`
+1. Visit [1.1.1.1 help page](https://1.1.1.1/help).
+1. Verify that `Using DNS over HTTPS (DoH)` is `Yes`.

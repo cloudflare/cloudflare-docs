@@ -73,6 +73,8 @@ order: 4
     ```txt
     2606:4700:4700::1112
     2606:4700:4700::1002
+    ```
+
 1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit vim. Then, after lifting the key, type:
 
     ```

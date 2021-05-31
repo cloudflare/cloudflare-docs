@@ -18,7 +18,7 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 
     ![search](../static/click-start.png)
 
-1. You can send a single domain name, which will default to returning the AAAA record. Example:
+1. You can send a single domain name, which will default to returning the AAAA record. For example:
 
     ![search](../static/example-com.png)
 

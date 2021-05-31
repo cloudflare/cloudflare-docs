@@ -12,7 +12,7 @@ Follow this quick guide to start using 1.1.1.1 on your router.
    - D-Link routers typically use [http://192.168.0.1](http://192.168.0.1)
    - Ubiquiti routers typically use [http://unifi.ubnt.com](http://unifi.ubnt.com)
 
-1. Enter the **router password**.
+1. Enter the router password.
 1. Find the place in the admin console where **DNS settings** are set.
 1. Replace the existing addresses with:
 
@@ -23,7 +23,7 @@ Follow this quick guide to start using 1.1.1.1 on your router.
     2606:4700:4700::1001
     ```
 
-1. **Save** and **exit**.
+1. Save the updated settings.
 
 ## Using DNS-Over-TLS on OpenWRT
 

@@ -38,7 +38,7 @@ Follow this quick guide to start using 1.1.1.1 on your Linux device.
        ```
 
    1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
-   1. Replace the **nameserver** lines with:
+   1. Replace the `nameserver` lines with:
 
    For IPv4:
 

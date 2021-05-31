@@ -50,7 +50,7 @@ Example Response:
       ]
     }
 
-Below the fields in the response are explained.
+The following table has more information on each response field:
 
 <TableWrap>
 

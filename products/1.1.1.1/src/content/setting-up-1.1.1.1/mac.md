@@ -12,6 +12,7 @@ Follow this quick guide to start using 1.1.1.1 on your Mac.
 1. Click on the **Network** icon.
 1. Click **Advanced**.
 1. Select the **DNS** tab. Remove any IP addresses that may be already listed and in their place add:
+
     ```txt
     1.1.1.1
     1.0.0.1

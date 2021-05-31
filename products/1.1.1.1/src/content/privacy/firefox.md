@@ -14,7 +14,7 @@ For most Internet users the DNS resolver that they use is either the one that co
 
 To counter such threats, Mozilla has partnered with Cloudflare to provide direct DNS resolution from within the Firefox browser using the Cloudflare Resolver for Firefox. What this means is that whenever you click on or type a web address in the Firefox browser your DNS lookup request will be sent over a secure channel to the Cloudflare Resolver for Firefox rather than to an unknown DNS resolver, significantly decreasing the odds of any unwanted spying or man in the middle attacks.
 
-### What information does the Cloudflare Resolver for Firefox collect?
+### What information does the Cloudflare resolver for Firefox collect?
 
 Any data Cloudflare handles as a result of its resolver for Firefox is as a data processor acting pursuant to Firefox’s data processing instructions. Therefore, the data Cloudflare collects and processes pursuant to its agreement with Firefox is not covered by the [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/). As part of its agreement with Firefox, Cloudflare has agreed to collect only a limited amount of data about the DNS requests that are sent to the Cloudflare Resolver for Firefox via the Firefox browser. Cloudflare will collect only the following information from Firefox users:
 

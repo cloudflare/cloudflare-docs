@@ -18,15 +18,15 @@ We've open sourced a Golang DoH client you can use to get started. Follow this q
     cloudflared version 2020.11.11 (built 2020-11-25-1643 UTC)
     ```
 
-1. Start the DNS proxy on an address and port in your network. If you don't
-specify an address and port, it will start listening on `localhost:53`. DNS (53)
-is a privileged port, so for the initial demo we will use a different port:
+1. Start the DNS proxy on an address and port in your network. If you don't specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so for the initial demo we will use a different port:
 
+    ```txt
     cloudflared proxy-dns --port 5553
     INFO[2020-12-04T19:58:57Z] Adding DNS upstream - url: https://1.1.1.1/dns-query
     INFO[2020-12-04T19:58:57Z] Adding DNS upstream - url: https://1.0.0.1/dns-query
     INFO[2020-12-04T19:58:57Z] Starting metrics server on 127.0.0.1:44841/metrics
     INFO[2020-12-04T19:58:57Z] Starting DNS over HTTPS proxy server on: dns://localhost:5553
+    ```
 
 1. You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
 
@@ -75,8 +75,8 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
 1. Install the dnscrypt-proxy. You can [find the instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
 1. Verify that the `dnscrypt-proxy` is installed, and at least version 2.0:
 
-    ```bash
-    dnscrypt-proxy -version
+    ```sh
+    $ dnscrypt-proxy -version
     2.0.8
     ```
 
@@ -87,8 +87,9 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
     ```
 
 1. Make sure that nothing else is running on `localhost:53`, and check that everything works as expected:
-    ```bash
-    dnscrypt-proxy -resolve cloudflare-dns.com
+
+    ```sh
+    $ dnscrypt-proxy -resolve cloudflare-dns.com
     Resolving [cloudflare-dns.com]
 
     Domain exists:  yes, 3 name servers found
@@ -98,4 +99,4 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
     Resolver IP:    172.68.140.217
     ```
 
-1. Register it as a system service using the [instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation#installing-as-a-system-service-windows-linux-macos).
+2. Register it as a system service according to the [dnscrypt-proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
