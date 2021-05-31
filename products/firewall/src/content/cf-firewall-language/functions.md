@@ -230,7 +230,7 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - _flags_ <Type>String literal</Type> <PropMeta>optional</PropMeta>
 
-  -  When you set this optional argument to `` `s` ``, the function expects the value of the base64-encoded _mac_ in the _MessageMAC_ argument to use the URL-safe character set with no padding.
+  -  When you set this optional argument to `'s'`, the function expects the value of the base64-encoded _mac_ in the _MessageMAC_ argument to use the URL-safe character set with no padding.
 
   -  When you do **not** set the value of _flags_ to `'s'`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
@@ -285,8 +285,8 @@ and is composed of these parentheses-delimited expressions:
     </tr>
     <tr>
       <td valign="top"><code>(.{'{43,}'})</code></td>
-      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">s</code>, you must URL encode the base64 value for <em>mac</em>.</p>
-      <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em>contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
+      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">'s'</code>, you must URL encode the base64 value for <em>mac</em>.</p>
+      <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em> contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
       <td valign="top"><code class="InlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
     </tr>
   </tbody>
@@ -298,7 +298,7 @@ For details on generating a MessageMAC, see [_Implement token creation_](https:/
 
 <Aside type='warning' header='Important'>
 
-When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+When you do not use the optional _flags_ argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more information, see [HMAC Validation: Overview](#overview).
 
@@ -312,14 +312,14 @@ Consider the case where the MessageMAC is contained entirely within a single fie
 /download/cat.jpg?verify=1484063787-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D
 ```
 
-Note how the URI maps to the elements of the MessageMac:
+Note how the URI maps to the elements of the MessageMAC:
 
 - _message_: `/download/cat.jpg`
 - _separator_: `?verify=`
 - _timestamp_: `1484063787`
 - _mac_: `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
-When the MessageMac is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Simply pass the name of the field to the _MessageMAC_ argument:
+When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Simply pass the name of the field to the _MessageMAC_ argument:
 
 ```java
 is_timed_hmac_valid_v0(
