@@ -10,7 +10,7 @@ To start using the DNS over Discord bot, invite it to your Discord server using 
 
 ## dig command
 
-Once the bot is in your server, type `/dig` to begin using the bot's main command -- performing DNS lookups.
+Once the bot is in your server, type `/dig` to begin using the bot's main command — performing DNS lookups.
 This will provide a native interface within Discord that allows you to specify the domain to lookup, an optional DNS record type and an optional flag for a short result.
 
 Due to limitations in Discord, the `/dig` command can only offer 10 different DNS record types, and will default to 'A' records if none is specified.
@@ -160,4 +160,4 @@ _`/invite`_
 
 The DNS over Discord bot is deployed on [Cloudflare Workers](https://workers.cloudflare.com/).
 
-You can find the source code for the bot on GitHub, as well as information on getting started with contributing to the project, at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).  
+You can find the source code for the bot on GitHub, as well as information on getting started with contributing to the project, at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).

@@ -24,9 +24,13 @@ Also, if you use the Tor Browser, you can head to the resolver's address to see 
 
 	https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/
 
-__Note:__ the HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
+<Aside>
 
-__Protip:__ if you ever forget the dns4torblahblahblah.onion address, you can simply use cURL:
+**Note:** the HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
+
+</Aside>
+
+__Protip:__ if you ever forget the `dns4torblahblahblah.onion` address, you can simply use cURL:
 
 	curl -sI https://tor.cloudflare-dns.com | grep -i alt-svc
 	alt-svc: h2="dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443"; ma=315360000; persist=1
@@ -53,7 +57,7 @@ device, simply replace `127.0.0.1` in `socat` commands with your local IP addres
 
 Note that the Tor network does not support UDP connections, which is why some hacking is needed.
 If your client only supports UDP connections, the solution is to encapsulate packets to port
-UDP:53 on localhost as TCP packets using the following `socat` command:
+`UDP:53` on localhost as TCP packets using the following `socat` command:
 
 	socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:253,socksport=9150
 
@@ -63,22 +67,21 @@ As explained in the blog post, our favorite way of using the hidden resolver is 
 
 1. First, start with downloading `cloudflared` by following the regular guide for
 [Running a DNS over HTTPS Client](../../dns-over-https/cloudflared-proxy/).
-
-2. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
+1. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
 		socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
 
-3. Instruct your machine to treat the .onion address as localhost:
+1. Instruct your machine to treat the .onion address as localhost:
 
 		cat << EOF >> /etc/hosts
 		127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
 		EOF
 
-4. Finally, start a local DNS over UDP daemon:
+1. Finally, start a local DNS over UDP daemon:
 
 		cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
 		INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
 		INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
 		INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
 
-5. Profit!
+1. Profit!

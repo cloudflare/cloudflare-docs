@@ -6,13 +6,13 @@ order: 11
 
 Cloudflare respects DNS wireformat as is defined in RFC1035.
 
-To send queries using DNS wire format, set the header 'accept: application/dns-message', or 'content-type: application/dns-message' if using POST to signalize the media type of the query.
+To send queries using DNS wire format, set the header `accept: application/dns-message`, or `content-type: application/dns-message` if using `POST` to signalize the media type of the query.
 
-Queries using DNS wireformat can be sent using POST or GET.
+Queries using DNS wireformat can be sent using `POST` or `GET`.
 
 ## Using POST
 
-When making requests using POST, the DNS query is included as the message body of the HTTP request, and the MIME type (see below) is included in the Content-Type request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
+When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (see below) is included in the Content-Type request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
 
 Example request:
 
@@ -50,7 +50,7 @@ To try using cURL you can do:
 
 ## Using GET
 
-When making requests using GET, the DNS query is encoded into the URL. The 'accept' header can be used to indicate the MIME type (default: 'application/dns-message').
+When making requests using GET, the DNS query is encoded into the URL. The `accept` header can be used to indicate the MIME type (default: 'application/dns-message').
 
 Example request:
 
