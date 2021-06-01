@@ -22,7 +22,7 @@ DNS64 is specifically for networks that already have NAT64 support. If you are a
 2606:4700:4700::6400
 ```
 
-Some devices use separate fields for all eight parts of IPv6 addresses and cannot accept the :: IPv6 abbreviation syntax. For such fields enter:
+Some devices use separate fields for all eight parts of IPv6 addresses and cannot accept the `::` IPv6 abbreviation syntax. For such fields enter:
 
 ```txt
 2606:4700:4700:0:0:0:0:64
