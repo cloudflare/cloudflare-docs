@@ -6,7 +6,7 @@ order: 2
 
 <Aside type="Warning">
 
-Deploying Gateway DNS filtering with static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals.
+Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to some public Wi-Fi networks that use captive portals.
 
 </Aside>
 
