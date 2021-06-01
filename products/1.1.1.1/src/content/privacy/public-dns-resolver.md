@@ -6,7 +6,7 @@ order: 1
 
 *Last updated September 30, 2020*
 
-Cloudflare’s Commitment to Privacy: 1.1.1.1 Public DNS Resolver
+## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
 The 1.1.1.1 public DNS resolver is governed by our [Privacy Policy](https://www.cloudflare.com/privacypolicy/). This document provides additional details on our collection, use, and disclosure of the information collected from the 1.1.1.1 public DNS resolver.
 
@@ -21,16 +21,16 @@ Given the current state of affairs, Cloudflare created a DNS resolver with your 
 The 1.1.1.1 public DNS resolver was designed for privacy first, and Cloudflare commits to the following:
 
 1. Cloudflare will not sell or share Public Resolver users’ personal data with third parties or use personal data from the Public Resolver to target any user with advertisements.
-2. Cloudflare will only retain or use what is being asked, not information that will identify who is asking it. Except for randomly sampled network packets captured from at most .05% of all traffic sent to Cloudflare’s network infrastructure, Cloudflare will not retain the source IP from DNS queries to the Public Resolver in non-volatile storage. These randomly sampled packets are solely used for network troubleshooting and DoS mitigation purposes.
-3. A Public Resolver user’s IP address (referred to as the client or source IP address) will not be stored in non-volatile storage. Cloudflare will anonymize source IP addresses via IP truncation methods (last octet for IPv4 and last 80 bits for IPv6). Cloudflare will delete the truncated IP address within 25 hours.
-4. Cloudflare will retain only the limited transaction and debug log data (“Public Resolver Logs”) set forth below, for the legitimate operation of our Public Resolver and research purposes, and Cloudflare will delete the Public Resolver Logs within 25 hours.
-5. Cloudflare will not share the Public Resolver Logs with any third parties except for APNIC pursuant to a Research Cooperative Agreement. APNIC will only have limited access to query the anonymized data in the Public Resolver Logs and conduct research related to the operation of the DNS system.
+1. Cloudflare will only retain or use what is being asked, not information that will identify who is asking it. Except for randomly sampled network packets captured from at most .05% of all traffic sent to Cloudflare’s network infrastructure, Cloudflare will not retain the source IP from DNS queries to the Public Resolver in non-volatile storage. These randomly sampled packets are solely used for network troubleshooting and DoS mitigation purposes.
+1. A Public Resolver user’s IP address (referred to as the client or source IP address) will not be stored in non-volatile storage. Cloudflare will anonymize source IP addresses via IP truncation methods (last octet for IPv4 and last 80 bits for IPv6). Cloudflare will delete the truncated IP address within 25 hours.
+1. Cloudflare will retain only the limited transaction and debug log data (“Public Resolver Logs”) set forth below, for the legitimate operation of our Public Resolver and research purposes, and Cloudflare will delete the Public Resolver Logs within 25 hours.
+1. Cloudflare will not share the Public Resolver Logs with any third parties except for APNIC pursuant to a Research Cooperative Agreement. APNIC will only have limited access to query the anonymized data in the Public Resolver Logs and conduct research related to the operation of the DNS system.
 
 Frankly, we don’t want to know what any one person is doing on the Internet — it’s none of our business — and we’ve taken the technical steps to ensure we can’t.
 
 We wanted to put our money where our mouth was, so we retained one of the top four accounting firms to audit our practices and publish a public report confirming we're doing what we said we would. The report is available [here](https://www.cloudflare.com/compliance/).
 
-## LIMITED DATA SHARING WITH APNIC
+## Limited data sharing with APNIC
 
 Cloudflare has partnered with [APNIC Labs](https://labs.apnic.net/?p=1127), the regional Internet registry for the Asia-Pacific region to make the 1.1.1.1 IP address the home of the Cloudflare Public DNS Resolver. As part of its mission to ensure a global, open and secure Internet, APNIC conducts research about the functioning and governance of the Internet, which it makes available on its website, located at www.apnic.net.
 
@@ -40,7 +40,7 @@ APNIC Labs will use such data for non-profit operational research. As part of Cl
 
 Aside from APNIC, Cloudflare will not share the Public Resolver Logs with any third party.
 
-## DATA IN PUBLIC RESOLVER LOGS
+## Data in public resolver logs
 
 The Public Resolver Logs we store consist entirely of the following fields:
 
@@ -87,8 +87,8 @@ The following subrequest data is included in the Public Resolver Logs:
 * subrequest.queryName
 * subrequest.queryType
 * subrequest.responseCode
-* subreqest.responseCount
-* subreqeust.recordType
+* subrequest.responseCount
+* subrequest.recordType
 * subrequest.recordData
 * subrequest.error
 
@@ -96,7 +96,7 @@ Except for the limited aggregated data generated using the Public Resolver Logs 
 
 Cloudflare will only store the following aggregated data:
 
-* Total number of queries with different protocol settings (e.g tcp/udp/dnssec) by Cloudflare PoP
+* Total number of queries with different protocol settings (for example, tcp/udp/dnssec) by Cloudflare PoP
 * Response code/time quantiles with different protocol settings by Cloudflare PoP
 * Total Number of Requests Processed by Cloudflare PoP
 * Aggregate List of All Domain Names Requested, aggregate number of requests and timestamp of first time requested
@@ -106,7 +106,7 @@ Cloudflare will only store the following aggregated data:
 
 Cloudflare may store the aggregated data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 
-## WHAT ABOUT REQUESTS FOR CONTENT BLOCKING?
+## What about requests for content blocking?
 
 Cloudflare does not block or filter any content through the 1.1.1.1 Public DNS Resolver, which is designed for direct, fast DNS resolution, not for blocking or filtering content. Cloudflare does block and filter malware and adult content through 1.1.1.1 for Families, which is designed to help individuals protect their home networks.
 
