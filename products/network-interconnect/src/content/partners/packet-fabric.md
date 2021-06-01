@@ -1,11 +1,11 @@
 ---
-title: Packet Fabric
+title: PacketFabric
 order: 4
 pcx-content-type: tutorial
 ---
 
 
-# Packet Fabric Users
+# PacketFabric Users
 
 1. [Video: how to create a connection to Cloudflare from PacketFabric ](https://packetfabric.wistia.com/medias/bx5ovz3xse)
 

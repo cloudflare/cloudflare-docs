@@ -20,8 +20,8 @@ You can read more about the partner program on our website. See
 * [Console Connect](/partners/console-connect)
 * [Equinix Fabric](/partners/equinix-fabric)
 * [Megaport](/partners/megaport)
-* [Packet Fabric](/partners/packet-fabric)
-* Coresite OCX (_coming soon_)
+* [PacketFabric](/partners/packet-fabric)
+* CoreSite OCX (_coming soon_)
 * Epsilon Infiny (_coming soon_)
 * Zayo (_coming soon_)
 

@@ -15,6 +15,12 @@ To configure the network cross-connect for physical links, Cloudflare generates 
 * Order cross-connects at the locations the LOA specifies.
 * Verify when the cross-connects are complete.
 
+<Aside type='note'>
+
+You can review the physical interconnection locations on the [Partners](/partners#physical-interconnection) Page
+
+</Aside>
+
 ## Virtual Links
 
 To configure the network cross-connect for virtual links, you must create a request from the partner dashboard. Cloudflare will then review and accept the request.
@@ -32,7 +38,7 @@ For more information, see the [Cloudflare Network Interconnect Partner Program](
 * [Console Connect](/partners/console-connect)
 * [Equinix Fabric](/partners/equinix-fabric)
 * [Megaport](/partners/megaport)
-* [Packet Fabric](/partners/packet-fabric)
-* Coresite OCX (_coming soon_)
+* [PacketFabric](/partners/packet-fabric)
+* CoreSite OCX (_coming soon_)
 * Epsilon Infiny (_coming soon_)
 * Zayo (_coming soon_)
