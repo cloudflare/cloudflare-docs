@@ -12,7 +12,7 @@ Cloudflare Waiting Room protects websites from surges in legitimate traffic that
 
 ![Waiting room process flow](../static/waiting-room-process-flow.png)
 
-A [cookie](/about/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
+A [cookie](/reference/waiting-room-cookie) is used to manage the dynamic outflow of requests from the Waiting Room to the origin website in First In First Out (FIFO) order.
 
 ## Benefits
 
@@ -34,10 +34,10 @@ The following Cloudflare customers have access to Waiting Room:
 
 * Cloudflare’s CDN is required to use the Waiting Room feature.
 * Configure a [proxied DNS record or a proxied load balancer](https://developers.cloudflare.com/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname: a DNS record is not auto-configured after a waiting room is created.
-* Visitors must enable cookies. Refer to [_Waiting room cookie_](/about/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
+* Visitors must enable cookies. Refer to [Waiting room cookie](/reference/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
 
 ## Get started
 
 To learn how to use Cloudflare Waiting Rooms, check out:
 - The [setup guide](../get-started)
-- Various [how to](../how-to) guides
+- Various [how-to guides](../how-to)

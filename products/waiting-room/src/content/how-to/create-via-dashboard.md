@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Create a waiting room from the dashboard
 
-<Aside>For more details on the overall process of creating a waiting room, see <a href="/get-started">Get started</a>.</Aside>
+<Aside>For additional context on creating a waiting room, see <a href="/get-started">Get started</a>.</Aside>
 
 1. Within your application, go to **Traffic** > **Waiting Rooms**.
 1. Click **Create**.

@@ -12,7 +12,7 @@ pcx-content-type: tutorial
 
 Before you start this tutorial, make sure you have:
 - Completed the [prerequisites](/about#prerequisites)
-- Reviewed your [rate limiting rules](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rules/rate-limiting) to make sure they allow for at least 1 request every 10 seconds (required for automatic page refreshes)
+- Reviewed your [rate limiting rules](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rules/rate-limiting) to make sure they allow at least 1 request every 10 seconds (required for automatic page refreshes)
 
 ---
 
@@ -24,7 +24,7 @@ Before you create your waiting, think about how your want your waiting room to a
 
 Which page will you cover with a waiting room? You can only have one waiting room per page, so you need to identify the high-traffic areas of your website.
 
-Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](#2-create-your-waiting-room).
+Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/how-to/configuration-settings).
 
 ### Access
 
@@ -50,4 +50,4 @@ After you have created your waiting room, you might also want to:
 - [Test your waiting room](/how-to/test-waiting-room) before it goes live
 - [Monitor your traffic](/how-to/monitor-waiting-room) in real time
 - [Suspend or force all traffic](/how-to/control-waiting-room) to waiting rooms
-- [Troubleshoot](/faq) potential issues
+- [Troubleshoot](/troubleshooting) potential issues

@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Create a waiting room via the API
 
-<Aside>For more details on the overall process of creating a waiting room, see <a href="/get-started">Get started</a>.</Aside>
+<Aside>For additional context on creating a waiting room, see <a href="/get-started">Get started</a>.</Aside>
 
 Create a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com/#waiting-room-create-waiting-room) to the Cloudflare API base URL.
 
@@ -41,7 +41,7 @@ The following parameters are optional:
 
 ## Example
 
-The following example API request configures a waiting room with the same settings as the example shown in [_Create a waiting room using the Cloudflare dashboard_](/how-to/create-waiting-room/create-waiting-room-dashboard).
+The following example API request configures a waiting room.
 
 ```shell
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
@@ -86,7 +86,7 @@ The response for the request above is:
 
 You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
-In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](../create-waiting-room-dashboard/customize-waiting-room#custom-waiting-room):
+In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/how-to/customize-waiting-room):
 
 ```shell
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"

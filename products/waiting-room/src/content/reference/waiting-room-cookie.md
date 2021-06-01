@@ -1,4 +1,5 @@
 ---
+title: Waiting Room cookie
 pcx-content-type: reference
 ---
 
