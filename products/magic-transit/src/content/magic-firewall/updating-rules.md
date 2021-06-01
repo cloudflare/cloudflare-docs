@@ -55,7 +55,7 @@ curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/437635
 
 <Aside type='note' header='Note'>
 
-The API response has quite a bit of extra information, e.g. the last updated timestamp, that will ignored if sent back to the API when making a PUT request. You can pipe curl's output through jq as shown below, to only display fields that are relevant to the update request.
+The API response has quite a bit of extra information, e.g. the last updated timestamp, that will be ignored if sent back to the API when making a PUT request. You can pipe curl's output through jq as shown below to only display fields that are relevant to the update request.
 ```
 curl ... | jq '.result | {description: .description, rules: [ .rules[] | {id: .id, description: .description, action: .action, action_parameters: .action_parameters, expression: .expression} ]}'
 ```
