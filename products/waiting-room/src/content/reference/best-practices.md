@@ -4,7 +4,7 @@ order: 3
 pcx-content-type: best-practices
 ---
 
-# Best practices for Cloudflare Waiting Rooms
+# Best practices for waiting rooms
 
 Follow these best practices to avoid potential issues and improve the visitor experience.
 
@@ -22,7 +22,7 @@ Additionally, if you have multiple waiting rooms, the waiting room with the most
 
 ### Waiting room template
 
-If you want provide your users with updated information or expectations when they are queueing, we recommend that you update your [waiting room template](/how-to/customize-waiting-room). All changes will be visible to your users in near-real time.
+If you want to provide your users with updated information or expectations when they are queueing, we recommend that you update your [waiting room template](/how-to/customize-waiting-room). All changes will be visible to your users in close to real time.
 
 ### Configuration settings
 

@@ -14,8 +14,8 @@ To design and preview the appearance of a waiting room, select the **Customizati
 Cloudflare offers options to customize the appearance of your waiting room:
 * [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
 * [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
-  - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more
-  - Edit content directly in the dashboard or import relevant files
+  - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
+  - Edit content directly in the dashboard or import relevant files.
 
 ## Default waiting room
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
@@ -36,7 +36,7 @@ You can edit the HTML code directly in the text box:
 
 The template text contains [code to display the wait time](#display-wait-time). If you want to display the estimated wait time to visitors, do not delete this content.
 
-### Upload a Waiting Room HTML file
+### Upload an HTML file
 
 1. Click **Import** to upload a HTML file from your computer.
 1. Select the file in the dialog and click **Open**.
@@ -109,4 +109,4 @@ To preview the appearance of a waiting room:
 
 ## Troubleshooting
 
-If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with it's appropriate closing tag (the tag name with a `/`).
+If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).

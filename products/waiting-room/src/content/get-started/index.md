@@ -11,14 +11,14 @@ pcx-content-type: tutorial
 ## Before you begin
 
 Before you start this tutorial, make sure you have:
-- Completed the [prerequisites](/about#prerequisites)
-- Reviewed your [rate limiting rules](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rules/rate-limiting) to make sure they allow at least 1 request every 10 seconds (required for automatic page refreshes)
+- Completed the [prerequisites](/about#prerequisites).
+- Reviewed your [rate limiting rules](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rules/rate-limiting) to make sure they allow at least one request every ten seconds (required for automatic page refreshes).
 
 ---
 
 ## 1. Plan out your waiting room
 
-Before you create your waiting, think about how your want your waiting room to appear and operate.
+Before you create your waiting room, think about how you want it to appear and operate.
 
 ### Location
 
@@ -41,13 +41,13 @@ If you have this ability, think about how you want the page to appear.
 ## 2. Create your waiting room
 
 Create your waiting room by:
-- Using the [dashboard](/how-to/create-via-dashboard)
-- Using the [API](/how-to/create-via-api)
+- Using the [dashboard](/how-to/create-via-dashboard).
+- Using the [API](/how-to/create-via-api).
 
 ## 3. Deploy your waiting room
 
 After you have created your waiting room, you might also want to:
-- [Test your waiting room](/how-to/test-waiting-room) before it goes live
-- [Monitor your traffic](/how-to/monitor-waiting-room) in real time
-- [Suspend or force all traffic](/how-to/control-waiting-room) to waiting rooms
-- [Troubleshoot](/troubleshooting) potential issues
+- [Test your waiting room](/how-to/test-waiting-room) before it goes live.
+- [Monitor your traffic](/how-to/monitor-waiting-room) in real time.
+- [Suspend or force all traffic](/how-to/control-waiting-room) to waiting rooms.
+- [Troubleshoot](/troubleshooting) potential issues.

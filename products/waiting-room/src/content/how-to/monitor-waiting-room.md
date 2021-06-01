@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 You can monitor the status of your waiting rooms using the [dashboard](#status-in-the-dashboard) or the [API](#status-in-the-api).
 
-<Aside>Future work will create a separate area of application analytics for Waiting Rooms.</Aside>
+<Aside>Future work will create a separate area of application analytics for Cloudflare Waiting Rooms.</Aside>
 
 ## Status in the dashboard
 
@@ -18,16 +18,16 @@ Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
 The **Status** column displays the current state of the waiting room:
 
 * **Not Queueing**: 
-  - Waiting room enabled, but has not reached traffic threshold to send visitors to waiting room
-  - Shows estimated number of users in the application
+  - Waiting room enabled, but has not reached traffic threshold to send visitors to waiting room.
+  - Shows estimated number of users in the application.
 * **Queueing**: 
-  - Waiting room enabled and sending visitors to waiting room
-  - Shows estimated number of users in the queue
-  - On hover, shows maximum wait time expected for users
+  - Waiting room enabled and sending visitors to waiting room.
+  - Shows estimated number of users in the queue.
+  - On hover, shows maximum wait time expected for users.
 * **Disabled**: The waiting room is suspended.
 * **Queue All**: 
-  - Forces all traffic to queue in the waiting room
-  - On hover, shows estimated number of users in the queue
+  - Forces all traffic to queue in the waiting room.
+  - On hover, shows estimated number of users in the queue.
 
 ## Status in the API
 
@@ -38,7 +38,7 @@ GET zones/{zone_identifier}/waiting_rooms/{identifier}/status
 ```
 
 The response is:
-*  `queueing` if visitors are currently queueing in the waiting room
+*  `queueing` if visitors are currently queueing in the waiting room.
 *  `not_queueing` if the room is empty or if the waiting room is suspended.
 
 To check whether a configured waiting room is suspended or whether the traffic is force-queued to the waiting room, append the following endpoint to the Cloudflare API base URL.

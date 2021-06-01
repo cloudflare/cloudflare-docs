@@ -61,14 +61,14 @@ The table below describes the **Settings** fields that you can configure in the 
       <td>Session duration</td>
       <td><code>session_duration</code></td>
       <td>No</td>
-      <td>The amount of time in minutes (between 1 and 30) that a user who left <code>host/path</code> can come <a href="#session-duration">directly back</a> without having to go into the Waiting Room. Defaults to 5 minutes.</td>
+      <td>The amount of time in minutes (between 1 and 30) that a user who left <code>host/path</code> can come <a href="#session-duration">directly back</a> without having to go into the waiting room. Defaults to 5 minutes.</td>
       <td></td>
     </tr>
     <tr>
       <td>Description</td>
       <td><code>description</code></td>
       <td>No</td>
-      <td>Description of the Waiting Room.</td>
+      <td>Description of the waiting room.</td>
       <td></td>
     </tr>
   </tbody>
@@ -76,7 +76,7 @@ The table below describes the **Settings** fields that you can configure in the 
 
 <Aside type='note' header='Note'>
 
-You can configure only one Waiting Room per `host/path` combination.
+You can configure only one waiting room per `host/path` combination.
 </Aside>
 
 ## Additional details

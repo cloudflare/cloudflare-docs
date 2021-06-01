@@ -22,7 +22,7 @@ For authentication instructions, see [_Getting Started: Requests_](https://api.c
 
 For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-## Manage Your Waiting Rooms
+## Manage your waiting room
 
 <table style="width:100%">
    <thead>
@@ -66,7 +66,7 @@ For help with endpoints and pagination, see [_Getting Started: Endpoints_](https
    </tbody>
 </table>
 
-## Fetch the current status of a Waiting Room
+## Fetch the current status of a waiting room
 
 <table style="width:100%">
     <thead>

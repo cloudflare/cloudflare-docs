@@ -82,7 +82,7 @@ The response for the request above is:
 }
 ```
 
-## Customize a Waiting Room web page using the Waiting Room API
+## Customize a waiting room web page
 
 You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
