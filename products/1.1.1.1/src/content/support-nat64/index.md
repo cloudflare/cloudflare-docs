@@ -17,13 +17,17 @@ You should only enable DNS64 if you are managing or using an IPv6-only network. 
 
 DNS64 is specifically for networks that already have NAT64 support. If you are a network operator who has NAT64, you can test our DNS64 support by updating it to the following IP addresses:
 
-    2606:4700:4700::64
-    2606:4700:4700::6400
+```txt
+2606:4700:4700::64
+2606:4700:4700::6400
+```
 
-Some devices use separate fields for all eight parts of IPv6 addresses and cannot accept the :: IPv6 abbreviation syntax. For such fields enter:
+Some devices use separate fields for all eight parts of IPv6 addresses and cannot accept the `::` IPv6 abbreviation syntax. For such fields enter:
 
-    2606:4700:4700:0:0:0:0:64
-    2606:4700:4700:0:0:0:0:6400
+```txt
+2606:4700:4700:0:0:0:0:64
+2606:4700:4700:0:0:0:0:6400
+```
 
 ## How can I test it?
 

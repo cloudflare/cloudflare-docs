@@ -8,10 +8,10 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 ## Mozilla Firefox
 
-1. Click the hamburger menu at the top-right corner of your browser window.
+1. Click the **hamburger menu** at the top-right corner of your browser window.
 1. Click **Preferences**.
 1. In the **General** menu, scroll down to access `Network Settings`.
-1. Click on the `Settings` button.
+1. Click on the **Settings** button.
 1. Click **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
 
 ## Google Chrome
@@ -22,9 +22,9 @@ This setting may already be enabled on Chrome by default.
 
 </Aside>
 
-1. Click on the three-dot menu at in the top-right corner of your browser window.
+1. Click on the **three-dot menu** at in the top-right corner of your browser window.
 1. Click **Settings**.
-1. Navigate to **Privacy and security > Security**.
+1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS** switch.
 
 Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](https://1.1.1.1/dns/#setup-instructions).
@@ -38,9 +38,9 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 
 ## Brave
 
-1. Click the hamburger menu at the top-right corner of your browser window.
+1. Click the **hamburger menu** at the top-right corner of your browser window.
 1. Navigate to **Settings**.
-1. Navigate to **Privacy and security > Security**.
+1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS**.
 1. Choose *Cloudflare (1.1.1.1)* as a service provider.
 
@@ -50,5 +50,5 @@ As of today, Safari does not support DNS over HTTPS.
 
 ## How to check if my browser is configured correctly?
 
-1. Visit [1.1.1.1 help page](https://1.1.1.1/help)
-2. Verify that `Using DNS over HTTPS (DoH)` is `Yes`
+1. Visit [1.1.1.1 help page](https://1.1.1.1/help).
+1. Verify that `Using DNS over HTTPS (DoH)` is `Yes`.
