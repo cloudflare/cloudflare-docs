@@ -13,7 +13,7 @@ This tutorial step shows you how to get started. Before you do so, make sure you
 
 First we’ll create a initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As you configuration gets more complex you’ll want to split the config into separate files and modules, but for now we’ll proceed with a single file:
 
-```
+```bash
 $ cat > cloudflare.tf <<'EOF'
 terraform { 
   required_providers {
