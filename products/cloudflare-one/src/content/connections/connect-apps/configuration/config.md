@@ -9,7 +9,7 @@ The configuration file format uses [YAML syntax](http://www.yaml.org/start.html)
 
 ## Example file
 
-The example file below uses a single Argo Tunnel to send traffic sent to two distinct hostnames to two services that `cloudflared` can address. The configuration file uses [ingress rules](/connections/connect-apps/configuration/ingress) to route traffic that arrives at `cloudflared`.
+The example file below uses a single Tunnel to send traffic sent to two distinct hostnames to two services that `cloudflared` can address. The configuration file uses [ingress rules](/connections/connect-apps/configuration/ingress) to route traffic that arrives at `cloudflared`.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -116,7 +116,7 @@ Disables periodic check for updates, restarting the server with the new version.
 |--|--|--|
 | `origincert value` | `~/.cloudflared/cert.pem` | `TUNNEL_ORIGIN_CERT` |
 
-Specifies the Tunnel certificate for one of your zones, authorizing the client to serve as an origin for that zone. A certificate is required to use Argo Tunnel. You can obtain a certificate by using the login command or by visiting `https://dash.cloudflare.com/argotunnel`.
+Specifies the Tunnel certificate for one of your zones, authorizing the client to serve as an origin for that zone. A certificate is required to use Cloudflare Tunnel. You can obtain a certificate by using the login command or by visiting `https://dash.cloudflare.com/argotunnel`.
 
 ### `no-tls-verify`
 

@@ -1,5 +1,6 @@
 ---
 title: Deploy a custom ruleset
+pcx-content-type: how-to
 alwaysopen: true
 order: 763
 ---

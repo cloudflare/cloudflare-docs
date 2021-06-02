@@ -69,7 +69,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Composer    |                                 |                      |
 | Doxygen     | Version 1.8.6                   |                      |
 | Emacs       | 25                              |                      |
-| Gutenberg   |                                 |                      |
+| Gutenberg   | (requires environment variable) | `GUTENBERG_VERSION`  |
 | Hugo        | Version 0.54                    | `HUGO_VERSION`       |
 | GNU Make    | Version 3.8.1                   |                      |
 | ImageMagick | Version 6.7.7                   |                      |
@@ -80,6 +80,6 @@ Many common tools have been pre-installed as well. The environment variable avai
 | pip         | Corresponds with Python version |                      |
 | Pipenv      | Latest version                  |                      |
 | Yarn        | Version 1.13.0                  | `YARN_VERSION`       |
-| Zola        |                                 |                      |
+| Zola        | (requires environment variable) | `ZOLA_VERSION`       |
 
 If you're looking to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For instance, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` NPM package, which will be installed using `npm install` as your project builds on Cloudflare Pages.

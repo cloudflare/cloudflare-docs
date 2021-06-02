@@ -10,9 +10,9 @@ order: 30
 | 2. [Configure the Tunnel](/connections/connect-apps/configuration) |
 | 3. [Configure routing to the Tunnel](/connections/connect-apps/routing-to-tunnel) |
 
-Argo Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
+Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
-By default, Argo Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/config/), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/config/), but at a minimum you must specify the following arguments to run as a service:
 
 |Argument|Description|
 |---|---|
@@ -38,7 +38,7 @@ If you do not have a configuration file, you will need to create a config.yml fi
 
 <Aside>
 
-The above arguments are required for pre-configured Argo Tunnel deployments. If you are using legacy Argo Tunnel, without names, you can append the `--legacy` flag when running cloudflared tunnel install command.
+The above arguments are required for pre-configured Cloudflare Tunnel deployments. If you are using legacy Tunnels, without names, you can append the `--legacy` flag when running `cloudflared` tunnel install command.
 
 </Aside>
 
@@ -52,7 +52,7 @@ Open a Terminal and run the following command:
 $ cloudflared service install
 ```
 
-Argo Tunnel will be installed as a launch agent, and start whenever you log in, using your local user configuration found in `~/.cloudflared/`.
+Cloudflare Tunnel will be installed as a launch agent, and start whenever you log in, using your local user configuration found in `~/.cloudflared/`.
 
 #### Manually start the service
 
@@ -72,7 +72,7 @@ Run the following command:
 $ sudo cloudflared service install
 ```
 
-Argo Tunnel will be installed as a launch daemon, and start whenever your system boots, using your configuration found in `/etc/cloudflared`.
+Cloudflare Tunnel will be installed as a launch daemon, and start whenever your system boots, using your configuration found in `/etc/cloudflared`.
 
 #### Manually start the service
 
@@ -111,7 +111,7 @@ C:\Cloudflared\bin\cloudflared.exe
 C:\Cloudflared\bin\cloudflared.exe service install
 ```
 
-Assuming Windows is installed to `C:\`, when running as a service, Argo Tunnel expects the configuration to be available at the following path:
+Assuming Windows is installed to `C:\`, when running as a service, Cloudflare Tunnel expects the configuration to be available at the following path:
 
 `C:\Windows\system32\config\systemprofile\.cloudflared\config.yml` .
 
@@ -151,7 +151,7 @@ copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\system
 
 ### Create, route, and configure the Tunnel
 
-You can now [create](/connections/connect-apps/create-tunnel) an Argo Tunnel and edit the configuration file to [configure](/connections/connect-apps/configuration) `cloudflared`. We recommend setting the [routing](/connections/connect-apps/routing-to-tunnel) before running the service in the next step.
+You can now [create](/connections/connect-apps/create-tunnel) an Cloudflare Tunnel and edit the configuration file to [configure](/connections/connect-apps/configuration) `cloudflared`. We recommend setting the [routing](/connections/connect-apps/routing-to-tunnel) before running the service in the next step.
 
 <Aside>
 
@@ -181,7 +181,7 @@ credentials-file: C:/UUID.json
 
 ### Start the service
 
-To start the service, open the Service Manager, select `Argo Tunnel agent` and open the `General` tab. In the `Start parameters` field, specify the location of the configuration file and place the `tunnel run` command after the path. For example:
+To start the service, open the Service Manager, select `Cloudflare Tunnel agent` and open the `General` tab. In the `Start parameters` field, specify the location of the configuration file and place the `tunnel run` command after the path. For example:
 
 ![DNS tab](../../../static/documentation/connections/start-param-1.png)
 
@@ -193,7 +193,7 @@ The Services UI in Windows will allow you to set Start parameters, and Start the
 
 </Aside>
 
-Alternatively, you can run the following commands to start Argo Tunnel as a service:
+Alternatively, you can run the following commands to start Cloudflare Tunnel as a service:
 
 ```
 C:\> sc start cloudflared tunnel run

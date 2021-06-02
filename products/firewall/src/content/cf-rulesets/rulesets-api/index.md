@@ -1,5 +1,6 @@
 ---
 title: Rulesets API
+pcx-content-type: navigation
 alwaysopen: false
 order: 780
 ---

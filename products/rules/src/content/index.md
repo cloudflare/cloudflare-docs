@@ -1,4 +1,5 @@
 ---
+pcx-content-type: landing-page
 order: 1
 ---
 

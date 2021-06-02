@@ -23,7 +23,7 @@ Cloudflare for Teams can check if [CrowdStrike](https://www.crowdstrike.com/) is
 1. Select **CrowdStrike**.
 
 1. You will be prompted for the following information:
-    * **Name:** A unique identifier for this SentinelOne device posture check
+    * **Name:** A unique identifier for this CrowdStrike device posture check
     * **Operating system:** You’ll need to configure one posture check per operating system (macOS and Windows currently supported)
     * **Application Path:** Enter the full path to the CrowdStrike process to be checked (for example, `c:\program files\CrowdStrike\CrowdStrike.exe`)
     * **Certificate thumbprint (optional):** The thumbprint of the publishing certificate used to sign the binary. This proves the binary came from CrowdStrike and is the recommended way to validated the process

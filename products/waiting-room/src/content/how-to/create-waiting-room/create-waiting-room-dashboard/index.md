@@ -1,7 +1,7 @@
 ---
 title: Create a Waiting Room in the dashboard
 order: 0
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Create a Waiting Room via the Cloudflare dashboard

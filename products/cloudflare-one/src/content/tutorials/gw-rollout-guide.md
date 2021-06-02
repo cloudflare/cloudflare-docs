@@ -5,12 +5,17 @@ category: 🛡️ Web Gateway
 
 # Deploy Cloudflare's Secure Web Gateway
 
-Cloudflare Gateway feaures two modes:
+Cloudflare Gateway feaures two modes, DNS filtering and HTTP filtering.
 
-|Mode|On-Ramps|Description|
+<TableWrap>
+
+| |DNS filtering|HTTP filtering|
 |---|---|---|
-|**DNS filtering**|* Router or device resolver configuration <br />* Cloudflare WARP agent|A secure DNS recursive resolver built on top of the world's fastest DNS resolver, 1.1.1.1. Filter DNS queries from networks and devices|
-|**HTTP filtering**|* Cloudflare WARP agent|A forward proxy that sends all traffic leaving a device through an encrypted Wiregaurd tunnel to Cloudflare's network. Inspect and filter HTTP traffic, including file control and virus scanning|
+| *What it is* | A secure DNS recursive resolver built on top of the world's fastest DNS resolver, 1.1.1.1 | A forward proxy that sends all traffic leaving a device through an encrypted Wiregaurd tunnel to Cloudflare's network|
+| *What it does* | Filter DNS queries from networks and devices | Inspect and filter HTTP traffic, including file control and virus scanning |
+| *On-Ramps* | <ul><li>Router or device resolver configuration</li><li>Cloudflare WARP agent</li></ul> | Cloudflare WARP agent | 
+
+</TableWrap>
 
 In both modes, Cloudflare Gateway filters traffic based on rules that you configure, including rules that can be applied based on user identity. Both deployment options log all events, including allowed queries and requests.
 
@@ -33,31 +38,34 @@ This guide walks through an end-to-end Gateway deployment that includes both mod
 
 ## Choose a Cloudflare for Teams plan
 
-Both modes Cloudflare Gateway is available in [three Cloudflare for Teams plans](https://www.cloudflare.com/teams-pricing/). The **Free** plan includes DNS and HTTP filtering for up to 50 users at no cost. The **Standard** plan allows your organization to deploy Gateway to 51 or more users and adds additional logging, support, and filtering features. The Cloudflare for Teams **Enterprise** plan includes additional features and support options.
+Both Cloudflare Gateway modes are available in [three Cloudflare for Teams plans](https://www.cloudflare.com/teams-pricing/).
+* The **Free** plan includes DNS and HTTP filtering for up to 50 users at no cost. 
+* The **Standard** plan allows your organization to deploy Gateway to 51 or more users and adds additional logging, support, and filtering features.
+* The **Enterprise** plan includes additional features and support options.
 
 This deployment guide uses the **Free** plan. You do not need any additional Cloudflare subscriptions to use the Cloudflare for Teams **Free** plan.
 
 Begin by navigating to `dash.teams.cloudflare.com` and signing in with your Cloudflare account. If you do not have a Cloudflare account, create one.
 
-Choose **Cloudflare for Teams** and click **Get Started**.
+1. Choose **Cloudflare for Teams** and click **Get Started**.
 
-![Choose plan](../static/secure-web-gateway/gw-rollout-guide/pick-teams-onboard.png)
+ ![Choose plan](../static/secure-web-gateway/gw-rollout-guide/pick-teams-onboard.png)
 
-Click **Next** to begin setting up your account.
+1. Click **Next** to begin setting up your account.
 
-![Welcome](../static/secure-web-gateway/gw-rollout-guide/welcome-to-teams.png)
+ ![Welcome](../static/secure-web-gateway/gw-rollout-guide/welcome-to-teams.png)
 
-Choose a name for your organization. This can be your company's name or an internal name for your team. End users in your organization will use this name to enroll into your account.
+1. Choose a [name](/glossary#team-name) for your organization. This can be your company's name or an internal name for your team. End users in your organization will use this name to enroll into your account.
 
-![Choose name](../static/secure-web-gateway/gw-rollout-guide/choose-name.png)
+ ![Choose name](../static/secure-web-gateway/gw-rollout-guide/choose-name.png)
 
-Next, select a Cloudflare for Teams plan. This tutorial uses the **Free** plan.
+1. Next, select a Cloudflare for Teams plan. This tutorial uses the **Free** plan.
 
-![Choose plan](../static/secure-web-gateway/gw-rollout-guide/free-bundle.png)
+ ![Choose plan](../static/secure-web-gateway/gw-rollout-guide/free-bundle.png)
 
-Click **Proceed to payment** and input payment details. Your card will not be charged on this plan.
+1. Click **Proceed to payment** and input payment details. Your card will not be charged on this plan.
 
-![Payment](../static/secure-web-gateway/gw-rollout-guide/confirm-free.png)
+ ![Payment](../static/secure-web-gateway/gw-rollout-guide/confirm-free.png)
 
 ## Configure a DNS filtering location
 

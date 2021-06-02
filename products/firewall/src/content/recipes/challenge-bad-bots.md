@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Challenge bad bots
 
 <Aside type='warning' header='Important'>

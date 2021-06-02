@@ -35,7 +35,7 @@ All values are per organization.
 
 </TableWrap>
 
-## Argo Tunnel limitations
+## Cloudflare Tunnel limitations
 
 All values are per account.
 

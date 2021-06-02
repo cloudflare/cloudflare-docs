@@ -52,11 +52,11 @@ Build a policy to determine who will be able to reach these resources. You can u
 
 ## Connect a host to Cloudflare
 
-You can now connect the host to Cloudflare with Argo Tunnel. Argo Tunnel, powered by its `cloudflared` daemon, will create an outbound-only connection from your environment and send SSH connections from users to protected resources once authorized.
+You can now connect the host to Cloudflare with Cloudflare Tunnel. Cloudflare Tunnel, powered by its `cloudflared` daemon, will create an outbound-only connection from your environment and send SSH connections from users to protected resources once authorized.
 
 First, [install and authenticate](/connections/connect-apps/install-and-setup) an instance of `cloudflared` in a location that can address the resources you are connecting to Cloudflare.
 
-Next, create a new Argo Tunnel with the following command. You can replace `ssh-pool` with any name.
+Next, create a new Tunnel with the following command. You can replace `ssh-pool` with any name.
 
 ```sh
 $ cloudflared tunnel create ssh-pool

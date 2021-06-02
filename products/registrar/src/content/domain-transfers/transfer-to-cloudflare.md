@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Transfer to Cloudflare
@@ -47,6 +48,10 @@ Sites can be unavailable for a few reasons, including:
 * Cloudflare does not yet support the TLD
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
+
+<Aside>
+If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when transferring a domain.
+</Aside>
 
 --------
 

@@ -10,7 +10,7 @@ To start using the DNS over Discord bot, invite it to your Discord server using 
 
 ## dig command
 
-Once the bot is in your server, type `/dig` to begin using the bot's main command -- performing DNS lookups.
+Once the bot is in your server, type `/dig` to begin using the bot's main command — performing DNS lookups.
 This will provide a native interface within Discord that allows you to specify the domain to lookup, an optional DNS record type and an optional flag for a short result.
 
 Due to limitations in Discord, the `/dig` command can only offer 10 different DNS record types, and will default to 'A' records if none is specified.
@@ -32,17 +32,17 @@ Due to limitations in Discord, the `/dig` command can only offer 10 different DN
 *   SRV
 *   TXT
 
-*For all DNS record types, use the `/multi-dig` command.*
+For all DNS record types, use the `/multi-dig` command.
 
 ### Examples
 
 ![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
 
-_`/dig domain: cloudflare.com`_
+`/dig domain: cloudflare.com`
 
 ![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)
 
-_`/dig domain: cloudflare.com type: AAAA short: True`_
+`/dig domain: cloudflare.com type: AAAA short: True`
 
 ## multi-dig command
 
@@ -79,17 +79,17 @@ Please provide a space-separated list of valid DNS record types to lookup, any i
 *   TXT
 *   URI
 
-*Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.*
+Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.
 
 ### Examples
 
 ![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)
 
-_`/multi-dig domain: cloudflare.com types: A AAAA`_
+`/multi-dig domain: cloudflare.com types: A AAAA`
 
 ![multi-dig domain: cloudflare.com types: DNSKEY short: True](../static/dns-over-discord/multi-dig-command-example-2.png)
 
-_`/multi-dig domain: cloudflare.com types: DNSKEY short: True`_
+`/multi-dig domain: cloudflare.com types: DNSKEY short: True`
 
 ## whois command
 
@@ -101,19 +101,19 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 ![whois query: cloudflare.com](../static/dns-over-discord/whois-command-example-1.png)
 
-_`/whois query: cloudflare.com`_
+`/whois query: cloudflare.com`
 
 ![whois query: 104.16.132.229](../static/dns-over-discord/whois-command-example-2.png)
 
-_`/whois query: 104.16.132.229`_
+`/whois query: 104.16.132.229`
 
 ![whois query: 2606:4700::6810:84e5](../static/dns-over-discord/whois-command-example-3.png)
 
-_`/whois query: 2606:4700::6810:84e5`_
+`/whois query: 2606:4700::6810:84e5`
 
 ![whois query: 13335](../static/dns-over-discord/whois-command-example-4.png)
 
-_`/whois query: 13335`_
+`/whois query: 13335`
 
 ## Other commands
 
@@ -125,7 +125,7 @@ The `/help` command provides in-Discord documentation about all the commands ava
 
 ![help command](../static/dns-over-discord/help-command.png)
 
-_`/help`_
+`/help`
 
 ### privacy command
 
@@ -134,7 +134,7 @@ This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](http
 
 ![privacy command](../static/dns-over-discord/privacy-command.png)
 
-_`/privacy`_
+`/privacy`
 
 ### github command
 
@@ -143,7 +143,7 @@ The GitHub repository can be accessed at [https://github.com/MattIPv4/DNS-over-D
 
 ![github command](../static/dns-over-discord/github-command.png)
 
-_`/github`_
+`/github`
 
 ### invite command
 
@@ -152,7 +152,7 @@ The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/
 
 ![invite command](../static/dns-over-discord/invite-command.png)
 
-_`/invite`_
+`/invite`
 
 ---
 
@@ -160,4 +160,4 @@ _`/invite`_
 
 The DNS over Discord bot is deployed on [Cloudflare Workers](https://workers.cloudflare.com/).
 
-You can find the source code for the bot on GitHub, as well as information on getting started with contributing to the project, at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).  
+You can find the source code for the bot on GitHub, as well as information on getting started with contributing to the project, at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).

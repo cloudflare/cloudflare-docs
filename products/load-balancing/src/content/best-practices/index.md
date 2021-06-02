@@ -1,7 +1,7 @@
 ---
 title: Best practices
 order: 40
-pcx-content-type: best practices
+pcx-content-type: best-practices
 ---
 
 # Best practices for Cloudflare Load Balancing

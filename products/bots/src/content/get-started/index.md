@@ -1,4 +1,5 @@
 ---
+title: Get started
 order: 3
 pcx-content-type: navigation
 ---

@@ -20,16 +20,19 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to blo
 
 ## Add Cloudflare Gateway
 
-Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. Cloudflare Gateway operates in two modes:
+Before you begin, you'll need to:
+
+1. [Set up](/setup) Cloudflare Gateway in your account
+2. [Add](/identity/idp-integration) an identity provider to the Teams dashboard
+
+Cloudflare Gateway operates in two modes:
 
 * DNS filtering
 * Proxy (HTTP filtering)
 
-The proxy mode in Gateway requires a Gateway Standard or Cloudflare for Teams Standard [plan](https://www.cloudflare.com/teams-pricing/).
+To filter all Internet-bound traffic in the proxy mode, devices must install and connect the Cloudflare for Teams [WARP client](/connections/connect-devices/warp). The WARP client will send all Internet traffic to a Cloudflare data center near the user where it can be filtered and logged before reaching the rest of the Internet.
 
-To filter all Internet-bound traffic in the proxy mode, devices must install and enroll the Cloudflare for Teams WARP client. The WARP client will send all Internet traffic to a Cloudflare data center near the user where it can be filtered and logged before reaching the rest of the Internet.
-
-Building a rule in Access to enforce Gateway connections requires the use of the WARP client and its configuration to proxy Internet traffic to Cloudflare.
+Building a rule in Access to enforce Gateway connections also requires using the WARP client to proxy Internet traffic to Cloudflare.
 
 ## Determine which devices can enroll
 
