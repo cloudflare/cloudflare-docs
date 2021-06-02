@@ -4,9 +4,9 @@ order: 2
 
 # Locations
 
-<Aside type="Warning">
+<Aside type="Warning" header="Warning">
 
-Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to some public Wi-Fi networks that use captive portals.
+Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/connections/connect-devices/warp) to connect your devices to Teams.
 
 </Aside>
 
