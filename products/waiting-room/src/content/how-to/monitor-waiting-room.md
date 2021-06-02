@@ -3,11 +3,13 @@ order: 2
 pcx-content-type: how-to
 ---
 
-# Monitor Waiting Room status
+# Monitor waiting room status
 
-You can monitor the status of your waiting rooms using the [user interface](/how-to/waiting-room-dashboard) or the API.
+You can monitor the status of your waiting rooms using the [dashboard](#status-in-the-dashboard) or the [API](#status-in-the-api).
 
-## Monitor waiting room status in the Waiting Rooms dashboard
+<Aside>Future work will create a separate area of application analytics for Cloudflare Waiting Rooms.</Aside>
+
+## Status in the dashboard
 
 Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
 
@@ -15,12 +17,19 @@ Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
 
 The **Status** column displays the current state of the waiting room:
 
-* **Not Queueing**: The waiting room is activated, but traffic has not reached the threshold to divert visitors to the waiting room.
-* **Queueing**: Traffic is exceeding the configured threshold and visitors are diverted to the waiting room.
+* **Not Queueing**: 
+  - Waiting room enabled, but has not reached traffic threshold to send visitors to waiting room.
+  - Shows estimated number of users in the application.
+* **Queueing**: 
+  - Waiting room enabled and sending visitors to waiting room.
+  - Shows estimated number of users in the queue.
+  - On hover, shows maximum wait time expected for users.
 * **Disabled**: The waiting room is suspended.
-* **Queue All**: All traffic is forced to queue in the waiting room.
+* **Queue All**: 
+  - Forces all traffic to queue in the waiting room.
+  - On hover, shows estimated number of users in the queue.
 
-## Monitor your waiting rooms using the Waiting Rooms API
+## Status in the API
 
 [Check whether traffic is queueing in a configured waiting room](https://api.cloudflare.com/#waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
 
@@ -29,7 +38,7 @@ GET zones/{zone_identifier}/waiting_rooms/{identifier}/status
 ```
 
 The response is:
-*  `queueing` if visitors are currently queueing in the waiting room
+*  `queueing` if visitors are currently queueing in the waiting room.
 *  `not_queueing` if the room is empty or if the waiting room is suspended.
 
 To check whether a configured waiting room is suspended or whether the traffic is force-queued to the waiting room, append the following endpoint to the Cloudflare API base URL.
