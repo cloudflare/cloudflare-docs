@@ -91,6 +91,22 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
+      <td valign="top"><code>http.request.cookies</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+      <td>
+         <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
+         </p>
+         <p>Cookie values are not pre-processed and retain the case used in the request.</p>
+         <p><em>Decoding:</em> Cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{'{"app": ["test"]}'}</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
       <td valign="top"><code>http.request.timestamp.sec</code><br /><Type>Integer</Type></td>
       <td>
          <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
