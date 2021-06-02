@@ -1,5 +1,6 @@
 ---
 title: Preview rules
+pcx-content-type: interim
 type: table
 order: 330
 ---
@@ -16,7 +17,7 @@ To help customers understand the potential impact of a rule, Cloudflare has buil
 
 <Aside type='warning' header='Important'>
 
-Rule Preview requires access to an Cloudflare Enterprise plan.
+Rule Preview requires access to a Cloudflare Enterprise plan.
 
 </Aside>
 

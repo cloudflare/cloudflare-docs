@@ -1,10 +1,11 @@
 ---
-order: 19
 title: Common use cases
+pcx-content-type: configuration
+order: 19
 ---
 
 # Common rate limiting use cases
- 
+
 <Aside type='warning' header='Important'>
 
 This feature is only available for selected customers on an Enterprise plan.
@@ -12,16 +13,16 @@ This feature is only available for selected customers on an Enterprise plan.
 </Aside>
 
 The examples below include sample Rate Limiting Rule configurations that address common rate limiting use cases.
- 
+
 ## Example 1
- 
+
 The following rule performs rate limiting on incoming requests from the US addressed at the login page, except for one allowed IP address.
 
 <Example>
 
 Expression:<br />
 `(http.request.uri.path eq "/login" and ip.geoip.country eq "US" and ip.src ne 192.0.0.1)`
- 
+
 Rule characteristics:
 * _Data center ID_ (included by default when creating the rule in the dashboard)
 * _IP Address_
@@ -31,12 +32,12 @@ Rule characteristics:
 ## Example 2
 
 The following rule performs rate limiting on incoming requests with a given base URI path, incrementing on the IP address and the provided API key.
- 
+
 <Example>
 
 Expression:<br />
 `(http.request.uri.path contains "/product*" and http.request.method eq "POST")`
- 
+
 Rule characteristics:
 * _Data center ID_ (included by default when creating the rule in the dashboard)
 * _IP Address_
@@ -65,6 +66,6 @@ Mitigation expression:<br/>
 
 <Aside type='warning' header='Important'>
 
-You can only define a value for the **Mitigation expression** via API. 
+You can only define a value for the **Mitigation expression** via API.
 
 </Aside>

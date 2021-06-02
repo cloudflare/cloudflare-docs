@@ -36,6 +36,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Magic Transit           | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
 | Network Interconnect    | network-interconnect | [Test](https://network-interconnect.cloudflare-docs.workers.dev/network-interconnect) | [Prod](https://developers.cloudflare.com/network-interconnect) |
 | Pages                   | pages                | [Test](https://pages.cloudflare-docs.workers.dev/pages)                               | [Prod](https://developers.cloudflare.com/pages)                |
+| Railgun                 | railgun              | [Test](https://railgun.cloudflare-docs.workers.dev/railgun)                           | [Prod](https://developers.cloudflare.com/railgun)              |
 | Randomness Beacon       | randomness-beacon    | [Test](https://randomness-beacon.cloudflare-docs.workers.dev/randomness-beacon)       | [Prod](https://developers.cloudflare.com/randomness-beacon)    |
 | Registrar               | registrar            | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       | [Prod](https://developers.cloudflare.com/registrar)            |
 | Rules                   | rules                | [Test](https://rules.cloudflare-docs.workers.dev/rules)                               | [Prod](https://developers.cloudflare.com/rules)                |

@@ -1,4 +1,5 @@
 ---
+pcx-content-type: reference
 order: 480
 type: table
 ---

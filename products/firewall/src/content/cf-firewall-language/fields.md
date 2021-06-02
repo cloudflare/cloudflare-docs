@@ -1,4 +1,5 @@
 ---
+pcx-content-type: reference
 order: 610
 ---
 
@@ -23,6 +24,12 @@ Most standard fields use the same naming conventions as [Wireshark display field
 - In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in Firewall Rules `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
 
 - The Cloudflare Firewall Rules language does not support the `slice` operator.
+
+<Aside type='warning' header='Important'>
+
+Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+
+</Aside>
 
 The Cloudflare Firewall Rules language supports these standard fields:
 
@@ -248,7 +255,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='warning' header='Important'>
 
-Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields require a Cloudflare Enterprise plan with [Bot Management](/bots/get-started/bm-subscription) enabled.
+Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) enabled.
 
 </Aside>
 

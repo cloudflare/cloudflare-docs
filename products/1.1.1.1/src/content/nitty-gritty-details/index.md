@@ -6,7 +6,7 @@ order: 8
 
 ## ANY
 
-Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) in 2015 as ANY queries are more often used to perpetuate large volumetric attacks against the DNS system than valid use. 1.1.1.1 returns NOTIMPL when asked for qtype==ANY.
+Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) in 2015 as ANY queries are more often used to perpetuate large volumetric attacks against the DNS system than valid use. 1.1.1.1 returns `NOTIMPL` when asked for `qtype==ANY`.
 
 ## DNSSEC
 
@@ -17,8 +17,6 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the EDNS Client Subnet Header to authoritative servers.
 
 ## IPv6
-
-It’s not 1995.
 
 1.1.1.1 has full IPv6 support.
 

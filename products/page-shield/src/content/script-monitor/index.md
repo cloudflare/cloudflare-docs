@@ -1,7 +1,7 @@
 ---
 title: Script Monitor (Beta)
 order: 1
-pcx-content-type: landing page
+pcx-content-type: landing-page
 ---
 
 import ScriptMDefinition from "../_partials/_script-monitor-definition.md"

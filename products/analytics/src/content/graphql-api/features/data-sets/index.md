@@ -34,6 +34,7 @@ The following data sets (and associated nodes) are available in Cloudflare Analy
 | Network Analytics           | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups`                                                 |
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
+| Magic Firewall Analytics    | `magicFirewallSamplesAdaptiveGroups`                                                                                           |
 
 </TableWrap>
 

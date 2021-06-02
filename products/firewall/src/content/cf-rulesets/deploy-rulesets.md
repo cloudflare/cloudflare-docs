@@ -1,5 +1,6 @@
 ---
 title: Deploy rulesets
+pcx-content-type: how-to
 type: overview
 order: 740
 ---
@@ -27,7 +28,6 @@ When deploying a ruleset to a phase at the **account** level, use the expression
 When deploying a ruleset to a phase at the **zone** level, you must set the expression to `true`. 
 
 </Aside>
-
 
 ## Example
 

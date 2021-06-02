@@ -8,15 +8,15 @@ WebSockets allow you to communicate in real-time with your Cloudflare Workers se
 
 ```js
 // { 0: <WebSocket>, 1: <WebSocket> }
-let websocketPair = new WebsocketPair()
+let websocketPair = new WebSocketPair()
 ```
 
-The WebsocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. 
+The WebSocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. 
 
 These WebSockets are commonly referred to as `client` and `server`. In the below example, we combine `Object.values` and ES6 destructuring to retrieve the WebSockets as `client` and `server`:
 
 ```js
-let [client, server] = Object.values(new WebsocketPair())
+let [client, server] = Object.values(new WebSocketPair())
 ```
 
 ## Methods

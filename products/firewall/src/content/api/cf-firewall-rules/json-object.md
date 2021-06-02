@@ -1,4 +1,5 @@
 ---
+pcx-content-type: reference
 order: 410
 ---
 
@@ -48,7 +49,7 @@ This table summarizes the object properties:
       </tr>
       <tr>
         <td><code>filter</code><br /><Type>Object</Type></td>
-        <td>A <a href='/api/cf-filters/json'>Cloudflare Filter object</a> that contains an expression for evaluating this rule.</td>
+        <td>A <a href='/api/cf-filters/json-object'>Cloudflare Filter object</a> that contains an expression for evaluating this rule.</td>
         <td></td>
       </tr>
       <tr>
@@ -97,19 +98,19 @@ Priority plays a key role in configuring firewall rules because of the power of 
 
 With Cloudflare Filters, it is possible to construct conflicting rules such as:
 
-- allow requests from the office IP range, and
-- block requests with a specific user agent.
+- Allow requests from the office IP range, and
+- Block requests with a specific user agent.
 
 Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, the Firewall Rules follow a strict ordering depending on action and priority.
 
 Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action using the following order of precedence:
 
-1. log
-2. bypass
-3. allow
-4. challenge
-5. js_challenge
-6. block
+1. `log`
+1. `bypass`
+1. `allow`
+1. `challenge`
+1. `js_challenge`
+1. `block`
 
 In the example above if no priority is set, the `allow request from the office IP range` would apply because the _allow_ action has a higher precedence than _block_.
 

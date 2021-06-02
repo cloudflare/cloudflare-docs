@@ -6,7 +6,7 @@ difficulty: Medium
 
 # Connect without long-lived API keys
 
-You can use [Argo Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network without leaving sensitive API keys lingering in your environment. These applications can be both public-facing or protected by [Cloudflare Access](/glossary#cloudflare-access).
+You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network without leaving sensitive API keys lingering in your environment. These applications can be both public-facing or protected by [Cloudflare Access](/glossary#cloudflare-access).
 
 **🗺️ This tutorial covers how to:**
 
@@ -24,7 +24,7 @@ In this example, the resource being connected is a [Hugo site](https://gohugo.io
 
 ![New Hugo](../static/secure-origin-connections/share-new-site/hugo-new.png)
 
-To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Argo Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation here](https://docs.brew.sh/Installation) to install it.
+To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation here](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -38,13 +38,13 @@ The command will launch a browser window and prompt you to login with your Cloud
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
-You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
+You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
-You can now [create an Argo Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -78,9 +78,9 @@ credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e
 
 If you are using the credentials file without the `cert.pem` file, you must specify the Tunnel ID in the `tunnel:` value. You cannot use the Name alone with the credentials file.
 
-## Run Argo Tunnel
+## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Argo Tunnel connection. You can now [run that](/connections/connect-apps/run-tunnel) Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run that](/connections/connect-apps/run-tunnel) Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 

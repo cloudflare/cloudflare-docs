@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Review and save a Waiting Room

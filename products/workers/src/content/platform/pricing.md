@@ -61,6 +61,7 @@ Total = ~$6.27 + Minimum $5/mo usage = **$11.27**
 
 ## KV
 
+### Free plan
 The Workers Free plan includes limited KV Usage. If you exceed one of these limits, further operations of that type will fail with an error. All limits reset daily at 00:00 UTC.
 
 <TableWrap>
@@ -75,6 +76,7 @@ The Workers Free plan includes limited KV Usage. If you exceed one of these limi
 
 </TableWrap>
 
+### Paid plan
 To avoid these limits, you can subscribe to the [Workers Paid plan](#pricing). Usage is then billed as follows:
 
 <TableWrap>

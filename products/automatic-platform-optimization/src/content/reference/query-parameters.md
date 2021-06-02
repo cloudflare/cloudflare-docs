@@ -1,6 +1,7 @@
 ---
 title: Query parameters and cached responses
 order: 10
+pcx-content-type: reference
 ---
 
 # Query parameters and cached responses

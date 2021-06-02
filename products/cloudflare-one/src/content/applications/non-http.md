@@ -2,7 +2,7 @@
 order: 4
 ---
 
-# Non-HTTP applications
+# Add non-HTTP applications
 
 You can connect applications to Cloudflare for Teams over a number of different protocols.
 
