@@ -8,6 +8,12 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 # Deploy a static WordPress site
 
+<Aside type="warning" header="Warning">
+
+This tutorial is outdated. As of August 2020, the WP2Static plugin is no longer available. For a free alternative to [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/), try [Simply Static](https://wordpress.org/plugins/simply-static/). 
+
+</Aside>
+
 <TutorialsBeforeYouStart/>
 
 ## Overview
