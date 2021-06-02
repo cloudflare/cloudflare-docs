@@ -12,21 +12,21 @@ order: 3
 
 Using the following DNS resolvers will block malicious content:
 
-* **1.1.1.2**
-* **1.0.0.2**
-* **2606:4700:4700::1112**
-* **2606:4700:4700::1002**
+* `1.1.1.2`
+* `1.0.0.2`
+* `2606:4700:4700::1112`
+* `2606:4700:4700::1002`
 
 ## Block malware and adult content
 
 When you change your DNS resolvers to the addresses below, 1.1.1.1 for Families will block malware and adult content.
 
-* **1.1.1.3**
-* **1.0.0.3**
-* **2606:4700:4700::1113**
-* **2606:4700:4700::1003**
+* `1.1.1.3`
+* `1.0.0.3`
+* `2606:4700:4700::1113`
+* `2606:4700:4700::1003`
 
-Cloudflare will return 0.0.0.0 if the FQDN or IP in a DNS query is classified as malicious.
+Cloudflare will return `0.0.0.0` if the FQDN or IP in a DNS query is classified as malicious.
 
 Ready to set it up? You’ll find an easy guide for every device in the [setup instructions](/1.1.1.1-for-families/setup-instructions/) page.
 

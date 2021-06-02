@@ -8,12 +8,9 @@ Follow this quick guide to start using 1.1.1.1 on your Linux device.
 
 ## Ubuntu
 
-1. Click System > Preferences > Network Connections.
-
-1. Click on the Wireless tab, then choose the Wi-Fi network you are currently connected to.
-
-1. Click Edit then click IPv4.
-
+1. Click **System** > **Preferences** > **Network Connections**.
+1. Click on the **Wireless tab**, then choose the Wi-Fi network you are currently connected to.
+1. Click **Edit** > **IPv4**.
 1. Change the DNS servers listed to:
 
     ```txt
@@ -21,10 +18,8 @@ Follow this quick guide to start using 1.1.1.1 on your Linux device.
     1.0.0.1
     ```
 
-1. Click Apply
-
-1. Then go to IPv6.
-
+1. Click **Apply**.
+1. Then, go to **IPv6**.
 1. Add the DNS servers:
 
     ```txt
@@ -32,7 +27,7 @@ Follow this quick guide to start using 1.1.1.1 on your Linux device.
     2606:4700:4700::1001
     ```
 
-1. Click Apply.
+1. Click **Apply**.
 
 ## Debian
 
@@ -42,8 +37,8 @@ Follow this quick guide to start using 1.1.1.1 on your Linux device.
        $ sudo vim /etc/resolv.conf
        ```
 
-   1. Replace the nameserver lines with:
-   (Since you are using vim press the <kbd>i</kbd> key on your keyboard to edit the document)
+   1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
+   1. Replace the `nameserver` lines with:
 
    For IPv4:
 
@@ -59,4 +54,8 @@ Follow this quick guide to start using 1.1.1.1 on your Linux device.
     nameserver 2606:4700:4700::1001
     ```
 
-   1. Save and exit vim by pressing the <kbd>ESC</kbd> key on your keyboard. Then after lifting the key type `:wq`.
+   1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit vim. Then after lifting the key, type:
+
+   ```
+   :wq
+   ```
