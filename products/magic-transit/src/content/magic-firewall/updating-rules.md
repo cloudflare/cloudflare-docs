@@ -50,13 +50,15 @@ We'll use this to fetch the existing rules to help us construct the call to upda
 curl https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/4376358e00ec4c42b0450b1afed120bf/versions/1 \
 -H 'Content-Type: application/json' \
 -H 'X-Auth-Email: user@example.com' \
--H 'X-Auth-Key: 00000000000' | jq '.result | {description: .description, rules: [ .rules[] | {id: .id, description: .description, action: .action, action_parameters: .action_parameters, expression: .expression} ]}'
+-H 'X-Auth-Key: 00000000000'
 ```
 
 <Aside type='note' header='Note'>
 
-What's up with that jq command? The API response has quite a bit of extra information, e.g. the last updated timestamp, that cannot be sent back to the API when making a PUT request. You do not need to use jq, but make sure you only send fields that are relevant to the update request.
-
+The API response has quite a bit of extra information, e.g. the last updated timestamp, that will be ignored if sent back to the API when making a PUT request. You can pipe curl's output through jq as shown below to only display fields that are relevant to the update request.
+```
+curl ... | jq '.result | {description: .description, rules: [ .rules[] | {id: .id, description: .description, action: .action, action_parameters: .action_parameters, expression: .expression} ]}'
+```
 </Aside>
 
 Example response:
