@@ -1,12 +1,12 @@
 ---
-title: Waiting Room API
+title: Common API calls
 order: 5
 pcx-content-type: reference
 ---
 
 # Use the Cloudflare Waiting Room API
 
-[Cloudflare Waiting Rooms](/about) redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
+Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 
 The [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting_rooms) provides an interface for programmatically managing waiting rooms.
 
@@ -22,7 +22,7 @@ For authentication instructions, see [_Getting Started: Requests_](https://api.c
 
 For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
 
-## Manage Your Waiting Rooms
+## Manage your waiting room
 
 <table style="width:100%">
    <thead>
@@ -66,7 +66,7 @@ For help with endpoints and pagination, see [_Getting Started: Endpoints_](https
    </tbody>
 </table>
 
-## Fetch the current status of a Waiting Room
+## Fetch the current status of a waiting room
 
 <table style="width:100%">
     <thead>

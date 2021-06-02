@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: tutorial
 ---
 
-# Test a Waiting Room
+# Test a waiting room
 
 Follow this tutorial to ensure your Waiting Room queues and admits users as expected.
 
@@ -17,8 +17,8 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 
 Before you start this tutorial, ensure you have:
 - Fulfilled all the [prerequisites](../../about#prerequisites)
-- Previously [created a Waiting Room](../create-waiting-room)
-- If you [customized the design](../create-waiting-room/create-waiting-room-dashboard/customize-waiting-room) of your waiting room, updated the [sample script](#1-download-sample-script) to ensure it captures when a "simulated user" enters and is released from your waiting room
+- Previously [created a waiting room](/get-started)
+- Updated the [sample script](#1-download-sample-script) to ensure your waiting room captures when a "simulated user" enters and is released from your waiting room (if you [customized the design](/how-to/customize-waiting-room) of your waiting room)
 
 ---
 
@@ -96,9 +96,9 @@ Once the script finishes running, it creates a CSV file with the following field
         </ul>
         <li><strong>wait_time</strong>: Number of seconds the user waited in the waiting room</li>
        <li><strong>wr_cnt_before</strong>: Number of users in the waiting room when the session first started</li>
-       <li><strong>wr_cnt_after</strong>: Number of users in the waiting room when the session made it past the Waiting Room</li>
+       <li><strong>wr_cnt_after</strong>: Number of users in the waiting room when the session made it past the waiting room</li>
        <li><strong>start_time</strong>: Time when the session first started (in UNIX epoch seconds)</li>
-       <li><strong>end_time</strong>: Time when the session made it past the Waiting Room (in UNIX epoch seconds)</li>
+       <li><strong>end_time</strong>: Time when the session made it past the waiting room (in UNIX epoch seconds)</li>
     </ul>
 </div>
 </details>
@@ -109,6 +109,6 @@ To visualize your results, open your CSV file within a spreadsheet application. 
 
 In this example, you can clearly see when the script entered the second phase — with a reduced rate of new users per second — leading to decreased wait times.
 
-## 4. Adjust Waiting Room (optional)
+## 4. Adjust waiting room (optional)
 
-Based on the results of your test, you may want to adjust [the settings](../create-waiting-room/create-waiting-room-dashboard/configure-settings) of your Waiting Room.
+Based on the results of your test, you may want to adjust [the settings](/reference/configuration-settings) of your waiting room.

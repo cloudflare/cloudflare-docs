@@ -3,28 +3,32 @@ order: 1
 pcx-content-type: how-to
 ---
 
-# Customize a Waiting Room
+# Customize a waiting room
+
+<Aside>
+Only Project Fair Shot (and soon Enterprise) customers can customize their waiting rooms.
+</Aside>
 
 To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
 
 Cloudflare offers options to customize the appearance of your waiting room:
 * [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
 * [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
-  * You can edit the HTML content in a text box within the **Customization** page.
-  * Alternatively, you can import a HTML file.
+  - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
+  - Edit content directly in the dashboard or import relevant files.
 
 ## Default waiting room
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
 
-![Choose default waiting room](../../../static/default-form.png)
+![Choose default waiting room](../static/default-form.png)
 
 ## Custom waiting room
 
-To customize a waiting room, click **Custom Waiting Room**. A text box containing editable template text displays.
+To customize a waiting room, click **Custom Waiting Room**.
 
-![Choose custom waiting room](../../../static/custom-form.png)
+![Choose custom waiting room](../static/custom-form.png)
 
-You can edit the HTML code directly in the text box.
+You can edit the HTML code directly in the text box:
 
 * Click **Download Template** to download a HTML file containing the default template content to your computer.
 * Click **Download** to download a HTML file containing the text box content to your computer.
@@ -32,7 +36,7 @@ You can edit the HTML code directly in the text box.
 
 The template text contains [code to display the wait time](#display-wait-time). If you want to display the estimated wait time to visitors, do not delete this content.
 
-### Upload a Waiting Room HTML file
+### Upload an HTML file
 
 1. Click **Import** to upload a HTML file from your computer.
 1. Select the file in the dialog and click **Open**.
@@ -46,9 +50,13 @@ The following content in the `<main>` section of the template HTML code displays
 ```html
      <h2 id="time-remaining">
         <noscript>
-          {{#waitTimeKnown}}Your estimated wait time is {{waitTime}}
-          minutes...{{/waitTimeKnown}} {{^waitTimeKnown}}Your estimated wait
-          time is unavailable.{{/waitTimeKnown}}
+          {{#waitTimeKnown}}Your estimated wait time is
+          {{waitTimeFormatted}}...{{/waitTimeKnown}}
+          {{^waitTimeKnown}}{{#queueIsFull}}The estimated wait time is
+          greater than a day. You will automatically be placed in the
+          queue once space is available.{{/queueIsFull}}
+          {{^queueIsFull}}Your estimated wait time is
+          unavailable.{{/queueIsFull}}{{/waitTimeKnown}}
         </noscript>
      </h2>
 ```
@@ -91,10 +99,14 @@ When you create a waiting room with custom HTML, you can use the following varia
 
 ## Preview waiting room
 
-Click **Preview Waiting Room** to preview the waiting room.
-* Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is disabled.
-* Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
+To preview the appearance of a waiting room:
+1. In your application, go to **Traffic** > **Waiting Rooms**.
+1. Either [create a waiting room](../create-via-dashboard) or [edit an existing one](../edit-delete-waiting-room).
+1. Go to the **Review** step.
+1. Click **Preview Waiting Room**:
+  * Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
+  * Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
 
-## Next steps
+## Troubleshooting
 
-Click **Next** or the **Review** tab to review and save your waiting room.
+If you see something unexpected when previewing your waiting room, review your custom code for proper syntax. Often, you might forget to close each tag with its appropriate closing tag (the tag name with a `/`).
