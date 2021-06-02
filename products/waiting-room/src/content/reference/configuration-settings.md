@@ -54,7 +54,7 @@ The table below describes the **Settings** fields that you can configure in the 
       <td>New users per minute</td>
       <td><code>new_users_per_minute</code></td>
       <td>Yes</td>
-      <td>Not the rate of new users added, but a <a href="#new-users-per-minute">threshold</a> of users per minute that can be allowed into <code>host/path</code>, less than or equal to <code>total active users</code>. Must be greater than 200.</td>
+      <td>A <a href="#new-users-per-minute">threshold</a> of users per minute that can be allowed into <code>host/path</code>, greater than 200 and less than or equal to <strong>total active users</strong>.</td>
       <td>Set to 100% of peak traffic to ensure users are only queued when necessary</td>
     </tr>
     <tr>
