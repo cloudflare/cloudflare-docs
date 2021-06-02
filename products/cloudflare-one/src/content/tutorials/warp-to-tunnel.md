@@ -121,6 +121,9 @@ By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certai
 
 Navigate to the `Policies` page of the Gateway section in the Cloudflare for Teams dashboard. Click the **Settings** tab. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
+Also, **HTTP traffic filtering** needs to be enabled to let Cloudflare proxy your private IP ranges to corresponding Cloudflare Tunnels.
+
+
 ![Split Tunnel](../static/secure-origin-connections/warp-to-tunnel/split-tunnel.png)
 
 ## Connect via WARP
