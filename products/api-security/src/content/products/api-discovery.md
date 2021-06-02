@@ -37,6 +37,6 @@ This process currently requires a session identifier, like an authorization toke
 
 ## API requests
 
-To better understand your API traffic, you can also see [API requests](dash.cloudflare.com/?to=/:account/:zone/analytics/traffic/api-requests) in your application dashboard.
+To better understand your API traffic, you can also see [API requests](https://dash.cloudflare.com/?to=/:account/:zone/analytics/traffic/api-requests) in your application dashboard.
 
 This view adds a lightweight filter to application requests so you can better identify API traffic. If you want a more sophisticated understanding of API traffic, check out [Bot Tags](https://developers.cloudflare.com/bots/about/cloudflare-bot-tags).
