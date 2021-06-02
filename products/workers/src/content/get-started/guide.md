@@ -52,7 +52,7 @@ Now that Wrangler is installed, you'll need to give it an API Token for your Clo
 
 Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
 
-```bash
+```sh
 $ wrangler login
 Allow Wrangler to open a page in your browser? [y/n]
 y
