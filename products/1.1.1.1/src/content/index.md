@@ -3,11 +3,6 @@ order: -2
 type: overview
 ---
 
-<!-- import h1gif from "./static/1111-fancycolor.gif"
-import IndexH1 from "./index-h1.js"
-
-# <IndexH1 gif={h1gif} /> -->
-
 # Overview
 
 <br/>
