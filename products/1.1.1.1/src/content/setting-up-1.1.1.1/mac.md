@@ -6,6 +6,12 @@ order: 7
 
 Follow this quick guide to start using 1.1.1.1 on your Mac.
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 <StreamVideo id="b95943849d53350130ba22d039fa6faf"/>
 
 1. Go to **System Preferences**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Preferences`.

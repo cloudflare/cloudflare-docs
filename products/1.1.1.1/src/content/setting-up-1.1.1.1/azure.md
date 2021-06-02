@@ -6,6 +6,13 @@ order: 2
 
 Follow this quick guide to start using 1.1.1.1 on Microsoft  Azure.
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
+
 1. Log into your Azure portal.
 
 1. From the Azure portal side menu, select **Virtual Networks**.

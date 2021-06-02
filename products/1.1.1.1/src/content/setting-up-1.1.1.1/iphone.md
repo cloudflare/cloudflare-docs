@@ -6,6 +6,12 @@ order: 5
 
 Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 <StreamVideo id="ddf07732bc76fc854d4b1879eea2c517"/>
 
 1. Go to **Settings**.

@@ -8,6 +8,12 @@ Faster access to online games? ✌️✌️.
 
 Follow the instructions below to setup 1.1.1.1 on your gaming consoles.
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 ## PS4
 
 1. Go to **Settings**.

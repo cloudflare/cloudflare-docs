@@ -6,6 +6,12 @@ order: 6
 
 Follow this quick guide to start using 1.1.1.1 on your Linux device.
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 ## Ubuntu
 
 1. Click **System** > **Preferences** > **Network Connections**.

@@ -5,6 +5,13 @@ order: 8
 # Router
 
 Follow this quick guide to start using 1.1.1.1 on your router.
+
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 1. Go to the **IP address** used to access your router's admin console in your browser.
 
    - Linksys and Asus routers typically use [http://192.168.1.1](http://192.168.1.1)

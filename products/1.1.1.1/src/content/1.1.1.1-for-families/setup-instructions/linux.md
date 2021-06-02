@@ -4,6 +4,12 @@ order: 4
 
 # Linux setup instructions
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 ## Block malware
 
 ### Ubuntu

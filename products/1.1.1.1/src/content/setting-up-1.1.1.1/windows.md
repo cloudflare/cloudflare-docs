@@ -6,6 +6,12 @@ order:8
 
 Follow this quick guide to start using 1.1.1.1 on your Windows computer.
 
+<Aside>
+
+**Note:** Entering static IP addresses while setting up 1.1.1.1 may prevent you from connecting to some public Wi-Fi networks that use captive portals.
+
+</Aside>
+
 ## Windows 10
 
 <StreamVideo id="92b27227d737a866adc8b0572cf0db89"/>
