@@ -29,7 +29,7 @@ The following values may be present in the `BotTags` log field:
 
 ## Enable bot tags
 
-To enable bot tags, include the `BotTags` log field when using our [Logpush service](https://developers.cloudflare.com/logs/logpush).
+To enable bot tags, include the `BotTags` log field when using our [Logpush service](https://developers.cloudflare.com/logs/about).
 
 ## Current features
 
