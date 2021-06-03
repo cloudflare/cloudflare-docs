@@ -33,7 +33,7 @@ Once the service key is created and shared, anybody with the key can create a co
     -   **Rate Limit** -- The speed of your connection in Mbps, up to the maximum limit defined by the key.
     -   **Preferred A-End VLAN** -- Optionally, specify an unused VLAN ID for this connection. This must be a unique VLAN ID on this Megaport and can range from 2 to 4093. If you don't specify a value, Megaport will assign one.
 
-        (The B-End VLAN for the Cloudflare side termination will be automatically populated based on the service key.)
+        (The B-End VLAN for the Cloudflare side termination automatically populates based on the service key.)
 
 6.  Click **Next**. A summary page appears that includes the monthly cost. 
     
