@@ -33,7 +33,7 @@ If you can't find a Cloudflare port close to your infrastructure from your fabri
 
 ## Physical Interconnection
 
-Cloudflare  collaborates with data center providers to streamline the physical network interconnect provisioning process in our physical locations. The locations are below are available with our PNI partners.
+Cloudflare collaborates with data center providers to streamline the physical network interconnect provisioning process in our physical locations. The locations below are available with our PNI partners.
 
 Metro | Data Center
 ---------|----------
