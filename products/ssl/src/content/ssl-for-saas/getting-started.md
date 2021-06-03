@@ -73,7 +73,8 @@ Note that it’s possible to serve these HTTP records from your own web servers,
 
 Alternatively, you may also issue certificates to custom hostnames via the dashboard. 
 1. Navigate to **SSL/TLS** > **Custom Hostnames** and click **Add Custom Hostname**.
-1. Add your customer's hostname `app.customer.com` and set the relevant options. Click **Add Custom Hostname**.
+1. Add your customer's hostname `app.customer.com` and set the relevant options. 
+1. Click **Add Custom Hostname**.
 ![Add a custom hostname](..//static/ssl-for-saas-custom-hostname.png)
 1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” after a while. If you see an error stating “custom hostname does not CNAME to this zone”, you need to [set the DNS record at the customer's domain](#setting-cname-at-customer-domain).
 
