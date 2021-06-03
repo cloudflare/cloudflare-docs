@@ -7,17 +7,26 @@ order: 1
 
 Let’s say you have a web server for your domain that’s accessible on 203.0.113.10. You just signed up your domain, example.com, on Cloudflare and want to manage everything in Terraform.
 
-This tutorial step shows you how to get started. Before you do so, make sure you’ve [installed Terraform](/installing).
+This tutorial step shows you how to get started. Before you do so, make sure you’ve [installed Terraform](/installing). You will need to [create an API Token](https://developers.cloudflare.com/api/tokens/create) with permissions to edit resources for this tutorial.
 
 ## 1. Defining your first Terraform config file
 
 First we’ll create a initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As you configuration gets more complex you’ll want to split the config into separate files and modules, but for now we’ll proceed with a single file:
 
-```sh
+```bash
 $ cat > cloudflare.tf <<'EOF'
+terraform { 
+  required_providers {
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+      version = "~> 2.0"
+    }
+  }
+}
+
 provider "cloudflare" {
-  email   = "you@example.com"
-  api_key = "your-api-key"
+      email = "you@example.com"
+      api_token = "your-api-token"
 }
 
 variable "zone_id" {

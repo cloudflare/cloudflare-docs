@@ -32,137 +32,22 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-05-17
+                2021-06-01
             </td>
             <td>
-                2021-05-24
+                2021-06-07
             </td>
             <td>
-                Wordpress
+                Specials
             </td>
             <td>
-                WP0025D
+                100195
             </td>
             <td>
-                Improve Rule Performance
+               Microsoft HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2021-31166 
             </td>
             <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-05-24
-            </td>
-            <td>
-                Wordpress
-            </td>
-            <td>
-                WP0023
-            </td>
-            <td>
-                Improve Rule Performance
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-05-24
-            </td>
-            <td>
-                Wordpress
-            </td>
-            <td>
-                WP0026
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-05-24
-            </td>
-            <td>
-                Drupal
-            </td>
-            <td>
-                D0000
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-05-24
-            </td>
-            <td>
-                PHP
-            </td>
-            <td>
-                PHP100011
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-05-24
-            </td>
-            <td>
-                PHP
-            </td>
-            <td>
-                PHP100012
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
+                N/A
             </td>
             <td>
                 Block

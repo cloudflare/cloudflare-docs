@@ -16,7 +16,7 @@ Get started deploying your first site using our starter guide below, or check ou
 
 ## Popular pages
 
-- [Deploy a React application](/how-to/deploy-a-react-application)
+- [Deploy a React application](/framework-guides/deploy-a-react-application)
 - [Build configuration](/platform/build-configuration)
 
 --------------------------------

@@ -2,6 +2,8 @@
 order: 2
 ---
 
+import StaticRoutesApi from "../../_partials/_static-routes-api.md"
+
 # Assign tunnel route priorities
 
 Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data center(s).
@@ -66,3 +68,7 @@ For an example edge routing configuration, refer to this table:
     </tr>
   </tbody>
 </table>
+
+## Create and edit static routes
+
+<StaticRoutesApi/>
