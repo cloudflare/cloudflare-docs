@@ -27,7 +27,7 @@ You can read more about the partner program on our website. See
 
 <Aside type='note'>
 
-If you can't see a Cloudflare port in your fabric provider's dashboard that's close to your infrastructure, reach out to interconnection@cloudflare.com and request a port closer to your location under the _Interconnect Anywhere_ program.
+If you can't find a Cloudflare port close to your infrastructure from your fabric provider's dashboard, contact interconnection@cloudflare.com to request a port closer to your location under the _Interconnect Anywhere_ program.
 
 </Aside>
 
