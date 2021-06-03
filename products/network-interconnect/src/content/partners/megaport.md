@@ -39,4 +39,4 @@ Once the service key is created and shared, anybody with the key can create a co
     
 7. Click **Back** to make changes or click **Add VXC** to move this configuration to your cart. Once you have finished this configuration, you can configure additional VXCs or proceed through the checkout process.
 
-8. Cloudflare will accept the connection and your Account team will provide next steps with respect to network turn up and BGP session establishment.
+8. Cloudflare will accept the connection and your account team will contact you to establish the BGP session.

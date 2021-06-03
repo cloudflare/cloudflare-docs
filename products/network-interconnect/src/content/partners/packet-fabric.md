@@ -6,9 +6,11 @@ pcx-content-type: tutorial
 
 
 # PacketFabric Users
-
-1. [Video: how to create a connection to Cloudflare from PacketFabric ](https://packetfabric.wistia.com/medias/bx5ovz3xse)
-
-2. Cloudflare will then accept the connection in the PacketFabric dashboard
-
-3. Once accepted, your Cloudflare account team will contact you with next steps regarding BGP session establishment.
+1. From the PacketFabric dashboard, select **Marketplace**.
+1. In the Search bar, enter **Cloudflare**.
+1. Select Cloudflare as the provider.
+1. From **Choose a Location**, choose a location from the dropdown.
+1. Under **Select Source Port**, choose a port.
+1. Under **Select Virtual Circuit Speed**, choose a speed from the dropdown.
+1. Click **Place Order**.
+1. Click **Okay* in the Virtual Circuit Request Dispatched notice.
