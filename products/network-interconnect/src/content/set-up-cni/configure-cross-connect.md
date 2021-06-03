@@ -17,7 +17,7 @@ To configure the network cross-connect for physical links, Cloudflare generates 
 
 <Aside type='note'>
 
-You can review the physical interconnection locations on the [Partners](/partners#physical-interconnection) Page
+To review physical interconnection locations, see [Partners](/partners#physical-interconnection).
 
 </Aside>
 
