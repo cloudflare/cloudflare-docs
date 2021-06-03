@@ -83,7 +83,7 @@ Once domain validation has been completed, the certificates will be issued and d
 --------
 
 ## Setting CNAME at customer domain
-Your customer needs to set up a CNAME record at their DNS provider, pointing to your CNAME target configured in step 3 [above](#configure-zone-with-proxy-fallback-origin). For example:
+Your customer needs to set up a CNAME record at their DNS provider, pointing to your CNAME target configured in [a previous step](#configure-zone-with-proxy-fallback-origin). For example:
 ```txt
 app CNAME john.customers.saasprovider.com
 ```
