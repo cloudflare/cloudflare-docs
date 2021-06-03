@@ -15,7 +15,7 @@ The fallback origin is where the traffic of your Custom Hostnames will be routed
 1. Add a DNS record pointing to the origin IP address (fallback origin) for Cloudflare to send custom hostname traffic. This hostname is not provided to customers.  Name the hostname according to your naming convention.  For example: `proxy-fallback.saasprovider.com`.
 3. Set up an additional DNS CNAME record to serve as the CNAME target for your end customers. CNAME this record to your fallback origin and use a more user-friendly CNAME target for customers. This record can optionally be a wildcard, e.g. `*.customers.saasprovider.com`.
 ![Add a CNAME record](..//static/ssl-for-saas-dns.png)
-4. Upgrade your zone to an Enterprise plan, and contact your Customer Success Manager to enable SSL for SaaS Certificates.
+4. Upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**.
 5. Set the **Fallback Origin** via either the dashboard or API.
     * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined in step 2 above and click **Add**.
     ![Add a fallback origin on dashboard](..//static/ssl-for-saas-add-fallback.png)
