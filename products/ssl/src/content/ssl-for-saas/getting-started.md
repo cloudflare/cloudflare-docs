@@ -17,7 +17,7 @@ The fallback origin is where the traffic of your Custom Hostnames will be routed
 ![Add a CNAME record](..//static/ssl-for-saas-dns.png)
 4. Upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**.
 5. Set the **Fallback Origin** via either the dashboard or API.
-    * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined in step 2 above and click **Add**.
+    * Via the dashboard: Go to **SSL/TLS** > **Custom Hostnames**, add your fallback origin defined in step 2 above, and click **Add**.
     ![Add a fallback origin on dashboard](..//static/ssl-for-saas-add-fallback.png)
 
     * Via API: Retrieve your [Global API Key and Zone ID](#api-key-and-zone-id). Then, set the fallback origin via API (change `proxy-fallback.saasprovider.com` to the fallback origin record you configured in Cloudflare DNS):
