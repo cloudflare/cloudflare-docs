@@ -10,16 +10,13 @@ pcx-content-type: tutorial
 
 After you confirm the locations and speed with you account team, order the Equinix Fabric connections to Cloudlfare.
 
-1.  Navigate to <https://fabric.equinix.com/>
-1.  Choose I want to connect to **A Service Provider**
-![A Service Provider](../static/equinix-connect.png)
-1. Search for **Cloudflare** and click **Select**
-![Search for Cloudflare](../static/equinix-search.png)
-1. Choose **Magic Transit** or **Cloudflare NaaS** (if you are not sure, choose Cloudflare NaaS, we can configure any service using this) and click **Create Connection**
-1. Select your **Origin Port** and your desired Cloudflare **Destination Location** (_Note: if the location you want is not listed, contact your Cloudflare Account team to request a new location under the "Interconnect Anywhere" program_)
-![Search for Cloudflare](../static/equinix-source-and-destination.png)
-1. Select **Speed** and **VLAN ID**
-You can choose your own VLAN ID. Cloudlare will choose our own and Equinix Fabric will map between the two. If you'd like to use the same us, simply ask your account team for Cloudflare's VLAN ID and we will provide it.
-![Search for Cloudflare](../static/equinix-details.png)
-1. Click **Next** and then **Submit Order**
-1. Cloudflare will accept the connection and your Account team will provide next steps with respect to BGP session establishment.
+1. Navigate to <https://fabric.equinix.com/>
+1. Under **I want to connect to:**, choose **A Service Provider**.
+1. Under **Select a Service Provider**, search for **Cloudflare** and click **Select**.
+1. Choose **Magic Transit** or **Cloudflare NaaS**. If you're unsure, choose **Cloudflare NaaS** which can can be used to configure any service.
+1. Under **Origin** > **Connect Using**, choose your port.
+1. Under **Destination**, choose your location. If the location you want is not listed, contact your Cloudflare account team to request a new location under the Interconnect Anywhere program.
+1. Under **Connection Information** > **VLAN ID**, enter a VLAN ID. Cloudflare chooses its own VLAN ID and Equinix Fabric maps between the two. To use the same VLAN ID as Cloudflare, ask your account team for Cloudflare's VLAN ID and they will provide it.
+1. Click **Next** and then **Submit Order**.
+
+Cloudflare will accept the connection and your account team will contact you to establish the BGP session.
