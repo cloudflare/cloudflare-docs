@@ -6,9 +6,9 @@ pcx-content-type: tutorial
 
 # Equinix Users
 
-## Ordering an Equinix Fabric Connection
+## Order an Equinix Fabric Connection
 
-After confirming locations and speeds with their account teams, customers should order Equinix Fabric connections to Cloudlfare as follows
+After you confirm the locations and speed with you account team, order the Equinix Fabric connections to Cloudlfare.
 
 1.  Navigate to <https://fabric.equinix.com/>
 1.  Choose I want to connect to **A Service Provider**

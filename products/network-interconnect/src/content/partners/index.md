@@ -1,7 +1,7 @@
 ---
 title: Partners
 order: 4
-pcx-content-type: navigation
+pcx-content-type: reference
 ---
 
 # Partner Program
