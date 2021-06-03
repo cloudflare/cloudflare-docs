@@ -13,4 +13,5 @@ pcx-content-type: tutorial
 1. Under **Select Source Port**, choose a port.
 1. Under **Select Virtual Circuit Speed**, choose a speed from the dropdown.
 1. Click **Place Order**.
-1. Click **Okay* in the Virtual Circuit Request Dispatched notice.
+1. Click **Okay** in the Virtual Circuit Request Dispatched notice.
+1. Cloudflare will accept the connection and your account team will contact you to establish the BGP session.

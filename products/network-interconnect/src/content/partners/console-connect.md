@@ -22,6 +22,4 @@ pcx-content-type: tutorial
 
 5. Review Console Connect pricing and then submit
 
-![](../static/console-connect-pricing.png)
-
 6. Cloudflare will accept the connection and your Account Team will get in touch with next steps for BGP session establishment
