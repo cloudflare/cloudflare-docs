@@ -8,8 +8,6 @@ pcx-content-type: tutorial
 
 1. Click **+** to create a new connection.
 
-![](../static/console-connect-connections.png)
-
 2. Choose your **source port**
 
 ![](../static/console-connect-port.png)
