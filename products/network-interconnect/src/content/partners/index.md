@@ -8,7 +8,7 @@ pcx-content-type: navigation
 
 ## Virtual Private Interconnection
 
-Cloudflare partners with multiple network fabric providers to offer our customers as many connectivity options and locations as possible. During the [configuring the cross-connect](/set-up-cni/configure-cross-connect) step, you'll be directed to initiate a connection in the admin portal of your chosen provider
+Cloudflare partners with multiple network fabric providers to offer as many connectivity options and locations as possible. During the [configure the cross-connect](/set-up-cni/configure-cross-connect) step, you'll initiate a connection from your chosen provider's admin portal..
 
 <Aside type='note'>
 
