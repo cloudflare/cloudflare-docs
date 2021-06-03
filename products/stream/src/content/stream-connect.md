@@ -5,7 +5,7 @@ order: 5
 
 <Aside>
 
-Note: Stream Connect is currently in closed beta and will be available to all users in coming weeks. [Request an invite].(https://docs.google.com/forms/d/1rpRFKDTZTnh0LxysM2_Rky5pYt_rs9pUdSoJr_Ix2pk/edit).
+Note: Stream Connect is currently in closed beta and will be available to all users in coming weeks. [Request an invite](https://docs.google.com/forms/d/1rpRFKDTZTnh0LxysM2_Rky5pYt_rs9pUdSoJr_Ix2pk/edit).
 
 </Aside>
 
