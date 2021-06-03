@@ -89,7 +89,6 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT
 
 Use the URL and streamKey returned from input creation in your streaming software.
 
-TODO(zaid): obs example screenshots for a step-by-step?
 
 ## Limits
 
