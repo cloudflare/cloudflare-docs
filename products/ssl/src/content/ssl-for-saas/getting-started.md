@@ -8,7 +8,7 @@ pcx-content-type: tutorial
 --------
 
 ## Configure zone with proxy fallback origin
-The fallback origin is where the traffic of your Custom Hostnames will be routed to.  The fallback record is the value of the DNS record you set up via step 2 below.
+The fallback origin is where the traffic of your Custom Hostnames will be routed to.  The fallback record is the value of the DNS record you set up via step 2.
 
 1. Sign up your desired zone at [www.cloudflare.com](https://www.cloudflare.com) and select the Free plan.
 1. Click **DNS**.
