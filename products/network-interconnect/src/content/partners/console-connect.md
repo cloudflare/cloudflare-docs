@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Console Connect Users
 
-1. Click **+** to create a new connection
+1. Click **+** to create a new connection.
 
 ![](../static/console-connect-connections.png)
 
