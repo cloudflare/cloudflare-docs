@@ -76,7 +76,7 @@ Alternatively, you may also issue certificates to custom hostnames via the dashb
 1. Add your customer's hostname `app.customer.com` and set the relevant options. 
 1. Click **Add Custom Hostname**.
 ![Add a custom hostname](..//static/ssl-for-saas-custom-hostname.png)
-1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” after a while. If you see an error stating “custom hostname does not CNAME to this zone”, you need to [set the DNS record at the customer's domain](#setting-cname-at-customer-domain).
+1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” within 5 minutes. If you see an error stating “custom hostname does not CNAME to this zone”, you need to [set the DNS record at the customer's domain](#setting-cname-at-customer-domain).
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge. With a CNAME in place, the entire process—from validation to issuance to edge deployment—completes in approximately 90 seconds.
 
