@@ -48,7 +48,7 @@ Before proceeding, make sure that you’ve enabled Cloudflare Bot Management for
 
 The Cloudflare Bot Management Dashboard is already available in Elastic, Google Data Studio, Looker, Splunk, and Sumo Logic. If you use any of those platforms, you do not need to do anything else to view these existing dashboards.
 
-See the [Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations) and [Analyze log data with Google Cloud](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk)google-cloud/) sections for details.
+See the [Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations) and [Analyze log data with Google Cloud](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/google-cloud) sections for details.
 
 ### Viewing dashboards for other platforms
 
