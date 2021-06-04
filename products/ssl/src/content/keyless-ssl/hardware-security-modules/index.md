@@ -21,7 +21,7 @@ Moreover, many HSMs are also capable of generating keys, producing cryptographic
 
 The key server communicates with HSMs via PKCS#11, so any HSM supporting the standard can be used with Keyless SSL. We have verified interoperability with the following modules:
 
-* [Gemalto SafeNet Luna](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/fips-common-criteria-validations/)
+* [Gemalto SafeNet Luna](https://cpl.thalesgroup.com/compliance/fips-common-criteria-validations)
 * [SoftHSMv2](https://github.com/opendnssec/SoftHSMv2)
 * [Entrust nShield Connect](https://www.entrust.com/digital-security/hsm)
 * [YubiKey Neo](https://www.yubico.com/product/yubikey-neo/)
