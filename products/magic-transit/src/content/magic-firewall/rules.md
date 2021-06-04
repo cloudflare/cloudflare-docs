@@ -5,7 +5,7 @@ order:  2
 
 # Rules
 
-You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](https://api.cloudflare.com/#account-rulesets-properties). If you're a new Magic Transit customer, you may not have a root ruleset created for your account.
+You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](https://api.cloudflare.com/#account-rulesets-properties). If you are a new Magic Transit customer, you may not have a root ruleset created for your account.
 
 To view examples for root rulesets, review the the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
 
@@ -25,7 +25,7 @@ To update a rule:
 
 1. From your dashboard, click **Firewall Rulesets**.
 1. Click **Magic Firewall**. A list of firewall rules displays.
-1. Locate the rule you'd like to edit and click **Edit**.
+1. Locate the rule you want to edit and click **Edit**.
 1. Update the rule with your changes and click **Edit rule**.
 
 ## Delete an existing rule
