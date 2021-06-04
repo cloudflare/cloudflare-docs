@@ -31,7 +31,7 @@ To create an Origin CA certificate in the dashboard:
 1. Click **Next**.
 1. Choose the **Key Format**:
     - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
-    - Servers using Windows and Apache Tomcat require PKCS#7.
+    - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
 1. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
 1. Click **OK**. 
 
