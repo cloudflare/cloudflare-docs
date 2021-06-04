@@ -319,7 +319,7 @@ Note how the URI maps to the elements of the MessageMAC:
 - _timestamp_: `1484063787`
 - _mac_: `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
-When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Simply pass the name of the field to the _MessageMAC_ argument:
+When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the _MessageMAC_ argument:
 
 ```java
 is_timed_hmac_valid_v0(
