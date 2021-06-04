@@ -24,7 +24,7 @@ Private network interconnects can range from 10G to 100G. The smallest compatibl
 
 ## Virtual private network interconnect
 
-Cloudflare partners with Equinix, Megaport, PCCW ConsoleConnect, PacketFabric, and Zayo to provide virtual private network interconnects (vPNI) that easily connect you with Cloudflare at any of our interconnection platform locations. For more information about our partner program, see [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
+Cloudflare partners with Equinix, Megaport, Console Connect, PacketFabric, Coresite, Epsilon and Zayo to provide virtual private network interconnects (vPNI) that easily connect you with Cloudflare at any of our interconnection platform locations. For more information about our partner program, see [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
 
 Choose a vPNI when you are already using our partner providers or when you want a quick and easy way to onboard a secure cloud experience.
 
