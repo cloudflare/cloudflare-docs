@@ -40,7 +40,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 - <code>all(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
 
-  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
   - <em>Example:</em><br />
 
