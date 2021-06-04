@@ -39,27 +39,27 @@ The Firewall fields contain rules managed by Cloudflare to block requests that c
 
 <TableWrap>
 
-| Value | Action | Description |
-|---|---|---|
-| <em><span style="font-weight: 400;">unknown</span></em> | Unknown | Take no other action |
-| <em><span style="font-weight: 400;">asn</span></em> | Allow | Bypass all subsequent WAF rules |
-| <em><span style="font-weight: 400;">country</span></em> | Drop | Block with an HTTP 403 response |
-| <em><span style="font-weight: 400;">ip</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
-| <em><span style="font-weight: 400;">ipRange</span></em> | Challenge Drop | Unused |
-| <em><span style="font-weight: 400;">securityLevel</span></em> | Simulate | Take no action other than logging the event |
-| <em><span style="font-weight: 400;">zoneLockdown</span></em> | Unknown | Take no other action |
-| <em><span style="font-weight: 400;">waf</span></em> | Allow | Bypass all subsequent WAF rules |
-| <em><span style="font-weight: 400;">firewallRules</span></em> | Drop | Block with an HTTP 403 response |
-| <em><span style="font-weight: 400;">uaBlock</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
-| <em><span style="font-weight: 400;">rateLimit</span></em> | Challenge Drop | Unused |
-| <em><span style="font-weight: 400;">bic</span></em> | Simulate | Take no action other than logging the event |
-| <em><span style="font-weight: 400;">hot</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
+| Value | Description |
+|---|---|
+| <em><span style="font-weight: 400;">unknown</span></em> | Take no other action |
+| <em><span style="font-weight: 400;">asn</span></em> | Allow or block based on autonomous system number |
+| <em><span style="font-weight: 400;">country</span></em> | Allow or block based on country |
+| <em><span style="font-weight: 400;">ip</span></em> | Allow or block based on IP address |
+| <em><span style="font-weight: 400;">ipRange</span></em> | Allow or block based on range of IP addresses |
+| <em><span style="font-weight: 400;">securityLevel</span></em> | Allow or block based on requester's security level |
+| <em><span style="font-weight: 400;">zoneLockdown</span></em> | Restrict all access to a specific zone |
+| <em><span style="font-weight: 400;">waf</span></em> |  |
+| <em><span style="font-weight: 400;">firewallRules</span></em> |  |
+| <em><span style="font-weight: 400;">uaBlock</span></em> |  |
+| <em><span style="font-weight: 400;">rateLimit</span></em> |  |
+| <em><span style="font-weight: 400;">bic</span></em> |  |
+| <em><span style="font-weight: 400;">hot</span></em> |  |
 | <em><span style="font-weight: 400;">l7ddos</span></em> | Challenge Drop | Unused |
-| <em><span style="font-weight: 400;">validation</span></em> | Simulate | Take no action other than logging the event |
-| <em><span style="font-weight: 400;">botFight</span></em> | Unknown | Take no other action |
-| <em><span style="font-weight: 400;">botManagement</span></em> | Allow | Bypass all subsequent WAF rules |
-| <em><span style="font-weight: 400;">dlp</span></em> | Drop | Block with an HTTP 403 response |
-| <em><span style="font-weight: 400;">firewallManaged</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
-| <em><span style="font-weight: 400;">firewallCustom</span></em> | Challenge Drop | Unused |
+| <em><span style="font-weight: 400;">validation</span></em> |  |
+| <em><span style="font-weight: 400;">botFight</span></em> |  |
+| <em><span style="font-weight: 400;">botManagement</span></em> |  |
+| <em><span style="font-weight: 400;">dlp</span></em> |  |
+| <em><span style="font-weight: 400;">firewallManaged</span></em> |  |
+| <em><span style="font-weight: 400;">firewallCustom</span></em> |  |
 
 </TableWrap>
