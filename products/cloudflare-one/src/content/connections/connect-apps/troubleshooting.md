@@ -9,7 +9,7 @@ pcx-content-type: faq
 1. On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
 1. If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
 
-![SSL encryption mode](../../../static/documentation/connections/ssl-encryption-mode.png)
+![SSL encryption mode](../../static/documentation/connections/ssl-encryption-mode.png)
 
 When the encryption mode is set to **Off (not secure)**, there are connection issues sometimes.
 
