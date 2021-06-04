@@ -15,6 +15,12 @@ To configure the network cross-connect for physical links, Cloudflare generates 
 * Order cross-connects at the locations the LOA specifies.
 * Verify when the cross-connects are complete.
 
+<Aside type='note'>
+
+To review physical interconnection locations, see [Partners](/partners#physical-interconnection).
+
+</Aside>
+
 ## Virtual Links
 
 To configure the network cross-connect for virtual links, you must create a request from the partner dashboard. Cloudflare will then review and accept the request.
@@ -27,26 +33,12 @@ For more information, see the [Cloudflare Network Interconnect Partner Program](
 
 </Aside>
 
-### Equinix Users
+### Follow your partner's instructions below
 
-Equinix uses a request-based model, which means Equinix users must make a request for a connection to Cloudflare, and Cloudflare will accept and provision the connection. In this scenario, VLAN is not necessary because every user has a specific VLAN that does not require mapping to Cloudflare's VLAN.
-
-1. Open your Equinix dashboard.
-1. Select Cloudflare as the service provider.
-1. Select your port, Cloudflare port, and port speed.
-1. Select your VLANID.
-1. Submit the connection for Cloudflare approval.
-
-![Equinix from Cloudflare's perspective](../static/equinix-cloudflare.png)
-
-The image above shows the Equinix network interconnect from Cloudflare's perspective.
-
-![Equinix from user perspective](../static/equinix-customer.png)
-
-The image above shows the Equinix network interconnect from a user's perspective.
-
-### Megaport Users
-
-Cloudflare provides you with a service key to provision the connection. The service key contains all of the necessary information to provision the connection, including the connection size, location, and VLAN.
-
-After you provide verification, Cloudflare assigns IP addresses to use with the cross-connect.
+* [Console Connect](/partners/console-connect)
+* [Equinix Fabric](/partners/equinix-fabric)
+* [Megaport](/partners/megaport)
+* [PacketFabric](/partners/packet-fabric)
+* CoreSite OCX (_coming soon_)
+* Epsilon Infiny (_coming soon_)
+* Zayo (_coming soon_)

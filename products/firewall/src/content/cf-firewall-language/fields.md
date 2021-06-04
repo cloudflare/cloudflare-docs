@@ -98,7 +98,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">1484063137</code>
          </p>
-         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v()</code> <a href="/cf-firewall-language/functions/#hmac-validation">validation function</a>.
+         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/cf-firewall-language/functions/#hmac-validation">validation function</a>.
          </p>
       </td>
    </tr>

@@ -24,7 +24,7 @@ Before you create your waiting room, think about how you want it to appear and o
 
 Which page will you cover with a waiting room? You can only have one waiting room per page, so you need to identify the high-traffic areas of your website.
 
-Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/how-to/configuration-settings).
+Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/reference/configuration-settings).
 
 ### Access
 
