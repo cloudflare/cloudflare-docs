@@ -161,12 +161,6 @@ The `concat()` and `regex_replace()` functions can appear only **once** in a rew
 
 ## HTTP request header modification examples
 
-<Aside type="note">
-
-HTTP Request Header Modification Rules are available in Beta.
-
-</Aside>
-
 The following examples illustrate how to perform header modifications with Transform Rules:
 
 * [Add an HTTP request header with a static value](#add-an-http-request-header-with-a-static-value)
@@ -226,7 +220,7 @@ starts_with(http.request.uri.path, "/private/")
 ```
 
 Selected operation under **Modify header**: _Remove_
- 
+
 **Header name**: `cf-connecting-ip`
 
 </Example>
