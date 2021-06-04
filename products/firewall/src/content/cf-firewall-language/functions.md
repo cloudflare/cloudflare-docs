@@ -40,7 +40,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 - <code>all(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
 
-  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
   - <em>Example:</em><br />
 
@@ -62,7 +62,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
     `ends_with("/welcome.html", ".html") == true`
 
     <Aside type='warning'>
-    
+
     **Warning:** You can only use the `ends_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
@@ -108,7 +108,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
     `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
     <Aside type='warning'>
-    
+
     **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
 
     </Aside>
@@ -129,7 +129,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
     `starts_with("/blog/first-post", "/blog") == true`
 
     <Aside type='warning'>
-    
+
     **Warning:** You can only use the `starts_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
@@ -165,7 +165,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     - <code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode to space characters <code class="InlineCode"> </code>
 
-    - <code class="InlineCode">%E4%BD</code> decodes to  <code class="InlineCode">ä½ </code>
+    - <code class="InlineCode">%E4%BD</code> decodes to <code class="InlineCode">ä½ </code>
 
   - <em>Example:</em><br />
 
@@ -177,9 +177,9 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 - <code>bit_slice(<Type>String</Type>, <Type>Number</Type>, <Type>Number</Type>)</code> <Type>Number</Type>
 
-  - Select a slice of contiguous bits from a string field.  This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
+  - Select a slice of contiguous bits from a string field. This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
   - The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
-  - Use of structure fields is preferred over this mechanism. 
+  - Use of structure fields is preferred over this mechanism.
 
 ## HMAC validation
 
@@ -195,12 +195,12 @@ You can validate hash-based message authentication code (HMAC) tokens in a Firew
 
 ```java
 is_timed_hmac_valid_v0(
-   <String literal as Key>,
-   <String field as MessageMAC>,
-   <Integer literal as ttl>,
-   <Integer as currentTimeStamp>,
-   <Optional Integer literal as lengthOfSeperator, default: 0>,
-   <Optional String literal as flags>
+  <String literal as Key>,
+  <String field as MessageMAC>,
+  <Integer literal as ttl>,
+  <Integer as currentTimeStamp>,
+  <Optional Integer literal as lengthOfSeparator, default: 0>,
+  <Optional String literal as flags>
 ) -> <Bool as result>
 ```
 
@@ -230,9 +230,9 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - _flags_ <Type>String literal</Type> <PropMeta>optional</PropMeta>
 
-  -  When you set this optional argument to `` `s` ``, the function expects the value of the base64-encoded _mac_ in the _MessageMAC_ argument to use the URL-safe character set with no padding.
+  - When you set this optional argument to `'s'`, the function expects the value of the base64-encoded _mac_ in the _MessageMAC_ argument to use the URL-safe character set with no padding.
 
-  -  When you do **not** set the value of _flags_ to `'s'`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+  - When you do **not** set the value of _flags_ to `'s'`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 </Definitions>
 
@@ -285,26 +285,26 @@ and is composed of these parentheses-delimited expressions:
     </tr>
     <tr>
       <td valign="top"><code>(.{'{43,}'})</code></td>
-      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">s</code>, you must URL encode the base64 value for <em>mac</em>.</p>
-      <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em>contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
+      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">'s'</code>, you must URL encode the base64 value for <em>mac</em>.</p>
+      <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em> contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
       <td valign="top"><code class="InlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
     </tr>
   </tbody>
 </table>
 
-For details on generating a MessageMAC, see [_Implement token creation_](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#6P9Gz7kmyxQrpL6r6iPKQR)
+For details on generating a MessageMAC, see [_Implement token creation_](https://support.cloudflare.com/hc/articles/115001376488#6P9Gz7kmyxQrpL6r6iPKQR).
 
 ## HMAC validation examples
 
 <Aside type='warning' header='Important'>
 
-When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+When you do not use the optional _flags_ argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more information, see [HMAC Validation: Overview](#overview).
 
 </Aside>
 
-#### Simple case
+### Simple case
 
 Consider the case where the MessageMAC is contained entirely within a single field, as in this example URI path:
 
@@ -312,26 +312,26 @@ Consider the case where the MessageMAC is contained entirely within a single fie
 /download/cat.jpg?verify=1484063787-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D
 ```
 
-Note how the URI maps to the elements of the MessageMac:
+Note how the URI maps to the elements of the MessageMAC:
 
 - _message_: `/download/cat.jpg`
 - _separator_: `?verify=`
 - _timestamp_: `1484063787`
 - _mac_: `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
-When the MessageMac is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Simply pass the name of the field to the _MessageMAC_ argument:
+When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the _MessageMAC_ argument:
 
 ```java
 is_timed_hmac_valid_v0(
-    "mysecretkey",
-    http.request.uri,
-    100000,
-    http.request.timestamp.sec,
-    8
+  "mysecretkey",
+  http.request.uri,
+  100000,
+  http.request.timestamp.sec,
+  8
 )
 ```
 
-#### Concatenated MessageMAC argument
+### Concatenated MessageMAC argument
 
 To compose a MessageMAC from more than one field, use the `concat()` function.
 
@@ -339,15 +339,15 @@ This example constructs the MessageMAC by concatenating the request URI and two 
 
 ```java
 is_timed_hmac_valid_v0(
-    "mysecretkey",
-    concat(
-        http.request.uri,
-        http.request.headers["timestamp"][0],
-        "-",
-        http.request.headers["mac"][0]),
-    100000,
-    http.request.timestamp.sec,
-    0
+  "mysecretkey",
+  concat(
+    http.request.uri,
+    http.request.headers["timestamp"][0],
+    "-",
+    http.request.headers["mac"][0]),
+  100000,
+  http.request.timestamp.sec,
+  0
 )
 ```
 
