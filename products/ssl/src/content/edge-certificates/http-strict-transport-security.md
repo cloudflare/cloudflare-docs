@@ -25,12 +25,12 @@ For more background information on HSTS, see the <a href="https://blog.cloudflar
 ## Requirements
 
 In order for HSTS to work as expected, you need to:
-- Have enabled HTTPS before HSTS (otherwise, browsers cannot accept your HSTS settings).
-- Keep HTTPS enabled (otherwise, visitors cannot access your site).
+- Have enabled HTTPS before HSTS so browsers can accept your HSTS settings
+- Keep HTTPS enabled so visitors can access your site
 
-These requirements mean that — once you enabled HSTS — you need to avoid the following actions on your site:
+Once you enabled HSTS, avoid the following actions to ensure visitors can still access your site:
 - Changing your DNS records from [Proxied to DNS only](https://support.cloudflare.com/hc/articles/200169626)
-- [Pausing Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753)
+- [Pausing Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753) on your site
 - Pointing your nameservers away from Cloudflare
 - Redirecting HTTPS to HTTP
 - Disabling SSL (invalid or expired certificates or certificates with mismatched host names)
