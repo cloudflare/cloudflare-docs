@@ -140,12 +140,6 @@ The `fetch()` method of a Durable Object namespace is called by the system when 
 
 The method takes a [`Request`](/runtime-apis/request) as the parameter, and returns a [`Response`](/runtime-apis/response) (or a `Promise` for a `Response`).
 
-<Aside>
-
-  `request.cf` is currently not available within a Durable Object's `fetch()` handler.
-
-</Aside>
-
 If the method fails with an uncaught exception, the exception will be thrown into the calling worker that made the `fetch()` request.
 
 --------------------------------
