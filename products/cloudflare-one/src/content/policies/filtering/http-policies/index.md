@@ -71,7 +71,7 @@ If you would like to isolate an **entire domain name**, you can use a regular ex
 
 | Selector | Operator | Value | Action |
 | - | - | - | - |
-| Host | matches regex | `example\.com|.*\.example\.com` | Isolate
+| Host | matches regex | `example\.com\|.*\.example\.com` | Isolate
 
 <Aside type='note' header='Isolate identity providers for applications'>
 
