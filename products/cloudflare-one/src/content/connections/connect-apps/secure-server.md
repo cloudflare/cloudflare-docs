@@ -51,7 +51,7 @@ Be very careful with the following command because if you didn't preserve the cu
 $ sudo iptables -A INPUT -j DROP
 ```
 
-6. After setting the firewall rules, use this command to check the current iptables settings:
+6. After setting the firewall rules, use this command to check the current `iptables` settings:
 ```sh
 $ sudo iptables -L
 ```

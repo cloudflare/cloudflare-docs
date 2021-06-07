@@ -85,7 +85,7 @@ To set up SAML with Okta as your identity provider:
    * **IdP Entity ID**: Enter the IdP issuer.
    * **Signing Certificate**: Copy the certificate from Okta in **X.509 Certificate** between **Begin Certificate** and **End Certificate**.
 
-1. Under **Optional configurations**, enter the name “email” as your email attribute.
+1. Under **Optional configurations**, enter the name “email” as your SAML attribute.
 
 1. Click **Save**.
 
