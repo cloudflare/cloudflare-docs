@@ -4,9 +4,9 @@ order: 2
 
 # Locations
 
-<Aside type="Warning">
+<Aside type="Warning" header="Warning">
 
-Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to some public Wi-Fi networks that use captive portals.
+Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/connections/connect-devices/warp) to connect your devices to Teams.
 
 </Aside>
 
@@ -62,7 +62,7 @@ When trying to configure a location over IPv4, you may run into this error:
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
-If you think someone else is wrongfully using this IPv4 address, please [let us know](https://forms.gle/MUtjTheQh24MRY2aA).
+If you think someone else is wrongfully using this IPv4 address, please [let us know](https://forms.gle/o9dLMjmCg6QtaDJ88).
 
 </Aside>
 

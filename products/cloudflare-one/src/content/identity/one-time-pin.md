@@ -2,7 +2,7 @@
 order: 1
 ---
 
-# OTP login
+# One-time PIN login
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to use their own authentication method.
 
@@ -14,7 +14,7 @@ To set up OTP to allow guest-user access, you simply add the guest user's email 
 
 This is the workflow for your guest user:
 
-1. When logging in to your application, they will select OTP.
+1. When logging in to your application, they will select **OTP**.
 1. Then, they will enter their email address and click **Send me a code**.
 
     ![Login page](../static/documentation/identity/otp/otp1.png)
