@@ -7,7 +7,7 @@ order: 1
 ## Android 9 Pie or later
 
 Android Pie or later supports Private DNS, which uses DNS over TLS to secure your queries.
-If your device runs Android from version 9 and up, this is the recommended method to set up 1.1.1.1 because unlike previous versions
+If your device runs Android version 9 or later, this is the recommended method to set up 1.1.1.1 because unlike previous versions
 of Android, it does not need to be configured for each new Wi-Fi network.
 
 Follow these steps to configure your device to use 1.1.1.1.
