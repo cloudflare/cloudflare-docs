@@ -4,12 +4,6 @@ order: 1
 
 # DNS over HTTPS
 
-<Aside type="Warning">
-
-Enrolling devices using static IP addresses may prevent users from connecting to some public Wi-Fi networks that use captive portals.
-
-</Aside>
-
 ## Browser
 
 ### Firefox
