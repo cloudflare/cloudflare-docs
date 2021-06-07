@@ -108,14 +108,15 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 - `https://support.example.com` Use an https:// link to open your companies internal help site.
 - `mailto://yoursupport@example.com`  Use a mailto:// link to open your default mail client.
 
-## Service Token based authentication
-Instead of requiring users to authenticate with their credential, you can deploy the client with a pre-generated [Service Token](/identity/service-auth/service-tokens).
+## Authentication with service tokens
 
 <Aside> 
   Devices that connect to Cloudflare for Teams with Service Token authentication are not subject to identity based rules.
 </Aside>
 
-Both a `auth_client_id` and `auth_client_secret` are required when using this authentication mechanism. 
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/identity/service-auth/service-tokens).
+
+Both a `auth_client_id` and `auth_client_secret` are required when using this authentication method. 
 
 
 ### `auth_client_id`
