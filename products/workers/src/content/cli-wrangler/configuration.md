@@ -385,10 +385,9 @@ Cloudflare Workers now supports uploading scripts as a collection of modules, in
 import html from './index.html'
 
 export default {
-  // request is almost the same as `event.request` from the service worker format, except for:
-  // * waitUntil() and passThroughOnException() are accessible from ctx instead
-  // * request.cf is currently not available
-  // env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
+  // * request is the same as `event.request` from the service worker format
+  // * waitUntil() and passThroughOnException() are accessible from `ctx` instead of `event` from the service worker format
+  // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
   // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
     const headers = { 'Content-Type': 'text/html;charset=UTF-8' }
