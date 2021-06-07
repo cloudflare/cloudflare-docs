@@ -84,8 +84,7 @@ This table outlines the Transform Rules features available with each customer pl
 
 Feature                                       | Free | Pro | Business | Enterprise
 ----------------------------------------------|------|-----|----------|-----------
-Active URL Rewrite Rules                      | 2    | 5   | 10       | 20
-Active HTTP Request Header Modification Rules | 2    | 5   | 10       | 20
+Active Transform Rules                        | 2    | 5   | 10       | 20
 Regular expression support                    | No   | No  | Yes      | Yes
 
 </TableWrap>
