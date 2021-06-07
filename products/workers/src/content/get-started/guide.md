@@ -36,6 +36,12 @@ To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have
 ```sh
 $ npm install -g @cloudflare/wrangler
 ```
+or install with yarn:
+
+```sh
+$ yarn global add @cloudflare/wrangler
+```
+If you are having permission issues, note that Node can be installed via a version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm).
 
 Then run `wrangler --version` to confirm that the installation was successful:
 
