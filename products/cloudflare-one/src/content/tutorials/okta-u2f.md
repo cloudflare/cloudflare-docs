@@ -31,7 +31,7 @@ Before you begin, you'll need to follow [these instructions](/setup) to set up C
 
 ## Integrate Okta
 
-Follow [these instructions](https://developers.cloudflare.com/access/authentication/configuring-identity-providers/okta) to integrate Okta with your Cloudflare Access account.
+Follow [these instructions](https://developers.cloudflare.com/access/authentication/configuring-identity-providers/okta) to integrate Okta with your Cloudflare Access account. Once integrated, Access will be able to apply rules using identity, group membership, and multifactor method from Okta.
 
 ## Configure Okta for U2F
 
@@ -45,11 +45,11 @@ You can begin building U2F policies by testing your Okta integration. Navigate t
 
 Cloudflare Access will prompt you to login with your Okta account. For the purposes of the test, use a second factor option like an app-based code. Okta will return `amr` values to Cloudflare Access - these are standard indicators of multifactor methods shared between identity control systems.
 
-Since you used an app-based code, you will see `otp` in addition to `mfa` (you used an MFA option) and `pwd` (you logged in with a password).
+The `mfa` value is sent by Okta to tell Cloudflare Access that you used a multifactor authentication option. The `pwd` value indicates you used a password. In this example, the `otp` value is sent because the user authenticatd with an app-based code.
 
 ![Test MFA](../static/zero-trust-security/require-yubikey/with-mfa.png)
 
-Log out of Okta and return to the list of providers in Access. Click **Test** again, but this time use your hardware key as a second factor. Cloudflare Access will now see Okta share `hwk` in the `amr` fields.
+You can test with a hardkey by logging out of Okta and returning to the list of providers in Access. Click **Test** again, but this time use your hardware key as a second factor. Cloudflare Access will now see Okta share `hwk` in the `amr` fields.
 
 ![Test MFA](../static/zero-trust-security/require-yubikey/with-hwk.png)
 
