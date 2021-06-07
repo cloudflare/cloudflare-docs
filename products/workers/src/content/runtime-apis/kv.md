@@ -45,6 +45,8 @@ await NAMESPACE.put(key, value)
   - `key` <Type>string</Type>
     - The key to associate with the value
 
+A key cannot be empty, `.` or `..`. All other keys are valid.
+
   - `value` <Type>string</Type> | <Type>ReadableStream</Type> | <Type>ArrayBuffer</Type>
     -  The value to store. The type is inferred.
 
