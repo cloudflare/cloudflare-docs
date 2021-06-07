@@ -22,23 +22,23 @@ If you host your services on a Virtual Machine (VM) instance by a Cloud provider
 Alternatively, you may also use operating system (OS)-level firewall rules to disallow all ingress traffic and allow only egress traffic. For example, if your server runs on Linux, you may use `iptables` to set up firewall rules. Most Linux distributions are pre-installed with `iptables`. Note that in the example below, not all ingress traffic is blocked, just in case that the server is hosted on the Cloud and there would be no way to SSH back into the system again if the settings were configured wrongly.
 
 1. Check your current firewall rules.
-```bash
-sudo iptables -L
+```sh
+$ sudo iptables -L
 ```
 
 2. Allow `localhost` to communicate with itself.
-```bash
-sudo iptables -A INPUT -i lo -j ACCEPT
+```sh
+$ sudo iptables -A INPUT -i lo -j ACCEPT
 ```
 
 3. Allow already established connection and related traffic.
-```bash
-sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```sh
+$ sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 ```
 
 4. Allow new SSH connections.
-```bash
-sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
+```sh
+$ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
 ```
 
 5. Drop all other ingress traffic.
@@ -47,13 +47,13 @@ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
 Be very careful with the following command because if you didn't preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
 </Aside>
 
-```bash
-sudo iptables -A INPUT -j DROP
+```sh
+$ sudo iptables -A INPUT -j DROP
 ```
 
 6. After setting the firewall rules, use this command to check the current iptables settings:
-```bash
-sudo iptables -L
+```sh
+$ sudo iptables -L
 ```
 
 Run your Tunnel and check that all the services specified in `config.yml` should still be accessible to the outside world via the Tunnel, but not via the external IP address of the server. 
