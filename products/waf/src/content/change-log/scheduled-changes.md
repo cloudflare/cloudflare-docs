@@ -32,29 +32,6 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-06-01
-            </td>
-            <td>
-                2021-06-07
-            </td>
-            <td>
-                Specials
-            </td>
-            <td>
-                100195
-            </td>
-            <td>
-               Microsoft HTTP Protocol Stack Remote Code Execution Vulnerability CVE-2021-31166 
-            </td>
-            <td>
-                N/A
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
                 2021-06-07
             </td>
             <td>
