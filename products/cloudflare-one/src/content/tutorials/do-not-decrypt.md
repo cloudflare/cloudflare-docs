@@ -6,9 +6,11 @@ difficulty: Beginner
 
 # Skip inspection for groups of applications
 
-Some common applications and resources, like endpoints used by Zoom or Apple, rely on certificate pinning. The TLS inspection performed by a service like Cloudflare Gatway will cause errors when users visit those applications.
+You can configure Cloudflare for Teams to skip inspection for certain groups of applications.
 
-Cloudflare for Teams has compiled a list of resources that rely on this mechanism and you can use this list to quickly exclude these endpoints from inspection. You can also use this same workflow to exclude any application from Cloudflare Gateway's inspection.
+By default, Cloudflare Gateway creates a rule that includes the hostnames used by certain client applications, like Zoom or Apple's services, that rely on certificate pinning. The TLS inspection performed by a service like Cloudflare Gatway will cause errors when users visit those applications.
+
+This tutorial skips inspection for additional appilcations beyond those in the list curated by Cloudflare.
 
 **🗺️ This walkthrough covers how to:**
 
@@ -30,13 +32,13 @@ Navigate to the **HTTP** tab of the `Policies` page in Cloudflare Gateway. Click
 
 ![Starter List](../static/secure-web-gateway/exempt-cert-pinning/starter-list.png)
 
-Under **Selector** choose **Application**. Select **in** in the **Operator field**. For value, type "Do Not Decrypt" or scroll to that section. Select the top-level "Do Not Decrypt" item.
+Name the policy and, optionally, provide a description.
 
-![Selctor](../static/secure-web-gateway/exempt-cert-pinning/select-do-not.png)
+![Name Policy](../static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
 
-Cloudflare Gateway will automatically include all of the endpoints known to perform certificate pinning. However, this list does not mean that all of Google will be excluded from inspection for example - only those resources within Google that perform certificate pinning.
+Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
 
-![Choose](../static/secure-web-gateway/exempt-cert-pinning/do-not-selected.png)
+![Selctor](../static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
 
 Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
 
@@ -44,6 +46,10 @@ Scroll to the bottom of the page and select **Do Not Inspect** and click **Creat
 
 ## Change rule precedence
 
-New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom. We recommend dragging the **Do Not Inspect** rule to the top of the list so that it always applies first.
+New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for do-not-inspect rules. Those are always evaluated first.
 
-![Rule Order](../static/secure-web-gateway/exempt-cert-pinning/rule-precedence.png)
+![Rule Order](../static/secure-web-gateway/exempt-cert-pinning/rules-first.png)
+
+We do recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
+
+![Rule Order](../static/secure-web-gateway/exempt-cert-pinning/rules-last.png)
