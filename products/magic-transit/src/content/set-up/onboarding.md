@@ -53,7 +53,7 @@ You control the edge router advertisement, which dictates whether Cloudflare’s
 
 It is critical that you put the appropriate MSS clamps in place before routing changes are made. Failure to apply an MSS clamp may result in dropped packets and hard-to-debug connectivity issues.
 
-When using [Cloudflare Network Interconnect](/network-interconnect/) with Magic Transit, you must set the MSS clamp size to 1332 bytes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the colocation facility where traffic is ingested (close to the end user) to the facility with the CNI link.
+When using [Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/) with Magic Transit, you must set the MSS clamp size to 1332 bytes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the colocation facility where traffic is ingested (close to the end user) to the facility with the CNI link.
 
 </Aside>
 
