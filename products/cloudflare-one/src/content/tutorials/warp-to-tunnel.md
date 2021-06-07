@@ -117,7 +117,7 @@ This example runs it from the command-line but we recommend running `cloudflared
 
 <Aside>
 
-Make sure **HTTP traffic filtering** is enabled. This enables Cloudflare to proxy your private IP ranges to corresponding Cloudflare Tunnels.
+Make sure **HTTP traffic filtering** is enabled. This lets Cloudflare proxy your private IP ranges to corresponding Cloudflare Tunnels.
 
 </Aside>
 
