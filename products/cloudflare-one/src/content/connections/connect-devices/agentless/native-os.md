@@ -8,7 +8,7 @@ order: 3
 
 Enrolling devices using static IP addresses may prevent users from connecting to some of the public Wi-Fi networks that use captive portals. If users are experiencing connectivity issues relatd to captive portals, they should:
 1. Remove the static IP addresses from the device.
-2. Connect to the WiFi network.
+1. Connect to the Wi-Fi network.
 3. Once the connection has been established, add the static IP addresses back.
 
 Alternatively, you can look into using the [WARP client](/connections/connect-devices) to connect your devices to Teams.
