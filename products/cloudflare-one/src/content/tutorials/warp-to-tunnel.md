@@ -115,14 +115,17 @@ This example runs it from the command-line but we recommend running `cloudflared
 
 ## Route private IP ranges through WARP
 
+<Aside>
+
+Make sure **HTTP traffic filtering** is enabled. This enables Cloudflare to proxy your private IP ranges to corresponding Cloudflare Tunnels.
+
+</Aside>
+
 Users can reach this private service by logging into their Cloudflare for Teams account and the WARP agent.
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/tutorials/split-tunnel). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
 Navigate to the `Policies` page of the Gateway section in the Cloudflare for Teams dashboard. Click the **Settings** tab. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
-
-Also, **HTTP traffic filtering** needs to be enabled to let Cloudflare proxy your private IP ranges to corresponding Cloudflare Tunnels.
-
 
 ![Split Tunnel](../static/secure-origin-connections/warp-to-tunnel/split-tunnel.png)
 
