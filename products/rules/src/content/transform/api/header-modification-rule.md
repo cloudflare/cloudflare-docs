@@ -306,7 +306,7 @@ The full syntax of the `action_parameters` field to define a dynamic HTTP reques
 
 <Aside type='note'>
 
-Check the [available fields and functions](/transform/create-header-modification-rule#available-fields-and-functions-for-setting-http-request-header-values) you can use in an expression.
+Check the [available fields and functions](/transform/create-header-modification-rule#available-fields-and-functions) you can use in an expression.
 
 </Aside>
 
