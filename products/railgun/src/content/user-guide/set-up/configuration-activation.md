@@ -9,7 +9,7 @@ Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most impor
 
 If you will be using Railgun in combination with a website hosted behind the same NAT scheme, then you will also need to configure static IP mapping. In other words, if your website and Railgun node are running behind the same router or firewall, there are extra configuration steps necessary to properly route requests. More details in the [Potential problems and common issues](/user-guide/set-up/potential-problems) section. Contact support for assistance, or you can use the examples in `/etc/railgun/railgun-nat.conf` to define one yourself.
 
-Railgun requires an activation step in order to use. To activate, you will need to update the configuration file with the external IP address or a hostname which resolves to the external IP of your Railgun instance for `activation.public_ip` and your activation token for `activation.token`. You can determine the external IP address of a server with the following command:
+Railgun requires an activation step before usage. To activate, you will need to update the configuration file with the external IP address or a hostname which resolves to the external IP of your Railgun instance for `activation.public_ip` and your activation token for `activation.token`. You can determine the external IP address of a server with the following command:
 
 ```sh
 $ curl icanhazip.com
