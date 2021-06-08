@@ -95,12 +95,6 @@ Use the following workflow to deploy a managed ruleset to a phase at the zone le
 1. Identify the phase where you want to deploy the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
 1. Add a rule to the zone-level phase to deploy the Managed Ruleset.
 
-<Aside type='warning' header='Important'>
-
-When deploying to a zone-level phase, you must set the rule `expression` to `true`, since the zone scope is already defined in the endpoint.
-
-</Aside>
-
 ### Example
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
@@ -163,4 +157,4 @@ header: Response
 }
 ```
 
-In these examples, the Managed Ruleset executes the behavior configured by Cloudflare. To customize the behavior of  Managed Rulesets, see [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
+In these examples, the Managed Ruleset executes the behavior configured by Cloudflare. To customize the behavior of Managed Rulesets, see [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
