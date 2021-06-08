@@ -59,7 +59,7 @@ $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 ```
 ## Testing Railgun
 
-Once you have configured Railgun, you can test its operation using the **Test** button under the performance section of your Cloudflare account. This will indicate whether a request to your web server uses Railgun.
+Once you have configured Railgun, you can test its operation using the **Test** button under the Speed section of your Cloudflare account. This will indicate whether a request to your web server uses Railgun.
 
 The log file can also be used to monitor results. By default, we log only errors. For testing, you need to raise the `log.level` option from 0 to 5 in your Railgun configuration and then restart the service. You can then tail the logs to watch the requests being processed:
 
@@ -88,7 +88,7 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Tx [ab18927f79... FnPush]
 Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 ```
 
-**Railgun will produce 5xx messages when the rg-listener service is unable to reach the origin web server.** Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that us just by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports 80 and 443 in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
+**Railgun will produce 5xx messages when the rg-listener service is unable to reach the origin web server.** Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that is just by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports 80 and 443 in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
 
 ## Going live
 
