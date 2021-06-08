@@ -11,7 +11,7 @@ In order to increase logging, the `log.level` within `railgun.conf` should be se
 
 <Aside>
 
-**Note**: The Railgun service running on the server will also need to be restarted. For changes to take effect input the following: 
+**Note**: The Railgun service running on the server will also need to be restarted. For changes to take effect, input the following: 
 
 ```sh
 $ service railgun restart
