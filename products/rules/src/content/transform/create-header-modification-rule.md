@@ -6,12 +6,6 @@ order: 2
 
 # Create an HTTP Request Header Modification Rule in the dashboard
 
-<Aside type="note">
-
-This feature is available in Beta.
-
-</Aside>
-
 Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. See [Common use cases](/transform/use-cases#http-request-header-modification-examples) for example rule definitions.
 
 Do the following:
@@ -34,7 +28,7 @@ Do the following:
 
     <Aside type='note'>
 
-    Check the [available fields and functions](#available-fields-and-functions-for-setting-http-request-header-values) during Beta.
+    Check the [available fields and functions](#available-fields-and-functions-for-setting-http-request-header-values).
 
     </Aside>
 
@@ -76,9 +70,9 @@ The name of the HTTP request header you want to set or remove can only contain a
 
 The value of the HTTP request header you want to set can only contain alphanumeric characters and the following special characters: `_ :;.,\/"'?!(){}[]@<>=-`.
 
-### Available fields and functions for setting HTTP request header values
+### Available fields and functions
 
-During the Beta, the available fields when setting an HTTP request header value using an expression are the following:
+The available fields when setting an HTTP request header value using an expression are the following:
 
 * `cf.bot_detection.js_check_score`
 * `cf.bot_management.*`

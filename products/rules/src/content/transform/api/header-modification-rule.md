@@ -6,12 +6,6 @@ order: 2
 
 # Create an HTTP Request Header Modification Rule via API
 
-<Aside type="note">
-
-This feature is available in Beta.
-
-</Aside>
-
 Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to create HTTP Request Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. See [Common use cases](/transform/use-cases#http-request-header-modification-examples) for example rule definitions.
 
 When creating an HTTP Request Header Modification Rule via API, make sure you:
@@ -272,6 +266,7 @@ To set an HTTP request header, set the following parameters in the `action_param
 
 * **operation**: `set`
 * Include one of the following parameters to define a static or dynamic value:
+
     * **value**: Specifies a static value for the HTTP request header.
     * **expression**: Specifies the expression that defines a value for the HTTP request header.
 
@@ -311,7 +306,7 @@ The full syntax of the `action_parameters` field to define a dynamic HTTP reques
 
 <Aside type='note'>
 
-Check the [available fields and functions](/transform/create-header-modification-rule#available-fields-and-functions-for-setting-http-request-header-values) you can use in an expression during Beta.
+Check the [available fields and functions](/transform/create-header-modification-rule#available-fields-and-functions-for-setting-http-request-header-values) you can use in an expression.
 
 </Aside>
 
