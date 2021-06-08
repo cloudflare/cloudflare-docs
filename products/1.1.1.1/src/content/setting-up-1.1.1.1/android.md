@@ -2,6 +2,8 @@
 order: 1
 ---
 
+import CaptivePortals from "../_partials/_captive-portals.md"
+
 # Android
 
 ## Android 9 Pie or later
@@ -49,13 +51,4 @@ Follow this quick guide to start using 1.1.1.1 on your Android.
 
 1. Click **Save**. You may need to disconnect from the Wi-Fi and reconnect for the changes to take place.
 
-<Aside>
-
-**Note:** Setting up a static IP address to configure a DNS server may prevent you from connecting to some public Wi-Fi networks that use captive portals (these are the web pages some wireless networks employ to let users login and use their services). 
-
-If you are experiencing connectivity issues related to captive portals:
-1. Remove the static IP addresses from the device.
-1. Connect to the Wi-Fi network.
-1. Once the connection has been established, add the static IP addresses back.
-
-</Aside>
+<CaptivePortals/>

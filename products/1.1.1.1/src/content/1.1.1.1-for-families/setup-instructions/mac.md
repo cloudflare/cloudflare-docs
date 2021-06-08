@@ -2,6 +2,8 @@
 order: 2
 ---
 
+import CaptivePortals from "../../_partials/_captive-portals.md"
+
 # Mac setup instructions
 
 ## Block malware
@@ -68,13 +70,4 @@ order: 2
 2. Click **OK**.
 3. Click **Apply**.
 
-<Aside>
-
-**Note:** Setting up a static IP address to configure a DNS server may prevent you from connecting to some public Wi-Fi networks that use captive portals (these are the web pages some wireless networks employ to let users login and use their services). 
-
-If you are experiencing connectivity issues related to captive portals:
-1. Remove the static IP addresses from the device.
-1. Connect to the Wi-Fi network.
-1. Once the connection has been established, add the static IP addresses back.
-
-</Aside>
+<CaptivePortals/>
