@@ -60,9 +60,11 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 * Set the value of an HTTP request header according to an expression, overwriting its previous value or adding a new header to the request.
 * Remove an HTTP request header from the request (remove all headers with the provided name).
 
-<Aside type='warning' label='Limitations'>
+<Aside type='warning' label='Important'>
 
 * You cannot modify or remove HTTP request headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
+
+* If you are setting the value of an HTTP request header using an expression and that expression evaluates to an empty string (`""`) or an undefined value, the HTTP request header is **removed**.
 
 </Aside>
 
