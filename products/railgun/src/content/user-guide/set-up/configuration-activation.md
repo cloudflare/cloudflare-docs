@@ -32,7 +32,7 @@ As an example, we are going to use domain port2408.net. The newly generated cert
 
 ## Starting the service
 
-You should start the service in the manner that your operating system recommends. This is likely either by using the init script directly, or by invoking the service command:
+You should start the service in the manner that your operating system recommends. This is likely either by using the `init` script directly, or by invoking the service command:
 
 ```sh
 (GNU/Linux)
