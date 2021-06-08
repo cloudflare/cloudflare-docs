@@ -30,6 +30,6 @@ By default, `railgun.conf` defines the Listener's trust store as (for Debian/Ubu
 
 <Aside>
 
-**Note**: As a reminder, the listener will need to be restarted after making changes to the configuration file.
+**Note**: As a reminder, the Listener will need to be restarted after making changes to the configuration file.
 
 </Aside>
