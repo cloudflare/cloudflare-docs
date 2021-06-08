@@ -28,7 +28,7 @@ Do the following:
 
     <Aside type='note'>
 
-    Check the [available fields and functions](#available-fields-and-functions-for-setting-http-request-header-values).
+    Check the [available fields and functions](#available-fields-and-functions).
 
     </Aside>
 
