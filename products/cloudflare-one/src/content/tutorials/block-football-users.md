@@ -117,7 +117,7 @@ The user will be prompted to login with the identity provider configured in Clou
 
 ## Confirm blocks
 
-When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
+When users visit that section of Reddit (and any page within it), they will see a block page. Any attempt to reach ESPN will also be blocked.
 
 You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type.
 
