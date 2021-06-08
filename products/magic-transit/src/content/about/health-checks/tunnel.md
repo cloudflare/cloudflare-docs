@@ -1,6 +1,7 @@
 ---
 title: Tunnel
 order: 1
+pcx-content-type: concept
 ---
 
 # Tunnel health checks

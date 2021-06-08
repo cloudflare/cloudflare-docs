@@ -1,6 +1,7 @@
 ---
 title: Rules
 order:  2
+pcx-content-type: how-to
 ---
 
 # Rules

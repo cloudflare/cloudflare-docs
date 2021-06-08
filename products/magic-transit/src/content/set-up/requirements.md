@@ -3,6 +3,7 @@ title: Requirements
 alwaysopen: true
 order: 1
 hidden: false
+pcx-content-type: tutorial
 ---
 
 # Requirements
