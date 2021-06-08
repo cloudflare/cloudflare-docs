@@ -1,15 +1,10 @@
 ---
 title: Create a Request Header Modification Rule
+pcx-content-type: interim
 order: 2
 ---
 
 # Create an HTTP Request Header Modification Rule via API
-
-<Aside type="note">
-
-This feature is available in **Beta**.
-
-</Aside>
 
 Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to create HTTP Request Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. See [Common use cases](/transform/use-cases#http-request-header-modification-examples) for example rule definitions.
 
@@ -17,15 +12,15 @@ When creating an HTTP Request Header Modification Rule via API, make sure you:
 
 * Set the rule action to `rewrite`
 * Define the [header modification parameters](#header-modification-parameters) in the `action_parameters` field according to the operation to perform (set or remove header)
-* Deploy the rule to the `http_request_late_transform` Phase at the zone level
+* Deploy the rule to the `http_request_late_transform` phase at the zone level
 
 ## Create an HTTP Request Header Modification Rule
 
 Follow this workflow to create an HTTP Request Header Modification Rule for a given zone via API:
 
-1. Use the [List existing rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_late_transform` Phase at the zone level.
+1. Use the [List existing rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_late_transform` phase at the zone level.
 
-1. If the Phase ruleset does not exist, create it using the [Create ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) method with the zone-level endpoint. In the new ruleset properties, set the following values:
+1. If the phase ruleset does not exist, create it using the [Create ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/create) method with the zone-level endpoint. In the new ruleset properties, set the following values:
 
     * **kind**: `zone`
     * **phase**: `http_request_late_transform`
@@ -38,7 +33,7 @@ Follow this workflow to create an HTTP Request Header Modification Rule for a gi
 <summary>Example: Add an HTTP request header with a static value</summary>
 <div>
 
-The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a static value — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a static value — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
 
 ```json
 ---
@@ -115,7 +110,7 @@ header: Response
 <summary>Example: Add an HTTP request header with a dynamic value</summary>
 <div>
 
-The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a dynamic value — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a dynamic value — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
 
 ```json
 ---
@@ -133,9 +128,9 @@ curl -X PUT \
       "action": "rewrite",
       "action_parameters": {
         "headers": {
-          "X-Path": {
+          "X-Bot-Score": {
             "operation": "set",
-            "expression": "http.request.uri.path"
+            "expression": "to_string(cf.bot_management.score)"
           }
         }
       }
@@ -164,9 +159,9 @@ header: Response
         "action": "rewrite",
         "action_parameters": {
           "headers": {
-            "X-Path": {
+            "X-Bot-Score": {
               "operation": "set",
-              "expression": "http.request.uri.path"
+              "expression": "to_string(cf.bot_management.score)"
             }
           }
         },
@@ -192,7 +187,7 @@ header: Response
 <summary>Example: Remove an HTTP request header</summary>
 <div>
 
-The following example sets the rules of an existing Phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — removing an HTTP request header — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — removing an HTTP request header — using the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method:
 
 ```json
 ---
@@ -271,6 +266,7 @@ To set an HTTP request header, set the following parameters in the `action_param
 
 * **operation**: `set`
 * Include one of the following parameters to define a static or dynamic value:
+
     * **value**: Specifies a static value for the HTTP request header.
     * **expression**: Specifies the expression that defines a value for the HTTP request header.
 
@@ -310,7 +306,7 @@ The full syntax of the `action_parameters` field to define a dynamic HTTP reques
 
 <Aside type='note'>
 
-Check the [available fields and functions](/transform/create-header-modification-rule#available-fields-and-functions-for-setting-http-request-header-values) you can use in an expression during the Beta.
+Check the [available fields and functions](/transform/create-header-modification-rule#available-fields-and-functions) you can use in an expression.
 
 </Aside>
 

@@ -6,16 +6,13 @@ order: 1
 # Magic Firewall
 
 Magic Firewall is a network-level firewall delivered through Cloudflare to protect your network. It is
-configurable by all Magic Transit customers by making calls to Cloudflare's API. Rules can be crafted in
-Wireshark syntax, a domain specific language common in the networking world and the same syntax we use
-across our other products. With this syntax, you can easily craft extremely powerful rules to precisely
-allow or deny any traffic in or out of your network.
+configurable by all Magic Transit customers from the dashboard under **Firewall Rulesets** or by making calls to Cloudflare's API. Rules can be crafted in Wireshark syntax, a domain-specific language common in the networking world and the same syntax we use across our other products. With this syntax, you can easily craft powerful rules to precisely allow or deny any traffic in or out of your network.
 
 Access to the API is controlled by the `#waf:read` and `#waf:write` permissions.
 
 Magic Firewall allows you to define skip and block rules on any packet characteristics including source and destination IP, source and destination port, protocol, packet length, and bit field match.
 
-Start by [adding a rule](/magic-firewall/adding-rules)!
+Start by [adding a rule](/magic-firewall/rules)!
 
 <Aside type='warning' header='Important'>
 

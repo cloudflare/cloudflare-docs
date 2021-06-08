@@ -2,6 +2,7 @@
 title: Actions
 order: 30
 type: overview
+pcx-content-type: reference
 ---
 
 # Load Balancing actions

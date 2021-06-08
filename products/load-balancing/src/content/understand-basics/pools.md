@@ -1,5 +1,6 @@
 ---
 order: 13
+pcx-content-type: concept
 ---
 
 # Pools

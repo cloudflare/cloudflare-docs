@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Require specific HTTP headers
 
 Many organizations qualify traffic based on the presence of specific HTTP request headers.

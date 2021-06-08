@@ -8,7 +8,7 @@ order: 2
 In the [first step](/tutorial/hello-world) of the tutorial, you created and applied some basic Cloudflare configuration. Terraform was able to apply this configuration to your account because you provided your email address and API token at the top of the `cloudflare.tf` file:
 
 ```sh
-$ head -n4 cloudflare.tf
+$ head -n13 cloudflare.tf | tail -n4
 provider "cloudflare" {
   email = "you@example.com"
   api_token = "your-api-token"
@@ -25,7 +25,7 @@ As a good security practice we need to remove your Cloudflare credentials from a
 $ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
 $ sed -ie 's/^.*api_token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
 
-$ head -n4 cloudflare.tf
+$ head -n13 cloudflare.tf | tail -n4
 provider "cloudflare" {
   # email pulled from $CLOUDFLARE_EMAIL
   # token pulled from $CLOUDFLARE_API_TOKEN

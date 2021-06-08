@@ -1,8 +1,9 @@
 ---
+pcx-content-type: concept
 order: 3
 ---
 
-# Automated exposed credentials check - Beta
+# Automated exposed credentials check (Beta)
 
 <Aside type='warning'>
 

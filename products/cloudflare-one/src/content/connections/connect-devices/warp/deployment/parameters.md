@@ -70,8 +70,13 @@ This field is only required to enforce DNS policies when deploying the client in
 - `false` [default value] The user is able to turn switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
 - `true`  The user is prevented from turning off the switch.
 
+**Warning**
+<Aside>
+On new deployments, you must also include the `auto_connect` parameter with at least a value of 0. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
+</Aside>
+
 <Aside> 
-  This parameter replaces the old enabled property which can no longer be used
+  This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 </Aside>
 
 
@@ -88,7 +93,7 @@ This field is only required to enforce DNS policies when deploying the client in
 - `1-1440`  Turn switch back on automatically after the specified number of minutes.
 
 <Aside> 
-  This parameter replaces the old enabled property which can no longer be used
+  This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 </Aside>
 
 ### `support_url`
@@ -102,6 +107,37 @@ This field is only required to enforce DNS policies when deploying the client in
 **Value:**
 - `https://support.example.com` Use an https:// link to open your companies internal help site.
 - `mailto://yoursupport@example.com`  Use a mailto:// link to open your default mail client.
+
+## Authentication with service tokens
+
+<Aside> 
+  Devices that connect to Cloudflare for Teams with Service Token authentication are not subject to identity based rules.
+</Aside>
+
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/identity/service-auth/service-tokens).
+
+Both a `auth_client_id` and `auth_client_secret` are required when using this authentication method. 
+
+
+### `auth_client_id`
+
+| Field | Value Type |
+| ----- | -------- |
+| `auth_client_id` | string |
+
+**Description.** The automatically genereated ID when you created your [Service Token](/identity/service-auth/service-tokens).
+
+**Value:** `Client ID` from your service token. 
+
+### `auth_client_secret`
+
+| Field | Value Type |
+| ----- | -------- |
+| `auth_client_secret` | string |
+
+**Description.** The automatically genereated secret when you created your [Service Token](/identity/service-auth/service-tokens).
+
+**Value:** `Client Secret` from your service token. 
 
 ## Frequently Asked Questions
 

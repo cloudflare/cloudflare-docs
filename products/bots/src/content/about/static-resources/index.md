@@ -7,7 +7,7 @@ pcx-content-type: configuration
 
 import StaticResourcesBM from "../../_partials/_static-resources-bm.md"
 
-# Static resource protection
+# Protect static resources from bots
 
 Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their static resources from bots.
 

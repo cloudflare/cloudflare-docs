@@ -13,8 +13,8 @@ Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead o
 ## [Cloudflare Gateway](https://www.cloudflare.com/en-gb/teams/gateway/)
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
-## [Argo Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
-A secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
+## [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
+Cloudflare Tunnel (formerly *Argo Tunnel*) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
 Teams customers can use the Cloudflare WARP application to connect corporate desktops to Cloudflare Gateway for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, with security filtering available to the connection.
@@ -38,11 +38,16 @@ Authenticated Origin Pulls let origin web servers validate that a web request ca
 | Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) |
 |---|---|
 
+## certificate pinning
+
+Certificate pinning is a security mechanism used to prevent man-in-the-middle (MITM) attacks on the Internet by hardcoding information about the certificate that the application expects to receive. If the wrong certificate is received, even if it's trusted by the system, the application will refuse to connect.
+
 ## cloudflared
 
-`cloudflared` is the software that powers [Argo Tunnel](#argo-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
+`cloudflared` is the software that powers [Cloudflare Tunnel](#cloudflare-tunnel). `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
 ## daemon
+
 A program that performs tasks without active management or maintenance.
 
 ## DNS filtering
@@ -53,10 +58,14 @@ DNS filtering is the process of using the Domain Name System to block malicious 
 
 Each device connected to the Internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as 192.168.1.1 (in IPv4), or more complex newer alphanumeric IP addresses such as 2400:cb00:2048:1::c629:d7a2 (in IPv6).
 
-## [DoH](/connections/connect-without-agent/DNS/dns-over-https)
-*DNS over HTTPS*
+## DNS over HTTPS
 
-With DoH, DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DoT](#DoT), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
+By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
+
+[DNS over TLS (DoT)](#dns-over-tls) and [DNS over HTTPS (DoH)](/connections/connect-devices/agentless/dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+
+DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS request in an HTTPS request. It uses HTTPS and HTTP/2 to encrypt traffic at the application layer. With DoH, DNS queries and responses are camouflaged within other HTTPS traffic, since it all comes and goes from the same port. This means they cannot easily be blocked without blocking all other HTTPS traffic as well, but it also provides users with greater privacy, as network administrators will have no visibility on the DNS queries hidden within the larger flow of HTTPS traffic. 
+
 
 ## DoH subdomain
 
@@ -66,21 +75,22 @@ Each location in Teams has a unique DoH subdomain (previously known as a *unique
 | ----------------------- | ------------- |
 | `https://9y65g5srsm.cloudflare-gateway.com/dns-query` | `9y65g5srsm` |
 
-## [DoT](/connections/connect-without-agent/DNS/dns-over-tls)
-*DNS over TLS*
+## DNS over TLS
 
-DNS over TLS, or DoT, is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications. (TLS is also known as "SSL.") DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
+By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This lack of privacy has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
+
+[DNS over TLS (DoT)](/connections/connect-devices/agentless/dns-over-tls) and [DNS over HTTPS (DoH)](#dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+
+DNS over TLS uses its own port, 853, to wrap DNS requests within a TLS connection. With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of the user datagram protocol (UDP). Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. This gives administrators the ability to monitor and block DNS queries, which is important for identifying and stopping malicious traffic.
 
 ## hostname
 The name given to a server or node on a network. In most cases, the public DNS name of a server.
 
-## IdP
-*identity provider*
+## identity provider
 
 An identity provider (IdP or IDP) stores and manages users' digital identities. Think of an IdP as being like a guest list, but for digital and cloud-hosted applications instead of an event. An IdP may check user identities via username-password combinations and other factors, or it may simply provide a list of user identities that another service provider (like an SSO) checks.
 
-## JWT
-*JSON web token*
+## JSON web token
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
@@ -166,7 +176,9 @@ The customizable portion of your [team domain](#team-domain). You can change thi
 [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building Cloudflare resources.
 
 ## Tunnel certificate
-The Argo Tunnel software, `cloudflared`, generates a certificate when you login with your Cloudflare account. The certificate consists of a [service token](#service-token) and [origin certificate](#origin-certificate).
+
+The Cloudflare Tunnel software, `cloudflared`, generates a certificate when you login with your Cloudflare account. The certificate consists of a [service token](#service-token) and [origin certificate](#origin-certificate).
 
 ## Zero Trust Security
+
 An IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. No single specific technology is associated with zero trust architecture; it is a holistic approach to network security that incorporates several different principles and technologies.

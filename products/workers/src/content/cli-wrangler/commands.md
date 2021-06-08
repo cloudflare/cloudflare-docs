@@ -184,7 +184,7 @@ If you would like to be able to publish your code to multiple places, please see
 
 ## dev
 
-`wrangler dev` starts a server on `localhost` that executes your Worker on incoming HTTP requests. It can forward the requests to Cloudflare's servers, one of your zones, or any host you specify. This is a great way to easily test your Worker while developing.
+`wrangler dev` is a command that establishes a connection between `localhost` and an edge server that operates your Worker in development. A cloudflared tunnel forwards all requests to the edge server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
 
 ```sh
 $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
@@ -262,6 +262,23 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 
 Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/argo-tunnel/quickstart/) for Argo Tunnel.
 `wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) that listens for incoming log requests from your Worker.
+
+<Aside type="warning" header="Issues with existing cloudflared configuration">
+
+`wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844).
+
+To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
+
+```sh
+# Move config file when using `wrangler tail`. 
+# This will temporarily disable `cloudflared`. 
+$ mv ~/.cloudflared/config.yml ~/.cloudflared/config.yml.disabled
+
+# Move file back when you need to use `cloudflared`.
+$ mv ~/.cloudflared/config.yml.disabled ~/.cloudflared/config.yml
+```
+
+</Aside>
 
 --------------------------------
 

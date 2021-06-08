@@ -32,7 +32,7 @@ There are three steps to creating and using a Durable Object:
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
-The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter contains any bindings you have associated with the Worker when you uploaded it.
+The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
 ```js
 export class DurableObjectExample {
@@ -40,6 +40,8 @@ export class DurableObjectExample {
     }
 }
 ```
+
+Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -159,7 +161,11 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
+<<<<<<< HEAD
 [Documentation for WebSockets on Workers is here](using-websockets).
+=======
+For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
+>>>>>>> cb19d4b5532a3a05e4b3fda62594a905acb71c52
 
 ## Instantiating and communicating with a Durable Object
 
@@ -227,7 +233,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.2) for installation instructions and more information.
+You must use [Wrangler version 1.17 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
 </Aside>
 
@@ -282,7 +288,7 @@ $ wrangler publish --new-class DurableObjectExample
 
 Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
 
-If you want to delete the Durable Objects associated with an exported class, you can use `--delete-class`:
+If you want to delete the Durable Objects associated with an exported class, remove the corresponding binding from wrangler.toml, then use `--delete-class`:
 
 ```sh
 $ wrangler publish --delete-class DurableObjectExample
@@ -304,6 +310,10 @@ $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.work
 ```
 
 As you write Durable Objects, you can find more helpful details in the [Durable Objects runtime API documentation](/runtime-apis/durable-objects).
+
+## Limits
+
+See the [Durable Objects section of the Limits page](/platform/limits#durable-objects) for current relevant usage limits.
 
 ## Limitations
 

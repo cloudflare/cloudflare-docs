@@ -1,5 +1,6 @@
 ---
 order: 18
+pcx-content-type: concept
 ---
 
 # Monitors
@@ -90,7 +91,7 @@ Monitors support a great deal of customization and have the following properties
       <tr>
         <td><strong><Code>interval</Code></strong><br/><Type>integer</Type></td>
         <td>
-          <p>The interval between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
+          <p>The interval (in seconds) between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
           <div><Code>90</Code></div>
         </td>
         <td>
