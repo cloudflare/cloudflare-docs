@@ -88,7 +88,7 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Tx [ab18927f79... FnPush]
 Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 ```
 
-**Railgun will produce 5xx messages when the rg-listener service is unable to reach the origin web server.** Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that is just by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports 80 and 443 in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
+**Railgun will produce 5xx messages when the rg-listener service is unable to reach the origin web server.** Checking that the route between the Railgun server and the web server is clear is essential before contacting support. The easiest way of checking that is by performing a curl command from the Railgun server to the origin web server. If Railgun and the web server are both run on the same physical server, check that it allows loopback HTTP connections on ports 80 and 443 in its firewall settings. Please ensure the correct port is open and contact support if errors persist.
 
 ## Going live
 
