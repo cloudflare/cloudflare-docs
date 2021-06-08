@@ -1,6 +1,7 @@
 ---
 title: Use on demand
 order: 5
+pcx-content-type: concept
 ---
 
 # Use Magic Transit on demand

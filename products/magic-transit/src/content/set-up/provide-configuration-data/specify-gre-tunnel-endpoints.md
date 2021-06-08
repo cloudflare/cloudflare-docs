@@ -1,6 +1,7 @@
 ---
 order: 1
 type: table
+pcx-content-type: how-to
 ---
 
 # Specify tunnel endpoints

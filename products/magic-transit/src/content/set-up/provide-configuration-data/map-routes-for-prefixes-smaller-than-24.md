@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 import StaticRoutesApi from "../../_partials/_static-routes-api.md"

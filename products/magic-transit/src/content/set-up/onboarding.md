@@ -1,6 +1,7 @@
 ---
 title: Onboarding
 order: 1
+pcx-content-type: tutorial
 ---
 
 # Magic Transit onboarding

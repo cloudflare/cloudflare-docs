@@ -1,6 +1,7 @@
 ---
 title: Set up
 order: 2
+pcx-content-type: navigation
 ---
 
 # Set up Magic Transit
