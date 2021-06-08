@@ -55,7 +55,17 @@ Currently, the following hints are available:
 
 #### Examples
 
-##### Using Stream videos as a cover background
+##### Only display video representations with at least 1.8 Mbps of bandwidth
+
+```txt
+https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
+```
+
+This removes all video representations with a bitrate less than 1.8Mbps from the manifest.
+
+In this case, a customer is expressing their preference to have their content display at a higher minimum quality.
+
+### Using Stream videos as a cover background
 
 If you need complete control over the video element's CSS you can use a third party player like **hls.js** and the manifest with a video element.
 
@@ -92,16 +102,6 @@ If you need complete control over the video element's CSS you can use a third pa
   </body>
 </html>
 ```
-
-##### Only display video representations with at least 1.8 Mbps of bandwidth
-
-```txt
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?clientBandwidthHint=1.8
-```
-
-This removes all video representations with a bitrate less than 1.8Mbps from the manifest.
-
-In this case, a customer is expressing their preference to have their content display at a higher minimum quality.
 
 ## Limitations
 
