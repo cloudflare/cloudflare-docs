@@ -51,7 +51,7 @@ $ netstat -plnt | grep 2408
 tcp        0      0 :::2408                     :::*                        LISTEN      2981/rg-listener
 ```
 
-Provided that your port is open to Cloudflare traffic, it’s time for testing. If you don’t see the process running, then there may be an issue with activation or your configuration. The Railgun panic log, which is written to `/var/log/railgun/panic.log` by default, may contain more information. You can also attempt to start Railgun without the init script to see if any errors are present at start:
+Provided that your port is open to Cloudflare traffic, it’s time for testing. If you don’t see the process running, then there may be an issue with activation or your configuration. The Railgun panic log, which is written to `/var/log/railgun/panic.log` by default, may contain more information. You can also attempt to start Railgun without the `init` script to see if any errors are present at start:
 
 ```sh
 (GNU/Linux)
