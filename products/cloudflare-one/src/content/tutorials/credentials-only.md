@@ -32,7 +32,7 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 `$ cloudflared login`
 
-The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
+The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. The website selected does not need to be the website where the environment will be made available.
 
 ![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
 
@@ -56,7 +56,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Delete the `cert.pem` file
 
-The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
+The credentials file created in the previous step is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
 If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/connections/connect-apps/create-tunnel).
 
@@ -75,8 +75,6 @@ url: http://localhost:1313
 tunnel: 5157d321-5933-4b30-938b-d889ca87e11b
 credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e11b.json
 ```
-
-If you are using the credentials file without the `cert.pem` file, you must specify the Tunnel ID in the `tunnel:` value. You cannot use the Name alone with the credentials file.
 
 ## Run Cloudflare Tunnel
 

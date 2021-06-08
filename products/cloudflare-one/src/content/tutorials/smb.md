@@ -3,7 +3,7 @@ updated: 2021-03-30
 category: 🔐 Zero Trust
 ---
 
-# SMB file shares
+# Connect through Cloudflare Access to SMB file shares
 
 The Server Message Block (SMB) protocol allows users to access, read, and write to shared files. Cloudflare for Teams provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to shared files over SMB without being on a virtual private network (VPN).
 
