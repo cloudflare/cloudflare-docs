@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 2
 pcx-content-type: navigation
 ---
 

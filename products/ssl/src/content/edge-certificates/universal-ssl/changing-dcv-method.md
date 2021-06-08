@@ -1,9 +1,9 @@
 ---
-order: 1
+order: 2
 pcx-content-type: how-to
 ---
 
-# Changing DCV method
+# Change DCV method
 
 --------
 
