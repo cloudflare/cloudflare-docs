@@ -3,9 +3,9 @@ updated: 2021-06-08
 category: 🛡️ Web Gateway
 ---
 
-# Customize the block page presented to users
+# Customize the block page users see
 
-Cloudflare Gateway can present users with a block page when a DNS or HTTP filtering policy applies a block action. Your team can customize the block page with branding from your organization, additional messaging, and messaging specific to particular rules.
+Cloudflare Gateway can present users with a [block page](/policies/filtering/configuring-block-page) when a DNS or HTTP filtering policy applies a block action. Your team can customize the block page with branding from your organization, additional messaging, and messaging specific to particular rules.
 
 To present this block page, in either DNS or HTTP filtering mode, users must have the Cloudflare certifiate [installed on their devices](/connections/connect-devices/warp/install-cloudflare-cert).
 
@@ -39,7 +39,7 @@ You can use the next page to modify the name of your organization and the text p
 
 ## Customize text for a specific rule
 
-Cloudflare Gateway can modify your custom block page to present text specific to particular rules. For example, if you have a particular rule that should include additional clarifying text, the user will see that in the block page.
+Cloudflare Gateway can also show a policy-specific message in the block page. When you create a policy and select the **Block** action, Gateway gives you the option to enter a particular block message to show users when they navigate to websites blocked by that policy. The block page will then display the policy-specific message just above that policy's Rule ID.
 
 Edit one of your existing policies or create a new one. If the policy is a `Block`, you will see the option to customize the block page presented.
 

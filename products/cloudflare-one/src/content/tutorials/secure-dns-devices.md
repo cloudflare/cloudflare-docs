@@ -58,7 +58,7 @@ Next, build a rule to decide which devices can enroll in your account. Navigate 
 
 ![Device List](../static/secure-web-gateway/secure-dns-devices/device-list.png)
 
-Click **Manage enrollment rules** to build the enrollment Next, click **Add a rule** to begin.
+Click **Manage enrollment rules** and click **Add a rule** to begin the enrollment.
 
 ![Add Device Rule](../static/secure-web-gateway/secure-dns-devices/add-device-rule.png)
 

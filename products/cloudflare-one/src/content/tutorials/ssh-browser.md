@@ -139,7 +139,7 @@ We recommend that you run `cloudflared` [as a service](/connections/connect-apps
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
-To enable, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable browser rendering` to on.
+To enable this feature, navigate to the **Access > Applications** page in the Teams Dashboard. Click **Edit** and select the **Settings** tab. In the **cloudflared settings** card, turn on the **Enable browser rendering**.
 
 ![Auto Auth](../static/documentation/applications/render-browser.png)
 

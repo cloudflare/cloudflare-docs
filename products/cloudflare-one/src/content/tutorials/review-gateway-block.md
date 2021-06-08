@@ -20,7 +20,7 @@ You can use Cloudflare Gateway to filter and log DNS queries from devices on any
 
 ## Before you start
 1. [Add Gateway to your account](/setup)
-2. Deploy Gateway rules to a network or group of devices[/policies/filtering/dns-policies]
+2. Deploy Gateway rules to a network or group of [devices](/policies/filtering/dns-policies)
 
 ---
 
@@ -46,7 +46,7 @@ You can expand the record to identify more information about the event, includin
 
 ## Review block reason
 
-You can review details about the domain blocked by Cloudflare by clicking **View domain details in Radar**. Cloudflare Radar  provides information like site ranking, certificate history, and WHOIS information. If you believe the site was not categorized appropriately, click `Submit Categorization Feedback` beneath the `Content Categories` section.
+Review details about the domain blocked by Cloudflare by clicking **View domain details in Radar**. Cloudflare Radar provides information like site ranking, certificate history, and WHOIS information. If you believe the site was not categorized appropriately, click `Submit Categorization Feedback` beneath the `Content Categories` section.
 
 ![Facebook Radar](../static/secure-web-gateway/review-gateway-block/facebook-radar.png)
 
