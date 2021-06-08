@@ -10,47 +10,94 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to blo
 
 **🗺️ This tutorial covers how to:**
 
+* Create a Gateway policy to block URLs that contain a hostname for a specific set of users
 * Enroll devices into Gateway
-* Create a Gateway policy to block URLs that contain a hostname for certain users
 * Review the block events in the Gateway logs
 
 **⏲️Time to complete:**
 
-25 minutes
+35 minutes
 
-## Add Cloudflare Gateway
+## Before you start
+1. [Add Gateway to your account](/setup)
 
-Before you begin, you'll need to:
+---
 
-1. [Set up](/setup) Cloudflare Gateway in your account
-2. [Add](/identity/idp-integration) an identity provider to the Teams dashboard
+## Build a hostname policy
 
-Cloudflare Gateway operates in two modes:
+To begin, navigate to the `Gateway` section of the Cloudflare for Teams dashboard and click on `Policies`. Select the `HTTP tab`. By default, Cloudflare Gateway create a rule that [skips inspection](/policies/filtering/http-policies#do-not-inspect) for applications that break when traffic is decrypted. You can remove this rule, but it will likely cause certain applications to break for end users.
 
-* DNS filtering
-* Proxy (HTTP filtering)
+![Policy Start](../static/secure-web-gateway/block-football/policy-start.png)
 
-To filter all Internet-bound traffic in the proxy mode, devices must install and connect the Cloudflare for Teams [WARP client](/connections/connect-devices/warp). The WARP client will send all Internet traffic to a Cloudflare data center near the user where it can be filtered and logged before reaching the rest of the Internet.
+Click **Create a policy** to add a new HTTP policy. Give the policy a name and description.
 
-Building a rule in Access to enforce Gateway connections also requires using the WARP client to proxy Internet traffic to Cloudflare.
+Next, create a rule to block any subdomain that uses a particular host. This example uses `espn.com` as the host. The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host.
+
+```
+.*espn\.com
+```
+
+![Block ESPN](../static/secure-web-gateway/block-football/block-espn.png)
+
+Next, click **+ Add condition** to apply this rule to a specific user or group of users. This example uses the user email address. You can also build rules using your identity provider's directory groups.
+
+![Block ESPN](../static/secure-web-gateway/block-football/block-espn-sam.png)
+
+You can now select **Block** as the action. You can add optional text to present to the user in the block page.
+
+![Block Action](../static/secure-web-gateway/block-football/block-espn-action.png)
+
+Click **Create policy** to save the rule.
+
+![ESPN List](../static/secure-web-gateway/block-football/after-block-espn.png)
+
+## Integrate your identity provider
+
+The HTTP filtering policy created will apply to any HTTP requests sent from configured locations or enrolled devices. You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
+
+Navigate to the `Configuration` section of the Cloudflare for Teams dashboard and select `Authentication`. Cloudflare for Teams will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can integrate your corporate [identity provider](/identity/idp-integration) as well.
 
 ## Determine which devices can enroll
 
-To proxy traffic through Gateway, devices must run the Cloudflare WARP client and [be enrolled in your Teams account](/connections/connect-devices/warp/device-enrollment). When devices enroll, users will be prompted to authenticate with your identity provider or a consumer identity service. You can also deploy the client and its configurations [via a device management platform](/connections/connect-devices/warp/deployment) like JAMF or InTune.
+Next, build a rule to decide which devices can enroll in your account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
 
-First, determine which devices can enroll based on user identity. If you have already integrated your identity provider when setting up Cloudflare Access you can reuse that integration. If you have not set up an identity provider, follow [these instructions](/identity/idp-integration) to add Access and integrate a free identity option or a specific provider.
+![Device List](../static/secure-web-gateway/secure-dns-devices/device-list.png)
 
-Next, build a rule to decide which devices can enroll into your Gateway account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
+Click **Manage enrollment rules** to build the enrollment Next, click **Add a rule** to begin.
 
-![Device List](../static/secure-web-gateway/secure-dns-devices/device-page.png)
+![Add Device Rule](../static/secure-web-gateway/secure-dns-devices/add-device-rule.png)
 
-Click `Device Settings` to build the enrollment rule. In the policy, define who should be allowed to enroll a device and click `Save`.
+You can determine who is allowed to enroll using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-![Enroll Rule](../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
+![Device List](../static/secure-web-gateway/secure-dns-devices/device-enroll.png)
+
+Return to the top of the page and click **Add rule**.
+
+On the next page, click **Save rules** to conclude.
+
+![Device List](../static/secure-web-gateway/secure-dns-devices/save-rules.png)
+
+## Configure the Cloudflare certificate
+
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
+
+Download the Cloudflare certificate provided in the [instructions here](/connections/connect-devices/warp/install-cloudflare-cert). You can also find the certificate in the Cloudflare for Teams dashboard - navigate to the `Account` page in the `Settings` section of the sidebar and scroll to the bottom.
+
+Next, follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert) to install the certificate on your system.
+
+## Enable the Cloudflare proxy
+
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, visit the `Settings` tab in the `Policies` page. Toggle `Proxy Settings` to **Enabled**. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/connections/connect-devices/warp/exclude-traffic) settings.
+
+![Policy Start](../static/secure-web-gateway/block-football/enable-proxy.png)
+
+Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
+
+![Policy Start](../static/secure-web-gateway/block-football/enable-decrypt.png)
 
 ## Enroll a device
 
-Follow the [instructions here](/connections/connect-devices/warp) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
 Once installed, click the gear icon.
 
@@ -66,46 +113,12 @@ Input your Cloudflare for Teams org name. You will have created this during the 
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Confirm WARP](../static/secure-web-gateway/block-uploads/with-warp.png)
+![Confirm WARP](../static/secure-web-gateway/block-football/warp-mode.png)
 
-## Configure the Cloudflare certificate
+## Confirm blocks
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below follows a manual distribution flow.
+When users visit that section of Reddit (and any page within it), they will see a block page. Any attempt to reach ESPN will also be blocked.
 
-Download the Cloudflare certificate provided in the [instructions here](/connections/connect-devices/warp/install-cloudflare-cert). You can also find the certificate in the Cloudflare for Teams dashboard. Navigate to the `Account` page in the `Settings` section of the sidebar and scroll to the bottom.
-
-Next, follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert#add-the-certificate-to-your-system) to install the certificate on your system.
-
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Click the **Settings** tab and toggle `Proxy Settings` to enabled.
-
-![Add Policy](../static/secure-web-gateway/block-uploads/filter-toggle.png)
-
-## Build a hostname policy
-
-Click **Add a rule** to add a new HTTP policy. You can build rules that match an exact hostname or, like the example here, rules that use regular expressions to match for patterns.
-
-![Add Rule](../static/secure-web-gateway/block-football/add-rule-sam.png)
-
-The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host. You can also build a rule with an `is` operator and input `espn.com` directly.
-
-```
-.*espn\.com
-```
-
-![Block ESPN](../static/secure-web-gateway/block-football/block-espn-host-sam.png)
-
-You can also build rules by user group (including name or ID).
-
-Once you have clicked **Create rule** you should see it appear at the bottom of the rule list. Gateway enforces rules from top to bottom. If you had a rule with higher precedence (ranked higher in the list) that allowed ESPN, that rule would allow the user before this rule could block.
-
-![Post ESPN](../static/secure-web-gateway/block-football/post-espn-sam.png)
-
-## Blocks
-
-When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
-
-![Block Page](../static/secure-web-gateway/block-football/block-page.png)
-
-You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type. The block logs will also list the user who made the request.
+You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type.
 
 ![Block Log](../static/secure-web-gateway/block-football/block-log.png)
