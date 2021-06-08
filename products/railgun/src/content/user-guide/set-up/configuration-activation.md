@@ -59,7 +59,7 @@ $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 ```
 ## Testing Railgun
 
-Once you have configured Railgun, you can test its operation using the **Test** button under the Speed section of your Cloudflare account. This will indicate whether a request to your web server uses Railgun.
+Once you have configured Railgun, you can test its operation using the **Test** button on the Cloudflare dashboard found in **Speed** > **Optimization** > scroll down to Railgun > **Test**. This will indicate whether a request to your web server uses Railgun.
 
 The log file can also be used to monitor results. By default, we log only errors. For testing, you need to raise the `log.level` option from 0 to 5 in your Railgun configuration and then restart the service. You can then tail the logs to watch the requests being processed:
 
