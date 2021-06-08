@@ -31,7 +31,7 @@ The signup process will guide you through choosing a workers.dev subdomain and v
 
 Installing `wrangler`, the Workers CLI, gives you the freedom to [generate](/cli-wrangler/commands#generate), [configure](/cli-wrangler/commands#configure), [build](/cli-wrangler/commands#build), [preview](/cli-wrangler/commands#preview), and [publish](/cli-wrangler/commands#publish) your Workers projects from the comfort of your dev environment.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
@@ -41,7 +41,6 @@ or install with yarn:
 ```sh
 $ yarn global add @cloudflare/wrangler
 ```
-If you are having permission issues, note that Node can be installed via a version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm).
 
 Then run `wrangler --version` to confirm that the installation was successful:
 

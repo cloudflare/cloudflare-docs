@@ -26,7 +26,7 @@ Wrangler can be installed both through [npm](https://www.npmjs.com/get-npm) and 
 
 ### Using `npm`
 
-1. If you don’t already have npm on your machine, install it using [npm’s instructions](https://www.npmjs.com/get-npm) — we recommend using a Node version manager like [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating).
+1. If you don’t already have npm on your machine, install it using [npm’s instructions](https://www.npmjs.com/get-npm) — we recommend using a Node version manager like [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating) or [Volta](https://volta.sh/).
 
     If you have already installed npm with a package manager, it is possible you will run into an `EACCES` error while installing wrangler. This is related to how many system packagers install npm. You can either uninstall npm and reinstall using the npm recommended install method (a version manager), or use one of our other install methods.
 
