@@ -1,6 +1,7 @@
 ---
 order: 90
 pcx-content-type: tutorial
+hidden: true
 ---
 
 # Bot Management Dashboard
