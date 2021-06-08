@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Using Railgun with Origin CA Certificates
 
-While using Railgun and configuring Origin CA certificates, please note that additional steps are needed to avoid service impact for HTTPS requests being sent from the Listener to the site's origin (where the origin CA certificates are installed). This is due to the default trust store that is shipped with the Railgun listener being a identical copy of the root certificates that it trusts (identical to what NSS/Mozilla trusts).
+While using Railgun and configuring Origin CA certificates, please note that additional steps are needed to avoid service impact for HTTPS requests being sent from the Listener to the site's origin (where the origin CA certificates are installed). This is due to the default trust store that is shipped with the Railgun Listener being an identical copy of the root certificates that it trusts (identical to what NSS/Mozilla trusts).
 
 This means that when enabling Full SSL (Strict) in the dashboard while Railgun is enabled, the Listener will no longer consider the origin presenting the Origin CA certificate as trustworthy, resulting in a 520 error.
 
