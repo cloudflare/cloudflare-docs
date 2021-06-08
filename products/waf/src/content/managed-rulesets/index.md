@@ -31,6 +31,10 @@ Cloudflare provides the following Managed Rulesets in the WAF:
       <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Data Loss Prevention (Beta)</td>
       <td>Created by Cloudflare to address common data loss threats. These rules run on the response phase and monitor download of files or specific sensitive data — for example, financial and personally identifiable information.</td>
     </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/exposed-credentials-check#the-exposed-credentials-check-managed-ruleset'>Cloudflare DDoS L7 Mitigations (Beta)</td>
+      <td>Created by the Cloudflare DOS team to give users more control over how and when our automated mitigation systems will mitigate layer 7 DoS attacks. The rules are always enabled but a user can use overrides to modify the mitigation actions and the sensitivity of the various rules.</td>
+    </tr>
   </tbody>
 </table></TableWrap>
 

@@ -13,9 +13,13 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-You cannot edit a Managed Ruleset, but you can customize its behavior by overriding it at deployment. When you override a ruleset, specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
+You cannot edit a Managed Ruleset, but you can customize its behavior by overriding it at deployment. When you override a ruleset you specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
 
 For example, if you want to test a ruleset before enforcing it, you may want to execute a Managed Ruleset with all rules set to `log` instead of their default actions. To accomplish this, override the configured behavior of the Managed Ruleset at the ruleset level so each rule uses the _Log_ action.
+
+## The ddos_l7 phase
+
+The `ddos_l7` phase is used to override both the sensitivity at which Layer 7 DDoS mitigation rules operate along with the action used by Gatebot to mitigate global attacks or dosd to mitigate attacks at the edge. Contrary to other phases, the `ddos_l7` phase rules are always enabled and cannot be disabled via overrides, though you can decrease the sensitivity level of individual rules to achieve a similar effect.
 
 ## Working with overrides
 
@@ -60,6 +64,12 @@ You can override the following rule properties:
 
 * `"action"` (`"block"`, `"challenge"`, `"log"`)
 * `"enabled"` (`true`, `false`)
+
+Additionally in the `ddos_l7` phase you can override the following rule properties:
+
+* `"sensitivity_level"` (`"default"`, `"medium"`, `"low"`, `eoff`)
+
+
 
 ## Examples
 
