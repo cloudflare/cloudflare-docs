@@ -1,6 +1,7 @@
 ---
 title: Magic Firewall
 order: 1
+pcx-content-type: concept
 ---
 
 # Magic Firewall
