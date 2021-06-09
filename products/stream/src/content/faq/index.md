@@ -50,11 +50,11 @@ The Stream player can be successfully embedded on the following platforms:
 
 Browser         | Version
 ----------------|-----------------------------------
-Chrome          | Supported since Chrome version 30+
-Firefox         | Supported since Firefox version 42+
-Internet Explorer | Supported since IE 11 (Windows 8+ only)
-Safari          | Supported since Safari version 8+
-Opera           | Supported since Opera version 15+
+Chrome          | Supported since Chrome version 88+
+Firefox         | Supported since Firefox version 87+
+Edge            | Supported since Edge 89+
+Safari          | Supported since Safari version 14+
+Opera           | Supported since Opera version 75+
 
 </TableWrap>
 
@@ -62,11 +62,10 @@ Opera           | Supported since Opera version 15+
 
 Mobile Platform   | Version
 ------------------|-----------------------------------------------------------------------------------
-Chrome on Android | Supported on Chrome and Firefox for Android 4.0+ and all browsers for Android 4.1+
-UC Browser on Android | Supported on version 11.8+
-Samsung Internet | Supported on 5+
-Safari on iOS    | Supported on iOS 8+. Speed selector supported when not in fullscreen.
-Windows           | Supported on Windows Phone 8+
+Chrome on Android | Supported on Chrome 90
+UC Browser on Android | Supported on version 12.12+
+Samsung Internet | Supported on 13+
+Safari on iOS    | Supported on iOS 13.4+. Speed selector supported when not in fullscreen.
 
 </TableWrap>
 
