@@ -4,13 +4,13 @@ order: 3
 
 # Network policies
 
-<Aside>
+<Aside type="note">
 
 To enable this feature, download and deploy the [WARP client](/connections/connect-devices/warp/deployment) on your devices.
 
 </Aside>
 
-With Teams, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP address and port, your policies will control access to any network origin. Because Cloudflare for Teams [integrates with your identity provider](/identity/sso-integration), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they’re accessing that resource from.
+With Teams, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare for Teams [integrates with your identity provider](/identity/idp-integration), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they’re accessing that resource from.
 
 Build a network policy by configuring the following elements:
 
@@ -28,6 +28,34 @@ These are the action types you can choose from:
 * [Allow](#allow)
 * [Block](#block)
 * [Network Override](#network-override)
+
+### Allow
+
+Policies with Allow actions allow network traffic to reach certain IPs or ports. For example, the following configuration allows specific users to reach a given IP address:
+
+| Selector | Operator | Value | Action |
+| --- | --- | --- | --- |
+| Destination IP | In | `92.100.02.102` | Allow |
+| Email | In | `*@example.com` |  |
+
+### Block
+
+Policies with Block actions block network traffic from reaching certain IPs or ports. For example, the following configuration blocks all traffic directed to port 443:
+
+| Selector | Operator | Value | Action |
+| --- | --- | --- | --- |
+| Destination Port | In | `443` | Block |
+
+
+### Network Override
+
+Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
+
+| Selector | Operator | Value | Action |
+| --- | --- | --- | --- |
+| Destination IP | In | `95.92.143.151` | Network Override |
+| User Email | In | `*@example.com` | |
+| Override IP |  | 10.0.0.1 | | 
 
 ## Expressions 
 
@@ -62,36 +90,5 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 |  matches regex        | regex evaluates to true         |
 |  does not match regex |  all except when regex evals to true   |
 
-## Common policy configurations
-
-This section addresses a few common policy configurations and best practices. You will find one example configuration per action type.
-
-### Allow
-
-Policies with Allow actions allow network traffic to reach certain IPs or ports. For example, the following configuration allows specific users to reach a given IP address:
-
-| Selector | Operator | Value | Action |
-| --- | --- | --- | --- |
-| Destination IP | In | `92.100.02.102` | Allow |
-| Email | In | `*@example.com` |  |
-
-### Block
-
-Policies with Block actions block network traffic from reaching certain IPs or ports. For example, the following configuration blocks all traffic directed to port 443:
-
-| Selector | Operator | Value | Action |
-| --- | --- | --- | --- |
-| Destination Port | In | `443` | Block |
-
-
-### Network Override
-
-Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
-
-| Selector | Operator | Value | Action |
-| --- | --- | --- | --- |
-| Destination IP | In | `95.92.143.151` | Network Override |
-| User Email | In | `*@example.com` | |
-| Override IP |  | 10.0.0.1 | | 
 
 
