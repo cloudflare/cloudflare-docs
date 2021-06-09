@@ -2,6 +2,8 @@
 order: 5
 ---
 
+import CaptivePortals from "../_partials/_captive-portals.md"
+
 # iPhone
 
 Follow this quick guide to start using 1.1.1.1 on your iPhone.
@@ -36,3 +38,5 @@ You can also use a handy iOS app called DNS Override (paid app, costs $1.99) tha
 1. Click **1.1.1.1** at the top of the app.
 1. Turn on the **DNS Override** toggle.
 1. DNS Override may ask you to install their VPN profile so that they can automatically update DNS settings.
+
+<CaptivePortals/>
