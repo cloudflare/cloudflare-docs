@@ -3,7 +3,7 @@ pcx-content-type: how-to
 order: 13
 ---
 
-# Manage Rate Limiting Rules in the dashboard
+# Manage Rate Limiting rules in the dashboard
 
 <Aside type='warning' header='Important'>
 
@@ -11,20 +11,20 @@ This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-You can manage Rate Limiting Rules under the **Custom Rules** tab in the **Firewall** app.
+You can manage Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
 
 The Custom Rules interface allows you to:
 
 * Browse and filter rules
-* Create Rate Limiting Rules
+* Create Rate Limiting rules
 * Edit and delete rules
 * Enable or disable rules
 
 ![Custom Rules tab](../../../images/custom-rules/custom-rules-tab.png)
 
-## Create a Rate Limiting Rule
+## Create a Rate Limiting rule
 
-To create a new Rate Limiting Rule:
+To create a new Rate Limiting rule:
 
 1. Log in to the Cloudflare dashboard.
 
@@ -36,7 +36,7 @@ To create a new Rate Limiting Rule:
 
 1. In the **Create Firewall Rule** page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Rate Limiting Rule page](../../../images/custom-rules/rate-limiting-create.png)
+    ![Create Rate Limiting rule page](../../../images/custom-rules/rate-limiting-create.png)
 
 1. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

@@ -12,7 +12,7 @@ This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-The examples below include sample Rate Limiting Rule configurations that address common rate limiting use cases.
+The examples below include sample Rate Limiting rule configurations that address common rate limiting use cases.
 
 ## Example 1
 
