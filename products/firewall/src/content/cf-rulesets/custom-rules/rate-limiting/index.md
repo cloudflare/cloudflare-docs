@@ -35,6 +35,7 @@ See [Determining the request rate](/cf-rulesets/custom-rules/rate-limiting/reque
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
 * [Firewall Rules](/cf-firewall-rules), available in the **Firewall Rules** tab
+* Custom Firewall Rules, available in the **Custom Rules** tab
 * Rate Limiting Rules (described in this section), available in the **Custom Rules** tab
 * Managed Rulesets, available in the **Managed Rules** tab
 * Legacy Rate Limiting Rules, available in the **Tools** tab
