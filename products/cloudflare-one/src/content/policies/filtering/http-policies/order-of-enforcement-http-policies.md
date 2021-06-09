@@ -12,6 +12,6 @@ Gateway evaluates HTTP policies as follows:
 
 This order of enforcement allows Gateway to determine first if decryption should occur.
 
-Once that's been established, Isolation policies are evaluated — when a user makes a request which triggers an Isolation policy, the request will be rerouted to an isolated browser and re-evaluated for HTTP policies.
+Once that's been established, Isolation policies are evaluated. When a user makes a request which triggers an Isolation policy, the request will be rerouted to an isolated browser and re-evaluated for HTTP policies.
 
 This makes it possible for an isolated browser to remotely render a block page or have malicious content within the isolated browser blocked by HTTP policies.
