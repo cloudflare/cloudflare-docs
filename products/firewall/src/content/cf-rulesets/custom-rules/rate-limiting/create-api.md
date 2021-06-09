@@ -4,7 +4,7 @@ order: 15
 type: overview
 ---
 
-# Manage Rate Limiting rules via API
+# Create Rate Limiting rules via API
 
 <Aside type='warning' header='Important'>
 
@@ -12,7 +12,9 @@ This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a Rate Limiting rule via API. A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/cf-rulesets/custom-rules/rate-limiting/parameters) for more information on this field and its parameters.
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a Rate Limiting rule via API. 
+
+A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/cf-rulesets/custom-rules/rate-limiting/parameters) for more information on this field and its parameters.
 
 You must deploy Rate Limiting rules to the `http_ratelimit` phase ruleset.
 

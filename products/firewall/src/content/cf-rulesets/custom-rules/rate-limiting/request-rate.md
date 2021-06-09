@@ -23,7 +23,7 @@ In this case, two incoming requests with the **same** value for the HTTP header 
 
 <Aside type='warning' header='Important'>
 
-The Cloudflare **data center ID** is a mandatory characteristic of every Rate Limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating Rate Limiting rules via API](/cf-rulesets/custom-rules/rate-limiting/manage-api).
+The Cloudflare **data center ID** is a mandatory characteristic of every Rate Limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating Rate Limiting rules via API](/cf-rulesets/custom-rules/rate-limiting/create-api).
 
 </Aside>
 

@@ -42,6 +42,6 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 
 ## Getting started
 
-To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, see [Manage Rate Limiting rules in the dashboard](/cf-rulesets/custom-rules/rate-limiting/manage-dashboard).
+To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, see [Manage Rate Limiting rules in the dashboard](/cf-rulesets/custom-rules/rate-limiting/create-dashboard).
 
-You can also configure Rate Limiting rules using the [Rulesets API](/cf-rulesets/rulesets-api). See [Manage Rate Limiting rules via API](/cf-rulesets/custom-rules/rate-limiting/manage-api) for more information.
+You can also configure Rate Limiting rules using the [Rulesets API](/cf-rulesets/rulesets-api). See [Manage Rate Limiting rules via API](/cf-rulesets/custom-rules/rate-limiting/create-api) for more information.

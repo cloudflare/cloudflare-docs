@@ -3,7 +3,7 @@ pcx-content-type: how-to
 order: 13
 ---
 
-# Manage Rate Limiting rules in the dashboard
+# Create Rate Limiting rules in the dashboard
 
 <Aside type='warning' header='Important'>
 
@@ -11,16 +11,7 @@ This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-You can manage Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
-
-The Custom Rules interface allows you to:
-
-* Browse and filter rules
-* Create Rate Limiting rules
-* Edit and delete rules
-* Enable or disable rules
-
-![Custom Rules tab](../../../images/custom-rules/custom-rules-tab.png)
+Create Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
 
 ## Create a Rate Limiting rule
 
