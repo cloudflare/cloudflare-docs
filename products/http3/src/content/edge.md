@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content-type: configuration
+pcx-content-type: how-to
 ---
 
 # Microsoft Edge

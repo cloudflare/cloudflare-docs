@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content-type: configuration
+pcx-content-type: how-to
 ---
 
 # Google Chrome

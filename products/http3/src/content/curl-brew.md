@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: configuration
+pcx-content-type: how-to
 ---
 
 # Curl + Quiche

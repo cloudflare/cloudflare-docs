@@ -1,6 +1,6 @@
 ---
 order: 5
-pcx-content-type: configuration
+pcx-content-type: how-to
 ---
 
 # Mozilla Firefox
