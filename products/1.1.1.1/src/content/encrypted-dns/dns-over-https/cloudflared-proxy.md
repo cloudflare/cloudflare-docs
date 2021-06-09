@@ -1,5 +1,6 @@
 ---
-order: 10
+order: 9
+pcx-content-type: tutorial
 ---
 
 # Running a DNS over HTTPS client
@@ -8,9 +9,9 @@ There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1
 
 ## cloudflared
 
-We've open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
+We have open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-1. Download the cloudflared daemon. You can [find it here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1. Download the cloudflared daemon. You can [find it this web page](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 1. Verify that the `cloudflared` daemon is installed:
 
     ```sh
@@ -18,7 +19,7 @@ We've open sourced a Golang DoH client you can use to get started. Follow this q
     cloudflared version 2020.11.11 (built 2020-11-25-1643 UTC)
     ```
 
-1. Start the DNS proxy on an address and port in your network. If you don't specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so for the initial demo we will use a different port:
+1. Start the DNS proxy on an address and port in your network. If you don not specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so for the initial demo we will use a different port:
 
     ```sh
     $ cloudflared proxy-dns --port 5553
@@ -73,11 +74,11 @@ We've open sourced a Golang DoH client you can use to get started. Follow this q
     2606:4700::6810:84e5
     ```
 
-## dnscrypt-proxy
+## DNSCrypt-Proxy
 
-The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1, and other services. It includes more advanced features, such as load balancing and local filtering.
+The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1, and other services. It includes more advanced features, such as load balancing and local filtering.
 
-1. Install the dnscrypt-proxy. You can [find the instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+1. Install DNSCrypt-Proxy. You can [find the instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
 1. Verify that the `dnscrypt-proxy` is installed, and at least version 2.0:
 
     ```sh
@@ -104,4 +105,4 @@ The [dnscrypt-proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It
     Resolver IP:    172.68.140.217
     ```
 
-1. Register it as a system service according to the [dnscrypt-proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+1. Register it as a system service according to the [DNSCrypt-Proxy installation instructions](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).

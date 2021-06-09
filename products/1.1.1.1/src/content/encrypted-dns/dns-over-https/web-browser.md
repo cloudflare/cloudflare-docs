@@ -1,5 +1,6 @@
 ---
-order: 10
+order: 8
+pcx-content-type: tutorial
 ---
 
 # Configure your browser to use DNS over HTTPS
@@ -8,9 +9,9 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 ## Mozilla Firefox
 
-1. Click the **hamburger menu** at the top-right corner of your browser window.
-1. Click **Preferences**.
-1. In the **General** menu, scroll down to access `Network Settings`.
+1. Click the hamburger menu at the top-right corner of your browser window.
+1. Select **Preferences**.
+1. In the **General** menu, scroll down to access **Network Settings**.
 1. Click on the **Settings** button.
 1. Click **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
 
@@ -22,12 +23,12 @@ This setting may already be enabled on Chrome by default.
 
 </Aside>
 
-1. Click on the **three-dot menu** at in the top-right corner of your browser window.
-1. Click **Settings**.
+1. Click on the three-dot menu in the top-right corner of your browser window.
+1. Select **Settings**.
 1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS** switch.
 
-Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](https://1.1.1.1/dns/#setup-instructions).
+Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](/setting-up-1.1.1.1/index).
 
 ## Microsoft Edge
 
@@ -38,7 +39,7 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 
 ## Brave
 
-1. Click the **hamburger menu** at the top-right corner of your browser window.
+1. Click the hamburger menu at the top-right corner of your browser window.
 1. Navigate to **Settings**.
 1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS**.

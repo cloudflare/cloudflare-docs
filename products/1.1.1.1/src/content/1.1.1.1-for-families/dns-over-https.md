@@ -1,6 +1,7 @@
 ---
-order: 5
+pcx-content-type: how-to
 ---
+
 # DNS over HTTPS
 
 You can send DNS queries in an encrypted fashion for 1.1.1.1 for Families. If you have DNS over HTTPS compliant client, use the following URLs to use 1.1.1.1 for Families.

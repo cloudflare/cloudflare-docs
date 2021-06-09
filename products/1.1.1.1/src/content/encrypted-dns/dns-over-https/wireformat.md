@@ -1,12 +1,13 @@
 ---
-order: 11
+order: 10
+pcx-content-type: tutorial
 ---
 
 # Using DNS Wireformat
 
 Cloudflare respects DNS wireformat as is defined in RFC1035.
 
-To send queries using DNS wire format, set the header `accept: application/dns-message`, or `content-type: application/dns-message` if using `POST` to signalize the media type of the query.
+To send queries using DNS wireformat, set the header `accept: application/dns-message`, or `content-type: application/dns-message` if using `POST` to signalize the media type of the query.
 
 Queries using DNS wireformat can be sent using `POST` or `GET`.
 

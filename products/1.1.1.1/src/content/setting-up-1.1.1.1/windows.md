@@ -10,11 +10,11 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 <StreamVideo id="92b27227d737a866adc8b0572cf0db89"/>
 
-1. Click the **Start menu** > **Control Panel**.
+1. Click the **Start menu** > **Settings**.
 1. Select **Network and Internet** > **Change Adapter Settings**.
-1. Right click on the Wi-Fi network you are connected to.
+1. Right-click on the WiFi network you are connected to and click **Properties**.
+1. Select **Internet Protocol Version 4**
 1. Click **Properties**.
-1. Select **Internet Protocol Version 4** > **Properties**.
 1. Click **Use The Following DNS Server Addresses**.
 1. Remove any IP addresses that may be already listed and in their place add:
 

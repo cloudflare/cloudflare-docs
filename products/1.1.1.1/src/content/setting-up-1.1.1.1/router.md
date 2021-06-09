@@ -32,11 +32,11 @@ It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if
 
 <StreamVideo id="510f09dad9812cd7ac009ebcab75068e"/>
 
-1. Go to [http://unifi.ubnt.com](http://unifi.ubnt.com) and enter your **email** and **password**.
+1. Go to [http://unifi.ubnt.com](http://unifi.ubnt.com) and enter your email and password.
 1. Click on the name of the network you are managing.
 1. Select **Launch**.
-1. Click on the **settings** icon in the lower left-hand corner.
-1. From the settings menu, select **Networks**.
+1. Click on the **Settings** icon in the lower left-hand corner.
+1. From the Settings menu, select **Networks**.
 1. Click **Edit** by the name of the network.
 1. Scroll to where it says **DHCP Name Server**. If Auto is selected, select **Manual** instead.
 1. In the boxes called DNS Server 1, 2, 3, etc. put:

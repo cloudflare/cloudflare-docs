@@ -1,10 +1,11 @@
 ---
-order: 3
+order: 7
+pcx-content-type: tutorial
 ---
 
 # Using JSON
 
-Cloudflare's DNS over HTTPS endpoint also supports JSON format for querying DNS data. For lack of an agreed upon JSON schema for DNS over HTTPS in the IETF, Cloudflare has chosen to follow the same schema as Google's DNS over HTTPS resolver.
+Cloudflare's DNS over HTTPS endpoint also supports JSON format for querying DNS data. For lack of an agreed upon JSON schema for DNS over HTTPS in the Internet Engineering Task Force (IETF), Cloudflare has chosen to follow the same schema as Google's DNS over HTTPS resolver.
 
 JSON formatted queries are sent using a `GET` request. When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (`application/dns-json`).
 

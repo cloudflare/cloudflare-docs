@@ -63,7 +63,7 @@ The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Ni
 1. Click **Save**.
 1. Click **OK**.
 
-## Nintendo Switch
+### Nintendo Switch
 
 1. Press the home button and select **System Settings** (the symbol that looks like a sun).
 1. Scroll down and select **Internet** > **Internet Settings**.
