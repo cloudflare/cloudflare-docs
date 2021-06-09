@@ -80,8 +80,8 @@ The value of  `queue_all` indicates whether all traffic is forced to queue in th
 
 ## Queueing activation
 
-When a waiting room begins queueing traffic, it does so at the level of individual data centers. This design increases scalability as each data center can make decisions independently.
+Waiting room queue traffic at the data-center level to increase scalability, letting each data center make decisions independently.
 
-However, this choice also means that a waiting room might queue traffic from specific data centers before it reaches its limit of `new_users_per_minute`. 
+Because of this design, a waiting room might queue traffic from a specific data centers before the waiting room reaches its limit of `new_users_per_minute`. 
 
-If you want to avoid this problem, increase the minimum values for `new_users_per_minute` and `total_active_users` until the waiting center stops queueing visitors.
+To stop active queueing, increase the minimum values for `new_users_per_minute` and `total_active_users`.
