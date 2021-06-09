@@ -98,7 +98,7 @@ When you create a waiting room with custom HTML, you can use the following varia
 
 ### Multiple-language support
 
-You can customize your waiting room page in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
+Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
 
 ## Preview waiting room
 
