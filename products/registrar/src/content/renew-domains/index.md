@@ -18,7 +18,7 @@ If the renewal fails, you will receive an email notification and Cloudflare will
 
 <Aside type='note'>
 
-If you want to delete your domain from Cloudflare, make sure to disable <strong>Auto Renew</strong> on your domain within Registrar.
+If you want to delete your domain from Cloudflare, disable <strong>Auto Renew</strong> on your domain within Registrar.
 
 </Aside>
 
@@ -49,9 +49,3 @@ If you do not renew your domain before the expiration date, your domain will ent
 All renewals are final and Cloudflare will not issue refunds.
 
 When renewing a domain, additional years are always added to the current expiration date regardless of when the renewal takes place.
-
-<Aside type="note">
-
-You can search for domains registered through Cloudflare using [RDAP](https://rdap.cloudflare.com).
-
-</Aside>

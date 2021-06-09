@@ -2,9 +2,17 @@
 order: 4
 ---
 
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
+
 # GoDaddy
 
 You can follow the instructions below to transfer your domain from GoDaddy to Cloudflare.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 
