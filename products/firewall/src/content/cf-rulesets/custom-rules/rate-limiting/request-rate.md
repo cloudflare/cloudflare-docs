@@ -19,7 +19,7 @@ For example, consider a rule configured with the following characteristics:
 * IP address
 * HTTP header `x-api-key`
 
-In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers. 
+In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
 
 <Aside type='warning' header='Important'>
 
@@ -38,9 +38,10 @@ Expression:<br/>
 
 Action: _Block_
 
-Characteristics: 
+Characteristics:
+
 * _Data center ID_ (included by default when creating the rule in the dashboard)
-* _IP Address_ 
+* _IP Address_
 * _HTTP Header_ > `x-api-key`
 
 Period: _10 seconds_
