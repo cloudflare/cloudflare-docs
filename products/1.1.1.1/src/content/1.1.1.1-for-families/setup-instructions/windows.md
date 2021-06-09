@@ -2,6 +2,8 @@
 order: 3
 ---
 
+import CaptivePortals from "../../_partials/_captive-portals.md"
+
 # Windows setup instructions
 
 ## Block malware
@@ -71,3 +73,5 @@ order: 3
     2606:4700:4700::1003
     ```
 1.  Click **OK**.
+
+<CaptivePortals/>

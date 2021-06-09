@@ -2,6 +2,8 @@
 order: 4
 ---
 
+import CaptivePortals from "../../_partials/_captive-portals.md"
+
 # Linux setup instructions
 
 ## Block malware
@@ -156,3 +158,5 @@ order: 4
     ```
     :wq
     ```
+
+    <CaptivePortals/>
