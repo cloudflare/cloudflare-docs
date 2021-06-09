@@ -2,9 +2,17 @@
 order: 3
 ---
 
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
+
 # Generic
 
 You can follow the instructions below to transfer your domain from any registrar to Cloudflare.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 
