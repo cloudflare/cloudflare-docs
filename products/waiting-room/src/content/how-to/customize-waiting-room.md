@@ -96,6 +96,9 @@ When you create a waiting room with custom HTML, you can use the following varia
 - **waitTimeKnown**: A `boolean` value. Not available when the queue is full or **queue all** is enabled.
 - **queueIsFull**: A `boolean` value. Changes to `True` when the queue is longer than 24 hours.
 
+### Multiple-language support
+
+Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
 
 ## Preview waiting room
 
