@@ -34,17 +34,15 @@ const BASIC_PASS = 'admin'
  * @returns {Promise<Response>}
  */
 async function handleRequest(request) {
-  const { method, url } = request
-  const { host, pathname, protocol } = new URL(url)
+  const { protocol, pathname } = new URL(request.url)
 
   // In the case of a "Basic" authentication, the exchange 
   // MUST happen over an HTTPS (TLS) connection to be secure.
-  if ('https'  !== request.headers.get('x-forwarded-proto')
-   || 'https:' !== protocol
-  ) throw new BadRequestException('Please use a HTTPS connection.')
+  if ('https:' !== protocol || 'https' !== request.headers.get('x-forwarded-proto')) {
+    throw new BadRequestException('Please use a HTTPS connection.')
+  }
 
-  switch (pathname)
-  {
+  switch (pathname) {
     case '/':
       return new Response('Anyone can access the homepage.')
 
@@ -54,7 +52,7 @@ async function handleRequest(request) {
       // a popup in the browser, immediately asking for credentials again.
       return new Response('Logged out.', { status: 401 })
 
-    case '/admin':
+    case '/admin': {
       // The "Authorization" header is sent when authenticated.
       if (request.headers.has('Authorization')) {
         // Throws exception when authorization fails.
@@ -78,7 +76,7 @@ async function handleRequest(request) {
           'WWW-Authenticate': 'Basic realm="my scope", charset="UTF-8"'
         }
       })
-    break
+    }
 
     case '/favicon.ico':
     case '/robots.txt':
@@ -95,110 +93,72 @@ async function handleRequest(request) {
  * @throws {UnauthorizedException}
  */
 function verifyCredentials(user, pass) {
+  if (BASIC_USER !== user) {
+    throw new UnauthorizedException('Invalid username.')
+  }
 
-  user = String(user).normalize()
-  pass = String(pass).normalize()
-
-  if (BASIC_USER !== user)
-    throw new UnauthorizedException('Username does not match.')
-
-  if (BASIC_PASS !== pass)
-    throw new UnauthorizedException('Password does not match.')
+  if (BASIC_PASS !== pass) {
+    throw new UnauthorizedException('Invalid password.')
+  }
 }
 
 /**
  * Parse HTTP Basic Authorization value.
  * @param {Request} request
  * @throws {BadRequestException}
- * @returns { (string)user, (string)pass }
+ * @returns {{ user: string, pass: string }}
  */
 function basicAuthentication(request) {
-  // The value after "Basic ", which contains 6 characters, is
-  // the base 64 encoded string containing the username & password.
-  const base64Encoded = getAuthorizationValue(request, 'Basic')
+  const Authorization = request.headers.get('Authorization')
 
-  // developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob
-  try {
-    const base64Decoded = atob(base64Encoded)
+  const [scheme, encoded] = Authorization.split(' ')
 
-    // The username & password are split by the first colon.
-    const seperatorPosition = base64Decoded.indexOf(':')
+  // The Authorization header should look like "Basic user:encoded"
+  if (scheme !== 'Basic') throw new BadRequestException('Malformed authorization header.')
 
-    // The username is the value before the first colon.
-    const user = base64Decoded.substr(0, seperatorPosition)
+  // Decode the base64 value
+  const decoded = atob(encoded)
 
-    // The password is the value after the first colon,
-    // not including that colon in the value (skip 1 position).
-    const pass = base64Decoded.substr(seperatorPosition + 1)
+  // The username & password are split by the first colon.
+  const seperatorPosition = decoded.indexOf(':')
 
-    return { user, pass }
+  return { 
+    // The username is the value before the first colon
+    user: decoded.substring(0, seperatorPosition).normalize(),
+    // The password is everything after the first colon
+    pass: decoded.substring(seperatorPosition + 1).normalize(),
   }
-  catch (exception) {
-    // Catch atob()
-    throw new BadRequestException(exception)
-  }
-}
-
-/**
- * Returns the authorization header without the scheme prefix.
- * @param {Request} request
- * @param  {string} authenticationScheme ['Basic', 'Bearer']
- * @throws {BadRequestException}
- * @returns {string} authorizationValue
- */
-function getAuthorizationValue(request, authenticationScheme) {
-  // Returns the value of the "Authorization" header.
-  const header = request.headers.get('Authorization')
-
-  // The value of the header should start with the scheme plus one space.
-  if ( ! header.startsWith(`${authenticationScheme} `) )
-    throw new BadRequestException('Malformed authorization header.')
-
-  // Strip the authorization scheme.
-  const authorizationValue = header.substr(authenticationScheme.length + 1)
-
-  return authorizationValue
 }
 
 function UnauthorizedException(reason) {
-  this.value = reason
   this.status = 401
-  this.headers = {}
-  this.toString = () => {
-    return '401 Unauthorized: ' + this.value
-  }
+  this.statusText = 'Unauthorized'
+  this.reason = reason
 }
 
 function BadRequestException(reason) {
-  this.value = reason
   this.status = 400
-  this.headers = {}
-  this.toString = () => {
-    return '400 Bad Request: ' + this.value
-  }
+  this.statusText = 'Bad Request'
+  this.reason = reason
 }
 
-addEventListener('fetch',function(event) {
-   const response = handleRequest(event.request)
-  .catch(exception => {
-    const message = exception.stack   || exception, // .toString()
-          headers = exception.headers || {},
-          status  = exception.status  || 500
+addEventListener('fetch', event => {
+  event.respondWith(
+    handleRequest(event.request).catch(err => {
+      const message = err.reason || err.stack || 'Unknown Error'
 
-    return new Response(message, { status,
-      headers: {
-        'Content-Type': 'text/plain;charset=UTF-8',
-        // Disables caching by default.
-        'Cache-Control': 'no-store',
-        // Returns the "Content-Length" header for HTTP HEAD requests.
-        'Content-Length': message.toString().length,
-        // Overwrites the values above.
-        ...headers
-      }
+      return new Response(message, {
+        status: err.status || 500,
+        statusText: err.statusText || null,
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+          // Disables caching by default.
+          'Cache-Control': 'no-store',
+          // Returns the "Content-Length" header for HTTP HEAD requests.
+          'Content-Length': message.length,
+        }
+      })
     })
-  })
-  
-  event.respondWith(response)
+  )
 })
-
 ```
