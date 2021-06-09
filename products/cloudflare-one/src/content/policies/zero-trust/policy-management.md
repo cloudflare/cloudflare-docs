@@ -10,15 +10,15 @@ You can then choose to edit or delete that first policy after completing the app
 
 There is no limit to the number of policies you can set up for your applications.
 
-## Add a policy
+## Create a policy
 
-To add a zero-trust policy:
+To create a Zero Trust policy:
 
 1. On the Teams dashboard, navigate to the **Access > Applications** page.
 1. Locate the application for which you want to create the policy.
 1. Click **Add a Rule**.
 
- ![Add rule](../../static/documentation/policies/add-rule.png)
+  ![Add rule](../../static/documentation/policies/add-rule.png)
 
 1. Select a **Rule name**. This name will identify your policy in the list of application policies.
 1. Select a **[Rule action](/policies/zero-trust#actions)**. 
@@ -35,7 +35,7 @@ To make any changes to an application’s policies:
 1. Locate the application for which you want to change the policies.
 1. Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
-![Policies section](../../static/documentation/policies/policies-section.png)
+  ![Policies section](../../static/documentation/policies/policies-section.png)
 
 1. Once in the **Policies** section, you can edit the **Rule name**, the **Rule action**, and any rules you had configured.
 1. Once you’ve made all the necessary changes, click **Save application**.
