@@ -84,4 +84,4 @@ Waiting rooms queue traffic at the data-center level to increase scalability, le
 
 Because of this design, a waiting room might queue traffic from a specific data centers before the waiting room reaches its limit of `new_users_per_minute`. 
 
-To stop active queueing, increase the minimum values for `new_users_per_minute` and `total_active_users`.
+To stop a waiting room from active queueing, increase the minimum values for `new_users_per_minute` and `total_active_users`.
