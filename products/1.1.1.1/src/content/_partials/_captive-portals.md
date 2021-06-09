@@ -5,6 +5,6 @@
 If you are experiencing connectivity issues related to captive portals:
 1. Remove the static IP addresses from the device.
 1. Connect to the Wi-Fi network.
-1. Once the connection has been established, add the static IP addresses back.
+1. Once the connection has been established, re-add the static IP addresses.
 
 </Aside>
