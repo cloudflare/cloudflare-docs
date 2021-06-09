@@ -77,3 +77,11 @@ The value of `suspended` indicates whether a waiting room is activated or suspen
 The value of  `queue_all` indicates whether all traffic is forced to queue in the waiting room:
 * `false`: Visitors are diverted to the waiting room only if traffic exceeds the configured threshold.
 * `true`: All traffic is forced to queue in the waiting room, and no traffic passes from the waiting room to the origin.
+
+## Queueing activation
+
+When a waiting room begins queueing traffic, it does so at the level of individual data centers. This design increases scalability as each data center can make decisions independently.
+
+However, this choice also means that a waiting room might queue traffic from specific data centers before it reaches its limit of `new_users_per_minute`. 
+
+If you want to avoid this problem, increase the minimum values for `new_users_per_minute` and `total_active_users` until the waiting center stops queueing visitors.
