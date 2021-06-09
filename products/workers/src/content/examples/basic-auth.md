@@ -113,21 +113,23 @@ function basicAuthentication(request) {
 
   const [scheme, encoded] = Authorization.split(' ')
 
-  // The Authorization header should look like "Basic user:encoded"
+  // The Authorization header must look like "Basic user:encoded".
   if (scheme !== 'Basic') throw new BadRequestException('Malformed authorization header.')
 
-  // Decode the base64 value
+  // Decode the base64 value.
   const decoded = atob(encoded)
 
   // The username & password are split by the first colon.
   const seperatorPosition = decoded.indexOf(':')
 
   return { 
-    // The username is the value before the first colon
+    // The username is the value before the first colon.
     user: decoded.substring(0, seperatorPosition).normalize(),
-    // The password is everything after the first colon
+    // The password is everything after the first colon.
     pass: decoded.substring(seperatorPosition + 1).normalize(),
   }
+  // Without `.normalize()` unicode characters could fail verification. See:
+  // https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
 }
 
 function UnauthorizedException(reason) {
