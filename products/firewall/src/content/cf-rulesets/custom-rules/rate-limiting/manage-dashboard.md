@@ -58,13 +58,13 @@ You can edit, delete, or enable/disable rules in the Custom Rules card.
 
 ### Enable or disable a rule
 
-To enable/disable a rule, click the _On_/_Off_ toggle button on the right of the rule you want to change.
+To enable/disable a rule, click the toggle button on the right of the rule you want to change.
 
 ### Edit a rule
 
 To edit a rule:
 
-1. Click **Edit** on the right of the rule you want to change. 
+1. Click **Edit** on the right of the rule you want to change.
 1. Update the rule parameters.
 1. Click **Save**.
 
