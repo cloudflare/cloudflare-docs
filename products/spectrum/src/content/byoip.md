@@ -1,3 +1,7 @@
+---
+pcx-content-type: concept
+---
+
 # BYOIP
 
 When creating a Spectrum application, Cloudflare normally assigns an arbitrary IP from Cloudflare’s IP pool to your application. This may not always be what you want: you may want to be explicit in your network setup, or use your own IP addresses. BYOIP with Spectrum allows you to do just that.
