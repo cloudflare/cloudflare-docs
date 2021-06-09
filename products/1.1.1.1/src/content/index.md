@@ -34,7 +34,7 @@ For those who need encryption, 1.1.1.1 also offers DNS over HTTPS and DNS over T
 
 <ButtonGroup>
   <Button type="primary" href="/1.1.1.1/setting-up-1.1.1.1">Set up 1.1.1.1</Button>
-  <Button type="secondary" href="/1.1.1.1/what-is-1.1.1.1">Learn more</Button> //change button
+  <Button type="secondary" href="/1.1.1.1/what-is-1.1.1.1">Learn more</Button>
 </ButtonGroup>
 
 </ContentColumn>

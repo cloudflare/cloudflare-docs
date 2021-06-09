@@ -1,12 +1,10 @@
 ---
-order: 7
+pcx-content-type: how-to
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 
 # macOS
-
-Follow this quick guide to start using 1.1.1.1 on your Mac.
 
 <StreamVideo id="b95943849d53350130ba22d039fa6faf"/>
 
@@ -22,7 +20,6 @@ Follow this quick guide to start using 1.1.1.1 on your Mac.
     2606:4700:4700::1001
     ```
 
-1. Click **OK**.
-1. Click **Apply**.
+1. Click **OK** > **Apply**.
 
 <CaptivePortals/>

@@ -1,5 +1,7 @@
 ---
 order: 3
+pcx-content-type: reference
+---
 ---
 
 # 1.1.1.1 for Families

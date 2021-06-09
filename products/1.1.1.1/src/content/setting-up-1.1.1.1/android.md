@@ -22,19 +22,15 @@ Follow these steps to configure your device to use 1.1.1.1.
 
 ## Previous versions
 
-Follow this quick guide to start using 1.1.1.1 on your Android.
-
 <StreamVideo id="62dceb0d5905f0c98a895d21409d6247"/>
 
-1. Open **Settings**.
-
-1. Click on **Wi-Fi**.
+1. Open **Settings** > **Wi-Fi**.
 
 1. Press down and hold on the name of the network you are currently connected to.
 
 1. Click **Modify Network**.
 
-1. Click the check box **Show Advanced Options**.
+1. Select the check box **Show Advanced Options**.
 
 1. Change the IP Settings to **Static**.
 

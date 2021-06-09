@@ -1,10 +1,8 @@
 ---
-order: 2
+pcx-content-type: how-to
 ---
 
 # Azure
-
-Follow this quick guide to start using 1.1.1.1 on Microsoft  Azure.
 
 1. Log into your Azure portal.
 
