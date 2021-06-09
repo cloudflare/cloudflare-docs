@@ -244,13 +244,13 @@ $ wrangler tail [--format $FORMAT] [--port $PORT] [--metrics-port $PORT]
 <Definitions>
 
 - `--format $FORMAT` <Type>json|pretty</Type>
-  - The format of the log entries
+  - The format of the log entries.
 
 - `--port $PORT` <Type>int</Type>
-  - The port for your local log server
+  - The port for your local log server.
 
 - `--metrics-port $PORT` <Type>int</Type>
-  - The port for serving [metrics information](https://developers.cloudflare.com/argo-tunnel/reference/arguments/#metrics) about the tunnel
+  - The port for serving [metrics information](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#metrics) about the tunnel.
 
 </Definitions>
 

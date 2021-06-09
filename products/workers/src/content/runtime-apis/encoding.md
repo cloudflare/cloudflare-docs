@@ -27,7 +27,7 @@ let encoder = new TextEncoder()
 
 <Definitions>
 
-- <Code>encode(input<TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">USVString</TypeLink>)</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Typed_arrays/Uint8Array">Uint8Array</TypeLink>
+- <Code>encode(input<TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">USVString</TypeLink>)</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</TypeLink>
 
   - Encodes a string input.
 

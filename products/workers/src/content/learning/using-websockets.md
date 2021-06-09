@@ -90,7 +90,7 @@ async function handleRequest(request) {
 }
 ```
 
-WebSockets emit a number of [Events](/workers/runtime-apis/websockets#events) that can be connected to using `addEventListener`. In the below example, we hook into the `message` event and emit a `console.log` with the data from it:
+WebSockets emit a number of [Events](/runtime-apis/websockets#events) that can be connected to using `addEventListener`. In the below example, we hook into the `message` event and emit a `console.log` with the data from it:
 
 ```js
 async function handleRequest(request) {
