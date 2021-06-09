@@ -1,6 +1,6 @@
 ---
 order: 6
-pcx-content-type: reference
+pcx-content-type: interim
 ---
 
 # Release notes
