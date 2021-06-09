@@ -9,7 +9,7 @@ Out of the box, Wrangler allows you to develop modern ES6 applications with supp
 
 <Aside>
 
-Wrangler's built-in webpack build only supports webpack 4. If you want to use webpack 5, or another bundler like ESBuild or Rollup, you'll want to setup [custom builds](configuration#build) in your `wrangler.toml`.
+Wrangler's built-in webpack build only supports webpack 4. If you want to use webpack 5, or another bundler like ESBuild or Rollup, you'll want to setup [custom builds](/cli-wrangler/configuration#build) in your `wrangler.toml`.
 
 </Aside>
 

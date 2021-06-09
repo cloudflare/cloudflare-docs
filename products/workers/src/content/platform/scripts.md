@@ -67,7 +67,7 @@ You will also need to add your WebAssembly module as a file part to your request
 
 ### Secret bindings
 
-If your Worker script uses [secrets](reference/apis/environment-variables#secrets), add a corresponding `secret_text` binding to the `bindings` array in `metadata.json`.
+If your Worker script uses [secrets](/platform/environments#environment-variables), add a corresponding `secret_text` binding to the `bindings` array in `metadata.json`.
 
 Secret bindings must include a `text` property. The `text` value includes text, such as an API key you want to store.
 
