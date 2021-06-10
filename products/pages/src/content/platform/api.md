@@ -52,7 +52,7 @@ async function handleScheduled(request) {
 }
 ```
 
-Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [cron triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
+Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
 ### 2. Deleting old deployments after a week
 
