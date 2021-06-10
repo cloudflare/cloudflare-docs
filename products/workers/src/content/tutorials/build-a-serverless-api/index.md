@@ -1,7 +1,7 @@
 ---
 updated: 2021-06-03
 difficulty: Intermediate
-type: "🎥 Video"
+content_type: "🎥 Video"
 url: "https://egghead.io/courses/build-a-serverless-api-with-cloudflare-workers-d67ca551?af=a54gwi"
 ---
 
