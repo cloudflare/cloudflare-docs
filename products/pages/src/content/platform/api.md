@@ -131,7 +131,7 @@ async function handleRequest(request) {
     },
   };
 
-  let style = `body{padding:6em; font-family: sans-serif;} h1{color:#f6821f}`;
+  let style = `body { padding: 6em; font-family: sans-serif; } h1 { color: #f6821f }`;
   let content = ``;
 
   content += `<h2>Project</h2>`;
