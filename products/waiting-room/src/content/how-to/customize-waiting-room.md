@@ -5,10 +5,6 @@ pcx-content-type: how-to
 
 # Customize a waiting room
 
-<Aside>
-Only Project Fair Shot (and soon Enterprise) customers can customize their waiting rooms.
-</Aside>
-
 To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
 
 Cloudflare offers options to customize the appearance of your waiting room:
@@ -16,6 +12,10 @@ Cloudflare offers options to customize the appearance of your waiting room:
 * [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
+
+<Aside>
+Only Project Fair Shot and Enterprise customers can customize their waiting rooms.
+</Aside>
 
 ## Default waiting room
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
