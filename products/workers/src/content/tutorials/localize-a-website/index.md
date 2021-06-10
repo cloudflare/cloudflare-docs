@@ -1,7 +1,7 @@
 ---
 updated: 2020-08-03
 difficulty: Intermediate
-type: "📝 Tutorial"
+content_type: "📝 Tutorial"
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
