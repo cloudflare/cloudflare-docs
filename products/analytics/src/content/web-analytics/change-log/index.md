@@ -1,4 +1,5 @@
 ---
+title: Change log
 order: 40
 pcx-content-type: reference
 ---
