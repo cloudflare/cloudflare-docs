@@ -82,7 +82,8 @@ async function handleScheduled(request) {
     },
   }
 
-  let deployments_response = await (await fetch(deployments_endpoint, init)).json()
+  let response = await fetch(deployments_endpoint, init)
+  let deployments = await response.json()
   let to_delete = []
 
   deployments_response.result.forEach(function(deploy){
