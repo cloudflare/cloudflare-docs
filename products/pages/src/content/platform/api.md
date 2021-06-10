@@ -171,6 +171,6 @@ async function handleRequest(request) {
 
 ## See also
 
-- Pages API Docs
+- [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
 - [Workers Getting Started Guide](https://developers.cloudflare.com/workers/get-started/guide)
 - [Workers Cron Triggers](https://developers.cloudflare.com/workers/platform/cron-triggers)
