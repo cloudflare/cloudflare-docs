@@ -8,7 +8,7 @@ The Pages API empowers you to build automations and integrate Pages with your de
 
 Navigate to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and copy your "Global API Key".
 
-### 2. Make requests
+### Make requests
 
 Now, you can authenticate and make requests to the API using your email and key in the request headers. For example, here is an API request to get all deployments in a project.
 
