@@ -4,7 +4,7 @@ The Pages API empowers you to build automations and integrate Pages with your de
 
 ## How to use the API
 
-### 1. Get an API Key
+### Get an API Key
 
 Navigate to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and copy your "Global API Key".
 
