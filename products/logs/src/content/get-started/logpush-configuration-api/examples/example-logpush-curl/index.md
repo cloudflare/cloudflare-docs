@@ -15,9 +15,11 @@ Before getting started, review:
 ## Step 1 - Get ownership challenge
 
 ```bash
-curl -s -X POST \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
--d '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
+$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
+-H "X-Auth-Email: user@example.com" \ 
+-H "X-Auth-Key: api_key" \
+-H "Content-Type: application/json" \ 
+--data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
 ### Parameters
