@@ -109,7 +109,7 @@ async function handleScheduled(request) {
 
 Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
-### 3. Sharing project information
+### Sharing project information
 
 Imagine we are working on a development team using Pages to build our websites. We would want an easy way to share deployment preview links and build status without having to share Cloudflare accounts. Using the API, we can easily share project information, including deployment status and preview links, and serve this content as HTML from a Cloudflare Worker.
 
