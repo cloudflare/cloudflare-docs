@@ -28,7 +28,7 @@ You can use `warp-cli set-mode --help` to get a list of the modes to switch betw
 - WARP with DoH `warp-cli set-mode warp+doh`
 
 ### Using 1.1.1.1 for Families
-The Linux client supports all 1.1.1.1 for Familes modes wither either WARP on or in pure DNS only mode
+The Linux client supports all 1.1.1.1 for Familes modes with either WARP on or in pure DNS only mode
 - Families off `warp-cli set-families-mode off`
 - Malware protection `warp-cli set-families-mode malware`
 - Malware + Adult Content `warp-cli set-families-mode full`
