@@ -1,6 +1,6 @@
 ---
-title: Configuring Cloudflare Web Analytics
 order: 30
+pcx-content-type: navigation
 ---
 
 # Configuring Cloudflare Web Analytics
