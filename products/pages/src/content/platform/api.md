@@ -54,7 +54,7 @@ async function handleScheduled(request) {
 
 Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
-### 2. Deleting old deployments after a week
+### Deleting old deployments after a week
 
 Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project relatively private and prevent access to our old deployments. We can use the API to delete deployments after a month so that they are no longer public online.
 
