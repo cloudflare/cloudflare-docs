@@ -15,7 +15,7 @@ curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{ac
 --header 'X-Auth-Key: {auth_key}' \
 ```
 
-Try it out with one of your projects by replacing {account_id}, {project_name},{email}, and {auth_key}. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/). (Ex: `41643ed677c7c7gba4x463c4zdb9563c`).
+Try it out with one of your projects by replacing {account_id}, {project_name}, {email}, and {auth_key}. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/). (Ex: `41643ed677c7c7gba4x463c4zdb9563c`).
 
 ## Examples
 The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions across the world on Cloudflare's network. Here are three code examples for useful ways to use the Pages API. To build and deploy these samples, refer to the [Workers Getting Started guide](https://developers.cloudflare.com/workers/get-started/guide).
