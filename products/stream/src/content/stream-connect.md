@@ -90,9 +90,8 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT
 Use the URL and streamKey returned from input creation in your streaming software.
 
 <Aside type="warning" header="Handling reconnections">
-Please ensure your streaming software handles reconnections in case the network connection to Cloudflare is interrupted. Although this is unlikely, it is technically possible at any time.
+Make sure the streaming software you are using to push RTMP feeds automatically reconnects if the connection breaks. Some apps like OBS reconnect automatically. Other apps like FFmpeg  [require custom configuration](https://stackoverflow.com/questions/59641728/ffmpeg-stream-to-rtmp-output-and-save-to-mp4-at-same-time-with-reconnect#60286591).
   
-Streaming software like OBS handles RTMP reconnection by default, using FFmpeg to output to RTMPS URLs [requires further configuration](https://stackoverflow.com/questions/59641728/ffmpeg-stream-to-rtmp-output-and-save-to-mp4-at-same-time-with-reconnect#60286591).
 </Aside>
 
 ## Limits
