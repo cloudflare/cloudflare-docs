@@ -56,7 +56,7 @@ Once you have deployed the JS worker, you can set a cron trigger through the Wor
 
 ### Deleting old deployments after a week
 
-Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project relatively private and prevent access to our old deployments. We can use the API to delete deployments after a month so that they are no longer public online.
+Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project private and prevent access to our old deployments. We can use the API to delete deployments after a month, so that they are no longer public online.
 
 ```js
 const deployments_endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
