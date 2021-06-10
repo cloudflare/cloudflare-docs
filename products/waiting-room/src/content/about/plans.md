@@ -33,9 +33,9 @@ The features available for a waiting room depend on your plan type.
         </tr>
          <tr>
             <td><a href='/about'>Queueing method</a></td>
-            <td>First in First Out (FIFO)</td>
-            <td>First in First Out (FIFO)</td>
-            <td>First in First Out (FIFO)</td>
+            <td>First In First Out (FIFO)</td>
+            <td>First In First Out (FIFO)</td>
+            <td>First In First Out (FIFO)</td>
         </tr>
         <tr>
             <td><a href='/reference/configuration-settings'>Disable session renewal</a></td>
