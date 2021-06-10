@@ -104,8 +104,12 @@ The `like` operator is available for string comparisons and supports the `%` cha
 {
   myQuery(
     filter: {
-      clientCountry: "UK" # all objects having client country equal to "UK"
-      datetime_gt: "2018-01-01T10:00:00Z" # all object having datetime greater than "2018-01-01T10:00:00Z"
+      httpRequestsAdaptiveGroups(
+        filter: {
+          clientCountry: "UK" # all objects having client country equal to "UK"
+          datetime_gt: "2018-01-01T10:00:00Z" # all object having datetime greater than "2018-01-01T10:00:00Z"
+        }
+      )
     }
   )
 }
@@ -118,7 +122,7 @@ The following GraphQL example shows how to filter a specific node. The SQL equiv
 ##### GraphQL {#001}
 
 ```graphql
-httpRequests1hGroups(filter: {datetime: "2018-01-01T10:00:00Z"}) {
+httpRequestsAdaptiveGroups(filter: {datetime: "2018-01-01T10:00:00Z"}) {
     ...
 }
 ```
@@ -155,9 +159,10 @@ The following GraphQL example demonstrates using the `OR` operator in a filter. 
 ##### GraphQL {#005}
 
 ```graphql
-httpRequests1hGroups(filter: {
-    datetime: "2018-01-01T10:00:00Z",
-    OR:[{clientCountryName: "US"}, {clientCountryName: "UK"}]) {
+httpRequestsAdaptiveGroups(
+        filter: {
+          datetime: "2018-01-01T10:00:00Z",
+          OR:[{clientCountryName: "US"}, {clientCountryName: "UK"}]) {
     ...
 }
 ```
