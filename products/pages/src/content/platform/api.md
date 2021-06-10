@@ -24,7 +24,7 @@ Try it out with one of your projects by replacing {account_id}, {project_name}, 
 
 The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions across the world on Cloudflare's network. Here are three code examples for useful ways to use the Pages API. To build and deploy these samples, refer to the ["Getting Started" guide](https://developers.cloudflare.com/workers/get-started/guide).
 
-### 1. Triggering a new build every hour
+### Triggering a new build every hour
 
 Suppose we have a CMS that pulls data from live sources to compile a static output. We can keep the static content as fresh as possible by triggering new builds periodically using the API.
 
@@ -55,9 +55,9 @@ async function handleScheduled(request) {
 
 Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
-### 2. Deleting old deployments after a week
+### Deleting old deployments after a week
 
-Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project relatively private and prevent access to our old deployments. We can use the API to delete deployments after a month so that they are no longer public online.
+Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project private and prevent access to our old deployments. We can use the API to delete deployments after a month, so that they are no longer public online.
 
 ```js
 const deployments_endpoint =
@@ -135,7 +135,7 @@ async function handleRequest(request) {
     },
   };
 
-  let style = `body{padding:6em; font-family: sans-serif;} h1{color:#f6821f}`;
+  let style = `body { padding: 6em; font-family: sans-serif; } h1 { color: #f6821f }`;
   let content = ``;
 
   content += `<h2>Project</h2>`;
