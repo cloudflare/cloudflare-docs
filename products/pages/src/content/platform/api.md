@@ -18,7 +18,7 @@ curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{ac
 Try it out with one of your projects by replacing {account_id}, {project_name}, {email}, and {auth_key}. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/). (Ex: `41643ed677c7c7gba4x463c4zdb9563c`).
 
 ## Examples
-The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions across the world on Cloudflare's network. Here are three code examples for useful ways to use the Pages API. To build and deploy these samples, refer to the [Workers Getting Started guide](https://developers.cloudflare.com/workers/get-started/guide).
+The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions across the world on Cloudflare's network. Here are three code examples for useful ways to use the Pages API. To build and deploy these samples, refer to the ["Getting Started" guide](https://developers.cloudflare.com/workers/get-started/guide).
 
 ### 1. Triggering a new build every hour
 Suppose we have a CMS that pulls data from live sources to compile a static output. We can keep the static content as fresh as possible by triggering new builds periodically using the API.
