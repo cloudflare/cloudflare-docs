@@ -1,4 +1,7 @@
-Before transferring a domain to or from Cloudflare:
+Before transferring a domain to Cloudflare:
+- Make sure Cloudflare is active on your domain, meaning that you:
+    - Have [an account that includes your domain](https://support.cloudflare.com/hc/articles/201720164).
+    - Have [changed your DNS nameservers](https://support.cloudflare.com/hc/articles/205195708) to Cloudflare.
 - Disable DNSSEC by:
     - Removing the DS record at your current DNS host.
     - [Disabling DNSSEC](https://support.cloudflare.com/hc/articles/360006660072) in the Cloudflare dashboard.
