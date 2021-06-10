@@ -18,7 +18,7 @@ curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{ac
 --header 'X-Auth-Key: {auth_key}' \
 ```
 
-Try it out with one of your projects by replacing {account_id}, {project_name}, {email}, and {auth_key}. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/). (Ex: `41643ed677c7c7gba4x463c4zdb9563c`).
+Try it out with one of your projects by replacing {account_id}, {project_name}, {email}, and {auth_key}. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/workers). (Ex: `41643ed677c7c7gba4x463c4zdb9563c`).
 
 ## Examples
 
@@ -29,7 +29,8 @@ The API is even more powerful when combined with Cloudflare Workers: the easiest
 Suppose we have a CMS that pulls data from live sources to compile a static output. We can keep the static content as fresh as possible by triggering new builds periodically using the API.
 
 ```js
-const endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
+const endpoint =
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
 const email = "{your_email}";
 
 addEventListener("scheduled", (event) => {
@@ -52,14 +53,15 @@ async function handleScheduled(request) {
 }
 ```
 
-Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [cron triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
+Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
 ### 2. Deleting old deployments after a week
 
 Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project relatively private and prevent access to our old deployments. We can use the API to delete deployments after a month so that they are no longer public online.
 
 ```js
-const deployments_endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
+const deployments_endpoint =
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
 const email = "{your_email}";
 const expiration_days = 7;
 
@@ -112,8 +114,10 @@ Once you have deployed the JS worker, you can set a cron trigger through the Wor
 Imagine we are working on a development team using Pages to build our websites. We would want an easy way to share deployment preview links and build status without having to share Cloudflare accounts. Using the API, we can easily share project information, including deployment status and preview links, and serve this content as HTML from a Cloudflare Worker.
 
 ```js
-const deployments_endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
-const project_endpoint = "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}";
+const deployments_endpoint =
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
+const project_endpoint =
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}";
 
 const email = "{your_email}";
 
@@ -135,7 +139,8 @@ async function handleRequest(request) {
   let content = ``;
 
   content += `<h2>Project</h2>`;
-  const project_response = await (await fetch(project_endpoint, init)).json();
+  let response = await fetch(project_endpoint, init);
+  let project_response = await response.json();
   content += `<p>Project Name: ${project_response.result.name}</p>`;
   content += `<p>Project ID: ${project_response.result.id}</p>`;
   content += `<p>Pages Subdomain: ${project_response.result.subdomain}</p>`;
@@ -143,9 +148,8 @@ async function handleRequest(request) {
   content += `<a href="${project_response.result.canonical_deployment.url}"><p>Latest preview: ${project_response.result.canonical_deployment.url}</p></a>`;
 
   content += `<h2>Deployments</h2>`;
-  const deployments_response = await (
-    await fetch(deployments_endpoint, init)
-  ).json();
+  let d_response = await fetch(deployments_endpoint, init);
+  let deployments_response = await d_response.json();
   deployments_response.result.forEach(function (deploy) {
     content += `<a href="${deploy.url}"><p>Deployment: ${deploy.id}</p></a>`;
   });
