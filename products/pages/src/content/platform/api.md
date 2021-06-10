@@ -18,7 +18,7 @@ curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{ac
 --header 'X-Auth-Key: {auth_key}' \
 ```
 
-Try it out with one of your projects by replacing {account_id}, {project_name}, {email}, and {auth_key}. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/workers). (Ex: `41643ed677c7c7gba4x463c4zdb9563c`).
+Try it out with one of your projects by replacing `{account_id}`, `{project_name}`, `{email}`, and `{auth_key}`. You can find your `account_id` in the URL address bar by navigating to the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/workers).
 
 ## Examples
 
