@@ -119,39 +119,9 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **URL Path and Query**
 * **HTTP Method**
 * **HTTP Response**
-* **Uploaded and Downloaded File Extension**
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
 * **Applications**
-
-List of file extensions Gateway can match against:
-
-<TableWrap>
-
-| Image | Executable | Audio | Documents | Data | Compressed | System | Video |
-|------|------|-------|------|--------|--------|--------|-----|
-| avif | apk | m4a | doc | avro | 7z | bak | avi |
-| bmp | bat | mid | docx | csv | arj | cab | flv |
-| gif | bin | mp3 | odp | dat | bz2 | cpl | h264 |
-| ico | cgi | mpa | ods | dmg | deb | cur | m4v |
-| jpeg | com | wav | odt | iso | gz | emu | mkv |
-| png | dll | wma | pdf | json | lz | ini | mov |
-| psd | exe | ppt | | log | lz4 | scr | mp4 |
-| svg | hta | pptx | | mdb | lzh | sys | mpeg |
-| tif | jar | rtf | | nzb | lzma | tmp | wmv |
-| webp | moo | txt | | orc | pak
-|  | pif | xls | | parquet | rar
-|  | pl | xlsx | | rc | rpm
-|  | prg | | | sav | sz
-|  | | | | wasm | xz | | 
-|  |      | | | sql lite | z
-|  |      | | | tar | zip
-|  |      | | | toml | zlib |
-|  |      | | | torrent | zst |
-|  |      | | | xml |  |
-|  |      | | | yaml | | 
-
-</TableWrap>
 
 ## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
