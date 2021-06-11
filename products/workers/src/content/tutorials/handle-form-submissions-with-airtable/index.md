@@ -86,15 +86,6 @@ Some sample code is provided as an example below, including the first `input`, t
 
 If you'd like to follow along with this example, you can directly copy the `form` code from the [`Form` component](https://github.com/signalnerve/workers-airtable-form/blob/main/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
 
-If you choose to work with the sample front-end codebase, you can delete the included directories that show a finished serverless function. The `worker` directory is the code for our Workers function, and `.github` contains a sample [GitHub Actions workflow](https://github.com/features/actions) for deploying the function when new code is committed to GitHub. Delete these directories by running the following command in your terminal:
-
-```sh
----
-header: Deleting Workers function sample code
----
-$ rm -rf worker .github
-```
-
 ## Create a serverless function
 
 In order to handle the form submission, we'll create and deploy a Workers serverless function that parses the incoming form data, and prepares it for submission to Airtable.
@@ -111,7 +102,7 @@ $ cd airtable-form-handler
 
 <Aside>
 
-If you've chosen to work with the [sample codebase on GitHub](https://github.com/signalnerve/workers-airtable-form), you can run this command inside of the project directory, for instance, `workers-airtable-form`.
+If you've chosen to work with the [sample codebase on GitHub](https://github.com/signalnerve/workers-airtable-form), you can find a sample function in the `worker` directory.
 
 </Aside>
 
