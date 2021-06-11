@@ -34,7 +34,7 @@ The first step is to enroll your devices into the WARP client. The WARP client i
 
 1. Define [device enrollment rules](/connections/connect-devices/warp/device-enrollment) under **My Team > Devices > Manage enrollment rules**.
 
- In this example, I am requiring that my users have a hard-key inserted and are connecting from the United States.
+ In this example, we require that users have a hard key inserted and are connecting from the United States.
 
  ![Device enrollment rules](../static/zero-trust-security/ztna/device-enrollment-rules.png)
  
@@ -49,13 +49,13 @@ The first step is to enroll your devices into the WARP client. The WARP client i
 
 Next, you will need to configure your private network server to connect to Cloudflare’s edge using Cloudflare Tunnel. This will establish a secure outbound connection to Cloudflare.
 
-1. Identify the server you want to use to securely make your private network available to users. This can be the origin server directly, a jumphost or load balancer.
+1. Identify the server you want to use to securely make your private network available to users. This can be the origin server directly, a jumphost, or load balancer.
 
 1. If your server or network has a firewall, follow [this guide](/connections/connect-devices/warp/deployment/firewall) to open up the correct ports and IP addresses. Only outbound openings are required. You do not need to open any inbound holes in your firewall.
 
 1. [Install `cloudflared`](/connections/connect-apps/install-and-setup/installation) on the server.
 
-1. Authenticate cloudflared on the server by running the following command, then follow the prompt to authenticate via URL provided.
+1. Authenticate `cloudflared` on the server by running the following command, then follow the prompt to authenticate via URL provided.
  
  ```sh
  $ cloudflared tunnel login
