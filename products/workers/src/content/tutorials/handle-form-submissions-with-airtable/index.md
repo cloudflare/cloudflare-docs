@@ -115,16 +115,7 @@ If you've chosen to work with the [sample codebase on GitHub](https://github.com
 
 </Aside>
 
-In order to easily parse the form data being sent to our function, we'll install the NPM package [`qs`](https://www.npmjs.com/package/qs):
-
-```sh
----
-header: Installing the qs package from NPM
----
-$ npm install qs
-```
-
-With the `qs` package installed, we need to update our project type to `webpack`, which will tell Wrangler to bundle NPM packages with our serverless function. In `wrangler.toml`, update the `type` attribute. While we're here, you can also add your Cloudflare account ID.
+In `wrangler.toml`, add your Cloudflare account ID:
 
 <Aside>
 
@@ -135,10 +126,10 @@ With the `qs` package installed, we need to update our project type to `webpack`
 ```toml
 ---
 filename: wrangler.toml
-highlight: [2, 4]
+highlight: [4]
 ---
 name = "airtable-form-handler"
-type = "webpack"
+type = "javascript"
 
 account_id = "yourAccountId"
 ```
@@ -180,6 +171,22 @@ Further down the page, you'll begin to see example requests, showing you how to 
 
 ![An example request in Airtable's API documentation, with the Airtable API key highlighted](./api-key.png)
 
+To make this API key available in your codebase, you can use the `wrangler secret` command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users. 
+
+Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
+
+```sh
+---
+header: Setting the AIRTABLE_API_KEY secret with Wrangler
+---
+$ wrangler secret put AIRTABLE_API_KEY
+Enter the secret text you would like assigned to the variable AIRTABLE_API_KEY on the script named airtable-form-handler:
+******
+🌀  Creating the secret for script name airtable-form-handler
+✨  Success! Uploaded secret AIRTABLE_API_KEY.
+```
+
+
 Before we continue, let's review the keys that we should have from Airtable:
 
 1. _Airtable Table Name:_ the name for your table, e.g. "Form Submissions".
@@ -196,8 +203,6 @@ In `index.js`, begin by setting up a simple Workers handler that can respond to 
 ---
 filename: index.js
 ---
-import qs from 'qs'
-
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -215,7 +220,7 @@ async function handleRequest(request) {
 }
 ```
 
-The `submitHandler` has two functions—first, it will parse the form data coming from our HTML5 form, using the `qs` library. Once the data is parsed, we'll use the Airtable API to persist a new _row_ (a new form submission) to our table:
+The `submitHandler` has two functions—first, it will parse the form data coming from our HTML5 form. Once the data is parsed, we'll use the Airtable API to persist a new _row_ (a new form submission) to our table:
 
 ```js
 ---
@@ -228,7 +233,7 @@ const submitHandler = async request => {
     })
   }
 
-  const body = await request.text()
+  const body = await request.formData();
 
   const {
     first_name,
@@ -237,7 +242,7 @@ const submitHandler = async request => {
     phone,
     subject,
     message
-  } = qs.parse(body)
+  } = Object.fromEntries(body)
 
   // The keys in "fields" are case-sensitive, and
   // should exactly match the field names you set up 
@@ -282,24 +287,7 @@ const createAirtableRecord = body => {
 }
 ```
 
-This function contains three values that we haven't defined yet—constants that represent the keys and IDs we need to make valid, authenticated requests to Airtable. 
-
-To set these, we need to configure two types of _environment variables_ inside of our serverless function. For any variables that should remain private, we'll use Wrangler's `secret` command, which can encrypt and store environment variables for use in your function, without revealing them to users. 
-
-Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
-
-```sh
----
-header: Setting the AIRTABLE_API_KEY secret with Wrangler
----
-$ wrangler secret put AIRTABLE_API_KEY
-Enter the secret text you would like assigned to the variable AIRTABLE_API_KEY on the script named airtable-form-handler:
-******
-🌀  Creating the secret for script name airtable-form-handler
-✨  Success! Uploaded secret AIRTABLE_API_KEY.
-```
-
-The _Airtable base ID_ and _table name_ are values that can be publicly shared in places like GitHub. We can use Wrangler's `vars` feature to pass public environment variables from `wrangler.toml`. Add a `vars` object at the end of your `wrangler.toml` file, as seen below:
+To make an authenticated request to Airtable, we need to provide three constants that represent data about our Airtable account, base, and table name. We've already set `AIRTABLE_API_KEY` using `wrangler secret`, since it's a value that should be encrypted. The _Airtable base ID_ and _table name_ are values that can be publicly shared in places like GitHub. We can use Wrangler's `vars` feature to pass public environment variables from `wrangler.toml`. Add a `vars` table at the end of your `wrangler.toml` file, as seen below:
 
 ```toml
 ---
@@ -307,12 +295,14 @@ filename: wrangler.toml
 highlight: [7]
 ---
 name = "workers-airtable-form"
-type = "webpack"
+type = "javascript"
 
 account_id = "yourAccountId"
 workers_dev = true
 
-vars = { AIRTABLE_BASE_ID = "exampleBaseId", AIRTABLE_TABLE_NAME = "Form Submissions" }
+[vars]
+AIRTABLE_BASE_ID = "exampleBaseId"
+AIRTABLE_TABLE_NAME = "Form Submissions"
 ```
 
 With all these fields submitted, it's time to deploy your Workers serverless function, and get your form communicating with it. First, publish your function:
