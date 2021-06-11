@@ -131,7 +131,6 @@ httpRequestsAdaptiveGroups(filter: {datetime: "2018-01-01T10:00:00Z"}) {
 
 ```sql
 WHERE datetime="2018-01-01T10:00:00Z"
-  AND ((clientCountryName = "UK") OR (clientCountryName = "US"))
 ```
 
 #### Filter on multiple fields
@@ -171,7 +170,7 @@ httpRequestsAdaptiveGroups(
 
 ```sql
 WHERE datetime="2018-01-01T10:00:00Z"
-  AND ((clientCountryName = "UK") OR (clientCountryName = "US"))
+  AND ((clientCountryName = "GB") OR (clientCountryName = "US"))
 ```
 
 ### Subqueries (advanced filters)
