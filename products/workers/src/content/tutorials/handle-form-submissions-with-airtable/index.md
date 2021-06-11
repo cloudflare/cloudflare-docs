@@ -53,7 +53,7 @@ The `form` used in the example front-end UI builds on these basics, adding some 
 
 ![The completed form in the front-end user interface](./ui.png)
 
-The code for this form can be [found on GitHub](https://github.com/signalnerve/workers-airtable-form/blob/main/src/Form.js). Of particular note is the `form` action, which has a placeholder for our serverless function URL, and the `method` attribute, which tells the form to submit using an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST). 
+The code for this form can be [found on GitHub](https://github.com/signalnerve/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for our serverless function URL, and the `method` attribute, which tells the form to submit using an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST). 
 
 Some sample code is provided as an example below, including the first `input`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
 
@@ -84,7 +84,7 @@ Some sample code is provided as an example below, including the first `input`, t
 </form>
 ```
 
-If you'd like to follow along with this example, you can directly copy the `form` code from the [`Form` component](https://github.com/signalnerve/workers-airtable-form/blob/main/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
+If you'd like to follow along with this example, you can directly copy the `form` code from the [`Form` component](https://github.com/signalnerve/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
 
 ## Create a serverless function
 
