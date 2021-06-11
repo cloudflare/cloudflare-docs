@@ -4,9 +4,9 @@ order: 40
 pcx-content-type: reference
 ---
 
-# Change log for beacon.js
+# Change log for beacon.min.js
 
-Cloudflare occasionally updates the `beacon.js` file to improve Web Analytics functionality. The table below includes a log of what changed in the `beacon.js` file and when.
+Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytics functionality. The table below includes a log of what changed in the `beacon.min.js` file and when.
 
 <table style="width:100%">
    <thead>
@@ -17,8 +17,12 @@ Cloudflare occasionally updates the `beacon.js` file to improve Web Analytics fu
     </thead>
     <tbody>
         <tr>
+            <td>2021-05-18</td>
+            <td>startsWith function replaced with indexOf function, which prevents rendering if multiple beacon scripts are loaded.</td>
+        </tr>
+        <tr>
             <td>2021-05-17</td>
-            <td>Reporting endpoint changed from /cdn-cgi/beacon/performance to /cdn-cgi/rum.</td>
+            <td>Reporting endpoint changed from /cdn-cgi/beacon/performance to /cdn-cgi/rum (for Browser Insights only).</td>
         </tr>
    </tbody>
 </table>
