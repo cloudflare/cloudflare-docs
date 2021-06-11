@@ -98,7 +98,7 @@ Talahassee | [EdgeConneX Tallahassee (EDCTAL01)](https://www.peeringdb.com/fac/2
 Atlanta | [Digital Realty ATL (56 Marietta)](https://www.peeringdb.com/fac/125)
 Charlotte | [Digital Realty CLT (113 N Myers St)](https://www.peeringdb.com/fac/4770)
 New York | [Digital Realty NYC (111 8th Ave)](https://www.peeringdb.com/fac/16)
-Miami | [zColo Miami - 36 NE 2nd St](https://www.peeringdb.com/fac/1718)
+Miami | [DataBank Miami (MIA1)](https://www.peeringdb.com/fac/1718)
 Seattle | [Westin Building Seattle](https://www.peeringdb.com/fac/71)
 Atlanta | [Equinix AT2/AT3 - Atlanta](https://www.peeringdb.com/fac/11)
 Chicago | [Equinix CH1/CH2/CH4 - Chicago](https://www.peeringdb.com/fac/7)
