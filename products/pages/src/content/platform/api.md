@@ -1,6 +1,6 @@
 # API
 
-The Pages API empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints expose the ability to manage deployments, builds, and configure projects. We plan to support prebuilt deployments and hooks soon to make the API even more powerful. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
+The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. We plan to support prebuilt deployments and hooks soon. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
 ## How to use the API
 
