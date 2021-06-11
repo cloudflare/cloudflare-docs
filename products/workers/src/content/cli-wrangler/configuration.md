@@ -113,7 +113,9 @@ Values to use in your Worker script as text environment variables.
 Usage:
 
 ```toml
-vars = { FOO = "some value", BAR = "some other string" }
+[vars]
+FOO = "some value"
+BAR = "some other string"
 ```
 
 <Definitions>
@@ -127,9 +129,15 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 </Definitions>
 
+Alternatively, you can define `vars` using an "inline table" format. This style should not include any newlines to be considered valid TOML:
+
+```toml
+vars = { FOO = "some value", BAR = "some other string" }
+```
+
 <Aside>
 
-**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret). The `vars` definition in your `wrangler.toml` must not contain newlines in order to be valid TOML.
+**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret).
 
 </Aside>
 
