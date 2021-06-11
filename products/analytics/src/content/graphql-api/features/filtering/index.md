@@ -170,7 +170,7 @@ The following GraphQL example demonstrates using the `OR` operator in a filter. 
 httpRequestsAdaptiveGroups(
         filter: {
           datetime: "2018-01-01T10:00:00Z",
-          OR:[{clientCountryName: "US"}, {clientCountryName: "UK"}]) {
+          OR:[{clientCountryName: "US"}, {clientCountryName: "GB"}]) {
     ...
 }
 ```
