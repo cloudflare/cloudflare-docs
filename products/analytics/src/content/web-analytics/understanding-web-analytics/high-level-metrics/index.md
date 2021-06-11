@@ -3,7 +3,7 @@ order: 39
 pcx-content-type: reference
 ---
 
-# High-Level Metrics
+# High-level metrics
 
 * Visits - A page view that originated from a different website or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
 * Page views - A successful HTTP response with a content-type of HTML.
