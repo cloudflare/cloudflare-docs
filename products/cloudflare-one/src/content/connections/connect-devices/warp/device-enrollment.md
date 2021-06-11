@@ -4,7 +4,7 @@ order: 3
 
 # Device enrollment
 
-## Build an enrollment policy
+## Create an enrollment rule
 
 <Aside>
 
