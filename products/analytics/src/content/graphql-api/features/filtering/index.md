@@ -102,7 +102,15 @@ The `like` operator is available for string comparisons and supports the `%` cha
 
 ```graphql
 {
-  myQuery(
+{
+  viewer {
+    zones(filter: {zoneTag: $zoneTag}) {
+      httpRequestsAdaptiveGroups(filter: {datetime_gt: "2021-06-10T00:00:00Z", clientCountryName: "GB"}, limit: 1) {
+        count
+      }
+    }
+  }
+}
     filter: {
       httpRequestsAdaptiveGroups(
         filter: {
@@ -161,7 +169,7 @@ The following GraphQL example demonstrates using the `OR` operator in a filter. 
 httpRequestsAdaptiveGroups(
         filter: {
           datetime: "2018-01-01T10:00:00Z",
-          OR:[{clientCountryName: "US"}, {clientCountryName: "UK"}]) {
+          OR:[{clientCountryName: "US"}, {clientCountryName: "GB"}]) {
     ...
 }
 ```
