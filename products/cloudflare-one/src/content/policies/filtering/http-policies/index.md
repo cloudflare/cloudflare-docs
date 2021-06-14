@@ -67,12 +67,6 @@ If instead you need to isolate **specific hostnames**, you can list the domains 
 | - | - | - | - |
 | Host | In | `example.com`, `example.net` | Isolate
 
-If you would like to isolate an **entire domain name**, you can use a regular expression match such as:
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | matches regex | `example\.com|.*\.example\.com` | Isolate
-
 <Aside type='note' header='Isolate identity providers for applications'>
 
 Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign on using third-party cookies will also need to be isolated.
