@@ -70,7 +70,7 @@ order: 1
                Improve rule performance
             </td>
             <td>
-                N/A
+                Block
             </td>
             <td>
                 Block
