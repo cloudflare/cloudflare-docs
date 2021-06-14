@@ -1,6 +1,7 @@
 ---
+order: 12
 title: For IPv6-only networks
-order: 9
+pcx-content-type: reference
 ---
 
 # Supporting IPv6-only networks

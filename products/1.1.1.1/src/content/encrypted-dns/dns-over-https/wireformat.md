@@ -1,6 +1,6 @@
 ---
 order: 10
-pcx-content-type: tutorial
+pcx-content-type: reference
 ---
 
 # Using DNS Wireformat

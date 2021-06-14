@@ -1,6 +1,6 @@
 ---
 order: 11
-pcx-content-type: tutorial
+pcx-content-type: reference
 ---
 
 # DNS over TLS

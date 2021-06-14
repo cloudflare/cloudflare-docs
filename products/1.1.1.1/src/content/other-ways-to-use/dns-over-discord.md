@@ -1,10 +1,10 @@
 ---
-order: 2
+pcx-content-type: reference
 ---
 
 # DNS over Discord
 
-Ever wanted to make DNS requests from the comfort of your Discord server? Well now you can, thanks to the [@1.1.1.1 bot](https://cfl.re/3nM6VfQ).
+1.1.1.1 also works from a Discord server, thanks to the [@1.1.1.1 bot](https://cfl.re/3nM6VfQ).
 
 To start using the DNS over Discord bot, invite it to your Discord server using this link: [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ)
 
@@ -15,9 +15,13 @@ This will provide a native interface within Discord that allows you to specify t
 
 Due to limitations in Discord, the `/dig` command can only offer 10 different DNS record types, and will default to 'A' records if none is specified.
 
+<div class="medium-img">
+
 ![dig command](../static/dns-over-discord/dig-command.png)
 
 ![dig command types](../static/dns-over-discord/dig-command-types.png)
+
+</div>
 
 ### Supported record types
 
@@ -36,6 +40,8 @@ For all DNS record types, use the `/multi-dig` command.
 
 ### Examples
 
+<div class="medium-img">
+
 ![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
 
 `/dig domain: cloudflare.com`
@@ -43,6 +49,8 @@ For all DNS record types, use the `/multi-dig` command.
 ![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)
 
 `/dig domain: cloudflare.com type: AAAA short: True`
+
+</div>
 
 ## multi-dig command
 
