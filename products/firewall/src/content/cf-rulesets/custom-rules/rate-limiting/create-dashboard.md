@@ -21,11 +21,11 @@ To create a new Rate Limiting rule:
 
 1. Select the **Websites** tab and choose the site for which you want to create a rule.
 
-1. Click the **Firewall** tile in the app bar, and then click the **Custom Rules** tab.
+1. Navigate to **Firewall** > **Custom Rules**.
 
 1. Click **Create Rate Limiting rule**.
 
-1. In the **Create Firewall Rule** page that displays, enter a descriptive name for the rule in **Rule name**.
+1. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
     ![Create Rate Limiting rule page](../../../images/custom-rules/rate-limiting-create.png)
 
