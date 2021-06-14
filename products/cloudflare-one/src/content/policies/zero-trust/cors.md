@@ -25,7 +25,7 @@ To handle CORS headers for the policy protecting the path that requires CORS, na
 
 * Safari, in particular Safari 13.1, handles cookies in a unique format. In some cases, this can cause CORS to fail. This will be dependent on Apple releasing a patch for handling cookies. This is known to impact macOS 10.15.4 when running Safari 13.1 (15609.1.20.111.8).
 
-* Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to the `CF-Authorization` cookie being blocked.
+* Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests"
 
 </Aside>
 
