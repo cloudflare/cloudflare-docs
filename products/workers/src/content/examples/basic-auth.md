@@ -121,6 +121,9 @@ function basicAuthentication(request) {
 
   // The username & password are split by the first colon.
   const seperatorPosition = decoded.indexOf(':')
+  
+  // NOTE: Without `.normalize()` unicode characters could fail verification.
+  // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
 
   return { 
     // The username is the value before the first colon.
@@ -128,8 +131,6 @@ function basicAuthentication(request) {
     // The password is everything after the first colon.
     pass: decoded.substring(seperatorPosition + 1).normalize(),
   }
-  // Without `.normalize()` unicode characters could fail verification. See:
-  // https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
 }
 
 function UnauthorizedException(reason) {
