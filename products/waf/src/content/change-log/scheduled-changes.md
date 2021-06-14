@@ -30,6 +30,29 @@ order: 1
         </tr>
     </thead>
     <tbody>
+         <tr>
+            <td>
+                2021-06-14
+            </td>
+            <td>
+                2021-06-21
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                100196
+            </td>
+            <td>
+              CVE-2021-21985 VSphere Virtual SAN Health Check
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
         <tr>
             <td>
                 2021-06-07
