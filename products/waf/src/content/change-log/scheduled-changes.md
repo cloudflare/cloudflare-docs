@@ -55,72 +55,25 @@ order: 1
         </tr>
         <tr>
             <td>
-                2021-06-07
+                2021-06-14
             </td>
             <td>
-                2021-06-14
+                2021-06-21
             </td>
             <td>
                 Specials
             </td>
             <td>
-                100139A
+                100136A
             </td>
             <td>
                Improve rule performance
             </td>
             <td>
-                Disabled
-            </td>
-            <td>
-                Disabled
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-06-07
-            </td>
-            <td>
-                2021-06-14
-            </td>
-            <td>
-                Specials
-            </td>
-            <td>
-                100139B
-            </td>
-            <td>
-                Improve rule performance
+                N/A
             </td>
             <td>
                 Block
             </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-06-07
-            </td>
-            <td>
-                2021-06-14
-            </td>
-            <td>
-                Specials
-            </td>
-            <td>
-                100139C
-            </td>
-            <td>
-                Improve rule performance
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
     </tbody>
 </table></TableWrap>
