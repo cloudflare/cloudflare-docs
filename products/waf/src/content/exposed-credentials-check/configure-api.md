@@ -25,7 +25,7 @@ To deploy the Managed Ruleset for a given zone, do the following:
 1. Use the [View ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#view-a-specific-ruleset) method to get the rules already associated with the phase ruleset where you want to deploy the Managed Ruleset.
 1. Use the [Update ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update) method to add a rule to the phase ruleset deploying the Exposed Credentials Check Managed Ruleset. Make sure you include the existing rules in the phase ruleset in your `PUT` request.
 
-For more information on deploying a Managed Ruleset, check [Execute a Managed Ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/execute-managed-ruleset).
+For more information on deploying a Managed Ruleset, check [Deploy a Managed Ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/deploy-managed-ruleset).
 
 
 ## Configure an override for the Exposed Credentials Check Managed Ruleset
@@ -116,4 +116,4 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 The example above uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
 
-See [Execute a custom ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets/execute-custom-ruleset/) for more information on executing custom rulesets using the Rulesets API.
+See [Deploy a custom ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets/deploy-custom-ruleset/) for more information on deploying custom rulesets using the Rulesets API.

@@ -13,7 +13,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Use a ruleset override and a rule override in a phase entry point to execute selected rules in a Managed Ruleset.
+Use a ruleset override and a rule override in a phase entry point to execute only selected rules in a Managed Ruleset.
 
 1. [Add a rule](/cf-rulesets/execute-rulesets) to a phase entry point that executes a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.

@@ -119,7 +119,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   </tbody>
 </table>
 
-## Update and execute rulesets
+## Update and deploy rulesets
 
 <table>
   <thead>
@@ -131,7 +131,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   </thead>
   <tbody style="vertical-align:top">
     <tr>
-      <td><a href="/cf-rulesets/rulesets-api/update">Update or execute a ruleset</a></td>
+      <td><a href="/cf-rulesets/rulesets-api/update">Update or deploy a ruleset</a></td>
       <td><code>PUT</code></td>
       <td>
         <p>Updates the basic properties of a ruleset and the list of rules in the ruleset.<br/>Allows you to configure the execution of Managed Rulesets.</p>

@@ -13,18 +13,18 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-A phase entry point behaves like a ruleset. You must create the phase entry point to be able to add rules and execute rulesets on it.
+A phase entry point contains an ordered list of rules that run in that phase.
 
 Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a phase entry point. You can create a phase entry point at the account level or at the zone level.
 
-You can specify the rules to execute in the entry point creating it — that is, in the same API request. Alternatively, you can define the set of rules later, in a separate request, using the [Update ruleset](/cf-rulesets/rulesets-api/update) operation.
-
-In the `data` field, include the following parameters.
+In the `data` field, include the following parameters:
 
 * `name`: The name of the phase entry point. You cannot change the name of a phase entry point after creating it.
 * `kind`: Indicates the ruleset kind. The kind must be `root` for phase entry points at the account level and `zone` for phase entry points at the zone level. You cannot edit the `kind` value later.
 * `phase`: Indicates the phase where you want to create the entry point.
 * `description`: Optional. You can update this field when editing the phase entry point.
+
+Specify the rules of the entry point when creating it — that is, in the same API request. Alternatively, define the list of rules later, in a separate request, using the [Update ruleset](/cf-rulesets/rulesets-api/update) operation.
 
 ## Examples
 
@@ -171,4 +171,4 @@ header: Response
 </div>
 </details>
 
-To add a rule that executes a ruleset, refer to [Execute rulesets](/cf-rulesets/execute-rulesets).
+To add a rule that executes a ruleset, see [Deploy rulesets](/cf-rulesets/deploy-rulesets).

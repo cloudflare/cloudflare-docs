@@ -4,7 +4,7 @@ alwaysopen: true
 order: 751
 ---
 
-# Execute a Managed Ruleset
+# Deploy a Managed Ruleset
 
 <Aside type='note' header='Note'>
 
@@ -12,20 +12,20 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-To configure the execution of a Managed Ruleset in a phase, use the [Rulesets API](/cf-rulesets/rulesets-api).
+To deploy a Managed Ruleset in a phase, use the [Rulesets API](/cf-rulesets/rulesets-api).
 
-## Execute a Managed Ruleset in a phase at the account level
+## Deploy a Managed Ruleset in a phase at the account level
 
-Use the following workflow to configure the execution of a Managed Ruleset in a phase at the account level.
+Use the following workflow to deploy a Managed Ruleset in a phase at the account level.
 
 1. Get your account ID.
-1. Get the ID of the Managed Ruleset you wish to execute. See [List existing rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets).
-1. Identify the phase where you want to execute the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same phase where you want to execute it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
+1. Get the ID of the Managed Ruleset you wish to deploy. See [List existing rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets).
+1. Identify the phase where you want to deploy the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
 1. Add a rule to the account-level phase entry point that executes the Managed Ruleset.
 
 ### Example
 
-The following example executes a Managed Ruleset in the `http_request_firewall_managed` phase of your account (`{account-id}`). The rules in the Managed Ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of your account (`{account-id}`) by creating a rule that executes the Managed Ruleset. The rules in the Managed Ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
 
 ```json
 ---
@@ -85,24 +85,24 @@ header: Response
 }
 ```
 
-## Execute a Managed Ruleset in a phase at the zone level
+## Deploy a Managed Ruleset in a phase at the zone level
 
-Use the following workflow to configure the execution of a Managed Ruleset in a phase at the zone level.
+Use the following workflow to deploy a Managed Ruleset in a phase at the zone level.
 
 1. Get your zone ID.
-1. Get the ID of the Managed Ruleset you wish to execute. See [List existing rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets).
-1. Identify the phase where you want to execute the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same phase where you want to execute it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
+1. Get the ID of the Managed Ruleset you wish to deploy. See [List existing rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets).
+1. Identify the phase where you want to deploy the Managed Ruleset. Ensure that the Managed Ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, check the specific documentation for that product.
 1. Add a rule to the zone-level phase entry point that executes the Managed Ruleset.
 
 <Aside type='warning' header='Important'>
 
-When executing a Managed Ruleset in a zone-level phase entry point, you must set the rule `expression` to `true`.
+When deploying a Managed Ruleset to a zone-level phase entry point, you must set the rule `expression` to `true`.
 
 </Aside>
 
 ### Example
 
-The following example executes a Managed Ruleset in the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`) by creating a rule that executes the Managed Ruleset.
 
 ```json
 ---

@@ -39,7 +39,7 @@ GET /zones/{zone-id}/rulesets
 
 The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
-Also, the list of rulesets at the zone level includes the account-level rulesets you may want to execute in the specified zone.
+Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy to the specified zone.
 
 <Aside type='warning' header='Important'>
 

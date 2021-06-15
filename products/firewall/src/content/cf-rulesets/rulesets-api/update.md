@@ -1,11 +1,10 @@
 ---
-title: Update and execute rulesets
 pcx-content-type: reference
 alwaysopen: true
 order: 785
 ---
 
-# Update and execute rulesets
+# Update and deploy rulesets
 
 <Aside type='warning' header='Important'>
 
@@ -110,11 +109,11 @@ header: Response
 }
 ```
 
-## Example - Execute a ruleset
+## Example - Deploy a ruleset
 
-To execute a ruleset, create a rule with the `action` field set to `execute` and add the ruleset ID to the `action_parameters` field in the `id` parameter. You execute rulesets in a phase.
+To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-This example executes a Managed Ruleset in the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
 
 ```json
 ---
@@ -180,7 +179,7 @@ You must set the `expression` field to `true` when executing a ruleset in a zone
 
 </Aside>
 
-For more information on executing rulesets, check [Execute rulesets](/cf-rulesets/execute-rulesets).
+For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
 
 
 ## Example - Update ruleset description

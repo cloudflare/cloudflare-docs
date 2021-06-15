@@ -78,7 +78,7 @@ The following parameters are required:
 
 Use the `rules` parameter to supply a list of rules that define the ruleset. For an object definition, see [Rulesets API: JSON Object](/cf-rulesets/rulesets-api/json-object).
 
-## Example - Create a zone-level phase ruleset
+## Example - Create a zone-level phase entry point
 
 This example creates a zone-level phase entry point at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
 

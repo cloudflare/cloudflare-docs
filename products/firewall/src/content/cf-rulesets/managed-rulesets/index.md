@@ -14,7 +14,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can execute in a phase. Only Cloudflare can modify these rulesets.
+Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy. Only Cloudflare can modify these rulesets.
 
 The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
@@ -30,6 +30,6 @@ There are several Cloudflare products that provide you with Managed Rulesets. Ch
 
 To view available Managed Rulesets, see [View rulesets](/cf-rulesets/view-rulesets/).
 
-To execute a Managed Ruleset in a phase, see [Execute a Managed Ruleset](/cf-rulesets/managed-rulesets/execute-managed-ruleset/).
+To deploy a Managed Ruleset to a phase, see [Deploy a Managed Ruleset](/cf-rulesets/managed-rulesets/deploy-managed-ruleset/).
 
-You cannot edit a Managed Ruleset, but you can customize Managed Ruleset behavior by using overrides when executing it in a phase. See [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
+You cannot edit a Managed Ruleset, but you can customize Managed Ruleset behavior by using overrides when deploying it to a phase. See [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).

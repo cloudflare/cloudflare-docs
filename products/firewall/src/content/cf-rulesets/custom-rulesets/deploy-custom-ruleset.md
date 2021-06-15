@@ -4,7 +4,7 @@ alwaysopen: true
 order: 763
 ---
 
-# Execute a custom ruleset
+# Deploy a custom ruleset
 
 <Aside type='warning' header='Important'>
 
@@ -14,9 +14,9 @@ This feature is part of an early access experience for selected customers.
 
 Before you begin:
 
-1. Obtain the name of the phase where you want to execute the custom ruleset.
+1. Obtain the name of the phase where you want to deploy the custom ruleset.
 1. [Create a custom ruleset](/cf-rulesets/custom-rulesets/create-custom-ruleset) and keep the ID of the new custom ruleset.
-1. [Fetch the rules already present in the phase entry point](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include all existing rules you want to keep in the `PUT` request that configures the execution of the custom ruleset.
+1. [Fetch the rules already present in the phase entry point](/cf-rulesets/view-rulesets#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
 
 Issue a `PUT` request that adds a rule to execute the custom ruleset when the zone name matches `example.com`.
 
