@@ -285,7 +285,7 @@ router.get('/users/:id', async ({ params }) => {
 })
 ```
 
-By implementing this, you will get a JSON array of users back, but since it will be filtering based on ID, it can either have be an empty array (when no user is found), or an array with a single item (a user was found). Complete the route handler by returning a JSON object with a key `user`, which is either `null`, or the object returned from PostgREST for the found user:
+By implementing this, you will get a JSON array of users back, but since it will be filtering based on ID, it can either be an empty array (when no user is found), or an array with a single item (a user was found). Complete the route handler by returning a JSON object with a key `user`, which is either `null`, or the object returned from PostgREST for the found user:
 
 ```js
 ---
@@ -310,7 +310,7 @@ router.get('/users/:id', async ({ params }) => {
 })
 ```
 
-Deploy the function again with `wrangler publish` to allow looking up users based on their ID, such as `/users/1`. If there is a user in the database with that given ID, you will get a JSON response (with a status of `200 Found`) containing the user data, otherwise the JSON response will be a `null` value (with a status of `404 Not Found`):
+Deploy the function again with `wrangler publish` to allow looking up users based on their ID, such as `/users/1`. If there is a user in the database with that given ID, you will get a JSON response (with a status of `200 OK`) containing the user data, otherwise the JSON response will be a `null` value (with a status of `404 Not Found`):
 
 ```json
 ---
@@ -374,7 +374,7 @@ $ curl https://postgrest-worker-example.signalnerve.workers.dev/users -X POST -H
 
 ## Conclusion
 
-In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely-scaling and secure approach to interfacing between your databases and your frontend applications, while still retaining the control and flexibility of not being locked in to Database-as-a-Service tools and other complicated SDKs for data management.
+In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely-scaling and secure approach to interfacing between your databases and your frontend applications, while still retaining the control and flexibility of avoiding lock-in to Database-as-a-Service tools and other complicated SDKs for data management.
 
 If you enjoyed this tutorial, you might enjoy some of the other tutorials we have for Cloudflare Workers—check them out!
 
