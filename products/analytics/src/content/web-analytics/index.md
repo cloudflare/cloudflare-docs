@@ -9,5 +9,4 @@ Cloudflare Web Analytics provides free, privacy-first analytics for your website
 
 Cloudflare Web Analytics does not collect or use your visitors’ personal data.
 
-To view similar analytics for domains using Cloudflares proxy (orange-clouded), navigate to the Analytics app and select Web Traffic Analytics. Web Traffic Analytics are available for Pro, Business, and Enterprise plans.
-
+To view similar analytics for domains using Cloudflare's proxy (orange-clouded), navigate to the Analytics app and select Web Traffic Analytics. Web Traffic Analytics are available for Pro, Business, and Enterprise plans.
