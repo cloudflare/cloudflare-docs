@@ -28,7 +28,7 @@ const SiteHeader = () => (
       </div>
 
       <div className="SiteHeader--search">
-          <SiteSearch/>
+        <SiteSearch/>
       </div>
 
       <div className="SiteHeader--nav">
