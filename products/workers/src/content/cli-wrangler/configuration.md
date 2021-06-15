@@ -179,7 +179,7 @@ You can also define your `kv_namespaces` using [alternative TOML syntax](https:/
 
 ### site
 
-A Workers Site generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
+A [Workers Site](/platform/sites) generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
 
 Usage:
 
