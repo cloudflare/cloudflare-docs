@@ -139,8 +139,6 @@ const SiteSearch = () => {
         <Helmet>
           <html {...disableSearchProps}/>
         </Helmet>
-
-        <React.Fragment/>
       </>
     )
   }
