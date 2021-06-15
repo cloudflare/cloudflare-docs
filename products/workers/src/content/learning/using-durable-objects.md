@@ -334,7 +334,9 @@ There is currently no support for generating a list of all existing objects, nor
 
 ### Development tools
 
-[Wrangler tail](/cli-wrangler/commands#tail) and [Wrangler dev](/cli-wrangler/commands#dev) do not currently work with Durable Objects.
+[Wrangler dev](/cli-wrangler/commands#dev) does not currently work with Durable Objects.
+
+[Wrangler tail](/cli-wrangler/commands#tail) does work, but note that logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.
 
 The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
 
