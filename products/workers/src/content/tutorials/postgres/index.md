@@ -34,12 +34,12 @@ $ wrangler generate postgrest-example
 $ cd postgrest-example
 ```
 
-Inside of your Workers function, configure `wrangler.toml` with your account ID. Change the `type` value to "webpack" to use `webpack` for bundling hte Workers function:
+Inside of your Workers function, configure `wrangler.toml` with your account ID. Change the `type` value to "webpack" to use `webpack` for bundling the Workers function:
 
 ```toml
 ---
 filename: wrangler.toml
-highlight: [2, 4]
+highlight: [2, 3, 4]
 ---
 name = "postgrest-worker-example"
 type = "webpack"
@@ -49,7 +49,7 @@ account_id = "yourAccountId"
 
 ## Build an API using postgrest-js
 
-PostgREST provides a consistent REST API structure for use in your applications. Each _table_ in your PostgreSQL database has a separate path as `/:table_name`. Query parameters are usedURL to do lookups in your database—for instance, to find all users with an ID of `1`, you make a `GET` request to `/users?id=eq.1`.
+PostgREST provides a consistent REST API structure for use in your applications. Each _table_ in your PostgreSQL database has a separate path as `/:table_name`. Query parameters are used to do lookups in your database—for instance, to find all users with an ID of `1`, you make a `GET` request to `/users?id=eq.1`.
 
 The URL structure makes it great for exploration, but in an application, it would be great to have something easier to use. [postgrest-js](https://github.com/supabase/postgrest-js/) is an open-source package that wraps PostgREST in an expressive JavaScript API. You will use it in your project to build a few endpoints to work with your PostgreSQL database in a Workers function.
 
@@ -91,7 +91,7 @@ webpack_config = "webpack.config.js"
 account_id = "yourAccountId"
 ```
 
-With the Webpack build configured, `postgrest-js` is ready to be used inside of your new Workers function. In `index.js`, import the package, and set up a new instance of `PostgrestClient`. Note that the `POSTGREST_ENDPOINT` is a placeholder for the publicly accessible endpoint mentioned earlier in this tutorial:
+With the Webpack build configured, `postgrest-js` is ready to be used inside of your new Workers function. In `index.js`, import the package, and set up a new instance of `PostgrestClient`. Note that the `POSTGREST_ENDPOINT` is a placeholder for the publicly accessible PostgREST endpoint mentioned earlier in this tutorial:
 
 ```js
 ---
@@ -128,7 +128,7 @@ async function handleRequest(request) {
 }
 ```
 
-This code is identical to making a `GET` request to `/users` on your PostgREST endpoint. In this example, get the `data` object back from `postgrest-js`, and then return it to the client as JSON.
+This code is identical to making a `GET` request to `/users` on your PostgREST endpoint. In this example, the function returns the `data` object back from `postgrest-js` to the client, as JSON.
 
 To publish this function, run `wrangler publish`:
 
@@ -142,7 +142,7 @@ $ wrangler publish
  https://postgrest-worker-example.signalnerve.workers.dev
 ```
 
-To correctly configure the function, set the `POSTGREST_ENDPOINT`, which tells Workers where to actually make requests to. `wrangler secret` is a command that sets an encrypted value that is only available inside of the Workers function:
+To correctly configure the function, set a `POSTGREST_ENDPOINT` "secret", which tells Workers where to actually route requests to. `wrangler secret` is a command that sets an encrypted value, or "secret", that is only available inside of the Workers function:
 
 ```sh
 $ wrangler secret put POSTGREST_ENDPOINT
@@ -152,7 +152,7 @@ Enter the secret text you'd like assigned to the variable POSTGREST_ENDPOINT on 
 ✨  Success! Uploaded secret POSTGREST_ENDPOINT.
 ```
 
-Visit the Workers function in browser (for instance, `https://postgrest-worker-example.signalnerve.workers.dev`). It returns a simple JSON array of your PostgreSQL data, for instance:
+Visit the Workers function in browser (such as `https://postgrest-worker-example.signalnerve.workers.dev`). It returns a simple JSON array of your PostgreSQL data:
 
 ```json
 ---
@@ -163,12 +163,13 @@ header: JSON array returning from PostgREST in a Workers function
 
 ### Adding a router
 
-To make this project more interesting, you will add a router to handle multiple potential paths in the application. The application will have one path which returns _all_ users, and another path that returns a single user _based on ID_. The URL structure will look like this:
+To make this project more interesting, you will add a router to handle multiple potential paths in the application. The application will have one path which returns _all_ users, a path that returns a single user _based on ID_, and a path that accepts data and creates a user. The URL structure will look like this:
 
 | Route            | Action                    |
 | ---------------- | ------------------------- |
 | `GET /users`     | Get all users             |
 | `GET /users/:id` | Get one user, based on ID |
+| `POST /users`    | Create a new user         |
 
 To build this, you will integrate [`itty-router`](https://github.com/kwhitley/itty-router), a small router built in JavaScript, into the project. Begin by installing the package:
 
@@ -193,7 +194,7 @@ const client = new PostgrestClient(POSTGREST_ENDPOINT)
 const router = Router()
 ```
 
-As with most routers, `itty-router` works by adding routes off of `router`, based on the HTTP method clients will access them by. In your case, you have two routes—`GET /users`, and `GET /users/:id`. To begin using the `router`, take the current code, and port it into a `GET /users` route, which will retrieve all the users in your `users` table. The updated code is below, but with a modified JSON response, which returns an object with a `users` array:
+As with most routers, `itty-router` works by adding routes to your `router`, based on the HTTP method clients will access them by. In this case, the router will have three routes—`GET /users`, `GET /users/:id`, and `POST /users`. To begin using the `router`, take the current code, which retrieves all the users in your database, and port it into a `GET /users` route. The updated code is below, but with a modified JSON response, which returns an object with a `users` array:
 
 ```js
 ---
@@ -214,7 +215,7 @@ With the first route configured, the Workers function needs to pass requests off
 ```js
 ---
 filename: index.js
-highlight: [4, 11]
+highlight: [4, 11, 12, 13, 14]
 ---
 const router = Router()
 
@@ -226,7 +227,7 @@ router.get("/users", () => {
   // PostgREST code
 })
 
-# The below function can be deleted
+// Delete the below function in your code entirely
 async function handleRequest(request) {
   // Old PostgREST code
 }
@@ -264,7 +265,7 @@ filename: index.js
 ---
 router.get('/users/:id', async ({ params } => {
   const { id } = params
-  console.log(id) // e.g. 5, if route is /users/5
+  console.log(id) // e.g. 5, if requested URL is /users/5
 })
 ```
 
@@ -289,7 +290,7 @@ By implementing this, you will get a JSON array of users back, but since it will
 ```js
 ---
 filename: index.js
-highlight: [8, 10, 12, 13, 14, 15]
+highlight: [8, 9, 10, 11, 12, 13, 14, 15]
 ---
 router.get('/users/:id', async ({ params }) => {
   const { id } = params
@@ -345,7 +346,7 @@ With that data available as `userData`, use the `insert` function to create a ne
 ```js
 ---
 filename: index.js
-highlight: [2, 3, 4, 5, 7, 9, 10, 11]
+highlight: [3, 4, 5, 6, 7, 8, 9, 10, 11]
 ---
 router.post('/users', async request => {
   const userData = await request.json()
@@ -361,7 +362,7 @@ router.post('/users', async request => {
 })
 ```
 
-Deploy the updated function using `wrangler publish`. To test this new endpoint, you will use `cURL`, a command-line tool for making requests. Copy the below command, replacing the base part of the URL with your unique Workers.dev deployment. The response back should be a new user:
+Deploy the updated function using `wrangler publish`. To test this new endpoint, you will use `cURL`, a command-line tool for making requests. Copy the below command, replacing the base part of the URL with your unique Workers.dev deployment. This command sends JSON data to your new endpoint as a `POST` request, which is parsed by the Workers function, and used to create a new user in your database. The response back should be the new user you have created:
 
 ```sh
 ---
