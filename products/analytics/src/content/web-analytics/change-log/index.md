@@ -17,11 +17,11 @@ Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytic
     </thead>
     <tbody>
         <tr>
-            <td>2021-05-18</td>
+            <td>2021-05-28</td>
             <td>startsWith function replaced with indexOf function, which prevents rendering if multiple beacon scripts are loaded.</td>
         </tr>
         <tr>
-            <td>2021-05-17</td>
+            <td>2021-05-12</td>
             <td>Reporting endpoint changed from /cdn-cgi/beacon/performance to /cdn-cgi/rum (for Browser Insights only).</td>
         </tr>
    </tbody>
