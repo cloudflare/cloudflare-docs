@@ -59,7 +59,7 @@ Wrangler](/cli-wrangler/commands#kvkey).
 
 Finally, you can [write data via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
 
-Due to the eventually consistent nature of Workers KV, concurrent writes from different edge locations can end up up overwriting one another. It’s a common pattern to write data via Wrangler or the API but read the data from within a worker, avoiding this issue by issuing all writes from the same location.
+Due to the eventually consistent nature of Workers KV, concurrent writes from different edge locations can end up overwriting one another. It’s a common pattern to write data via Wrangler or the API but read the data from within a worker, avoiding this issue by issuing all writes from the same location.
 
 Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. See [How KV works](/learning/how-kv-works) for more on this topic.
 
