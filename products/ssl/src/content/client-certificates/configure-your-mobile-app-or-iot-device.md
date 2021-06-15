@@ -271,6 +271,76 @@ Verifying - Enter Export Password:
 
 In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
 
+### Embed the client certificate in an Android app
+
+The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in ``AndroidManifest.xml`` to allow an Internet connection.
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+For demonstration purposes, the certificate in this example is stored in ``app/src/main/res/raw/cert.pem`` and the private key is stored in ``app/src/main/res/raw/key.pem``. You may also store these files in other secure manners. 
+
+The following example uses an ``OkHttpClient``, but you may also use other clients such as ``HttpURLConnection`` in similar ways. The key is to use the ``SSLSocketFactory``.
+```java
+private OkHttpClient setUpClient() {
+    try {
+        final String SECRET = "secret"; // You may also store this String somewhere more secure.
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+
+        // Get private key
+        InputStream privateKeyInputStream = getResources().openRawResource(R.raw.key);
+        byte[] privateKeyByteArray = new byte[privateKeyInputStream.available()];
+        privateKeyInputStream.read(privateKeyByteArray);
+
+        String privateKeyContent = new String(privateKeyByteArray, Charset.defaultCharset())
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replaceAll(System.lineSeparator(), "")
+                .replace("-----END PRIVATE KEY-----", "");
+
+        byte[] rawPrivateKeyByteArray = Base64.getDecoder().decode(privateKeyContent);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(rawPrivateKeyByteArray);
+
+        // Get certificate
+        InputStream certificateInputStream = getResources().openRawResource(R.raw.cert);
+        Certificate certificate = certificateFactory.generateCertificate(certificateInputStream);
+
+        // Set up KeyStore
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keyStore.load(null, SECRET.toCharArray());
+        keyStore.setKeyEntry("client", keyFactory.generatePrivate(keySpec), SECRET.toCharArray(), new Certificate[]{certificate});
+        certificateInputStream.close();
+
+        // Set up Trust Managers
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init((KeyStore) null);
+        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+
+        // Set up Key Managers
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        keyManagerFactory.init(keyStore, SECRET.toCharArray());
+        KeyManager[] keyManagers = keyManagerFactory.getKeyManagers();
+
+        // Obtain SSL Socket Factory
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(keyManagers, trustManagers, new SecureRandom());
+        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+        // Finally, return the client, which will then be used to make HTTP calls.
+        OkHttpClient client = new OkHttpClient.Builder()
+                .sslSocketFactory(sslSocketFactory)
+                .build();
+
+        return client;
+
+    } catch (CertificateException | IOException | NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException | KeyManagementException | InvalidKeySpecException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+```
+
+The above function returns an ``OkHttpClient`` embedded with the client certificate. You can now use this client to make HTTP requests to your API endpoint protected with mTLS.
+
 --------
 
 ## Embed the client certificate on your IoT device
@@ -313,7 +383,7 @@ def main():
     print("Response status code: %d" % r.status_code)
 ```
 
-When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent, and the script sends the contents of `$CERT_FILE` and then, as required to complete the SSL/TLS handshake, demonstrates it has possession of `$KEY_FILE`.
+When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent, and the script sends the contents of `/etc/ssl/certs/sensor.pem` and then, as required to complete the SSL/TLS handshake, demonstrates it has possession of `/etc/ssl/private/sensor-key.pem`.
 
 Without the client certificate, the Cloudflare rejects the request:
 

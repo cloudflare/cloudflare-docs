@@ -32,163 +32,48 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-05-17
+                2021-06-14
             </td>
             <td>
-                2021-06-01
-            </td>
-            <td>
-                Wordpress
-            </td>
-            <td>
-                WP0025D
-            </td>
-            <td>
-                Improve Rule Performance
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-06-01
-            </td>
-            <td>
-                Wordpress
-            </td>
-            <td>
-                WP0023
-            </td>
-            <td>
-                Improve Rule Performance
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-06-01
-            </td>
-            <td>
-                Wordpress
-            </td>
-            <td>
-                WP0026
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-06-01
-            </td>
-            <td>
-                Drupal
-            </td>
-            <td>
-                D0000
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-06-01
-            </td>
-            <td>
-                PHP
-            </td>
-            <td>
-                PHP100011
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-17
-            </td>
-            <td>
-                2021-06-01
-            </td>
-            <td>
-                PHP
-            </td>
-            <td>
-                PHP100012
-            </td>
-            <td>
-                Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-05-24
-            </td>
-            <td>
-                2021-06-01
+                2021-06-21
             </td>
             <td>
                 Specials
             </td>
             <td>
-                100245
+                100196
             </td>
             <td>
-                Remove 100245 (Wordpress - Broken Access Control - Update Script).  Superseded by WP0023
+               CVE-2021-21985 VSphere Virtual SAN Health Check
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-06-14
+            </td>
+            <td>
+                2021-06-21
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                100136A
+            </td>
+            <td>
+               Improve rule performance
             </td>
             <td>
                 Block
             </td>
             <td>
-                Disabled
+                Block
             </td>
         </tr>
     </tbody>

@@ -142,6 +142,8 @@ Routes in fail closed mode will display a Cloudflare 1027 error page to visitors
 
 Only one Workers instance runs on each of the many global Cloudflare edge servers. Each Workers instance can consume up to 128MB of memory. Use [global variables](/runtime-apis/web-standards) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*. 
+
 Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
 ---
@@ -156,9 +158,9 @@ There is no limit on the real runtime for a Workers script. As long as the clien
 
 ## Duration
 
-Duration is the measurement of wall-clock time. This is measured in Gigabytes per second (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
+Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
 
-For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduledevent), it executes for 4 seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
+For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
 Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
 

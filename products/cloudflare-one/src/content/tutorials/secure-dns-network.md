@@ -6,7 +6,7 @@ difficulty: Beginner
 
 # Filter DNS on home or office network
 
-You can use Cloudflare Gateway to filter and log DNS queries from any device using your network without installing client software.
+You can use Cloudflare Gateway to filter and log DNS queries from any device in your network without installing client software.
 
 **🗺️ This tutorial covers how to:**
 
@@ -16,6 +16,9 @@ You can use Cloudflare Gateway to filter and log DNS queries from any device usi
 **⏲️ Time to complete:**
 
 15 minutes
+
+## Before you start
+1. [Add Gateway to your account](/setup)
 
 ---
 
@@ -37,19 +40,27 @@ If you want to create a different location, one that you are not currently using
 
 ## Create a Gateway policy
 
-Next, you can [build a policy](/policies/filtering/dns-policies) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Add a policy`.
+Next, you can [build a policy](/policies/filtering/dns-policies) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Create a DNS policy`.
 
-![Add Policy](../static/secure-web-gateway/secure-dns-devices/add-policy.png)
+![Add Policy](../static/secure-web-gateway/secure-dns-network/create-dns-policy.png)
 
-Assign the policy a name and choose which locations will adhere to this policy. In this example, `Austin Office` is the only location and also the Default.
+First, assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.
 
-![Apply Policy](../static/secure-web-gateway/secure-dns-devices/apply-policy.png)
+In this example, the policy will block any hostnames that Cloudflare's data intelligence platform identifies as containing security risks like malware or phishing campaigns. You can click `All security risks` to include all options or check individual types of threats in the dropdown.
 
-Under the `Security threats` tab you can toggle which types of threats to block. In this case, choosing `Block all` will toggle all threats to be blocked.
+![Block Threats](../static/secure-web-gateway/secure-dns-network/block-threats.png)
 
-![Block Rules](../static/secure-web-gateway/secure-dns-devices/block-rules.png)
+The policy will block security threats for any location in your Cloudflare for Teams deployment. If you want to only block the security risks selected above for the location created previously, add an `AND` rule to the selector. Choose `Location` and check the location to include in this policy.
 
-You can also configure content or custom blocks. Once complete, click `Save`. The policy will now filter DNS queries from that location once you have configured your router.
+![Include Location](../static/secure-web-gateway/secure-dns-network/include-location.png)
+
+Finally, choose `Block` as the action and create the policy.
+
+![Block Action](../static/secure-web-gateway/secure-dns-network/block-action.png)
+
+The rule will appear in your DNS policies list.
+
+![Rule Listed](../static/secure-web-gateway/secure-dns-network/rule-listed.png)
 
 ## Configure your router
 

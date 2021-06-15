@@ -20,7 +20,7 @@ Switched to a new branch 'step3-https'
 $ cat >> cloudflare.tf <<'EOF'
 
 resource "cloudflare_zone_settings_override" "example-com-settings" {
-  name = var.domain
+  name = var.zone_id
 
   settings {
     tls_1_3                  = "on"

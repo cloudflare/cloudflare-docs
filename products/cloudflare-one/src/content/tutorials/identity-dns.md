@@ -14,7 +14,9 @@ To apply these types of rules, you will need to deploy Cloudflare's agent on the
 * Build a DNS filtering rule that applies to a group of users
 * Use DNS filtering rule precedence to allow some users to reach a destination
 
-**⏲️ Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
 
 ## Before you start
 
@@ -52,4 +54,8 @@ In the **Action** section, select **Block** and save the rule at the top of the 
 
 ![Block Action](../static/secure-web-gateway/id-dns/block-action.png)
 
-Once saved, ensure that the `Allow` rule has higher precedence than the `Block` rule. You can drag-and-drop rules as needed in the UI. Rules are evaluated from top to bottom, so when the `Allow` rule is ranked first, users in the marketing group will be allowed to reach social media. Users who do not meet that criteria will have the next rule applied and will be blocked.
+Once saved, ensure that the `Allow` rule has higher precedence than the `Block` rule. You can drag-and-drop rules as needed in the UI.
+
+![Block Action](../static/secure-web-gateway/id-dns/rule-order.png)
+
+Rules are evaluated from top to bottom, so when the `Allow` rule is ranked first, users in the marketing group will be allowed to reach social media. Users who do not meet that criteria will have the next rule applied and will be blocked.

@@ -126,7 +126,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 <Definitions>
 
 - `Range`
-    - Results in a `206` response if a matching response is found. Your Cloudflare cache always respects range requests, even if an `Accept-Ranges` header is on the response.
+    - Results in a `206` response if a matching response with a Content-Length header is found. Your Cloudflare cache always respects range requests, even if an `Accept-Ranges` header is on the response.
 
 - `If-Modified-Since`
     - Results in a `304` response if a matching response is found with a `Last-Modified` header with a value after the time specified in `If-Modified-Since`.

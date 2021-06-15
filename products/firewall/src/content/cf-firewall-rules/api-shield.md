@@ -48,7 +48,7 @@ To protect your application with mTLS authentication, use this workflow:
 
 API Shield's Mutual TLS requires Cloudflare-issued certificates. You can use mTLS with any fully managed certificate authority (CA) where Cloudflare issues the client certificates.
 
-If you need to use certificates issued by another (CA), please reach out to a Cloudflare Customer Success Manager.
+If you need to use certificates issued by another CA, use <a href="https://developers.cloudflare.com/cloudflare-one/identity/devices/mutual-tls-authentication?">Cloudflare Access</a> to upload your own CA.
 
 When using Yubikeys, the browser may prompt for unlocking the key due to a problem in Yubikey's PKCS#11 library.
 

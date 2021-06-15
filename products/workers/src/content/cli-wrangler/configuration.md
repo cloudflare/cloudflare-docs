@@ -113,7 +113,9 @@ Values to use in your Worker script as text environment variables.
 Usage:
 
 ```toml
-vars = { FOO = "some value", BAR = "some other string" }
+[vars]
+FOO = "some value"
+BAR = "some other string"
 ```
 
 <Definitions>
@@ -127,9 +129,15 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 </Definitions>
 
+Alternatively, you can define `vars` using an "inline table" format. This style should not include any newlines to be considered valid TOML:
+
+```toml
+vars = { FOO = "some value", BAR = "some other string" }
+```
+
 <Aside>
 
-**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret). The `vars` definition in your `wrangler.toml` must not contain newlines in order to be valid TOML.
+**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret).
 
 </Aside>
 
@@ -265,7 +273,7 @@ You can learn more about the standard patterns used for include and exclude in t
 
 Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
 
-You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](configuration#build) section for more information.
+You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
 
 ### triggers
 
@@ -385,10 +393,9 @@ Cloudflare Workers now supports uploading scripts as a collection of modules, in
 import html from './index.html'
 
 export default {
-  // request is almost the same as `event.request` from the service worker format, except for:
-  // * waitUntil() and passThroughOnException() are accessible from ctx instead
-  // * request.cf is currently not available
-  // env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
+  // * request is the same as `event.request` from the service worker format
+  // * waitUntil() and passThroughOnException() are accessible from `ctx` instead of `event` from the service worker format
+  // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
   // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
     const headers = { 'Content-Type': 'text/html;charset=UTF-8' }

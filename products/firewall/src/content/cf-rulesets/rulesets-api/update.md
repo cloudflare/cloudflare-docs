@@ -173,12 +173,6 @@ header: Response
 }
 ```
 
-<Aside type='warning' header='Important'>
-
-You must set the `expression` field to `true` when executing a ruleset in a zone-level phase entry point.
-
-</Aside>
-
 For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
 
 

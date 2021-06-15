@@ -20,19 +20,15 @@ A rule that executes a ruleset consists of:
 * An **expression**.
 * An **action**. Set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
-When executing a ruleset in a phase at the **account** level, use the expression to define the hosts the ruleset applies to. The only field you can use in a rule expression to execute a ruleset in a phase at the account level is `cf.zone.name`. The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
-
-When executing a ruleset in a phase at the **zone** level, you must set the expression to `true`.
+To apply a rule to every request in a phase at the **zone** level, set the rule expression to `true`.
 
 </Aside>
 
 ## Example
 
 The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
-
-When executing a ruleset in a zone-level phase, you must set `expression` to `true`.
 
 ```json
 ---

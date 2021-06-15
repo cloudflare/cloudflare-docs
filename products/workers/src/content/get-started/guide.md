@@ -31,10 +31,15 @@ The signup process will guide you through choosing a workers.dev subdomain and v
 
 Installing `wrangler`, the Workers CLI, gives you the freedom to [generate](/cli-wrangler/commands#generate), [configure](/cli-wrangler/commands#configure), [build](/cli-wrangler/commands#build), [preview](/cli-wrangler/commands#preview), and [publish](/cli-wrangler/commands#publish) your Workers projects from the comfort of your dev environment.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
+```
+or install with yarn:
+
+```sh
+$ yarn global add @cloudflare/wrangler
 ```
 
 Then run `wrangler --version` to confirm that the installation was successful:
@@ -52,7 +57,7 @@ Now that Wrangler is installed, you'll need to give it an API Token for your Clo
 
 Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
 
-```bash
+```sh
 $ wrangler login
 Allow Wrangler to open a page in your browser? [y/n]
 y
