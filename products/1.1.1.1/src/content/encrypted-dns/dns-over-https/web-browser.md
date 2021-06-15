@@ -19,7 +19,7 @@ There are several browsers compatible with DNS over HTTPS (DoH) that you can use
 
 <Aside>
 
-This setting may already be enabled on Chrome by default.
+**Note:** This setting may already be enabled on Chrome by default.
 
 </Aside>
 
@@ -28,7 +28,7 @@ This setting may already be enabled on Chrome by default.
 1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS** switch.
 
-Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](/setting-up-1.1.1.1/index).
+Your browser infers the DNS over HTTPS provider you want based on your system DNS. To benefit from Cloudflare DoH, make sure your system is [properly configured](/setting-up-1.1.1.1/).
 
 ## Microsoft Edge
 

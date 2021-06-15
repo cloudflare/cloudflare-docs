@@ -5,6 +5,12 @@ pcx-content-type: navigation
 
 # Encrypted DNS
 
-In the next tutorials you will learn how you can use DNS over TLS (DoT) and DNS over HTTPS (DoH) for greater security and privacy.
+Traditionally, DNS queries and replies are performed over plaintext which means sent over the Internet without any kind of encryption or protection. This happens even when you are accessing a secured website. This has a huge impact on security and privacy, as these queries might be subject to surveillance, spoofing and tracking by malicious actors, advertisers, ISPs, and others.
+
+To prevent this and secure your connections, 1.1.1.1 supports DNS over TLS (DoT) and DNS over HTTPS (DoH), two standards developed for encrypting plaintext DNS traffic. This prevents untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+
+DNS over TLS uses its own port, 853, to wrap DNS requests within a TLS connection. With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of the user datagram protocol (UDP). Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. This gives administrators the ability to monitor and block DNS queries, which is important for identifying and stopping malicious traffic.
+
+In the next chapters we will talk more about DNS over TLS (DoT) and DNS over HTTPS (DoH).
 
 <DirectoryListing path="/encrypted-dns"/>

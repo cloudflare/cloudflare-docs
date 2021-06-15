@@ -3,7 +3,7 @@ order: 9
 pcx-content-type: tutorial
 ---
 
-# Running a DNS over HTTPS client
+# DNS over HTTPS client
 
 There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1 in order to protect your DNS queries from privacy intrusions and tampering.
 
