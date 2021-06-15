@@ -308,6 +308,40 @@ The command to install the certificate with Python on Windows automatically incl
 
 The root certificate is now installed and ready to be used.
 
+### ChromeOS
+
+1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+
+2. Navigate to your **ChromeOS Settings**.
+
+![Chrome OS Settings cog](../../../static/documentation/connections/chromeOS1_cert.png)
+
+3. Navigate to **Apps** and then click **Google Play Store**.
+
+![Click google play store in Apps section](../../../static/documentation/connections/chromeOS2_cert.png)
+
+4. Click **Manage Android preferences**.
+
+![Click manage android preferences](../../../static/documentation/connections/chromeOS3_cert.png)
+
+5. Click **Security & location** then click **Credentials** then click **Install from SD card**.
+
+<TableWrap>
+
+|  |  |  |
+|------|------|------|
+| ![Click security & location](../../../static/documentation/connections/chromeOS4_cert.png) | ![click credentials](../../../static/documentation/connections/chromeOS5_cert.png) | ![click install from SD card](../../../static/documentation/connections/chromeOS6_cert.png) |
+
+</TableWrap>
+
+6. In the file open dialog select the `Cloudflare_CA.crt` file downloaded in step #1 and click **Open**.
+
+![Choose the Cloudflare_CA.crt file to install](../../../static/documentation/connections/chromeOS7_cert.png)
+
+7. Enter anything you want for the certificate name and click **OK**.
+
+![Name the certificate with anything](../../../static/documentation/connections/chromeOS8_cert.png)
+
 <Aside>
 
 Common dev tools provide the option to trust root certificates. To trust the Cloudflare root certificate, run the following command and update it with the location for your Cloudflare root certificate:

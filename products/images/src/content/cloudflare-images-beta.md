@@ -27,9 +27,9 @@ Currently, Cloudflare Images API requires use of your auth key and email. Suppor
 Once you have access to Images, you can upload pictures by call the /images endpoint:
 
 ```bash
-curl api.cloudflare.com/client/v4/accounts/$account_tag/images/v1 \
--H "X-Auth-Key:$auth_key" \
--H "X-Auth-Email:$auth_email"
+curl https://api.cloudflare.com/client/v4/accounts/$account_tag/images/v1 \
+-H "X-Auth-Key: $auth_key" \
+-H "X-Auth-Email: $auth_email" \
 -F file=@./logo.png
 ```
 
@@ -74,9 +74,9 @@ If the device type cannot be inferred, the default variant will use the `Desktop
 
 ## Deleting Images
 ```bash
-curl -X DELETE api.cloudflare.com/client/v4/accounts/$account_tag/images/v1/MTt4OTd0b0w5ajZxR0pLaXRldlBtaFhhO2FiZGVnaA== \
--H "X-Auth-Key:$auth_key" \
--H "X-Auth-Email:$auth_email"
+curl -X DELETE https://api.cloudflare.com/client/v4/accounts/$account_tag/images/v1/MTt4OTd0b0w5ajZxR0pLaXRldlBtaFhhO2FiZGVnaA== \
+-H "X-Auth-Key: $auth_key" \
+-H "X-Auth-Email: $auth_email"
 
 ```
 
