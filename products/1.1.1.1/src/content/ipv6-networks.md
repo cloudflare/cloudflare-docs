@@ -1,5 +1,5 @@
 ---
-order: 12
+order: 11
 title: For IPv6-only networks
 pcx-content-type: concept
 ---

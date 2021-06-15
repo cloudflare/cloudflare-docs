@@ -28,13 +28,11 @@ The addresses of 1.1.1.1 are:
 
 1.1.1.1 also offers a version made for Families, which adds a layer of protection to your home network from malware and adult content.
 
-In addition to the regular DNS resolver, 1.1.1.1 also offers [DNS over HTTPS (DoH)](/encrypted-dns/dns-over-https) and [DNS over TLS (DoT)](/encrypted-dns/dns-over-tls) for increased security and privacy. Moreover, you can access 1.1.1.1 as a Tor hidden service at this address:
-
-- [dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion](./fun-stuff/dns-over-tor/). //change address
+In addition to the regular DNS resolver, 1.1.1.1 also offers [DNS over HTTPS (DoH)](/encrypted-dns/dns-over-https) and [DNS over TLS (DoT)](/encrypted-dns/dns-over-tls) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/other-ways-to-use/dns-over-tor).
 
 <ButtonGroup>
-  <Button type="primary" href="/1.1.1.1/setting-up-1.1.1.1">Set up 1.1.1.1</Button>
-  <Button type="secondary" href="/1.1.1.1/what-is-1.1.1.1">Learn more</Button>
+  <Button type="primary" href="/setting-up-1.1.1.1">Set up 1.1.1.1</Button>
+  <Button type="secondary" href="/what-is-1.1.1.1">Learn more</Button>
 </ButtonGroup>
 
 </ContentColumn>

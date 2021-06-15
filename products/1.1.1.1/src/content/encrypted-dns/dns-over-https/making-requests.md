@@ -3,7 +3,9 @@ order: 6
 pcx-content-type: tutorial
 ---
 
-# Making requests
+# Making requests to 1.1.1.1 over HTTPS
+
+If you are building a mobile application, browser, operating system, IoT device or router, here are the settings to have in mind when making requests to 1.1.1.1 over HTTPS.
 
 ## Endpoint
 
@@ -13,19 +15,13 @@ Cloudflare offers a DNS over HTTPS resolver at:
 https://cloudflare-dns.com/dns-query
 ```
 
-See curl examples for [UDP wireformat](/dns-over-https/wireformat/) and [JSON](/json-format/).
-
-## HTTP method
-
 Cloudflare's DNS-over-HTTPS (DOH) endpoint supports `POST` and `GET` for UDP wireformat, and `GET` for JSON format.
 
 When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (`application/dns-udpwireformat`) is sent in the `Content-Type` request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
 
 When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (see below).
 
-## Wireformat and JSON options
-
-Both [UDP wireformat](/dns-over-https/wireformat/) and [JSON](/dns-over-https/json-format/) formats are supported.
+See curl examples for [UDP wireformat](/dns-over-https/wireformat/) and [JSON](/json-format/).
 
 ## Valid MIME types
 
