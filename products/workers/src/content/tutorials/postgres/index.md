@@ -8,9 +8,11 @@ content_type: "💾 Storage"
 
 ## Overview
 
-Many applications for the web are built using industry-standards like PostgreSQL, an open-source SQL database. Instead of directly connecting your user interface to that database, it's common for developers to use a backend server to format and proxy API requests to that database. Instead of building a backend server for this task, we can make use of Cloudflare Workers and recent improvements to the PostgreSQL developer experience - namely, PostgREST: a REST API built specifically for PostgreSQL. By doing this, we can handle API requests to our database without needing to maintain another piece of infrastructure.
+Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting your user interface to that database, it's common for developers to use a backend server to format and proxy API requests to that database. Instead of building a backend server for this task, we can make use of Cloudflare Workers and recent improvements to the PostgreSQL developer experience—namely, [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, we can handle API requests to our database without needing to maintain another piece of infrastructure.
 
 In this tutorial, we'll explore how to integrate with PostgREST and PostgreSQL using Workers.
+
+![Example GIF](./example.gif)
 
 ## Prerequisites
 
@@ -36,7 +38,7 @@ Inside of your Workers function, configure `wrangler.toml` with your account ID.
 
 ```toml
 ---
-file: wrangler.toml
+filename: wrangler.toml
 highlight: [2, 4]
 ---
 name = "postgrest-worker-example"
@@ -47,7 +49,7 @@ account_id = "yourAccountId"
 
 ## Build an API using postgrest-js
 
-PostgREST provides a consistent REST API structure for use in your applications. Each _table_ in your PostgreSQL database has a separate path as `/:table_name`, and you can add query parameters to that URL to do lookups in your database - for instance, to find all users with an ID of `1`, you can make a `GET` request to `/users?id=eq.1`.
+PostgREST provides a consistent REST API structure for use in your applications. Each _table_ in your PostgreSQL database has a separate path as `/:table_name`, and you can add query parameters to that URL to do lookups in your database—for instance, to find all users with an ID of `1`, you can make a `GET` request to `/users?id=eq.1`.
 
 The URL structure makes it great for exploration, but in an application, it'd be great to have something easier to use. [postgrest-js](https://github.com/supabase/postgrest-js/) is an open-source package that wraps PostgREST in an expressive JavaScript API. We'll use it in our project to build a few endpoints to work with our PostgreSQL database in a Workers function.
 
@@ -64,7 +66,7 @@ Before we can work with `postgrest-js` in our application, we need to quickly pa
 
 ```js
 ---
-file: webpack.config.js
+filename: webpack.config.js
 ---
 module.exports = {
   target: "webworker",
@@ -79,7 +81,7 @@ In `wrangler.toml`, define the `webpack_config` key, and use your new file as th
 
 ```toml
 ---
-file: wrangler.toml
+filename: wrangler.toml
 highlight: [3]
 ---
 name = "postgrest-worker-example"
@@ -93,7 +95,7 @@ With the Webpack build configured, `postgrest-js` is ready to be used inside of 
 
 ```js
 ---
-file: index.js
+filename: index.js
 highlight: [1, 2]
 ---
 import { PostgrestClient } from '@supabase/postgrest-js'
@@ -107,7 +109,7 @@ With a new client set up, we can make our first request from inside the Workers 
 
 ```js
 ---
-file: index.js
+filename: index.js
 ---
 // ... Rest of code
 
@@ -181,7 +183,7 @@ With `itty-router` installed, we can import the package, and instantiate a new r
 
 ```js
 ---
-file: index.js
+filename: index.js
 highlight: [2, 5]
 ---
 import { PostgrestClient } from '@supabase/postgrest-js'
@@ -191,11 +193,11 @@ const client = new PostgrestClient(POSTGREST_ENDPOINT)
 const router = Router()
 ```
 
-As with most routers, `itty-router` works by adding routes off of `router`, based on the HTTP method clients will access them by. In our case, we have two routes - `GET /users`, and `GET /users/:id`. Let's take our current code, and port it into a `GET /users` route, which will retrieve all the users in our `users` table. In the below sample, we make an identical request using `postgrest-js` as before, but modify the JSON response slightly, so that it returns an object with a `users` array:
+As with most routers, `itty-router` works by adding routes off of `router`, based on the HTTP method clients will access them by. In our case, we have two routes—`GET /users`, and `GET /users/:id`. Let's take our current code, and port it into a `GET /users` route, which will retrieve all the users in our `users` table. In the below sample, we make an identical request using `postgrest-js` as before, but modify the JSON response slightly, so that it returns an object with a `users` array:
 
 ```js
 ---
-file: index.js
+filename: index.js
 ---
 router.get('/users', async () => {
   const { data, error } = await client.from('users').select()
@@ -211,7 +213,7 @@ With our first route configured, we need to tell the Workers function to pass re
 
 ```
 ---
-file: index.js
+filename: index.js
 highlight: [4, 11]
 ---
 const router = Router()
@@ -243,7 +245,7 @@ You'll notice that our original _root_ path, `/`, now has nothing configured, an
 
 ```js
 ---
-file: index.js
+filename: index.js
 highlight: [5]
 ---
 router.get('/users', async () => {
@@ -257,7 +259,7 @@ Our second planned route is `GET /users/:id`, which should return a single user 
 
 ```js
 ---
-file: index.js
+filename: index.js
 ---
 router.get('/users/:id', async ({ params } => {
   const { id } = params
@@ -269,7 +271,7 @@ With the ID captured as the variable `id`, we can use `postgrest-js` to select f
 
 ```js
 ---
-file: index.js
+filename: index.js
 highlight: [3, 4, 5, 6]
 ---
 router.get('/users/:id', async ({ params }) => {
@@ -285,7 +287,7 @@ By implementing this, we should get a JSON array of users back, but since it wil
 
 ```js
 ---
-file: index.js
+filename: index.js
 highlight: [8, 10, 12, 13, 14, 15]
 ---
 router.get('/users/:id', async ({ params }) => {
@@ -330,7 +332,7 @@ In our Workers function, we can implement this by setting up a new `POST` handle
 
 ```js
 ---
-file: index.js
+filename: index.js
 ---
 router.post('/users', async request => {
   const userData = await request.json()
@@ -341,8 +343,8 @@ With that data available as `userData`, we can use the `insert` function to crea
 
 ```js
 ---
-file: index.js
-highlight: [2, 3, 4, 6, 8, 9, 10]
+filename: index.js
+highlight: [2, 3, 4, 5, 7, 9, 10, 11]
 ---
 router.post('/users', async request => {
   const userData = await request.json()
@@ -364,10 +366,7 @@ Deploy the updated function using `wrangler publish`. To test this new endpoint,
 ---
 header: Creating a new user using cURL
 ---
-$ curl https://postgrest-worker-example.signalnerve.workers.dev/users \
-  -X POST \
-  -H "Content-type: application/json" \
-  -d '{"name": "Dog"}'
+$ curl https://postgrest-worker-example.signalnerve.workers.dev/users -X POST -H "Content-type: application/json" -d '{"name": "Dog"}'
 {"user":{"id":2,"name":"Dog"}}
 ```
 
@@ -375,7 +374,7 @@ $ curl https://postgrest-worker-example.signalnerve.workers.dev/users \
 
 In this tutorial, you've used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely-scaling and secure approach to interfacing between your databases and your frontend applications, while still retaining the control and flexibility of staying locked out of Database-as-a-Service tools and other complicated SDKs for data management.
 
-If you enjoyed this tutorial, you might enjoy some of the other tutorials we have for Cloudflare Workers - check them out!
+If you enjoyed this tutorial, you might enjoy some of the other tutorials we have for Cloudflare Workers—check them out!
 
 - [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
 - [Build a Slackbot](/tutorials/build-a-slackbot)
