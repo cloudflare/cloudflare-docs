@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 # 1.1.1.1 for Families

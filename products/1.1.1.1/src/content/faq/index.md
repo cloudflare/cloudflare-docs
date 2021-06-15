@@ -1,8 +1,9 @@
 ---
-order: 8
+order: 14
+pcx-content-type: faq
 ---
 
-# The nitty gritty
+# Frequently Asked Questions
 
 ## Does 1.1.1.1 support ANY?
 

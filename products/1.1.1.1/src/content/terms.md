@@ -1,6 +1,5 @@
 ---
-title: Terms
-order: 10
+pcx-content-type: concept
 ---
 
 # Terms of Use

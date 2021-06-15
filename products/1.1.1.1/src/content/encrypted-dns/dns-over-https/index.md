@@ -1,6 +1,6 @@
 ---
 order: 5
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 # DNS over HTTPS

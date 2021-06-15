@@ -1,5 +1,6 @@
 ---
-order: 10
+order: 15
+pcx-content-type: concept
 ---
 
 # Privacy

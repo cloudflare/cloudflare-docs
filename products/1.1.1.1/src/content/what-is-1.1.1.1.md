@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 # What is 1.1.1.1?

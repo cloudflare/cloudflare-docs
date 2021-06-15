@@ -1,5 +1,5 @@
 ---
-order: 3
+pcx-content-type: tutorial
 ---
 
 # DNS over email
@@ -16,7 +16,11 @@ example.com
 
 Returns:
 
+<div class="medium-img">
+
 ![DNS-over-email](../static/dns-over-email.png)
+
+</div>
 
 You can also send a record type followed by a domain name. The record types supported are:
 
@@ -44,4 +48,8 @@ AAAA example.com
 
 Returns:
 
+<div class="medium-img">
+
 ![DNS-over-email](../static/dns-over-email.png)
+
+</div>

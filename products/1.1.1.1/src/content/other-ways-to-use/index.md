@@ -1,6 +1,6 @@
 ---
 order: 13
-pcx-content-type: landing-page
+pcx-content-type: concept
 ---
 
 # Other ways to use 1.1.1.1

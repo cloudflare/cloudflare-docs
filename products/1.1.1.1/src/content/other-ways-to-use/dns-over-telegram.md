@@ -1,5 +1,5 @@
 ---
-order: 4
+pcx-content-type: tutorial
 ---
 
 # DNS over Telegram
@@ -11,16 +11,28 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 1. Click **Contacts**.
 1. Search for `onedotonedotonedotonedotbot`.
 
-    <div class="medium-img"><img alt="Search" src="../static/search.png"/></div>
+    <div class="medium-img">
+
+    ![Search](../static/search.png)
+
+    </div>
 
 1. When the 1.1.1.1 bot appears in the search results, click on it.
 1. Then press **Start**.
 
-    <div class="medium-img"><img alt="Search" src="../static/click-start.png"/></div>
+    <div class="medium-img">
+    
+    ![Search](../static/click-start.png)
+    
+    </div>
 
 1. You can send a single domain name, which will default to returning the AAAA record. For example:
 
-    <div class="medium-img"><img alt="Search" src="../static/example-com.png"/></div>
+    <div class="medium-img">
+    
+    ![Search](../static/example-com.png)
+    
+    </div>
 
 Or you can send a record type followed by a domain name. The record types supported are:
 
@@ -39,4 +51,8 @@ Or you can send a record type followed by a domain name. The record types suppor
 *  TXT
 
 Example:
-<div class="medium-img"><img alt="Search" src="../static/aaaa-example-com.png"/></div>
+<div class="medium-img">
+
+![Search](../static/aaaa-example-com.png)
+
+</div>

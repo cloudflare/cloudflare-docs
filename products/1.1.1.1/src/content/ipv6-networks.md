@@ -1,7 +1,7 @@
 ---
 order: 12
 title: For IPv6-only networks
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 # Supporting IPv6-only networks

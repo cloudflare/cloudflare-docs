@@ -15,7 +15,7 @@ pcx-content-type: landing-page
 
 <ContentColumn>
 
-1.1.1.1 is a fast and private way to browse the Internet. It is a DNS resolver — meaning it is kind of like Google Maps for your computer, in that it translates places (like cloudflare.com) into addresses (like `2400:cb00:2048:1::c629:d7a2`). 
+1.1.1.1 is a fast and private way to browse the Internet. It is a DNS resolver — meaning it is kind of like Google Maps for your computer, in that it translates places (like cloudflare.com) into addresses (like `2400:cb00:2048:1::c629:d7a2`).  
 
 1.1.1.1 is deployed in 150+ cities worldwide, and has access to the addresses of 7M+ domain names on the same servers it runs on so [it’s the fastest resolver out there](https://www.dnsperf.com/#!dns-resolvers).
 
