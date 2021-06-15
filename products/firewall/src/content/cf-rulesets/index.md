@@ -58,13 +58,13 @@ Phase entry points have a type, just like rulesets. You can check the ruleset/en
 
 ### Managed Rulesets
 
-Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can execute in a phase. Only Cloudflare can modify these rulesets.
+Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a phase. Only Cloudflare can modify these rulesets.
 
 The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
 There are several Cloudflare products that provide you with Managed Rulesets. Check each product’s documentation for details on the available Managed Rulesets.
 
-For more information on executing Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
+For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
 
 ### Custom rulesets
 
