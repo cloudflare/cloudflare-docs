@@ -14,7 +14,7 @@ This feature is part of an early access experience for selected customers.
 
 Customize the execution of Managed Rulesets with a combination of ruleset overrides, tag overrides, and rule overrides in your phase entry point.
 
-1. [Add a rule](/cf-rulesets/execute-rulesets) to a phase entry point to execute a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point to execute a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. [Configure a tag override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for rules with a given tag.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for the rules you want to execute.

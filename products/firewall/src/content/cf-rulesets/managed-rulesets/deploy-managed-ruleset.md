@@ -12,11 +12,11 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-To deploy a Managed Ruleset in a phase, use the [Rulesets API](/cf-rulesets/rulesets-api).
+To deploy a Managed Ruleset to a phase, use the [Rulesets API](/cf-rulesets/rulesets-api).
 
-## Deploy a Managed Ruleset in a phase at the account level
+## Deploy a Managed Ruleset to a phase at the account level
 
-Use the following workflow to deploy a Managed Ruleset in a phase at the account level.
+Use the following workflow to deploy a Managed Ruleset to a phase at the account level.
 
 1. Get your account ID.
 1. Get the ID of the Managed Ruleset you wish to deploy. See [List existing rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets).
@@ -85,9 +85,9 @@ header: Response
 }
 ```
 
-## Deploy a Managed Ruleset in a phase at the zone level
+## Deploy a Managed Ruleset to a phase at the zone level
 
-Use the following workflow to deploy a Managed Ruleset in a phase at the zone level.
+Use the following workflow to deploy a Managed Ruleset to a phase at the zone level.
 
 1. Get your zone ID.
 1. Get the ID of the Managed Ruleset you wish to deploy. See [List existing rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets).
