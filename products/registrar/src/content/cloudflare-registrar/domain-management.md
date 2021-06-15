@@ -27,4 +27,4 @@ If you decide you no longer need the domain, you can disable AutoRenew for your 
 
 You can continue to keep your domain registered with Cloudflare for the time remaining on the expiration. If you decide you want to keep the domain, you can enable AutoRenew at any time prior to your expiration.
 
-For more details on renewals, see [Renew domains](../renew-domains).
+For more details on renewals, see [Renew domains](../../renew-domains).
