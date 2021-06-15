@@ -7,4 +7,4 @@ pcx-content-type: navigation
 
 Select a platform to get started:
 
-<DirectoryListing path="/01-setting-up-1.1.1.1"/>
+<DirectoryListing path="/setting-up-1.1.1.1"/>
