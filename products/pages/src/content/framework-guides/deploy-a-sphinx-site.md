@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Sphinx site
 
 [Sphinx](https://www.sphinx-doc.org/) is a tool that makes it easy to create beautiful documentation, originally created

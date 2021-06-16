@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Next.js site
 
 Next.js is an open-source React framework for creating websites and apps. In this guide, you'll create a new Next.js application and deploy it using Cloudflare Pages.
