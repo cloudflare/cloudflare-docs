@@ -55,8 +55,7 @@ Select the new GitHub repository that you created above and, in the configuratio
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
 | Build directory       | `build`            |
-| Environment Variables	| `NODE_VERSION: 14` |
-
+| Environment Variables | `NODE_VERSION: 14` |
 
 </TableLayout>
 
