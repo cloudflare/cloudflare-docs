@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a React application
 
 React is an incredibly popular framework for building reactive and powerful frontend applications, built by the open-source team at Facebook.

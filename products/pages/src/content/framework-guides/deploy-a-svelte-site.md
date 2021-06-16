@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Svelte site
 
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
