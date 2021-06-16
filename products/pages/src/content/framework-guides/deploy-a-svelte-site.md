@@ -54,15 +54,22 @@ Select the new GitHub repository that you created above and, in the configuratio
 
 <TableLayout>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `build`          |
+| Configuration option  | Value              |
+| --------------------- | ------------------ |
+| Production branch     | `main`             |
+| Build command         | `npm run build`    |
+| Build directory       | `build`            |
+| Environment Variables | `NODE_VERSION: 14` |
 
 </TableLayout>
 
 Optionally, you can customize the `Project Name` setting. It defaults to the repository's name, but it does not need to match. This value is assigned as your `pages.dev` subdomain.
+
+<Aside type="warning">
+
+**Important:** SvelteKit requires Node.js v14.x or later to build successfully! You must expand the "Environment Variables (advanced)" section and add a `NODE_VERSION` variable with a value of `14` or greater.
+
+</Aside>
 
 ### SvelteKit Configuration
 
