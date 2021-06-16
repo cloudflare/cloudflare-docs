@@ -20,7 +20,7 @@ In this tutorial, we'll use Workers and [Airtable](https://airtable.com) to pers
 
 [The source for this project can be found on GitHub](https://github.com/signalnerve/workers-airtable-form)—note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)), as well as a serverless function for handling the interaction with Airtable. 
 
-**The front-end portion of this site does not require any specific React experience.** It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JS-heavy forms, such as with React or other front-end frameworks.
+**[The front-end portion of this site](https://workers-airtable-form.pages.dev/) does not require any specific React experience.** It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JS-heavy forms, such as with React or other front-end frameworks.
 
 ## Create a form
 
@@ -325,8 +325,9 @@ With that, you've created a Workers serverless function that can accept form sub
 
 You can find the source for this project—both the front-end UI, as well as the serverless function that communicates with Airtable—[on GitHub](https://github.com/signalnerve/workers-airtable-form).
 
-See what else you can build with Workers with some of our other tutorials below!
+See what else you can build with Workers with some of our other resources below!
 
 - [Build a Slackbot](https://developers.cloudflare.com/workers/tutorials/build-a-slackbot)
 - [Build a To-Do List Jamstack App](https://developers.cloudflare.com/workers/tutorials/build-a-jamstack-app)
 - [Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages](https://developers.cloudflare.com/pages/tutorials/build-a-blog-using-nuxt-and-sanity)
+- [James Quick's video on building a Cloudflare Workers + Airtable integration](https://www.youtube.com/watch?v=tFQ2kbiu1K4)
