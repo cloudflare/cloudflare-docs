@@ -1,13 +1,20 @@
 # Redirects
 
 ## Creating redirects
+
 To use redirects on Cloudflare Pages, declare your redirects in a `_redirects` plain text file in the output folder of your project. The [build output folder](https://developers.cloudflare.com/pages/platform/build-configuration) is project-specific so the `_redirects` file should not always be in the root directory of the repo. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
 
 Only one redirect can be defined per line and must follow this format:
 
 ```
-[source] [destination] [code]
+[source] [destination] [code?]
 ```
+
+<Aside heading="Status Code">
+  
+  The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
+  
+</Aside>
 
 A complete example with multiple redirects may look like the following:
 
@@ -18,7 +25,7 @@ filename: _redirects
 /home301 / 301
 /home302 / 302
 /querystrings /?query=string 301
-/twitch https://twitch.tv 301
+/twitch https://twitch.tv
 /trailing /trailing/ 301
 /notrailing/ /nottrailing 301
 ```
