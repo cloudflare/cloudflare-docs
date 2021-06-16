@@ -16,9 +16,9 @@ You can connect applications to Cloudflare for Teams over a number of different 
 
 Cloudflare can render certain non-web applications in your browser without the need for client software or end user configuration changes. Cloudflare currently supports rendering a terminal for SSH connections in a user's browser.
 
-To enable, follow the instructions [here](/tutorials/ssh) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable browser rendering` to on.
+To enable, follow the instructions [here](/tutorials/ssh) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
 
-![Auto Auth](../static/documentation/applications/render-browser.png)
+![Auto Auth](../static/documentation/applications/ssh-browser-rendering.png)
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 
