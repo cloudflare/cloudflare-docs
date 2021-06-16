@@ -1,3 +1,7 @@
+---
+pcx-content-type: tutorial
+---
+
 # Build an API for your frontend using Cloudflare Workers
 
 ## Introduction
