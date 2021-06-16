@@ -22,7 +22,7 @@ Follow these steps to configure your device to use 1.1.1.1.
 
 1. Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is enabled.
 
-## Previous versions
+## Previous Android versions
 
 1. Open **Settings** > **Wi-Fi**.
 

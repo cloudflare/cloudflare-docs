@@ -14,6 +14,6 @@ In this chapter, we go over the ways in which you can configure DNS over HTTPS (
 
 <Aside>
 
-**Note**: If you are an end-user trying to configure your browser to use DNS over HTTPS, please refer to our documentation regarding how to setup [Windows](../setting-up-1.1.1.1/windows) and [MacOS](../setting-up-1.1.1.1/macos).
+**Note**: If you are an end-user trying to configure your browser to use DNS over HTTPS, please refer to our documentation regarding how to setup [Windows](/setting-up-1.1.1.1/windows) and [macOS](/setting-up-1.1.1.1/mac).
 
 </Aside>

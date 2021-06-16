@@ -10,9 +10,8 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 1. Click the **Start menu** > **Settings**.
 1. Select **Network and Internet** > **Change Adapter Settings**.
 1. Right-click on the WiFi network you are connected to and click **Properties**.
-1. Select **Internet Protocol Version 4**
-1. Click **Properties**.
-1. Click **Use The Following DNS Server Addresses**.
+1. Select **Internet Protocol Version 4**.
+1. Click **Properties** > **Use The Following DNS Server Addresses**.
 1. Remove any IP addresses that may be already listed and in their place add:
 
     ```txt
@@ -22,7 +21,7 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 1. Click **OK**.
 1. Now, go to **Internet Protocol Version 6**.
-1. Click **Properties** > **Use The Following DNS Server Addresses**.
+1. Select **Properties** > **Use The Following DNS Server Addresses**.
 1. Remove any IP addresses that may be already listed and in their place add:
 
     ```txt
@@ -66,7 +65,7 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 1. Go to `edge://settings/privacy`.
 1. Scroll down to the **Security** section.
 1. Make sure the **Use secure DNS** option is checked and enabled.
-1. Choose *Cloudflare (1.1.1.1)* as a service provider.
+1. Choose **Cloudflare (1.1.1.1)** as a service provider.
 
 ### Brave
 
@@ -74,7 +73,7 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 1. Navigate to **Settings**.
 1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS**.
-1. Choose *Cloudflare (1.1.1.1)* as a service provider.
+1. Choose **Cloudflare (1.1.1.1)** as a service provider.
 
 ### Safari
 

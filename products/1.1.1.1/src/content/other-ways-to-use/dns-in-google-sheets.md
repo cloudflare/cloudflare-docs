@@ -68,29 +68,30 @@ function NSLookup(type, domain) {
 }
 ```
 
-Now, when you feed the function `NSLookup` a record type and a domain, you'll get a DNS record value in the cell you called `NSLookup`.
+Now, when you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
 
 The record types supported are:
 
+* A
+* AAAA
+* CAA
+* CNAME
+* DS
+* DNSKEY
+* MX
+* NS
+* NSEC
+* NSEC3
+* RRSIG
+* SOA
+* TXT
+
+
+For example, typing:
+
 ```txt
-A
-AAAA
-CAA
-CNAME
-DS
-DNSKEY
-MX
-NS
-NSEC
-NSEC3
-RRSIG
-SOA
-TXT
+NSLookup(B1, B2)
 ```
-
-Example:
-
-`NSLookup(B1, B2)`
 
 <div class="medium-img">
 
@@ -98,9 +99,7 @@ Example:
 
 </div>
 
-Returns:
-
-`198.41.214.162, 198.41.215.162`
+Returns `198.41.214.162, 198.41.215.162`
 
 <div class="medium-img">
 

@@ -7,7 +7,7 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 # iPhone
 
 1. Go to **Settings** > **Wi-Fi**.
-1. Select the information **'i'** icon next to the WiFi network you are connected to.
+1. Select the **'i'** icon next to the WiFi network you are connected to.
 1. Scroll down until you see the section called **Configure DNS**.
 1. Change the configuration from **Automatic** to **Manual**.
 1. Select **Add Server**.
@@ -22,6 +22,8 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 1. Select **Save**.
 
+<CaptivePortals/>
+
 ## Using DNS Override iOS App
 
 You can also use a handy iOS app called DNS Override (paid app, costs $1.99) that automatically configures 1.1.1.1 for you on any network you connect to. To use it:
@@ -31,5 +33,3 @@ You can also use a handy iOS app called DNS Override (paid app, costs $1.99) tha
 1. Select **1.1.1.1** at the top of the app.
 1. Turn on the **DNS Override** toggle.
 1. DNS Override may ask you to install their VPN profile so that they can automatically update DNS settings.
-
-<CaptivePortals/>

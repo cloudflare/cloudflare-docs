@@ -40,15 +40,19 @@ For all DNS record types, use the `/multi-dig` command.
 
 ### Examples
 
+`/dig domain: cloudflare.com`
+
 <div class="medium-img">
 
 ![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
 
-`/dig domain: cloudflare.com`
-
-![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)
+</div>
 
 `/dig domain: cloudflare.com type: AAAA short: True`
+
+<div class="medium-img">
+
+![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)
 
 </div>
 
@@ -95,15 +99,19 @@ Use '\*' (asterisk) in place of a record type to get DNS results for all support
 
 ### Examples
 
+`/multi-dig domain: cloudflare.com types: A AAAA`
+
 <div class="medium-img">
 
 ![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)
 
-`/multi-dig domain: cloudflare.com types: A AAAA`
-
-![multi-dig domain: cloudflare.com types: DNSKEY short: True](../static/dns-over-discord/multi-dig-command-example-2.png)
+</div>
 
 `/multi-dig domain: cloudflare.com types: DNSKEY short: True`
+
+<div class="medium-img">
+
+![multi-dig domain: cloudflare.com types: DNSKEY short: True](../static/dns-over-discord/multi-dig-command-example-2.png)
 
 </div>
 
@@ -114,27 +122,46 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 <div class="medium-img">
 
 ![whois command](../static/dns-over-discord/whois-command.png)
+
 </div>
 
 ### Examples
 
 <div class="medium-img">
 
-![whois query: cloudflare.com](../static/dns-over-discord/whois-command-example-1.png)
-
 `/whois query: cloudflare.com`
 
-![whois query: 104.16.132.229](../static/dns-over-discord/whois-command-example-2.png)
+![whois query: cloudflare.com](../static/dns-over-discord/whois-command-example-1.png)
+
+</div>
+
+---
+
+<div class="medium-img">
 
 `/whois query: 104.16.132.229`
 
-![whois query: 2606:4700::6810:84e5](../static/dns-over-discord/whois-command-example-3.png)
+![whois query: 104.16.132.229](../static/dns-over-discord/whois-command-example-2.png)
+
+</div>
+
+---
 
 `/whois query: 2606:4700::6810:84e5`
 
-![whois query: 13335](../static/dns-over-discord/whois-command-example-4.png)
+<div class="medium-img">
+
+![whois query: 2606:4700::6810:84e5](../static/dns-over-discord/whois-command-example-3.png)
+
+</div>
+
+---
 
 `/whois query: 13335`
+
+<div class="medium-img">
+
+![whois query: 13335](../static/dns-over-discord/whois-command-example-4.png)
 
 </div>
 
@@ -148,9 +175,9 @@ The `/help` command provides in-Discord documentation about all the commands ava
 
 <div class="medium-img">
 
-![help command](../static/dns-over-discord/help-command.png)
-
 `/help`
+
+![help command](../static/dns-over-discord/help-command.png)
 
 </div>
 
@@ -161,9 +188,9 @@ This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](http
 
 <div class="medium-img">
 
-![privacy command](../static/dns-over-discord/privacy-command.png)
-
 `/privacy`
+
+![privacy command](../static/dns-over-discord/privacy-command.png)
 
 </div>
 
@@ -174,9 +201,9 @@ The GitHub repository can be accessed at [https://github.com/MattIPv4/DNS-over-D
 
 <div class="medium-img">
 
-![github command](../static/dns-over-discord/github-command.png)
-
 `/github`
+
+![github command](../static/dns-over-discord/github-command.png)
 
 </div>
 
@@ -187,9 +214,9 @@ The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/
 
 <div class="medium-img">
 
-![invite command](../static/dns-over-discord/invite-command.png)
-
 `/invite`
+
+![invite command](../static/dns-over-discord/invite-command.png)
 
 </div>
 

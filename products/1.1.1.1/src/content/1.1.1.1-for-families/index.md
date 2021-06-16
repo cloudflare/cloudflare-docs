@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 1.1.1.1 for Families is the easiest way to add a layer of protection to your home network, and protect it from malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1 two years ago.
 
-1.1.1.1 for Families has two default options: one that blocks malware and the other that blocks malware and adult content. You choose which setting you want depending on which IP address you configure.
+1.1.1.1 for Families has two default options: one that blocks malware and the other that blocks malware and adult content. You choose which setting you want depending on which IP address you configure. In this section we provide easy guides for different devices.
 
 ## Protect your home against malware
 
@@ -28,8 +28,6 @@ When you change your DNS resolvers to the addresses below, 1.1.1.1 for Families 
 * `2606:4700:4700::1003`
 
 Cloudflare will return `0.0.0.0` if the FQDN or IP in a DNS query is classified as malicious.
-
-Ready to set it up? We provide easy guides for every device in this section.
 
 ## Domain miscategorization
 

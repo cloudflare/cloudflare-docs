@@ -10,9 +10,9 @@ pcx-content-type: how-to
 1. Select **WiFi** or **LAN** depending on what you use.
 1. Select **Custom**.
 1. Set **IP Address Settings** to **Automatic**.
-1. Set **DHCP Host Name** to **Do Not Specify**.
+1. Change **DHCP Host Name** to **Do Not Specify**.
 1. Set **DNS Settings** to **Manual**.
-1. Set **Primary DNS** to: `1.1.1.1`.
+1. Change **Primary DNS** to: `1.1.1.1`.
 1. Set **Secondary DNS** to: `1.0.0.1`.
 1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
 
@@ -70,5 +70,5 @@ The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Ni
 1. Select your Internet connection and then select **Change Settings**.
 1. Select **DNS Settings** > **Manual**.
 1. Set **Primary DNS** to: `1.1.1.1`.
-1. Set **Secondary DNS** to: `1.0.0.1`.
+1. Change **Secondary DNS** to: `1.0.0.1`.
 1. Press **Save** > **OK**.

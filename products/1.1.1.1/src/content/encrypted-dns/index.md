@@ -13,6 +13,6 @@ DNS over TLS uses its own port, 853, to wrap DNS requests within a TLS connectio
 
 DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS request in an HTTPS request. It uses HTTPS and HTTP/2 to encrypt traffic at the application layer. With DoH, DNS queries and responses are camouflaged within other HTTPS traffic, since it all comes and goes from the same port. This means they cannot easily be blocked without blocking all other HTTPS traffic as well, but it also provides users with greater privacy, as network administrators will have no visibility on the DNS queries hidden within the larger flow of HTTPS traffic.
 
-In the next chapters we will talk more about DNS over TLS (DoT) and DNS over HTTPS (DoH).
+In the next chapters we will talk more about DNS over TLS (DoT) and DNS over HTTPS (DoH). Choose one of the links below to start.
 
 <DirectoryListing path="/encrypted-dns"/>

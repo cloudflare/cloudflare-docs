@@ -54,7 +54,7 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 1. Go to `edge://settings/privacy`.
 1. Scroll down to the **Security** section.
 1. Make sure the **Use secure DNS** option is checked and enabled.
-1. Choose *Cloudflare (1.1.1.1)* as a service provider.
+1. Choose **Cloudflare (1.1.1.1)** as a service provider.
 
 ### Brave
 
@@ -62,7 +62,7 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 1. Navigate to **Settings**.
 1. Navigate to **Privacy and security** > **Security**.
 1. Enable the **Use secure DNS**.
-1. Choose *Cloudflare (1.1.1.1)* as a service provider.
+1. Choose **Cloudflare (1.1.1.1)** as a service provider.
 
 ### Safari
 

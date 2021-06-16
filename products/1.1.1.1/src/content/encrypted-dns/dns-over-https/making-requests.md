@@ -21,7 +21,7 @@ When making requests using `POST`, the DNS query is included as the message body
 
 When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (see below).
 
-See curl examples for [UDP wireformat](/dns-over-https/wireformat/) and [JSON](/json-format/).
+See also curl examples for [UDP wireformat](/dns-over-https/wireformat/) and [JSON](/json-format/).
 
 ## Valid MIME types
 
