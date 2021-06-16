@@ -1,14 +1,11 @@
 ---
+title: Windows
 pcx-content-type: how-to
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 
-# Windows
-
-## Windows 10
-
-<StreamVideo id="92b27227d737a866adc8b0572cf0db89"/>
+# Windows 10
 
 1. Click the **Start menu** > **Settings**.
 1. Select **Network and Internet** > **Change Adapter Settings**.

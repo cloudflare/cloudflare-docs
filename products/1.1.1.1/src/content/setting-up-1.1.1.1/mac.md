@@ -6,8 +6,6 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 # macOS
 
-<StreamVideo id="b95943849d53350130ba22d039fa6faf"/>
-
 1. Go to **System Preferences**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Preferences`.
 1. Click on the **Network** icon.
 1. Click **Advanced**.

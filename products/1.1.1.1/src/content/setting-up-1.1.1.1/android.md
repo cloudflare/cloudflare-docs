@@ -12,7 +12,9 @@ Android Pie or later supports Private DNS, which uses DNS over TLS to secure you
 
 Follow these steps to configure your device to use 1.1.1.1.
 
-1. Go to **Settings** > **Network & internet** > **Advanced** > **Private DNS**.
+1. Go to **Settings** > **Network & internet** 
+
+1. Select **Advanced** > **Private DNS**.
 
 1. Select the **Private DNS** provider hostname option.
 
@@ -21,8 +23,6 @@ Follow these steps to configure your device to use 1.1.1.1.
 1. Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is enabled.
 
 ## Previous versions
-
-<StreamVideo id="62dceb0d5905f0c98a895d21409d6247"/>
 
 1. Open **Settings** > **Wi-Fi**.
 

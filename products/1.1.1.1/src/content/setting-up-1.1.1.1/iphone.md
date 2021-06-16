@@ -6,8 +6,6 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 # iPhone
 
-<StreamVideo id="ddf07732bc76fc854d4b1879eea2c517"/>
-
 1. Go to **Settings** > **Wi-Fi**.
 1. Select the information **'i'** icon next to the WiFi network you are connected to.
 1. Scroll down until you see the section called **Configure DNS**.
@@ -27,8 +25,6 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 ## Using DNS Override iOS App
 
 You can also use a handy iOS app called DNS Override (paid app, costs $1.99) that automatically configures 1.1.1.1 for you on any network you connect to. To use it:
-
-<StreamVideo id="da4eefaa9315767842737eb793c9b63d"/>
 
 1. [Download DNS Override from the app store](https://itunes.apple.com/us/app/dns-override/id1060830093?mt=8).
 1. Launch the DNS Override app.

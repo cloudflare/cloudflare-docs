@@ -4,7 +4,13 @@ pcx-content-type: concept
 
 # DNS over HTTPS
 
-You can send DNS queries in an encrypted fashion for 1.1.1.1 for Families. If you have DNS over HTTPS compliant client, use the following URLs to use 1.1.1.1 for Families.
+When we input an address into our web browser to visit a website, the browser has no idea where that website is. That is because a place like `cloudflare.com` needs to be translated into its real address (like `104.16.124.96`). This translation is done by querying DNS resolvers, such as 1.1.1.1. 
+
+DNS resolvers are like the Google Maps of the Internet, helping browsers reach the correct place. 
+
+Traditionally, these queries and replies are performed over plaintext which means they are sent over the Internet without any kind of encryption or protection. This happens even when you are accessing a secured website. This has a huge impact on security and privacy, as these queries might be subject to surveillance, spoofing and tracking by malicious actors, advertisers, ISPs, and others.
+
+To prevent this and secure your connections, your can send encrypted DNS queries to 1.1.1.1 over HTTPS. If you have a DNS over HTTPS compliant client (such as a router), use the following URLs to use a secure connection to 1.1.1.1 for Families. If you don't see a place in your router to input the following URLs, that is because your router is not compliant with DNS over HTTPS.
 
 ## Block Malware
 
