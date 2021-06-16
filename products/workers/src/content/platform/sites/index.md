@@ -1,3 +1,7 @@
+---
+pcx-content-type: navigation
+---
+
 # Workers Sites
 
 Workers Sites enables developers to deploy __static applications__ directly to Workers.
