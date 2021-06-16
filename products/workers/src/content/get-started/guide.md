@@ -1,6 +1,7 @@
 ---
 order: 0
 title: "Guide"
+pcx-content-type: getting-started
 ---
 
 # Getting Started Guide

@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content-type: concept
 ---
 
 # Using Durable Objects
