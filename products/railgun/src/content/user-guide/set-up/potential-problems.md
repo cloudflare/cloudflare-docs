@@ -24,7 +24,7 @@ example.com:2083 = 127.0.0.1:2083
 
 ---
 
-**Railgun is returning a HTTP 502 in its error logs**
+**Railgun is returning an HTTP 502 in its error logs**
 
 This commonly occurs when Railgun cannot reach your origin web server over port 443 (or port 80) within 30 seconds. Verify that the server your Railgun instance is on can connect via `telnet <host> 443`.
 
