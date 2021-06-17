@@ -7,8 +7,8 @@ pcx-content-type: concept
 # About Cloudflare Waiting Room
 
 Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down:
-- If a page is not experiencing heavy traffic, a visitor goes straight to the page.
-- If page traffic crosses a [user-defined threshold](/reference/configuration-settings#session-duration), a visitor goes to a virtual waiting room until it's their turn to access the page:
+- If a page is not experiencing heavy traffic, a visitor accesses the page directly.
+- If page traffic crosses a [user-defined threshold](/reference/configuration-settings#session-duration), a visitor enters a virtual waiting room until it's their turn to access the page:
     - Each user receives a [cookie](/reference/waiting-room-cookie) to manage the dynamic outflow of requests from the waiting room to the origin website in First In First Out (FIFO) order.
     - While in the waiting room, the user's browser automatically refreshes every 20 seconds to give them updated information about their estimated wait time.
     - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/reference/configuration-settings#session-duration).
