@@ -1,6 +1,7 @@
 ---
 title: Resizing with Workers
 order: 3
+pcx-content-type: configuration
 ---
 
 # Resizing with Cloudflare Workers

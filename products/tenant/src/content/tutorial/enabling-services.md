@@ -1,6 +1,7 @@
 ---
 title: "3: Enabling services"
 order: 2
+pcx-content-type: tutorial
 ---
 
 # Step 3: Enabling services
