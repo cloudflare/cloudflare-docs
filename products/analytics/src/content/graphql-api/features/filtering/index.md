@@ -150,7 +150,7 @@ WHERE (datetime > "2018-01-01T10:00:00Z") AND (datetime < "2018-01-01T10:00:00Z"
 
 #### Filter using the `OR` operator
 
-The following GraphQL example demonstrates using the `OR` operator in a filter. This `OR` operator filters for the value `US` or `UK` in the `clientCountryName` field.
+The following GraphQL example demonstrates using the `OR` operator in a filter. This `OR` operator filters for the value `US` or `GB` in the `clientCountryName` field.
 
 ##### GraphQL {#005}
 
@@ -167,7 +167,7 @@ httpRequestsAdaptiveGroups(
 
 ```sql
 WHERE datetime="2018-01-01T10:00:00Z"
-  AND ((clientCountryName = "GB") OR (clientCountryName = "US"))
+  AND ((clientCountryName = "US") OR (clientCountryName = "GB"))
 ```
 
 ### Subqueries (advanced filters)
