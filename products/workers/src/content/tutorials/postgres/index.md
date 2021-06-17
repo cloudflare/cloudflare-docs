@@ -164,7 +164,7 @@ header: JSON array returning from PostgREST in a Workers function
 
 ### Adding a router
 
-To make this project more interesting, you will add a router to handle multiple potential paths in the application. The application will have one path which returns _all_ users, a path that returns a single user _based on ID_, and a path that accepts data and creates a user. The URL structure will look like this:
+To increase the functionality of this project, you can add a router to handle multiple potential paths in the application. The application will have one path which returns _all_ users, a path that returns a single user _based on ID_, and a path that accepts data and creates a user. The URL structure will look like this:
 
 | Route            | Action                    |
 | ---------------- | ------------------------- |
