@@ -1,6 +1,7 @@
 ---
 title: 6 – Making some exceptions
 order: 6
+pcx-content-type: tutorial
 ---
 
 # Making some exceptions
