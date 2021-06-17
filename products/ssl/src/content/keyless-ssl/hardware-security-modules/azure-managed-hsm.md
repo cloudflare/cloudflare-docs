@@ -47,7 +47,11 @@ brew install azure-cli
     $ az login
     $ az group create --name HSMgroup --location southcentralus
     ```
-    <Aside type="note" header="Note:">The public preview of Managed HSM is available in the following regions: East US 2, South Central US, North Europe, and West Europe</Aside>
+    <Aside type="note" header="Note:">
+    
+    For a list of supported regions, see the <a href="https://azure.microsoft.com/en-us/global-infrastructure/services/?products=key-vault">Microsoft documentation</a>.
+    
+    </Aside>
 
 1. [Create, provision, and activate](https://docs.microsoft.com/en-us/azure/key-vault/managed-hsm/quick-create-cli) the HSM.
 1. Add your private key to the `keyvault`, which returns the URI you need for **Step 4**:
