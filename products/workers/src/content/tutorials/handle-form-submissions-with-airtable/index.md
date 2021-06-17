@@ -18,9 +18,9 @@ In this tutorial, we'll use Workers and [Airtable](https://airtable.com) to pers
 
 ![Example GIF of complete Airtable and serverless function integration](./example.gif)
 
-[The source for this project can be found on GitHub](https://github.com/signalnerve/workers-airtable-form)—note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)), as well as a serverless function for handling the interaction with Airtable. 
+[The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form)—note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)), as well as a serverless function for handling the interaction with Airtable. 
 
-**[The front-end portion of this site](https://workers-airtable-form.pages.dev/) does not require any specific React experience.** It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JS-heavy forms, such as with React or other front-end frameworks.
+**[The front-end portion of this site](https://airtable-form-example.pages.dev) does not require any specific React experience.** It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JS-heavy forms, such as with React or other front-end frameworks.
 
 ## Create a form
 
@@ -53,7 +53,7 @@ The `form` used in the example front-end UI builds on these basics, adding some 
 
 ![The completed form in the front-end user interface](./ui.png)
 
-The code for this form can be [found on GitHub](https://github.com/signalnerve/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for our serverless function URL, and the `method` attribute, which tells the form to submit using an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST). 
+The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for our serverless function URL, and the `method` attribute, which tells the form to submit using an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST). 
 
 Some sample code is provided as an example below, including the first `input`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
 
@@ -84,7 +84,7 @@ Some sample code is provided as an example below, including the first `input`, t
 </form>
 ```
 
-If you'd like to follow along with this example, you can directly copy the `form` code from the [`Form` component](https://github.com/signalnerve/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
+If you'd like to follow along with this example, you can directly copy the `form` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
 
 ## Create a serverless function
 
@@ -102,7 +102,7 @@ $ cd airtable-form-handler
 
 <Aside>
 
-If you've chosen to work with the [sample codebase on GitHub](https://github.com/signalnerve/workers-airtable-form), you can find a sample function in the `worker` directory.
+If you've chosen to work with the [sample codebase on GitHub](https://github.com/cloudflare/workers-airtable-form), you can find a sample function in the `worker` directory.
 
 </Aside>
 
@@ -188,7 +188,7 @@ Before we continue, let's review the keys that we should have from Airtable:
 
 With our Airtable base set up, and the keys and IDs we need to communicate with the API at the ready, it's time to set up our Workers function, and persist data from our form into Airtable.
 
-In `index.js`, begin by setting up a simple Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, we'll handle a new form submission, otherwise, we'll redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [workers-airtable-form.pages.dev](https://workers-airtable-form.pages.dev/)):
+In `index.js`, begin by setting up a simple Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, we'll handle a new form submission, otherwise, we'll redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [workers-airtable-form.pages.dev/](https://airtable-form.pages.dev/)):
 
 ```js
 ---
@@ -198,7 +198,7 @@ addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
 
-const FORM_URL = "https://workers-airtable-form.pages.dev"
+const FORM_URL = "https://airtable-form-example.pages.dev"
 
 async function handleRequest(request) {
   const url = new URL(request.url)
@@ -305,13 +305,13 @@ header: Publishing the serverless function
 $ wrangler publish
 ✨  Built successfully, built project size is 10 KiB.
 ✨  Successfully published your script to
- https://workers-airtable-form.signalnerve.workers.dev
+ https://workers-airtable-form.cloudflare.workers.dev
 ```
 
-You'll notice that your function is deployed to a unique URL—for instance, `https://workers-airtable-form.signalnerve.workers.dev`. This represents the first part of your front-end form's `action` attribute—the second part is the _path_ for our form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
+You'll notice that your function is deployed to a unique URL—for instance, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute—the second part is the _path_ for our form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
 
 ```html
-<form action="https://workers-airtable-form.signalnerve.workers.dev/submit" method="POST" class="...">
+<form action="https://workers-airtable-form.cloudflare.workers.dev/submit" method="POST" class="...">
 <!-- The rest of your HTML form -->
 ```
 
@@ -323,7 +323,7 @@ Once you've deployed your new form (we recommend [Cloudflare Pages](https://page
 
 With that, you've created a Workers serverless function that can accept form submissions, and persist them to Airtable. Along the way, we've learned how to parse form data, set up environment variables, and use the `fetch` API to make requests to external services outside of our Workers function.
 
-You can find the source for this project—both the front-end UI, as well as the serverless function that communicates with Airtable—[on GitHub](https://github.com/signalnerve/workers-airtable-form).
+You can find the source for this project—both the front-end UI, as well as the serverless function that communicates with Airtable—[on GitHub](https://github.com/cloudflare/workers-airtable-form).
 
 See what else you can build with Workers with some of our other resources below!
 
