@@ -13,9 +13,9 @@ This feature is available for all customers, but only selected customers on an E
 
 Cloudflare systems work 24/7 around the clock to mitigate attacks of all types against millions of websites.
 
-Traditionally, mitigation methods and attack vectors have not been shared with customers publicly, but we have created the `ddos_l7` Managed Ruleset and populated it with a subset of our mitigation rules in order to provide customers with more control over both the action taken when an attack is detected and the sensitivity to be used when looking for attacks. The phase also provides more observability into the types of attacks seen against a specific zone in the firewall dashbaord.
- 
-By default Cloudflare mitigation systems and the WAF will apply the actions from this Managed Ruleset for all customers, regardless of plan level, but only certain customers may override the rules in the Managed Ruleset.
+Traditionally, mitigation methods and attack vectors have not been shared with customers publicly, but we have created the `ddos_l7` Managed Ruleset and populated it with a subset of our mitigation rules in order to provide customers with more control over both the action taken when an attack is detected and the sensitivity to be used when looking for attacks. The phase also provides more observability into the types of attacks seen against a specific zone in the firewall dashboard.
+
+By default, Cloudflare mitigation systems and the WAF will apply the actions from this Managed Ruleset for all customers, regardless of plan level, but only certain customers may override the rules in the Managed Ruleset.
 
 Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
