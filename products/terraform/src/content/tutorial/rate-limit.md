@@ -1,6 +1,7 @@
 ---
 title: 4 – Woah, slow down there
 order: 4
+pcx-content-type: tutorial
 ---
 
 # Woah, slow down there

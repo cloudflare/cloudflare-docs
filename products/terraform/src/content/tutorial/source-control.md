@@ -1,6 +1,7 @@
 ---
 title: 2 – Tracking your history
 order: 2
+pcx-content-type: tutorial
 ---
 
 # Tracking your history
