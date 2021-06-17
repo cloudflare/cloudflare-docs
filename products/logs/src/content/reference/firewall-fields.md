@@ -48,7 +48,7 @@ The Firewall fields contain rules managed by Cloudflare to block requests that c
 | <em><span style="font-weight: 400;">ipRange</span></em> | Allow or block based on range of IP addresses |
 | <em><span style="font-weight: 400;">securityLevel</span></em> | Allow or block based on requester's security level |
 | <em><span style="font-weight: 400;">zoneLockdown</span></em> | Restrict all access to a specific zone |
-| <em><span style="font-weight: 400;">waf</span></em> | Allow or block based on the WAF product settings |
+| <em><span style="font-weight: 400;">waf</span></em> | Allow or block based on the WAF product settings. This is the old WAF/managed rules system that is being phased out. |
 | <em><span style="font-weight: 400;">firewallRules</span></em> | Allow or block based on a zone's firewall rules configuration |
 | <em><span style="font-weight: 400;">uaBlock</span></em> | Allow or block based on the Cloudflare User Agent Blocking product settings |
 | <em><span style="font-weight: 400;">rateLimit</span></em> | Allow or block based on a rate limiting rule, whether set by you or by Cloudflare |
@@ -56,7 +56,7 @@ The Firewall fields contain rules managed by Cloudflare to block requests that c
 | <em><span style="font-weight: 400;">hot</span></em> | Allow or block based on the Hotlinking Protection product settings |
 | <em><span style="font-weight: 400;">l7ddos</span></em> | Allow or block based on the L7 DdoS product settings |
 | <em><span style="font-weight: 400;">validation</span></em> | Allow or block based on a request that is invalid (cannot be customized) |
-| <em><span style="font-weight: 400;">botFight</span></em> | Allow or block based on the Super Bot Fight Mode product settings |
+| <em><span style="font-weight: 400;">botFight</span></em> | Allow or block based on the Bot Fight Mode (classic) product settings |
 | <em><span style="font-weight: 400;">botManagement</span></em> | Allow or block based on the Bot Management product settings |
 | <em><span style="font-weight: 400;">dlp</span></em> | Allow or block based on the Data Loss Prevention product settings |
 | <em><span style="font-weight: 400;">firewallManaged</span></em> | Allow or block based on the Cloudflare managed rules product settings |
