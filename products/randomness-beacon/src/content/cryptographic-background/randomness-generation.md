@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: tutorial
+pcx-content-type: interim
 ---
 
 # Randomness Generation
