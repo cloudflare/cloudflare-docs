@@ -1,6 +1,7 @@
 ---
 title: 3 – HTTPS all the things
 order: 3
+pcx-content-type: tutorial
 ---
 
 # HTTPS all the things

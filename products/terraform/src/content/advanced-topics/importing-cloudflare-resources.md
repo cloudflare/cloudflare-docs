@@ -1,3 +1,7 @@
+---
+pcx-content-type: tutorial
+---
+
 # Importing Cloudflare resources
 
 An important point to understand about Terraform is that it is only able to manage configuration that it created, or was explicitly told about after the fact. The reason for this limitation is that Terraform expects to be authoritative for the resources its manages. It relies on 2 types of files to understand what resources it controls, and what state they are in. This is how it determines when and how to make changes.

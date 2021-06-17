@@ -1,7 +1,7 @@
 ---
 title: Welcome
 order: 0
-type: overview
+pcx-content-type: landing-page
 ---
 
 <ContentColumn>
