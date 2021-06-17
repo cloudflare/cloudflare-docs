@@ -102,7 +102,6 @@ The `like` operator is available for string comparisons and supports the `%` cha
 
 ```graphql
 {
-{
   viewer {
     zones(filter: {zoneTag: $zoneTag}) {
       httpRequestsAdaptiveGroups(filter: {datetime_gt: "2021-06-10T00:00:00Z", clientCountryName: "GB"}, limit: 1) {
@@ -110,16 +109,6 @@ The `like` operator is available for string comparisons and supports the `%` cha
       }
     }
   }
-}
-    filter: {
-      httpRequestsAdaptiveGroups(
-        filter: {
-          clientCountry: "UK" # all objects having client country equal to "UK"
-          datetime_gt: "2018-01-01T10:00:00Z" # all object having datetime greater than "2018-01-01T10:00:00Z"
-        }
-      )
-    }
-  )
 }
 ```
 
