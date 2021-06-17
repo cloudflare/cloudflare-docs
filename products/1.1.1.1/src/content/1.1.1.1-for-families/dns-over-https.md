@@ -8,9 +8,7 @@ When you request to visit an application like `cloudflare.com`, your computer ne
 
 Traditionally, these queries and replies are performed over plaintext, which means they are sent over the Internet without any kind of encryption or protection. This happens even when you are accessing a secured website. This has a huge impact on security and privacy, as these queries might be subject to surveillance, spoofing and tracking by malicious actors, advertisers, ISPs, and others.
 
-To prevent this and secure your connections, you can send encrypted DNS queries to 1.1.1.1 over HTTPS. 1.1.1.1 for Families also categorizes destinations on the Internet based on the potential threat they pose regarding malware, phishing, or other types of security risks. When enabled, 1.1.1.1 for Families will block resolution of these destinations when a threat is found.
-
-If you have a DNS over HTTPS compliant client, use the following URLs to use a secure connection to 1.1.1.1 for Families. 
+To prevent this and secure your connections, you can send encrypted DNS queries to 1.1.1.1 over HTTPS. If you have a DNS over HTTPS compliant client, use the following URLs to use a secure connection to 1.1.1.1 for Families. 
 
 ## Block Malware
 
