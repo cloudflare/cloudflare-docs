@@ -78,7 +78,7 @@ Some sample code is provided as an example below, including the first `input`, t
 
   <!-- Rest of form -->
 
-  <button type="submit" className="...">
+  <button type="submit" class="...">
     Submit
   </button>
 </form>
