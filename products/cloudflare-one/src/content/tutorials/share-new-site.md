@@ -6,11 +6,11 @@ difficulty: Beginner
 
 # Share development environments
 
-You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers.
+You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers across the Internet.
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Cloudflare Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Cloudflare Tunnel to quickly share projects you are working on with team members. In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
+You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
 
 **🗺️ This tutorial covers how to:**
 
@@ -18,7 +18,9 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 * Give that application a hostname where users can reach the resource
 * Optionally require a simple login to reach the application with Cloudflare Access
 
-**⏲️ Time to complete: ~30 minutes**
+**⏲️ Time to complete:**
+
+15 minutes
 
 ## Before you start
 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
@@ -33,7 +35,7 @@ In this example, the new website is a [Hugo site](https://gohugo.io/getting-star
 
 ![New Hugo](../static/secure-origin-connections/share-new-site/hugo-new.png)
 
-To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+To share this work-in-progress, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -41,7 +43,7 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 `$ cloudflared login`
 
-The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
+The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your Cloudflare account. The website selected does not need to be the website where the environment will be made available.
 
 ![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
 
@@ -69,7 +71,7 @@ By default, `cloudflared` expects the configuration file at a specific location:
 
 `$ vim ~/.cloudflared/config.yml`
 
-The `url` value is the destination where the new website is available locally. The `tunnel` and `credentials-file` value can be copied from the output of the last command.
+The `url` value is the destination where the new website is available locally. The `tunnel` and `credentials-file` value can be copied from the output of the last command where you created the Tunnel.
 
 ```yml
 url: http://localhost:1313
@@ -79,7 +81,7 @@ credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e
 
 ## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run that](https://developers.cloudflare.com/argo-tunnel/create-tunnel) Tunnel. Running it will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 
@@ -93,9 +95,11 @@ Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the
 
 ![Add DNS](../static/secure-origin-connections/share-new-site/add-dns.png)
 
-Alternatively, you can create a DNS record from `cloudflared` directly.
-
 Once saved, you can share the subdomain created and visitors can reach your local web server environment.
+
+Alternatively, you can create a DNS record from `cloudflared` directly. To do so, run the following command, replacing the `UUID` value and DNS record with your own equivalents.
+
+`$ cloudflared tunnel route 5157d321-5933-4b30-938b-d889ca87e11b new-website.mopacthedog.com`
 
 ## Optional: Add a Zero Trust policy
 

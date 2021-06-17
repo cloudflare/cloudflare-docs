@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Fetch
 
 The [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provides an interface for asynchronously fetching resources via HTTP requests inside of a Worker.

@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Hugo site
 
 Hugo is a tool for generating static sites, written in Go. It's incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.

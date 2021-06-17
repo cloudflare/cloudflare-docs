@@ -93,7 +93,7 @@ If your video is public, the mp4 will also be publicly accessible. If your video
 
 Download links will not work for videos which already require signed URLs if the `downloadable` flag is not present in the token.
 
-For more details about using signed URLs with videos, please see [the documentation](../securing-your-stream).
+For more details about using signed URLs with videos, please see [the documentation](/viewing-videos/securing-your-stream).
 
 ### Example token payload
 

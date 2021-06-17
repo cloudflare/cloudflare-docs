@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content-type: common-configurations
 ---
 
 # Application paths
@@ -29,7 +30,7 @@ Using a wildcard in the *subdomain* field **does not cover the apex domain**.
 
 <TableWrap>
 
-| Wildcard | Covers | Doesn't cover |
+| Entry | Covers | Doesn't cover |
 | -------- | ------ | ------------- |
 | `*.example.com` | `alpha.example.com`, `beta.example.com` | `example.com` |
 
@@ -37,13 +38,23 @@ Using a wildcard in the *subdomain* field **does not cover the apex domain**.
 
 ### Protect all paths of an apex domain
 
-Using a wildcard in the *path* field **does cover the apex domain**.
+If you want to protect an apex domain and all of the paths under it, leave the path field empty.
 
 <TableWrap>
 
-| Wildcard | Covers | Doesn't cover |
+| Entry | Covers | Doesn't cover |
 | -------- | ------ | ------------- |
-| `example.com/*` | `example.com`, `example.com/alpha`, `example.com/beta` | `alpha.example.com` |
+| `example.com` | `example.com`, `example.com/alpha`, `example.com/beta` | `alpha.example.com` |
+
+</TableWrap>
+
+To protect all the paths under an apex domain, but not the apex domain itself, use a wildcard in the *path* field.
+
+<TableWrap>
+
+| Entry | Covers | Doesn't cover |
+| -------- | ------ | ------------- |
+| `example.com/*` | `example.com/alpha`, `example.com/beta` | `example.com` |
 
 </TableWrap>
 
@@ -53,7 +64,7 @@ Using a wildcard in the *subdomain* field to protect multi-level subdomains **do
 
 <TableWrap>
 
-| Wildcard | Covers | Doesn't cover |
+| Entry | Covers | Doesn't cover |
 | -------- | ------ | ------------- |
 | `*.test.example.com` | `alpha.test.example.com`, `beta.test.example.com` | `example.com`, `test.example.com` |
 
@@ -65,7 +76,7 @@ Using a wildcard in the *path* field to protect multi-level paths **does not cov
 
 <TableWrap>
 
-| Wildcard | Covers | Doesn't cover |
+| Entry | Covers | Doesn't cover |
 | -------- | ------ | ------------- |
 | `example.com/alpha/*` | `example.com/alpha/one`, `example.com/alpha/two` | `example.com`, `example.com/beta` |
 
@@ -75,7 +86,7 @@ Using a wildcard in the *path* field to protect multi-level paths **does not cov
 
 You cannot use wildcards to partially match subdomain and path names. Using asterisks in any way other than the ones outlined above **will cause the wildcard to be invalidated**. This means your application won't be effective, and neither will be any rules you may try to enforce on it at a later time.
 
-| Wildcard | Does NOT cover |
+| Entry | Does NOT cover |
 | -------- | ------ | 
 | `example.com/cat-*` | `example.com/cat`, `example.com/cat-food` |
 | `*ing.example.com` | `ing.example.com`, `engineering.example.com`|

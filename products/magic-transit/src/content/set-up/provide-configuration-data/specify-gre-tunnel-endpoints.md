@@ -1,6 +1,7 @@
 ---
 order: 1
 type: table
+pcx-content-type: how-to
 ---
 
 # Specify tunnel endpoints
@@ -17,7 +18,7 @@ Cloudflare recommends 2 GRE tunnels for each ISP and data center router combinat
 
 To configure the GRE tunnel(s) between Cloudflare and your data center(s), you must provide the following data for each tunnel:
 
-* **Customer edge IP address**—A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/about)), you do not need to provide edge addresses—Cloudflare will provide them.
+* **Customer edge IP address**—A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/)), you do not need to provide edge addresses—Cloudflare will provide them.
 * **Private subnet**—A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   * 10.0.0.0–10.255.255.255
   * 172.16.0.0–172.31.255.255

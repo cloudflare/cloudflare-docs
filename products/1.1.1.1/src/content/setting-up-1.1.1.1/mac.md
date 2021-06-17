@@ -2,6 +2,8 @@
 order: 7
 ---
 
+import CaptivePortals from "../_partials/_captive-portals.md"
+
 # macOS
 
 Follow this quick guide to start using 1.1.1.1 on your Mac.
@@ -22,3 +24,5 @@ Follow this quick guide to start using 1.1.1.1 on your Mac.
 
 1. Click **OK**.
 1. Click **Apply**.
+
+<CaptivePortals/>

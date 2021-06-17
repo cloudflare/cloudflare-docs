@@ -2,6 +2,8 @@
 order: 2
 ---
 
+import CaptivePortals from "../../_partials/_captive-portals.md"
+
 # Mac setup instructions
 
 ## Block malware
@@ -67,3 +69,5 @@ order: 2
 
 2. Click **OK**.
 3. Click **Apply**.
+
+<CaptivePortals/>

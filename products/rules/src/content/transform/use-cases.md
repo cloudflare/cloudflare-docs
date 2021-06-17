@@ -17,6 +17,7 @@ The following use cases illustrate how to perform URL rewrites with Transform Ru
 * [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
 * [Rewrite path of archived blog posts](#rewrite-path-of-archived-blog-posts)
 * [Rewrite path of moved section of a website](#rewrite-path-of-moved-section-of-a-website)
+* [Rewrite path with several URL segments to a different URL segment](#rewrite-path-with-several-url-segments-to-a-different-url-segment)
 * [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
 
 ### Rewrite path of welcome page for visitors in specific countries
@@ -127,6 +128,28 @@ regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
 
 The `regex_replace()` function matches the path component on a regular expression (`^/blog/`) and then provides a replacement for that match (`/marketing/`).
 
+### Rewrite path with several URL segments to a different URL segment
+
+To rewrite paths like `/images/<folder1>/<folder2>/<filename>` — where `<folder1>`, `<folder2>`, and `<filename>` can vary — to `/img/<filename>`, create a URL Rewrite Rule with a dynamic rewrite of the path component:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.request.uri.path ~ "^/images/[^/]+/[^/]+/[^/]+$"
+```
+
+Text after **Path** > **Rewrite to...** > _Dynamic_:
+
+```txt
+regex_replace(http.request.uri.path, "^/images/[^/]+/[^/]+/(.+)$", "/img/${1}")
+```
+
+</Example>
+
+For example, this rule would rewrite the `/images/nature/animals/tiger.png` path to `/img/tiger.png`.
+
 ### Rewrite blog archive URLs to support a new URL format
 
 To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following URL Rewrite Rule:
@@ -160,12 +183,6 @@ The `concat()` and `regex_replace()` functions can appear only **once** in a rew
 ---
 
 ## HTTP request header modification examples
-
-<Aside type="note">
-
-HTTP Request Header Modification Rules are available in Beta.
-
-</Aside>
 
 The following examples illustrate how to perform header modifications with Transform Rules:
 
@@ -226,7 +243,7 @@ starts_with(http.request.uri.path, "/private/")
 ```
 
 Selected operation under **Modify header**: _Remove_
- 
+
 **Header name**: `cf-connecting-ip`
 
 </Example>

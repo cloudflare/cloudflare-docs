@@ -1,5 +1,6 @@
 ---
 type: overview
+pcx-content-type: reference
 ---
 
 # Settings by plan

@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Durable Objects
 
 <Aside type="warning" header="Beta">

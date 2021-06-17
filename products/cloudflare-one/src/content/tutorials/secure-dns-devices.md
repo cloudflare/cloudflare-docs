@@ -1,71 +1,92 @@
 ---
 updated: 2020-11-30
 category: 🛡️ Web Gateway
-difficulty: Medium
 ---
 
 # Filter DNS on devices
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to filter and log DNS queries from devices on any network.
+You can use Cloudflare Gateway and the Cloudflare WARP client application to filter and log DNS queries from devices on any network. Cloudflare Gateway will continue to secure devices in any location by filtering all DNS queries using the WARP client on the roaming devices.
 
 **🗺️ This tutorial covers how to:**
 
 * Create a DNS filtering policy that secures devices by blocking malicious hostnames
 * Apply that policy to devices on any network
+* Enroll devices into a Cloudflare Gateway deployment
 
 **⏲️ Time to complete:**
 
-45 minutes
+30 minutes
 
+## Before you start
 1. [Add Gateway to your account](/setup)
 
-## Create a default location
+---
 
-When you [enable Cloudflare Gateway](/setup) for the first time, you will be prompted to configure your first location. You can use that Location to represent a physical office and/or roaming users.
+## Create a DNS filtering policy
 
-Start by navigating to the `Locations` page in the `Gateway` section of the sidebar. You will see the first location that you added has been set as the Default. Any device that enrolls into your Gateway account will follow the policies set for the default location by using the `DNS over HTTPS` address.
+You can [build a policy](/policies/filtering/dns-policies) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Create a DNS policy`.
 
-![Add DNS](../static/secure-web-gateway/secure-dns-devices/locations.png)
+![Add Policy](../static/secure-web-gateway/secure-dns-devices/start-filtering.png)
 
-If you wish to [use a different Location](/connections/connect-networks/locations) as your Default, and subsequently the one used for roaming devices, click `Add a location`. During location creation, toggle the `Default location` toggle and the new location will be the Default.
+First, assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.
 
-![New Default](../static/secure-web-gateway/secure-dns-devices/new-default.png)
+![Name Policy](../static/secure-web-gateway/secure-dns-devices/name-policy.png)
 
-## Create a Secure Web Gateway policy
+In this example, the policy will block any hostnames that Cloudflare's data intelligence platform identifies as containing security risks like malware or phishing campaigns. You can click `All security risks` to include all options or check individual types of threats in the dropdown.
 
-Next, you can [build a policy](/policies/filtering/dns-policies) that will filter DNS queries for known malicious hostnames and other types of threats. Navigate to the `Policies` page. On the DNS tab, click `Add a policy`.
+![Block Threats](../static/secure-web-gateway/secure-dns-devices/block-threats.png)
 
-![Add Policy](../static/secure-web-gateway/secure-dns-devices/add-policy.png)
+The policy will block security threats for any location or device in your Cloudflare for Teams deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/tutorials/identity-dns).
 
-Assign the policy a name and choose which locations will adhere to this policy. In this example, `Austin Office` is the only location and also the Default. Any devices which enroll will be grouped into this location using its `DNS over HTTPS` hostname.
+Choose `Block` as the action. You can optionally [enable a block page](/policies/filtering/configuring-block-page) that will be presented to users if they have the [Cloudflare certificate](/connections/connect-devices/warp/install-cloudflare-cert) on their devices. Click **Save policy** to conclude.
 
-![Apply Policy](../static/secure-web-gateway/secure-dns-devices/apply-policy.png)
+![Save Block](../static/secure-web-gateway/secure-dns-devices/save-dns-block.png)
 
-Under the `Security threats` tab you can toggle which types of threats to block. In this case, choosing `Block all` will toggle all threats to be blocked.
+The policy will now appear in your DNS policies list.
 
-![Block Rules](../static/secure-web-gateway/secure-dns-devices/block-rules.png)
+![Policy List](../static/secure-web-gateway/secure-dns-devices/dns-rule-list.png)
 
-You can also configure content or custom blocks. Once complete, click `Save`.
+## Integrate your identity provider
+
+The DNS filtering policy created will apply to any DNS queries sent from configured locations or enrolled devices. You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
+
+Navigate to the `Configuration` section of the Cloudflare for Teams dashboard and select `Authentication`. Cloudflare for Teams will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can integrate your corporate [identity provider](/identity/idp-integration) as well.
 
 ## Determine which devices can enroll
 
-Now that you have a default location and DNS filtering policy, you can [begin to enroll devices](/connections/connect-devices/warp/deployment). When devices enroll, users will be prompted to authenticate with your identity provider or a consumer identity service. By authenticating, you can attribute devices and DNS queries to users while also limiting who can enroll.
+Next, build a rule to decide which devices can enroll in your account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
 
-To begin, you will need to enable Cloudflare Access for your account. Cloudflare Access provides the identity integration to enroll users. This feature of Cloudflare Access is available in the Teams Free plan or in the Gateway plan at no additional cost. Follow [these instructions](/setup) to add Access and integrate a free identity option or a specific provider.
+![Device List](../static/secure-web-gateway/secure-dns-devices/device-list.png)
 
-Next, build a rule to decide which devices can enroll into your Gateway account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
+Click **Manage enrollment rules** and click **Add a rule** to begin the enrollment.
 
-![Device List](../static/secure-web-gateway/secure-dns-devices/device-page.png)
+![Add Device Rule](../static/secure-web-gateway/secure-dns-devices/add-device-rule.png)
 
-Click `Device Settings` to build the enrollment rule. In the policy, define who should be allowed to enroll a device and click `Save`.
+You can determine who is allowed to enroll using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-![Enroll Rule](../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
+![Device List](../static/secure-web-gateway/secure-dns-devices/device-enroll.png)
+
+Return to the top of the page and click **Add rule**.
+
+On the next page, click **Save rules** to conclude.
+
+![Device List](../static/secure-web-gateway/secure-dns-devices/save-rules.png)
+
+## Collect your Team domain
+
+When you first created your Cloudflare for Teams account, the dashboard prompted you to choose a [team name](/glossary#team-name). The name will be in the format `team.cloudflareaccess.com` where `team` is replaced with the name you selected.
+
+You will need this name to enroll devices. You can confirm the team name selected by visiting the `Settings` section of the dashboard and selecting `General`.
+
+![Device List](../static/secure-web-gateway/secure-dns-devices/team-name.png)
 
 ## Enroll a device
 
-You can use the WARP client to enroll a device into your security policies. Follow the [instructions here](/connections/connect-devices/warp) to install the client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+Your team members can run the WARP client to enroll in your Gateway account and send DNS queries to your configured policies. This section documents a self-serve user flow; you can alternatively [deploy the agent with an MDM](/connections/connect-devices/warp/deployment) so that users do not need to take any action.
 
-Once installed, click the gear icon.
+To begin the self-serve flow, follow the [instructions here](/connections/connect-devices/warp) to install the client depending on your device type.
+
+Once installed, click the logo in the toolbar and select the gear icon in the top right of the panel.
 
 ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
@@ -73,18 +94,22 @@ Under the `Account` tab, click `Login with Cloudflare for Teams`.
 
 ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-Input your Cloudflare for Teams [team name](/glossary#team-name). You will have created this during the Cloudflare Access setup flow. You can find it under the `Authentication` tab in the `Access` section of the sidebar.
+Input the Cloudflare for Teams [team name](/glossary#team-name).
 
 ![Org Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 
-The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you only need DNS filtering.
+The user will be prompted to login with the identity provider configured or with the one-time PIN flow.
 
-![DoH](../static/secure-web-gateway/secure-dns-devices/with-doh.png)
+![Login](../static/secure-web-gateway/secure-dns-devices/login.png)
 
-You can confirm that the device is using the default location under the `Connection` tab. The DoH address will match that of the default location.
+Once authenticated, the client will update to `Teams` mode.
 
-![Confirm DoH](../static/secure-web-gateway/secure-dns-devices/doh-subdomain.png)
+![Team Mode](../static/secure-web-gateway/secure-dns-devices/team-mode.png)
 
-## Optional: deploy via MDM
+You can click the gear to toggle between `Gateway with DoH`, which only filters DNS, or `Gateway with WARP`, which functions as a full forward proxy and can filter HTTP requests. In this use case, you only need DNS filtering.
 
-You can deploy the WARP client on corporate devices in a way that does not require users to configure the Org Name. To do so, [follow these instructions](/connections/connect-devices/warp/deployment).
+![DoH](../static/secure-web-gateway/secure-dns-devices/doh-mode.png)
+
+## Review logs and devices
+
+As users enroll, you can review the users and associated devices by visiting the `My Team` section of the dashboard. You can also [review logs](/tutorials/review-gateway-block) in the `Logs` section by selecting `Gateway`. To add identity into the logs, your users will need to switch to `Gateway with WARP` mode.

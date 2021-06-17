@@ -1,6 +1,7 @@
 ---
 title: Web Analytics for SPAs
 order: 12
+pcx-content-type: reference
 ---
 
 # Web Analytics for Single Page Applications (SPAs)

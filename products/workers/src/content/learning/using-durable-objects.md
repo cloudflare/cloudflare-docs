@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content-type: concept
 ---
 
 # Using Durable Objects
@@ -161,7 +162,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
+For more information, see the [documentation of WebSockets in Workers](/learning/using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -333,7 +334,9 @@ There is currently no support for generating a list of all existing objects, nor
 
 ### Development tools
 
-[Wrangler tail](/cli-wrangler/commands#tail) and [Wrangler dev](/cli-wrangler/commands#dev) do not currently work with Durable Objects.
+[Wrangler dev](/cli-wrangler/commands#dev) does not currently work with Durable Objects.
+
+[Wrangler tail](/cli-wrangler/commands#tail) does work, but note that logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.
 
 The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
 

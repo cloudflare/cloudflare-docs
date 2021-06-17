@@ -8,7 +8,7 @@ When a user makes a DNS request to Gateway, Gateway matches the request against 
 
 ![Gateway DNS flow](../../../static/documentation/policies/gateway-dns-diagram.png)
 
-When creating a DNS policy, you can select as many security risk and content categories as you want to affect with the policy. 
+When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. 
 
 Build a DNS policy by configuring the following elements:
 * [Actions](#actions)

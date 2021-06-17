@@ -1,6 +1,7 @@
 ---
 updated: 2020-09-22
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Migrating from Netlify to Pages

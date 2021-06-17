@@ -39,8 +39,8 @@ OeH8gMJ+FuwtXYEPa4hBf38M5eU5xWG7
 ```
 
 ```txt
-$ MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
-$ MYKEY="$(cat app_example_com.key|perl -pe 's/\r?\n/\\n/'|sed -e's/..$//')"
+$ MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/')"
+$ MYKEY="$(cat app_example_com.key|perl -pe 's/\r?\n/\\n/')"
 ```
 
 ```bash
@@ -65,7 +65,7 @@ Note that the serial number returned is unique to the issuer, but not globally u
 
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames\
-    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"
+    -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
     -H 'Content-Type: application/json' -d "$request_body"
 
 {

@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: configuration
 ---
 
 # Configuration
@@ -113,7 +114,9 @@ Values to use in your Worker script as text environment variables.
 Usage:
 
 ```toml
-vars = { FOO = "some value", BAR = "some other string" }
+[vars]
+FOO = "some value"
+BAR = "some other string"
 ```
 
 <Definitions>
@@ -127,9 +130,15 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 </Definitions>
 
+Alternatively, you can define `vars` using an "inline table" format. This style should not include any newlines to be considered valid TOML:
+
+```toml
+vars = { FOO = "some value", BAR = "some other string" }
+```
+
 <Aside>
 
-**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret). The `vars` definition in your `wrangler.toml` must not contain newlines in order to be valid TOML.
+**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret).
 
 </Aside>
 
@@ -171,7 +180,7 @@ You can also define your `kv_namespaces` using [alternative TOML syntax](https:/
 
 ### site
 
-A Workers Site generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
+A [Workers Site](/platform/sites) generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
 
 Usage:
 
@@ -265,7 +274,7 @@ You can learn more about the standard patterns used for include and exclude in t
 
 Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
 
-You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](configuration#build) section for more information.
+You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
 
 ### triggers
 
