@@ -9,6 +9,12 @@ pcx-content-type: concept
 
 A Cloudflare load balancer is identified by the DNS hostname whose traffic you want to balance (www.example.com, for example). The load balancer defines which origin server pools to use, the order in which they should be used, and how to geographically distribute traffic among pools.
 
+<Aside type="note">
+
+For more background information on what load balancers are and how they work, check out our <a href="https://www.cloudflare.com/learning/performance/what-is-load-balancing/">Learning Center</a>.
+
+</Aside>
+
 ---
 
 ## Common configurations
@@ -40,6 +46,12 @@ To set up a load balancer with **active-active failover**:
 1. For equal traffic, choose the same **Weight** for each origin. For guidance on other configurations, see [Weighted load balancers](../weighted-load-balancing).
 
 With this setup, your load balancer will direct all traffic to `primary`, which then directs traffic to `origin-1` and `origin-2` according to their respective weights. If enough origins become so unhealthy that `primary` falls below its **Health Threshold**, traffic would then go to the **fallback pool**.
+
+<Aside type='note'>
+
+For more background reading on server failover and common configurations, see our <a href="https://www.cloudflare.com/learning/performance/what-is-server-failover/">Learning Center</a>.
+
+</Aside>
 
 ## Important notes
 
