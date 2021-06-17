@@ -2,6 +2,7 @@
 updated: 2020-12-07
 category: 🛡️ Web Gateway
 difficulty: Medium
+pcx-content-type: tutorial
 ---
 
 # Block sites by host and URL

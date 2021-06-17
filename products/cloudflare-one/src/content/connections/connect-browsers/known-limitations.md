@@ -1,6 +1,6 @@
 ---
-title: Known limitations
 order: 3
+pcx-content-type: reference
 ---
 
 # Known limitations

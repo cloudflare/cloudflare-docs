@@ -2,6 +2,7 @@
 updated: 2021-05-11
 category: 🌐 Connections
 Difficulty: Advanced
+pcx-content-type: tutorial
 ---
 
 # Use `cloudflared` to expose a Kubernetes app to the Internet
