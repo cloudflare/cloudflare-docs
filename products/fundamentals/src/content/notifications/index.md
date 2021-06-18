@@ -14,7 +14,7 @@ Notifications are available to anyone with a Cloudflare account. Free plans can 
 
 ## Where to find the Notifications section
 
-Notifications are available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging into your account, click **Notifications** on the top right of the menu in your account home page. Here you can create notifications for different scenarios, edit notifications previously set up and enable or disable notifications.
+Notifications are available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging into your account, click Notifications on the top right of the menu in your account home page. Here you can create notifications for different scenarios, edit notifications previously set up and enable or disable notifications.
 
 ![Where to find the Notifications section](../static/images/notifications/where-to-find.png)
 

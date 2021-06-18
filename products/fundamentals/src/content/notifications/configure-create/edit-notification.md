@@ -22,9 +22,9 @@ There are a variety of services you can connect to using webhooks, in order to r
 * [DataDog](https://docs.datadoghq.com/developers/guide/calling-on-datadog-s-api-with-the-webhooks-integration/)
 * [OpsGenie](https://docs.opsgenie.com/docs/integration-api)
 
-After you are done, you can set up webhooks in your [Cloudflare account](https://dash.cloudflare.com/login):
+After you are done, you can set up webhooks in your [Cloudflare dashboard](https://dash.cloudflare.com/login):
 
-1. Go to **Notifications > Destinations**. 
+1. Go to **Notifications**. 
 1. On the left of your dashboard, click **Destinations**.
 1. You will see an area called **Webhooks**. Click the button **Create**.
 1. Give your webhook a name so you can identify it later.

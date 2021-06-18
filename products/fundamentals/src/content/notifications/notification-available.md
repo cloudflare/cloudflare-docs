@@ -1,7 +1,7 @@
 ---
 order: 5
 type: overview
-title: Notifications available
+title: Types of Notifications
 pcx-content: concept
 ---
 
