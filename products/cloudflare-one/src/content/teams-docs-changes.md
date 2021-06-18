@@ -2,6 +2,7 @@
 order: 0
 title: "Welcome"
 hidden: true
+pcx-content-type: reference
 ---
 
 # What's new?

@@ -1,6 +1,7 @@
 ---
 updated: 2021-04-27
 category: 🛡️ Web Gateway
+pcx-content-type: tutorial
 ---
 
 # Filter DNS based on users and groups

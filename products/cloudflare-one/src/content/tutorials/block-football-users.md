@@ -2,6 +2,7 @@
 updated: 2020-12-20
 category: 🛡️ Web Gateway
 difficulty: Advanced
+pcx-content-type: tutorial
 ---
 
 # Block sites for specific users

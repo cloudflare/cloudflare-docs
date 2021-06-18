@@ -2,6 +2,7 @@
 updated: 2021-03-09
 category: 🛡️ Web Gateway
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Skip inspection for groups of applications

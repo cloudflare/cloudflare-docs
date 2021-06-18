@@ -1,5 +1,6 @@
 ---
 order: 0
+pcx-content-type: how-to
 ---
 
 # Install the Cloudflare root certificate

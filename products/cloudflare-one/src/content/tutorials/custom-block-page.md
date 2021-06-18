@@ -1,6 +1,7 @@
 ---
 updated: 2021-06-08
 category: 🛡️ Web Gateway
+pcx-content-type: tutorial
 ---
 
 # Customize the block page users see

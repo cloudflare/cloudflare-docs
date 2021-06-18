@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content-type: how-to
 ---
 
 # Add non-HTTP applications
