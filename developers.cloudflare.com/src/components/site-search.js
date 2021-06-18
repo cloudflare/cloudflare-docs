@@ -1,3 +1,11 @@
+// Based on cloudflare-docs-engine/src/components/docs-search.js
+// Keep these components (mostly) in sync.
+//
+// Due to what seems like a Gatsby bug which occurs only with `gatsby build`
+// and not `gatsby develop`, when any file imported from cloudflare-docs-engine
+// contains `useStaticQuery` the build fails due to a relative import issue with
+// the way GraphQL stores the cached static JSON.
+
 import React, { useEffect } from "react"
 import Helmet from "react-helmet"
 
