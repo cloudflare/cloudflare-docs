@@ -16,6 +16,7 @@ To configure a block page:
 1. Enable the block page for [HTTP](#enable-the-block-page-for-http-policies) or [DNS](#enable-the-block-page-for-dns-policies) policies.
 1. [Customize the block page](#customize-the-block-page).
 
+
 ## Download the Cloudflare certificate
 
 1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Account > Certificates**.
@@ -108,3 +109,10 @@ To apply customizations to your block page, navigate to the **Block page** card 
 Once you have completed your customization, click **Save**. Your customers will now see your custom block page when navigating to a blocked website.
 
  ![Final block page](../../static/documentation/policies/final-block-page.png)
+
+
+<Aside>
+ 
+Currently, the custom block page is only visible to users with the macOS and Windows client. It is not generally available for iOS and Android users or users with stub resolvers forwarding queries from a registered location. 
+
+</Aside>
