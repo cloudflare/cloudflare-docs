@@ -17,7 +17,7 @@ The Firewall fields contain rules to block requests that contain specific types 
 | <em><span style="font-weight: 400;">allow</span></em> | Allow | Bypass all subsequent rules |
 | <em><span style="font-weight: 400;">block</span></em> | Drop | Block with an HTTP 403 response |
 | <em><span style="font-weight: 400;">challenge</span></em> | Challenge Drop | Issue a CAPTCHA challenge |
-| <em><span style="font-weight: 400;">jschallenge</span></em> | Challenge Drop | Unused |
+| <em><span style="font-weight: 400;">jschallenge</span></em> | Challenge Drop | Issue a Javascript challenge |
 | <em><span style="font-weight: 400;">log</span></em> | Log | Take no action other than logging the event |
 | <em><span style="font-weight: 400;">connectionClose</span></em> | Close | Close connection |
 | <em><span style="font-weight: 400;">challengeSolved</span></em> | Allow | Allow once CAPTCHA challenge solved |
@@ -31,7 +31,7 @@ The Firewall fields contain rules to block requests that contain specific types 
 | <em><span style="font-weight: 400;">managedChallengeSkipped</span></em> | Allow | Skip managed challenge and allow |
 | <em><span style="font-weight: 400;">managedChallengeNonInteractiveSolved</span></em> | Allow | Allow once managed challenge solved via non-interactive interstitial page |
 | <em><span style="font-weight: 400;">managedChallengeInteractiveSolved</span></em> | Allow | Allow once managed challenged solved via interactive interstitial page |
-| <em><span style="font-weight: 400;">managedChallengeBypassed</span></em> | Allow | Allow if managed challenge bypassed or not issued because visitor had clearance |
+| <em><span style="font-weight: 400;">managedChallengeBypassed</span></em> | Allow | Challenge was not presented because visitor had clearance from previous challenge |
 
 </TableWrap>
 
