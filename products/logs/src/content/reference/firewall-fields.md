@@ -31,7 +31,7 @@ The Firewall fields contain rules managed by Cloudflare to block requests that c
 | <em><span style="font-weight: 400;">managedChallengeSkipped</span></em> | Allow | Skip managed challenge and allow |
 | <em><span style="font-weight: 400;">managedChallengeNonInteractiveSolved</span></em> | Allow | Allow once managed challenge solved via non-interactive interstitial page |
 | <em><span style="font-weight: 400;">managedChallengeInteractiveSolved</span></em> | Allow | Allow once managed challenged solved via interactive interstitial page |
-| <em><span style="font-weight: 400;">managedChallengeBypassed</span></em> | Allow | Allow if managed challenge bypassed or not issued because visitor had clearance |
+| <em><span style="font-weight: 400;">managedChallengeBypassed</span></em> | Allow | Challenge was not presented because visitor had clearance from previous challenge |
 
 </TableWrap>
 
