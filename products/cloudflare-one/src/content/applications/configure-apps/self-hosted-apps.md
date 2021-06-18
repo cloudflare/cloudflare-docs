@@ -59,6 +59,8 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 
  ![Select identity providers](../../static/documentation/applications/saas-idp.png)
 
+1. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
+
 1. Click **Next**.
 
 ### 2. Add a policy
