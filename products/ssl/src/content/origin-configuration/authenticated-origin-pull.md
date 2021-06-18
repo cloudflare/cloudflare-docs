@@ -114,7 +114,7 @@ To enable Authenticated Origin Pull globally on a zone:
 1. For your [SSL/TLS encryption mode](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls), select **Full**.
 1. Configure the origin web server to accept client certificates.
 1. Enable **Authenticated Origin Pulls**:
-    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pools** and select **On**.
+    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
     - For the API, [change the TLS Client Auth setting](https://api.cloudflare.com/#zone-settings-change-tls-client-auth-setting):
 
         ```bash
@@ -203,7 +203,7 @@ To enable Authenticated Origin Pull globally on a zone:
     ```
 
 1. Enable **Authenticated Origin Pulls**:
-    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pools** and select **On**.
+    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
     - For the API, [set the enablement for a zone](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
 
         ```bash
