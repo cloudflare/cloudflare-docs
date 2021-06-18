@@ -14,6 +14,12 @@ __Note:__ Asynchronous tasks such as `fetch` are not executed at the top level i
 
 </Aside>
 
+<Aside type="warning" header="Warning">
+
+It is not currently possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal. 
+
+</Aside>
+
 --------------------------------
 
 ## Constructor
