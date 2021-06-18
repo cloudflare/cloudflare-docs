@@ -34,10 +34,7 @@ The resource being protected by Cloudflare for Teams. An application can be a su
 
 ## Authenticated Origin Pulls
 
-Authenticated Origin Pulls let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
-
-| Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) |
-|---|---|
+[Authenticated Origin Pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
 
 ## certificate pinning
 
@@ -95,7 +92,7 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-## [location](/policies/filtering/dns-policies/configuring-locations)
+## [location](/connections/connect-networks/locations)
 Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 ## mTLS
@@ -115,7 +112,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+[Cloudflare Origin Certificates](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 ## [policy](/policies)
 A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.

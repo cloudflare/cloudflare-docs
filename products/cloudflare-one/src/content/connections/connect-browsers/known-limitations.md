@@ -39,7 +39,7 @@ We are still defining our minimum requirements but expect Browser Isolation to w
 
 ### Safari
 
-Safari's default configuration is susceptible to "[Maximum Sessions Reached](/faq/browser-isolation#why-do-i-see-a-maximum-sessions-reached)" alerts. To workaround this behaviour open Safari → Preferences → Privacy and uncheck **Prevent cross-site tracking**.
+Safari's default configuration is susceptible to "[Maximum Sessions Reached](/faq/teams-troubleshooting#i-see-a-maximum-sessions-reached-alert)" alerts. To workaround this behaviour open Safari → Preferences → Privacy and uncheck **Prevent cross-site tracking**.
 
 ## Submitting feedback
 
