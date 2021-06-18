@@ -1,5 +1,6 @@
 ---
 order: 7
+pcx-content-type: how-to
 ---
 
 # SAML | Citrix ADC

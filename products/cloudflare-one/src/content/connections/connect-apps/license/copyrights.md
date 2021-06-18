@@ -1,5 +1,6 @@
 ---
 order: 101
+pcx-content-type: reference
 ---
 
 # Copyrights

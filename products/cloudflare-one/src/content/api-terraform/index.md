@@ -1,5 +1,6 @@
 ---
 order: 7
+pcx-content-type: navigation
 ---
 
 # API and Terraform

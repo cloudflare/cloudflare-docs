@@ -1,5 +1,6 @@
 ---
 order: 50
+pcx-content-type: how-to
 ---
 
 # Load balancers

@@ -1,6 +1,7 @@
 ---
 updated: 2021-01-19
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # SSH with short-lived certificates
