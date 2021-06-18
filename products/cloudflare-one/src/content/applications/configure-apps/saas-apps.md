@@ -29,19 +29,20 @@ SaaS applications store this information in different ways.
 1. In the **Assertion Consumer Service URL** field, input the service provider’s endpoint for receiving and parsing SAML assertions.
 
 1. Scroll down to the **Application logo** card to choose a logo that will represent the application in the App Launcher and in the Applications page.
-You can either:
-  * Select **Default** if you want to show the SaaS application’s logo.
-  * Select **Custom** if you want to assign a custom logo to the application.
+
+  ![SaaS logo](../../static/documentation/applications/saas-logo.png)
 
   <Aside>
+  
   If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
-  </Aside>
 
- ![SaaS logo](../../static/documentation/applications/saas-logo.png)
+  </Aside>
 
 1. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
- ![Setup SaaS IdPs](../../static/documentation/applications/saas-idp.png)
+  ![Setup SaaS IdPs](../../static/documentation/applications/saas-idp.png)
+
+1. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
 1. Click **Next**.
 
