@@ -4,8 +4,6 @@ type: overview
 pcx-content: landing-page
 ---
 
-
-
 # Cloudflare Notifications
 
 <ContentColumn>

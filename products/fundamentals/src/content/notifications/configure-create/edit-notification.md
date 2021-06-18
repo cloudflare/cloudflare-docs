@@ -22,12 +22,15 @@ There are a variety of services you can connect to using webhooks, in order to r
 * [DataDog](https://docs.datadoghq.com/developers/guide/calling-on-datadog-s-api-with-the-webhooks-integration/)
 * [OpsGenie](https://docs.opsgenie.com/docs/integration-api)
 
-After you are done, you can set up webhooks in your Cloudflare account:
+After you are done, you can set up webhooks in your [Cloudflare account](https://dash.cloudflare.com/login):
 
-1. In your [Cloudflare dashboard](https://dash.cloudflare.com/login), go to **Notifications > Destinations**. 
-1. On the left of your dashboard, click **Destinations** 
-1. You will se an area called **Webhooks**. Click the button **Create**.
+1. Go to **Notifications > Destinations**. 
+1. On the left of your dashboard, click **Destinations**.
+1. You will see an area called **Webhooks**. Click the button **Create**.
 1. Give your webhook a name so you can identify it later.
-1. Fill in the URL you previously set up in the third party service you want to connect your Cloudflare account to — for example, Slack.
-1. If needed, insert the **secret** in this field. Secrets are how webhooks are encrypted and vary according to the service you are trying to use.
-1. Click **Save and test** to finish setting up your webhook.
+1. Fill in the URL you set up above, in the third party service you want to connect your Cloudflare account to — for example, Slack.
+1. If needed, insert the **Secret** in its field. Secrets are how webhooks are encrypted and vary according to the service you are trying to use.
+
+  ![Webhooks secret](../../static/images/notifications/webhooks.png)
+
+1. Click **Save and Test** to finish setting up your webhook.
