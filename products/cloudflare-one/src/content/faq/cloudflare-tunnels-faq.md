@@ -97,9 +97,9 @@ If your server is correctly locked down, you will see:
 [ip-address] 443 (https): Connection refused
 ```
 
-## What is the difference between Tunnel creating a CNAME or AAAA record in the hostname's DNS setting?
+## What records are created for routing to a Named Tunnel's hostname?
 
-Tunnels that use Cloudflare's Load Balancer use CNAME records. Tunnels that do not use the Load Balancer product will create AAAA records.
+Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancer origins, which also point to `<UUID>.cfargotunnel.com`.
 
 ## Does Cloudflare Tunnel send visitor IPs to my origin?
 
