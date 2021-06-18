@@ -17,7 +17,7 @@ Administrators can use Cloudflare Tunnel to connect a VNC host to Cloudflare’s
 - Build a Zero Trust policy to determine who can reach the host
 - Render the VNC server in your browser
 
-**⏲️Time to complete:**
+**⏲️ Time to complete:**
 
 10 minutes
 
@@ -35,7 +35,7 @@ There are a number of VNC versions, deployments and instances. This tutorial foc
 
 ## Configure VNC on your virtual machine
 
-This section walks through installing a VNC server with TightVNC and the Gnome User Interface. If you already have a VNC server installed, you can skip this step.
+This section covers how to install a VNC server with TightVNC and the Gnome User Interface. If you already have a VNC server installed, you can skip this step.
 
 1. Open a terminal window for your VM. 
 
@@ -68,13 +68,14 @@ This section walks through installing a VNC server with TightVNC and the Gnome U
     ```
     ![VNC password](../static/zero-trust-security/vnc-client-in-browser/vnc-password.png)
 
-1. Select a password for the VNC server.his password will be used during login for your browser VNC server.
+1. Select a password for the VNC server. This password will be used during login for your browser VNC server.
 
 1. Run the following command, which will take you to your VNC server configuration directory.
 
     ```bash
     $ cd .vnc
     ```
+
 1. Open your `xstartup` file.
 
     ```bash
@@ -96,6 +97,7 @@ This section walks through installing a VNC server with TightVNC and the Gnome U
     gnome-panel &
     nautilus &
     ```
+
     ![VNC xstartup file](../static/zero-trust-security/vnc-client-in-browser/vnc-xstartup.png)
 
 1. Run the following command to create your VNC server:
@@ -104,7 +106,7 @@ This section walks through installing a VNC server with TightVNC and the Gnome U
     $ vncserver
     ```
 
-At this point, you have a VNC server ready to test with browser-based VNC. We recommend doing a brief test with an existing VNC browser to verify any missing packages or configuration changes that might need to be made before continuing. Once your VNC server appears as desired, continue with your setup.
+At this point, you have a VNC server ready to test with browser-based VNC. We recommend performing a brief test with an existing VNC browser to verify any missing packages or configuration changes that might need to be made before continuing. Once your VNC server appears as desired, continue with your setup.
 
 ## Configure Cloudflare Tunnel on your machine
 
@@ -121,6 +123,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
     ```bash
     $ cloudflared tunnel create <NAME>
     ```
+
 1. Create a Tunnel configuration file with the command:
 
     ```bash
@@ -145,7 +148,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 1. [Route your Tunnel](/connections/connect-apps/routing-to-tunnel/dns) to your website.
 
-1. Run your tunnel:
+1. Run your Tunnel:
 
     ```bash
     $ cloudflared tunnel --config path/config.yaml run <NAME>
@@ -171,7 +174,7 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
     ![Name application](../static/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
 
-1. Add a Zero Trust policy. In this example we’re only allowing users with emails ending in `@example.com`.
+1. Add a Zero Trust policy. In this example we are only allowing users with emails ending in `@example.com`.
 
     ![Create policy](../static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
@@ -190,4 +193,4 @@ Then your user will be directed into your VNC server:
 
 ![VNC server](../static/zero-trust-security/vnc-client-in-browser/vnc-server.png)
 
-You’ve now successfully deployed a Zero Trust VNC server in the browser. You can define granular access controls across each individual VNC instance. For more information about Cloudflare for Teams, check out our developer guides.
+You’ve now successfully deployed a Zero Trust VNC server in the browser. You can define granular access controls across each individual VNC instance. 
