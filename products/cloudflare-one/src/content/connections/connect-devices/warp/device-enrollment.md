@@ -23,8 +23,6 @@ Cloudflare for Teams allows you to establish which users in your organization ca
 
  In this example, only users with `cloudflare.com` email addresses who successfully authenticate during device enrollment through the WARP client will be able to enroll in the organization. This rule prevents outsider users from sending traffic through your account and will give your organization the ability to capture user profile logs and apply profile-specific rules.
 
-![Enroll Rule](../../../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
-
 4. Click **Save**.
 
 ## Enroll devices
