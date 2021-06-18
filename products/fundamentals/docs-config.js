@@ -24,6 +24,6 @@ module.exports = {
     description: "Undersea cables, peering agreements and TLS handshakes. Follow the life of a request across the internet and see how it all works.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/fundamentals",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png"
   }
 }

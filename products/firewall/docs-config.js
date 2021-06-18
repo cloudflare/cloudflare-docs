@@ -20,6 +20,6 @@ module.exports = {
     description: "Create rules that examine incoming HTTP traffic against a set of powerful filters to block, challenge, log, or allow matching requests.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/firewall",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png"
   }
 }
