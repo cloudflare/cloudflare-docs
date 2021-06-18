@@ -17,7 +17,7 @@ The Firewall fields contain rules managed by Cloudflare to block requests that c
 | <em><span style="font-weight: 400;">allow</span></em> | Allow | Bypass all subsequent rules |
 | <em><span style="font-weight: 400;">block</span></em> | Drop | Block with an HTTP 403 response |
 | <em><span style="font-weight: 400;">challenge</span></em> | Challenge Drop | Issue a CAPTCHA challenge |
-| <em><span style="font-weight: 400;">jschallenge</span></em> | Challenge Drop | Unused |
+| <em><span style="font-weight: 400;">jschallenge</span></em> | Challenge Drop | Issue a Javascript challenge |
 | <em><span style="font-weight: 400;">log</span></em> | Log | Take no action other than logging the event |
 | <em><span style="font-weight: 400;">connectionClose</span></em> | Close | Close connection |
 | <em><span style="font-weight: 400;">challengeSolved</span></em> | Allow | Allow once CAPTCHA challenge solved |
