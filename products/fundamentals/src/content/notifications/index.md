@@ -8,7 +8,7 @@ pcx-content: landing-page
 
 <ContentColumn>
 
-Cloudflare Notifications help you to always be up to date with your Cloudflare account, be it a denial-of-service attack or something gone wrong with your server. You decide on what you want to be warned about and how. 
+Cloudflare Notifications help you stay up to date with your Cloudflare account. Manage your Notifications to define what you want to be warned about and how, be it a denial-of-service attack or an issue with your server. 
 
 Notifications are available to anyone with a Cloudflare account. Free plans can set up email-based Notifications. Professional and higher plans can also access PagerDuty. Business and higher plans can also use webhooks.
 
