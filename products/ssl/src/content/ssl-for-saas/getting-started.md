@@ -35,7 +35,7 @@ The fallback origin is where the traffic of your Custom Hostnames will be routed
 ## Certificate Validation vs Hostname Verification
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-* [Certificate Validation](../certificate-validation-methods/)__: Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+* [Certificate Validation](../certificate-validation-methods): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
 * [Hostname Verification](../hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 [Create Custom Hostnames via the custom_hostnames API endpoint](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
