@@ -51,7 +51,7 @@ You should aim for a low Challenge Solve Rate. Review the CSR of your CAPTCHA ru
 
 Currently, Cloudflare does not calculate the CSR of Managed Challenges.
 
-If you are a customer on a Free plan, any rules whose action is set to _Challenge (Captcha)_ now use Managed Challenges. For more information, see [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+For customers on a Free plan, any rules whose action is set to _Challenge (Captcha)_ now use Managed Challenges. For more information, see [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
 </Aside>
 
