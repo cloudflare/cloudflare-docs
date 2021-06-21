@@ -5,7 +5,7 @@ pcx-content: reference
 
 # What to do when receiving Notifications
 
-Each Notification has different information about what you can do or what is happening to your Cloudflare account. What you do next depends on the type of Notification you previously set up on your Cloudflare account. 
+Each Notification carries different types of information about the status to your Cloudflare account, or the type of action you can take. 
 
 <TableWrap>
 
