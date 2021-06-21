@@ -1,6 +1,7 @@
 ---
 title: Images (beta)
 order: 7
+pcx-content-type: how-to
 ---
 
 # Cloudflare Images API (beta)

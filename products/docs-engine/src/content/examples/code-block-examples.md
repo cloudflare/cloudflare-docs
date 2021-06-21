@@ -1,3 +1,7 @@
+---
+pcx-content-type: reference
+---
+
 # Code block examples
 
 Code blocks inside [Docs Engine Markdown](/reference/markdown) offer a variety of custom presentation mechanisms. This page contains practical examples for inspiration.

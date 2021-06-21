@@ -1,11 +1,11 @@
 ---
-type: example
 summary: A short summary of the example. Should be no more than 100 characters or so.
 demo: https://example.com
 tags:
   - Tag1
   - Tag2
   - Tag3
+pcx-content-type: interim
 ---
 
 # Example
