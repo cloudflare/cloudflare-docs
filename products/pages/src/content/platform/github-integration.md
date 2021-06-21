@@ -17,3 +17,13 @@ When authorizing Cloudflare Pages to access your GitHub account, you can also sp
 ## Removing access to your GitHub account
 
 You can remove Cloudflare Pages' access to your GitHub account by viewing the ["Applications" page](https://github.com/settings/installations) on GitHub. Note that removing access to GitHub will also disable new builds, though the last build of your site will continue to be hosted via Cloudflare Pages.
+
+## Pausing Automatic Builds
+
+By default, Cloudflare Pages automatically builds and deploys a project whenever its repository receives new commits. You can pause this behavior to keep your website at a particular version and manually deploy new versions when desired.
+
+To pause automatic deployments, go to the Pages project's settings and select the "Builds & deployments" navigation panel. Near the bottom of the page is a "Pause deployments" button.
+
+![pause button](git.pause.png)
+
+Clicking the button will present a confirmation dialog and, once confirmed, the pause button will be replaced with a "Resume deployments" button. While paused, your "Deployments" list will present a banner message, reminding you that automatic deployments are not enabled.

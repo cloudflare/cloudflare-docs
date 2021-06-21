@@ -10,4 +10,5 @@ In order to perform a rollback, select a Pages project and ensure its Deployment
 
 ## See Also
 
-- [Preview Deployments](./preview-deployments)
+- [Preview Deployments](/pages/platform/preview-deployments)
+- [Pausing Automatic Builds](/pages/platform/github-integration#pausing-automatic-builds)
