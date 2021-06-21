@@ -5,8 +5,6 @@ pcx-content-type: tutorial
 
 # Making requests to 1.1.1.1 over HTTPS
 
-If you are building a mobile application, browser, operating system, IoT device or router, here are the settings to have in mind when making requests to 1.1.1.1 over HTTPS.
-
 ## Endpoint
 
 Cloudflare offers a DNS over HTTPS resolver at:
