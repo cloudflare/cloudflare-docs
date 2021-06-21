@@ -152,7 +152,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
           <strong
             >Request method
             <p />
-            <code class="InlineCode">Http.request. method</code></strong
+            <code class="InlineCode">http.request.method</code></strong
           >
         </td>
         <td>&#x2705;</td>
