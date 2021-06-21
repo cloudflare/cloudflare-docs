@@ -11,4 +11,5 @@ pcx-content: how-to
 1. Give the Notification a name to identify it. 
 1. Add at least one email address you want to send the Notification to.
 1. Click **Create**.
+
 This will take you back to your list of Notifications, where your newly created Notification will appear as **Enabled**.
