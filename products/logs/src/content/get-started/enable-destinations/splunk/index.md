@@ -6,7 +6,13 @@ pcx-content-type: how-to
 
 # Enable Logpush to Splunk
 
-Cloudflare Logpush now supports pushing logs directly to Splunk via API.
+Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare dashboard or via API.
+
+## Manage via the Cloudflare dashboard
+
+Enable Logpush to Splunk via the [Cloudflare dashboard](/get-started/logpush-dashboard/).
+
+## Manage via API
 
 To set up a Splunk Logpush job:
 1. Create a job with the appropriate endpoint URL and authentication parameters
