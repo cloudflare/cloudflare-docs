@@ -12,8 +12,11 @@ Before enabling **Cloudflare Logpush**, make sure that you have already configur
 Learn how to set up a destination for:
 
 * [Amazon S3](/get-started/enable-destinations/aws-s3/)
+* [S3-compatible endpoints](/get-started/enable-destinations/s3-compatible-endpoints/)
+* [Datadog](/get-started/enable-destinations/datadog/)
 * [Google Cloud Storage](/get-started/enable-destinations/google-cloud-storage/)
 * [Microsoft Azure](/get-started/enable-destinations/azure/)
+* [Splunk](/get-started/enable-destinations/splunk/)
 * [Sumo Logic](/get-started/enable-destinations/sumo-logic/)
 
 </Aside>
