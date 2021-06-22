@@ -350,9 +350,9 @@ Custom presentation options like [row highlights](#highlight) and [filename head
 
 ### Highlight
 
-You can highlight rows by specifying `highlight: [...]` with an array of row numbers.
+You can highlight rows by specifying `highlight: [...]` with an array of row numbers. The array can only contain individual row numbers — for example, `5,6,7`. Currently, you cannot specify a range of rows like `5-7`.
 
-For example, here we’re specifying `highlight: [5,6,7]` in order to highlight the `hello()` function:
+For example, here we are specifying `highlight: [5,6,7]` to highlight the `hello()` function:
 
 ```js
 ---
