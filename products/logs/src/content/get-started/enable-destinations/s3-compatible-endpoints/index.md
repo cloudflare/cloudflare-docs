@@ -24,8 +24,8 @@ Enable Logpush to S3-compatible destinations via the [Cloudflare dashboard](/get
 ## Manage via API
 
 To set up S3-compatible endpoints:
-1. Create a job with the appropriate endpoint URL and authentication parameters
-2. Then, enable the job to begin pushing logs
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+2. Enable the job to begin pushing logs.
 
 See below for detailed instructions.
 

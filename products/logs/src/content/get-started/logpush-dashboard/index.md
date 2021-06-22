@@ -9,7 +9,7 @@ Before enabling **Cloudflare Logpush**, make sure that you have already configur
 
 <Aside type="info" header="Info">
 
-Learn  how to set up a destination for:
+Learn how to set up a destination for:
 
 * [Amazon S3](/get-started/enable-destinations/aws-s3/)
 * [Google Cloud Storage](/get-started/enable-destinations/google-cloud-storage/)
@@ -20,21 +20,21 @@ Learn  how to set up a destination for:
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the Cloudflare dashboard
+1. Log in to the Cloudflare dashboard.
 
-1. Ensure the Enterprise domain you want to use with Logpush is selected
+2. Select the Enterprise domain you want to use with Logpush.
 
-1. Select the **Analytics** app in the top menu
+3. Go to **Analytics** > **Logs**.
 
-1. Select the **Logs** section in the secondary menu
+4. Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select **Connect a service**. A modal window opens where you will need to complete several steps
+5. Select the data set you want to push to a storage service.
 
-1. Select the data set you want to push to a storage service. You can keep the default fields to include in your log or make changes. You can add or remove fields at a later time by modifying your settings in **Logs** > **Logpush** (select the wrench icon).
+6. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
-1. Under **Select destination**, pick your cloud service provider and click **Select**
+7. Select your cloud storage service or analytics provider.
 
-2. Complete the steps below based on your provider
+8. Complete the steps below based on your provider.
 
    * For **Amazon S3**, enter or select the following:
      * **Bucket path**
@@ -60,20 +60,14 @@ To enable the Cloudflare Logpush service:
      * **HTTP Source Address**
        * See [Enable Sumo Logic](/get-started/enable-destinations/sumo-logic/) for instructions on getting this address
 
-1.  In the Cloudflare dashboard, click **Validate access**
+9. In the Cloudflare dashboard, click **Validate access**.
 
-1.  Follow the on-screen instructions to enter the **Ownership token** (included in a file or log Cloudflare sends to your provider), then click **Prove ownership**
+10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and click **Prove ownership**.
+    *  Tips for seeing the token:
+       *  **Amazon S3**: click the **Open** button in the **Overview** tab of the ownership challenge file
+       *  **Microsoft Azure**: use the **Storage Explorer** feature to navigate to and open the file
+       *  **Sumo Logic**: use the [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) feature to see your log containing the token as soon as it's received
 
-<Aside type="note" header="Note">
+11. Click **Save and Start Pushing** to finish enabling Logpush.
 
-Tips for seeing the token:
-
-* **Amazon S3**: click the **Open** button in the **Overview** tab of the ownership challenge file
-* **Microsoft Azure**: use the **Storage Explorer** feature to navigate to and open the file
-* **Sumo Logic**: use the [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) feature to see your log containing the token as soon as it's received
-
-</Aside>
-
-1. To finish enabling Logpush, click **Save and Start Pushing**
-
-Once connected, Cloudflare lists the provider you just configured under **Logs** > **Logpush**. This is where you can make changes or remove the provider.
+Once connected, Cloudflare lists the provider you configured under **Logs** > **Logpush**. This is where you can make changes or remove the provider.
