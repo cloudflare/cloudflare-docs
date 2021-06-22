@@ -142,10 +142,6 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
     As you do that, replace the `hostname` value with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
 
-run `ps aux | grep vnc`. The `-rfbport` flag will tell you which port your VNC server is running on.
-
-    ![Check VNC server port](../static/zero-trust-security/vnc-client-in-browser/vnc-rfbport.png)
-
 1. [Route your Tunnel](/connections/connect-apps/routing-to-tunnel/dns) to your website.
 
 1. Run your Tunnel:
