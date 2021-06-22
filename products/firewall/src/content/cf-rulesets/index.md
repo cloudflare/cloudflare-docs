@@ -35,7 +35,7 @@ The following diagram outlines the request handling process where requests go th
 
 ![Requests going through the available phases](../images/rulesets-phases.png)
 
-Phases have an **entry point** at the account and zone levels. An entry point contains a list of ordered rules that run in the phase.
+Phases have an **entry point** ruleset at the account and zone levels. An entry point ruleset contains a list of ordered rules that run in the phase. You can define rules in an entry point ruleset that execute a different ruleset.
 
 Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
 
