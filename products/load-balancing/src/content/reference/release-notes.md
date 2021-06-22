@@ -11,7 +11,7 @@ After 30 September 2021, we will make the following changes to the Load Balancin
 - Deprecate nodes:
     - `loadBalancingRequestsGroups` will be deprecated for `loadBalancingRequestsAdaptiveGroups`
     - `loadBalancingRequests` will be deprecated for `loadBalancingRequestsAdaptive`
-- Replace the `date` field with `datetime`
+- Deprecate the `date` field (should be replaced with existing `datetime` field)
 - Add the `sampleInterval` field
 
 <details>
