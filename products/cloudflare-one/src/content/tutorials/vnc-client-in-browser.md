@@ -7,7 +7,7 @@ pcx-content-type: tutorial
 
 # Render a VNC client in browser
 
-Cloudflare can render a Virtual Network Computer (VNC) terminal in your browser without any client software or configuration required. 
+Cloudflare can render a Virtual Network Computer (VNC) terminal in your browser without any client software or configuration required.
 
 Administrators can use Cloudflare Tunnel to connect a VNC host to Cloudflare’s network. Using Cloudflare Access, you can apply Zero Trust policies to determine who can access your VNC server. Cloudflare’s network will then enforce the Zero Trust policies and, when a user is allowed, render the client in the browser.
 
@@ -37,7 +37,7 @@ There are a number of VNC versions, deployments and instances. This tutorial foc
 
 This section covers how to install a VNC server with TightVNC and the Gnome User Interface. If you already have a VNC server installed, you can skip this step.
 
-1. Open a terminal window for your VM. 
+1. Open a terminal window for your VM.
 
 1. Run the following commands to install the VNC software.
 
@@ -110,9 +110,9 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 ## Configure Cloudflare Tunnel on your machine
 
-1. Follow [these instructions](/connections/connect-apps/install-and-setup/installation#build-from-source) to install `cloudflared` 
+1. Follow [these instructions](/connections/connect-apps/install-and-setup/installation#build-from-source) to install `cloudflared`
 
-1. Authenticate `cloudflared` with the command: 
+1. Authenticate `cloudflared` with the command:
 
     ```bash
     $ cloudflared tunnel login
@@ -130,19 +130,19 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
     $ vim config.yml
     ```
 
-1. Add the following configuration to your configuration file. 
+1. Add the following configuration to your configuration file.
 
     ```txt
-    tunnel: 210c5a4f-78c0-4477-8e45-8329939d5b43
-    warp-routing:
-    enabled: true
+    tunnel: <NAME>
     ingress:
     - hostname: vnc.kennyatx.com
-        service: tcp://localhost:5901
+      service: tcp://localhost:5901
     - service: http_status:404
     ```
 
-    As you do that, replace the `hostname value` with the domain you wish to use to expose your VNC server in the browser. Also, replace `5902` with the port your VNC server is running on. To check that value, run `ps aux | grep vnc`. The `-rfbport` flag will tell you which port your VNC server is running on.
+    As you do that, replace the `hostname` value with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
+
+run `ps aux | grep vnc`. The `-rfbport` flag will tell you which port your VNC server is running on.
 
     ![Check VNC server port](../static/zero-trust-security/vnc-client-in-browser/vnc-rfbport.png)
 
@@ -193,4 +193,4 @@ Then your user will be directed into your VNC server:
 
 ![VNC server](../static/zero-trust-security/vnc-client-in-browser/vnc-server.png)
 
-You’ve now successfully deployed a Zero Trust VNC server in the browser. You can define granular access controls across each individual VNC instance. 
+You’ve now successfully deployed a Zero Trust VNC server in the browser. You can define granular access controls across each individual VNC instance.
