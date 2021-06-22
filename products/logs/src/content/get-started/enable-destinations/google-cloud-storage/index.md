@@ -5,6 +5,14 @@ pcx-content-type: how-to
 
 # Enable Google Cloud Storage
 
+Cloudflare Logpush supports pushing logs directly to Google Cloud Storage via the Cloudflare dashboard or via API.
+
+## Manage via the Cloudflare dashboard
+
+Enable Logpush to Google Cloud Storage via the [Cloudflare dashboard](/get-started/logpush-dashboard/).
+
+## Manage via API
+
 Cloudflare uses Google Cloud Identity and Access Management (IAM) to gain access to your bucket. The Cloudflare IAM service account needs admin permission for the bucket.
 
 To enable Logpush to GCS:
