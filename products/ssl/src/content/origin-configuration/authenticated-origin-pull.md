@@ -117,6 +117,7 @@ To enable Authenticated Origin Pull globally on a zone:
 1. Install the above certificate at the origin web server to authenticate all connections.
 1. For your [SSL/TLS encryption mode](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls), select **Full**.
 1. Configure your [origin web server](#server-installation-instructions) to accept client certificates:
+
     <details>
     <summary>Apache example</summary>
     <div>
