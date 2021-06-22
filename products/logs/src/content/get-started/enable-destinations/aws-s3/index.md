@@ -6,6 +6,14 @@ pcx-content-type: how-to
 
 # Enable Amazon S3
 
+Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflare dashboard or via API.
+
+## Manage via the Cloudflare dashboard
+
+Enable Logpush to Amazon S3 via the [Cloudflare dashboard](/get-started/logpush-dashboard/).
+
+## Manage via API
+
 Cloudflare uses Amazon Identity and Access Management (IAM) to gain access to your S3 bucket. The Cloudflare IAM user needs *PutObject* permission for the bucket.
 
 Logs are written into that bucket as gzipped objects using the S3 Access Control List (ACL)
