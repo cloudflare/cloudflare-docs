@@ -33,7 +33,7 @@ Cloudflare provides the following Managed Rulesets in the WAF:
     </tr>
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/ddos-l7-mitigations#the-ddos-l7-attack-mitigation-managed-ruleset'>Cloudflare DDoS L7 Mitigations (Beta)</a></td>
-      <td>Created by Cloudflare to give users more control over how and when our automated mitigation systems will mitigate layer 7 DoS attacks. The rules are always enabled but a user can use overrides to modify the mitigation actions and the sensitivity of the various rules.</td>
+      <td>Created by Cloudflare to give users more control over how and when Cloudflare's automated mitigation systems will handle layer 7 DoS attacks. The rules in this Managed Ruleset are always enabled. However, you can define overrides to modify the rule actions and the sensitivity of the various rules.</td>
     </tr>
   </tbody>
 </table></TableWrap>
