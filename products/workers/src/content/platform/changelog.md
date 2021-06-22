@@ -6,6 +6,13 @@ Changes this week:
 - Updated V8 from 9.1 to 9.2.
 - Wrangler tail now works on Durable Objects. Note that logs from long-lived WebSockets will not be visible until the WebSocket is closed.
 
+## 6/11/2021
+
+Changes this week:
+
+- Turn on V8 Sparkplug compiler.
+- Durable Object instances that are finishing up existing requests after their code is updated will be disconnected from the persistent storage API, to maintain the invariant that only a single instance ever has access to persistent storage for a given Durable Object.
+
 ## 6/4/2021
 
 Changes this week:
