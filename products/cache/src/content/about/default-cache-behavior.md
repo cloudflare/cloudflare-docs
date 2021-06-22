@@ -12,7 +12,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
 - Cloudflare caches the resource if the `Cache-Control` header is set to `public`, and the `max-age` is greater than 0 or if the `Expires` header is set to a future date.
 - If both the `max-age` and an `Expires` header are set, `max-age` is used.
 
-For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache-control#cache-control-directives).
+For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/about/cache-control#cache-control-directives).
 
 ## Default cached file extensions
 
@@ -220,7 +220,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         BYPASS
       </td>
       <td colspan="5" rowspan="1">
-        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to `no-cache`, `private`, or `max-age=0` even though Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling Origin Cache-Control. Cloudflare also sets BYPASS when your origin web server sends cookies in the response header.
+        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to <code>no-cache</code>, <code>private</code>, or <code>max-age=0</code> even though Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling Origin Cache-Control. Cloudflare also sets BYPASS when your origin web server sends cookies in the response header.
       </td>
     </tr>
     <tr>
@@ -228,7 +228,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         REVALIDATED
       </td>
       <td colspan="5" rowspan="1">
-        The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by either an `If-Modified-Since` header or an `If-None-Match header`.
+        The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by either an <code>If-Modified-Since</code> header or an <code>If-None-Match header</code>.
       </td>
     </tr>
     <tr>
