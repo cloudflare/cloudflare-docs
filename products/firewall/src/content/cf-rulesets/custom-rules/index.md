@@ -17,7 +17,7 @@ Use Custom Rules in the **Firewall** app to define the following rule types:
 
 * [**Rate Limiting rules**](/cf-rulesets/custom-rules/rate-limiting) — Check for excessive incoming traffic and apply mitigation actions.
 
-* [**Custom Firewall rules**](/cf-rulesets/custom-rules/custom-firewall) — Control incoming traffic by filtering requests. You can block or challenge incoming requests according to rules you define.
+* [**Custom Firewall rules**](/cf-rulesets/custom-rules/custom-firewall) — Control incoming traffic by filtering requests. Perform actions like _Block_ or _JS Challenge_ on incoming requests according to rules you define.
 
 Custom Rules are built upon the [Ruleset Engine](/cf-rulesets) which you can use to define rules and actions in several Cloudflare products.
 
