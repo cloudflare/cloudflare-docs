@@ -22,7 +22,7 @@ To create a Custom Firewall rule, add a rule to the `http_request_firewall_custo
 
 Do the following:
 
-1. Invoke the [View ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/view#view-a-specific-ruleset) method to obtain the list of rules already present in the `http_request_firewall_custom` phase ruleset. If the phase ruleset does not exist, proceed to step 2, since adding a rule to the phase ruleset will create the ruleset if it does not exist.
+1. Invoke the [View ruleset](/cf-rulesets/rulesets-api/view#view-a-specific-ruleset) method to obtain the list of rules already present in the `http_request_firewall_custom` phase ruleset. If the phase ruleset does not exist, proceed to step 2, since adding a rule to the phase ruleset will create the ruleset if it does not exist.
 
 1. Invoke the [Update ruleset](/cf-rulesets/rulesets-api/update) method to update the list of rules in the phase ruleset with a new rule. You must include (at least) the rule ID of all the rules you wish to keep in the ruleset.
 
