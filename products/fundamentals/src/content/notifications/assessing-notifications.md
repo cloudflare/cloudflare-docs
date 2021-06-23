@@ -179,3 +179,14 @@ Secondary DNS Successfully Updated | No action needed. Everything is working cor
 
 </div>
 </details>
+
+<details>
+<summary>Secondary DNS Successfully Updated</summary>
+<div>
+
+**What should you do?**
+
+No action needed. Everything is working correctly.
+
+</div>
+</details>
