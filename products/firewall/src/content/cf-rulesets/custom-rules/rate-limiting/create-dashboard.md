@@ -41,25 +41,3 @@ To create a new Rate Limiting rule:
 1. Under **For...**, select the mitigation timeout. This is the time period during which Cloudflare applies the select action once the request rate is reached.
 
 1. To save and deploy your rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
-
-## Manage Custom Rules
-
-You can edit, delete, or enable/disable rules in the Custom Rules card.
-
-![Custom Rules card](../../../images/custom-rules/custom-rules-card.png)
-
-### Enable or disable a rule
-
-To enable/disable a rule, click the toggle button on the right of the rule you want to change.
-
-### Edit a rule
-
-To edit a rule:
-
-1. Click **Edit** on the right of the rule you want to change.
-1. Update the rule parameters.
-1. Click **Save**.
-
-### Delete a rule
-
-To delete a rule, click **Delete** on the right of the rule you want to delete and confirm the operation.
