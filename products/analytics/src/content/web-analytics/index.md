@@ -1,6 +1,7 @@
 ---
 title: Cloudflare Web Analytics
 order: 1
+pcx-content-type: reference
 ---
 
 # Overview

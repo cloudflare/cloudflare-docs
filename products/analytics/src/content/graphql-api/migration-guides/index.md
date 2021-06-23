@@ -1,6 +1,7 @@
 ---
 title: Migration guides
 order: 60
+pcx-content-type: navigation
 ---
 
 # Migration guides
