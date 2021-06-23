@@ -6,13 +6,13 @@ type: overview
 
 # Create Custom Firewall rules in the dashboard
 
+Create Custom Firewall rules under the **Custom Rules** tab in the **Firewall** app.
+
 <Aside type='warning' header='Important'>
 
 This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
-
-Create Custom Firewall rules under the **Custom Rules** tab in the **Firewall** app.
 
 ## Create a Custom Firewall rule
 

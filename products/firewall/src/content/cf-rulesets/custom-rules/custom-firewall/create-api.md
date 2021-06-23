@@ -6,21 +6,19 @@ type: overview
 
 # Create Custom Firewall rules via API
 
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a Custom Firewall rule via API.
+
+You must deploy Custom Firewall rules to the `http_request_firewall_custom` phase ruleset.
+
 <Aside type='warning' header='Important'>
 
 This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a Custom Firewall rule via API.
-
-You must deploy Custom Firewall rules to the `http_request_firewall_custom` phase ruleset.
-
 ## Create a Custom Firewall rule
 
 To create a Custom Firewall rule, add a rule to the `http_request_firewall_custom` phase ruleset.
-
-Do the following:
 
 1. Invoke the [View ruleset](/cf-rulesets/rulesets-api/view#view-a-specific-ruleset) method to obtain the list of rules already present in the `http_request_firewall_custom` phase ruleset. If the phase ruleset does not exist, proceed to step 2, since adding a rule to the phase ruleset will create the ruleset if it does not exist.
 
