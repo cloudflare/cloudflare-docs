@@ -11,7 +11,7 @@ This feature is only available for selected customers on an Enterprise plan. Con
 
 </Aside>
 
-Custom Firewall rules allow you to control incoming traffic by filtering requests. You can block or challenge incoming requests according to the rules you define.
+Custom Firewall rules allow you to control incoming traffic by filtering requests. You can perform actions like _Block_ or _JS Challenge_ on incoming requests according to rules you define.
 
 Like other rules evaluated by Cloudflare's [Ruleset Engine](/cf-rulesets), Custom Firewall rules have an **expression** and an **action**:
 
