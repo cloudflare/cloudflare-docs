@@ -11,7 +11,7 @@ This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-The available Rate Limiting Rule parameters are the following:
+The available Rate Limiting rule parameters are the following:
 
 <Definitions>
 
