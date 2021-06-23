@@ -23,7 +23,7 @@ Administrators can use Cloudflare Tunnel to connect a VNC host to Cloudflare’s
 
 <Aside>
 
-There are a number of VNC versions, deployments and instances. This tutorial focuses on configuring a Tight VNC server on an Azure hosted Linux virtual machine. For help with other configurations, please post your questions in our community post about TightVNC [PLACE HOLDER FOR LINK].
+There are a number of VNC versions, deployments and instances. This tutorial focuses on configuring a Tight VNC server on an Azure hosted Linux virtual machine. For help with other configurations, please post your questions in our [community](https://community.cloudflare.com).
 
 </Aside>
 
