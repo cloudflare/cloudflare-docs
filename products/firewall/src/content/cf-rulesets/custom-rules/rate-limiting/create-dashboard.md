@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 order: 13
+type: overview
 ---
 
 # Create Rate Limiting rules in the dashboard

@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 order: 1
+type: overview
 ---
 
 # Create Custom Firewall rules in the dashboard
