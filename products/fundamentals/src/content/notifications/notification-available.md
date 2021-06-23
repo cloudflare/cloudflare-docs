@@ -6,14 +6,14 @@ pcx-content: concept
 
 # What kinds of Notifications are available?
 
-The type of available Notifications depends on your Cloudflare plan. We offer a variety of Notifications for our products and services: Billing, Denial-of-Service protection, Magic Transit, SSL/TLS, and many more.
+Available Notifications depend on your Cloudflare plan. We offer a variety of Notifications for our products and services: Billing, Denial-of-Service protection, Magic Transit, SSL/TLS, and many more.
 Depending on your plan, you will also be able to configure webhooks. Webhooks allow you to connect your account with external services such as Slack, Google Chat and others. Another possibility is to use PagerDuty to receive Cloudflare Notifications.
 
 ## What should you do when receiving Notifications?
 
 Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take. 
 
-Click below to see more information about Cloudflare Notifications and what to do.
+Click below to understand what each Notification does and what to do when receiving one.
 
 <details>
 <summary>Origin Error Rate Alert</summary>
@@ -116,6 +116,7 @@ No action needed. Refer to [Understanding Cloudflare DDoS alerts](https://suppor
 <div>
 
 **What is it for?**
+
 BYOIP customers and Spectrum customers with Network Analytics that want to be alerted when Cloudflare has mitigated an attack.
 
 **Included with**
@@ -220,7 +221,7 @@ Business and up plans.
 
 **What should you do if you receive one?**
 
-Investigate to confirm it's an expected change.
+Investigate to confirm it is an expected change.
 
 </div>
 </details>
@@ -239,7 +240,7 @@ Business and up plans.
 
 **What should you do if you receive one?**
 
-Investigate to confirm it's an expected change.
+Investigate to confirm it is an expected change.
 
 
 </div>

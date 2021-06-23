@@ -15,7 +15,7 @@ This will take you back to your list of Notifications.
 
 <Aside>
 
-You can also disable and/or delete Notifications. To disable a notification, click the **Enabled** toggle. To delete it, click **Delete**.
+**Note:** You can also disable and/or delete Notifications. To disable a notification, click the **Enabled** toggle. To delete it, click **Delete**.
 
 </Aside>
 
@@ -32,7 +32,7 @@ You can only disconnect PagerDuty services.
 
 ## Edit webhooks
 
-You can only edit the name of webhooks.
+You can only edit the name of webhooks and/or delete them.
 
 1. Sign in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
 1. Go to **Notifications**.
@@ -42,6 +42,6 @@ You can only edit the name of webhooks.
 
 <Aside>
 
-**Note:** You can also delete a webhook after clicking **Edit**, but it's faster to click **Delete** in the list of wenhooks you see in the** Destinations card**.
+**Note:** You can also delete a webhook after clicking **Edit**, but it is faster to click **Delete** in the list of wenhooks you see in the** Destinations card**.
 
 </Aside>
