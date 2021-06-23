@@ -23,8 +23,6 @@ The Custom Rules interface allows you to:
 
 ![Custom Rules tab](../../images/custom-rules/custom-rules-tab.png)
 
-[UPDATE SCREENSHOT]
-
 ## Manage Custom Rules
 
 Edit, delete, or enable/disable rules in the Custom Rules card.
