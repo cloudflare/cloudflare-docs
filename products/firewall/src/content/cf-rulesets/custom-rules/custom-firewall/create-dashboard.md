@@ -23,7 +23,7 @@ To create a new Custom Firewall rule:
 
 1. Navigate to **Firewall** > **Custom Rules**.
 
-1. Click **Create Custom rule**.
+1. Click **Create Custom rule** > **Firewall rule**.
 
 1. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 

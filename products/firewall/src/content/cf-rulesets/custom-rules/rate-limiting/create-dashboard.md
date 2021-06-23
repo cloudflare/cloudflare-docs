@@ -23,7 +23,7 @@ To create a new Rate Limiting rule:
 
 1. Navigate to **Firewall** > **Custom Rules**.
 
-1. Click **Create Rate Limiting rule**.
+1. Click **Create Custom rule** > **Rate limiting rule**.
 
 1. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
