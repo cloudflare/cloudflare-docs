@@ -23,13 +23,11 @@ To create a new Custom Firewall rule:
 
 1. Navigate to **Firewall** > **Custom Rules**.
 
-1. Click **Create Custom Firewall rule**.
+1. Click **Create Custom rule**.
 
 1. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Custom Firewall rule page](../../../images/custom-rules/rate-limiting-create.png)
-
-    [UPDATE SCREENSHOT]
+    ![Create Custom Firewall rule page](../../../images/custom-rules/firewall-custom-rule-create.png)
 
 1. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
