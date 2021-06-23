@@ -13,8 +13,10 @@ Cloudflare offers options to customize the appearance of your waiting room:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
 
-<Aside>
-Only Project Fair Shot and Enterprise customers can customize their waiting rooms.
+<Aside type="note">
+
+Only certain customers can customize their waiting rooms. For more details, see our <a href="/about/plans">Plans</a> page.
+
 </Aside>
 
 ## Default waiting room

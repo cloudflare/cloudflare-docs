@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/waiting-room-dashboard) or the [API](/reference/waiting-room-api).
 
-<Aside>For details about updating an active waiting room, see [Best practices](/reference/best-practices)</Aside>
+<Aside>For details about updating an active waiting room, see <a href="/reference/best-practices">Best practices</a>.</Aside>
 
 ## Using the dashboard
 
@@ -33,13 +33,13 @@ You can manage your waiting rooms using the [Waiting Rooms dashboard](/how-to/wa
 [Replace](https://api.cloudflare.com#waiting-room-update-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
 
 ```shell
-PUT zones/{zone_identifier}/waiting_rooms/{identifier}
+$ PUT zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
 [Update](https://api.cloudflare.com#waiting-room-patch-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
 
 ```shell
-PATCH zones/{zone_identifier}/waiting_rooms/{identifier}
+$ PATCH zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
 You only need to include the parameters that you want to update in the `data` field of the PATCH request.
@@ -49,5 +49,5 @@ You only need to include the parameters that you want to update in the `data` fi
 Delete a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com#waiting-room-delete-waiting-room) to the Cloudflare API base URL.
 
 ```shell
-DELETE zones/{zone_identifier}/waiting_rooms/{identifier}
+$ DELETE zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
