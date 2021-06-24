@@ -1,5 +1,5 @@
 ---
-title: Configure overrides via API
+title: Configure Managed Ruleset overrides via API
 pcx-content-type: concept
 order: 2
 ---
