@@ -11,9 +11,11 @@ This feature is available for all customers, but only selected customers on an E
 
 </Aside>
 
-The DDoS L7 Attack Mitigation Managed Ruleset allows you to have more control over a subset of Cloudflare's mitigation rules. You can configure the performed action when an attack is detected and the sensitivity of attack detection mechanisms. This Managed Ruleset also provides additional information in the Firewall dashboard on the types of attacks detected for a specific zone.
+Cloudflare provides protection against DDoS L7 attacks through several mitigation systems and rules. Some of these rules are available in the DDoS L7 Attack Mitigation Managed Ruleset. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
 
-By default, Cloudflare mitigation systems and the WAF will apply the actions from this Managed Ruleset for all customers, regardless of plan level. However, only certain customers may override the rules in the Managed Ruleset.
+Depending on your Cloudflare plan, you may be able to adjust the behavior of the rules in the Managed Ruleset using overrides. You can change the performed action when an attack is detected and the sensitivity of attack detection mechanisms.
+
+The Managed Ruleset also provides additional information in the Firewall dashboard on the types of attacks detected for a specific zone.
 
 ## Available actions
 
