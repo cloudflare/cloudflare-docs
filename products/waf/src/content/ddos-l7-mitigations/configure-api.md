@@ -1,18 +1,20 @@
 ---
+title: Configure overrides via API
 pcx-content-type: concept
 order: 2
 ---
 
-# Configure Managed Ruleset overrides via API
+# Configure DDoS L7 Attack Mitigation Managed Ruleset overrides via API
 
-Configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api). You can deploy a DDoS L7 Attack Mitigation phase ruleset in order to override the rules in the Managed Ruleset. There is no need to deploy a DDoS L7 Attack Mitigation Managed Ruleset since if you have access to view use the ruleset it will already be deployed for you. In order to customize how rules within the `ddos_l7` phase ruleset function you must configure an override. See below for how to do this.
+Configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
+
+Each zone has the DDoS L7 Attack Mitigation Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l7` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
 
 ## Configure an override for the DDoS L7 Attack Mitigation Managed Ruleset
 
-You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets. When configuring the DDoS L7 Attack Mitigation Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. You can override the following rule properties:
+You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 
-* `"action"` (`"block"`, `"challenge"`, `"log"`)
-* `"sensitivity_level"` (`"default"`, `"medium"`, `"low"`, `"eoff"`)
+When configuring the DDoS L7 Attack Mitigation Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/ddos-l7-mitigations/how-ddos-l7-works).
 
 <Aside type='warning' header='Important'>
 
@@ -22,7 +24,7 @@ The DDoS L7 Attack Mitigation Managed Ruleset is always enabled — you cannot d
 
 ## Example
 
-The following `PUT` example creates a new phase ruleset (or updates an existing one) for the `ddos_l7` phase at the account level. It contains several overrides to adjust the default behavior of the DDoS L7 Attack Mitigation Managed Ruleset. The overrides are the following:
+The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The request includes several overrides to adjust the default behavior of the DDoS L7 Attack Mitigation Managed Ruleset. These overrides are the following:
 
 * All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
 * All rules tagged with the category `{category-name}` will have a sensitivity level of `low`.
@@ -34,7 +36,7 @@ curl -X PUT \
 -H "X-Auth-Key: REDACTED"
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/ddos_l7/entrypoint" \
 -d '{
-  "description": "Execute Cloudflare DDoS L7 Attack Mitigation Managed Ruleset on my account-level Phase ruleset",
+  "description": "Execute Cloudflare DDoS L7 Attack Mitigation Managed Ruleset on my account-level phase ruleset",
   "rules": [
     {
       "action": "execute",
@@ -63,7 +65,7 @@ curl -X PUT \
 }'
 ```
 
-The response returns the created phase ruleset.
+The response returns the created (or updated) phase ruleset.
 
 ```json
 {
