@@ -359,7 +359,7 @@ filename: "src/components/post.js"
 import React, { useEffect, useState } from "react";
 import { Link } from "@reach/router";
 
-const Posts = ({ id }) => {
+const Post = ({ id }) => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
@@ -390,7 +390,7 @@ const Posts = ({ id }) => {
   );
 };
 
-export default Posts;
+export default Post;
 ```
 
 ### Publishing with Cloudflare Pages
