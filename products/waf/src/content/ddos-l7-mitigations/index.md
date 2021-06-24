@@ -44,7 +44,7 @@ Currently, you can only override rules of the DDoS L7 Attack Mitigation Managed 
 
 </Aside>
 
-Cloudflare WAF includes a DDoS L7 Attack Mitigation Managed Ruleset, a set of pre-configured rules used to match known DDoS attack vectors at the application layer on the edge like the following:
+Cloudflare WAF includes the DDoS L7 Attack Mitigation Managed Ruleset, a set of pre-configured rules used to match known DDoS attack vectors at the application layer on the edge, like the following:
 
 * Credential stuffing attacks
 * Requests causing large amounts of origin errors
