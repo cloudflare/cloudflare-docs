@@ -2,21 +2,17 @@
 pcx-content-type: how-to
 ---
 
-# Add Custom HTTP Headers
+# Add custom HTTP headers
 
-Cloudflare provides HTTP header customization for Pages projects through Cloudflare Workers serverless functions. You may want to add, remove or alter HTTP headers for security or performance reasons. 
+Cloudflare provides HTTP header customization for Pages projects through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). You may want to add, remove or alter HTTP headers for security or performance reasons. 
 
-Link to Workers getting started guide. / If you haven't worked with Workers before, you can get started here. 
+If you have not deployed a Worker before, you can get started [here](https://developers.cloudflare.com/workers/get-started/guide). For the purpose of this tutorial, accomplish steps one ("Sign up for a Workers account") through four ("Generate a new project") before returning to this page. 
 
-<Aside>
+Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain). 
 
-In order to update your headers with Cloudflare Workers serverless functions, your Cloudflare Pages project needs to be deployed to a custom domain(link on instructions). 
+## Writing a Workers function
 
-</Aside>
-
-## Writing a serverless function 
-
-Workers functions are written in JavaScript. When a Worker makes a request to a Cloudflare Pages application, it will receive a response. The response a Worker receives is immutable, meaning it cannot be changed. In order to add, delete or alter headers, you can clone the response and modify the headers on the new response. Return the new response to the browser with your desired header changes: 
+Workers functions are written in [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/). When a Worker makes a request to a Cloudflare Pages application, it will receive a response. The response a Worker receives is immutable, meaning it cannot be changed. In order to add, delete or alter headers, you will clone the response and modify the headers on a new `Response` instance. You will return the new response to the browser with your desired header changes. An example of this is shown below: 
 
 ```js
 ---
@@ -37,7 +33,7 @@ async function handleRequest(request) {
   headers.delete("x-header-to-delete")
   headers.delete("x-header2-to-delete")
 
-  // Change a header
+  // Alter a header
   headers.set("x-header-to-change", "NewValue")
 
   const newResponse = new Response(response.body, {
@@ -49,9 +45,9 @@ async function handleRequest(request) {
 }
 ```
 
-## Deploying a function
+<Aside>
 
-If you want to deploy a serverless function to add custom headers to your custom Pages application, you can use our `custom-header-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](), the Workers CLI tool. 
+If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the Workers CLI tool. 
 
 ```sh 
 ---
@@ -60,7 +56,11 @@ header: Generating a serverless function with wrangler
 $ wrangler generate projectname https://github.com/cloudflare/custom-headers-example
 ```
 
-You Workers function should be deployed to the same custom domain as your Pages application. To do this, update the wrangler.toml file in your project with your account and zone details: 
+</Aside>
+
+## Deploying a Workers function
+
+In order for your Workers function to operate alongside your custom Pages application, it will need to be deployed to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details: 
 
 ```toml
 ---
@@ -76,10 +76,12 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
-If you don't know how to find your account and zone ID, refer to [our guide.](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment)
+If you do not know how to find your Account ID and Zone ID, refer to [our guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment).
 
-Once you've configured your wrangler.toml, you can publish your code using `wrangler publish`:
+Once you have configured your `wrangler.toml`, run `wrangler publish` in your terminal to deploy your Worker:
 
 ```sh
 $ wrangler publish
 ``` 
+
+After you have deployed your Worker, your desired HTTP header adjustments will take effect. While the Worker is deployed, you should continue to see the content from your Pages application as normal. 
