@@ -1,24 +1,76 @@
 ---
-pcx-content-type: concept
-order: 1
+title: Managed Ruleset override parameters
+pcx-content-type: reference
+order: 3
 ---
 
-# Overriding the DDoS L7 Attack Mitigation Managed Ruleset
+# DDoS L7 Attack Mitigation Managed Ruleset override parameters
 
-The DDoS L7 Attack Mitigation Managed Ruleset provides users with both increased observability into layer-7 DDoS attacks mitigated by Cloudflare, and the ability to control how these rules affect a request via overrides. This functionality informs users of ongoing or past attacks and allows them to customize how Cloudflare treats similar attacks to the zone if they happen again.
+Configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. Define these overrides at the account level or at the zone level.
 
-Use overrides to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can define overrides at the account level or at the zone level.
+You can override the following rule properties:
 
-The fields of the rules that you can override are the following:
+* [Action](#action)
+* [Sensitivity](#sensitivity)
 
-* `action`: The action that the WAF will perform for requests that match specific rules of Cloudflare's DDoS mitigation services.
-* `sensitivity_level`: Defines how sensitive a rule is. Affects the thresholds used to determine if an attack should be mitigated. A higher sensitivity level means having a lower threshold, while a lower sensitivity level means having a higher threshold. You cannot increase the sensitivity level beyond `"default"`.
+<Aside type='warning'>
 
-<Aside type='note' header='Note'>
-
-The DDoS L7 Attack Mitigation Managed Ruleset is always enabled. You can only modify its behavior via overrides.
+Currently, you can only configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset via API.
 
 </Aside>
+
+## Action
+
+The action that the WAF will perform for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
+
+<Definitions>
+
+- _**Log**_ | API value: `log`
+    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting layer-7 DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+
+- _**Block**_ | API value: `block`
+    - Blocks HTTP requests that match the rule expression.
+
+- _**Challenge (CAPTCHA)**_ | API value: `challenge`
+    - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
+
+- _**Force Connection Close**_ | API value: _N/A_
+    - Closes ongoing HTTP connections. This action does not block a request, but it forces the client to reconnect.
+    - The performed action depends on the HTTP version:
+
+      - HTTP/1: set the [`Connection` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection#directives) to `close`.
+      - HTTP/2: send a [`GOAWAY` frame](https://datatracker.ietf.org/doc/html/rfc7540#section-6.8) to the client.
+
+    - This is an internal rule action that you cannot use in rule overrides.
+
+- _**DDoS Dynamic**_ | API value: _N/A_
+    - Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be one of the above or an undisclosed mitigation action.
+    - This is an internal rule action that you cannot use in rule overrides.
+
+</Definitions>
+
+<Aside type='warning' header='Important'>
+
+You cannot set the rule action to _Log_ using overrides for rules with the `gatebot` category or any rule whose `id` starts with `GB`.
+
+However, you can use the _Log_ action in global override. In this case, any rule with the `gatebot` category or whose `id` starts with `GB` will ignore the override and use the default action as defined in the Managed Ruleset.
+
+</Aside>
+
+## Sensitivity
+
+Defines how sensitive a rule is. Affects the thresholds used to determine if an attack should be mitigated. A higher sensitivity level means having a lower threshold, while a lower sensitivity level means having a higher threshold.
+
+The available sensitivity levels are:
+
+UI value          | API value
+------------------|----------
+_High_            | `"default"`
+_Medium_          | `"medium"`
+_Low_             | `"low"`
+_Essentially Off_ | `"eoff"`
+
+You cannot increase the sensitivity level beyond _High_ (`"default"`).
 
 ## Example
 
