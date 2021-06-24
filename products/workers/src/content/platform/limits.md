@@ -22,6 +22,21 @@ pcx-content-type: concept
 
 </TableWrap>
 
+## Upload size limits
+
+Cloudflare has network-wide limits on the body size of uploads (HTTP POST/PUT/PATCH requests) which depend on your Cloudflare plan (this is separate from your Workers plan). All uploads larger than your plan limit will be rejected with an HTTP 413 error code ("Request entity too large"). Cloudflare Enterprise customers can [contact Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476) to request a larger upload limit. Learn more about [Cloudflare plans](https://www.cloudflare.com/plans/).
+
+<TableWrap>
+
+| Cloudflare Plan | Maximum body size |
+| --------------- | ----------------- |
+| Free            | 100MB             |
+| Pro             | 100MB             |
+| Business        | 200MB             |
+| Enterprise      | 500MB             |
+
+</TableWrap>
+
 ## Worker limits
 
 <TableWrap>
