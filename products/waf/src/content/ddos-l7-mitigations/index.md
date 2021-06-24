@@ -57,4 +57,6 @@ Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
 ## Availability
 
-The DDoS L7 Attack Mitigation ruleset is available in Beta to customers on an Enterprise plan, where it is enabled by default.
+The DDoS L7 Attack Mitigation feature is available in Beta to all customers.
+
+However, only customers on an Enterprise plan can customize the behavior of the DDoS L7 Attack Mitigation Managed Ruleset using overrides.
