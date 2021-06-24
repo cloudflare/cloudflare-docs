@@ -18,9 +18,11 @@ To configure a block page:
 
 ## Download the Cloudflare certificate
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Account > Certificates**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Devices**.
 
-1. Click on **Download**.
+1. Scroll down to the **Certificates** card.
+
+1. Click on **Download certificate**.
 
 Now you'll need to add the certificate to your system. This ensures your web browser can use it to establish HTTPS connections.
 

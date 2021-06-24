@@ -36,8 +36,12 @@ To set up PingIdentity (SAML) as your identity provider:
 
     This file shares several fields with Cloudflare Access so you don’t have to input this data.
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
-1. Click *+ Add* under **Login Methods**, and select SAML.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+
+1. Under **Login methods**, click **Add new**.
+
+1. Select SAML.
+
 1. In the **IdP Entity ID** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
