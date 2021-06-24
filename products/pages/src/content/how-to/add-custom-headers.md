@@ -4,11 +4,6 @@ pcx-content-type: how-to
 
 # Add Custom HTTP Headers
 
-Why you may need to customise HTTP headers
-Aside on need for custom domain
-The code 
-How to deploy it, and what resources you need in order to do it
-
 Cloudflare provides HTTP header customization for Pages projects through Cloudflare Workers serverless functions. You may want to add, remove or alter HTTP headers for security or performance reasons. 
 
 Link to Workers getting started guide. / If you haven't worked with Workers before, you can get started here. 
