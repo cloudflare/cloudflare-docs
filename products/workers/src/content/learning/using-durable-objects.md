@@ -354,7 +354,7 @@ While Durable Objects already perform well for many kinds of tasks, we have lots
 
 ## Example - Counter
 
-We've included complete example code for both the Worker and the Durable Object for a basic counter below.
+We've included complete example code for both the Worker and the Durable Object for a basic counter below. [See here](https://github.com/cloudflare/durable-objects-template) for the full code template.
 
 ```js
 // Worker
