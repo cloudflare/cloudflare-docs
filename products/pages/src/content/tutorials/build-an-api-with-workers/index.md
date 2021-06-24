@@ -425,4 +425,4 @@ In this tutorial, you built a full blog application by combining a frontend depl
 - Blog frontend: https://github.com/signalnerve/blog-frontend
 - Serverless API: https://github.com/signalnerve/serverless-api
 
-If you enjoyed this tutorial, check out our headless CMS tutorial!
+If you enjoyed this tutorial, check out our headless CMS tutorial.
