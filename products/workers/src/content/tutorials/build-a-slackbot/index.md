@@ -633,7 +633,7 @@ The constant `SLACK_WEBHOOK_URL` represents the Slack Webhook URL that you creat
 ---
 header: Set the SLACK_WEBHOOK_URL secret
 ---
-$ wrangler secret create SLACK_WEBHOOK_URL
+$ wrangler secret put SLACK_WEBHOOK_URL
 Enter the secret text you’d like assigned to the variable name on the script named slack-bot-ENVIRONMENT_NAME: https://hooks.slack.com/services/abc123
 ```
 
