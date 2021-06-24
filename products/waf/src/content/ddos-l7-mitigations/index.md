@@ -5,12 +5,6 @@ order: 4
 
 # DDoS L7 Attack Mitigation (Beta)
 
-<Aside type='warning'>
-
-This feature is available for all customers, but only selected customers on an Enterprise plan may override the Managed Ruleset.
-
-</Aside>
-
 Cloudflare provides protection against DDoS L7 attacks through several mitigation systems and rules. The DDoS L7 Attack Mitigation Managed Ruleset contains a subset of these rules. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
 
 ## The DDoS L7 Attack Mitigation Managed Ruleset
