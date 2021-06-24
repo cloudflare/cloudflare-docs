@@ -43,7 +43,9 @@ To pass data _inside_ of the form, you can use `input` tags. `input` tags have a
 
 <Aside>
 
-The `id` attribute, while not required for the `input` to be submitted as part of the `form`, is often set alongside the `name` attribute to enable styling via CSS.
+The `id` attribute, while not required for the `input` to be submitted as part of the `form`, [may be required to ensure accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML#meaningful_text_labels). If the `input` element is nested inside the `label`, the `id` is not required. If the `input` element is not nested inside the `label`, the `id` on the `input` is required along with the `for` (or `htmlFor` in React) property to ensure differently abled readers will get built-in accessibility features.
+
+Additionally, the `id` attribute is often set alongside the `name` attribute to enable styling via CSS.
 
 </Aside>
 
