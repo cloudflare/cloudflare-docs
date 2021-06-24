@@ -32,7 +32,7 @@ Depending on your Cloudflare plan, you may be able to adjust the behavior of the
 
 To define overrides using the Rulesets API, see [Configure DDoS L7 Attack Mitigation Managed Ruleset overrides via API](/ddos-l7-mitigations/configure-api).
 
-For more information on the available override parameters, check [Managed Ruleset override parameters](/ddos-l7-mitigations/how-ddos-l7-works).
+For more information on the available override parameters, check [Managed Ruleset override parameters](/ddos-l7-mitigations/override-parameters).
 
 <Aside type='note' header='Note'>
 

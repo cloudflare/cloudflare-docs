@@ -14,7 +14,7 @@ Each zone has the DDoS L7 Attack Mitigation Managed Ruleset enabled by default. 
 
 You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 
-When configuring the DDoS L7 Attack Mitigation Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/ddos-l7-mitigations/how-ddos-l7-works).
+When configuring the DDoS L7 Attack Mitigation Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/ddos-l7-mitigations/override-parameters).
 
 <Aside type='warning' header='Important'>
 
