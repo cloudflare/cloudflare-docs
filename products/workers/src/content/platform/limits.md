@@ -33,7 +33,7 @@ Cloudflare has network-wide limits on the body size of uploads (HTTP POST/PUT/PA
 | Free            | 100MB             |
 | Pro             | 100MB             |
 | Business        | 200MB             |
-| Enterprise      | 500MB+            |
+| Enterprise      | 500MB             |
 
 </TableWrap>
 
