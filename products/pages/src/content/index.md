@@ -9,7 +9,7 @@ pcx-content-type: landing-page
 
 # Cloudflare Pages documentation
 
-Deploy your dynamic frontend applications using Cloudflare Pages! Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
+Deploy your dynamic frontend applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
 
 Get started deploying your first site using our starter guide below, or check out our examples page to explore the vast ecosystem of tools and framework that we support on the platform.
 
@@ -24,9 +24,9 @@ Get started deploying your first site using our starter guide below, or check ou
 
 ## Community
 
-You can [connect with the Pages community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you’re building, and discuss the platform with other developers. 
+You can [connect with the Pages community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers. 
 
-[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what's new in Cloudflare Pages.
+[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
 
 ---
 
