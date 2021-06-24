@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: tutorial
 ---
 
 # Connecting your Website
@@ -7,7 +8,7 @@ order: 3
 You can connect your own domain name to <https://cloudflare-eth.com> to allow
 Ethereum network access from your own domain. This means that anyone can send
 the HTTP (JSON RPC) queries as given in [Interacting with the Ethereum
-Gateway](./interacting-with-the-eth-gateway/)
+Gateway](../interacting-with-the-eth-gateway/)
 to your own domain. To do this, you should replace `https://cloudflare-eth.com`
 with your domain, e.g. `myethereumgateway.xyz`, as the target of the HTTP
 query.
