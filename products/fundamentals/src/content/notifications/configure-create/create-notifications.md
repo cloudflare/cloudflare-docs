@@ -5,7 +5,7 @@ pcx-content: how-to
 
 # Create a Notification
 
-1. Sign in to your [Cloudflare dashboard](https://dash.cloudflare.com/login)
+1. Sign in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
 1. Go to **Notifications**.
 1. Click **Add**.
 1. Click **Select** on the Notification you want to enable. The list of Notifications available depends on the [type of account you have](/notifications/notification-available).
@@ -27,7 +27,7 @@ Professional plans or higher can configure PagerDuty to receive notifications ab
 1. Select the services you want to use and click **Connect**.
 1. The browser will navigate back to your Cloudflare dashboard. Click **Continue**.
 
-Your new connected PagerDuty will appear in your **Connected notification services** card.
+Your new connected PagerDuty will appear in the **Connected notification services** card.
 
 ## Webhooks to external services
 
@@ -44,7 +44,7 @@ After configuring the external service you want to connect to, set up webhooks i
 1. Sign in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
 1. Go to **Notifications**. 
 1. Click **Destinations** on the left side of your dashboard.
-In the **Webhooks** card, click **Create**.
+1. In the **Webhooks** card, click **Create**.
 1. Give your webhook a name so you can identify it later.
 1. In the **URL** field, enter the URL of the third-party service you set up above and want to connect to your Cloudflare account.
 1. If needed, insert the **Secret**. Secrets are how webhooks are encrypted and vary according to the service you are connecting to Cloudflare.

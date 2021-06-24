@@ -23,7 +23,7 @@ Notifications are available in your [Cloudflare dashboard](https://dash.cloudfla
 
 Other features vary according to your plan: 
 * Professional and higher plans can also connect a **PagerDuty** instance to send notifications to.
-* Business and higher plans also have access to **Webhooks**, to connect their Cloudflare account to external services such as Google Chat, Slack, and many others. 
+* Business and higher plans also have access to **Webhooks**, to connect their Cloudflare account to external services such as Google Chat and Slack. 
 
 ## What to do when receiving Notifications
 

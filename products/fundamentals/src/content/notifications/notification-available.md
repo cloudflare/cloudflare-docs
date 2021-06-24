@@ -23,9 +23,9 @@ Click below to understand what each Notification does and what to do when receiv
 <summary>Origin Error Rate Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Enterprise customers who want to be alerted when Cloudflare is unable to access their origin server.
+Enterprise customers who want to receive a notification when Cloudflare is unable to access their origin server.
 
 **Included with**
 
@@ -43,9 +43,9 @@ Enterprise plans.
 <summary>Dedicated SSL Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Customers with dedicated certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+Customers with dedicated certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
 
 **Included with**
 
@@ -62,9 +62,9 @@ Free plan.
 <summary>Universal SSL Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Customers with universal certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+Customers with universal certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
 
 **Included with**
 
@@ -81,9 +81,9 @@ Free plan.
 <summary>SSL for SaaS Custom Hostnames Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Customers with custom hostname certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+Customers with custom hostname certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
 
 **Included with**
 
@@ -100,13 +100,13 @@ Purchase of Cloudflare for SaaS.
 <summary>HTTP DDoS Attack Alerter</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-WAF/CDN customers that want to be alerted when Cloudflare has mitigated an attack.
+WAF/CDN customers who want to receive a notification when Cloudflare has mitigated an attack.
 
 **Included with**
 
-Pro and up plans.
+Professional or higher.
 
 **What should you do if you receive one?**
 
@@ -119,9 +119,9 @@ Pro and up plans.
 <summary>Layer 4 Attack Alerter</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-BYOIP customers and Spectrum customers with Network Analytics that want to be alerted when Cloudflare has mitigated an attack.
+BYOIP customers and Spectrum customers with Network Analytics who want to receive a notification when Cloudflare has mitigated an attack.
 
 **Included with**
 
@@ -138,7 +138,7 @@ Purchase of Magic Transit and/or BYOIP.
 <summary>Flow-based Monitoring: Volumetric Attack</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
 Magic Transit On Demand customers who are using Flow Based Monitoring to detect attacks when Magic Transit is disabled.
 
@@ -148,7 +148,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement page](https://developers.cloudflare.com/byoip/dynamic-advertisement).
+You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](https://developers.cloudflare.com/byoip/dynamic-advertisement).
 
 </div>
 </details>
@@ -157,9 +157,9 @@ You need to advertise your IP prefixes to enable Magic Transit. For more informa
 <summary>Passive Origin Monitoring</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Any customer who wants to be alerted when Cloudflare is unable to access their origin.
+Any customer who wants to receive a notification when Cloudflare is unable to access their origin.
 
 **Included with**
 
@@ -176,9 +176,9 @@ Free plans.
 <summary>Expiring Access Service Token Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Access customers who want to be alerted when their service token is about to expire.
+Access customers who want to receive a notification when their service token is about to expire.
 
 **Included with**
 
@@ -196,9 +196,9 @@ Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflar
 <summary>Usage Based Billing</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Customers that want to be alerted when usage of a product goes above a set level.
+Customers who want to receive a notification when usage of a product goes above a set level.
 
 **Included with**
 
@@ -215,9 +215,9 @@ Review your usage of the product and adjust the configuration and/or increase th
 <summary>Script Monitor New Scripts Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Page Shield customers who want to be alerted when new JavaScript dependencies appear in their zone.
+Page Shield customers who want to receive a notification when new JavaScript dependencies appear in their zone.
 
 **Included with**
 
@@ -234,9 +234,9 @@ Investigate to confirm it is an expected change.
 <summary>Script Monitor New Domain Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Page Shield customers who want to be alerted when JavaScript dependencies from new host domains appear in their zone.
+Page Shield customers who want to receive a notification when JavaScript dependencies from new host domains appear in their zone.
 
 **Included with**
 
@@ -254,9 +254,9 @@ Investigate to confirm it is an expected change.
 <summary>Route Leak Detection Alert</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-BYOIP customers who want to be alerted when their prefixes are advertised in places they should not be.
+BYOIP customers who want to receive a notification when their prefixes are advertised in places they should not be.
 
 **Included with**
 
@@ -273,9 +273,9 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 <summary>Secondary DNS all Primaries Failing</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Enterprise customers who have at least one secondary zone in their account and who want to get alerted if all of their primary nameservers are failing.
+Enterprise customers who have at least one secondary zone in their account and want to receive a notification if all of their primary nameservers are failing.
 
 **Included with**
 
@@ -294,9 +294,9 @@ Purchase of Secondary DNS.
 <summary>Secondary DNS Primaries Failing</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Enterprise customers who have at least one secondary zone and who want to get alerted if at least one of their primary nameservers is failing.
+Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing.
 
 **Included with**
 
@@ -315,9 +315,9 @@ Purchase of Secondary DNS.
 <summary>Secondary DNS Successfully Updated</summary>
 <div>
 
-**What is it for?**
+**Who is it for?**
 
-Enterprise customers who have at least one secondary zone in their account and who want to get alerted on successful zone transfers.
+Enterprise customers who have at least one secondary zone in their account and want to receive a notification on successful zone transfers.
 
 **Included with**
 

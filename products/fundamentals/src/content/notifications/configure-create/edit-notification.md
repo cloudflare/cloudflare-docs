@@ -26,7 +26,7 @@ You can only disconnect PagerDuty services.
 1. Sign in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
 1. Go to **Notifications**.
 1. Click **Destinations** on the left side of your dashboard.
-1. In the **Connected notification services** card, click **View** on the PagerDuty you want to disconnect.
+1. In the **Connected notification services** card, click **View** on the PagerDuty service you want to disconnect.
 1. Click **Disconnect**.
 1. Select **Confirm**.
 
@@ -38,7 +38,7 @@ You can only edit the name of webhooks and/or delete them.
 1. Go to **Notifications**.
 1. Click **Destinations** on the left side of your dashboard.
 1. In the **Webhooks** card, click **Edit** on the webhook you want to edit.
-1. Change the name as you see fit.
+1. Change the webhook name as you see fit and click **Save**.
 
 <Aside type="note" header="Note">
 
