@@ -1,9 +1,9 @@
 ---
-title: FAQs
 order: 130
+pcx-content-type: faq
 ---
 
-# FAQs
+# FAQ
 
 ## General FAQ
 
@@ -29,18 +29,6 @@ Yes, this is normal. The time period for which you pull or receive logs is based
 
 Currently not. Talk to your account manager or Cloudflare Support if you’re interested in other formats and we’ll consider them for the future.
 
-## Logpull API FAQ
-
-### How long are logs retained?
-
-Cloudflare makes logs available for at least 3 days and up to 7 days. If you need your logs for a longer time period, download and store them locally.
-
-### I’m asking for logs for the time window of 16:10-16:13. However, the timestamps in the logs show requests that are before this time period. Why does that happen?
-
-When you make a call for the time period of 16:10-16:13, you're actually asking for the logs that were received and processed by our system during that time (hence the endpoint name, _logs/received_). the _received_ time is the time the logs are written to disk. There is some delay between the time the request hits the Cloudflare edge and the time it is received and processed. The _request time_ is what you see in the log itself: _EdgeStartTimestamp_ and _EdgeEndTimestamp_ tell you when the edge started and stopped processing the request.
-
-The advantage of basing the responses on the _time received_ rather than the request or edge time is not needing to worry about late-arriving logs. As long as you're calling our API for continuous time segments, you will always get all of your logs and will never have to make the same call twice. If we based the response on request time, you could never be sure that all the logs for that request time had been processed.
-
 ## Logpush FAQ
 
 ### What happens if my cloud storage destination is temporarily unavailable?
@@ -54,3 +42,15 @@ No. Cloudflare pushes logs in batches as soon as possible.
 ### My job was accidentally turned off, and I didn’t receive my logs for a certain time period. Can they still be pushed to me?
 
 No, **Logpush** only pushes the logs once as they become available, and is unable to backfill. However, the logs are stored for a period of at least 72 hours and can be downloaded using the **Logpull API**.
+
+## Logpull API FAQ
+
+### How long are logs retained?
+
+Cloudflare makes logs available for at least 3 days and up to 7 days. If you need your logs for a longer time period, download and store them locally.
+
+### I’m asking for logs for the time window of 16:10-16:13. However, the timestamps in the logs show requests that are before this time period. Why does that happen?
+
+When you make a call for the time period of 16:10-16:13, you are actually asking for the logs that were received and processed by our system during that time (hence the endpoint name, _logs/received_). The _received_ time is the time the logs are written to disk. There is some delay between the time the request hits the Cloudflare edge and the time it is received and processed. The _request time_ is what you see in the log itself: _EdgeStartTimestamp_ and _EdgeEndTimestamp_ tell you when the edge started and stopped processing the request.
+
+The advantage of basing the responses on the _time received_ rather than the request or edge time is not needing to worry about late-arriving logs. As long as you are calling our API for continuous time segments, you will always get all of your logs without making duplicate calls. If we based the response on request time, you could never be sure that all the logs for that request time had been processed.

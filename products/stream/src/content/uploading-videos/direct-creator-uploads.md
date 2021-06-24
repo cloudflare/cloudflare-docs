@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: interim
 ---
 
 # Direct creator uploads
@@ -25,7 +26,7 @@ body of the `POST` request:
   - `maxDurationSeconds` <Type>integer</Type> <PropMeta>required</PropMeta>
     - Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
 
-  - `expiry` <Type>string (date)</Type> <PropMeta>default: now + 6 hours</PropMeta>
+  - `expiry` <Type>string (date)</Type> <PropMeta>default: now + 30 minutes</PropMeta>
     - Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
 
 </Definitions>
@@ -51,7 +52,7 @@ Additionally, you can control security features through these fields:
 
 </Definitions>
 
-## Using Basic Uploads 
+## Using Basic Uploads
 
 If the uploads from your creators are under 200MB, you can use basic uploads. For videos over 200 MB, use TUS uploads (described later in this article.)
 
@@ -176,14 +177,13 @@ size, the user will receive a `4xx` response.
 
 </Example>
 
-## Using tus (recommended for videos over 200MB) 
+## Using tus (recommended for videos over 200MB)
 
-tus is a protocol that supports resumable uploads and works best for larger files. 
+tus is a protocol that supports resumable uploads and works best for larger files.
 
-Typically, tus uploads require the authentication information to be sent with every request. This is not ideal for direct creators uploads because it exposes your API key (or token) to the end user. 
+Typically, tus uploads require the authentication information to be sent with every request. This is not ideal for direct creators uploads because it exposes your API key (or token) to the end user.
 
 To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
-
 
 ```
 curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
@@ -225,21 +225,21 @@ async function gatherResponse(response) {
 }
 ```
 
-Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article. 
+Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
 
-To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field. 
+To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field.
 
-## Using the Upload-Metadata header
+### Upload-Metadata header syntax
 
-You can apply the same constraints as Direct Creator Upload via basic upload: requiresignedurls, expiry and maxDurationSeconds. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
+You can apply the same constraints as Direct Creator Upload via basic upload when using tus. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
-Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces. 
+Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
 In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
 
-```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls```
+```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'```
 
-*NjAw* is the base64 encoded value for "600" (or 10 minutes). 
+*NjAw* is the base64 encoded value for "600" (or 10 minutes).
 
 ## Tracking user upload progress
 

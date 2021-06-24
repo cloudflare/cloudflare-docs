@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Upload video file
@@ -38,7 +39,8 @@ Note that cURL `-F` flag automatically configures the content-type header and ma
 Important: Cloudflare Stream requires a minimum chunk size of 5,242,880 bytes when using TUS, unless the entire file is less than this amount.
 
 We recommend increasing the chunk size to 52,428,800 bytes for better performance when the client connection is expected to be reliable.
-
+	
+Maximum chunk size can be 209,715,200 bytes.
 </Aside>
 
 <Aside>
@@ -58,9 +60,9 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
 
 <Definitions>
-	
+
 - `name`
-	
+
   - Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
 
 - `requiresignedurls`
@@ -69,7 +71,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `allowedorigins`
 
-  - A comma separated strings containing the domains. This will set the [allowed origins setting](/viewing-your-videos/securing-your-stream) for the video.
+  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](../../viewing-videos/securing-your-stream#security-considerations) for the video.
 
 - `thumbnailtimestamppct`
 

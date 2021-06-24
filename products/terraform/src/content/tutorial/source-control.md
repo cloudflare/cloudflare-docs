@@ -1,6 +1,7 @@
 ---
 title: 2 – Tracking your history
 order: 2
+pcx-content-type: tutorial
 ---
 
 # Tracking your history
@@ -8,10 +9,10 @@ order: 2
 In the [first step](/tutorial/hello-world) of the tutorial, you created and applied some basic Cloudflare configuration. Terraform was able to apply this configuration to your account because you provided your email address and API token at the top of the `cloudflare.tf` file:
 
 ```sh
-$ head -n4 cloudflare.tf
+$ head -n13 cloudflare.tf | tail -n4
 provider "cloudflare" {
   email = "you@example.com"
-  token = "your-api-key"
+  api_token = "your-api-token"
 }
 ```
 
@@ -19,25 +20,25 @@ In this step of the tutorial, we’re going to store your configuration in GitHu
 
 ## 1. Using Environment Variables for Authentication
 
-As a good security practice we need to remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_TOKEN` environment variables, so all we need to do is:
+As a good security practice we need to remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_TOKEN` environment variables, so all we need to do is:
 
 ```sh
 $ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
-$ sed -ie 's/^.*token =.*$/  # token pulled from $CLOUDFLARE_TOKEN/' cloudflare.tf
+$ sed -ie 's/^.*api_token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
 
-$ head -n4 cloudflare.tf
+$ head -n13 cloudflare.tf | tail -n4
 provider "cloudflare" {
   # email pulled from $CLOUDFLARE_EMAIL
-  # token pulled from $CLOUDFLARE_TOKEN
+  # token pulled from $CLOUDFLARE_API_TOKEN
 }
 
 $ export CLOUDFLARE_EMAIL=you@example.com
-$ export CLOUDFLARE_TOKEN=your-api-key
+$ export CLOUDFLARE_API_TOKEN=your-api-token
 ```
 
 Note that you need to leave the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. In a future tutorial, we'll discuss some of the more [advanced options](https://www.terraform.io/docs/providers/cloudflare/index.html#argument-reference) that can be used with the provider.
 
-After completing the above step, it's a good idea to make sure that you can still authenticate to Cloudflare. By running `terraform plan` we can get Terraform to pull the current state (which requires a valid email and API key):
+After completing the above step, it's a good idea to make sure that you can still authenticate to Cloudflare. By running `terraform plan` we can get Terraform to pull the current state (which requires a valid email and API token):
 
 ```sh
 $ terraform plan
@@ -88,7 +89,7 @@ $ git commit -m "Step 2 - Initial commit with webserver definition."
  create mode 100644 cloudflare.tf
 ```
 
-An astute reader may have noticed that we did _not_ commit the `.terraform` directory nor did we commit the `terraform.tfstate` file. The former was not committed because this repository may be used on a different architecture, and the plugins contained in this directory are built for the system on which `terraform init` was run. The latter was not committed as i) it may eventually contain sensitive strings and ii) it is not a good way to keep state in sync, as explained in [Sharing State](/advanced-topics/sharing-state).
+An astute reader may have noticed that we did _not_ commit the `.terraform` directory nor did we commit the `terraform.tfstate` file. The former was not committed because this repository may be used on a different architecture, and the plugins contained in this directory are built for the system on which `terraform init` was run. The latter was not committed as i) it may eventually contain sensitive strings and ii) it is not a good way to keep state in sync, as explained in Hashicorp's documentaion on [Remote State](https://www.terraform.io/docs/language/state/remote.html).
 
 To prevent git from bugging us about these files, let's add them to a new .gitignore file, commit it, and push everything to GitHub:
 

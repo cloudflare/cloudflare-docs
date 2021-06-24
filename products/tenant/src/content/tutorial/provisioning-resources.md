@@ -1,6 +1,7 @@
 ---
 title: "1: Provisioning resources"
 order: 0
+pcx-content-type: tutorial
 ---
 
 # Step 1: Provisioning resources

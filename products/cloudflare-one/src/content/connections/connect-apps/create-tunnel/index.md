@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # Create a Tunnel
@@ -12,12 +13,6 @@ order: 3
 
 ## Create a Tunnel
 
-<Aside>
-
-Tunnels created in this method do not currently display in the **Traffic** tab of the [Cloudflare dashboard](https://dash.cloudflare.com). These connections will be added to the dashboard in a future release.
-
-</Aside>
-
 To create a Tunnel, run the following command:
 
 ```sh
@@ -27,6 +22,8 @@ $ cloudflared tunnel create <NAME>
 Replace `<NAME>` with the name you want to give to the Tunnel. The name assigned can be any string and does not need to relate to the hostname where traffic will be served.
 
 This command will create a Tunnel with the name provided and associate it with a UUID. The relationship between the UUID and the name is persistent. The command will not create a connection at this point.
+
+The created Tunnel can serve traffic for multiple hostnames in your Cloudflare account and send traffic to multiple services available to `cloudflared`, including SSH, RDP, and most arbitrary TCP connections.
 
 ![Create a tunnel](../../../static/documentation/connections/ct1.png)
 
@@ -50,7 +47,7 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 `cloudflared` can list all created Tunnels in your account, as well as those actively connected to Cloudflare, by running the following command:
 
 ```sh
-cloudflared tunnel list
+$ cloudflared tunnel list
 ```
 
 Note: the command requires the `cert.pem` file.
@@ -64,6 +61,7 @@ You can delete an existing Tunnel with cloudflared. To delete a Tunnel, run the 
 ```sh
 $ cloudflared tunnel delete <NAME>
 ```
+
 <Aside>
 
 The command requires the `cert.pem` file.
@@ -79,3 +77,11 @@ $ cloudflared tunnel delete -f <NAME>
 This will cause those connections to be dropped.
 
 Deleting the Tunnel also invalidates the credentials file associated with that Tunnel, meaning those connections can not be re-established.
+
+<Aside>
+
+Tunnels created in this method do not currently display in the **Traffic** tab of the [Cloudflare dashboard](https://dash.cloudflare.com). These connections will be added to the dashboard in a future release.
+
+</Aside>
+
+Cloudflare Tunnel deletes DNS records after 24-48 hours of a Tunnel being unregistered. Cloudflare Tunnel does not delete TLS certificates on your behalf once the Tunnel is shut down. If you want to clean up a Tunnel you’ve shut down, you can delete DNS records [in the DNS editor](https://dash.cloudflare.com/?zone=dns) and revoke TLS certificates in the Origin Certificates section of the [SSL/TLS tab of the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/ssl-tls/origin).

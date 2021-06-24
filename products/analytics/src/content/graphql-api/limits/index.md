@@ -41,6 +41,7 @@ Access to Network Analytics <b>ipFlows</b> nodes is only available to Enterprise
 | `loadBalancingRequestsGroups`        |      n/a |   3 days |  30 days |    30 days |
 | `loadBalancingRequests`              |      n/a |   3 days |  30 days |    30 days |
 | `synAvgPps1mGroups`                  |      n/a |      n/a |      n/a |     7 days |
+| `magicFirewallSamplesAdaptiveGroups` |      n/a |      n/a |      n/a |     7 days |
 
 </TableWrap>
 

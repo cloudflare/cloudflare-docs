@@ -2,6 +2,7 @@
 title: Welcome
 order: 0
 type: overview
+pcx-content-type: landing-page 
 ---
 
 # Cloudflare Spectrum documentation

@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: getting-started
 ---
 
 # Getting started
@@ -16,11 +17,11 @@ You'll be signing up for a Cloudflare account. You may also want a custom domain
 
 ### Sign in to Cloudflare Pages
 
-To begin, sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
+To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
 
 ### Connect to GitHub
 
-Signing in with GitHub allows Cloudflare Pages to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. When you sign in, you'll also have the option of specifying any GitHub organizations that you'd like to connect to Cloudflare Pages. This allows you to deploy both public and private repositories for your own account, as well as repositories for your company or organization.
+Signing in with GitHub allows [Cloudflare Pages](https://pages.dev) to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. When you sign in, you'll also have the option of specifying any GitHub organizations that you'd like to connect to Cloudflare Pages. This allows you to deploy both public and private repositories for your own account, as well as repositories for your company or organization.
 
 ## Configuration and deployment
 
@@ -30,7 +31,7 @@ You can select a GitHub project from your personal account or an organization yo
 
 <Aside>
 
-Don't have a project? [Check out our extensive How To section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
+Don't have a project? [Check out our extensive How-To section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
 
 </Aside>
 
@@ -80,7 +81,7 @@ Click the "Set up a domain" button, and provide the domain that you'd like to se
 
 #### Configure nameservers
 
-Configure your nameservers to point to Cloudflare's name servers. If your nameservers are succesfully pointed to Cloudflare, we'll proceed by creating a CNAME record for you!
+Configure your nameservers to point to Cloudflare's name servers. If your nameservers are successfully pointed to Cloudflare, we'll proceed by creating a CNAME record for you!
 
 #### Add a custom CNAME record
 

@@ -1,6 +1,7 @@
 ---
 title: To Docs Engine
 order: 3
+pcx-content-type: how-to
 ---
 
 # Contribute to the Docs Engine

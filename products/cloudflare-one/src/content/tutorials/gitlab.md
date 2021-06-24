@@ -2,19 +2,22 @@
 updated: 2020-12-10
 category: 🔐 Zero Trust
 difficulty: Advanced
+pcx-content-type: tutorial
 ---
 # Zero Trust GitLab SSH & HTTP
 
-You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance of GitLab. Combined with Argo Tunnel, users can connect through HTTP and SSH and authenticate with your team's identity provider.
+You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance of GitLab. Combined with Cloudflare Tunnel, users can connect through HTTP and SSH and authenticate with your team's identity provider.
 
 **🗺️ This walkthrough covers how to:**
 
 * Deploy an instance of GitLab
-* Lock down all inbound connections to that instance and use Argo Tunnel to set outbound connections to Cloudflare
+* Lock down all inbound connections to that instance and use Cloudflare Tunnel to set outbound connections to Cloudflare
 * Build policies with Cloudflare Access to control who can reach GitLab
 * Connect over HTTP and SSH through Cloudflare
 
-**⏲️ Time to complete: 1 hour**
+**⏲️ Time to complete:**
+
+1 hour
 
 ---
 
@@ -88,7 +91,7 @@ Users connect to GitLab over SSH (port 22 here) and HTTP for the web app (port 8
 
 You can use Cloudflare Access to build Zero Trust rules to determine who can connect to both the web application of GitLab (HTTP) and who can connect over SSH.
 
-When a user makes a request to a site protected by Access, that request hits Cloudflare's network first. Access can then check if the user is allowed to reach the application. When integrated with Argo Tunnel, the zero-trust architecture looks like this:
+When a user makes a request to a site protected by Access, that request hits Cloudflare's network first. Access can then check if the user is allowed to reach the application. When integrated with Cloudflare Tunnel, the zero-trust architecture looks like this:
 
 ![GitLab Services](../static/zero-trust-security/gitlab/teams-diagram.png)
 
@@ -122,11 +125,11 @@ Click `Next` and `Next` again on the `Setup` page - this example does not requir
 
 ![App List](../static/secure-origin-connections/gitlab/app-list.png)
 
-## Cloudflare Argo Tunnel
+## Cloudflare Tunnel
 
-Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Argo Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
 
 ```bash
 sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
@@ -145,13 +148,13 @@ Choose a website that you have added into your account.
 
 ![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
 
-Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Argo Tunnel connections in your Cloudflare account.
+Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
 ![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
 
 ### Connecting to Cloudflare
 
-You can now connect GitLab to Cloudflare using Argo Tunnel.
+You can now connect GitLab to Cloudflare using Cloudflare Tunnel.
 
 First, create a new Tunnel by running the following command.
 
@@ -163,7 +166,7 @@ cloudflared tunnel create gitlab
 
 ![Self Hosted](../static/zero-trust-security/gitlab/tunnel-create.png)
 
-Next, you will need to configure Argo Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
+Next, you will need to configure Cloudflare Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
 
 You use the text editor of your choice to edit the configuration file. The example relies on `Vi`.
 
@@ -171,7 +174,7 @@ You use the text editor of your choice to edit the configuration file. The examp
 vim ~/.cloudflared/config.yml
 ```
 
-Next,
+Next, configure the Tunnel to serve traffic.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -285,7 +288,7 @@ You can now configure your Digital Ocean firewall with a single rule, block any 
 
 ![Download Cert](../static/zero-trust-security/gitlab/disable-ingress.png)
 
-Argo Tunnel will continue to run outbound-only connections and I can avoid this machine getting caught up in a crypto mining operation, or something worse.
+Cloudflare Tunnel will continue to run outbound-only connections and I can avoid this machine getting caught up in a crypto mining operation, or something worse.
 
 ## View logs
 

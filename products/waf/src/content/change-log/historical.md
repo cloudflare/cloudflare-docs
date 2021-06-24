@@ -152,7 +152,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>SQL Injection - Obfuscated SELECT expressions</td>
             <td>2019-06-17</td>
             <td>2019-09-09</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -200,7 +200,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -208,7 +208,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -216,7 +216,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -224,7 +224,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -232,7 +232,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -240,7 +240,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -248,7 +248,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -256,7 +256,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -264,7 +264,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -272,7 +272,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -280,7 +280,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -288,7 +288,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -296,7 +296,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -304,7 +304,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -312,7 +312,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -320,7 +320,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -328,7 +328,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -336,7 +336,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -344,7 +344,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -352,7 +352,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -360,7 +360,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -368,7 +368,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -376,7 +376,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -384,7 +384,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -392,7 +392,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -400,7 +400,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -408,7 +408,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -416,7 +416,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -424,7 +424,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -432,7 +432,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -440,7 +440,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -448,7 +448,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -456,7 +456,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -464,7 +464,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -472,7 +472,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -480,7 +480,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -488,7 +488,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -496,7 +496,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -504,7 +504,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -512,7 +512,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -520,7 +520,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -528,7 +528,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -536,7 +536,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -544,7 +544,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -552,7 +552,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -560,7 +560,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -568,7 +568,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -576,7 +576,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -584,7 +584,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -592,7 +592,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -600,7 +600,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -608,7 +608,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -616,7 +616,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -624,7 +624,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -632,7 +632,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -640,7 +640,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -648,7 +648,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -656,7 +656,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -664,7 +664,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -672,7 +672,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -680,7 +680,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -688,7 +688,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -696,7 +696,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -704,7 +704,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -712,7 +712,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -720,7 +720,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -728,7 +728,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -736,7 +736,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -744,7 +744,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -752,7 +752,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -760,7 +760,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -768,7 +768,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -776,7 +776,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Disable rule by default</td>
             <td>2019-07-22</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Disable</td>
         </tr>
         <tr>
@@ -816,7 +816,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve XSS Javascript Events detection and reduce false positives</td>
             <td>2019-07-01</td>
             <td>2019-07-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -888,7 +888,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Easy WP SMTP - Deserialization</td>
             <td>2019-06-10</td>
             <td>2019-06-17</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -896,7 +896,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>XSS, HTML Injection - Malicious HTML Encoding</td>
             <td>2019-06-10</td>
             <td>2019-06-17</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -921,7 +921,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>2019-06-03</td>
             <td>2019-06-03</td>
             <td>N/A</td>
-            <td>Simulate</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>100096BEVIL</td>
@@ -929,14 +929,14 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>2019-06-03</td>
             <td>2019-06-03</td>
             <td>N/A</td>
-            <td>Simulate</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>100155</td>
             <td>PHPCMS - Dangerous File Upload - <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-14399">CVE-2018-14399</a></td>
             <td>2019-06-03</td>
             <td>2019-06-10</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1008,7 +1008,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Dangerous stream wrappers</td>
             <td>2019-05-13</td>
             <td>2019-05-20</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1016,7 +1016,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>WordPress Social Warfare RCE/XSS (<a href="https://nvd.nist.gov/vuln/detail/CVE-2019-9978">CVE-2019-9978</a>)</td>
             <td>2019-05-07</td>
             <td>2019-05-13</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1024,7 +1024,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Reduce OWASP false positives</td>
             <td>2019-05-07</td>
             <td>2019-05-13</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Allow</td>
         </tr>
         <tr>
@@ -1048,7 +1048,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve XSS detection and reduce false positives</td>
             <td>2019-04-29</td>
             <td>2019-05-07</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1088,7 +1088,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve inline XSS detection</td>
             <td>2019-04-29</td>
             <td>2019-05-07</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1104,7 +1104,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Potential SSRF attack</td>
             <td>2019-04-29</td>
             <td>2019-05-07</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1121,7 +1121,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>2019-04-29</td>
             <td>2019-05-07</td>
             <td>N/A</td>
-            <td>Simulate</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>100139B</td>
@@ -1160,7 +1160,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>NoSQL Injection attack (Expression vector)</td>
             <td>2019-04-22</td>
             <td>2019-04-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1168,7 +1168,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>NoSQL Injection attack (comparison vector)</td>
             <td>2019-04-22</td>
             <td>2019-04-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1208,7 +1208,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve SQLi blocking</td>
             <td>2019-04-15</td>
             <td>2019-04-22</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1232,7 +1232,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Blocks PHP CGI attack by default</td>
             <td>2019-04-15</td>
             <td>2019-04-22</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1248,7 +1248,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve XSS inline detection</td>
             <td>2019-04-15</td>
             <td>2019-04-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1256,7 +1256,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>NoSQL Injection attack (array vector)</td>
             <td>2019-04-08</td>
             <td>2019-04-15</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1344,7 +1344,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1352,7 +1352,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1360,7 +1360,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -1368,7 +1368,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -1376,7 +1376,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -1384,7 +1384,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -1392,7 +1392,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -1400,7 +1400,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve blocking of SA-CORE-2019-003</td>
             <td>2019-04-01</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -1441,7 +1441,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>2019-03-25</td>
             <td>2019-04-08</td>
             <td>N/A</td>
-            <td>Simulate</td>
+            <td>Log</td>
         </tr>
        <tr>
             <td>100135C</td>
@@ -1456,7 +1456,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Reduce 100120's false positives</td>
             <td>2019-03-25</td>
             <td>2019-04-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1473,14 +1473,14 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>2019-03-25</td>
             <td>2019-04-08</td>
             <td>N/A</td>
-            <td>Simulate</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>WP0032BETA</td>
             <td>Reduce false positives for WP0032</td>
             <td>2019-03-25</td>
             <td>2019-04-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1488,7 +1488,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Block use of stream wrappers in all arguments</td>
             <td>2019-03-25</td>
             <td>2019-04-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1496,7 +1496,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Protection for Apache Tika Command Injection <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-1335">CVE-2018-1335</a></td>
             <td>2019-03-25</td>
             <td>2019-04-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1504,7 +1504,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve PHP webshell attempt detection.</td>
             <td>2019-03-25</td>
             <td>2019-04-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1536,7 +1536,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Ruby on Rails File Disclosure <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-5418">CVE-2019-5418</a></td>
             <td>2019-03-25</td>
             <td>2019-04-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1544,7 +1544,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve 100120's coverage of SQLi</td>
             <td>2019-03-18</td>
             <td>2019-03-25</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1552,7 +1552,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Executable file upload attempt</td>
             <td>2019-03-18</td>
             <td>2019-04-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1560,7 +1560,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Executable file with fake extension upload attempt</td>
             <td>2019-03-18</td>
             <td>2019-03-25</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1568,7 +1568,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improves XSS event detection using alternate syntax `, brackets, and parenthesis.</td>
             <td>2019-03-11</td>
             <td>2019-03-18</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1616,7 +1616,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Block use of stream wrappers in GET arguments (RFI/RCE)</td>
             <td>2019-03-11</td>
             <td>2019-03-18</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1624,7 +1624,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Block AngularJS Sandbox attacks</td>
             <td>2019-03-11</td>
             <td>2019-03-18</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1672,7 +1672,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>UTF-8 Invalid Characters detection (URL)</td>
             <td>2019-02-18</td>
             <td>2019-03-04</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1704,7 +1704,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Reduce false positives for 100063</td>
             <td>2019-02-11</td>
             <td>2019-02-18</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1720,7 +1720,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve XSS</td>
             <td>2019-02-11</td>
             <td>2019-02-18</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1744,7 +1744,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Blocked SQLi with mysql comments</td>
             <td>2019-01-28</td>
             <td>2019-02-04</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1752,7 +1752,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Blocked SQLi with mysql comments</td>
             <td>2019-01-28</td>
             <td>2019-02-04</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1768,7 +1768,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Block <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-5638">CVE-2017-5638</a> RCE attempts</td>
             <td>2019-01-28</td>
             <td>2019-02-04</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1817,7 +1817,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>2019-01-17</td>
             <td>2019-01-17</td>
             <td>N/A</td>
-            <td>Simulate</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>100009J</td>
@@ -1832,7 +1832,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS probing detection</td>
             <td>2019-01-14</td>
             <td>2019-01-21</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1840,7 +1840,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved LFI detection</td>
             <td>2019-01-14</td>
             <td>2019-01-21</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1848,7 +1848,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved PHP code injection detection in URI and headers</td>
             <td>2019-01-07</td>
             <td>2019-01-14</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1880,7 +1880,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve SQLi detection</td>
             <td>2018-12-17</td>
             <td>2019-01-02</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1888,7 +1888,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improve XXS detection</td>
             <td>2018-12-17</td>
             <td>2019-01-02</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Challenge</td>
         </tr>
         <tr>
@@ -1896,7 +1896,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved sensitive directories access</td>
             <td>2018-12-06</td>
             <td>2018-12-11</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1904,7 +1904,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved Baidu bot detection</td>
             <td>2018-11-26</td>
             <td>2018-12-06</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1912,7 +1912,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved PHP injection detection</td>
             <td>2018-11-26</td>
             <td>2018-12-06</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1920,7 +1920,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-11-12</td>
             <td>2018-11-19</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1928,7 +1928,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-11-05</td>
             <td>2018-11-12</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1936,7 +1936,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>For <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-9206">CVE-2018-9206</a>, vulnerable jQuery File Uploader</td>
             <td>2018-11-05</td>
             <td>2018-11-19</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1944,7 +1944,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>For <a href="https://nvd.nist.gov/vuln/detail/CVE-2018-9206">CVE-2018-9206</a>, vulnerable jQuery File Uploader</td>
             <td>2018-11-05</td>
             <td>2018-11-19</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1952,7 +1952,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>XSS probing detection</td>
             <td>2018-10-29</td>
             <td>2018-11-12</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1968,7 +1968,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>libinjection based SQLi detection rule.</td>
             <td>2018-10-22</td>
             <td>2018-10-29</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1984,7 +1984,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Block requests with invalid x-forwarded-for headers</td>
             <td>2018-10-15</td>
             <td>2018-10-22</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -1992,7 +1992,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Probing detection</td>
             <td>2018-10-15</td>
             <td>2018-10-22</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2000,7 +2000,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Detect large numbers of GET parameters in requests</td>
             <td>2018-10-15</td>
             <td>2018-10-22</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2008,7 +2008,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Detect large numbers of GET parameters in requests</td>
             <td>2018-10-15</td>
             <td>2018-10-22</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2016,8 +2016,8 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Detect large numbers of GET parameters in requests</td>
             <td>2018-10-15</td>
             <td>2018-10-22</td>
-            <td>Simulate</td>
-            <td>Simulate</td>
+            <td>Log</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>100110</td>
@@ -2029,7 +2029,7 @@ summary: Changes that were completed before the change log was made publicly ava
         </tr>
         <tr>
             <td>WP0020</td>
-            <td>WP whitelist</td>
+            <td>WP allowlist</td>
             <td>2018-10-01</td>
             <td>2018-10-08</td>
             <td>Allow</td>
@@ -2037,7 +2037,7 @@ summary: Changes that were completed before the change log was made publicly ava
         </tr>
         <tr>
             <td>WP0004</td>
-            <td>WP whitelist</td>
+            <td>WP allowlist</td>
             <td>2018-10-01</td>
             <td>2018-10-08</td>
             <td>Allow</td>
@@ -2048,7 +2048,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XXE detection</td>
             <td>2018-09-24</td>
             <td>2018-10-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2072,7 +2072,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Probing detection</td>
             <td>2018-09-24</td>
             <td>2018-10-08</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2080,7 +2080,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi sleep probing</td>
             <td>2018-09-24</td>
             <td>2018-10-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2088,7 +2088,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-09-24</td>
             <td>2018-10-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2096,7 +2096,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-09-24</td>
             <td>2018-10-01</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2104,7 +2104,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-09-17</td>
             <td>2018-09-24</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2112,7 +2112,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Rules to stop file read and deletion vulnerabilities in GhostScript</td>
             <td>2018-09-17</td>
             <td>2018-09-24</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2120,7 +2120,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Rules to stop file read and deletion vulnerabilities in GhostScript</td>
             <td>2018-09-17</td>
             <td>2018-09-24</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2192,7 +2192,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-09-10</td>
             <td>2018-09-17</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Deleted</td>
         </tr>
         <tr>
@@ -2208,7 +2208,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XXE Detection</td>
             <td>2018-09-03</td>
             <td>2018-09-10</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2232,7 +2232,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Detection</td>
             <td>2018-08-20</td>
             <td>2018-08-28</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2240,7 +2240,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Detection</td>
             <td>2018-08-20</td>
             <td>2018-08-28</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2248,7 +2248,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Detection</td>
             <td>2018-08-20</td>
             <td>2018-08-28</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2256,7 +2256,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Detection</td>
             <td>2018-08-20</td>
             <td>2018-08-28</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2264,7 +2264,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Detection</td>
             <td>2018-08-20</td>
             <td>2018-08-28</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2272,8 +2272,8 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved XSS Detection</td>
             <td>2018-08-20</td>
             <td>2018-08-28</td>
-            <td>Simulate</td>
-            <td>Simulate</td>
+            <td>Log</td>
+            <td>Log</td>
         </tr>
         <tr>
             <td>100063</td>
@@ -2408,7 +2408,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Blocks requests to /server_status, which g ives away information on how a server works.</td>
             <td>2018-08-30</td>
             <td>2018-08-06</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
         <tr>
@@ -2416,7 +2416,7 @@ summary: Changes that were completed before the change log was made publicly ava
             <td>Improved SQLi detection</td>
             <td>2018-07-16</td>
             <td>2018-07-30</td>
-            <td>Simulate</td>
+            <td>Log</td>
             <td>Block</td>
         </tr>
     </tbody>

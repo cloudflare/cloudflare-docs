@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Web Crypto
 
 ## Background

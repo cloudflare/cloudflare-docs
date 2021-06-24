@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content-type: reference
 ---
 
 # Download WARP
@@ -37,7 +38,7 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>High Sierra, Catalina</td>
+      <td>Big Sur, High Sierra, Catalina</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>

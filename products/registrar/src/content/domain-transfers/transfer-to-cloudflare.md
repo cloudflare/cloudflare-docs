@@ -1,12 +1,21 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
+
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
 # Transfer to Cloudflare
 
 Domain transfers tell your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar, at any given time, to make changes on your behalf.
 
 Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some steps at both your new registrar and the one you are leaving. Each registrar handles transfers a bit differently, but in general they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 
@@ -31,11 +40,9 @@ Once your transfer to Cloudflare completes, we will redact your WHOIS informatio
 --------
 
 ## Initiate your transfer
-When you log in to your Cloudflare account, the first screen will display all sites you have on Cloudflare. You can start transfers to Cloudflare from this page. Select `Start Transferring Now` or click `Domain Registration` in the top navigation bar and Cloudflare will review your domains to determine which are eligible for transfer.
+To initiate your transfer, go to the [Registrar section](https://dash.cloudflare.com/?to=/:account/domains/transfer) of your account.
 
-![Cloudflare dashboard navbar screenshot](../static/navbar.png)
-
-On the next page, Cloudflare will display the zones available for transfer, those with transfers in progress, and sites unavailable for transfer.
+Cloudflare will display the zones available for transfer, those with transfers in progress, and sites unavailable for transfer.
 
 You’ll also be presented with the price for each transfer. When you transfer a domain, you are also required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting the “x”.
 
@@ -49,6 +56,10 @@ Sites can be unavailable for a few reasons, including:
 * Cloudflare does not yet support the TLD
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
+
+<Aside>
+If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when transferring a domain.
+</Aside>
 
 --------
 

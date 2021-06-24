@@ -1,6 +1,7 @@
 ---
 order: 1
 type: table
+pcx-content-type: how-to
 ---
 
 # Specify tunnel endpoints
@@ -17,7 +18,7 @@ Cloudflare recommends 2 GRE tunnels for each ISP and data center router combinat
 
 To configure the GRE tunnel(s) between Cloudflare and your data center(s), you must provide the following data for each tunnel:
 
-* **Customer edge IP address**—A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/about)), you do not need to provide edge addresses—Cloudflare will provide them.
+* **Customer edge IP address**—A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/)), you do not need to provide edge addresses—Cloudflare will provide them.
 * **Private subnet**—A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   * 10.0.0.0–10.255.255.255
   * 172.16.0.0–172.31.255.255
@@ -114,7 +115,7 @@ For an example of scoping configuration data, see the table below. It lists GRE 
 </tbody>
 </table>
 
-Cloudflare has 13 geographic regions across the world. This table lists region codes and their associated regions:
+Cloudflare has nine geographic regions across the world. This table lists region codes and their associated regions:
 
 <table>
   <thead>
@@ -125,8 +126,18 @@ Cloudflare has 13 geographic regions across the world. This table lists region c
   </thead>
   <tbody>
     <tr>
-    <td>WNAM</td>
-    <td>Western North America
+    <td>AFR</td>
+    <td>Africa
+    </td>
+    </tr>
+    <tr>
+    <td>APAC</td>
+    <td>Asia Pacific
+    </td>
+    </tr>
+    <tr>
+    <td>EEUR</td>
+    <td>Eastern Europe
     </td>
     </tr>
     <tr>
@@ -135,23 +146,8 @@ Cloudflare has 13 geographic regions across the world. This table lists region c
     </td>
     </tr>
     <tr>
-    <td>WEU</td>
-    <td>Western Europe
-    </td>
-    </tr>
-    <tr>
-    <td>EEU</td>
-    <td>Eastern Europe
-    </td>
-    </tr>
-    <tr>
-    <td>NSAM</td>
-    <td>Northern South America
-    </td>
-    </tr>
-    <tr>
-    <td>SSAM</td>
-    <td>Southern South America
+    <td>ME</td>
+    <td>Middle East
     </td>
     </tr>
     <tr>
@@ -160,33 +156,18 @@ Cloudflare has 13 geographic regions across the world. This table lists region c
     </td>
     </tr>
     <tr>
-    <td>ME</td>
-    <td>Middle East
+    <td>SAM</td>
+    <td>South America
     </td>
     </tr>
     <tr>
-    <td>NAF</td>
-    <td>Northern Africa
+    <td>WEUR</td>
+    <td>Western Europe
     </td>
     </tr>
     <tr>
-    <td>SAF</td>
-    <td>Southern Africa
-    </td>
-    </tr>
-    <tr>
-    <td>IN</td>
-    <td>India
-    </td>
-    </tr>
-    <tr>
-    <td>SEAS</td>
-    <td>Southeast Asia
-    </td>
-    </tr>
-    <tr>
-    <td>NEAS</td>
-    <td>Northeast Asia
+    <td>WNAM</td>
+    <td>Western North America
     </td>
     </tr>
   </tbody>

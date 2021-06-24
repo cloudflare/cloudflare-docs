@@ -1,14 +1,9 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Policy management
-
-<Aside type='warning' header='Important'>
-
-This feature is not available on the Teams free plan. For more information, see the [Cloudflare for Teams pricing page](https://www.cloudflare.com/teams-pricing/).
-
-</Aside>
 
 ## Before you start
 
@@ -20,7 +15,7 @@ This feature is not available on the Teams free plan. For more information, see 
 The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device.
 </Aside>
 
-## Setup your first HTTP policy
+## Create your first HTTP policy
 
 1. On the Teams dashboard, navigate to the **Policies** tab.
 

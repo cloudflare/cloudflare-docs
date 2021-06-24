@@ -1,0 +1,1 @@
+Create and edit static routes to route traffic through GRE tunnels with the [Magic Transit Static Routes API](https://api.cloudflare.com/#magic-transit-static-routes-properties).

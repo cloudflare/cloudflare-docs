@@ -5,8 +5,6 @@ order: 3
 
 # Installation on macOS
 
-**Important:** While the Remote Browser Isolation technology only requires a web browser to function, the beta programme integrates into the end-to-end Cloudflare for Teams experience. This uses a local client to proxy Internet traffic through from your computer to the nearest Cloudflare data center.
-
 ## Install WARP client
 Download and install the WARP client here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/macOS.
 

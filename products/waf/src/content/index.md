@@ -1,5 +1,6 @@
 ---
 title: Welcome
+pcx-content-type: landing-page
 type: overview
 order: 0
 ---
@@ -10,6 +11,10 @@ order: 0
 
 The Cloudflare Web Application Firewall (WAF) provides both automatic protection from vulnerabilities and the flexibility to create custom WAF rules.
 
-<p><Button type="primary" href="/change-log">View change log</Button></p>
+<ButtonGroup>
+  <Button type="primary" href="/about">Learn more</Button>
+  <Button type="secondary" href="/managed-rulesets">Available Managed Rulesets</Button>
+  <Button type="secondary" href="/change-log">Managed Rulesets change log</Button>
+</ButtonGroup>
 
-</ContentColumn>
+</ContentColumn> 
