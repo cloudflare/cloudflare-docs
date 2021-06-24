@@ -25,7 +25,7 @@ The WAF can perform one of the following actions when an L7 DDoS attack is detec
 * _Force Connection Close_ — Closes ongoing HTTP connections. The performed action depends on the HTTP version:
     * HTTP/1: set the [`Connection` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection#directives) to `close`.
     * HTTP/2: send a [`GOAWAY` frame](https://datatracker.ietf.org/doc/html/rfc7540#section-6.8) to the client.
-    * HTTP/3: not supported.
+    * HTTP/3: not supported (HTTP requests are allowed).
 * _DDoS Dynamic_ — Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be one of the above or an undisclosed mitigation action.
 
 <Aside type='warning' header='Important'>
