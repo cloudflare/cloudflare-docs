@@ -30,7 +30,7 @@ The DDoS L7 Attack Mitigation Managed Ruleset provides users with increased obse
 
 Depending on your Cloudflare plan, you may be able to adjust the behavior of the rules in the Managed Ruleset using **overrides**. You can change the performed action when an attack is detected and the sensitivity of attack detection mechanisms.
 
-To define overrides using the Rulesets API, see [Configure Managed Ruleset overrides via API](/ddos-l7-mitigations/configure-api).
+To define overrides using the Rulesets API, see [Configure DDoS L7 Attack Mitigation Managed Ruleset overrides via API](/ddos-l7-mitigations/configure-api).
 
 For more information on the available override parameters, check [Managed Ruleset override parameters](/ddos-l7-mitigations/how-ddos-l7-works).
 
