@@ -63,6 +63,8 @@ However, you can use the _Log_ action in global override. In this case, any rule
 
 ## Sensitivity
 
+API property name: `"sensitivity_level"`.
+
 Defines how sensitive a rule is. Affects the thresholds used to determine if an attack should be mitigated. A higher sensitivity level means having a lower threshold, while a lower sensitivity level means having a higher threshold.
 
 The available sensitivity levels are:
@@ -75,42 +77,3 @@ _Low_             | `"low"`
 _Essentially Off_ | `"eoff"`
 
 You cannot increase the sensitivity level beyond _High_ (`"default"`).
-
-## Example
-
-For example, Cloudflare may expose a rule in the Managed Ruleset that is blocking legitimate traffic during your peak hours of operation, and you want to prevent this situation from happening in the future.
-
-**Rule #1** (the rule that is blocking legitimate traffic)
-
-```json
-{
-  "id": "{problem-rule-id}",
-  "version": "1",
-  "action": "block",
-  "categories": [
-    "{category-name}"
-  ],
-  "last_updated": "2021-06-15T22:55:10.480572Z",
-  "ref": "{problem-rule-ref}",
-  "enabled": "true"
-}
-```
-
-**Override #1** (used to alleviate issue caused by `{problem-rule-id}`)
-
-```json
-{
-  // ...
-  "overrides": {
-    "rules": [
-      {
-        "id": "{problem-rule-id}",
-        "action": "challenge",
-        "sensitivity_level": "low"
-      }
-    ]
-  }
-}
-```
-
-By setting the action to `challenge` in applying override #1 for `{problem-rule-id}`, clients will be issued a challenge instead of their traffic being blocked. The sensitivity level is also significantly lowered by setting its value to `low`. After this change, only a larger amount of traffic will trigger the `challenge` mitigation action.
