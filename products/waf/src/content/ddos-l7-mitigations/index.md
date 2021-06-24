@@ -29,7 +29,7 @@ Depending on your Cloudflare plan, you may be able to adjust the behavior of the
 * The performed **action** when an attack is detected
 * The **sensitivity** of attack detection mechanisms
 
-For more information on the available override parameters, check [Managed Ruleset override parameters](/ddos-l7-mitigations/override-parameters).
+For more information on the available override parameters, see [Managed Ruleset override parameters](/ddos-l7-mitigations/override-parameters).
 
 To define overrides using the Rulesets API, see [Configure DDoS L7 Attack Mitigation Managed Ruleset overrides via API](/ddos-l7-mitigations/configure-api).
 
