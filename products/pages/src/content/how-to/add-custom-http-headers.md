@@ -12,7 +12,7 @@ Before continuing, ensure that your Cloudflare Pages project is connected to a [
 
 ## Writing a Workers function
 
-Workers functions are written in [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/). When a Worker makes a request to a Cloudflare Pages application, it will receive a response. The response a Worker receives is immutable, meaning it cannot be changed. In order to add, delete or alter headers, you will clone the response and modify the headers on a new `Response` instance. You will return the new response to the browser with your desired header changes. An example of this is shown below: 
+Workers functions are written in [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/). When a Worker makes a request to a Cloudflare Pages application, it will receive a response. The response a Worker receives is immutable, meaning it cannot be changed. In order to add, delete, or alter headers, clone the response and modify the headers on a new `Response` instance. Return the new response to the browser with your desired header changes. An example of this is shown below: 
 
 ```js
 ---
