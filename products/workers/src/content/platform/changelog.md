@@ -4,7 +4,7 @@
 
 Changes this week:
 - Updated V8 from 9.1 to 9.2.
-- Wrangler tail now works on Durable Objects. Note that logs from long-lived WebSockets will not be visible until the WebSocket is closed.
+- `wrangler tail` now works on Durable Objects. Note that logs from long-lived WebSockets will not be visible until the WebSocket is closed.
 
 ## 6/11/2021
 
@@ -17,7 +17,7 @@ Changes this week:
 
 Changes this week:
 - WebCrypto: We now support the “raw” import/export format for ECDSA/ECDH public keys.
-- request.cf is no longer missing when writing workers using modules syntax.
+- `request.cf` is no longer missing when writing workers using modules syntax.
 
 ## 5/14/2021
 
@@ -30,29 +30,29 @@ Changes in an earlier release:
 - WebCrypto: Add support for RSA-OAEP
 - WebCrypto: HKDF implemented.
 - Fix recently-introduced backwards clock jumps in Durable Objects.
-- WebCrypto.generateKey(), when asked to generate a key pair with algorithm RSA-PSS, would instead return a key pair using algorithm RSASSA-PKCS1-v1\_5. Although the key structure is the same, the signature algorithms differ, and therefore signatures generated using the key would not be accepted by a correct implementation of RSA-PSS, and vice versa. Since this would be a pretty obvious problem, but no one ever reported it to us, we guess that currently no one is using this functionality on Workers.
+- `WebCrypto.generateKey()`, when asked to generate a key pair with algorithm RSA-PSS, would instead return a key pair using algorithm RSASSA-PKCS1-v1\_5. Although the key structure is the same, the signature algorithms differ, and therefore signatures generated using the key would not be accepted by a correct implementation of RSA-PSS, and vice versa. Since this would be a pretty obvious problem, but no one ever reported it to us, we guess that currently no one is using this functionality on Workers.
 
 ## 4/29/2021
 
 Changes this week:
-- WebCrypto: Implemented wrapKey() / unwrapKey() for AES algorithms.
-- The arguments to WebSocket.close() are now optional, as the standard says they should be.
+- WebCrypto: Implemented `wrapKey()` / `unwrapKey()` for AES algorithms.
+- The arguments to `WebSocket.close()` are now optional, as the standard says they should be.
 
 ## 4/23/2021
 
 Changes this week:
 - In the WebCrypto API, encrypt and decrypt operations are now supported for the “AES-CTR” encryption algorithm.
-- For Durable Objects, CPU time limits are now enforced on the object level rather than the request level. Each time a new request arrives, the time limit is “topped up” to 500ms. After the (free) beta period ends and Durable Objects becomes generally available, we’ll increase this to 30 seconds.
+- For Durable Objects, CPU time limits are now enforced on the object level rather than the request level. Each time a new request arrives, the time limit is “topped up” to 500ms. After the (free) beta period ends and Durable Objects becomes generally available, we will increase this to 30 seconds.
 - When a Durable Object exceeds its CPU time limit, the entire object will be discarded and recreated. Previously, we allowed subrequest requests to continue using the same object, but this was dangerous because hitting the CPU time limit can leave the object in an inconsistent state.
-- Long running Durable Objects are given more subrequest quota as additional WebSocket messages are sent to them, to avoid the problem of a long-running Object being unable to make any more subrequests after it’s been held open by a particular WebSocket for a while.
-- When a Durable Object’s code is updated, or when its isolate is reset due to exceeding the memory limit, all stubs pointing to the object will become invalidated and have to be recreated. This is consistent with what happens when the CPU time is exceeded, or when stubs become disconnected due to random network errors. This behavior is useful, as apps can now assume that two messages sent to the same stub will be delivered to exactly the same live instance (if they are delivered at all). Apps which don’t care about this property should recreate their stubs for every request; there is no performance penalty from doing so.
+- Long running Durable Objects are given more subrequest quota as additional WebSocket messages are sent to them, to avoid the problem of a long-running Object being unable to make any more subrequests after it has been held open by a particular WebSocket for a while.
+- When a Durable Object’s code is updated, or when its isolate is reset due to exceeding the memory limit, all stubs pointing to the object will become invalidated and have to be recreated. This is consistent with what happens when the CPU time is exceeded, or when stubs become disconnected due to random network errors. This behavior is useful, as apps can now assume that two messages sent to the same stub will be delivered to exactly the same live instance (if they are delivered at all). Apps which do not care about this property should recreate their stubs for every request; there is no performance penalty from doing so.
 - When a Durable Object’s isolate exceeds its memory limit, an exception with an explanatory message will now be thrown to the caller, instead of “internal error”.
 - When a Durable Object exceeds its CPU time limit, an exception with an explanatory message will now be thrown to the caller, instead of “internal error”.
 - `wrangler tail` now reports CPU-time-exceeded exceptions with an explanatory message instead of “internal error”.
 
 ## 4/19/2021
 
-Changes since the last time we posted (which was apparently 3/26):
+Changes since the last post on 3/26:
 - Cron Triggers now have a 15 minute wall time limit, in addition to the existing CPU time limit. (Previously, there was no limit, so a cron trigger that spent all its time waiting for I/O could hang forever.)
 - Our WebCrypto implementation now supports importing and exporting HMAC and AES keys in JWK format.
 - Our WebCrypto implementation now supports AES key generation for CTR, CBC, and KW modes. AES-CTR encrypt/decrypt and AES-KW key wrapping/unwrapping support will land in a later release.
@@ -67,7 +67,7 @@ Changes since the last time we posted (which was apparently 3/26):
 - passThroughOnException is now available under the ctx argument to module handlers
 - Reliability improvements for Durable Objects
 - Reliability improvements for Durable Objects persistent storage API
-- ScheduledEvent.cron is now set to the original cron string that the event was scheduled for.
+- `ScheduledEvent.cron` is now set to the original cron string that the event was scheduled for.
 
 ## 3/26/2021
 
@@ -128,9 +128,9 @@ Changes this week:
 
 ### Concurrent Subrequest Limit
 
-As of this release, we impose a limit on the number of outgoing HTTP requests that a worker can make simultaneously. **For each incoming request**, a worker can make up to 6 concurrent outgoing fetch() requests.
+As of this release, we impose a limit on the number of outgoing HTTP requests that a worker can make simultaneously. **For each incoming request**, a worker can make up to 6 concurrent outgoing `fetch()` requests.
 
-If a worker’s request handler attempts to call fetch() more than six times (on behalf of a single incoming request) without waiting for previous fetches to complete, then fetches after the sixth will be delayed until previous fetches have finished. A worker is still allowed to make up to 50 total subrequests per incoming request, as before; the new limit is only on how many can execute simultaneously.
+If a worker’s request handler attempts to call `fetch()` more than six times (on behalf of a single incoming request) without waiting for previous fetches to complete, then fetches after the sixth will be delayed until previous fetches have finished. A worker is still allowed to make up to 50 total subrequests per incoming request, as before; the new limit is only on how many can execute simultaneously.
 
 #### Automatic deadlock avoidance
 
@@ -142,7 +142,7 @@ The vast, vast majority of workers make fewer than six outgoing requests per inc
 
 Of workers that do make more than six outgoing requests concurrently for a single incoming request, the vast majority either read the response bodies immediately upon each response returning, or never read the response bodies at all. In either case, these workers will still work fine – although they may be a little slower due to outgoing requests after the sixth being delayed.
 
-A very very small number of deployed workers (about 20 total) make more than 6 requests concurrently, wait for all responses to return, and then go back to read the response bodies later. For all known workers that do this, we have temporarily grandfathered your zone into the old behavior, so that your workers will continue to operate. However, we will be communicating with customers one-by-one to request that you update your code to proactively read request bodies, so that it works correctly under the new limit.
+A very small number of deployed workers (about 20 total) make more than 6 requests concurrently, wait for all responses to return, and then go back to read the response bodies later. For all known workers that do this, we have temporarily grandfathered your zone into the old behavior, so that your workers will continue to operate. However, we will be communicating with customers one-by-one to request that you update your code to proactively read request bodies, so that it works correctly under the new limit.
 
 #### Why did we do this?
 
@@ -165,7 +165,7 @@ Changes this week:
 ## 11/13/2020
 
 Changes over the past week:
-- ReadableStream.cancel() and ReadableStream.getReader().cancel() now take an optional, instead of a mandatory, argument, to conform with the Streams spec.
+- `ReadableStream.cancel()` and `ReadableStream.getReader().cancel()` now take an optional, instead of a mandatory, argument, to conform with the Streams spec.
 - Fixed an error that occurred when a WASM module declared that it wanted to grow larger than 128MB. Instead, the actual memory usage of the module is monitored and an error is thrown if it exceeds 128MB used.
 
 ## 11/5/2020
@@ -242,7 +242,7 @@ Changes over the last couple weeks:
 
 ## 1/24/2020
 
-It’s been a while since we posted release notes, partly due to the holidays. Here’s what’s new over the past month:
+It has been a while since we posted release notes, partly due to the holidays. Here is what is new over the past month:
 - Performance and stability improvements.
 - A rare source of daemonDown errors when processing bursty traffic over HTTP/2 has been eliminated.
 - Updated V8 7.9 -> 8.0.
@@ -256,8 +256,8 @@ New this week:
 ## 12/6/2019
 
 Runtime release notes covering the past few weeks:
-- Increased total per-request Cache.put() limit to 5GiB.
-- Increased individual Cache.put() limits to the lesser of 5GiB or the zone’s normal cache limits ([https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN](<https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN>)).
+- Increased total per-request `Cache.put()` limit to 5GiB.
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal cache limits ([https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN](<https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN>)).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
 - More “internal errors” were converted to useful user-facing errors.
