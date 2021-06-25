@@ -1,12 +1,12 @@
 ---
-title: Configure Managed Ruleset overrides via API
+title: Configure the Managed Ruleset via API
 pcx-content-type: concept
 order: 2
 ---
 
-# Configure DDoS L7 Attack Mitigation Managed Ruleset overrides via API
+# Configure the DDoS L7 Attack Mitigation Managed Ruleset via API
 
-Configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
+Configure the DDoS L7 Attack Mitigation Managed Ruleset by defining overrides using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
 
 Each zone has the DDoS L7 Attack Mitigation Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l7` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
 
