@@ -57,7 +57,7 @@ $ wrangler generate projectname https://github.com/cloudflare/custom-headers-exa
 
 ## Deploying a Workers function
 
-In order for your Workers function to operate alongside your Pages application, it will need to be deployed to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details: 
+To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details: 
 
 ```toml
 ---
