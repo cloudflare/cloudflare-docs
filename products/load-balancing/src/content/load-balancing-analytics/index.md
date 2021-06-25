@@ -7,9 +7,9 @@ pcx-content-type: how-to
 # Load balancing analytics
 
 Using load balancing analytics, you can:
-- Evaluate traffic flow
-- Assess the health status of origin servers in your pools
-- Review changes in pools and pool health over time
+- Evaluate traffic flow.
+- Assess the health status of origin servers in your pools.
+- Review changes in pools and pool health over time.
 
 <Aside type="note">
 
@@ -24,15 +24,15 @@ Load balancing analytics are only available to customers on paid plans (Pro, Bus
 To view **Overview** metrics for your load balancer, go to **Traffic** > **Load Balancing Analytics**.
 
 These metrics show the number of requests routed to specific pools within a load balancer, helping you:
-- Evaluate the effects of adding or removing a pool
-- Decide when to create new origin pools
-- Plan for peak traffic demands and future infrastructure needs
+- Evaluate the effects of adding or removing a pool.
+- Decide when to create new origin pools.
+- Plan for peak traffic demands and future infrastructure needs.
 
-Add additional filters for specific pools, times, and — by clicking **Add filter** — **Region** and **Origin**.
+Add additional filters for specific pools, times, regions, and origins.
 
 ### Latency and Logs
 
-To view latency and log information for your load balancer, go to go to **Traffic** > **Load Balancing Analytics** > **Latency**.
+To view latency and log information for your load balancer, go to **Traffic** > **Load Balancing Analytics** > **Latency**.
 
 **Latency** metrics show an interactive map, helping you identify regions with **Unhealthy** or **Slow** pools.
 
@@ -43,6 +43,7 @@ To view latency and log information for your load balancer, go to go to **Traffi
 For more flexibility, get load balancing metrics directly from the [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api).
 
 Get started with a sample query:
+
 <details>
 <summary>Requests per pool</summary>
 <div>
@@ -112,7 +113,7 @@ header: Response (truncated)
 <summary>Requests per data center</summary>
 <div>
 
-This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requets from a specific data center (Singapore or `SIN`) to each pool in a specific load balancer.
+This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requets from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
 
 ```graphql
 ---
