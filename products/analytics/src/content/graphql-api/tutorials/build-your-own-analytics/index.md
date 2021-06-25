@@ -126,7 +126,7 @@ Cloudflare's [GraphQL endpoint](https://api.cloudflare.com/client/v4/graphql) do
 
         function fetchAPI(url, email, apiKey, zoneTag) {
             let request = new Request(url)
-            let query = {"query":"{\n  viewer {\n    zones(filter: { zoneTag: " + zoneTag + " }) {\n      httpRequests1dGroups(\n        orderBy: [date_ASC]\n        limit: 1000\n        filter: { date_gt: \"2019-07-15\" }\n      ) {\n        date: dimensions {\n          date\n        }\n        sum {\n          cachedBytes\n          bytes\n        }\n      }\n    }\n  }\n}","variables":{}}
+            let query = {"query":"{\n  viewer {\n    zones(filter: { zoneTag: "\" + zoneTag + "\" }) {\n      httpRequests1dGroups(\n        orderBy: [date_ASC]\n        limit: 1000\n        filter: { date_gt: \"2019-07-15\" }\n      ) {\n        date: dimensions {\n          date\n        }\n        sum {\n          cachedBytes\n          bytes\n        }\n      }\n    }\n  }\n}","variables":{}}
 
             let init = {
                 method: 'POST',
