@@ -13,16 +13,22 @@ This feature is only available for selected customers on an Enterprise plan. Con
 
 Custom Rules allow you to protect your website and your APIs from malicious or excessive incoming traffic.
 
-You can use Custom Rules in the **Firewall** app to define the following rule types:
+Use Custom Rules in the **Firewall** app to define the following rule types:
 
-* [**Rate Limiting Rules**](/cf-rulesets/custom-rules/rate-limiting) — Check for excessive incoming traffic and apply mitigation actions.
+* [**Rate Limiting rules**](/cf-rulesets/custom-rules/rate-limiting) — Check for excessive incoming traffic and apply mitigation actions.
 
-* **Custom Firewall rules** — Control incoming traffic by filtering requests. You can block or challenge incoming requests according to rules you define.
+* [**Custom Firewall rules**](/cf-rulesets/custom-rules/custom-firewall) — Control incoming traffic by filtering requests. Perform actions like _Block_ or _JS Challenge_ on incoming requests according to rules you define.
 
-<Aside type='warning' header='Important'>
+Custom Rules are built upon the [Ruleset Engine](/cf-rulesets) which you can use to define rules and actions in several Cloudflare products.
 
-Currently, you can only create and manage Custom Firewall rules using the API. They are not displayed in the **Custom Rules** tab.
+---
 
-</Aside>
+## Rule execution order
 
-Custom Rules are built upon the ruleset engine which you can use to define rules and actions in several Cloudflare products. Custom Rules are deployed to the `http_request_firewall_custom` phase ruleset.
+Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
+
+* [Firewall Rules](/cf-firewall-rules), available in the **Firewall Rules** tab
+* [Custom Firewall rules](/cf-rulesets/custom-rules/custom-firewall), available in the **Custom Rules** tab
+* [Rate Limiting rules](/cf-rulesets/custom-rules/rate-limiting), available in the **Custom Rules** tab
+* [Managed Rulesets](https://developers.cloudflare.com/waf/managed-rulesets), available in the **Managed Rules** tab
+* [Legacy Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128), available in the **Tools** tab

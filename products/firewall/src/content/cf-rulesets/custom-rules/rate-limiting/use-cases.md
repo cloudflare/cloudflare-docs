@@ -12,7 +12,7 @@ This feature is only available for selected customers on an Enterprise plan.
 
 </Aside>
 
-The examples below include sample Rate Limiting Rule configurations that address common rate limiting use cases.
+The examples below include sample Rate Limiting rule configurations that address common rate limiting use cases.
 
 ## Example 1
 
@@ -24,6 +24,7 @@ Expression:<br />
 `(http.request.uri.path eq "/login" and ip.geoip.country eq "US" and ip.src ne 192.0.0.1)`
 
 Rule characteristics:
+
 * _Data center ID_ (included by default when creating the rule in the dashboard)
 * _IP Address_
 
@@ -39,6 +40,7 @@ Expression:<br />
 `(http.request.uri.path contains "/product*" and http.request.method eq "POST")`
 
 Rule characteristics:
+
 * _Data center ID_ (included by default when creating the rule in the dashboard)
 * _IP Address_
 * _HTTP Header_ > `x-api-key`
@@ -55,6 +57,7 @@ Expression:<br />
 `(http.request.uri.path eq "/store" or http.request.uri.path eq "/prices") and (http.host eq "mystore1.com" or http.host eq "mystore2.com") and not cf.client.bot`
 
 Rule characteristics:
+
 * _Data center ID_ (included by default when creating the rule in the dashboard)
 * _IP Address_
 * _HTTP Header_ > `user-agent`

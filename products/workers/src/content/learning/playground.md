@@ -33,7 +33,7 @@ Check out the reference for [addEventListener](/runtime-apis/add-event-listener)
 
 ## Beyond hello world
 
-To get familiar with Workers, we recommend playing around in the Playground, borrowing bits from [Examples](/examples) section of the documentation. This will give you a taste of what Workers can do. It’s pretty amazing.
+To get familiar with Workers, we recommend playing around in the Playground, borrowing bits from [Examples](/examples) section of the documentation. This will give you a taste of what Workers can do. It’s pretty [amazing](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
 
 --------------------------------
 
