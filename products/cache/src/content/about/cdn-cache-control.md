@@ -1,6 +1,6 @@
 ---
 title: CDN-Cache-Control
-order: 6
+order: 5
 pcx-content-type: concept
 ---
 
@@ -14,7 +14,7 @@ You have several options available to determine how `CDN-Cache-Control` directiv
 
 An origin can:
 
-- Return the `CDN-Cache-Control` response header which Cloudflare evaluates to make caching decisions. `Cache-Control`, if also returned by the origin, isproxied as is and does not affect caching decisions made by Cloudflare. Additionally, `CDN-Cache-Control` is proxied downstream in case there are other CDNs between Cloudflare and the browser.
+- Return the `CDN-Cache-Control` response header which Cloudflare evaluates to make caching decisions. `Cache-Control`, if also returned by the origin, is proxied as is and does not affect caching decisions made by Cloudflare. Additionally, `CDN-Cache-Control` is proxied downstream in case there are other CDNs between Cloudflare and the browser.
 
 - Return the `Cloudflare-CDN-Cache-Control` response header. This results in the same behavior as the origin returning `CDN-Cache-Control` except Cloudflare does not proxy `Cloudflare-CDN-Cache-Control` downstream because it’s a header only used to control Cloudflare. This option is beneficial if you want only Cloudflare to have a different caching behavior while all other downstream servers rely on `Cache-Control`, or if you do not want Cloudflare to proxy the `CDN-Cache-Control` header downstream.
 
@@ -53,10 +53,10 @@ Cache behavior:
 
 <table>
   <tbody>
-    <th colspan="4" rowspan="1">
+    <th colspan="5" rowspan="1">
       Caches
     </th>
-    <th colspan="4" rowspan="1">
+    <th colspan="5" rowspan="1">
       Cache TTL (seconds)
     </th>
     <tr>
@@ -115,10 +115,10 @@ Behavior in response to 5XX error:
 
 <table>
   <tbody>
-    <th colspan="4" rowspan="1">
+    <th colspan="5" rowspan="1">
       Caches
     </th>
-    <th colspan="4" rowspan="1">
+    <th colspan="5" rowspan="1">
       Stale served (seconds) in response to error
     </th>
     <tr>
