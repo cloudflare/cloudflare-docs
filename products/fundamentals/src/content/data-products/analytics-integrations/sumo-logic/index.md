@@ -1,6 +1,6 @@
 ---
-title: Sumo Logic
 order: 105
+pcx-content-type: interim
 ---
 
 # Sumo Logic
