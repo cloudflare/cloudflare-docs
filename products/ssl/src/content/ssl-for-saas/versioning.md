@@ -65,13 +65,14 @@ You can revert the migration at any time.
 ### Before the migration
 
 Before your migration, you should:
-1. Receive a test zone from your Solutions Engineer (SE).
+
+1. To test validation methods, set up a test zone and ask your Solutions Engineer (SE) to enable SSL for SaaS v2.
 1. Wait for your SE to run our pre-migration tool. This tool groups your hostnames into one of the following statuses:
-    - `test_pending`: Currently being verified
-    - `test_active`: Passed CNAME verification
-    - `test_active_apex`: Passed Apex Proxy verification
-    - `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone 
-    - `test_failed`: Failed hostname verification 25 times
+    - `test_pending`: In the process of being verified or was not able to be verified and re-queued for verification. A custom hostname will be re-queued 25 times before moving to the `test_failed` status.
+    - `test_active`: Passed CNAME verification.
+    - `test_active_apex`: Passed Apex Proxy verification.
+    - `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your CSM to verify banned custom hostnames and proceed with the migration.
+    - `test_failed`: Failed hostname verification 25 times.
 1. Review the results of our pre-migration tool (run by your Solutions Engineer) using one of the following methods:
     - Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
     - Via a CSV file (provided by your SE)
