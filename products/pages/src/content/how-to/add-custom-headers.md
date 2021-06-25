@@ -24,22 +24,19 @@ addEventListener('fetch', event => {
 
 async function handleRequest(request) {
   const response = await fetch(request)
-  const headers = new Headers(response.headers)
+  
+  // Clone the response so that it's no longer immutable
+  const newResponse = new Response(response.body, response)
 
-  // Add a header
-  headers.append("x-workers-hello", "Hello from Cloudflare Workers")
+  // Add a custom header with a value
+  newResponse.headers.append("x-workers-hello", "Hello from Cloudflare Workers")
 
   // Delete headers
-  headers.delete("x-header-to-delete")
-  headers.delete("x-header2-to-delete")
+  newResponse.headers.delete("x-header-to-delete")
+  newResponse.headers.delete("x-header2-to-delete")
 
-  // Alter a header
-  headers.set("x-header-to-change", "NewValue")
-
-  const newResponse = new Response(response.body, {
-    ...response,
-    headers
-  })
+  // Adjust the value for an existing header
+  newResponse.headers.set("x-header-to-change", "NewValue")
 
   return newResponse
 }
@@ -60,7 +57,7 @@ $ wrangler generate projectname https://github.com/cloudflare/custom-headers-exa
 
 ## Deploying a Workers function
 
-In order for your Workers function to operate alongside your custom Pages application, it will need to be deployed to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details: 
+In order for your Workers function to operate alongside your Pages application, it will need to be deployed to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details: 
 
 ```toml
 ---
