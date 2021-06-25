@@ -19,7 +19,7 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 1. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
 1. Start the Railgun daemon so that it can proceed with activation.
 1. If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on.
-1. If the Railgun fails to activate, check your logs for errors and [contact support](mailto:support@cloudflare.com) if the issue persists.
+1. If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
 
 ## Enabling Railgun
 
