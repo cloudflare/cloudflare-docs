@@ -1,6 +1,6 @@
 ---
-title: Accessing the data Cloudflare collects
 order: 12
+pcx-content-type: reference
 ---
 
 # Accessing the data Cloudflare collects

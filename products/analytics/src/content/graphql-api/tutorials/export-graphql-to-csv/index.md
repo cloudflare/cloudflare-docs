@@ -1,5 +1,5 @@
 ---
-title: Export GraphQL data to CSV
+pcx-content-type: interim
 ---
 
 # Export GraphQL data to CSV

@@ -1,6 +1,6 @@
 ---
-title: Configure GraphQL client endpoint and HTTP headers
 order: 40
+pcx-content-type: how-to
 ---
 
 # Configure GraphQL client endpoint and HTTP headers

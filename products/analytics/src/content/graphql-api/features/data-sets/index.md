@@ -1,6 +1,6 @@
 ---
-title: Data Sets (tables)
 order: 2
+pcx-content-type: reference
 ---
 
 # Data Sets (tables)
