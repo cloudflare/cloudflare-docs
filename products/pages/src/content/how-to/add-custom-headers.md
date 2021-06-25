@@ -24,22 +24,19 @@ addEventListener('fetch', event => {
 
 async function handleRequest(request) {
   const response = await fetch(request)
-  const headers = new Headers(response.headers)
+  
+  // Clone the response so that it's no longer immutable
+  const newResponse = new Response(response.body, response)
 
-  // Add a header
-  headers.append("x-workers-hello", "Hello from Cloudflare Workers")
+  // Add a custom header with a value
+  newResponse.headers.append("x-workers-hello", "Hello from Cloudflare Workers")
 
   // Delete headers
-  headers.delete("x-header-to-delete")
-  headers.delete("x-header2-to-delete")
+  newResponse.headers.delete("x-header-to-delete")
+  newResponse.headers.delete("x-header2-to-delete")
 
-  // Alter a header
-  headers.set("x-header-to-change", "NewValue")
-
-  const newResponse = new Response(response.body, {
-    ...response,
-    headers
-  })
+  // Adjust the value for an existing header
+  newResponse.headers.set("x-header-to-change", "NewValue")
 
   return newResponse
 }
