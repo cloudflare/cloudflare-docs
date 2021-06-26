@@ -71,6 +71,22 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
+      <td valign="top"><code>http.request.cookies</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+      <td>
+         <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
+         </p>
+         <p>Cookie value are not pre-processed and retain the case used in the request.</p>
+         <p><em>Decoding:</em> Cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{'{"app": ["test"]}'}</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
       <td valign="top"><code>http.request.full_uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the full URI as received by the web server (does not include <code class="InlineCode">#fragment</code>, which is not sent to web servers).
