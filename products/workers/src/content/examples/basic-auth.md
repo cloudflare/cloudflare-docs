@@ -5,6 +5,7 @@ summary: Shows how to restrict access using the HTTP "Basic" schema.
 tags:
   - Security
   - Originless
+  - Authentication
 ---
 
 # HTTP "Basic" Authentication

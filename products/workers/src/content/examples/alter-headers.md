@@ -3,7 +3,8 @@ order: 1000
 type: example
 summary: Change the headers sent in a request or returned in a response.
 tags:
-  - Security
+  - Headers
+  - Middleware
 ---
 
 # Alter headers
