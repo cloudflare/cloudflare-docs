@@ -83,7 +83,7 @@ While every Cloudflare Pages site receives a custom subdomain during deployment,
 
 #### Configure nameservers
 
-Configure your nameservers to point to Cloudflare's name servers. If your nameservers are successfully pointed to Cloudflare, we will proceed by creating a CNAME record for you.
+Configure your nameservers to point to Cloudflare's name servers. If your nameservers are successfully pointed to Cloudflare, Cloudflare will proceed by creating a CNAME record for you.
 
 #### Add a custom CNAME record
 
