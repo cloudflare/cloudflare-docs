@@ -23,7 +23,7 @@ The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) o
 * Create an override for the rule with ID `{rule-id}` and set the rule sensitivity to `low`. All other rules use the default sensitivity defined by Cloudflare.
 
 <details>
-<summary>Example: Use an override to set the sensitivity of a L7 DDoS rule at the zone level</summary>
+<summary>Example: Use an override to set the sensitivity of an HTTP DDoS rule at the zone level</summary>
 <div>
 
 ```json
