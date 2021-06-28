@@ -22,7 +22,7 @@ Do the following:
 
     ![Create HTTP Header Modification rule page](../../static/transform/create-header-modification-rule.png)
 
-1. In the page that displays, enter a descriptive name for the URL Rewrite Rule in **Rule name**.
+1. Enter a descriptive name for the URL Rewrite Rule in **Rule name**.
 
 1. Under **When incoming requests match**, define the [rule expression](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
 
