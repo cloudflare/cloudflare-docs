@@ -263,6 +263,12 @@ All plans have access to:
 
 </Definitions>
 
+<Aside>
+
+`request.cf` is not available in the Cloudflare Workers dashboard or Playground preview editor.
+
+</Aside>
+
 --------------------------------
 
 ## Methods
