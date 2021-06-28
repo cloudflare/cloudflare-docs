@@ -9,7 +9,7 @@ In this guide, you will get started with Cloudflare Pages, and deploy your first
 
 <Aside>
 
-You will be signing up for a Cloudflare account. You may also want a custom domain available, but this is not required.
+You will be signing up for a Cloudflare account. You may also want to create a custom domain, but this is not required.
 
 </Aside>
 
@@ -17,7 +17,7 @@ You will be signing up for a Cloudflare account. You may also want a custom doma
 
 ### Sign in to Cloudflare Pages
 
-To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with your Cloudflare account. If you don't have one yet, you can sign up for an account as you get started deploying your new site.
+To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with your Cloudflare account. If you do not have an account yet, you can sign up as you get started deploying your new Pages site.
 
 ### Connect to GitHub
 
@@ -39,7 +39,7 @@ If you do not have a project, [refer to our extensive How To section](/how-to) t
 
 Once you have selected a repository, select **Install & Authorize** and **Begin setup**. You can then customize your deployment in the "Set up builds and deployments" page.
 
-Your "project name" will be used to generate your deploy's hostname. By default, this matches your GitHub project name.
+Your **project name** will be used to generate your project's hostname. By default, this matches your GitHub project name.
 
 "Production branch" indicates the branch that Cloudflare Pages should use to deploy the "production" version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/platform/preview-deployments).
 
@@ -49,7 +49,7 @@ Your "project name" will be used to generate your deploy's hostname. By default,
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **publish directory** to tell Cloudflare Pages how to deploy your site.
 
-Our deployment UI provides a number of "presets", pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, refer to the documentation for [build configuration](/platform/build-configuration).
+Our deployment UI provides a number of "presets", pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, check out our documentation for [build configuration](/platform/build-configuration).
 
 ![Build settings](./images/build-settings.png)
 
@@ -65,11 +65,11 @@ Once you have finished setting your build configuration, select **Save and Deplo
 
 ![Deploy log](./images/deploy-log.png)
 
-When your project has finished deploying, you will receive a unique URL to view your deployed site. After this step, you have finalized deploying your first site with Cloudflare Pages.
+When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
 ## Managing your site
 
-After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
+After your first deploy, select **Continue to project** to see see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
 ![Site dashboard](./images/site-dashboard.png)
 
