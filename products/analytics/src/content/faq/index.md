@@ -1,9 +1,9 @@
 ---
-title: FAQ
 order: 40
+pcx-content-type: faq
 ---
 
-# FAQs
+# FAQ
 
 ## Web Analytics FAQ
 

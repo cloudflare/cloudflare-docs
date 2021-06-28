@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: concept
 ---
 
 # HTTP policies
@@ -53,7 +54,7 @@ Rules with Block actions block outbound traffic from reaching destinations you s
 
 ### Isolate
 
-When a HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
+When an HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
 
 If you'd like to isolate **all security threats**, you can set up a policy with the following configuration:
 
@@ -66,12 +67,6 @@ If instead you need to isolate **specific hostnames**, you can list the domains 
 | Selector | Operator | Value | Action |
 | - | - | - | - |
 | Host | In | `example.com`, `example.net` | Isolate
-
-If you would like to isolate an **entire domain name**, you can use a regular expression match such as:
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | matches regex | `example\.com|.*\.example\.com` | Isolate
 
 <Aside type='note' header='Isolate identity providers for applications'>
 
@@ -105,6 +100,12 @@ The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow
 
 ## Selectors
 
+<Aside>
+
+Policies created using the URL selector are case-sensitive.
+
+</Aside>
+
 Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Host**
 * **URL**
@@ -113,39 +114,9 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **URL Path and Query**
 * **HTTP Method**
 * **HTTP Response**
-* **Uploaded and Downloaded File Extension**
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
 * **Applications**
-
-List of file extensions Gateway can match against:
-
-<TableWrap>
-
-| Image | Executable | Audio | Documents | Data | Compressed | System | Video |
-|------|------|-------|------|--------|--------|--------|-----|
-| avif | apk | m4a | doc | avro | 7z | bak | avi |
-| bmp | bat | mid | docx | csv | arj | cab | flv |
-| gif | bin | mp3 | odp | dat | bz2 | cpl | h264 |
-| ico | cgi | mpa | ods | dmg | deb | cur | m4v |
-| jpeg | com | wav | odt | iso | gz | emu | mkv |
-| png | dll | wma | pdf | json | lz | ini | mov |
-| psd | exe | ppt | | log | lz4 | scr | mp4 |
-| svg | hta | pptx | | mdb | lzh | sys | mpeg |
-| tif | jar | rtf | | nzb | lzma | tmp | wmv |
-| webp | moo | txt | | orc | pak
-|  | pif | xls | | parquet | rar
-|  | pl | xlsx | | rc | rpm
-|  | prg | | | sav | sz
-|  | | | | wasm | xz | | 
-|  |      | | | sql lite | z
-|  |      | | | tar | zip
-|  |      | | | toml | zlib |
-|  |      | | | torrent | zst |
-|  |      | | | xml |  |
-|  |      | | | yaml | | 
-
-</TableWrap>
 
 ## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:

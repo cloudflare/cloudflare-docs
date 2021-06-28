@@ -1,6 +1,7 @@
 ---
 title: Cache by device type
 order: 12
+pcx-content-type: reference
 ---
 
 # Cache by device type

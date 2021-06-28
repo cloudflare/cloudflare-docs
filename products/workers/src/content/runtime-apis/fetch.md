@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Fetch
 
 The [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provides an interface for asynchronously fetching resources via HTTP requests inside of a Worker.
@@ -7,6 +11,12 @@ The `fetch` method is implemented on the ServiceWorkerGlobalScope. See [MDN docu
 <Aside>
 
 __Note:__ Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a FetchEvent handler such as [`respondWith`](/runtime-apis/fetch-event#methods). Learn more about [the Request context](/runtime-apis/request#the-request-context).
+
+</Aside>
+
+<Aside type="warning" header="Warning">
+
+It is not currently possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal. 
 
 </Aside>
 

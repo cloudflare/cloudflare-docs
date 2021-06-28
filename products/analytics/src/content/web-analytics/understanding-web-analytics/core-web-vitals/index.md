@@ -1,6 +1,6 @@
 ---
-title: Core Web Vitals
 order: 40
+pcx-content-type: concept
 ---
 
 # Core Web Vitals

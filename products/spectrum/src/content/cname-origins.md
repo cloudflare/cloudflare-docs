@@ -1,3 +1,7 @@
+---
+pcx-content-type: tutorial
+---
+
 # CNAME origins
 
 The API supports specifying an origin by hostname. This is useful for cases where you might setup Spectrum in front of a load balancer like an AWS ELB that offers a hostname instead of a static IP.

@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Request
 
 The `Request` interface represents an HTTP request, and is part of the Fetch API.
@@ -339,6 +343,6 @@ listener will never be registered.
 
 ## See also
 
-- [Examples: Modify request property](examples/modify-request-property)
+- [Examples: Modify request property](/examples/modify-request-property)
 - [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
 - [Reference: `Response`](/runtime-apis/response)

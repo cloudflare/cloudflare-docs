@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: how-to
 ---
 
 # Self-hosted applications
@@ -21,7 +22,7 @@ Make sure you create [Zero Trust policies](/policies/zero-trust) before connecti
 
 ### 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 
@@ -57,6 +58,8 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 1. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
  ![Select identity providers](../../static/documentation/applications/saas-idp.png)
+
+1. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
 1. Click **Next**.
 

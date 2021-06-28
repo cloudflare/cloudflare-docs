@@ -22,14 +22,14 @@ The **Transform Rules** dashboard interface lets you:
 
 In the **Transform Rules** tab you can:
 
-* [Create a URL Rewrite Rule](/transform/create-url-rewrite-rule)
-* [Create an HTTP Request Header Modification Rule](/transform/create-header-modification-rule)
+* [Create a URL Rewrite Rule](/transform/url-rewrite/create-dashboard)
+* [Create an HTTP Request Header Modification Rule](/transform/request-header-modification/create-dashboard)
 
 See each linked section for details on creating each rule type.
 
 ## Manage rules
 
-You can manage your existing Transform Rules at any time using the buttons located on the right of the rule you want to change, or by using the handle located on the left of the rule. 
+You can manage your existing Transform Rules at any time using the buttons located on the right of the rule you want to change, or by using the handle located on the left of the rule.
 
 ![Available rule operations in the Rules List](../static/transform/rule-operations.png)
 

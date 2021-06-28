@@ -1,6 +1,6 @@
 ---
-title: Data Sets (tables)
 order: 2
+pcx-content-type: reference
 ---
 
 # Data Sets (tables)
@@ -34,6 +34,7 @@ The following data sets (and associated nodes) are available in Cloudflare Analy
 | Network Analytics           | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups`                                                 |
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
+| Magic Firewall Analytics    | `magicFirewallSamplesAdaptiveGroups`                                                                                           |
 
 </TableWrap>
 
@@ -64,8 +65,8 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 | `firewallRulePreviewGroups`  | `httpRequestsAdaptiveGroups`         | March 1, 2021     |
 | `healthCheckEvents`          | `healthCheckEventsAdaptive`          | March 1, 2021     |   
 | `healthCheckEventsGroups`    | `healthCheckEventsAdaptiveGroups`    | March 1, 2021     |  
-| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | March 1, 2021     | 
-| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| March 1, 2021     |
+| `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | September 30, 2021     | 
+| `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| September 30, 2021     |
 
 </TableWrap>
 

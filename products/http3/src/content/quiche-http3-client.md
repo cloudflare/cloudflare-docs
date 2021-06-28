@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: configuration
 ---
 
 # Quiche HTTP/3 client

@@ -10,6 +10,10 @@ import GetStarted from "../_partials/_plan-get-started.md"
 
 While Cloudflare offers several products that mitigate and identify bot traffic, this section reviews our _bot-specific products_, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
 
+## What is a bot?
+
+A bot is a software application programmed to do certain tasks. For a more thorough definition and real-world examples of bots, see our [Learning Center](https://www.cloudflare.com/learning/bots/what-is-a-bot/).
+
 ## Which bot solution do I need?
 
 If you have a smaller domain and have identified a bot problem, we recommend Bot Fight Mode or Super Bot Fight Mode (included with your plan subscription). You can enable either from your dashboard, but these solutions offer limited configuration options.

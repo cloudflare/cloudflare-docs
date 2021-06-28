@@ -6,6 +6,7 @@ const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
+$["api-security"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
 $["automatic-platform-optimization"]   = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/automatic-platform-optimization.js").pathD
 $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
@@ -19,6 +20,7 @@ $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resourc
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
+$["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-wan.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
@@ -42,6 +44,11 @@ const products = [
     title: "API",
     path: "api",
     icon: "api",
+  },
+  {
+    title: "API Security",
+    path: "api-security",
+    icon: "page-shield",
   },
   {
     title: "Analytics",
@@ -128,6 +135,11 @@ const products = [
     icon: "magic-transit",
   },
   {
+    title: "Magic WAN",
+    path: "magic-wan",
+    icon: "magic-wan",
+  },
+  {
     title: "Network Interconnect",
     path: "network-interconnect",
     icon: "network-interconnect",
@@ -145,7 +157,7 @@ const products = [
   },
   {
     title: "Railgun",
-    href: "https://www.cloudflare.com/docs/railgun/",
+    path: "railgun",
     icon: "railgun",
   },
   {

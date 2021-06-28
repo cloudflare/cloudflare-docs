@@ -1,6 +1,7 @@
 ---
 title: Use Network Interconnect
 order: 4
+pcx-content-type: tutorial
 ---
 
 # Use Cloudflare Network Interconnect

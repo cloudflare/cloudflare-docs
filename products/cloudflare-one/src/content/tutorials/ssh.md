@@ -1,6 +1,7 @@
 ---
 updated: 2021-03-23
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # Connect through Cloudflare Access over SSH
@@ -33,7 +34,7 @@ Choose **Self-hosted** on the next page.
 
 ![Add App](../static/zero-trust-security/ssh/add-app.png)
 
-Input a subdomain where your application will be availble to users.
+Input a subdomain that will become the hostname where your application will be availble to users.
 
 ![Configure](../static/zero-trust-security/ssh/configure-app.png)
 
@@ -45,11 +46,13 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 ![Save](../static/zero-trust-security/ssh/save-app.png)
 
-## Install `cloudflared`
+## Install `cloudflared` on the server
 
-Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find instructions for installing `cloudflared` on other operating systems [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation). The release history can be found [here](https://github.com/cloudflare/cloudflared/releases).
+
+For example, `cloudflared` can be installed on Debian and its derivatives with these commands:
 
 ```sh
 $ sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
@@ -58,7 +61,7 @@ $ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
 
 ## Authenticate `cloudflared`
 
-Run the following command to authenticate cloudflared into your Cloudflare account.
+Run the following command on the server to authenticate cloudflared into your Cloudflare account.
 
 ```sh
 $ cloudflared tunnel login
@@ -70,7 +73,7 @@ Choose any hostname presented in the list. Cloudflare will issue a certificate s
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/connections/connect-apps/create-tunnel) with the command below.
+Next, [create a Tunnel](/connections/connect-apps/create-tunnel) on the server with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
@@ -165,8 +168,8 @@ You can now test the SSH flow by running a command to reach the service. When th
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
-To enable, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable browser rendering` to on.
+To enable, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
 
-![Auto Auth](../static/documentation/applications/render-browser.png)
+![Auto Auth](../static/documentation/applications/ssh-browser-rendering.png)
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.

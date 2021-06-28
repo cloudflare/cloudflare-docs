@@ -1,8 +1,15 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Google Suite
+
+<Aside header="Note">
+
+You don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+
+</Aside>
 
 You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/identity/idp-integration/google), the steps below will allow you to pull group membership information from your Google Workspace account.
 

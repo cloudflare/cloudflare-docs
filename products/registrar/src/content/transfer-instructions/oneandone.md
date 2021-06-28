@@ -1,10 +1,19 @@
 ---
 order: 7
+pcx-content: how-to
 ---
+
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
 # 1&1
 
 You can follow the instructions below to transfer your domain from 1&1 to Cloudflare.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 

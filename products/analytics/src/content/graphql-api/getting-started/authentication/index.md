@@ -1,6 +1,6 @@
 ---
-title: Authentication
 order: 10
+pcx-content-type: reference
 ---
 
 # Authentication

@@ -60,14 +60,17 @@ Authenticated Origin Pull does not work in **SSL** mode _Off_ (not secure) or _F
 
 --------
 
-### Zone-Level — Cloudflare certificates
+### Zone-Level — Cloudflare certificate
+
+#### Certificate value
 
 Cloudflare uses the following CA to sign certificates for the Authenticated Origin Pull service:
 <details>
 <summary>Certificate value</summary>
 <div>
 
-`-----BEGIN CERTIFICATE-----
+```text
+-----BEGIN CERTIFICATE-----
 MIIGCjCCA/KgAwIBAgIIV5G6lVbCLmEwDQYJKoZIhvcNAQENBQAwgZAxCzAJBgNV
 BAYTAlVTMRkwFwYDVQQKExBDbG91ZEZsYXJlLCBJbmMuMRQwEgYDVQQLEwtPcmln
 aW4gUHVsbDEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzETMBEGA1UECBMKQ2FsaWZv
@@ -101,18 +104,50 @@ bA+JbyJeUMtU7KMsxvx82RmhqBEJJDBCJ3scVptvhDMRrtqDBW5JShxoAOcpFQGm
 iYWicn46nPDjgTU0bX1ZPpTpryXbvciVL5RkVBuyX2ntcOLDPlZWgxZCBp96x07F
 AnOzKgZk4RzZPNAxCXERVxajn/FLcOhglVAKo5H0ac+AitlQ0ip55D2/mf8o72tM
 fVQ6VpyjEXdiIXWUq/o=
------END CERTIFICATE-----`
+-----END CERTIFICATE-----
+```
 
 </div>
 </details>
+
+#### Setup instructions
 
 To enable Authenticated Origin Pull globally on a zone:
 
 1. Install the above certificate at the origin web server to authenticate all connections.
 1. For your [SSL/TLS encryption mode](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls), select **Full**.
-1. Configure the origin web server to accept client certificates.
+1. Configure your [origin web server](#server-installation-instructions) to accept client certificates:
+
+    <details>
+    <summary>Apache example</summary>
+    <div>
+
+    For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/path/to/origin-pull-ca.pem</code>.
+
+    ```txt
+    SSLVerifyClient require
+    SSLVerifyDepth 1
+    SSLCACertificateFile /path/to/origin-pull-ca.pem
+    ```
+    </div>
+    </details>
+
+    <details>
+    <summary>NGINX example</summary>
+    <div>
+
+    For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/etc/nginx/certs/cloudflare.crt</code>.
+
+    ```txt
+    ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
+    ssl_verify_client on;
+    ```
+    </div>
+    
+    
+    </details>
 1. Enable **Authenticated Origin Pulls**:
-    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pools** and select **On**.
+    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
     - For the API, [change the TLS Client Auth setting](https://api.cloudflare.com/#zone-settings-change-tls-client-auth-setting):
 
         ```bash
@@ -201,7 +236,7 @@ To enable Authenticated Origin Pull globally on a zone:
     ```
 
 1. Enable **Authenticated Origin Pulls**:
-    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pools** and select **On**.
+    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
     - For the API, [set the enablement for a zone](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
 
         ```bash

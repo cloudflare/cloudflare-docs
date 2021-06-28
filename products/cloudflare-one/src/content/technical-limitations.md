@@ -1,5 +1,6 @@
 ---
 order: 20
+pcx-content-type: reference
 ---
 
 # Technical limitations

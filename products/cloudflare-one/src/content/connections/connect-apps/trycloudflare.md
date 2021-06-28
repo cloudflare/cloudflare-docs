@@ -1,5 +1,6 @@
 ---
 order: 100
+pcx-content-type: how-to
 ---
 
 # TryCloudflare
