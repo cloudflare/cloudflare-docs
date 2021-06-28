@@ -9,7 +9,7 @@ pcx-content-type: tutorial
 In this tutorial, you will learn how to deploy your Netlify application to Cloudflare Pages.
 
 <Aside>
-You should already have an existing project deployed on Netlify that you would like to host on Cloudflare Pages. Features such as Netlify's Forms and Serverless Functions are currently not supported in Cloudflare Pages. Cloudflare does support the HTTP header customization, which can be done following the [Add custom HTTP headers guide](/pages/how-to/add-custom-http-headers).
+You should already have an existing project deployed on Netlify that you would like to host on Cloudflare Pages. Features such as Netlify's Forms and Serverless Functions are currently not supported in Cloudflare Pages. Cloudflare does support HTTP header customization, which can be done following the [Add custom HTTP headers guide](/pages/how-to/add-custom-http-headers).
 </Aside>
 
 ## Finding your build command and build directory
@@ -40,6 +40,6 @@ If you choose to use a custom domain for your Pages, you can set it to the same 
 
 ## Cleaning up your old application and assigning the domain
 
-In *DNS* on the Cloudflare dashboard, review that you have updated the CNAME record for your domain from Netlify to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
+In **DNS** on the Cloudflare dashboard, review that you have updated the CNAME record for your domain from Netlify to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
 
 With the above steps completed, you have successfully migrated your Netlify project to Cloudflare Pages.
