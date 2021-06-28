@@ -242,7 +242,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
   <tr id="field-raw-http-request-full-uri">
     <td valign="top"><code>raw.http.request.full_uri</code><br /><Type>String</Type></td>
     <td>
-      <p>Similar to the <code><a href="#field-http-request-full-uri">http.request.full_uri</a></code> non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+      <p>Similar to the <a href="#field-http-request-full-uri"><code>http.request.full_uri</code></a> non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
       </p>
       <p>Notes:</p>
       <p><ul>
@@ -254,7 +254,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
   <tr id="field-raw-http-request-uri">
     <td valign="top"><code>raw.http.request.uri</code><br /><Type>String</Type></td>
     <td>
-      <p>Similar to the <code><a href="#field-http-request-uri">http.request.uri</a></code> non-raw field. Represents the absolute URI of the request without any transformation.
+      <p>Similar to the <a href="#field-http-request-uri"><code>http.request.uri</code></a> non-raw field. Represents the absolute URI of the request without any transformation.
       </p>
       <p>Notes:</p>
       <p><ul>
@@ -266,7 +266,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
   <tr id="field-raw-http-request-uri-path">
     <td valign="top"><code>raw.http.request.uri.path</code><br /><Type>String</Type></td>
     <td>
-      <p>Similar to the <code><a href="#field-http-request-uri-path">http.request.uri.path</a></code> non-raw field. Represents the URI path of the request without any transformation.
+      <p>Similar to the <a href="#field-http-request-uri-path"><code>http.request.uri.path</code></a> non-raw field. Represents the URI path of the request without any transformation.
       </p>
       <p>Notes:</p>
       <p><ul>
@@ -278,7 +278,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
   <tr id="field-raw-http-request-uri-query">
     <td valign="top"><code>raw.http.request.uri.query</code><br /><Type>String</Type></td>
     <td>
-      <p>Similar to the <code><a href="#field-http-request-uri-query">http.request.uri.query</a></code> non-raw field. Represents the entire query string without the <code class="InlineCode">?</code> delimiter and without any transformation.
+      <p>Similar to the <a href="#field-http-request-uri-query"><code>http.request.uri.query</code></a> non-raw field. Represents the entire query string without the <code class="InlineCode">?</code> delimiter and without any transformation.
       </p>
       <p>Notes:</p>
       <p><ul>
