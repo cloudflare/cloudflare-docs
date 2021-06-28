@@ -29,7 +29,7 @@ The action that the WAF will perform for requests that match specific rules of C
 
 - **Log**
     - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting layer-7 DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting layer 7 DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 - **Block**
     - API value: `"block"`.
