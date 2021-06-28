@@ -9,7 +9,7 @@ In this guide, you will get started with Cloudflare Pages, and deploy your first
 
 <Aside>
 
-You will be signing up for a Cloudflare account. You may also want a custom domain available, but it isn't required.
+You will be signing up for a Cloudflare account. You may also want a custom domain available, but this is not required.
 
 </Aside>
 
