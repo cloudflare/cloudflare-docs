@@ -9,7 +9,7 @@ Cloudflare provides protection against DDoS L7 attacks through several mitigatio
 
 ---
 
-## The HTTP DDoS Managed Ruleset
+## The Cloudflare HTTP DDoS Managed Ruleset
 
 The Cloudflare HTTP DDoS Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at the application layer on the edge, like the following:
 
