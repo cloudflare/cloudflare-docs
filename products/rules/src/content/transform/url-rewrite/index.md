@@ -13,12 +13,8 @@ To create a URL Rewrite Rule via API, see [Create a URL Rewrite Rule via API](/t
 
 ## Rewrites and redirects
 
-You can manipulate the URL of a request through different operations, namely through rewrites and redirects.
+You can manipulate the URL of a request through different operations, namely through rewrites and redirects:
 
-A **rewrite** is a server-side operation that occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change.
+* A **rewrite** is a server-side operation that occurs before a web server has fully processed a request. A rewrite is not visible to website visitors, since the URL displayed in the browser does not change. Configure URL Rewrite Rules to perform rewrites at the edge without reaching your web server.
 
-A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can see the URL changing when the redirect occurs.
-
-You can configure URL Rewrite Rules in the dashboard to perform rewrites at the edge without reaching your web server. URL Rewrite Rules run in the `http_request_transform` phase of Cloudflare's request handling workflow. For more information on phases, check the [Ruleset Engine](https://developers.cloudflare.com/firewall/cf-rulesets) documentation.
-
-Check [Configuring URL forwarding or redirects with Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/200172286) in the Support KB to learn more about configuring redirects.
+* A **redirect** is a client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can see the URL changing when the redirect occurs. See [Configuring URL forwarding or redirects with Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/200172286) in the Support KB to learn more about configuring redirects.
