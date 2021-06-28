@@ -6,7 +6,7 @@ order: 1
 
 # Create a URL Rewrite Rule in the dashboard
 
-Create URL Rewrite Rules in the **Transform Rules** tab under Rules. See [URL rewrite examples](/transform/url-rewrite/examples) for example rule definitions.
+Create URL Rewrite Rules in the **Transform Rules** tab under Rules. See [URL rewrite examples](/transform/url-rewrite/examples) for examples of rule definitions.
 
 Do the following:
 
