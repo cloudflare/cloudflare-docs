@@ -70,7 +70,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-full-uri">
       <td valign="top"><code>http.request.full_uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the full URI as received by the web server (does not include <code class="InlineCode">#fragment</code>, which is not sent to web servers).
@@ -102,7 +102,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-uri">
       <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the absolute URI of the request.
@@ -112,7 +112,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-uri-path">
       <td valign="top"><code>http.request.uri.path</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the URI path of the request.
@@ -122,7 +122,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-uri-query">
       <td valign="top"><code class>http.request.uri.query</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the entire query string, without the <code class="InlineCode">?</code> delimiter.
@@ -238,6 +238,54 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
          </p>
       </td>
+  </tr>
+  <tr id="field-raw-http-request-full-uri">
+    <td valign="top"><code>raw.http.request.full_uri</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <code><a href="#field-http-request-full-uri">http.request.full_uri</a></code> non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+      </p>
+      <p>Notes:</p>
+      <p><ul>
+      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
+      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
+      </ul></p>
+  </td>
+  </tr>
+  <tr id="field-raw-http-request-uri">
+    <td valign="top"><code>raw.http.request.uri</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <code><a href="#field-http-request-uri">http.request.uri</a></code> non-raw field. Represents the absolute URI of the request without any transformation.
+      </p>
+      <p>Notes:</p>
+      <p><ul>
+      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
+      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
+      </ul></p>
+    </td>
+  </tr>
+  <tr id="field-raw-http-request-uri-path">
+    <td valign="top"><code>raw.http.request.uri.path</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <code><a href="#field-http-request-uri-path">http.request.uri.path</a></code> non-raw field. Represents the URI path of the request without any transformation.
+      </p>
+      <p>Notes:</p>
+      <p><ul>
+      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
+      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
+      </ul></p>
+    </td>
+  </tr>
+  <tr id="field-raw-http-request-uri-query">
+    <td valign="top"><code>raw.http.request.uri.query</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <code><a href="#field-http-request-uri-query">http.request.uri.query</a></code> non-raw field. Represents the entire query string without the <code class="InlineCode">?</code> delimiter and without any transformation.
+      </p>
+      <p>Notes:</p>
+      <p><ul>
+      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
+      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
+      </ul></p>
+    </td>
   </tr>
   <tr>
       <td valign="top"><code>ssl</code><br /><Type>Boolean</Type></td>
@@ -577,7 +625,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr id="field-http-request-uri-args">
       <td valign="top"><code>http.request.uri.args</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
        <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
@@ -596,7 +644,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
         </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-uri-args-names">
       <td valign="top"><code>http.request.uri.args.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Represents the names of the arguments in the HTTP URI query string. Names are not pre-processed and retain the case used in the request.
@@ -614,7 +662,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
         </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-uri-args-values">
       <td valign="top"><code>http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Represents the values of arguments in the HTTP URI query string. Values are not pre-processed and retain the case used in the request. They are in the same order as in the request.
@@ -629,6 +677,33 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
         </p>
         <p>Example value:
         <br /><code class="InlineCode">["red+apples"]</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args">
+      <td valign="top"><code>raw.http.request.uri.args</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+       <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
+        </p>
+        <p>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args-names">
+      <td valign="top"><code>raw.http.request.uri.args.names</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a>.
+        </p>
+        <p>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args-values">
+      <td valign="top"><code>raw.http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.values</code></a>.
+        </p>
+        <p>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.
         </p>
       </td>
     </tr>
