@@ -46,7 +46,7 @@ title: HTTP requests
 | EdgePathingOp | Indicates what type of response was issued for this request (unknown = no specific action) | string |
 | EdgePathingSrc | Details how the request was classified based on security checks (unknown = no specific classification) | string |
 | EdgePathingStatus | Indicates what data was used to determine the handling of this request (unknown = no data) | string |
-| EdgeRateLimitAction | The action taken by the blocking rule; empty if no action taken | string |
+| EdgeRateLimitAction | The action taken by the blocking rule; empty if no action taken. <br />Possible values are <em>unknown</em> \| <em>simulate</em> \| <em>ban</em> \| <em>challenge</em> \| <em>jsChallenge</em> | string |
 | EdgeRateLimitID | The internal rule ID of the rate-limiting rule that triggered a block (ban) or log action. 0 if no action taken. | int |
 | EdgeRequestHost | Host header on the request from the edge to the origin | string |
 | EdgeResponseBodyBytes | Size of the HTTP response body returned to clients. Available in Logpush v2 only. | int |
