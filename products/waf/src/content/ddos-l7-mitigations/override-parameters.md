@@ -4,9 +4,9 @@ pcx-content-type: reference
 order: 3
 ---
 
-# DDoS L7 Attack Mitigation Managed Ruleset override parameters
+# HTTP DDoS Managed Ruleset override parameters
 
-Configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. Define these overrides at the account level or at the zone level.
+Configure overrides for the Cloudflare HTTP DDoS Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. Define these overrides at the account level or at the zone level.
 
 You can override the following rule properties:
 
@@ -15,7 +15,7 @@ You can override the following rule properties:
 
 <Aside type='warning'>
 
-Currently, you can only configure overrides for the DDoS L7 Attack Mitigation Managed Ruleset via API.
+Currently, you can only configure overrides for the Cloudflare HTTP DDoS Managed Ruleset via API.
 
 </Aside>
 
