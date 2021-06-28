@@ -1,12 +1,12 @@
 ---
-title: Create a Request Header Modification Rule
-pcx-content-type: interim
-order: 2
+title: Create a rule in the dashboard
+pcx-content-type: how-to
+order: 1
 ---
 
 # Create an HTTP Request Header Modification Rule in the dashboard
 
-Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. See [Common use cases](/transform/use-cases#http-request-header-modification-examples) for example rule definitions.
+Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. See [Request header modification examples](/transform/request-header-modification/examples) for example rule definitions.
 
 Do the following:
 
@@ -16,11 +16,11 @@ Do the following:
 
 1. Select **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](../static/transform/overview.png)
+    ![Transform Rules tab](../../static/transform/overview.png)
 
 1. Click **Create transform rule** > **Modify Header**.
 
-    ![Create HTTP Header Modification rule page](../static/transform/create-header-modification-rule.png)
+    ![Create HTTP Header Modification rule page](../../static/transform/create-header-modification-rule.png)
 
 1. In the page that displays, enter a descriptive name for the URL Rewrite Rule in **Rule name**.
 
@@ -28,7 +28,7 @@ Do the following:
 
     <Aside type='note'>
 
-    Check the [available fields and functions](#available-fields-and-functions).
+    Check the [available fields and functions](/transform/request-header-modification/reference/fields-functions).
 
     </Aside>
 
@@ -44,7 +44,7 @@ Do the following:
 
     The following example includes the modification of three headers using the available actions:
 
-    ![HTTP request header modification examples](../static/transform/header-modification-example.png)
+    ![HTTP request header modification examples](../../static/transform/header-modification-example.png)
 
     <Aside type='note'>
 
@@ -56,53 +56,4 @@ Do the following:
 
 After creating a rule, you return to the **Transform Rules** dashboard interface.
 
-If you choose to deploy your new HTTP Request Header Modification Rule, the toggle switch associated with the rule will be _On_. If you save the rule as a draft, the toggle will be _Off_.
-
----
-
-## Additional information on Request Header Modification Rules
-
-This section contains reference information on HTTP Request Header Modification Rules.
-
-### Format of HTTP request header names and values
-
-The name of the HTTP request header you want to set or remove can only contain alphanumeric characters (`a`-`z` and `A`-`Z`) and the following special characters: `-` and `_`.
-
-The value of the HTTP request header you want to set can only contain alphanumeric characters and the following special characters: `_ :;.,\/"'?!(){}[]@<>=-`.
-
-### Available fields and functions
-
-The available fields when setting an HTTP request header value using an expression are the following:
-
-* `cf.bot_detection.js_check_score`
-* `cf.bot_management.*`
-* `cf.client.bot`
-* `cf.client_trust_score`
-* `cf.threat_score`
-* `cf.colo.id`
-* `cf.edge.server_port`
-* `cf.zone.name`
-* `cf.metal.id`
-* `cf.tls_client_auth.*`
-* `http.cookie`
-* `http.host`
-* `http.referer`
-* `http.request.headers`
-* `http.request.method`
-* `http.request.timestamp.sec`
-* `http.request.timestamp.msec`
-* `http.request.full_uri`
-* `http.request.uri`
-* `http.request.uri.*`
-* `http.request.version`
-* `raw.http.request.full_uri`
-* `raw.http.request.uri`
-* `http.user_agent`
-* `http.x_forwarded_for`
-* `ip.src`
-* `ip.geoip.*`
-* `ssl`
-
-Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
-
-For more information on the available functions, check [Functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions) in the Firewall documentation.
+If you choose to deploy your HTTP Request Header Modification Rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
