@@ -673,8 +673,6 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
        <td>
         <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
         </p>
-        <p>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.
-        </p>
       </td>
     </tr>
     <tr id="field-raw-http-request-uri-args-names">
@@ -682,16 +680,12 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
       <td>
         <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a>.
         </p>
-        <p>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.
-        </p>
       </td>
     </tr>
     <tr id="field-raw-http-request-uri-args-values">
       <td valign="top"><code>raw.http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.values</code></a>.
-        </p>
-        <p>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.
         </p>
       </td>
     </tr>
