@@ -20,8 +20,6 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 
 </Aside>
 
-HTTP Request Header Modification Rules run in the `http_request_late_transform` phase of Cloudflare's request handling workflow. For more information on phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
-
 To create an HTTP Request Header Modification Rule in the dashboard, see [Create an HTTP Request Header Modification Rule in the dashboard](/transform/request-header-modification/create-dashboard).
 
 To create an HTTP Request Header Modification Rule via API, see [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api).
