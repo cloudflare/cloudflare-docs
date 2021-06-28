@@ -4,7 +4,7 @@ alwaysopen: true
 order: 775
 ---
 
-# Adjust the sensitivity of a specific DDoS rule to Low
+# Adjust the sensitivity of a specific HTTP DDoS Managed Ruleset rule to Low
 
 <Aside type='warning' header='Important'>
 
