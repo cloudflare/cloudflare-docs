@@ -244,11 +244,8 @@ The Cloudflare Firewall Rules language supports these standard fields:
     <td>
       <p>Similar to the <a href="#field-http-request-full-uri"><code>http.request.full_uri</code></a> non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
       </p>
-      <p>Notes:</p>
-      <p><ul>
-      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
-      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
-      </ul></p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
   </td>
   </tr>
   <tr id="field-raw-http-request-uri">
@@ -256,11 +253,8 @@ The Cloudflare Firewall Rules language supports these standard fields:
     <td>
       <p>Similar to the <a href="#field-http-request-uri"><code>http.request.uri</code></a> non-raw field. Represents the URI path and query string of the request without any transformation.
       </p>
-      <p>Notes:</p>
-      <p><ul>
-      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
-      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
-      </ul></p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
     </td>
   </tr>
   <tr id="field-raw-http-request-uri-path">
@@ -268,11 +262,8 @@ The Cloudflare Firewall Rules language supports these standard fields:
     <td>
       <p>Similar to the <a href="#field-http-request-uri-path"><code>http.request.uri.path</code></a> non-raw field. Represents the URI path of the request without any transformation.
       </p>
-      <p>Notes:</p>
-      <p><ul>
-      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
-      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
-      </ul></p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
     </td>
   </tr>
   <tr id="field-raw-http-request-uri-query">
@@ -280,11 +271,8 @@ The Cloudflare Firewall Rules language supports these standard fields:
     <td>
       <p>Similar to the <a href="#field-http-request-uri-query"><code>http.request.uri.query</code></a> non-raw field. Represents the entire query string without the <code class="InlineCode">?</code> delimiter and without any transformation.
       </p>
-      <p>Notes:</p>
-      <p><ul>
-      <li>This raw field includes some basic normalization done by NGINX. However, this may change in the future.</li>
-      <li>Only available in expressions of <a href="https://developers.cloudflare.com/rules/transform">Tranform Rules</a>.</li>
-      </ul></p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
     </td>
   </tr>
   <tr>
