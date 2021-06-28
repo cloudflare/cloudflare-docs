@@ -49,7 +49,7 @@ Your "project name" will be used to generate your deploy's hostname. By default,
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **publish directory** to tell Cloudflare Pages how to deploy your site.
 
-Our deployment UI provides a number of "presets", pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, check out our documentation for [build configuration](/platform/build-configuration).
+Our deployment UI provides a number of "presets", pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, refer to the documentation for [build configuration](/platform/build-configuration).
 
 ![Build settings](./images/build-settings.png)
 
