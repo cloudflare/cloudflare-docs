@@ -41,7 +41,7 @@ Once you have selected a repository, select **Install & Authorize** and **Begin 
 
 Your "project name" will be used to generate your deploy's hostname. By default, this matches your GitHub project name.
 
-"Production branch" indicates the branch that Cloudflare Pages should use to deploy the "production" version of your site. For most projects, this is the `main` or `master` branch. All other branches that aren't your production branch will be used for [preview deployments](/platform/preview-deployments).
+"Production branch" indicates the branch that Cloudflare Pages should use to deploy the "production" version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/platform/preview-deployments).
 
 ![Configuration](./images/configuration.png)
 
