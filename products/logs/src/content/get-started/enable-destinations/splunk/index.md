@@ -38,7 +38,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   * `<SPLUNK-CHANNEL-ID>`: A unique channel ID. This is a random GUID that you can generate by:
       * Using an online tool like the [GUID generator](https://www.guidgenerator.com/) 
       * Using command line.  Example: `python -c 'import uuid; print(uuid.uuid4())'` 
-  * `<INSECURE-SKIP-VERIFY>`: Boolean value. Cloudflare recommends setting this value to ``false``. Setting this value to ``true`` is equivalent to using the `-k` option with ``curl`` as shown in Splunk examples and is **not** recommended. Only set this value to ``true`` when HEC uses a self-signed certificate.
+  * `<INSECURE-SKIP-VERIFY>`: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 <Aside type="note" header="Note">
 Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="../../../faq/index#logpush-faq">Logpush FAQ</a> for more information.
