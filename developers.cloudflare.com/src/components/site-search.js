@@ -85,7 +85,7 @@ const SiteSearch = () => {
           if (suggestion.isLvl0) {
             url.hash = ""
           }
-          window.location.href = url
+          window.location.href = url.toString()
         },
         
         transformData: function(hits) {
