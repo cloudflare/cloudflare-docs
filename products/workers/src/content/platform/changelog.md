@@ -1,5 +1,9 @@
 # Changelog
 
+# 6/27/2021:
+
+- WebCrypto: Implemented non-standard Ed25519 operation (algorithm NODE-ED25519, curve name NODE-ED25519). The Ed25519 implementation differs from NodeJS’s in that raw import/export of private keys is disallowed, per parity with ECDSA/ECDH.
+
 ## 6/17/2021
 
 Changes this week:
