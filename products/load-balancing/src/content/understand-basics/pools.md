@@ -224,7 +224,10 @@ For example, you might have a pool with origins hosted in multiple AppEngine pro
 
 Since these examples require specific hostnames per origin, your load balancer could not properly route traffic _without_ a `Host` header override.
 
-If you need an origin `Host` header override, add it when [creating](/create-load-balancer-ui#create-and-add-origin-pools) or editing a pool. For security reasons, this header also needs to be a subdomain of the overall zone. See [Configure Cloudflare and Heroku](https://support.cloudflare.com/hc/articles/205893698) for more details.
+If you need an origin `Host` header override, add it when [creating](/create-load-balancer-ui#create-and-add-origin-pools) or editing a pool. For security reasons, this header must meet one of the following criteria:
+- Is a subdomain of a zone associated with this account
+- Matches the origin address
+- Publicly resolves to the origin address
 
 For details about how origin and monitor `Host` headers interact, see [Host header prioritization](/understand-basics/monitors#host-header-prioritization).
 
