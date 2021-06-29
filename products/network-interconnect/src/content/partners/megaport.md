@@ -8,11 +8,11 @@ pcx-content-type: tutorial
 
 ## Create a VXC with a service key
 
-Once the service key is created and shared, anybody with the key can create a connection.
+Once your Cloudflare account team creates the service key and shares with you, anybody with the key can create a connection.
 
 1. Log in to the [Megaport Portal](https://portal.megaport.com/).
 1. Find the Megaport you want to use for the connection and click **+Connection**.
-1. Under **Choose Destination Type**, click **Enter Service Key**.
+1. Under **Choose Destination Type**, click **Enter Service Key**. Your Cloudflare account team will provide the Service Key via email.
 1. Under **Service Key** > **Megaport Service Key Id**, enter the service key.
  Megaport validates the key and displays basic information about the key.
 1.  Click **Next**.
