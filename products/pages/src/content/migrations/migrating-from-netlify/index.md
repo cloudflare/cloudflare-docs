@@ -10,7 +10,7 @@ In this tutorial, you will learn how to deploy your Netlify application to Cloud
 
 <Aside>
 
-Features such as Netlify's Forms and Serverless Functions are currently not supported in Cloudflare Pages. Cloudflare Pages does not _directly_ support HTTP header customization, but it can be done through a Worker. Follow the ["Add custom HTTP headers"](/how-to/add-custom-http-headers) guide for more information.
+Features such as Netlify's Forms and Serverless Functions are currently not supported in Cloudflare Pages. Cloudflare Pages does not directly support HTTP header customization, but it can be done through Workers. Refer to the ["Add custom HTTP headers"](/how-to/add-custom-http-headers) guide for more information.
 
 </Aside>
 
