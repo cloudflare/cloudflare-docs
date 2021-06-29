@@ -19,6 +19,16 @@ You can deploy Managed Rulesets to the `http_request_firewall_managed` phase sup
 
 To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, see [Work with Managed Rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets).
 
+<Aside type="warning" header="Important">
+
+Make sure that your configuration **does not execute the same Managed Ruleset more than once per request**. If this happens, the second rule that would execute the Managed Ruleset for the same request will not run.
+
+For example, consider two account-level rules with different expressions that execute the same Managed Ruleset. If the two rules match for the same request, the Managed Ruleset will not be executed for the second rule.
+
+As another example, consider an account-level rule that executes a Managed Ruleset and a zone-level rule that executes the same Managed Ruleset. If both rules match for the same request, the Managed Ruleset is only executed when the account-level rule is evaluated.
+
+</Aside>
+
 ## Deploying custom rulesets
 
 You can create custom rulesets in the `http_request_firewall_custom` phase at the account level. After creating a custom ruleset, you can deploy it to a phase at the account level by creating an `execute` rule in the phase.
