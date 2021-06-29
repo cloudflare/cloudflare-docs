@@ -11,17 +11,25 @@ Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/ru
 
 You can deploy Managed Rulesets to the `http_request_firewall_managed` phase supported by the Cloudflare WAF, both at the account level and at the zone level. You can also define overrides to customize the behavior of the rules included in a Managed Ruleset.
 
-<Aside type='warning' header='Important'>
-
-There are a few requirements when deploying Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
+**Note:** There are a few requirements when deploying Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
 
 * The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
 
 * You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
 
-</Aside>
-
 To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, see [Work with Managed Rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets).
+
+<Aside type="warning" header="Important">
+
+Currently, each Managed Ruleset will execute **at most once per request**. Configuring a second rule that executes the same Managed Ruleset will have no effect.
+
+For example, consider two account-level rules with different expressions that execute the same Managed Ruleset. If the two rules match for the same request, the Managed Ruleset will not be executed for the second rule.
+
+As another example, consider an account-level rule that executes a Managed Ruleset and a zone-level rule that executes the same Managed Ruleset. If both rules match for the same request, the Managed Ruleset is only executed when the account-level rule is evaluated.
+
+ This behavior will change in the future so that you can execute each Managed Ruleset multiple times per request.
+
+</Aside>
 
 ## Deploying custom rulesets
 
