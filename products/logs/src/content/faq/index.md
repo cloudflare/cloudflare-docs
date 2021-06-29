@@ -9,47 +9,75 @@ pcx-content-type: faq
 
 ### Once a request has passed through the Cloudflare network, how soon are the logs available?
 
-Logs become available in approximately 1 to 5 minutes.
-
-In the best case, logs take about 1 minute to process, and so we require that calls to the **Logpull API** be for time periods of at least 1 minute in the past. For example, if it’s 9:43 now, you can ask for logs processed between 9:41 and 9:42. The response will include logs for requests that passed through our network between 9:41 and 9:42 and potentially earlier. It’s normal for our processing to take between 3 and 4 minutes, so when you ask for that same time period, you may also see logs of requests that passed through our network at 9:39 or earlier.
-
 When using **Logpush**, logs are pushed in batches as soon as possible. For example, if you receive a file at 10:10, the file consists of logs that were processed shortly before 10:10.
 
-These timings are only a guideline, not a guarantee, and may depend on network conditions, the request volume for your domain, and other factors. Although we try to get the logs to you as fast as possible, we prioritize not losing log data over speed. On rare occasions, you may see a longer delay. In this case, you don’t need to take any action--the logs will be available as soon as they’re processed.
+When using **Logpull**, logs become available in approximately one to five minutes. Cloudflare requires that calls to the **Logpull API** be for time periods of at least one minute in the past. For example, if it is 9:43 now, you can ask for logs processed between 9:41 and 9:42. The response will include logs for requests that passed through our network between 9:41 and 9:42 and potentially earlier. It is normal for our processing to take between three and four minutes, so when you ask for that same time period, you may also see logs of requests that passed through our network at 9:39 or earlier.
+
+These timings are only a guideline, not a guarantee, and may depend on network conditions, the request volume for your domain, and other factors. Although we try to get the logs to you as fast as possible, we prioritize not losing log data over speed. On rare occasions, you may see a longer delay. In this case, you do not need to take any action. The logs will be available as soon as they are processed.
 
 ### Are logs available for customers who are not on an Enterprise plan?
 
-Not yet, but we’re planning to make them available to other customer plans in the future.
+Not yet, but we are planning to make them available to other customer plans in the future.
 
-### When pulling or pushing logs, I occasionally come across a time period with no data, even though I’m sure my domain received requests at that time. Is this normal?
+### When pulling or pushing logs, I occasionally come across a time period with no data, even though I am sure my domain received requests at that time. Is this normal?
 
-Yes, this is normal. The time period for which you pull or receive logs is based on our processing time, not the time the requests passed through our network. If you receive an empty response, it does not mean there were no requests during that time period. It just means we did not process any logs for your domain during that time.
+Yes. The time period for which you pull or receive logs is based on our processing time, not the time the requests passed through our network. Empty responses do not mean there were no requests during that time period, just that we did not process any logs for your domain during that time.
 
 ### Can I receive logs in a format other than JSON?
 
-Currently not. Talk to your account manager or Cloudflare Support if you’re interested in other formats and we’ll consider them for the future.
+Not at this time. Talk to your account manager or Cloudflare Support if you are interested in other formats and we will consider them for the future.
 
 ## Logpush FAQ
 
 ### What happens if my cloud storage destination is temporarily unavailable?
 
-**Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, we’ll keep trying until it’s online again and the logs are received. We’ll also automatically catch up, so that you don’t miss any logs. However, if we persistently receive errors from your destination, we’ll take that as a sign that it’s permanently unavailable and disable your push job. It can always be re-enabled later.
+**Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will make the best effort to retry. If Cloudflare persistently receives errors from your destination, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
 
 ### Can I adjust how often logs are pushed?
 
 No. Cloudflare pushes logs in batches as soon as possible.
 
-### My job was accidentally turned off, and I didn’t receive my logs for a certain time period. Can they still be pushed to me?
+### My job was accidentally turned off, and I did not receive my logs for a certain time period. Can they still be pushed to me?
 
-No, **Logpush** only pushes the logs once as they become available, and is unable to backfill. However, the logs are stored for a period of at least 72 hours and can be downloaded using the **Logpull API**.
+No. **Logpush** only pushes the logs once as they become available and is unable to backfill. However, the logs are stored for at least 72 hours and can be downloaded using the **Logpull API**.
+
+### Why am I receiving a validating destination error while setting up a Splunk job? 
+You could be seeing this error for multiple reasons:
+* The Splunk endpoint URL is not correct. Cloudflare only supports Splunk HEC raw endpoint over HTTPS.
+* The Splunk authentication token is not correct. Be sure to URL-encode the token. For example, use "%20" for a whitespace.
+* The certificate for Splunk Server is not properly configured. Certificates generated by Splunk/third-party certificates should have the Common Name field in the certificate match the Splunk server’s domain name. Otherwise you may see errors like: `x509: certificate is valid for SplunkServerDefaultCert, not <your-instance>.splunkcloud.com.`
+
+### What is the insecure-skip-verify parameter in Splunk jobs?
+This flag, if set to `true`, makes an insecure connection to Splunk. Setting this value to ``true`` is equivalent to using the `-k` option with ``curl`` as shown in Splunk examples and is **not** recommended. Cloudflare highly recommends setting this flag to ``false` when using the `insecure-skip-verify` parameter.
+
+### Why do we have the insecure-skip-verify parameter in Splunk jobs if it is not recommended?
+Certificates generated by Splunk/third-party certificates should have the Common Name field in the certificate match the Splunk server’s domain name. Otherwise you may see errors like: `x509: certificate is valid for SplunkServerDefaultCert, not <your-instance>.splunkcloud.com.` This happens especially with the default certificates generated by Splunk on startup. Pushes will never succeed unless the certificates are fixed.
+
+The proper way to resolve the issue is to fix the certificates. This flag is only here for those rare scenarios when it is not possible to have access or permissions to fix the certificates, like with the Splunk cloud instances, which don’t allow changing Splunk server configurations.
+
+### How can I verify that my Splunk HEC is working correctly before setting up a job?
+Ensure that you can publish events to your Splunk instance through ``curl`` without the `-k` flag and with the `insecure-skip-verify` parameter set to ``false`` as in the following example:
+
+```bash
+curl  "https://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>" \
+   -H "Authorization: Splunk <SPLUNK-AUTH-TOKEN>" \
+   -d '{"BotScore":99,"BotScoreSrc":"Machine Learning","CacheCacheStatus":"miss","CacheResponseBytes":2478}'
+{"text":"Success","code":0}
+```
+
+### Can I use any HEC network port in the Splunk destination conf?
+No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088`.
+
+### Does Logpush integrate with the Cloudflare Splunk App?
+Yes. See [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
 
 ## Logpull API FAQ
 
 ### How long are logs retained?
 
-Cloudflare makes logs available for at least 3 days and up to 7 days. If you need your logs for a longer time period, download and store them locally.
+Cloudflare makes logs available for at least three days and up to seven days. If you need your logs for a longer time period, download and store them locally.
 
-### I’m asking for logs for the time window of 16:10-16:13. However, the timestamps in the logs show requests that are before this time period. Why does that happen?
+### I am asking for logs for the time window of 16:10-16:13. However, the timestamps in the logs show requests that are before this time period. Why does that happen?
 
 When you make a call for the time period of 16:10-16:13, you are actually asking for the logs that were received and processed by our system during that time (hence the endpoint name, _logs/received_). The _received_ time is the time the logs are written to disk. There is some delay between the time the request hits the Cloudflare edge and the time it is received and processed. The _request time_ is what you see in the log itself: _EdgeStartTimestamp_ and _EdgeEndTimestamp_ tell you when the edge started and stopped processing the request.
 

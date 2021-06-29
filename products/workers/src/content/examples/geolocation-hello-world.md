@@ -3,7 +3,7 @@ order: 1000
 type: example
 summary: Get all geolocation data fields and display them in HTML.
 tags:
-  - HTML
+  - Originless
   - Geolocation
 ---
 
