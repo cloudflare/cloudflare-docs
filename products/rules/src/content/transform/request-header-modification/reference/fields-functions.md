@@ -39,4 +39,6 @@ The available fields when setting an HTTP request header value using an expressi
 
 Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
 
-For more information on the available functions, check [Functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions) in the Firewall documentation.
+See [Fields](https://developers.cloudflare.com/firewall/cf-firewall-language/fields) for reference information on these fields.
+
+For information on the available functions, see [Functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions).
