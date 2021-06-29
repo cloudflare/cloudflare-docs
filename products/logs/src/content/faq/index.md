@@ -31,7 +31,7 @@ Not at this time. Talk to your account manager or Cloudflare Support if you are 
 
 ### What happens if my cloud storage destination is temporarily unavailable?
 
-**Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will make the best effort to retry. If Cloudflare persistently receives errors from your destination, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. The job can always be re-enabled later.
+**Logpush** is designed to retry in case of errors. If your destination is temporarily unavailable, Logpush will make the best effort to retry. If Cloudflare persistently receives errors from your destination, Logpush will eventually drop logs. If the errors continue for a prolonged period of time, Logpush will assume that the destination is permanently unavailable and disable your push job. You can always re-enable the job later.
 
 ### Can I adjust how often logs are pushed?
 
