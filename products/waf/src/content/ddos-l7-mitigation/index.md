@@ -28,7 +28,7 @@ You can adjust the behavior of the rules in the Managed Ruleset using **override
 * The performed **action** when an attack is detected
 * The **sensitivity** of attack detection mechanisms
 
-Note: Certain actions or sensitivity levels may not be available to all Cloudflare plans.
+**Note:** Certain actions or sensitivity levels may not be available to all Cloudflare plans.
 
 For more information on the available override parameters, see [Managed Ruleset override parameters](/ddos-l7-mitigations/override-parameters).
 
