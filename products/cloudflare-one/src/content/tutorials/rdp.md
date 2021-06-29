@@ -1,6 +1,7 @@
 ---
 updated: 2021-06-14
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # Connect through Cloudflare Access over RDP
@@ -256,9 +257,3 @@ The default behavior in MacOS is for the Terminal window to stay open. You can c
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
 </Aside>
-
-## Video Guides
-
-In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Cloudflare Tunnel.
-
-<StreamVideo id="2a3073fb7881b4fcba4b9e3709dfaacf"/>

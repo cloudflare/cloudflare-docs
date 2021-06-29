@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: configuration
 ---
 
 # Configuration
@@ -339,6 +340,7 @@ Usage:
 ```toml
 [build]
 command = "npm install && npm run build"
+
 [build.upload]
 format = "service-worker"
 ```
@@ -364,11 +366,11 @@ format = "service-worker"
 #### `[build.upload]`
 
 <Definitions>
-  
+
   - `format` <PropMeta>required</PropMeta>
 
     - The format of the Worker script, must be "service-worker"
-  
+
 </Definitions>
 
 <Aside>

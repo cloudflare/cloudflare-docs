@@ -2,13 +2,14 @@
 title: Overview
 order: 0
 type: overview
+pcx-content-type: landing-page
 ---
 
 <ContentColumn>
 
 # Cloudflare Workers documentation
 
-Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 <ButtonGroup>
   <Button type="primary" href="/get-started/guide">Get started</Button>

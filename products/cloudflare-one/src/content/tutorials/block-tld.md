@@ -2,6 +2,7 @@
 updated: 2020-12-13
 category: 🛡️ Web Gateway
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Block sites by TLD

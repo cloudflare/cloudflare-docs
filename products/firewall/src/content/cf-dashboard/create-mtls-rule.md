@@ -17,7 +17,7 @@ Before you can create a mTLS rule, you must do the following:
 
 You can only use mTLS with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
-If you need to use a different CA, contact a Cloudflare Customer Success Manager.
+If you need to use certificates issued by another CA, use [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/identity/devices/mutual-tls-authentication) to upload your own CA.
 
 </Aside>
 

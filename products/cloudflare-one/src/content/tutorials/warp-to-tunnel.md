@@ -2,6 +2,7 @@
 updated: 2021-03-23
 category: 🌐 Connections
 difficulty: Advanced
+pcx-content-type: tutorial
 ---
 
 # Connect from WARP to a private network on Cloudflare using Cloudflare Tunnel
@@ -161,7 +162,7 @@ On the next page, click **Save rules** to conclude.
 
 To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
-Download the Cloudflare certificate provided in the [instructions here](/connections/connect-devices/warp/install-cloudflare-cert). You can also find the certificate in the Cloudflare for Teams dashboard - navigate to the `Account` page in the `Settings` section of the sidebar and scroll to the bottom.
+Download the Cloudflare certificate provided in the [instructions here](/connections/connect-devices/warp/install-cloudflare-cert). You can also find the certificate in the Cloudflare for Teams dashboard - navigate to the `Certificates` page in the `Account` section of the sidebar and scroll to the bottom.
 
 Next, follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert) to install the certificate on your system.
 

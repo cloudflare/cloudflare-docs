@@ -80,9 +80,7 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
 
 ## Support
 
-Support requests can be made through normal channels via [email](mailto:support@cloudflare.com) or https://support.cloudflare.com.
-
-Where possible you should provide:
+When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if accessible):
 * Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
 * Output from `/var/log/messages` from Railgun.
 * A copy of `/var/log/railgun/panic.log`, if not empty.

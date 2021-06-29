@@ -1,6 +1,7 @@
 ---
 title: To Cloudflare’s docs
 order: 2
+pcx-content-type: configuration
 ---
 
 # Contribute to Cloudflare’s docs

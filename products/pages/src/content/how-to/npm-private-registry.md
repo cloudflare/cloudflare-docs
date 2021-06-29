@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Install Private Packages
 
 Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough focuses specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.

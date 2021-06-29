@@ -1,6 +1,7 @@
 ---
 updated: 2021-01-04
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # Service tokens for SSH connections

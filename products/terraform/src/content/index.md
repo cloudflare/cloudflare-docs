@@ -1,12 +1,12 @@
 ---
-title: Welcome
+title: Overview
 order: 0
-type: overview
+pcx-content-type: landing-page
 ---
 
 <ContentColumn>
 
-# Cloudflare Terraform documentation
+# Cloudflare Terraform
 
 Configure Cloudflare using HashiCorp's “Infrastructure as Code” tool, Terraform.
 

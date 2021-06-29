@@ -2,6 +2,7 @@
 updated: 2020-11-28
 category: 🌐 Connections
 difficulty: Medium
+pcx-content-type: tutorial
 ---
 
 # Connect without long-lived API keys

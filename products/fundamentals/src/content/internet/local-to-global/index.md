@@ -1,5 +1,6 @@
 ---
 order: 40
+pcx-content-type: concept
 ---
 
 # Bridging from local to global
