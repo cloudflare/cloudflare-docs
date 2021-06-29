@@ -225,7 +225,7 @@ async function gatherResponse(response) {
 }
 ```
 
-Once you have an endpoint that returns the tokenized upload URL in the location header, you can use it by setting the tus client to make a request to *your* endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to *your* endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
 
 ### Testing your Direct Creator Upload Endpoint
 
