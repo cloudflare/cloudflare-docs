@@ -3,7 +3,7 @@ order: 1000
 type: example
 summary: Fetch weather data from an API using the user's geolocation data.
 tags:
-  - HTML
+  - Originless
   - Geolocation
 ---
 

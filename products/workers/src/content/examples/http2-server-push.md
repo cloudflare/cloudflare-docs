@@ -3,9 +3,8 @@ order: 1000
 type: example
 summary: Push static assets to a client's browser without waiting for HTML to render.
 tags:
-  - Originless
-  - JAMstack
-  - HTML
+  - Middleware
+  - Headers
 ---
 
 # HTTP2 server push
