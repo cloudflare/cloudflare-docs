@@ -141,6 +141,8 @@ To use this command, the following fields are required in your `wrangler.toml`:
 
 From here, you have two options, you can choose to publish to your own domain or you can choose to publish to [&lt;your-worker&gt;.&lt;your-subdomain&gt;.workers.dev](https://workers.dev).
 
+When `wrangler publish` is deployed on a modified Worker script, all new requests will be routed to the updated version of the function without downtime. All inflight requests to the previous script will continue to completion. When all inflight requests are complete, the old Worker script is garbage collected. 
+
 ### Publishing to workers.dev
 
 If you want to publish to [workers.dev](https://workers.dev), you will first need to have a subdomain registered. You can register a subdomain by executing the [subdomain](#subdomain) command.
