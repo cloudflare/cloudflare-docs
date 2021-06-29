@@ -15,7 +15,7 @@ module.exports = {
     },
     siteMetadata: {
         title: "Cloudflare Client IP Geolocation docs",
-        description: "Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.",
+        description: "Cloudflare Client IP Geolocation helps you understand where in the world a given client is located, even if their true client IP address is obscured by our proxy systems.",
         author: "@cloudflare",
         url: "https://developers.cloudflare.com/client-ip-geolocation",
         image: "https://www.cloudflare.com/img/cf-twitter-card.png",
