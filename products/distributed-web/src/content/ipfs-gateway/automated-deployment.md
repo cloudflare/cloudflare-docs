@@ -25,5 +25,5 @@ hash. There are several tools that help with different parts of this:
   script to programmatically update DNSLink records. This can be run with the
   `-Q` flag of `ipfs add` that only outputs the top-level hash.
 - [fission ipns support](https://guide.fission.codes/developers/custom-domains/using-cloudflare-ipfs-gateway) 
-  lets you use the the Fission IPFS app publishing system from the CLI  
+  lets you use the Fission IPFS app publishing system from the CLI
   or from GitHub Actions, while using Cloudflare-managed DNS and gateway.
