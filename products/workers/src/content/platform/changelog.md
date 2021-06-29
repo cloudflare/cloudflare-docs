@@ -126,17 +126,17 @@ Changes this week:
 - Enforced new limit on concurrent subrequests (see below).
 - Stability improvements.
 
-### Concurrent Subrequest Limit
+**Concurrent Subrequest Limit**
 
 As of this release, we impose a limit on the number of outgoing HTTP requests that a Worker can make simultaneously. **For each incoming request**, a Worker can make up to 6 concurrent outgoing `fetch()` requests.
 
 If a Worker’s request handler attempts to call `fetch()` more than six times (on behalf of a single incoming request) without waiting for previous fetches to complete, then fetches after the sixth will be delayed until previous fetches have finished. A Worker is still allowed to make up to 50 total subrequests per incoming request, as before; the new limit is only on how many can execute simultaneously.
 
-#### Automatic deadlock avoidance
+**Automatic deadlock avoidance**
 
 Our implementation automatically detects if delaying a fetch would cause the Worker to deadlock, and prevents the deadlock by cancelling the least-recently-used request. For example, imagine a Worker that starts 10 requests and waits to receive all the responses *without reading the response bodies*. A fetch is not considered complete until the response body is fully-consumed (e.g. by calling `response.text()` or `response.json()`, or by reading from `response.body`). Therefore, in this scenario, the first six requests will run and their response objects would be returned, but the remaining four requests would not start until the earlier responses are consumed. If the Worker fails to actually read the earlier response bodies and is still waiting for the last four requests, then the Workers Runtime will automatically cancel the first four requests so that the remaining ones can complete. If the Worker later goes back and tries to read the response bodies, exceptions will be thrown.
 
-#### Most Workers are Not Affected
+**Most Workers are Not Affected**
 
 The vast majority of Workers make fewer than six outgoing requests per incoming request. Such Workers are totally unaffected by this change.
 
@@ -144,7 +144,7 @@ Of Workers that do make more than six outgoing requests concurrently for a singl
 
 A very small number of deployed Workers (about 20 total) make more than 6 requests concurrently, wait for all responses to return, and then go back to read the response bodies later. For all known Workers that do this, we have temporarily grandfathered your zone into the old behavior, so that your Workers will continue to operate. However, we will be communicating with customers one-by-one to request that you update your code to proactively read request bodies, so that it works correctly under the new limit.
 
-#### Why did we do this?
+**Why did we do this?**
 
 Cloudflare communicates with origin servers using HTTP/1.1, not HTTP/2. Under HTTP/1.1, each concurrent request requires a separate connection. So, Workers that make many requests concurrently could force the creation of an excessive number of connections to origin servers. In some cases, this caused resource exhaustion problems either at the origin server or within our own stack.
 
