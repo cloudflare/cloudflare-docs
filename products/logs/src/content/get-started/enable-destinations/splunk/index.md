@@ -41,7 +41,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   * `<INSECURE-SKIP-VERIFY>`: Boolean value. Cloudflare recommends setting this value to false. Setting this value to true is equivalent to using the `-k` option with curl as shown in Splunk examples and is NOT recommended. Only set this value to true when HEC uses a self-signed certificate.
 
 <Aside type="note" header="Note">
-Cloudflare highly recommends setting this value to false. Refer to the FAQ below for more information.
+Cloudflare highly recommends setting this value to false. Refer to the [Logpush FAQ](../../../faq/index#logpush-faq) for more information.
 </Aside>
 
   * `<SOURCE-TYPE>`: The Splunk sourcetype. Example: `cloudflare:json`
@@ -119,4 +119,4 @@ Response:
 }
 ```
 
-Refer to the [Logpush FAQ](../../../faq/index#logpush-faq) for troubleshooting information. 
+Refer to the [Logpush FAQ](../../../faq/index#logpush-faq) for troubleshooting information.
