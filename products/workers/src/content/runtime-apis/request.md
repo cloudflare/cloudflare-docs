@@ -265,7 +265,7 @@ All plans have access to:
 
 <Aside>
 
-`request.cf` is not available in the Cloudflare Workers dashboard or Playground preview editor.
+The `request.cf` object is not available in the Cloudflare Workers dashboard or Playground preview editor.
 
 </Aside>
 
