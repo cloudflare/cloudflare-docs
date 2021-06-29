@@ -21,11 +21,13 @@ To learn more about deploying Managed Rulesets and configuring overrides using t
 
 <Aside type="warning" header="Important">
 
-Make sure that your configuration **does not execute the same Managed Ruleset more than once per request**. If this happens, the second rule that would execute the Managed Ruleset for the same request will not run.
+Currently, each Managed Ruleset will execute **at most once per request**. Configuring a second rule that executes the same Managed Ruleset will have no effect.
 
 For example, consider two account-level rules with different expressions that execute the same Managed Ruleset. If the two rules match for the same request, the Managed Ruleset will not be executed for the second rule.
 
 As another example, consider an account-level rule that executes a Managed Ruleset and a zone-level rule that executes the same Managed Ruleset. If both rules match for the same request, the Managed Ruleset is only executed when the account-level rule is evaluated.
+
+ This behavior will change in the future so that you can execute each Managed Ruleset multiple times per request.
 
 </Aside>
 
