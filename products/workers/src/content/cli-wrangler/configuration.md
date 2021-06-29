@@ -174,7 +174,7 @@ kv_namespaces = [
 
 **Note:** Creating your KV Namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
 
-You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml#user-content-table).
+You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
 </Aside>
 
@@ -211,7 +211,7 @@ entry-point = "workers-site"
 
 To learn more about the optional `include` and `exclude` fields, visit [Ignoring Subsets of Static Assets](#ignoring-subsets-of-static-assets).
 
-You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml#user-content-inline-table).
+You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
 
 #### Storage Limits
 
