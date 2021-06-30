@@ -6,7 +6,7 @@
 // contains `useStaticQuery` the build fails due to a relative import issue with
 // the way GraphQL stores the cached static JSON.
 
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Helmet from "react-helmet"
 
 import { useStaticQuery, graphql } from "gatsby"
@@ -46,16 +46,24 @@ const SiteSearch = () => {
   
   const enableSearch = indexName && apiKey && algoliaOptions
 
+  let [scriptAdded, setScriptAdded] = useState(false)
+  let [scriptLoaded, setScriptLoaded] = useState(false)
+
+  let scriptLoadedHandler = () => { 
+    setScriptLoaded(true) 
+  }
+
+  if (enableSearch && !scriptAdded) {
+    var searchScript = document.createElement('script')
+    searchScript.type = "text/javascript"
+    searchScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js'
+    searchScript.onload = scriptLoadedHandler
+    document.body.appendChild(searchScript)
+    setScriptAdded(true)
+  }
+
   useEffect(() => {
-    let frames = 0
     const init = () => {
-      frames += 1
-
-      // Sadly this is needed because of the way Helmet works in local development
-      if (!window.docsearch && frames < 60) {
-        return requestAnimationFrame(() => init())
-      }
-
       const search = window.docsearch({
         indexName,
         apiKey,
@@ -133,14 +141,14 @@ const SiteSearch = () => {
       })
     }
   
-    if (enableSearch) {
+    if (enableSearch && scriptLoaded) {
       init()
     }
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [scriptLoaded])
   
-  if (!enableSearch) {
+    if (!enableSearch) {
     const disableSearchProps = { "search-disabled": "" }
     return (
       <>
@@ -153,10 +161,6 @@ const SiteSearch = () => {
   
   return (
     <>
-      <Helmet>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js"/>
-      </Helmet>
-
       <div className="SiteSearch">
         <div className="SiteSearch--input-wrapper">
           <input id="SiteSearch--input" className="SiteSearch--input" type="text" spellCheck="false" autoComplete="false" placeholder="Search docs..."/>
