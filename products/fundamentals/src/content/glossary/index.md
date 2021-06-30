@@ -10,6 +10,11 @@ See definitions for Cloudflare terms.
 ## account
 Accounts group one or more members together with specific roles or permissions. Accounts can be associated with any number of domains.
 
+## allowlist
+A list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
+
+**Related terms:** blocklist
+
 ## API key
 An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](https://api.cloudflare.com/#getting-started-endpoints).
 
@@ -25,6 +30,9 @@ Allow restoration of Cloudflare account access outside the normal [two-factor au
 
 **Related terms:** two-factor authentication
 
+## blocklist
+A list of items (usually websites, IP addresses, email addresses, etc.) that are prevented from accessing a system.
+
 ## cached bandwidth (cached egress bandwidth)
 The amount of bandwidth served from Cloudflare without hitting the origin server. Cached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
 
@@ -36,10 +44,10 @@ The number of requests served from Cloudflare without having to hit the origin s
 ## certificate
 SSL certificates enable encryption over HTTPS for traffic between a client and a website. SSL certificates contain the website's public key and the website's identity along with related information. Devices attempting to communicate with the origin web server reference the SSL certificate to obtain the public key and verify the server's identity. Cloudflare provides a [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) for each active Cloudflare domain.
 
-**Related terms:** CAA record, Certificate Authority, EV certificate, intermediate certificate, primary certificate, root certificate  
+**Related terms:** SSL certificate, CAA record, Certificate Authority, EV certificate, intermediate certificate, primary certificate, root certificate  
 **Relevant links:** [Cloudflare SSL documentation](https://developers.cloudflare.com/ssl/)
 
-## Certificate Authority
+## Certificate Authority (CA)
 A CA is a trusted third party that provides SSL certificates for encrypting network traffic.
 
 ## Certification Authority Authorization (CAA) record
@@ -54,12 +62,32 @@ Certificate packs allow Cloudflare to fallback to a different SSL certificate fo
 **Relevant links:** [Managing Custom SSL certificates](https://support.cloudflare.com/hc/articles/200170466)
 
 ## cipher suite
-A cipher suite is a set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
+A set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
 
 **Relevant links:** [cipher suites documentation](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)
 
+## cloud
+A network of remote servers used to store and maintain data.
+
+## content delivery network (CDN)
+A geographically distributed group of servers which work together to provide fast delivery of Internet content.
+
 ## credit
 An amount applied to a specific Cloudflare account as credit for recurring subscriptions or plan payments. The Cloudflare billing system automatically applies credits in the next billing cycle.
+
+## data center
+A location with physical servers run and other IT operations are hosted.
+
+## denial-of-service (DoS) attack
+A type of cyber attack in which an attacker aims to render a computer or other device unavailable to its intended users by interruptin ghte device's normal functioning.
+
+**Related terms:** DDoS attack
+
+## distributed denial-of-service (DDoS) attack
+A malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
+
+**Related terms:** DoS attack  
+**Relevant links:** [What is a DDoS attack?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
 
 ## domain
 The domain name of your application on Cloudflare.
@@ -74,7 +102,13 @@ The Domain Name System (DNS) is the phonebook of the Internet. DNS translates do
 ## DNS record
 DNS records are instructions that live in authoritative DNS servers and provide information about a domain including what IP address is associated with that domain and how to handle requests for that domain.
 
+**Related terms:** DNS  
 **Relevant links:** [Learning Center guide on DNS records](https://www.cloudflare.com/learning/dns/dns-records/)
+
+## DNS zone
+A portion of the DNS namespace that is managed by a specific organization or administrator.
+
+**Related terms:** DNS
 
 ## dynamic content
 Website content that has to be fetched from the origin server.
@@ -96,8 +130,14 @@ A setting in the Cloudflare dashboard that corresponds to functionality within a
 ## firewall
 A firewall is a security system that monitors and controls network traffic based on a set of security rules.
 
+## hostname
+The name given to a server or node on a network. In most cases, the hostname is the public DNS name of a server.
+
 ## intermediate certification
 For security purposes, CAs issue intermediate certificates for signing website certificates. Intermediate certificates provide a means for the CA to revoke a single intermediate certificate, thus affecting only a small subset of website certificates.
+
+## Internet
+The Internet is a global system of computer networks that provides a wide range of information and communication facilities.
 
 ## member or user
 A member or user is an email account in Cloudflare that you can grant access to your organization account. Members belonging to multiple accounts can select which account to manage via the Cloudflare dashboard.
