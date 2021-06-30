@@ -1,6 +1,7 @@
 ---
 title: Installing
 order: 1
+pcx-content-type: how-to
 ---
 
 # Installing Terraform

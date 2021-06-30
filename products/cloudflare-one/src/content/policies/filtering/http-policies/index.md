@@ -1,12 +1,19 @@
 ---
-order: 2
+order: 3
+pcx-content-type: concept
 ---
 
 # HTTP policies
 
+<Aside>
+
+Install the <a href="/connections/connect-devices/warp/install-cloudflare-cert">Cloudflare Root Certificate</a> before creating HTTP policies.
+
+</Aside>
+
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
-![Gateway flow HTTP](../../../static/documentation/policies/gateway-flow-3.jpg)
+![Gateway flow HTTP](../../../static/documentation/policies/gateway-identity-diagram.jpg)
 
 Build an HTTP policy by configuring the following elements:
 
@@ -21,9 +28,61 @@ Just like actions on destinations in DNS policies, actions in HTTP policies allo
 
 These are the action types you can choose from:
 
-* **Allow** 
-* **Block** 
-* **Do Not Inspect**
+* **[Allow](#allow)** 
+* **[Block](#block)** 
+* **[Isolate](#isolate)**
+* **[Do Not Isolate](#do-not-isolate)**
+* **[Do Not Inspect](#do-not-inspect)**
+
+### Allow
+
+Rules with Allow actions allow outbound traffic to reach destinations you specify within the [Selectors](#selectors) and Value fields. For example, the following configuration allows traffic to reach all websites we categorize as belonging to the Education content category:
+
+| Selector | Operator | Value | Action |
+| - | - | - | - |
+| Content Categories | in | `Education` | Allow |
+
+
+### Block
+
+Rules with Block actions block outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and Value fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
+
+| Selector | Operator | Value | Action |
+| - | - | - | - |
+| Application | in | `Google Drive` | Block |
+| Upload Mime Type | matches regex | `.*` |  |
+
+### Isolate
+
+When an HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
+
+If you'd like to isolate **all security threats**, you can set up a policy with the following configuration:
+
+| Selector | Operator | Value | Action |
+| - | - | - | - |
+| Security Threats | In | All security threats | Isolate
+
+If instead you need to isolate **specific hostnames**, you can list the domains you'd like to isolate traffic to:
+
+| Selector | Operator | Value | Action |
+| - | - | - | - |
+| Host | In | `example.com`, `example.net` | Isolate
+
+<Aside type='note' header='Isolate identity providers for applications'>
+
+Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign on using third-party cookies will also need to be isolated.
+
+For example, example.com authenticates using Google Workspace you will also need to isolate the top level <a href="https://support.google.com/a/answer/9012184">Google Workspace URLs</a>.
+
+</Aside>
+
+### Do Not Isolate
+
+You can choose to disable isolation for certain destinations or categories. The following configuration disables isolation for traffic directed to `example.com`:
+
+| Selector | Operator | Value | Action |
+| - | - | - | - |
+| Host | In | `example.com` | Do Not Isolate |
 
 ### Do Not Inspect
 
@@ -39,8 +98,14 @@ The *Do Not Inspect* action is only available when matching against the host cri
 
 The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
 
-
 ## Selectors
+
+<Aside>
+
+Policies created using the URL selector are case-sensitive.
+
+</Aside>
+
 Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Host**
 * **URL**
@@ -49,39 +114,9 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **URL Path and Query**
 * **HTTP Method**
 * **HTTP Response**
-* **Uploaded and Downloaded File Extension**
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
 * **Applications**
-
-List of file extensions Gateway can match against:
-
-<TableWrap>
-
-| Image | Executable | Audio | Documents | Data | Compressed | System | Video |
-|------|------|-------|------|--------|--------|--------|-----|
-| avif | apk | m4a | doc | avro | 7z | bak | avi |
-| bmp | bat | mid | docx | csv | arj | cab | flv |
-| gif | bin | mp3 | odp | dat | bz2 | cpl | h264 |
-| ico | cgi | mpa | ods | dmg | deb | cur | m4v |
-| jpeg | com | wav | odt | iso | gz | emu | mkv |
-| png | dll | wma | pdf | json | lz | ini | mov |
-| psd | exe | ppt | | log | lz4 | scr | mp4 |
-| svg | hta | pptx | | mdb | lzh | sys | mpeg |
-| tif | jar | rtf | | nzb | lzma | tmp | wmv |
-| webp | moo | txt | | orc | pak
-|  | pif | xls | | parquet | rar
-|  | pl | xlsx | | rc | rpm
-|  | prg | | | sav | sz
-|  | | | | wasm | xz | | 
-|  |      | | | sql lite | z
-|  |      | | | tar | zip
-|  |      | | | toml | zlib |
-|  |      | | | torrent | zst |
-|  |      | | | xml |  |
-|  |      | | | yaml | | 
-
-</TableWrap>
 
 ## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:

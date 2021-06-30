@@ -1,5 +1,6 @@
 ---
 title: POST example
+pcx-content-type: reference
 order: 420
 ---
 

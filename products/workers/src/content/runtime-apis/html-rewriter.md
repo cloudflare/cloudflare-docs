@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # HTMLRewriter
 
 ## Background
@@ -177,11 +181,11 @@ The `element` argument, used only in element handlers, is a representation of a 
 
   - Replaces content of the element.
 
-- <Code>remove(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+- <Code>remove()</Code> <Type>Element</Type>
 
   - Removes the element with all its content.
 
-- <Code>removeAndKeepContent(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+- <Code>removeAndKeepContent()</Code> <Type>Element</Type>
 
   - Removes the start tag and end tag of the element, but keeps its inner content intact.
 

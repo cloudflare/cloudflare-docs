@@ -5,6 +5,7 @@ summary: Cache POST requests using the Cache API.
 tags:
   - Middleware
   - Caching
+  - Cache API
 ---
 
 # Cache POST requests

@@ -1,5 +1,6 @@
 ---
 title: Call sequence
+pcx-content-type: reference
 order: 497
 ---
 
@@ -15,11 +16,11 @@ Cloudflare recommends this sequence because it facilitates filter reusability an
 
 For example, a filter that matches all traffic for your API (i.e., `http.request.uri.path matches "^/api/.*$"`) may disable caching, disable human CAPTCHAs, configure JSON custom errors, and appear in a firewall rule. With the recommended sequence above, you would just repeat steps 3-6 for every Cloudflare feature to configure against the same filter created in steps 1-2.
 
-However for a POST operation, the **simplified sequence** -- shown below -- allows you to create both a filter and rule in the same call. In this case, the filter and rule only refer to each other.
+However, for a POST operation, the **simplified sequence** -- shown below -- allows you to create both a filter and rule in the same call. In this case, the filter and rule only refer to each other.
 
 ![Simple flow](../images/simple-flow.png)
 
-In this sequence, a single POST request to the `/firewall/rules` takes the filter object in the JSON to create the filter in the `/filters API` (also via a POST request). If successful, then the firewall rule is created.
+In this sequence, a single POST request to the `/firewall/rules` takes the filter object in the JSON to create the filter in the Filters API (also via a POST request). If successful, then the firewall rule is created.
 
 Below is an example call and response using this method:
 
@@ -63,7 +64,7 @@ However, this approach has some disadvantages:
 - The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
 - To protect against accidentally modifying or deleting filters used by other Cloudflare features, the PUT or DELETE operations are not allowed.
 
-By default if either the filter or rule is invalid, neither will be created.
+By default, if either the filter or rule is invalid, neither will be created.
 
 However, one exception applies. If you have exceeded your rule quota, the filter could be created while creating the rule may fail. This is because the rule is created after the filter in the sequence diagram and so, we learn of the quota being exceeded after the filter was created.
 

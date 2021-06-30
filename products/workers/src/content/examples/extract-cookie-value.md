@@ -3,12 +3,10 @@ order: 1000
 type: example
 summary: Given the cookie name, get the value of a cookie. You can also use cookies for A/B testing.
 tags:
-  - Security
-  - JAMstack
-  - Originless
+  - Headers
 ---
 
-# Extract cookie value
+# Cookie parsing
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>

@@ -1,5 +1,6 @@
 ---
 title: GET examples
+pcx-content-type: reference
 order: 465
 ---
 

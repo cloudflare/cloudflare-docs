@@ -1,10 +1,11 @@
 ---
 order: 11
+pcx-content-type: reference
 ---
 
 # Ingress rules
 
-You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Argo Tunnel.
+You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Tunnel.
 
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
 By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/config), you can specify which local services a request should be proxied to.
@@ -62,9 +63,9 @@ ingress:
 
 ## Supported protocols
 
-In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](https://developers.cloudflare.com/access/protocols-and-connections).
+In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](/applications/non-http).
 
-You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Argo Tunnel protocol.
+You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Cloudflare Tunnel protocol.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -90,9 +91,11 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 |--|--|--|--|
 | HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |
 | HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead | `unix:/home/production/echo.sock` |
-| TCP, RDP, SSH, SMB, kubectl to a single address | TCP requests are proxied to your local service. [Learn more](/applications/non-HTTP). | `ssh://localhost:2222` |
-| TCP, RDP, SSH, SMB, kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
-| Hello World | Test server for validating your Argo Tunnel setup | `hello_world` |
+| TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
+| SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
+| RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
+| kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
+| Hello World | Test server for validating your Cloudflare Tunnel setup | `hello_world` |
 | HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
 
 ## Single-service configuration
@@ -303,4 +306,4 @@ Default: `""`
 This configures what type of proxy will be started. Valid options are
 
  - "" for the regular proxy
- - "socks" for a SOCKS5 proxy. See [kubectl](https://developers.cloudflare.com/access/other-protocols/kubectl) for more.
+ - "socks" for a SOCKS5 proxy. See this [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.

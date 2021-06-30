@@ -1,6 +1,7 @@
 ---
 title: Forming an expression
 order: 4
+pcx-content-type: concept
 ---
 
 # Forming an expression
@@ -14,6 +15,10 @@ To start with a simple case, here's how you'd match a source IP:
 Expressions can be more complex by joining multiple clauses via a logical operator:
 
 ```ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)```
+
+# Capabilities
+
+You can use Magic Firewall to skip or block packets based on source or destination IP, source or destination port, protocol, packet length, or bit field match.
 
 # Restrictions
 

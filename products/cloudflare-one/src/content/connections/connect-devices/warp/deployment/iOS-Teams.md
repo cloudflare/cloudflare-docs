@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content-type: how-to
 ---
 
 # iOS
@@ -23,16 +24,18 @@ The Cloudflare WARP iOS client, known in the App Store as [1.1.1.1: Faster Inter
 To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments: 
 
 ```xml
-<key>organization</key>
-<string>yourorganization</string>
-<key>enable</key>
-<true />
-<key>gateway_unique_id</key>
-<string>your_gateway_doh_subdomain</string>
-<key>service_mode</key>
-<string>warp</string>
-<key>support_url</key>
-<string>https://support.example.com</string>
+<dict>
+    <key>organization</key>
+    <string>yourorganization</string>
+    <key>auto_connect</key> 
+    <integer>1</integer>
+    <key>switch_locked</key> 
+    <false />
+    <key>service_mode</key>
+    <string>warp</string>
+    <key>support_url</key>
+    <string>https://support.example.com</string>
+</dict>
 ```
 For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
 
@@ -84,3 +87,10 @@ If your organization uses [Zero Trust policies](/policies/zero-trust) to control
 1. Tap **Login with Cloudflare for Teams**.
 1. Enter your [team name](/glossary#team-name).
 1. Complete the authentication steps required by your organization.
+
+## Delete the WARP client
+
+1. Find the 1.1.1.1 application on the home screen.
+1. Touch and hold on the application tile.
+1. Tap **Remove App**.
+1. Select **Delete App**.

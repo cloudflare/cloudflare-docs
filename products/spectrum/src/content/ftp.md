@@ -1,3 +1,7 @@
+---
+pcx-content-type: concept
+---
+
 # FTP
 
 Enabling Spectrum for FTP is not straightforward due to the implementation of the protocol. This guide gives an overview of the intricacies of FTP and under which circumstances you can enable Spectrum for your FTP service.

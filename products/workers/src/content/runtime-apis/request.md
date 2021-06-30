@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Request
 
 The `Request` interface represents an HTTP request, and is part of the Fetch API.
@@ -221,12 +225,6 @@ All plans have access to:
 
   - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
 
-</Definitions>
-
-Business and Enterprise scripts have access to:
-
-<Definitions>
-
 - `city` <Type>string | null</Type>
 
   - City of the incoming request, e.g. `"Austin"`.
@@ -264,6 +262,12 @@ Business and Enterprise scripts have access to:
   - Timezone of the incoming request, e.g. `"America/Chicago"`.
 
 </Definitions>
+
+<Aside>
+
+The `request.cf` object is not available in the Cloudflare Workers dashboard or Playground preview editor.
+
+</Aside>
 
 --------------------------------
 
@@ -345,6 +349,6 @@ listener will never be registered.
 
 ## See also
 
-- [Examples: Modify request property](examples/modify-request-property)
+- [Examples: Modify request property](/examples/modify-request-property)
 - [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
 - [Reference: `Response`](/runtime-apis/response)

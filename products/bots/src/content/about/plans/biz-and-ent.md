@@ -2,6 +2,7 @@
 title: Business
 order: 2
 type: document
+pcx-content-type: reference
 ---
 
 import PlanIntro from "../../_partials/_plan-intro.md"
@@ -14,7 +15,7 @@ import BotCookie from "../../_partials/_bots-cookie.md"
 import Considerations from "../../_partials/_about-plan-considerations.md"
 import GetStarted from "../../_partials/_plan-get-started.md"
 
-# Plans
+# Cloudflare bot plans
 
 <PlanIntro/>
 

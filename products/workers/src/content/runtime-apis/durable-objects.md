@@ -1,8 +1,12 @@
+---
+pcx-content-type: configuration
+---
+
 # Durable Objects
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](https://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
@@ -41,12 +45,8 @@ export class DurableObject {
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
-- <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
-
-  - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
-
 - `env`
-  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
+  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using Modules syntax, these same "bindings" appear as global variables within the script. Scripts that export Durable Object classes always use the Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
 </Definitions>
 

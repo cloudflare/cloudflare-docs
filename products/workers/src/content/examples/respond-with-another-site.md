@@ -4,7 +4,7 @@ type: example
 summary: Respond to the Worker request with the response from another website (example.com in this example).
 demo: https://respond-with-another-site.workers-sites-examples.workers.dev
 tags:
-  - Proxy
+  - Middleware
 ---
 
 # Respond with another site
@@ -14,11 +14,22 @@ tags:
 </ContentColumn>
 
 ```js
-addEventListener("fetch", event => {
-  return event.respondWith(
-    fetch("https://example.com")
-  )
+addEventListener('fetch', function(event) {
+  event.respondWith(handleRequest(event.request))
 })
+async function handleRequest(request) {
+  // Only GET requests work with this proxy.
+  if (request.method !== 'GET') return MethodNotAllowed(request)
+  return fetch(`https://example.com`)
+}
+function MethodNotAllowed(request) {
+  return new Response(`Method ${request.method} not allowed.`, {
+    status: 405,
+    headers: {
+      'Allow': 'GET'
+    }
+  })
+}
 ```
 
 ## Demo

@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # SAML | OneLogin
@@ -73,10 +74,10 @@ OneLogin SAML allows administrators to upload metadata files from the service pr
 
 To add a metadata file to your OneLogin SAML configuration:
 
-1. Download your unique SAML metadata file at the following URL, replacing `your-team-name` with your [team name](/glossary#team-name):
+1. Download your unique SAML metadata file at the following URL, replacing `<your-team-name>` with your [team name](/glossary#team-name):
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
     The link returns a web page with your SAML SP data in XML format.

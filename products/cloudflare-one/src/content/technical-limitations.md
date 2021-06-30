@@ -1,5 +1,6 @@
 ---
 order: 20
+pcx-content-type: reference
 ---
 
 # Technical limitations
@@ -34,3 +35,16 @@ All values are per organization.
 | DNS Logpush jobs | 5 |
 
 </TableWrap>
+
+## Cloudflare Tunnel limitations
+
+All values are per account.
+
+<TableWrap>
+
+| Feature | Limit |
+| ------- | ----- | 
+| Number of concurrently running Tunnels | 1000 |
+
+</TableWrap>
+

@@ -1,10 +1,11 @@
 ---
 order: 1
+pcx-content-type: reference
 ---
 
 # Install `cloudflared`
 
-Argo Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
+Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 
 Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/releases). Downloads are available as standalone binaries or packages like Debian and RPM.
 
@@ -22,7 +23,7 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 
 ### `.deb` install
 
-Use the `deb` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` package in this example. 
+Use the `deb` package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` package in this example.
 
 ```bash
 wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
@@ -31,7 +32,7 @@ dpkg -i cloudflared-stable-linux-amd64.deb
 
 ### `.rpm` install
 
-Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example. 
+Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example.
 
 ```bash
 wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
@@ -67,7 +68,7 @@ You can install `cloudflared` on macOS systems via Homebrew:
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, you can download the latest Darwin amd64 release directly.
+Alternatively, you can [download the latest Darwin amd64 release directly](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-darwin-amd64.zip).
 
 ## Windows
 
@@ -123,9 +124,9 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 ### Updating with Cloudflare Load Balancer
 
-You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Argo Tunnel deployment.
+You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
 
-1. Install a new instance of `cloudflared` and [create](connections/connect-apps/create-tunnel) a new Argo Tunnel.
+1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. [Add the address](/connections/connect-apps/routing-to-tunnel/lb) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4. Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
@@ -135,7 +136,7 @@ You can update `cloudflared` without downtime by using Cloudflare's Load Balance
 
 If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
-1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Argo Tunnel.
+1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
 2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
 3. In the Cloudflare DNS dashboard, [replace](/connections/connect-apps/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4. Remove the now-inactive instance of `cloudflared`.
@@ -159,12 +160,9 @@ sc.exe start <unique-name>
 
 ## Deprecated versions
 
-Cloudflare currently supports all versions of `cloudflared`. Starting on March 20, 2021, Cloudflare will no longer support versions released prior to 2020.5.1.
-
-All features available in versions released prior to 2020.5.1 are available in current versions. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1.
+Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation#updating-cloudflared).
 
 | Version(s) | Deprecation status |
 |---|---|
 | 2020.5.1 and later | Supported |
-| Versions prior to 2020.5.1 | Will no longer be supported starting March 20, 2021 |
-
+| Versions prior to 2020.5.1 | No longer supported |

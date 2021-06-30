@@ -31,6 +31,6 @@ module.exports = {
     author: '@cloudflare',
     url: 'http://developers.cloudflare.com/pages',
     image:
-      'https://repository-images.githubusercontent.com/253644261/3c9cd080-e25c-11ea-9db6-57a083cfdb49',
+      'https://www.cloudflare.com/img/cf-twitter-card.png',
   },
 }
