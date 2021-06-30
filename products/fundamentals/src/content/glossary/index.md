@@ -76,10 +76,10 @@ A geographically distributed group of servers which work together to provide fas
 An amount applied to a specific Cloudflare account as credit for recurring subscriptions or plan payments. The Cloudflare billing system automatically applies credits in the next billing cycle.
 
 ## data center
-A location with physical servers run and other IT operations are hosted.
+A physical location where servers run and other IT operations are hosted.
 
 ## denial-of-service (DoS) attack
-A type of cyber attack in which an attacker aims to render a computer or other device unavailable to its intended users by interruptin ghte device's normal functioning.
+A type of cyber attack in which an attacker aims to render a computer or other device unavailable to its intended users by interrupting the device's normal functioning.
 
 **Related terms:** DDoS attack
 
@@ -196,7 +196,7 @@ SSL was a widely used cryptographic protocol for providing data security for Int
 SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. Cloudflare uses SNI for Dedicated SSL certificates and all Universal SSL certificates.
 
 ## Service Level Agreement (for Business and Enterprise plans)
-A contractual obligation for Cloudflare to maintain a specific level of service. Read the [Service Level Agreement (SLA) for the Cloudflare Business plan](https://www.cloudflare.com/business-sla/). Enterprise customers refer to the Enterprise SLA provided by their Subscription Agreement.)
+A contractual obligation for Cloudflare to maintain a specific level of service. Read the [Service Level Agreement (SLA) for the Cloudflare Business plan](https://www.cloudflare.com/business-sla/). Enterprise customers refer to the Enterprise SLA provided by their Subscription Agreement.
 
 ## static content
 Website content that can be delivered to an end user directly from cache, without hitting the origin server.
@@ -236,10 +236,10 @@ TLS is a security protocol that replaces SSL for data privacy and Internet commu
 Two-factor authentication adds an additional layer of login security to Cloudflare accounts. It requires users to provide both something known, such as a Cloudflare password, and something physically present, such as an authentication code from a mobile device.
 
 ## uncached bandwidth (uncached egress bandwidth)
-The amount of bandwidth that is not cached and therefore, is served from the origin. Uncached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** doesn’t equal _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
+The amount of bandwidth that is not cached, and therefore is served from the origin. Uncached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** doesn’t equal _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
 
 ## uncached requests
-The number of requests that are not cached and therefore, are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** doesn’t equal to _hit_, _stale_, _updating_, or _ignored_.
+The number of requests that are not cached, and therefore are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** doesn’t equal to _hit_, _stale_, _updating_, or _ignored_.
 
 **Related terms:** requests, cached requests
 
