@@ -23,8 +23,8 @@ Do not use Always Online with:
 There are limitations with the Always Online functionality: 
 
 1. Always Online is not immediately active for sites recently added to Cloudflare due to:
-  - DNS record propagation (can take 24-72 hours), or
-  - Always Online has not initially crawled the website. 
+    - DNS record propagation (can take 24-72 hours), or
+    - Always Online has not initially crawled the website. 
 2. Cloudflare cannot show private content behind logins or handle form submission (POSTs) if your origin web server is offline.
 
 Always Online does not trigger for HTTP response codes such as [404](https://support.cloudflare.com/hc/articles/115003014512#code_404), [503](https://support.cloudflare.com/hc/articles/115003011431#503error), or [500](https://support.cloudflare.com/hc/articles/115003011431#500error) errors such as database connection errors or internal server errors.
