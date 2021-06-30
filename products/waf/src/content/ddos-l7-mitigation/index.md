@@ -30,9 +30,9 @@ You can adjust the behavior of the rules in the Managed Ruleset using **override
 
 **Note:** Certain actions or sensitivity levels may not be available to all Cloudflare plans.
 
-For more information on the available override parameters, see [Managed Ruleset override parameters](/ddos-l7-mitigations/override-parameters).
+For more information on the available override parameters, see [Managed Ruleset override parameters](/ddos-l7-mitigation/override-parameters).
 
-To define overrides using the Rulesets API, see [Configure HTTP DDoS Managed Ruleset overrides via API](/ddos-l7-mitigations/configure-api).
+To define overrides using the Rulesets API, see [Configure HTTP DDoS Managed Ruleset overrides via API](/ddos-l7-mitigation/configure-api).
 
 <Aside type='note' header='Note'>
 
