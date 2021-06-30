@@ -37,7 +37,7 @@ To enable load shedding for a specific pool via the dashboard:
     When shedding <strong>Default traffic</strong>, you have two <strong>Policy</strong> options:
 
     - **Random**: Randomly sheds the percentage of requests specified in the *Shed %*. Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
-    - **IP hash**: Sheds the percentage of IP addresses specified in the *Shed %*. Ensures requests from the same IP will hit the same origin, but may shed a significantly higher or lower percentage of requests.
+    - **IP hash**: Sheds the percentage of IP address hash space specified in the *Shed %*. Ensures requests from the same IP will hit the same origin, but may shed a significantly higher or lower percentage of requests.
 
     For more guidance on choosing a policy, see [Shedding policies](#shedding-policies).
     </div>
@@ -62,11 +62,11 @@ To enable load shedding for a specific pool via the API, [update the values](htt
 ---
 header: Request
 ---
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account-id}/load_balancers/pools/{pool-id}" \
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/{account-id}/load_balancers/pools/{pool-id}" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: REDACTED" \
      -H "Content-Type: application/json" \
-     --data '{
+     --data-binary '{
          "load_shedding": {
              "default_percent": 20,
              "default_policy": "random",
@@ -113,13 +113,13 @@ A *Random* policy:
 
 - Randomly sheds the percentage of requests specified in the *Shed %*.
 - Distributes traffic more accurately because it sheds at the request level.
-- May cause requests from the same IP to hit different origins, potentially leading to cache misses, inconsistent latency, or session disruption for [DNS-only load balancers](/understand-basics/proxy-modes#dns-only-mode)).
+- May cause requests from the same IP to hit different origins, potentially leading to cache misses, inconsistent latency, or session disruption for [DNS-only load balancers](/understand-basics/proxy-modes#dns-only-mode).
 
 An *IP hash* policy:
 
-- Sheds the percentage of IP addresses specified in the *Shed %*.
+- Sheds the percentage of IP address hash space specified in the *Shed %*.
 - Ensures requests from the same IP will hit the same origin, which will increase cache hits, provide consistent latency, and preserve sessions.
-- Can over- or under-shed requests, since individual IPs may be responsible for different percentages of your requests. For example, setting a *Shed %* of *50%* may shed between **40%** to **60%** of pool requests.
+- Can over- or under-shed requests, since hashing does not guarantee a perfectly even IP distribution and individual IPs may be responsible for different percentages of your requests.
 
 Choose a *Random* policy when you want a more accurate distribution of raw requests and an *IP hash* policy when you want to prevent a single IP from flapping between different origins.
 
