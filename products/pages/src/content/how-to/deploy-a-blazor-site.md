@@ -12,11 +12,29 @@ When you have completed your application, make sure to run
 ```sh
 $ dotnet publish
 ```
+## Creating the build script
+To deploy, Cloudflare Pages will need a way to build the Blazor project. In the project's directory root, create a `build.sh` file. Populate it with this:
+```sh
+#!/bin/sh
+curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh -c 5.0 -InstallDir ./dotnet5
+./dotnet5/dotnet --version
+./dotnet5/dotnet publish -c Release -o output
+```
+Then, make the file executable by running:
+```sh
+chmod +x build.sh
+```
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can prepare and push your local application to GitHub:
 
 ```sh
+$ dotnet new gitignore
+$ git init
+$ git add -A
+$ git commit -m "Initial commit"
 $ git remote add origin https://github.com/yourgithubusername/githubrepo.git
 $ git branch -M main
 $ git push -u origin main
@@ -28,7 +46,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 | Configuration option | Value          |
 | -------------------- | -------------- |
 | Production branch    | `main`         |
-| Build command        | `curl -sSL https://dot.net/v1/dotnet-install.sh > dotnet-install.sh; chmod +x dotnet-install.sh; ./dotnet-install.sh -c 5.0 -InstallDir ./dotnet5; ./dotnet5/dotnet --version; ./dotnet5/dotnet publish -c Release -o output;` |
+| Build command        | `./build.sh` |
 | Build directory      | `output/wwwroot`       |
 </TableLayout>
 Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
