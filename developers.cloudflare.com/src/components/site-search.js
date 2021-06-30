@@ -49,18 +49,17 @@ const SiteSearch = () => {
   let [scriptAdded, setScriptAdded] = useState(false)
   let [scriptLoaded, setScriptLoaded] = useState(false)
 
-  let scriptLoadedHandler = () => { 
-    setScriptLoaded(true) 
-  }
-
-  if (enableSearch && !scriptAdded) {
-    var searchScript = document.createElement('script')
-    searchScript.type = "text/javascript"
-    searchScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js'
-    searchScript.onload = scriptLoadedHandler
-    document.body.appendChild(searchScript)
-    setScriptAdded(true)
-  }
+  useEffect(() => {
+    if (enableSearch && !scriptAdded) {
+      var searchScript = document.createElement('script')
+      searchScript.type = "text/javascript"
+      searchScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js'
+      searchScript.onload = () => { setScriptLoaded(true) }
+      document.body.appendChild(searchScript)
+      setScriptAdded(true)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const init = () => {
