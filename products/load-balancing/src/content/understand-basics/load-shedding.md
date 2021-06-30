@@ -11,7 +11,8 @@ Once you configure load shedding on a pool, that pool will begin diverting traff
 
 ## Step 1 — Identify at-risk origins
 
-Using your internal metrics, identify origins at risk of reaching their failure threshold:
+Using your internal metrics, identify origins at risk of reaching their failure threshold.
+
 - If your origin is seeing increased traffic but is not yet at risk of failure, start with [Step 2](#step-2--shed-default-traffic).
 - If your origin is about to fail, start with [Step 4](#step-4--shed-additional-traffic-optional).
 
@@ -117,7 +118,7 @@ A *Random* policy:
 An *IP hash* policy:
 
 - Sheds the percentage of IP addresses specified in the *Shed %*.
-- Ensures requests from the same IP will hit the same origin, promoting cache hits, consistent latency, and session preservation.
+- Ensures requests from the same IP will hit the same origin, which will increase cache hits, provide consistent latency, and preserve sessions.
 - Can over- or under-shed requests, since individual IPs may be responsible for different percentages of your requests. For example, setting a *Shed %* of *50%* may shed between **40%** to **60%** of pool requests.
 
 Choose a *Random* policy when you want a more accurate distribution of raw requests and an *IP hash* policy when you want to prevent a single IP from flapping between different origins.
