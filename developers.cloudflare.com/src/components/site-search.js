@@ -51,7 +51,7 @@ const SiteSearch = () => {
 
   useEffect(() => {
     if (enableSearch && !scriptAdded) {
-      var searchScript = document.createElement('script')
+      const searchScript = document.createElement('script')
       searchScript.type = "text/javascript"
       searchScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js'
       searchScript.onload = () => { setScriptLoaded(true) }
