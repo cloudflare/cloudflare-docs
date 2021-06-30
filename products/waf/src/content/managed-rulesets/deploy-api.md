@@ -9,9 +9,13 @@ Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/ru
 
 ## Deploying Managed Rulesets
 
-You can deploy Managed Rulesets to the `http_request_firewall_managed` phase supported by the Cloudflare WAF, both at the account level and at the zone level. You can also define overrides to customize the behavior of the rules included in a Managed Ruleset.
+You can deploy WAF Managed Rulesets to the `http_request_firewall_managed` phase, both at the account level and at the zone level.
 
-**Note:** There are a few requirements when deploying Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
+Other Managed Rulesets, like DDoS Managed Rulesets, must be deployed to a different phase. Check the specific Managed Ruleset documentation for details.
+
+You can define overrides to customize the behavior of the rules included in a Managed Ruleset.
+
+**Note:** There are a few requirements when deploying WAF Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
 
 * The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
 
