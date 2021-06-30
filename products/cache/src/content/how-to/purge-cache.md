@@ -32,7 +32,7 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
 
 You can purge objects with these characteristics using an API call ([Purge files by URL](https://api.cloudflare.com/#zone-purge-files-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
-<Aside type="warning" header="warning">
+<Aside type="warning" header="Warning">
 
 Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution. All of the listed options are Enterprise features.
 
@@ -72,7 +72,7 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 1. Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host).
 1. Cloudflare forces a [cache miss](/about/default-cache-behavior#cloudflare-cache-responses) on content with the purged cache-tag.
 
-<Aside type="warning" header="warning">
+<Aside type="warning" header="Warning">
 
 Be careful when purging. A cache miss can cause execution delays by requiring a fetch from your origin server.
 
@@ -88,7 +88,7 @@ Your end users never see Cache-Tag HTTP headers on your Cloudflare-enabled websi
 - Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
 - Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
 
-A few things to remember:
+### A few things to remember:
 
 - A single HTTP response can have more than one `Cache-Tag HTTP` header field.
 - The minimum length of a cache-tag is 1 byte.
@@ -135,8 +135,8 @@ Purging by prefix is useful in different scenarios, such as:
 1. Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
 1. Under **Purge by**, select **Prefix**.
 1. Follow the syntax instructions.
-  - One prefix per line.
-  - Maximum 30 prefixes per API call.
+    - One prefix per line.
+    - Maximum 30 prefixes per API call.
 1. Enter the appropriate value(s) in the text field using the format shown in the example.
 1. Click **Purge**.
 
@@ -151,7 +151,7 @@ There are several limitations regarding purge by prefix:
   - `www.example.com/foo?a=b` (query string)
   - `www.exmaple.com/foo#bar` (fragment)
 
-<Aside type="warning" header="warning">
+<Aside type="warning" header="Warning">
 
 Because purge by prefix purges a directory, any URI for a resource within the purged directory is purged regardless of query string or fragment (though fragments are not generally sent by browsers). Purge by prefix rules do not accept fragments and query strings.
 

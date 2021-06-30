@@ -14,11 +14,11 @@ pcx-content-type: concept
 1. Under **Then the settings are**, choose **Custom Cache Ke**y from the dropdown.
 1. Click the appropriate *Query String* setting.
 1. (Optional) Click Advanced and enter appropriate settings for:
-  - `Headers`
-  - `Cookie`
-  - `Host`
-  - `User Features`
+    - `Headers`
+    - `Cookie`
+    - `Host`
+    - `User Features`
 1. Choose a save option:
-  - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
-  - **Save and Deploy **to save the rule and enable it immediately.
+    - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
+    - **Save and Deploy **to save the rule and enable it immediately.
   

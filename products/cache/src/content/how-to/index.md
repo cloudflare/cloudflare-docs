@@ -8,4 +8,4 @@ pcx-content-type: navigation
 
 Review the tasks you can complete depending on the type of cache behavior you want to modify.
 
-<DirectoryListing path="/get-started"/>
+<DirectoryListing path="/how-to"/>

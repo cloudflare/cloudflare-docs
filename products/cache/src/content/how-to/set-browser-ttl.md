@@ -19,7 +19,7 @@ Unless specifically set in a Page Rule, Cloudflare does not override or `insert 
 
 The Cloudflare UI and API both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains. 
 
-<Aside type="note" header="note">
+<Aside type="note" header="Note">
 
 If you modify cached assets, the new asset is not displayed to repeat visitors before the Browser Cache TTL duration. [Purging Cloudflare’s cache](/how-to/purge-cache) does not affect assets cached in a visitor’s browser.
 
