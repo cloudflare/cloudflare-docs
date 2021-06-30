@@ -94,7 +94,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 **Railgun compresses web objects, even rapidly changing pages like news sites or personalized content**. Using Railgun in conjunction with Cloudflare Load Balancing speeds up connections between Cloudflare datacenters and DNS origin servers so that uncacheable requests have minimal latency.
 
-![](../static/images/load-balancer-1.png)
+![Set up a railgun listener in front of the load balancer](../static/images/railgun-load-balancer-setup.png)
 
 **Set up a Railgun listener in front of the load balancer** so that the load balancer can handle HTTP connections normally. Load balancing long-lived TLS connections between the sender and listener is very difficult.
 
