@@ -6,7 +6,7 @@ order: 3
 
 # Configure payload logging for a Managed Ruleset via API
 
-Use the [Rulesets API](https://api.cloudflare.com/) to configure payload logging for a Managed Ruleset.
+You can use the [Rulesets API](https://api.cloudflare.com/) to configure payload logging for a Managed Ruleset.
 
 ## Configure and enable payload logging
 
@@ -14,7 +14,9 @@ Do the following:
 
 1. Use the [Update rule in ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update-rule) API method to update the rule that executes the Managed Ruleset.
 
-1. In the configuration of the rule that executes the Managed Ruleset, include a `matched_data` object in `action_parameters` to configure payload logging. This object has the following structure:
+1. In the configuration of the rule that executes the Managed Ruleset, include a `matched_data` object in `action_parameters` to configure payload logging.
+
+    The `matched_data` object has the following structure:
 
     ```json
     ---
@@ -28,13 +30,13 @@ Do the following:
     }
     ```
 
-Replace `<PUBLIC_KEY_VALUE>` with the public key you want to use for payload logging.
+    Replace `<PUBLIC_KEY_VALUE>` with the public key you want to use for payload logging.
 
-[Use the command line](/managed-rulesets/payload-logging/command-line/generate-key-pair) to obtain a public key or [generate it in the Cloudflare dashboard](/managed-rulesets/payload-logging/configure).
+You can generate a public key [in the command line](/managed-rulesets/payload-logging/command-line/generate-key-pair) or [in the Cloudflare dashboard](/managed-rulesets/payload-logging/configure).
 
 ### Example
 
-The following example updates rule `{rule-id-1}` that executes the Cloudflare Managed Ruleset for `{zone-id}`, configuring payload logging with the provided public key.
+The following example updates rule `{rule-id-1}` that executes the Cloudflare Managed Ruleset for zone `{zone-id}`, configuring payload logging with the provided public key.
 
 ```json
 ---
@@ -108,7 +110,7 @@ For more information on deploying Managed Rulesets via API, see [Deploy a Manage
 
 To disable payload logging for a Managed Ruleset:
 
-1. Use the [Update a rule in a ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update-rule) API method to update the rule that executes the Managed Ruleset.
+1. Use the [Update rule in ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update-rule) API method to update the rule that executes the Managed Ruleset.
 
 1. Modify the rule definition so that there is no `matched_data` object in `action_parameters`.
 
