@@ -15,10 +15,7 @@ For zones proxied on Cloudflare\*, route patterns decide what (if any) script is
 
 Route patterns can be added with the Cloudflare API or on the [Workers tab](https://dash.cloudflare.com/?zone=workers) in the Cloudflare dashboard (after selecting a zone).
 
-<!-- TODO: add image -->
-<!--
-![Workers Route Modal](https://web.archive.org/web/20200817183804im_/https://developers.cloudflare.com/workers/about/media/add-route-modal.png)
--->
+![Workers Route Modal](./add-route-modal.png)
 
 Cloudflare Site routes are comprised of:
 
