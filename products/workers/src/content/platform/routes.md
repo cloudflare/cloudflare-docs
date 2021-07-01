@@ -99,7 +99,7 @@ If a route pattern path ends with `*`, then it matches all suffixes of that path
 
 - `https://example.com/path*` matches `https://example.com/path` _and_ `https://example.com/path2` _and_ `https://example.com/path/readme.txt`
 
-- There is a well known bug associated with path matching concerning wildcards and forward slashes that is documented in the [Known Issues section.](/workers/platform/known-issues)
+- There is a well-known bug associated with path matching concerning wildcards and forward slashes that is documented in the [Known issues section.](/workers/platform/known-issues)
 
 #### Subdomains must have a DNS Record
 
