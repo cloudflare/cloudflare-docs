@@ -9,7 +9,7 @@ Below are some known bugs and issues to be aware of when using Cloudflare Worker
 
 ## Route specificity 
 
-- When defining route specificity, avoid the use of forward slashes before a wildcard to ensure accuracy when matching suffixes. For example, consider the below path examples:
+- When defining route specificity, a trailing `/*` in your pattern may not act as expected:
 
     1) `example.com/images/*`
 
