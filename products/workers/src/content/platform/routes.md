@@ -9,7 +9,7 @@ pcx-content-type: concept
 
 Routes allow users to map a URL pattern to a Worker script to enable Workers to run on custom domains.
 
-## Custom zones
+## Custom routes
 
 For zones proxied on Cloudflare\*, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
 
