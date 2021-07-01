@@ -282,6 +282,8 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 </Aside>
 
+---
+
 ## Durable Objects
 
 <Aside type="warning" header="Beta">
