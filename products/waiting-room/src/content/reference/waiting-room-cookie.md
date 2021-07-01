@@ -23,5 +23,19 @@ Cloudflare Waiting Room requires the `__cfwaitingroom` cookie. When a waiting ro
 The `__cfwaitingroom` cookie is used to:
 
 * Track a user's position in the waiting room queue and serve them in the correct order.
-* Monitor each visitor's duration in the application to provide an accurate entry time to visitors queueing in the waiting room.
+* Monitor each visitor's duration in the application to provide an [accurate entry time](#estimated-wait-time) to visitors queueing in the waiting room.
 * To allow re-entry for a period of time (specified by [session_duration](/reference/configuration-settings#session-duration)) without going back in the waiting room.
+
+## Estimated wait time
+
+When a visitor first enters the host and path combination for your waiting room, they receive the `__cfwaitingroom` cookie. That cookie contains a value for `bucketId`, which corresponds to the minute your visitor entered the waiting room. When we group visitors by `bucketId`, we can see how many visitors are in front of a specific bucket.
+
+Each cookie also contains a value for `acceptedAt`, which corresponds to the minute your visitor entered your application. This value lets us know how many visitors per minute are leaving the waiting room to enter your application.
+
+```txt
+visitorsAhead ÷ activeUsersToWebApplication = estimatedMinWait
+```
+
+We combine these pieces of information to calculate estimated wait time for each bucket of visitors.
+
+For more details about the technical implementation of Cloudflare Waiting Room, see the [blog post](https://blog.cloudflare.com/building-waiting-room-on-workers-and-durable-objects/).
