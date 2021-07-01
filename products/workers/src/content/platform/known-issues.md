@@ -7,7 +7,8 @@ pcx-content-type: concept
 
 Below are some known bugs and issues to be aware of when using Cloudflare Workers:
 
-- When defining route specifcity, avoid the use of forward slashes before a wildcard to ensure accuracy when matching suffixes. For example, consider the below path examples:
+- When defining route specificity, avoid the use of forward slashes before a wildcard to ensure accuracy when matching suffixes. For example, consider the below path examples:
+
 
     1) `example.com/images/*`
 
