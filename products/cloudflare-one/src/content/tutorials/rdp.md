@@ -158,12 +158,12 @@ Click **Save**.
 
 <Aside>
  
-**IMPORTANT**: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
+<strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
 
 ![Enable WebSockets](../static/zero-trust-security/ssh/enable-websockets.png)
 
 </Aside>
- 
+
 ## Run the Tunnel
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
