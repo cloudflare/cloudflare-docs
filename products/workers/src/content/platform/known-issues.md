@@ -9,10 +9,20 @@ Below are some known bugs and issues to be aware of when using Cloudflare Worker
 
 ## Route specificity 
 
-- When defining route specificity, a trailing `/*` in your pattern may not act as expected:
+- When defining route specificity, a trailing `/*` in your pattern may not act as expected.
 
-    1) `example.com/images/*`
+Consider two different Workers, each deployed to the same zone. Worker A is assigned the `example.com/images/*` route and Worker B is given the `example.com/images*` route pattern. With these in place, here are how the following URLs will be resolved:
 
-    2) `example.com/images*`
+```
+// (A) example.com/images/*
+// (B) example.com/images*
 
-For requests like `example.com/images/hello` to route successfully, the route pattern path must be set to option 2 (`example.com/images*`) without the forward slash. If the route pattern path is set to option 1 (`example.com/images/*`) requests that include a suffix, like `example.com/images/world`, will not route as intended. 
+"example.com/images" 
+// -> B
+"example.com/images123" 
+// -> B
+"example.com/images/hello"
+// -> B
+```
+
+You will notice that all examples trigger Worker B. This includes the final example, which exemplifies the unexpected behavior.
