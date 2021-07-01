@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # ScheduledEvent
 
 ## Background
@@ -15,6 +19,9 @@ addEventListener("scheduled", event => {
 ### Properties
 
 <Definitions>
+
+- `event.cron` <Type>string</Type>
+    - The value of the [Cron Trigger](/platform/cron-triggers) that started the `ScheduledEvent`.
 
 - `event.type` <Type>string</Type>
     - The type of event. This will always return `"scheduled"`.

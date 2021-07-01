@@ -1,5 +1,6 @@
 ---
 title: Enable only Joomla rules
+pcx-content-type: configuration
 alwaysopen: true
 order: 772
 ---
@@ -16,13 +17,13 @@ Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy Managed Rulesets and
 
 Follow the steps below to deploy Managed Rulesets that enable rules tagged with `joomla`.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a Phase that deploys a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a phase that deploys a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. Configure a tag override that enables only the rules with a given tag.
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a Phase with only Joomla rules enabled. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
@@ -41,15 +42,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": "false"
-            }
-          ],
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
-              "action": "block"
+              "action": "block",
+              "enabled": true
             }
           ]
         }
@@ -59,9 +57,9 @@ curl -X PUT \
 }'
 ```
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a Phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone-id}`).
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"overrides": {"category": joomla", "action": "block"}` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone-id}`).
+* `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -83,15 +81,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": "false"
-            }
-          ],
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
-              "action": "block"
+              "action": "block",
+              "enabled": true
             }
           ]
         }
@@ -101,16 +96,16 @@ curl -X PUT \
 }'
 ```
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a Phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
-* `"overrides": {"rulesets": {"enabled": false}}` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"overrides": {"category": joomla", "action": "block"}` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+* `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
+* `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
 
 You can add more than one category override to a rule.
 
-The example below uses a `PUT` request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` Phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses a `PUT` request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Add more than one category override at the zone level</summary>
@@ -129,16 +124,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": false
-            }
-          ],
+          "enabled": false,
           "categories": [
             {
               "category": "joomla",
-              "enabled": true,
-              "action": "log"
+              "action": "log",
+              "enabled": true
             },
             {
               "category": "wordpress",
@@ -172,16 +163,12 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "enabled": false
-            }
-          ],
+          "enabled": false,          
           "categories": [
             {
               "category": "joomla",
-              "enabled": true,
-              "action": "log"
+              "action": "log",
+              "enabled": true
             },
             {
               "category": "wordpress",

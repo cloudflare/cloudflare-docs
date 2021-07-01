@@ -1,10 +1,10 @@
 ---
-title: Welcome
+title: Overview
 order: 0
-type: overview
+pcx-content-type: landing-page
 ---
 
-# Cloudflare Randomness Beacon docs
+# Cloudflare Randomness Beacon
 
 <ContentColumn>
 

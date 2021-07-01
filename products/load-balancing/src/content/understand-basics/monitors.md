@@ -1,5 +1,6 @@
 ---
 order: 18
+pcx-content-type: concept
 ---
 
 # Monitors
@@ -20,7 +21,7 @@ Health checks that result in a status change for an origin server are recorded a
 - **Load Balancing monitors use the following HTTP user-agent**: `"Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; pool-id: $poolid)"`. The `$poolid` contains the first 16 characters of the Load Balancing pool that is the target of the health check.
 - **To prevent health checks from failing**, and to secure user infrastructure against spoofed checks from bad actors, we recommend the following:
   - Only accept connections to hosts listed in the [Cloudflare IP ranges](https://www.cloudflare.com/ips/) in your firewall or web-server.
-  - Use Cloudflare's user agent (see below) to reject HTTP requests that don't come from these ranges.
+  - Use Cloudflare's user agent (see above) to reject HTTP requests that don't come from these ranges.
   - Ensure that your firewall or web server does not block or rate limit Cloudflare health checks.
 
 ---
@@ -90,7 +91,7 @@ Monitors support a great deal of customization and have the following properties
       <tr>
         <td><strong><Code>interval</Code></strong><br/><Type>integer</Type></td>
         <td>
-          <p>The interval between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
+          <p>The interval (in seconds) between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations.</p>
           <div><Code>90</Code></div>
         </td>
         <td>

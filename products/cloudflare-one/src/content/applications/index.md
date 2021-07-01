@@ -1,8 +1,13 @@
 ---
 order: 5
+pcx-content-type: navigation
 ---
 
 # Applications
+
+<Aside>
+Cloudflare Access only secures applications that use HTTPS.
+</Aside>
 
 Cloudflare for Teams can secure self-hosted and SaaS applications with Zero Trust rules.
 

@@ -1,7 +1,8 @@
 ---
-title: Home
+title: Overview
 order: 0
 type: overview
+pcx-content-type: landing-page
 ---
 
 # Cloudflare for Teams documentation

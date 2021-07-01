@@ -1,9 +1,10 @@
 ---
-title: Create via Cloudflare dashboard
+title: Create via dashboard
 order: 20
+pcx-content-type: tutorial
 ---
 
-# Create a load balancer in the Cloudflare dashboard
+# Create a Cloudflare load balancer in the dashboard
 
 ## Overview
 
@@ -101,7 +102,9 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
 
 1. Select **Save**.
 
-<Aside type='note' header='Tip'>
+---
+
+<Example>
     An example monitor might be:
     <table style='table-layout:fixed; width:70%'>
       <thead>
@@ -145,7 +148,9 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
         </tr>
       </tbody>
     </table>
-  </Aside>
+</Example>
+
+---
 
 #### B. Configure the monitor
 
@@ -174,11 +179,11 @@ Select **Next** to continue.
 
 ---
 
-### 5. Create custom Load Balancing rules (Beta)
+### 5. Create custom Load Balancing rules
 
-Load Balancing rules allow you to customize the behavior of your Cloudflare [load balancer](/understand-basics/load-balancers). For example, use Load Balancing rules to select an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
+Customize the behavior of load balancer using load balancing rules. For example, select an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
 
-For a walkthrough, see [_Creating Load Balancing rules_](/understand-basics/load-balancing-rules/create-rules).
+For a walkthrough, see [Create Load Balancing rules](/understand-basics/load-balancing-rules/create-rules).
 
 ---
 

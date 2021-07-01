@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: how-to
 ---
 
 # Self-hosted applications
@@ -17,13 +18,11 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ![Self-hosted applications diagram](../../static/documentation/applications/network-diagram.png)
 
-Make sure you create [Zero Trust policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use Argo Tunnel. If you do not wish to use Argo Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
-
-
+Make sure you create [Zero Trust policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use [Cloudflare Tunnel](/glossary#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
 
 ### 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Applications** tab.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 
@@ -52,9 +51,15 @@ To add a custom logo, click **Custom** and input a link to your desired image.
 
   ![Set application logo](../../static/documentation/applications/app-logo-sh.png)
 
+  <Aside>
+  If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+  </Aside>
+
 1. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
-![Select identity providers](../../static/documentation/applications/saas-idp.png)
+ ![Select identity providers](../../static/documentation/applications/saas-idp.png)
+
+1. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
 1. Click **Next**.
 

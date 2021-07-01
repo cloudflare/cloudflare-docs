@@ -1,4 +1,5 @@
 ---
+pcx-content-type: concept
 order: 250
 ---
 
@@ -6,12 +7,12 @@ order: 250
 
 Cloudflare API Shield allows you to secure your APIs using the following security solutions:
 
-- **Mutual TLS (mTLS)** - Blocks traffic from devices that do not have a valid client SSL/TLS certificate with an API Shield rule.
-- **Schema Validation (Beta)** - Protects your origin from invalid API requests or a malicious payload by matching each request with the provided schema.
+- **Mutual TLS (mTLS)** — Blocks traffic from devices that do not have a valid client SSL/TLS certificate with an API Shield rule.
+- **Schema Validation** — Protects your origin from invalid API requests or a malicious payload by matching each request with the provided schema.
 
 ## A positive security model for APIs
 
-Implementing a positive security model for APIs is the most direct way to eliminate credential stuffing attacks and deny access to automated scanning tools. Unlike the security model followed by firewalls, in a positive security model you define the requirements and admissible behavior of incoming traffic. The only allowed requests are the ones that comply with the defined rules. 
+Implementing a positive security model for APIs is the most direct way to eliminate credential stuffing attacks and deny access to automated scanning tools. Unlike the security model followed by firewalls, in a positive security model you define the requirements and admissible behavior of incoming traffic. The only allowed requests are the ones that comply with the defined rules.
 
 Cloudflare API Shield follows a positive security model.
 
@@ -47,17 +48,17 @@ To protect your application with mTLS authentication, use this workflow:
 
 API Shield's Mutual TLS requires Cloudflare-issued certificates. You can use mTLS with any fully managed certificate authority (CA) where Cloudflare issues the client certificates.
 
-If you need to use certificates issued by another (CA), please reach out to a Cloudflare Customer Success Manager.
+If you need to use certificates issued by another CA, use <a href="https://developers.cloudflare.com/cloudflare-one/identity/devices/mutual-tls-authentication?">Cloudflare Access</a> to upload your own CA.
 
 When using Yubikeys, the browser may prompt for unlocking the key due to a problem in Yubikey's PKCS#11 library.
 
 </Aside>
 
-## Schema Validation - Beta
+## Schema Validation
 
 <Aside type='note'>
 
-This feature is only available for customers in the Enterprise plan.
+This feature is only available for customers on an Enterprise plan.
 
 </Aside>
 
@@ -71,10 +72,8 @@ To configure Schema Validation for one or more hosts using the dashboard, check 
 
 <Aside type='warning'>
 
-**Notes about the current Beta:**
+**Important**
 
-- The only available action for requests whose validations fail is _Log_.
-- You cannot edit an API Shield. If you need to make changes, delete the existing shield and create a new one.
-- API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
+Currently, API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 
 </Aside>

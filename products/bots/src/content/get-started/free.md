@@ -1,6 +1,7 @@
 ---
 title: Free
 order: 0
+pcx-content-type: how-to
 ---
 
 # Get started with Bot Fight Mode

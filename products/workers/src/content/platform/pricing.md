@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: concept
 ---
 
 # Pricing
@@ -16,9 +17,12 @@ To avoid the Free plan limits, you can subscribe to the Workers Paid plan for a 
 
 ### Usage Models
 
-Under the Paid plan, you have access to two Usage Models: Bundled and Unbound. Usage Models are **settings on your Workers** that specify the upper [limits](/platform/limits) for how long a Worker can execute. In addition to different limits, each Usage Model is billed on different usage measurements.
+Under the Paid plan, you have access to two Usage Models: Bundled and Unbound. Usage Models are **settings on your Workers** that specify the upper [limits](/platform/limits) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests, duration, and egress data at the rates shown under [pricing](/platform/pricing#pricing).
 
-By default, when an account is first upgraded to the Paid plan, the default Usage Model is set to Unbound. This default can be changed at any time by using the Default Usage Model setting on the Workers overview page.
+### Default Usage Model
+
+The default Usage Model is used when new Workers are created, and no Usage Model is provided via configuration during creation. When an account is first upgraded to the Paid plan, the default Usage Model is set to Unbound. The default can be changed at any time by using the Default Usage Model setting on the Workers overview page. We recommend setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
+
 
 ### Pricing
 
@@ -56,12 +60,9 @@ Total = ~$6.27 + Minimum $5/mo usage = **$11.27**
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = **$5.00**
 - (20 GB - included 5 GB) x $0.045 = **$0.675**
 
-### Default Usage Model
-
-Each account will have a default Usage Model. The default Usage Model is used when new Workers are created, unless a Usage Model is provided via configuration during creation. We recommend setting the default Usage Model to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model, and you are able to change the Usage Model for an individual Worker at any time after creation.
-
 ## KV
 
+### Free plan
 The Workers Free plan includes limited KV Usage. If you exceed one of these limits, further operations of that type will fail with an error. All limits reset daily at 00:00 UTC.
 
 <TableWrap>
@@ -76,6 +77,7 @@ The Workers Free plan includes limited KV Usage. If you exceed one of these limi
 
 </TableWrap>
 
+### Paid plan
 To avoid these limits, you can subscribe to the [Workers Paid plan](#pricing). Usage is then billed as follows:
 
 <TableWrap>

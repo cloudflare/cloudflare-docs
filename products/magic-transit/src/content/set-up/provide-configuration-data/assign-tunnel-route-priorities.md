@@ -1,6 +1,9 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
+
+import StaticRoutesApi from "../../_partials/_static-routes-api.md"
 
 # Assign tunnel route priorities
 
@@ -66,3 +69,7 @@ For an example edge routing configuration, refer to this table:
     </tr>
   </tbody>
 </table>
+
+## Create and edit static routes
+
+<StaticRoutesApi/>

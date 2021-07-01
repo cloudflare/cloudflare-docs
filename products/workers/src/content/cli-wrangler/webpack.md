@@ -1,10 +1,18 @@
 ---
 order: 4
+pcx-content-type: configuration
 ---
 
 # Webpack
 
 Out of the box, Wrangler allows you to develop modern ES6 applications with support for modules. This is because of the 🧙‍♂️ magic of [webpack](https://webpack.js.org/). This document describes how Wrangler uses webpack to build your Workers, and how you can bring your own configuration.
+
+
+<Aside>
+
+Wrangler's built-in webpack build only supports webpack 4. If you want to use webpack 5, or another bundler like ESBuild or Rollup, you'll want to setup [custom builds](/cli-wrangler/configuration#build) in your `wrangler.toml`.
+
+</Aside>
 
 <Aside>
 

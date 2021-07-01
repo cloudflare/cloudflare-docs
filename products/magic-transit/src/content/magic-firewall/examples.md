@@ -1,6 +1,7 @@
 ---
 title: Examples
 order:  5
+pcx-content-type: configuration
 ---
 
 # Examples

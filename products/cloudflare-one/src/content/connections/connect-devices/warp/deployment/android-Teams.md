@@ -1,5 +1,6 @@
 ---
 order: 5
+pcx-content-type: how-to
 ---
 
 # Android
@@ -49,7 +50,7 @@ If your organization uses Gateway DNS filtering, you will need to instruct your 
 
 Then ask your users to complete the following steps:
 
-1. Fine the **1.1.1.1** application and tap to launch.
+1. Find the **1.1.1.1** application and tap to launch.
 1. Tap the **menu bar icon** (3 lines) in the upper right.
 1. Tap **Advanced**.
 1. Tap **Connection options**.
@@ -59,9 +60,16 @@ Then ask your users to complete the following steps:
 ### Manually configure a Cloudflare for Teams device registration
 If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or is using the Gateway L7 Filtering and user or device specific Gateway policies, your users will need to login to Cloudflare for Teams by following these instructions:
 
-1. Fine the **1.1.1.1** application and tap to launch.
+1. Find the **1.1.1.1** application and tap to launch.
 1. Tap the **menu bar icon** (3 lines) in the upper right.
 1. Tap **Account**.
 1. Tap **Login with Cloudflare for Teams**.
 1. Enter your [team name](/glossary#team-name).
 1. Complete authentication steps required by your organization.
+
+## Delete the WARP client
+
+1. Find the 1.1.1.1 application on the home screen.
+1. Touch and hold on the application tile.
+1. Tap **Remove App**.
+1. Select **Delete App**.

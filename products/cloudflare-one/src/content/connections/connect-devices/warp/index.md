@@ -1,12 +1,13 @@
 ---
 order: 0
+pcx-content-type: how-to
 ---
 
 # WARP client
 
-You can use Cloudflare WARP client to connect devices to Cloudflare for DNS filtering or Secure Web Gateway filtering. The WARP client can be deployed in the following modes:
+You can use Cloudflare WARP client to connect devices to Cloudflare for DNS or HTTP filtering. The WARP client can be deployed in the following modes:
 
-|Mode|Description|DNS Filtering|HTTP Filtering|
+|Mode|Description|DNS filtering|HTTP filtering|
 |---|---|---|---|
 |DNS only|DoH-based filtering|Yes|No|
 |DNS with WARP+|DoH-based filtering with encrypted WARP+ traffic|Yes|No|

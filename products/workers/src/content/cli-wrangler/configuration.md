@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: configuration
 ---
 
 # Configuration
@@ -47,7 +48,9 @@ Keys to configure per project in your `wrangler.toml`.
   - Specifies how `wrangler build` will build your project. There are three options: `javascript`, `webpack`, and `rust`. `javascript` checks for a build command specified in the `[build]` section, `webpack` builds your project using webpack v4, and `rust` compiles the Rust in your project to WebAssembly.
 
 <Aside>
-  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`[build]`](#build) section.
+
+  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`build`](#build) section.
+
 </Aside>
 
 - `account_id` <Type>inherited</Type> <PropMeta>required</PropMeta>
@@ -97,6 +100,11 @@ Keys to configure per project in your `wrangler.toml`.
 - `usage_model` <Type>top level</Type> <PropMeta>optional</PropMeta>
   - Specifies the [Usage Model](/platform/pricing#usage-models) for your Worker. There are two options - [`bundled`](/platform/limits#bundled-usage-model) and [`unbound`](/platform/limits#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
+- `build` <Type>inherited</Type> <PropMeta>optional</PropMeta>
+
+  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](#build) for more details.
+
+
 </Definitions>
 
 ### vars
@@ -106,7 +114,9 @@ Values to use in your Worker script as text environment variables.
 Usage:
 
 ```toml
-vars = { FOO = "some value", BAR = "some other string" }
+[vars]
+FOO = "some value"
+BAR = "some other string"
 ```
 
 <Definitions>
@@ -120,9 +130,15 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 </Definitions>
 
+Alternatively, you can define `vars` using an "inline table" format. This style should not include any newlines to be considered valid TOML:
+
+```toml
+vars = { FOO = "some value", BAR = "some other string" }
+```
+
 <Aside>
 
-**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret). The `vars` definition in your `wrangler.toml` must not contain newlines in order to be valid TOML.
+**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret).
 
 </Aside>
 
@@ -158,13 +174,13 @@ kv_namespaces = [
 
 **Note:** Creating your KV Namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
 
-You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml#user-content-table).
+You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
 </Aside>
 
 ### site
 
-A Workers Site generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
+A [Workers Site](/platform/sites) generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
 
 Usage:
 
@@ -195,7 +211,7 @@ entry-point = "workers-site"
 
 To learn more about the optional `include` and `exclude` fields, visit [Ignoring Subsets of Static Assets](#ignoring-subsets-of-static-assets).
 
-You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml#user-content-inline-table).
+You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
 
 #### Storage Limits
 
@@ -254,9 +270,11 @@ Wrangler will always ignore:
 
 You can learn more about the standard patterns used for include and exclude in the [gitignore documentation](https://git-scm.com/docs/gitignore).
 
-#### Customizing your Build
+#### Customizing your Sites Build
 
 Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+
+You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
 
 ### triggers
 
@@ -321,15 +339,15 @@ Usage:
 
 ```toml
 [build]
-upload.format = "service-worker"
 command = "npm install && npm run build"
+
+[build.upload]
+format = "service-worker"
 ```
 
+#### `[build]`
+
 <Definitions>
-
-- `upload.format` <PropMeta>required</PropMeta>
-
-  - The format of the Worker script, must be "service-worker"
 
 - `command` <PropMeta>optional</PropMeta>
 
@@ -345,30 +363,52 @@ command = "npm install && npm run build"
 
 </Definitions>
 
+#### `[build.upload]`
+
+<Definitions>
+
+  - `format` <PropMeta>required</PropMeta>
+
+    - The format of the Worker script, must be "service-worker"
+
+</Definitions>
+
 <Aside>
 
   **Note:** Make sure the `main` field in your `package.json` references the Worker script you want to publish.
 
 </Aside>
 
-#### ES Modules
+#### Modules
 
-ES modules, also known as [ECMAScript modules](https://nodejs.org/api/esm.html#esm_introduction), are scripts that use `import` and `export` semantics. If your account has opt-in to the [Durable Objects](/learning/using-durable-objects) open beta, then you have access to the `modules` format, since it's required to use Durable Objects. 
+Cloudflare Workers now supports uploading scripts as a collection of modules, instead of a single file. Scripts uploaded in this fashion are written a bit differently -- they `export` their event handlers instead of registering them using the global `addEventListener('fetch', handler...)`. Modules also receive bindings (like KV Namespaces, Config Vargs, and Secrets) as arguments to their handlers, rather than global variables. Uploaded modules can `import` (for ES Modules) or `require()` (for CommonJS modules) other uploaded modules.
+
+<Aside>
+
+  **Note:** You currently need to opt-in to the [Durable Objects](/learning/using-durable-objects)
+  open beta to be able to use the `modules` format. This restriction will be removed as modules are
+  better supported in the Workers Dashboard.
+
+</Aside>
 
 ```js
 import html from './index.html'
 
 export default {
-  async fetch(request, env) {
+  // * request is the same as `event.request` from the service worker format
+  // * waitUntil() and passThroughOnException() are accessible from `ctx` instead of `event` from the service worker format
+  // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
+  // are exposed, instead of them being placed in global scope.
+  async fetch(request, env, ctx) {
     const headers = { 'Content-Type': 'text/html;charset=UTF-8' }
     return new Response(html, { headers })
   }
 }
 ```
 
-In the future, ES modules will become the default experience for creating Workers. Until then, we are still working on "full" support, so consider this as a beta feature.
+In the future, Modules will become the default format for writing Workers scripts. Until then, we are still working on "full" support, so consider this as a beta feature.
 
-Usage:
+To create a Workers project using wrangler and Modules, you'll need to add a `[build]` section:
 
 ```toml
 [build]
@@ -385,7 +425,7 @@ main = "./worker.mjs"
 
 - `command` <PropMeta>optional</PropMeta>
 
-  - The command to build your project which is executed in the shell of your machine: `sh` for Linux and MacOS, and `cmd` for Windows. You can also use shell operators such as `&&` and `|`
+  - The command to build your project which is executed in the shell of your machine: `sh` for Linux and MacOS, and `cmd` for Windows. You can also use shell operators such as `&&` and `||`
 
 - `cwd` <PropMeta>optional</PropMeta>
 
@@ -403,33 +443,45 @@ main = "./worker.mjs"
 
 - `format` <PropMeta>required</PropMeta>
 
-  - The format of the Worker script, must be `"modules"`
+  - The format of the Workers script, must be `"modules"`
 
 - `dir` <PropMeta>optional</PropMeta>
 
-  - The upload directory for modules, defaults to "dist" relative to the project root directory
+  - The directory you wish to upload your modules from, defaults to "dist" relative to the project root directory
 
 - `main` <PropMeta>required</PropMeta>
 
-  - The relative path of the main module from `dir`, including the `./`. The main module must be an ES module. For projects with a build script, this usually refers to the output of your JavaScript bundler
-  
+  - The relative path of the main module from `dir`, including the `./` prefix. The main module must be an ES module. For projects with a build script, this usually refers to the output of your JavaScript bundler.
+
 <Aside>
 
-  **Note:** If your project is written using CommonJS modules, you will need to re-export using an ES module. See the [modules-webpack-commonjs](https://github.com/cloudflare/modules-webpack-commonjs) template as an example.
+  **Note:** If your project is written using CommonJS modules, you will need to re-export your handlers and Durable Object classes using an ES module shim. See the [modules-webpack-commonjs](https://github.com/cloudflare/modules-webpack-commonjs) template as an example.
 
 </Aside>
 
 - `rules` <PropMeta>optional</PropMeta>
 
-  - An ordered list of rules that define which modules to import
+  - An ordered list of rules that define which modules to import, and what type to import them as.
+    You'll need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
+    have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
   - Defaults:
 
     ```toml
-    rules = [
-      {type = "ESModule", globs = ["**/*.mjs"]},
-      {type = "CommonJS", globs = ["**/*.js", "**/*.cjs"]}
-    ]
+    [build.upload]
+    format = "modules"
+    main = "./worker.mjs"
+
+    # You don't need to include these default rules in your `wrangler.toml`, they are implicit.
+    # The default rules are treated as the last two rules in the list.
+
+    [[build.upload.rules]]
+    type = "ESModule"
+    globs = ["**/*.mjs"]
+
+    [[build.upload.rules]]
+    type = "CommonJS"
+    globs = ["**/*.js", "**/*.cjs"]
     ```
 
   - <Definitions>
@@ -440,19 +492,23 @@ main = "./worker.mjs"
 
       <TableWrap>
 
-        | `type`       | JavaScript class     | 
+        | `type`       | JavaScript type      |
         | ------------ | -------------------- |
         | ESModule     | -                    |
         | CommonJS     | -                    |
         | Text         | `String`             |
-        | Data         | `ArrayBuffer`        | 
+        | Data         | `ArrayBuffer`        |
         | CompiledWasm | `WebAssembly.Module` |
 
       </TableWrap>
 
     - `globs` <PropMeta>required</PropMeta>
 
-      - Unix-style [glob rules](https://gulpjs.com/docs/en/getting-started/explaining-globs/) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the relative path without `./`. Rules are evaluated in order, starting at the top.
+      - Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
+
+    - `fallthrough` <PropMeta>optional</PropMeta>
+
+      - This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
 
     </Definitions>
 
@@ -482,7 +538,8 @@ kv_namespaces = [
 
 [build]
 command = "webpack"
-upload.format = "service-worker"
+[build.upload]
+format = "service-worker"
 
 [site]
 bucket = "./public"

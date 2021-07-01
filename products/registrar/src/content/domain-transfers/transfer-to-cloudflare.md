@@ -1,12 +1,21 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
+
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
 # Transfer to Cloudflare
 
 Domain transfers tell your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar, at any given time, to make changes on your behalf.
 
 Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some steps at both your new registrar and the one you are leaving. Each registrar handles transfers a bit differently, but in general they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 
@@ -47,6 +56,10 @@ Sites can be unavailable for a few reasons, including:
 * Cloudflare does not yet support the TLD
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
+
+<Aside>
+If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when transferring a domain.
+</Aside>
 
 --------
 

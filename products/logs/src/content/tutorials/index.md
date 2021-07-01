@@ -1,18 +1,12 @@
 ---
-title: Tutorials and examples
 order: 80
+pcx-content-type: navigation
 ---
 
-# Tutorials and examples
+# Tutorials
 
-Learn to manage and analyze your Cloudflare Logs with the following resources.
+Learn to manage and analyze your Cloudflare Logs with the following resources. For information about Cloudflare's analytics integrations, refer to [Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations).
 
 ### Logpull and Logpsuh
 
 - [Parsing Cloudflare Logs JSON data](/tutorials/parsing-json-log-data/)
-
-### Logpush
-
-- [Manage Logpush with cURL](/tutorials/tutorial-logpush-curl/)
-- [Logpush using Python (example)](/tutorials/example-logpush-python/)
-- [Analyze logs with Google Cloud Platform](/analytics-integrations/google-cloud/)

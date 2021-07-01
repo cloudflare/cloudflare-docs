@@ -1,6 +1,7 @@
 ---
 order: 3
 title: Short-lived certificates
+pcx-content-type: how-to
 ---
 
 # Configure short-lived certificates
@@ -11,7 +12,7 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 ## 1. **Secure a server behind Cloudflare Access**.
 
-To protect a resource behind Cloudflare Access, first follow [these instructions](/applications/non-HTTP/ssh/ssh-connections) to secure the server.
+To protect a resource behind Cloudflare Access, first follow [these instructions](/tutorials/ssh) to secure the server.
 
 ## 2. **Generate a short-lived certificate public key**.
 
@@ -98,16 +99,25 @@ The change above will tell your SSH configuration to use the public key saved in
 
 Once you have modified your SSHD configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
+### Debian/Ubuntu
+
 ```sh
 $ sudo service ssh restart
 $ sudo systemctl restart ssh
+```
+
+### CentOS/RHEL
+
+```sh
+$ sudo service sshd restart
+$ sudo systemctl restart sshd
 ```
 
 ## 7. Connect as a user
 
 ### Configure your client SSH config
 
-On the client side, follow [these instructions](/applications/non-HTTP/ssh/ssh-connections/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
+On the client side, follow [this tutorial](/tutorials/ssh) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 

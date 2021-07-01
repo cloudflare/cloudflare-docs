@@ -1,10 +1,12 @@
 ---
+title: Traffic steering
 order: 12
+pcx-content-type: reference
 ---
 
-# Traffic steering
+import RegionMapping from "../_partials/_region-mapping.md"
 
-## Overview
+# Traffic steering
 
 Load Balancing provides several traffic steering modes, which allow customers to optimize how load balancers route traffic.
 
@@ -48,95 +50,30 @@ Geo Steering directs traffic to pools to a specific geographical region or — f
 
 You can assign multiple pools to the same region and the load balancer will use them in failover order. If there is no configuration for a region or pool, the load balancer will use the default failover order.
 
-Cloudflare has 13 geographic regions that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query. These regions are listed below, along with their region codes.
+Cloudflare has 13 geographic regions that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query. 
 
-<table>
-  <thead>
-  <tr>
-   <th>Region Code
-   </th>
-   <th>Region
-   </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-   <td><strong>WNAM</strong>
-   </td>
-   <td>Western North America
-   </td>
-  </tr>
-  <tr>
-   <td><strong>ENAM</strong>
-   </td>
-   <td>Eastern North America
-   </td>
-  </tr>
-  <tr>
-   <td><strong>WEU</strong>
-   </td>
-   <td>Western Europe
-   </td>
-  </tr>
-  <tr>
-   <td><strong>EEU</strong>
-   </td>
-   <td>Eastern Europe
-   </td>
-  </tr>
-  <tr>
-   <td><strong>NSAM</strong>
-   </td>
-   <td>Northern South America
-   </td>
-  </tr>
-  <tr>
-   <td><strong>SSAM</strong>
-   </td>
-   <td>Southern South America
-   </td>
-  </tr>
-  <tr>
-   <td><strong>OC</strong>
-   </td>
-   <td>Oceania
-   </td>
-  </tr>
-  <tr>
-   <td><strong>ME</strong>
-   </td>
-   <td>Middle East
-   </td>
-  </tr>
-  <tr>
-   <td><strong>NAF</strong>
-   </td>
-   <td>Northern Africa
-   </td>
-  </tr>
-  <tr>
-   <td><strong>SAF</strong>
-   </td>
-   <td>Southern Africa
-   </td>
-  </tr>
-  <tr>
-   <td><strong>SAS</strong>
-   </td>
-   <td>Southern Asia
-   </td>
-  </tr>
-  <tr>
-   <td><strong>SEAS</strong>
-   </td>
-   <td>Southeast Asia
-   </td>
-  </tr>
-  <tr>
-   <td><strong>NEAS</strong>
-   </td>
-   <td>Northeast Asia
-   </td>
-  </tr>
-  </tbody>
-</table>
+<RegionMapping/>
+
+For more details on working with regions and region codes, see [Region Mapping API](../region-mapping-api).
+
+## Proximity Steering
+
+Choose **Proximity Steering** to route visitors or internal services to the closest physical data center.
+
+To use proximity steering on a load balancer, you first need to add GPS coordinates to each origin pool.
+
+### When to add proximity steering
+
+- For new pools, add GPS coordinates when you create a pool.
+- For existing pools, add GPS coordinates when [managing pools](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/pools) or in the **Add Traffic Steering** step of creating a load balancer.
+
+### How to add proximity steering
+
+To add coordinates when creating or editing a pool:
+1. Select **Configure co-ordinates for Proximity Steering**.
+1. Enter the latitude and longitude or drag a marker on the map.
+1. Select **Save**.
+
+<Aside type="warning" header="Warning:">
+  For accurate proximity steering, add GPS coordinates to all pools within the same load balancer.
+</Aside>

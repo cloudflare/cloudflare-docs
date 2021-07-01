@@ -1,6 +1,7 @@
 ---
 title: Expressions
 order: 20
+pcx-content-type: reference
 ---
 
 # Load Balancing expressions
@@ -39,7 +40,7 @@ In general, simple expressions use this pattern:
 <field> <operator> <value>
 ```
 
-For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
+For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/reference).
 
 ---
 
@@ -47,7 +48,7 @@ For more, see [_Supported fields and operators_](/understand-basics/load-balanci
 
 A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
 
-The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `stream1`:
+The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `webserver`:
 
 ```sql
 (http.request.uri.path contains "/content") 
@@ -62,7 +63,7 @@ In general, compound expressions use this pattern:
 
 A compound expression can be an operand of a logical operator. This allows multiple operators to construct a compound expression from many individual expressions.
 
-For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/supported-fields-and-operators).
+For more, see [_Supported fields and operators_](/understand-basics/load-balancing-rules/reference).
 
 ---
 

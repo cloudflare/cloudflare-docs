@@ -2,6 +2,7 @@
 updated: 2021-03-02
 category: 🛡️ Web Gateway
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Upload and use a list of objects
@@ -24,7 +25,9 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 * Manage the list in the Teams dashboard
 * Use the list in a Gateway policy
 
-**⏲️ Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
 
 ## Upload a CSV
 

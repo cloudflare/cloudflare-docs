@@ -1,4 +1,5 @@
 ---
+pcx-content-type: concept
 order: 2
 ---
 
@@ -19,8 +20,20 @@ Cloudflare provides the following Managed Rulesets in the WAF:
       <td>Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. The ruleset is updated frequently to cover new vulnerabilities and reduce false positives.</td>
     </tr>
     <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/exposed-credentials-check#the-exposed-credentials-check-managed-ruleset'>Cloudflare Exposed Credentials Check Managed Ruleset</a></td>
+      <td>Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials.</td>
+    </tr>
+    <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='https://support.cloudflare.com/hc/articles/200172016#sJbboLurEVhipzWYJQnyz'>Cloudflare OWASP Core Ruleset</a></td>
       <td>Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.</td>
+    </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Data Loss Prevention (Beta)</td>
+      <td>Created by Cloudflare to address common data loss threats. These rules run on the response phase and monitor download of files or specific sensitive data — for example, financial and personally identifiable information.</td>
+    </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/ddos-l7-mitigation#the-cloudflare-http-ddos-managed-ruleset'>Cloudflare HTTP DDoS Managed Ruleset (Beta)</a></td>
+      <td>Created by Cloudflare to give users more control over how and when Cloudflare's automated mitigation systems will handle layer 7 DDoS attacks. The rules in this Managed Ruleset are always enabled. However, you can define overrides to modify the rule actions and the sensitivity of the various rules.</td>
     </tr>
   </tbody>
 </table></TableWrap>

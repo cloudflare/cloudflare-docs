@@ -1,6 +1,7 @@
 ---
-title: Getting started
+title: Get started
 order: 10
+pcx-content-type: how-to
 ---
 
 # Enabling Cloudflare Web Analytics
