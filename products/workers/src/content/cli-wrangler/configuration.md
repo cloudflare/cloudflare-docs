@@ -70,13 +70,13 @@ kv_namespaces = [
   { binding = "FOO", id = "1a2b3c4d5e", preview_id = "6e7f8g9h10i" }
 ]
 ```
-To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`. 
+To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`.
 
 ---
 
 ## Keys
 
-There are three types of keys in a `wrangler.toml` file: 
+There are three types of keys in a `wrangler.toml` file:
 
 * Top level only keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
 
@@ -190,7 +190,7 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 ### kv_namespaces
 
-`kv_namespaces` defines a list of KV namespace bindings for your Worker. 
+`kv_namespaces` defines a list of KV namespace bindings for your Worker.
 
 Usage:
 
@@ -207,7 +207,7 @@ Much like environment variables and secrets, the `binding` names are available t
 
 let value = await FOO.get("keyname");
 //=> gets the value for "keyname" from
-//=> the FOO variable, which points to 
+//=> the FOO variable, which points to
 //=> the "0f2ac...e279" KV namespace
 ```
 
@@ -433,9 +433,9 @@ format = "service-worker"
 
 #### Modules
 
-Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which required a single file to be uploaded. 
+Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which required a single file to be uploaded.
 
-Module Workers `export` their event handlers instead of using `addEventListener` calls. 
+Module Workers `export` their event handlers instead of using `addEventListener` calls.
 
 Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets) as arguments to the exported handlers. Previously, with the Service Worker format, these bindings were available as global variables.
 

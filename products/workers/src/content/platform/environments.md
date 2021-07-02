@@ -74,7 +74,7 @@ route = "your-custom-route"
 
 #### Publishing to a custom domain
 
-This `wrangler.toml` file has no environments defined and will publish `my-worker` to `example.com/*`. 
+This `wrangler.toml` file has no environments defined and will publish `my-worker` to `example.com/*`.
 The `workers_dev` key is missing from this example, but because a route is specified, the inferred value of `workers_dev` is `false`.
 
 ```toml
@@ -90,7 +90,7 @@ account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
 route = "example.com/*"
 ```
-To deploy this worker, run the `wrangler publish` command like the example below: 
+To deploy this worker, run the `wrangler publish` command like the example below:
 
 ```sh
 ~/my-worker $ wrangler publish
@@ -116,7 +116,7 @@ account_id = "12345678901234567890"
 # should be deployed to *.workers.dev
 workers_dev = true
 ```
-This example will publish to your `*workers.dev` subdomain because `workers_dev` has been set to `true`. 
+This example will publish to your `*workers.dev` subdomain because `workers_dev` has been set to `true`.
 
 Run `wrangler publish` as normal to deploy your Worker script:
 
@@ -128,9 +128,9 @@ Run `wrangler publish` as normal to deploy your Worker script:
 
 ### Introducing environments
 
-Environments enable you to write and deploy projects to multiple places. 
+Environments enable you to write and deploy projects to multiple places.
 
-You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key. 
+You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key.
 
 The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/cli-wrangler/configuration#keys) for each environment if you are deploying to a custom domain.
 
@@ -312,7 +312,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
     workers_dev = true
 
     # Define top-level environment variables
-    # under the `[vars]` block using 
+    # under the `[vars]` block using
     # the `key = "value"` format
     [vars]
     API_TOKEN = "example_dev_token"
