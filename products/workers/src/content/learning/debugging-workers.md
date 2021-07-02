@@ -55,7 +55,7 @@ Inserting `console.log` lines throughout your code can help you understand the s
 
 You can customize how `wrangler dev` works to fit your needs: see [the docs](/cli-wrangler/commands#dev-alpha) for available configuration options.
 
-<Aside>
+<Aside type="warning">
 
 There is a bug associated with `wrangler dev` documented in the [Known issues section](/workers/platform/known-issues#wrangler-dev). 
 
