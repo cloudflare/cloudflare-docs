@@ -20,9 +20,6 @@ tags:
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
  * @see https://tools.ietf.org/html/rfc7617
  *
- * The user and password MUST NOT contain any control characters.
- * @see https://tools.ietf.org/html/rfc5234#appendix-B.1
- *
  * A user-id containing a colon (":") character is invalid, as the
  * first colon in a user-pass string separates user and password.
  */
@@ -114,24 +111,21 @@ function basicAuthentication(request) {
 
   const [scheme, encoded] = Authorization.split(' ')
 
-  // The Authorization header must look like "Basic user:encoded".
-  if (scheme !== 'Basic') throw new BadRequestException('Malformed authorization header.')
+  // The Authorization header must start with "Basic", followed by a space.
+  if (!encoded || scheme !== 'Basic')
+    throw new BadRequestException('Malformed authorization header.')
 
-  // Decode the base64 value.
-  const decoded = atob(encoded)
-
-  // The username & password are split by the first colon.
-  const seperatorPosition = decoded.indexOf(':')
-  
-  // NOTE: Without `.normalize()` unicode characters could fail verification.
+  // Decodes the base64 value and performs unicode normalization.
+  // @see https://datatracker.ietf.org/doc/html/rfc7613#section-3.3.2 (and #section-4.2.2)
   // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+  const decoded = atob(encoded).normalize('NFC')
 
-  return { 
-    // The username is the value before the first colon.
-    user: decoded.substring(0, seperatorPosition).normalize(),
-    // The password is everything after the first colon.
-    pass: decoded.substring(seperatorPosition + 1).normalize(),
-  }
+  // The user & password are split by the first colon and MUST NOT contain control characters.
+  // @see https://tools.ietf.org/html/rfc5234#appendix-B.1 (=> "CTL = %x00-1F / %x7F")
+  try {
+    const [matched, user, pass] = decoded.match(/^([^\0-\x1F\x7F:]*):([^\0-\x1F\x7F]*)$/)
+    return { user, pass }
+  } catch { throw new BadRequestException('Invalid decoded "user:password" value.') }
 }
 
 function UnauthorizedException(reason) {
