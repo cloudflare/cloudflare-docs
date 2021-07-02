@@ -88,6 +88,12 @@ const products = [
     wrap: true,
   },
   {
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
@@ -112,12 +118,6 @@ const products = [
     title: "Image Resizing",
     path: "images",
     icon: "images",
-  },
-  {
-    title: "Cloudflare Fundamentals",
-    path: "fundamentals",
-    icon: "fundamentals",
-    wrap: true
   },
   {
     title: "Load Balancing",
