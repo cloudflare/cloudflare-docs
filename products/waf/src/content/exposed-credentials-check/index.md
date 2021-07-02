@@ -88,4 +88,4 @@ Rules that check for exposed credentials run before Rate Limiting Rules.
 
 ## Availability
 
-Exposed credentials checking is available in Beta to all plans.
+Exposed credentials checking is available in Beta to all paid plans.
