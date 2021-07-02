@@ -10,7 +10,7 @@ You can use the [Rulesets API](https://api.cloudflare.com/) to configure payload
 
 ## Configure and enable payload logging
 
-Do the following:
+To configure:
 
 1. Use the [Update rule in ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api/update-rule) API method to update the rule that executes the Managed Ruleset.
 
