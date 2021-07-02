@@ -1,12 +1,10 @@
 ---
-order: 1
+pcx-content-type: tutorial
 ---
 
 # DNS in Google Sheets
 
-They thought we wouldn't go there, but they thought wrong.
-
-If you want or need to find out some DNS records inside of Google Sheets, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code.
+1.1.1.1 works directly inside Google Sheets. If you want or need to find out some DNS records, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
 function NSLookup(type, domain) {
@@ -70,34 +68,41 @@ function NSLookup(type, domain) {
 }
 ```
 
-Now, when you feed the function `NSLookup` a record type and a domain, you'll get a DNS record value in the cell you called `NSLookup`.
+Now, when you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
 
 The record types supported are:
 
+* A
+* AAAA
+* CAA
+* CNAME
+* DS
+* DNSKEY
+* MX
+* NS
+* NSEC
+* NSEC3
+* RRSIG
+* SOA
+* TXT
+
+
+For example, typing:
+
 ```txt
-A
-AAAA
-CAA
-CNAME
-DS
-DNSKEY
-MX
-NS
-NSEC
-NSEC3
-RRSIG
-SOA
-TXT
+NSLookup(B1, B2)
 ```
 
-Example:
-
-`NSLookup(B1, B2)`
+<div class="medium-img">
 
 ![function](../static/google-sheet-function.png)
 
-Returns:
+</div>
 
-`198.41.214.162, 198.41.215.162`
+Returns `198.41.214.162, 198.41.215.162`
+
+<div class="medium-img">
 
 ![function](../static/google-sheet-result.png)
+
+</div>

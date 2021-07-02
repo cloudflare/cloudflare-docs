@@ -1,5 +1,5 @@
 ---
-order: 1
+pcx-content-type: how-to
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"
@@ -8,13 +8,13 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 ## Android 9 Pie or later
 
-Android Pie or later supports Private DNS, which uses DNS over TLS to secure your queries.
-If your device runs Android version 9 or later, this is the recommended method to set up 1.1.1.1 because unlike previous versions
-of Android, it does not need to be configured for each new Wi-Fi network.
+Android Pie or later supports Private DNS, which uses DNS over TLS to secure your queries. If your device runs Android version 9 or later, this is the recommended method to set up 1.1.1.1 because unlike previous versions of Android, 1.1.1.1 does not need to be configured for each new WiFi network.
 
 Follow these steps to configure your device to use 1.1.1.1.
 
-1. Go to **Settings** > **Network & internet** > **Advanced** > **Private DNS**.
+1. Go to **Settings** > **Network & internet** 
+
+1. Select **Advanced** > **Private DNS**.
 
 1. Select the **Private DNS** provider hostname option.
 
@@ -22,21 +22,15 @@ Follow these steps to configure your device to use 1.1.1.1.
 
 1. Visit [1.1.1.1/help](https://1.1.1.1/help) to verify DNS over TLS is enabled.
 
-## Previous versions
+## Previous Android versions
 
-Follow this quick guide to start using 1.1.1.1 on your Android.
-
-<StreamVideo id="62dceb0d5905f0c98a895d21409d6247"/>
-
-1. Open **Settings**.
-
-1. Click on **Wi-Fi**.
+1. Open **Settings** > **Wi-Fi**.
 
 1. Press down and hold on the name of the network you are currently connected to.
 
 1. Click **Modify Network**.
 
-1. Click the check box **Show Advanced Options**.
+1. Select the check box **Show Advanced Options**.
 
 1. Change the IP Settings to **Static**.
 

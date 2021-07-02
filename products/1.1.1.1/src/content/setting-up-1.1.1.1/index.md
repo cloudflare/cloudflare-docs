@@ -1,5 +1,6 @@
 ---
-order: -1
+order: 2
+pcx-content-type: navigation
 ---
 
 # Setting up 1.1.1.1

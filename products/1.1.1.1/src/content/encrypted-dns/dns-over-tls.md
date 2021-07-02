@@ -1,20 +1,21 @@
 ---
-order: 9
+order: 10
+pcx-content-type: concept
 ---
 
 # DNS over TLS
 
-By default, DNS is sent over a plaintext connection. DNS over TLS is one way to send DNS queries over an encrypted connection. Cloudflare supports DNS over TLS on standard port 853 and is compliant with [RFC7858](https://tools.ietf.org/html/rfc7858).
+By default, DNS is sent over a plaintext connection. DNS over TLS (DoT) is one way to send DNS queries over an encrypted connection. Cloudflare supports DNS over TLS on standard port 853 and is compliant with [RFC7858](https://tools.ietf.org/html/rfc7858). With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of the user datagram protocol (UDP). Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. This gives administrators the ability to monitor and block DNS queries, which is important for identifying and stopping malicious traffic.
 
 ## Configuration
 
-Cloudflare supports DNS over TLS on `1.1.1.1` and `1.0.0.1` on port 853. The certificate presented is for cloudflare-dns.com.
+Cloudflare supports DNS over TLS on `1.1.1.1` and `1.0.0.1` on port 853. The certificate presented is for `cloudflare-dns.com`.
 
 ## How it works
 
 A stub resolver (the DNS client on a device that talks to the DNS resolver) connects to the resolver over a TLS connection:
 
-1. Before the connection the DNS stub resolver has stored a base64 encoded SHA256 hash of cloudflare-dns.com's TLS certificate (called SPKI).
+1. Before the connection, the DNS stub resolver has stored a base64 encoded SHA256 hash of the TLS certificate from `cloudflare-dns.com` (called SPKI).
 1. DNS stub resolver establishes a TCP connection with `cloudflare-dns.com:853`.
 1. DNS stub resolver initiates a TLS handshake.
 1. In the TLS handshake, `cloudflare-dns.com` presents its TLS certificate.

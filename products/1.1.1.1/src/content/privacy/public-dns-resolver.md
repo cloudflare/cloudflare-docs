@@ -1,5 +1,5 @@
 ---
-order: 1
+pcx-content-type: concept
 ---
 
 # 1.1.1.1 Public DNS Resolver

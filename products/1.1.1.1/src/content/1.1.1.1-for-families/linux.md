@@ -1,8 +1,8 @@
 ---
-order: 4
+pcx-content-type: how-to
 ---
 
-import CaptivePortals from "../../_partials/_captive-portals.md"
+import CaptivePortals from "../_partials/_captive-portals.md"
 
 # Linux setup instructions
 
@@ -13,7 +13,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
 #### IPv4
 
 1. Click **System** > **Preferences** > **Network Connections**.
-1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
+1. Select **Wireless** tab, then choose the WiFi network you are currently connected to.
 1. Click **Edit** > **IPv4**.
 1. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
 
@@ -27,7 +27,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
 #### IPv6
 
 1. Click **System** > **Preferences** > **Network Connections**.
-1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
+1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
 1. Go to **IPv6**.
 1. Add the IPv6 addresses listed below:
 
@@ -56,7 +56,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
     1.0.0.2
     ```
 
-2. Press the <kbd>ESC</kbd> key on your keyboard to save and exit vim. Then, after lifting the key, type:
+2. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, after lifting the key, type:
 
     ```
     :wq
@@ -77,7 +77,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
     2606:4700:4700::1002
     ```
 
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit vim. Then, after lifting the key, type:
+1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, after lifting the key, type:
 
     ```
     :wq
@@ -90,7 +90,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
 #### IPv4
 
 1. Click **System** > **Preferences** > **Network Connections**.
-1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
+1. Select the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
 1. Click **Edit** > **IPv4**.
 1. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
 
@@ -103,7 +103,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
 #### IPv6
 
 1. Click **System** > **Preferences** > **Network Connections**.
-1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
+1. Select the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
 1. Go to **IPv6**.
 1. Add the IPv6 addresses listed below:
 
@@ -132,7 +132,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
     1.0.0.3
     ```
 
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit vim. Then, after lifting the key, type:
+1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, after lifting the key, type:
 
     ```
     :wq
@@ -153,7 +153,7 @@ import CaptivePortals from "../../_partials/_captive-portals.md"
     2606:4700:4700::1003
     ```
 
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit vim. Then, after lifting the key, type:
+1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, after lifting the key, type:
 
     ```
     :wq
