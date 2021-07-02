@@ -13,35 +13,106 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-A phase entry point ruleset contains an ordered list of rules that run in that phase. You can define rules in an entry point ruleset that execute a different ruleset.
+A phase entry point ruleset contains an ordered list of rules that run in that phase. You can define rules in an entry point ruleset that execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to add one or more rules to a phase entry point ruleset. When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist.
+To add one or more rules to a phase entry point ruleset, use the [Update ruleset](/cf-rulesets/rulesets-api/update) method of the [Rulesets API](/cf-rulesets/rulesets-api). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
 
-You can have entry point rulesets for each phase at the account level and at the zone level.
+If you are adding a **single** rule to a ruleset, consider using the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) API method instead — the request must only include the definition of the new rule. However, the endpoint of this API method includes the ruleset ID — get this information using the [List rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets) method.
 
+<Aside type="note" header="Creating an entry point ruleset">
 
-In the `data` field, include the following parameters:
+Instead of relying on the automatic creation of an entry point ruleset, you can also create this ruleset explicitly using the [Create ruleset](/cf-rulesets/rulesets-api/create) method.
 
-* `name`: The name of the phase entry point ruleset. You cannot change the name of a phase entry point ruleset after creating it.
-* `kind`: Indicates the ruleset kind. The kind must be `root` for phase entry point rulesets at the account level and `zone` for phase entry point rulesets at the zone level. You cannot edit the `kind` value later.
-* `phase`: Indicates the phase where you want to create the entry point ruleset.
-* `description`: Optional. You can update this field when editing the phase entry point ruleset.
+</Aside>
 
-Specify the rules of the entry point ruleset when creating it — that is, in the same API request. Alternatively, define the list of rules later, in a separate request, using the [Update ruleset](/cf-rulesets/rulesets-api/update) operation.
+---
 
 ## Examples
 
 <details>
-<summary>Example: Create phase entry point ruleset at the zone level</summary>
+<summary>Example: Set the rules of a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example creates a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase. It also defines a single rule that executes a Managed Ruleset for incoming requests.
+The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update ruleset](/cf-rulesets/rulesets-api/update) API method.
 
-Note the `kind`, `phase`, and `expression` field values:
+```json
+---
+header: Request
+---
+curl -X PUT \
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/phases/http_request_firewall_managed/entrypoint" \
+-d '{
+  "rules": [
+    {
+      "action": "execute",
+      "action_parameters": {
+        "id": "{managed-ruleset-id-1}"
+      },
+      "expression": "true"
+    },
+    {
+      "action": "execute",
+      "action_parameters": {
+        "id": "{managed-ruleset-id-2}"
+      },
+      "expression": "true"
+    }
+  ]
+}'
+```
 
-* `kind` is set to `zone` because this is a zone-level phase entry point ruleset.
-* `phase` is set to `http_request_firewall_managed` which is the name of the desired phase.
-* `expression` is set to `true` so that the rule applies to every request for the zone (`{zone-id}`).
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "{ruleset-id}",
+    "name": "Default",
+    "description": "",
+    "kind": "zone",
+    "version": "1",
+    "rules": [
+      {
+        "id": "{rule-id-1}",
+        "version": "1",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id-1}"
+        },
+        "last_updated": "2021-06-17T15:42:37.917815Z"
+      },
+      {
+        "id": "{rule-id-2}",
+        "version": "1",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{managed-ruleset-id-2}"
+        },
+        "last_updated": "2021-06-17T15:42:37.917815Z"
+      }
+    ],
+    "last_updated": "2021-06-17T15:42:37.917815Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
+<div>
+
+The following example adds a single rule to a phase entry point ruleset at the zone level using the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) API method.
 
 ```json
 ---
@@ -50,21 +121,13 @@ header: Request
 curl -X POST \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
+"https://api.cloudflare.com/client/v4/zone/{zone-id}/rulesets/{ruleset-id}/rules" \
 -d '{
-  "name": "Zone-level phase entry point ruleset",
-  "kind": "zone",
-  "description": "Executes a Managed Ruleset.",
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "{managed-ruleset-id}"
-      },
-      "expression": "true"
-    }
-  ],
-  "phase": "http_request_firewall_managed"
+  "action": "execute",
+  "action_parameters": {
+    "id": "{managed-ruleset-id}"
+  },
+  "expression": "true"
 }'
 ```
 
@@ -76,22 +139,32 @@ header: Response
   "result": {
     "id": "{ruleset-id}",
     "name": "Zone-level phase entry point ruleset",
-    "description": "Executes a Managed Ruleset.",
-    "kind": "zone",
-    "version": "1",
+    "description": "",
+    "kind": "root",
+    "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "{existing-rule-id}",
+        "version": "1",
+        "action": "execute",
+        "expression": "true",
+        "action_parameters": {
+          "id": "{another-managed-ruleset-id}"
+        },
+        "last_updated": "2021-03-17T15:42:37.917815Z"
+      },
+      {
+        "id": "{new-rule-id}",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
           "id": "{managed-ruleset-id}"
         },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
+        "last_updated": "2021-06-30T15:42:37.917815Z"
       }
     ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
+    "last_updated": "2021-06-30T15:42:37.917815Z",
     "phase": "http_request_firewall_managed"
   },
   "success": true,
@@ -103,75 +176,6 @@ header: Response
 </div>
 </details>
 
-<details>
-<summary>Example: Create phase entry point ruleset at the account level</summary>
-<div>
+## Next steps
 
-The following example creates a phase entry point ruleset at the account level for the `http_request_firewall_managed` phase. It also defines a single rule in the entry point ruleset that executes a Managed Ruleset for incoming requests addressed at `example.com` or `anotherexample.com`.
-
-Note the `kind` and `phase` field values:
-
-* `kind` is set to `root` because this is an account-level phase entry point ruleset.
-* `phase` is set to `http_request_firewall_managed` which is the name of the desired phase.
-
-```json
----
-header: Request
----
-curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
--d '{
-  "name": "Account-level phase entry point ruleset",
-  "kind": "root",
-  "description": "Executes a Managed Ruleset for example.com and anotherexample.com.",
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "{managed-ruleset-id}"
-      },
-      "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}"
-    }
-  ],
-  "phase": "http_request_firewall_managed"
-}'
-```
-
-```json
----
-header: Response
----
-{
-  "result": {
-    "id": "{ruleset-id}",
-    "name": "Account-level phase entry point ruleset",
-    "description": "Executes a Managed Ruleset for example.com and anotherexample.com.",
-    "kind": "root",
-    "version": "1",
-    "rules": [
-      {
-        "id": "{rule-id}",
-        "version": "1",
-        "action": "execute",
-        "expression": "cf.zone.name in {\"example.com\" \"anotherexample.com\"}",
-        "action_parameters": {
-          "id": "{managed-ruleset-id}"
-        },
-        "last_updated": "2021-03-17T15:42:37.917815Z"
-      }
-    ],
-    "last_updated": "2021-03-17T15:42:37.917815Z",
-    "phase": "http_request_firewall_managed"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-</div>
-</details>
-
-To add a rule that executes a ruleset, see [Deploy rulesets](/cf-rulesets/deploy-rulesets).
+To deploy a ruleset in a phase, add a rule that executes that ruleset to the entry point ruleset. For more information, see [Deploy rulesets](/cf-rulesets/deploy-rulesets).
