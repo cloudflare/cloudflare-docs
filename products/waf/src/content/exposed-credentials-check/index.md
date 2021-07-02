@@ -7,8 +7,8 @@ order: 3
 
 <Aside type='warning'>
 
-This feature is only available for selected customers on an Enterprise plan.
-
+This feature is available to all paid plans.
+ 
 </Aside>
 
 Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
