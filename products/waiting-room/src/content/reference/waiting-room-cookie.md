@@ -28,14 +28,14 @@ The `__cfwaitingroom` cookie is used to:
 
 ## Estimated wait time
 
-When a visitor first enters the host and path combination for your waiting room, they receive the `__cfwaitingroom` cookie. That cookie contains a value for `bucketId`, which corresponds to the minute your visitor entered the waiting room. When we group visitors by `bucketId`, we can see how many visitors are in front of a specific bucket.
+When a visitor first enters the host and path combination for your waiting room, they receive the `__cfwaitingroom` cookie. That cookie contains a unique group id, which corresponds to the minute your visitor entered the waiting room. Using this value, we can see how many visitors are in front of a specific group.
 
 Each cookie also contains a value for `acceptedAt`, which corresponds to the minute your visitor entered your application. This value lets us know how many visitors per minute are leaving the waiting room to enter your application.
 
 ```txt
-visitorsAhead ÷ activeUsersToWebApplication = estimatedMinWait
+visitorsAhead ÷ activeUsersToWebApplication = estimatedWaitTime
 ```
 
-We combine these pieces of information to calculate estimated wait time for each bucket of visitors.
+We combine these pieces of information to calculate estimated wait time for each group of visitors.
 
 For more details about the technical implementation of Cloudflare Waiting Room, see the [blog post](https://blog.cloudflare.com/building-waiting-room-on-workers-and-durable-objects/).
