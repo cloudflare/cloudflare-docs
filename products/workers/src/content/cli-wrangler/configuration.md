@@ -7,7 +7,7 @@ pcx-content-type: configuration
 
 ## Background
 
-Your project will need some configuration before you can publish your worker. These values are stored in a `wrangler.toml` file. You will need to manually edit this file to add these values before you can publish.
+Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file. You must manually edit this file to edit your keys and values before you can publish.
 
 ---
 
@@ -15,15 +15,63 @@ Your project will need some configuration before you can publish your worker. Th
 
 Top level configuration: the configuration values you specify at the top of your `wrangler.toml` will be applied to all environments if not otherwise specified in the environment.
 
-Environment configuration <PropMeta>(optional)</PropMeta>: the configuration values you specify under an `[env.name]` in your `wrangler.toml`
+The layout of a top level configuration in a `wrangler.toml` file is displayed below:
+
+```toml
+-
+your-worker.toml
+-
+name = "your-worker"
+type = "javascript"
+account_id = "your-account-id"
+
+# This field speficies that the Worker
+# will be deployed to *.workers.dev domain
+workers_dev = true
+
+# -- OR --
+
+# These fields specify that the Worker
+# will deploy to a custom domain
+zone_id = "your-zone-id"
+routes = ["example.com/*"]
+```
+
+Environment configuration <PropMeta>(optional)</PropMeta>: the configuration values you specify under an `[env.name]` in your `wrangler.toml` file.
 
 Environments is a feature that allows you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the commands that are deploying live Worker scripts:
 
 - `build`
+- `dev`
 - `preview`
 - `publish`
+- `secret`
 
-Some environment properties can be [_inherited_](#keys) from the top level configuration, but values in an environment will always override those at the top level.
+An example syntax would look like this: `wrangler publish --env "environment name"`.
+
+Some environment properties can be [_inherited_](#keys) from the top level configuration, but if new values are configured in an environment, they will always override those at the top level.
+
+An example of a `[env.name]` configuration looks like this:
+
+```toml
+-
+your-worker.toml
+-
+name = "your-worker"
+type = "javascript"
+account_id = "your-account-id"
+
+[env.helloworld]
+# These new values will override the top level configuration.
+name = "your-worker-helloworld"
+account id = "your-other-account-id"
+
+# Any additional keys, like environment variables, will be placed here.
+vars = { FOO = "some value", BAR = "some other string" }
+kv_namespaces = [
+  { binding = "FOO", id = "1a2b3c4d5e", preview_id = "6e7f8g9h10i" }
+
+```
 
 ---
 
@@ -31,7 +79,8 @@ Some environment properties can be [_inherited_](#keys) from the top level confi
 
 Keys to configure per project in your `wrangler.toml`.
 
-**Top level only**: required to be configured at the top level of your wrangler.toml only; multiple environments on the same project must share this property
+// why is this here? are there any top level only keys?
+**Top level only**: required to be configured at the top level of your `wrangler.toml` only; multiple environments on the same project must share this property.
 
 **Inherited**: Can be configured at the top level and/or environment. If the property is defined _only_ at the top level, the environment will use the property value from the top level. If the property is defined in the environment, the environment value will override the top level value.
 
@@ -63,7 +112,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `workers_dev` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is a boolean flag that specifies if your worker will be deployed to your [workers.dev](https://workers.dev) subdomain. If omitted defaults to false.
+  - This is a boolean flag that specifies if your Worker will be deployed to your [workers.dev](https://workers.dev) subdomain. If omitted defaults to false.
 
 - `route` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -71,11 +120,11 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `routes` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
-  - A list of routes you’d like to use your worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a [workers.dev](https://workers.dev) subdomain.
+  - A list of routes you would like to use your Worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a [workers.dev](https://workers.dev) subdomain.
 
 - `webpack_config` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is the path to a custom webpack configuration file for your worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Visit the [Wrangler webpack page](/cli-wrangler/webpack) for more information.
+  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Visit the [Wrangler webpack page](/cli-wrangler/webpack) for more information.
 
 - `vars` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -102,7 +151,7 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `build` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](#build) for more details.
+  - Allows configuring a custom build step to be run by Wrangler when building your Worker. See the [custom builds documentation](#build) for more details.
 
 
 </Definitions>
@@ -123,7 +172,7 @@ BAR = "some other string"
 
 - `FOO`
 
-  - The variable to access in your Worker script
+  - The [variable](/workers/platform/environments#environment-variables) to access in your Worker script
 
 - `"some value"`
   - The string value the variable resolves to
@@ -406,9 +455,9 @@ export default {
 }
 ```
 
-In the future, Modules will become the default format for writing Workers scripts. Until then, we are still working on "full" support, so consider this as a beta feature.
+In the future, Modules will become the default format for writing Workers scripts. Until then, Cloudflare is still working on "full" support, so consider Modules as a beta feature.
 
-To create a Workers project using wrangler and Modules, you'll need to add a `[build]` section:
+To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
 ```toml
 [build]
@@ -462,7 +511,7 @@ main = "./worker.mjs"
 - `rules` <PropMeta>optional</PropMeta>
 
   - An ordered list of rules that define which modules to import, and what type to import them as.
-    You'll need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
+    You will need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
     have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
   - Defaults:
@@ -472,7 +521,7 @@ main = "./worker.mjs"
     format = "modules"
     main = "./worker.mjs"
 
-    # You don't need to include these default rules in your `wrangler.toml`, they are implicit.
+    # You do not need to include these default rules in your `wrangler.toml`, they are implicit.
     # The default rules are treated as the last two rules in the list.
 
     [[build.upload.rules]]

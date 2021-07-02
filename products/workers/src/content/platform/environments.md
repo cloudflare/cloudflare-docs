@@ -13,19 +13,21 @@ __Note__: You can only interact with environments using [wrangler](/cli-wrangler
 
 ## Background
 
-Environments is a feature that allows you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on `wrangler build`, `wrangler preview`, and `wrangler publish`.
+Environments are different contexts that your code runs in. The Workers platform allows you to create and manage different environments. Through environments, users are able to deploy the same project to multiple places under multiple names.
+
+These environments are utilized with the `--env` or `-e` flag on `wrangler build`, `wrangler dev`, `wrangler preview`, `wrangler publish` and `wrangler secret`.
 
 --------------------------------
 
 ## Usage
 
-The most common use case for environments is deploying to a staging subdomain before your production environment. `wrangler publish` will look at your top level configuration, and you can specify other environments beneath it. For details on what keys are inherited see [`wrangler.toml` configuration](/cli-wrangler/configuration#keys).
+The most common use case for environments is deploying to a staging subdomain before your production environment. `wrangler publish` will determine its destination by your top level configuration in your `wrangler.toml` file. Users can create other environments beneath the top level configuration in the `wrangler.toml` file through an [[env.name] configuration](/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by your environemnts from the top level configuration see [`wrangler.toml` configuration](/cli-wrangler/configuration#keys).
 
 ### Naming
 
-You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed worker, and the behavior would not be clear.
+You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker, and the behavior would not be clear.
 
-For this reason wrangler **appends the environment name to the top-level name to publish a Worker script**. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
+For this reason, Wrangler **appends the environment name to the top-level name to publish a Worker script**. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
 
 --------------------------------
 
@@ -67,7 +69,7 @@ name = "my-worker"
 account_id = "12345678901234567890"
 
 # this field specifies that the worker
-# should be deployed to workers.dev
+# should be deployed to *.workers.dev
 workers_dev = true
 ```
 
@@ -79,7 +81,7 @@ workers_dev = true
 
 ### Introducing environments
 
-This `wrangler.toml` adds two environments to the base case. Note that you must provide a route/routes key for each environment if you are deploying to a custom domain.
+This `wrangler.toml` adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. Note that you must provide a [route/routes key](/workers/cli-wrangler/configuration#keys) for each environment if you are deploying to a custom domain.
 
 ```toml
 ---
@@ -174,7 +176,7 @@ With this configuration, Wrangler will behave in the following manner:
 
 ### workers.dev as a first class target
 
-If you only want to deploy to workers.dev you can configure Wrangler like so:
+If you only want to deploy to workers.dev, you can configure Wrangler like so:
 
 ```toml
 ---
