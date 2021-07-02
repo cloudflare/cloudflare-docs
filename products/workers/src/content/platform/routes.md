@@ -9,7 +9,7 @@ pcx-content-type: concept
 
 Routes allow users to map a URL pattern to a Worker script to enable Workers to run on custom domains.
 
-## Custom zones
+## Custom routes
 
 For zones proxied on Cloudflare\*, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
 
@@ -50,13 +50,13 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route patterns may not contain infix wildcards or query parameters, e.g. neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
 
-- When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`.
+- When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
 
 - Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
 - Route patterns are case sensitive, e.g. `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
-A route can be specified without being associated with a worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
+A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 
 ```txt
 *example.com/images/cat.png -> <no script>
@@ -99,7 +99,11 @@ If a route pattern path ends with `*`, then it matches all suffixes of that path
 
 - `https://example.com/path*` matches `https://example.com/path` _and_ `https://example.com/path2` _and_ `https://example.com/path/readme.txt`
 
-- `https://example.com/path/*` matches `https://example.com/path/readme.txt` but _not_ `https://example.com/path2`.
+<Aside type="warning">
+
+There is a well-known bug associated with path matching concerning wildcards and forward slashes that is documented in the [Known issues section.](/workers/platform/known-issues)
+
+</Aside>
 
 #### Subdomains must have a DNS Record
 
