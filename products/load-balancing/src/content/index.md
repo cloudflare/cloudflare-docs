@@ -24,7 +24,7 @@ You can set up a load balancer from the Cloudflare Traffic app or via the Cloudf
 
 Cloudflare Load Balancing has three major components:
 
-- A Cloudflare [**Load Balancer**](/understand-basics/load-balancers) is identified by a DNS hostname (`www.example.com`) for which you want to balance traffic. A load balancer defines which origin-server pools to use, the order in which they should be used, and how to geographically distribute traffic to different pools.
+- A Cloudflare [**Load Balancer**](/understand-basics/load-balancers) is identified by a DNS hostname (`www.amazon.com`) for which you want to balance traffic. A load balancer defines which origin-server pools to use, the order in which they should be used, and how to geographically distribute traffic to different pools.
 - [**Pools**](/understand-basics/pools) represent a group of origin servers (or endpoints), each identified by its IP address or hostname. You can configure multiple pools, as well as failover priority (Pool A-> Pool B-> Pool C). If you're familiar with DNS terminology, think of a pool as a “record set,” except we only return addresses of origins that are considered healthy. You can attach health checks to individual pools to tailor monitoring to collections of servers.
 - [**Monitors**](/understand-basics/monitors) configure availability monitoring. When a monitor is attached to a pool, Cloudflare will run health checks on that pool’s origin servers from our data centers around the world. You can customize monitoring for specific URLs by using periodic HTTP/HTTPS requests, which allow you to set request intervals, timeouts, and status codes.
 
