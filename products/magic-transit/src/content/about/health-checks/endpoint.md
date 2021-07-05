@@ -1,6 +1,7 @@
 ---
 title: Endpoint
 order: 2
+pcx-content-type: concept
 ---
 
 # Endpoint health checks

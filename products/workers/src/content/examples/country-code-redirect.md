@@ -3,7 +3,6 @@ order: 1000
 type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
-  - Security
   - Originless
 ---
 
@@ -38,7 +37,7 @@ async function redirect(request) {
  */
 const countryMap = {
   US: "https://example.com/us",
-  EU: "https://eu.example.com/",
+  DE: "https://de.example.com/",
 }
 
 async function handleRequest(request) {

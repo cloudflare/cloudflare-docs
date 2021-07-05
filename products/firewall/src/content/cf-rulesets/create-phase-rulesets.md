@@ -38,7 +38,7 @@ Note the `kind`, `phase`, and `expression` field values:
 
 * `kind` is set to `zone` because this is a zone-level phase ruleset.
 * `phase` is set to `http_request_firewall_managed` which is the name of the desired phase.
-* `expression` is set to `true` because the endpoint already sets the context for a specific zone (`{zone-id}`).
+* `expression` is set to `true` so that the rule applies to every request for the zone (`{zone-id}`).
 
 ```json
 ---

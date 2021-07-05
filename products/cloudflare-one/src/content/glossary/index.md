@@ -1,5 +1,6 @@
 ---
 order: 10
+pcx-content-type: reference
 ---
 
 # Glossary
@@ -33,10 +34,7 @@ The resource being protected by Cloudflare for Teams. An application can be a su
 
 ## Authenticated Origin Pulls
 
-Authenticated Origin Pulls let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
-
-| Related products: | [Cloudflare SSL](https://developers.cloudflare.com/ssl/) |
-|---|---|
+[Authenticated Origin Pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
 
 ## certificate pinning
 
@@ -60,7 +58,12 @@ Each device connected to the Internet has a unique IP address which other machin
 
 ## DNS over HTTPS
 
-With [DNS over HTTPS](/connections/connect-devices/agentless/dns-over-https) (DoH), DNS queries and responses are encrypted, and they are sent via the HTTP or HTTP/2 protocols. Like [DNS over TLS](#dns-over-tls), DoH ensures that attackers can't forge or alter DNS traffic. DoH traffic looks like other HTTPS traffic – e.g. normal user-driven interactions with websites and web apps – from a network administrator's perspective.
+By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
+
+[DNS over TLS (DoT)](#dns-over-tls) and [DNS over HTTPS (DoH)](/connections/connect-devices/agentless/dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+
+DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS request in an HTTPS request. It uses HTTPS and HTTP/2 to encrypt traffic at the application layer. With DoH, DNS queries and responses are camouflaged within other HTTPS traffic, since it all comes and goes from the same port. This means they cannot easily be blocked without blocking all other HTTPS traffic as well, but it also provides users with greater privacy, as network administrators will have no visibility on the DNS queries hidden within the larger flow of HTTPS traffic. 
+
 
 ## DoH subdomain
 
@@ -72,7 +75,11 @@ Each location in Teams has a unique DoH subdomain (previously known as a *unique
 
 ## DNS over TLS
 
-[DNS over TLS](/connections/connect-devices/agentless/dns-over-tls) (DoT), is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications (TLS is also known as "SSL"). DoT adds TLS encryption on top of the user datagram protocol (UDP), which is used for DNS queries. Additionally, it ensures that DNS requests and responses are not tampered with or forged via on-path attacks.
+By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This lack of privacy has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
+
+[DNS over TLS (DoT)](/connections/connect-devices/agentless/dns-over-tls) and [DNS over HTTPS (DoH)](#dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+
+DNS over TLS uses its own port, 853, to wrap DNS requests within a TLS connection. With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of the user datagram protocol (UDP). Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. This gives administrators the ability to monitor and block DNS queries, which is important for identifying and stopping malicious traffic.
 
 ## hostname
 The name given to a server or node on a network. In most cases, the public DNS name of a server.
@@ -85,7 +92,7 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-## [location](/policies/filtering/dns-policies/configuring-locations)
+## [location](/connections/connect-networks/locations)
 Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 ## mTLS
@@ -105,7 +112,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-Cloudflare Origin Certificates are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+[Cloudflare Origin Certificates](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 ## [policy](/policies)
 A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.

@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: concept
 ---
 
 # Limits
@@ -18,6 +19,21 @@ order: 2
 | [Number of scripts](#number-of-scripts)                                         | 30        | 30        |
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
+
+</TableWrap>
+
+## Upload size limits
+
+Cloudflare has network-wide limits on the body size of uploads (HTTP POST/PUT/PATCH requests) which depend on your Cloudflare plan (this is separate from your Workers plan). All uploads larger than your plan limit will be rejected with an HTTP 413 error code ("Request entity too large"). Cloudflare Enterprise customers can [contact Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476) to request a larger upload limit. Learn more about [Cloudflare plans](https://www.cloudflare.com/plans/).
+
+<TableWrap>
+
+| Cloudflare Plan | Maximum body size |
+| --------------- | ----------------- |
+| Free            | 100MB             |
+| Pro             | 100MB             |
+| Business        | 200MB             |
+| Enterprise      | 500MB             |
 
 </TableWrap>
 
@@ -142,6 +158,8 @@ Routes in fail closed mode will display a Cloudflare 1027 error page to visitors
 
 Only one Workers instance runs on each of the many global Cloudflare edge servers. Each Workers instance can consume up to 128MB of memory. Use [global variables](/runtime-apis/web-standards) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*. 
+
 Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
 ---
@@ -158,7 +176,7 @@ There is no limit on the real runtime for a Workers script. As long as the clien
 
 Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
 
-For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduledevent), it executes for 4 seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
+For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
 Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
 
@@ -263,6 +281,8 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 **Note:** The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
 </Aside>
+
+---
 
 ## Durable Objects
 

@@ -1,6 +1,6 @@
 ---
-title: Filters
 order: 40
+pcx-content-type: how-to
 ---
 
 # Filters

@@ -1,6 +1,6 @@
 ---
-title: Dimensions
 order: 41
+pcx-content-type: reference
 ---
 
 # Dimensions

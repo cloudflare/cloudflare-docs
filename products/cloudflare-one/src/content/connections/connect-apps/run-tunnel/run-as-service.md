@@ -1,5 +1,6 @@
 ---
 order: 30
+pcx-content-type: how-to
 ---
 
 # Run as a service

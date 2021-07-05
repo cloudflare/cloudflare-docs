@@ -1,6 +1,7 @@
 ---
 title: Forming an expression
 order: 4
+pcx-content-type: concept
 ---
 
 # Forming an expression

@@ -1,12 +1,14 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # Terraform
 
 | Requirements |
 | ------------ |
-| [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) installed on your machine. |
+| [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) installed on your machine |
+| The [Cloudflare provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) properly configured |
 
 [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://www.terraform.io/docs/providers/cloudflare/). Listed below are examples to help you get started with building Access with Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
 
@@ -17,8 +19,6 @@ order: 3
  Here is an example configuration:
 
 ```
-provider "cloudflare" {}
-
 variable "domain" {
   default = "example.com"
 }

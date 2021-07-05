@@ -1,6 +1,7 @@
 ---
 order: 3
 title: Short-lived certificates
+pcx-content-type: how-to
 ---
 
 # Configure short-lived certificates

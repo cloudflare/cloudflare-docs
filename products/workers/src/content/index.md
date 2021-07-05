@@ -1,14 +1,15 @@
 ---
-title: Welcome
+title: Overview
 order: 0
 type: overview
+pcx-content-type: landing-page
 ---
 
 <ContentColumn>
 
 # Cloudflare Workers documentation
 
-Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 <ButtonGroup>
   <Button type="primary" href="/get-started/guide">Get started</Button>
@@ -19,10 +20,15 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 ## Installing the Workers CLI
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI, ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). Then, run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
+```
+or install with yarn:
+
+```sh
+$ yarn global add @cloudflare/wrangler
 ```
 
 Read more about [installing `wrangler`](/cli-wrangler/install-update).

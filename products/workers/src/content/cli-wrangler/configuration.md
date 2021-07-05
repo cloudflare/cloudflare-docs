@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: configuration
 ---
 
 # Configuration
@@ -113,7 +114,9 @@ Values to use in your Worker script as text environment variables.
 Usage:
 
 ```toml
-vars = { FOO = "some value", BAR = "some other string" }
+[vars]
+FOO = "some value"
+BAR = "some other string"
 ```
 
 <Definitions>
@@ -127,9 +130,15 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 </Definitions>
 
+Alternatively, you can define `vars` using an "inline table" format. This style should not include any newlines to be considered valid TOML:
+
+```toml
+vars = { FOO = "some value", BAR = "some other string" }
+```
+
 <Aside>
 
-**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret). The `vars` definition in your `wrangler.toml` must not contain newlines in order to be valid TOML.
+**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret).
 
 </Aside>
 
@@ -165,13 +174,13 @@ kv_namespaces = [
 
 **Note:** Creating your KV Namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
 
-You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml#user-content-table).
+You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
 </Aside>
 
 ### site
 
-A Workers Site generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
+A [Workers Site](/platform/sites) generated with [`wrangler generate --site`](/cli-wrangler/commands#generate) or [`wrangler init --site`](/cli-wrangler/commands#init).
 
 Usage:
 
@@ -202,7 +211,7 @@ entry-point = "workers-site"
 
 To learn more about the optional `include` and `exclude` fields, visit [Ignoring Subsets of Static Assets](#ignoring-subsets-of-static-assets).
 
-You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml#user-content-inline-table).
+You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
 
 #### Storage Limits
 
@@ -265,7 +274,7 @@ You can learn more about the standard patterns used for include and exclude in t
 
 Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
 
-You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](configuration#build) section for more information.
+You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
 
 ### triggers
 
@@ -331,6 +340,7 @@ Usage:
 ```toml
 [build]
 command = "npm install && npm run build"
+
 [build.upload]
 format = "service-worker"
 ```
@@ -356,11 +366,11 @@ format = "service-worker"
 #### `[build.upload]`
 
 <Definitions>
-  
+
   - `format` <PropMeta>required</PropMeta>
 
     - The format of the Worker script, must be "service-worker"
-  
+
 </Definitions>
 
 <Aside>
@@ -385,10 +395,9 @@ Cloudflare Workers now supports uploading scripts as a collection of modules, in
 import html from './index.html'
 
 export default {
-  // request is almost the same as `event.request` from the service worker format, except for:
-  // * waitUntil() and passThroughOnException() are accessible from ctx instead
-  // * request.cf is currently not available
-  // env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
+  // * request is the same as `event.request` from the service worker format
+  // * waitUntil() and passThroughOnException() are accessible from `ctx` instead of `event` from the service worker format
+  // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
   // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
     const headers = { 'Content-Type': 'text/html;charset=UTF-8' }

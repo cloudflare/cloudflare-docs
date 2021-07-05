@@ -1,6 +1,6 @@
 ---
-title: Customizations
 order: 1
+pcx-content-type: navigation
 ---
 
 # Customizations

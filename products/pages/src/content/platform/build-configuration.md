@@ -55,7 +55,7 @@ Here are the pinned versions for tools included in the Cloudflare Workers build 
 | Erlang    | 21              |                      |                           |
 | Go        | 1.12            | `GO_VERSION`         |                           |
 | Java      | 8               |                      |                           |
-| Node.js   | 10              | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
+| Node.js   | 12.18.0         | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
 | PHP       | 5.6             | `PHP_VERSION`        |                           |
 | Python    | 2.7             | `PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
 | Ruby      | 2.6.2           | `RUBY_VERSION`       | `.ruby-version`           |

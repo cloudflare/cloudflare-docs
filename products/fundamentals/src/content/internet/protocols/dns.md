@@ -1,5 +1,6 @@
 ---
 order: 71
+pcx-content-type: concept
 ---
 
 # DNS

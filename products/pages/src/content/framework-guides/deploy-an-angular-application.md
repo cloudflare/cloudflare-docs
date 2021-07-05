@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy an Angular application
 
 Angular is an incredibly popular framework for building reactive and powerful frontend applications.
