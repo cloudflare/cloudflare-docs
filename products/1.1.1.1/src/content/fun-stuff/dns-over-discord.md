@@ -9,92 +9,208 @@ Ever wanted to make DNS requests from the comfort of your Discord server? Well n
 
 To start using the DNS over Discord bot, invite it to your Discord server using this link: [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ)
 
+
 ## dig command
 
-Once the bot is in your server, type `/dig` to begin using the bot's main command — performing DNS lookups.
+Once the bot is in your server, type `/dig` to begin using the bot's main command -- performing DNS lookups.
 This will provide a native interface within Discord that allows you to specify the domain to lookup, an optional DNS record type and an optional flag for a short result.
 
-Due to limitations in Discord, the `/dig` command can only offer 10 different DNS record types, and will default to 'A' records if none is specified.
+If only a domain is given for the command, the bot will default to looking for 'A' DNS records, and will return the full format result, not the short form.
 
 ![dig command](../static/dns-over-discord/dig-command.png)
 
-![dig command types](../static/dns-over-discord/dig-command-types.png)
+![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
+
+_`/dig domain: cloudflare.com`_
+
 
 ### Supported record types
 
-*   A
-*   AAAA
-*   CAA
-*   CERT
-*   CNAME
-*   MX
-*   NS
-*   SPF
-*   SRV
-*   TXT
+Discord has a limit of 25 options in slash commands, so DNS over Discord offers the 25 most common DNS record types to choose from:
 
-For all DNS record types, use the `/multi-dig` command.
+<table>
+<tr>
+<td>
+<ul>
+<li>A</li>
+<li>AAAA</li>
+<li>CAA</li>
+<li>CERT</li>
+<li>CNAME</li>
+<li>MX</li>
+<li>NS</li>
+<li>SPF</li>
+<li>SRV</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>TXT</li>
+<li>DNSKEY</li>
+<li>DS</li>
+<li>LOC</li>
+<li>URI</li>
+<li>HTTPS</li>
+<li>NAPTR</li>
+<li>PTR</li>
+<li>SMIMEA</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>SOA</li>
+<li>SSHFP</li>
+<li>SVCB</li>
+<li>TLSA</li>
+<li>HINFO</li>
+<li>CDS</li>
+<li>CDNSKEY</li>
+</ul>
+</td>
+</tr>
+</table>
 
-### Examples
+*To query other DNS record types, or multiple record types at once, use the `/multi-dig` command.*
 
-![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
+![dig command types](../static/dns-over-discord/dig-command-types.png)
 
-`/dig domain: cloudflare.com`
 
-![dig domain: cloudflare.com type: AAAA short: True](../static/dns-over-discord/dig-command-example-2.png)
+### Short form response
 
-`/dig domain: cloudflare.com type: AAAA short: True`
+Much like the dig command itself, DNS over Discord has an optional flag in the dig command that allows the user to request that the response be in the short form.
+
+When this is requested, the name and TTL columns will be excluded, with just the data column returned without the table formatting, similar to the equivalent dig command response.
+
+![dig domain: cloudflare.com type: AAAA short: true](../static/dns-over-discord/dig-command-example-2.png)
+
+_`/dig domain: cloudflare.com type: AAAA short: true`_
+
+
+### Refreshing existing results
+
+As part of the response that the DNS over Discord bot returns for dig commands there is a button to refresh the results.
+
+Any user can press this button, triggering the bot to re-request the DNS query in the message and update the results in the message.
+
+The refresh button is available on all responses to the dig command, including those that resulted in an error, such as an unknown domain or no records found.
+
+![Refreshing dig domain: cloudflare.com](../static/dns-over-discord/dig-command-refresh.gif)
+
+_`/dig domain: cloudflare.com`_
+
 
 ## multi-dig command
 
-Want to lookup multiple DNS record types at once, or record types not available in `/dig`?
+Want to lookup multiple DNS record types at once?
 The `/multi-dig` command allows you to specify any supported DNS record type, and multiple types separated by a space.
-
-When providing DNS record types for the `/multi-dig` command, Discord will not prompt you with options.
-Please provide a space-separated list of valid DNS record types to lookup, any invalid options will be silently dropped.
-'A' records will be used as the default if no valid types are given.
 
 ![multi-dig command](../static/dns-over-discord/multi-dig-command.png)
 
-![multi-dig command types](../static/dns-over-discord/multi-dig-command-types.png)
+![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)
+
+_`/multi-dig domain: cloudflare.com types: A AAAA`_
+
 
 ### Supported record types
 
-*   A
-*   AAAA
-*   CAA
-*   CERT
-*   CNAME
-*   DNSKEY
-*   DS
-*   LOC
-*   MX
-*   NAPTR
-*   NS
-*   PTR
-*   SMIMEA
-*   SPF
-*   SRV
-*   SSHFP
-*   TLSA
-*   TXT
-*   URI
+When providing DNS record types for the `/multi-dig` command, Discord will not prompt you with options.
 
-Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.
+Please provide a space-separated list of valid DNS record types to lookup, any invalid options will be silently dropped.
+'A' records will be used as the default if no valid types are given.
 
-### Examples
+The following DNS record types are supported and considered valid by the bot:
 
-![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)
+<table>
+<tr>
+<td>
+<ul>
+<li>A</li>
+<li>AAAA</li>
+<li>CAA</li>
+<li>CERT</li>
+<li>CNAME</li>
+<li>MX</li>
+<li>NS</li>
+<li>SPF</li>
+<li>SRV</li>
+<li>TXT</li>
+<li>DNSKEY</li>
+<li>DS</li>
+<li>LOC</li>
+<li>URI</li>
+<li>HTTPS</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>NAPTR</li>
+<li>PTR</li>
+<li>SMIMEA</li>
+<li>SOA</li>
+<li>SSHFP</li>
+<li>SVCB</li>
+<li>TLSA</li>
+<li>HINFO</li>
+<li>CDS</li>
+<li>CDNSKEY</li>
+<li>AFSDB</li>
+<li>APL</li>
+<li>CSYNC</li>
+<li>DHCID</li>
+<li>DLV</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>DNAME</li>
+<li>EUI48</li>
+<li>EUI64</li>
+<li>HIP</li>
+<li>IPSECKEY</li>
+<li>KEY</li>
+<li>KX</li>
+<li>NSEC</li>
+<li>NSEC3</li>
+<li>NSEC3PARAM</li>
+<li>OPENPGPKEY</li>
+<li>RP</li>
+<li>TA</li>
+<li>TKEY</li>
+<li>ZONEMD</li>
+</ul>
+</td>
+</tr>
+</table>
 
-`/multi-dig domain: cloudflare.com types: A AAAA`
+*Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.*
 
-![multi-dig domain: cloudflare.com types: DNSKEY short: True](../static/dns-over-discord/multi-dig-command-example-2.png)
+![multi-dig command types](../static/dns-over-discord/multi-dig-command-types.png)
 
-`/multi-dig domain: cloudflare.com types: DNSKEY short: True`
+
+### Short form response
+
+Like the main dig command, the multi-dig command also supports the optional short flag after the types have been specified in the slash command.
+
+![multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true](../static/dns-over-discord/multi-dig-command-example-2.png)
+
+_`/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true`_
+
+
+### Refreshing existing results
+
+The multi-dig command also provides a refresh button below each set of DNS results requested (or after each block of 10 DNS record types if more than 10 were requested).
+
+As with the dig command, any user can press the refresh button to refresh the displayed DNS results, including for DNS queries that had previously failed.
+
+![Refreshing multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-refresh.gif)
+
+_`/multi-dig domain: cloudflare.com types: A AAAA`_
+
 
 ## whois command
 
-The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord to find who is behind a given domain name, an IP address, or an ASN.
+Curious about who's behind a domain name, an IP address or even an ASN?
+The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord for a given domain, IP or ASN.
 
 ![whois command](../static/dns-over-discord/whois-command.png)
 
@@ -102,19 +218,19 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 ![whois query: cloudflare.com](../static/dns-over-discord/whois-command-example-1.png)
 
-`/whois query: cloudflare.com`
+_`/whois query: cloudflare.com`_
 
 ![whois query: 104.16.132.229](../static/dns-over-discord/whois-command-example-2.png)
 
-`/whois query: 104.16.132.229`
+_`/whois query: 104.16.132.229`_
 
 ![whois query: 2606:4700::6810:84e5](../static/dns-over-discord/whois-command-example-3.png)
 
-`/whois query: 2606:4700::6810:84e5`
+_`/whois query: 2606:4700::6810:84e5`_
 
 ![whois query: 13335](../static/dns-over-discord/whois-command-example-4.png)
 
-`/whois query: 13335`
+_`/whois query: 13335`_
 
 ## Other commands
 
@@ -126,7 +242,7 @@ The `/help` command provides in-Discord documentation about all the commands ava
 
 ![help command](../static/dns-over-discord/help-command.png)
 
-`/help`
+_`/help`_
 
 ### privacy command
 
@@ -135,7 +251,7 @@ This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](http
 
 ![privacy command](../static/dns-over-discord/privacy-command.png)
 
-`/privacy`
+_`/privacy`_
 
 ### github command
 
@@ -144,7 +260,7 @@ The GitHub repository can be accessed at [https://github.com/MattIPv4/DNS-over-D
 
 ![github command](../static/dns-over-discord/github-command.png)
 
-`/github`
+_`/github`_
 
 ### invite command
 
@@ -153,7 +269,7 @@ The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/
 
 ![invite command](../static/dns-over-discord/invite-command.png)
 
-`/invite`
+_`/invite`_
 
 ---
 
