@@ -1,5 +1,6 @@
 ---
 order: 5
+pcx-content: how-to
 ---
 
 # DNS over Tor

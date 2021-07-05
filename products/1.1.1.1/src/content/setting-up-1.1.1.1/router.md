@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content: how-to
 ---
 
 # Router

@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content: concept
 ---
 
 # DNS over HTTPS
