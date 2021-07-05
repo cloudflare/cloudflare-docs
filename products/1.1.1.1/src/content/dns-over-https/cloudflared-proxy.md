@@ -1,5 +1,6 @@
 ---
 order: 10
+pcx-content: how-to
 ---
 
 # Running a DNS over HTTPS client
