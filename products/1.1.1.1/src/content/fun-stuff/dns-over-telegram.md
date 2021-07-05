@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content: how-to
+pcx-content: tutorial
 ---
 
 # DNS over Telegram

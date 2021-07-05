@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content: how-to
+pcx-content: tutorial
 ---
 
 # DNS over email
