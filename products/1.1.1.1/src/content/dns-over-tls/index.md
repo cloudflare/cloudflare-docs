@@ -1,6 +1,6 @@
 ---
 order: 9
-pcx-content: reference
+pcx-content: concept
 ---
 
 # DNS over TLS

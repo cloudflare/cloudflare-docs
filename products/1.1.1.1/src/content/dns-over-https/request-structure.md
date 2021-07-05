@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content: how-to
+pcx-content: reference
 ---
 
 # Making requests

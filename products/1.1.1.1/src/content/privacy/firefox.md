@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content: reference
+pcx-content: concept
 ---
 
 # Cloudflare Resolver for Firefox

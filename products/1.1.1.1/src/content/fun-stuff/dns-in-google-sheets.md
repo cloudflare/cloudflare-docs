@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content: how-to
+pcx-content: tutorial
 ---
 
 # DNS in Google Sheets
