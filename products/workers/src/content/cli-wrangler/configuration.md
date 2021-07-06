@@ -62,7 +62,7 @@ account_id = "your-account-id"
 [env.helloworld]
 # These new values will override the top level configuration.
 name = "your-worker-helloworld"
-account id = "your-other-account-id"
+account_id = "your-other-account-id"
 
 # Any additional keys, like environment variables, will be placed here.
 vars = { FOO = "some value", BAR = "some other string" }
