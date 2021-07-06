@@ -66,6 +66,21 @@ name = "your-worker-dev"
 route = "your-custom-route"
 ```
 
+The layout of an example `[end.dev]` environment is displayed below:
+
+```toml
+---
+your-worker.toml
+---
+name = "your-worker"
+type = "javascript"
+account_id = "your-account-id"
+
+[env.dev]
+name = "your-worker-dev"
+route = "your-custom-route"
+```
+
 --------------------------------
 
 ## Examples
@@ -90,6 +105,7 @@ account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
 route = "example.com/*"
 ```
+
 To deploy this worker, run the `wrangler publish` command like the example below:
 
 ```sh
@@ -116,6 +132,7 @@ account_id = "12345678901234567890"
 # should be deployed to *.workers.dev
 workers_dev = true
 ```
+
 This example will publish to your `*workers.dev` subdomain because `workers_dev` has been set to `true`.
 
 Run `wrangler publish` as normal to deploy your Worker script:
@@ -326,7 +343,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
     STRIPE_TOKEN = "pk_xyz1234"
     ```
 
-* KV Namespaces are defined via the [`kv_namespaces`](https://developers.cloudflare.com/workers/cli-wrangler/configuration#kv_namespaces) config in your `wrangler.toml` and are always provided as [KV runtime instances](https://developers.cloudflare.com/workers/runtime-apis/kv).
+* KV namespaces are defined via the [`kv_namespaces`](https://developers.cloudflare.com/workers/cli-wrangler/configuration#kv_namespaces) config in your `wrangler.toml` and are always provided as [KV runtime instances](https://developers.cloudflare.com/workers/runtime-apis/kv).
 
     ```toml
     ---
