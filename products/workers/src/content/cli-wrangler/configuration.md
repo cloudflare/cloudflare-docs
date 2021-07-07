@@ -13,7 +13,7 @@ Your project will need some configuration before you can publish your Worker. Co
 
 ## Environments
 
-Top-level configuration is the collection of values you specify at the top of your `wrangler.toml` file. These values will be inherited by all environments, unless otherwise specified in the environment.
+The top-level configuration is the collection of values you specify at the top of your `wrangler.toml` file. These values will be inherited by all environments, unless otherwise defined in the environment.
 
 The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
 
@@ -78,11 +78,11 @@ To deploy this example Worker to the `helloworld` environment, you would run `wr
 
 There are three types of keys in a `wrangler.toml` file: 
 
-* **Top level only** keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
+* Top level only keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
 
-* **Inherited** keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
+* Inherited keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
 
-* **Not inherited** keys must be defined for every environment individually.
+* Not inherited keys must be defined for every environment individually.
 
 <Definitions>
 
@@ -106,7 +106,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 - `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a [workers.dev](https://workers.dev) subdomain.
+  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
 
 - `workers_dev` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -118,7 +118,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 - `routes` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
-  - A list of routes you would like to use your Worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a [workers.dev](https://workers.dev) subdomain.
+  - A list of routes you would like to use your Worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a `*.workers.dev` subdomain.
 
 - `webpack_config` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -138,25 +138,25 @@ There are three types of keys in a `wrangler.toml` file:
 
 - `dev` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Arguments for `wrangler dev`, configure local server.
+  - Arguments for `wrangler dev` that configure local server.
 
 - `triggers` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Configures cron triggers for executing a Worker on a schedule.
+  - Configures cron triggers for running a Worker on a schedule.
 
 - `usage_model` <Type>inherited</Type> <PropMeta>optional</PropMeta>
   - Specifies the [Usage Model](/platform/pricing#usage-models) for your Worker. There are two options - [`bundled`](/platform/limits#bundled-usage-model) and [`unbound`](/platform/limits#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
 - `build` <Type>top level</Type> <PropMeta>optional</PropMeta>
 
-  - Allows configuring a custom build step to be run by Wrangler when building your Worker. See the [custom builds documentation](#build) for more details.
+  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to the [custom builds documentation](#build) for more details.
 
 
 </Definitions>
 
 ### vars
 
-`vars` defines a table of [environment variables](/workers/platform/environments#environment-variables) provided to your Worker script. These are plaintext values.
+The `vars` key defines a table of [environment variables](https://developers.cloudflare.com/workers/platform/environments#environment-variables) provided to your Worker script. All values are plaintext values.
 
 Usage:
 
@@ -215,7 +215,7 @@ let value = await FOO.get("keyname");
 
 - `binding` <PropMeta>required</PropMeta>
 
-  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/workers/runtime-apis/kv).
+  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](https://developers.cloudflare.com/workers/runtime-apis/kv).
 
 - `id` <PropMeta>required</PropMeta>
 
@@ -266,8 +266,6 @@ entry-point = "workers-site"
   - A list of `.gitignore`-style patterns that match files or directories in your `bucket` that should be excluded from uploads. Example: `exclude = ["ignore_dir"]`
 
 </Definitions>
-
-To learn more about the optional `include` and `exclude` fields, refer to [Ignoring Subsets of Static Assets](#ignoring-subsets-of-static-assets).
 
 You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
 

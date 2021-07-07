@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 <Aside>
 
-__Note__: You can only interact with environments using [wrangler](/cli-wrangler).
+__Note__: You can only use environments with [wrangler](/cli-wrangler).
 
 </Aside>
 
@@ -21,7 +21,7 @@ These environments are utilized with the `--env` or `-e` flag on `wrangler build
 
 ## Usage
 
-You will likely use environments to deploy Workers to a staging subdomain before your production environment. `wrangler publish` will determine its destination by the top-level configuration in your `wrangler.toml` [file](/workers/cli-wrangler/commands#generate). You can create other environments beneath the top-level configuration in the `wrangler.toml` file by adding an [`[env.name]` configuration](/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by environments from the top-level configuration, see [`wrangler.toml` configuration](/cli-wrangler/configuration#keys).
+You will likely use environments to deploy Workers to a staging subdomain before your production environment. `wrangler publish` will determine its destination by the top-level configuration in your `wrangler.toml` [file](https://developers.cloudflare.com/workers/cli-wrangler/commands#generate). You can create other environments beneath the top-level configuration in the `wrangler.toml` file by adding an [`[env.name]` configuration](https://developers.cloudflare.com/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by environments from the top-level configuration, see [`wrangler.toml` configuration](https://developers.cloudflare.com/workers/cli-wrangler/configuration#keys).
 
 The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
 
@@ -49,7 +49,7 @@ routes = ["example.com/*"]
 
 You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
 
-For this reason, Wrangler **appends the environment name to the top-level name to publish a Worker script**. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
+For this reason, Wrangler appends the environment name to the top-level name to publish a Worker script. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
 
 The layout of an example `[env.dev]` environment is displayed below:
 
@@ -100,7 +100,7 @@ To deploy this worker, run the `wrangler publish` command like the example below
 
 #### Publishing to *.workers.dev
 
-`*.workers.dev` allows you to deploy your Workers script [without a registered Cloudflare domain](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*workers.dev` subdomain, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers' dashboard under **Your subdomain**.
+`*.workers.dev` allows you to deploy your Workers script [without a registered Cloudflare domain](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers' dashboard under **Your subdomain**.
 
 This `wrangler.toml` file has no environments defined and will publish `my-worker` to `my-worker.<your-subdomain>.workers.dev`:
 
@@ -132,7 +132,7 @@ Environments enable you to write and deploy projects to multiple places.
 
 You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key. 
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. Note that you must provide a [`route`/`routes` key](/workers/cli-wrangler/configuration#keys) for each environment if you are deploying to a custom domain.
+The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/cli-wrangler/configuration#keys) for each environment if you are deploying to a custom domain.
 
 ```toml
 ---
@@ -181,7 +181,7 @@ With this configuration, Wrangler will behave in the following manner:
 ✨  Successfully published your script to example.com/*
 ```
 
-Any defined environment variables (the [`vars`](/workers/cli-wrangler/configuration#vars) key) are exposed as global variables to your Worker.
+Any defined environment variables (the [`vars`](https://developers.cloudflare.com/workers/cli-wrangler/configuration#vars) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
@@ -299,7 +299,7 @@ The build commands `wrangler build -e production`, `wrangler preview -e producti
 
 In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script. Here is how they are declared:
 
-* **environment variables** are defined via the `[vars]` config in your `wranger.toml` file and are always plaintext values.
+* Environment variables are defined via the `[vars]` config in your `wranger.toml` file and are always plaintext values.
 
     ```toml
     ---
@@ -326,7 +326,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
     STRIPE_TOKEN = "pk_xyz1234"
     ```
 
-* **KV Namespaces** are defined via the [`kv_namespaces`](/workers/cli-wrangler/configuration#kv_namespaces) config in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv).
+* KV Namespaces are defined via the [`kv_namespaces`](https://developers.cloudflare.com/workers/cli-wrangler/configuration#kv_namespaces) config in your `wrangler.toml` and are always provided as [KV runtime instances](https://developers.cloudflare.com/workers/runtime-apis/kv).
 
     ```toml
     ---
@@ -350,11 +350,12 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
     id = "<PRODUCTION KV NAMESPACEID>"
     ```
 
-* **secrets** are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
+* Secrets are defined by running [`wrangler secret put <NAME>`](https://developers.cloudflare.com/workers/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
 
     ```toml
     ---
     your-worker.toml
+    ---
     name = "my-worker-dev"
     type = "javascript"
 
@@ -369,7 +370,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
 <Aside type="warning">
 
-\* __Warning:__ Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/cli-wrangler/commands#secret) instead.
+\* __Warning:__ Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](https://developers.cloudflare.com/workers/cli-wrangler/commands#secret) instead.
 
 </Aside>
 
