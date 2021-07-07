@@ -126,4 +126,4 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 The example above uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
 
-After creating the custom ruleset, you must deploy it to a phase so that it is executed. See [Deploy a custom ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets/deploy-custom-ruleset/) for more information.
+After creating a custom ruleset, deploy it to a phase so that it can execute. Refer to [Deploy a custom ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets/deploy-custom-ruleset) for more information.
