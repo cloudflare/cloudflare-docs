@@ -66,7 +66,7 @@ name = "your-worker-dev"
 route = "your-custom-route"
 ```
 
-The layout of an example `[end.dev]` environment is displayed below:
+The layout of an example `[env.dev]` environment is displayed below:
 
 ```toml
 ---
