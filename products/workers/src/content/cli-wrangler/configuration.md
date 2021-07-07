@@ -7,7 +7,7 @@ pcx-content-type: configuration
 
 ## Background
 
-Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file. You must manually edit this file to edit your keys and values before you can publish.
+Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
 
 ---
 
