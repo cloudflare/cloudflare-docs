@@ -27,8 +27,7 @@ To deploy the Managed Ruleset for a given zone, do the following:
 
 For more information on deploying a Managed Ruleset, check [Deploy a Managed Ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/deploy-managed-ruleset).
 
-
-## Configure an override for the Exposed Credentials Check Managed Ruleset
+### Configure an override for the Exposed Credentials Check Managed Ruleset
 
 An override allows you to define an action or status different from the default values as configured by Cloudflare. You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets, including the Exposed Credentials Check Managed Ruleset.
 
@@ -36,7 +35,13 @@ For more information on defining overrides for Managed Rulesets using the Rulese
 
 ## Create a custom rule checking for exposed credentials
 
-You can create rules that check for exposed credentials using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
+<Aside type="note">
+
+This feature is only available to customers on an Enterprise plan.
+
+</Aside>
+
+You can create rules that check for exposed credentials using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
 
 A rule with exposed credentials check has a match when both the rule expression and the result from the exposed credentials check are true.
 
@@ -54,9 +59,9 @@ These options have additional requirements:
 
 </Aside>
 
-You can use the `exposed_credential_check` field in rules with one of the following actions: `rewrite`, `log`, `block`, `challenge`, or `js_challenge`. 
+You can use the `exposed_credential_check` field in rules with one of the following actions: `rewrite`, `log`, `block`, `challenge`, or `js_challenge`.
 
-To create and deploy a custom ruleset, follow the workflow described in [Work with custom rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets). 
+To create and deploy a custom ruleset, follow the workflow described in [Work with custom rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets).
 
 ### Example
 
@@ -81,7 +86,7 @@ curl -X POST \
       }
     }
   ],
-  "phase": "http_request_firewall_managed"
+  "phase": "http_request_firewall_custom"
 }
 ```
 
@@ -94,7 +99,7 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
     "name": "Custom Ruleset 1",
     "description": "This ruleset includes a rule checking for exposed credentials.",
     "kind": "custom",
-    "version": "3",
+    "version": "1",
     "rules": [
       {
         "id": "{custom-rule-id}",
@@ -109,11 +114,16 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
         "ref": "{custom-rule-ref}",
         "enabled": true
       }
-    ]
-  }
+    ],
+    "last_updated": "2021-03-19T10:48:04.057775Z",
+    "phase": "http_request_firewall_custom"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
 The example above uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
 
-See [Deploy a custom ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets/deploy-custom-ruleset/) for more information on deploying custom rulesets using the Rulesets API.
+After creating a custom ruleset, deploy it to a phase so that it can execute. Refer to [Deploy a custom ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets/deploy-custom-ruleset) for more information.
