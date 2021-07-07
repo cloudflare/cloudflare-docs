@@ -21,7 +21,7 @@ These environments are utilized with the `--env` or `-e` flag on `wrangler build
 
 ## Usage
 
-The most common use case for environments is deploying to a staging subdomain before your production environment. `wrangler publish` will determine its destination by your top-level configuration in your `wrangler.toml` [file](/workers/cli-wrangler/commands#generate). Users can create other environments beneath the top-level configuration in the `wrangler.toml` file through an [`[env.name]` configuration](/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by your environemnts from the top-level configuration see [`wrangler.toml` configuration](/cli-wrangler/configuration#keys).
+You will likely use environments to deploy Workers to a staging subdomain before your production environment. `wrangler publish` will determine its destination by the top-level configuration in your `wrangler.toml` [file](/workers/cli-wrangler/commands#generate). You can create other environments beneath the top-level configuration in the `wrangler.toml` file by adding an [`[env.name]` configuration](/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by environments from the top-level configuration, see [`wrangler.toml` configuration](/cli-wrangler/configuration#keys).
 
 The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
 
