@@ -12,6 +12,6 @@
 - pages.dev subdomains currently can't be changed. If you need to change your pages.dev subdomain, delete your project and create a new one.
 - Hugo builds automatically run an old version. To run the latest version of Hugo (for instance, 0.80.0), you'll need to set an environment variable. Set `HUGO_VERSION` to `0.80.0` or the Hugo version of your choice.
 - By default, we use Node 10 in the Pages build environment. If you need to use a newer Node version, see our [Build configuration page](https://developers.cloudflare.com/pages/platform/build-configuration) for configuration options.
-- It's currently not possible to add a custom domain with wildcard, e.g. *.domain.com.
+- It is currently not possible to add a custom domain with a wildcard, e.g. *.domain.com.
 
 Having an issue that you don't see listed above? Let us know in the Cloudflare Workers Discord! Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages channel.
