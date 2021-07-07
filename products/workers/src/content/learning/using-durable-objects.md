@@ -438,10 +438,13 @@ While using Wrangler is strongly recommended, if you would really rather not use
 ## Troubleshooting
 
 ### Debugging 
-Since `wrangler dev` currently does not support Durable Objects, it may be hard to debug when you don't get a response or when your requests are not handled properly by the script. To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+`wrangler dev` does not currently support Durable Objects.
 
-### Error: `No event handlers were registered. This script does nothing.`
-In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker script, and the file extension should be `.mjs` instead of `.js` if you use the ES Modules Syntax.
+To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
-### Error when deleting migration
-When deleting a migration using `wrangler --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You can remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply --delete-class again.
+### Common errors
+#### Error: `No event handlers were registered. This script does nothing.`
+In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker script, and that the file extension is `.mjs` instead of `.js` if using ES Modules Syntax.
+
+#### Error when deleting migration
+When deleting a migration using `wrangler --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply --delete-class again.
