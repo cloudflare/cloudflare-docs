@@ -13,9 +13,9 @@ __Note__: You can only interact with environments using [wrangler](/cli-wrangler
 
 ## Background
 
-Environments are different contexts that your code runs in. The Workers platform allows you to create and manage different environments. Through environments, users are able to deploy the same project to multiple places under multiple names.
+Environments are different contexts that your code runs in. The Workers platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
 
-These environments are utilized with the `--env` or `-e` flag on `wrangler build`, `wrangler dev`, `wrangler preview`, `wrangler publish` and `wrangler secret`.
+These environments are utilized with the `--env` or `-e` flag on `wrangler build`, `wrangler dev`, `wrangler preview`, `wrangler publish`, and `wrangler secret`.
 
 --------------------------------
 
@@ -47,11 +47,11 @@ routes = ["example.com/*"]
 
 ### Naming
 
-You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker, and the behavior would not be clear.
+You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
 
 For this reason, Wrangler **appends the environment name to the top-level name to publish a Worker script**. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
 
-The layout of an example `[end.dev]` environment is displayed below:
+The layout of an example `[env.dev]` environment is displayed below:
 
 ```toml
 ---
@@ -128,9 +128,9 @@ Run `wrangler publish` as normal to deploy your Worker script:
 
 ### Introducing environments
 
-Environments enable users to write and deploy projects to multiple places. 
+Environments enable you to write and deploy projects to multiple places. 
 
-An environment may be defined by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key. 
+You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key. 
 
 The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. Note that you must provide a [`route`/`routes` key](/workers/cli-wrangler/configuration#keys) for each environment if you are deploying to a custom domain.
 
@@ -225,7 +225,7 @@ With this configuration, Wrangler will behave in the following manner:
 ✨  Successfully published your script to https://my-worker-staging.<your-subdomain>.workers.dev
 ```
 
-### workers.dev as a first class target
+### workers.dev as a first-class target
 
 If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each owning its own set of environment variables, secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
 
@@ -289,7 +289,7 @@ webpack_config = "webpack.config.js"
 name = "my-worker-staging"
 ```
 
-Your default `wrangler build`, `wrangler preview`, and `wrangler publish` commands will all build with `webpack.dev.js`. Any commnds tied to the staging environment will also use this configuration; for example, `wrangler build -e staging`, `wrangler preview -e staging`, and `wrangler publish -e staging`.
+Your default `wrangler build`, `wrangler preview`, and `wrangler publish` commands will all build with `webpack.dev.js`. Any commands tied to the staging environment will also use this configuration; for example, `wrangler build -e staging`, `wrangler preview -e staging`, and `wrangler publish -e staging`.
 
 The build commands `wrangler build -e production`, `wrangler preview -e production`, and `wrangler publish -e production` would all use your `webpack.config.js` file.
 
@@ -350,7 +350,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
     id = "<PRODUCTION KV NAMESPACEID>"
     ```
 
-* **secrets** are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets, by rerunning the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. It is recommended to keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
+* **secrets** are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
 
     ```toml
     ---
@@ -396,7 +396,7 @@ workers_dev = true
 type = "rust"
 ```
 
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in a `--env production` setting.
+With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env production` setting.
 
 ### Same name for multiple environments
 
@@ -442,7 +442,7 @@ workers_dev = true
 route = "staging.example.com/*"
 ```
 
-Wrangler will fail to deploy when both  `workers_dev = true` and `route` (or `routes`) are defined. If you are trying to deploy to a `*.workers.dev` domain, you must remove the `route` or `routes` value.
+Wrangler will fail to deploy when both  `workers_dev = true` and `route` (or `routes`) are defined. If you are trying to deploy to a `*.workers.dev` domain, remove the `route` or `routes` value.
 
 ```sh
 ~/my-worker $ wrangler publish

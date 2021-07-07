@@ -76,7 +76,7 @@ To deploy this example Worker to the `helloworld` environment, you would run `wr
 
 ## Keys
 
-There are three type of keys present in a `wrangler.toml` file: 
+There are three types of keys in a `wrangler.toml` file: 
 
 * **Top level only** keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
 
@@ -251,7 +251,7 @@ entry-point = "workers-site"
 
 - `bucket` <PropMeta>required</PropMeta>
 
-  - The directory containing your static assets. It must be a path relative to your `wrangler.toml`file. Example: `bucket = "./public"`
+  - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file. Example: `bucket = "./public"`
 
 - `entry-point` <PropMeta>optional</PropMeta>
 
@@ -321,7 +321,7 @@ You can learn more about the standard patterns used for include and exclude in t
 
 #### Customizing your Sites Build
 
-Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be aware of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. Though you can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), be aware of your `entry` and `context` settings.
 
 You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
 
@@ -359,19 +359,19 @@ local_protocol = "https"
 
 - `ip` <PropMeta>optional</PropMeta>
 
-  - The IP address for the local `wrangler dev` server to listen on, defaults to 127.0.0.1.
+  - The IP address for the local `wrangler dev` server to listen on, defaults to `127.0.0.1`.
 
 - `port` <PropMeta>optional</PropMeta>
 
-  - Port for local `wrangler dev` server to listen on, defaults to 8787.
+  - Port for local `wrangler dev` server to listen on, defaults to `8787`.
 
 - `local_protocol` <PropMeta>optional</PropMeta>
 
-  - Protocol that local `wrangler dev` server listen to requests on, defaults to http.
+  - Protocol that local `wrangler dev` server listen to requests on, defaults to `http`.
 
 - `upstream_protocol` <PropMeta>optional</PropMeta>
 
-  - Protocol that `wrangler dev` forwards requests on, defaults to https.
+  - Protocol that `wrangler dev` forwards requests on, defaults to `https`.
 
 </Definitions>
 
@@ -405,7 +405,7 @@ format = "service-worker"
 
 - `command` <PropMeta>optional</PropMeta>
 
-  - The command used to build your Worker. On Linus and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
+  - The command used to build your Worker. On Linux and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
 - `cwd` <PropMeta>optional</PropMeta>
 
@@ -413,7 +413,7 @@ format = "service-worker"
 
 - `watch_dir` <PropMeta>optional</PropMeta>
 
-  - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory.
+  - The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
 
 </Definitions>
 
@@ -423,7 +423,7 @@ format = "service-worker"
 
   - `format` <PropMeta>required</PropMeta>
 
-    - The format of the Worker script, must be "service-worker".
+    - The format of the Worker script, must be `"service-worker"`.
 
 </Definitions>
 
@@ -441,7 +441,7 @@ Module Workers `export` their event handlers instead of using `addEventListener`
 
 Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets) as arguments to the exported handlers. Previously, with the Service Worker format, these bindings were available as global variables.
 
-Uploaded modules may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
+An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
 <Aside>
 
@@ -466,7 +466,7 @@ export default {
 }
 ```
 
-In the future, Modules will become the default format for writing Workers scripts. Until then, Cloudflare is still working on "full" support, so consider Modules as a beta feature.
+Modules support in Cloudflare Workers is currently in beta.
 
 To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
@@ -485,7 +485,7 @@ main = "./worker.mjs"
 
 - `command` <PropMeta>optional</PropMeta>
 
-  - The command used to build your Worker. On Linus and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
+  - The command used to build your Worker. On Linux and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
 - `cwd` <PropMeta>optional</PropMeta>
 
@@ -493,7 +493,7 @@ main = "./worker.mjs"
 
 - `watch_dir` <PropMeta>optional</PropMeta>
 
-  - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory.
+  - The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
 
 </Definitions>
 
@@ -507,7 +507,7 @@ main = "./worker.mjs"
 
 - `dir` <PropMeta>optional</PropMeta>
 
-  - The directory you wish to upload your modules from, defaults to "dist" relative to the project root directory.
+  - The directory you wish to upload your modules from, defaults to the `dist` relative to the project root directory.
 
 - `main` <PropMeta>required</PropMeta>
 
