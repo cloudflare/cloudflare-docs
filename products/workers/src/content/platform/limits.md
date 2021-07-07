@@ -1,28 +1,62 @@
 ---
 order: 2
+pcx-content-type: concept
 ---
 
 # Limits
+
+## Account plan limits
+
+<TableWrap>
+
+| Feature                                                                         | Free      | Paid      |
+| ------------------------------------------------------------------------------- | --------- | --------- |
+| [Subrequests](#subrequests)                                                     | 50        | 50        |
+| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
+| [Environment variables](#environment-variables)                                 | 32/worker | 32/worker |
+| [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
+| [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
+| [Number of scripts](#number-of-scripts)                                         | 30        | 30        |
+| [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
+| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
+
+</TableWrap>
+
+## Upload size limits
+
+Cloudflare has network-wide limits on the body size of uploads (HTTP POST/PUT/PATCH requests) which depend on your Cloudflare plan (this is separate from your Workers plan). All uploads larger than your plan limit will be rejected with an HTTP 413 error code ("Request entity too large"). Cloudflare Enterprise customers can [contact Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476) to request a larger upload limit. Learn more about [Cloudflare plans](https://www.cloudflare.com/plans/).
+
+<TableWrap>
+
+| Cloudflare Plan | Maximum body size |
+| --------------- | ----------------- |
+| Free            | 100MB             |
+| Pro             | 100MB             |
+| Business        | 200MB             |
+| Enterprise      | 500MB             |
+
+</TableWrap>
 
 ## Worker limits
 
 <TableWrap>
 
-| Feature                                                                         | Free                                                 | Bundled   |
-|---------------------------------------------------------------------------------|------------------------------------------------------|-----------|
-| [Request](#request)                                                             | 100,000&nbsp;requests/day<br/>1000&nbsp;requests/min | none      |
-| [Worker memory](#memory)                                                        | 128 MB                                               | 128 MB    |
-| [CPU runtime](#cpu-runtime)                                                     | 10 ms                                                | 50 ms     |
-| [Subrequests](#subrequests)                                                     | 50                                                   | 50        |
-| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6                                                    | 6         |
-| [Environment variables](#environment-variables)                                 | 32/worker                                            | 32/worker |
-| [Environment variable<br/>size](#environment-variables)                         | 1 KB                                                 | 1 KB      |
-| [Script size](#script-size)                                                     | 1 MB                                                 | 1 MB      |
-| [Number of scripts](#number-of-scripts)                                         | 30                                                   | 30        |
-| [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3                                                    | 3         |
-| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5                                                    | 90        |
+| Feature                     | Free                                                 | Bundled Usage Model                         | Unbound Usage Model                       |
+| --------------------------- | ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
+| [Request](#request)         | 100,000&nbsp;requests/day<br/>1000&nbsp;requests/min | none                                        | none                                      |
+| [Worker memory](#memory)    | 128 MB                                               | 128 MB                                      | 128 MB                                    |
+| [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger |                                           |
+| [Duration](#duration)       |                                                      |                                             | 30 s HTTP request <br/> 30 s Cron trigger |
 
 </TableWrap>
+
+### Bundled Usage Model
+
+Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit _does not_ include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the `Paid plan`. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
+
+### Unbound Usage Model
+
+The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds. Unbound Worker limits are based on [duration](#duration), meaning the limit _includes_ the time a script is waiting for responses from network calls. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
 
 ## KV limits
 
@@ -30,13 +64,13 @@ The Workers Free plan includes limited KV Usage. If you exceed one of these limi
 
 <TableWrap>
 
-| Feature                               | Free limit  |
-|---------------------------------------|-------------|
-| [Reads/day](#kv)                      |   100,000   |
-| [Writes/day](#kv)                     |     1,000   |
-| [Lists/day](#kv)                      |     1,000   |
-| [Deletes/day](#kv)                    |     1,000   |
-| [Storage limit](#kv)                  |     1 GB    |
+| Feature              | Free limit |
+| -------------------- | ---------- |
+| [Reads/day](#kv)     | 100,000    |
+| [Writes/day](#kv)    | 1,000      |
+| [Lists/day](#kv)     | 1,000      |
+| [Deletes/day](#kv)   | 1,000      |
+| [Storage limit](#kv) | 1 GB       |
 
 </TableWrap>
 
@@ -45,7 +79,7 @@ The following limits apply regardless of the plan used.
 <TableWrap>
 
 | Feature                               | Limit      |
-|---------------------------------------|------------|
+| ------------------------------------- | ---------- |
 | [Reads/second](#kv)                   | unlimited  |
 | [Writes/second (different keys)](#kv) | unlimited  |
 | [Writes/second (same key)](#kv)       | 1          |
@@ -63,14 +97,36 @@ The following limits apply regardless of the plan used.
 <TableWrap>
 
 | Feature                       | Free   | Bundled |
-|-------------------------------|--------|---------|
+| ----------------------------- | ------ | ------- |
 | [Max object size](#cache-api) | 512 MB | 512 MB  |
 | [Calls/request](#cache-api)   | 50     | 50      |
 | [Storage limit](#cache-api)   | 5 GB   | 5 GB    |
 
 </TableWrap>
 
---------------------------------
+## Durable Objects limits
+
+<Aside type="warning" header="Beta">
+
+Durable Objects are currently in beta. See [their docs](/learning/using-durable-objects) for more information about the beta and any current limitations.
+
+</Aside>
+
+<TableWrap>
+
+| Feature                                 | Limit
+| --------------------------------------- | ------
+| [Number of objects](#durable-objects)   | unlimited
+| [Storage per account](#durable-objects) | 10 GB
+| [Storage per class](#durable-objects)   | unlimited
+| [Storage per object](#durable-objects)  | unlimited
+| [Key size](#durable-objects)            | 2048 bytes
+| [Value size](#durable-objects)          | 32 KiB
+| [CPU per request](#durable-objects)     | 500ms
+
+</TableWrap>
+
+---
 
 ## Request
 
@@ -96,15 +152,17 @@ Routes in fail open mode will bypass the failing Worker and prevent it from oper
 
 Routes in fail closed mode will display a Cloudflare 1027 error page to visitors, signifying the Worker has been temporarily disabled. We recommend this option if your Worker is performing security related tasks.
 
---------------------------------
+---
 
 ## Memory
 
 Only one Workers instance runs on each of the many global Cloudflare edge servers. Each Workers instance can consume up to 128MB of memory. Use [global variables](/runtime-apis/web-standards) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*. 
+
 Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
---------------------------------
+---
 
 ## CPU runtime
 
@@ -112,7 +170,29 @@ Most Workers requests consume less than a millisecond. It’s rare to find a nor
 
 There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/runtime-apis/fetch-event) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
---------------------------------
+---
+
+## Duration
+
+Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
+
+For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
+
+Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
+
+---
+
+## Egress data transfer
+
+Egress data transfer is the measurement of data sent **out** of an executing Worker. The diagram below illustrates the flow of data going from a requesting device, to a Worker which calls a 3rd party, like a storage provider, and returns the data. In this example, the egress data measured is the request going from a Worker to a 3rd party and the Workers response to the original requester.
+
+![Diagram of traffic going in and out of a Worker.](./media/worker-egress-diagram.png)
+
+Cloudflare encourages using providers on the [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/) for reduced costs on egress data transfer. We will not bill for egress within the Cloudflare ecosystem.
+
+Egress data transfer is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
+
+---
 
 ## Subrequests
 
@@ -130,7 +210,7 @@ There is no hard limit on the amount of real time a Worker may use. As long as t
 
 When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/runtime-apis/fetch-event), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
 
---------------------------------
+---
 
 ## Simultaneous open connections
 
@@ -144,18 +224,19 @@ Once a Worker has six connections open, it can still attempt to open additional 
 
 If the system detects that a Worker is deadlocked on open connections — for instance, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it’s uncommon for a Worker to open a connection that it doesn’t have an immediate use for.
 
---------------------------------
+---
 
 ## Environment variables
 
 The maximum number of environment variables (secret and text combined) for a Worker is 32 variables.
 There is no limit to the number of environment variables per account.
 
-Each environment variable has a size limitation of 1 KB.
+Each environment variable has a size limitation of 5 KB.
 
 ### Script size
 
 <!-- TODO(soon): Broken link to Bindings API documentation. -->
+
 A Workers script plus any [Asset Bindings](/platform/scripts#resource-bindings) can be up to 1MB in size after compression.
 
 ### Number of scripts
@@ -164,11 +245,11 @@ Unless otherwise negotiated as a part of an enterprise level contract, all Worke
 
 <Aside>
 
-__Note:__ App Workers scripts do not count towards this limit.
+**Note:** App Workers scripts do not count towards this limit.
 
 </Aside>
 
---------------------------------
+---
 
 ## KV
 
@@ -187,7 +268,7 @@ Workers KV read performance is determined by the amount of read-volume a given k
 
 Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds before reads in all edge locations are guaranteed to see the new value.
 
---------------------------------
+---
 
 ## Cache API
 
@@ -197,6 +278,32 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 <Aside>
 
-__Note:__ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
+**Note:** The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
 </Aside>
+
+---
+
+## Durable Objects
+
+<Aside type="warning" header="Beta">
+
+Durable Objects are currently in beta. See [their docs](/learning/using-durable-objects) for more information about the beta and any current limitations.
+
+</Aside>
+
+- Unlimited Durable Objects within an account or of a given class
+
+- 10 GB total storage per account (this will be raised after the beta period)
+
+- No storage limit per Durable Object separate from the account limit
+
+- No storage limit per Durable Object class separate from the account limit
+
+- Storage keys of up to 2 KiB (2048 bytes)
+
+- Storage values of up to 32 KiB (32768 bytes)
+
+- 500ms of CPU time per request, including websocket messages (this will be raised to match the Unbound limit after the beta period)
+
+Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account, which we expect to raise after the beta period ends. If you need more storage in the meantime, please contact us.

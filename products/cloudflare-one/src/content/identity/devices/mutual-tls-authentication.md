@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Mutual TLS
@@ -14,23 +15,24 @@ Mutual TLS (mTLS) authentication ensures that traffic is both secure and trusted
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
+Currently, mTLS does not work with HTTP3 traffic.
+
 ![mTLS Diagram](../../static/documentation/identity/devices/mtls.png)
 
+
 ## Add mTLS authentication to your Access configuration
-
-To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
-
-1. Navigate to **Service Auth > Mutual TLS**.
-
-2. Click **Add mTLS Certificate**.
-
-    ![Root CA](../../static/documentation/identity/devices/add-mtls.png)
 
 <Aside type='warning' header='Important'>
 
 The mTLS certificate is used **only** to verify the client certificate. It does **not** control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
 </Aside>
+
+To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
+
+1. Navigate to **Configuration > Service Auth > Mutual TLS**.
+
+2. Click **Add mTLS Certificate**.
 
 3. Paste the content of the `ca.pem` file in the Certificate content field.
 
@@ -48,12 +50,20 @@ If your zone is using an intermediate certificate in addition to the root certif
 
 The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
 
-![mTLS Policy](../../static/documentation/identity/devices/mtls-rule.png)
+![mTLS Policy](../../static/documentation/identity/devices/create-mtls-rule.png)
 
 |Option|Result|
 |-|-|
 |**Common Name**|Only client certificates with a specific common name will be allowed to proceed.|
 |**Valid Certificate**|Any client certificate that can authenticate with the Root CA will be allowed to proceed.|
+
+8. Save the rule.
+
+9. On the **Edit Application** page, navigate to **Application > Overview**.
+
+10. Set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
+
+ ![mTLS session duration](../../static/documentation/identity/devices/mutual-tls-session-duration.png)
 
 ## Test using cURL
 

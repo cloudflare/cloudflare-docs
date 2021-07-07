@@ -71,7 +71,7 @@ To configure GitHub access in both GitHub and Cloudflare Access:
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "github",
     "name": "my example idp"

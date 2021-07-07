@@ -74,7 +74,7 @@ These steps help you set up Centrify as your identity provider (IdP).
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "centrify_account": "https://abc123.my.centrify.com/",
         "centrify_app_id": "exampleapp",
     },

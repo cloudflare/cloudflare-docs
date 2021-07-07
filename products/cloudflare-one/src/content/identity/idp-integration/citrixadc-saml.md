@@ -1,5 +1,6 @@
 ---
 order: 7
+pcx-content-type: how-to
 ---
 
 # SAML | Citrix ADC
@@ -44,7 +45,7 @@ To set up Citrix ADC (SAML) as your identity provider:
     | Field | Description |
     | ----- | ----------- |
     | **Name** | The certificate name you defined while [configuring SAML](#configure-saml) |
-    | **Assertion Consumer Service URL** | `https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback` |
+    | **Assertion Consumer Service URL** | `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback` |
     | **IdP Certificate Name** | The IdP certificate name you defined while [configuring SAML](#configure-saml) |
     | **Issuer Name** | `https://idp.<yourdomain>.com/saml/login` |
     | **Service Provider ID** | `https://idp.<yourdomain>.com/saml/login` |
@@ -64,7 +65,7 @@ To set up Citrix ADC (SAML) as your identity provider:
     ```json
     add authentication samlIdPProfile samlProf_CloudflareAccess \
         -samlIdPCertName SAML_Signing \
-        -assertionConsumerServiceURL "https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback" \
+        -assertionConsumerServiceURL "https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback" \
         -samlIssuerName "https://idp.yourdomain.com/saml/login" \
         -rejectUnsignedRequests OFF \
         -NameIDFormat emailAddress \
@@ -78,7 +79,8 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     ```
 
-1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
+
 1. Click *+ Add* under **Login Methods**, and select SAML.
 
 1. Configure the fields as follows:

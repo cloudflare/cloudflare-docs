@@ -1,10 +1,19 @@
 ---
 order: 5
+pcx-content: how-to
 ---
+
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
 # Namecheap
 
 You can follow the instructions below to transfer your domain from NameCheap to Cloudflare.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 
@@ -47,4 +56,4 @@ In the Cloudflare transfer screen, input the authorization code. Each domain wil
 --------
 
 ## Step 5: Approve the transfer
-Once Cloudflare processes your transfer, Namecheap will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically approve within 5 days.
+Once Cloudflare processes your transfer, Namecheap will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). To approve the transfer, do **not** take any action. The transfer will automatically approve within 5 days.

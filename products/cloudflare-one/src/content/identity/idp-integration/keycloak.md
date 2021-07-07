@@ -1,5 +1,6 @@
 ---
 order: 9
+pcx-content-type: how-to
 ---
 
 # SAML | Keycloak 
@@ -17,7 +18,7 @@ To set up Keycloak (SAML) as your identity provider:
 1. Under **Client AD**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
     
     ![SAML Client](../../static/documentation/identity/keycloak/configure-client.png)
@@ -32,7 +33,7 @@ To set up Keycloak (SAML) as your identity provider:
 
     ![Mapper](../../static/documentation/identity/keycloak/protocol-mapper.png)
 
-1. Next, you'll need to integrate with Cloudflare Access. On the Teams dashboard, navigate to **Access > Authentication**.
+1. Next, you'll need to integrate with Cloudflare Access. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
 1. Under **Login methods**, click *+ Add*.
 

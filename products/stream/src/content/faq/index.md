@@ -1,22 +1,24 @@
 ---
+title: FAQ
 order: 6
+pcx-content-type: faq
 ---
 
-# FAQ
+# Frequently asked questions about Cloudflare Stream
 
 ## What formats and quality levels are delivered through Cloudflare Stream?
 
-Cloudflare decides on which bitrate, resolution and codec is best for you. We deliver all videos to industry standard H264 codec. We use to few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
+Cloudflare decides on which bitrate, resolution and codec is best for you. We deliver all videos to industry standard H264 codec. We use a few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
 
 ## Can I download original video files from Stream?
 
-Video cannot be downloaded from Cloudflare Stream.
+You cannot download the *exact* input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](https://developers.cloudflare.com/stream/viewing-videos/download-videos) feature to get encoded MP4s for use cases like offline viewing.
 
 ## Is there a limit to the amount of videos I can upload?
 
 - By default, a video upload can be at most 30 GB.
 
-- By default, 70 videos can be in the "in progress" state at once.
+- By default, 120 videos can be in the `inprogress`, `queued` or `downloading` state at once. If videos are in `error`, `ready` or `pendingupload` states, they don't count towards this limit.
 
 - An account cannot upload videos if the total video duration exceeds the video storage capacity purchased.
 
@@ -48,11 +50,11 @@ The Stream player can be successfully embedded on the following platforms:
 
 Browser         | Version
 ----------------|-----------------------------------
-Chrome          | Supported since Chrome version 30+
-Firefox         | Supported since Firefox version 42+
-Internet Explorer | Supported since IE 11 (Windows 8+ only)
-Safari          | Supported since Safari version 8+
-Opera           | Supported since Opera version 15+
+Chrome          | Supported since Chrome version 88+
+Firefox         | Supported since Firefox version 87+
+Edge            | Supported since Edge 89+
+Safari          | Supported since Safari version 14+
+Opera           | Supported since Opera version 75+
 
 </TableWrap>
 
@@ -60,11 +62,10 @@ Opera           | Supported since Opera version 15+
 
 Mobile Platform   | Version
 ------------------|-----------------------------------------------------------------------------------
-Chrome on Android | Supported on Chrome and Firefox for Android 4.0+ and all browsers for Android 4.1+
-UC Browser on Android | Supported on version 11.8+
-Samsung Internet | Supported on 5+
-iOS               | Supported on iOS 8+
-Windows           | Supported on Windows Phone 8+
+Chrome on Android | Supported on Chrome 90
+UC Browser on Android | Supported on version 12.12+
+Samsung Internet | Supported on 13+
+Safari on iOS    | Supported on iOS 13.4+. Speed selector supported when not in fullscreen.
 
 </TableWrap>
 

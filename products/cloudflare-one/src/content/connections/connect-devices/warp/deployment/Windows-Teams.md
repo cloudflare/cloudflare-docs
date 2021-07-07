@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 # Windows
@@ -59,11 +60,11 @@ Intune is now configured to deploy the Cloudflare WARP Client.
 
 If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
 
-* If your organization uses Gateway DNS filtering, users will need to [configure a Gateway DoH subdomain](#manually-configure-a-gateway-doh-subdomain).
+* If your organization uses Gateway DNS filtering, users will need to configure a [DoH subdomain](/glossary#doh-subdomain).
 * If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
 
-### Manually configure a Gateway DoH Subdomain
-If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway DoH Subdomain field. Follow [these instructions](/policies/filtering/dns-policies/configuring-locations#find-a-locations-doh-subdomain) to find this value for your Teams configuration.
+### Manually configure a Gateway DoH subdomain
+If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway [DoH subdomain](/glossary#doh-subdomain) field.
 
 Then ask your users to complete the following steps:
 
@@ -88,3 +89,10 @@ If your organization uses [Zero Trust policies](/policies/zero-trust) to control
 1. Complete the authentication steps required by your organization.
 
 ![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/windows_TeamsButton.png)
+
+## Remove the WARP client application
+
+1. Navigate to Windows Settings (Windows Key + I).
+1. Click **Apps**.
+1. Click **App & Features**.
+1. Scroll to find the Cloudflare WARP application and click **Uninstall**.

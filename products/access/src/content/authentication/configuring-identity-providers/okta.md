@@ -91,7 +91,7 @@ https://<your-auth-domain-here>.cloudflareaccess.com/cdn-cgi/access/callback
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "okta_account": "https://dev-abc123.oktapreview.com",
     },
     "type": "okta",

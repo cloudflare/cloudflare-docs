@@ -1,8 +1,10 @@
 ---
+title: Troubleshooting
 order: 50
+pcx-content-type: faq
 ---
 
-# Troubleshooting
+# Troubleshoot Cloudflare load balancers
 
 ## Overview
 
@@ -146,13 +148,11 @@ Make sure IP is accurate, and if it is check if there is an ISP or hosting provi
 
 ### Cause
 
-If you're using the Cloudflare API and receive a Quota Exceeded error, you have tried to create more objects than you are allowed. For example, if you are limited to 5 monitors and you attempt to create a sixth monitor object, you will see this error returned by the API. The Cloudflare dashboard will not allow you to create more objects. See the example below:
+You will receive this error if you attempt to create more objects (monitors, pools, or origins) than are included in your plan.
 
-#### Dashboard
+If using the dashboard, you will not be able to create additional objects.
 
-![](../static/images/troubleshooting-1.png)
-
-#### API
+If you're using the **Cloudflare API**, you will receive this error message.
 
 ```
 {
@@ -170,7 +170,7 @@ If you're using the Cloudflare API and receive a Quota Exceeded error, you have 
 
 ### Solution
 
-- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their Customer Success Manager or contact support@cloudflare.com to discuss this issue.
+- Enterprise customers who need to create more objects (load balancers, pools, origins, or monitors) should reach out to their Customer Success Manager or [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to discuss this issue.
 - Self-service customers upgrade their Load Balancing subscription with more origin servers to increase load balancing capacity.
 
 ---

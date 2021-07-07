@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: getting-started
 ---
 
 # Get started
@@ -36,8 +37,6 @@ Let's walk through the setup flow!
 
 1. Choose a payment plan.
 
- ![Choose payment plan](../static/documentation/quickstart/step-3.png)
-
 1. Click **Next**. We'll show you a summary of the payment plan you've selected; you now have the opportunity to go back and choose a different plan or click **Proceed to payment**.
 
  ![Enter payment details](../static/documentation/quickstart/step-4.png)
@@ -51,14 +50,14 @@ Let's walk through the setup flow!
  For example, if you've purchased one of the Teams bundle plans, you can:
 
  * [Add your first location](/connections/connect-networks)
- * [Add your first application](/applications/configure-applications)
+ * [Add your first application](/applications/configure-apps)
  * [Customize your login page](/identity/login-page)
 
  And so much more. Happy exploring!
 
- ![Enter payment details](../static/documentation/quickstart/step-6.png)
+ ![Enter payment details](../static/documentation/quickstart/quickstart.png)
 
 
 ## Tutorials
 
-Once you have your account created, you can begin using Cloudflare for Teams. We recommend reviewing the Cloudflare for Teams [Tutorials](/tutorials) section to begin adding new features.
+Once you've created your account, you can start exploring Cloudflare for Teams. We recommend reviewing the Cloudflare for Teams [Tutorials](/tutorials) section to begin adding new features.

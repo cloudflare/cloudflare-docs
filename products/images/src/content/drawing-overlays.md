@@ -1,6 +1,7 @@
 ---
 title: Drawing overlays
 order: 4
+pcx-content-type: configuration
 ---
 
 # Drawing overlays & watermarks

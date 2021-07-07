@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: how-to
 ---
 
 # DNS over HTTPS
@@ -8,11 +9,13 @@ order: 1
 
 ### Firefox
 
-<Aside>
+<TableWrap>
 
-<b>Before you start</b>. <a href="/getting-started/troubleshooting-policies/#find-a-location-doh-subdomain"> Obtain a location DoH subdomain (previously known as a unique id)</a>
+| Before you start |
+| ---------------- |
+| Obtain a location's [DoH subdomain](/glossary#doh-subdomain) (previously known as a unique id). |
 
-</Aside>
+</TableWrap>
 
 With Firefox, you can send DNS queries using the DNS over HTTPS protocol.
 

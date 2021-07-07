@@ -54,6 +54,7 @@ function SEO({ lang, title, description, meta }) {
       <meta property="og:type" content="website"/>
 
       <meta name="twitter:title" content={title}/>
+      <meta name="twitter:image" content="https://www.cloudflare.com/img/cf-twitter-card.png"/>
       <meta name="twitter:description" content={metaDescription}/>
       <meta name="twitter:creator" content={site.siteMetadata.author}/>
       <meta name="twitter:card" content="summary_large_image"/>

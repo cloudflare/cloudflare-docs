@@ -1,5 +1,6 @@
 ---
 order: 0
+pcx-content-type: configuration
 ---
 
 # Configuration
@@ -36,16 +37,17 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
   - An array of objects each specifying a `title` <Type>string</Type> and `url` <Type>string</Type>. Used to construct the external links menu inside the sidebar nav on desktop.
 
 - `search` <Type>object</Type> <PropMeta>required</PropMeta>
-  - Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, e.g.:
+  - Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, and `search.algoliaOptions` to the default empty filter, e.g.:
 
     ```js
     search: {
       indexName: "",
-      apiKey: ""
+      apiKey: "",
+      algoliaOptions: { "facetFilters": "" }
     }
     ```
 
-    For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/e72247549d20f649786251d0368de19560d1bbb2/products/workers/docs-config.js#L21-L24).
+    For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/df657d2ef2983999128b9f83116080225bcdb8f2/products/workers/docs-config.js#L25-L29).
 
 - `siteMetadata` <Type>object</Type> <PropMeta>required</PropMeta>
   - A proxy to the Gatsby [property of the same name](https://www.gatsbyjs.com/docs/gatsby-config/#sitemetadata). Sub-properties:
@@ -74,49 +76,6 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
 --------------------------------
 
 ## Examples
-
-Here’s the `docs-config.js` file for the [example project](https://github.com/adamschwartz/docs-engine-example):
-
-```js
----
-filename: docs-config.js
----
-module.exports = {
-  product: "Example",
-  pathPrefix: "",
-  productLogoPathD: "M8 8v32h32V26H22V8zm18-2h16v16H26z",
-  contentRepo: "adamschwartz/docs-engine-example",
-  externalLinks: [
-    {
-      title: "Adam Schwartz website",
-      url: "https://adamschwartz.co"
-    },
-    {
-      title: "Docs Engine on GitHub",
-      url: "https://github.com/adamschwartz/cloudflare-docs-engine"
-    },
-    {
-      title: "example.com",
-      url: "https://example.com"
-    },
-  ],
-  search: {
-    indexName: "",
-    apiKey: "",
-  },
-  siteMetadata: {
-    title: "Example docs",
-    description: "These docs are an example of of a docs site built with https://github.com/cloudflare/workers-docs-engine.",
-    author: "@adamschwartz",
-    url: "http://adamschwartz.co/docs-engine-example",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",
-  },
-}
-```
-
-([Source](https://github.com/adamschwartz/docs-engine-example/blob/c45fa9f0a8affc68baf5d3517f8b890ba0522531/docs-config.js))
-
---------------------------------
 
 Here’s the `docs-config.js` file for [these docs](https://github.com/cloudflare/cloudflare-docs/tree/production/products/docs-engine):
 
@@ -149,7 +108,7 @@ module.exports = {
     description: "Documentation for the open-source Cloudflare Documentation engine which powers Cloudflare's open-source documentation.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/docs-engine",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png",
   }
 }
 ```

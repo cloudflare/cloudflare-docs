@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content-type: how-to
 ---
 
 # Applications and app types
@@ -11,15 +12,20 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 ## Creating rules with applications and app types
 
 1. On the [Teams dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
+
 1. Navigate to the **HTTP tab**.
+
 1. [Create a new rule](/policies/filtering/http-policies/policy-management#create-your-first-http-policy), or edit an existing one.
 1. In the **Selector** drop-down menu, select the *Application* option. 
+
 1. In the **Operator** drop-down menu, select *in* or *not in*, depending on whether you want to include or exclude applications or app types from your rule.
+
 1. In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
 
   ![Applications](../../../static/documentation/policies/http-applications-operator-value.png)
 
 1. Next, select an **[Action](#supported-actions-for-applications)** for your rule.
+
 1. Click **Create rule** to finalize your changes.
 
 
@@ -66,6 +72,12 @@ Gateway automatically groups applications incompatible with TLS decryption into 
 Gateway periodically updates the *Do Not Decrypt* app type to include new applications. By creating this *Do Not Inspect* rule and selecting all applications within the *Do Not Decrypt* app type, you'll ensure that your rule will apply to any new applications that will be added to the app type.
 
 ![Do not decrypt HTTP rule](../../../static/documentation/faq/do-not-decrypt.png)
+
+<Aside>
+
+<b>Google Drive for Desktop</b> allows you to configure the app to trust the <a href="/connections/connect-devices/warp/install-cloudflare-cert">Cloudflare Root Certificate</a> Gateway presents. 
+Doing so will allow you to inspect the traffic to and from Google Drive, instead of setting up a <i>Do Not Inspect</i> rule and lose visibility on that traffic. To trust the Cloudflare Root Certificate in Google Drive, check out these <a href="https://support.google.com/a/answer/7644837">instructions for TrustedRootCertsFile</a>.
+</Aside>
 
 
 ## Supported actions for applications

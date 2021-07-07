@@ -1,6 +1,7 @@
 ---
 title: Future of Drand
 order: 2
+pcx-content-type: concept
 ---
 
 # What do you see as the future of this project?

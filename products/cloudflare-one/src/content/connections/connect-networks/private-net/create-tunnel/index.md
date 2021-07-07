@@ -1,12 +1,13 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # Create a Tunnel
 
 | Before you start |
 |---|
-| 1. [Install and authenticate `cloudflared`](connections/connect-apps/install-and-setup/installation) |
+| 1. [Install and authenticate `cloudflared`](/connections/connect-apps/install-and-setup/installation) |
 
 ## Create a Tunnel
 

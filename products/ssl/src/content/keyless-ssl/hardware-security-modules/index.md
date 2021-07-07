@@ -1,5 +1,6 @@
 ---
-order: 0
+order: 1
+pcx-content-type: concept
 ---
 
 # Hardware security modules
@@ -20,15 +21,18 @@ Moreover, many HSMs are also capable of generating keys, producing cryptographic
 
 The key server communicates with HSMs via PKCS#11, so any HSM supporting the standard can be used with Keyless SSL. We have verified interoperability with the following modules:
 
-* [Gemalto SafeNet Luna](https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/fips-common-criteria-validations/)
+* [Gemalto SafeNet Luna](https://cpl.thalesgroup.com/compliance/fips-common-criteria-validations)
 * [SoftHSMv2](https://github.com/opendnssec/SoftHSMv2)
-* [Thales nShield Connect](https://www.thalesesecurity.com/products/general-purpose-hsms/nshield-connect)
+* [Entrust nShield Connect](https://www.entrust.com/digital-security/hsm)
 * [YubiKey Neo](https://www.yubico.com/product/yubikey-neo/)
 
 We’ve also tested with the following Cloud HSM offerings:
 
-* [AWS CloudHSM](https://aws.amazon.com/cloudhsm/)
-* [IBM Cloud HSM](https://console.bluemix.net/docs/infrastructure/hardware-security-modules/about.html#about-ibm-cloud-hsm)
+* [AWS CloudHSM](aws-cloud-hsm)
+* [IBM Cloud HSM](ibm-cloud-hsm)
+* [Azure Dedicated HSM](azure-dedicated-hsm)
+* [Azure Managed HSM](azure-managed-hsm)
+* [Google Cloud HSM](google-cloud-hsm)
 
 If you have deployed Keyless SSL with an HSM model not listed above, please email keyless@cloudflare.com with details.
 

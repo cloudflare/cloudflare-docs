@@ -1,6 +1,7 @@
 ---
 updated: 2021-02-02
 category: 🛡️ Web Gateway
+pcx-content-type: tutorial
 ---
 
 # Configure local domains and split tunnel mode
@@ -12,7 +13,11 @@ You can configure Cloudflare for Teams to exclude domains and IP addresses from 
 * Manage the default lists of excluded domains and IP addresses
 * Add a domain or IP address to the exclusion list
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
+
+---
 
 ## Configure domains to resolve locally
 
