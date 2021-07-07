@@ -14,4 +14,4 @@
 - By default, we use Node 10 in the Pages build environment. If you need to use a newer Node version, see our [Build configuration page](https://developers.cloudflare.com/pages/platform/build-configuration) for configuration options.
 - It is currently not possible to add a custom domain with a wildcard, e.g. *.domain.com.
 
-Having an issue that you don't see listed above? Let us know in the Cloudflare Workers Discord! Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages channel.
+If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages channel.
