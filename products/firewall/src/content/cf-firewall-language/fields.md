@@ -330,6 +330,15 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><code>cf.edge.server_ip</code><br /><Type>IP Address</Type></td>
+        <td>
+          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          </p>
+          <p>This field will only contain a value for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>. For other customers, the field will contain a null value.
+          </p>
+        </td>
+    </tr>
+    <tr>
         <td><code>cf.edge.server_port</code><br /><Type>Number</Type></td>
         <td>
           <p>Represents the port number at which Cloudflare's network received the request.
