@@ -42,91 +42,13 @@ async function handleRequest(request) {
 }
 ```
 
-## Deploying a Workers function in the UI
+## Deploying a Workers function in the dashboard
 
-The easiest way to start deploying your Workers function is typing [workers.new](https://workers.new/) in the browser. You'll sign-in to your account and automatically be directed to the Workers UI. There you can write your function or use one of the [examples](https://developers.cloudflare.com/workers/examples/) from the Workers docs. 
+The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log into your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/). 
 
-Click "Save and Deploy" when it's ready and set a [route](https://developers.cloudflare.com/workers/platform/routes/) in your domain's zone settings.
+Click "Save and Deploy" when your script is ready and set a [route](/workers/platform/routes/) in your domain's zone settings.
 
-For example, here is a Workers script you can copy/paste into the UI that sets common security headers whenever a request hits your Pages URL. 
-
-```js
----
-header: Setting security headers for your Pages project with a Workers function 
----
-const DEFAULT_SECURITY_HEADERS = {
-    /*
-    Secure your application with Content-Security-Policy headers.
-    To avoid introducing breaking changes, these headers are not automatically set. 
-    Read more here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
-    */
-    /*
-    You can also set Strict-Transport-Security headers. 
-    These are not automatically set because your website might get added to Chrome's HSTS preload list.
-    Here's the code if you want to apply it:
-    "Strict-Transport-Security" : "max-age=63072000; includeSubDomains; preload",
-    */
-    /*
-    X-XSS-Protection header prevents a page from loading if an XSS attack is detected. 
-    Read more here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
-    */
-    "X-XSS-Protection": "1; mode=block",
-    /*
-    X-Frame-Options header prevents click-jacking attacks. 
-    Read more here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-    */
-    "X-Frame-Options": "DENY",
-    /*
-    X-Content-Type-Options header prevents MIME-sniffing. 
-    Read more here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
-    */
-    "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-    'Cross-Origin-Embedder-Policy': 'require-corp; report-to="default";',
-    'Cross-Origin-Opener-Policy': 'same-site; report-to="default";',
-    "Cross-Origin-Resource-Policy": "same-site",
-}
-const BLOCKED_HEADERS = [
-    "Public-Key-Pins",
-    "X-Powered-By",
-    "X-AspNet-Version",
-]
-addEventListener('fetch', event => {
-    event.respondWith(addHeaders(event.request))
-})
-async function addHeaders(req) {
-    let response = await fetch(req)
-    let newHeaders = new Headers(response.headers)
-
-    const tlsVersion = req.cf.tlsVersion
-    // This sets the headers for HTML responses: 
-    if (newHeaders.has("Content-Type") && !newHeaders.get("Content-Type").includes("text/html")) {
-        return new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: newHeaders
-        })
-    }
-
-    Object.keys(DEFAULT_SECURITY_HEADERS).map(function (name) {
-        newHeaders.set(name, DEFAULT_SECURITY_HEADERS[name]);
-    })
-
-    BLOCKED_HEADERS.forEach(function (name) {
-        newHeaders.delete(name)
-    })
-
-    if (tlsVersion != "TLSv1.2" && tlsVersion != "TLSv1.3") {
-        return new Response("You need to use TLS version 1.2 or higher.", { status: 400 })
-    } else {
-        return new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers: newHeaders
-        })
-    }
-}
-```
+For example, [here](https://developers.cloudflare.com/workers/examples/security-headers) is a Workers script you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
 
 ## Deploying a Workers function using the CLI
 
@@ -163,3 +85,25 @@ $ wrangler publish
 ``` 
 
 After you have deployed your Worker, your desired HTTP header adjustments will take effect. While the Worker is deployed, you should continue to see the content from your Pages application as normal.
+
+## Modify HTTP request headers in the dashboard with Transform Rules
+
+You can set or remove HTTP request headers directly by using [Transform Rules](https://developers.cloudflare.com/rules/transform/request-header-modification/create-dashboard), removing the need to write any code with a Worker.
+
+Go to your [account](https://dash.cloudflare.com/), select your zone, and then click the Rules tab.
+
+   ![transform-rules-dashboard](./how-to/media/transform-rules-dashboard.png)
+
+**Adding a custom header with a value:**
+
+   ![transform-rules-add-custom-header](./how-to/media/transform-rules-add-custom-header.png)
+
+**Deleting headers:**
+
+   ![transform-rules-delete-headers](./how-to/media/transform-rules-delete-headers.png)
+
+**Adjusting the value for an existing header:**
+
+   ![transform-rules-adjust-header-value](./how-to/media/transform-rules-adjust-header-value.png)
+
+Here are additional [examples](https://developers.cloudflare.com/rules/transform/request-header-modification/examples) of Transform Rules you can get started with.
