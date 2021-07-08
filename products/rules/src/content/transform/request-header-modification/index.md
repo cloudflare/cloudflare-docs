@@ -18,6 +18,8 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 
 * If you modify the value of an existing HTTP request header using an expression that evaluates to an empty string (`""`) or an undefined value, the HTTP request header is **removed**.
 
+* Currently, there is a limited number of HTTP request headers that you cannot modify. Cloudflare may remove restrictions for some of these HTTP request headers when presented with valid use cases. [Create a post in the community](https://community.cloudflare.com) for consideration.
+
 </Aside>
 
 To create an HTTP Request Header Modification Rule in the dashboard, see [Create an HTTP Request Header Modification Rule in the dashboard](/transform/request-header-modification/create-dashboard).
