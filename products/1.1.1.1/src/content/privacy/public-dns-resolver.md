@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content: reference
 ---
 
 # 1.1.1.1 Public DNS Resolver

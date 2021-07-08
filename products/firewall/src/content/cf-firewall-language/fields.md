@@ -896,3 +896,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
     </tr>
   </tbody>
 </table>
+
+---
+
+_GeoIP is the registered trademark of MaxMind, Inc._
