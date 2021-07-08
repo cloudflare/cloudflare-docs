@@ -30,13 +30,23 @@ These metrics show the number of requests routed to specific pools within a load
 
 Add additional filters for specific pools, times, regions, and origins.
 
-### Latency and Logs
+<Aside type="note">
 
-To view latency and log information for your load balancer, go to **Traffic** > **Load Balancing Analytics** > **Latency**.
+Load balancing <strong>requests</strong> are the number of uncached requests made by your load balancer. By default, Cloudflare caches resolved IP addresses for up to five seconds.
+
+</Aside>
+
+### Latency
 
 **Latency** metrics show an interactive map, helping you identify regions with **Unhealthy** or **Slow** pools.
 
-**Logs** provide a history of all origin server status changes and how they affect your load balancing pools.
+To view latency information for your load balancer, go to **Traffic** > **Load Balancing Analytics** > **Latency**.
+
+### Logs
+
+**Logs** provide a history of all origin server status changes and how they affect your load balancing pools. Load Balancing only logs events that represent a status change for an origin, from healthy to unhealthy or vice versa.
+
+To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**. You can also access healthcheck logs [using the API](https://api.cloudflare.com/#load-balancer-healthcheck-events-list-healthcheck-events).
 
 ## GraphQL Analytics
 
@@ -113,7 +123,7 @@ header: Response (truncated)
 <summary>Requests per data center</summary>
 <div>
 
-This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requets from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
+This query shows the weighted, round-trip time measurement (`avgRttMs`) for individual requests from a specific data center (for example, Singapore or `SIN`) to each pool in a specific load balancer.
 
 ```graphql
 ---
