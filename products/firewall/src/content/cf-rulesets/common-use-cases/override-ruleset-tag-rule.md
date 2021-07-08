@@ -7,12 +7,6 @@ order: 774
 
 # Deploy a Managed Ruleset with ruleset, tag, and rule overrides
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Customize the deployment of Managed Rulesets with a combination of ruleset overrides, tag overrides, and rule overrides in your root ruleset.
 
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase to deploy a Managed Ruleset.
