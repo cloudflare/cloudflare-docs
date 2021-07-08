@@ -26,7 +26,7 @@ pcx-content-type: tutorial
 1. Select the SaaS application type. 
 1. Next, select *Salesforce* from the **Application** drop-down menu.
 1. Fill the remaining fields as follows:
-    * **Entity ID**: `https://salesforce.com`
+    * **Entity ID**: https://[YOUR_SFDC_DOMAIN].my.salesforce.com
     * **Assertion consumer service URL**: https://[YOUR_SFDC_DOMAIN].my.salesforce.com
     * **Name ID format**: Email
 1. Click **Next**.
@@ -53,8 +53,8 @@ pcx-content-type: tutorial
 
    ![Salefsorce configuration](../static/zero-trust-security/access/salesforce.png)
 
-2. Navigate to **Security Controls > Single Sign-On Settings**
-3. Set the following global settings:
+1. Navigate to **Security Controls > Single Sign-On Settings**
+1. Set the following global settings:
     * **SAML Enabled:** true
     * **Make federation ID case-insensitive:** true
 
@@ -75,3 +75,7 @@ Configure as follows:
 1. Click **Save**.
 
   ![Salefsorce configuration](../static/zero-trust-security/access/salesforce-sso.png)
+  
+1. From the navigation panel on the left, click on Domain Management > My Domain. Select your domain.
+1. Scroll to the bottom to find Authentication Configuration. Click Edit and select your Authentication Service you created.
+1. (Optional) Select Security Controls > Signle Sign-On Settings > Edit. Select `Disable login with Salesforce credentials` this will enforce all users to sign in through Cloudflare Access.
