@@ -107,6 +107,12 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
 
+    <Aside type="note">
+
+      **Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270`.
+
+    </Aside>
+
 - `src`
 
   - The video id from the video you've uploaded to Cloudflare Stream should be included here.
