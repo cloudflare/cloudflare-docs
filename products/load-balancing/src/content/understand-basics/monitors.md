@@ -259,6 +259,30 @@ The sub-string must appear within the first 10KiB of your response body.
           </ul>
         </td>
       </tr>
+      <tr>
+        <td><strong><Code>consecutive_up</Code></strong><br/><Type>integer</Type></td>
+        <td>
+          <p>To be marked healthy the monitored origin must pass this healthcheck N consecutive times.</p>
+          <div><Code>2</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 1</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong><Code>consecutive_down</Code></strong><br/><Type>integer</Type></td>
+        <td>
+          <p>To be marked unhealthy the monitored origin must pass this healthcheck N consecutive times.</p>
+          <div><Code>2</Code></div>
+        </td>
+        <td>
+          <ul>
+            <li>default value: 1</li>
+          </ul>
+        </td>
+      </tr>
     </tbody>
   </table>
 </TableWrap>
@@ -305,7 +329,7 @@ For a list of origins that override a monitor's `Host` header:
 
 ## Managing monitors via the Load Balancing dashboard
 
-Use the **Create Load Balancer** or **Edit Load Balancer** panels in the Load Balancing dashboard to manage health check monitors. For step-by-step guidance, see _[Create, attach, and configuring health checks](/create-load-balancer-ui#create-attach-and-configure-health-checks)_.
+Use the **Create Load Balancer** or **Edit Load Balancer** panels in the Load Balancing dashboard to manage health check monitors. For step-by-step guidance, see _[Create, attach, and configuring monitors](/create-load-balancer-ui#3-create-attach-and-configure-monitors)_.
 
 ---
 
