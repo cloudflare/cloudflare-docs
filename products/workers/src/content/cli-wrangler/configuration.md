@@ -403,7 +403,7 @@ format = "service-worker"
 
 - `command` <PropMeta>optional</PropMeta>
 
-  - The command used to build your Worker. On Linux and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
 - `cwd` <PropMeta>optional</PropMeta>
 
