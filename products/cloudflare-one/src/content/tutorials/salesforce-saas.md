@@ -68,7 +68,7 @@ Configure as follows:
   * **API name:** (this will pre-populate)
   * **Issuer:** `<your-team-name>.cloudflareaccess.com`, where your-team-name is your [team name](/glossary#team-name).
   * **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step. 
-  * **EntityID**: `https://salesforce.com`
+  * **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
   * **SAML Identity type:** Assertion contains the Federation ID from the User object
   * **Identity Provider Login URL**: This is the SSO endpoint provided in the Teams dashboard for that application.
 
