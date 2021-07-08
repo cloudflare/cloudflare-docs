@@ -8,6 +8,9 @@ workers_dev = false
 account_id = "b54f07a6c269ecca2fa60f1ae4920c99"
 zone_id = "351cf9fc660523187714fa772ad5ca49"
 route = "https://developers.cloudflare.com/load-balancing*"
+kv_namespaces = [
+    { binding = "REDIRECTS", id = "4f0f506480c84575af95ee848bee5f4e" }
+]
 
 [site]
 bucket = ".docs/public/"
