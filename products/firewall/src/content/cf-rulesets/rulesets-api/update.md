@@ -12,25 +12,25 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-You can use the API to update **basic properties** of a ruleset or phase entry point (currently only the description) and the **list of rules** in the ruleset/entry point.
+You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
-To configure a ruleset at the account or zone level, use one of the following API endpoints:
+To update a ruleset at the account or zone level, use one of the following API endpoints:
 
 ```bash
 ---
 header: Account-level endpoint
 ---
-PUT /accounts/{account-id}/rulesets/{root-ruleset-id}
+PUT /accounts/{account-id}/rulesets/{ruleset-id}
 ```
 
 ```bash
 ---
 header: Zone-level endpoint
 ---
-PUT /zones/{zone-id}/rulesets/{root-ruleset-id}
+PUT /zones/{zone-id}/rulesets/{ruleset-id}
 ```
 
-Alternatively, you can use one of the following endpoints when updating a phase entry point:
+Alternatively, you can use one of the following endpoints when updating a phase entry point ruleset:
 
 ```bash
 ---
@@ -54,7 +54,7 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 ## Example - Set the rules of a ruleset
 
-Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every `PUT` request.
+Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
 
 ```json
 ---
@@ -175,14 +175,13 @@ header: Response
 
 For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
 
-
 ## Example - Update ruleset description
 
 You can use this API method to update the description of an existing ruleset or phase entry point.
 
 <Aside type='warning' header='Important'>
 
-You cannot update the description or the rules in a Managed Ruleset. You can only define overrides to customize the ruleset behavior.
+You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/cf-rulesets/managed-rulesets/override-managed-ruleset) to customize the ruleset behavior.
 
 </Aside>
 
