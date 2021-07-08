@@ -7,12 +7,6 @@ order: 784
 
 # Create ruleset
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Creates a ruleset of a given kind in the specified phase.
 
 Use one of the following endpoints when creating a ruleset:
