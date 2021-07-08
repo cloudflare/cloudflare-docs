@@ -64,7 +64,7 @@ Free plan.
 
 **Who is it for?**
 
-Customers with universal certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
+Customers with universal certificates who want to receive a notification on validation, issuance, and renewal of certificates.
 
 **Included with**
 

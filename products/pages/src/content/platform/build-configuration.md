@@ -1,3 +1,8 @@
+---
+order: 2
+pcx-content-type: concept
+---
+
 # Build configuration
 
 ## Build commands and directories
@@ -17,6 +22,7 @@ Below are some standard build commands and directories for popular frameworks an
 | Docusaurus                   | `npm run build`                     | `build`                     |
 | Eleventy                     | `eleventy`                          | `_site`                     |
 | Ember.js                     | `ember build`                       | `dist`                      |
+| Expo                         | `expo build:web`                    | `web-build`                 |
 | Gatsby                       | `gatsby build`                      | `public`                    |
 | GitBook                      | `gitbook build`                     | `_book`                     |
 | Gridsome                     | `gridsome build`                    | `dist`                      |

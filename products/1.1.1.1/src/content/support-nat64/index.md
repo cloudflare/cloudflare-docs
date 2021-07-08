@@ -1,6 +1,7 @@
 ---
 title: For IPv6-only networks
 order: 9
+pcx-content: interim
 ---
 
 # Supporting IPv6-only networks

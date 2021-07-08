@@ -7,12 +7,6 @@ order: 773
 
 # Use rulesets and rule overrides to only enable selected rules
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Use a ruleset override and a rule override in the ruleset of a phase to deploy selected rules in a Managed Ruleset.
 
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a phase to deploy a Managed Ruleset.

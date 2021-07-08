@@ -7,12 +7,6 @@ order: 782
 
 # Endpoints
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 For some operations, you can use specific endpoints provided by the Rulesets API for managing the rulesets of phases. These endpoints include the phase name in the endpoint instead of the ruleset ID.
 
 For example, instead of using the following endpoint:
