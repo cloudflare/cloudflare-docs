@@ -15,6 +15,7 @@ All values are per organization.
 | ------- | ----- | 
 | Applications count | 500 |
 | Group size | 1000 | 
+| Group count | 50 | 
 | Email addresses per rule | 1000 |
 | IP addresses per rule | 1000 |
 | Application name length (characters) | 350 |
