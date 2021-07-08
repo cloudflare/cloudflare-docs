@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content: reference
 ---
 
 # Cloudflare custom domain protection

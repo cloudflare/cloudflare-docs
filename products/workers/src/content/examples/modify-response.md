@@ -3,9 +3,8 @@ order: 1000
 type: example
 summary: Fetch and modify response properties which are immutable by creating a copy first.
 tags:
-  - Originless
-  - API
-  - JSON
+  - Middleware
+  - Headers
 ---
 
 # Modify response

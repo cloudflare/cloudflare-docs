@@ -18,6 +18,6 @@ module.exports = {
       description: "Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.",
       author: "@cloudflare",
       url: "https://developers.cloudflare.com/bots",
-      image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=",
+      image: "https://www.cloudflare.com/img/cf-twitter-card.png",
   },
 }

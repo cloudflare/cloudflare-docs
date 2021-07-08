@@ -1,12 +1,17 @@
+---
+pcx-content-type: configuration
+---
+
 # Cache
 
 ## Background
 
-The Cache API allows fine grained control of reading and writing from cache, and deciding exactly when to fetch data from your origin.
+The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from the [Cloudflare edge network](https://www.cloudflare.com/network/) cache.
 
-For each individual zone, the Cloudflare Workers runtime exposes a single global cache object: `caches.default`. Though this cache object persists on all of Cloudflare’s data centers, objects are not replicated to any other data centers.
+The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created. 
 
-The Service Workers Cache API is currently unimplemented in the Cloudflare Workers Preview. Cache API operations in the preview will have no impact. You must deploy the Worker on a zone to test cache operations.
+However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/learning/playground) preview will have no impact. Only deployed, live Workers have access to live cache operations. 
+
 
 <Aside>
 
@@ -16,13 +21,22 @@ __Note:__ This individualized zone cache object differs from Cloudflare’s Glob
 
 --------------------------------
 
-## Constructor
+## Accessing Cache 
+
+The `caches.default` API is strongly influenced by the web browsers’ Cache API, but there are some important differences. For instance, Cloudflare Workers runtime exposes a single global cache object.
 
 ```js
-let cache = caches.default
+let cache = caches.default;
+await cache.match(request);
 ```
 
-This API is strongly influenced by the web browsers’ Cache API, but there are some important differences. For instance, Cloudflare Workers runtime exposes a single global cache object.
+You may create and manage additional Cache instances via the [`caches.open`](https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/open) method.
+
+```js
+let myCache = await caches.open('custom:cache');
+await myCache.match(request);
+```
+
 
 --------------------------------
 
@@ -126,7 +140,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 <Definitions>
 
 - `Range`
-    - Results in a `206` response if a matching response is found. Your Cloudflare cache always respects range requests, even if an `Accept-Ranges` header is on the response.
+    - Results in a `206` response if a matching response with a Content-Length header is found. Your Cloudflare cache always respects range requests, even if an `Accept-Ranges` header is on the response.
 
 - `If-Modified-Since`
     - Results in a `304` response if a matching response is found with a `Last-Modified` header with a value after the time specified in `If-Modified-Since`.

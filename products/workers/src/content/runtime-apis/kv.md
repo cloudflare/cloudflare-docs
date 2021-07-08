@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # KV
 
 ## Background
@@ -6,7 +10,27 @@ Workers KV is a global, low-latency, key-value data store. It supports exception
 
 Learn more about [How KV works](/learning/how-kv-works).
 
+To use Workers KV you must create a KV namespace and bind it to your worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
+
 --------------------------------
+
+## Using KV with Durable Objects
+
+The docs below assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
+
+```js
+export class DurableObject {
+  constructor(state, env) {
+    this.state = state
+    this.env = env
+  }
+
+  async fetch(request) {
+    const valueFromKV = await this.env.NAMESPACE.get('someKey')
+    return new Response(valueFromKV)
+  }
+}
+```
 
 ## Methods
 
@@ -23,7 +47,7 @@ await NAMESPACE.put(key, value)
 <Definitions>
 
   - `key` <Type>string</Type>
-    - The key to associate with the value
+    - The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid.
 
   - `value` <Type>string</Type> | <Type>ReadableStream</Type> | <Type>ArrayBuffer</Type>
     -  The value to store. The type is inferred.
@@ -39,7 +63,7 @@ Wrangler](/cli-wrangler/commands#kvkey).
 
 Finally, you can [write data via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
 
-Due to the eventually consistent nature of Workers KV, concurrent writes from different edge locations can end up up overwriting one another. It’s a common pattern to write data via Wrangler or the API but read the data from within a worker, avoiding this issue by issuing all writes from the same location.
+Due to the eventually consistent nature of Workers KV, concurrent writes from different edge locations can end up overwriting one another. It’s a common pattern to write data via Wrangler or the API but read the data from within a worker, avoiding this issue by issuing all writes from the same location.
 
 Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. See [How KV works](/learning/how-kv-works) for more on this topic.
 

@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content: tutorial
 ---
 
 # Transfer out from cloudflare

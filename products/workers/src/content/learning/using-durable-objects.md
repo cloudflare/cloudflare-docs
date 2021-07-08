@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content-type: concept
 ---
 
 # Using Durable Objects
@@ -32,7 +33,7 @@ There are three steps to creating and using a Durable Object:
 
 Before you can create and access Durable Objects, you must define their behavior by exporting an ordinary JavaScript class. Other languages will need a shim that translates their class definition to a JavaScript class.
 
-The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter contains any bindings you have associated with the Worker when you uploaded it.
+The first parameter passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
 ```js
 export class DurableObjectExample {
@@ -40,6 +41,8 @@ export class DurableObjectExample {
     }
 }
 ```
+
+Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -159,7 +162,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-Full documentation for WebSockets will be coming soon, but for now check out this [heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo) that runs in Durable Objects to see how it works.
+For more information, see the [documentation of WebSockets in Workers](/learning/using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -167,7 +170,9 @@ As mentioned above, Durable Objects do not receive requests directly from the In
 
 When a Worker talks to a Durable Object, it does so through a "stub" object. The class binding's `get()` method returns a stub to the particular Durable Object instance, and the stub's `fetch()` method sends HTTP [Requests](/runtime-apis/request) to the instance.
 
-Note that in the example below, we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for Durable Objects. The fetch handler in this example implements the Worker that talks to the Durable Object. We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
+The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that we have written the fetch handler using a new kind of Workers syntax based on ES modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the service-workers syntax.
+
+We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. As you saw above, we wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
@@ -225,7 +230,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-At the time of writing, Durable Object support in Wrangler is not yet available in a full release build, so you need to install a release candidate instead. See the [release notes](https://github.com/cloudflare/wrangler/releases/tag/v1.15.0-custom-builds-rc.2) for installation instructions and more information.
+You must use [Wrangler version 1.17 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
 </Aside>
 
@@ -248,7 +253,7 @@ $ wrangler publish --new-class Counter
 
 ### Specifying the main module
 
-Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using "module" key in the `package.json` file in the project.
+Workers that use modules syntax must have a "main" module specified from which all Durable Objects and event handlers are exported. The file that should be treated as the main module is configured using the `"main"` key in the `[build.upload]` section of `wrangler.toml`. See the [modules section of the custom builds documentation](/cli-wrangler/configuration#modules) for more details.
 
 ### Configuring Durable Object bindings
 
@@ -280,7 +285,7 @@ $ wrangler publish --new-class DurableObjectExample
 
 Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
 
-If you want to delete the Durable Objects associated with an exported class, you can use `--delete-class`:
+If you want to delete the Durable Objects associated with an exported class, remove the corresponding binding from wrangler.toml, then use `--delete-class`:
 
 ```sh
 $ wrangler publish --delete-class DurableObjectExample
@@ -302,6 +307,10 @@ $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.work
 ```
 
 As you write Durable Objects, you can find more helpful details in the [Durable Objects runtime API documentation](/runtime-apis/durable-objects).
+
+## Limits
+
+See the [Durable Objects section of the Limits page](/platform/limits#durable-objects) for current relevant usage limits.
 
 ## Limitations
 
@@ -325,7 +334,9 @@ There is currently no support for generating a list of all existing objects, nor
 
 ### Development tools
 
-[Wrangler tail](/cli-wrangler/commands#tail) and [Wrangler dev](/cli-wrangler/commands#dev) do not currently work with Durable Objects.
+[Wrangler dev](/cli-wrangler/commands#dev) does not currently work with Durable Objects.
+
+[Wrangler tail](/cli-wrangler/commands#tail) does work, but note that logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.
 
 The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
 
@@ -343,7 +354,7 @@ While Durable Objects already perform well for many kinds of tasks, we have lots
 
 ## Example - Counter
 
-We've included complete example code for both the Worker and the Durable Object for a basic counter below.
+We've included complete example code for both the Worker and the Durable Object for a basic counter below. [See here](https://github.com/cloudflare/durable-objects-template) for the full code template.
 
 ```js
 // Worker
@@ -381,7 +392,7 @@ export class Counter {
         if (!this.initializePromise) {
             this.initializePromise = this.initialize().catch((err) => {
                 // If anything throws during initialization then we need to be
-                // sure sure that a future request will retry initialize().
+                // sure that a future request will retry initialize().
                 // Note that the concurrency involved in resetting this shared
                 // promise on an error can be tricky to get right -- we don't
                 // recommend customizing it.
@@ -423,3 +434,17 @@ export class Counter {
 ## Configuration Script
 
 While using Wrangler is strongly recommended, if you would really rather not use it for some reason we've included a [shell script](/publish-durable-object.sh) to automate the curl commands involved in uploading a Worker that implements and uses Durable Objects.
+
+## Troubleshooting
+
+### Debugging 
+`wrangler dev` does not currently support Durable Objects.
+
+To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+
+### Common errors
+#### Error: `No event handlers were registered. This script does nothing.`
+In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker script, and that the file extension is `.mjs` instead of `.js` if using ES Modules Syntax.
+
+#### Error when deleting migration
+When deleting a migration using `wrangler --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.

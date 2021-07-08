@@ -1,11 +1,12 @@
 ---
 updated: 2021-01-12
 category: 🌐 Connections
+pcx-content-type: tutorial
 ---
 
 # Migrate to Named Tunnels with Load Balancer
 
-Cloudflare Argo Tunnel is available in two deployment modes: "Legacy" Argo Tunnel and "Named" Argo Tunnel. [Named Argo Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
+Cloudflare Tunnel is available in two deployment modes: "Legacy" Tunnel and "Named" Argo Tunnel. [Named Tunnel](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) mode improves maintainability and stability by distinguishing between routing and configuration.
 
 Unlike Legacy mode, Named Argo Tunnels give users the ability to manage routing in the Cloudflare dashboard and to run `cloudflared` once for [multiple services](https://blog.cloudflare.com/many-services-one-cloudflared/).
 
@@ -16,7 +17,13 @@ If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel d
 * Migrate a Legacy Argo Tunnel deployment to Named Argo Tunnel model
 * Use Cloudflare Load Balancer to perform a zero downtime migration
 
-**⏲️ Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
+
+See additional documentation for working with [Kubernetes](/connections/connect-apps/routing-to-tunnel/kubernetes).
+
+---
 
 ## Creating a Legacy Argo Tunnel with Cloudflare Load Balancer
 
@@ -83,7 +90,7 @@ $ cloudflared tunnel run lisbon-app
 
 ## Migrate the Load Balancer configuration
 
-You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Create a new Origin Pool in the Load Balancer.Add a new origin to the list.
+You can now begin migrating your Load Balancer deployment to use the new Named Tunnel. Create a new Origin Pool in the Load Balancer. Add a new origin to the list.
 
 In the origin address field, input the ID of the tunnel followed by `cfargotunnel.com`. In this example, the origin address value would be `6b9b8f72-b655-46fb-b008-a45366e26b48.cfargotunnel.com`.
 

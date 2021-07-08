@@ -1,6 +1,7 @@
 ---
 title: Web standards
 order: 0
+pcx-content-type: configuration
 ---
 
 # JavaScript and web standards

@@ -1,5 +1,6 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Okta
@@ -29,7 +30,7 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 1. You can name the application to be any value. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
  ![Create New App](../../static/documentation/identity/okta/add-uri.png)
@@ -64,9 +65,11 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1. Input the ID, secret, and the Okta account URL.
 
+1. If you have more than 100 Okta groups. [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. (optional)
+
 1. Click **Save**.
 
-   ![Input](../../static/documentation/identity/okta/add-okta.png)
+   ![Input](../../static/documentation/identity/okta/Add_Okta_Cred_API_Token.png)
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Okta.
 

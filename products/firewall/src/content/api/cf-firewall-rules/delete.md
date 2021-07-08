@@ -1,5 +1,6 @@
 ---
 title: DELETE examples
+pcx-content-type: reference
 order: 435
 ---
 

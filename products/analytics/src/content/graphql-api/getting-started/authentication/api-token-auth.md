@@ -1,6 +1,6 @@
 ---
-title: Configure an Analytics API token
 order: 20
+pcx-content-type: how-to
 ---
 
 # Configure an Analytics API token
@@ -11,10 +11,11 @@ For more detail on API tokens and the full range of supported options, see [_Cre
 
 To create an API token for authentication to the GraphQL Analytics API, use this workflow:
 
-* [Access the Create API Token page](#access-the-create-api-token-page)
-* [Configure a custom API token](#configure-a-custom-api-token)
-* [Review and create your API token](#review-and-create-your-api-token)
-* [Copy and test your API token](#copy-and-test-your-api-token)
+- [Configure an Analytics API token](#configure-an-analytics-api-token)
+  - [Access the Create API Token page](#access-the-create-api-token-page)
+  - [Configure a custom API token](#configure-a-custom-api-token)
+  - [Review and create your API token](#review-and-create-your-api-token)
+  - [Copy and test your API token](#copy-and-test-your-api-token)
 
 ## Access the Create API Token page
 

@@ -1,3 +1,8 @@
+---
+order: 8
+pcx-content-type: concept
+---
+
 # Limits
 
 Below, we've listed the limits for users using the Cloudflare Pages free plan. For more details on removing these limits, check out our [Cloudflare plans](https://www.cloudflare.com/plans) page.
@@ -16,15 +21,15 @@ We take each file in your site and upload it to our globally distributed network
 
 ## File size
 
-The maximum file size for a Cloudflare Pages site asset is 25mb.
+The maximum file size for a single Cloudflare Pages site asset is 25MB.
 
 ## Preview deployments
 
-You can have a unlimited number of [preview deployments](/platform/preview-deployments) active on your project at a time.
+You can have an unlimited number of [preview deployments](/platform/preview-deployments) active on your project at a time.
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your GitHub project--you can manage both public and private repos, open issues, and accept pull requests via GitHub without it impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your GitHub project--you can manage both public and private repos, open issues, and accept pull requests via GitHub without impacting your Pages site.
 
 ## Sites
 

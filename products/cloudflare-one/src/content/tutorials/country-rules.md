@@ -2,6 +2,7 @@
 updated: 2020-11-28
 category: 🔐 Zero Trust
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Require specific countries
@@ -15,7 +16,9 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 * Create a list of approved countries where a team operates
 * Require that users connecting to self-hosted or SaaS applications connect from those countries
 
-**⏲️ Time to complete: ~5 minutes**
+**⏲️ Time to complete:**
+
+5 minutes
 
 ## Create an approved country list
 
@@ -35,7 +38,7 @@ Click `Save`.
 
 ![Full Groups](../static/zero-trust-security/country-rules/later-groups.png)
 
-## Build a policy
+## Build or edit a policy
 
 You can now build [Zero Trust policies](/policies/zero-trust) that will require at least one country in the approved countries list. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
 

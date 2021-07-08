@@ -1,5 +1,6 @@
 ---
 order: 5
+pcx-content-type: interim
 ---
 
 # Controlling origin access
@@ -30,7 +31,7 @@ __Warning:__ When testing image resizing, please deploy the script, and test it 
 
 </Aside>
 
-## Hiding the image sever
+## Hiding the image server
 
 ```js
 async function handleRequest(request) {
