@@ -228,7 +228,7 @@ let value = await FOO.get("keyname");
 
 - `binding` <PropMeta>required</PropMeta>
 
-  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](https://developers.cloudflare.com/workers/runtime-apis/kv).
+  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/runtime-apis/kv).
 
 - `id` <PropMeta>required</PropMeta>
 
