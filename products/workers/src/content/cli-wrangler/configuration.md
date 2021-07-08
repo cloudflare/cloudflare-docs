@@ -7,35 +7,82 @@ pcx-content-type: configuration
 
 ## Background
 
-Your project will need some configuration before you can publish your worker. These values are stored in a `wrangler.toml` file. You will need to manually edit this file to add these values before you can publish.
+Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
 
 ---
 
 ## Environments
 
-Top level configuration: the configuration values you specify at the top of your `wrangler.toml` will be applied to all environments if not otherwise specified in the environment.
+The top-level configuration is the collection of values you specify at the top of your `wrangler.toml` file. These values will be inherited by all environments, unless otherwise defined in the environment.
 
-Environment configuration <PropMeta>(optional)</PropMeta>: the configuration values you specify under an `[env.name]` in your `wrangler.toml`
+The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
 
-Environments is a feature that allows you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the commands that are deploying live Worker scripts:
+```toml
+---
+your-worker.toml
+---
+name = "your-worker"
+type = "javascript"
+account_id = "your-account-id"
+
+# This field specifies that the Worker
+# will be deployed to a *.workers.dev domain
+workers_dev = true
+
+# -- OR --
+
+# These fields specify that the Worker
+# will deploy to a custom domain
+zone_id = "your-zone-id"
+routes = ["example.com/*"]
+```
+
+Environment configuration <PropMeta>(optional)</PropMeta>: the configuration values you specify under an `[env.name]` in your `wrangler.toml` file.
+
+Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/cli-wrangler/commands) that are deploying live Worker scripts:
 
 - `build`
+- `dev`
 - `preview`
 - `publish`
+- `secret`
 
-Some environment properties can be [_inherited_](#keys) from the top level configuration, but values in an environment will always override those at the top level.
+Some environment properties can be [_inherited_](#keys) from the top-level configuration, but if new values are configured in an environment, they will always override those at the top level.
+
+An example of an `[env.name]` configuration looks like this:
+
+```toml
+---
+your-worker.toml
+---
+name = "your-worker"
+type = "javascript"
+account_id = "your-account-id"
+
+[env.helloworld]
+# These new values will override the top level configuration.
+name = "your-worker-helloworld"
+account_id = "your-other-account-id"
+
+# Any additional keys, like environment variables, will be placed here.
+vars = { FOO = "some value", BAR = "some other string" }
+kv_namespaces = [
+  { binding = "FOO", id = "1a2b3c4d5e", preview_id = "6e7f8g9h10i" }
+]
+```
+To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`.
 
 ---
 
 ## Keys
 
-Keys to configure per project in your `wrangler.toml`.
+There are three types of keys in a `wrangler.toml` file:
 
-**Top level only**: required to be configured at the top level of your wrangler.toml only; multiple environments on the same project must share this property
+* Top level only keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
 
-**Inherited**: Can be configured at the top level and/or environment. If the property is defined _only_ at the top level, the environment will use the property value from the top level. If the property is defined in the environment, the environment value will override the top level value.
+* Inherited keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
 
-**Not inherited**: Must be defined for every environment individually.
+* Non-inherited keys must be defined for every environment individually.
 
 <Definitions>
 
@@ -59,11 +106,11 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is the ID of the "zone" or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a [workers.dev](https://workers.dev) subdomain.
+  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
 
 - `workers_dev` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is a boolean flag that specifies if your worker will be deployed to your [workers.dev](https://workers.dev) subdomain. If omitted defaults to false.
+  - This is a boolean flag that specifies if your Worker will be deployed to your [workers.dev](https://workers.dev) subdomain. If omitted, it defaults to false.
 
 - `route` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -71,11 +118,11 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `routes` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
-  - A list of routes you’d like to use your worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a [workers.dev](https://workers.dev) subdomain.
+  - A list of routes you would like to use your Worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a `*.workers.dev` subdomain.
 
 - `webpack_config` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is the path to a custom webpack configuration file for your worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Visit the [Wrangler webpack page](/cli-wrangler/webpack) for more information.
+  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Visit the [Wrangler webpack page](/cli-wrangler/webpack) for more information.
 
 - `vars` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -87,29 +134,29 @@ Keys to configure per project in your `wrangler.toml`.
 
 - `site` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Determines the local folder to upload and serve from a Worker
+  - Determines the local folder to upload and serve from a Worker.
 
 - `dev` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Arguments for `wrangler dev`, configure local server
+  - Arguments for `wrangler dev` that configure local server.
 
 - `triggers` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - Configures cron triggers for executing a Worker on a schedule
+  - Configures cron triggers for running a Worker on a schedule.
 
-- `usage_model` <Type>top level</Type> <PropMeta>optional</PropMeta>
+- `usage_model` <Type>inherited</Type> <PropMeta>optional</PropMeta>
   - Specifies the [Usage Model](/platform/pricing#usage-models) for your Worker. There are two options - [`bundled`](/platform/limits#bundled-usage-model) and [`unbound`](/platform/limits#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
-- `build` <Type>inherited</Type> <PropMeta>optional</PropMeta>
+- `build` <Type>top level</Type> <PropMeta>optional</PropMeta>
 
-  - Allows configuring a custom build step to be run by wrangler when building your worker. See the [custom builds documentation](#build) for more details.
+  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to the [custom builds documentation](#build) for more details.
 
 
 </Definitions>
 
 ### vars
 
-Values to use in your Worker script as text environment variables.
+The `vars` key defines a table of [environment variables](/platform/environments#environment-variables) provided to your Worker script. All values are plaintext values.
 
 Usage:
 
@@ -118,19 +165,18 @@ Usage:
 FOO = "some value"
 BAR = "some other string"
 ```
+The table keys are available to your script as global variables, which will contain their associated values.
 
-<Definitions>
+```js
+// Worker code:
+console.log(FOO);
+//=> "some value"
 
-- `FOO`
+console.log(BAR);
+//=> "some other string"
+```
 
-  - The variable to access in your Worker script
-
-- `"some value"`
-  - The string value the variable resolves to
-
-</Definitions>
-
-Alternatively, you can define `vars` using an "inline table" format. This style should not include any newlines to be considered valid TOML:
+Alternatively, you can define `vars` using an inline table format. This style should not include any new lines to be considered a valid TOML configuration:
 
 ```toml
 vars = { FOO = "some value", BAR = "some other string" }
@@ -144,7 +190,7 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 ### kv_namespaces
 
-KV namespaces bind to your Worker and may be referenced in your script.
+`kv_namespaces` defines a list of KV namespace bindings for your Worker.
 
 Usage:
 
@@ -154,25 +200,49 @@ kv_namespaces = [
   { binding = "BAR", id = "068c101e168d03c65bddf4ba75150fb0", preview_id = "fb69528dbc7336525313f2e8c3b17db0" }
 ]
 ```
+Alternatively, you can define `kv namespaces` like so:
+
+```toml
+[[kv_namespaces]]
+binding = "FOO"
+preview_id = "abc456"
+id = "abc123"
+
+[[kv_namespaces]]
+binding = "BAR"
+preview_id = "xyz456"
+id = "xyz123"
+```
+Much like environment variables and secrets, the `binding` names are available to your Worker as global variables.
+
+```js
+// Worker script:
+
+let value = await FOO.get("keyname");
+//=> gets the value for "keyname" from
+//=> the FOO variable, which points to
+//=> the "0f2ac...e279" KV namespace
+```
 
 <Definitions>
 
 - `binding` <PropMeta>required</PropMeta>
 
-  - After you’ve created a namespace, you must bind it to your Worker so it is accessible from within the Worker script via a variable name you specify.
+  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/runtime-apis/kv).
 
 - `id` <PropMeta>required</PropMeta>
 
-  - The ID of the namespace you wish to bind to the Worker’s global scope when it is deployed. Required for `wrangler publish`.
+  - The ID of the KV namespace that your `binding` should represent. Required for `wrangler publish`.
 
 - `preview_id` <PropMeta>required</PropMeta>
-  - The ID of the namespace you wish to bind to the Worker’s global scope when it is previewed . Required for `wrangler dev` and `wrangler preview`.
+
+  - The ID of the KV namespace that your `binding` should represent during `wrangler dev` or `wrangler preview`. Required for `wrangler dev` and `wrangler preview`.
 
 </Definitions>
 
 <Aside>
 
-**Note:** Creating your KV Namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
+**Note:** Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
 
 You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
@@ -194,41 +264,31 @@ entry-point = "workers-site"
 
 - `bucket` <PropMeta>required</PropMeta>
 
-  - The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`
+  - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file. Example: `bucket = "./public"`
 
 - `entry-point` <PropMeta>optional</PropMeta>
 
-  - The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`
+  - The location of your Worker script. The default location is `workers-site`. Example: `entry-point = "./workers-site"`
 
 - `include` <PropMeta>optional</PropMeta>
 
-  - A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`
+  - An exclusive list of `.gitignore`-style patterns that match file or directory names from your `bucket` location. Only matched items will be uploaded. Example: `include = ["upload_dir"]`
 
 - `exclude` <PropMeta>optional</PropMeta>
-  - A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`
+
+  - A list of `.gitignore`-style patterns that match files or directories in your `bucket` that should be excluded from uploads. Example: `exclude = ["ignore_dir"]`
 
 </Definitions>
-
-To learn more about the optional `include` and `exclude` fields, visit [Ignoring Subsets of Static Assets](#ignoring-subsets-of-static-assets).
 
 You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
 
 #### Storage Limits
 
-For very exceptionally large pages, Workers Sites might not work for you. There is a 25MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
-
-#### Ignoring Subsets of Static Assets
-
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to be on the [latest version](/cli-wrangler/install-update#update) — and the Workers [Bundled plan](https://workers.cloudflare.com/sites#plans).
-
-There are cases where users may not want to upload certain static assets to their Workers Sites.
-In this case, Workers Sites can also be configured to ignore certain files or directories using logic
-similar to [Cargo’s optional include and exclude fields](https://doc.rust-lang.org/cargo/reference/manifest.html#the-exclude-and-include-fields-optional).
-This means that we use gitignore semantics when declaring which directory entries to include or ignore in uploads.
+For exceptionally large pages, Workers Sites may not be ideal. There is a 25MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
 
 #### Exclusively including files/directories
 
-If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your
+If you want to include only a certain set of files or directories in your `bucket`, add an `include` field to your
 `[site]` section of `wrangler.toml`:
 
 ```toml
@@ -242,7 +302,7 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 #### Excluding files/directories
 
-If you want to exclude files or directories in your `bucket`, you can add an `exclude` field to your
+If you want to exclude files or directories in your `bucket`, add an `exclude` field to your
 `[site]` section of `wrangler.toml`:
 
 ```toml
@@ -272,7 +332,7 @@ You can learn more about the standard patterns used for include and exclude in t
 
 #### Customizing your Sites Build
 
-Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. Though you can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), be aware of your `entry` and `context` settings.
 
 You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
 
@@ -287,12 +347,16 @@ Usage:
 crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
 ```
 
+<Definitions>
+
 - `crons` <PropMeta>optional</PropMeta>
   - A set of cron expressions, where each expression is a separate schedule to run the Worker on.
 
+</Definitions>
+
 ### dev
 
-Arguments for `wrangler dev` can be configured here so you don't have to repeatedly pass them.
+Arguments for `wrangler dev` can be configured here so you do not have to repeatedly pass them.
 
 Usage:
 
@@ -306,18 +370,19 @@ local_protocol = "https"
 
 - `ip` <PropMeta>optional</PropMeta>
 
-  - Ip for local `wrangler dev` server to listen on, defaults to 127.0.0.1
+  - The IP address for the local `wrangler dev` server to listen on, defaults to `127.0.0.1`.
 
 - `port` <PropMeta>optional</PropMeta>
 
-  - Port for local `wrangler dev` server to listen on, defaults to 8787
+  - Port for local `wrangler dev` server to listen on, defaults to `8787`.
 
 - `local_protocol` <PropMeta>optional</PropMeta>
 
-  - Protocol that local `wrangler dev` server listen to requests on, defaults to http
+  - Protocol that local `wrangler dev` server listen to requests on, defaults to `http`.
 
 - `upstream_protocol` <PropMeta>optional</PropMeta>
-  - Protocol that `wrangler dev` forwards requests on, defaults to https
+
+  - Protocol that `wrangler dev` forwards requests on, defaults to `https`.
 
 </Definitions>
 
@@ -327,10 +392,10 @@ Customize the command used to build your project. There are two configurations b
 
 #### Service Workers
 
-This section is for customizing Workers with the `service-worker` format. If you're not familar, these are Workers that use `addEventListener` and look like the following:
+This section is for customizing Workers with the `service-worker` format. These Workers use `addEventListener` and look like the following:
 
 ```js
-addEventListener('fetch', function (event) {
+addEventListener('fetch', event => {
   event.respondWith(new Response("I'm a service Worker!"))
 })
 ```
@@ -351,15 +416,15 @@ format = "service-worker"
 
 - `command` <PropMeta>optional</PropMeta>
 
-  - The command to build your project which is executed in the shell of your machine: `sh` for Linux and MacOS, and `cmd` for Windows. You can also use shell operators such as `&&` and `|`
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
 - `cwd` <PropMeta>optional</PropMeta>
 
-  - The working directory for commands, defaults to the project root directory
+  - The working directory for commands, defaults to the project root directory.
 
 - `watch_dir` <PropMeta>optional</PropMeta>
 
-  - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory
+  - The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
 
 </Definitions>
 
@@ -369,7 +434,7 @@ format = "service-worker"
 
   - `format` <PropMeta>required</PropMeta>
 
-    - The format of the Worker script, must be "service-worker"
+    - The format of the Worker script, must be `"service-worker"`.
 
 </Definitions>
 
@@ -381,7 +446,13 @@ format = "service-worker"
 
 #### Modules
 
-Cloudflare Workers now supports uploading scripts as a collection of modules, instead of a single file. Scripts uploaded in this fashion are written a bit differently -- they `export` their event handlers instead of registering them using the global `addEventListener('fetch', handler...)`. Modules also receive bindings (like KV Namespaces, Config Vargs, and Secrets) as arguments to their handlers, rather than global variables. Uploaded modules can `import` (for ES Modules) or `require()` (for CommonJS modules) other uploaded modules.
+Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which required a single file to be uploaded.
+
+Module Workers `export` their event handlers instead of using `addEventListener` calls.
+
+Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets) as arguments to the exported handlers. Previously, with the Service Worker format, these bindings were available as global variables.
+
+An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
 <Aside>
 
@@ -406,9 +477,9 @@ export default {
 }
 ```
 
-In the future, Modules will become the default format for writing Workers scripts. Until then, we are still working on "full" support, so consider this as a beta feature.
+Modules support in Cloudflare Workers is currently in beta.
 
-To create a Workers project using wrangler and Modules, you'll need to add a `[build]` section:
+To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
 ```toml
 [build]
@@ -425,15 +496,15 @@ main = "./worker.mjs"
 
 - `command` <PropMeta>optional</PropMeta>
 
-  - The command to build your project which is executed in the shell of your machine: `sh` for Linux and MacOS, and `cmd` for Windows. You can also use shell operators such as `&&` and `||`
+  - The command used to build your Worker. On Linux and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
 - `cwd` <PropMeta>optional</PropMeta>
 
-  - The working directory for commands, defaults to the project root directory
+  - The working directory for commands, defaults to the project root directory.
 
 - `watch_dir` <PropMeta>optional</PropMeta>
 
-  - The directory to watch for changes while using `wrangler dev`, defaults to "src" relative to the project root directory
+  - The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
 
 </Definitions>
 
@@ -443,11 +514,11 @@ main = "./worker.mjs"
 
 - `format` <PropMeta>required</PropMeta>
 
-  - The format of the Workers script, must be `"modules"`
+  - The format of the Workers script, must be `"modules"`.
 
 - `dir` <PropMeta>optional</PropMeta>
 
-  - The directory you wish to upload your modules from, defaults to "dist" relative to the project root directory
+  - The directory you wish to upload your modules from, defaults to the `dist` relative to the project root directory.
 
 - `main` <PropMeta>required</PropMeta>
 
@@ -462,7 +533,7 @@ main = "./worker.mjs"
 - `rules` <PropMeta>optional</PropMeta>
 
   - An ordered list of rules that define which modules to import, and what type to import them as.
-    You'll need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
+    You will need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
     have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
   - Defaults:
@@ -472,7 +543,7 @@ main = "./worker.mjs"
     format = "modules"
     main = "./worker.mjs"
 
-    # You don't need to include these default rules in your `wrangler.toml`, they are implicit.
+    # You do not need to include these default rules in your `wrangler.toml`, they are implicit.
     # The default rules are treated as the last two rules in the list.
 
     [[build.upload.rules]]
@@ -518,7 +589,7 @@ main = "./worker.mjs"
 
 ## Example
 
-To illustrate how these levels are applied, here is a wrangler.toml using multiple environments:
+To illustrate how these levels are applied, here is a `wrangler.toml` file using multiple environments:
 
 ```toml
 ---
@@ -568,9 +639,3 @@ kv_namespaces = [
   { binding = "BAR", id = "0d8c101e168d03c65bddf4ba75150f33" }
 ]
 ```
-
-<Aside>
-
-**Note:** Global user was configured with the `wrangler login`, `wrangler config`, or environment variables.
-
-</Aside>
