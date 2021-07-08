@@ -82,7 +82,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 * Inherited keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
 
-* Not inherited keys must be defined for every environment individually.
+* Non-inherited keys must be defined for every environment individually.
 
 <Definitions>
 
