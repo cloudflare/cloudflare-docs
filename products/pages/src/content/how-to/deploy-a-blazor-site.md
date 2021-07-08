@@ -38,6 +38,7 @@ $ git push -u origin main
 ## Deploying with Cloudflare Pages
 
 You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:  
+
 <TableLayout>
 | Configuration option | Value          |
 | -------------------- | -------------- |
@@ -45,6 +46,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 | Build command        | `./build.sh` |
 | Build directory      | `output/wwwroot`       |
 </TableLayout>
+
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
 
 <Aside>
