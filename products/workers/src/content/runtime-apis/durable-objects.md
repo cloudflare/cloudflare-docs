@@ -86,7 +86,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - <Code>list()</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
-  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your actor before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
+  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
 
 - <Code>list(options<ParamType>Object</ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
