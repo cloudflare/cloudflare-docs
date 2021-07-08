@@ -38,9 +38,9 @@ Load balancing <strong>requests</strong> are the number of uncached requests mad
 
 ### Latency
 
-To view latency information for your load balancer, go to **Traffic** > **Load Balancing Analytics** > **Latency**.
-
 **Latency** metrics show an interactive map, helping you identify regions with **Unhealthy** or **Slow** pools.
+
+To view latency information for your load balancer, go to **Traffic** > **Load Balancing Analytics** > **Latency**.
 
 ### Logs
 

@@ -19,7 +19,7 @@ Health checks that result in a status change for an origin server are recorded a
 - **The default retry rate is 5 retries/second** and is completely configurable. We do not recommend increasing the retry rate significantly. Retries use exponential backoff (1, 2, 4, 8, 16 seconds by default).
 - **You can configure monitoring for specific URLs** by sending periodic HTTP requests to the load balancer, taking advantage of customizable intervals, timeouts, and status codes. Once an origin server is marked unhealthy, multi-region failover reroutes traffic to the next available server in failover order.
 - **Load Balancing monitors use the following HTTP user-agent**: `"Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; pool-id: $poolid)"`. The `$poolid` contains the first 16 characters of the Load Balancing pool that is the target of the health check.
-- **To increase confidence in pool status**, increase the `consecutive_up` and `consecutive_down` fields when [creating a monitor with the API](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To become healthy or unhealthy, monitored origins must pass this healthcheck the consecutive number of times specified in these parameters.
+- **To increase confidence in pool status**, increase the `consecutive_up` and `consecutive_down` fields when [creating a monitor with the API](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To become healthy or unhealthy, monitored origins must pass this health check the consecutive number of times specified in these parameters.
 - **To prevent health checks from failing**, and to secure user infrastructure against spoofed checks from bad actors, we recommend the following:
   - Only accept connections to hosts listed in the [Cloudflare IP ranges](https://www.cloudflare.com/ips/) in your firewall or web-server.
   - Use Cloudflare's user agent (see above) to reject HTTP requests that don't come from these ranges.
@@ -262,7 +262,7 @@ The sub-string must appear within the first 10KiB of your response body.
       <tr>
         <td><strong><Code>consecutive_up</Code></strong><br/><Type>integer</Type></td>
         <td>
-          <p>To be marked healthy the monitored origin must pass this healthcheck N consecutive times.</p>
+          <p>To be marked healthy, the monitored origin must pass this health check <Code>consecutive_up</Code> consecutive times.</p>
           <div><Code>2</Code></div>
         </td>
         <td>
@@ -274,7 +274,7 @@ The sub-string must appear within the first 10KiB of your response body.
       <tr>
         <td><strong><Code>consecutive_down</Code></strong><br/><Type>integer</Type></td>
         <td>
-          <p>To be marked unhealthy the monitored origin must pass this healthcheck N consecutive times.</p>
+          <p>To be marked unhealthy, the monitored origin must pass this health check <Code>consecutive_down</Code> consecutive times.</p>
           <div><Code>2</Code></div>
         </td>
         <td>
