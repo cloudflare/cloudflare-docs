@@ -12,7 +12,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy a ruleset. You deploy a ruleset by adding a rule with `"action": "execute"` to a phase entry point, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
 A rule that executes a ruleset consists of:
 
