@@ -15,6 +15,10 @@ Cloudflare Logpush supports pushing logs to S3-compatible destinations via the C
 * [Linode Object Storage](https://www.linode.com/products/object-storage/)
 * On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
+```
+Note: S3-compatible destination should be responding on standard HTTPS port 443 in order to work with logpush.
+```
+
 For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](/get-started/) documentation.
 
 ## Manage via the Cloudflare dashboard
