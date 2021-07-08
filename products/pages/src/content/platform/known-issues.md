@@ -1,3 +1,8 @@
+---
+order: 9
+pcx-content-type: concept
+---
+
 # Known issues
 
 Here are some known bugs and issues that we're aware of with Cloudflare Pages:
