@@ -48,7 +48,7 @@ The easiest way to start deploying your Workers function is by typing [workers.n
 
 Click "Save and Deploy" when your script is ready and set a [route](/workers/platform/routes/) in your domain's zone settings.
 
-For example, [here](https://developers.cloudflare.com/workers/examples/security-headers) is a Workers script you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
+For example, [here is a Workers script]((https://developers.cloudflare.com/workers/examples/security-headers)) you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
 
 ## Deploying a Workers function using the CLI
 
