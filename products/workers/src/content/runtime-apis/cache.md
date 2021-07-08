@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 ## Background
 
-The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from cache.
+The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from the [Cloudflare edge network](https://www.cloudflare.com/network/) cache.
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created. 
 
