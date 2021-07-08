@@ -200,6 +200,19 @@ kv_namespaces = [
   { binding = "BAR", id = "068c101e168d03c65bddf4ba75150fb0", preview_id = "fb69528dbc7336525313f2e8c3b17db0" }
 ]
 ```
+Alternatively, you can define `kv namespaces` like so:
+
+```toml
+[[kv_namespaces]]
+binding = "FOO"
+preview_id = "abc456"
+id = "abc123"
+
+[[kv_namespaces]]
+binding = "BAR"
+preview_id = "xyz456"
+id = "xyz123"
+```
 Much like environment variables and secrets, the `binding` names are available to your Worker as global variables.
 
 ```js

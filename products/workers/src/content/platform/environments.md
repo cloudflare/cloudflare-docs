@@ -27,7 +27,7 @@ The layout of a top-level configuration in a `wrangler.toml` file is displayed b
 
 ```toml
 ---
-your-worker.toml
+filename: wrangler.toml
 ---
 name = "your-worker"
 type = "javascript"
@@ -55,7 +55,7 @@ The layout of an example `[env.dev]` environment is displayed below:
 
 ```toml
 ---
-your-worker.toml
+filename: wrangler.toml
 ---
 name = "your-worker"
 type = "javascript"
@@ -70,7 +70,7 @@ The layout of an example `[env.dev]` environment is displayed below:
 
 ```toml
 ---
-your-worker.toml
+filename: wrangler.toml
 ---
 name = "your-worker"
 type = "javascript"
@@ -320,7 +320,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
     ```toml
     ---
-    your-worker.toml
+    filename: wrangler.toml
     ---
     name = "my-worker-dev"
     type = "javascript"
@@ -347,7 +347,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
     ```toml
     ---
-    your-worker.toml
+    filename: wrangler.toml
     ---
     name = "my-worker-dev"
     type = "javascript"
@@ -371,7 +371,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
     ```toml
     ---
-    your-worker.toml
+    filename: wrangler.toml
     ---
     name = "my-worker-dev"
     type = "javascript"
