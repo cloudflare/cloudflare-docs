@@ -92,18 +92,18 @@ You can set or remove HTTP request headers directly by using [Transform Rules](h
 
 Go to your [account](https://dash.cloudflare.com/), select your zone, and then click the Rules tab.
 
-   ![transform-rules-dashboard](./how-to/media/transform-rules-dashboard.png)
+![Transform Rules in the dashboard](./media/transform-rules-dashboard.png)
 
 **Adding a custom header with a value:**
 
-   ![transform-rules-add-custom-header](./how-to/media/transform-rules-add-custom-header.png)
+![Adding a custom header with a value](./media/transform-rules-add-custom-header.png)
 
 **Deleting headers:**
 
-   ![transform-rules-delete-headers](./how-to/media/transform-rules-delete-headers.png)
+![Deleting headers](./media/transform-rules-delete-headers.png)
 
 **Adjusting the value for an existing header:**
 
-   ![transform-rules-adjust-header-value](./how-to/media/transform-rules-adjust-header-value.png)
+![Adjusting the value for an existing header](./media/transform-rules-adjust-header-value.png)
 
 Here are additional [examples](https://developers.cloudflare.com/rules/transform/request-header-modification/examples) of Transform Rules you can get started with.
