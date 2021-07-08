@@ -71,7 +71,7 @@ The following parameters are required:
       <td><code>phase</code></td>
       <td>The name of the phase where the ruleset will be created.</td>
       <td>String</td>
-      <td>Check the specific Cloudflare product documentation for more information on the phases where you can create rulesets or entry point rulesets.</td>
+      <td>Check the specific Cloudflare product documentation for more information on the phases where you can create rulesets for that product.</td>
     </tr>
   </tbody>
 </table>
@@ -133,9 +133,9 @@ header: Response
 }
 ```
 
-## Example - Create a zone-level phase entry point
+## Example - Create a zone-level phase entry point ruleset
 
-This example creates a zone-level phase entry point at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
+This example creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
 
 ```json
 ---
