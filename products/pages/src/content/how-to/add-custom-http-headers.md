@@ -85,25 +85,3 @@ $ wrangler publish
 ``` 
 
 After you have deployed your Worker, your desired HTTP header adjustments will take effect. While the Worker is deployed, you should continue to see the content from your Pages application as normal.
-
-## Modify HTTP request headers in the dashboard with Transform Rules
-
-You can set or remove HTTP request headers directly by using [Transform Rules](https://developers.cloudflare.com/rules/transform/request-header-modification/create-dashboard), removing the need to write any code with a Worker.
-
-Go to your [account](https://dash.cloudflare.com/), select your zone, and then click the Rules tab.
-
-![Transform Rules in the dashboard](./media/transform-rules-dashboard.png)
-
-**Adding a custom header with a value:**
-
-![Adding a custom header with a value](./media/transform-rules-add-custom-header.png)
-
-**Deleting headers:**
-
-![Deleting headers](./media/transform-rules-delete-headers.png)
-
-**Adjusting the value for an existing header:**
-
-![Adjusting the value for an existing header](./media/transform-rules-adjust-header-value.png)
-
-Here are additional [examples](https://developers.cloudflare.com/rules/transform/request-header-modification/examples) of Transform Rules you can get started with.
