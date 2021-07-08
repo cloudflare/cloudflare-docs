@@ -1,3 +1,8 @@
+---
+order: 8
+pcx-content-type: concept
+---
+
 # Limits
 
 Below, we've listed the limits for users using the Cloudflare Pages free plan. For more details on removing these limits, check out our [Cloudflare plans](https://www.cloudflare.com/plans) page.
