@@ -703,7 +703,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       <td><strong>Field Name</strong></td>
       <td style="width: 50%;"><strong>Description</strong></td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers">
       <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).
