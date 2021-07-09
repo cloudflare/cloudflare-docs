@@ -78,4 +78,6 @@ Configure as follows:
   
 1. From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
 1. At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.
-1. (Optional) Select Security Controls > Signle Sign-On Settings > Edit. Select `Disable login with Salesforce credentials` this will enforce all users to sign in through Cloudflare Access.
+1. (Optional) To force all users to sign in through Cloudflare Access:
+    1. Click **Security Controls** > **Single Sign-On Settings** > **Edit**. 
+    1. Click `Disable login with Salesforce credentials`.
