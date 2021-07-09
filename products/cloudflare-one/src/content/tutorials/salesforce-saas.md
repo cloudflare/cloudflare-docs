@@ -76,6 +76,6 @@ Configure as follows:
 
   ![Salefsorce configuration](../static/zero-trust-security/access/salesforce-sso.png)
   
-1. From the navigation panel on the left, click on Domain Management > My Domain. Select your domain.
+1. From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
 1. Scroll to the bottom to find Authentication Configuration. Click Edit and select your Authentication Service you created.
 1. (Optional) Select Security Controls > Signle Sign-On Settings > Edit. Select `Disable login with Salesforce credentials` this will enforce all users to sign in through Cloudflare Access.
