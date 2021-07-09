@@ -53,7 +53,7 @@ pcx-content-type: tutorial
 
    ![Salefsorce configuration](../static/zero-trust-security/access/salesforce.png)
 
-1. Navigate to **Security Controls > Single Sign-On Settings**
+1. Navigate to **Security Controls > Single Sign-On Settings**.
 1. Set the following global settings:
     * **SAML Enabled:** true
     * **Make federation ID case-insensitive:** true
