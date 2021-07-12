@@ -19,6 +19,7 @@ All values are per organization.
 | Email addresses per rule | 1000 |
 | IP addresses per rule | 1000 |
 | Application name length (characters) | 350 |
+| Group count | 300 |
 | Group name length (characters) | 350 |
 | mTLS root certificates count | 50 |
 | Service Tokens count | 50 |
@@ -30,6 +31,8 @@ All values are per organization.
 | Team Domain max length (characters) | <= 63 |
 | Lists: total number of lists | 100 |
 | Locations | 250 |
+| Rules count per application | 1000 |
+| Rules count per group | 1000 |
 | HTTP rule limit | 1000 |
 | DNS rule limit | 1000 |
 | HTTP Logpush jobs | 5 |
