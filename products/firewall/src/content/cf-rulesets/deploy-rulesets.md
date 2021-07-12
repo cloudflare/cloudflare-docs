@@ -28,7 +28,7 @@ To apply a rule to every request in a phase at the **zone** level, set the rule 
 
 ## Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`) by adding a rule that executes the Managed Ruleset.
 
 ```json
 ---
@@ -88,8 +88,8 @@ header: Response
 }
 ```
 
-Check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information on working with Managed Rulesets and custom rulesets.
+See [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information.
 
-For more information on the available API endpoints for editing and deploying rulesets, check [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
+For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
 
 For examples of deploying rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).
