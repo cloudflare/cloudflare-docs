@@ -31,4 +31,4 @@ To enable the App Launcher:
 
 1. Click **Save**.
 
-The App Launcher is now configured. You can always edit your App Launcher rules by navigating to **Settings > General**, and clicking **Manage**.
+The App Launcher is now configured. You can always edit your App Launcher rules by navigating to **Settings > Authentication**, and clicking **Manage**.
