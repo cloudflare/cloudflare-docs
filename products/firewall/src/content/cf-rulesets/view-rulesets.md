@@ -172,7 +172,7 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
+    "name": "Zone-level phase entry point ruleset",
     "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "2",
