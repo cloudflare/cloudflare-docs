@@ -1,3 +1,8 @@
+---
+order: 2
+pcx-content-type: concept
+---
+
 # Build configuration
 
 ## Build commands and directories

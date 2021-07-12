@@ -7,12 +7,6 @@ order: 763
 
 # Deploy a custom ruleset
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Before you begin:
 
 1. Obtain the name of the phase where you want to deploy the custom ruleset.

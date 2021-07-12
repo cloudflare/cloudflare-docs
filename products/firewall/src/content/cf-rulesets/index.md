@@ -5,12 +5,6 @@ order: 700
 
 # Ruleset Engine (Beta)
 
-<Aside type="warning" header="Important">
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is the same syntax used in custom Firewall Rules. Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
 
 There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:

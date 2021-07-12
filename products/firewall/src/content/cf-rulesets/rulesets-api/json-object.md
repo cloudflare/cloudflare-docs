@@ -7,12 +7,6 @@ order: 781
 
 # JSON object
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 ## Ruleset object
 
 A fully populated ruleset object has the following JSON structure.

@@ -1,3 +1,8 @@
+---
+order: 3
+pcx-content-type: concept
+---
+
 # Preview deployments
 
 Preview deployments allow you to preview new versions of your project without deploying it to production.
