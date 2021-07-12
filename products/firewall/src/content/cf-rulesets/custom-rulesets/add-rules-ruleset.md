@@ -9,7 +9,7 @@ order: 762
 
 To add rules to an existing custom ruleset, use the [Update ruleset](/cf-rulesets/rulesets-api/update) API method and pass the rules in an array. Each rule contains an expression and action.
 
-<Aside type='info' header='Info'>
+<Aside type='note' header='Choosing the appropriate API method'>
 
 When you add rules to a ruleset using the [Update ruleset](/cf-rulesets/rulesets-api/update) method, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. It updates the ruleset version number only once.
 
