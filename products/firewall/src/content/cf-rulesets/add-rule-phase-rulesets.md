@@ -1,5 +1,4 @@
 ---
-title: Add rules to phase entry point rulesets
 pcx-content-type: how-to
 type: overview
 order: 720
@@ -13,11 +12,11 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-A phase entry point ruleset contains an ordered list of rules that run in that phase. You can define rules in an entry point ruleset that execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
+A phase entry point ruleset contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
 
 To add one or more rules to a phase entry point ruleset, use the [Update ruleset](/cf-rulesets/rulesets-api/update) method of the [Rulesets API](/cf-rulesets/rulesets-api). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
 
-If you are adding a **single** rule to a ruleset, consider using the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) API method instead — the request must only include the definition of the new rule. However, the endpoint of this API method includes the ruleset ID — get this information using the [List rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets) method.
+If you are adding a **single** rule to a ruleset, consider using the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) API method instead. In this case, the request only includes the definition of the new rule.
 
 <Aside type="note" header="Creating an entry point ruleset">
 
@@ -112,7 +111,7 @@ header: Response
 <summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example adds a single rule to a phase entry point ruleset at the zone level using the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) API method.
+The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset-id}`) at the zone level using the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) API method.
 
 ```json
 ---
