@@ -13,7 +13,7 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-You cannot edit a Managed Ruleset, but you can customize its behavior by overriding it. When you override a ruleset, specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
+You cannot edit the rules in a Managed Ruleset, but you can customize the Managed Ruleset behavior by defining overrides. When you override a ruleset, specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
 
 For example, if you want to test a ruleset before enforcing it, you may want to execute a Managed Ruleset with all rules set to `log` instead of their default actions. To accomplish this, override the configured behavior of the Managed Ruleset at the ruleset level so that each rule uses the _Log_ action.
 
