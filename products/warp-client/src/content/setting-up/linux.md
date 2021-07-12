@@ -5,6 +5,12 @@ order: 6
 
 # Linux desktop client
 
+## Known Issues
+Thank you for using the intial release of the Linux client for WARP! Here is a list of known issues. Please check back frequently as we keep this updated.
+* Cloudflare for Teams is not yet fully supported
+* 1.1.1.1 Families blocks are not working
+
+
 ## Steps to install
 1. Find the [setup repository](https://pkg.cloudflareclient.com/).
 1. Install the `cloudflare-warp` package depending on your distro:
@@ -20,6 +26,10 @@ To connect for the very first time you must call `register` first:
 1. Register the client `warp-cli register`
 1. Connect `warp-cli connect`
 1. Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`
+
+### Always stay connected
+If you want to always stay connected to WARP you must call `enable-always-on`. This is the cli equivilent to switching the toggle switch to the on position in our GUI apps.
+1. Run `warp-cli enable-always-on`
 
 ### Switching modes
 You can use `warp-cli set-mode --help` to get a list of the modes to switch between. For instance:
