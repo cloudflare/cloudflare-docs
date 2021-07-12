@@ -34,6 +34,31 @@ export class DurableObject {
 
 ## Methods
 
+### Creating a namespace
+
+A Namespace is a container for key-value pairs in your account.
+
+Using [Wrangler](/cli-wrangler/commands#kv), you can create a namespace by running this subcommand that will generate a binding (which is referred to as FIRST_KV below) and a namespace ID.
+
+```sh
+$ wrangler kv:namespace create "FIRST_KV"
+```
+A binding makes your namespace accessible from within a Worker. In fact, multiple Workers can access the same namespace if they use the same binding.
+
+You can also create a namespace in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, where you specify the binding name under "Namespace Name".
+
+Here is an example on how to add your binding to a Worker.
+
+```js
+async function handleRequest(request) {
+  const value = await FIRST_KV.get("first-key")
+  if (value === null) {
+  return new Response("Value not found", {status: 404})
+    }
+  return new Response(value)
+}
+```
+
 ### Writing key-value pairs
 
 To create a new key-value pair, or to update the value for a particular key, you can call the `put` method on any namespace you’ve bound to your script. The basic form of this method looks like this:
@@ -134,7 +159,7 @@ addEventListener("fetch", event => {
 })
 
 async function handleRequest(request) {
-  const value = await FIRST_KV_NAMESPACE.get("first-key")
+  const value = await FIRST_KV.get("first-key")
   if (value === null) {
     return new Response("Value not found", {status: 404})
   }
