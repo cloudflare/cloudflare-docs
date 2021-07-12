@@ -37,15 +37,16 @@ export class DurableObject {
 ### Creating a namespace
 
 A namespace is a container for key-value pairs in your account.
+A binding makes your namespace accessible from within a Worker. In fact, multiple Workers can access the same namespace if they use the same binding.
 
 Using [Wrangler](/cli-wrangler/commands#kv), you can create a namespace by running this subcommand that will generate a binding (which is referred to as FIRST_KV below) and a namespace ID.
 
 ```sh
 $ wrangler kv:namespace create "FIRST_KV"
 ```
-A binding makes your namespace accessible from within a Worker. In fact, multiple Workers can access the same namespace if they use the same binding.
 
 You can also create a namespace in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, where you specify the binding name under "Namespace Name".
+Once your Worker has been bound, you can access the KV namespace from within a Worker.
 
 Here is an example on how to add your binding to a Worker.
 
