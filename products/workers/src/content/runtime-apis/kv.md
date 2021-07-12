@@ -36,7 +36,7 @@ export class DurableObject {
 
 ### Creating a namespace
 
-A Namespace is a container for key-value pairs in your account.
+A namespace is a container for key-value pairs in your account.
 
 Using [Wrangler](/cli-wrangler/commands#kv), you can create a namespace by running this subcommand that will generate a binding (which is referred to as FIRST_KV below) and a namespace ID.
 
