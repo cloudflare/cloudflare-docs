@@ -57,7 +57,7 @@ You can customize how `wrangler dev` works to fit your needs: see [the docs](/cl
 
 <Aside type="warning">
 
-There is a bug associated with `wrangler dev` documented in the [Known issues section](/workers/platform/known-issues#wrangler-dev). 
+There is a bug associated with `wrangler dev` documented in the [Known issues section](/platform/known-issues#wrangler-dev). 
 
 </Aside>
 
