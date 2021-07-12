@@ -1,6 +1,9 @@
 ---
 order: 4
+pcx-content: how-to
 ---
+
+import CaptivePortals from "../../_partials/_captive-portals.md"
 
 # Linux setup instructions
 
@@ -156,3 +159,5 @@ order: 4
     ```
     :wq
     ```
+
+    <CaptivePortals/>

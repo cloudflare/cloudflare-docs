@@ -1,6 +1,6 @@
 ---
-title: Sorting
 order: 12
+pcx-content-type: reference
 ---
 
 # Sorting

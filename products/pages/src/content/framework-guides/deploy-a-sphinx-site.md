@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Sphinx site
 
 [Sphinx](https://www.sphinx-doc.org/) is a tool that makes it easy to create beautiful documentation, originally created
@@ -119,6 +123,7 @@ push your local application to GitHub:
 
 ```shell
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
+$ git add . && git commit -m "Initial commit"
 $ git branch -M main
 $ git push -u origin main
 ```

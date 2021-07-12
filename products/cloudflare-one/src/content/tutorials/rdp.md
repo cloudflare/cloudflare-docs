@@ -1,6 +1,7 @@
 ---
-updated: 2021-03-23
+updated: 2021-06-14
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # Connect through Cloudflare Access over RDP
@@ -114,9 +115,9 @@ C:\Cloudflared\bin\cloudflared.exe tunnel list
 
 You can now [configure the Tunnel](/connections/connect-apps/configuration) to serve traffic.
 
-1. Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
+1. Create a `YAML` file that `cloudflared` can reach. By default `cloudflared` will look for the file in the `C:\Users\%USERNAME%\.cloudflared\` folder of your Windows machine.
 
-1. Run `Notepad.exe` as an administrator. Next, configure the Tunnel, replacing the example ID below with the ID of the Tunnel created above. Additionally, replace the hostname in this example with the hostname of the application configured with Cloudflare Access.
+1. Run `Notepad.exe` as an administrator. Next, configure the Tunnel, replacing the example ID below in the first two lines with the ID of the Tunnel created above. Additionally, replace the hostname in this example with the hostname of the application configured with Cloudflare Access.
 
   ```yaml
   tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -130,11 +131,13 @@ You can now [configure the Tunnel](/connections/connect-apps/configuration) to s
     # the earlier rules
   ```
 
-1. Save the file to the following location:
+1. make sure the file is saved to the following location:
 
  ```txt
- C:\Windows\System32\config\systemprofile\.cloudflared\config.yml
+ C:\Users\%USERNAME%\.cloudflared\config.yml
  ```
+ 
+ with `%USERNAME%` being your Windows username (this is your user folder).
 
 ## Route to the Tunnel
 
@@ -151,6 +154,15 @@ Select `CNAME` as the record type. For the target, input the ID of your Tunnel f
 Click **Save**.
 
 ![Add DNS](../static/zero-trust-security/ssh/add-dns.png)
+
+
+<Aside>
+ 
+<strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
+
+![Enable WebSockets](../static/zero-trust-security/ssh/enable-websockets.png)
+
+</Aside>
 
 ## Run the Tunnel
 
@@ -245,9 +257,3 @@ The default behavior in MacOS is for the Terminal window to stay open. You can c
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
 </Aside>
-
-## Video Guides
-
-In this video, you’ll learn how to use Cloudflare Access to protect a Remote Desktop Protocol (RDP) connection by setting up a secure link with Cloudflare Tunnel.
-
-<StreamVideo id="2a3073fb7881b4fcba4b9e3709dfaacf"/>

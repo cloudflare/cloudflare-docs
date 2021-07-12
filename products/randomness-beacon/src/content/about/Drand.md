@@ -1,6 +1,7 @@
 ---
 title: Drand Project
 order: 0
+pcx-content-type: concept
 ---
 
 # What is drand?

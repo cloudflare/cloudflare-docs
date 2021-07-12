@@ -7,12 +7,6 @@ order: 785
 
 # Update and deploy rulesets
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
 To configure a ruleset at the account or zone level, use one of the following API endpoints:
@@ -173,12 +167,6 @@ header: Response
   "messages": []
 }
 ```
-
-<Aside type='warning' header='Important'>
-
-You must set the `expression` field to `true` when deploying a ruleset to a zone-level phase.
-
-</Aside>
 
 For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
 

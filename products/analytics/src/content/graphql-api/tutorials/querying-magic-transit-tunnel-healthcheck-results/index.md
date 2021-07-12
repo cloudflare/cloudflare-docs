@@ -1,5 +1,5 @@
 ---
-title: Querying Magic Transit Tunnel Health Check Results with GraphQL
+pcx-content-type: interim
 ---
 
 # Querying Magic Transit Tunnel Health Check Results with GraphQL

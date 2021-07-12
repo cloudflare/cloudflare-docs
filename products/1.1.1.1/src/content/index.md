@@ -1,13 +1,17 @@
 ---
-title: Welcome
 order: -2
 type: overview
+pcx-content: landing-page
 ---
 
-import h1gif from "./static/1111-fancycolor.gif"
-import IndexH1 from "./index-h1.js"
+# Overview
 
-# <IndexH1 gif={h1gif} />
+<br/>
+<div class="medium-img">
+
+![Cloudflare 1.1.1.1](static/1111-fancycolor.gif)
+
+</div>
 
 <ContentColumn>
 

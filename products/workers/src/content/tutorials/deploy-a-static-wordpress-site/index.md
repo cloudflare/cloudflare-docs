@@ -1,7 +1,8 @@
 ---
 updated: 2020-07-25
 difficulty: Intermediate
-type: "📝 Tutorial"
+content_type: "📝 Tutorial"
+pcx-content-type: tutorial
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"

@@ -1,5 +1,6 @@
 ---
 order: 0
+pcx-content-type: how-to
 ---
 
 # Connect applications

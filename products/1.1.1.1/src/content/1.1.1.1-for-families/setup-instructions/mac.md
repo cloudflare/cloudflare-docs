@@ -1,6 +1,9 @@
 ---
 order: 2
+pcx-content: how-to
 ---
+
+import CaptivePortals from "../../_partials/_captive-portals.md"
 
 # Mac setup instructions
 
@@ -67,3 +70,5 @@ order: 2
 
 2. Click **OK**.
 3. Click **Apply**.
+
+<CaptivePortals/>

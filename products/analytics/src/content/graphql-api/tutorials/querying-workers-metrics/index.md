@@ -1,5 +1,6 @@
 ---
 title: Querying Workers Metrics with GraphQL
+pcx-content-type: interim
 ---
 
 # Querying Workers Metrics with GraphQL

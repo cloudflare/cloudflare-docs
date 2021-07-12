@@ -7,12 +7,6 @@ order: 762
 
 # Add rules to a custom ruleset
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 To add rules to an existing custom ruleset, execute a `PUT` request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action.
 
 <Aside type='info' header='Info'>

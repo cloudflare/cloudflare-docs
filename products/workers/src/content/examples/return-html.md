@@ -4,12 +4,10 @@ type: example
 summary: Deliver an HTML page from an HTML string directly inside the Worker script.
 demo: https://returning-html.workers-sites-examples.workers.dev
 tags:
-  - HTML
-  - JAMstack
   - Originless
 ---
 
-# Return HTML
+# Return small HTML page
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>

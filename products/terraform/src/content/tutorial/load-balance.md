@@ -1,6 +1,7 @@
 ---
 title: 5 – Sharing the load
 order: 5
+pcx-content-type: tutorial
 ---
 
 # Sharing the load

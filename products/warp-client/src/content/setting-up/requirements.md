@@ -87,7 +87,7 @@ __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.
   </tbody>
 </table>
 
-__[cloudflare-warp package repository](https://pkg.cloudflare.com/)__
+__[cloudflare-warp package repository](https://pkg.cloudflareclient.com/)__
 
 ## iOS
 <table>

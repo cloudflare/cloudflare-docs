@@ -23,7 +23,7 @@ const DocsTutorials = () => {
             frontmatter {
               title
               updated
-              type
+              content_type
               url
             }
             headings(depth: h1) {
@@ -45,7 +45,7 @@ const DocsTutorials = () => {
       title: getPageTitle(page),
       url: page.frontmatter.url || page.fields.slug,
       updated: page.frontmatter.updated,
-      type: page.frontmatter.type,
+      content_type: page.frontmatter.content_type,
       wordCount: page.wordCount.words,
       new: (+new Date() - +new Date(page.frontmatter.updated)) < tenDaysInMS
     }))
@@ -98,7 +98,7 @@ const DocsTutorials = () => {
                 </React.Fragment>
               )} minPeriod={60} />
             </div>
-            <div className="DocsTutorials--column" data-column="type">{tutorial.type}</div>
+            <div className="DocsTutorials--column" data-column="type">{tutorial.content_type}</div>
             <div className="DocsTutorials--column" data-column="length">
               <div className="DocsTutorials--length-bar">
                 <div className="DocsTutorials--length-bar-inner" style={{ width: tutorial.length }}></div>

@@ -1,6 +1,6 @@
 ---
-title: Analytics Integrations
 order: 100
+pcx-content-type: navigation
 ---
 
 # Analytics Integrations

@@ -1,11 +1,12 @@
 ---
 order: 0
 title: "Guide"
+pcx-content-type: getting-started
 ---
 
 # Getting Started Guide
 
-Cloudflare Workers is a **serverless application platform** running on Cloudflare’s global cloud network in over 200 cities around the world, offering both [free and paid plans](/platform/pricing).
+Cloudflare Workers is a **serverless application platform** running on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/platform/pricing).
 
 Learn more about [how Workers works](/learning/how-workers-works).
 
@@ -31,10 +32,15 @@ The signup process will guide you through choosing a workers.dev subdomain and v
 
 Installing `wrangler`, the Workers CLI, gives you the freedom to [generate](/cli-wrangler/commands#generate), [configure](/cli-wrangler/commands#configure), [build](/cli-wrangler/commands#build), [preview](/cli-wrangler/commands#preview), and [publish](/cli-wrangler/commands#publish) your Workers projects from the comfort of your dev environment.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
+```
+or install with yarn:
+
+```sh
+$ yarn global add @cloudflare/wrangler
 ```
 
 Then run `wrangler --version` to confirm that the installation was successful:

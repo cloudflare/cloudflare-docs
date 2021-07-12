@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: concept
 ---
 
 # HTTP policies
@@ -67,12 +68,6 @@ If instead you need to isolate **specific hostnames**, you can list the domains 
 | - | - | - | - |
 | Host | In | `example.com`, `example.net` | Isolate
 
-If you would like to isolate an **entire domain name**, you can use a regular expression match such as:
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | matches regex | `example\.com|.*\.example\.com` | Isolate
-
 <Aside type='note' header='Isolate identity providers for applications'>
 
 Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign on using third-party cookies will also need to be isolated.
@@ -119,39 +114,9 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **URL Path and Query**
 * **HTTP Method**
 * **HTTP Response**
-* **Uploaded and Downloaded File Extension**
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
 * **Applications**
-
-List of file extensions Gateway can match against:
-
-<TableWrap>
-
-| Image | Executable | Audio | Documents | Data | Compressed | System | Video |
-|------|------|-------|------|--------|--------|--------|-----|
-| avif | apk | m4a | doc | avro | 7z | bak | avi |
-| bmp | bat | mid | docx | csv | arj | cab | flv |
-| gif | bin | mp3 | odp | dat | bz2 | cpl | h264 |
-| ico | cgi | mpa | ods | dmg | deb | cur | m4v |
-| jpeg | com | wav | odt | iso | gz | emu | mkv |
-| png | dll | wma | pdf | json | lz | ini | mov |
-| psd | exe | ppt | | log | lz4 | scr | mp4 |
-| svg | hta | pptx | | mdb | lzh | sys | mpeg |
-| tif | jar | rtf | | nzb | lzma | tmp | wmv |
-| webp | moo | txt | | orc | pak
-|  | pif | xls | | parquet | rar
-|  | pl | xlsx | | rc | rpm
-|  | prg | | | sav | sz
-|  | | | | wasm | xz | | 
-|  |      | | | sql lite | z
-|  |      | | | tar | zip
-|  |      | | | toml | zlib |
-|  |      | | | torrent | zst |
-|  |      | | | xml |  |
-|  |      | | | yaml | | 
-
-</TableWrap>
 
 ## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:

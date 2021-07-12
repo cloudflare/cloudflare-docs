@@ -1,5 +1,6 @@
 ---
 order: 5
+pcx-content-type: how-to
 ---
 
 # Run a Tunnel
@@ -32,7 +33,7 @@ You can also run the Tunnel without a configuration file by appending the flags 
 
 ![Run tunnels](../../../static/documentation/connections/connect-apps/create-tunnel/rt1.png)
 
-Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the [routing instructions](/connections/connect-apps/routing-to-tunnel).
+Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the [routing instructions](../routing-to-tunnel).
 
 You can also:
 * [Run a tunnel as a service](/connections/connect-apps/run-tunnel/run-as-service)

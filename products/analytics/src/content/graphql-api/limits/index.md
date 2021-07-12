@@ -1,6 +1,6 @@
 ---
-title: Limits
 order: 30
+pcx-content-type: reference
 ---
 
 # Limits

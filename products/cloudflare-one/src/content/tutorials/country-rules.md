@@ -2,6 +2,7 @@
 updated: 2020-11-28
 category: 🔐 Zero Trust
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Require specific countries
@@ -37,7 +38,7 @@ Click `Save`.
 
 ![Full Groups](../static/zero-trust-security/country-rules/later-groups.png)
 
-## Build a policy
+## Build or edit a policy
 
 You can now build [Zero Trust policies](/policies/zero-trust) that will require at least one country in the approved countries list. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
 

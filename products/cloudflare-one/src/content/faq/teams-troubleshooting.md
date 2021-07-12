@@ -66,6 +66,17 @@ A browser isolation session is a connection from your local browser to a remote 
 
 Safari is more susceptible to presenting this error. See [workaround](/connections/connect-browsers/known-limitations#safari).
 
+## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
+
+<div class="small-img"><img alt="Google Error 400" src="../static/documentation/faq/google-error-400.png"/></div>
+
+This is due to a Google policy change requiring you to flag your applications as trusted in the GSuite Admin console:
+1. In the Google Admin console, navigate to **Security > Settings > API Permissions**.
+1. Locate the domain you would like to mark as trusted.
+1. Click on the three-dots menu to the right.
+1. Select **Trust**.
+
+
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
 These mobile applications may use [certificate pinning](/glossary#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.

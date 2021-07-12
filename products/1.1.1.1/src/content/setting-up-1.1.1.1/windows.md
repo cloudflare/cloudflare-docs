@@ -1,6 +1,9 @@
 ---
-order:8
+order: 8
+pcx-content: tutorial
 ---
+
+import CaptivePortals from "../_partials/_captive-portals.md"
 
 # Windows
 
@@ -37,3 +40,5 @@ Follow this quick guide to start using 1.1.1.1 on your Windows computer.
     ```
 
 1. Click **Close**.
+
+<CaptivePortals/>

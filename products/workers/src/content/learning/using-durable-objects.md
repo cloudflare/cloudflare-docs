@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content-type: concept
 ---
 
 # Using Durable Objects
@@ -161,7 +162,7 @@ As part of Durable Objects, we've made it possible for Workers to act as WebSock
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-For more information, see the [documentation of WebSockets in Workers](using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
+For more information, see the [documentation of WebSockets in Workers](/learning/using-websockets). For an example of WebSockets in action within Durable Objects, see [our heavily commented example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -333,7 +334,9 @@ There is currently no support for generating a list of all existing objects, nor
 
 ### Development tools
 
-[Wrangler tail](/cli-wrangler/commands#tail) and [Wrangler dev](/cli-wrangler/commands#dev) do not currently work with Durable Objects.
+[Wrangler dev](/cli-wrangler/commands#dev) does not currently work with Durable Objects.
+
+[Wrangler tail](/cli-wrangler/commands#tail) does work, but note that logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.
 
 The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
 
@@ -351,7 +354,7 @@ While Durable Objects already perform well for many kinds of tasks, we have lots
 
 ## Example - Counter
 
-We've included complete example code for both the Worker and the Durable Object for a basic counter below.
+We've included complete example code for both the Worker and the Durable Object for a basic counter below. [See here](https://github.com/cloudflare/durable-objects-template) for the full code template.
 
 ```js
 // Worker
@@ -431,3 +434,17 @@ export class Counter {
 ## Configuration Script
 
 While using Wrangler is strongly recommended, if you would really rather not use it for some reason we've included a [shell script](/publish-durable-object.sh) to automate the curl commands involved in uploading a Worker that implements and uses Durable Objects.
+
+## Troubleshooting
+
+### Debugging 
+`wrangler dev` does not currently support Durable Objects.
+
+To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+
+### Common errors
+#### Error: `No event handlers were registered. This script does nothing.`
+In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker script, and that the file extension is `.mjs` instead of `.js` if using ES Modules Syntax.
+
+#### Error when deleting migration
+When deleting a migration using `wrangler --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.

@@ -1,11 +1,19 @@
 ---
 order: 1
 pcx-content-type: reference
+type: overview
 ---
 
 # Configuration settings
 
-The table below describes the **Settings** fields that you can configure in the dashboard, and indicates the equivalent Waiting Room API parameter for each setting.
+You can customize a variety of options for your waiting rooms.
+
+<ButtonGroup>
+  <Button type="primary" href="#dashboard-settings">Dashboard settings</Button>
+  <Button type="secondary" href="#additional-details">Additional details</Button>
+</ButtonGroup>
+
+## Dashboard settings
 
 <table style="width:100%">
   <thead>
@@ -69,6 +77,13 @@ The table below describes the **Settings** fields that you can configure in the 
       <td><code>description</code></td>
       <td>No</td>
       <td>Description of the waiting room.</td>
+      <td></td>
+    </tr>
+     <tr>
+      <td>Disable session renewal</td>
+      <td><code>disable_session_renewal</code></td>
+      <td>No</td>
+      <td>Available via API only (and only to Enterprise customers with purchase). If true, users only have <code>session duration</code> minutes to browse your site. If false, a user's session cookie is renewed on every request.</td>
       <td></td>
     </tr>
   </tbody>

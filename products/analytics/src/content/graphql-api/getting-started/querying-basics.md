@@ -1,6 +1,6 @@
 ---
-title: Querying basics
 order: 20
+pcx-content-type: reference
 ---
 
 # Querying basics

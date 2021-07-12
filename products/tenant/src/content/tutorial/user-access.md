@@ -1,6 +1,7 @@
 ---
 title: "2: User access"
 order: 1
+pcx-content-type: tutorial
 ---
 
 # Step 2: User access
