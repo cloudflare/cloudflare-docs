@@ -17,7 +17,7 @@ Use a ruleset override and a rule override in a phase entry point ruleset to exe
 <summary>Example: Configure ruleset and rule overrides at the zone level</summary>
 <div>
 
-The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation at the zone level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
+The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/update) operation at the zone level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
 
 In this example:
 
@@ -65,7 +65,7 @@ curl -X PUT \
 <summary>Example: Configure ruleset and rule overrides at the account level</summary>
 <div>
 
-The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation at the account level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
+The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/update) operation at the account level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
 
 In this example:
 

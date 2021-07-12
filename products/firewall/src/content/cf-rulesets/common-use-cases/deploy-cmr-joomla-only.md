@@ -17,7 +17,7 @@ Follow the steps below to configure the execution of a Managed Ruleset with two 
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>

@@ -11,4 +11,4 @@ The Rulesets API provides an interface for managing and configuring the executio
 
 ## Get started
 
-To get started, review the Rulesets [JSON object](/cf-rulesets/rulesets-api/json-object/) and the available [Endpoints](/cf-rulesets/rulesets-api/endpoints/).
+To get started, review the Rulesets [JSON object](/cf-rulesets/rulesets-api/json-object) and the available [Endpoints](/cf-rulesets/rulesets-api/endpoints).
