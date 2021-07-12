@@ -11,6 +11,12 @@ Cloudflare health checks track the health of pools. They are configured through 
 
 Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs. You can create, attach, and configure health checks from either the Load Balancing dashboard or the Cloudflare API.
 
+<Aside type="note">
+
+Health checks associated with load balancers are different from <strong>Standalone health checks</strong>. For more details about Standalone health checks, see the <a href="https://support.cloudflare.com/hc/articles/4404867308429">Support documentation</a>.
+
+</Aside>
+
 ---
 
 ## Important notes
