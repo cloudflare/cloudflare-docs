@@ -13,6 +13,12 @@ To set up a generic OIDC:
 
 1. Visit your identity provider and create a client/app.
 
+1. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
+
 1. Copy the content of these fields:
    * Client ID
    * Client secret
@@ -20,7 +26,7 @@ To set up a generic OIDC:
    * Token URL: The token_endpoint URL of your IdP
    * Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
 
-    You can find these values on your identity provider’s OIDC discovery endpoint. Some providers call this the “well-known URL.”
+    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL.”
 
 1. On the Teams dashboard, navigate to **Configuration > Authentication**.
 
@@ -31,12 +37,6 @@ To set up a generic OIDC:
    ![ODIC Provider option](../../static/documentation/identity/generic-oidc/oidc.png)
 
 1. In the **Name** field, enter your IdP. Then, paste in the **Client ID** and **Client secret**.
-
-1. In the **authorized redirect URI** field for your IdP, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
-
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
 
 1. Click **Save**.
 
