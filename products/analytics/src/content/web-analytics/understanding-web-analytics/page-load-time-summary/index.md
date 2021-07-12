@@ -1,6 +1,6 @@
 ---
-title: Page load time summary
 order: 42
+pcx-content-type: reference
 ---
 
 # Page load time summary

@@ -1,3 +1,8 @@
+---
+order: 2
+pcx-content-type: concept
+---
+
 # Build configuration
 
 ## Build commands and directories
@@ -17,6 +22,7 @@ Below are some standard build commands and directories for popular frameworks an
 | Docusaurus                   | `npm run build`                     | `build`                     |
 | Eleventy                     | `eleventy`                          | `_site`                     |
 | Ember.js                     | `ember build`                       | `dist`                      |
+| Expo                         | `expo build:web`                    | `web-build`                 |
 | Gatsby                       | `gatsby build`                      | `public`                    |
 | GitBook                      | `gitbook build`                     | `_book`                     |
 | Gridsome                     | `gridsome build`                    | `dist`                      |
@@ -55,7 +61,7 @@ Here are the pinned versions for tools included in the Cloudflare Workers build 
 | Erlang    | 21              |                      |                           |
 | Go        | 1.12            | `GO_VERSION`         |                           |
 | Java      | 8               |                      |                           |
-| Node.js   | 10              | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
+| Node.js   | 12.18.0         | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
 | PHP       | 5.6             | `PHP_VERSION`        |                           |
 | Python    | 2.7             | `PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
 | Ruby      | 2.6.2           | `RUBY_VERSION`       | `.ruby-version`           |

@@ -1,5 +1,6 @@
 ---
 order: 11
+pcx-content: how-to
 ---
 
 # Using DNS Wireformat

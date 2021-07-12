@@ -20,10 +20,10 @@ module.exports = {
     algoliaOptions: { 'facetFilters': '["project:fundamentals"]'}
   },
   siteMetadata: {
-    title: "The Life of a Cloudflare Request docs",
-    description: "Undersea cables, peering agreements and TLS handshakes. Follow the life of a request across the internet and see how it all works.",
+    title: "Cloudflare Fundamentals",
+    description: "Cloudflare Fundamentals provides information about features that span Cloudflare products.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/fundamentals",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png"
   }
 }

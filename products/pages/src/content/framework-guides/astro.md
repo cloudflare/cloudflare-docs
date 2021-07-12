@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy an Astro site
 
 [Astro](https://astro.build) is a new static-site generator that allows you to build faster, SEO-friendly websites that use less client-side JavaScript code. By default, Astro builds websites that have _zero_ JavaScript runtime code.

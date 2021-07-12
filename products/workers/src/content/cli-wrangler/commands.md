@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: configuration
 ---
 
 # Commands
@@ -139,6 +140,8 @@ To use this command, the following fields are required in your `wrangler.toml`:
 </Definitions>
 
 From here, you have two options, you can choose to publish to your own domain or you can choose to publish to [&lt;your-worker&gt;.&lt;your-subdomain&gt;.workers.dev](https://workers.dev).
+
+When you publish changes to an existing Worker script, all new requests will automatically route to the updated version of the Worker without downtime. Any inflight requests will continue running on the previous version until completion. Once all inflight requests have finished complete, the previous Worker version will be purged and will no longer handle requests.
 
 ### Publishing to workers.dev
 

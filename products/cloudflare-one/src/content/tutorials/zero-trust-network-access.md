@@ -2,6 +2,7 @@
 updated: 2021-06-11
 category: 🔐 Zero Trust
 difficulty: Advanced
+pcx-content-type: tutorial
 ---
 
 # Configure Zero Trust Network Access in Cloudflare for Teams
@@ -71,9 +72,9 @@ Next, you will need to configure your private network server to connect to Cloud
 
  ```txt
  tunnel: <YOUR TUNNEL ID>
- credentials-file: /root/.cloudflared<YOUR TUNNEL ID>.json
+ credentials-file: /root/.cloudflared/<YOUR TUNNEL ID>.json
  warp-routing:
- enabled: true
+   enabled: true
  ```
  
  <Aside>

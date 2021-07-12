@@ -7,12 +7,6 @@ order: 786
 
 # Update a rule in a ruleset
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Applies one or more changes to an existing rule in a ruleset.
 
 Use one of the following API endpoints to update a single rule in a ruleset:

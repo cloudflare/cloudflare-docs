@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Gatsby site
 
 Gatsby is an open-source React framework for creating websites and apps. In this guide, you'll create a new Gatsby application and deploy it using Cloudflare Pages. We'll be using the `gatsby` CLI to create a new Gatsby site.

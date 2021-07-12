@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # Service tokens
@@ -101,5 +102,3 @@ To configure a service token expiration alert:
 1. Click **Create**.
 
 Your alert has now been set, and is now visible in the **Notifications** tab of the Cloudflare dashboard.
-
-

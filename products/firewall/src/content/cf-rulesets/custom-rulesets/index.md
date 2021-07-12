@@ -9,9 +9,7 @@ order: 760
 
 <Aside type='warning' header='Important'>
 
-This feature is part of an early access experience for selected customers.
-
-Also, custom rulesets are currently only supported by the Cloudflare WAF.
+Custom rulesets are currently only supported by the Cloudflare WAF.
 
 </Aside>
 

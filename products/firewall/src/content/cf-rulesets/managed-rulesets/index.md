@@ -8,15 +8,9 @@ order: 750
 
 # Work with Managed Rulesets
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy. Only Cloudflare can modify these rulesets.
 
-The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
+The rules in a Managed Ruleset have a default configuration. However, you can define **overrides** that change this default configuration.
 
 <Aside type='note' header='Note'>
 

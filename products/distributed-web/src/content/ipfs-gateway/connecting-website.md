@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: tutorial
 ---
 
 # Connecting Your Website
@@ -120,7 +121,7 @@ If your website is on Cloudflare, the DNS settings are accessible from your
 dashboard and can be managed through [our
 API](https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record). If
 your website is not on Cloudflare, and you need help finding the DNS records,
-[look here](https://support.google.com/projectshield/answer/6358886?hl=en/).
+[refer to Project Shield's guide.](https://support.projectshield.withgoogle.com/s/article/Find-your-Domain-Name-System-DNS-records?language=en_US).
 Serving your website from Cloudflare's gateway without the domain itself being
 on Cloudflare is called a *CNAME setup* (meaning that you manage the DNS records
 directly with your registrar). While our gateway supports CNAME setups, there's

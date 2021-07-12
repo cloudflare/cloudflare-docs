@@ -6,12 +6,6 @@ order: 751
 
 # Deploy a Managed Ruleset
 
-<Aside type='note' header='Note'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 To deploy a Managed Ruleset to a phase, use the [Rulesets API](/cf-rulesets/rulesets-api).
 
 ## Deploy a Managed Ruleset to a phase at the account level

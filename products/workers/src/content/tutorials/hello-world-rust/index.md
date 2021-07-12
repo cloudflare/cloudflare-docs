@@ -2,6 +2,7 @@
 updated: 2020-06-29
 difficulty: Beginner
 content_type: "📝 Tutorial"
+pcx-content-type: tutorial
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"

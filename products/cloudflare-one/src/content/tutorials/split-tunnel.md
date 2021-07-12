@@ -1,6 +1,7 @@
 ---
 updated: 2021-02-02
 category: 🛡️ Web Gateway
+pcx-content-type: tutorial
 ---
 
 # Configure local domains and split tunnel mode

@@ -7,12 +7,6 @@ order: 783
 
 # List and view rulesets
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 * [List existing rulesets](#list-existing-rulesets)
 * [View a specific ruleset](#view-a-specific-ruleset)
 * [List all versions of a ruleset](#list-all-versions-of-a-ruleset)

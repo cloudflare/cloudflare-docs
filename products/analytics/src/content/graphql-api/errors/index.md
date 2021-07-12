@@ -1,6 +1,6 @@
 ---
-title: Error responses
 order: 25
+pcx-content-type: reference
 ---
 
 # Error responses

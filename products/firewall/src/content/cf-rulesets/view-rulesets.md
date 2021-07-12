@@ -6,12 +6,6 @@ type: overview
 
 # View rulesets
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 ## View available rulesets
 
 You can list the available rulesets for a zone, account, or phase.

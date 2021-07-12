@@ -1,5 +1,6 @@
 ---
 order: 70
+pcx-content-type: reference
 ---
 
 # Protocols

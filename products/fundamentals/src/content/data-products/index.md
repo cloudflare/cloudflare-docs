@@ -1,6 +1,6 @@
 ---
-title: Cloudflare's Data Products
 order: 1
+pcx-content-type: reference
 ---
 
 # Cloudflare's Data Products

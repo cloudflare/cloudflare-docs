@@ -1,5 +1,6 @@
 ---
 order: 1
+pcx-content-type: how-to
 ---
 
 # One-time PIN login

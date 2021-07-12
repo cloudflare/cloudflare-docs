@@ -1,6 +1,6 @@
 ---
-title: Zone Analytics Colos Endpoint to GraphQL Analytics
 order: 12
+pcx-content-type: reference
 ---
 # Zone Analytics Colos Endpoint to GraphQL Analytics
 

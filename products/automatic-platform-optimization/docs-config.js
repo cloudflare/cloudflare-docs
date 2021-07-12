@@ -28,6 +28,6 @@ module.exports = {
     description: "With Automatic Platform Optimization, Cloudflare serves your entire site from our edge network, ensuring customers see improved performance when visiting your site.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/automatic-platform-optimization",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png"
   }
 }

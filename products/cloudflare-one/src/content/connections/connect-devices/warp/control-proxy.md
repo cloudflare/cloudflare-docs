@@ -1,21 +1,24 @@
 ---
 order: 0
+pcx-content-type: how-to
 ---
 
 # Control proxy settings
 
-You can use the Cloudflare for Teams dashboard to control the proxy settings of your deployment.
+To begin inspecting HTTP traffic on your devices, you need to ensure that:
+
+* Your [devices have been enrolled](/device-enrollment) in your account,
+* The [Cloudflare root certificate](/install-cloudflare-cert) has been installed on your devices, and
+* The proxy has been enabled on the Cloudflare for Teams Dashboard.
 
 ## Enable the proxy
 
-Once devices have enrolled in your account, via user action or administrator deployment, you must enable the proxy to begin inspecting HTTP traffic.
+To enable the proxy on the Teams Dashboard:
 
-<Aside>
+1. Navigate to **Gateway > Policies**.
 
-Ensure the Cloudflare root certificate has been installed first to avoid breaking user Internet connections.
+1. Click **Settings**.
 
-</Aside>
+1. Toggle the **Proxy Settings** value to be *Enabled*.
 
-Navigate to the **Settings** tab of the `Policies` page in the Gateway section of the Cloudflare for Teams dashboard. Toggle the `Proxy Settings` value to be "Enabled".
-
-![Enable Proxy](../../../static/documentation/connections/enable-proxy.png)
+ ![Enable Proxy](../../../static/documentation/connections/enable-proxy.png)
