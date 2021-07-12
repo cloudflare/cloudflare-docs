@@ -1,17 +1,10 @@
 ---
-title: Add rule to ruleset
 pcx-content-type: reference
 alwaysopen: true
 order: 786
 ---
 
 # Add rule to ruleset
-
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
 
 Adds a single rule to an existing ruleset. Use this endpoint to add a rule without having to include all the existing ruleset rules in the request.
 
