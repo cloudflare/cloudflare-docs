@@ -13,17 +13,20 @@ This feature is part of an early access experience for selected customers.
 
 </Aside>
 
-To add rules to an existing custom ruleset, execute a `PUT` request to the custom ruleset and pass the rules in an array. Each rule contains an expression and action.
+To add rules to an existing custom ruleset, use the [Update ruleset](/cf-rulesets/rulesets-api/update) API method and pass the rules in an array. Each rule contains an expression and action.
 
 <Aside type='info' header='Info'>
 
-When you modify a ruleset using a `PUT` request, you replace the entire content of the ruleset with the request's payload. You must include in the request all existing rules you want to keep in addition to any new rules.
+When you add rules to a ruleset using the [Update ruleset](/cf-rulesets/rulesets-api/update) method, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. It updates the ruleset version number only once.
 
-If you are updating several rules at once, use the `PUT` request described in this section. It allows you to make changes to several rules in bulk, while changing the version number of the updated rules and of the ruleset only once. However, if you are updating a single rule, consider using the [Update rule](/cf-rulesets/rulesets-api/update-rule) method instead.
+You can use other API methods depending on the operation you wish to perform:
+
+* Add a single rule to an existing custom ruleset — use the [Add rule to ruleset](/cf-rulesets/rulesets-api/add-rule) method.
+* Update a single rule in a custom ruleset — use the [Update rule](/cf-rulesets/rulesets-api/update-rule) method.
 
 </Aside>
 
-The following request adds two rules to a custom ruleset.
+The following request adds two rules to a custom ruleset. These will be the only two rules in the ruleset.
 
 ```json
 ---
@@ -94,7 +97,7 @@ header: Response
 
 ## Update rules in a custom ruleset
 
-To update one or more rules in a custom ruleset, execute a `PUT` request to the custom ruleset. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
+To update one or more rules in a custom ruleset, use the [Update ruleset](/cf-rulesets/rulesets-api/update) API method. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
 
 The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 
@@ -164,4 +167,4 @@ header: Response
 }
 ```
 
-The `PUT` request completely replaces the existing contents of the ruleset. If you omit an existing rule from the `rules` array, it will not appear in the new version of the ruleset.
+The request above completely replaces the list of rules in the ruleset. If you omit an existing rule from the `rules` array, it will not appear in the new version of the ruleset.
