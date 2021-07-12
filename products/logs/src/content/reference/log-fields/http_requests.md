@@ -6,6 +6,8 @@ title: HTTP requests
 
 # HTTP requests
 
+The descriptions below detail the fields available for `http_requests`.
+
 <TableWrap>
 
 | Field | Value | Type |

@@ -6,6 +6,8 @@ title: Firewall events
 
 # Firewall events
 
+The descriptions below detail the fields available for `firewall_events`.
+
 <TableWrap>
 
 | Field | Value | Type |

@@ -6,6 +6,8 @@ title: Spectrum events
 
 # Spectrum events
 
+The descriptions below detail the fields available for `spectrum_events`.
+
 <TableWrap>
 
 | Field | Value | Type |

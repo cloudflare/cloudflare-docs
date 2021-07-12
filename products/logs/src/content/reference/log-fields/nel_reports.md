@@ -6,6 +6,8 @@ title: NEL reports
 
 # NEL reports
 
+The descriptions below detail the fields available for `nel_reports`.
+
 <TableWrap>
 
 | Field | Value | Type |
