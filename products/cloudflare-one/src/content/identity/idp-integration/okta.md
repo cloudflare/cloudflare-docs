@@ -67,9 +67,11 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1. Input the ID, secret, and the Okta account URL.
 
+1. If you have more than 100 Okta groups. [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. (optional)
+
 1. Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Okta.
+To test that your connection is working, navigate to **Settings > Authentication > Login methods** and click **Test** next to Okta.
 
 ## Example API Configuration
 

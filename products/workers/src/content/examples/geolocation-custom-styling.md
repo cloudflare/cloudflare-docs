@@ -3,7 +3,7 @@ order: 1000
 type: example
 summary: Personalize website styling based on localized user time.
 tags:
-  - HTML
+  - Originless
   - Geolocation
 ---
 

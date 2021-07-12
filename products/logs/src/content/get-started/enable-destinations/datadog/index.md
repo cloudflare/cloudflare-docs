@@ -20,7 +20,7 @@ To set up a Datadog Logpush job:
 
 <Aside type="note" header="Note">
 
-Note: Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog.
+Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog.
 
 </Aside>
 
@@ -104,8 +104,8 @@ Response:
   "success": true
 }
 ```
+<Aside type="note" header="Note">
 
-## Troubleshooting
+The Datadog destination is exclusive to new jobs and might not be backward compatible with older jobs. Create new jobs if you expect to send your logs directly to Datadog instead of modifying already existing ones. If you try to modify an existing job for another destination to push logs to Datadog, you may observe errors.
 
-### I am observing errors pushing to Datadog after I modify an existing job for another destination to push logs to Datadog.
-Datadog destination is exclusive to new jobs and might not be backward compatible with older jobs. Create new jobs if you expect to send your logs directly to Datadog instead of modifying already existing ones.
+</Aside>

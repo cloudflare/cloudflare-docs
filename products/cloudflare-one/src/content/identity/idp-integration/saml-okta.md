@@ -75,14 +75,18 @@ To set up SAML with Okta as your identity provider:
 
     ![Okta SAML Settings Sign On page](../../static/documentation/identity/saml-okta/saml-okta-9.png)
 
-1. Copy and paste the following information into the Cloudflare Access **Edit a SAML identity provider** card.
+1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
 
-   * **Provider Name**: Name your IdP.
+1. Click *+ Add* under **Login Methods**, and select SAML.
+
+1. Copy and paste the following information into the relevant fields.
+
+   * **Name**: Name your IdP.
    * **Single Sign On URL**: Enter the IdP Single-Sign-On URL.
    * **IdP Entity ID**: Enter the IdP issuer.
    * **Signing Certificate**: Copy the certificate from Okta in **X.509 Certificate** between **Begin Certificate** and **End Certificate**.
 
-1. After completing the information, enter the name “email” as your email attribute for the **SAML assertion** field.
+1. Under **Optional configurations**, enter the name “email” as your SAML attribute.
 
 1. Click **Save**.
 

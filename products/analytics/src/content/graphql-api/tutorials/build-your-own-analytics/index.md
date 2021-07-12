@@ -1,6 +1,6 @@
 ---
-title: Build your own Analytics dashboard
 order: 40
+pcx-content-type: interim
 ---
 
 # Build your own Analytics dashboard

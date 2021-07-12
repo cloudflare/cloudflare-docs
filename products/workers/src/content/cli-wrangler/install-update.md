@@ -48,6 +48,8 @@ Wrangler can be installed both through [npm](https://www.npmjs.com/get-npm) and 
     ```
 
     Additional installation methods are available [on the Rust site](https://forge.rust-lang.org/other-installation-methods.html).
+    
+    Windows users will need to install Perl as a dependency for `openssl-sys`. We recommmend [Strawberry Perl](https://www.perl.org/get.html).
 
 2. Install `wrangler`:
 

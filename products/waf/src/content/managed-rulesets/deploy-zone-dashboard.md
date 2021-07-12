@@ -10,27 +10,35 @@ You can enable and configure Managed Rulesets for a zone in the **Managed Rules*
 
 ![Managed Rules tab of Firewall app](../images/waf-managed-rules-tab.png)
 
-<Aside type='note' header='Note'>
+## Enable or disable a Managed Ruleset
 
-When you enable a Managed Ruleset in the **Managed Rules** tab under Firewall, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+<Aside type="note">
+
+You many not be able to configure the status of certain Managed Rulesets.
 
 </Aside>
 
-## Enable or disable a Managed Ruleset
-
-In the Web Application Firewall (WAF) interface, click the on/off toggle on the right of a Managed Ruleset to enable or disable all the rules in that ruleset.
+In the Web Application Firewall (WAF) interface, click the toggle on the right of a Managed Ruleset to enable or disable all the rules in that ruleset.
 
 ## Configure a Managed Ruleset
 
-### Configure an action for all the rules
+<Aside type="note">
 
-To configure an action for all the rules in a Managed Ruleset:
+Some Managed Rulesets may not allow custom configuration, depending on your Cloudflare plan.
 
-1. Open the **Firewall Rules** tab of the **Firewall** tile.
+</Aside>
+
+### Configure field values for all the rules
+
+To configure rule field values for all the rules in a Managed Ruleset:
+
+1. Navigate to **Firewall** > **Managed Rules**.
 
 1. On the right of the Managed Ruleset you want to configure, click **Configure**.
 
-1. Select the action to perform for all the rules in the ruleset from the **Ruleset Action** drop-down list.
+1. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
+
+    For example, select the action to perform for all the rules in the ruleset from the **Ruleset Action** drop-down list.
 
     ![Configure Managed Ruleset](../images/waf-configure-ruleset.png)
 
@@ -64,7 +72,9 @@ Do the following:
 
 1. Find the rule you want to configure in the results list.
 
-1. In the result line for the rule you want to change, select the action for the rule in the **Action** dropdown, or change the status of the rule using the toggle available on the right.
+1. In the result line for the rule you want to change, select the desired value for a field in the displayed drop-down lists. For example, select the rule action in the **Action** dropdown.
+
+    In some Managed Rulesets, you can also change the status of a rule using the toggle available on the right.
 
     ![Browse rules in Managed Ruleset](../images/waf-browse-rules.png)
 
@@ -88,7 +98,7 @@ Do the following:
 
     Alternatively, click a tag name under the search input to filter the rules with that tag, and then click the checkboxes for the rules you want to configure.
 
-1. To change the action or the status for the selected rules, select one of the options in the **Set action** and **Set status** drop-down lists, displayed in the top right corner of the table.
+1. Update one or more fields for the selected rules using the drop-down lists displayed in the top right corner of the table.
 
     ![Configure Managed Ruleset rules in bulk](../images/waf-modify-selected-rules.png)
 
@@ -96,9 +106,7 @@ Do the following:
 
     <Aside type='note' header='Note'>
 
-    If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the action and status you selected.
-
-    ![Modal asking whether to apply changes to new rules in selected tag or not](../images/waf-apply-changes-modal.png)
+    If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
 
     Select **Do not apply to new rules** to apply your configurations to the selected rules only.
 
@@ -107,3 +115,11 @@ Do the following:
     </Aside>
 
 1. Click **Save**.
+
+## Phases of deployed Managed Rulesets
+
+When you enable a Managed Ruleset under **Web Application Firewall (WAF)**, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+
+Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Check the specific Managed Ruleset documentation for details.
+
+For more information on phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases).

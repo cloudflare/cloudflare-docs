@@ -1,4 +1,9 @@
-# API
+---
+order: 7
+pcx-content-type: concept
+---
+
+# REST API
 
 The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. We plan to support prebuilt deployments and hooks soon. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 

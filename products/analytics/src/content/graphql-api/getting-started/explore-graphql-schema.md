@@ -1,6 +1,6 @@
 ---
-title: Explore the Analytics schema with GraphiQL
 order: 40
+pcx-content-type: interim
 ---
 
 # Explore the Analytics schema with GraphiQL

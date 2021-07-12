@@ -57,7 +57,8 @@ Hugo sites use _themes_ to customize the look and feel of the statically built H
 ```sh
 $ cd my-hugo-site
 $ git init
-$ git clone https://github.com/panr/hugo-theme-terminal.git themes/terminal
+$ git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal
+$ git submodule update --init --recursive
 ```
 
 You should also copy the default configuration provided by the theme into the `config.toml` file. Take the following information and customize it per your site's needs:
