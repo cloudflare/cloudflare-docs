@@ -94,8 +94,6 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 **Railgun compresses web objects, even rapidly changing pages like news sites or personalized content**. Using Railgun in conjunction with Cloudflare Load Balancing speeds up connections between Cloudflare datacenters and DNS origin servers so that uncacheable requests have minimal latency.
 
-![](../static/images/load-balancer-1.png)
-
 **Set up a Railgun listener in front of the load balancer** so that the load balancer can handle HTTP connections normally. Load balancing long-lived TLS connections between the sender and listener is very difficult.
 
 **Use the same load balancer settings as if Railgun were not in place** — for example, HTTP keep-alive connections should be enabled and set to a 90-second timeout, since Railgun is working as an HTTP reverse proxy.
@@ -105,6 +103,8 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 1. Use the `railgun-nat.conf` configuration file to set the **internal** addresses of the hosts Railgun will be optimizing (`localhost:8080`, for example). This is important to avoid looping the request outbound to the internet and back to the load balancer only to be forwarded to the origin.
 1. Ensure no firewall rules are in place that will interfere with traffic between the listener and the origin server.
 1. Ensure port 2408 is open and passed through the load balancer so that it does not interfere with the TLS connection between the listener and sender.
+
+For additional guidance and diagrams, see [Best practices for Railgun with a Load Balancer](https://support.cloudflare.com/hc/articles/200168346).
 
 ---
 
