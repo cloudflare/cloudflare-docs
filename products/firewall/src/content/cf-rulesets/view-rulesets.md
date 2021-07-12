@@ -150,10 +150,10 @@ header: Response
 You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
 
 <details>
-<summary>Example: View rules in a phase entry point at the zone level</summary>
+<summary>Example: View rules in a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point at the zone level.
+The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
 
 ```bash
 ---

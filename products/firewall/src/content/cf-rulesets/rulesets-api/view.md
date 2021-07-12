@@ -206,7 +206,7 @@ header: Zone-level phase endpoint
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions
 ```
 
-When the specified phase entry point does not exist, this API method returns an empty array in the `result` field.
+When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
 
@@ -287,7 +287,7 @@ header: Zone-level phase endpoint
 GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
 ```
 
-When the specified phase entry point does not exist, this API method returns a 404 HTTP Status Code.
+When the specified phase entry point ruleset does not exist, this API method returns a 404 HTTP Status Code.
 
 ### Example
 

@@ -7,9 +7,9 @@ order: 773
 
 # Use rulesets and rule overrides to only enable selected rules
 
-Use a ruleset override and a rule override in a phase entry point to execute only selected rules in a Managed Ruleset.
+Use a ruleset override and a rule override in a phase entry point ruleset to execute only selected rules in a Managed Ruleset.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point that executes a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) to set an action for the rules you want to execute.
 
@@ -21,7 +21,7 @@ The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/
 
 In this example:
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the phase entry point to execute a Managed Ruleset for requests in the specified zone (`{zone-id}`).
+* `"id": "{managed-ruleset-id}"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests in the specified zone (`{zone-id}`).
 * `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
 * `"rules": [{"id": "{rule-id-1}", "action": "block", "enabled": true}, {"id": "{rule-id-2}", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
@@ -69,7 +69,7 @@ The following `PUT` request uses the [Update ruleset](/cf-rulesets/rulesets-api/
 
 In this example:
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the phase entry point to execute a Managed Ruleset for requests addressed to `example.com`.
+* `"id": "{managed-ruleset-id}"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests addressed to `example.com`.
 * `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
 * `"rules": [{"id": "{rule-id-1}", "action": "block", "enabled": true}, {"id": "{rule-id-2}", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 

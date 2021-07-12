@@ -11,7 +11,7 @@ Use the [Rulesets API](/cf-rulesets/rulesets-api) to configure the execution of 
 
 Follow the steps below to configure the execution of a Managed Ruleset with two overrides for enabling only the rules tagged with `joomla`.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point that executes a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. Configure a tag override that enables only the rules with a given tag.
 

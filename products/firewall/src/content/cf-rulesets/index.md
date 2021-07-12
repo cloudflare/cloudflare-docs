@@ -43,10 +43,10 @@ There are several types of rulesets. Cloudflare provides **Managed Rulesets** th
 
 <Aside type="note" header="Note">
 
-Phase entry points have a type, just like rulesets. You can check the ruleset/entry point type in the `kind` field:
+Phase entry point rulesets have a type defined in the `kind` field:
 
-* Phase entry points at the account level have `"kind": "root"`
-* Phase entry points at the zone level have `"kind": "zone"`
+* Phase entry point rulesets at the account level have `"kind": "root"`
+* Phase entry point rulesets at the zone level have `"kind": "zone"`
 
 </Aside>
 

@@ -8,7 +8,7 @@ order: 774
 
 Customize the execution of Managed Rulesets with a combination of ruleset overrides, tag overrides, and rule overrides in your phase entry point ruleset.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point to execute a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point ruleset to execute a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. [Configure a tag override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for rules with a given tag.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets an action for the rules you want to execute.
@@ -77,7 +77,7 @@ curl -X PUT \
 
 In this example:
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the `http_request_firewall_managed` phase entry point that executes a Managed Ruleset for requests addressed to `example.com`.
+* `"id": "{managed-ruleset-id}"` adds a rule to the `http_request_firewall_managed` phase entry point ruleset that executes a Managed Ruleset for requests addressed to `example.com`.
 * `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
 * `"categories": [{"category": "wordpress", "action": "log", "enabled": true}, {"category": "drupal", "action": "log", "enabled": true}]` defines an override at the tag level to enable rules tagged with `wordpress` or `drupal` and sets their action to `log`.
 * `"rules": [{"id": "{rule-id}", "action": "block", "enabled": true}]` defines an override at the rule level that enables one individual rule and sets the action to `block`.

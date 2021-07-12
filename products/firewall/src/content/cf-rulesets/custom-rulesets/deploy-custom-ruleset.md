@@ -51,7 +51,7 @@ header: Response
 {
   "result": {
     "id": "{account-phase-ruleset-id}",
-    "name": "http_request_firewall_custom phase entry point for my account",
+    "name": "http_request_firewall_custom phase entry point ruleset for my account",
     "description": "Execute several rulesets",
     "kind": "root",
     "version": "3",
