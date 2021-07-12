@@ -30,7 +30,7 @@ All values are per organization.
 | Team Domain max length (characters) | <= 63 |
 | Lists: total number of lists | 100 |
 | Locations | 250 |
-| Rules count per app | 1000 |
+| Rules count per application | 1000 |
 | Rules count per group | 1000 |
 | HTTP rule limit | 1000 |
 | DNS rule limit | 1000 |
