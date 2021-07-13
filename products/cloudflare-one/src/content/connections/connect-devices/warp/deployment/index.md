@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 The Cloudflare WARP client can be deployed via a device management platform like JAMF or InTune or through end user self-enrollment.
 
-To get started, you'll first need to create a **device enrollment policy** in your Teams dashboard. The device enrollment policy will determine who can enroll a device into your organization. To do so:
+To get started, create a **device enrollment policy** in your Teams dashboard. The device enrollment policy will determine who can enroll a device into your organization. To do so:
 
 1. Make sure you have set up a [team domain](/glossary#team-domain). You can find your team domain under **Settings > General > Team domain**.
 
