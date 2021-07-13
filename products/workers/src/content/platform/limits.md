@@ -26,11 +26,11 @@ pcx-content-type: concept
 
 URLs have a limit of 16KB.
 
-Request headers observe a total limit of 32KB, but each heaer is limited to 16KB. 
+Request headers observe a total limit of 32KB, but each header is limited to 16KB. 
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(403) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476) to request a limit beyond 500MB.
+Cloudflare Enterprise customers may contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500MB.
 
 <TableWrap>
 
@@ -45,7 +45,7 @@ Cloudflare Enterprise customers may contact [Cloudflare Support](https://support
 
 ## Response limits
 
-Cloudflare does not enforce response limts, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512MB for Free, Pro, and Business customers and 5GB for Enterprise customers.
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512MB for Free, Pro, and Business customers and 5GB for Enterprise customers.
 
 ## Worker limits
 
