@@ -46,7 +46,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 1. Finally, click **Save** to save the policy.
 
-You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
+You can always edit the policy to change who should be allowed access to the application, or to change which authentication providers can be used to access the application.
 
 ![Save](../static/zero-trust-security/ssh/save-app.png)
 
@@ -182,12 +182,12 @@ We recommend that you run `cloudflared` [as a service](/connections/connect-apps
 
 ## Connect from a client machine
 
-### Install cloudflared On The Client Machine
+### Install `cloudflared` on the client machine
 
 Follow steps 1 through 3 above to download and install `cloudflared` on the client desktop that will connect to the remote desktop.
 `cloudflared` will need to be installed on each user device that will connect.
 
-### Connect To The Remote Desktop
+### Connect to the remote desktop
 
 1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified, but in this example we will use `3389` as it is the default port for RDP connections.
 
