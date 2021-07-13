@@ -4,7 +4,7 @@ pcx-content-type: how-to
 
 # Deploy an Elder.js site
 
-[Elder.js](https://elderguide.com/tech/elderjs/) is an SEO-focused framework for building static sites with [Svelte](framework-guides/deploy-a-svelte-site).
+[Elder.js](https://elderguide.com/tech/elderjs/) is an SEO-focused framework for building static sites with [Svelte](/framework-guides/deploy-a-svelte-site).
 
 In this guide, you will create a new Elder.js application and deploy it using Cloudflare Pages.
 
