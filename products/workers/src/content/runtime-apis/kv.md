@@ -168,7 +168,7 @@ addEventListener("fetch", event => {
 })
 
 async function handleRequest(request) {
-  const value = await FIRST_KV.get("first-key")
+  const value = await NAMESPACE.get("first-key")
   if (value === null) {
     return new Response("Value not found", {status: 404})
   }
