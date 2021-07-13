@@ -15,10 +15,8 @@ To begin inspecting HTTP traffic on your devices, you need to ensure that:
 
 To enable the proxy on the Teams Dashboard:
 
-1. Navigate to **Gateway > Policies**.
+1. Navigate to **Settings > Network**.
 
-1. Click **Settings**.
+1. Scroll down to **L7 Firewall**.
 
-1. Toggle the **Proxy Settings** value to be *Enabled*.
-
- ![Enable Proxy](../../../static/documentation/connections/enable-proxy.png)
+1. Set the **Proxy** switch to *Enabled*.

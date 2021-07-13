@@ -39,9 +39,8 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
     ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
-
-1. Under **Login methods**, click *+ Add*.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **GitHub** on the next page. 
 

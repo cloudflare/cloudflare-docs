@@ -81,9 +81,11 @@ To set up SAML with Centrify as your identity provider:
 
 1. Select the **Manual Configuration** option.
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select SAML.
+1. Under **Login methods**, click **Add new**.
+
+1. Select SAML.
 
 1. Copy and paste the corresponding information from Centrify into the fields.
 

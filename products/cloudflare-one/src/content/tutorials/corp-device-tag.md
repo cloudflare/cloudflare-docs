@@ -21,7 +21,7 @@ You can use Cloudflare Access to require team members to connect to self-hosted 
 
 ## Create or upload a list of devices
 
-Navigate to `dash.teams.cloudflare.com` and select the `Lists` page from the Configuration section of the sidebar. Click **Create manual list**. You can also upload a CSV list.
+Navigate to `dash.teams.cloudflare.com` and select the `Lists` page from the `My Team` section of the sidebar. Click **Create manual list**. You can also upload a CSV list.
 
 ![Add List](../static/zero-trust-security/corp-device/list-start.png)
 
