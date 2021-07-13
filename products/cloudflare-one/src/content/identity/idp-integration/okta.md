@@ -59,19 +59,19 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
  ![Credentials](../../static/documentation/identity/okta/credentials.png)
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select **Okta** as your IdP.
+1. Under **Login methods**, click **Add new**.
+
+1. Select **Okta** as your IdP.
 
 1. Input the ID, secret, and the Okta account URL.
 
-1. If you have more than 100 Okta groups. [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. (optional)
+1. If you have more than 100 Okta groups, [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. (optional)
 
 1. Click **Save**.
 
-   ![Input](../../static/documentation/identity/okta/Add_Okta_Cred_API_Token.png)
-
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Okta.
+To test that your connection is working, navigate to **Settings > Authentication > Login methods** and click **Test** next to Okta.
 
 ## Example API Configuration
 
