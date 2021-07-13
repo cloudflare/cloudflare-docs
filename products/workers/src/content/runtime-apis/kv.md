@@ -14,59 +14,7 @@ To use Workers KV you must create a KV namespace and bind it to your worker. See
 
 --------------------------------
 
-## Using KV with Durable Objects
-
-The docs below assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
-
-```js
-export class DurableObject {
-  constructor(state, env) {
-    this.state = state
-    this.env = env
-  }
-
-  async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get('someKey')
-    return new Response(valueFromKV)
-  }
-}
-```
-
 ## Methods
-
-### Creating a KV namespace
-
-A KV namespace is a key-value database that replicates at Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
-
-The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
-
-For example, assume you create a KV namespace called "My Tasks - 2021" that receives a generated namespace ID of "abcd1234". You then associate your Workers script with "My Tasks - 2021" by using the `TODO` global variable (your binding):
-
-```js
-addEventListener('fetch', async event => {
-  // Get the value for the "todo:123" key
-  // NOTE: Relies on the `TODO` KV binding!
-  let value = await TODO.get('to-do:123');
-
-  // Return the value, as is, for the Response
-  event.respondWith(new Response(value));
-});
-```
-Now, to deploy this Worker correctly, the `kv_namespaces` portion of your `wrangler.toml` file needs to be either created or modified.
-
-```toml
-name = "worker"
-
-# ...
-
-kv_namespaces = [ 
-  { binding = "TODO", id = "abcd1234" }
-]
-```
-
-With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
-
-You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, which you can bind to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
 
 ### Writing key-value pairs
 
@@ -315,6 +263,59 @@ const value = await NAMESPACE.list()
 const cursor = value.cursor
 
 const next_value = await NAMESPACE.list({"cursor": cursor})
+```
+## [KV bindings](https://developers.cloudflare.com/workers/runtime-apis/kv#background)
+
+### Referencing KV from Workers 
+
+A KV namespace is a key-value database that replicates at Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
+
+The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
+
+For example, assume you create a KV namespace called "My Tasks - 2021" that receives a generated namespace ID of "abcd1234". You then associate your Workers script with "My Tasks - 2021" by using the `TODO` global variable (your binding):
+
+```js
+addEventListener('fetch', async event => {
+  // Get the value for the "todo:123" key
+  // NOTE: Relies on the `TODO` KV binding!
+  let value = await TODO.get('to-do:123');
+
+  // Return the value, as is, for the Response
+  event.respondWith(new Response(value));
+});
+```
+Now, to deploy this Worker correctly, the `kv_namespaces` portion of your `wrangler.toml` file needs to be either created or modified.
+
+```toml
+name = "worker"
+
+# ...
+
+kv_namespaces = [ 
+  { binding = "TODO", id = "abcd1234" }
+]
+```
+
+With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
+
+You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, which you can bind to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
+
+### Referencing KV from Durable Objects
+
+The docs below assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
+
+```js
+export class DurableObject {
+  constructor(state, env) {
+    this.state = state
+    this.env = env
+  }
+
+  async fetch(request) {
+    const valueFromKV = await this.env.NAMESPACE.get('someKey')
+    return new Response(valueFromKV)
+  }
+}
 ```
 
 ## See Also
