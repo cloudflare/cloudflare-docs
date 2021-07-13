@@ -21,7 +21,7 @@ You can add or remove IP addresses from the Split Tunnels list at any time.
  
 1. Under **Split Tunnels**, click **Manage**.
  
-    On this page, you'll find a list of the IP addresses Cloudflare for Teams excludes. You can customize this list to add or remove any items from it.
+    On this page, you will find a list of the IP addresses Cloudflare for Teams excludes. You can customize this list to add or remove any items from it.
  
 ### Add an IP address
  
