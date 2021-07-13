@@ -118,9 +118,9 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
    ![Second network policy](../static/zero-trust-security/ztna/second-network-policy.png)
 
-1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Gateway > Settings > Split Tunnels - WARP**.
+1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
 
-   ![Split Tunnels](../static/zero-trust-security/ztna/split-tunnels.png)
+   ![Split Tunnel](../static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/policies/filtering/network-policies).
 

@@ -40,7 +40,9 @@ An Okta administrator in your organization must first [enable U2F support](https
 
 ## Test U2F in Access
 
-You can begin building U2F policies by testing your Okta integration. Navigate to the `Authentication` page in the `Access` section of the Cloudflare for Teams dashboard. Choose the row for Okta and click **Test**.
+You can begin building U2F policies by testing your Okta integration. 
+
+Navigate to the **Settings > Authentication** section of the Teams Dashboard. Next, choose the row for Okta and click **Test**.
 
 ![Test MFA](../static/zero-trust-security/require-yubikey/idp-list.png)
 
