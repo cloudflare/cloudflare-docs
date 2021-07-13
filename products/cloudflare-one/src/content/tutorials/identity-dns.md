@@ -37,7 +37,7 @@ This first rule will allow users of your marketing team to reach social media. S
 
 ![Add Rule](../static/secure-web-gateway/id-dns/add-second-rule.png)
 
-Next, click **And** to add a second rule. In this rule, select **User Group Names**. You can also select individual user emails or group IDs, as well as locations. Input the name of the group in your identity provider that should be allowed to reach social media.
+Next, click **+Add condition** to add a second rule. In this rule, select **User Group Names**. You can also select individual user emails or group IDs, as well as locations. Input the name of the group in your identity provider that should be allowed to reach social media.
 
 In the **Action** section, select **Allow** and save the rule at the top of the page.
 

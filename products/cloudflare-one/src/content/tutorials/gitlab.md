@@ -123,8 +123,6 @@ You can then add rules to determine who can reach the site.
 
 Click `Next` and `Next` again on the `Setup` page - this example does not require advanced CORS configuration. Repeat these steps for the second application, `gitlab-ssh.widgetcorp.tech`.
 
-![App List](../static/secure-origin-connections/gitlab/app-list.png)
-
 ## Cloudflare Tunnel
 
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
