@@ -334,7 +334,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td>
           <p>Represents the edge IP address to which the HTTP request has resolved to.
           </p>
-          <p>This field will only contain a value for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>. For other customers, the field will contain a null value.
+          <p>This field is only meaningful for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>.
           </p>
         </td>
     </tr>
