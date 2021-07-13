@@ -19,7 +19,7 @@ You can add or remove domains from the Local Domains list at any time.
  
 1. Under **Local Domain Fallback**, click **Manage**.
  
-1. On this page, you'll find a list of domains Cloudflare for Teams excludes. You can customize this list to add or remove any items from it.
+1. On this page, you will find a list of domains Cloudflare for Teams excludes. You can customize this list to add or remove any items from it.
 
 ## Add a domain
  
