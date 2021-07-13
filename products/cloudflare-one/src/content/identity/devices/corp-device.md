@@ -17,9 +17,9 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
 </Aside>
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Lists**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Lists**.
 
-1. Click **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's API endpoint.
+1. Click **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's API endpoint.
 
    ![Add List](../../static/zero-trust-security/corp-device/list-start.png)
 
@@ -62,5 +62,4 @@ To do that:
   ![Add Require](../../static/zero-trust-security/corp-device/add-require.png)
 
 Once saved, any device attempting to reach the application will need to connect from a device that uses Cloudflare WARP and presents a serial number in the list created.
-
 

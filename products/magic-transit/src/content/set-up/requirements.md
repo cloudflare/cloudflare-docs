@@ -20,7 +20,7 @@ Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit 
 
 ## Draft Letter of Authorization
 
-Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. See this [LOA template](https://developers.cloudflare.com/byoip/loa/loa-template) for an example.
+Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. See this [LOA template](https://developers.cloudflare.com/byoip/loa/loa-template) for an example.
 
 ## Verify Internet Routing Registry entries
 

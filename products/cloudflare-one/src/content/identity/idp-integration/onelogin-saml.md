@@ -50,9 +50,11 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO](../../static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select SAML.
+1. Under **Login methods**, click **Add new**.
+
+1. Select SAML.
 
 1. Input the details from your OneLogin account in the fields.
 

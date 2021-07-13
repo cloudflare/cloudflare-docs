@@ -13,13 +13,9 @@ AV scanning of files requires organizations to enable HTTP traffic filtering.
 
 To enable AV scanning:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
 
-1. Select the **Settings** tab.
-
-1. In the section titled **AntiVirus Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
-
-  ![AV Scanning settings](../../../static/documentation/policies/av-toggles.png)
+1. In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 
   When a file is blocked due to the presence of malware, it is logged as a Block decision:
 
