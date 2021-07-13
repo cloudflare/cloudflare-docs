@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: getting-started
 ---
 
-# Getting started
+# Get started
 
 In this guide, you will get started with Cloudflare Pages, and deploy your first website to the platform.
 
