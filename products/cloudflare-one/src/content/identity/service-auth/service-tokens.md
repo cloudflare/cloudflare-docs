@@ -61,7 +61,7 @@ The `Refresh` operation will extend the token's lifetime by **one year** from th
 
 ## Revoke service tokens
 
-By default, Access service tokens expire one year after they’re created. If you need to revoke access earlier, simply delete the token.
+By default, Access service tokens expire one year after they are created. If you need to revoke access earlier, simply delete the token.
 
 To revoke a service token immediately:
 
