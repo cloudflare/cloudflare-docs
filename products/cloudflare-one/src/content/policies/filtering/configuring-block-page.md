@@ -24,7 +24,7 @@ To configure a block page:
 
 1. Click on **Download certificate**.
 
-Now you'll need to add the certificate to your system. This ensures your web browser can use it to establish HTTPS connections.
+Now you will need to add the certificate to your system. This ensures your web browser can use it to establish HTTPS connections.
 
 ## Add the certificate to your system
 
