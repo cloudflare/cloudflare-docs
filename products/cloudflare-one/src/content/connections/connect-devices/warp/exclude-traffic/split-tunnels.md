@@ -17,28 +17,18 @@ You can add or remove IP addresses from the Split Tunnels list at any time.
  
 ![Settings End](../../../../static/secure-web-gateway/split-tunnel/settings-end.png)
  
-1. On the Teams dashboard, navigate to **Policies** > **Settings**.
+1. On the Teams dashboard, navigate to **Settings** > **Network**.
  
-![Settings](../../../../static/secure-web-gateway/split-tunnel/settings-page.png)
+1. Under **Split Tunnels**, click **Manage**.
  
-1. Click **Manage Split Tunnels**.
- 
-![Settings End](../../../../static/secure-web-gateway/split-tunnel/settings-end.png)
- 
-1. On this page, you'll find a list of the IP addresses Cloudflare for Teams excludes. You can customize this list to add or remove any items from it.
+    On this page, you will find a list of the IP addresses Cloudflare for Teams excludes. You can customize this list to add or remove any items from it.
  
 ### Add an IP address
  
-On the Manage Split Tunnels page, in the **Add Split Tunneling Record** card, enter the IP address or CIDR and an optional description in the relevant fields. Then, click **Add**.
- 
- ![Add IP address](../../../../static/documentation/connections/add-IP-address.png)
- 
-The IP address will appear in the list below.
+On the Split Tunnels page, enter the IP address or CIDR and an optional description in the relevant fields. Then, click **Add destination**.
+
+The IP address will appear in the list of Split Tunnel entries.
  
 ### Remove an IP address
  
-On the Manage Split Tunnels page, locate the IP address in the list and then click **Delete**.
- 
-If you wish to remove multiple IP addresses at the same time, click the checkbox to the left of each IP address to select it, and click **Delete** in the top right corner of the box.
- 
- ![Delete IP address](../../../../static/documentation/connections/delete-IP-address.png)
+On the Split Tunnels page, locate the IP address in the list and then click **Delete**.

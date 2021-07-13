@@ -16,11 +16,11 @@ This section covers how to create, renew, and revoke a service token.
 
 ## Create a service token
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Service Auth**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth**.
+
+1. Go to the **Service Tokens** tab.
 
 1. Click **Create Service Token**.
-
-   ![Access Service Token card](../../static/documentation/identity/users/service-token-list.png)
 
 1. Next, name the service token.
 
@@ -59,21 +59,18 @@ When a request is made to an application behind our network, the request will su
 By default, service tokens expire one year after creation. You can extend a token’s lifecycle by navigating to the **Service Tokens** tab and clicking the **Refresh** button for the token you want to renew.
 The `Refresh` operation will extend the token's lifetime by **one year** from the date of the refresh.
 
-![Access Service Token card](../../static/documentation/identity/users/service-token-list.png)
-
 ## Revoke service tokens
 
-By default, Access service tokens expire one year after they’re created. If you need to revoke access earlier, simply delete the token.
+By default, Access service tokens expire one year after they are created. If you need to revoke access earlier, simply delete the token.
 
 To revoke a service token immediately:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Service Auth > Service Tokens**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth > Service Tokens**.
 
 1. Click **Delete** for the token you need to revoke and delete.
 
-   ![Access Service Token card](../../static/documentation/identity/users/service-token-list.png)
-
 When revoking service tokens, keep in mind:
+
 * Services that rely on a deleted service token can no longer reach your application.
 * Clicking **Revoke Existing Tokens** when editing a policy in the **Edit Access Policy** dialog revokes existing sessions but does not revoke access.
 

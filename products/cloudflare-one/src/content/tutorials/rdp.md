@@ -24,23 +24,29 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 ## Create a Zero Trust policy
 
-First, navigate to the Cloudflare for Teams dashboard to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
+1. Navigate to the Teams Dashboard to create a new application.
 
-![App List](../static/zero-trust-security/ssh/app-list.png)
+1. Select the `Applications` page from the sidebar.
 
-Choose **Self-hosted** on the next page.
+1. Click **Add application**.
 
-![Add App](../static/zero-trust-security/ssh/add-app.png)
+  ![App List](../static/zero-trust-security/ssh/app-list.png)
 
-Input a subdomain where your application will be availble to users.
+1. Choose **Self-hosted** on the next page.
 
-![Configure](../static/zero-trust-security/ssh/configure-app.png)
+  ![Add App](../static/zero-trust-security/ssh/add-app.png)
 
-Next, create rules that control who can reach the application.
+1. Input a subdomain where your application will be availble to users.
 
-![Add Rules](../static/zero-trust-security/ssh/app-rules.png)
+  ![Configure](../static/zero-trust-security/ssh/configure-app.png)
 
-Finally, click **Save** to save the policy. You can return to edit the policy to make changes to who should be allowed or to choose what authentication providers can be used.
+1. Next, create rules that control who can reach the application.
+
+  ![Add Rules](../static/zero-trust-security/ssh/app-rules.png)
+
+1. Finally, click **Save** to save the policy.
+
+You can always edit the policy to change who should be allowed access to the application, or to change which authentication providers can be used to access the application.
 
 ![Save](../static/zero-trust-security/ssh/save-app.png)
 
@@ -48,27 +54,28 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Download the version of `cloudflared` that matches your architecture from the releases [available here](https://github.com/cloudflare/cloudflared/releases).
+1. Download the version of `cloudflared` that matches your architecture from the [available releases](https://github.com/cloudflare/cloudflared/releases).
 
-Place the `cloudflared` executable in a location accessible to the OS, for example:
+1. Place the `cloudflared` executable in a location accessible to the OS, for example:
 
-```sh
-C:\Cloudflared\bin\cloudflared.exe
-```
+  ```sh
+  C:\Cloudflared\bin\cloudflared.exe
+  ```
 
-Next, run `CMD` as an administrator to install the service.
+1. Next, run `CMD` as an administrator to install the service.
 
-```bash
-C:\Cloudflared\bin\cloudflared.exe service install
-```
+  ```bash
+  C:\Cloudflared\bin\cloudflared.exe service install
+  ```
 
-By default, the agent will run as a Local Account service and will look for the configuration and certificate file in the systemprofile.
+  By default, the agent will run as a Local Account service and will look for the configuration and certificate file in the systemprofile.
 
-Run the following command to create a new directory within systemprofile, replacing the `System32` value if needed to match your architecture.
+1. Run the following command to create a new directory within systemprofile, replacing the `System32` value if needed to match your architecture.
 
-```bash
-mkdir C:\Windows\System32\config\systemprofile\.cloudflared
-```
+  ```bash
+  mkdir C:\Windows\System32\config\systemprofile\.cloudflared
+  ```
+
 <Aside>
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
@@ -77,7 +84,7 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 ## Authenticate `cloudflared`
 
-1. Run the following command to authenticate cloudflared into your Cloudflare account.
+1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
  ```txt
  C:\Cloudflared\bin\cloudflared.exe login
@@ -103,7 +110,7 @@ Next, [create a Tunnel](/connections/connect-apps/create-tunnel) with the comman
 $ cloudflared tunnel create <NAME>
 ```
 
-Replacing `<NAME>` with a name for the Tunnel. This name can be any value. A single Tunnel can also serve traffic for multiple hostnames to multiple services in your environment, including a mix of connection types like SSH and HTTP.
+Replace `<NAME>` with a name for the Tunnel. This name can be any value. A single Tunnel can also serve traffic for multiple hostnames to multiple services in your environment, including a mix of connection types like SSH and HTTP.
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
 
@@ -131,7 +138,7 @@ You can now [configure the Tunnel](/connections/connect-apps/configuration) to s
     # the earlier rules
   ```
 
-1. make sure the file is saved to the following location:
+1. Make sure the file is saved to the following location:
 
  ```txt
  C:\Users\%USERNAME%\.cloudflared\config.yml
@@ -141,21 +148,6 @@ You can now [configure the Tunnel](/connections/connect-apps/configuration) to s
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/ingress).
-
-Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
-
-![DNS List](../static/zero-trust-security/ssh/dns-list.png)
-
-Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
-
-`6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
-
-Click **Save**.
-
-![Add DNS](../static/zero-trust-security/ssh/add-dns.png)
-
-
 <Aside>
  
 <strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
@@ -163,6 +155,20 @@ Click **Save**.
 ![Enable WebSockets](../static/zero-trust-security/ssh/enable-websockets.png)
 
 </Aside>
+
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/ingress).
+
+1. Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
+
+  ![DNS List](../static/zero-trust-security/ssh/dns-list.png)
+
+1. Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
+
+  `6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
+
+1. Click **Save**.
+
+  ![Add DNS](../static/zero-trust-security/ssh/add-dns.png)
 
 ## Run the Tunnel
 
@@ -176,22 +182,22 @@ We recommend that you run `cloudflared` [as a service](/connections/connect-apps
 
 ## Connect from a client machine
 
-### 1. Install cloudflared On The Client Machine
+### Install `cloudflared` on the client machine
 
-Follow steps 1 through 3 above to download and install cloudflared on the client desktop that will connect to the remote desktop.
-cloudflared will need to be installed on each user device that will connect.
+Follow steps 1 through 3 above to download and install `cloudflared` on the client desktop that will connect to the remote desktop.
+`cloudflared` will need to be installed on each user device that will connect.
 
-### 2. Connect To The Remote Desktop
+### Connect to the remote desktop
 
-1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
+1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified, but in this example we will use `3389` as it is the default port for RDP connections.
 
  ```txt
- C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:2244
+ C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:3389
  ```
 
  This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
-1. Open your RDP client and configure the client to point to `localhost:2244`. Do not input the hostname.
+1. Open your RDP client and configure the client to point to `localhost:3389`. Do not input the hostname.
 
 1. When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
@@ -208,7 +214,7 @@ You can help end users connect without requiring the command line by providing t
 1. In the wizard that appears, paste in the path to your `cloudflared.exe` file, followed by this command with the hostname your team uses:
 
  ```txt
- C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:2244
+ C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:3389
  ```
 1. Click **Next** and complete the wizard.
 
@@ -228,14 +234,14 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 
  ```txt
  var=/Applications/CF-RDP-Tunnel.command &&
- echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:2244 &" > $var &&
+ echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:3389 &" > $var &&
  chmod +x $var
  ```
 
 1. Check that everything is successful by running the following command:
 
  ```sh
- $ lsof -nP -iTCP:2244 | grep LISTEN
+ $ lsof -nP -iTCP:3389 | grep LISTEN
  ```
  If needed, you can kill the process by running the following command: 
 
@@ -252,8 +258,3 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 1. Double click on the previously created `CF-RDP-Tunnel.command` file.
 
 The default behavior in MacOS is for the Terminal window to stay open. You can configure it to close automatically.
-
-<Aside>
-
-Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
-</Aside>
