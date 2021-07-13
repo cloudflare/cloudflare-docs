@@ -12,7 +12,7 @@ To start using the DNS over Discord bot, invite it to your Discord server using 
 
 ## dig command
 
-Once the bot is in your server, type `/dig` to begin using the bot's main command -- performing DNS lookups.
+Once the bot is in your server, type `/dig` to begin using the bot's main command — performing DNS lookups.
 This will provide a native interface within Discord that allows you to specify the domain to lookup, an optional DNS record type and an optional flag for a short result.
 
 If only a domain is given for the command, the bot will default to looking for 'A' DNS records, and will return the full format result, not the short form.
@@ -28,47 +28,31 @@ _`/dig domain: cloudflare.com`_
 
 Discord has a limit of 25 options in slash commands, so DNS over Discord offers the 25 most common DNS record types to choose from:
 
-<table>
-<tr>
-<td>
-<ul>
-<li>A</li>
-<li>AAAA</li>
-<li>CAA</li>
-<li>CERT</li>
-<li>CNAME</li>
-<li>MX</li>
-<li>NS</li>
-<li>SPF</li>
-<li>SRV</li>
-</ul>
-</td>
-<td>
-<ul>
-<li>TXT</li>
-<li>DNSKEY</li>
-<li>DS</li>
-<li>LOC</li>
-<li>URI</li>
-<li>HTTPS</li>
-<li>NAPTR</li>
-<li>PTR</li>
-<li>SMIMEA</li>
-</ul>
-</td>
-<td>
-<ul>
-<li>SOA</li>
-<li>SSHFP</li>
-<li>SVCB</li>
-<li>TLSA</li>
-<li>HINFO</li>
-<li>CDS</li>
-<li>CDNSKEY</li>
-</ul>
-</td>
-</tr>
-</table>
+*   A
+*   AAAA
+*   CAA
+*   CERT
+*   CNAME
+*   MX
+*   NS
+*   SPF
+*   SRV
+*   TXT
+*   DNSKEY
+*   DS
+*   LOC
+*   URI
+*   HTTPS
+*   NAPTR
+*   PTR
+*   SMIMEA
+*   SOA
+*   SSHFP
+*   SVCB
+*   TLSA
+*   HINFO
+*   CDS
+*   CDNSKEY
 
 *To query other DNS record types, or multiple record types at once, use the `/multi-dig` command.*
 
@@ -120,67 +104,51 @@ Please provide a space-separated list of valid DNS record types to lookup, any i
 
 The following DNS record types are supported and considered valid by the bot:
 
-<table>
-<tr>
-<td>
-<ul>
-<li>A</li>
-<li>AAAA</li>
-<li>CAA</li>
-<li>CERT</li>
-<li>CNAME</li>
-<li>MX</li>
-<li>NS</li>
-<li>SPF</li>
-<li>SRV</li>
-<li>TXT</li>
-<li>DNSKEY</li>
-<li>DS</li>
-<li>LOC</li>
-<li>URI</li>
-<li>HTTPS</li>
-</ul>
-</td>
-<td>
-<ul>
-<li>NAPTR</li>
-<li>PTR</li>
-<li>SMIMEA</li>
-<li>SOA</li>
-<li>SSHFP</li>
-<li>SVCB</li>
-<li>TLSA</li>
-<li>HINFO</li>
-<li>CDS</li>
-<li>CDNSKEY</li>
-<li>AFSDB</li>
-<li>APL</li>
-<li>CSYNC</li>
-<li>DHCID</li>
-<li>DLV</li>
-</ul>
-</td>
-<td>
-<ul>
-<li>DNAME</li>
-<li>EUI48</li>
-<li>EUI64</li>
-<li>HIP</li>
-<li>IPSECKEY</li>
-<li>KEY</li>
-<li>KX</li>
-<li>NSEC</li>
-<li>NSEC3</li>
-<li>NSEC3PARAM</li>
-<li>OPENPGPKEY</li>
-<li>RP</li>
-<li>TA</li>
-<li>TKEY</li>
-<li>ZONEMD</li>
-</ul>
-</td>
-</tr>
-</table>
+*   A
+*   AAAA
+*   CAA
+*   CERT
+*   CNAME
+*   MX
+*   NS
+*   SPF
+*   SRV
+*   TXT
+*   DNSKEY
+*   DS
+*   LOC
+*   URI
+*   HTTPS
+*   NAPTR
+*   PTR
+*   SMIMEA
+*   SOA
+*   SSHFP
+*   SVCB
+*   TLSA
+*   HINFO
+*   CDS
+*   CDNSKEY
+*   AFSDB
+*   APL
+*   CSYNC
+*   DHCID
+*   DLV
+*   DNAME
+*   EUI48
+*   EUI64
+*   HIP
+*   IPSECKEY
+*   KEY
+*   KX
+*   NSEC
+*   NSEC3
+*   NSEC3PARAM
+*   OPENPGPKEY
+*   RP
+*   TA
+*   TKEY
+*   ZONEMD
 
 *Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.*
 
