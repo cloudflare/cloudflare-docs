@@ -55,27 +55,27 @@ Navigate to the `Settings` section of the Cloudflare for Teams dashboard and sel
 
 ## Determine which devices can enroll
 
-Next, build a rule to decide which devices can enroll in your account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
+Next, build a rule to decide which devices can enroll in your account. 
 
-![Device List](../static/secure-web-gateway/secure-dns-devices/device-list.png)
+1. Navigate to **Settings > Devices > Device enrollment**.
 
-Click **Manage enrollment rules** and click **Add a rule** to begin the enrollment.
+    ![Device settings](../static/secure-web-gateway/block-football/device-enrollment-settings.png)
 
-![Add Device Rule](../static/secure-web-gateway/secure-dns-devices/add-device-rule.png)
+1. Click **Manage**.
 
-You can determine who is allowed to enroll using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
+1. Click **Add a rule**.
 
-![Device List](../static/secure-web-gateway/secure-dns-devices/device-enroll.png)
+    ![Device Enrollment](../static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
-Return to the top of the page and click **Add rule**.
+    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-On the next page, click **Save rules** to conclude.
+    ![Allow Cloudflare users](../static/secure-web-gateway/block-football/allow-cf-users.png)
 
-![Device List](../static/secure-web-gateway/secure-dns-devices/save-rules.png)
+1. Click **Save**.
 
 ## Collect your Team domain
 
-When you first created your Cloudflare for Teams account, the dashboard prompted you to choose a [team name](/glossary#team-name). The name will be in the format `team.cloudflareaccess.com` where `team` is replaced with the name you selected.
+When you first created your Cloudflare for Teams account, the dashboard prompted you to choose a [team domain](/glossary#team-domain). The domain will be in the format `team.cloudflareaccess.com` where `team` is replaced with the [team name](/glossary#team-name) you selected.
 
 You will need this name to enroll devices. You can confirm the team name selected by visiting the `Settings` section of the dashboard and selecting `General`.
 
