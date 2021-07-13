@@ -103,21 +103,16 @@ Once integrated, users will login with their Google Suite credentials to reach r
 
 ![Client ID Visible](../../static/documentation/identity/gsuite/client-id-visible.png)
 
-1. Navigate to the Cloudflare for Teams dashboard. In the `Authentication` page of the Access section, click **+ Add**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
- ![Add IdP](../../static/documentation/identity/gsuite/add-idp.png)
+1. Under **Login methods**, click **Add new**.
 
-1. Select `Google Suite`.
-
- ![Add Google Suite](../../static/documentation/identity/gsuite/add-gsuite.png)
+1. Select **Google Suite**.
 
 1. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account. Click **Save**.
 
- ![Add Google Suite](../../static/documentation/identity/gsuite/input-client.png)
-
 1. To complete setup, you must scroll below and visit the link generated. If you are not the Google Workspace administrator, share the link with the administrator.
 
- ![Visit Link](../../static/documentation/identity/gsuite/visit-link.png)
 
 1. The generated link will prompt you to login to your Google account and to authorize Cloudflare Access to view group information.
 

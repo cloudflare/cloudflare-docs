@@ -28,13 +28,10 @@ To set up a generic OIDC:
 
     You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL.”
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
-
-1. Under **Login methods**, click *+ Add*.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **OpenID Connect** on the next page.
-
-   ![ODIC Provider option](../../static/documentation/identity/generic-oidc/oidc.png)
 
 1. In the **Name** field, enter your IdP. Then, paste in the **Client ID** and **Client secret**.
 
