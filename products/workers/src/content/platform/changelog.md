@@ -1,5 +1,14 @@
 # Changelog
 
+## 7/13/2021
+
+- The preview service now prints a warning in the devtools console when a script uses Response/Request.clone() but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
+
+## 7/1/2021
+
+- Fixed bug where registering the same exact event listener method twice on the same event type threw an internal error.
+- Add support for the `.forEach()` method for `Headers`, `URLSearchParameters`, and `FormData`.
+
 ## 6/27/2021
 
 - WebCrypto: Implemented non-standard Ed25519 operation (algorithm NODE-ED25519, curve name NODE-ED25519). The Ed25519 implementation differs from NodeJS’s in that raw import/export of private keys is disallowed, per parity with ECDSA/ECDH.
