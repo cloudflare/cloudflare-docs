@@ -49,7 +49,7 @@ Select the new GitHub repository that you created above and, in the configuratio
 | -------------------- | ---------------   |
 | Production branch    | `main`            |
 | Build command        | `npm run build`   |
-| Build directory      | `dist`          |
+| Build directory      | `dist`            |
 
 </TableLayout>
 
