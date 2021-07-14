@@ -10,7 +10,7 @@ Workers KV is a global, low-latency, key-value data store. It supports exception
 
 Learn more about [How KV works](/learning/how-kv-works).
 
-To use Workers KV you must create a KV namespace and bind it to your worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
+To use Workers KV you must create a KV namespace and add a [binding](https://developers.cloudflare.com/workers/runtime-apis/kv#kv-bindings) to your worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
 
 --------------------------------
 
@@ -264,7 +264,7 @@ const cursor = value.cursor
 
 const next_value = await NAMESPACE.list({"cursor": cursor})
 ```
-## [KV bindings](https://developers.cloudflare.com/workers/runtime-apis/kv#background)
+## KV bindings
 
 ### Referencing KV from Workers 
 
