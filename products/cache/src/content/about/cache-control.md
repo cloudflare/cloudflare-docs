@@ -297,18 +297,18 @@ With this configuration, Cloudflare attempts to revalidate the content with the 
 ### Cache an asset and serve while asset is being revalidated
 `Cache-Control: max-age=600, stale-while-revalidate=30`
 
-This configuration indicates the asset is fresh for 600 second. The asset can be served stale for up to an additional 30 seconds to parallel requests for the same resource while the initial synchronous revalidation is attempted.
+This configuration indicates the asset is fresh for 600 seconds. The asset can be served stale for up to an additional 30 seconds to parallel requests for the same resource while the initial synchronous revalidation is attempted.
 
 ## Interaction with other Cloudflare features
 
-### Edge Cache TTL
+### [Edge Cache TTL](/about/edge-browser-cache-ttl#edge-cache-ttl) 
 
-Edge Cache TTL Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
+Edge Cache TTL Page Rulesoverride `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
 
-### Browser Cache TTL
+### [Browser Cache TTL](/about/edge-browser-cache-ttl#browser-cache-ttl)
 Browser Cache TTL Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
 
-### Polish
+### [Polish](/best-practices/activate-polish)
 Polish is disabled when the `no-transform` directive is present.
 
 ### Gzip and Other Compression
