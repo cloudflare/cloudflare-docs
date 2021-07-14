@@ -47,6 +47,45 @@ To match requests where `ssl` is `false`, use the boolean `not` operator :
 not ssl
 ```
 
+## Arrays
+
+The Cloudflare Firewall Rules language includes [fields](/cf-firewall-language/fields) of `Array` type and [functions](/cf-firewall-language/functions) with `Array` arguments and return values.
+
+You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
+
+Functions like `all()` and `any()` work with arguments of `Array` type. Use the `[*]` index/unpacking operator when specifying an expression that should be evaluated in the context of each array element.
+
+<Aside type="note" header="Notes">
+
+It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
+
+You can only use the `[*]` operator when providing an argument of type `Array` to a function that allows/expects an array argument.
+
+The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator (however, they support indexed array elements like `array_value[0]`). For example, you cannot use the `[*]` operator with the `==` operator, except when specifying an array function argument:
+
+* `http.request.headers.names[*] == "Content-Type"` — **invalid** expression
+* `any(http.request.headers.names[*] == "Content-Type")` — **valid** expression
+
+</Aside>
+
+### Examples
+
+Consider the `http.request.headers.names` field with type `Array<String>` in the following examples:
+
+* Obtain the first element in the array:<br/>
+  `http.request.headers.names[0]`
+
+* Check if the first array element is equal to `Content-Type` (case sensitive):<br/>
+  `http.request.headers.names[0] == "Content-Type"`
+
+* Check if any array element is equal to `Content-Type` (case sensitive):<br/>
+  `any(http.request.headers.names[*] == "Content-Type")`
+
+* Check if any array element is equal to `Content-Type`, ignoring the case:<br/>
+  `any(lower(http.request.headers.names[*])[*] == "content-type")`
+
+In the last example, the `lower()` function includes the `[*]` operator so that the function is evaluated in the context of each array element. The function returns a new array where each element of the input array is converted to lowercase. Then, the `any()` function must also contain a `[*]` operator so that the full expression provided to `any()` is evaluated in the context of each element of the array returned by `lower()`.
+
 ## Rules Lists
 
 [Rules Lists](/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
