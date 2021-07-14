@@ -1,7 +1,7 @@
 module.exports = {
   product: "Cache",
   pathPrefix: "/cache",
-  productIconKey: "magic-transit",
+  productIconKey: "cache",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/cache",
   externalLinks: [
@@ -15,8 +15,8 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "developers-cloudflare",
-    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    indexName: "",
+    apiKey: "",
     algoliaOptions: { 'facetFilters': '["project:cache"]'}
   },
   siteMetadata: {
