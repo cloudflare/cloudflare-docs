@@ -28,16 +28,14 @@ Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
 1. Click **Save**.
 
-## Using DNS Override iOS App
+## 1.1.1.1 iOS app
 
-You can also use a handy iOS app called DNS Override (paid app, costs $1.99) that automatically configures 1.1.1.1 for you on any network you connect to. To use it:
+You can also use Cloudflare's own 1.1.1.1: Faster Internet iOS app. This app is free to download and it automatically configures your phone to use 1.1.1.1 DNS resolver. You can also use the power of WARP to keep your connections private and secure.
 
-<StreamVideo id="da4eefaa9315767842737eb793c9b63d"/>
+1. Download [1.1.1.1: Faster Internet from the app store](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627).
+1. Launch 1.1.1.1: Faster Internet and accept its Terms of Service.
+1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
+1. You are now using 1.1.1.1 for your Internet queries. If you want to add an extra layer of security with HTTPS encryption, toggle the WARP button.
 
-1. [Download DNS Override from the app store](https://itunes.apple.com/us/app/dns-override/id1060830093?mt=8).
-1. Launch the DNS Override app.
-1. Click **1.1.1.1** at the top of the app.
-1. Turn on the **DNS Override** toggle.
-1. DNS Override may ask you to install their VPN profile so that they can automatically update DNS settings.
 
 <CaptivePortals/>
