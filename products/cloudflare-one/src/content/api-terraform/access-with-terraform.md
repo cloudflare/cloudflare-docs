@@ -1,12 +1,14 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # Terraform
 
 | Requirements |
 | ------------ |
-| [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) installed on your machine. |
+| [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) installed on your machine |
+| The [Cloudflare provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) properly configured |
 
 [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://www.terraform.io/docs/providers/cloudflare/). Listed below are examples to help you get started with building Access with Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
 
@@ -17,8 +19,6 @@ order: 3
  Here is an example configuration:
 
 ```
-provider "cloudflare" {}
-
 variable "domain" {
   default = "example.com"
 }
@@ -92,7 +92,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 After you've created an application, you can start creating policies and attaching them to applications:
 ```
 resource "cloudflare_access_policy" "cf_policy" {
-  application_id = cf_app.id
+  application_id = cloudflare_access_application.cf_app.id
   zone_id        = var.zone_id
   name           = "Example Policy"
   precedence     = "1"

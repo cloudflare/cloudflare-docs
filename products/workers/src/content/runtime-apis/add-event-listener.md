@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: configuration
 ---
 
 # addEventListener
@@ -46,7 +47,7 @@ This function defines triggers for a Worker script to execute. There are current
 
 ```js
 addEventListener("fetch", event => {
-  return event.respondWith(
+  event.respondWith(
     new Response("Hello world")
   )
 })

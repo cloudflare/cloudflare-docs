@@ -3,7 +3,6 @@ order: 1000
 type: example
 summary: Serve an HTML form, then read POST requests. Use also to read JSON or POST data from an incoming request.
 tags:
-  - HTML
   - JSON
   - Originless
 ---

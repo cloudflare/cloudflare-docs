@@ -3,11 +3,10 @@ order: 1000
 type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
-  - Middleware
-  - Originless
+  - Debugging
 ---
 
-# Logging headers
+# Logging headers to console
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>
@@ -15,7 +14,6 @@ tags:
 
 ```js
 async function handleRequest(request) {
-  let requestHeaders = JSON.stringify([...request.headers])
   console.log(new Map(request.headers))
 
   return new Response("Hello world")

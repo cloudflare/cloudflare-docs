@@ -1,7 +1,9 @@
 ---
+title: Upload videos
 order: 1
+pcx-content-type: navigation
 ---
 
-# Uploading videos
+# Upload videos
 
 <DirectoryListing path="/uploading-videos"/>

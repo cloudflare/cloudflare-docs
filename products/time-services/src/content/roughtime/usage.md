@@ -1,5 +1,6 @@
 ---
 title: User Guide
+pcx-content-type: reference
 order: 1
 ---
 

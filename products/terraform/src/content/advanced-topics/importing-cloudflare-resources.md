@@ -1,3 +1,7 @@
+---
+pcx-content-type: tutorial
+---
+
 # Importing Cloudflare resources
 
 An important point to understand about Terraform is that it is only able to manage configuration that it created, or was explicitly told about after the fact. The reason for this limitation is that Terraform expects to be authoritative for the resources its manages. It relies on 2 types of files to understand what resources it controls, and what state they are in. This is how it determines when and how to make changes.
@@ -9,16 +13,16 @@ When Terraform makes calls to Cloudflare's API to create new resources as illust
 
 If you've configured Cloudflare through other means, e.g., by logging into the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not (yet) have these resource IDs in the state file. To manage this preexisting configuration you will need to first i) reproduce the configuration in your config file and; ii) import resources one-by-one by providing their IDs and resource names.
 
-## Introducing Cf-Terraforming
+## Introducing cf-terraforming
 
 To help with this process, we have published a library called [cf-terraforming](https://github.com/cloudflare/cf-terraforming). Our goal with cf-terraforming is to make it easy for existing Cloudflare customers to get going with Terraform. Currently, cf-terraforming helps to generate terraform config state by fetching all the resources of a specified type from the account and/or zone of your choosing. Let's try it out.
 
-First, `go get` cf-terraforming with `go get -u github.com/cloudflare/cf-terraforming/...`
+First, `go get` cf-terraforming with `GO111MODULE=on go get -u github.com/cloudflare/cf-terraforming/...`
 
 You can use `cf-terraforming` or `cf-terraforming -h` to view the help file, but to use cf-terraforming there are 4 things to specify:
 
 1. Your Cloudflare user email - `--email` or `-e`
-2. Your Cloudflare API key - `--key` or `-k`
+2. Your Cloudflare API token - `--token` or `-t`
 3. The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`
   * Specifying an account will generate configuration for all resources from all zones in that account.
 4. The Cloudflare resources to generate config
@@ -59,7 +63,7 @@ If you don't have a Terraform configuration file defined, all you need is the pr
 ```tf
 provider 'cloudflare' {
  # Cloudflare email saved in $CLOUDFLARE_EMAIL
- # Cloudflare API key saved in $CLOUDFLARE_TOKEN
+ # Cloudflare API token saved in $CLOUDFLARE_API_TOKEN
 }
 ```
 
@@ -69,7 +73,7 @@ We start by making a call to Cf-Terraforming to enumerate the Terraform configur
 
 Note: The below command assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
 ```
-$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_TOKEN -z 1109d899a5ff5fd74bc01e581693685a record > importing-example.tf
+$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a record > importing-example.tf
 ```
 
 If output to standard out, the result would look like the below. In this case we directly imported the configuration into our Terraform configuration file `importing-state.tf`.

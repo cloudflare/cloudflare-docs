@@ -1,59 +1,88 @@
 ---
+pcx-content-type: concept
 order: 700
 ---
 
-# Rulesets - Beta
+# Ruleset Engine (Beta)
+
+The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is the same syntax used in custom Firewall Rules. Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
+
+There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
+
+* **Phase** — Defines a stage in the life of a request where you can execute rulesets.
+* **Ruleset** — Defines a versioned set of rules. You can execute rulesets in a phase.
+* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action deploys a ruleset.
+
+## Phases
+
+A phase defines a stage or entry point in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and you cannot modify them.
+
+At a conceptual level, a phase is also a ruleset. You deploy rulesets to a phase by adding rules to the phase ruleset.
+
+Phases exist at two levels: at the **account** level and at the **zone** level. For the same phase, rules defined at the account level run **before** the rules defined at the zone level.
 
 <Aside type="warning" header="Important">
 
-This feature is part of an early access experience for selected customers.
+Currently, phases at the account level are only available in Enterprise plans.
 
 </Aside>
 
-With rulesets, you can create and apply sets of rules to incoming traffic. Create and add your own rules to custom rulesets or use managed rulesets provided and maintained by Cloudflare.
+The following diagram outlines the request handling process where requests go through the available phases:
 
-You can also deploy managed and custom rulesets from the root ruleset for your account.
+![Requests going through the available phases](../images/rulesets-phases.png)
 
-The following diagram shows how the rulesets interact with one another.
+Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
 
-![Rulesets Structure](../images/rulesets-types.png)
+## Rulesets
 
-## Root Ruleset
+A ruleset is a versioned set of rules. Cloudflare creates a new version of the ruleset each time you modify it. You execute rulesets by deploying them to a phase.
 
-Root rulesets contain an array of rules that execute managed and custom rulesets. Each rule in the root ruleset deploys a managed or custom ruleset, and the rules in the rulesets are executed in the order they appear.
+There are several types of rulesets. Cloudflare provides **Managed Rulesets** that you can deploy. Additionally, you can create and manage your own **custom rulesets**. Specific Cloudflare products may provide other types of rulesets.
 
-Use the `rulesets` API to create and edit the root ruleset. You can only create one root ruleset for your account. While you cannot delete a root ruleset, you can remove rules from it. After you modify a root ruleset, a new version of the root ruleset is created.
+<Aside type="note" header="Note">
 
-Rules in the root ruleset only deploy other rulesets. As a result, the only allowable action for rules in the root ruleset is to execute. If you have configured a root ruleset for your account, it is executed automatically.
+Since phases behave just like rulesets, they also have a type. In the Rulesets API, you can check the ruleset type in the `kind` field. Account-level phases have a `root` ruleset type, while zone-level phases have a `zone` ruleset type.
 
-Your root ruleset is associated with your account, but you can execute the rules in any of your zones.
+</Aside>
 
-## Managed Rulesets
+Cloudflare creates a new version of the ruleset every time there is a change to that ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset, the most recent version of the ruleset is selected by default.
 
-**Managed rulesets** are rulesets your account can deploy but does not own. The owner of a managed ruleset is the **ruleset issuer**. The issuer configures the default action and status for each rule in the ruleset. Only the issuer can modify the ruleset.
+### Managed Rulesets
 
-You can override the default behavior of managed rules when you deploy the managed ruleset on a zone from your account-level root ruleset.
+Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a phase. Only Cloudflare can modify these rulesets.
 
-Cloudflare provides the following managed rulesets:
-* Cloudflare Managed Ruleset
-* Cloudflare OWASP Core Ruleset
+The rules in a Managed Ruleset have a default action and status. However, you can define **overrides** that change these defaults.
 
-Refer to [work with managed rulesets](/cf-rulesets/managed-rulesets) for information on working with managed rulesets.
+There are several Cloudflare products that provide you with Managed Rulesets. Check each product’s documentation for details on the available Managed Rulesets.
 
-## Custom Rulesets
+For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
 
-Custom rulesets are account-level rulesets that you create, manage, and deploy from the root ruleset. The number of custom rulesets that you can configure is limited. Cloudflare will provide more information about custom ruleset limits on product release.
+### Custom rulesets
 
-Custom rulesets contain rules that you create, and the rules use the same syntax as firewall rules. The rules inspect incoming traffic and block, challenge, log, or allow specific requests. The rules in custom rulesets are executed in the order that they appear.
+<Aside type="warning" header="Important">
 
-Use the `rulesets` API to create custom rulesets. Once you have created your custom rulesets, you can add rules to it. Custom rulesets do not run automatically, and you must create rules in your root ruleset to deploy them. Each rule in a root ruleset deploys only one custom ruleset.
+Currently, custom rulesets are only supported by the Cloudflare WAF.
 
-Refer to [work with custom rulesets](/cf-rulesets/custom-rulesets) for more information on working with custom rulesets.
+</Aside>
+
+You can create custom rulesets at the account level where you can define your own set of rules. After creating a custom ruleset, you can deploy it to a phase.
+
+For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/cf-rulesets/custom-rulesets).
+
+## Rules
+
+A **rule** defines a filter and an action to perform on the incoming requests that match the filter. The rule filter **expression** defines the scope of the rule and the rule **action** defines what happens when there’s a match for the expression. Rule filter expressions use the same syntax as Firewall Rules.
+
+For example, consider the following ruleset with four rules (R1, R2, R3, and R4). For a given incoming request, the expression of the first two rules matches the request properties. Therefore, the action for these rules runs (_Execute_ and _Log_). The action of the first rule executes a Managed Ruleset, which means that every rule in the Managed Ruleset is evaluated. The action of the second rule logs an event associated with the current phase. There is no match for the expressions of rules 3 and 4, so their actions do not run. Since no rule blocks the request, it proceeds to the next phase.
+
+![Rules execution example](../images/rulesets-rules-example.png)
+
+Rules can have additional features through specific Cloudflare products. You may have additional fields available for rule expressions, perform additional actions, or configure additional behavior in a given phase.
 
 ## Get started
 
-To view your rulesets, see [view rulesets](/cf-rulesets/view-rulesets/).
+To view existing rulesets and their properties, see [View rulesets](/cf-rulesets/view-rulesets).
 
-To create the root ruleset for your account, see [configure the root ruleset for your account](/cf-rulesets/configure-root-ruleset/).
+For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets).
 
-To deploy a ruleset from your root ruleset, see [deploy a ruleset](/cf-rulesets/deploy-rulesets/).
+For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/cf-rulesets/custom-rulesets).

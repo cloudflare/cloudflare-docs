@@ -1,5 +1,6 @@
 ---
 order: 13
+pcx-content-type: concept
 ---
 
 # Pools
@@ -23,6 +24,8 @@ When working with pools, note the following:
 **Dynamic Steering uses Round Trip Time (RTT) profiles to determine pool priority**. If there is no RTT data for a pool in a region or colocation center, Load Balancing will use pool order to determine failover priority.
 
 **Geo Steering directs traffic to pools based on the client’s region or point of presence.** If there is no Geo Steering configuration for a region or pool, the load balancer will use pool order to determine failover priority.
+
+**If Health Check Regions for a pool is set to All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
 
 ---
 
@@ -212,6 +215,23 @@ Read only
 </table>
 
 </TableWrap>
+
+---
+
+## Per origin Host header override
+
+To balance traffic across multiple hosts, add `Host` headers to individual origins within the same pool.
+
+For example, you might have a pool with origins hosted in multiple AppEngine projects or Amazon S3 buckets. You also might want to set up specific failover origins within a pool.
+
+Since these examples require specific hostnames per origin, your load balancer could not properly route traffic _without_ a `Host` header override.
+
+If you need an origin `Host` header override, add it when [creating](/create-load-balancer-ui#create-and-add-origin-pools) or editing a pool. For security reasons, this header must meet one of the following criteria:
+- Is a subdomain of a zone associated with this account
+- Matches the origin address
+- Publicly resolves to the origin address
+
+For details about how origin and monitor `Host` headers interact, see [Host header prioritization](/understand-basics/monitors#host-header-prioritization).
 
 ---
 

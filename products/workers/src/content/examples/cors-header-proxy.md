@@ -3,9 +3,8 @@ order: 1000
 type: example
 summary: Add the necessary CORS headers to a third party API response.
 tags:
-  - Originless
   - Security
-  - API
+  - Headers
 ---
 
 # CORS header proxy

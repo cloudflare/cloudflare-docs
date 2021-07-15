@@ -1,10 +1,19 @@
 ---
 order: 6
+pcx-content: how-to
 ---
+
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
 # Network solutions
 
 You can follow the instructions below to transfer your domain from Network Solutions to Cloudflare.
+
+---
+
+## Before you begin
+
+<BeforeYouBegin/>
 
 --------
 

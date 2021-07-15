@@ -1,6 +1,6 @@
 ---
-title: Pagination
 order: 14
+pcx-content-type: reference
 ---
 
 # Pagination

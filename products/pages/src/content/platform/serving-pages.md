@@ -1,3 +1,8 @@
+---
+order: 4
+pcx-content-type: concept
+---
+
 # Serving Pages
 
 Cloudflare Pages includes a number of "good defaults" for serving your Pages sites. This page details some of those decisions, so you can understand how Pages works, and how you might want to override some of the default behaviors.

@@ -3,8 +3,7 @@ order: 2
 type: example
 summary: Send a request to a remote server, read HTML from the response, and serve that HTML.
 tags:
-  - JSON
-  - API
+  - Originless
 ---
 
 # Fetch HTML

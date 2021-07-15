@@ -1,5 +1,6 @@
 ---
 order: 8
+pcx-content-type: how-to
 ---
 
 # SAML | Signed AuthN requests
@@ -14,9 +15,9 @@ Cloudflare Access supports this requirement in the form of Signed AuthN requests
 
 To set up Signed AuthN requests:
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click *+ Add*.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **SAML** on the next page.
 
@@ -25,7 +26,7 @@ To set up Signed AuthN requests:
 1. Go to this URL to find the certificate:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/public-cert
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```
 
     <Aside>
@@ -49,5 +50,5 @@ To set up Signed AuthN requests:
     This is an example format:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/public-cert
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```

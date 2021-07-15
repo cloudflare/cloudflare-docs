@@ -3,8 +3,6 @@ order: 1000
 type: example
 summary: Rewrite URL links in HTML using the HTMLRewriter. This is useful for JAMstack websites.
 tags:
-  - HTML
-  - JAMstack
   - HTMLRewriter
 ---
 
@@ -20,7 +18,15 @@ const NEW_URL = "mynewdomain.com"
 
 async function handleRequest(req) {
   const res = await fetch(req)
-  return rewriter.transform(res)
+  const contentType = res.headers.get("Content-Type")
+  
+  // If the response is HTML, it can be transformed with
+  // HTMLRewriter -- otherwise, it should pass through
+  if (contentType.startsWith("text/html")) {
+    return rewriter.transform(res)
+  } else {
+    return res
+  }
 }
 
 class AttributeRewriter {

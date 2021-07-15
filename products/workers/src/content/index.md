@@ -1,17 +1,18 @@
 ---
-title: Welcome
+title: Overview
 order: 0
 type: overview
+pcx-content-type: landing-page
 ---
 
 <ContentColumn>
 
 # Cloudflare Workers documentation
 
-Cloudflare Workers provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 <ButtonGroup>
-  <Button type="primary" href="/learning/getting-started">Get started</Button>
+  <Button type="primary" href="/get-started/guide">Get started</Button>
   <Button type="secondary" href="/tutorials">View the tutorials</Button>
 </ButtonGroup>
 
@@ -19,10 +20,15 @@ Cloudflare Workers provides a serverless execution environment that allows you t
 
 ## Installing the Workers CLI
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI, ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). Then, run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
+```
+or install with yarn:
+
+```sh
+$ yarn global add @cloudflare/wrangler
 ```
 
 Read more about [installing `wrangler`](/cli-wrangler/install-update).
@@ -31,7 +37,7 @@ Read more about [installing `wrangler`](/cli-wrangler/install-update).
 
 ## Playground
 
-View this __Hello World__ example in the Workers playground:
+View this Hello World example in the Workers playground:
 
 ```javascript
 addEventListener("fetch", event => {
@@ -60,10 +66,11 @@ async function handleRequest(request) {
 --------------------------------
 
 ## Community
+[Explore third-party packages](https://workers.cloudflare.com/works) that work on Workers, submitted by Cloudflare users.
 
-You can [connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you’re building, and discuss the platform with other developers. 
+[Connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers. 
 
-[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what's new in Cloudflare Workers.
+[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
 
 --------------------------------
 

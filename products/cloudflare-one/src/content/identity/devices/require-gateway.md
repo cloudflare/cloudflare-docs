@@ -1,12 +1,13 @@
 ---
 order: 2
+pcx-content-type: how-to
 ---
 
 #  Require Gateway
 
 With Access, you can require that all traffic to specific applications is monitored by Cloudflare Gateway. With Gateway protecting and filtering all requests to your applications, you will be able to see all user traffic and activity in each of these applications, broken down by user and device.
 
-Alternatively, you can require users to run WARP (Cloudflare's secure and modern VPN) in order to access an application. This ensures that all user traffic is encrypted and routed through Cloudflare.
+Alternatively, you can require users to run the WARP client in order to access an application. This ensures that all user traffic is encrypted and routed through Cloudflare.
 
 You can choose to require Gateway or WARP by configuring dedicated actions within your [Zero Trust policies](/policies/zero-trust).
 
@@ -14,7 +15,7 @@ The first step you need to take in order to require Gateway or WARP is to add a 
 
 To do that:
 
-1. Log in to your [Teams dashboard](https://dash.teams.cloudflare.com/) and navigate to **Access > Authentication > Device Posture**.
+1. On your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 1. Select **Gateway** if you’d like to require all traffic to flow through your Gateway instance. Select **WARP** if you’d like to require all traffic to flow through Cloudflare’s VPN.
 
 ![Device Posture](../../static/documentation/identity/devices/device-posture.png)

@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: tutorial
 ---
 
 # Configure your mobile app or IoT device
@@ -7,10 +8,10 @@ order: 3
 To configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield), follow this workflow:
 
 * [Create Cloudflare-issued certificates](#create-cloudflare-issued-certificates).
-* [Enable mutual Transport Layer Security (mTLS)](#enable-mtls).
-* [Configure API Shield](#configure-api-shield-to-require-client-certificates) to require the use of Cloudflare-issued certificates.
 * [Embed the certificate in your mobile app](#embed-the-client-certificate-in-your-mobile-app).
 * [Embed the certificate on your IoT device](#embed-the-client-certificate-on-your-iot-device).
+* [Enable mutual Transport Layer Security (mTLS)](#enable-mtls).
+* [Configure API Shield](#configure-api-shield-to-require-client-certificates) to require the use of Cloudflare-issued certificates.
 
 This walkthrough uses the example of a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS retrieves those readings and displays them.
 
@@ -256,22 +257,6 @@ $ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-T
 
 --------
 
-## Enable mTLS
-
-Having created Cloudflare-issued certificates, the next step is to enable mTLS for the hosts you want to protect with API Shield.
-
-For instructions, see [_Enable mutual Transport Layer Security_](/client-certificates/enable-mtls).
-
---------
-
-## Configure API Shield to require client certificates
-
-To configure API Shield to require client certificates, [create an API Shield rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-api-shield-rule):
-
-![create api shield clip](../static/create-api-shield-clip-1.gif)
-
---------
-
 ## Embed the client certificate in your mobile app
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
@@ -285,6 +270,76 @@ Verifying - Enter Export Password:
 ```
 
 In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
+
+### Embed the client certificate in an Android app
+
+The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in ``AndroidManifest.xml`` to allow an Internet connection.
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+For demonstration purposes, the certificate in this example is stored in ``app/src/main/res/raw/cert.pem`` and the private key is stored in ``app/src/main/res/raw/key.pem``. You may also store these files in other secure manners. 
+
+The following example uses an ``OkHttpClient``, but you may also use other clients such as ``HttpURLConnection`` in similar ways. The key is to use the ``SSLSocketFactory``.
+```java
+private OkHttpClient setUpClient() {
+    try {
+        final String SECRET = "secret"; // You may also store this String somewhere more secure.
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+
+        // Get private key
+        InputStream privateKeyInputStream = getResources().openRawResource(R.raw.key);
+        byte[] privateKeyByteArray = new byte[privateKeyInputStream.available()];
+        privateKeyInputStream.read(privateKeyByteArray);
+
+        String privateKeyContent = new String(privateKeyByteArray, Charset.defaultCharset())
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replaceAll(System.lineSeparator(), "")
+                .replace("-----END PRIVATE KEY-----", "");
+
+        byte[] rawPrivateKeyByteArray = Base64.getDecoder().decode(privateKeyContent);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(rawPrivateKeyByteArray);
+
+        // Get certificate
+        InputStream certificateInputStream = getResources().openRawResource(R.raw.cert);
+        Certificate certificate = certificateFactory.generateCertificate(certificateInputStream);
+
+        // Set up KeyStore
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keyStore.load(null, SECRET.toCharArray());
+        keyStore.setKeyEntry("client", keyFactory.generatePrivate(keySpec), SECRET.toCharArray(), new Certificate[]{certificate});
+        certificateInputStream.close();
+
+        // Set up Trust Managers
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init((KeyStore) null);
+        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+
+        // Set up Key Managers
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        keyManagerFactory.init(keyStore, SECRET.toCharArray());
+        KeyManager[] keyManagers = keyManagerFactory.getKeyManagers();
+
+        // Obtain SSL Socket Factory
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(keyManagers, trustManagers, new SecureRandom());
+        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+        // Finally, return the client, which will then be used to make HTTP calls.
+        OkHttpClient client = new OkHttpClient.Builder()
+                .sslSocketFactory(sslSocketFactory)
+                .build();
+
+        return client;
+
+    } catch (CertificateException | IOException | NoSuchAlgorithmException | KeyStoreException | UnrecoverableKeyException | KeyManagementException | InvalidKeySpecException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+```
+
+The above function returns an ``OkHttpClient`` embedded with the client certificate. You can now use this client to make HTTP requests to your API endpoint protected with mTLS.
 
 --------
 
@@ -328,7 +383,7 @@ def main():
     print("Response status code: %d" % r.status_code)
 ```
 
-When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent, and the script sends the contents of `$CERT_FILE` and then, as required to complete the SSL/TLS handshake, demonstrates it has possession of `$KEY_FILE`.
+When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent, and the script sends the contents of `/etc/ssl/certs/sensor.pem` and then, as required to complete the SSL/TLS handshake, demonstrates it has possession of `/etc/ssl/private/sensor-key.pem`.
 
 Without the client certificate, the Cloudflare rejects the request:
 
@@ -345,3 +400,17 @@ Cloudflare API Shield [IoT device demonstration]
 Request body:  {"temperature": "36.5", "time": "2020-09-28T15:56:45Z"}
 Response status code: 201
 ```
+
+--------
+
+## Enable mTLS
+
+After creating Cloudflare-issued certificates, the next step is to enable mTLS for the hosts you want to protect with API Shield.
+
+For instructions, see [_Enable mutual Transport Layer Security_](/client-certificates/enable-mtls).
+
+--------
+
+## Configure API Shield to require client certificates
+
+To configure API Shield to require client certificates, [create a mTLS rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule).

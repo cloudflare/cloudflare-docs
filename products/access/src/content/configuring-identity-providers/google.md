@@ -82,7 +82,7 @@ Cloudflare Access can integrate with Google as an IdP. Use these steps to config
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
     },
     "type": "google",
     "name": "my example idp"

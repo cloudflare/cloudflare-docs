@@ -1,6 +1,7 @@
 ---
 updated: 2021-01-26
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # Create reuseable Zero Trust rules
@@ -15,7 +16,9 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 * Use that rule when adding an application to Cloudflare Access
 * Combine that default rule with other rules for additional customization
 
-**⏲️Time to complete: 10 minutes**
+**⏲️ Time to complete:**
+
+10 minutes
 
 ## Create a default group
 

@@ -3,8 +3,7 @@ order: 1000
 type: example
 summary: Send two GET request to two urls and aggregates the responses into one response.
 tags:
-  - JSON
-  - HTML
+  - Originless
 ---
 
 # Aggregate requests

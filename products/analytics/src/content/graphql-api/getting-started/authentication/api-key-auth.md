@@ -1,6 +1,6 @@
 ---
-title: Authenticate with a Cloudflare API key
 order: 30
+pcx-content-type: reference
 ---
 
 # Authenticate with a Cloudflare API key

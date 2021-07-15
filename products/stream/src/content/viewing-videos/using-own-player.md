@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: reference
 ---
 
 # Using own player
@@ -63,6 +64,44 @@ https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.mpd?cl
 This removes all video representations with a bitrate less than 1.8Mbps from the manifest.
 
 In this case, a customer is expressing their preference to have their content display at a higher minimum quality.
+
+### Using Stream videos as a cover background
+
+If you need complete control over the video element's CSS you can use a third party player like **hls.js** and the manifest with a video element.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+
+      #cover-video {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/hls.js/dist/hls.min.js"></script>
+    <video autoplay muted loop id="cover-video"></video>
+    <script>
+      var hls = new Hls();
+      hls.loadSource("https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8");
+      hls.attachMedia(document.getElementById("cover-video"));
+    </script>
+  </body>
+</html>
+```
 
 ## Limitations
 

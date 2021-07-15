@@ -1,5 +1,6 @@
 ---
 order: 9
+pcx-content-type: how-to
 ---
 
 # SAML | Keycloak 
@@ -17,7 +18,7 @@ To set up Keycloak (SAML) as your identity provider:
 1. Under **Client AD**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
     
     ![SAML Client](../../static/documentation/identity/keycloak/configure-client.png)
@@ -32,9 +33,11 @@ To set up Keycloak (SAML) as your identity provider:
 
     ![Mapper](../../static/documentation/identity/keycloak/protocol-mapper.png)
 
-1. Next, you'll need to integrate with Cloudflare Access. On the Teams dashboard, navigate to **Access > Authentication**.
+    Next, you will need to integrate with Cloudflare Access.
+    
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click *+ Add*.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **SAML** on the next page.
 
@@ -45,8 +48,6 @@ To set up Keycloak (SAML) as your identity provider:
     | Single Sign-On URL | `https://<keycloak_domain>/auth/realms/master/protocol/saml` |
     | IdP Entity ID or Issuer URL | `https://<unique_id>.cloudflareaccess.com/cdn-cgi/access/callback` |
     | Signing certificate | Use the X509 Certificate in the Realm Settings from Keycloak |
-
-    ![Access Config](../../static/documentation/identity/keycloak/access-config-keycloak.png)
 
 1. Click **Save**.
 

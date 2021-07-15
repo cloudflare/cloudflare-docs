@@ -13,7 +13,9 @@ jobs:
       access: ${{ steps.filter.outputs.access }}
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
+      api-security: ${{ steps.filter.outputs.api-security }}
       argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
+      automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
@@ -21,18 +23,22 @@ jobs:
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
+      fundamentals: ${{ steps.filter.outputs.fundamentals }}
       gateway: ${{ steps.filter.outputs.gateway }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
       images: ${{ steps.filter.outputs.images }}
-      internet: ${{ steps.filter.outputs.internet }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
+      magic-wan: ${{ steps.filter.outputs.magic-wan }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
+      railgun: ${{ steps.filter.outputs.railgun }}
+      page-shield: ${{ steps.filter.outputs.page-shield }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
+      rules: ${{ steps.filter.outputs.rules }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -59,8 +65,12 @@ jobs:
               - 'products/analytics/**'
             api:
               - 'products/api/**'
+            api-security:
+              - 'products/api-security/**'
             argo-tunnel:
               - 'products/argo-tunnel/**'
+            automatic-platform-optimization:
+              - 'products/automatic-platform-optimization/**'
             bots:
               - 'products/bots/**'
             byoip:
@@ -75,6 +85,8 @@ jobs:
               - 'products/events/**'
             firewall:
               - 'products/firewall/**'
+            fundamentals:
+              - 'products/fundamentals/**'
             gateway:
               - 'products/gateway/**'
             browser-isolation:
@@ -83,22 +95,28 @@ jobs:
               - 'products/http3/**'
             images:
               - 'products/images/**'
-            internet:
-              - 'products/internet/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
               - 'products/logs/**'
             magic-transit:
               - 'products/magic-transit/**'
+            magic-wan:
+              - 'products/magic-wan/**'
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
               - 'products/pages/**'
+            page-shield:
+              - 'products/page-shield/**'
+            railgun:
+              - 'products/railgun/**'
             randomness-beacon:
               - 'products/randomness-beacon/**'
             registrar:
               - 'products/registrar/**'
+            rules:
+              - 'products/rules/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -213,6 +231,25 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
+  build-api-security:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.api-security == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/api-security
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
   build-argo-tunnel:
     runs-on: ubuntu-latest
     needs: changes
@@ -221,6 +258,26 @@ jobs:
       run:
         shell: bash
         working-directory: products/argo-tunnel
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+
+  build-automatic-platform-optimization:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.automatic-platform-optimization == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/automatic-platform-optimization
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -364,6 +421,24 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
+  build-fundamentals:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.fundamentals == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/fundamentals
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
 
   build-gateway:
     runs-on: ubuntu-latest
@@ -441,25 +516,6 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
-  build-internet:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.internet == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/internet
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
   build-load-balancing:
     runs-on: ubuntu-latest
     needs: changes
@@ -517,6 +573,25 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
+  build-magic-wan:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.magic-wan == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/magic-wan
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
   build-network-interconnect:
     runs-on: ubuntu-latest
     needs: changes
@@ -555,6 +630,44 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
+  build-page-shield:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.page-shield == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/page-shield
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-railgun:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.railgun == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/railgun
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
   build-randomness-beacon:
     runs-on: ubuntu-latest
     needs: changes
@@ -582,6 +695,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/registrar
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-rules:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.rules == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/rules
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

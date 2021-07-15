@@ -1,4 +1,5 @@
 ---
+pcx-content-type: reference
 order: 440
 ---
 
@@ -8,11 +9,11 @@ order: 440
 
 For example, a filter matching:
 
-- a HTTP user agent, and
-- the HTTP path, and
-- the source IP address
+- An HTTP user agent, and
+- The HTTP path, and
+- The source IP address
 
-may be associated with a firewall rule declaring that the request should be blocked.
+May be associated with a firewall rule declaring that the request should be blocked.
 
 Use Rules Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/api/cf-lists/) for more information.
 

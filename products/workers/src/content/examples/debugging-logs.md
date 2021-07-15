@@ -3,10 +3,8 @@ order: 1000
 type: example
 summary: Send debugging information in an errored response to a logging service.
 tags:
-  - API
-  - JSON
-  - Middleware
-  - Originless
+  - Debugging
+  - Logging
 ---
 
 # Debugging logs
