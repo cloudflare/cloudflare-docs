@@ -22,7 +22,7 @@ const ORIGINS = {
   "google.yourdomain.com": "www.google.com",
 }
 
-async function handleRequest(request) {
+function handleRequest(request) {
   const url = new URL(request.url)
   // Check if incoming hostname is a key in the ORIGINS object
   if (url.hostname in ORIGINS) {

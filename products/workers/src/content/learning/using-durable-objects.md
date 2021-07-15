@@ -377,7 +377,7 @@ We've included complete example code for both the Worker and the Durable Object 
 // Worker
 
 export default {
-    async fetch(request, env) {
+    fetch(request, env) {
         return handleRequest(request, env);
     }
 }

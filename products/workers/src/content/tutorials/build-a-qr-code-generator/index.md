@@ -50,8 +50,8 @@ addEventListener("fetch", event => {
  * Fetch and log a request
  * @param {Request} request
  */
-async function handleRequest(request) {
-  return new Response("Hello worker!", { status: 200 })
+function handleRequest(request) {
+  return new Response("Hello worker!")
 }
 ```
 
@@ -74,9 +74,9 @@ Currently, our Workers function receives requests, and returns a simple response
 filename: "index.js"
 highlight: [2, 3, 4]
 ---
-async function handleRequest(request) {
+function handleRequest(request) {
   if (request.method === "POST") {
-    return new Response("Hello worker!", { status: 200 })
+    return new Response("Hello worker!")
   }
 }
 ```
@@ -88,9 +88,9 @@ Currently, if an incoming request isn’t a `POST`, we return `undefined`. Since
 filename: "index.js"
 highlight: [5]
 ---
-async function handleRequest(request) {
+function handleRequest(request) {
   if (request.method === "POST") {
-    return new Response("Hello worker!", { status: 200 })
+    return new Response("Hello worker!")
   }
   return new Response("Expected POST", { status: 405 })
 }
@@ -103,8 +103,9 @@ With the basic flow of `handleRequest` established, it’s time to think about h
 filename: "index.js"
 highlight: [1, 2, 3]
 ---
-const generate = async request => {
-  return new Response("Hello worker!", { status: 200 })
+async function generate(request) {
+  // TODO: Include QR code generation
+  return new Response("Hello worker!")
 }
 
 async function handleRequest(request) {
@@ -112,14 +113,14 @@ async function handleRequest(request) {
 }
 ```
 
-With the `generate` function filled out, we can `await` the generation to finish in `handleRequest`, and return it to the client:
+With the `generate` function filled out, we can call it within `handleRequest` and return its result directly to the client:
 
 ```js
 ---
 filename: "index.js"
 highlight: [4]
 ---
-async function handleRequest(request) {
+function handleRequest(request) {
   // ...
   if (request.method === "POST") {
     return generate(request)
@@ -159,7 +160,7 @@ highlight: [1, 2, 3, 4, 5, 6]
 ---
 const qr = require("qr-image")
 
-const generate = async request => {
+async function generate(request) {
   const { text } = await request.json()
   const qr_png = qr.imageSync(text || "https://workers.dev")
 }
@@ -172,7 +173,7 @@ By default, the QR code is generated as a PNG. Construct a new instance of `Resp
 filename: "index.js"
 highlight: [3, 5]
 ---
-const generate = async request => {
+async function generate(request) {
   const { text } = await request.json()
   const headers = { "Content-Type": "image/png" }
   const qr_png = qr.imageSync(text || "https://workers.dev")
@@ -206,11 +207,15 @@ const landing = `
 </script>
 `
 
-async function handleRequest(request) {
+function handleRequest(request) {
   if (request.method === "POST") {
     return generate(request)
   }
-  return new Response(landing, { headers: { "Content-Type": "text/html" } })
+  return new Response(landing, {
+    headers: {
+      "Content-Type": "text/html"
+    }
+  })
 }
 ```
 
@@ -224,7 +229,7 @@ filename: "index.js"
 ---
 const qr = require("qr-image")
 
-const generate = async request => {
+async function generate(request) {
   const { text } = await request.json()
   const headers = { "Content-Type": "image/png" }
   const qr_png = qr.imageSync(text || "https://workers.dev")
@@ -248,11 +253,15 @@ const landing = `
 </script>
 `
 
-async function handleRequest(request) {
+function handleRequest(request) {
   if (request.method === "POST") {
     return generate(request)
   }
-  return new Response(landing, { headers: { "Content-Type": "text/html" } })
+  return new Response(landing, {
+    headers: {
+      "Content-Type": "text/html"
+    }
+  })
 }
 
 addEventListener("fetch", event => {
