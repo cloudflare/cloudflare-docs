@@ -27,6 +27,10 @@ The Routes REST API documentation can be found [in the Workers API docs](https:/
 
 \* _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
 
+## Routes with *.workers.dev
+
+Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable from the Workers dashboard sidebar. `*.workers.dev` allows you to deploy your Workers script [without a registered Cloudflare domain](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**. The name field of a Worker is used as the secondary subdomain for the deployed script, (e.g., `my-worker.my-subdomain.workers.dev.`).
+
 ### Matching Behavior
 
 Route patterns look like this:
