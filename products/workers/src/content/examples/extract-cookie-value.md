@@ -16,25 +16,29 @@ tags:
 const COOKIE_NAME = "__uid"
 
 /**
- * Gets the cookie with the name from the request headers
- * @param {Request} request incoming Request
- * @param {string} name of the cookie to get
+ * Returns a cookie value or null.
+ * @param {Request} request incoming request
+ * @param {string}  key of the cookie to get
+ * @returns {string|void} value of the cookie if found
  */
-function getCookie(request, name) {
-  let result = ""
-  const cookieString = request.headers.get("Cookie")
-  if (cookieString) {
-    const cookies = cookieString.split(";")
-    cookies.forEach(cookie => {
-      const cookiePair = cookie.split("=", 2)
-      const cookieName = cookiePair[0].trim()
-      if (cookieName === name) {
-        const cookieVal = cookiePair[1]
-        result = cookieVal
-      }
-    })
-  }
-  return result
+function getCookie(request, key) {
+  const cookie = request.headers.get('Cookie')
+  
+  // No cookie found
+  if (!cookie) return
+
+  // Search for the cookie key in the header.
+  const search = `${key}=`
+  const starts = cookie.indexOf(search)
+
+  // The cookie could not be found.
+  if (starts === -1) return
+
+  // Parse the cookie value.
+  const value = cookie.substring(starts + search.length, cookie.length)
+  const end = value.indexOf(';')
+
+  return end === -1 ? value : value.substring(0, end)
 }
 
 function handleRequest(request) {
