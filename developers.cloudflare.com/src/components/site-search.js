@@ -148,11 +148,10 @@ const SiteSearch = () => {
   }, [scriptLoaded])
   
     if (!enableSearch) {
-    const disableSearchProps = { "search-disabled": "" }
     return (
       <>
         <Helmet>
-          <html {...disableSearchProps}/>
+          <html search-disabled=""/>
         </Helmet>
       </>
     )
