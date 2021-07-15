@@ -21,27 +21,26 @@ const COOKIE_NAME = "__uid"
  * Returns a cookie value or null.
  * @param {Request} request incoming request
  * @param {string}  key of the cookie to get
- * @returns {string} value of the cookie or null
+ * @returns {string|void} value of the cookie if found
  */
 function getCookie(request, key) {
-  // No cookies were found in the request headers.
-  if ( ! request.headers.has('Cookie') )
-    return null
+  const cookie = request.headers.get('Cookie')
+  
+  // No cookie found
+  if (!cookie) return
 
   // Search for the cookie key in the header.
-  const str = request.headers.get('Cookie'),
-     search = `${key}=`,
-     starts = str.indexOf(search)
+  const search = `${key}=`
+  const starts = cookie.indexOf(search)
 
   // The cookie could not be found.
-  if (starts === -1)
-    return null
+  if (starts === -1) return
 
   // Parse the cookie value.
-  const val = str.substr(starts + search.length, str.length),
-        end = val.indexOf(';')
+  const value = cookie.substring(starts + search.length, cookie.length)
+  const end = value.indexOf(';')
 
-  return (end === -1) ? val : val.substr(0, end)
+  return end === -1 ? value : value.substring(0, end)
 }
 
 function handleRequest(request) {
