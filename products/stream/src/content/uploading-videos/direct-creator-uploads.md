@@ -203,7 +203,7 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const init = {
+  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", {
     method: 'POST',
     headers: {
       'Authorization': 'bearer $TOKEN',
@@ -211,14 +211,18 @@ async function handleRequest(request) {
       'Upload-Length': request.headers.get('Upload-Length'),
       'Upload-Metadata': request.headers.get('Upload-Metadata')
     },
-  }
-  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", init)
-  const results = await gatherResponse(response)
-  return new Response(null, {headers: {'Access-Control-Expose-Headers':'Location','Access-Control-Allow-Headers':'*','Access-Control-Allow-Origin':'*','location':results}})
-}
+  })
 
-function gatherResponse(response) {
-  return response.headers.get('location')
+  const destination = response.headers.get('Location')
+
+  return new Response(null, {
+    headers: {
+      'Access-Control-Expose-Headers': 'Location',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin':'*',
+      'Location': destination
+    }
+  })
 }
 ```
 
