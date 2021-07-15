@@ -19,10 +19,10 @@ For more information on creating page rules, see [Create page rules](/how-to/cre
 
 ## Browser Cache TTL
 
-The Browser Cache TTL sets the expiration for resources cached in a visitor’s browser. By default, Cloudflare honors the cache expiration set in your Expires and `Cache-Control` headers but overrides those headers if:
+The Browser Cache TTL sets the expiration for resources cached in a visitor’s browser. By default, Cloudflare honors the cache expiration set in your `Expires` and `Cache-Control` headers but overrides those headers if:
 
 - The value of the `Cache-Control` header from the origin web server is less than the Browser Cache TTL Cloudflare setting.
-- The origin web server does not send a `Cache-Control` or an Expires header.
+- The origin web server does not send a `Cache-Control` or an `Expires` header.
 
 Unless specifically set in a page rule, Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**.
 

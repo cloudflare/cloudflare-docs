@@ -58,7 +58,7 @@ Revalidation determines how the cache should behave when a resource expires, and
 
 - `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
 - `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
-- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the stale-while-revalidate and stale-if-error directive are ignored.
+- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the `stale-while-revalidate` and `stale-if-error` directive are ignored.
 - `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information.
 
 The `stale-if-error` directive is ignored if [Always Online](/about/always-online) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
@@ -253,7 +253,7 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
         Cache-Control returned to eyeball does not include <code>private</code>
       </td>
       <td colspan="5" rowspan="1">
-        If origin returns <code>private</code> in Cache-control then preserve it
+        If origin returns <code>private</code> in Cache-Control then preserve it
       </td>
     </tr>             
   </tbody>
