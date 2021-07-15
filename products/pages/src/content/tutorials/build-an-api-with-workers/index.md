@@ -431,4 +431,4 @@ In this tutorial, you built a full blog application by combining a frontend depl
 
 If you enjoyed this tutorial, check out our [headless CMS tutorial].
 
-[headless CMS tutorial]:https://developers.cloudflare.com/pages/tutorials/build-a-blog-using-nuxt-and-sanity
+[headless CMS tutorial]:/tutorials/build-a-blog-using-nuxt-and-sanity
