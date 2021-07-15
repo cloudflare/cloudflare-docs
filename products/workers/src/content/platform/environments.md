@@ -116,7 +116,7 @@ To deploy this worker, run the `wrangler publish` command like the example below
 
 #### Publishing to *.workers.dev
 
-`*.workers.dev` allows you to deploy your Workers script [without a registered Cloudflare domain](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers' dashboard under **Your subdomain**.
+Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/). To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**.
 
 This `wrangler.toml` file has no environments defined and will publish `my-worker` to `my-worker.<your-subdomain>.workers.dev`:
 
