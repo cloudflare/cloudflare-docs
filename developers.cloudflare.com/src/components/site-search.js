@@ -142,7 +142,7 @@ const SiteSearch = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scriptLoaded])
   
-    if (!enableSearch) {
+  if (!enableSearch) {
     return (
       <>
         <Helmet>
