@@ -8,15 +8,17 @@ pcx-content-type: concept
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL page rule overrides the headers. 
 
-- Cloudflare does not cache the resource if the `Cache-Control` header is set to `private`, `no-store`, `no-cache`, `max-age=0` or if there is a cookie in the response.
-- Cloudflare caches the resource if the `Cache-Control` header is set to `public`, and the `max-age` is greater than 0 or if the `Expires` header is set to a future date.
+- Cloudflare does not cache the resource if the `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0` or if there is a cookie in the response.
+- Cloudflare caches the resource in the following scenarios:
+    - The `Cache-Control` header is set to `public` and the `max-age` is greater than 0.
+    - The `Expires` header is set to a future date.
 - If both the `max-age` and an `Expires` header are set, `max-age` is used.
 
 For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/about/cache-control#cache-control-directives).
 
 ## Default cached file extensions
 
-Cloudflare only caches based on file extension and does not cache by MIME type. The Cloudflare CDN automatically caches files with specific file extensions but does not cache HTML by default. Additionally, Cloudflare caches a website’s robot.txt.
+Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML by default. Additionally, Cloudflare caches a website’s robot.txt.
 
 <table>
   <tbody>
@@ -159,7 +161,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
 - 100MB Free and Pro
 - 200MB Business
-- 500MB Enterprise by default. Contact Customer Support to request a limit increase.
+- 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through a [grey-clouded DNS record](https://support.cloudflare.com/hc/en-us/articles/200169626).
 
@@ -204,7 +206,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         EXPIRED
       </td>
       <td colspan="5" rowspan="1">
-        The resource was found in Cloudflare’s cache but expired and served from the origin web server.
+        The resource was found in Cloudflare’s cache but was expired and served from the origin web server.
       </td>
     </tr>
     <tr>
@@ -212,7 +214,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         STALE
       </td>
       <td colspan="5" rowspan="1">
-        The resource was served from Cloudflare’s cache but expired. Cloudflare could not contact the origin to retrieve an updated resource.
+        The resource was served from Cloudflare’s cache but was expired. Cloudflare could not contact the origin to retrieve an updated resource.
       </td>
     </tr>
     <tr>
@@ -236,7 +238,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         UPDATING
       </td>
       <td colspan="5" rowspan="1">
-        The resource was served from Cloudflare’s cache but expired, and the origin web server is updating the resource. UPDATING is typically only seen for very popular cached resources.
+        The resource was served from Cloudflare’s cache and was expired, but the origin web server is updating the resource. UPDATING is typically only seen for very popular cached resources.
       </td>
     </tr>
     <tr>

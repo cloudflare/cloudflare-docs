@@ -17,7 +17,7 @@ module.exports = {
   search: {
     indexName: "",
     apiKey: "",
-    algoliaOptions: { 'facetFilters': '["project:cache"]'}
+    algoliaOptions: { 'facetFilters': ''}
   },
   siteMetadata: {
     title: "Cloudflare Cache docs",
