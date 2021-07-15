@@ -21,7 +21,7 @@ To use Image Resizing you first need to enable it via the Speed app of your Clou
 
 1. Click the **Optimization** tab.
 1. Under **File Size Optimization**, locate Image Resizing and toggle the switch to **On**.
-1. If you don't want to resize images from any origin, uncheck Resize images from any origin.
+1. If you don't want to resize images from any origin, uncheck **Resize images from any origin**.
 
 
 <Aside type="note" header="Note:">
