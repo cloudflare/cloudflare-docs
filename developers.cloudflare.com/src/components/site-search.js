@@ -6,7 +6,7 @@
 // contains `useStaticQuery` the build fails due to a relative import issue with
 // the way GraphQL stores the cached static JSON.
 
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import Helmet from "react-helmet"
 
 import { useStaticQuery, graphql } from "gatsby"
@@ -49,6 +49,9 @@ const SiteSearch = () => {
   let [scriptAdded, setScriptAdded] = useState(false)
   let [scriptLoaded, setScriptLoaded] = useState(false)
   let [searchFocused, setSearchFocused] = useState(false)
+
+  const onSearchFocus = useCallback(() => setSearchFocused(true), [])
+  const onSearchBlur = useCallback(() => setSearchFocused(false), [])
 
   useEffect(() => {
     if (enableSearch && !scriptAdded) {
@@ -154,7 +157,7 @@ const SiteSearch = () => {
       <div className="SiteSearch" {...(searchFocused ? {"is-focused" : ""} : {})}>
         <div className="SiteSearch--input-wrapper">
           <input id="SiteSearch--input" className="SiteSearch--input"
-          onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)}
+          onFocus={onSearchFocus} onBlur={onSearchBlur}
           type="text" spellCheck="false" autoComplete="false" placeholder="Search docs..."/>
           <div className="SiteSearch--input-icon">
             <AccessibleSVG title="Search icon (depiction of a magnifying glass)" viewBox="0 0 16 16">
