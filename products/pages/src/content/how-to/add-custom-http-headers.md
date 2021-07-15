@@ -23,6 +23,7 @@ addEventListener('fetch', event => {
 })
 
 async function handleRequest(request) {
+  // This proxies your Pages app, as long as your Worker is deployed on the same custom domain as your Pages project
   const response = await fetch(request)
   
   // Clone the response so that it's no longer immutable
