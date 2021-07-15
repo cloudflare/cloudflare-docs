@@ -5,11 +5,11 @@ pcx-content-type: concept
  
 # Exclude network traffic from WARP
 
-When the WARP Client is deployed, all DNS requests and/or network traffic on the device are processed by Cloudflare Gateway by default. However, under certain circumstances, you may need to exclude DNS requests and/or network traffic from being processed by Gateway.
+When the WARP client is deployed, all DNS requests and/or network traffic on the device are processed by Cloudflare Gateway by default. However, under certain circumstances, you may need to exclude DNS requests and/or network traffic from being processed by Gateway.
  
 To do that, there are two settings you can use depending on your needs:
 
-* **Use [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains)** to instruct the WARP Client to ignore DNS requests to a given list of domains. These DNS requests will be passed back to other DNS servers configured on existing network interfaces on the device.
+* **Use [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains)** to instruct the WARP client to ignore DNS requests to a given list of domains. These DNS requests will be passed back to other DNS servers configured on existing network interfaces on the device.
  
 This is useful when you have defined private hostnames that wouldn’t otherwise resolve on the public internet.
 
@@ -26,7 +26,7 @@ This is useful when you want to run another VPN alongside WARP or when you need 
 
 <Aside type="warning">
  
-Traffic exlided from WARP by Split Tunnel configuration will not be encrypted, managed or monitored by Cloudflare Gateway.
+Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, managed or monitored by Cloudflare Gateway.
  
 </Aside>
 
