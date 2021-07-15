@@ -17,7 +17,7 @@ However, any Cache API operations in the Cloudflare Workers dashboard editor and
 
 __Note:__ This individualized zone cache object differs from Cloudflare’s Global CDN, for details see: [How the Cache Works](/learning/how-the-cache-works).
 
-Due to this, the Cache API will **not** work on `workers.dev`!
+Due to this, the Cache API will not work on `*.workers.dev`.
 
 </Aside>
 
