@@ -34,7 +34,7 @@ Cacheability refers to whether or not a resource should enter a cache, and the d
 
 - `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
 - `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
-- `no-store` — Indicates any cache (i.e. a client or proxy cache) must not store any part of either the immediate request or response.
+- `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
 
 ### Expiration
 
@@ -57,7 +57,7 @@ When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to c
 Revalidation determines how the cache should behave when a resource expires, and the directives below affect the revalidation behavior.
 
 - `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
-`proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
+- `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
 - `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the stale-while-revalidate and stale-if-error directive are ignored.
 - `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information.
 
@@ -69,7 +69,7 @@ Additional directives that influence cache behavior are listed below.
 
 - `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload
 - `vary` — Cloudflare does not consider vary values in caching decisions.
-- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g. `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
+- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
 ## Origin Cache-Control behavior
 
@@ -110,7 +110,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        <code>no-cache;</code>
+        <code>no-cache</code>
       </td>
       <td colspan="5" rowspan="1">
         Will not cache
@@ -236,7 +236,7 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        Origin response has <code>Set-Cookie</code> header, and default cache level is used
+        Origin response has <code>Set-Cookie</code> header and default cache level is used
       </td>
       <td colspan="5" rowspan="1">
         Content may be cached with stripped <code>set-cookie</code> header
