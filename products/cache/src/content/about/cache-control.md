@@ -6,9 +6,9 @@ pcx-content-type: concept
 
 # Origin Cache Control
 
-`Cache-Control` headers are one way web administrators can tell Cloudflare how to handle content from the origin. 
+Set `Cache-Control` headers to tell Cloudflare how to handle content from the origin. 
 
-When a user sends an HTTP request, the user’s request URL is matched against a list of cacheable file extensions. If the request matches an extension on this list, Cloudflare serves the resource from cache if it is present. If the content is stale in Cloudflare’s cache, Cloudflare attempts to revalidate the content with the origin before serving the response to the client.
+When a user sends an HTTP request, the user’s request URL is matched against a [list of cacheable file extensions](/about/default-cache-behavior#default-cached-file-extensions). If the request matches an extension on this list, Cloudflare serves the resource from cache if it is present. If the content is stale in Cloudflare’s cache, Cloudflare attempts to revalidate the content with the origin before serving the response to the client.
 
 In the response, Cloudflare first examines its caches in multiple network locations for content. If the resource is not present in the cache, Cloudflare requests the resource from your origin web server to fill the cache. The response is then sent to the client who initiated the request.
 
@@ -44,7 +44,7 @@ Expiration refers to how long a resource should remain in the cache, and the dir
 
 Cloudflare respects whichever value is higher: the [Browser Cache TTL](/about/edge-browser-cache-ttl) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser’s Cache TTL respectively via the `s-maxage` and `max-age Cache-Control` headers.
 
-When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache-Control off and `max-age=0`, Cloudflare settings bypass cache. Setting no-cache also bypasses cache.
+When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache-Control off and `max-age=0`, Cloudflare settings bypass cache. Setting `no-cache` also bypasses cache.
 
 </Aside>
 
@@ -91,7 +91,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         <code>s-maxage=0</code>
       </td>
       <td colspan="5" rowspan="1">
-        Won't cache
+        Will not cache
       </td>
       <td colspan="5" rowspan="1">
         Caches and always revalidates
@@ -102,7 +102,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         <code>max-age=0</code>
       </td>
       <td colspan="5" rowspan="1">
-        Won't cache
+        Will not cache
       </td>
       <td colspan="5" rowspan="1">
         Caches and always revalidates
@@ -113,10 +113,10 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         <code>no-cache;</code>
       </td>
       <td colspan="5" rowspan="1">
-        Won't cache
+        Will not cache
       </td>
       <td colspan="5" rowspan="1">
-        Caches and always revalidates. Doesn't serve stale.
+        Caches and always revalidates. Does not serve stale.
       </td>
     </tr>
     <tr>
@@ -124,10 +124,10 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         <code>no-cache=#headers</code>
       </td>
       <td colspan="5" rowspan="1">
-        Won't cache at all
+        Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Caches if headers mentioned in <code>no-cache=#headers</code> don't exist. Always revalidates if any header mentioned in <code>no-cache=#headers</code> is present.
+        Caches if headers mentioned in <code>no-cache=#headers</code> do not exist. Always revalidates if any header mentioned in <code>no-cache=#headers</code> is present.
       </td>
     </tr>
     <tr>
@@ -135,10 +135,10 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         <code>Private=#headers</code>
       </td>
       <td colspan="5" rowspan="1">
-        Won't cache at all
+        Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Doesn't cache <code>#headers</code> values mentioned in <code>Private=#headers</code> directive.
+        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code> directive.
       </td>
     </tr>
     <tr>
@@ -149,7 +149,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Service is stale and ignored.
       </td>
       <td colspan="5" rowspan="1">
-        Doesn't serve stale. Must revalidate for CDN but not for browser.
+        Does not serve stale. Must revalidate for CDN but not for browser.
       </td>
     </tr>
     <tr>
@@ -160,7 +160,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Service is stale and ignored.
       </td>
       <td colspan="5" rowspan="1">
-        Doesn't serve stale. Must revalidate for CDN but not for browser.
+        Does not serve stale. Must revalidate for CDN but not for browser.
       </td>
     </tr>
     <tr>
@@ -171,7 +171,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         May (un)Gzip, Polish, email filter, etc.
       </td>
       <td colspan="5" rowspan="1">
-        Doesn't transform body.
+        Does not transform body.
       </td>
     </tr>
     <tr>
@@ -193,7 +193,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Not proxied downstream
       </td>
       <td colspan="5" rowspan="1">
-        Proxied downstream. Browser facing, doesn't impact caching proxies.
+        Proxied downstream. Browser facing, does not impact caching proxies.
       </td>
     </tr>                
   </tbody>

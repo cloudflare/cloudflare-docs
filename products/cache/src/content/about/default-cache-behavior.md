@@ -196,7 +196,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         NONE
       </td>
       <td colspan="5" rowspan="1">
-        Cloudflare generated the response and is not eligible for caching.
+        Cloudflare generated response. The resource is not eligible for caching.
       </td>
     </tr>
     <tr>
