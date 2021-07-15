@@ -97,9 +97,9 @@ If your server is correctly locked down, you will see:
 [ip-address] 443 (https): Connection refused
 ```
 
-## What is the difference between Tunnel creating a CNAME or AAAA record in the hostname's DNS setting?
+## What records are created for routing to a Named Tunnel's hostname?
 
-Tunnels that use Cloudflare's Load Balancer use CNAME records. Tunnels that do not use the Load Balancer product will create AAAA records.
+Named Tunnels can be routed via DNS records, in which case we use CNAME records to point to the `<UUID>.cfargotunnel.com`; Or as Load Balancer origins, which also point to `<UUID>.cfargotunnel.com`.
 
 ## Does Cloudflare Tunnel send visitor IPs to my origin?
 
@@ -110,3 +110,30 @@ To log external visitor IPs, you will need to [configure an alternative method](
 ## Why does the name "warp" appear in some legacy materials?
 
 Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to match.
+
+## How can I troubleshoot a Tunnel?
+
+### Run Tunnel with debug logging
+
+Use the following command to run your Tunnel in the debug mode:
+```sh
+$ cloudflared tunnel --loglevel debug run
+```
+
+The `--loglevel` flag indicates the logging level, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, please note that this can expose sensitive information in your logs. 
+
+### Check SSL/TLS encryption mode
+1. On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
+1. If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
+
+![SSL encryption mode](../static/documentation/connections/ssl-encryption-mode.png)
+
+When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
+
+### Check location of credentials file
+If you encouter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
+```sh
+$ cloudflared tunnel run
+2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
+Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
+```

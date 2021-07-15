@@ -9,7 +9,7 @@ View the content of the matched rule payload in the dashboard by entering your p
 
 1. Open **Firewall** > **Overview**.
 
-1. Under **Activity log**, expand the details of an event triggered by a rule whose ruleset has payload logging enabled.
+1. Under **Activity log**, expand the details of an event triggered by a rule whose Managed Ruleset has payload logging enabled.
 
 1. Under **Payload match**, select **Decrypt payload log**.
 

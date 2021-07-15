@@ -55,8 +55,8 @@ When multiple registries are in use, a project will need to define its own root-
 
 ```ini
 @foobar:registry=https://npm.pkg.github.com
-//registry.npmjs.org/:_authToken=$TOKEN_FOR_NPM
-//npm.pkg.github.com/:_authToken=$TOKEN_FOR_GITHUB
+//registry.npmjs.org/:_authToken=${TOKEN_FOR_NPM}
+//npm.pkg.github.com/:_authToken=${TOKEN_FOR_GITHUB}
 ```
 
 Here, all packages under the `@foobar` scope are directed towards the GitHub Packages registry. Then the registries are assigned their own access tokens via their respective environment variable names.

@@ -1,6 +1,7 @@
 ---
 title: Terms
 order: 10
+pcx-content: reference
 ---
 
 # Terms of Use

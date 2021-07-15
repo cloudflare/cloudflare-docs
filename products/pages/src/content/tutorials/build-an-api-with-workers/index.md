@@ -16,9 +16,9 @@ If you are interested in a more comprehensive approach to building applications 
 
 ### Generating a new project
 
-Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](/workers/cli-wrangler/install-update), the command-line tool for managing and publishing Workers projects, refer to the [Quick Start guide](/workers/get-started/guide) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, you can return here to generate your API codebase.
+Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the command-line tool for managing and publishing Workers projects, refer to the [Getting started guide](https://developers.cloudflare.com/workers/get-started/guide) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, return here to generate your API codebase.
 
-You will use the Workers TypeScript template to generate our project. Don't worry if you don't know TypeScript -- you will not be writing any complicated types, and if you are using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` to create a new project using the template:
+You will use the Workers TypeScript template to generate our project. Don't worry if you do not know TypeScript — you will not be writing any complicated types, and if you are using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` to create a new project using the template:
 
 ```sh
 ---
@@ -431,4 +431,4 @@ In this tutorial, you built a full blog application by combining a frontend depl
 
 If you enjoyed this tutorial, check out our [headless CMS tutorial].
 
-[headless CMS tutorial]:https://developers.cloudflare.com/pages/tutorials/build-a-blog-using-nuxt-and-sanity
+[headless CMS tutorial]:/tutorials/build-a-blog-using-nuxt-and-sanity

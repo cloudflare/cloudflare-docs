@@ -25,6 +25,8 @@ When working with pools, note the following:
 
 **Geo Steering directs traffic to pools based on the client’s region or point of presence.** If there is no Geo Steering configuration for a region or pool, the load balancer will use pool order to determine failover priority.
 
+**If Health Check Regions for a pool is set to All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
+
 ---
 
 ## Properties
@@ -224,7 +226,10 @@ For example, you might have a pool with origins hosted in multiple AppEngine pro
 
 Since these examples require specific hostnames per origin, your load balancer could not properly route traffic _without_ a `Host` header override.
 
-If you need an origin `Host` header override, add it when [creating](/create-load-balancer-ui#create-and-add-origin-pools) or editing a pool. For security reasons, this header also needs to be a subdomain of the overall zone. See [Configure Cloudflare and Heroku](https://support.cloudflare.com/hc/articles/205893698) for more details.
+If you need an origin `Host` header override, add it when [creating](/create-load-balancer-ui#create-and-add-origin-pools) or editing a pool. For security reasons, this header must meet one of the following criteria:
+- Is a subdomain of a zone associated with this account
+- Matches the origin address
+- Publicly resolves to the origin address
 
 For details about how origin and monitor `Host` headers interact, see [Host header prioritization](/understand-basics/monitors#host-header-prioritization).
 

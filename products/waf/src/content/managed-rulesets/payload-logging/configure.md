@@ -1,10 +1,10 @@
 ---
-title: Configure payload logging
+title: Configure payload logging in the dashboard
 pcx-content-type: how-to
 order: 1
 ---
 
-# Configure payload logging in the dashboard
+# Configure payload logging for a Managed Ruleset in the dashboard
 
 Configure payload logging for a ruleset in the ruleset configuration page.
 

@@ -1,5 +1,6 @@
 ---
 order: 4
+pcx-content: how-to
 ---
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"

@@ -26,7 +26,7 @@ Once `cloudflared` has been installed and authenticated, the process to get your
 2. [Route traffic to your Tunnel](/connections/connect-apps/routing-to-tunnel)
 3. [Run your Tunnel](/connections/connect-apps/run-tunnel)
 
-Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3 is executed whenever the Tunnel is to be started, normally by the owner of the Tunnel (whom may be different from the administrator).
+Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3 is executed whenever the Tunnel is to be started, normally by the owner of the Tunnel (whom may be different from the administrator). After running the Tunnel, you may [secure your server](/connections/connect-apps/secure-server) from all ingress traffic.
 
 Be sure to check out our [Tutorials](/tutorials), where you can also find
 best practices for managing Tunnels as an administrator.

@@ -11,9 +11,13 @@ pcx-content-type: landing-page
 
 Deploy your dynamic frontend applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
 
-Get started deploying your first site using our starter guide below, or check out our examples page to explore the vast ecosystem of tools and framework that we support on the platform.
+Get started deploying your first site using our **Get started** guide below, or refer to our **Framework guides** page to explore the vast ecosystem of tools and frameworks that Pages supports.
 
-<Link to="/getting-started" className="Button Button-is-docs-primary">Get started</Link> &nbsp;&nbsp; <Link to="/how-to" className="Button Button-is-docs-secondary">See what you can build</Link> &nbsp;&nbsp; <Link to="https://pages.dev" className="Button Button-is-docs-secondary">Your Cloudflare Pages dashboard</Link>
+<ButtonGroup>
+  <Button type="primary" href="/getting-started">Get started</Button>
+  <Button type="secondary" href="/framework-guides">See the framework guides</Button>
+  <Button type="secondary" href="https://pages.dev">Your Cloudflare Pages dashboard</Button>
+</ButtonGroup>
 
 ## Popular pages
 

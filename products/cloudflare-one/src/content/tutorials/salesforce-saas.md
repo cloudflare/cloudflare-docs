@@ -26,7 +26,7 @@ pcx-content-type: tutorial
 1. Select the SaaS application type. 
 1. Next, select *Salesforce* from the **Application** drop-down menu.
 1. Fill the remaining fields as follows:
-    * **Entity ID**: `https://salesforce.com`
+    * **Entity ID**: https://[YOUR_SFDC_DOMAIN].my.salesforce.com
     * **Assertion consumer service URL**: https://[YOUR_SFDC_DOMAIN].my.salesforce.com
     * **Name ID format**: Email
 1. Click **Next**.
@@ -53,8 +53,8 @@ pcx-content-type: tutorial
 
    ![Salefsorce configuration](../static/zero-trust-security/access/salesforce.png)
 
-2. Navigate to **Security Controls > Single Sign-On Settings**
-3. Set the following global settings:
+1. Navigate to **Security Controls > Single Sign-On Settings**.
+1. Set the following global settings:
     * **SAML Enabled:** true
     * **Make federation ID case-insensitive:** true
 
@@ -68,10 +68,16 @@ Configure as follows:
   * **API name:** (this will pre-populate)
   * **Issuer:** `<your-team-name>.cloudflareaccess.com`, where your-team-name is your [team name](/glossary#team-name).
   * **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step. 
-  * **EntityID**: `https://salesforce.com`
+  * **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
   * **SAML Identity type:** Assertion contains the Federation ID from the User object
   * **Identity Provider Login URL**: This is the SSO endpoint provided in the Teams dashboard for that application.
 
 1. Click **Save**.
 
   ![Salefsorce configuration](../static/zero-trust-security/access/salesforce-sso.png)
+  
+1. From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
+1. At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.
+1. (Optional) To force all users to sign in through Cloudflare Access:
+    1. Click **Security Controls** > **Single Sign-On Settings** > **Edit**. 
+    1. Click `Disable login with Salesforce credentials`.

@@ -7,12 +7,6 @@ order: 785
 
 # Update and deploy rulesets
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
 To configure a ruleset at the account or zone level, use one of the following API endpoints:
