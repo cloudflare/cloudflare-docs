@@ -1,13 +1,18 @@
 ---
 title: About
 order: 1
+pcx-content-type: concept
 ---
 
 import GetStarted from "../_partials/_plan-get-started.md"
 
-# Cloudflare’s Bot Products
+# Cloudflare bot products
 
 While Cloudflare offers several products that mitigate and identify bot traffic, this section reviews our _bot-specific products_, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
+
+## What is a bot?
+
+A bot is a software application programmed to do certain tasks. For a more thorough definition and real-world examples of bots, see our [Learning Center](https://www.cloudflare.com/learning/bots/what-is-a-bot/).
 
 ## Which bot solution do I need?
 

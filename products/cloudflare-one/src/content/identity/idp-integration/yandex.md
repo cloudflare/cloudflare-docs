@@ -1,5 +1,6 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Yandex
@@ -26,7 +27,7 @@ To set up Yandex for Cloudflare Access:
 1. In the **Callback URL #1** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
     ![Yandex scopes](../../static/documentation/identity/yandex/yandex-3.png)
@@ -40,9 +41,11 @@ To set up Yandex for Cloudflare Access:
 
     ![Yandex Platform card](../../static/documentation/identity/yandex/yandex-4.png)
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select Yandex.
+1. Under **Login methods**, click **Add new**.
+
+1. Select Yandex.
 
 1. Paste the ID and password in the appropriate fields.
 

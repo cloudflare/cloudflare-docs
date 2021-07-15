@@ -2,6 +2,7 @@
 updated: 2020-12-20
 category: 🔐 Zero Trust
 difficulty: Medium
+pcx-content-type: tutorial
 ---
 
 # Require Gateway connections
@@ -15,7 +16,11 @@ You can build rules in Cloudflare Access that require users to connect through y
 * View enrolled devices
 * Build a rule in Access to require Cloudflare Gateway
 
-**⏲️Time to complete: 40 minutes**
+**⏲️Time to complete:**
+
+40 minutes
+
+---
 
 ## Add Cloudflare Gateway
 
@@ -32,55 +37,61 @@ Building a rule in Access to enforce Gateway connections requires the use of the
 
 ## Determine which devices can enroll
 
-To proxy traffic through Gateway, devices must run the Cloudflare WARP client and [be enrolled in your Teams account](/connections/connect-devices/warp). When devices enroll, users will be prompted to authenticate with your identity provider or a consumer identity service. You can also deploy the client and its configurations [via a device management platform](/connections/connect-devices/warp/deployment) like JAMF or InTune.
+Next, build a rule to decide which devices can enroll in your account. 
 
-First, determine which devices can enroll based on user identity. If you have already integrated your identity provider when setting up Cloudflare Access you can reuse that integration. If you have not set up an identity provider, follow [these instructions](/setup) to add Access and integrate a free identity option or a specific provider.
+1. Navigate to **Settings > Devices > Device enrollment**.
 
-Next, build a rule to decide which devices can enroll into your Gateway account. Navigate to the `Devices` page in the `My Teams` section of the sidebar.
+    ![Device settings](../static/secure-web-gateway/block-football/device-enrollment-settings.png)
 
-![Device List](../static/secure-web-gateway/secure-dns-devices/device-page.png)
+1. Click **Manage**.
 
-Click `Device Settings` to build the enrollment rule. In the policy, define who should be allowed to enroll a device and click `Save`.
+1. Click **Add a rule**.
 
-![Enroll Rule](../static/secure-web-gateway/secure-dns-devices/enroll-rule.png)
+    ![Device Enrollment](../static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
-## Enroll a device
+    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+    ![Allow Cloudflare users](../static/secure-web-gateway/block-football/allow-cf-users.png)
 
-Once installed, click the gear icon.
+1. Click **Save**.
 
-![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
-
-Under the `Account` tab, click `Login with Cloudflare for Teams`.
-
-![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
-
-Input your Cloudflare for Teams org name. You will have created this during the Cloudflare Access setup flow. You can find it under the `Authentication` tab in the `Access` section of the sidebar.
-
-![Org Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
-
-The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
-
-![Confirm WARP](../static/secure-web-gateway/block-uploads/with-warp.png)
+Your rule will now be visible under the **Device enrollment rules** list.
 
 ## Configure the Cloudflare certificate
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below follows a manual distribution flow.
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
-Download the Cloudflare certificate provided in the [instructions](/connections/connect-devices/warp/install-cloudflare-cert). You can also find the certificate in the Cloudflare for Teams dashboard. Navigate to the `Account` page in the `Settings` section of the sidebar and scroll to the bottom.
+To download the Cloudflare certificate:
+* Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
+* Find the certificate in the Teams Dashboard, by navigating to **Settings > Devices > Certificates**.
 
-Next, follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert) to install the certificate on your system.
+## Enable the Cloudflare proxy
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to the `Policies` page in the Gateway section. Scroll to the bottom and toggle `Proxy Settings` to enabled.
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to *Enabled*. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/connections/connect-devices/warp/exclude-traffic) settings.
 
-![Add Policy](../static/secure-web-gateway/block-uploads/filter-toggle.png)
+Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
-## View enrolled devices
+![Policy settings](../static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
-You can view enrolled devices and their associated users in the Cloudflare for Teams dashboard. To do so, navigate to the `My Teams` section and open the `Devices` page.
+## Enroll a device
 
-![Add Policy](../static/zero-trust-security/require-swg/device-view.png)
+1. Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+
+1. Once the client is installed, click the gear icon.
+
+    ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
+
+1. Under the **Account** tab, click **Login with Cloudflare for Teams**.
+
+    ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
+
+1. Input your [team name](/glossary#team-name). You can find it on the Teams Dashboard under **Settings > General**.
+
+    ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
+
+The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
+
+![Confirm WARP](../static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Build a Gateway rule in Access
 

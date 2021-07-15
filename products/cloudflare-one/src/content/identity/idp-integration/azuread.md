@@ -1,5 +1,6 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Microsoft Azure AD®
@@ -25,7 +26,7 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 1. Name your application and enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
     Click **Register**.
 
@@ -71,17 +72,15 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
  ![Azure AD API Permissions](../../static/documentation/identity/azure/configured-perms.png)
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click *+ Add*.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **Azure AD** on the next page.
 
 1. Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
 
  If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
-
- ![Azure AD Add Identity](../../static/documentation/identity/azure/add-azure.png)
 
 1. Click **Save**.
 

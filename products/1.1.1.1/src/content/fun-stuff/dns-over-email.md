@@ -1,10 +1,9 @@
 ---
 order: 3
+pcx-content: tutorial
 ---
 
 # DNS over email
-
-Ah, the classic yet revolutionary DNS over email.
 
 To receive DNS responses over email, send an email to `lookup@resolver.email`. The DNS query goes in the body of the message.
 

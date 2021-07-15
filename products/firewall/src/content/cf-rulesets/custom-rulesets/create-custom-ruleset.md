@@ -1,18 +1,13 @@
 ---
 title: Create a custom ruleset
+pcx-content-type: how-to
 alwaysopen: true
 order: 761
 ---
 
 # Create a custom ruleset
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
-The following `POST` request creates a new custom ruleset. Set the `kind` field to `custom` and specify the name of the Phase where you want to create the custom ruleset in the `phase` field.
+The following `POST` request creates a new custom ruleset. Set the `kind` field to `custom` and specify the name of the phase where you want to create the custom ruleset in the `phase` field.
 
 ```json
 ---

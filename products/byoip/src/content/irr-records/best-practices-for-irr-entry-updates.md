@@ -1,6 +1,7 @@
 ---
 title: Best practices
 order: 6
+pcx-content-type: best-practices
 ---
 
 # Best practices for IRR entry updates

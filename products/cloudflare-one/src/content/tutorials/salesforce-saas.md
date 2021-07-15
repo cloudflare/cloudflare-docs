@@ -2,6 +2,7 @@
 updated: 2021-03-09
 category: 🔐 Zero Trust
 difficulty: Intermediate
+pcx-content-type: tutorial
 ---
 
 # Salesforce with Access for SaaS configuration
@@ -10,11 +11,14 @@ difficulty: Intermediate
 * Configure Salesforce as a SaaS application in Teams
 * Force logins to Salesforce through Cloudflare's Zero Trust rules
 
-**⏲️ Time to complete: 15 minutes**
+**⏲️ Time to complete:**
 
-| Before you start |
-|---|
-| 1. You'll need admin access to a Salesforce account |
+15 minutes
+
+## Before you start
+1. You'll need admin access to a Salesforce account
+
+---
 
 ## Set up Salesforce as a SaaS application in Teams
 
@@ -22,7 +26,7 @@ difficulty: Intermediate
 1. Select the SaaS application type. 
 1. Next, select *Salesforce* from the **Application** drop-down menu.
 1. Fill the remaining fields as follows:
-    * **Entity ID**: `https://salesforce.com`
+    * **Entity ID**: https://[YOUR_SFDC_DOMAIN].my.salesforce.com
     * **Assertion consumer service URL**: https://[YOUR_SFDC_DOMAIN].my.salesforce.com
     * **Name ID format**: Email
 1. Click **Next**.
@@ -49,8 +53,8 @@ difficulty: Intermediate
 
    ![Salefsorce configuration](../static/zero-trust-security/access/salesforce.png)
 
-2. Navigate to **Security Controls > Single Sign-On Settings**
-3. Set the following global settings:
+1. Navigate to **Security Controls > Single Sign-On Settings**.
+1. Set the following global settings:
     * **SAML Enabled:** true
     * **Make federation ID case-insensitive:** true
 
@@ -62,12 +66,18 @@ difficulty: Intermediate
 Configure as follows:
   * **Name:** (this is what you want your users to see on sign in)
   * **API name:** (this will pre-populate)
-  * **Issuer:** your-team-name.cloudflareaccess.com, where your-team-name is your [team name](/glossary#team-name).
+  * **Issuer:** `<your-team-name>.cloudflareaccess.com`, where your-team-name is your [team name](/glossary#team-name).
   * **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step. 
-  * **EntityID**: `https://salesforce.com`
+  * **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
   * **SAML Identity type:** Assertion contains the Federation ID from the User object
   * **Identity Provider Login URL**: This is the SSO endpoint provided in the Teams dashboard for that application.
 
 1. Click **Save**.
 
   ![Salefsorce configuration](../static/zero-trust-security/access/salesforce-sso.png)
+  
+1. From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
+1. At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.
+1. (Optional) To force all users to sign in through Cloudflare Access:
+    1. Click **Security Controls** > **Single Sign-On Settings** > **Edit**. 
+    1. Click `Disable login with Salesforce credentials`.

@@ -20,6 +20,6 @@ module.exports = {
     description: "Cloudflare Gateway protects enterprises, their devices, their networks and their data by securing every connection without compromising performance.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/gateway",
-    image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png"
   }
 }

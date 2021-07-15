@@ -1,6 +1,7 @@
 ---
 order: 0
 title: Getting started
+pcx-content-type: interim
 ---
 
 # Cloudflare Stream

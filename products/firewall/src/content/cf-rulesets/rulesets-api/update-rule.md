@@ -1,16 +1,11 @@
 ---
 title: Update a rule in a ruleset
+pcx-content-type: reference
 alwaysopen: true
 order: 786
 ---
 
 # Update a rule in a ruleset
-
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
 
 Applies one or more changes to an existing rule in a ruleset.
 

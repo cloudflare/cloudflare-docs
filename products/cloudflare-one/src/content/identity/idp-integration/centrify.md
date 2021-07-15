@@ -1,5 +1,6 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Centrify
@@ -39,7 +40,7 @@ These steps help you set up Centrify as your identity provider:
 1. Under **Authorized Redirect URIs** enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 1. Click **Save**.
@@ -58,8 +59,8 @@ These steps help you set up Centrify as your identity provider:
 
     ![Centrify User Access](../../static/documentation/identity/centrify/centrify-7.png)
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
-1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. Under **Login methods**, click **Add new**.
 1. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 1. Click **Save**.
 

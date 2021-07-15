@@ -1,6 +1,6 @@
 ---
-title: Tutorials
 order: 50
+pcx-content-type: navigation
 ---
 
 # Tutorials

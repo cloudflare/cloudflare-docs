@@ -1,7 +1,8 @@
 ---
 updated: 2020-06-01
 difficulty: Beginner
-type: "📝 Tutorial"
+content_type: "📝 Tutorial"
+pcx-content-type: tutorial
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
@@ -49,6 +50,17 @@ $ wrangler init --site
 ```
 
 The `init --site` command will provide the scaffolding necessary to deploy your React application. For the majority of static sites, you shouldn’t need to change the Workers script: by default, the script will look at an incoming request, and will serve a corresponding asset from [Workers KV](https://www.cloudflare.com/products/workers-kv/) based on that route. For instance, if my static site is deployed at `mystaticsite.com`, requesting `mystaticsite.com/about.html` will look for a file in KV called `about.html`, and serve it back to the client. In addition, if the asset being returned from KV is cacheable, it will automatically be cached with Cloudflare’s CDN, making subsequent requests even faster.
+
+To serve a single page application, update `workers-site/index.js` with the following code to so that all html requests are pointed at your root `index.html` file.
+
+```js
+import { getAssetFromKV, serveSinglePageApp } from '@cloudflare/kv-asset-handler';
+
+async function handleEvent(event) {
+   ...
+   const asset = await getAssetFromKV(event, { mapRequestToAsset: serveSinglePageApp });
+}
+```
 
 ## Configure and publish
 

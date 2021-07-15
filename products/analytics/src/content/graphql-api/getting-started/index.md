@@ -1,9 +1,10 @@
 ---
 title: Getting started
 order: 10
+pcx-content-type: navigation
 ---
 
-# Getting started
+# Get started
 
 Use these articles to get started with the Cloudflare GraphQL Analytics API:
 

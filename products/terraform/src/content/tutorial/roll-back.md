@@ -1,6 +1,7 @@
 ---
 title: 7 – On final thought...
 order: 7
+pcx-content-type: tutorial
 ---
 
 # On final thought, let’s roll some of that back

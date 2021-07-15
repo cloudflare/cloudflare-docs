@@ -2,37 +2,42 @@
 updated: 2020-12-13
 category: 🔐 Zero Trust
 difficulty: Advanced
+pcx-content-type: tutorial
 ---
 
 # Troubleshoot user login details
 
-Cloudflare Access provides a user-facing portal, the [Access App Launcher](https://blog.cloudflare.com/announcing-the-cloudflare-access-app-launch/), which displays all applications that a user can reach in a single view. The same portal also can be used by a member of your team to gather diagnostic information about their account for troubleshooting.
+Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog.cloudflare.com/announcing-the-cloudflare-access-app-launch/), which displays all applications that a user can reach in a single view. The same portal also can be used by a member of your team to gather diagnostic information about their account for troubleshooting.
 
 **🗺️ This tutorial covers how to:**
 
-* Configure the Access App Launcher
-* Visit the Access App Launcher as an end user
+* Configure the App Launcher
+* Visit the App Launcher as an end user
 * Review login diagnostics as an end user
 
-**⏲️Time to complete: 10 minutes**
+**⏲️Time to complete:**
 
-## Configure Cloudflare Access App Launcher
+10 minutes
 
-To enable the Cloudflare Access App Launch, navigate to the Cloudflare for Teams dashboard. Open the `Authentication` page in the Access section of the sidebar.
+---
 
-![Auth Page](../static/zero-trust-security/user-diagnostics/auth-page.png)
+## Configure the App Launcher
 
-Click the **App Launcher** tab. The App Launcher works like other Access policies - you can define who is able to reach the App Launcher. When users visit the App Launcher, Cloudflare Access will display only the applications they have permission to reach.
+1. On the Teams Dashboard, navigate to **Settings > Authentication**.
 
-![App Launch](../static/zero-trust-security/user-diagnostics/app-launch-page.png)
+1. Under **App Launcher**, click the **Manage**.
 
-To define who is able to use the App Launcher, add a new rule.
+   The App Launcher works like other Access policies - you can define who is able to reach the App Launcher. When users visit the App Launcher, Cloudflare Access will display only the applications they have permission to reach.
 
-![Add Rule](../static/zero-trust-security/user-diagnostics/add-rule.png)
+1. To define who is able to use the App Launcher, add a new rule.
 
-Once you have defined at least one rule, click **Save application**.
+   ![Add Rule](../static/zero-trust-security/user-diagnostics/add-new-rule.png)
 
-![Add Rule](../static/zero-trust-security/user-diagnostics/save-app.png)
+1. Once you have defined at least one rule, click **Save**. Your rule will appear under the **App Launcher rules** list.
+
+   ![Add Rule](../static/zero-trust-security/user-diagnostics/app-launcher-rules.png)
+
+1. Click **Save** to finalize your edits.
 
 ## Visiting the Access App Launcher
 

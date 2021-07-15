@@ -1,20 +1,15 @@
 ---
 title: Override a Managed Ruleset
+pcx-content-type: how-to
 alwaysopen: true
 order: 752
 ---
 
 # Override a Managed Ruleset
 
-<Aside type='warning' header='Important'>
+You cannot add or remove rules from a Managed Ruleset, but you can customize its behavior by overriding it at deployment. When you override a ruleset you specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
 
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
-You cannot edit a Managed Ruleset, but you can customize its behavior by overriding it at deployment. When you override a ruleset, specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
-
-For example, if you want to test a ruleset before enforcing it, you may want to execute a Managed Ruleset with all rules set to `log` instead of their default actions. To accomplish this, override the configured behavior of the Managed Ruleset at the ruleset level so each rule uses the _Log_ action.
+For example, if you want to test a ruleset before enforcing it, you may want to execute a Managed Ruleset with all rules set to `log` instead of their default actions. To accomplish this, override the configured behavior of the Managed Ruleset at the ruleset level, so that each rule uses the _Log_ action.
 
 ## Working with overrides
 
@@ -27,25 +22,29 @@ You can override a ruleset at three levels.
 To apply an override for a Managed Ruleset, execute the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation on your root ruleset and specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
 
 ```json
-"overrides": {
-  "rulesets": [
-    {
-      "property-to-modify": "value",
-      "property-to-modify": "value"
-    }
-  ],
-  "categories": [
-    {
-      "property-to-modify": "value",
-      "property-to-modify": "value"
-    }
-  ],
-  "rules": [
-    {
-      "property-to-modify": "value",
-      "property-to-modify": "value"
-    }
-  ]
+"action_parameters": {
+  "id": "{ruleset-id}",
+  "overrides": {
+    // ruleset overrides
+    "property-to-modify": "value",
+    "property-to-modify": "value",
+    // tag overrides
+    "categories": [
+      {
+        "category": "{tag-name}",
+        "property-to-modify": "value",
+        "property-to-modify": "value"
+      }
+    ],
+    // rule overrides
+    "rules": [
+      {
+        "id": "{rule-id}",
+        "property-to-modify": "value",
+        "property-to-modify": "value"
+      }
+    ]
+  }
 }
 ```
 
@@ -53,15 +52,21 @@ Specific overrides take precedence over more general ones, and rule overrides ta
 
 You can override the following rule properties:
 
-* `action` (block, challenge, log)
-* `enabled` (true, false)
+* `"action"` (`"block"`, `"challenge"`, `"log"`)
+* `"enabled"` (`true`, `false`)
+
+<Aside type="note" header="Note">
+
+Some Managed Rulesets may have additional override requirements, or they may allow you to override other rule properties. Check each Cloudflare product’s documentation for details.
+
+</Aside>
 
 ## Examples
 
-The following request deploys a Managed Ruleset to the `http_request_firewall_managed` Phase and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
+The following request deploys a Managed Ruleset to the `http_request_firewall_managed` phase and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
 
 <details>
-<summary>Example: Deploy a Managed Ruleset to a Phase at the zone level</summary>
+<summary>Example: Deploy a Managed Ruleset to a phase at the zone level</summary>
 <div>
 
 ```json
@@ -78,12 +83,8 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "action": "log",
-              "enabled": "true"
-            }
-          ]
+          "action": "log",
+          "enabled": true
         }
       }
     }
@@ -95,7 +96,7 @@ curl -X PUT \
 </details>
 
 <details>
-<summary>Example: Deploy a Managed Ruleset to a Phase at the account level</summary>
+<summary>Example: Deploy a Managed Ruleset to a phase at the account level</summary>
 <div>
 
 ```json
@@ -112,12 +113,8 @@ curl -X PUT \
       "action_parameters": {
         "id": "{managed-ruleset-id}",
         "overrides": {
-          "rulesets": [
-            {
-              "action": "log",
-              "enabled": "true"
-            }
-          ]
+          "action": "log",
+          "enabled": true
         }
       }
     }

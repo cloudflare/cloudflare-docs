@@ -1,6 +1,7 @@
 ---
 title: Enterprise Bot Management
 order: 3
+pcx-content-type: tutorial
 ---
 
 import StaticResourcesBM from "../_partials/_static-resources-bm.md"

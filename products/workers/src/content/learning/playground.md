@@ -1,10 +1,11 @@
 ---
 order: 1
+pcx-content-type: concept
 ---
 
 # Playground
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It doesn’t require _any_ setup. It’s just a simple, instant way to preview and test a Workers script directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It doesn’t require _any_ setup. It’s just a simple sandbox which gives an instant way to preview and test a Workers script directly in the browser against any site.
 
 <p><Button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Launch playground</Button></p>
 
@@ -24,17 +25,15 @@ async function handleRequest(request) {
 }
 ```
 
-It’s essentially the simplest Worker script you can write.
+This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/learning/fetch-event-lifecycle#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/runtime-apis/response) of `"Hello world"` which bubbles up and is delivered back to the client.
 
-Essentially what’s going on here is that when the Worker receives a request, `handleRequest` is called, and it responds with a text [response](/runtime-apis/response) of `"Hello world"`.
-
-Check out the reference for [addEventListener](/runtime-apis/add-event-listener) and [FetchEvent](/runtime-apis/fetch-event) to learn more.
+Check out the reference for [addEventListener](/runtime-apis/add-event-listener), [FetchEvent](/runtime-apis/fetch-event) and [FetchEvent lifecycle](/learning/fetch-event-lifecycle) to learn more.
 
 --------------------------------
 
 ## Beyond hello world
 
-To get familiar with Workers, we recommend playing around in the Playground, borrowing bits from [Examples](/examples) section of the documentation. This will give you a taste of what Workers can do. It’s pretty amazing.
+To get familiar with Workers, we recommend playing around in the Playground, borrowing bits from [Examples](/examples) section of the documentation. This will give you a taste of what Workers can do. It’s pretty [amazing](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
 
 --------------------------------
 

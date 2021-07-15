@@ -1,7 +1,8 @@
 ---
-title: Welcome
+title: Overview
 order: 0
 type: overview
+pcx-content: landing-page
 ---
 
 # Cloudflare Distributed Web docs

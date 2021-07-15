@@ -1,5 +1,7 @@
 ---
+title: Frequently asked questions
 order: 4
+pcx-content-type: faq
 ---
 
 # Transfer FAQ
@@ -21,7 +23,7 @@ Once successful, you will receive an email from Cloudflare and be able to manage
 --------
 
 ## What happens if I entered the wrong auth code?
-If you input the incorrect authentication code, please return to the Domain Registration page or the Overview page for your site. You can use the available input field to reenter your authentication code. You will not be charged twice.
+If you input the incorrect authentication code, please return to the Domain Registration page or the Overview page for your site. You can use the available input field to reenter your authentication code.
 
 --------
 
@@ -30,7 +32,7 @@ Domain transfers sometimes fail. We’re here to help you address what failed so
 
 First, please make sure that you entered the auth code for that domain. If you need to reenter it, you can do so from the transfer launch page or the overview page for that site.
 
-Second, you can reattempt the transfer from the transfer launch page. You will not be charged twice.
+Second, you can reattempt the transfer from the transfer launch page.
 
 If you can’t seem to resolve the issue, please open a support ticket and we’ll help investigate.
 
@@ -39,4 +41,16 @@ If you can’t seem to resolve the issue, please open a support ticket and we’
 ## 60 day window requirement
 ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, we will be unable to process your transfer immediately.
 
-You can continue to leave the domain “In Progress” and we will continue to attempt to process the transfer until the 60 day window passes.
+You can leave the domain “In Progress” and we will attempt to process the transfer until the 60 day window passes.
+
+--------
+
+## Why am I not able to start a transfer?
+
+If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when initiating a domain transfer.
+
+--------
+
+## Premium Domains
+
+Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.

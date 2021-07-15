@@ -1,8 +1,15 @@
 ---
-order: 0
+order: 2
+pcx-content-type: concept
 ---
 
 # DNS policies
+
+<Aside>
+
+To take full advantage of the DNS filtering experience with Gateway, build any new DNS policy in the DNS (New) tab.
+
+</Aside>
 
 When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an override rule, the user's client receives the DNS resolution and initiates an HTTP connection. 
 

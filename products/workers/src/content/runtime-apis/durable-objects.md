@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Durable Objects
 
 <Aside type="warning" header="Beta">
@@ -41,12 +45,8 @@ export class DurableObject {
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
-- <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
-
-  - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
-
 - `env`
-  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
+  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using Modules syntax, these same "bindings" appear as global variables within the script. Scripts that export Durable Object classes always use the Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
 </Definitions>
 
@@ -86,7 +86,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - <Code>list()</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
-  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your actor before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
+  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
 
 - <Code>list(options<ParamType>Object</ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 

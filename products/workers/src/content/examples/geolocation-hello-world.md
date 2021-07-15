@@ -3,7 +3,7 @@ order: 1000
 type: example
 summary: Get all geolocation data fields and display them in HTML.
 tags:
-  - HTML
+  - Originless
   - Geolocation
 ---
 
@@ -31,7 +31,7 @@ async function handleRequest(request) {
   html_content += "<p> PostalCode: " + request.cf.postalCode + "</p>"
   html_content += "<p> MetroCode: " + request.cf.metroCode + "</p>"
   html_content += "<p> Region: " + request.cf.region + "</p>"
-  html_content += "<p> RegionCode: " + request.cf.regioncode + "</p>"
+  html_content += "<p> RegionCode: " + request.cf.regionCode + "</p>"
   html_content += "<p> Timezone: " + request.cf.timezone + "</p>"
 
   let html = `

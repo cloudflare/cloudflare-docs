@@ -1,5 +1,6 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # LinkedIn
@@ -54,9 +55,11 @@ To configure LinkedIn as an IdP:
 
 1. Copy the **Client ID** and **Client Secret**.
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select LinkedIn as your IdP.
+1. Under **Login methods**, click **Add new**.
+
+1. Select **LinkedIn** as your IdP.
 
 1. In the **App ID** and **Client secret** fields, input the **Client ID** and **Client secret** values you've copied from the Application credentials tab in the LinkedIn Developer Portal.
 
@@ -69,7 +72,7 @@ To configure LinkedIn as an IdP:
 1. Enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
 To test that your connection is working, in the Teams dashboard, navigate to **Authentication > Login methods** and click **Test** next to LinkedIn.

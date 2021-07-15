@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # Require a valid HMAC token
 
 <Aside type='warning' header='Important'>

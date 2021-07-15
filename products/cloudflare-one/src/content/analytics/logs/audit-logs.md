@@ -1,8 +1,9 @@
 ---
 order: 5
+pcx-content-type: reference
 ---
 
-# Audit logs
+# Access Audit logs
 
 Cloudflare Access generates two types of audit logs:
 * **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
@@ -106,9 +107,9 @@ A video guide is also available:
 
 Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (for more information about Cloudflare HTTP logging, see the [Cloudflare Logs](https://developers.cloudflare.com/logs/) section).
 
-Once a member of your team authenticates to reach a resource behind Access, Cloudflare generates a token for that user that contains their SSO identity. The token is structured as a [JSON Web Token (JWT)](/glossary#jwt). Cloudflare relies on an RSA Signature with SHA-256, or RS256, an asymmetric algorithm, to perform that signature. Cloudflare also makes the public key available, so that you can validate their authenticity, as well.
+Once a member of your team authenticates to reach a resource behind Access, Cloudflare generates a token for that user that contains their SSO identity. The token is structured as a [JSON Web Token (JWT)](/glossary#json-web-token). Cloudflare relies on an RSA Signature with SHA-256, or RS256, an asymmetric algorithm, to perform that signature. Cloudflare also makes the public key available, so that you can validate their authenticity, as well.
 
-When a user requests a given URL, Access appends the user identity from that token as a request header, which we then log as the request passes through our network. Your team can collect these logs in your preferred third-party Security information and event management (SIEM) software or storage destination by using the [Cloudflare Logpush](https://developers.cloudflare.com/logs/logpush) platform.
+When a user requests a given URL, Access appends the user identity from that token as a request header, which we then log as the request passes through our network. Your team can collect these logs in your preferred third-party Security information and event management (SIEM) software or storage destination by using the [Cloudflare Logpush](https://developers.cloudflare.com/logs/about) platform.
 
 Cloudflare Logpush can be used to gather and send specific request headers from the requests made to sites behind Access. Once enabled, you can then configure the destination where Cloudflare should send these logs. When enabled with the Access user identity field, the logs will export to your systems as JSON similar to the logs below.
 
