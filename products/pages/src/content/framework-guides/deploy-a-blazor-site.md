@@ -11,6 +11,7 @@ Blazor uses C#, so you will need to [install the .NET SDK](https://dotnet.micros
 There are two types of Blazor projects, Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. Create a new Blazor WASM application by running:
 ```sh
 $ dotnet new blazorwasm my-blazor-project
+```
 ## Creating the build script
 
 To deploy, Cloudflare Pages will need a way to build the Blazor project. In the project's directory root, create a `build.sh` file. Populate the file with this:
@@ -21,6 +22,7 @@ chmod +x dotnet-install.sh
 ./dotnet-install.sh -c 5.0 -InstallDir ./dotnet5
 ./dotnet5/dotnet --version
 ./dotnet5/dotnet publish -c Release -o output
+```
 ## Creating a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub:
