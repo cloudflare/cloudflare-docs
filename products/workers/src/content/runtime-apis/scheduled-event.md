@@ -53,7 +53,7 @@ A `ScheduledEvent` can be handled in Workers functions written using the Module 
 ```js
 export default {
   async scheduled(event, env, ctx) {
-    // Do something on a schedule
+    ctx.waitUntil(doSomeTaskOnASchedule())
   }
 }
 ```
@@ -73,6 +73,9 @@ export default {
 
 - `env` <Type>object</Type>
     - An object containing the bindings associated with your Module Worker, such as KV namespaces and Durable Objects.
+
+- `ctx` <Type>object</Type>
+    - An object containing the context associated with your Module Worker. Currently, this object just contains the `waitUntil` function.
 
 </Definitions>
 
