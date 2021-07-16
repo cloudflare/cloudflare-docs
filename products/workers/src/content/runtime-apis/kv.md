@@ -10,7 +10,7 @@ Workers KV is a global, low-latency, key-value data store. It supports exception
 
 Learn more about [How KV works](/learning/how-kv-works).
 
-To use Workers KV you must create a KV namespace and add a [binding](https://developers.cloudflare.com/workers/runtime-apis/kv#kv-bindings) to your worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
+To use Workers KV you must create a KV namespace and add a [binding](/runtime-apis/kv#kv-bindings) to your Worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
 
 --------------------------------
 
@@ -268,15 +268,17 @@ const next_value = await NAMESPACE.list({"cursor": cursor})
 
 ### Referencing KV from Workers 
 
-A KV namespace is a key-value database that replicates at Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
+A KV namespace is a key-value database that is replicated to Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 
 The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
-For example, assume you create a KV namespace called "My Tasks - 2021" that receives a generated namespace ID of "abcd1234". You then associate your Workers script with "My Tasks - 2021" by using the `TODO` global variable (your binding):
+This is not the case with modules, which you can see more in the [next section below](/runtime-apis/kv#referencing-kv-from-durable-objects-and-Workers-using-modules-syntax).
+
+For example, assume you create a KV namespace called "My Tasks - 2021" that receives a generated namespace ID of "abcd1234". The binding associates the TODO global variable in your script with the KV namespace:
 
 ```js
 addEventListener('fetch', async event => {
-  // Get the value for the "todo:123" key
+  // Get the value for the "to-do:123" key
   // NOTE: Relies on the `TODO` KV binding!
   let value = await TODO.get('to-do:123');
 
@@ -284,7 +286,7 @@ addEventListener('fetch', async event => {
   event.respondWith(new Response(value));
 });
 ```
-Now, to deploy this Worker correctly, the `kv_namespaces` portion of your `wrangler.toml` file needs to be either created or modified.
+For this Worker to execute properly, we need to define the binding. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
 ```toml
 name = "worker"
@@ -300,9 +302,9 @@ With this, the deployed Worker will have a `TODO` global variable; any reads, wr
 
 You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, which you can bind to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
 
-### Referencing KV from Durable Objects
+### Referencing KV from Durable Objects and Workers using Modules Syntax
 
-The docs below assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
+The docs above assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
 
 ```js
 export class DurableObject {
