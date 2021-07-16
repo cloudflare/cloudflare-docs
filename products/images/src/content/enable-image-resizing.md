@@ -1,6 +1,6 @@
 ---
 order: 1
-title: Before you begin
+title: Get started
 pcx-content-type: how-to
 ---
 
@@ -15,7 +15,7 @@ To use Image Resizing you first need to enable it via the Speed app of your Clou
 
   <div class="large-img">
 
-  ![Image Resizing options in CLoudflare's dashboard](static/image-resizing.png)
+  ![Image Resizing options in Cloudflare's dashboard](static/image-resizing.png)
 
   </div>
 
