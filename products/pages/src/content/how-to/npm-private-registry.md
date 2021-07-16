@@ -81,8 +81,8 @@ In the event that your local development no longer works with your new `.npmrc` 
 3. Create a new `is-pages.js` file in your project's root directory:
 
     ```js
-    // Pages always has `NODE_VERSION` defined
-    if (process.env.NODE_VERSION == null) process.exit(1);
+    // Pages always has `CF_PAGES` defined
+    if (!process.env.CF_PAGES) process.exit(1);
     ```
 
 4. In your `package.json` file, create a new `"preinstall"` script, which will rename the `.npmrc.pages` file to `.npmrc` **only** during the Pages build process:

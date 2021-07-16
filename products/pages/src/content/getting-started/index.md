@@ -93,6 +93,10 @@ If you do not want to point your nameservers to Cloudflare, you can still use a 
 | ------------ | ------------------ | ------------------ |
 | `CNAME`      | `domain.com`       | `custom.pages.dev` |
 
+<Aside>
+To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/getting-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [522 error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+</Aside>
+
 ## Advanced project settings
 
 In the "Settings" tab, you can configure advanced settings, such as **changing your project name**, **updating your GitHub configuration**, or **updating your build command or build directory**.
