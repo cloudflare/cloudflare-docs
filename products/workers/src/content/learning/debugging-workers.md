@@ -137,7 +137,7 @@ Exceptions will show up under the `exceptions` field in the JSON returned by `wr
 
 ### Setup a logging service
 
-A Worker can make HTTP requests to any HTTP service on the public internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
+A Worker can make HTTP requests to any HTTP service on the public internet. You can use a service like [Sentry](https://sentry.io) or [TrackJS](https://trackjs.com/) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
 When logging using this strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, you can pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
