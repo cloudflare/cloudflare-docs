@@ -5,9 +5,7 @@
 ## Install .NET
 
 Blazor uses C#, so you will need to [install the .NET SDK](https://dotnet.microsoft.com/download) by grabbing the newest installation from the [.NET downloads page](https://dotnet.microsoft.com/download) and download and running the installer.  
-
 ## Creating a new Blazor WASM project  
-
 There are two types of Blazor projects, Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. Create a new Blazor WASM application by running:
 ```sh
 $ dotnet new blazorwasm my-blazor-project
@@ -38,9 +36,7 @@ $ git push -u origin main
 ```
 
 ## Deploying with Cloudflare Pages
-
 You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:  
-
 <TableLayout>
 | Configuration option | Value          |
 | -------------------- | -------------- |
@@ -48,7 +44,6 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 | Build command        | `./build.sh` |
 | Build directory      | `output/wwwroot`       |
 </TableLayout>
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
 
 <Aside>
