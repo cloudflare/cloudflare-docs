@@ -6,7 +6,7 @@ pcx-content-type: landing-page
 
 # Cloudflare Image Resizing docs
 
-You can transform images on Cloudflare’s edge platform. You can resize, adjust quality, and convert images to WebP or AVIF format on demand. We’ll automatically cache every derived image at the edge, so you only need to store one original image at your origin.
+You can transform images on Cloudflare’s edge platform. You can resize, adjust quality, and convert images to WebP or AVIF format on demand. Cloudflare will automatically cache every derived image at the edge, so you only need to store one original image at your origin.
 
 - Quickly and easily adapt images to your site’s layout and your visitors’ screen sizes without maintaining a server-side image processing pipeline on your servers.
 
@@ -14,11 +14,11 @@ You can transform images on Cloudflare’s edge platform. You can resize, adjust
 
 ## Availability
 
-Image Resizing is available today for Business and Enterprise Customers. Before you can start using it, ensure you have [enabled Image Resizing](/enable-image-resizing) in the Cloudflare dashboard.
+Image Resizing is currently available for Business and Enterprise customers. Before you can start using it, ensure you have [enabled Image Resizing](/enable-image-resizing) in the Cloudflare dashboard.
 
 ## Two ways to use
 
-You can use Cloudflare Image Resizing with either a pre-defined [URL format](/url-format) or with [Cloudflare Workers](/resizing-with-workers), for advanced use-cases. 
+You can use Cloudflare Image Resizing with either a pre-defined [URL format](/url-format) or with [Cloudflare Workers](/resizing-with-workers), for advanced use cases. 
 
 <ButtonGroup>
   <Button type="primary" href="/url-format">Learn the URL format</Button>
