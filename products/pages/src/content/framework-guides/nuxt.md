@@ -2,22 +2,20 @@
 pcx-content-type: how-to
 ---
 
-# Deploy an Elder.js site
+# Deploy an Nuxt.js site
 
-[Elder.js](https://elderguide.com/tech/elderjs/) is an SEO-focused framework for building static sites with [Svelte](/framework-guides/deploy-a-svelte-site).
+[Nuxt.js](https://nuxtjs.org/) is a framework making web development simple and powerful.
 
-In this guide, you will create a new Elder.js application and deploy it using Cloudflare Pages.
+In this guide, you'll create a new Nuxt.js application and deploy it using Cloudflare Pages.
 
 ## Setting up a new project
 
-Create a new project using [`npx degit Elderjs/template`](https://docs.npmjs.com/cli/v6/commands/npm-init), giving it a project name:
+Create a new project using `npx`, giving it the title `my-nuxt-app`.
 
 ```sh
-$ npx degit Elderjs/template elderjs-app
-$ cd elderjs-app
+$ npx create-nuxt-app my-nuxt-app
+$ cd my-nuxt-app
 ```
-
-The Elder.js template includes a number of pages and examples showing how to build your static site, but by simply generating the project, it's already ready to be deployed to Cloudflare Pages.
 
 ## Creating a GitHub repository
 
@@ -51,7 +49,7 @@ Select the new GitHub repository that you created above and, in the configuratio
 | -------------------- | ---------------   |
 | Production branch    | `main`            |
 | Build command        | `npm run build`   |
-| Build directory      | `public`          |
+| Build directory      | `dist`            |
 
 </TableLayout>
 
@@ -69,6 +67,6 @@ Additionally, you'll have access to [preview deployments](/platform/preview-depl
 
 ## Learn more
 
-Congratulations! You've deployed your Elder.js site to Cloudflare Pages!
+Congratulations! You've deployed your Nuxt.js site to Cloudflare Pages!
 
 To learn more about what you can do with the platform, [check out our How To section](/how-to).

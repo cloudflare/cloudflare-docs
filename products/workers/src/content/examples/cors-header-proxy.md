@@ -32,7 +32,7 @@ const API_URL = "https://examples.cloudflareworkers.com/demos/demoapi"
 const PROXY_ENDPOINT = "/corsproxy/"
 
 // The rest of this snippet for the demo page
-async function rawHtmlResponse(html) {
+function rawHtmlResponse(html) {
   return new Response(html, {
     headers: {
       "content-type": "text/html;charset=UTF-8",
@@ -56,26 +56,25 @@ const DEMO_PAGE = `
     <code id="proxypreflight">Waiting</code>
     <script>
     let reqs = {};
-    reqs.noproxy = async () => {
-      let response = await fetch("${API_URL}")
-      return await response.json()
+    reqs.noproxy = () => {
+      return fetch("${API_URL}").then(r => r.json())
     }
     reqs.proxy = async () => {
-      let response = await fetch(window.location.origin + "${PROXY_ENDPOINT}?apiurl=${API_URL}")
-      return await response.json()
+      let href = "${PROXY_ENDPOINT}?apiurl=${API_URL}"
+      return fetch(window.location.origin + href).then(r => r.json())
     }
     reqs.proxypreflight = async () => {
-      const reqBody = {
-        msg: "Hello world!"
-      }
-      let response = await fetch(window.location.origin + "${PROXY_ENDPOINT}?apiurl=${API_URL}", {
+      let href = "${PROXY_ENDPOINT}?apiurl=${API_URL}"
+      let response = await fetch(window.location.origin + href, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(reqBody),
+        body: JSON.stringify({
+          msg: "Hello world!"
+        })
       })
-      return await response.json()
+      return response.json()
     }
     (async () => {
       for (const [reqName, req] of Object.entries(reqs)) {
