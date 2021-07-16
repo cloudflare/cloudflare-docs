@@ -37,7 +37,7 @@ If you want to configure 1.1.1.1 automatically, you can [download Cloudflare's 1
 To set up 1.1.1.1: Faster Internet:
 
 1. Download [1.1.1.1: Faster Internet from the app store](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627).
-1. Launch 1.1.1.1: Faster Internet and accept its Terms of Service.
+1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
 
 You are now using 1.1.1.1 for your Internet queries. If you want to add an extra layer of security with HTTPS encryption, toggle the WARP button.
