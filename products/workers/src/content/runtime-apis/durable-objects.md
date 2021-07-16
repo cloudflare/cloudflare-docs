@@ -64,7 +64,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-- <Code>get(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
+- <Code>get(keys<ParamType>Array&lt;string></ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
 
@@ -80,7 +80,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   - Deletes the key and associated value. Returns true if the key existed or false if it didn't.
 
-- <Code>delete(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;number></Type>
+- <Code>delete(keys<ParamType>Array&lt;string></ParamType>)</Code> <Type>Promise&lt;number></Type>
 
   - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
 
