@@ -301,7 +301,7 @@ function App() {
   return (
     <Router>
       <Posts path="/" />
-      <Post path="/:id" />
+      <Post path="/posts/:id" />
     </Router>
   );
 }
