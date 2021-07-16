@@ -1,0 +1,145 @@
+---
+updated: 2021-07-16
+difficulty: Beginner
+pcx-content-type: tutorial
+---
+
+# Migrating from GitHub Pages
+
+This tutorial shows how to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages.
+
+We will:
+
+1. Add the list of dependencies used by our existing Jekyll-based repository on GitHub Pages 
+2. Create a new Cloudflare Pages site, connected to our GitHub repository
+3. Build and deploy our site on Cloudflare Pages.
+
+## Before you begin
+
+This tutorial assumes:
+
+1. You have an existing GitHub Pages site using Jekyll
+2. You have some familiarity with running Ruby's command-line tools, and have both `gem` and `bundle` installed.
+3. You know how to use a few basic Git operations, including `add`, `commit`, `push`, `pull`.
+4. You have read the [Get Started](/getting-started) guide for Cloudflare Pages.
+
+If you don't have Rubygems (`gem`) or Bundler (`bundle`) installed on your machine, refer to the installation guides for [Rubygems](https://rubygems.org/pages/download) and [Bundler](https://bundler.io/).
+
+## Preparing your GitHub Pages repository
+
+<Aside>
+
+**If your GitHub Pages repo already has a `Gemfile` and `Gemfile.lock` present, you can skip this step entirely.** The GitHub Pages environment assumes a default set of Jekyll plugins that aren't explicitly specified in a `Gemfile`.
+
+</Aside>
+
+Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/platform/build-configuration). Specifically, we need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
+
+```sh
+---
+header: Create a Gemfile
+---
+$ cd my-github-pages-repo
+$ bundle init
+```
+
+```sh
+---
+header: Add the github-pages gem
+---
+$ bundle init
+```
+
+Open the `Gemfile` that was created for you, and add the following line to the bottom of the file:
+
+```ruby
+---
+header: Specifying the github-pages version
+---
+gem "github-pages", "~> 215", group: :jekyll_plugins
+```
+
+Your `Gemfile` should resemble the below:
+
+```ruby
+---
+filename: Gemfile
+---
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+# gem "rails"
+gem "github-pages", "~> 215", group: :jekyll_plugins
+```
+
+We can now run `bundle update`, which will install the `github-pages` gem for us, and create a `Gemfile.lock` file with the resolved dependency versions.
+
+```sh
+---
+header: Running bundle update
+---
+$ bundle update
+# Bundler will show a lot of output as it fetches the dependencies
+```
+
+This should complete successfully. If not, make sure you've copied the `github-pages` line above exactly, and have *not* commented it out with a leading `#`.
+
+You'll now need to commit these files to your repository so that Cloudflare Pages can reference them in the following steps:
+
+```sh
+---
+header: Commit Gemfile and Gemfile.lock
+---
+$ git add Gemfile Gemfile.lock
+$ git commit -m "deps: added Gemfiles"
+$ git push origin main
+```
+
+## Configuring your Pages project
+
+With your GitHub Pages project now explicitly specifying its dependencies, we can now configure Cloudflare Pages. The process is almost identical to [deploying a Jekyll site](/framework-guides/deploy-a-jekyll-site).
+
+<Aside>
+
+Configuring Cloudflare Pages for the first time? Refer to the [Getting started guide](/getting-started), which covers how to connect your existing GitHub repository to Cloudflare Pages.
+
+</Aside>
+
+You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select the *existing* GitHub repository you use for your GitHub Pages site, and in the configuration section, provide the following information:
+
+<TableLayout>
+
+| Configuration option | Value          |
+| -------------------- | -------------- |
+| Production branch    | `main`         |
+| Build command        | `jekyll build` |
+| Build directory      | `_site`        |
+
+</TableLayout>
+
+Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site, before deploying it.
+
+<Aside>
+
+For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+
+</Aside>
+
+Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+
+## Migrating your custom domain
+
+If you're using a [custom domain with GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site), you'll need to update your DNS record(s) to point at your new Cloudflare Pages deployment. This will require you to update the `CNAME` record at the DNS provider for your domain to point to `<your-pages-site>.pages.dev`, replacing `<your-username>.github.io`.
+
+Note that it may take some time for DNS caches to expire and for this change to be reflected, depending on the DNS TTL (time-to-live) value you set when you originally created the record.
+
+Refer to the [adding a custom domain](/getting-started#adding-a-custom-domain) section of the Getting Started guide for a list of detailed steps.
+
+## What's next?
+
+* Learn how to [customize HTTP response headers](/how-to/add-custom-http-headers) for your Pages site using Cloudflare Workers.
+* Understand how to [rollback a potentially broken deployment](/platform/rollbacks) to a previously working version.
+* [Configure redirects](/platform/redirects) so that visitors are always directed to your 'canonical' custom domain.
