@@ -23,10 +23,10 @@ addEventListener('fetch', event => {
 })
 
 async function handleRequest(request) {
-  // This proxies your Pages app, as long as your Worker is deployed on the same custom domain as your Pages project
+  // This proxies your Pages application under the condition that your Worker script is deployed on the same custom domain as your Pages project
   const response = await fetch(request)
   
-  // Clone the response so that it's no longer immutable
+  // Clone the response so that it is no longer immutable
   const newResponse = new Response(response.body, response)
 
   // Add a custom header with a value
