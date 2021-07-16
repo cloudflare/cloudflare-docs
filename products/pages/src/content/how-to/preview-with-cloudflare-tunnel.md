@@ -4,15 +4,15 @@ pcx-content-type: how-to
 
 # Preview Local Projects with Cloudflare Tunnel
 
-[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps) runs a lightweight daemon (`cloudflared`) in your infrastructure that establishes outbound connections (Tunnels) between your service and the Cloudflare edge. In practical terms, you can use Cloudflare Tunnel to allow remote access to services running on your local machine. It is an alternative to popular tools like [Ngrok](https://ngrok.com), and provides free, long-running tunnels via the [TryCloudflare](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/trycloudflare) service.
+[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps) runs a lightweight daemon (`cloudflared`) in your infrastructure that establishes outbound connections (Tunnels) between your origin web server and the Cloudflare edge. In practical terms, you can use Cloudflare Tunnel to allow remote access to services running on your local machine. It is an alternative to popular tools like [Ngrok](https://ngrok.com), and provides free, long-running tunnels via the [TryCloudflare](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/trycloudflare) service.
 
 While Cloudflare Pages provides unique [deploy preview URLs](/platform/preview-deployments) for new branches and commits on your projects, Cloudflare Tunnel can be used to provide access to locally running applications and servers during the development process. In this guide, you will install Cloudflare Tunnel, and create a new tunnel to provide access to a locally running application. You will need a Cloudflare account to begin using Cloudflare Tunnel.
 
 ## Installing Cloudflare Tunnel
 
-Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about how to install Cloudflare Tunnel, see the ["Install cloudflared"](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) page in the Cloudflare for Teams documentation.
+Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about installing Cloudflare Tunnel, refer to the ["Install cloudflared"](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) page in the Cloudflare for Teams documentation.
 
-Confirm that `cloudflared` is installed correctly by running `cloudflared --version` in your command-line:
+Confirm that `cloudflared` is installed correctly by running `cloudflared --version` in your command line:
 
 ```sh
 $ cloudflared --version
@@ -21,11 +21,11 @@ cloudflared version 2021.5.9 (built 2021-05-21-1541 UTC)
 
 ## Run a local service
 
-The easiest way to get up and running with Cloudflare Tunnel is to have an application running locally, such as a [React](/framework-guides/deploy-a-react-application) or [Svelte](/framework-guides/deploy-a-svelte-site) site. When you are developing an application with these frameworks, they will often make use of a `npm run develop` script, or something similar, which mounts the application and runs it on a `localhost` port. For instance, the popular `create-react-app` tool runs your in-development React application on port 3000, or `localhost:3000`.
+The easiest way to get up and running with Cloudflare Tunnel is to have an application running locally, such as a [React](/framework-guides/deploy-a-react-application) or [Svelte](/framework-guides/deploy-a-svelte-site) site. When you are developing an application with these frameworks, they will often make use of a `npm run develop` script, or something similar, which mounts the application and runs it on a `localhost` port. For instance, the popular `create-react-app` tool runs your in-development React application on port 3000, making it accessible at the `http://localhost:3000` address.
 
 ## Start a Cloudflare Tunnel
 
-With this development server running, a new Cloudflare Tunnel can be instantiated by running `cloudflared tunnel`, passing in the `--url` flag with your `localhost` URL and port. `cloudflared` will output logs to your command-line, including a banner with a tunnel URL:
+With a local development server running, a new Cloudflare Tunnel can be instantiated by running `cloudflared tunnel`, passing in the `--url` flag with your `localhost` URL and port. `cloudflared` will output logs to your command line, including a banner with a tunnel URL:
 
 ```sh
 $ cloudflared tunnel --url http://localhost:3000
@@ -53,4 +53,4 @@ In this example, the randomly-generated URL `https://seasonal-deck-organisms-sf.
 
 Cloudflare Tunnel can be configured in a variety of ways, to provide more than just simple access to your in-development applications. For instance, you can pass `cloudflared` a [config file](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) to add more complex routing and tunnel setups, and [use Cloudflare DNS](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns) to associate a domain or subdomain with a long-running tunnel on your machine. 
 
-In conjunction with Cloudflare Access, you can provide [secure access to your tunnels](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps) without exposing your entire server, or compromising on security. See the [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/) to learn more about what you can do with our entire suite of Zero Trust tools.
+In conjunction with Cloudflare Access, you can provide [secure access to your tunnels](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps) without exposing your entire server, or compromising on security. Refer to the [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/) to learn more about what you can do with Cloudflare's entire suite of Zero Trust tools.
