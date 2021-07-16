@@ -15,15 +15,16 @@ Cloudflare limits the number of sites for which you can track web analytics by w
 
 | Domain type                                    | Site limit (soft)  | Site limit (hard) |
 | ---------------------------------------------- | ------------------ | ----------------- |
-| Single host, not proxied through Cloudflare    | 10                 | 1000              |
-| Multiple hosts, not proxied through Cloudflare | 100                | -                 |
+| Not proxied through Cloudflare                 | 10                 | 1000              |
 | Proxied through Cloudflare                     | -                  | -                 |
 
 </TableWrap>
 
 ## Rules Limits
 
-Cloudflare limits the number of Web Analytics rules you can have by plan type.
+Cloudflare limits the number of Web Analytics rules you can have by plan type. For plans with a limit of zero, Web Analytics injects the JS snippet on all subdomains.
+
+Rules are only available for domains proxied through Cloudflare.
 
 <TableWrap>
 
