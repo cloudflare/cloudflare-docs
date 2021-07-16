@@ -30,13 +30,16 @@ Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
 ## 1.1.1.1 iOS app
 
-If you don't want to configure 1.1.1.1 manually, you can use Cloudflare's 1.1.1.1: Faster Internet free iOS app to setup 1.1.1.1 automatically. With 1.1.1.1: Faster Internet you can also use WARP to keep your connections private and secure through HTTPS encryption. Using WARP is the only way to connect do 1.1.1.1 DNS resolver through HTTPS encryption outside a secured network.
+If you want to configure 1.1.1.1 automatically, you can [download Cloudflare's 1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) free iOS app.
+
+1.1.1.1: Faster Internet automatically configures 1.1.1.1 on any network you connect to. Additionally, it allows you to enable the [WARP mode](https://developers.cloudflare.com/warp-client/), which keeps all your HTTP traffic private and secure.
 
 To set up 1.1.1.1: Faster Internet:
 
 1. Download [1.1.1.1: Faster Internet from the app store](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627).
 1. Launch 1.1.1.1: Faster Internet and accept its Terms of Service.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
-1. You are now using 1.1.1.1 for your Internet queries. If you want to add an extra layer of security with HTTPS encryption, toggle the WARP button.
+
+You are now using 1.1.1.1 for your Internet queries. If you want to add an extra layer of security with HTTPS encryption, toggle the WARP button.
 
 <CaptivePortals/>
