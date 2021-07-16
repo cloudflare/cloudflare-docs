@@ -25,7 +25,7 @@ The easiest way to get up and running with Cloudflare Tunnel is to have an appli
 
 ## Start a Cloudflare Tunnel
 
-With a local development server running, a new Cloudflare Tunnel can be instantiated by running `cloudflared tunnel`, passing in the `--url` flag with your `localhost` URL and port. `cloudflared` will output logs to your command line, including a banner with a tunnel URL:
+With a local development server running, a new Cloudflare Tunnel can be instantiated by running `cloudflared tunnel` in a new command line window, passing in the `--url` flag with your `localhost` URL and port. `cloudflared` will output logs to your command line, including a banner with a tunnel URL:
 
 ```sh
 $ cloudflared tunnel --url http://localhost:3000
