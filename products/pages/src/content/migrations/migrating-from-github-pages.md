@@ -33,20 +33,15 @@ If you don't have Rubygems (`gem`) or Bundler (`bundle`) installed on your machi
 
 </Aside>
 
-Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/platform/build-configuration). Specifically, we need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
+Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependency configuration file) to allow Cloudflare Pages to fetch and install those dependencies during the [build step](/platform/build-configuration).
+
+Specifically, we need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 
 ```sh
 ---
 header: Create a Gemfile
 ---
 $ cd my-github-pages-repo
-$ bundle init
-```
-
-```sh
----
-header: Add the github-pages gem
----
 $ bundle init
 ```
 
