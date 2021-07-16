@@ -91,5 +91,10 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 |  matches regex        | regex evaluates to true         |
 |  does not match regex |  all except when regex evals to true   |
 
+<Aside>
+
+The <code>in</code> operator allows you to specify IP addresses or networks using CIDR notation. 
+
+</Aside>
 
 
