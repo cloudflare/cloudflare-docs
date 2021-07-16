@@ -48,7 +48,7 @@ When a Workers script is invoked by a [Cron Trigger](/platform/cron-triggers), t
 
 ## Syntax: Module Worker
 
-A `ScheduledEvent` can be handled in Workers functions written using the Module Worker syntax by adding a `scheduled` function to your module:
+A `ScheduledEvent` can be handled in Workers functions written using the Module Worker syntax by adding a `scheduled` function to your module's exported handlers:
 
 ```js
 export default {
@@ -78,12 +78,12 @@ export default {
 
 ### Methods
 
-When a Workers script is invoked by a [Cron Trigger](/platform/cron-triggers), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the _context_ your function runs in, and contains the following methods to control what happens next:
+When a Workers script is invoked by a [Cron Trigger](/platform/cron-triggers), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
 
 <Definitions>
 
 - <Code>ctx.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - Use this method to notify the runtime to wait for asynchronous tasks (e.g. logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/platform/cron-triggers) Past Events table. Otherwise, it will be reported as a Success.
+    - Use this method to notify the runtime to wait for asynchronous tasks (e.g., logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/platform/cron-triggers) Past Events table. Otherwise, it will be reported as a Success.
 
 </Definitions>
