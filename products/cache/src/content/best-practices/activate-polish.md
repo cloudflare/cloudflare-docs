@@ -10,7 +10,7 @@ Polish strips metadata to accelerate image downloads and reduce image size throu
 
 ![Polish](../images/polish.png)
 
-<Aside type="note" header="Note>
+<Aside type="note" header="Note">
 
 Cloudflare Image Resizing(https://support.cloudflare.com/hc/articles/360028146432) also optimizes images cached in the Cloudflare network, but is only available for Business and Enterprise users.
 
