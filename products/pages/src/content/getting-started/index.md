@@ -31,17 +31,17 @@ You can select a GitHub project from your personal account or an organization yo
 
 <Aside>
 
-If you do not have a project, [refer to our extensive How To section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
+If you do not have a project, [refer to our extensive How to section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
 
 </Aside>
 
 ### Configuring your deployment
 
-Once you have selected a repository, select **Install & Authorize** and **Begin setup**. You can then customize your deployment in the "Set up builds and deployments" page.
+Once you have selected a repository, select **Install & Authorize** and **Begin setup**. You can then customize your deployment in the **Set up builds and deployments** page.
 
 Your **project name** will be used to generate your project's hostname. By default, this matches your GitHub project name.
 
-"Production branch" indicates the branch that Cloudflare Pages should use to deploy the "production" version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/platform/preview-deployments).
+**Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/platform/preview-deployments).
 
 ![Configuration](./images/configuration.png)
 
@@ -49,7 +49,7 @@ Your **project name** will be used to generate your project's hostname. By defau
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **publish directory** to tell Cloudflare Pages how to deploy your site.
 
-Our deployment UI provides a number of "presets", pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, check out our documentation for [build configuration](/platform/build-configuration).
+Our deployment UI provides a number of presets, pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, check out our documentation for [build configuration](/platform/build-configuration).
 
 ![Build settings](./images/build-settings.png)
 
@@ -93,7 +93,7 @@ If you do not want to point your nameservers to Cloudflare, you can still use a 
 | ------------ | ------------------ | ------------------ |
 | `CNAME`      | `domain.com`       | `custom.pages.dev` |
 
-<Aside>
+<Aside type="note">
 
 To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/getting-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [522 error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
 
@@ -101,7 +101,7 @@ To ensure a custom domain is added successfully, you must go through the [Adding
 
 ## Advanced project settings
 
-In the "Settings" tab, you can configure advanced settings, such as **changing your project name**, **updating your GitHub configuration**, or **updating your build command or build directory**.
+In the **Settings** tab, you can configure advanced settings, such as changing your project name, updating your GitHub configuration, or updating your build command or build directory.
 
 ![Settings](./images/settings.png)
 
