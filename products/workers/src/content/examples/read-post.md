@@ -41,10 +41,10 @@ async function readRequestBody(request) {
     return JSON.stringify(await request.json())
   }
   else if (contentType.includes("application/text")) {
-    return await request.text()
+    return request.text()
   }
   else if (contentType.includes("text/html")) {
-    return await request.text()
+    return request.text()
   }
   else if (contentType.includes("form")) {
     const formData = await request.formData()

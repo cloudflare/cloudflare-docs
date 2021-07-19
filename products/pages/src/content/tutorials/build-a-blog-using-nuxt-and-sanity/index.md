@@ -95,7 +95,7 @@ header: Adding @nuxt/sanity
 $ yarn add @nuxtjs/sanity @sanity/client
 ```
 
-To configure the plugin in your Nuxt.js application, you'll need to provide some configuration details. The easiest way to do this it to copy the `sanity.json` folder from your studio into your application directory (though there are other methods, too: [check out the docs!](https://sanity.nuxtjs.org/quick-start)).
+To configure the plugin in your Nuxt.js application, you will need to provide some configuration details. The easiest way to do this is to copy the `sanity.json` folder from your studio into your application directory (though there are other methods, too: [refer to the `@nuxt/sanity` documentation](https://sanity.nuxtjs.org/getting-started/quick-start/).
 
 ```sh
 ---
