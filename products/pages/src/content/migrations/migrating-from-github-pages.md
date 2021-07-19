@@ -83,9 +83,9 @@ $ bundle update
 # Bundler will show a lot of output as it fetches the dependencies
 ```
 
-This should complete successfully. If not, make sure you've copied the `github-pages` line above exactly, and have *not* commented it out with a leading `#`.
+This should complete successfully. If not, verify that you have copied the `github-pages` line above exactly, and have not commented it out with a leading `#`.
 
-You'll now need to commit these files to your repository so that Cloudflare Pages can reference them in the following steps:
+You will now need to commit these files to your repository so that Cloudflare Pages can reference them in the following steps:
 
 ```sh
 ---
@@ -98,11 +98,11 @@ $ git push origin main
 
 ## Configuring your Pages project
 
-With your GitHub Pages project now explicitly specifying its dependencies, we can now configure Cloudflare Pages. The process is almost identical to [deploying a Jekyll site](/framework-guides/deploy-a-jekyll-site).
+With your GitHub Pages project now explicitly specifying its dependencies, you can start configuring Cloudflare Pages. The process is almost identical to [deploying a Jekyll site](/framework-guides/deploy-a-jekyll-site).
 
-<Aside>
+<Aside type="note">
 
-Configuring Cloudflare Pages for the first time? Refer to the [Getting started guide](/getting-started), which covers how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Getting started guide](/getting-started#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
 
 </Aside>
 
