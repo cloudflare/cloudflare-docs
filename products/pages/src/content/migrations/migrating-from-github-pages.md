@@ -26,7 +26,7 @@ This tutorial assumes:
 3. You know how to use a few basic Git operations, including `add`, `commit`, `push`, `pull`.
 4. You have read the [Get Started](/getting-started) guide for Cloudflare Pages.
 
-If you don't have Rubygems (`gem`) or Bundler (`bundle`) installed on your machine, refer to the installation guides for [Rubygems](https://rubygems.org/pages/download) and [Bundler](https://bundler.io/).
+If you do not have Rubygems (`gem`) or Bundler (`bundle`) installed on your machine, refer to the installation guides for [Rubygems](https://rubygems.org/pages/download) and [Bundler](https://bundler.io/).
 
 ## Preparing your GitHub Pages repository
 
