@@ -272,9 +272,9 @@ A KV namespace is a key-value database that is replicated to Cloudflare's edge. 
 
 The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
-This is not the case with modules, which you can see more in the [next section below](/runtime-apis/kv#referencing-kv-from-durable-objects-and-Workers-using-modules-syntax).
+This is not the case with modules, see [next section](/runtime-apis/kv#referencing-kv-from-durable-objects-and-Workers-using-modules-syntax).
 
-For example, assume you create a KV namespace called "My Tasks - 2021" that receives a generated namespace ID of "abcd1234". The binding associates the TODO global variable in your script with the KV namespace:
+When you create a namespace (see note below), it will have a name you choose (e.g. "My tasks"), and an assigned ID (e.g. "06779da6940b431db6e566b4846d64db")
 
 ```js
 addEventListener('fetch', async event => {
@@ -294,13 +294,17 @@ name = "worker"
 # ...
 
 kv_namespaces = [ 
-  { binding = "TODO", id = "abcd1234" }
+  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
 ]
 ```
 
 With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
 
-You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, which you can bind to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
+<Aside>
+  
+You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page. For the dashboard, you can bind the namespace to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
+
+</Aside>
 
 ### Referencing KV from Durable Objects and Workers using Modules Syntax
 
