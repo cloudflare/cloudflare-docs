@@ -28,16 +28,29 @@ Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
 1. Click **Save**.
 
-## Using DNS Override iOS App
+## 1.1.1.1 iOS app
 
-You can also use a handy iOS app called DNS Override (paid app, costs $1.99) that automatically configures 1.1.1.1 for you on any network you connect to. To use it:
+If you want to configure 1.1.1.1 automatically, you can [download Cloudflare's 1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) free iOS app.
 
-<StreamVideo id="da4eefaa9315767842737eb793c9b63d"/>
+1.1.1.1: Faster Internet automatically configures your phone to use 1.1.1.1 on any network you connect to. The app also allows you to enable encryption for DNS queries to the 1.1.1.1 DNS resolver or enable [WARP mode](https://developers.cloudflare.com/warp-client/), which gives you all the protection from 1.1.1.1 while additionally keeping all your HTTP traffic private and secure.
 
-1. [Download DNS Override from the app store](https://itunes.apple.com/us/app/dns-override/id1060830093?mt=8).
-1. Launch the DNS Override app.
-1. Click **1.1.1.1** at the top of the app.
-1. Turn on the **DNS Override** toggle.
-1. DNS Override may ask you to install their VPN profile so that they can automatically update DNS settings.
+You can select between these options in 1.1.1.1: Faster Internet's settings. By default, 1.1.1.1:Faster Internet's settings are configured to WARP mode.
+
+To set up 1.1.1.1: Faster Internet:
+
+1. Download [1.1.1.1: Faster Internet from the app store](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627).
+1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
+1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
+
+You are now using 1.1.1.1 for your DNS queries. If you want to add an extra layer of security and encrypt all of your traffic with HTTPS, toggle the **WARP** button to **Connected**.
+
+Alternatively, you may want to only encrypt your DNS queries and leave the remaining traffic unencrypted. If this is the case: 
+
+1. Open 1.1.1.1: Faster Internet.
+1. Tap the hamburger menu on the top right corner of the app.
+1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1*** > **Done**.
+
+You are now using encryption only for your DNS queries.
+
 
 <CaptivePortals/>
