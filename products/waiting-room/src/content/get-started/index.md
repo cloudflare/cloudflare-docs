@@ -28,13 +28,13 @@ Specify the URL for your page by setting the `hostname` and `path` in your [conf
 
 ### Access method
 
-Do you want visitors to reach your high-traffic page:
+You can direct visitors to your high-traffic page:
 - Directly (via URL)
 - Indirectly (via a [Page Rule redirect](https://support.cloudflare.com/hc/articles/200172286))
 
 ### Queue method
 
-When you [activate your waiting room](#step-3--activate-your-waiting-room), do you want:
+When you [activate your waiting room](#step-3--activate-your-waiting-room), choose whether:
 - [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event
 - Only [**some visitors**](#queue-some-visitors) to be queued, as traffic reaches the thresholds defined in `Total active users` and `New users per minute`
 
