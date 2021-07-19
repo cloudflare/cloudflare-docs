@@ -32,7 +32,7 @@ If you do not have Rubygems (`gem`) or Bundler (`bundle`) installed on your mach
 
 <Aside type="note">
 
-**If your GitHub Pages repo already has a `Gemfile` and `Gemfile.lock` present, you can skip this step entirely.** The GitHub Pages environment assumes a default set of Jekyll plugins that aren't explicitly specified in a `Gemfile`.
+If your GitHub Pages repository already has a `Gemfile` and `Gemfile.lock` present, you can skip this step entirely. The GitHub Pages environment assumes a default set of Jekyll plugins that are not explicitly specified in a `Gemfile`.
 
 </Aside>
 
