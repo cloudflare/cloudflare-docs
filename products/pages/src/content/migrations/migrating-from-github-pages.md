@@ -23,7 +23,7 @@ This tutorial assumes:
 
 1. You have an existing GitHub Pages site using [Jekyll](https://jekyllrb.com/)
 2. You have some familiarity with running Ruby's command-line tools, and have both `gem` and `bundle` installed.
-3. You know how to use a few basic Git operations, including `add`, `commit`, `push`, `pull`.
+3. You know how to use a few basic Git operations, including `add`, `commit`, `push`, and `pull`.
 4. You have read the [Get Started](/getting-started) guide for Cloudflare Pages.
 
 If you do not have Rubygems (`gem`) or Bundler (`bundle`) installed on your machine, refer to the installation guides for [Rubygems](https://rubygems.org/pages/download) and [Bundler](https://bundler.io/).
