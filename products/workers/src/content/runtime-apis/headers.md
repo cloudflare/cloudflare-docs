@@ -55,4 +55,4 @@ headers.get('x-foo'); //=> "hello, world"
 
     </Aside>
 
-* `CF-EW-Via`: Used for loop detection, similar to the `CDN-Loop` header.
+* `CF-EW-Via`: Used for loop detection, similar to the [`CDN-Loop`](https://blog.cloudflare.com/preventing-request-loops-using-cdn-loop/) header.
