@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Blazor Site  
   
 [Blazor](https://blazor.net) is an SPA framework that can use C# code, rather than JavaScript in the browser. In this guide, you will build a site using Blazor, and deploy it using Cloudflare Pages.  
@@ -45,11 +49,13 @@ $ git push -u origin main
 You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:  
 
 <TableLayout>
+
 | Configuration option | Value            |
 | -------------------- | ---------------- |
 | Production branch    | `main`           |
 | Build command        | `./build.sh`     |
 | Build directory      | `output/wwwroot` |
+
 </TableLayout>
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
