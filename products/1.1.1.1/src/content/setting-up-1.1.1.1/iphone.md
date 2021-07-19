@@ -40,7 +40,7 @@ To set up 1.1.1.1: Faster Internet:
 1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
 
-You are now using 1.1.1.1 for your Internet queries. If you want to add an extra layer of security and encrypt all of your traffic with HTTPS, toggle the WARP button to *Connected*.
+You are now using 1.1.1.1 for your Internet queries. If you want to add an extra layer of security and encrypt all of your traffic with HTTPS, toggle the **WARP** button to *Connected*.
 
 Alternatively, you may want to only encrypt your DNS queries and leave your traffic unencrypted. If this is the case: 
 
