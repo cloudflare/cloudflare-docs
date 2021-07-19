@@ -42,12 +42,12 @@ No. Cloudflare Access cannot enforce a policy that would contain a port appended
 
 ## Why can I still reach domains blocked by a DNS policy?
 
-Here is a list of things that may be happening:
+Here is a list of possible causes:
 
-1. **Your policy is still being updated.** After you edit or create a policy, Cloudflare updates the new setting across all of our data centers around the world. It takes about 60 seconds for the change to propagate.
+* **Your policy is still being updated.** After you edit or create a policy, Cloudflare updates the new setting across all of our data centers around the world. It takes about 60 seconds for the change to propagate.
 
-1. **Your device is using another DNS resolver.** If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. As a result, the domain you are trying to block is still accessible from your device. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
+* **Your device is using another DNS resolver.** If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. As a result, the domain you are trying to block is still accessible from your device. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
 
-1. **​Your policy is not assigned to a location.** If your policy is not assigned to a location and you send a DNS query from that location, Gateway will not apply that policy. Assign a policy to a location to make sure the desired policy is applied when you send a DNS query from that location.
+* **Your policy is not assigned to a location.** If your policy is not assigned to a location and you send a DNS query from that location, Gateway will not apply that policy. Assign a policy to a location to make sure the desired policy is applied when you send a DNS query from that location.
 
-1. **Your DoH endpoint is not a Gateway location**. Browsers can be configured to use any DoH endpoint. If you chose to configure DoH directly in your browser, please make sure that the DoH  endpoint is a Gateway location. 
+* **Your DoH endpoint is not a Gateway location**. Browsers can be configured to use any DoH endpoint. If you chose to configure DoH directly in your browser, please make sure that the DoH  endpoint is a Gateway location. 
