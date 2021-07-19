@@ -40,7 +40,7 @@ You are now ready to start requiring WARP for your Access applications.
 
 1. Click **Edit**.
 
-1. To have an existing policy require WARP, click **Edit** for that specific policy. Then, and add an **Include** or **Require** rule with the option *WARP* selected.
+1. To have an existing policy require WARP, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option *WARP* selected.
 
 1. Click **Save rule**.
 

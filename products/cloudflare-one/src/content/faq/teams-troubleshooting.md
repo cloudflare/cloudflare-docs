@@ -108,7 +108,7 @@ If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able t
 
 ## I see an error: x509: certificate signed by unknown authority
 
-This means the origin is using a certificate that `cloudflared` doesn't trust. For example, you may come across this error if you have an SSL inspection in a proxy between your server and Cloudflare. To solve this:
+This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
 1. Add the certificate to the system certificate pool.
 1. Use the `--origin-ca-pool` flag and specify the path to the certificate.
 1. Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
