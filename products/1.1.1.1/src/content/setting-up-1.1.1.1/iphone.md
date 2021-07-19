@@ -32,7 +32,7 @@ Follow this quick guide to start using 1.1.1.1 on your iPhone.
 
 If you want to configure 1.1.1.1 automatically, you can [download Cloudflare's 1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) free iOS app.
 
-1.1.1.1: Faster Internet automatically configures 1.1.1.1 on any network you connect to. It also allows you to encrypt your DNS queries to 1.1.1.1 DNS resolver or enable the [WARP mode](https://developers.cloudflare.com/warp-client/), which gives you all the protection from 1.1.1.1 while additionally keeping all your HTTP traffic private and secure. By default, 1.1.1.1: Faster Internet is setup with the WARP mode.
+1.1.1.1: Faster Internet automatically configures 1.1.1.1 on any network you connect to. It also allows you to encrypt your DNS queries to the 1.1.1.1 DNS resolver or enable [WARP mode](https://developers.cloudflare.com/warp-client/), which gives you all the protection from 1.1.1.1 while additionally keeping all your HTTP traffic private and secure. By default, 1.1.1.1: Faster Internet is set up with WARP mode.
 
 To set up 1.1.1.1: Faster Internet:
 
