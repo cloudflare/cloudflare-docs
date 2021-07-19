@@ -33,6 +33,8 @@ headers.get('x-foo'); //=> "hello, world"
 
 ## Cloudflare headers
 
+Cloudflare sets a number of its own custom headers on and incoming requests and outgoing responses. While some may be used for its own tracking and bookkeeping, many of these can be useful to your own applications – or Workers – too.
+
 ### Request headers
 
 * `CF-Connecting-IP`: In same zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
