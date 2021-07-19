@@ -5,7 +5,7 @@ pcx-content-type: getting-started
 
 # Get started
 
-In this guide, you will get started with Cloudflare Pages, and deploy your first website to the platform.
+In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform.
 
 <Aside>
 
@@ -21,7 +21,7 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 ### Connect to GitHub
 
-Signing in with GitHub allows [Cloudflare Pages](https://pages.dev) to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. After you sign in, select **Create a project**.
+Signing in with GitHub allows [Cloudflare Pages](https://pages.dev) to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. After you sign in, select **Create a project** in the Pages dashboard. 
 
 ## Configuration and deployment
 
@@ -49,7 +49,7 @@ Your **project name** will be used to generate your project's hostname. By defau
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **publish directory** to tell Cloudflare Pages how to deploy your site.
 
-Our deployment UI provides a number of presets, pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, check out our documentation for [build configuration](/platform/build-configuration).
+Our deployment dashboard provides a number of presets, which are pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/platform/build-configuration).
 
 ![Build settings](./images/build-settings.png)
 
@@ -75,7 +75,7 @@ After your first deploy, select **Continue to project** to see see your project'
 
 ### Adding a custom domain
 
-While every Cloudflare Pages site receives a custom subdomain during deployment, you may also wish to point custom domains (or subdomains) to your site. To do this, go to **Custom domains** in your site dashboard.
+While every Cloudflare Pages site receives a custom subdomain during deployment, you may also wish to point custom domains (or subdomains) to your site. To do this, select the **Custom domains** section in your site dashboard.
 
 ![Domains](./images/domains.png)
 
@@ -101,7 +101,7 @@ To ensure a custom domain is added successfully, you must go through the [Adding
 
 ## Advanced project settings
 
-In the **Settings** tab, you can configure advanced settings, such as changing your project name, updating your GitHub configuration, or updating your build command or build directory.
+In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your GitHub configuration, or updating your build command or build directory.
 
 ![Settings](./images/settings.png)
 
