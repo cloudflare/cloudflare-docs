@@ -18,7 +18,7 @@ Cloudflare Waiting Room benefits:
     - Showing estimated wait times that are continuously updated.
     - Opening up new spots more quickly by tracking dynamic inflow and [outflow](/reference/configuration-settings#session-duration).
     - Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
-    - Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide more information as needed.
+    - Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
 
 ## How it works
 
