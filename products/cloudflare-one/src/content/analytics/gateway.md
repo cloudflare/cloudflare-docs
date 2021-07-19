@@ -3,9 +3,9 @@ order: 1
 pcx-content-type: concept
 ---
 
-# Gateway overview 
+# Gateway 
 
-You can use the Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or a time.
+Use the Gateway Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
 
 ![Overview analytics](../static/documentation/logs/gateway-dash-overview-page.png)
 
