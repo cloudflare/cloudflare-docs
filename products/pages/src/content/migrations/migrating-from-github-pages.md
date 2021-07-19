@@ -120,7 +120,7 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site, before deploying it.
 
-<Aside>
+<Aside type="note">
 
 For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
 
