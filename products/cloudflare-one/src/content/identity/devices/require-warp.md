@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Require WARP
 
-<Aside>
+<Asid type="note">
 
 This device posture attribute will check for all versions of WARP, including the consumer version. 
 
@@ -28,7 +28,6 @@ The process involves two steps:
 1. Select **WARP**. 
 
 1. Click **Save**.
-
 
 You are now ready to start requiring WARP for your Access applications.
 
