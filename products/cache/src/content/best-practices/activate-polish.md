@@ -8,7 +8,7 @@ pcx-content-type: concept
 
 Polish strips metadata to accelerate image downloads and reduce image size through lossy or lossless compression. Learn more about Polish from our [blog post](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/).
 
-![Polish](.../images/polish.png)
+![Polish](../images/polish.png)
 
 <Aside type="note" header="Note>
 
