@@ -73,7 +73,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gem "github-pages", "~> 215", group: :jekyll_plugins
 ```
 
-We can now run `bundle update`, which will install the `github-pages` gem for us, and create a `Gemfile.lock` file with the resolved dependency versions.
+Run `bundle update`, which will install the `github-pages` gem for you, and create a `Gemfile.lock` file with the resolved dependency versions.
 
 ```sh
 ---
