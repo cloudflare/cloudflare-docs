@@ -106,7 +106,7 @@ Configuring Cloudflare Pages for the first time? Refer to the [Getting started g
 
 </Aside>
 
-You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select the *existing* GitHub repository you use for your GitHub Pages site, and in the configuration section, provide the following information:
+Begin deployment of your site to Cloudflare Pages by going to your Pages dashboard through the account home and select **Create a project**. Choose the existing GitHub repository you use for your GitHub Pages site, and select **Install & Authorize** and **Begin setup** to continue. Next, on the **Set up builds and deployments** page, provide the following information:
 
 <TableLayout>
 
