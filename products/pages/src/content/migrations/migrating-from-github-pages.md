@@ -122,7 +122,7 @@ Once you've configured your site, you can begin your first deploy. You should se
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/getting-started).
 
 </Aside>
 
