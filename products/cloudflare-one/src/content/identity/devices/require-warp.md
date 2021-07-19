@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Require WARP
 
-<Asid type="note">
+<Aside type="note">
 
 This device posture attribute will check for all versions of WARP, including the consumer version. 
 
