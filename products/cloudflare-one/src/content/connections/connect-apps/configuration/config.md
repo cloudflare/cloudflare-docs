@@ -73,6 +73,7 @@ hello-world: true
 - [`transport-loglevel`](#transport-loglevel)
 - [`retries`](#retries)
 - [`pidfile`](#pidfile)
+- [`protocol`](#protocol)
 - [`logfile`](#logfile)
 - [`help`](#help)
 - [`version`](#version)
@@ -192,6 +193,14 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 | `pidfile value` | `TUNNEL_PIDFILE` |
 
 Write the application's PID to this file after the first successful connection. Mainly useful for scripting and service integration.
+
+### `protocol`
+
+| Syntax | Default | Environment Variable |
+|--|--|--|
+| `protocol` | `auto` | `TUNNEL_TRANSPORT_PROTOCOL` |
+
+Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `http2` protocol. 
 
 ### `logfile`
 
