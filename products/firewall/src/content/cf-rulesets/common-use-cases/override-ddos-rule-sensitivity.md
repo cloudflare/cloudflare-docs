@@ -6,12 +6,6 @@ order: 775
 
 # Adjust the sensitivity of a specific HTTP DDoS rule to Low
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Follow the steps below to override the sensitivity of a specific rule of the Cloudflare HTTP DDoS Managed Ruleset.
 
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase to deploy the Cloudflare HTTP DDoS Managed Ruleset. You only need to deploy this specific ruleset when you wish to define one or more overrides, since it is enabled by default.

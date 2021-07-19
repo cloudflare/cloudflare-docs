@@ -31,13 +31,17 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 
 ## Upload a CSV
 
-You can manually create a list or upload a CSV to Cloudflare for Teams. To begin, navigate to the Cloudflare for Teams dashboard and click on the `Lists` page. Click **Upload CSV** to add a CSV.
+You can manually create a list or upload a CSV to Cloudflare for Teams.
 
-![List Create](../static/secure-web-gateway/gateway-list/list-start.png)
+1. To begin, navigate to the [Teams Dashboard](https://dash.teams.cloudflare.com) and go to **My Team > Lists** page.
 
-Name the list and choose its type. A list can only include objects of the same type. You can add an optional comment. Next, click **select a file** and then **Create**.
+![List Create](../static/secure-web-gateway/gateway-list/lists.png)
 
-![List Add](../static/secure-web-gateway/gateway-list/list-create.png)
+1. Click **Upload CSV** to add a CSV.
+
+1. Name the list and choose its type. A list can only include objects of the same type. You can add an optional comment. Next, click **select a file** and then **Create**.
+
+    ![List Add](../static/secure-web-gateway/gateway-list/list-create.png)
 
 The list will begin to upload and confirm if successful.
 
@@ -47,11 +51,9 @@ The list will begin to upload and confirm if successful.
 
 The next page will present the items uploaded through the CSV. You can edit or remove individual items. You can also return to this page if you want to make edits, additions, or removals in the future.
 
-![List Upload](../static/secure-web-gateway/gateway-list/list-edit.png)
+![List Upload](../static/secure-web-gateway/gateway-list/edit-list.png)
 
 Click **Save** to proceed.
-
-![List Upload](../static/secure-web-gateway/gateway-list/list-save.png)
 
 ## Use a list
 

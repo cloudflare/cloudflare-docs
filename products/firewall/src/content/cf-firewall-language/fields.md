@@ -330,6 +330,15 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><code>cf.edge.server_ip</code><br /><Type>IP Address</Type></td>
+        <td>
+          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          </p>
+          <p>This field is only meaningful for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>.
+          </p>
+        </td>
+    </tr>
+    <tr>
         <td><code>cf.edge.server_port</code><br /><Type>Number</Type></td>
         <td>
           <p>Represents the port number at which Cloudflare's network received the request.
@@ -703,7 +712,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       <td><strong>Field Name</strong></td>
       <td style="width: 50%;"><strong>Description</strong></td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers">
       <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).
@@ -896,3 +905,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
     </tr>
   </tbody>
 </table>
+
+---
+
+_GeoIP is the registered trademark of MaxMind, Inc._

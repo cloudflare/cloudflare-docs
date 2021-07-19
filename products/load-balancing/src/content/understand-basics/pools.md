@@ -25,6 +25,8 @@ When working with pools, note the following:
 
 **Geo Steering directs traffic to pools based on the client’s region or point of presence.** If there is no Geo Steering configuration for a region or pool, the load balancer will use pool order to determine failover priority.
 
+**If Health Check Regions for a pool is set to All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
+
 ---
 
 ## Properties

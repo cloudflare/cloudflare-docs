@@ -41,4 +41,12 @@ Use the `to_string()` function to get the string representation of a non-string 
 
 See [Fields](https://developers.cloudflare.com/firewall/cf-firewall-language/fields) for reference information on these fields.
 
+<Aside type="warning" header="Important">
+
+To obtain the value of an HTTP request header using the [`http.request.headers`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#field-http-request-headers) field, specify the header name in **lowercase**.
+
+For example, to get the first value of the `Accept-Encoding` request header in an expression, use: `http.request.headers["accept-encoding"][0]`.
+
+</Aside>
+
 For information on the available functions, see [Functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions).

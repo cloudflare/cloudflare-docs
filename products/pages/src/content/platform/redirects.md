@@ -1,3 +1,8 @@
+---
+order: 6
+pcx-content-type: concept
+---
+
 # Redirects
 
 ## Creating redirects

@@ -1,6 +1,6 @@
 ---
 title: Images (beta)
-order: 7
+order: 8
 pcx-content-type: how-to
 ---
 
@@ -55,10 +55,6 @@ If the upload is successful, you can expect a JSON response body similar to this
 ```
 
 ## Displaying Images
-
-When you upload an image, you will see a `url` property that can be used to serve the image.
-  
-Currently, all images are auto-optimized based on device type. In future, we will be introducing custom variants so you can configure exactly how you'd like the image to be optimized.
 
 When you upload an image, you will see a `url` property that can be used to serve the image.
   

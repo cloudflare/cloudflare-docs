@@ -1,5 +1,6 @@
 ---
 order: 10
+pcx-content: how-to
 ---
 
 # Configure your browser to use DNS over HTTPS

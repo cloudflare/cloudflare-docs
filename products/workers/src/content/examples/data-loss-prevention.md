@@ -19,22 +19,19 @@ const SOME_HOOK_SERVER = "https://webhook.flow-wolf.io/hook"
 /**
  * Alert a data breach by posting to a webhook server
  */
-async function postDataBreach(request) {
-  const trueClientIp = request.headers.get("cf-connecting-ip")
-  const epoch = new Date().getTime()
-  const body = {
-    ip: trueClientIp,
-    time: epoch,
-    request: request
-  }
-  const init = {
-    body: JSON.stringify(body),
+function postDataBreach(request) {
+  return fetch(SOME_HOOK_SERVER, {
     method: "POST",
+    body: JSON.stringify(body),
     headers: {
       "content-type": "application/json;charset=UTF-8"
     },
-  }
-  return await fetch(SOME_HOOK_SERVER, init)
+    body: JSON.stringify({
+      ip: request.headers.get("cf-connecting-ip"),
+      time: Date.now(),
+      request: request
+    })
+  })
 }
 
 /**

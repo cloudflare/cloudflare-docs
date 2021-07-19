@@ -1,3 +1,8 @@
+---
+order: 1
+pcx-content-type: concept
+---
+
 # GitHub integration
 
 We support connecting Cloudflare Pages to your GitHub repositories to look for new changes to your project.
