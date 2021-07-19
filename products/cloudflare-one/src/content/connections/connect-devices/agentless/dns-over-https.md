@@ -7,6 +7,8 @@ pcx-content-type: how-to
 
 ## Browser
 
+Browsers can be configured to use any DoH endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway location as your DoH endpoint, otherwise Gateway DNS filtering will not occur in that browser. 
+
 ### Firefox
 
 <TableWrap>
