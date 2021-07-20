@@ -10,6 +10,7 @@ $["api-security"]         = require("@cloudflare/cloudflare-brand-assets/resourc
 $["automatic-platform-optimization"]   = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/automatic-platform-optimization.js").pathD
 $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
+$["cache"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
@@ -80,6 +81,11 @@ const products = [
     title: "BYOIP",
     path: "byoip",
     icon: "byoip",
+  },
+  {
+    title: "Cache",
+    path: "cache",
+    icon: "cache",
   },
   {
     title: "Cloudflare for Teams",
