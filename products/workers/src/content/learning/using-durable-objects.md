@@ -281,7 +281,9 @@ The destination class (the one that stored objects are being transferred to) for
 
 <Aside type="warning" header="Important">
 
-After a rename or transfer migration, requests to the destination Durable Object class will have access to the stored objects of the source Durable Object class. Don't do this without first ensuring that you aren't relying on the source Durable Object class having access to its stored data.
+After a rename or transfer migration, requests to the destination Durable Object class will have access to the stored objects of the source Durable Object class.
+
+Existing bindings to the source Durable Object class will continue to work, now pointing to the destination Durable Object class. Future script uploads must update the class name for the binding in the `[durable_objects]` section of `wrangler.toml`.
 
 </Aside>
 
