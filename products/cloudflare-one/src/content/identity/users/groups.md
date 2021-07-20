@@ -6,7 +6,7 @@ pcx-content-type: concept
 # Groups
 
 ## Definition
-A group is a set of rules that can be configured once and then quickly applied across many Access applications. You can select a group as a selector in any zero-trust rule, and all the criteria from the selected group will apply to that application.
+A group is a set of rules that can be configured once and then quickly applied across many Access applications. You can select a group as a selector in any Zero Trust policy, and all the criteria from the selected group will apply to that application.
 
 <Aside>
 
@@ -44,7 +44,7 @@ To create and manage groups:
 
 Group criteria determine whether or not a user is a member of a particular group.
 
-Groups follow the same [logic](/policies/) as rules for zero-trust policies in Access.
+Groups follow the same [logic](/policies/) as rules for Zero Trust policies in Access.
 
 Group criteria help define whether to include or exclude a team member from a  group. Here is a list of criteria and examples:
 * **Emails** — `you@company.com`

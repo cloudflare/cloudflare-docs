@@ -29,7 +29,7 @@ To apply these types of rules, you will need to deploy Cloudflare's agent on the
 
 ## Allow a team to reach social media
 
-Navigate to the Gateway section of the Cloudflare for Teams dashboard and open the `Policies` page. Select the `DNS` tab; if you see two `DNS` tabs, select the one marked `NEW`. Click **Create a DNS policy** to get started.
+Navigate to the Gateway section of the Cloudflare for Teams Dashboard and open the `Policies` page. Select the `DNS` tab; if you see two `DNS` tabs, select the one marked `NEW`. Click **Create a DNS policy** to get started.
 
 ![Start Process](../static/secure-web-gateway/id-dns/start-policy.png)
 

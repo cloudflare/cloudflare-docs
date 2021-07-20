@@ -5,10 +5,10 @@ pcx-content-type: navigation
 
 # Policies
 
-Policies are sets of rules that allow you to create:
+With Cloudflare for Teams, you can create: 
 
-* [**Secure Web Gateway**](/policies/filtering) rules to filter traffic to the Internet, with [Cloudflare Gateway](/glossary#cloudflare-gateway)
-* [**Zero Trust**](/policies/zero-trust) rules to secure applications with [Cloudflare Access](/glossary#cloudflare-access)
+* [**Secure Web Gateway**](/policies/filtering) policies to inspect outbound traffic to the Internet, with [Cloudflare Gateway](/glossary#cloudflare-gateway)
+* [**Zero Trust**](/policies/zero-trust) policies to secure inbound traffic to your applications with [Cloudflare Access](/glossary#cloudflare-access)
 
 
 ## Related tutorials
