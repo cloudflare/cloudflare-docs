@@ -269,25 +269,33 @@ The `[durable_objects]` section has 1 subsection:
   - `class_name` - Required, The class name you wish to bind to.
   - `script_name` - Optional, Defaults to the current environment's script.
 
-### Durable Object migrations
+### Configuring Durable Object classes with migrations
 
 When you export a new Durable Objects class from your script, you must tell the Workers platform about it before you can create and access Durable Objects associated with that class from a Durable Object binding. This process is called a "migration".
 
-The migration mechanism is also used to:
-* Transfer stored objects between two Durable Object classes in the same script, called a rename migration
-* Transfer stored objects between two Durable Object classes in different scripts, called a transfer migration.
-* Delete stored objects for a given Durable Object class
+Migrations can also be used for transferring stored data between two Durable Object classes:
+* Rename migrations are used to transfer stored objects between two Durable Object classes in the same script
+* Transfer migrations are used to transfer stored objects between two Durable Object classes in different scripts
+
+The destination class (the one that stored objects are being transferred to) for a rename or transfer migration must be exported by the script.
+
+<Aside type="warning" header="Important">
+
+After a rename or transfer migration, requests to the destination Durable Object class will have access to the stored objects of the source Durable Object class. Don't do this without first ensuring that you aren't relying on the source Durable Object class having access to its stored data.
+
+</Aside>
+
+Migrations can also be used to delete a given Durable Object class along with its stored objects.
 
 <Aside type="warning" header="Important">
 
 Running a delete migration will delete all Durable Objects associated with the deleted class, including all of their stored data. Don't do this without first ensuring that you aren't relying on the Durable Objects anymore and have copied any important data to some other location.
 
-A similar warning applies to rename and transfer migrations -- make sure you are not relying on the source Durable Object classes before applying a rename or transfer migration.
-
 </Aside>
 
-Migrations can be performed in two different ways: An "ad hoc" migration using extra options on `wrangler publish`, or using the migration list in `wrangler.toml`. Migrations specified in `wrangler.toml` have the additional requirement of a "migration tag", which is used to determine
-which migrations have already been applied, and therefore can be skipped for a given script upload. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+Migrations can be performed in two different ways: by listing them in `wrangler.toml` or by manually providing "ad hoc" migrations using extra options on wrangler publish. Migrations specified in `wrangler.toml` have the additional requirement of a "migration tag", which is used to determine which migrations have already been applied, and therefore can be skipped for a given script upload. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+
+### Durable Object migrations in `wrangler.toml`
 
 The migration list (added in `wrangler 1.19.0`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments, and cannot be overridden by a specific environment. Like "ad hoc" migrations, they are applied when you run `wrangler publish` on the selected environment's script. For our `DurableObjectExample` class, we need a migration list like this:
 
@@ -308,8 +316,18 @@ renamed_classes = [{from: "OldClass", to: "NewClass"}] # array of rename directi
 transferred_classes = [{from_script: "old_script", from: "ExampleClass", to: "ExampleClass"}] # array of transfer directives
 ```
 
-Ad hoc migrations are performed using extra options on `wrangler publish`. Several options can be passed at once in a single `wrangler publish` call. You can also specify `--old-tag <tag>` and `--new-tag <tag>` if your script has a migration tag associated with it but you still
-want to do an ad hoc migration.
+<Aside>
+
+Note that toml doesn't allow line breaks in inline tables (the `{key: "value"}` syntax), but line breaks
+in the surrounding inline array are OK.
+
+</Aside>
+
+### Ad hoc Durable Object migrations
+
+Ad hoc migrations are performed using extra options on `wrangler publish`. Several options can be passed at once in a single `wrangler publish` call. You can also specify `--old-tag <tag>` and `--new-tag <tag>` if your script has a migration tag associated with it but you still want to do an ad hoc migration.
+
+When an ad hoc migration is performed, any migrations listed in `wrangler.toml` are ignored.
 
 The list of ad hoc migration options that can be added to `wrangler publish` is as follows:
 
