@@ -230,7 +230,7 @@ At this point the shortcut will appear on the desktop, and users can launch with
 
 <Aside type="note">
   
-  Before you start, make sure you download a remote desktop client for macOS.
+  Before you start, make sure you download an RDP client for macOS.
   
 </Aside>
 
