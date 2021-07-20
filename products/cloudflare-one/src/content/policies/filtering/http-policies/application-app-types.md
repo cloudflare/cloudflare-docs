@@ -16,6 +16,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 1. Navigate to the **HTTP tab**.
 
 1. [Create a new rule](/policies/filtering/http-policies/policy-management#create-your-first-http-policy), or edit an existing one.
+
 1. In the **Selector** drop-down menu, select the *Application* option. 
 
 1. In the **Operator** drop-down menu, select *in* or *not in*, depending on whether you want to include or exclude applications or app types from your rule.
@@ -32,6 +33,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 ## Supported applications and app types
 
 ### Applications
+
 A full list of supported applications and their respective app types are available to download [here](../../../static/documentation/applications.csv).
 
 ### App types

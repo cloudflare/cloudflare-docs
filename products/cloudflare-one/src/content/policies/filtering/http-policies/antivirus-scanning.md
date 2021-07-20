@@ -5,15 +5,17 @@ pcx-content-type: concept
 
 # AV scanning
 
-Cloudflare Gateway protects users as they navigate the Internet. When you download or upload a file to an origin on the Internet, that file could potentially contain malicious code that, if executed on your machine, may cause the device to perform undesired behavior. To prevent this, Cloudflare Gateway allows admins to enable **Anti-Virus (AV) scanning** of files that are uploaded and/or downloaded by users as the file passes through Gateway. 
+Cloudflare Gateway protects users as they navigate the Internet. When users download or upload a file to an origin on the Internet, that file could potentially contain malicious code that may cause their device to perform undesired behavior.
 
-AV scanning of files requires organizations to enable HTTP traffic filtering.
+To prevent this, Cloudflare Gateway allows admins to enable **Anti-Virus (AV) scanning** of files that are uploaded or downloaded by users as the file passes through Gateway. 
+
+AV scanning of files requires organizations to enable Proxy mode under **Settings** > **Network** > **Layer 7 Firewall**.
 
 ## Enable AV scanning
 
 To enable AV scanning:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
+1. On the [Teams Dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
 
 1. In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 
@@ -23,7 +25,7 @@ To enable AV scanning:
 
 ## How Gateway determines if a file should be scanned
 
-If enabled, Gateway will use the following to determine whether a file is present in a request or response, and whether to scan that file (first match will result in the file being scanned):
+If AV scanning is enabled, Gateway will use the following to determine whether a file is present in a request or response, and whether to scan that file (first match will result in the file being scanned):
 
 * If the Content-Disposition HTTP header is `Attachment`
 * If the byte signature of the body of the request matches a signature we identify as one of the following file type categories:
@@ -40,7 +42,7 @@ If a file does not trigger a scan based on the three methods above but also does
 
 ## Non-scannable files
 
-Not all files are able to be scanned — for example, password protected files that cannot be opened due to encryption. Admins can choose whether to **fail open** (allow the file to pass through unscanned) or to **fail closed** (deny the file transfer).
+Not all files are able to be scanned. For example, this is the case for password protected files that cannot be opened due to encryption. Admins can choose whether to **fail open** (allow the file to pass through unscanned) or to **fail closed** (deny the file transfer).
 
 The following files cannot be scanned and will be blocked or allowed based on whether the admin configured Gateway to fail open or closed:
 
@@ -53,6 +55,7 @@ The following files cannot be scanned and will be blocked or allowed based on wh
 ## Opt content out from scanning
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. The following selectors can be used to opt HTTP traffic out from AV scanning using the Do Not Scan action:
+
 * Application
 * Hostname
 * URL
@@ -72,7 +75,7 @@ For example, an enables AV scanning for all files uploaded and downloaded throug
 | - | - | - | - | - |
 | Hostname | Matches Regex | `.*example.com` | Do Not Scan |
 
-Opting out of AV scanning applies to both uploads and downloads of files (i.e., it matches the global AV scanning setting). If an admin has chosen, for example, to only globally scan uploads then opting out of AV scanning only applies to uploads.  
+Opting out of AV scanning applies to both uploads and downloads of files (i.e., it matches the global AV scanning setting). If an admin has chosen, for example, to only globally scan uploads, then opting out of AV scanning only applies to uploads.  
 
 ## Supported compressed file types
 
