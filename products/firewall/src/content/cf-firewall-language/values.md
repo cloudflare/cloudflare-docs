@@ -53,15 +53,15 @@ The Cloudflare Firewall Rules language includes [fields](/cf-firewall-language/f
 
 You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
 
-Functions like `all()` and `any()` work with arguments of `Array` type. Use the `[*]` index/unpacking operator when specifying an expression that should be evaluated in the context of each array element.
+Use the special notation `[*]` when specifying an expression that will be evaluated for each array element. This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
 
 <Aside type="note" header="Notes">
 
 It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
 
-You can only use the `[*]` operator when providing an argument of type `Array` to a function that allows/expects an array argument.
+You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
-The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator (however, they support indexed array elements like `array_value[0]`). For example, you cannot use the `[*]` operator with the `==` operator, except when specifying an array function argument:
+The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
 
 * `http.request.headers.names[*] == "Content-Type"` — **invalid** expression
 * `any(http.request.headers.names[*] == "Content-Type")` — **valid** expression
