@@ -39,7 +39,7 @@ Jane is a Cloudflare WARP user in Glendive, Montana, USA. She is interested in t
 
 ![Waiting room process flow](../static/client-ip-geolocation-example.png)
 
-Jane connects to Cloudflare’s edge using a secure tunnel. Cloudflare operates an Anycast network and dictates VPN ingress by Anycast. Jane’s VPN traffic lands in the Cloudflare Minneapolis datacenter, [930km from Glendive](http://www.gcmap.com/mapui?P=GDV-MSP).
+Jane connects to Cloudflare’s edge using a secure tunnel. Cloudflare operates an anycast network and dictates VPN ingress by anycast. Jane’s VPN traffic lands in the Cloudflare Minneapolis data center, [930km from Glendive](http://www.gcmap.com/mapui?P=GDV-MSP).
 
 A naive geolocation implementation would provide unacceptably inaccurate information. It would have Jane geolocated to Minneapolis, which is in a totally different state — Minnesota instead of Montana — and Designated Marketing Area — Glendive, MT, the [country’s smallest DMA](https://mediatracks.com/resources/nielsen-dma-rankings-2020/), instead of Minneapolis, MN — from her true location. From a content distribution perspective, this level of geolocation is **not acceptable**.
 
