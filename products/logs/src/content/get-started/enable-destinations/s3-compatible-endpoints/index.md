@@ -7,12 +7,13 @@ pcx-content-type: how-to
 
 Cloudflare Logpush supports pushing logs to S3-compatible destinations via the Cloudflare dashboard or via API, including:
 
-* [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
-* [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
 * [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
+* [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
+* [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
+* [IBM Cloud Object Storage](https://cloud.ibm.com/apidocs/cos/cos-compatibility)
 * [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
-* [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
 * [Linode Object Storage](https://www.linode.com/products/object-storage/)
+* [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
 * On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
 For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](/get-started/) documentation.
