@@ -148,7 +148,7 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
   </tbody>
 </table>
 
-To cache additional content, see [Page Rules]()/how-to/create-page-rules) to create a rule to cache everything.
+To cache additional content, see [Page Rules](/how-to/create-page-rules) to create a rule to cache everything.
 
 ## Customization options and limitations
 

@@ -1,7 +1,7 @@
 ---
 title: Create custom cache keys
 order: 13
-pcx-content-type: concept
+pcx-content-type: how-to
 ---
 
 # Create custom cache keys

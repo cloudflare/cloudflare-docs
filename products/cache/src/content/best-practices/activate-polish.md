@@ -12,7 +12,7 @@ Polish strips metadata to accelerate image downloads and reduce image size throu
 
 <Aside type="note" header="Note">
 
-Cloudflare Image Resizing(https://support.cloudflare.com/hc/articles/360028146432) also optimizes images cached in the Cloudflare network, but is only available for Business and Enterprise users.
+[Cloudflare Image Resizing](https://developers.cloudflare.com/images/) also optimizes images cached in the Cloudflare network, but is only available for Business and Enterprise users.
 
 </Aside>
 
@@ -43,7 +43,7 @@ Polish creates and caches a WebP version of the image and delivers it to the bro
 
 ## Activate Polish
 
-Images in the [cache must be purged](https://docs.google.com/document/d/1d914GxRjJol1ETq02WnJ20rCfFKKUt_Zzqumtz4Qkak/edit#heading=h.xhg8ndks215i) or expired before seeing any changes in Polish settings.
+Images in the [cache must be purged](/how-to/purge-cache) or expired before seeing any changes in Polish settings.
 
 1. Log in to the Cloudflare dashboard.
 1. Click the appropriate Cloudflare account for the domain where you will activate Polish.
@@ -69,4 +69,4 @@ cf-cache-status: HIT
 
 WebP conversion does not change the image URL. The `Content-Type` HTTP header tells the browser the original format of an image.
 
-To view a list of common `Cf-Polished` statuses and how to troubleshoot them, see [Common Cf-Polished statuses](/content/reference/common-cf-published-statuses).
+To view a list of common `Cf-Polished` statuses and how to troubleshoot them, see [Common Cf-Polished statuses](/reference/common-cf-published-statuses).

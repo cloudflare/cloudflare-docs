@@ -303,7 +303,7 @@ This configuration indicates the asset is fresh for 600 seconds. The asset can b
 
 ### [Edge Cache TTL](/about/edge-browser-cache-ttl#edge-cache-ttl) 
 
-Edge Cache TTL Page Rulesoverride `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
+Edge Cache TTL Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
 
 ### [Browser Cache TTL](/about/edge-browser-cache-ttl#browser-cache-ttl)
 Browser Cache TTL Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.

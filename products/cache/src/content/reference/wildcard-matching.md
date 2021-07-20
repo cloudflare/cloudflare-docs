@@ -34,6 +34,6 @@ To add a $ character in the forwarding URL, escape it by adding a backslash `\` 
 
 <Aside type="warning" header="Warning">
 
-Avoid creating a redirect where the domain points to itself as the destination. A domain that points to itself can cause an infinite redirect error, which makes your site unservable to visitors.
+Avoid creating a redirect where the domain points to itself as the destination. A domain that points to itself can cause an [infinite redirect error](https://support.cloudflare.com/hc/articles/115000219871#h_af6598f6-bc1c-4a4d-ac5f-538230a704b7), which makes your site inaccessible to visitors.
 
 </Aside>

@@ -89,13 +89,11 @@ You can also [purchase additional rules](https://www.cloudflare.com/features-pag
   - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
   - **Save and Deploy** to save the rule and enable it immediately.
 
-<Aside type="note" header="note">
+<Aside type="note" header="Note">
 
 We do not support non-ASCII characters (e.g. punycode/unicode domain) in Page Rules. Instead, you can URL-encode the string using [Punycode converter](https://www.punycoder.com/) as a workaround.
 
 </Aside>
-
-Consult Recommended Page Rules to Consider for ideas about the types of page rules you can create.
 
 ## Edit existing page rules
 

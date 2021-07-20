@@ -10,7 +10,7 @@ Cloudflare makes customer websites faster by storing a copy of the website’s c
 
 Cloudflare caches static content based on the following factors:
 
-- Cache level set at a zone or [page rule](https://support.cloudflare.com/hc/articles/218411427)
+- Cache level set at a zone or [page rule](/how-to/create-page-rules)
 - File extension
 - Presence of query strings
 - Origin cache-control headers

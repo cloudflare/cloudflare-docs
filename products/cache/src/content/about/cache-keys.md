@@ -34,7 +34,7 @@ There are a couple of common reasons to change the Cache Key Template. You might
 
 <Aside type="note" header="Note">
 
-`$scheme` is the protocol (HTTP or HTTPS) sent to your origin web server and not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](https://support.cloudflare.com/hc/articles/200170416) influences caching decisions. For instance, Cloudflare only attempts to connect to your origin web server via HTTP when [Flexible SSL](https://support.cloudflare.com/hc/articles/200170416#h_4e0d1a7c-eb71-4204-9e22-9d3ef9ef7fef) is utilized. Thus, Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
+`$scheme` is the protocol (HTTP or HTTPS) sent to your origin web server and not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](https://support.cloudflare.com/hc/articles/200170416) influences caching decisions. For instance, Cloudflare only attempts to connect to your origin web server via HTTP when [Flexible SSL](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#flexible) is utilized. Thus, Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
 
 </Aside>
 
@@ -43,7 +43,7 @@ For cross-origin requests, such as one from `anotherdomain.com` to `example.com`
 A [Cache Level](/how-to/set-caching-levels) of Ignore Query String creates the following Cache Key:
 `${header:origin}::${scheme}://${host_header}${uri_iqs}`
 
-`${uri_iqs}` is replaced with the request path excluding the query string, so a request for http://example.com/file.jpg?something=123 creates the following Cache Key:
+`${uri_iqs}` is replaced with the request path excluding the query string, so a request for `http://example.com/file.jpg?something=123` creates the following Cache Key:
 `::http://example.com/file.jpg`
 
 ## Cache Key Settings
@@ -96,8 +96,7 @@ Currently, you can only exclude the `Origin` header. The `Origin` header is alwa
   - `cookie`
   - `host`
 - Headers that are specific to Cloudflare and prefixed with `cf-`, e.g. `cf-ray`
-- Headers that are already included in the custom Cache Key template
-  - `origin`
+- Headers that are already included in the custom Cache Key template, e.g. `origin`
 
 ### Host
 
@@ -111,7 +110,7 @@ Like `query_string` or `header`, `cookie` controls which cookies appear in the C
 
 #### Usage notes
 
-You cannot include cookies specific to Cloudflare. Cloudflare cookies are prefixed with `__cf`, e.g. `__cfuid`
+You cannot include cookies specific to Cloudflare. Cloudflare cookies are prefixed with `__cf`, e.g. `__cflb`
 
 #### User features
 
