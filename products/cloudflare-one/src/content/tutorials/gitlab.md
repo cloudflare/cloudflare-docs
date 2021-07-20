@@ -91,7 +91,7 @@ Users connect to GitLab over SSH (port 22 here) and HTTP for the web app (port 8
 
 You can use Cloudflare Access to build Zero Trust rules to determine who can connect to both the web application of GitLab (HTTP) and who can connect over SSH.
 
-When a user makes a request to a site protected by Access, that request hits Cloudflare's network first. Access can then check if the user is allowed to reach the application. When integrated with Cloudflare Tunnel, the zero-trust architecture looks like this:
+When a user makes a request to a site protected by Access, that request hits Cloudflare's network first. Access can then check if the user is allowed to reach the application. When integrated with Cloudflare Tunnel, the Zero Trust architecture looks like this:
 
 ![GitLab Services](../static/zero-trust-security/gitlab/teams-diagram.png)
 
@@ -101,7 +101,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the `Applications` page in the Cloudflare for Teams dashboard. Click `Add an application`.
+Once enabled, navigate to the `Applications` page in the Cloudflare for Teams Dashboard. Click `Add an application`.
 
 ![Applications Page](../static/secure-origin-connections/share-new-site/applications.png)
 
@@ -290,6 +290,6 @@ Cloudflare Tunnel will continue to run outbound-only connections and I can avoid
 
 ## View logs
 
-You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Cloudflare for Teams dashboard.
+You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Cloudflare for Teams Dashboard.
 
 ![View Logs](../static/zero-trust-security/gitlab/view-logs.png)

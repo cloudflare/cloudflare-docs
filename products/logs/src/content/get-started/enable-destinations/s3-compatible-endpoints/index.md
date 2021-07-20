@@ -7,7 +7,6 @@ pcx-content-type: how-to
 
 Cloudflare Logpush supports pushing logs to S3-compatible destinations via the Cloudflare dashboard or via API, including:
 
-
 * [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
 * [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
 * [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
