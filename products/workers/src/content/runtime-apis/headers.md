@@ -37,7 +37,7 @@ Cloudflare sets a number of its own custom headers on and incoming requests and 
 
 ### Request headers
 
-* `CF-Connecting-IP`: In same zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
+* `CF-Connecting-IP`: In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
 
     In cross-zone subrequests from one Cloudflare customer zone to another Cloudflare customer zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons. 
 
