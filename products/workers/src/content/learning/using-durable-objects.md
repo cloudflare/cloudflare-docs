@@ -245,7 +245,7 @@ This will create a directory for your project with basic configuration and a sin
 * [Durable Objects Rollup ES Modules template](https://github.com/cloudflare/durable-objects-rollup-esm)
 * [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
 
-The following sections will cover how to customize the configuration, but if you'd like you can immediately publish the generated project using `wrangler publish`.
+The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using `wrangler publish`.
 
 ### Specifying the main module
 
@@ -265,7 +265,7 @@ bindings = [
 The `[durable_objects]` section has 1 subsection:
 
 - `bindings` - An array of tables, each table can contain the below fields.
-  - `name` - Required, The binding name to use within your worker.
+  - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
   - `script_name` - Optional, Defaults to the current environment's script.
 
@@ -274,10 +274,10 @@ The `[durable_objects]` section has 1 subsection:
 When you export a new Durable Objects class from your script, you must tell the Workers platform about it before you can create and access Durable Objects associated with that class from a Durable Object binding. This process is called a "migration".
 
 Migrations can also be used for transferring stored data between two Durable Object classes:
-* Rename migrations are used to transfer stored objects between two Durable Object classes in the same script
-* Transfer migrations are used to transfer stored objects between two Durable Object classes in different scripts
+* Rename migrations are used to transfer stored objects between two Durable Object classes in the same script.
+* Transfer migrations are used to transfer stored objects between two Durable Object classes in different scripts.
 
-The destination class (the one that stored objects are being transferred to) for a rename or transfer migration must be exported by the script.
+The destination class (the class that stored objects are being transferred to) for a rename or transfer migration must be exported by the script.
 
 <Aside type="warning" header="Important">
 
@@ -291,15 +291,15 @@ Migrations can also be used to delete a given Durable Object class along with it
 
 <Aside type="warning" header="Important">
 
-Running a delete migration will delete all Durable Objects associated with the deleted class, including all of their stored data. Don't do this without first ensuring that you aren't relying on the Durable Objects anymore and have copied any important data to some other location.
+Running a delete migration will delete all Durable Objects associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting. 
 
 </Aside>
 
-Migrations can be performed in two different ways: by listing them in `wrangler.toml` or by manually providing "ad hoc" migrations using extra options on wrangler publish. Migrations specified in `wrangler.toml` have the additional requirement of a "migration tag", which is used to determine which migrations have already been applied, and therefore can be skipped for a given script upload. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+Migrations can be performed in two different ways: by listing them in `wrangler.toml` or by manually providing ad hoc migrations using extra options on `wrangler publish`. Migrations specified in `wrangler.toml` have the additional requirement of a **migration tag**, which is used to determine which migrations have already been applied, and therefore can be skipped for a given script upload. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
 
 ### Durable Object migrations in `wrangler.toml`
 
-The migration list (added in `wrangler 1.19.0`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments, and cannot be overridden by a specific environment. Like "ad hoc" migrations, they are applied when you run `wrangler publish` on the selected environment's script. For our `DurableObjectExample` class, we need a migration list like this:
+The migration list (added in `wrangler 1.19.0`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments, and cannot be overridden by a specific environment. Like ad hoc migrations, they are applied when you run `wrangler publish` on the selected environment's script. For our `DurableObjectExample` class, you need a migration list like this:
 
 ```toml
 [[migrations]]
@@ -318,10 +318,10 @@ renamed_classes = [{from: "OldClass", to: "NewClass"}] # array of rename directi
 transferred_classes = [{from_script: "old_script", from: "ExampleClass", to: "ExampleClass"}] # array of transfer directives
 ```
 
-<Aside>
+<Aside type="note">
 
-Note that toml doesn't allow line breaks in inline tables (the `{key: "value"}` syntax), but line breaks
-in the surrounding inline array are OK.
+Note that `.toml` files do not allow line breaks in inline tables (the `{key: "value"}` syntax), but line breaks
+in the surrounding inline array are acceptable.
 
 </Aside>
 
