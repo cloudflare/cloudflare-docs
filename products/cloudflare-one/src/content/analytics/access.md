@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: concept
 ---
  
-# Shadow IT
+# Shadow IT Discovery
  
 The Teams Shadow IT Discovery page gives you visibility over which SaaS applications your end users are visiting. This information enables you to create the appropriate Zero Trust or Secure Web Gateway policies in Cloudflare for Teams, so that you can have control over the security of your users and data.
 
