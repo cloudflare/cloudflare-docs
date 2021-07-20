@@ -14,7 +14,7 @@ Magic WAN relies on Generic Routing Encapsulation (GRE) tunnels to transmit pack
 
 - Support GRE tunneling
 - Allow configuration of at least one tunnel per Internet service provider (ISP)
-- Support maximum segment size (MSS) clamping.
+- Support maximum segment size (MSS) clamping
 
 ## Draft Letter of Authorization
 

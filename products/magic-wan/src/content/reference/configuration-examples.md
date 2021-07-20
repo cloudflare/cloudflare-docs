@@ -1,5 +1,4 @@
 ---
-title: Configuration examples
 order: 9
 pcx-content-type: reference
 ---

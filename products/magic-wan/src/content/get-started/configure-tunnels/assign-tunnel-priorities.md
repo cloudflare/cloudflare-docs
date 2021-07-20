@@ -13,7 +13,7 @@ You must assign a route priority to each GRE tunnel–subnet pair in your GRE co
 - Lower values have greater priority.
 - When the priority values for prefix entries match—as illustrated by the 103.21.244.0/24 subnet in the example routing configuration (in boldface)—Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic.
 
-For more on how Cloudflare uses ECMP packet forwarding, see [_Traffic steering_](/about/traffic-steering).
+For more on how Cloudflare uses ECMP packet forwarding, see [Traffic steering](https://developers.cloudflare.com/magic-transit/about/traffic-steering).
 
 For an example edge routing configuration, refer to this table:
 
@@ -68,7 +68,3 @@ For an example edge routing configuration, refer to this table:
     </tr>
   </tbody>
 </table>
-
-## Create and edit static routes
-
-<StaticRoutesApi/>

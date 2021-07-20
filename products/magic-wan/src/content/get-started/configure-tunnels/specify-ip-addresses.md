@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Specify IP addresses for endpoint health checks
 
-Magic WAN uses endpoint health checks to determine the overall health of your inter-network connections. Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network, beyond the tunnel-terminating border router. These “long distance” probes are purely diagnostic.
+Magic WAN uses endpoint health checks to determine the overall health of your inter-network connections. Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network. This process occurs beyond the tunnel-terminating border router, and these “long distance” probes are purely diagnostic.
 
 When choosing which endpoint IP addresses to monitor with health checks, keep in mind that redundant IPs routed via the same ISP and infrastructure are unnecessary but are useful when troubleshooting.
 
