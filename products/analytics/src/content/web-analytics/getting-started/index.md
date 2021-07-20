@@ -6,18 +6,31 @@ pcx-content-type: how-to
 
 # Enabling Cloudflare Web Analytics
 
+## New users
 
-If you already have a Cloudflare account, go to Web Analytics from your Account Home page and skip to step 4.
-
-1. Visit [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics). 
-1. Enter your Email address and password.
+1. Go to [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics).
+1. Enter an Email address and password.
 1. Click **Create Account**.
-1. Enter your website’s hostname and click **Next**.
-1. Copy the JS Snippet and add it to any of your website’s HTML pages before the ending body tag.
-1. Click **Next**.
+1. Enter your website’s hostname. Automatic setup is enabled by default.
+1. Click **Done**.
 1. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
 
-Repeat steps 4-7 for all of the websites you want to track with Web Analytics. Cloudflare enforces a soft limit of 10 sites per account, but that can be adjusted by contacting Cloudflare support. 
+Repeat steps 4-6 for all of the websites you want to track with Web Analytics. For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
 
-Once enabled, find and copy the JS Snippet on the left menu of the Web Analytics page anytime.
+## Existing users
 
+1. Go to Web Analytics.
+2. Under **Quick Actions**, click **Add a site**.
+3. Enter your website’s hostname. Automatic setup is enabled by default.
+4. Click **Done**.
+5. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
+
+Repeat steps 3-5 for all of the websites you want to track with Web Analytics. For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
+
+## Advanced options
+
+To set up Web Analytics manually, expand **Advanced Options** during setup and select **Disable automatic setup**. Then copy the JS snippet and add it to any of your website’s HTML pages before the ending body tag.
+
+Find and copy the JS Snippet from the **Manage site** settings at any time.
+
+For more information on how to configure which sites you track with Web Analytics, refer to [Rules](../understanding-web-analytics/rules/).
