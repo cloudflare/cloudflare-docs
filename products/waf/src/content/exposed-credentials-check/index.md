@@ -5,16 +5,16 @@ order: 3
 
 # Automated exposed credentials check (Beta)
 
-<Aside type='warning'>
+<Aside type='note'>
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is available to all paid plans.
 
 </Aside>
 
 Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
 
 Cloudflare offers you automated checks for exposed credentials using Cloudflare Web Application Firewall (WAF).
- 
+
 The WAF provides two mechanisms for this check:
 
 * The **Exposed Credentials Check Managed Ruleset**, which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
@@ -66,7 +66,6 @@ The Managed Ruleset contains an additional rule that blocks HTTP requests alread
 
 You can turn the Managed Ruleset on/off and customize the action performed by each rule when there is a match. Check [Configure exposed credentials check in the dashboard](/exposed-credentials-check/configure-dashboard) for more information.
 
-
 ## Exposed credentials checks in custom rules
 
 <Aside type='warning'>
@@ -89,4 +88,4 @@ Rules that check for exposed credentials run before Rate Limiting Rules.
 
 ## Availability
 
-Exposed credentials checking is available in Beta to customers on an Enterprise plan, where it is enabled by default.
+Exposed credentials checking is available in Beta to all paid plans.

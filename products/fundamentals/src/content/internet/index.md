@@ -1,6 +1,6 @@
 ---
-title: The Internet
 order: 2
+pcx-content-type: concept
 ---
 
 # The Internet

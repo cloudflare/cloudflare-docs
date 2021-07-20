@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: concept
 ---
 
 # CORS
@@ -21,7 +22,11 @@ To handle CORS headers for the policy protecting the path that requires CORS, na
 ## Access and CORS
 
 <Aside type='Warning' header='Important'>
-Safari, in particular Safari 13.1, handles cookies in a unique format. In some cases, this can cause CORS to fail. This will be dependent on Apple releasing a patch for handling cookies. This is known to impact macOS 10.15.4 when running Safari 13.1 (15609.1.20.111.8).
+
+* Safari, in particular Safari 13.1, handles cookies in a unique format. In some cases, this can cause CORS to fail. This will be dependent on Apple releasing a patch for handling cookies. This is known to impact macOS 10.15.4 when running Safari 13.1 (15609.1.20.111.8).
+
+* Do not troubleshoot CORS in Incognito mode, as this will cause disruptions with Access due to `CF-Authorization` being blocked as a third-party cookie on cross origin requests"
+
 </Aside>
 
 If you have two sites protected by Cloudflare Access, `app1.site.com` and `app2.hostname.com`, requests made between the two will be subject to CORS checks. Users who login to `app1.site.com` will be issued cookies for `app1.site.com` and your Cloudflare Access [team domain](/glossary#team-domain).
@@ -86,7 +91,7 @@ cf-request-id: 0244b54354000082d7b991f200000001
 
 In general, we recommend the following steps when troubleshooting CORS issues:
 
-1. Capture a HAR file with the issue described.
+1. Capture a HAR file with the issue described, as well as the JS console log output recorded simultaneously. This is because the HAR file alone will not give full visibility on the reason behind cross-origin issues.
 2. Ensure that the application has set `credentials: 'same-origin'` in all fetch or XHR requests.
 3. If you are using the [cross-origin setting](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) on script tags, these must be set to "use-credentials".
 

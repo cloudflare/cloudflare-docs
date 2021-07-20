@@ -1,5 +1,6 @@
 ---
-order: 1
+order: 2
+pcx-content-type: configuration
 ---
 
 # URL format

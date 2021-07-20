@@ -3,7 +3,6 @@ order: 1000
 type: example
 summary: Serve an HTML form, then read POST requests. Use also to read JSON or POST data from an incoming request.
 tags:
-  - HTML
   - JSON
   - Originless
 ---
@@ -42,10 +41,10 @@ async function readRequestBody(request) {
     return JSON.stringify(await request.json())
   }
   else if (contentType.includes("application/text")) {
-    return await request.text()
+    return request.text()
   }
   else if (contentType.includes("text/html")) {
-    return await request.text()
+    return request.text()
   }
   else if (contentType.includes("form")) {
     const formData = await request.formData()

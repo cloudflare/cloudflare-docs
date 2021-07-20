@@ -7,12 +7,6 @@ order: 772
 
 # Use category overrides to enable Joomla rules
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy Managed Rulesets and override their behavior. This ensures that **only rules with a specific tag are enabled**. By default, enabled rules run with actions set by the ruleset issuer in the Managed Ruleset.
 
 Follow the steps below to deploy Managed Rulesets that enable rules tagged with `joomla`.

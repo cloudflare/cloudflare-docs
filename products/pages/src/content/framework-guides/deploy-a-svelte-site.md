@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Svelte site
 
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
@@ -50,15 +54,22 @@ Select the new GitHub repository that you created above and, in the configuratio
 
 <TableLayout>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `build`          |
+| Configuration option  | Value              |
+| --------------------- | ------------------ |
+| Production branch     | `main`             |
+| Build command         | `npm run build`    |
+| Build directory       | `build`            |
+| Environment Variables | `NODE_VERSION: 14` |
 
 </TableLayout>
 
 Optionally, you can customize the `Project Name` setting. It defaults to the repository's name, but it does not need to match. This value is assigned as your `pages.dev` subdomain.
+
+<Aside type="warning">
+
+**Important:** SvelteKit requires Node.js v14.x or later to build successfully! You must expand the "Environment Variables (advanced)" section and add a `NODE_VERSION` variable with a value of `14` or greater.
+
+</Aside>
 
 ### SvelteKit Configuration
 

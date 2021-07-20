@@ -1,5 +1,6 @@
 ---
 order: 30
+pcx-content-type: how-to
 ---
 
 # Run as a service
@@ -41,6 +42,16 @@ If you do not have a configuration file, you will need to create a config.yml fi
 The above arguments are required for pre-configured Cloudflare Tunnel deployments. If you are using legacy Tunnels, without names, you can append the `--legacy` flag when running `cloudflared` tunnel install command.
 
 </Aside>
+
+Then, start the system service with the following command:
+```sh
+$ sudo systemctl start cloudflared
+``` 
+
+Or start on boot with:
+```sh
+$ sudo systemctl enable cloudflared
+```
 
 ## macOS
 

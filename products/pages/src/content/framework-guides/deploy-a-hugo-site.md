@@ -1,3 +1,7 @@
+---
+pcx-content-type: how-to
+---
+
 # Deploy a Hugo site
 
 Hugo is a tool for generating static sites, written in Go. It's incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
@@ -53,7 +57,8 @@ Hugo sites use _themes_ to customize the look and feel of the statically built H
 ```sh
 $ cd my-hugo-site
 $ git init
-$ git clone https://github.com/panr/hugo-theme-terminal.git themes/terminal
+$ git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal
+$ git submodule update --init --recursive
 ```
 
 You should also copy the default configuration provided by the theme into the `config.toml` file. Take the following information and customize it per your site's needs:

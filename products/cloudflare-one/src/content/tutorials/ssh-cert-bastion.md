@@ -1,6 +1,7 @@
 ---
 updated: 2021-01-19
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # SSH with short-lived certificates
@@ -62,7 +63,7 @@ Next, create a new Tunnel with the following command. You can replace `ssh-pool`
 $ cloudflared tunnel create ssh-pool
 ```
 
-`cloudflared` will create the Tunneland generate a UUID and corresponding credentials file.
+`cloudflared` will create the Tunnel and generate a UUID and corresponding credentials file.
 
 You can now configure your Tunnel. The example configuration file below uses the UUID value of the Tunnel, adds the path to the credentials file, and sets an optional logging location.
 

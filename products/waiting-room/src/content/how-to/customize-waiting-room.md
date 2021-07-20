@@ -5,17 +5,21 @@ pcx-content-type: how-to
 
 # Customize a waiting room
 
-<Aside>
-Only Project Fair Shot (and soon Enterprise) customers can customize their waiting rooms.
-</Aside>
-
 To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
+
+<Aside type="note">
+
+Only certain customers can customize their waiting rooms. For more details, see our <a href="/about/plans">Plans</a> page.
+
+</Aside>
 
 Cloudflare offers options to customize the appearance of your waiting room:
 * [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
 * [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
+
+
 
 ## Default waiting room
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
@@ -96,6 +100,9 @@ When you create a waiting room with custom HTML, you can use the following varia
 - **waitTimeKnown**: A `boolean` value. Not available when the queue is full or **queue all** is enabled.
 - **queueIsFull**: A `boolean` value. Changes to `True` when the queue is longer than 24 hours.
 
+### Multiple-language support
+
+Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
 
 ## Preview waiting room
 

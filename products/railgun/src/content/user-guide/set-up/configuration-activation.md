@@ -26,7 +26,7 @@ Oct 27 22:29:41 www rg-listener: [Activation] Assigned Railgun ID: 1
 Oct 27 22:29:41 www rg-listener: [Activation] Acquired cert from server
 ```
 
-If there is a certificate error in the system log or during startup, ensure that the necessary certificate bundle is installed as described in [Preparing the Environment](/user-guide/installation#preparing-the-environment) above so that Railgun may connect securely back to Cloudflare’s activation servers.
+If there is a certificate error in the system log or during startup, ensure that the necessary certificate bundle is installed as described in [Preparing the Environment](/user-guide/set-up/preparing-environment) above so that Railgun may connect securely back to Cloudflare’s activation servers.
 
 As an example, we are going to use domain port2408.net. The newly generated certificate is signed against the port2408.net domain and our system will automatically set your new port2408.net subdomain to resolve to the IP specified by `activation.public_ip`. You can use this hostname to test Railgun without enabling the service for all users. More details are in the [Testing Railgun](/user-guide/installation#testing-railgun) section below.
 

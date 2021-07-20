@@ -70,7 +70,7 @@ To use proximity steering on a load balancer, you first need to add GPS coordina
 ### How to add proximity steering
 
 To add coordinates when creating or editing a pool:
-1. Select **Configure co-ordinates for Proximity Steering**.
+1. Click the **Configure co-ordinates for Proximity Steering** dropdown.
 1. Enter the latitude and longitude or drag a marker on the map.
 1. Select **Save**.
 

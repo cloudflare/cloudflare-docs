@@ -1,5 +1,9 @@
 ---
 order: 3
+<<<<<<< HEAD
+=======
+pcx-content-type: reference
+>>>>>>> b42660bb2bf85ae32221cc3728d41eec2cae8d4c
 ---
 
 # Ports and IPs

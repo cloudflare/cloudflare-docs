@@ -1,6 +1,7 @@
 ---
 updated: 2021-03-23
 category: 🔐 Zero Trust
+pcx-content-type: tutorial
 ---
 
 # Connect through Cloudflare Access using a CLI
@@ -86,7 +87,7 @@ Set up a token as an environment variable as follows:
 1. Run the following command to export the token to the shell environment:
 
     ```sh
-    $ export TOKEN=$(cloudflared access token -app=http://example.com
+    $ export TOKEN=$(cloudflared access token -app=http://example.com)
     ```
 
 2. Confirm the token was saved with the following:

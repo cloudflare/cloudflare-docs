@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: concept
 ---
 
 # Limits
@@ -20,6 +21,31 @@ order: 2
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
 
 </TableWrap>
+
+## Request limits
+
+URLs have a limit of 16KB.
+
+Request headers observe a total limit of 32KB, but each header is limited to 16KB. 
+
+Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(403) Request entity too large` error.
+
+Cloudflare Enterprise customers may contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500MB.
+
+<TableWrap>
+
+| Cloudflare Plan | Maximum body size |
+| --------------- | ----------------- |
+| Free            | 100MB             |
+| Pro             | 100MB             |
+| Business        | 200MB             |
+| Enterprise      | 500MB             |
+
+</TableWrap>
+
+## Response limits
+
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512MB for Free, Pro, and Business customers and 5GB for Enterprise customers.
 
 ## Worker limits
 
@@ -142,13 +168,15 @@ Routes in fail closed mode will display a Cloudflare 1027 error page to visitors
 
 Only one Workers instance runs on each of the many global Cloudflare edge servers. Each Workers instance can consume up to 128MB of memory. Use [global variables](/runtime-apis/web-standards) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*. 
+
 Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
 ---
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It’s rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10ms on the free plan and 50ms on the Bundled tier. The 10ms allowance on the free plan is enough execution time for most use cases including application hosting.
+Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10ms on the free plan and up to 50ms for Bundled Workers on the Paid Plan. The Paid Plan also offers up to a 30 second [duration](/platform/limits#duration) for increased compute time. The 10ms allowance on the free plan is enough execution time for most use cases including application hosting.
 
 There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/runtime-apis/fetch-event) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
@@ -158,7 +186,7 @@ There is no limit on the real runtime for a Workers script. As long as the clien
 
 Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128mb of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
 
-For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduledevent), it executes for 4 seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
+For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
 Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
 
@@ -263,6 +291,8 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 **Note:** The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
 </Aside>
+
+---
 
 ## Durable Objects
 

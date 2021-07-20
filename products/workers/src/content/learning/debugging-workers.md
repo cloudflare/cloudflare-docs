@@ -1,5 +1,6 @@
 ---
 order: 3
+pcx-content-type: concept
 ---
 
 # Debugging Workers
@@ -53,6 +54,12 @@ Received new request to url: https://example.com/
 Inserting `console.log` lines throughout your code can help you understand the state of your application in various stages until you reach the desired output.
 
 You can customize how `wrangler dev` works to fit your needs: see [the docs](/cli-wrangler/commands#dev-alpha) for available configuration options.
+
+<Aside type="warning">
+
+There is a bug associated with `wrangler dev` documented in the [Known issues section](/platform/known-issues#wrangler-dev). 
+
+</Aside>
 
 --------------------------------
 

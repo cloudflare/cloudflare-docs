@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: configuration
 ---
 
 # Commands
@@ -140,6 +141,8 @@ To use this command, the following fields are required in your `wrangler.toml`:
 
 From here, you have two options, you can choose to publish to your own domain or you can choose to publish to [&lt;your-worker&gt;.&lt;your-subdomain&gt;.workers.dev](https://workers.dev).
 
+When you publish changes to an existing Worker script, all new requests will automatically route to the updated version of the Worker without downtime. Any inflight requests will continue running on the previous version until completion. Once all inflight requests have finished complete, the previous Worker version will be purged and will no longer handle requests.
+
 ### Publishing to workers.dev
 
 If you want to publish to [workers.dev](https://workers.dev), you will first need to have a subdomain registered. You can register a subdomain by executing the [subdomain](#subdomain) command.
@@ -244,13 +247,13 @@ $ wrangler tail [--format $FORMAT] [--port $PORT] [--metrics-port $PORT]
 <Definitions>
 
 - `--format $FORMAT` <Type>json|pretty</Type>
-  - The format of the log entries
+  - The format of the log entries.
 
 - `--port $PORT` <Type>int</Type>
-  - The port for your local log server
+  - The port for your local log server.
 
 - `--metrics-port $PORT` <Type>int</Type>
-  - The port for serving [metrics information](https://developers.cloudflare.com/argo-tunnel/reference/arguments/#metrics) about the tunnel
+  - The port for serving [metrics information](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#metrics) about the tunnel.
 
 </Definitions>
 

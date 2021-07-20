@@ -1,6 +1,9 @@
 ---
 order: 1
+pcx-content: reference
 ---
+
+import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
 # Transfer instructions
 
@@ -8,4 +11,8 @@ Transferring a domain to a new registrar informs the registry that they should i
 
 This section contains transfer instructions for some of the largest registrars as well as generic details.
 
-Before transferring a domain to Cloudflare, you need to set up Cloudflare on the domain. This involves [creating an account and adding your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers](https://support.cloudflare.com/hc/articles/205195708).
+---
+
+## Before you begin
+
+<BeforeYouBegin/>

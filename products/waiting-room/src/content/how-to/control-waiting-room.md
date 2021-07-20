@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 # Control waiting room traffic
 
-You can suspend or enable your waiting rooms, and force all traffic to a waiting room using the [user interface](/how-to/waiting-room-dashboard) or the [API](/reference/waiting-room-api).
+You can suspend or enable your waiting rooms, and force all traffic to a waiting room using the [user interface](/how-to/create-via-dashboard) or the [API](/reference/waiting-room-api).
 
 Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
 

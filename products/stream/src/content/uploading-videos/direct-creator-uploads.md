@@ -38,7 +38,7 @@ Additionally, you can control security features through these fields:
   - `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
     - Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
 
-  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>  
+  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>
     - Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
 
   - `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
@@ -52,7 +52,7 @@ Additionally, you can control security features through these fields:
 
 </Definitions>
 
-## Using Basic Uploads 
+## Using Basic Uploads
 
 If the uploads from your creators are under 200MB, you can use basic uploads. For videos over 200 MB, use TUS uploads (described later in this article.)
 
@@ -177,14 +177,13 @@ size, the user will receive a `4xx` response.
 
 </Example>
 
-## Using tus (recommended for videos over 200MB) 
+## Using tus (recommended for videos over 200MB)
 
-tus is a protocol that supports resumable uploads and works best for larger files. 
+tus is a protocol that supports resumable uploads and works best for larger files.
 
-Typically, tus uploads require the authentication information to be sent with every request. This is not ideal for direct creators uploads because it exposes your API key (or token) to the end user. 
+Typically, tus uploads require the authentication information to be sent with every request. This is not ideal for direct creators uploads because it exposes your API key (or token) to the end user.
 
 To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
-
 
 ```
 curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
@@ -194,7 +193,7 @@ The response will contain a `Location` header which provides the one-time URL th
 
 Here is a demo Cloudflare Worker script which returns the one-time upload URL:
 
-```
+```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -204,7 +203,7 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const init = {
+  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", {
     method: 'POST',
     headers: {
       'Authorization': 'bearer $TOKEN',
@@ -212,35 +211,36 @@ async function handleRequest(request) {
       'Upload-Length': request.headers.get('Upload-Length'),
       'Upload-Metadata': request.headers.get('Upload-Metadata')
     },
-  }
-  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", init)
-  const results = await gatherResponse(response)
-  return new Response(null, {headers: {'Access-Control-Expose-Headers':'Location','Access-Control-Allow-Headers':'*','Access-Control-Allow-Origin':'*','location':results}})
+  })
 
-}
+  const destination = response.headers.get('Location')
 
-async function gatherResponse(response) {
-  const { headers } = response
-  return await headers.get('location')
-
+  return new Response(null, {
+    headers: {
+      'Access-Control-Expose-Headers': 'Location',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin':'*',
+      'Location': destination
+    }
+  })
 }
 ```
 
-Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article. 
+Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
 
-To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field. 
+To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field.
 
 ### Upload-Metadata header syntax
 
 You can apply the same constraints as Direct Creator Upload via basic upload when using tus. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
-Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces. 
+Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
 In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
 
 ```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'```
 
-*NjAw* is the base64 encoded value for "600" (or 10 minutes). 
+*NjAw* is the base64 encoded value for "600" (or 10 minutes).
 
 ## Tracking user upload progress
 

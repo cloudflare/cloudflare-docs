@@ -70,7 +70,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-full-uri">
       <td valign="top"><code>http.request.full_uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the full URI as received by the web server (does not include <code class="InlineCode">#fragment</code>, which is not sent to web servers).
@@ -102,17 +102,17 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-uri">
       <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
       <td>
-         <p>Represents the absolute URI of the request.
+         <p>Represents the URI path and query string of the request.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">/articles/index?section=539061&expand=comments</code>
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-uri-path">
       <td valign="top"><code>http.request.uri.path</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the URI path of the request.
@@ -122,7 +122,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-uri-query">
       <td valign="top"><code class>http.request.uri.query</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the entire query string, without the <code class="InlineCode">?</code> delimiter.
@@ -239,6 +239,42 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
   </tr>
+  <tr id="field-raw-http-request-full-uri">
+    <td valign="top"><code>raw.http.request.full_uri</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-full-uri"><code>http.request.full_uri</code></a> non-raw field. Represents the full URI as received by the web server without the URI fragment (if any) and without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+  </td>
+  </tr>
+  <tr id="field-raw-http-request-uri">
+    <td valign="top"><code>raw.http.request.uri</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-uri"><code>http.request.uri</code></a> non-raw field. Represents the URI path and query string of the request without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+    </td>
+  </tr>
+  <tr id="field-raw-http-request-uri-path">
+    <td valign="top"><code>raw.http.request.uri.path</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-uri-path"><code>http.request.uri.path</code></a> non-raw field. Represents the URI path of the request without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+    </td>
+  </tr>
+  <tr id="field-raw-http-request-uri-query">
+    <td valign="top"><code>raw.http.request.uri.query</code><br /><Type>String</Type></td>
+    <td>
+      <p>Similar to the <a href="#field-http-request-uri-query"><code>http.request.uri.query</code></a> non-raw field. Represents the entire query string without the <code class="InlineCode">?</code> delimiter and without any transformation.
+      </p>
+      <p>Note: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+      </p>
+    </td>
+  </tr>
   <tr>
       <td valign="top"><code>ssl</code><br /><Type>Boolean</Type></td>
       <td>
@@ -291,6 +327,15 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
+        </td>
+    </tr>
+    <tr>
+        <td><code>cf.edge.server_ip</code><br /><Type>IP Address</Type></td>
+        <td>
+          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          </p>
+          <p>This field is only meaningful for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>.
+          </p>
         </td>
     </tr>
     <tr>
@@ -577,7 +622,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr id="field-http-request-uri-args">
       <td valign="top"><code>http.request.uri.args</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
        <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).
@@ -596,7 +641,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
         </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-uri-args-names">
       <td valign="top"><code>http.request.uri.args.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Represents the names of the arguments in the HTTP URI query string. Names are not pre-processed and retain the case used in the request.
@@ -614,7 +659,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
         </p>
       </td>
     </tr>
-    <tr>
+    <tr id="field-http-request-uri-args-values">
       <td valign="top"><code>http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
         <p>Represents the values of arguments in the HTTP URI query string. Values are not pre-processed and retain the case used in the request. They are in the same order as in the request.
@@ -632,6 +677,27 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
         </p>
       </td>
     </tr>
+    <tr id="field-raw-http-request-uri-args">
+      <td valign="top"><code>raw.http.request.uri.args</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+       <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args"><code>http.request.uri.args</code></a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args-names">
+      <td valign="top"><code>raw.http.request.uri.args.names</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a>.
+        </p>
+      </td>
+    </tr>
+    <tr id="field-raw-http-request-uri-args-values">
+      <td valign="top"><code>raw.http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+        <p>Contains the same field values as <a href="#field-http-request-uri-args-names"><code>http.request.uri.args.values</code></a>.
+        </p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -646,7 +712,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       <td><strong>Field Name</strong></td>
       <td style="width: 50%;"><strong>Description</strong></td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers">
       <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).
@@ -839,3 +905,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
     </tr>
   </tbody>
 </table>
+
+---
+
+_GeoIP is the registered trademark of MaxMind, Inc._

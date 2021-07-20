@@ -1,3 +1,8 @@
+---
+order: 2
+pcx-content-type: concept
+---
+
 # Build configuration
 
 ## Build commands and directories
@@ -17,6 +22,7 @@ Below are some standard build commands and directories for popular frameworks an
 | Docusaurus                   | `npm run build`                     | `build`                     |
 | Eleventy                     | `eleventy`                          | `_site`                     |
 | Ember.js                     | `ember build`                       | `dist`                      |
+| Expo                         | `expo build:web`                    | `web-build`                 |
 | Gatsby                       | `gatsby build`                      | `public`                    |
 | GitBook                      | `gitbook build`                     | `_book`                     |
 | Gridsome                     | `gridsome build`                    | `dist`                      |
@@ -40,6 +46,14 @@ Below are some standard build commands and directories for popular frameworks an
 
 If your project makes use of environment variables to build your site, you can provide custom environment variables via the Pages UI.
 
+The following system environment variables are injected by default (but can be overridden):
+
+| Environment Variable  | Injected value                        | Example use-case                                                               |
+| --------------------- | ------------------------------------- | ------------------------------------------------------------------------------ |
+| `CF_PAGES`            | `1`                                   | Changing build behaviour when run on Pages vs locally                          |
+| `CF_PAGES_COMMIT_SHA` | `<sha1-hash-of-current-commit>`       | Passing current commit ID to error reporting e.g. Sentry                       |
+| `CF_PAGES_BRANCH`     | `<branch-name-of-current-deployment>` | Customising build based on branch e.g. disabling debug logging on `production` |
+
 ## Language support and tools
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go (and many more). 
@@ -55,7 +69,7 @@ Here are the pinned versions for tools included in the Cloudflare Workers build 
 | Erlang    | 21              |                      |                           |
 | Go        | 1.12            | `GO_VERSION`         |                           |
 | Java      | 8               |                      |                           |
-| Node.js   | 10              | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
+| Node.js   | 12.18.0         | `NODE_VERSION`       | `.nvmrc`, `.node-version` |
 | PHP       | 5.6             | `PHP_VERSION`        |                           |
 | Python    | 2.7             | `PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
 | Ruby      | 2.6.2           | `RUBY_VERSION`       | `.ruby-version`           |

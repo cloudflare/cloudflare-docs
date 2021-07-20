@@ -1,6 +1,6 @@
 ---
-title: Sampling
 order: 40
+pcx-content-type: reference
 ---
 
 # Sampling

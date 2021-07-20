@@ -1,6 +1,7 @@
 ---
 title: 1 – Hello World
 order: 1
+pcx-content-type: tutorial
 ---
 
 # Hello World

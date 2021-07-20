@@ -1,5 +1,6 @@
 ---
-order:8
+order: 8
+pcx-content: tutorial
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"

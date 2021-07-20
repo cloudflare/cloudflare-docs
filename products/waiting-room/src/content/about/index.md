@@ -6,29 +6,39 @@ pcx-content-type: concept
 
 # About Cloudflare Waiting Room
 
-Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down:
-- If a page is not experiencing heavy traffic, a visitor goes straight to the page.
-- If page traffic crosses a [user-defined threshold](/reference/configuration-settings#session-duration), a visitor goes to a virtual waiting room until it's their turn to access the page. 
-
-![Waiting room process flow](../static/waiting-room-process-flow.png)
-
-A [cookie](/reference/waiting-room-cookie) is used to manage the dynamic outflow of requests from the waiting room to the origin website in First In First Out (FIFO) order.
+Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down.
 
 ## Benefits
 
-Cloudflare Waiting Room improves customer experience and confidence in your website:
+Cloudflare Waiting Room benefits **your origin server** by preventing surges in legitimate traffic that may overload your origin.
 
-* Instead of seeing error pages, site visitors see a page informing them that they are in a waiting room.
-* You can [customize the waiting room](../how-to/customize-waiting-room) to use your own website branding and style, enhancing visitors' trust.
-* The waiting room page provides an estimated wait time for visitors and automatically refreshes the browser page to update the estimated time.
-* Once a site visitor reaches the application from the waiting room, they are given [known-user status](/reference/configuration-settings#session-duration) so they can leave the site and re-enter without needing to queue again.
-* Because waiting rooms support dynamic inflow and [outflow](/reference/configuration-settings#session-duration), new spots appear more quickly and estimated wait times are lower and more accurate.
+Waiting Rooms also benefit **your visitors** by:
+    - Keeping your application online and preventing them from reaching error pages.
+    - Showing estimated wait times that are continuously updated.
+    - Opening up new spots more quickly by tracking dynamic inflow and [outflow](/reference/configuration-settings#session-duration).
+    - Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
+    - Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
+
+## How it works
+
+Once you have [created and activated a waiting room](get-started) for a specific application page:
+
+- If a page is not experiencing heavy traffic, a visitor accesses the page directly.
+- If page traffic crosses a [user-defined threshold](/reference/configuration-settings#session-duration), a visitor enters a virtual waiting room until it's their turn to access the page:
+    - Each user receives a [cookie](/reference/waiting-room-cookie) to manage the dynamic outflow of requests from the waiting room to the origin website in First In First Out (FIFO) order.
+    - While in the waiting room, the user's browser automatically refreshes every 20 seconds to give them updated information about their estimated wait time.
+    - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/reference/configuration-settings#session-duration).
+    - Because waiting rooms support dynamic inflow and [outflow](/reference/configuration-settings#session-duration), new spots appear more quickly and estimated wait times are lower and more accurate.
+
+![Waiting room process flow](../static/waiting-room-process-flow.png)
 
 ## Availability
 
-The following Cloudflare customers have access to waiting room:
+The following customers have access to Cloudflare Waiting Room:
 - Those qualified under [Project Fair Shot](https://www.cloudflare.com/fair-shot/)
 - Business customers
+
+Access to certain features depends on a customer's [plan type](plans).
 
 ## Prerequisites
 

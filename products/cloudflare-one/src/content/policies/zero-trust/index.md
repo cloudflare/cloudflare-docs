@@ -1,12 +1,14 @@
 ---
 order: 4
+pcx-content-type: concept
+title: Zero Trust
 ---
 
-# Zero Trust
+# Zero Trust policies
 
-Access determines who can reach your applications by applying the zero-trust policies you configure. To build a zero-trust policy, you will have to combine different elements; the way you assemble these "building blocks" determines the scope and effectiveness of your policy.
+Access determines who can reach your applications by applying the Zero Trust policies you configure. To build a Zero Trust policy, you will have to combine different elements; the way you assemble these building blocks determines the scope and effectiveness of your policy.
 
-The elements that make up a zero-trust policy are:
+The elements that make up a Zero Trust policy are:
 
 * **Actions**
 * **Rules**
@@ -16,7 +18,7 @@ The elements that make up a zero-trust policy are:
 
 Actions let you define which *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
 
-The action is the first element you'll be asked to configure when you create a zero-trust policy in the Teams dash. You can set only one action per policy.
+The action is the first element you'll be asked to configure when you create a Zero Trust policy in the Teams Dash. You can set only one action per policy.
 
 These are the action types you can choose from:
 
@@ -55,7 +57,7 @@ Here is a list of all the criteria you can apply:
 * **Country** – uses the IP address to determine country.
 * **Valid Certificate** - the request will need to present any valid client certificate.
 * **Common Name** - the request will need to present a valid certificate with an expected common name.
-* **Any Access Service Token** - the request will need to present the headers for any [service token](/access-service-auth/service-tokens) created for this account.
+* **Any Access Service Token** - the request will need to present the headers for any [service token](/identity/service-auth/service-tokens) created for this account.
 * **Service Token** - the request will need to present the correct service token headers configured for the specific application
 * **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 * **Authentication Method** - checks the [multifactor authentication](/policies/zero-trust/mfa-requirements) method used by the user, if supported by the identity provider.

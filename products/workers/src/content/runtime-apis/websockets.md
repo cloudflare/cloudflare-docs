@@ -1,3 +1,7 @@
+---
+pcx-content-type: configuration
+---
+
 # WebSockets
 
 ## Background
@@ -99,10 +103,6 @@ An event indicating there was an error with the WebSocket.
 - `message`
 
 An event indicating a new message received from the client, including the data passed by the client.
-
-- `open`
-
-An event indicating the WebSocket has successfully opened.
 
 ## Types
 

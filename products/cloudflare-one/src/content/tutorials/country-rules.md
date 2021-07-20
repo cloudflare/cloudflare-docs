@@ -2,6 +2,7 @@
 updated: 2020-11-28
 category: 🔐 Zero Trust
 difficulty: Beginner
+pcx-content-type: tutorial
 ---
 
 # Require specific countries
