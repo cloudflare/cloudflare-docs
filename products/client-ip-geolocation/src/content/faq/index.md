@@ -1,10 +1,9 @@
 ---
-title: FAQ
 order: 3
 pcx-content-type: faq
 ---
 
-# Frequently asked questions
+# FAQ
 
 <Aside type="note">
 
