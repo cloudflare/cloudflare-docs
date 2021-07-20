@@ -17,7 +17,7 @@ Cloudflare Client IP Geolocation helps you understand where in the world a given
 
 ## Simple explanation
 
-When Cloudflare connects to your origin over **IPv4**, we geolocate our VPN users to 1 of 1,000 egress locations (a “cell”). The list of cells is a super set of all the countries in the world and all US Designated Market Areas and includes multiple cells for large metropolitan areas. For all supported cell locations, download [our list](https://api.cloudflare.com/local-ip-ranges.csv).
+When Cloudflare connects to your origin over **IPv4**, we geolocate our VPN users to 1 of 1,000 egress locations (a `cell`). The list of cells is a super set of all the countries in the world and all US Designated Market Areas and includes multiple cells for large metropolitan areas. For all supported cell locations, download [our list](https://api.cloudflare.com/local-ip-ranges.csv).
 
 When Cloudflare connects to your origin over **IPv6**, we geolocate our VPN users to one of thousands of locations distributed across the globe.
 
