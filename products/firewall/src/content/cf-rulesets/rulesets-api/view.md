@@ -344,7 +344,7 @@ When you view a specific version of a Managed Ruleset, each rule listed in the r
 Returns a list of all the rules in a Managed Ruleset with a specific tag.
 
 ```bash
-GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_category/{category-name}
+GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_tag/{tag-name}
 ```
 
 ### Example
@@ -356,7 +356,7 @@ header: Request
 curl -X GET \
   -H "X-Auth-Email: user@cloudflare.com" \
   -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_category/wordpress"
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_tag/wordpress"
 ```
 
 ```json
