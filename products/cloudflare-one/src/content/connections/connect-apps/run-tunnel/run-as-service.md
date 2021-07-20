@@ -43,6 +43,16 @@ The above arguments are required for pre-configured Cloudflare Tunnel deployment
 
 </Aside>
 
+Then, start the system service with the following command:
+```sh
+$ sudo systemctl start cloudflared
+``` 
+
+Or start on boot with:
+```sh
+$ sudo systemctl enable cloudflared
+```
+
 ## macOS
 
 ### Run at login

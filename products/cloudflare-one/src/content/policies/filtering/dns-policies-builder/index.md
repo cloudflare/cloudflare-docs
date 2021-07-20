@@ -18,10 +18,11 @@ Build a DNS policy by configuring the following elements:
 * [Operators](#operators)
 
 <Aside>
-Unless a more specific selector is configured in a policy (e.g., user email or source IP address for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
+Unless a more specific selector is configured in a policy (e.g., <code>user email</code> or <code>source IP address</code> for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 </Aside>
 
 ## Actions
+
 Just like actions in HTTP policies, actions in DNS policies allow you to choose what to do with a given set of elements. You can assign one action per policy.
 
 These are the action types you can choose from:
@@ -34,7 +35,7 @@ These are the action types you can choose from:
 
 ### Allow
 
-Policies with Allow actions allow DNS queries you specify within the Selectors and Value fields. For example, the following configuration allows DNS queries to domains we categorize as belonging to the Education content category:
+Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -42,7 +43,7 @@ Policies with Allow actions allow DNS queries you specify within the Selectors a
 
 ### Block
 
-Policies with Block actions block DNS queries you specify within the Selectors and Value fields. For example, the following configuration blocks DNS queries to domains we categorize as belonging to the Adult Themes content category:
+Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -50,7 +51,7 @@ Policies with Block actions block DNS queries you specify within the Selectors a
 
 ### Override
 
-Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of 1.2.3.4 for all queries to www.example.com with the following policy:
+Policies with Override actions allow you to respond to all DNS queries for a given domain to another destination. For example, you can provide a custom response IP of `1.2.3.4` for all queries to www.example.com with the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -58,7 +59,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 ### SafeSearch
 
-SafeSearch is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
+SafeSearch is a feature of search engines that helps you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children or at work.
 
 You can use Cloudflare Gateway to enable SafeSearch on search engines like Google, Bing, Yandex, YouTube and DuckDuckGo. For example, to enable SafeSearch for Google, you can create the following policy:
 
@@ -68,7 +69,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 #### Test SafeSearch
 
-You can test if SafeSearch is working by performing dig on the search engines. Instead of returning the regular IP address, you should see the CNAMEs returned like below:
+You can test if SafeSearch is working by performing `dig` on the search engines. Instead of returning the regular IP address, you should see the CNAMEs returned like below:
 
 ##### Google
 Google will return `forcesafesearch.google.com`.
@@ -92,7 +93,7 @@ DuckDuckGo will return `safe.duckduckgo.com`.
 
 ### YouTube Restricted Mode
 
-Similarly, you can enforce YouTube Restricted mode by choosing the Youtube Restricted Mode action. YouTube Restricted Mode is an automated filter for adult and offensive content that's built into YouTube. To enable Youtube Restricted Mode, you could set up a policy like the following:
+Similarly, you can enforce YouTube Restricted mode by choosing the *Youtube Restricted* action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable Youtube Restricted Mode, you could set up a policy like the following:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -130,14 +131,14 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 | DNS Subdomain | Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`. |
 | DNS Domain | Use this selector to match against a domain and all subdomains—for example, if you want to block example.com and all subdomains of example.com. |
 | DNS Host | Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com. |
-| DNS Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against—for example, you can choose to block A records for a domain but not MX records. |
+| DNS Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against — for example, you can choose to block A records for a domain but not MX records. |
 | DNS Resolver IP | Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. |
-| DNS Src IP | Use this selector to apply DNS policies to a specific source IP address that queries arrived to Gateway from—for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway |
+| DNS Src IP | Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway. |
 | Location | Use this selector to apply DNS policies to a specific location or set of locations. |
 
 </TableWrap>
 
-These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams client and the user to be enrolled in the organization via the Teams client:
+These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client:
 
 <TableWrap>
 
@@ -186,5 +187,5 @@ Blocking a popular TLD like `.com` will prevent users from connecting to signifi
 
 ## Custom block page
 
-When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`.
+When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, see the dedicated documentation on [customizing the block page](/policies/filtering/configuring-block-page).
 

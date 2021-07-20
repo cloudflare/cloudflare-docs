@@ -1,3 +1,8 @@
+---
+order: 5
+pcx-content-type: concept
+---
+
 # Rollbacks
 
 Rollbacks allow you to instantly revert your project to a previous production deployment.
@@ -10,5 +15,5 @@ In order to perform a rollback, select a Pages project and ensure its Deployment
 
 ## See Also
 
-- [Preview Deployments](/pages/platform/preview-deployments)
-- [Pausing Automatic Builds](/pages/platform/github-integration#pausing-automatic-builds)
+- [Preview Deployments](/platform/preview-deployments)
+- [Pausing Automatic Builds](/platform/github-integration#pausing-automatic-builds)

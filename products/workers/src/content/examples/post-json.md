@@ -4,8 +4,6 @@ type: example
 summary: Send a POST request with JSON data. Use to share data with external servers.
 tags:
   - Originless
-  - JSON
-  - API
 ---
 
 # Post JSON
@@ -41,13 +39,13 @@ async function gatherResponse(response) {
     return JSON.stringify(await response.json())
   }
   else if (contentType.includes("application/text")) {
-    return await response.text()
+    return response.text()
   }
   else if (contentType.includes("text/html")) {
-    return await response.text()
+    return response.text()
   }
   else {
-    return await response.text()
+    return response.text()
   }
 }
 

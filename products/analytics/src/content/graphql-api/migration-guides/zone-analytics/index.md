@@ -1,6 +1,6 @@
 ---
-title: Zone Analytics to GraphQL Analytics
 order: 11
+pcx-content-type: reference
 ---
 
 # Zone Analytics to GraphQL Analytics

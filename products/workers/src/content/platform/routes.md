@@ -9,16 +9,13 @@ pcx-content-type: concept
 
 Routes allow users to map a URL pattern to a Worker script to enable Workers to run on custom domains.
 
-## Custom zones
+## Custom routes
 
 For zones proxied on Cloudflare\*, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
 
 Route patterns can be added with the Cloudflare API or on the [Workers tab](https://dash.cloudflare.com/?zone=workers) in the Cloudflare dashboard (after selecting a zone).
 
-<!-- TODO: add image -->
-<!--
-![Workers Route Modal](https://web.archive.org/web/20200817183804im_/https://developers.cloudflare.com/workers/about/media/add-route-modal.png)
--->
+![Workers Route Modal](./add-route-modal.png)
 
 Cloudflare Site routes are comprised of:
 
@@ -29,6 +26,12 @@ Cloudflare Site routes are comprised of:
 The Routes REST API documentation can be found [in the Workers API docs](https://api.cloudflare.com/#worker-routes-properties).
 
 \* _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
+
+## Routes with *.workers.dev
+
+Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable from the Workers dashboard sidebar. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
+
+To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (e.g., `my-worker.my-subdomain.workers.dev.`).
 
 ### Matching Behavior
 
@@ -53,13 +56,13 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route patterns may not contain infix wildcards or query parameters, e.g. neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
 
-- When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`.
+- When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
 
 - Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
 - Route patterns are case sensitive, e.g. `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
-A route can be specified without being associated with a worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
+A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 
 ```txt
 *example.com/images/cat.png -> <no script>
@@ -102,7 +105,11 @@ If a route pattern path ends with `*`, then it matches all suffixes of that path
 
 - `https://example.com/path*` matches `https://example.com/path` _and_ `https://example.com/path2` _and_ `https://example.com/path/readme.txt`
 
-- `https://example.com/path/*` matches `https://example.com/path/readme.txt` but _not_ `https://example.com/path2`.
+<Aside type="warning">
+
+There is a well-known bug associated with path matching concerning wildcards and forward slashes that is documented in the [Known issues section.](/workers/platform/known-issues)
+
+</Aside>
 
 #### Subdomains must have a DNS Record
 

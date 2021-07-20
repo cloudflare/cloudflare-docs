@@ -43,7 +43,9 @@ To pass data _inside_ of the form, you can use `input` tags. `input` tags have a
 
 <Aside>
 
-The `id` attribute, while not required for the `input` to be submitted as part of the `form`, is often set alongside the `name` attribute to enable styling via CSS.
+The `id` attribute, while not required for the `input` to be submitted as part of the `form`, [may be required to ensure accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML#meaningful_text_labels). If the `input` element is nested inside the `label`, the `id` is not required. If the `input` element is not nested inside the `label`, the `id` on the `input` is required along with the `for` (or `htmlFor` in React) property to ensure differently abled readers will get built-in accessibility features.
+
+Additionally, the `id` attribute is often set alongside the `name` attribute to enable styling via CSS.
 
 </Aside>
 
@@ -188,7 +190,7 @@ Before we continue, let's review the keys that we should have from Airtable:
 
 With our Airtable base set up, and the keys and IDs we need to communicate with the API at the ready, it's time to set up our Workers function, and persist data from our form into Airtable.
 
-In `index.js`, begin by setting up a simple Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, we'll handle a new form submission, otherwise, we'll redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [workers-airtable-form.pages.dev/](https://airtable-form.pages.dev/)):
+In `index.js`, begin by setting up a simple Workers handler that can respond to requests. When the URL requested has a pathname of `/submit`, we'll handle a new form submission, otherwise, we'll redirect to `FORM_URL`, a constant representing your front-end form URL (for example, [airtable-form-example.pages.dev](https://airtable-form-example.pages.dev)):
 
 ```js
 ---

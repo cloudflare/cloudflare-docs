@@ -7,12 +7,6 @@ order: 720
 
 # Create phase rulesets
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 A phase behaves like a ruleset. You must create the ruleset for a phase to be able to add rules and deploy rulesets to it.
 
 Use the [Rulesets API](/cf-rulesets/rulesets-api) to create a phase ruleset. You can create a phase ruleset at the account level or at the zone level.

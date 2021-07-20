@@ -1,6 +1,6 @@
 ---
-title: Use curl to query the Analytics API
 order: 60
+pcx-content-type: interim
 ---
 
 # Use curl to query the Analytics API

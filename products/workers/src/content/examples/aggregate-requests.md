@@ -3,8 +3,7 @@ order: 1000
 type: example
 summary: Send two GET request to two urls and aggregates the responses into one response.
 tags:
-  - JSON
-  - HTML
+  - Originless
 ---
 
 # Aggregate requests
@@ -36,13 +35,13 @@ async function gatherResponse(response) {
     return JSON.stringify(await response.json())
   }
   else if (contentType.includes("application/text")) {
-    return await response.text()
+    return response.text()
   }
   else if (contentType.includes("text/html")) {
-    return await response.text()
+    return response.text()
   }
   else {
-    return await response.text()
+    return response.text()
   }
 }
 

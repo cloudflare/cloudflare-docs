@@ -7,12 +7,6 @@ order: 771
 
 # Use tag overrides to set WordPress rules to Block
 
-<Aside type='warning' header='Important'>
-
-This feature is part of an early access experience for selected customers.
-
-</Aside>
-
 Follow the steps below to deploy a Managed Ruleset and override rules for a specific tag.
 
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase to deploy a Managed Ruleset.

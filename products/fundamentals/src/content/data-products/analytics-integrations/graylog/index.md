@@ -1,6 +1,6 @@
 ---
-title: Graylog
 order: 101
+pcx-content-type: interim
 ---
 
 # Graylog

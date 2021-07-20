@@ -22,6 +22,31 @@ pcx-content-type: concept
 
 </TableWrap>
 
+## Request limits
+
+URLs have a limit of 16KB.
+
+Request headers observe a total limit of 32KB, but each header is limited to 16KB. 
+
+Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(403) Request entity too large` error.
+
+Cloudflare Enterprise customers may contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500MB.
+
+<TableWrap>
+
+| Cloudflare Plan | Maximum body size |
+| --------------- | ----------------- |
+| Free            | 100MB             |
+| Pro             | 100MB             |
+| Business        | 200MB             |
+| Enterprise      | 500MB             |
+
+</TableWrap>
+
+## Response limits
+
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512MB for Free, Pro, and Business customers and 5GB for Enterprise customers.
+
 ## Worker limits
 
 <TableWrap>
@@ -151,7 +176,7 @@ Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream r
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It’s rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10ms on the free plan and 50ms on the Bundled tier. The 10ms allowance on the free plan is enough execution time for most use cases including application hosting.
+Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10ms on the free plan and up to 50ms for Bundled Workers on the Paid Plan. The Paid Plan also offers up to a 30 second [duration](/platform/limits#duration) for increased compute time. The 10ms allowance on the free plan is enough execution time for most use cases including application hosting.
 
 There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/runtime-apis/fetch-event) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
@@ -266,6 +291,8 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 **Note:** The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
 </Aside>
+
+---
 
 ## Durable Objects
 

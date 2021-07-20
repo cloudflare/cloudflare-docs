@@ -39,3 +39,15 @@ Isolation policies are applied to requests that include Accept: `text/html*`. Th
 
 ## Can Access enforce policies on a specific nonstandard port?
 No. Cloudflare Access cannot enforce a policy that would contain a port appended to the URL. However, you can use Cloudflare Tunnel to point traffic to non-standard ports. For example, if Jira is available at port `8443` on your origin, you can proxy traffic to that port via Cloudflare Tunnel.
+
+## Why can I still reach domains blocked by a DNS policy?
+
+Here is a list of possible causes:
+
+* **Your policy is still being updated.** After you edit or create a policy, Cloudflare updates the new setting across all of our data centers around the world. It takes about 60 seconds for the change to propagate.
+
+* **Your device is using another DNS resolver.** If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. As a result, the domain you are trying to block is still accessible from your device. Make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
+
+* **Your policy is not assigned to a location.** If your policy is not assigned to a location and you send a DNS query from that location, Gateway will not apply that policy. Assign a policy to a location to make sure the desired policy is applied when you send a DNS query from that location.
+
+* **Your DoH endpoint is not a Gateway location**. Browsers can be configured to use any DoH endpoint. If you chose to configure DoH directly in your browser, make sure that the DoH  endpoint is a Gateway location. 

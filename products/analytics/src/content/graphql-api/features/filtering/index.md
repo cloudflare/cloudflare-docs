@@ -1,6 +1,6 @@
 ---
-title: Filtering
 order: 10
+pcx-content-type: reference
 ---
 
 # Filtering

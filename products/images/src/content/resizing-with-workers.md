@@ -1,6 +1,6 @@
 ---
 title: Resizing with Workers
-order: 3
+order: 4
 pcx-content-type: configuration
 ---
 

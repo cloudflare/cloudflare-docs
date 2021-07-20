@@ -63,7 +63,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `autoplay` <PropMeta>default: `false`</PropMeta>
 
-  - Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
+  - If the autoplay flag is included as a querystring parameter, the player will attempt to autoplay the video. If you don't want the video to autoplay, don't include the autoplay flag at all (instead of setting it to `autoplay=false`.) Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
     <Aside>
 
@@ -106,6 +106,12 @@ Player options are configured with querystring parameters in the iframe's `src` 
 - `poster` <PropMeta>defaults to the first frame of the video</PropMeta>
 
   - A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
+
+    <Aside type="note">
+
+      **Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270`.
+
+    </Aside>
 
 - `src`
 

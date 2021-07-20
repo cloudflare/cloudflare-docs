@@ -55,9 +55,11 @@ To configure LinkedIn as an IdP:
 
 1. Copy the **Client ID** and **Client Secret**.
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select LinkedIn as your IdP.
+1. Under **Login methods**, click **Add new**.
+
+1. Select **LinkedIn** as your IdP.
 
 1. In the **App ID** and **Client secret** fields, input the **Client ID** and **Client secret** values you've copied from the Application credentials tab in the LinkedIn Developer Portal.
 

@@ -1,13 +1,14 @@
 ---
 order: 4
 pcx-content-type: concept
+title: Zero Trust
 ---
 
-# Zero Trust
+# Zero Trust policies
 
-Access determines who can reach your applications by applying the zero-trust policies you configure. To build a zero-trust policy, you will have to combine different elements; the way you assemble these "building blocks" determines the scope and effectiveness of your policy.
+Access determines who can reach your applications by applying the Zero Trust policies you configure. To build a Zero Trust policy, you will have to combine different elements; the way you assemble these building blocks determines the scope and effectiveness of your policy.
 
-The elements that make up a zero-trust policy are:
+The elements that make up a Zero Trust policy are:
 
 * **Actions**
 * **Rules**
@@ -17,7 +18,7 @@ The elements that make up a zero-trust policy are:
 
 Actions let you define which *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
 
-The action is the first element you'll be asked to configure when you create a zero-trust policy in the Teams dash. You can set only one action per policy.
+The action is the first element you'll be asked to configure when you create a Zero Trust policy in the Teams Dash. You can set only one action per policy.
 
 These are the action types you can choose from:
 

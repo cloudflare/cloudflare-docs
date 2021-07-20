@@ -6,12 +6,11 @@ pcx-content-type: configuration
 
 ## Background
 
-The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from cache.
+The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from the [Cloudflare edge network](https://www.cloudflare.com/network/) cache.
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created. 
 
-However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/learning/playground) preview will have no impact. Only deployed, live Workers have access to live cache operations. 
-
+However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/learning/playground) previews, and any `*.workers.dev` deployments will have no impact. Only Workers deployed to custom domains have access to functional `Cache` operations. 
 
 <Aside>
 

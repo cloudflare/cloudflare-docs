@@ -1,5 +1,5 @@
 ---
-title: Querying Firewall Events with GraphQL
+pcx-content-type: interim
 ---
 
 # Querying Firewall Events with GraphQL

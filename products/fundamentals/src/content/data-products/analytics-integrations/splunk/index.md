@@ -1,6 +1,6 @@
 ---
-title: Splunk
 order: 103
+pcx-content-type: interim
 ---
 
 # Splunk
