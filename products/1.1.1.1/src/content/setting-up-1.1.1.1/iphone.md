@@ -47,8 +47,8 @@ You are now using 1.1.1.1 for your DNS queries. If you want to add an extra laye
 Alternatively, you may want to only encrypt your DNS queries and leave the remaining traffic unencrypted. If this is the case: 
 
 1. Open 1.1.1.1: Faster Internet.
-1. Tap the hamburger menu on the top right corner of the app.
-1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1*** > **Done**.
+1. Tap the menu button.
+1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1** > **Done**.
 
 You are now using encryption only for your DNS queries.
 
