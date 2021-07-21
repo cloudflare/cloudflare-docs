@@ -1,10 +1,10 @@
 ---
-title: Avoid web poisoning
+title: Avoid web cache poisoning
 order: 17
 pcx-content-type: concept
 ---
 
-# Avoid Web Poisoning
+# Avoid Web Cache Poisoning
 
 A cache poisoning attack uses an HTTP request to trick an origin web server into responding with a harmful resource that has the same cache key as a clean request. As a result, the poisoned resource gets cached and served to other users.
 
