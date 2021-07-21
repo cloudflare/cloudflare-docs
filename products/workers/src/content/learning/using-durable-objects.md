@@ -271,51 +271,57 @@ The `[durable_objects]` section has 1 subsection:
 
 ### Configuring Durable Object classes with migrations
 
-When you export a new Durable Objects class from your script, you must tell the Workers platform about it before you can create and access Durable Objects associated with that class from a Durable Object binding. This process is called a "migration".
+When you make changes to your list of Durable Objects classes, you must initiate a migration process. A migration is informing the Workers platform of the changes and provide it with instructions on how to deal with those changes.
 
 Migrations can also be used for transferring stored data between two Durable Object classes:
 * Rename migrations are used to transfer stored objects between two Durable Object classes in the same script.
 * Transfer migrations are used to transfer stored objects between two Durable Object classes in different scripts.
 
-The destination class (the class that stored objects are being transferred to) for a rename or transfer migration must be exported by the script.
+The destination class (the class that stored objects are being transferred to) for a rename or transfer migration must be exported by the deployed script.
 
 <Aside type="warning" header="Important">
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the stored objects of the source Durable Object class.
 
-Existing bindings to the source Durable Object class will continue to work, now pointing to the destination Durable Object class. Future script uploads must update the class name for the binding in the `[durable_objects]` section of `wrangler.toml`.
+After a migration, any existing bindings to the original Durable Object class (e.g., from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 </Aside>
 
-Migrations can also be used to delete a given Durable Object class along with its stored objects.
+Migrations can also be used to delete a Durable Object class and its stored objects.
 
 <Aside type="warning" header="Important">
 
-Running a delete migration will delete all Durable Objects associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting. 
+Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting. 
 
 </Aside>
 
-Migrations can be performed in two different ways: by listing them in `wrangler.toml` or by manually providing ad hoc migrations using extra options on `wrangler publish`. Migrations specified in `wrangler.toml` have the additional requirement of a **migration tag**, which is used to determine which migrations have already been applied, and therefore can be skipped for a given script upload. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+Migrations can be performed in two different ways: through the `[[migrations]]` configurations key in your `wrangler.toml` file or through additional CLI arguments during a `wrangler publish` command. Migrations specified in `wrangler.toml` have the additional requirement of a migration tag, which is defined by the **tag** property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
 
 ### Durable Object migrations in `wrangler.toml`
 
-The migration list (added in `wrangler 1.19.0`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments, and cannot be overridden by a specific environment. Like ad hoc migrations, they are applied when you run `wrangler publish` on the selected environment's script. For our `DurableObjectExample` class, you need a migration list like this:
+The migration list (added in `wrangler 1.19.0`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
+
+All migrations are applied at deployment. This is true for all migrations, whether initiated through `wrangler.toml` configurations or `wrangler publish` command arguments. Each migration can only be applied once per [environment](/platform/environments). 
+
+To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
 
 ```toml
 [[migrations]]
-tag = "v1" # should be unique for each entry
-new_classes = ["DurableObjectExample"] # array of new classes
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
 ```
 
-Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity.
+Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity. For example, you may want to rename the `DurableObjectExample` class to `UpdatedName` and delete an outdated `DeprecatedClass` entirely.
 
 ```toml
 [[migrations]]
-tag = "v1" # should be unique for each entry
-new_classes = ["DurableObjectExample"] # array of new classes
-deleted_classes = ["DeprecatedClass"] # array of deleted classes
-renamed_classes = [{from: "OldClass", to: "NewClass"}] # array of rename directives
-transferred_classes = [{from_script: "old_script", from: "ExampleClass", to: "ExampleClass"}] # array of transfer directives
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+
+[[migrations]]
+tag = "v2"
+renamed_classes = [{from: "DurableObjectExample", to: "UpdatedName" }] # Array of rename directives
+deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
 <Aside type="note">
