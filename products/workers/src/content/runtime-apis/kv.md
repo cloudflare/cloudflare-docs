@@ -302,7 +302,7 @@ With this, the deployed Worker will have a `TODO` global variable; any reads, wr
 
 <Aside>
   
-You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page. For the dashboard, you can bind the namespace to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
+You can create a namespace <a href="https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started">using Wrangler</a> or in the <a href="https://dash.cloudflare.com/">Workers dashboard</a> on the KV page. For the dashboard, you can bind the namespace to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
 
 </Aside>
 
