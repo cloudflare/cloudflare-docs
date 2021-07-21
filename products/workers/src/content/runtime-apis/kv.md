@@ -272,7 +272,7 @@ A KV namespace is a key-value database that is replicated to Cloudflare's edge. 
 
 The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
-This is not the case with modules, see [next section](/runtime-apis/kv#referencing-kv-from-durable-objects-and-Workers-using-modules-syntax).
+This is not the case with modules, see [next section](/runtime-apis/kv#referencing-kv-from-durable-objects-and-workers-using-modules-syntax).
 
 When you create a namespace (see note below), it will have a name you choose (e.g. "My tasks"), and an assigned ID (e.g. "06779da6940b431db6e566b4846d64db")
 
@@ -298,7 +298,7 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
+With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "06779da6940b431db6e566b4846d64db" – which you called "My Tasks - 2021" earlier.
 
 <Aside>
   
