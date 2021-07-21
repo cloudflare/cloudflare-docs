@@ -19,7 +19,7 @@ Key servers support both ECDSA and RSA keys, though signatures for RSA are an [o
 
 Because ECDSA signing can be broken down into two steps, where the first step of generating random values (to be used later with the private key and message to be signed) represents the majority of the computational cost, we pre-generate these random values to significantly reduce latency. ECDSA signing requests are computationally isolated from RSA signing requests using separate worker pools to keep them as fast as possible.
 
-Additional details can be found in the [gokeyless server readme file](https://github.com/cloudflare/gokeyless/blob/master/server/README.md) file.
+Additional details can be found in the [gokeyless server readme file](https://github.com/cloudflare/gokeyless#readme) file.
 
 --------
 
