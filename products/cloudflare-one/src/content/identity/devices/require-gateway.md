@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Require Gateway
 
-Cloudflare for Teams allows you to restrict access to your applications to devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. Unlike [Require WARP](/identity/devices/require-warp), which will check for any WARP instance (including the consumer version), this check will allow only requests coming from devices whose network traffic is monitored by your organizaition's instance of Gateway. This policy is best used when you want to protect company-owned assets by only allowing employees to connect.
+Cloudflare for Teams allows you to restrict access to your applications to devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. Unlike [Require WARP](/identity/devices/require-warp), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose network traffic is monitored by your organizaition's instance of Gateway. This policy is best used when you want to protect company-owned assets by only allowing employees to connect.
 
 The process involves two steps:
 
