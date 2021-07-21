@@ -5,7 +5,7 @@ order: 24
 
 # Defining WAF exceptions
 
-Define WAF exceptions to skip the execution of WAF Managed Rulesets or some of their rules. The WAF exception configuration defines the skip conditions using an expression, and what should be skipped under those conditions.
+Define WAF exceptions to skip the execution of WAF Managed Rulesets or some of their rules. The WAF exception configuration includes an expression that defines the skip conditions, and the rules or rulesets to skip under those conditions.
 
 WAF exceptions have priority over [overrides](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
 
