@@ -5,17 +5,17 @@ pcx-content-type: reference
 
 # Technical limitations
 
-This lists covers limitations for rules, applications, fields, and other features. 
+This lists covers limitations for rules, applications, fields, and other features.
 
 All values are per organization.
 
 <TableWrap>
 
 | Feature | Limit |
-| ------- | ----- | 
+| ------- | ----- |
 | Applications count | 500 |
-| Group size | 1000 | 
-| Group count | 50 | 
+| Group size | 1000 |
+| Group count | 50 |
 | Email addresses per rule | 1000 |
 | IP addresses per rule | 1000 |
 | Application name length (characters) | 350 |
@@ -47,8 +47,7 @@ All values are per account.
 <TableWrap>
 
 | Feature | Limit |
-| ------- | ----- | 
-| Number of concurrently running Tunnels | 1000 |
+| ------- | ----- |
+| Replicas per Tunnel | 100 |
 
 </TableWrap>
-
