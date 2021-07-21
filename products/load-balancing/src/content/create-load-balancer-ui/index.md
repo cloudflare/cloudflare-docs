@@ -14,9 +14,8 @@ This tutorial provides a general overview of how to create a load balancer, orig
 
 ## Prerequisites
 
-- **Access to Load Balancing**:
-  - A Cloudflare Enterprise plan with Load Balancing enabled
-  - An existing Free, Pro, or Business plan with a Load Balancing subscription
+- **Multiple servers**, either physical or cloud-based
+- **Access to Load Balancing**, available as an add-on for any type of account
 - **Load balancer hostname**: The hostname for which the Cloudflare Load Balancer will manage traffic. The default hostname is the root hostname.
 - **Location**: This walkthrough configures only a single geographic region.
 
