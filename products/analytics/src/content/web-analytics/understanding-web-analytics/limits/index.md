@@ -16,7 +16,7 @@ Cloudflare limits the number of sites for which you can track web analytics. Lim
 | Domain type                                    | Site limit (soft)  | Site limit (hard) |
 | ---------------------------------------------- | ------------------ | ----------------- |
 | Not proxied through Cloudflare                 | 10                 | 1000              |
-| Proxied through Cloudflare                     | No limit           | No limi           |
+| Proxied through Cloudflare                     | No limit           | No limit           |
 
 </TableWrap>
 

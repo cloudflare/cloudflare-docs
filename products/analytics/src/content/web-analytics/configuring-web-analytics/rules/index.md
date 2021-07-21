@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Rules
 
-Use **Rules** to configure whether to track Web Analytics for specific websites or paths.
+Use **Rules** to configure whether to track Web Analytics for specific websites or paths. If you do not configure any rules, Web Analytics injects the JS snippet for all sites.
 
 Rules are only available for sites proxied through Cloudflare. For more information, refer to [Limits](/web-analytics/understanding-web-analytics/limits/).
 
