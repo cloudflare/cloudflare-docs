@@ -298,7 +298,7 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
+With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "06779da6940b431db6e566b4846d64db" – which you called "My Tasks - 2021" earlier.
 
 <Aside>
   
