@@ -1,6 +1,6 @@
 ---
 title: Images (beta)
-order: 7
+order: 8
 pcx-content-type: how-to
 ---
 

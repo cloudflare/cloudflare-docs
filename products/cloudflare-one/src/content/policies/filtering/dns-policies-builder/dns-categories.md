@@ -79,7 +79,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 
 <TableWrap>
 
-|Category ID|Category Name         |Subcategory ID|Subcategory Name                         |
+| Category ID | Category Name | Subcategory ID |Subcategory Name |
 |-----------|----------------------|---------------|------------------------------------------|
 |1          |Ads                   |66             |Advertisements                            |
 |2          |Adult Themes          |67             |Adult Themes                              |

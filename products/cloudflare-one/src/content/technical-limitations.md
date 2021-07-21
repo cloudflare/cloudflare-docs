@@ -22,7 +22,7 @@ All values are per organization.
 | Group count | 300 |
 | Group name length (characters) | 350 |
 | mTLS root certificates count | 50 |
-| Service Tokens count | 50 |
+| Service Tokens count | 500 |
 | mTLS certificates name length (characters) | 350 |
 | Service Token name length | 350 |
 | IdP count | 50 |
