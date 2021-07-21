@@ -41,13 +41,13 @@ AEAD-CHACHA20-POLY1305-SHA256 [^1]|❌|❌|❌|✅
 
 ## Restricting at edge
 
-With [Advanced Certificate Manager (ACM)](../../advanced-certificate-manager), you can restrict connections to specific cipher suites.
+With [Advanced Certificate Manager (ACM)](/edge-certificates/advanced-certificate-manager), you can restrict connections to specific cipher suites.
 
 Restrict these connections at the following levels:
 - [Zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting)
 - [Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname)
 
-For more guidance on using ACM, see [Common API Calls](../../advanced-certificate-manager#common-api-commands).
+For more guidance on using ACM, see [Common API Calls](/edge-certificates/advanced-certificate-manager#common-api-commands).
 
 --------
 
