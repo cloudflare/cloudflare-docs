@@ -9,7 +9,7 @@ Cloudflare Tunnel requires the installation of a lightweight server-side daemon,
 
 Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/releases). Downloads are available as standalone binaries or packages like Debian and RPM.
 
-Release detailed notes (What changed) can be [found on GitHub RELEASE_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES)
+Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
 
 ## Linux
 
