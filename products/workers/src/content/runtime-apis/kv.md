@@ -10,27 +10,9 @@ Workers KV is a global, low-latency, key-value data store. It supports exception
 
 Learn more about [How KV works](/learning/how-kv-works).
 
-To use Workers KV you must create a KV namespace and bind it to your worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
+To use Workers KV you must create a KV namespace and add a [binding](/runtime-apis/kv#kv-bindings) to your Worker. See the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces)
 
 --------------------------------
-
-## Using KV with Durable Objects
-
-The docs below assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
-
-```js
-export class DurableObject {
-  constructor(state, env) {
-    this.state = state
-    this.env = env
-  }
-
-  async fetch(request) {
-    const valueFromKV = await this.env.NAMESPACE.get('someKey')
-    return new Response(valueFromKV)
-  }
-}
-```
 
 ## Methods
 
@@ -134,7 +116,7 @@ addEventListener("fetch", event => {
 })
 
 async function handleRequest(request) {
-  const value = await FIRST_KV_NAMESPACE.get("first-key")
+  const value = await FIRST_KV.get("first-key")
   if (value === null) {
     return new Response("Value not found", {status: 404})
   }
@@ -281,6 +263,65 @@ const value = await NAMESPACE.list()
 const cursor = value.cursor
 
 const next_value = await NAMESPACE.list({"cursor": cursor})
+```
+## KV bindings
+
+### Referencing KV from Workers 
+
+A KV namespace is a key-value database that is replicated to Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
+
+The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
+
+This is not the case with modules, see [next section](/runtime-apis/kv#referencing-kv-from-durable-objects-and-Workers-using-modules-syntax).
+
+When you create a namespace (see note below), it will have a name you choose (e.g. "My tasks"), and an assigned ID (e.g. "06779da6940b431db6e566b4846d64db")
+
+```js
+addEventListener('fetch', async event => {
+  // Get the value for the "to-do:123" key
+  // NOTE: Relies on the `TODO` KV binding!
+  let value = await TODO.get('to-do:123');
+
+  // Return the value, as is, for the Response
+  event.respondWith(new Response(value));
+});
+```
+For this Worker to execute properly, we need to define the binding. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
+
+```toml
+name = "worker"
+
+# ...
+
+kv_namespaces = [ 
+  { binding = "TODO", id = "06779da6940b431db6e566b4846d64db" }
+]
+```
+
+With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
+
+<Aside>
+  
+You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page. For the dashboard, you can bind the namespace to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
+
+</Aside>
+
+### Referencing KV from Durable Objects and Workers using Modules Syntax
+
+The docs above assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
+
+```js
+export class DurableObject {
+  constructor(state, env) {
+    this.state = state
+    this.env = env
+  }
+
+  async fetch(request) {
+    const valueFromKV = await this.env.NAMESPACE.get('someKey')
+    return new Response(valueFromKV)
+  }
+}
 ```
 
 ## See Also
