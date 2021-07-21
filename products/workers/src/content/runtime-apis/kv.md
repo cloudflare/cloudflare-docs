@@ -34,6 +34,40 @@ export class DurableObject {
 
 ## Methods
 
+### Creating a KV namespace
+
+A KV namespace is a key-value database that replicates at Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
+
+The name of your binding **does not** need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
+
+For example, assume you create a KV namespace called "My Tasks - 2021" that receives a generated namespace ID of "abcd1234". You then associate your Workers script with "My Tasks - 2021" by using the `TODO` global variable (your binding):
+
+```js
+addEventListener('fetch', async event => {
+  // Get the value for the "todo:123" key
+  // NOTE: Relies on the `TODO` KV binding!
+  let value = await TODO.get('to-do:123');
+
+  // Return the value, as is, for the Response
+  event.respondWith(new Response(value));
+});
+```
+Now, to deploy this Worker correctly, the `kv_namespaces` portion of your `wrangler.toml` file needs to be either created or modified.
+
+```toml
+name = "worker"
+
+# ...
+
+kv_namespaces = [ 
+  { binding = "TODO", id = "abcd1234" }
+]
+```
+
+With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "abcd1234" – which you called "My Tasks - 2021" earlier.
+
+You can create a namespace [using Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started) or in the [Workers dashboard](https://dash.cloudflare.com/) on the KV page, which you can bind to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
+
 ### Writing key-value pairs
 
 To create a new key-value pair, or to update the value for a particular key, you can call the `put` method on any namespace you’ve bound to your script. The basic form of this method looks like this:
@@ -134,7 +168,7 @@ addEventListener("fetch", event => {
 })
 
 async function handleRequest(request) {
-  const value = await FIRST_KV_NAMESPACE.get("first-key")
+  const value = await NAMESPACE.get("first-key")
   if (value === null) {
     return new Response("Value not found", {status: 404})
   }
