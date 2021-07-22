@@ -1,0 +1,47 @@
+name: Preview
+
+on: push
+
+jobs:
+  changes:
+    name: "Check for docs changes"
+    runs-on: ubuntu-latest
+    outputs:
+      products: ${{ steps.filter.outputs.products }}
+    steps:
+      - run: echo "Hello!!!"
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2.4.2
+        id: filter
+        with:
+          filters: |
+            products:
+              - 'products/**'
+      - run: echo "What is inside  steps.filter.outputs.products ${{  steps.filter.outputs.products }}"
+  create-pr-artifact:
+    name: Create PR artifact
+    needs: [changes]
+    # if: ${{ needs.preview.outputs.p == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${PRNUMBER} > ./pr/NUMBER
+          touch ./pr/CHANGES
+        env:
+          # PRNUMBER == '0' => don't deploy preview
+          PRNUMBER: ${{ needs.changes.outputs.products == 'true' && format(github.event.number) || '0' }}
+
+      - name: products changed
+        if: ${{ needs.changes.outputs.products == 'true' }}
+        run: echo 'products' >> ./pr/CHANGES
+          
+
+
+      # - name: WAF changed
+      #   if: ${{ needs.preview.outputs.result == 'true' && needs.changes.outputs.waf == 'true' }}
+      #   run: echo 'waf' >> ./pr/CHANGES
