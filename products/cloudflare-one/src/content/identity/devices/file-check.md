@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 <Aside type="note">
 
-You can create multiple instances of the File Check for each operative system you need to run it on, or if you need to check for multiple files.
+You can create multiple instances of the File Check for each operating system you need to run it on, or if you need to check for multiple files.
 
 </Aside>
 
@@ -25,13 +25,14 @@ To enable File Check:
 1. Select **File Check**.
 1. Enter a descriptive name for the check.
 1. Select your operating system.
-1. Enter a file path (ex: `c:\my folder\myfile.exe`).
+1. Enter a file path (for example: `c:\my folder\myfile.exe`).
 1. Next, you can choose to enter a [**Signing certificate thumbprint**](#determine-the-signing-thumbprint). 
 
-    Adding this information will enable the check to ensure that the file was signed by the software developer you expect it to be signed from. 
+    Adding this information will enable the check to ensure that the file was signed by the expected software developer. 
+
 1. You can also opt to enter a [**SHA-256** value](#determine-the-sha-256-value). 
 
-    This enables the check to ensure that the exact binary is on the device.
+    This enables the check to ensure the integrity of the binary file on the device.
 
 1. Click **Save**.
 
@@ -39,7 +40,7 @@ Your device posture attribute is now visible on the **Device posture** page.
 
 ## Determine the signing thumbprint
 
-The process to determine the signing thumbprint of a file varies depending on the operative system. This is how you would look up the signing thumbrpint of the Cloudflare WARP application on macOS and Windows.
+The process to determine the signing thumbprint of a file varies depending on the operating system. This is how you would look up the signing thumbprint of the Cloudflare WARP application on macOS and Windows.
 
 ### On macOS
 
@@ -94,5 +95,5 @@ $ shasum -a 256 myfile
 1. Use the `get-filehash` command to find the sha256 value of the file. For example:
 
 ```
-get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list`)
+get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
 ```

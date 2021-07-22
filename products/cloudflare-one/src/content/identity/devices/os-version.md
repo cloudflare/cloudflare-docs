@@ -14,5 +14,5 @@ To enable the OS version check:
 1. Click **+Add**.
 1. Select **OS version**.
 1. Enter a descriptive name for the check.
-1. Combine the **Operating system**, **Operator**, and **Value** fields to outline the OS version you want devices to match.
+1. Combine the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
 1. Click **Save**.
