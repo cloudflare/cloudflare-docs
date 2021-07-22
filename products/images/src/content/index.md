@@ -4,23 +4,21 @@ order: 0
 pcx-content-type: landing-page
 ---
 
-# Cloudflare Image Resizing docs
+# Cloudflare Images API (beta)
 
-You can transform images on Cloudflare’s edge platform. You can resize, adjust quality, and convert images to WebP or AVIF format on demand. Cloudflare will automatically cache every derived image at the edge, so you only need to store one original image at your origin.
+Cloudflare Images API provides an end-to-end solution to build your image pipeline.  It aims to answer the most common challenges associated with building and maintaining your image infrastructure:
 
-- Quickly and easily adapt images to your site’s layout and your visitors’ screen sizes without maintaining a server-side image processing pipeline on your servers.
+1. “Where do we store images?”
+1. “How do we secure, resize, and optimize the images for different use cases?”
+1. “How do we serve the images to our users reliably?”
+1. “How do we do all of these things at scale while having predictable and affordable pricing, especially during spikes?”
 
-- Image processing [integrates well with Workers](/resizing-with-workers), which enables advanced integrations such as custom URL schemes, content negotiation and responsive images based on Client Hints.
+To learn more about the vision behind Images, [read the Images blog post.](https://blog.cloudflare.com/announcing-cloudflare-images-beta/) 
 
 ## Availability
 
-Image Resizing is currently available for Business and Enterprise customers. Before you can start using it, ensure you have [enabled Image Resizing](/enable-image-resizing) in the Cloudflare dashboard.
+Cloudflare Images is currently in closed beta. To request an invite, [click here.](https://docs.google.com/forms/d/1x1caSSYQn10dRjxNLJlG-MdHgLnUa2mnR6iUpa2ahxI/edit) 
 
-## Two ways to use
+## Limitations
 
-You can use Cloudflare Image Resizing with either a pre-defined [URL format](/url-format) or with [Cloudflare Workers](/resizing-with-workers), for advanced use cases. 
-
-<ButtonGroup>
-  <Button type="primary" href="/url-format">Learn the URL format</Button>
-  <Button type="secondary" href="/resizing-with-workers">View the Workers docs</Button>
-</ButtonGroup>
+Currently, Cloudflare Images API requires use of your auth key and email. Support for Bearer Tokens will be added soon.

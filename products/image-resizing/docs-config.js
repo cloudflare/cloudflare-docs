@@ -1,9 +1,9 @@
 module.exports = {
-  product: "Images (Beta)",
-  pathPrefix: "/images",
+  product: "Image Resizing",
+  pathPrefix: "/image-resizing",
   productIconKey: "images",
   contentRepo: "cloudflare/cloudflare-docs",
-  contentRepoFolder: "products/images",
+  contentRepoFolder: "products/image-resizing",
   externalLinks: [
     {
       title: "Cloudflare homepage",
@@ -13,13 +13,13 @@ module.exports = {
   search: {
     indexName: "developers-cloudflare",
     apiKey: "b23088ab4d346409f9d3ece6606344c3",
-    algoliaOptions: { 'facetFilters': '["project:images"]'}
+    algoliaOptions: { 'facetFilters': '["project:image-resizing"]'}
   },
   siteMetadata: {
-    title: "Cloudflare Image (Beta) docs",
-    description: "An end-to-end solution to build your image pipeline.",
+    title: "Cloudflare Image Resizing docs",
+    description: "Run your image optimization logic at the edge.",
     author: "@cloudflare",
-    url: "https://developers.cloudflare.com/images",
+    url: "https://developers.cloudflare.com/image-resizing",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png"
   }
 }
