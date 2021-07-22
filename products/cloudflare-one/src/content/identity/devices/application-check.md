@@ -46,24 +46,22 @@ The process to determine the signing thumbprint of an application varies dependi
 
 1. Create a directory.
 
-    ```bash
-    ~/Desktop % mkdir tmp
-    ```
-    ```bash
-    ~/Desktop % cd tmp
+    ```sh
+    $ ~/Desktop % mkdir tmp
+
+    $ ~/Desktop % cd tmp
     ```
 
 1. Run the following command to extract certificates for the WARP application:
 
-    ```bash
-    ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP"
-    Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
+    ```sh
+    $ ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
     ```
 
-1. Next, run the following commant to extract the `SHA1` thumbprint:
+1. Next, run the following commant to extract the SHA1 thumbprint:
 
-    ```bash
-    ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :                              
+    ```sh
+    $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :                              
     SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E
     ```
 
@@ -83,17 +81,17 @@ The SHA-256 value almost always changes between versions of a file/application.
 ### On macOS
 
 1. Open a Terminal window.
-1. Use the `shasum` command to find the sha256 value of the file. For example:
+1. Use the `shasum` command to find the SHA256 value of the file. For example:
 
-```bash
+```sh
 $ shasum -a 256 myfile
 ```
 
 ### On Windows
 
 1. Open a PowerShell window.
-1. Use the `get-filehash` command to find the sha256 value of the file. For example:
+1. Use the `get-filehash` command to find the SHA256 value of the file. For example:
 
-```
+```txt
 get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
 ```
