@@ -1,0 +1,1 @@
+To protect specific pages from being overwhelmed by traffic spikes, [set up a waiting room](https://developers.cloudflare.com/waiting-room/about).
