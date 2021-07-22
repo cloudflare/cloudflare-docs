@@ -9,7 +9,7 @@ Cloudflare visualizes the metadata collected by our products in the Cloudflare d
 
 ## Cloudflare Web Analytics
 
-[Cloudflare Web Analytics](/web-analytics) provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy. 
+[Cloudflare Web Analytics](/web-analytics) provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy.
 
 ## GraphQL Analytics API
 
