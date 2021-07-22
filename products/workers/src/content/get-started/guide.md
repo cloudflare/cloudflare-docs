@@ -4,33 +4,35 @@ title: "Guide"
 pcx-content-type: getting-started
 ---
 
-# Getting Started Guide
+# Get started guide
 
-Cloudflare Workers is a **serverless application platform** running on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/platform/pricing).
+Cloudflare Workers is a serverless application platform running on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/platform/pricing).
 
 Learn more about [how Workers works](/learning/how-workers-works).
 
-<Aside header="Try the Playground">
+<Aside type ="note" header="Try the Playground">
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It doesn’t require _any_ setup. It’s just a simple, instant way to preview and test a Workers script directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is a simple, instant way to preview and test a Workers script directly in the browser against any site.
 
 </Aside>
+
+This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script.
 
 --------------------------------
 
 ## 1. Sign up for a Workers account
 
-Before you can start [publishing](/cli-wrangler/commands#publish) your Workers on your own domain or a free workers.dev subdomain, you’ll need to sign up for a Cloudflare Workers account.
+Before you can start [publishing](/cli-wrangler/commands#publish) your Workers on your own domain or a free `workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
 
 <p><Button type="primary" href="https://dash.cloudflare.com/sign-up/workers">Sign up</Button></p>
 
-The signup process will guide you through choosing a workers.dev subdomain and verifying your email address, both of which are required to publish.
+The signup process will guide you through choosing a `workers.dev` subdomain and verifying your email address, both of which are required to publish.
 
 --------------------------------
 
 ## 2. Install the Workers CLI
 
-Installing `wrangler`, the Workers CLI, gives you the freedom to [generate](/cli-wrangler/commands#generate), [configure](/cli-wrangler/commands#configure), [build](/cli-wrangler/commands#build), [preview](/cli-wrangler/commands#preview), and [publish](/cli-wrangler/commands#publish) your Workers projects from the comfort of your dev environment.
+Installing `wrangler`, the Workers CLI, gives you the freedom to [`generate`](/cli-wrangler/commands#generate), [`configure`](/cli-wrangler/commands#configure), [`build`](/cli-wrangler/commands#build), [`preview`](/cli-wrangler/commands#preview), and [`publish`](/cli-wrangler/commands#publish) your Workers projects from the comfort of your dev environment.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
 
@@ -54,9 +56,9 @@ $ wrangler --version
 
 ## 3. Configure the Workers CLI
 
-Now that Wrangler is installed, you'll need to give it an API Token for your Cloudflare account.
+With Wrangler is installed, you will need to give it an API Token for your Cloudflare account.
 
-Run the command `wrangler login` and Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that doesn't have a GUI, you can copy and paste the url into a browser and log in.
+Run the command `wrangler login`. Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that does not have a GUI, you can copy and paste the url into a browser and log in.
 
 ```sh
 $ wrangler login
@@ -65,19 +67,19 @@ y
 💁  Opened a link in your default browser: https://dash.cloudflare.com/wrangler?key=girjeanvioajsdn...
 ```
 
-Open the browser, log into your account, and click the `Authorize Wrangler` button. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log into your account, and click the **Authorize Wrangler** button. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 --------------------------------
 
 ## 4. Generate a new project
 
-Wrangler’s [`generate` subcommand](/cli-wrangler/commands#generate) will create a new project from a “starter” template—just a GitHub repo. With no [template argument](/cli-wrangler/commands#generate), Wrangler generates projects from the [default starter](https://github.com/cloudflare/worker-template). Let’s generate a new project, called `my-worker`:
+Wrangler’s [`generate` subcommand](/cli-wrangler/commands#generate) will create a new project from a starter template — just a GitHub repo. With no [template argument](/cli-wrangler/commands#generate), Wrangler generates projects from the [default starter](https://github.com/cloudflare/worker-template). To generate a new project, called `my-worker`, run:
 
 ```sh
 ~/ $ wrangler generate my-worker
 ```
 
-Wrangler will create a directory called `my-worker` and populate it with the contents of the starter template, in this case the default, and will automatically configure the `wrangler.toml` file in the project’s root with the `name = "my-worker"`.
+Wrangler will create a directory called `my-worker` and populate it with the contents of the starter template, in this case the default starter. Wrangler will automatically configure the `wrangler.toml` file in the project’s root with the `name = "my-worker"`.
 
 ```sh
 ~/ $ cd my-worker
@@ -96,7 +98,7 @@ zone_id = ""
 
 Visit the [Quick Starts](/get-started/quickstarts) page to see a complete list of our recommended starter templates.
 
-For example, to build a Workers project in TypeScript, you would instead run:
+For example, to build a Workers project in TypeScript, run:
 
 ```sh
 ~/ $ wrangler generate my-typescript-worker https://github.com/EverlastingBugstopper/worker-typescript-template
@@ -108,16 +110,16 @@ To start a project from your own code—rather than a starter—use [`wrangler i
 
 ## 5. Write code
 
-With your new project generated, you’re ready to write your own code.
+With your new project generated, you can begin to write your own code.
 
 ### 5a. Understanding Hello World
 
-At its heart, a Workers app consists of two parts:
+Fundamentally, a Workers application consists of two parts:
 
 1. An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
 2. An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request in to the Workers runtime, which in turn [emits a “fetch”](/learning/fetch-event-lifecycle) event in the [isolate](/learning/how-workers-works#isolates) where the script is running.
+When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request in to the Workers runtime, which in turn [emits a `FetchEvent`](/learning/fetch-event-lifecycle) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
 
 ```js
 ---
@@ -134,11 +136,11 @@ async function handleRequest(request) {
 }
 ```
 
-Let’s break this down:
+The example Hello World Workers request response workflow:
 
-1. An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/runtime-apis/request) object which is a representation of the HTTP request that triggered the FetchEvent.
+1. An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/runtime-apis/request) object which is a representation of the HTTP request that triggered the `FetchEvent`.
 
-2. The call to [`.respondWith()`](/runtime-apis/fetch-event#methods) lets us intercept the request in order to send back a custom response (in this case, the plain text “Hello worker!”).
+2. The call to [`.respondWith()`](/runtime-apis/fetch-event#methods) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
 
     - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/runtime-apis/response) or `Promise<Response>` that determines the response.
 
@@ -148,7 +150,7 @@ Learn more about [the `FetchEvent` lifecycle](/learning/fetch-event-lifecycle).
 
 ### 5b. Routing and filtering requests
 
-Now that we have a very basic script running on all requests, the next thing you’ll commonly want to be able to do is generate a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
+After writing a basic script for all requests, the next step commonly taken is generating a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
 
 #### Option 1: Manually filter requests
 
@@ -174,13 +176,13 @@ async function handleRequest(request) {
 }
 ```
 
-It’s very common to filter requests based on:
+It is common to filter requests based on:
 
 - `request.method` — e.g. `GET` or `POST`.
 - `request.url` — e.g. filter based on query parameters or the pathname.
 - `request.headers` — filter based on specific headers.
 
-See a list of [all properties of a `Request` object](/runtime-apis/request#properties).
+Refer to a full list of [all properties of a `Request` object](/runtime-apis/request#properties).
 
 In addition to standard request properties, the Workers platform populates the request with a [`cf` object](/runtime-apis/request#incomingrequestcfproperties), containing many useful properties, e.g. the `region` or `timezone`.
 
