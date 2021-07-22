@@ -6,30 +6,34 @@ pcx-content-type: how-to
 
 # Enabling Cloudflare Web Analytics
 
-## New users
+## Sites not proxied through Cloudflare
 
 1. Go to [Get started with Web Analytics](https://dash.cloudflare.com/sign-up/web-analytics).
 1. Enter an Email address and password.
 1. Click **Create Account**.
-2. Enter your website’s hostname. If you select a hostname for a site that is already proxied by Cloudflare, automatic setup is enabled by default. If your site is not proxied through Cloudflare, install the JS snippet manually by following the steps in [Manually set up Web Analytics](../getting-started#manually-set-up-web-analytics/).
-3. Click **Done**.
-4. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
+1. Enter your website’s hostname.
+1. Copy the JS snippet.
+1. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
+1. Click **Done**.
+1. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
 
-Repeat steps 4-6 for all of the websites you want to track with Web Analytics. For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
+Repeat steps 4-8 for all of the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from the Web Analytics Sites page. Adjust Web Analytics for your site at any time by clicking **Manage site**.
 
-## Existing users
+For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
 
-1. Go to Web Analytics.
+## Sites proxied through Cloudflare
+
+1. Go to [Web Analytics Sites](dash.cloudflare.com/?to=/:account/web-analytics) from your account home page.
 2. Under **Quick Actions**, click **Add a site**.
-3. Enter your website’s hostname. If you select a hostname for a site that is already proxied by Cloudflare, automatic setup is enabled by default. If your site is not proxied through Cloudflare, install the JS snippet manually by following the steps in [Manually set up Web Analytics](../getting-started#manually-set-up-web-analytics/).
+3. Select a hostname from the drop-down menu. Automatic setup is enabled by default. To set up Web Analytics manually:
+   1. Expand **Advanced options**.
+   2. Select **Disable automatic setup**.
+   3. Copy the JS snippet.
+   4. Add the JS snippet to any of your website’s HTML pages before the ending body tag.
 4. Click **Done**.
 
-Repeat steps 3-4 for all of the websites you want to track with Web Analytics. For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
+Repeat steps 3-4 for all of the websites you want to track with Web Analytics. Web Analytics are enabled by default for sites proxied through Cloudflare that previously used Browser Insights. Adjust Web Analytics for your site at any time by clicking **Manage site** from the Web Analytics Sites page.
 
-## Manually set up Web Analytics
+For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
 
-To set up Web Analytics manually, expand **Advanced Options** during setup and select **Disable automatic setup**. Then copy the JS snippet and add it to any of your website’s HTML pages before the ending body tag.
-
-Find and copy the JS Snippet from the **Manage site** settings at any time.
-
-For more information on how to configure which sites you track with Web Analytics, refer to [Rules](../understanding-web-analytics/rules/).
+For more information on how to configure which sites or pages you track with Web Analytics, refer to [Rules](../understanding-web-analytics/rules/).

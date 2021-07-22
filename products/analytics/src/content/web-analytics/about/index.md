@@ -11,6 +11,6 @@ To enable Web Analytics, Cloudflare writes and injects a piece of JavaScript cod
 
 Web Analytics supports Adaptive Bit Rate (ABR). Cloudflare's servers will select the best resolution for each chart or table depending on the size of the data, the date range, your network connection, and other factors. For more information, refer to [Explaining Cloudflare's ABR Analytics](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
 
-The data displayed in Web Analytics is real user monitoring (RUM). For more information, refer to [What is Real-User Monitoring?](https://smartbear.com/learn/performance-monitoring/what-is-real-user-monitoring/).
+The data displayed in Web Analytics is real user monitoring (RUM). For more information, refer to [Real User Monitoring](https://en.wikipedia.org/wiki/Real_user_monitoring).
 
 Note: Web Analytics now includes the functionality formerly enabled through Browser Insights.
