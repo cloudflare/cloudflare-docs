@@ -5,7 +5,7 @@ order: 5
 
 <Aside>
 
-Note: MP4 downloads are currently in beta and will be available to all users in coming weeks.
+Note: MP4 downloads are currently in open beta and available to all Stream customers
 
 </Aside>
 
