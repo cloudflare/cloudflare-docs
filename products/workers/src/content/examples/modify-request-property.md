@@ -5,6 +5,7 @@ summary: Create a modified request with edited properties based off of an incomi
 tags:
   - Middleware
   - Headers
+pcx-content-type: configuration
 ---
 
 # Modify request property

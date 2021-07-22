@@ -5,6 +5,7 @@ summary: Sign and verify a request using the HMAC and SHA-256 algorithms or retu
 tags:
   - Security
   - WebCrypto
+pcx-content-type: configuration
 ---
 
 # Sign requests

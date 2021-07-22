@@ -5,6 +5,7 @@ summary: Push static assets to a client's browser without waiting for HTML to re
 tags:
   - Middleware
   - Headers
+pcx-content-type: configuration
 ---
 
 # HTTP2 server push

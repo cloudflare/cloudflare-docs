@@ -6,6 +6,7 @@ tags:
   - Middleware
   - Caching
   - Cache API
+pcx-content-type: configuration
 ---
 
 # Cache POST requests
