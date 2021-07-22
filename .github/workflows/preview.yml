@@ -1,0 +1,349 @@
+name: Preview
+
+on: pull_request
+
+jobs:
+  preview:
+    name: Check preview label
+    # if: ${{ github.repository_owner == 'gganch' }}
+    outputs:
+      result: ${{ steps.step1.outputs.result || 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env variable to true when label is present
+        id: step1
+        if: ${{ contains( github.event.pull_request.labels.*.name, 'preview' ) }}
+        run: echo "::set-output name=result::true"
+
+  changes:
+    name: "Check for docs changes"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      products: ${{ steps.filter.outputs.products }}
+    steps:
+      - run: echo "Hello!!!"
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2.4.2
+        id: filter
+        with:
+          list-files: shell
+          filters: |
+            products:
+              - 'products/**'
+      - run: echo ${{ steps.filter.outputs.products_files }}
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+
+      - name: Feed files into node scrips
+        run: |
+          echo The current working directory is: $PWD
+          echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js
+          
+      - name: Define MYHOME folder
+        run: |
+          echo "MYHOME=$(echo $HOME)" >> $GITHUB_ENV
+          echo $MYHOME
+      - name: Get PR number
+        env:
+          # PRNUMBER == '0' => don't deploy preview
+          PRNUMBER: ${{ steps.filter.outputs.products == 'true' && format(github.event.number) || '0' }}
+        run: echo ${{ env.PRNUMBER }}
+      - name: RETURN VALUES FROM files
+        run: |
+          node ./get-products-from-file-paths.js
+
+      - name: Checkout changes
+        # if: ${{ env.PRNUMBER == '0' }}
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+#          token: ${{ secrets.NEW_GH_TOKEN }}
+      - name: Checkout docs engine
+        # if: ${{ env.PRNUMBER != '0' }}
+        uses: actions/checkout@v2
+        with:
+          repository: 'cloudflare/cloudflare-docs-engine'
+          path: 'engine'
+
+      - name: Install docs engine
+        # if: ${{ env.PRNUMBER != '0' }}
+        run: |
+          cd $GITHUB_WORKSPACE/engine
+          npm link
+
+      - name: Build updated docs
+        # if: ${{ env.PRNUMBER != '0' }}
+        run: |
+          while read tile; do
+            echo "Building $tile..."
+            if [ $tile == "developers.cloudflare.com" ]; then
+              pushd developers.cloudflare.com
+              npm install
+              npm run build
+              popd
+            else
+              pushd products/$tile
+              npm link cloudflare-docs-engine
+              mkdir .docs
+              npm run ghactionsbootstrap
+              npm run build
+              popd
+            fi
+          done < <(echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js)
+        env:
+          WORKERS_ENV: development
+          PREVIEW_ACCOUNT_ID: 09e1897acd19314fc6df7d21108729b0
+      
+      - name: Publish preview
+        # if: ${{ env.PRNUMBER != '0' }}
+        # uses: actions/checkout@v2
+        # with:
+        #   ref: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          echo preivew $PREVIEW_ACCOUNT_ID
+          echo github ${GITHUB_WORKSPACE}
+          echo prnumber $PRNUMBER
+          export WRANGLER_HOME="$HOME"
+          mkdir -p "$HOME/.wrangler"
+          chmod -R 770 "$HOME/.wrangler"
+          export CF_API_TOKEN=${{ secrets.CF_API_TOKEN }}
+          npm install "@cloudflare/wrangler" -g
+          COPIED="false"
+          while read tile; do 
+            if [ $tile == "developers.cloudflare.com" ]; then
+              pushd developers.cloudflare.com
+              if [ $COPIED == "false" ]; then
+                cp wrangler.toml ${GITHUB_WORKSPACE}/
+                COPIED=true
+              fi
+              ${GITHUB_WORKSPACE}/.github/setup_preview.sh ${{ format(github.event.number) }} $tile 09e1897acd19314fc6df7d21108729b0
+              wrangler publish -e $ENVIRONMENT
+              popd
+            else
+              pushd products/$tile
+              if [ $COPIED == "false" ]; then
+                cp wrangler.toml ${GITHUB_WORKSPACE}/
+                COPIED=true
+              fi
+              ${GITHUB_WORKSPACE}/.github/setup_preview.sh ${{ format(github.event.number) }} $tile 09e1897acd19314fc6df7d21108729b0
+              wrangler publish -e $ENVIRONMENT
+              popd
+            fi
+          done < <(echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js)
+          cd ${GITHUB_WORKSPACE}
+          # iconv removes emoji in output; xargs does a trim
+          echo "SUBDOMAIN=$(wrangler subdomain | iconv -c -f utf-8 -t ascii | xargs)" >> $GITHUB_ENV
+        env:
+          ENVIRONMENT: preview
+          CF_ACCOUNT_ID: 09e1897acd19314fc6df7d21108729b0
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
+
+
+    
+  # create-pr-artifact:
+  #   name: Create PR artifact
+  #   needs: [preview, changes]
+  #   if: ${{ needs.preview.outputs.result == 'true' }}
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #   steps:
+  #     - name: Save PR number
+  #       run: |
+  #         mkdir -p ./pr
+  #         echo ${PRNUMBER} > ./pr/NUMBER
+  #         touch ./pr/CHANGES
+  #       env:
+  #         # PRNUMBER == '0' => don't deploy preview
+  #         PRNUMBER: ${{ needs.preview.outputs.result == 'true' && format(github.event.number) || '0' }}
+
+  #     - name: products changed
+  #       if: ${{ needs.changes.outputs.products == 'true' }}
+  #       run: echo 'products' >> ./pr/CHANGES
+          
+
+
+      # - name: WAF changed
+      #   if: ${{ needs.preview.outputs.result == 'true' && needs.changes.outputs.waf == 'true' }}
+      #   run: echo 'waf' >> ./pr/CHANGES
+    
+  # deploy-preview:
+  #   name: Deploy preview
+  #   # needs: [create-pr-artifact]
+  #   env:
+  #     PREVIEW_ACCOUNT_ID: 09e1897acd19314fc6df7d21108729b0
+  #   runs-on: ubuntu-latest
+    
+  #   # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #       working-directory: scripts
+  #   steps:
+  #     - name: Setup NodeJS
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.2.0
+
+  #     - name: Feed files into node scrips
+  #       run: |
+  #         echo The current working directory is: $PWD
+  #         echo find $PWD -type f -maxdepth 1
+  #         printf '%s\n' "$PWD"/*
+  #         ls $PWD
+  #         echo "steps filter" ${{steps.filter.outputs.products}} 
+
+  #         echo ${{steps.filter.outputs.products}} | node ./get-products-from-file-paths.js
+
+  #         while IFS= read -r line; do
+  #           echo "a line: $line"
+  #         done < ./get-products-from-file-paths.js
+  #         foo=$(cat <./get-products-from-file-paths.js)
+  #         echo what is fooo "$foo"
+
+  #     - name: Define MYHOME folder
+  #       run: |
+  #         echo "MYHOME=$(echo $HOME)" >> $GITHUB_ENV
+  #         echo $MYHOME
+  
+      # - name: Get PR number
+      #   run: |
+      #     echo ${PRNUMBER}
+      #     echo "PRNUMBER=$(cat $HOME/NUMBER)" >> $GITHUB_ENV
+      # - name: Checkout changes
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: ${{ github.event.workflow_run.head_sha }}
+
+      # - name: Setup NodeJS
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 14.2.0
+
+      # - name: Checkout docs engine
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: 'cloudflare/cloudflare-docs-engine'
+      #     path: 'engine'
+
+      # - name: Install docs engine
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   run: |
+      #     cd $GITHUB_WORKSPACE/engine
+      #     npm link
+
+      # - name: Build updated docs
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   run: |
+      #     while read tile; do
+      #       echo "Building $tile..."
+      #       if [ $tile == "developers.cloudflare.com" ]; then
+      #         pushd developers.cloudflare.com
+      #         npm install
+      #         npm run build
+      #         popd
+      #       else
+      #         pushd products/$tile
+      #         npm link cloudflare-docs-engine
+      #         mkdir .docs
+      #         npm run ghactionsbootstrap
+      #         npm run build
+      #         popd
+      #       fi
+      #     done <$HOME/CHANGES
+      #   env:
+      #     WORKERS_ENV: development
+      #     PREVIEW_ACCOUNT_ID: ${{ env.PREVIEW_ACCOUNT_ID }}
+
+      # - name: Publish preview
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   run: |
+      #     export WRANGLER_HOME="$HOME"
+      #     mkdir -p "$HOME/.wrangler"
+      #     chmod -R 770 "$HOME/.wrangler"
+      #     export CF_API_TOKEN=${{ secrets.CF_API_TOKEN }}
+      #     npm install "@cloudflare/wrangler" -g
+      #     COPIED="false"
+      #     while read tile; do 
+      #       if [ $tile == "developers.cloudflare.com" ]; then
+      #         pushd developers.cloudflare.com
+      #         if [ $COPIED == "false" ]; then
+      #           cp wrangler.toml ${GITHUB_WORKSPACE}/
+      #           COPIED=true
+      #         fi
+      #         ${GITHUB_WORKSPACE}/.github/setup_preview.sh ${{ env.PRNUMBER }} $tile ${{ env.PREVIEW_ACCOUNT_ID }}
+      #         wrangler publish -e $ENVIRONMENT
+      #         popd
+      #       else
+      #         pushd products/$tile
+      #         if [ $COPIED == "false" ]; then
+      #           cp wrangler.toml ${GITHUB_WORKSPACE}/
+      #           COPIED=true
+      #         fi
+      #         ${GITHUB_WORKSPACE}/.github/setup_preview.sh ${{ env.PRNUMBER }} $tile ${{ env.PREVIEW_ACCOUNT_ID }}
+      #         wrangler publish -e $ENVIRONMENT
+      #         popd
+      #       fi
+      #     done <$HOME/CHANGES
+      #     cd ${GITHUB_WORKSPACE}
+      #     # iconv removes emoji in output; xargs does a trim
+      #     echo "SUBDOMAIN=$(wrangler subdomain | iconv -c -f utf-8 -t ascii | xargs)" >> $GITHUB_ENV
+      #   env:
+      #     ENVIRONMENT: preview
+      #     CF_ACCOUNT_ID: ${{ env.PREVIEW_ACCOUNT_ID }}
+      #     CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
+
+      # - name: Build PR comment with URLs
+      #   id: build-comment
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   run: |
+      #     BASE_URL=$(echo "https://pr${PR}-PRODUCTNAME.${SUBDOMAIN}")
+      #     # %0A is escaped newline:
+      #     # https://github.com/peter-evans/create-or-update-comment/issues/51
+      #     MESSAGE="[Previewer] Preview up to commit \`${SHA:0:7}\` available at the following URIs:%0A"
+      #     while read tile; do
+      #       if [ $tile == "developers.cloudflare.com" ]; then
+      #         CURR_URL=${BASE_URL//PRODUCTNAME/developers-cloudflare-com}
+      #         MESSAGE="${MESSAGE}- ${CURR_URL}%0A"
+      #       else
+      #         CURR_URL=${BASE_URL//PRODUCTNAME/$tile}
+      #         MESSAGE="${MESSAGE}- ${CURR_URL}/${tile}%0A"
+      #       fi
+      #     done <$HOME/CHANGES
+      #     echo ::set-output name=body::$MESSAGE
+      #   env:
+      #     SUBDOMAIN: ${{ env.SUBDOMAIN }}
+      #     PR: ${{ env.PRNUMBER }}
+      #     SHA: ${{ github.event.workflow_run.head_sha }}
+
+      # - name: Find comment about preview
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   uses: peter-evans/find-comment@v1
+      #   id: find-comment
+      #   with:
+      #     issue-number: ${{ env.PRNUMBER }}
+      #     body-includes: "[Previewer]"
+
+      # - name: Create or update comment
+      #   if: ${{ env.PRNUMBER != '0' }}
+      #   uses: peter-evans/create-or-update-comment@v1
+      #   with:
+      #     comment-id: ${{ steps.find-comment.outputs.comment-id }}
+      #     issue-number: ${{ env.PRNUMBER }}
+      #     body: ${{ steps.build-comment.outputs.body }}
+      #     edit-mode: replace
+
+
+
