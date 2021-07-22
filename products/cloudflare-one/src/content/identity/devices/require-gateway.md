@@ -1,12 +1,12 @@
 ---
-order: 2
+order: 1
 title: Gateway
 pcx-content-type: how-to
 ---
 
 # Require Gateway
 
-Setting up Require Gateway enables you to allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/identity/devices/require-warp), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
+With Require Gateway you can allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/identity/devices/require-warp), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 
 The process involves two steps:
 
