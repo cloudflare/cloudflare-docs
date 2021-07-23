@@ -4,6 +4,4 @@ When you secure origin connections, it prevents attackers from discovering and o
 - **SSL**: 
     - To encrypt traffic between Cloudflare and your server, choose [Full (strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#strict) SSL/TLS mode (requires server configuration)
     - To ensure all origin connections come from Cloudflare, set up [authenticated origin pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull).
-- **Cloudflare Tunnel**: 
-
-For additional Secure origin connections with a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps)
+- **Cloudflare Tunnel**: To encrypt all traffic and prevent any inbound connections to your origin, set up a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps).

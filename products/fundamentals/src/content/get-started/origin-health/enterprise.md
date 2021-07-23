@@ -5,7 +5,6 @@ hidden: true
 ---
 
 import OriginHealthOverview from "../../_partials/_origin-health-overview"
-import SecureOriginConnections from "../../_partials/_origin-secure-connections"
 import OriginHealthCheck from "../../_partials/_origin-health-check"
 import OriginLBAlert from "../../_partials/_origin-lb-alert"
 import DDoS from "../../_partials/_origin-ddos"
@@ -21,7 +20,13 @@ import WaitingRoom from "../../_partials/_origin-waiting-room"
 
 ## Secure origin connections
 
-<SecureOriginConnections/>
+When you secure origin connections, it prevents attackers from discovering and overloading your origin server with requests:
+
+- **DNS**: Set up [proxied (orange-clouded) DNS records](https://support.cloudflare.com/hc/articles/200169626) and [change your domain nameservers](https://support.cloudflare.com/hc/articles/205195708), which will also require that you [allow Cloudflare IP addresses](https://support.cloudflare.com/hc/articles/201897700) at your origin.
+- **SSL**: 
+    - To encrypt all traffic between Cloudflare and your server, choose [Strict (SSL-Only Origin Pull)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#strict-ssl-only-origin-pull) SSL/TLS mode (requires server configuration)
+    - To ensure all origin connections come from Cloudflare, set up [authenticated origin pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull).
+- **Cloudflare Tunnel**: To encrypt all traffic and prevent any inbound connections to your origin, set up a [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps).
 
 ## Monitor origin health
 
