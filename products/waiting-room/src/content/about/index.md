@@ -13,11 +13,11 @@ Cloudflare Waiting Room protects websites from surges in legitimate traffic that
 Cloudflare Waiting Room benefits **your origin server** by preventing surges in legitimate traffic that may overload your origin.
 
 Waiting Rooms also benefit **your visitors** by:
-    - Keeping your application online and preventing them from reaching error pages.
-    - Showing estimated wait times that are continuously updated.
-    - Opening up new spots more quickly by tracking dynamic inflow and [outflow](/reference/configuration-settings#session-duration).
-    - Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
-    - Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
+- Keeping your application online and preventing them from reaching error pages.
+- Showing estimated wait times that are continuously updated.
+- Opening up new spots more quickly by tracking dynamic inflow and [outflow](/reference/configuration-settings#session-duration).
+- Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
+- Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
 
 ## How it works
 
