@@ -241,7 +241,7 @@ $ curl serverless-api.signalnerve.workers.dev/api/posts
 $ curl serverless-api.signalnerve.workers.dev/api/posts/1
 ```
 
-## Deploying a new React application to pages
+## Deploying a new React application to Pages
 
 With our serverless API deployed, we can now build the frontend of our application with React. First, you will generate the application, and then you will define the functionality by adding routing, and rendering blog posts from the API. Once you are happy with the implementation locally, you will use Cloudflare Pages to deploy it in just a matter of minutes.
 
