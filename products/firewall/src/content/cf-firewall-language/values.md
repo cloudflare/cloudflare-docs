@@ -71,7 +71,7 @@ Consider the `http.request.headers.names` field with type `Array<String>` in the
 * Check if any array element is equal to `Content-Type`, ignoring the case:<br/>
   `any(lower(http.request.headers.names[*])[*] == "content-type")`
 
-In the last example, the `lower()` function includes the `[*]` notation so that the function is evaluated for each array element. This function, used along `[*]`, returns a new array where each element of the input array is converted to lowercase. Then, the `any()` function also uses `[*]` so that the full expression provided to `any()` is evaluated in the context of each element of the array returned by `lower()`.
+In the last example, the `lower()` function includes the `[*]` notation so that the function is evaluated for each array element. This function, used along `[*]`, returns a new array where each element of the input array is converted to lowercase. Then, the string comparison uses `[*]` to transform the array resulting from applying `lower()` to each header name into an array of boolean values. Finally, `any()` evaluates to true if at least one of these array elements is true.
 
 ### Final notes
 
