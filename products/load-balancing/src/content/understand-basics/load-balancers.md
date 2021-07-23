@@ -21,7 +21,7 @@ For more background information on what load balancers are and how they work, ch
 
 ### Active - Passive Failover
 
-An **active-passive failover** sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, your load balancer then re-directs traffic to the passive pool.
+An **active-passive failover** sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, your load balancer then redirects traffic to the passive pool.
 
 This setup ensures uninterrupted service and helps with planned outtages, but it might lead to slower traffic overall.
 
