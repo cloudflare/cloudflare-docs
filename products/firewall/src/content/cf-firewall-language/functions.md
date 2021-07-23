@@ -22,7 +22,7 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that take arrays as an argument type require the `[*]` index operator, which returns an array of values for each field.
+Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/cf-firewall-language/values#arrays) for more information.
 
 The Cloudflare Firewall Rules language supports these transformation functions:
 

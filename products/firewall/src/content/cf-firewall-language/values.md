@@ -29,7 +29,7 @@ Note in this example that the first and last `"` characters in `"token-type=\"JW
 
 Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](https://developers.cloudflare.com/firewall/cf-firewall-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
+Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/cf-firewall-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
 
 ## Boolean values
 
@@ -46,6 +46,48 @@ To match requests where `ssl` is `false`, use the boolean `not` operator :
 ```sql
 not ssl
 ```
+
+## Arrays
+
+The Cloudflare Firewall Rules language includes [fields](/cf-firewall-language/fields) of `Array` type and [functions](/cf-firewall-language/functions) with `Array` arguments and return values.
+
+You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
+
+Use the special notation `[*]` when specifying an expression that will be evaluated for each array element (like the [`map` high-order function](https://wikipedia.org/wiki/Map_(higher-order_function))). This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
+
+### Examples
+
+Consider the `http.request.headers.names` field with type `Array<String>` in the following examples:
+
+* Obtain the first element in the array:<br/>
+  `http.request.headers.names[0]`
+
+* Check if the first array element is equal to `Content-Type` (case sensitive):<br/>
+  `http.request.headers.names[0] == "Content-Type"`
+
+* Check if any array element is equal to `Content-Type` (case sensitive):<br/>
+  `any(http.request.headers.names[*] == "Content-Type")`
+
+* Check if any array element is equal to `Content-Type`, ignoring the case:<br/>
+  `any(lower(http.request.headers.names[*])[*] == "content-type")`
+
+In the last example, the `lower()` function includes the `[*]` notation so that the function is evaluated for each array element. This function, used along `[*]`, returns a new array where each element of the input array is converted to lowercase. Then, the string comparison uses `[*]` to transform the array resulting from applying `lower()` to each header name into an array of boolean values. Finally, `any()` evaluates to true if at least one of these array elements is true.
+
+### Final notes
+
+It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
+
+Accessing an out-of-bounds array index produces a "missing value". A missing value has the following behavior:
+
+* Any comparison `<expr> <op> <literal>` where `<expr>` evaluates to a missing value will evaluate to false.
+* Function calls like `function(<expr>)`, where `<expr>` evaluates to a missing value, will return a missing value in most cases, but the exact behavior can vary per function.
+
+You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
+
+The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
+
+* `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
+* `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
 ## Rules Lists
 
