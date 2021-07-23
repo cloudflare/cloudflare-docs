@@ -5,6 +5,7 @@ summary: Set common security headers (X-XSS-Protection, X-Frame-Options, X-Conte
 tags:
   - Security
   - Middleware
+pcx-content-type: configuration
 ---
 
 # Set security headers

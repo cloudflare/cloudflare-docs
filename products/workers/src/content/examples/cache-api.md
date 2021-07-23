@@ -6,6 +6,7 @@ tags:
   - Cache API
   - Middleware
   - Caching
+pcx-content-type: configuration
 ---
 
 # Using the Cache API

@@ -5,6 +5,7 @@ summary: Change the headers sent in a request or returned in a response.
 tags:
   - Headers
   - Middleware
+pcx-content-type: configuration
 ---
 
 # Alter headers

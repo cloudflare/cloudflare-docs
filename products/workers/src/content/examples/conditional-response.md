@@ -4,6 +4,7 @@ type: example
 summary: Return a response based on the incoming request's URL, HTTP method, User Agent, IP address, ASN or device type.
 tags:
   - Middleware
+pcx-content-type: configuration
 ---
 
 # Conditional response

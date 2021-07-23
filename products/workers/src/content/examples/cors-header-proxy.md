@@ -5,6 +5,7 @@ summary: Add the necessary CORS headers to a third party API response.
 tags:
   - Security
   - Headers
+pcx-content-type: configuration
 ---
 
 # CORS header proxy
