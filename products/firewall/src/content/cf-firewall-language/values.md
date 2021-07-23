@@ -53,7 +53,7 @@ The Cloudflare Firewall Rules language includes [fields](/cf-firewall-language/f
 
 You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
 
-Use the special notation `[*]` when specifying an expression that will be evaluated for each array element. This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
+Use the special notation `[*]` when specifying an expression that will be evaluated for each array element (like the [`map` high-order function](https://wikipedia.org/wiki/Map_(higher-order_function))). This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
 
 ### Examples
 
