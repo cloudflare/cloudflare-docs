@@ -12,6 +12,8 @@ You can enable and configure Managed Rulesets for a zone in the **Managed Rules*
 
 ## Enable or disable a Managed Ruleset
 
+When you enable a Managed Ruleset in the **Managed Rules** tab under Firewall, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase entry point ruleset.
+
 <Aside type="note">
 
 You many not be able to configure the status of certain Managed Rulesets.

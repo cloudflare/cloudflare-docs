@@ -37,7 +37,7 @@ As another example, consider an account-level rule that executes a Managed Rules
 
 ## Deploying custom rulesets
 
-You can create custom rulesets in the `http_request_firewall_custom` phase at the account level. After creating a custom ruleset, you can deploy it to a phase at the account level by creating an `execute` rule in the phase.
+You can create custom rulesets in the `http_request_firewall_custom` phase at the account level. After creating a custom ruleset, you can deploy it to a phase at the account level by adding a rule to the phase entry point that executes the custom ruleset.
 
 <Aside type='warning' header='Important'>
 

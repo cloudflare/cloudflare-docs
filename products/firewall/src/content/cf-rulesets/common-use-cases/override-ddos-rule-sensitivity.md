@@ -11,7 +11,7 @@ Follow the steps below to override the sensitivity of a specific rule of the Clo
 1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase to deploy the Cloudflare HTTP DDoS Managed Ruleset. You only need to deploy this specific ruleset when you wish to define one or more overrides, since it is enabled by default.
 1. [Configure a rule override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that sets the `sensitivity_level` of a specific rule.
 
-The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation to execute the steps in a single `PUT` request.
+The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update) operation to execute the steps in a single `PUT` request.
 
 * Add a rule to the ruleset of the `ddos_l7` phase that applies the Cloudflare HTTP DDoS Managed Ruleset (with ID `{http-ddos-ruleset-id}`).
 * Create an override for the rule with ID `{rule-id}` and set the rule sensitivity to `low`. All other rules use the default sensitivity defined by Cloudflare.

@@ -1,5 +1,4 @@
 ---
-title: Update and deploy rulesets
 pcx-content-type: reference
 alwaysopen: true
 order: 785
@@ -9,23 +8,23 @@ order: 785
 
 You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
-To configure a ruleset at the account or zone level, use one of the following API endpoints:
+To update a ruleset at the account or zone level, use one of the following API endpoints:
 
 ```bash
 ---
 header: Account-level endpoint
 ---
-PUT /accounts/{account-id}/rulesets/{root-ruleset-id}
+PUT /accounts/{account-id}/rulesets/{ruleset-id}
 ```
 
 ```bash
 ---
 header: Zone-level endpoint
 ---
-PUT /zones/{zone-id}/rulesets/{root-ruleset-id}
+PUT /zones/{zone-id}/rulesets/{ruleset-id}
 ```
 
-Alternatively, you can use one of the following endpoints when updating the ruleset of a phase:
+Alternatively, you can use one of the following endpoints when updating a phase entry point ruleset:
 
 ```bash
 ---
@@ -49,7 +48,7 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 ## Example - Set the rules of a ruleset
 
-Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every `PUT` request.
+Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
 
 ```json
 ---
@@ -79,8 +78,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
-    "description": "This ruleset deploys a Managed Ruleset.",
+    "name": "Zone-level phase entry point",
+    "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "4",
     "rules": [
@@ -106,9 +105,9 @@ header: Response
 
 ## Example - Deploy a ruleset
 
-To deploy a ruleset, create a rule with the `action` field set to `execute` and add the ruleset ID to the `action_parameters` field in the `id` parameter. You deploy rulesets to a phase.
+To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-This example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
 
 ```json
 ---
@@ -126,7 +125,7 @@ curl -X PUT \
         "id": "{managed-ruleset-id}"
       },
       "expression": "true",
-      "description": "Execute Cloudflare Managed Ruleset on my phase ruleset"
+      "description": "Execute Cloudflare Managed Ruleset on my phase entry point"
     }
   ]
 }'
@@ -139,7 +138,7 @@ header: Response
 {
   "result": {
     "id": "{phase-ruleset-id}",
-    "name": "Zone-level phase ruleset",
+    "name": "Zone-level phase entry point",
     "description": "",
     "kind": "zone",
     "version": "4",
@@ -153,7 +152,7 @@ header: Response
           "version": "latest"
         },
         "expression": "true",
-        "description": "Execute Cloudflare Managed Ruleset on my phase ruleset",
+        "description": "Execute Cloudflare Managed Ruleset on my phase entry point",
         "last_updated": "2021-03-21T11:02:08.769537Z",
         "ref": "{rule-ref-1}",
         "enabled": true
@@ -170,14 +169,13 @@ header: Response
 
 For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
 
-
 ## Example - Update ruleset description
 
-You can use this API method to update the description of an existing ruleset.
+You can use this API method to update the description of an existing ruleset or phase entry point.
 
 <Aside type='warning' header='Important'>
 
-You cannot update the description or the rules in a Managed Ruleset. You can only define overrides to customize the ruleset behavior.
+You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/cf-rulesets/managed-rulesets/override-managed-ruleset) to customize the ruleset behavior.
 
 </Aside>
 
@@ -190,7 +188,7 @@ curl -X PUT \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{ 
-  "description": "My updated zone ruleset"
+  "description": "My updated phase entry point"
 }'
 ```
 
@@ -201,8 +199,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone Ruleset",
-    "description": "My updated zone ruleset",
+    "name": "Zone entry point",
+    "description": "My updated phase entry point",
     "kind": "zone",
     "version": "4",
     "rules": [
