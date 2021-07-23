@@ -5,21 +5,21 @@ order: 2
 
 # Define WAF exceptions via API
 
-To define a WAF exception via API, create a `skip` rule — a rule with `"action": "skip"` — in a phase entry point ruleset of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
+To define a WAF exception via API, create a rule with `skip` action in a phase entry point ruleset of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
 
-To define an exception, add a rule to the entry point ruleset with `"action": "skip"` and define the `action_parameters` object according to the type of exception.
+To configure the WAF exception, define the `action_parameters` object according to the [exception type](/managed-rulesets/waf-exceptions#types-of-waf-exceptions).
 
 Refer to [Add rules to phase entry point rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/add-rule-phase-rulesets) for more information on adding rules using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
 
-<Aside type="note" header="warning">
+<Aside type="note" header="Rule execution order">
 
-Rules with `"action": "skip"` only apply to rules with `"action": "execute"` listed after them that execute rules in Managed Rulesets. If you add a `skip` rule at the end of the rules list of a phase entry point ruleset, nothing will be skipped.
+Rules with `skip` action only apply to rules with `execute` action listed **after** them that execute Managed Ruleset rules. If you add a rule with `skip` action at the end of the rules list of a phase entry point ruleset, nothing will be skipped.
 
 </Aside>
 
 ## Skip all remaining rules
 
-To skip all the remaining rules in the entry point ruleset, create a `skip` rule with `"ruleset": "current"` in the `action_parameters` object.
+To skip all the remaining rules in the entry point ruleset, create a rule with `skip` action and include `"ruleset": "current"` in the `action_parameters` object.
 
 Example rule definition:
 
@@ -33,11 +33,11 @@ Example rule definition:
 }
 ```
 
-Skipping all remaining rules only affects the rules in the current context (account or zone). For example, if you include a `skip` rule in the account-level phase entry point ruleset, the rules defined in the zone-level phase entry point ruleset will still be evaluated.
+Skipping all remaining rules only affects the rules in the current context (account or zone). For example, adding a rule with `skip` action to the account-level phase entry point ruleset has no impact on the rules defined in the zone-level phase entry point ruleset, which will be evaluated.
 
 ## Skip one or more WAF Managed Rulesets
 
-To skip one or more WAF Managed Rulesets, create a `skip` rule with a `rulesets` field in the `action_parameters` object. The `rulesets` field must contain a list of WAF Managed Ruleset IDs you wish to skip.
+To skip one or more WAF Managed Rulesets, create a rule with `skip` action containing a `rulesets` field in the `action_parameters` object. The `rulesets` field must contain a list of WAF Managed Ruleset IDs you wish to skip.
 
 Example rule definition:
 
@@ -58,9 +58,9 @@ The Managed Rulesets to skip must belong to the `http_request_firewall_managed` 
 
 ## Skip one or more rules of WAF Managed Rulesets
 
-To skip one or more rules of WAF Managed Rulesets, create a `skip` rule with a `rules` object in the `action_parameters` object. The `rules` object must contain one or more Managed Ruleset IDs as keys, and a list of rules to skip in those Managed Rulesets as the value of each key.
+To skip one or more rules of WAF Managed Rulesets, create a rule with `skip` action containing a `rules` object in the `action_parameters` object. The `rules` object must contain one or more Managed Ruleset IDs as keys, and a list of rules to skip in those Managed Rulesets as the value of each key.
 
-The following example defines a `skip` rule that skips rules `A` and `B` of WAF Managed Ruleset `1`, and rule `X` of WAF Managed Ruleset `2`:
+The following example defines a rule with `skip` action that will skip rules `A` and `B` of WAF Managed Ruleset `1` and rule `X` of WAF Managed Ruleset `2`:
 
 ```json
 {
