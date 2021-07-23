@@ -43,10 +43,10 @@ There are several types of rulesets. Cloudflare provides **Managed Rulesets** th
 
 <Aside type="note" header="Note">
 
-Phase entry point rulesets have a type defined in the `kind` field:
+The `kind` field of phase entry point rulesets has one of the following values:
 
-* Phase entry point rulesets at the account level have `"kind": "root"`
-* Phase entry point rulesets at the zone level have `"kind": "zone"`
+* `root` for phase entry point rulesets at the account level
+* `zone` for phase entry point rulesets at the zone level
 
 </Aside>
 
