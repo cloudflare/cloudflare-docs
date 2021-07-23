@@ -803,7 +803,7 @@ Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
-The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
 The Cloudflare Firewall Rules language supports these HTTP body fields:
 
