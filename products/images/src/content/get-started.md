@@ -1,5 +1,5 @@
 ---
-title: Get started
+title: How to use Images
 order: 1
 pcx-content-type: tutorial
 ---
