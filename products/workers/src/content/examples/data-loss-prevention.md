@@ -4,6 +4,7 @@ type: example
 summary: Protect sensitive data to prevent data loss, and send alerts to a webhooks server in the event of a data breach.
 tags:
   - Security
+pcx-content-type: configuration
 ---
 
 # Data loss prevention

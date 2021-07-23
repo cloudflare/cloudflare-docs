@@ -5,6 +5,7 @@ summary: Block other websites from linking to your content. This is useful for p
 tags:
   - Security
   - Headers
+pcx-content-type: configuration
 ---
 
 # Hot-link protection

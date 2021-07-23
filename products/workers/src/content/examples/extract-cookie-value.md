@@ -4,6 +4,7 @@ type: example
 summary: Given the cookie name, get the value of a cookie. You can also use cookies for A/B testing.
 tags:
   - Headers
+pcx-content-type: configuration
 ---
 
 # Cookie parsing

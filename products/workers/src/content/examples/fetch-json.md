@@ -4,6 +4,7 @@ type: example
 summary: Send a GET request and read in JSON from the response. Use to fetch external data.
 tags:
   - Originless
+pcx-content-type: configuration
 ---
 
 # Fetch JSON
