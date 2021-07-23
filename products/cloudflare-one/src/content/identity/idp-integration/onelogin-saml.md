@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 
-## Set up neLogin (SAML)
+## Set up OneLogin (SAML)
 
 To set up OneLogin (SAML) as your identity provider:
 
