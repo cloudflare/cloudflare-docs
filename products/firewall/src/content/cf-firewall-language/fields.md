@@ -610,7 +610,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
 
 ## URI argument and value fields
 
-The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
 The Cloudflare Firewall Rules language supports these URI argument and value fields:
 
@@ -703,7 +703,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
 
 ## HTTP header fields
 
-The Firewall Rules language includes fields that represent properties of HTTP request headers. Many of these return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Firewall Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
 The Cloudflare Firewall Rules language supports these HTTP header fields:
 
@@ -803,7 +803,7 @@ Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
-The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
 The Cloudflare Firewall Rules language supports these HTTP body fields:
 
