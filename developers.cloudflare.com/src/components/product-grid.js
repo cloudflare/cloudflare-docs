@@ -12,12 +12,12 @@ $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resourc
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
 $["cache"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
+$["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
 $["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
-$["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
@@ -94,6 +94,12 @@ const products = [
     wrap: true,
   },
   {
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
@@ -118,12 +124,6 @@ const products = [
     title: "Image Resizing",
     path: "images",
     icon: "images",
-  },
-  {
-    title: "Cloudflare Fundamentals",
-    path: "fundamentals",
-    icon: "fundamentals",
-    wrap: true
   },
   {
     title: "Load Balancing",

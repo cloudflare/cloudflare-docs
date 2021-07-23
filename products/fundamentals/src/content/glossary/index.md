@@ -1,6 +1,7 @@
 ---
 title: Glossary
 order: 1
+pcx-content-type: glossary
 ---
 
 # Glossary
