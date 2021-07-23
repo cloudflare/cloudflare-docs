@@ -14,9 +14,9 @@ Configure traffic steering from the Load Balancing dashboard — in either the *
 
 ---
 
-## Off - Standard failover
+## Off - standard failover
 
-Standard failover directs traffic from unhealthy pools to the next healthy pool in the configuration.
+Standard failover directs traffic from unhealthy pools — determined by [health checks](/understand-basics/monitors) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/understand-basics/load-balancers#active---passive-failover).
 
 Standard failover uses the pool order to determine failover priority (the failover order).
 
@@ -28,7 +28,7 @@ If no monitors are attached to the load balancer, it will direct traffic to the 
 
 ---
 
-## Dynamic Steering
+## Dynamic steering
 
 Dynamic Steering uses health check data to identify the fastest pool for a given Cloudflare Region or data center.
 
@@ -40,11 +40,11 @@ For TCP health checks, calculated latency may not reflect the true latency to th
 
 The diagram below shows how Cloudflare would route traffic to the pool with the lowest EWMA among three regions: Eastern North America, Europe, and Australia. In this case, the ENAM pool is selected, because it has the lowest RTT.
 
-![](../static/images/traffic-steering-2.png)
+![Dynamic steering routes traffic to the fastest available pool](../static/images/traffic-steering-2.png)
 
 ---
 
-## Geo Steering
+## Geo steering
 
 Geo Steering directs traffic to pools to a specific geographical region or — for Enterprise customers only — data center. This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
@@ -56,7 +56,7 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
 
 For more details on working with regions and region codes, see [Region Mapping API](../region-mapping-api).
 
-## Proximity Steering
+## Proximity steering
 
 Choose **Proximity Steering** to route visitors or internal services to the closest physical data center.
 
@@ -77,3 +77,7 @@ To add coordinates when creating or editing a pool:
 <Aside type="warning" header="Warning:">
   For accurate proximity steering, add GPS coordinates to all pools within the same load balancer.
 </Aside>
+
+## Random steering
+
+Choose **Random** to route traffic to a healthy pool at random. Customers can use this option to set up [active - active failover](/understand-basics/load-balancers#active---active-failover) (or round robin), where traffic is split equally between multiple pools.
