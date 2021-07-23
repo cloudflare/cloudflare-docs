@@ -55,19 +55,6 @@ You can access individual array elements using an index (a non-negative value) b
 
 Use the special notation `[*]` when specifying an expression that will be evaluated for each array element. This special index notation will unpack the array, call the enclosing function for all its elements individually, and return a new array containing all the individual return values.
 
-<Aside type="note" header="Notes">
-
-It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
-
-You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
-
-The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
-
-* `http.request.headers.names[*] == "Content-Type"` — **invalid** expression
-* `any(http.request.headers.names[*] == "Content-Type")` — **valid** expression
-
-</Aside>
-
 ### Examples
 
 Consider the `http.request.headers.names` field with type `Array<String>` in the following examples:
@@ -85,6 +72,22 @@ Consider the `http.request.headers.names` field with type `Array<String>` in the
   `any(lower(http.request.headers.names[*])[*] == "content-type")`
 
 In the last example, the `lower()` function includes the `[*]` operator so that the function is evaluated in the context of each array element. The function returns a new array where each element of the input array is converted to lowercase. Then, the `any()` function must also contain a `[*]` operator so that the full expression provided to `any()` is evaluated in the context of each element of the array returned by `lower()`.
+
+### Final notes
+
+It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
+
+Accessing an out-of-bounds array index produces a "missing value". A missing value has the following behavior:
+
+* Any comparison `<expr> <op> <literal>` where `<expr>` evaluates to a missing value will evaluate to false.
+* Function calls like `function(<expr>)`, where `<expr>` evaluates to a missing value, will return a missing value in most cases, but the exact behavior can vary per function.
+
+You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
+
+The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
+
+* `http.request.headers.names[*] == "Content-Type"` — **invalid** expression
+* `any(http.request.headers.names[*] == "Content-Type")` — **valid** expression
 
 ## Rules Lists
 
