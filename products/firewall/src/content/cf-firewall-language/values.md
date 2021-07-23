@@ -86,8 +86,8 @@ You can only use `[*]` multiple times in the same expression if applied to the s
 
 The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
 
-* `http.request.headers.names[*] == "Content-Type"` — **invalid** expression
-* `any(http.request.headers.names[*] == "Content-Type")` — **valid** expression
+* `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
+* `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
 ## Rules Lists
 
