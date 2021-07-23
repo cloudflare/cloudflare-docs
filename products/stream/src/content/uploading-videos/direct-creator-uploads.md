@@ -38,7 +38,7 @@ Additionally, you can control security features through these fields:
   - `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
     - Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
 
-  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>  
+  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>
     - Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
 
   - `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
@@ -193,7 +193,7 @@ The response will contain a `Location` header which provides the one-time URL th
 
 Here is a demo Cloudflare Worker script which returns the one-time upload URL:
 
-```
+```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -203,7 +203,7 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const init = {
+  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", {
     method: 'POST',
     headers: {
       'Authorization': 'bearer $TOKEN',
@@ -211,17 +211,18 @@ async function handleRequest(request) {
       'Upload-Length': request.headers.get('Upload-Length'),
       'Upload-Metadata': request.headers.get('Upload-Metadata')
     },
-  }
-  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", init)
-  const results = await gatherResponse(response)
-  return new Response(null, {headers: {'Access-Control-Expose-Headers':'Location','Access-Control-Allow-Headers':'*','Access-Control-Allow-Origin':'*','location':results}})
+  })
 
-}
+  const destination = response.headers.get('Location')
 
-async function gatherResponse(response) {
-  const { headers } = response
-  return await headers.get('location')
-
+  return new Response(null, {
+    headers: {
+      'Access-Control-Expose-Headers': 'Location',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin':'*',
+      'Location': destination
+    }
+  })
 }
 ```
 

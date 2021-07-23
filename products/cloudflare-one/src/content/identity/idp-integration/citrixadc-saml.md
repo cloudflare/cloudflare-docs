@@ -79,9 +79,8 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     ```
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
-
-1. Click *+ Add* under **Login Methods**, and select SAML.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. Under **Login methods**, click **Add new**.
 
 1. Configure the fields as follows:
     

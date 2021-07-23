@@ -5,6 +5,7 @@ summary: Allow or deny a request based on a known pre-shared key in a header. Th
 tags:
   - Authentication
   - WebCrypto
+pcx-content-type: configuration
 ---
 
 # Auth with headers

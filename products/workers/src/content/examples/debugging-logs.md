@@ -5,6 +5,7 @@ summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
   - Logging
+pcx-content-type: configuration
 ---
 
 # Debugging logs

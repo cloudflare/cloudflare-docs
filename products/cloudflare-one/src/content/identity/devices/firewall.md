@@ -1,0 +1,21 @@
+---
+order: 16
+pcx-content-type: how-to
+title: Firewall
+---
+
+# Firewall (beta)
+
+The Firewall device posture attribute ensures that a firewall is running on a device.
+
+To enable the Firewall check:
+
+1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1. Click **+Add**.
+1. Select **Firewall**.
+1. Enter a descriptive name for the check.
+1. Select your operating system.
+1. Toggle on the **Enable firewall check** switch.
+1. Click **Save**.
+
+Your device posture attribute is now visible on the **Device posture** page.

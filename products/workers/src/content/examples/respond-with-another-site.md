@@ -5,6 +5,7 @@ summary: Respond to the Worker request with the response from another website (e
 demo: https://respond-with-another-site.workers-sites-examples.workers.dev
 tags:
   - Middleware
+pcx-content-type: configuration
 ---
 
 # Respond with another site

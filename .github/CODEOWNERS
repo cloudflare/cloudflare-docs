@@ -25,6 +25,9 @@ products/browser-isolation/ @cloudflare/PCX
 # BYOIP
 products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 
+# Cache
+products/cache/ @cloudflare/PCX
+
 # Cloudflare One
 products/cloudflare-one/ @cloudflare/PCX
 

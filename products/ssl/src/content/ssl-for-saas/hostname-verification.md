@@ -152,7 +152,7 @@ Various hostname verification errors include:
 </tr>
 <tr>
 <td style='width:50%; word-wrap:break-word; white-space:normal'>None of the A or AAAA records are owned by this account and the pre-generated ownership verification token was not found</td>
-<td>Account has apex proxying enabled but custom.</td>
+<td>Account has apex proxying enabled but the custom hostname failed the hostname validation check on the A record.</td>
 </tr>
 <tr>
 <td style='width:50%; word-wrap:break-word; white-space:normal'>This account and the pre-generated ownership verification token was not found</td>

@@ -71,6 +71,12 @@ All steering modes are available for transport load balancing through Spectrum:
 
 --------------------------------
 
+## Load balancing rules
+
+At the moment, you cannot use [load balancing custom rules](https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules) with Cloudflare Spectrum.
+
+--------------------------------
+
 ## Example
 
 <Aside>

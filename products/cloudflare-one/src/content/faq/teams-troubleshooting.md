@@ -99,8 +99,16 @@ The third component, the token, consists of the zone ID (for the selected domain
 You may have to disable the DNS over HTTPs setting in Firefox. To do so, navigate to Firefox Preferences, scroll down to **Network Settings**, and uncheck **Enable DNS over HTTPS > OK**.
 
 ## `cloudflared access` shows an error `websocket: bad handshake`
+
 This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin.
 To diagnose this, you should look at the `cloudflared tunnel` logs. A very often root cause is that the `cloudflared tunnel` is unable to proxy to your origin (e.g. because the ingress is mis-configured, or the origin is down, or because the origin HTTPS certificate cannot be validated by `cloudflared tunnel`).
 If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it. There are two possible root causes there:
 1. Your `cloudflared tunnel` is not running or connected to Cloudflare Edge; or
 2. You need to make sure that WebSockets are enabled in your `dash.cloudflare.com` (under the **Network** tab).
+
+## I see an error: x509: certificate signed by unknown authority
+
+This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
+1. Add the certificate to the system certificate pool.
+1. Use the `--origin-ca-pool` flag and specify the path to the certificate.
+1. Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
