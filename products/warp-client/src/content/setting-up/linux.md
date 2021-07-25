@@ -10,6 +10,7 @@ order: 6
 1. Install the `cloudflare-warp` package depending on your distro:
     1. **apt-based OS** (e.g., Ubuntu) `sudo apt install cloudflare-warp`
     2. **yum-based OS** (e.g., CentOS or RHEL) `sudo yum install cloudflare-warp`
+    3. **Archlinux(AUR)**(e.g.,yay) `yay -S cloudflare-warp-bin`
 
 ## Using WARP
 
