@@ -82,7 +82,7 @@ credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e
 
 ## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](/connections/connect-apps/create-tunnel). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 
