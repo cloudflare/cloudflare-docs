@@ -28,7 +28,6 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Events                  | events               | [Test](https://events.cloudflare-docs.workers.dev/events)                             | [Prod](https://developers.cloudflare.com/events)               |
 | Firewall                | firewall             | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         | [Prod](https://developers.cloudflare.com/firewall)             |
 | Fundamentals            | fundamentals         | [Test](https://fundamentals.cloudflare-docs.workers.dev/fundamentals)                 | [Prod](https://developers.cloudflare.com/fundamentals)         |
-| Gateway                 | gateway              | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           | [Prod](https://developers.cloudflare.com/gateway)              |
 | HTTP/3                  | http3                | [Test](https://http3.cloudflare-docs.workers.dev/http3)                               | [Prod](https://developers.cloudflare.com/http3)                |
 | Image Resizing          | images               | [Test](https://images.cloudflare-docs.workers.dev/images)                             | [Prod](https://developers.cloudflare.com/images)               |
 | Load Balancing          | load-balancing       | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             | [Prod](https://developers.cloudflare.com/load-balancing)       |

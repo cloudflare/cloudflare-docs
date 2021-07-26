@@ -26,7 +26,6 @@ jobs:
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
-      gateway: ${{ steps.filter.outputs.gateway }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
       images: ${{ steps.filter.outputs.images }}
@@ -93,8 +92,6 @@ jobs:
               - 'products/firewall/**'
             fundamentals:
               - 'products/fundamentals/**'
-            gateway:
-              - 'products/gateway/**'
             browser-isolation:
               - 'products/browser-isolation/**'
             http3:
@@ -473,25 +470,6 @@ jobs:
       run:
         shell: bash
         working-directory: products/fundamentals
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
-  build-gateway:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.gateway == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/gateway
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

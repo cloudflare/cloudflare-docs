@@ -22,7 +22,6 @@ const products = [
   "events",
   "firewall",
   "fundamentals",
-  "gateway",
   "http3",
   "images",
   "load-balancing",

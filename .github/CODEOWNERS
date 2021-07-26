@@ -49,9 +49,6 @@ products/firewall/ @cloudflare/firewall @cloudflare/PCX
 # Fundamentals
 products/fundamentals/ @cloudflare/PCX
 
-# Gateway
-products/gateway/ @cloudflare/PCX
-
 # HTTP/3
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
