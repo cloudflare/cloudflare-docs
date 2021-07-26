@@ -9,7 +9,7 @@ order: 770
 
 You cannot edit Managed Rulesets, but you can add overrides to Managed Rulesets deployed to a phase. Overrides take precedence over the default behavior of the Managed Ruleset.
 
-For more information on overriding Managed Rulesets, see [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
+For more information on overriding Managed Rulesets, refer to [Override a Managed Ruleset](/cf-rulesets/managed-rulesets/override-managed-ruleset).
 
 The examples in the topics below use overrides to customize the behavior of Managed Rulesets.
 

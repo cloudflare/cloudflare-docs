@@ -10,7 +10,7 @@ order: 750
 
 Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can deploy. Only Cloudflare can modify these rulesets.
 
-The rules in a Managed Ruleset have a default configuration. However, you can define **overrides** that change this default configuration.
+The rules in a Managed Ruleset have a default configuration. However, you can define overrides that change this default configuration.
 
 <Aside type='note' header='Note'>
 

@@ -11,11 +11,11 @@ There are several elements involved in the configuration and use of the Ruleset 
 
 * **Phase** — Defines a stage in the life of a request where you can execute rulesets.
 * **Ruleset** — Defines a versioned set of rules. You deploy rulesets to a phase, where they execute.
-* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an “execute” action executes a ruleset.
+* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an `execute` action executes a ruleset.
 
 ## Phases
 
-A phase defines a stage in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and you cannot modify them.
+A phase defines a stage in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and cannot be modified.
 
 Phases exist at two levels: at the **account** level and at the **zone** level. For the same phase, rules defined at the account level are evaluated **before** the rules defined at the zone level.
 
@@ -37,7 +37,7 @@ Cloudflare products are specific to one or more phases, and they add support for
 
 A ruleset is an ordered set of rules that you can apply to traffic at the edge. Rulesets belong to a phase and can only execute in the same phase. To deploy a ruleset to a phase, add a rule that executes the ruleset to the phase entry point.
 
-Rulesets are versioned. Each ruleset modification creates a new version of the ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset — that is, when you create a rule that executes the ruleset —, the most recent version of the ruleset is selected by default.
+Rulesets are versioned. Each ruleset modification creates a new version of the ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset — that is, when you create a rule that executes the ruleset — the most recent version of the ruleset is selected by default.
 
 There are several types of rulesets. Cloudflare provides **Managed Rulesets** that you can deploy. Additionally, you can create and manage your own **custom rulesets**. Specific Cloudflare products may provide other types of rulesets.
 

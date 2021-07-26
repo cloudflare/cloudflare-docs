@@ -70,7 +70,7 @@ The following parameters are required:
   </tbody>
 </table>
 
-Use the `rules` parameter to supply a list of rules for the ruleset. For an object definition, see [Rulesets API: JSON Object](/cf-rulesets/rulesets-api/json-object).
+Use the `rules` parameter to supply a list of rules for the ruleset. For an object definition, refer to [Rulesets API: JSON Object](/cf-rulesets/rulesets-api/json-object).
 
 ## Example - Create a custom ruleset
 
