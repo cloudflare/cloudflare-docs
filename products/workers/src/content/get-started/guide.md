@@ -22,7 +22,7 @@ This guide will instruct you through setting up a Cloudflare account to deployin
 
 ## 1. Sign up for a Workers account
 
-Before you can start [publishing](/cli-wrangler/commands#publish) your Workers on your own domain or a free `workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
+Before you can start [publishing](/cli-wrangler/commands#publish) your Workers on your own domain or a free `*.workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
 
 <p><Button type="primary" href="https://dash.cloudflare.com/sign-up/workers">Sign up</Button></p>
 
@@ -206,7 +206,7 @@ For inspiration, visit [Built with Workers](https://workers.cloudflare.com/built
 
 ## 6. Preview your project
 
-In order to preview our Worker, we're going to need to configure our project by adding our `Account ID` to our project's `wrangler.toml`.
+In order to preview our Worker, you need to configure your project by adding your `Account ID` to our project's `wrangler.toml` file.
 
 Run the command `wrangler whoami` and copy your `Account ID`.
 
@@ -221,7 +221,7 @@ $ wrangler whoami
 +----------------------------------+----------------------------------+
 ```
 
-Then, open up your project's `wrangler.toml` and paste it in as the value for the `account_id` field.
+Then, open up your project's `wrangler.toml` file and paste it in as the value for the `account_id` field.
 
 ```toml
 ---
@@ -252,33 +252,11 @@ Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforeha
 
 ## 7. Configure your project for deployment
 
-To configure your project, we need to fill in a few missing fields in the `wrangler.toml` file in the root of the generated project. This file contains the information Wrangler needs to connect to the Cloudflare Workers API and publish your code.
+To configure your project, fill in a missing fields in the `wrangler.toml` file in the root directory of your generated project. This file contains the information Wrangler needs to connect to the Cloudflare Workers API and publish your code.
 
-You should have already filled in the `account_id` field in the last step. If you didn't, you can get your `Account ID` by running `wrangler whoami`.
+You should have already filled in the `account_id` field in [step number six](/get-started/guide#6-preview-your-project). Complete this step before proceeding further. 
 
-```bash
-$ wrangler whoami
-👋  You are logged in with an API Token, associated with the email '<Your Email>'!
-
-+----------------------------------+----------------------------------+
-| Account Name                     | Account ID                       |
-+----------------------------------+----------------------------------+
-| Your Account                     | $yourAccountId                   |
-+----------------------------------+----------------------------------+
-```
-
-Then, paste it into your `wrangler.toml` as the value for the `account_id` field.
-
-```toml
----
-filename: wrangler.toml
-highlight: [2]
----
-name = "my-worker"
-account_id = "$yourAccountId"
-```
-
-Let’s also configure the `type` to `"webpack"`, to tell Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. (Learn more about [`type` configuration](/cli-wrangler/configuration).)
+After you have filled in your `account_id`, configure the `type` to `"webpack"` in your `wrangler.toml` file to tell Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. To learn more about `type` configuration, refer to [`type` configuration](/cli-wrangler/configuration).)
 
 ```toml
 ---
@@ -290,20 +268,22 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-By default, this project will deploy to your workers.dev subdomain. When deploying to a workers.dev subdomain, the **name** field will be used as the secondary subdomain for the deployed script, e.g. `my-worker.my-subdomain.workers.dev`.
+By default, this project will deploy to your `*.workers.dev` subdomain. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (e.g., `my-worker.my-subdomain.workers.dev`).
 
 #### (Optional) Configure for deploying to a registered domain
 
-To publish your application on a domain you own, and not a workers.dev subdomain, you can add a `route` key to your `wrangler.toml`.
+To publish your application on a domain you own, and not a `*workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
 
 You can get your `zone_id` with the following steps:
 
-1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired domain.
-2. Select the **Overview** tab on the navigation bar.
-3. Scroll down until you see both **Zone ID** on the right.
+1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired zone.
+2. If not already there, navigate to **Overview** in the dashboard.
+3. Scroll down until you see **Zone ID** on the right.
 4. Click **Click to copy** below the input.
 
-Wrangler’s [environments feature](/platform/environments) allows us to specify multiple different deploy targets for our application. Let's add a `production` environment, passing in a `zone_id` and `route`:
+Wrangler’s environments feature allows you to deploy the same project to multiple places under multiple names. For a complete guide on how to configure environments, refer to the [environments page](/platform/environments).
+
+To add a `production` environment, pass in a `zone_id` and `route`:
 
 ```toml
 ---
@@ -323,7 +303,7 @@ zone_id = "$yourZoneId"
 route = "example.com/*"
 ```
 
-The `route` key here is a [route pattern](/platform/routes), which e.g., can contain wildcards.
+The `route` key here is a [route pattern](/platform/routes), which can contain wildcards.
 
 If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (the response comes directly from a Worker), you should enter a placeholder (dummy) AAAA record pointing to `100::`, which is the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666).
 
@@ -331,9 +311,9 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 ## 8. Publish your project
 
-With our project configured, it’s time to publish it.
+With our project configured, it is time to publish.
 
-To deploy to our workers.dev subdomain, we can run:
+To deploy to your `*.workers.dev` subdomain, run:
 
 ```sh
 ---
@@ -342,15 +322,15 @@ header: Publish to workers.dev
 ~/my-worker $ wrangler publish
 ```
 
-<Aside>
+<Aside type="note">
 
-__Note:__ When pushing to workers.dev project for the first time, you may initially see **523 errors** while DNS is propagating. It should work after a minute or so.
+__Note:__ When pushing to your `*.workers.dev`subdomain for the first time, you may initially see [523 errors](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#523error) while DNS is propagating. It should work after a minute or so.
 
 </Aside>
 
 #### (Optional) Publish your project to a registered domain
 
-To deploy to our production environment we set in our `wrangler.toml` in the optional configuration step, we can pass the `--env` flag to the command:
+To deploy to your production environment you set in your `wrangler.toml` file in the [optional configuration step](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
 
 ```sh
 ---
@@ -365,6 +345,6 @@ You can also configure a GitHub repo to automatically deploy every time you `git
 
 --------------------------------
 
-## Where to go next
+## Next steps
 
-This is just the beginning of what you can do with Cloudflare Workers. To dive deeper into building meaty projects, check out our [Tutorials](/tutorials).
+This is just the beginning of what you can do with Cloudflare Workers. To do more with Workers, refer to the [Tutorials](/tutorials) section.
