@@ -5,6 +5,7 @@ summary: Serve an HTML form, then read POST requests. Use also to read JSON or P
 tags:
   - JSON
   - Originless
+pcx-content-type: configuration
 ---
 
 # Read POST

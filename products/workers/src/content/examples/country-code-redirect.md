@@ -4,6 +4,7 @@ type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
   - Originless
+pcx-content-type: configuration
 ---
 
 # Country code redirect
