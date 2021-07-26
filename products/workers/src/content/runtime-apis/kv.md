@@ -116,7 +116,7 @@ addEventListener("fetch", event => {
 })
 
 async function handleRequest(request) {
-  const value = await FIRST_KV.get("first-key")
+  const value = await NAMESPACE.get("first-key")
   if (value === null) {
     return new Response("Value not found", {status: 404})
   }
@@ -276,17 +276,7 @@ This is not the case with modules, see [next section](/runtime-apis/kv#referenci
 
 When you create a namespace (see note below), it will have a name you choose (e.g. "My tasks"), and an assigned ID (e.g. "06779da6940b431db6e566b4846d64db")
 
-```js
-addEventListener('fetch', async event => {
-  // Get the value for the "to-do:123" key
-  // NOTE: Relies on the `TODO` KV binding!
-  let value = await TODO.get('to-do:123');
-
-  // Return the value, as is, for the Response
-  event.respondWith(new Response(value));
-});
-```
-For this Worker to execute properly, we need to define the binding. In the `kv_namespaces` portion of your `wrangler.toml` file, add:
+For your Worker to execute properly, we need to define the binding (called `TODO` below). In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
 ```toml
 name = "worker"
@@ -298,8 +288,18 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "06779da6940b431db6e566b4846d64db" – which you called "My Tasks - 2021" earlier.
+With this, the deployed Worker will have a `TODO` global variable; any reads, writes, or deletes on `TODO` will map to the KV namespace with an ID of "06779da6940b431db6e566b4846d64db" – which you called "My Tasks" earlier.
 
+```js
+addEventListener('fetch', async event => {
+  // Get the value for the "to-do:123" key
+  // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace!
+  let value = await TODO.get('to-do:123');
+
+  // Return the value, as is, for the Response
+  event.respondWith(new Response(value));
+});
+```
 <Aside>
   
 You can create a namespace <a href="https://developers.cloudflare.com/workers/cli-wrangler/commands#getting-started">using Wrangler</a> or in the <a href="https://dash.cloudflare.com/">Workers dashboard</a> on the KV page. For the dashboard, you can bind the namespace to your Worker by clicking "Settings" and adding a binding under "KV Namespace Bindings".
