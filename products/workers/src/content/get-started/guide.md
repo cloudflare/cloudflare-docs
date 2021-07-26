@@ -150,11 +150,11 @@ Learn more about [the `FetchEvent` lifecycle](/learning/fetch-event-lifecycle).
 
 ### 5b. Routing and filtering requests
 
-After writing a basic script for all requests, the next step commonly taken is generating a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
+After writing a basic script for all requests, the next step is generating a dynamic response based on the requests the Worker script is receiving. This is often referred to as routing or filtering.
 
 #### Option 1: Manually filter requests
 
-You can use standard JavaScript branching logic, such as `if`/`else` or `switch` statements, to conditionally return different responses or execute different handlers based on the request:
+Use standard JavaScript branching logic, such as `if`/`else` or `switch` statements, to conditionally return different responses or execute different handlers based on the request:
 
 ```js
 ---
@@ -188,7 +188,7 @@ In addition to standard request properties, the Workers platform populates the r
 
 #### Option 2: Use a template for routing on URL
 
-For more complex routing, it can be helpful to use a library. The [Workers router starter](https://github.com/cloudflare/worker-template-router) template provides an API similar to ExpressJS for handling requests based on HTTP methods and paths:
+For more complex routing, it is recommended to use a library. The [Workers router starter](https://github.com/cloudflare/worker-template-router) template provides an API similar to ExpressJS for handling requests based on HTTP methods and paths:
 
 ```sh
 ~/ $ wrangler generate my-worker-with-router https://github.com/cloudflare/worker-template-router
