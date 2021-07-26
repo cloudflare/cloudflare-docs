@@ -42,4 +42,4 @@ The Cloudflare HTTP DDoS Managed Ruleset is always enabled. You can only customi
 
 ## Availability
 
-The Cloudflare HTTP DDoS feature is available in Beta to all customers. If you would like Beta access, contact your Customer Success Manager or Cloudflare Support.
+The Cloudflare HTTP DDoS feature is available in Beta to all Enterprise customers. If you would like Beta access, contact your Customer Success Manager or Account Team.
