@@ -44,7 +44,7 @@ Domain-based split tunneling works alongside DNS by dynamically excluding the ro
 4. If a DNS result has been previously cached it will not be dynamically included in the Split Tunnel result until the next time the DNS lookup happens.
 
 </Aside>
- 
+
 ### Remove an item from Split Tunnels
  
 On the Split Tunnels page, locate the IP address or hostname in the list and then click **Delete**.
