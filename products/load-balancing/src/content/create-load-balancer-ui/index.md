@@ -96,7 +96,7 @@ Create [monitors](/understand-basics/monitors) to run health checks that track t
 1. For additional settings, select **Advanced health check settings**:
     - **Simulate Zone**: 
         - Pushes a request from Cloudflare Health Monitors through the Cloudflare stack as if it were a real visitor request to help analyze behavior or validate a configuration
-        - Ensures health checks are compatible features like [authenticated origin pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull) and [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
+        - Ensures health checks are compatible with features like [authenticated origin pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull) and [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
 
 1. Select **Save**.
 
