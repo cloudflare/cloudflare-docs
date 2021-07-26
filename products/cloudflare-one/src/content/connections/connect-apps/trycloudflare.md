@@ -37,4 +37,4 @@ $ cloudflared tunnel --url http://localhost:7000
 * We don’t guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
 
 #### Legal
-Your installation of cloudflared software constitutes a symbol of your signature indicating that you accept the terms of the [Cloudflare License](https://developers.cloudflare.com/argo-tunnel/license/), [Terms](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
+Your installation of cloudflared software constitutes a symbol of your signature indicating that you accept the terms of the [Cloudflare License](/connections/connect-apps/license), [Terms](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
