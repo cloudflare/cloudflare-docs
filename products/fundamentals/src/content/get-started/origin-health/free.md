@@ -32,7 +32,7 @@ import LoadBalancing from "../../_partials/_origin-load-balancing"
 
 <DDoS/>
 
-Additionally, you can adjust various settings in your **Firewall** to restrict potentially malicious traffic, including:
+Additionally, adjust various settings in your **Firewall** to restrict potentially malicious traffic:
 - Set up customized [firewall rules](https://developers.cloudflare.com/firewall/cf-firewall-rules)
 - Enable [bot protection](https://developers.cloudflare.com/bots/get-started)
 - Block, challenge, or allow specific addresses with [IP access rules](https://support.cloudflare.com/hc/articles/217074967)

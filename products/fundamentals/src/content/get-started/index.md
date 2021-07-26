@@ -5,6 +5,6 @@ pcx-content-type: navigation
 
 # Get started
 
-As you get started with Cloudflare, explore the following guides to get the most out of our products:
+As you get started with Cloudflare, explore the following guides to get the most out of our products.
 
-<DirectoryListing path="/fundamentals/get-started"/>
+<DirectoryListing path="/get-started"/>
