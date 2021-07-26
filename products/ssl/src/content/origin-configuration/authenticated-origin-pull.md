@@ -5,9 +5,9 @@ pcx-content-type: interim
 
 # Authenticated origin pull
 
-Authenticated origin pulls add an extra layer of security to your domain.
+Authenticated origin pulls ensure requests to your origin server come from the Cloudflare network.
 
-This authentication becomes particularly important with the Cloudflare Web Application Firewall (WAF). Together with the WAF, you can make sure that **all traffic** is evaluated before reaching your origin server.
+This authentication becomes particularly important with the Cloudflare Web Application Firewall (WAF). Together with the WAF, you can make sure that **all traffic** is evaluated before receiving a response from your origin server.
 
 <ButtonGroup>
     <Button type="primary" href="#set-up-authenticated-origin-pulls">Get started</Button>
@@ -26,7 +26,7 @@ Authenticated Origin Pull is incompatible with Railgun.
 
 When visitors request content from your domain, Cloudflare first attempts to serve content from the cache. Failing that, Cloudflare sends a request — or an `origin pull` — back to your origin web server to get the content.
 
-Authenticated origin pulls make sure that all of these `origin pulls` come from Cloudflare. Put another way, authenticated origin pulls ensure that any HTTPS requests outside of Cloudflare are blocked from reaching your origin.
+Authenticated origin pulls make sure that all of these `origin pulls` come from Cloudflare. Put another way, authenticated origin pulls ensure that any HTTPS requests outside of Cloudflare will not receive a response from your origin.
 
 <Aside type='note' header='Note'>
 
