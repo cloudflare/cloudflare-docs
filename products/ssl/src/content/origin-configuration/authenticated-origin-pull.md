@@ -5,7 +5,7 @@ pcx-content-type: interim
 
 # Authenticated origin pull
 
-Authenticated origin pulls validate that requests to your origin server are coming from the Cloudflare network.
+Authenticated origin pulls ensure requests to your origin server come from the Cloudflare network.
 
 This authentication becomes particularly important with the Cloudflare Web Application Firewall (WAF). Together with the WAF, you can make sure that **all traffic** is evaluated before receiving a response from your origin server.
 
