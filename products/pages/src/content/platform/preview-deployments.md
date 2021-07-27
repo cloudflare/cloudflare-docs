@@ -5,17 +5,21 @@ pcx-content-type: concept
 
 # Preview deployments
 
-Preview deployments allow you to preview new versions of your project without deploying it to production.
+Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments, navigate from the Account Home > **Pages** dashboard > and select your project.
 
 Every time you open a new pull request on your GitHub repository, Cloudflare Pages will create a unique preview URL, which will stay up-to-date as you continue to push new commits to the branch.
 
-<!-- this is a draft!!!!!!!!! and a terrible one at that. revisions coming>
+For example, if you have a repo called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](getting-started#adding-a-custom-domain) attached to the project. 
 
-For example, suppose you have a repo called `user-example` connected to Pages. This will give you a ``example.pages.dev` subdomain. if you assume that `main` is your default branch, then any commits to this main branch will update your example.pages.dev website content, as well as any custom domains attached to the project. 
+![development preview](preview-deployment-mergedone.png)
 
-While developing user-example, you may push new changes to a `developlemnt` branch. In doing so, Pages will automatically kick off a preview deployment making these changes available at `abc12.example.pages.dev` -- where `abc12` is a generated hash. Any further additional changes `dev` branch will continue to update this abc12.example.pages.dev address. Any custom domains will not be affected by preview deployments. 
+While developing `user-example`, you may push new changes to a `developlment` branch. After you create a new branch, Pages will automatically generate a preview deployment for these changes available at `373f31e2.example.pages.dev` -- where `373f31e2` is a randomly generated hash. Each new branch will receive a new, randomly-generated hash that can be previewed on the dashboard. 
 
-<!-->
+![development preview](preview-deployment-generated.png)
+
+Any additional changes to the `development` branch will continue to update this `373f31e2.user-example.pages.dev` preview address, until the `development` branch is merged with the `main` production branch. 
+
+Any custom domains, as well as your `user-example.pages.dev` site, will not be affected by preview deployments. 
 
 ## Customizing preview deployments access
 
