@@ -49,7 +49,7 @@ Your **project name** will be used to generate your project's hostname. By defau
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **publish directory** to tell Cloudflare Pages how to deploy your site.
 
-Our deployment dashboard provides a number of presets, which are pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/platform/build-configuration).
+Our deployment dashboard provides a number of presets, which are pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/platform/build-configuration). If you do not need a build step, you may input  `exit 0` into the **Build command** field and leave **Build output director** empty.
 
 ![Build settings](./images/build-settings.png)
 
