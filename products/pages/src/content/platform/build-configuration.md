@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: concept
 ---
 
-# Framework presets
+# Build configuration
 
 You may tell Cloudflare Pages how your site needs to be built as well as where its output files will be located.
 
@@ -13,7 +13,11 @@ You should provide a build command to tell Cloudflare Pages how to build your ap
 
 Build directories indicates where your project's build command outputs the built version of your Cloudflare Pages site. Often, this defaults to the industry-standard `public`, but you may find that you need to customize it.
 
-Below are some standard build commands and directories for popular frameworks and tools. If you are not using a framework, you may input `exit 0` into the **Build command** field.
+## Framework presets
+
+Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools. 
+
+If you are not using a framework, you may input `exit 0` into the **Build command** field.
 
 <TableWrap>
 
