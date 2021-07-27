@@ -13,7 +13,11 @@ For example, if you have a repo called `user-example` connected to Pages, this w
 
 ![development preview](preview-deployment-mergedone.png)
 
-While developing `user-example`, you may push new changes to a `developlment` branch. After you create a new branch, Pages will automatically generate a preview deployment for these changes available at `373f31e2.example.pages.dev` -- where `373f31e2` is a randomly generated hash. Each new branch will receive a new, randomly-generated hash that can be previewed on the dashboard. 
+While developing `user-example`, you may push new changes to a `developlment` branch. 
+
+In this example,after you create a new `development` branch, Pages will automatically generate a preview deployment for these changes available at `373f31e2.example.pages.dev` -- where `373f31e2` is a randomly generated hash. 
+
+Each new branch will receive a new, randomly-generated hash that can be previewed on the dashboard. 
 
 ![development preview](preview-deployment-generated.png)
 
