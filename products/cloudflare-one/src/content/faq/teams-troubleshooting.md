@@ -98,7 +98,10 @@ You may have to disable the DNS over HTTPs setting in Firefox. To do so, navigat
 
 This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin.
 To diagnose this, you should look at the `cloudflared tunnel` logs. A very often root cause is that the `cloudflared tunnel` is unable to proxy to your origin (e.g. because the ingress is mis-configured, or the origin is down, or because the origin HTTPS certificate cannot be validated by `cloudflared tunnel`).
-If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it. There are a few different possible root causes:
+If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it.
+
+There are a few different possible root causes behind the `websocket: bad handshake` error:
+
 * Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
 * WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 * Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
