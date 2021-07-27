@@ -26,7 +26,7 @@ Before you can start [publishing](/cli-wrangler/commands#publish) your Workers o
 
 <p><Button type="primary" href="https://dash.cloudflare.com/sign-up/workers">Sign up</Button></p>
 
-The signup process will guide you through choosing a `workers.dev` subdomain and verifying your email address, both of which are required to publish.
+The signup process will guide you through choosing a `*.workers.dev` subdomain and verifying your email address, both of which are required to publish.
 
 --------------------------------
 
@@ -58,7 +58,9 @@ $ wrangler --version
 
 With Wrangler is installed, you will need to give it an API Token for your Cloudflare account.
 
-Run the command `wrangler login`. Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that does not have a GUI, you can copy and paste the url into a browser and log in.
+Run the command `wrangler login`. 
+
+Wrangler will ask to automatically open your web browser to log into your Cloudflare account. If you are in an environment that does not have a GUI, you can copy and paste the url into a browser and log in.
 
 ```sh
 $ wrangler login
@@ -67,13 +69,13 @@ y
 💁  Opened a link in your default browser: https://dash.cloudflare.com/wrangler?key=girjeanvioajsdn...
 ```
 
-Open the browser, log into your account, and click the **Authorize Wrangler** button. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log into your account, and select **Authorize Wrangler**. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 --------------------------------
 
 ## 4. Generate a new project
 
-Wrangler’s [`generate` subcommand](/cli-wrangler/commands#generate) will create a new project from a starter template — just a GitHub repo. With no [template argument](/cli-wrangler/commands#generate), Wrangler generates projects from the [default starter](https://github.com/cloudflare/worker-template). To generate a new project, called `my-worker`, run:
+Wrangler’s `generate` [subcommand](/cli-wrangler/commands#generate) will create a new project from a starter template — just a GitHub repo. With no [template argument](/cli-wrangler/commands#generate), Wrangler generates projects from the [default starter](https://github.com/cloudflare/worker-template). To generate a new project, called `my-worker`, run:
 
 ```sh
 ~/ $ wrangler generate my-worker
@@ -96,7 +98,7 @@ route = ""
 zone_id = ""
 ```
 
-Visit the [Quick Starts](/get-started/quickstarts) page to see a complete list of our recommended starter templates.
+Refer to the [Quick Starts](/get-started/quickstarts) page to see a complete list of starter templates.
 
 For example, to build a Workers project in TypeScript, run:
 
@@ -110,7 +112,7 @@ To start a project from your own code—rather than a starter—use [`wrangler i
 
 ## 5. Write code
 
-With your new project generated, you can begin to write your own code.
+With your new project generated, you can begin to write your code.
 
 ### 5a. Understanding Hello World
 
@@ -254,7 +256,28 @@ Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforeha
 
 To configure your project, fill in a missing fields in the `wrangler.toml` file in the root directory of your generated project. This file contains the information Wrangler needs to connect to the Cloudflare Workers API and publish your code.
 
-You should have already filled in the `account_id` field in [step number six](/get-started/guide#6-preview-your-project). Complete this step before proceeding further. 
+You should have already filled in the `account_id` field in the previous step. If not, run the command `wrangler whoami` and copy your `Account ID`.
+
+```bash
+$ wrangler whoami
+👋  You are logged in with an API Token, associated with the email '<Your Email>'!
+
++----------------------------------+----------------------------------+
+| Account Name                     | Account ID                       |
++----------------------------------+----------------------------------+
+| Your Account                     | $yourAccountId                   |
++----------------------------------+----------------------------------+
+```
+
+Then, open up your project's `wrangler.toml` file and paste it in as the value for the `account_id` field.
+
+```toml
+---
+filename: wrangler.toml
+highlight: [2]
+---
+name = "my-worker"
+account_id = "$yourAccountId"
 
 After you have filled in your `account_id`, configure the `type` to `"webpack"` in your `wrangler.toml` file to tell Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. To learn more about `type` configuration, refer to [`type` configuration](/cli-wrangler/configuration).)
 
