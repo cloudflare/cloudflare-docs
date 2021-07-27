@@ -53,7 +53,7 @@ Our deployment dashboard provides a number of presets, which are pre-filling val
 
 ![Build settings](./images/build-settings.png)
 
-Cloudflare Pages will deploy files that are stored in the root of your Github repository. If your content files are stored in a folder of your repository, specify this path in the **Root directory (advanced)** > **Path** field.
+Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
 
 ![Root directory](root-directory.png)
 
