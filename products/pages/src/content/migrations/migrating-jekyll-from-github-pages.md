@@ -106,7 +106,7 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 <Aside type="note">
 
-If you are configuring your Cloudflare Pages site for the first time, refer to the [Getting started guide](/getting-started#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/getting-started#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
 
 </Aside>
 
