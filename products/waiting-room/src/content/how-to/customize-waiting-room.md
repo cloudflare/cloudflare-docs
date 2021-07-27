@@ -7,19 +7,12 @@ pcx-content-type: how-to
 
 To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
 
-<Aside type="note">
-
-Only certain customers can customize their waiting rooms. For more details, see our <a href="/about/plans">Plans</a> page.
-
-</Aside>
-
 Cloudflare offers options to customize the appearance of your waiting room:
 * [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
 * [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
-
-
+* [Support mobile traffic](/how-to/mobile-traffic): Toggle to also enable a JSON response with a user's status in the waiting room.
 
 ## Default waiting room
 To choose the default, unbranded waiting room, click **Default Waiting Room**.
@@ -27,6 +20,12 @@ To choose the default, unbranded waiting room, click **Default Waiting Room**.
 ![Choose default waiting room](../static/default-form.png)
 
 ## Custom waiting room
+
+<Aside type="note">
+
+Only certain customers can customize their waiting rooms. For more details, see our <a href="/about/plans">Plans</a> page.
+
+</Aside>
 
 To customize a waiting room, click **Custom Waiting Room**.
 
