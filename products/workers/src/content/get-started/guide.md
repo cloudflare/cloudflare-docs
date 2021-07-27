@@ -334,7 +334,7 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 ## 8. Publish your project
 
-With our project configured, it is time to publish.
+With your project configured, you can now publish your Worker.
 
 To deploy to your `*.workers.dev` subdomain, run:
 
