@@ -29,7 +29,7 @@ You can update the definition of the rule, changing its fields, or change the or
 
 ## Update the definition of a rule
 
-To update the definition of a rule, include the new rule definition in the request body. You must include all the rule fields that you want to include in the new rule definition, even if you are not changing their values.
+To update the definition of a rule, include the new rule definition in the request body. You must include all the rule fields that you want to be part of the new rule definition, even if you are not changing their values.
 
 ```json
 ---
@@ -93,11 +93,11 @@ header: Response
 
 To reorder a rule in a list of ruleset rules, include a `position` field in the request, containing one of the following arguments:
 
-* `"before": "{rule-id}"` - Places the rule before rule `{rule-id}`. Use this argument with an empty rule ID value (`""`) to set the rule as the first rule in the ruleset.
+* `"before": "{rule-id}"` — Places the rule before rule `{rule-id}`. Use this argument with an empty rule ID value (`""`) to set the rule as the first rule in the ruleset.
 
-* `"after": "{rule-id}"` - Places the rule after rule `{rule-id}`. Use this argument with an empty rule ID value (`""`) to set the rule as the last rule in the ruleset.
+* `"after": "{rule-id}"` — Places the rule after rule `{rule-id}`. Use this argument with an empty rule ID value (`""`) to set the rule as the last rule in the ruleset.
 
-* `"index": {position-number}` - Places the rule in the exact position specified by the integer number `{position-number}`. Position numbers start with `1`. Existing rules in the ruleset from the specified position number onward are shifted one position (no rule is overwritten). For example, when you place a rule in position <var>n</var> using `index`, existing rules with index <var>n</var>, <var>n</var>+1, <var>n</var>+2, and so on, are shifted one position — their new position will be <var>n</var>+1, <var>n</var>+2, <var>n</var>+3, and so forth. If the index is out of range, the method returns 400 HTTP Status Code.
+* `"index": {position-number}` — Places the rule in the exact position specified by the integer number `{position-number}`. Position numbers start with `1`. Existing rules in the ruleset from the specified position number onward are shifted one position (no rule is overwritten). For example, when you place a rule in position <var>n</var> using `index`, existing rules with index <var>n</var>, <var>n</var>+1, <var>n</var>+2, and so on, are shifted one position — their new position will be <var>n</var>+1, <var>n</var>+2, <var>n</var>+3, and so forth. If the index is out of range, the method returns 400 HTTP Status Code.
 
 <Aside type='warning' header='Important'>
 
@@ -105,7 +105,7 @@ You can only use one of the arguments `before`, `after`, and `index` at a time.
 
 </Aside>
 
-You can reorder a rule without changing its definition by including only the `position` field in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` field and the `position` field.
+Reorder a rule without changing its definition by including only the `position` field in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` field and the `position` field.
 
 The following examples build upon the following (abbreviated) ruleset:
 
