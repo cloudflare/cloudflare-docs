@@ -13,7 +13,7 @@ If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migrat
 </Aside>
 ## Installing Jekyll
 
-Jekyll is written in Ruby, meaning that you'll need a functioning Ruby installation in order to install Jekyll.
+Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation in order to install Jekyll.
 
 We recommend using [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on your computer. Follow the [`rbenv` install instructions](https://github.com/rbenv/rbenv#installation), and install a recent version of Ruby using `rbenv`:
 
