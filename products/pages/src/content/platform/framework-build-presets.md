@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: concept
 ---
 
-# Framework build presets
+# Framework presets
 
 You may tell Cloudflare Pages how your site needs to be built as well as where its output files will be located.
 
@@ -13,7 +13,7 @@ You should provide a build command to tell Cloudflare Pages how to build your ap
 
 Build directories indicates where your project's build command outputs the built version of your Cloudflare Pages site. Often, this defaults to the industry-standard `public`, but you may find that you need to customize it.
 
-Below are some standard build commands and directories for popular frameworks and tools. If you are not using a framework, you may input `exit 0` into the **Build command** field and leave **Build output director** empty.
+Below are some standard build commands and directories for popular frameworks and tools. If you are not using a framework, you may input `exit 0` into the **Build command** field.
 
 <TableWrap>
 
@@ -98,4 +98,4 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Yarn        | Version 1.13.0                  | `YARN_VERSION`       |
 | Zola        | (requires environment variable) | `ZOLA_VERSION`       |
 
-If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` NPM package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
+If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.

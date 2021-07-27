@@ -30,13 +30,13 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 </TableLayout>
 
-Unlike many of our How-To guides, the build command and build directory for your site are going to be completely custom. If you do not need a build step, input  `exit 0` into the **Build command** field and leave **Build output director** empty.
+Unlike many of our How-To guides, the build command and build directory for your site are going to be completely custom. If you do not need a build step, input  `exit 0` into the **Build command** field.
 
 Once you have configured your site, you can begin your first deploy. Your custom build command (if provided) will run, and Pages will deploy your static site.
 
 <Aside>
 
-For the complete guide to deploying your first site to Cloudflare Pages, refr to [the Get Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get Started guide](/getting-started).
 
 </Aside>
 
