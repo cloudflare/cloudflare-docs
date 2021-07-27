@@ -4,7 +4,7 @@ pcx-content-type: how-to
 
 # Deploying your site
 
-We support deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in our [How-To](/how-to) section, you can still deploy it using this guide.
+Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in our [How-To](/how-to) section, you can still deploy it using this guide.
 
 ## Creating a GitHub repository
 
