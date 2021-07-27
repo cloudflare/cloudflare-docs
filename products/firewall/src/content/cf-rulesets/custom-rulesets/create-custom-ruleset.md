@@ -47,4 +47,4 @@ header: Response
 }
 ```
 
-After creating a custom ruleset, you can [add rules to a custom ruleset](/cf-rulesets/custom-rulesets/add-rules-ruleset).
+You can include a list of rules in the custom ruleset creation request. However, if you have not added any rules, see how to [add rules to a custom ruleset](/cf-rulesets/custom-rulesets/add-rules-ruleset).

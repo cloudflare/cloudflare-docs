@@ -1,5 +1,4 @@
 ---
-title: Deploy rulesets
 pcx-content-type: how-to
 type: overview
 order: 740
@@ -7,13 +6,13 @@ order: 740
 
 # Deploy rulesets
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy or execute a ruleset. Add a rule with `"action": "execute"` to a phase, specifying the Ruleset ID as an action parameter. This rule executes the ruleset. Use a separate rule for each ruleset you want to deploy.
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
-A rule that deploys a ruleset consists of:
+A rule that executes a ruleset consists of:
 
-* The **ID of the ruleset** you want to deploy.
+* The **ID of the ruleset** you want to execute.
 * An **expression**.
-* An **action**. To deploy a ruleset, set the action to execute. The rules in the ruleset are executed when a request satisfies the expression.
+* An **action**. Set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
 
 <Aside type='note'>
 
@@ -23,7 +22,7 @@ To apply a rule to every request in a phase at the **zone** level, set the rule 
 
 ## Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`) by adding a rule that executes the Managed Ruleset.
 
 ```json
 ---
@@ -83,8 +82,8 @@ header: Response
 }
 ```
 
-Check [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information on working with Managed Rulesets and custom rulesets.
+See [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information.
 
-For more information on the available API endpoints for editing and deploying rulesets, check [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
+For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
 
 For examples of deploying rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).

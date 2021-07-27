@@ -13,13 +13,16 @@ For example, if you want to test a ruleset before enforcing it, you may want to 
 
 ## Working with overrides
 
-You can override a ruleset at three levels.
+You can override a ruleset at three levels:
 
-* **Ruleset overrides** are for all rules in the specified rulesets.
-* **Tag overrides** are for all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to _Block_. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
-* **Rule overrides** are for specific rules in a Managed Ruleset, referenced by their Rule ID.
+* **Ruleset overrides** apply to all rules in the executed ruleset.
+* **Tag overrides** apply to all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to _Block_. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
+* **Rule overrides** apply to specific rules in a Managed Ruleset, referenced by their Rule ID.
 
-To apply an override for a Managed Ruleset, execute the [Update ruleset](/cf-rulesets/rulesets-api/update/) operation on your root ruleset and specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
+To apply an override for a Managed Ruleset:
+
+* Call the [Update ruleset](/cf-rulesets/rulesets-api/update) method on your account-level phase entry point.
+* Specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
 
 ```json
 "action_parameters": {
@@ -63,10 +66,10 @@ Some Managed Rulesets may have additional override requirements, or they may all
 
 ## Examples
 
-The following request deploys a Managed Ruleset to the `http_request_firewall_managed` phase and defines a ruleset override to deploy the `log` action for all rules in that ruleset.
+The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase and defines a ruleset override to execute the `log` action for all rules in that ruleset.
 
 <details>
-<summary>Example: Deploy a Managed Ruleset to a phase at the zone level</summary>
+<summary>Example: Execute a Managed Ruleset with overrides in a phase at the zone level</summary>
 <div>
 
 ```json
@@ -96,7 +99,7 @@ curl -X PUT \
 </details>
 
 <details>
-<summary>Example: Deploy a Managed Ruleset to a phase at the account level</summary>
+<summary>Example: Execute a Managed Ruleset with overrides in a phase at the account level</summary>
 <div>
 
 ```json
