@@ -15,11 +15,11 @@ Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://g
 
 <TableWrap>
 
-Type   | amd64 / x86-64 | x86 (32-bit) | ARMv6 | ARM64 |
--------|----------------|--------------|------|------|
-Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.tgz) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz) | [Download from GitHub](https://github.com/cloudflare/cloudflared/releases) |
-.deb   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.deb) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.deb) | - |
-.rpm   | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-386.rpm) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.rpm) | - |
+Type   | amd64 / x86-64 | x86 (32-bit) | ARM64|
+-------|----------------|--------------|------|
+Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64) |
+.deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) |
+.rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) |
 
 </TableWrap>
 
@@ -28,8 +28,8 @@ Binary | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux
 Use the `deb` package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` package in this example.
 
 ```bash
-wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-dpkg -i cloudflared-stable-linux-amd64.deb
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+dpkg -i cloudflared-linux-amd64.deb
 ```
 
 ### `.rpm` install
@@ -37,8 +37,8 @@ dpkg -i cloudflared-stable-linux-amd64.deb
 Use the `rpm` package manager to install `cloudflared` on compatable machines. `amd64 / x86-64` is used in this example.
 
 ```bash
-wget -q https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.rpm
-rpm -ivh cloudflared-stable-linux-amd64.rpm
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm
+rpm -ivh cloudflared-linux-x86_64.rpm
 ```
 
 ### Build from source
@@ -70,13 +70,13 @@ You can install `cloudflared` on macOS systems via Homebrew:
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, you can [download the latest Darwin amd64 release directly](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-darwin-amd64.zip).
+Alternatively, you can [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
 
 ## Windows
 
 Type   | 32-bit | 64-bit |
 -------|----------------|-----|
-ZIP | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-386.zip) | [Download](https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-amd64.zip) |
+ZIP | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
 
 Once `cloudflared` is installed:
 1. Navigate to the **Downloads** folder.

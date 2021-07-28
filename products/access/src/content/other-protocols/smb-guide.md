@@ -37,8 +37,7 @@ For example, on a Windows server, the following Powershell example can be used.
 ```bash
 New-Item -Path "C:\cloudflared" -ItemType "directory"
 Set-Location "C:\cloudflared"
-(New-Object System.Net.WebClient).DownloadFile("https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-windows-amd64.zip","c:\cloudflared\cloudflared.zip")
-Expand-Archive -LiteralPath c:\cloudflared\cloudflared.zip -DestinationPath c:\cloudflared
+(New-Object System.Net.WebClient).DownloadFile("https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe","c:\cloudflared\cloudflared.exe")
 ```
 
 ## 2. Authenticate the Cloudflare daemon
