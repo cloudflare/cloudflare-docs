@@ -229,18 +229,18 @@ struct WorkersKv {
 }
 
 impl WorkersKv {
-    async fn put_text(&self, key: &str, value: &str, ttl: u64) -> Result<(), JsValue> {
+    async fn put_text(&self, key: &str, value: &str, expiration_ttl: u64) -> Result<(), JsValue> {
         let options = Object::new();
-        Reflect::set(&options, &"expirationTtl".into(), &(ttl as f64).into())?;
+        Reflect::set(&options, &"expirationTtl".into(), &(expiration_ttl as f64).into())?;
         self.kv
             .put(JsValue::from_str(key), value.into(), options.into())
             .await?;
         Ok(())
     }
 
-    async fn put_vec(&self, key: &str, value: &[u8], ttl: u64) -> Result<(), JsValue> {
+    async fn put_vec(&self, key: &str, value: &[u8], expiration_ttl: u64) -> Result<(), JsValue> {
         let options = Object::new();
-        Reflect::set(&options, &"expirationTtl".into(), &(ttl as f64).into())?;
+        Reflect::set(&options, &"expirationTtl".into(), &(expiration_ttl as f64).into())?;
         let typed_array = Uint8Array::new_with_length(value.len() as u32);
         typed_array.copy_from(value);
         self.kv
@@ -426,18 +426,18 @@ struct WorkersKv {
 }
 
 impl WorkersKv {
-    async fn put_text(&self, key: &str, value: &str, ttl: u64) -> Result<(), JsValue> {
+    async fn put_text(&self, key: &str, value: &str, expiration_ttl: u64) -> Result<(), JsValue> {
         let options = Object::new();
-        Reflect::set(&options, &"expirationTtl".into(), &(ttl as f64).into())?;
+        Reflect::set(&options, &"expirationTtl".into(), &(expiration_ttl as f64).into())?;
         self.kv
             .put(JsValue::from_str(key), value.into(), options.into())
             .await?;
         Ok(())
     }
 
-    async fn put_vec(&self, key: &str, value: &[u8], ttl: u64) -> Result<(), JsValue> {
+    async fn put_vec(&self, key: &str, value: &[u8], expiration_ttl: u64) -> Result<(), JsValue> {
         let options = Object::new();
-        Reflect::set(&options, &"expirationTtl".into(), &(ttl as f64).into())?;
+        Reflect::set(&options, &"expirationTtl".into(), &(expiration_ttl as f64).into())?;
         let typed_array = Uint8Array::new_with_length(value.len() as u32);
         typed_array.copy_from(value);
         self.kv
