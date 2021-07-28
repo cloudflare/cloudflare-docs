@@ -26,7 +26,7 @@ SaaS applications store this information in different ways.
 
 1. In the **Assertion Consumer Service URL** field, input the service provider’s endpoint for receiving and parsing SAML assertions.
 
-1. (Optional) If your SaaS applications require additional SAML statements, add the mapping of your IdP’s attributes to what you would like to appear in the SAML statement sent to the SaaS application.
+1. If your SaaS application requires additional SAML statements, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
   ![Custom SaaS statements](../../static/documentation/applications/custom-saas-statements.png)
 
