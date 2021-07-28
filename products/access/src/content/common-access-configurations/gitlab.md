@@ -48,8 +48,8 @@ Cloudflare Argo Tunnel creates a secure, outbound-only, connection between this 
 Argo Tunnel can be installed on the machine with the following commands.
 
 ```sh
-$ sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-$ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+$ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+$ sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
 Once installed, you will need to authenticate `cloudflared`. The following command will print a URL that can be visited in another machine with a browser.
