@@ -5,17 +5,23 @@ pcx-content-type: concept
 
 # Build configuration
 
+You may tell Cloudflare Pages how your site needs to be built as well as where its output files will be located.
+
 ## Build commands and directories
 
-You should provide a build command to tell Cloudflare Pages how to build your application. For projects not listed here, consider reading the tool's documentation or framework, and submit a pull request to add it here!
+You should provide a build command to tell Cloudflare Pages how to build your application. For projects not listed here, consider reading the tool's documentation or framework, and submit a pull request to add it here.
 
 Build directories indicates where your project's build command outputs the built version of your Cloudflare Pages site. Often, this defaults to the industry-standard `public`, but you may find that you need to customize it.
 
-Below are some standard build commands and directories for popular frameworks and tools.
+## Framework presets
+
+Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools. 
+
+If you are not using a framework, you may input `exit 0` into the **Build command** field.
 
 <TableWrap>
 
-| Framework/tool               | Build command                       | Build directory             |
+| Framework/tool               | Build command                       | Build output directory      |
 | ---------------------------- | ----------------------------------- | --------------------------- |
 | Angular (Angular CLI)        | `ng build`                          | `dist`                      |
 | Brunch                       | `brunch build --production`         | `public`                    |
@@ -58,7 +64,7 @@ The following system environment variables are injected by default (but can be o
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go (and many more). 
 
-If you need to use a specific version of a language, e.g. Node.js or Ruby, you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
+If you need to use a specific version of a language, (e.g., Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
 
 Here are the pinned versions for tools included in the Cloudflare Workers build environment, and how to override them as relevant:
 
@@ -96,4 +102,4 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Yarn        | Version 1.13.0                  | `YARN_VERSION`       |
 | Zola        | (requires environment variable) | `ZOLA_VERSION`       |
 
-If you're looking to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For instance, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` NPM package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
+If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
