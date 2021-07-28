@@ -6,7 +6,7 @@ order: 1
 
 # About Cloudflare Web Application Firewall
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 The Cloudflare WAF announced in March 2021 is available for selected customers on our paid plans.
 
@@ -24,7 +24,7 @@ You can define a configuration that affects an entire Managed Ruleset, or config
 
 Additionally, you can create custom rulesets with your own WAF rules that you can later enable or deploy.
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
 Currently, you can only create and deploy custom rulesets via API.
 
@@ -62,7 +62,7 @@ To deploy your own WAF rules, create a custom ruleset and add any custom rules t
 
 You can **create** and **deploy** custom rulesets to the `http_request_firewall_custom` phase at the **account** level (the phase `kind` is `root`).
 
-<Aside type='warning' header='Warning'>
+<Aside type='warning'>
 
 Currently, creating and deploying custom rulesets is only available via API.
 
