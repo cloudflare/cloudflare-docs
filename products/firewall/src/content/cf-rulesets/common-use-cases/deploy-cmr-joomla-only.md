@@ -7,17 +7,17 @@ order: 772
 
 # Use category overrides to enable Joomla rules
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy Managed Rulesets and override their behavior. This ensures that **only rules with a specific tag are enabled**. By default, enabled rules run with actions set by the ruleset issuer in the Managed Ruleset.
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to configure the execution of a Managed Ruleset and override its behavior. By default, enabled rules perform the actions defined by the Managed Ruleset issuer. This example uses overrides to ensure that only rules with a specific tag are enabled.
 
-Follow the steps below to deploy Managed Rulesets that enable rules tagged with `joomla`.
+Follow the steps below to configure the execution of a Managed Ruleset with two overrides for enabling only the rules tagged with `joomla`.
 
-1. [Add a rule](/cf-rulesets/deploy-rulesets) to the ruleset of a phase that deploys a Managed Ruleset.
+1. [Add a rule](/cf-rulesets/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
 1. [Configure a ruleset override](/cf-rulesets/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. Configure a tag override that enables only the rules with a given tag.
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses the [Update ruleset](/cf-rulesets/rulesets-api/update) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
@@ -99,7 +99,7 @@ curl -X PUT \
 
 You can add more than one category override to a rule.
 
-The example below uses a `PUT` request to add two overrides to the deployment of a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses a `PUT` request to add two overrides to the rule that executes a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Add more than one category override at the zone level</summary>

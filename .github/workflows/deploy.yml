@@ -16,7 +16,6 @@ jobs:
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
       api-security: ${{ steps.filter.outputs.api-security }}
-      argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
       automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
@@ -70,8 +69,6 @@ jobs:
               - 'products/api/**'
             api-security:
               - 'products/api-security/**'
-            argo-tunnel:
-              - 'products/argo-tunnel/**'
             automatic-platform-optimization:
               - 'products/automatic-platform-optimization/**'
             bots:
@@ -340,40 +337,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/api-security"
-          environment: "production"
-          wranglerVersion: '1.13.0'
-
-  deploy-argo-tunnel:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.argo-tunnel == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/argo-tunnel
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-        env:
-          WORKERS_ENV: development
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/argo-tunnel"
-          wranglerVersion: '1.13.0'
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/argo-tunnel"
           environment: "production"
           wranglerVersion: '1.13.0'
 

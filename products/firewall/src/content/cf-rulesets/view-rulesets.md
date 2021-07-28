@@ -27,7 +27,7 @@ curl -X GET \
 The response displays the following rulesets:
 
 * Managed Rulesets you can deploy, indicated by `"kind": "managed"`
-* Rulesets for zone-level phases, if configured, indicated by `"kind": "zone"`
+* Zone-level phase entry points, if configured, indicated by `"kind": "zone"`
 * Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
@@ -89,8 +89,8 @@ curl -X GET \
 
 The response displays the following rulesets:
 
-* Managed Rulesets that you can deploy, indicated by `"kind": "managed"`
-* Rulesets for account-level phases, if configured, indicated by `"kind": "root"`
+* Managed Rulesets you can deploy, indicated by `"kind": "managed"`
+* Account-level phase entry points, if configured, indicated by `"kind": "root"`
 * Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
@@ -147,13 +147,13 @@ header: Response
 
 ## View the rules included in a ruleset
 
-You can view all versions in phase rulesets (both account-level and zone-level) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
+You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
 
 <details>
-<summary>Example: View rules in a phase ruleset at the zone level</summary>
+<summary>Example: View rules in a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example lists the rules in version `2` of the `http_request_firewall_managed` phase ruleset at the zone level.
+The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
 
 ```bash
 ---
@@ -172,8 +172,8 @@ header: Response
 {
   "result": {
     "id": "{ruleset-id}",
-    "name": "Zone-level phase ruleset",
-    "description": "This ruleset deploys a Managed Ruleset.",
+    "name": "Zone-level phase entry point ruleset",
+    "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "2",
     "rules": [

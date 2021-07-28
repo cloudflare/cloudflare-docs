@@ -14,7 +14,7 @@ Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead o
 ## [Cloudflare Gateway](https://www.cloudflare.com/en-gb/teams/gateway/)
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
-## [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
+## [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/tunnel/)
 Cloudflare Tunnel (formerly *Argo Tunnel*) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client

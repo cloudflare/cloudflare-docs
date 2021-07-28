@@ -263,8 +263,8 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 
 ### Dependencies
 
-Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/argo-tunnel/quickstart/) for Argo Tunnel.
-`wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) that listens for incoming log requests from your Worker.
+Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup) for Cloudflare Tunnel.
+`wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup) that listens for incoming log requests from your Worker.
 
 <Aside type="warning" header="Issues with existing cloudflared configuration">
 

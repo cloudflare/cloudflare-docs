@@ -7,7 +7,7 @@ order: 782
 
 # Endpoints
 
-For some operations, you can use specific endpoints provided by the Rulesets API for managing the rulesets of phases. These endpoints include the phase name in the endpoint instead of the ruleset ID.
+For some operations, you can use specific endpoints provided by the Rulesets API for managing phase entry point rulesets. These endpoints include the phase name in the endpoint instead of the ruleset ID.
 
 For example, instead of using the following endpoint:
 
@@ -18,7 +18,7 @@ PUT /zones/{zone-id}/rulesets/{ruleset-id}
 You can use the following endpoint:
 
 ```bash
-PUT /zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint
+PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 ```
 
 To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
@@ -33,7 +33,7 @@ For help with endpoints and pagination, see [Getting Started: Endpoints](https:/
 
 <Aside>
 
-The Rulesets endpoints require a value for `{account_id}` or for `{zone-id}`.
+The Rulesets API endpoints require a value for `{account_id}` or `{zone-id}`.
 
 To retrieve a list of accounts you have access to, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
 
@@ -107,7 +107,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       <td><a href="/cf-rulesets/rulesets-api/create">Create ruleset</a></td>
       <td><code>POST</code></td>
       <td>
-        <p>Creates a new ruleset.</p>
+        <p>Creates a new ruleset or a new phase entry point.</p>
       </td>
     </tr>
   </tbody>
@@ -128,7 +128,14 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
       <td><a href="/cf-rulesets/rulesets-api/update">Update or deploy a ruleset</a></td>
       <td><code>PUT</code></td>
       <td>
-        <p>Updates the basic properties of a ruleset and the list of rules in the ruleset.<br/>Allows you to deploy Managed Rulesets.</p>
+        <p>Updates the basic properties of a ruleset and the list of rules in the ruleset.<br/>Allows you to configure the execution of Managed Rulesets.</p>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="/cf-rulesets/rulesets-api/add-rule">Add rule to ruleset</a></td>
+      <td><code>POST</code></td>
+      <td>
+        <p>Adds a single rule to an existing ruleset.<br/>Allows you to add a single rule without having to include all the existing ruleset rules in the request.</p>
       </td>
     </tr>
     <tr>

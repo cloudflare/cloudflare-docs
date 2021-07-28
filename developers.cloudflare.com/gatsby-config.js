@@ -13,7 +13,6 @@ const products = [
   "access",
   "analytics",
   "api",
-  "argo-tunnel",
   "byoip",
   "cloudflare-for-teams",
   "cloudflare-one",

@@ -10,9 +10,6 @@ products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
 # API
 products/api/ @cloudflare/sdk @cloudflare/PCX
 
-# Argo Tunnel
-products/argo-tunnel/ @cloudflare/PCX
-
 # APO
 products/automatic-platform-optimization/ @cloudflare/PCX
 
