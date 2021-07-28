@@ -47,17 +47,21 @@ Your **project name** will be used to generate your project's hostname. By defau
 
 #### Build settings
 
-Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **publish directory** to tell Cloudflare Pages how to deploy your site.
+Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **Build command** and **Build output directory** to tell Cloudflare Pages how to deploy your site.
 
 Our deployment dashboard provides a number of presets, which are pre-filling values for many common deployment scenarios. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/platform/build-configuration).
 
 ![Build settings](./images/build-settings.png)
 
+Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
+
+![Root directory](./images/root-directory.png)
+
 #### Environment variables
 
 Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
 
-After you have chosen your _Framework preset_, configured Root directory (optional), and customized your Environment variables (optional), you are ready to deploy. 
+After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy. 
 
 ## Your first deploy
 
