@@ -21,7 +21,7 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 ### Connect to GitHub
 
-Signing in with GitHub allows [Cloudflare Pages](https://pages.dev) to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. After you sign in, select **Create a project** in the Pages dashboard. 
+Signing in with GitHub allows [Cloudflare Pages](https://pages.dev) to deploy your projects, update your GitHub PRs with [preview deployments](/platform/preview-deployments), and more. After you sign in, select **Create a project** in the Pages dashboard.
 
 ## Configuration and deployment
 
@@ -61,7 +61,7 @@ Cloudflare Pages begins by working from your repository's root directory. The en
 
 Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
 
-After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy. 
+After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
 
 ## Your first deploy
 
@@ -91,7 +91,7 @@ Configure your nameservers to point to Cloudflare's name servers. If your namese
 
 #### Add a custom CNAME record
 
-If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. You can configure your DNS settings in the **DNS** section of the Cloudflare dashboard. 
+If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. You can configure your DNS settings in the **DNS** section of the Cloudflare dashboard.
 
 | Type         | Name               | Content            |
 | ------------ | ------------------ | ------------------ |
