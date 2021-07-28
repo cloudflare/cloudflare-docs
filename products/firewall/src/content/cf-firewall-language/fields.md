@@ -25,7 +25,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 - The Cloudflare Firewall Rules language does not support the `slice` operator.
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
@@ -289,7 +289,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) enabled.
 
@@ -797,7 +797,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
 
 ## HTTP body fields
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
