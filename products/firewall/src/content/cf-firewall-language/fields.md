@@ -807,7 +807,9 @@ The Firewall Rules language includes fields that represent properties of an HTTP
 
 <Aside type="warning">
 
-The value of HTTP request body fields has a maximum size of 128 KB. If the request body is larger, HTTP request body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+The value of `http.request.body.*` fields has a maximum size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+
+The maximum body size applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
 
 </Aside>
 
