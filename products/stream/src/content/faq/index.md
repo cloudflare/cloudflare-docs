@@ -22,7 +22,7 @@ You cannot download the *exact* input file that you uploaded. However, depending
 
 <Aside type="note">
 
-The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. It is not related to the number of end-users streaming videos.
+The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. This limit is not related to the number of end users streaming videos.
 
 </Aside>
 
