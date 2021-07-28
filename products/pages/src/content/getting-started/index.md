@@ -55,7 +55,7 @@ Our deployment dashboard provides a number of presets, which are pre-filling val
 
 Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
 
-![Root directory](root-directory.png)
+![Root directory](./images/root-directory.png)
 
 #### Environment variables
 
