@@ -79,6 +79,7 @@ Here are the pinned versions for tools included in the Cloudflare Workers build 
 | PHP       | 5.6             | `PHP_VERSION`        |                           |
 | Python    | 2.7             | `PYTHON_VERSION`     | `runtime.txt`, `Pipfile`  |
 | Ruby      | 2.6.2           | `RUBY_VERSION`       | `.ruby-version`           |
+| .NET      | 3.1.302         |                      |                           |
 
 Many common tools have been pre-installed as well. The environment variable available for overriding the pinned version is specified, as available:
 
