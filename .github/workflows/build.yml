@@ -14,7 +14,6 @@ jobs:
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
       api-security: ${{ steps.filter.outputs.api-security }}
-      argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
       automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
@@ -68,8 +67,6 @@ jobs:
               - 'products/api/**'
             api-security:
               - 'products/api-security/**'
-            argo-tunnel:
-              - 'products/argo-tunnel/**'
             automatic-platform-optimization:
               - 'products/automatic-platform-optimization/**'
             bots:
@@ -252,26 +249,6 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-
-  build-argo-tunnel:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.argo-tunnel == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/argo-tunnel
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
 
   build-automatic-platform-optimization:
     runs-on: ubuntu-latest
