@@ -805,6 +805,12 @@ Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
+<Aside type="warning">
+
+The value of HTTP request body fields has a maximum size of 128 KB. If the request body is larger, HTTP request body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+
+</Aside>
+
 The Cloudflare Firewall Rules language supports these HTTP body fields:
 
 <table>
