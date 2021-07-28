@@ -310,15 +310,15 @@ private OkHttpClient setUpClient() {
         keyStore.setKeyEntry("client", keyFactory.generatePrivate(keySpec), SECRET.toCharArray(), new Certificate[]{certificate});
         certificateInputStream.close();
 
-        // Set up Trust Managers
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-        trustManagerFactory.init((KeyStore) null);
-        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-
         // Set up Key Managers
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         keyManagerFactory.init(keyStore, SECRET.toCharArray());
         KeyManager[] keyManagers = keyManagerFactory.getKeyManagers();
+
+        // Set up Trust Managers
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init((KeyStore) null);
+        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
 
         // Obtain SSL Socket Factory
         SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -327,7 +327,7 @@ private OkHttpClient setUpClient() {
 
         // Finally, return the client, which will then be used to make HTTP calls.
         OkHttpClient client = new OkHttpClient.Builder()
-                .sslSocketFactory(sslSocketFactory)
+                .sslSocketFactory(sslSocketFactory, (X509TrustManager) trustManagers[0])
                 .build();
 
         return client;
