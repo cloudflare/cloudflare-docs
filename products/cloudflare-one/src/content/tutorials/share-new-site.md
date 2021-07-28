@@ -7,7 +7,7 @@ pcx-content-type: tutorial
 
 # Share development environments
 
-You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#argo-tunnel) to share local development environments with team members or customers across the Internet.
+You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#cloudflare-tunnel) to share local development environments with team members or customers across the Internet.
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Cloudflare Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
@@ -82,7 +82,7 @@ credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e
 
 ## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](https://developers.cloudflare.com/argo-tunnel/create-tunnel). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](/connections/connect-apps/create-tunnel). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 

@@ -19,7 +19,6 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Analytics               | analytics            | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       | [Prod](https://developers.cloudflare.com/analytics)            |
 | API                     | api                  | [Test](https://api.cloudflare-docs.workers.dev/api)                                   | [Prod](https://developers.cloudflare.com/api)                  |
 | Automatic Platform Optimization | automatic-platform-optimization | [Test](https://automatic-platform-optimization.cloudflare-docs.workers.dev/automatic-platform-optimization) | [Prod](https://developers.cloudflare.com/automatic-platform-optimization) |
-| Argo Tunnel             | argo-tunnel          | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   | [Prod](https://developers.cloudflare.com/argo-tunnel)          |
 | Bots                    | bots                 | [Test](https://bots.cloudflare-docs.workers.dev/bots)                                 | [Prod](https://developers.cloudflare.com/bots)     
 | BYOIP                   | byoip                | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               | [Prod](https://developers.cloudflare.com/byoip)                |
 | Cloudflare One          | cloudflare-one       | [Test](https://cloudflare-one.cloudflare-docs.workers.dev/cloudflare-one)             | [Prod](https://developers.cloudflare.com/cloudflare-one)       |
