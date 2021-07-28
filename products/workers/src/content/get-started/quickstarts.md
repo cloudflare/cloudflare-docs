@@ -112,6 +112,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   repo="cloudflare/workers-aws-template"
 />
 
+<WorkerStarter
+  title="Edge-side rendering - Vitedge"
+  description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more."
+  repo="frandiox/vitessedge-template"
+/>
+
 --------------------------------
 
 ## Other languages

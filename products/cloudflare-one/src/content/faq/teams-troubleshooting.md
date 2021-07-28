@@ -52,10 +52,6 @@ You may not see analytics on the Overview page for the following reasons:
 * **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
 * **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
-## I see a `websocket: bad handshake` error.
-
-If your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to Off, cloudflared will return a "websocket: bad handshake" error. To resolve, set the SSL/TLS encryption mode to any setting other than Off.
-
 ## ​I see a "No Browsers Available" alert.
 
 If you encounter this error please [file feedback](https://developers.cloudflare.com/cloudflare-one/connections/connect-browsers/known-limitations#submitting-feedback) via the WARP client and we will investigate.
@@ -102,9 +98,14 @@ You may have to disable the DNS over HTTPs setting in Firefox. To do so, navigat
 
 This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin.
 To diagnose this, you should look at the `cloudflared tunnel` logs. A very often root cause is that the `cloudflared tunnel` is unable to proxy to your origin (e.g. because the ingress is mis-configured, or the origin is down, or because the origin HTTPS certificate cannot be validated by `cloudflared tunnel`).
-If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it. There are two possible root causes there:
-1. Your `cloudflared tunnel` is not running or connected to Cloudflare Edge; or
-2. You need to make sure that WebSockets are enabled in your `dash.cloudflare.com` (under the **Network** tab).
+If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it.
+
+There are a few different possible root causes behind the `websocket: bad handshake` error:
+
+* Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
+* WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
+* Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
+* Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
 
 ## I see an error: x509: certificate signed by unknown authority
 

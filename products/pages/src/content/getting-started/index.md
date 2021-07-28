@@ -53,11 +53,15 @@ Our deployment dashboard provides a number of framework-specific presets, which 
 
 ![Build settings](./images/build-settings.png)
 
+Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
+
+![Root directory](./images/root-directory.png)
+
 #### Environment variables
 
 Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
 
-After you have chosen your _Framework preset_, configured Root directory (optional), and customized your Environment variables (optional), you are ready to deploy. 
+After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy. 
 
 ## Your first deploy
 
