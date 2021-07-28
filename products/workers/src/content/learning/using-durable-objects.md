@@ -281,7 +281,7 @@ The destination class (the class that stored objects are being transferred to) f
 
 <Aside type="warning" header="Important">
 
-After a rename or transfer migration, requests to the destination Durable Object class will have access to the stored objects of the source Durable Object class.
+After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data. 
 
 After a migration, any existing bindings to the original Durable Object class (e.g., from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
@@ -331,17 +331,17 @@ in the surrounding inline array are acceptable.
 
 </Aside>
 
-### Ad hoc Durable Object migrations
+### Durable Object migrations through Wrangler CLI
 
 Ad hoc migrations are performed using extra options on `wrangler publish`. Several options can be passed at once in a single `wrangler publish` call. You can also specify `--old-tag <tag>` and `--new-tag <tag>` if your script has a migration tag associated with it but you still want to do an ad hoc migration.
 
 When an ad hoc migration is performed, any migrations listed in `wrangler.toml` are ignored.
 
-The list of ad hoc migration options that can be added to `wrangler publish` is as follows:
+The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
 
 ```sh
---old-tag <tag name> # old-tag is optional if your script doesn't have a migration tag set yet
---new-tag <tag name> # new-tag and old-tag are optional if you only use ad hoc migrations.
+--old-tag <tag name> # Optional if your script does not have a migration tag set yet.
+--new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
 
 # Each of the migration directives can be specified multiple times if you are
 # creating/deleting/renaming/transferring multiple classes at once.
