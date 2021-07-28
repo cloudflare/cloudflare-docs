@@ -86,4 +86,4 @@ It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if
 
 ## FRITZ!Box
 
-Starting with [FRITZ!OS 7.20](https://en.avm.de/press/press-releases/2020/07/fritzos-720-with-even-more-performance-convenience-and-security-more-than-100-new-features-and-updates/), DNS over TLS is supported, see [Configuring different DNS servers in the FRITZ!Box](https://en.avm.de/service/fritzbox/fritzbox-7590/knowledge-base/publication/show/165_Configuring-different-DNS-servers-in-the-FRITZ-Box/)
+Starting with [FRITZ!OS 7.20](https://en.avm.de/press/press-releases/2020/07/fritzos-720-more-performance-convenience-security/), DNS over TLS is supported, see [Configuring different DNS servers in the FRITZ!Box](https://en.avm.de/service/fritzbox/fritzbox-7590/knowledge-base/publication/show/165_Configuring-different-DNS-servers-in-the-FRITZ-Box/)
