@@ -130,8 +130,8 @@ Cloudflare Tunnel creates a secure, outbound-only, connection between this machi
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
 
 ```bash
-sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
 Once installed, authenticate the instance of `cloudflared` with the following command.
