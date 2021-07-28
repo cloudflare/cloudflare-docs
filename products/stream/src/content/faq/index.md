@@ -18,7 +18,13 @@ You cannot download the *exact* input file that you uploaded. However, depending
 
 - By default, a video upload can be at most 30 GB.
 
-- By default, 120 videos can be in the `inprogress`, `queued` or `downloading` state at once. If videos are in `error`, `ready` or `pendingupload` states, they don't count towards this limit.
+- By default, 120 videos can be in the `inprogress`, `queued` or `downloading` state at once. If videos are in `error`, `ready` or `pendingupload` states, they don't count towards this limit. 
+
+<Aside type="note">
+
+The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. It is not related to the number of end-users streaming videos.
+
+</Aside>
 
 - An account cannot upload videos if the total video duration exceeds the video storage capacity purchased.
 
