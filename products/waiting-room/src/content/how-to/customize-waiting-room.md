@@ -7,30 +7,34 @@ pcx-content-type: how-to
 
 To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
 
+Cloudflare offers options to customize the appearance of your waiting room:
+* [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
+* [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
+  - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
+  - Edit content directly in the dashboard or import relevant files.
+* [Support mobile app traffic](/how-to/mobile-traffic): Toggle to also enable a JSON response with a user's status in the waiting room.
+
+## Default waiting room
+
+To choose the default, unbranded waiting room:
+
+1. Select a waiting room.
+1. Go to the **Customization** step.
+1. Click **Default Waiting Room**.
+
+## Custom waiting room
+
 <Aside type="note">
 
 Only certain customers can customize their waiting rooms. For more details, see our <a href="/about/plans">Plans</a> page.
 
 </Aside>
 
-Cloudflare offers options to customize the appearance of your waiting room:
-* [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
-* [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
-  - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
-  - Edit content directly in the dashboard or import relevant files.
+To customize a waiting room:
 
-
-
-## Default waiting room
-To choose the default, unbranded waiting room, click **Default Waiting Room**.
-
-![Choose default waiting room](../static/default-form.png)
-
-## Custom waiting room
-
-To customize a waiting room, click **Custom Waiting Room**.
-
-![Choose custom waiting room](../static/custom-form.png)
+1. Select a waiting room.
+1. Go to the **Customization** step.
+1. Click **Custom Waiting Room**.
 
 You can edit the HTML code directly in the text box:
 
@@ -107,10 +111,12 @@ Customize your waiting room to display in any language supported by the UTF-8 ch
 ## Preview waiting room
 
 To preview the appearance of a waiting room:
+
 1. In your application, go to **Traffic** > **Waiting Rooms**.
 1. Either [create a waiting room](../create-via-dashboard) or [edit an existing one](../edit-delete-waiting-room).
 1. Go to the **Review** step.
 1. Click **Preview Waiting Room**:
+
   * Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
   * Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
 
