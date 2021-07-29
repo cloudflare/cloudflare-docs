@@ -3,7 +3,7 @@ order: 41
 pcx-content-type: concept
 ---
 
-# Understanding the Logpush API
+# Logpush API configuration
 
 ## Endpoints
 

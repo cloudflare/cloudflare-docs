@@ -10,7 +10,36 @@ Cloudflare Logpush supports pushing logs directly to Microsoft Azure via the Clo
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Microsoft Azure via the [Cloudflare dashboard](/get-started/logpush-dashboard/).
+Enable Logpush to Microsoft Azure via the dashboard.
+
+To enable the Cloudflare Logpush service:
+
+1. Log in to the Cloudflare dashboard.
+
+2. Select the Enterprise domain you want to use with Logpush.
+
+3. Go to **Analytics** > **Logs**.
+
+4. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+
+5. Select the data set you want to push to a storage service.
+
+6. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+
+7. Select **Microsoft Azure**.
+
+8. Enter or select the following destination information:
+     * **SAS URL**
+     * **Blob container subpath (optional)**
+     * **Daily subfolders**
+
+9. Click **Validate access**.
+    
+10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and click **Prove ownership**. To find the ownership token, click the **Open** button in the **Overview** tab of the ownership challenge file.
+
+11. Click **Save and Start Pushing** to finish enabling Logpush.
+
+Once connected, Cloudflare lists Microsoft Azure as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
 ## Manage via API
 
