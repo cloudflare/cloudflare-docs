@@ -78,16 +78,15 @@ Currently, creating and deploying custom rulesets is only available via API.
 
 </Aside>
 
-To learn more about phases, see [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
+To learn more about phases, refer to [Phases](https://developers.cloudflare.com/firewall/cf-rulesets#phases) in the Ruleset Engine documentation.
 
 ---
 
 ## Get started
 
-To configure Managed Rulesets using the Cloudflare dashboard, check [Deploy Managed Rulesets for a zone in the dashboard](/managed-rulesets/deploy-zone-dashboard). 
+To configure Managed Rulesets using the Cloudflare dashboard, refer to [Deploy Managed Rulesets for a zone in the dashboard](/managed-rulesets/deploy-zone-dashboard).
 
 You can also use the Rulesets API to deploy rulesets to the available phases:
 
-* Deploy Managed Rulesets to the `http_request_firewall_managed` phase. See [Work with Managed Rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets).
-* Create and deploy custom rulesets to the `http_request_firewall_custom` phase. See [Work with custom rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets).
-
+* Deploy Managed Rulesets to the `http_request_firewall_managed` phase — refer to [Work with Managed Rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets).
+* Create and deploy custom rulesets to the `http_request_firewall_custom` phase — refer to [Work with custom rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rulesets).
