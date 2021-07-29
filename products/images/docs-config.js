@@ -1,7 +1,7 @@
 module.exports = {
   product: "Images (Beta)",
   pathPrefix: "/images",
-  productIconKey: "images",
+  productLogoPathD: require('./src/content/icons/images').pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/images",
   externalLinks: [
