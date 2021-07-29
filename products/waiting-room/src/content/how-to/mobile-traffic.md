@@ -6,8 +6,8 @@ pcx-content-type: how-to
 # Support mobile app traffic
 
 If you need to manage mobile app traffic, Cloudflare provides a JSON-friendly waiting room that sits in front of your API endpoints:
-- When a user [is queued](/about#how-it-works), we return our own [JSON response](#integrate-waiting-room-variables).
-- When a user leaves the waiting room, we forward their request to your origin server and return your default JSON.
+1. When a user [is queued](/about#how-it-works), we return our own [JSON response](#integrate-waiting-room-variables).
+1. When a user leaves the waiting room, we forward their request to your origin server and return your default JSON.
 
 Since the format of the waiting room response is controlled by an HTTP header (`Accept: application/json` or `Accept: text/html`), a single waiting room can handle both mobile and web traffic.
 
