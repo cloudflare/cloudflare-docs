@@ -43,6 +43,12 @@ The features available for a waiting room depend on your plan type.
             <td>No</td>
             <td>Yes</td>
         </tr>
+        <tr>
+            <td><a href='/how-to/mobile-traffic'>Mobile app traffic</a></td>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
    </tbody>
 </table>
 
