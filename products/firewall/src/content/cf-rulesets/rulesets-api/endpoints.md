@@ -145,5 +145,40 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
         <p>Updates the definition of a single rule within a ruleset.<br/>Allows you to change the order of a rule in a ruleset.</p>
       </td>
     </tr>
+    <tr>
+      <td><a href="/cf-rulesets/rulesets-api/delete-rule">Delete a rule in a ruleset</a></td>
+      <td><code>DELETE</code></td>
+      <td>
+        <p>Deletes a single rule in a ruleset.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Delete rulesets
+
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Verb</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody style="vertical-align:top">
+    <tr>
+      <td><a href="/cf-rulesets/rulesets-api/delete#delete-ruleset">Delete ruleset</a></td>
+      <td><code>DELETE</code></td>
+      <td>
+        <p>Deletes all the versions of a ruleset.</p>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="/cf-rulesets/rulesets-api/delete#delete-ruleset-version">Delete ruleset version</a></td>
+      <td><code>DELETE</code></td>
+      <td>
+        <p>Deletes a specific version of a ruleset.</p>
+      </td>
+    </tr>
   </tbody>
 </table>
