@@ -198,7 +198,7 @@ if (response.ok) {
 
 ### An example worker
 
-Assuming you [set up a worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`
+Assuming you [set up a worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=/uploads/avatar1.jpg`
 
 ```js
 addEventListener("fetch", event => {
@@ -223,10 +223,11 @@ async function handleRequest(request) {
   if (url.searchParams.has("height")) options.cf.image.height = url.searchParams.get("height")
   if (url.searchParams.has("quality")) options.cf.image.quality = url.searchParams.get("quality")
 
-  // Get URL of the original (full size) image to resize.
+  // Get pathname of the original (full size) image to resize.
   // You could adjust the URL here, e.g. prefix it with a fixed address of your server,
-  // so that user-visible URLs are shorter and cleaner.
-  const imageURL = url.searchParams.get("image")
+  const imagePath = url.searchParams.get("image")
+  const urlPrefix = request.headers.get('origin') || `https://${request.headers.get('host'}`
+  const imageURL = urlPrefix + imagePath
 
   // Build a request that passes through request headers,
   // so that automatic format negotiation can work.
