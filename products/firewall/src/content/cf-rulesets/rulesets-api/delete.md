@@ -33,7 +33,9 @@ If the delete operation succeeds, the API method call returns a `204 No Content`
 
 <Aside type='warning' header='Important'>
 
-You cannot delete a ruleset that is still being referenced by other rules. For example, you cannot delete a custom ruleset being referenced in a rule with `execute` action. To delete the ruleset, update or delete any rules that reference the ruleset and try again.
+You cannot delete a ruleset that is still referenced in other rules. For example, you cannot delete a custom ruleset that is being deployed in a rule with `execute` action.
+
+To delete the ruleset, update or delete any rules that reference the ruleset and try again.
 
 </Aside>
 
@@ -72,12 +74,9 @@ Later updates to the ruleset will not reuse the version number of a deleted rule
 
 <Aside type='warning' header='Important'>
 
-You cannot delete a ruleset version if:
+You cannot delete a ruleset version if it is the latest ruleset version and there is a rule with `execute` action deploying that ruleset.
 
-* You are trying to delete the latest ruleset version and there is a rule with `execute` action deploying that ruleset without specifying a version
-* There is a rule with `execute` action deploying the exact ruleset version you are trying to delete
-
-To delete the ruleset version, update or delete any rules that still reference the ruleset version (or the ruleset, if you are deleting the latest version of a ruleset) and try again.
+To delete the ruleset version, update or delete any rules that reference the ruleset and try again.
 
 </Aside>
 
