@@ -5,9 +5,7 @@ pcx-content-type: how-to
 
 # Manual deployment
 
-If you plan to direct your users to manually download and configure the WARP client, they can do so in two ways, depending on your organization's Teams configuration:
-
-If your organization wants to implement the WARP client in the [Gateway with WARP mode](/connections/connect-devices/warp#warp-client-modes), users will need to connect the client to your organization's Cloudflare for Teams instance. This is not needed if your organization only wants to enforce DNS filtering.
+If you plan to direct your users to manually download and configure the WARP client, users will need to connect the client to your organization's Cloudflare for Teams instance.
 
 ## On desktop
 
@@ -21,8 +19,6 @@ End users will need to log in to Cloudflare for Teams by following these instruc
 1. Complete the authentication steps required by your organization.
 
 ## On mobile devices
-
-### Manually configure a Cloudflare for Teams device registration
 
 End users will need to login to Cloudflare for Teams by following these instructions:
 
