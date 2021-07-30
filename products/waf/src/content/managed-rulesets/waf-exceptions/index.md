@@ -15,7 +15,7 @@ You can [define WAF exceptions via API](/managed-rulesets/waf-exceptions/define-
 
 ## Types of WAF exceptions
 
-WAF exceptions can have one of the following behaviors:
+WAF exceptions can have one of the following behaviors (from highest to lowest priority):
 
 * Skip all remaining rules (belonging to WAF Managed Rulesets)
 * Skip one or more specific WAF Managed Rulesets
@@ -23,15 +23,7 @@ WAF exceptions can have one of the following behaviors:
 
 You define WAF exceptions in a given context — zone level or account level — and they apply only to that context. For example, if you define a WAF exception that skips all remaining rules at the account level, the WAF rules at the zone level will still be evaluated.
 
-## WAF exception expressions
-
-Every WAF exception has an expression that defines the criteria for skipping one or more rules of WAF Managed Rulesets. Define the exception expression using the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language).
-
-If there is a match for the expressions of several WAF exceptions, then the following order applies (from highest to lowest priority):
-
-* Exception that skips all remaining rules belonging to WAF Managed Rulesets
-* Exception that skips one or more specific WAF Managed Rulesets
-* Exception that skips one or more specific rules of WAF Managed Rulesets
+Define the exception expression using the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language). If there is a match for the expressions of several WAF exceptions, the WAF will consider the exception with the highest priority.
 
 All WAF exceptions in a given context (zone or account) must have different expressions.
 
@@ -41,4 +33,4 @@ If you define a WAF exception that skips all remaining rules, the expressions of
 
 If you define a WAF exception that skips a rule of a Managed Ruleset, the expression of the rule that executes the Managed Ruleset is evaluated and the Managed Ruleset rules are executed except for that specific rule, which is bypassed.
 
-WAF exceptions are not logged in Firewall Events.
+Currently, WAF exceptions are not logged in Firewall Events.
