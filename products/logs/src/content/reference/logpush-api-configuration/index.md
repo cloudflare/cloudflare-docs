@@ -3,7 +3,7 @@ order: 41
 pcx-content-type: concept
 ---
 
-# Understanding the Logpush API
+# Logpush API configuration
 
 ## Endpoints
 
@@ -146,8 +146,8 @@ If you don't change any options, you will receive logs with default fields that 
 The three options that you can customize are:
 
 1. Fields: See *[Log fields](../../../reference/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
-2. Sampling rate: Value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
-3. Timestamp format: The format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
+1. Sampling rate: Value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
+1. Timestamp format: The format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
 
 To check if `logpull_options` is valid:
 
