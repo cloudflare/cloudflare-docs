@@ -4,7 +4,7 @@ Disallow: /browser-isolation
 Disallow: /client-ip-geolocation
 
 Sitemap: https://developers.cloudflare.com/developers/sitemap.xml
-Sitemap: https://developers.cloudflare.com/onedot/sitemap.xml
+Sitemap: https://developers.cloudflare.com/1.1.1.1/sitemap.xml
 Sitemap: https://developers.cloudflare.com/analytics/sitemap.xml
 Sitemap: https://developers.cloudflare.com/api/sitemap.xml
 Sitemap: https://developers.cloudflare.com/api-security/sitemap.xml
