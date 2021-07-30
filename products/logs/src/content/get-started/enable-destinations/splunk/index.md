@@ -10,13 +10,42 @@ Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare d
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to Splunk via the [Cloudflare dashboard](/get-started/logpush-dashboard/).
+Enable Logpush to Splunk via the dashboard.
+
+To enable the Cloudflare Logpush service:
+
+1. Log in to the Cloudflare dashboard.
+
+1. Select the Enterprise domain you want to use with Logpush.
+
+1. Go to **Analytics** > **Logs**.
+
+1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+
+1. Select the data set you want to push to a storage service.
+
+1. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+
+1. Select **Splunk**.
+
+1. Enter or select the following destination information:
+     * **Splunk raw HTTP Event Collector URL**
+     * **Channel ID**
+     * **Auth Token**
+     * **Source Type**
+     * **Use insecure skip verify option**
+
+1. Click **Validate access**.
+
+1. Click **Save and Start Pushing** to finish enabling Logpush.
+
+Once connected, Cloudflare lists Splunk as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
 ## Manage via API
 
 To set up a Splunk Logpush job:
 1. Create a job with the appropriate endpoint URL and authentication parameters
-2. Enable the job to begin pushing logs
+1. Enable the job to begin pushing logs
 
 <Aside type="note" header="Note">
 
@@ -24,7 +53,7 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 </Aside>
 
-## 1. Create a job
+### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
@@ -87,7 +116,7 @@ Response:
 }
 ```
 
-## 2. Enable (update) a job
+### 2. Enable (update) a job
 
 To enable a  job, make a `PUT` request to the Logpush jobs endpoint. Use the job ID returned from the previous step in the URL and send `{"enabled":true}` in the request body.
 
@@ -119,4 +148,4 @@ Response:
 }
 ```
 
-Refer to the [Logpush FAQ](../../../faq/index#logpush-faq) for troubleshooting information.
+Refer to the [Logpush FAQ](../../../faq#logpush-faq) for troubleshooting information.
