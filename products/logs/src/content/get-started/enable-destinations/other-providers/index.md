@@ -14,7 +14,7 @@ Refer to [Enable destinations](/get-started/enable-destinations/) for the list o
 
 ## Manage via API
 
-The **Cloudflare Logpush API** allows you to configure and manage jobs via create, retrieve, update, and delete operations (CRUD).
+The Cloudflare Logpush API allows you to configure and manage jobs via create, retrieve, update, and delete operations (CRUD).
 
 With Logpush, you can create a job to upload logs of the metadata Cloudflare collects in batches as soon as possible to your cloud service provider. The API allows one job per data set per domain.
 
@@ -26,4 +26,4 @@ To get started:
    - Zone ID
    - Destination access details for your cloud service provider
 
-2. Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/reference/logpush-api-configuration).
+1. Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/reference/logpush-api-configuration).
