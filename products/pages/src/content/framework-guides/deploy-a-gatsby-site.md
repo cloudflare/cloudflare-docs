@@ -8,7 +8,7 @@ Gatsby is an open-source React framework for creating websites and apps. In this
 
 ## Installing Gatsby
 
-Install the `gatsby` CLI by running the following code in your command line:
+Install the `gatsby` CLI by running the following command in your terminal:
 
 ```sh
 $ npm install -g gatsby-cli
@@ -16,7 +16,7 @@ $ npm install -g gatsby-cli
 
 ## Creating a new project
 
-With Gatsby installed, you can create a new project using `gatsby new`. The `new` command accepts a GitHub URL for using an existing template. As an example, use the `gatsby-starter-lumen` template in the below codeblock. You can find more in [Gatsby's Starters section](https://www.gatsbyjs.com/starters/?v=2):
+With Gatsby installed, you can create a new project using `gatsby new`. The `new` command accepts a GitHub URL for using an existing template. As an example, use the `gatsby-starter-lumen` template by running the following command in your terminal. You can find more in [Gatsby's Starters section](https://www.gatsbyjs.com/starters/?v=2):
 
 ```sh
 $ gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lumen
@@ -59,4 +59,4 @@ Every time you commit new code to your Gatsby site, Cloudflare Pages will automa
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Gatsby site on Cloudflare Pages. To learn more about what you can do with the platform, [refer to the How To section](/how-to).
+By completing this guide, you have successfully deployed your Gatsby site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
