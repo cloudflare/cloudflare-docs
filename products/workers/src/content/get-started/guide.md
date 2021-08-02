@@ -56,7 +56,7 @@ $ wrangler --version
 
 ## 3. Configure the Workers CLI
 
-With Wrangler is installed, Wrangler will need access to a Cloudflare API token to manage Workers resources on your behalf.
+With installation complete, `wrangler` will need access to a Cloudflare API token to manage Workers resources on your behalf.
 
 Run the command `wrangler login`, which will automate this process.
 
@@ -186,7 +186,7 @@ It is common to route requests based on:
 
 Refer to a full list of [all properties of a `Request` object](/runtime-apis/request#properties).
 
-In addition to standard request properties, the Workers platform populates the request with a [`cf` object](/runtime-apis/request#incomingrequestcfproperties), containing many useful properties (e.g., the `region` or `timezone`).
+In addition to standard request properties, the Workers platform populates the request with a [`cf` object](/runtime-apis/request#incomingrequestcfproperties), containing many useful properties, for example, the `region` or `timezone`.
 
 #### Option 2: Use a template for routing on URL
 
@@ -223,7 +223,7 @@ $ wrangler whoami
 +----------------------------------+----------------------------------+
 ```
 
-Then, open up your project's `wrangler.toml` file and paste it in as the value for the `account_id` field.
+Open your project's `wrangler.toml` file and paste it in as the value for the `account_id` field.
 
 ```toml
 ---
@@ -355,7 +355,7 @@ __Note:__ When pushing to your `*.workers.dev`subdomain for the first time, you 
 
 #### (Optional) Publish your project to a registered domain
 
-To deploy to your production environment you set in your `wrangler.toml` file in the [optional configuration step](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
+To deploy the production environment set in your `wrangler.toml` file in the [optional configuration step](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
 
 ```sh
 ---
