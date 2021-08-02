@@ -224,7 +224,7 @@ async function handleRequest(request) {
   if (url.searchParams.has("quality")) options.cf.image.quality = url.searchParams.get("quality")
 
   // Get URL of the original (full size) image to resize.
-  // You could adjust the URL here, e.g. prefix it with a fixed address of your server,
+  // You could adjust the URL here, e.g., prefix it with a fixed address of your server,
   // so that user-visible URLs are shorter and cleaner.
   const imageURL = url.searchParams.get("image")
   if (!imageURL) return new Response('Missing "image" value', { status: 400 })
