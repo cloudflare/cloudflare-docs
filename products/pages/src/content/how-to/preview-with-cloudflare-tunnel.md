@@ -21,7 +21,7 @@ cloudflared version 2021.5.9 (built 2021-05-21-1541 UTC)
 
 ## Run a local service
 
-The easiest way to get up and running with Cloudflare Tunnel is to have an application running locally, such as a [React](/framework-guides/deploy-a-react-application) or [Svelte](/framework-guides/deploy-a-svelte-site) site. When you are developing an application with these frameworks, they will often make use of a `npm run develop` script, or something similar, which mounts the application and runs it on a `localhost` port. For instance, the popular `create-react-app` tool runs your in-development React application on port 3000, making it accessible at the `http://localhost:3000` address.
+The easiest way to get up and running with Cloudflare Tunnel is to have an application running locally, such as a [React](/framework-guides/deploy-a-react-application) or [Svelte](/framework-guides/deploy-a-svelte-site) site. When you are developing an application with these frameworks, they will often make use of a `npm run develop` script, or something similar, which mounts the application and runs it on a `localhost` port. For example, the popular `create-react-app` tool runs your in-development React application on port 3000, making it accessible at the `http://localhost:3000` address.
 
 ## Start a Cloudflare Tunnel
 
@@ -51,6 +51,6 @@ In this example, the randomly-generated URL `https://seasonal-deck-organisms-sf.
 
 ## Next Steps
 
-Cloudflare Tunnel can be configured in a variety of ways and can be used to provide far more than just simple access to your in-development applications. For instance, you can provide `cloudflared` with a [configuration file](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) to add more complex routing and tunnel setups that go beyond a simple `--url` flag. You can also [attach a Cloudflare DNS record](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns) to a domain or subdomain for an easily-accessible, long-lived tunnel to your local machine.
+Cloudflare Tunnel can be configured in a variety of ways and can be used beyond providing access to your in-development applications. For example, you can provide `cloudflared` with a [configuration file](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) to add more complex routing and tunnel setups that go beyond a simple `--url` flag. You can also [attach a Cloudflare DNS record](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns) to a domain or subdomain for an easily accessible, long-lived tunnel to your local machine.
 
 Finally, by incorporating Cloudflare Access, you can provide [secure access to your tunnels](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps) without exposing your entire server, or compromising on security. Refer to the [Cloudflare for Teams documentation](https://developers.cloudflare.com/cloudflare-one/) to learn more about what you can do with Cloudflare's entire suite of Zero Trust tools.
