@@ -16,7 +16,7 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 ## Setting up a new project
 
-Create a new project directory (e.g., `astro-site`) by running the below code in your command line. Use [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) inside that directory to run the official Astro setup tool:
+Create a new project directory (e.g., `astro-site`) by running the following commands in your terminal. Use [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) inside that directory to run the official Astro setup tool:
 
 ```sh
 $ mkdir astro-site && cd astro-site
