@@ -23,6 +23,7 @@ The typical setup requirements are:
 1. Create a new integration in the identity provider with the type set as **SAML**.
 1. Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare for Teams [team name](/glossary#team-name).
 1. Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare for Teams [team name](/glossary#team-name).
+1. Set the Name ID/Email format to `emailAddress`.
 1. [Optional] Set the signature policy to *Always Sign*.
 1. [Optional] If your identity provider supports metadata file configuration, use the endpoint:  `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
 
