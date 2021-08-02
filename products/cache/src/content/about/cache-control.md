@@ -1,6 +1,6 @@
 ---
 title: Origin Cache-Control
-order: 4
+order: 7
 pcx-content-type: concept
 ---
 
