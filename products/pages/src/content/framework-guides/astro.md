@@ -49,7 +49,7 @@ Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cl
 
 You will be asked to authorize access to your GitHub account, if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) as you wish to attach more repositories to Cloudflare Pages.
 
-Select the new GitHub repository that you created above and, in the **Set up builds and deployments** section, provide the following information:
+Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
