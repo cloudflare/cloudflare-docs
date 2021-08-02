@@ -6,7 +6,7 @@ title: "Deploy WARP"
 
 # Deploy WARP to your organization
 
-Depending on how your organization is structured, you can deploy WARP in one of three ways:
+Depending on how your organization is structured, you can deploy WARP in one of two ways:
 
 * [Manual deployment](/connections/connect-devices/warp/deployment/manual-deployment). If you are a small organization, asking your users to download the client themselves and type in the required settings is the ideal way to get started with WARP.
 
