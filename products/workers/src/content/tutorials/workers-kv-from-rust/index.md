@@ -9,16 +9,11 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 # Use Workers KV directly from Rust
 
-This tutorial will show you how to read and write to Workers KV directly from
-Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers
-KV API.
+This tutorial will show you how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
 
 ## Basic Project Scaffolding
 
-To get started, we will let `wrangler` generate a basic project using the
-[rustwasm-worker
-template](https://github.com/cloudflare/rustwasm-worker-template/), `cd` into it
-and use the current state of the git repository as the initial commit:
+To get started, we will let `wrangler` generate a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/), `cd` into it and use the current state of the git repository as the initial commit:
 
 ```sh
 $ wrangler generate workers-kv-from-rust https://github.com/cloudflare/rustwasm-worker-template/
@@ -29,10 +24,7 @@ $ git commit -m 'Initial commit'
 
 ## Create & bind a KV namespace
 
-To be able to access Workers KV, we need to define a binding for a particular KV
-namespace in `wrangler.toml`. If you do not have an existing namespace, you can
-quickly create one using wrangler. For example, a namespace called
-`KV_FROM_RUST` would be created by running:
+To be able to access Workers KV, we need to define a binding for a particular KV namespace in `wrangler.toml`. If you do not have an existing namespace, you can quickly create one using wrangler. For example, a namespace called `KV_FROM_RUST` would be created by running:
 
 ```sh
 $ wrangler kv:namespace create "KV_FROM_RUST"
@@ -44,8 +36,7 @@ kv_namespaces = [
 ]
 ```
 
-Let's also create a preview id so that we can use the namespace with `wrangler
-preview`:
+Let's also create a preview id so that we can use the namespace with `wrangler preview`:
 
 ```sh
 wrangler kv:namespace create "KV_FROM_RUST" --preview
@@ -76,9 +67,7 @@ kv_namespaces = [
 
 ## Pass the KV namespace object to Rust
 
-We can now access this KV namespace as the variable `KV_FROM_RUST` in JS. To
-read or write from the namespace in Rust, we need to pass the whole object to
-our Rust handler function:
+We can now access this KV namespace as the variable `KV_FROM_RUST` in JS. To read or write from the namespace in Rust, we need to pass the whole object to our Rust handler function:
 
 ```js
 ---
@@ -99,14 +88,7 @@ async function handleRequest(request) {
 }
 ```
 
-Note that the signature of our Rust handler differs from the template, which
-merely returns a `String` from Rust and keeps the request and response handling
-purely on the JS side. In this tutorial we will try to do as much as possible in
-Rust and thus pass the request directly to our wasm handler, which will then
-construct and return a response. To do this, we first declare `web-sys` as one
-of our Rust dependencies and explicitly enable the `Request`, `Response` and
-`ResponseInit` features (the `Url` and `UrlSearchParams` features will be used
-later in this tutorial):
+Note that the signature of our Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JS side. In this tutorial we will try to do as much as possible in Rust and thus pass the request directly to our wasm handler, which will then construct and return a response. To do this, we first declare `web-sys` as one of our Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features (the `Url` and `UrlSearchParams` features will be used later in this tutorial):
 
 ```toml
 ---
@@ -123,8 +105,7 @@ features = [
 ]
 ```
 
-We can now use `Request` and `Response` in Rust to create a very simple handler
-that completely ignores the request and always responds with a `200 OK` status:
+We can now use `Request` and `Response` in Rust to create a very simple handler that completely ignores the request and always responds with a `200 OK` status:
 
 ```rust
 ---
@@ -160,9 +141,7 @@ pub fn handle(kv: JsValue, req: JsValue) -> Result<Response, JsValue> {
 
 ## Bind to KV using `wasm_bindgen`
 
-We are now ready to create a type binding using `wasm_bindgen` to access the KV
-object. Since the KV API returns JS promises, we first need to add
-`wasm-bindgen-futures` and `js-sys` as dependencies:
+We are now ready to create a type binding using `wasm_bindgen` to access the KV object. Since the KV API returns JS promises, we first need to add `wasm-bindgen-futures` and `js-sys` as dependencies:
 
 ```toml
 ---
@@ -175,8 +154,7 @@ wasm-bindgen-futures = "0.4"
 js-sys = "0.3"
 ```
 
-Now we can add the wrapper and change the type of the `kv` argument of our
-handler accordingly:
+Now we can add the wrapper and change the type of the `kv` argument of our handler accordingly:
 
 ```rust
 ---
@@ -213,10 +191,7 @@ extern "C" {
 
 ## Create a wrapper around KV
 
-We could start using the `kv` parameter as it is, but the function signatures
-generated by `wasm_bindgen` are somewhat cumbersome to work with in Rust. It
-thus makes sense to create a simple struct around the `WorkersKvJs` type that
-wraps it with a more Rust-friendly API:
+We could start using the `kv` parameter as it is, but the function signatures generated by `wasm_bindgen` are somewhat cumbersome to work with in Rust. It thus makes sense to create a simple struct around the `WorkersKvJs` type that wraps it with a more Rust-friendly API:
 
 ```rust
 ---
@@ -280,22 +255,11 @@ impl WorkersKv {
 }
 ```
 
-The above wrapper only exposes a subset of the options supported by the KV API,
-other options such as `expiration` instead of `expirationTtl` for put and other
-types than `text` and `arrayBuffer` for get could be wrapped in a similar
-fashion. Conceptually, the wrapper methods all manually construct a JS object
-using `Reflect::set` and then convert the return value into a standard Rust type
-where necessary.
+The above wrapper only exposes a subset of the options supported by the KV API, other options such as `expiration` instead of `expirationTtl` for put and other types than `text` and `arrayBuffer` for get could be wrapped in a similar fashion. Conceptually, the wrapper methods all manually construct a JS object using `Reflect::set` and then convert the return value into a standard Rust type where necessary.
 
 ## Using the wrapper
 
-We can now finally use the wrapper to get and put values from and to our KV
-namespace. The following function is a simple example handler that writes the
-key `foo` with the value `bar` to KV if a `PUT` request is made to
-`/foo?value=bar` and reads and returns the value of key `foo` from KV if a `GET`
-request is made to `/foo` (note that `handle` is now async and that we are using
-the `Url` and `UrlSearchParams` features that we declared earlier in
-`Cargo.toml`):
+We can now finally use the wrapper to get and put values from and to our KV namespace. The following function is a simple example handler that writes the key `foo` with the value `bar` to KV if a `PUT` request is made to `/foo?value=bar` and reads and returns the value of key `foo` from KV if a `GET` request is made to `/foo` (note that `handle` is now async and that we are using the `Url` and `UrlSearchParams` features that we declared earlier in `Cargo.toml`):
 
 ```rust
 ---
@@ -332,8 +296,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-We can now run `wrangler preview`, `wrangler dev` or `wrangler publish` to test
-the worker. Here is an example invocation using `wrangler dev`:
+We can now run `wrangler preview`, `wrangler dev` or `wrangler publish` to test the worker. Here is an example invocation using `wrangler dev`:
 
 ```sh
 $ curl 'localhost:8787/foo'
