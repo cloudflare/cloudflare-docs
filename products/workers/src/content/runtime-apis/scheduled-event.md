@@ -69,7 +69,7 @@ export default {
     - The type of event. This will always return `"scheduled"`.
 
 - `event.scheduledTime` <Type>number</Type>
-    - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <Code>new Date(event.scheduledTime)</Code>
+    - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <Code>new Date(event.scheduledTime)</Code>.
 
 - `env` <Type>object</Type>
     - An object containing the bindings associated with your Module Worker, such as KV namespaces and Durable Objects.
