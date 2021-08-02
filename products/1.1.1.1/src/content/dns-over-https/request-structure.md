@@ -23,6 +23,18 @@ When making requests using `POST`, the DNS query is included as the message body
 
 When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (see below).
 
+## Send multiple questions in a query
+
+Sending more than one question when making requests depends on the HTTP version used, as each DNS query maps to exactly one HTTP request. HTTP/2 and HTTP/3 have multiplexing and you can start multiple requests concurrently. HTTP/2 is, in fact, the minimum recommended version of HTTP for use with DNS over HTTPS (DoH). This is not specific to 1.1.1.1, but rather how DoH works. 
+
+You can learn more about how DoH works in RFC8484, more specifically [the HTTP layer requirements](https://datatracker.ietf.org/doc/html/rfc8484#section-5.2).
+
+The following example sends two questions in a query:
+
+```sh
+$ curl --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com --next --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com
+```
+
 ## Wireformat and JSON options
 
 Both [UDP wireformat](https://developers.cloudflare.com/1.1.1.1/dns-over-https/wireformat/) and [JSON](https://developers.cloudflare.com/1.1.1.1/dns-over-https/json-format/) formats are supported.
