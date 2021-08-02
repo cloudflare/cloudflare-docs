@@ -81,4 +81,4 @@ Additionally, you will have access to [preview deployments](/platform/preview-de
 
 ## Learn more
 
-You have successfully deployed your Astro site to Cloudflare Pages. To learn more about what you can do with the platform, [refer to the How to section](/how-to).
+By completing this guide, you have successfully deployed your Astro site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
