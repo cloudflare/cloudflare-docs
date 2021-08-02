@@ -27,7 +27,7 @@ During `init`, Astro will ask you which project type you would like to set up. Y
 
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the below code in your command line:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
 
 ```sh
 # Setup the local repository
