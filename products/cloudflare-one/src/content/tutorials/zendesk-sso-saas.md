@@ -13,7 +13,7 @@ This tutorial covers how to configure Zendesk SSO with Access for SaaS.
 
 For this tutorial, you will need:
 * A Cloudflare for Teams Account
-* An Integrated Identity Provider (IdP)
+* An integrated identity provider (IdP)
 * Admin access to your Zendesk account
 
 </Aside>
