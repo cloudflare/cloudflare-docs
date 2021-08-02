@@ -1,7 +1,7 @@
 ---
 order: 0
 title: "Guide"
-pcx-content-type: configuration
+pcx-content-type: how-to
 ---
 
 # Get started guide
