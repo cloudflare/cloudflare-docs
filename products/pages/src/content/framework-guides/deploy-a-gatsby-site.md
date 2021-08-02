@@ -24,7 +24,7 @@ $ gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lume
 
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following code in your command line:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following command in your terminal:
 
 ```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
@@ -59,4 +59,4 @@ Every time you commit new code to your Gatsby site, Cloudflare Pages will automa
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Gatsby site on Cloudflare Pages. To learn more about what you can do with the platform, [refer to the How-To section](/how-to).
+By completing this guide, you have successfully deployed your Gatsby site on Cloudflare Pages. To learn more about what you can do with the platform, [refer to the How To section](/how-to).
