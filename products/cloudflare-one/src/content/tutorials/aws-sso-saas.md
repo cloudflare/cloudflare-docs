@@ -50,7 +50,7 @@ In this tutorial we will configure AWS SSO with Access for SaaS. Cloudflare Acce
     | AWS value | Cloudflare value |
     | ----- | ---- |
     | **AWS SSO ACS URL** | **Assertion Consumer Service URL** |
-    | **AWS SSO Issue URL** | **Entity ID** |
+    | **AWS SSO Issuer URL** | **Entity ID** |
 
     The **Name ID Format** must be set to: Email.
 
@@ -99,8 +99,7 @@ In this tutorial we will configure AWS SSO with Access for SaaS. Cloudflare Acce
     Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
     1. Users are created in both your identity provider and AWS
     1. Users have matching usernames in your identity provider and AWS.
-    
-    AWS **requires** that Usernames are in the format of an email.
+    1. Users usernames are email addresses. This is the only format AWS supports with 3rd party SSO providers.
 
     </Aside>
 
