@@ -144,7 +144,7 @@ When logging using this strategy, remember that outstanding asynchronous tasks a
 ```js
 addEventListener("fetch", event => {
   event.respondWith(handleEvent(event))
-}
+})
 
 async function handleEvent(event) {
   // ...
