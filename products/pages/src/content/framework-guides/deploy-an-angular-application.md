@@ -108,7 +108,7 @@ You'll see your first deploy pipeline in progress. Pages installs all dependenci
 
 <Aside>
 
-**Note:** For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+**Note:** For the complete guide to deploying your first site to Cloudflare Pages, check out [our Get Started guide](/get-started).
 
 </Aside>
 
