@@ -32,7 +32,7 @@ You can learn more about how DoH works in RFC8484, more specifically [the HTTP l
 The following example sends two questions in a query:
 
 ```sh
-$ curl --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com --next --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com
+$ curl --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com --next --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=example.com
 ```
 
 ## Wireformat and JSON options
