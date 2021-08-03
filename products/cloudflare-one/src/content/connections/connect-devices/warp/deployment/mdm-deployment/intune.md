@@ -10,7 +10,7 @@ hidden: true
 1. Log in to your Microsoft Intune account.
 1. Navigate to **Apps** > **All Apps**.
 1. Click **+Add**.
-1. As **App type**, select *Line-of-business app* from the drop-down menu.
+1. In **App type**, select *Line-of-business app* from the drop-down menu.
 1. Click **Select**.
 1. Click **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
 1. Click **OK**.
