@@ -29,7 +29,7 @@ jobs:
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
-      images: ${{ steps.filter.outputs.images }}
+      image-resizing: ${{ steps.filter.outputs.image-resizing }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
@@ -95,8 +95,8 @@ jobs:
               - 'products/browser-isolation/**'
             http3:
               - 'products/http3/**'
-            images:
-              - 'products/images/**'
+            image-resizing:
+              - 'products/image-resizing/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
@@ -776,14 +776,14 @@ jobs:
           environment: "production"
           wranglerVersion: '1.13.0'
 
-  deploy-images:
+  deploy-image-resizing:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.images == 'true' }}
+    if: ${{ needs.changes.outputs.image-resizing == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/images
+        working-directory: products/image-resizing
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -800,13 +800,13 @@ jobs:
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/images"
+          workingDirectory: "products/image-resizing"
           wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/images"
+          workingDirectory: "products/image-resizing"
           environment: "production"
           wranglerVersion: '1.13.0'
 
