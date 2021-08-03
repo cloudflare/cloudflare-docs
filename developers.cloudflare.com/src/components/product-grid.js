@@ -117,7 +117,7 @@ const products = [
   {
     title: "Image Resizing",
     path: "image-resizing",
-    icon: "images",
+    icon: "image-resizing",
   },
   {
     title: "Cloudflare Fundamentals",
