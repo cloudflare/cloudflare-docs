@@ -74,4 +74,4 @@ If an application only requires specific SAML attributes on sign-in, then the at
 
 ## Testing the connection
 
-Save the initial SAML configuration and then click Test. This will provide an error or success message. The error message will provide instructions on how to update the configuration to successfully integrate.
+Save the initial SAML configuration and click **Test**. This will prompt an error or success message. The error message will provide instructions on how to update the configuration to successfully integrate your identity provider with Cloudflare.
