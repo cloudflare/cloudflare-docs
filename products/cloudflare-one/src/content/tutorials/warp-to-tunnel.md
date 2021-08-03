@@ -134,7 +134,7 @@ By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certai
 
 ## Integrate your identity provider
 
-Users can now connect over this private network by [enrolling their devices into the WARP agent](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp) in the same account as the Cloudflare Tunnel configuration. They must use the `Gateway with WARP` mode.
+Users can now connect over this private network by [enrolling their devices into the WARP agent](/connections/connect-devices/warp) in the same account as the Cloudflare Tunnel configuration. They must use the `Gateway with WARP` mode.
 
 You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
 

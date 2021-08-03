@@ -33,7 +33,7 @@ To proceed with the installation, here is an example of the XML code you will ne
     <string>https://support.example.com</string>
 </dict>
 ```
-For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
 
 ### Example Configuration in Jamf
 Follow these steps to deploy the WARP Client via Jamf:

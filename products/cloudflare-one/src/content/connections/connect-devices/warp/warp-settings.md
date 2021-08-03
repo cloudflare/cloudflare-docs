@@ -3,11 +3,11 @@ order: 5
 pcx-content-type: reference
 ---
 
-# Configure WARP settings
+# WARP settings
 
 <Aside type="note">
 
-If you are deploying WARP via MDM, see the following list of parameters instead. Any settings you configure on the Teams Dashboard will be overridden by an MDM deployment. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from your MDM deployment.
+If you are deploying [WARP in Managed mode](/connections/connect-devices/warp/deployment/mdm-deployment), refer to this [list of parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) instead. Any settings you configure on the Teams Dashboard will be overridden by an MDM deployment. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from your MDM deployment.
 
 </Aside>
 
@@ -17,12 +17,13 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 
 When the toggle is enabled, users will be able to make changes to the WARP client configuration if they have a one-time password. When the toggle is disabled, no one-time passwords are generated, and the users will not be able to change the client's configuration.
 
-## Device enrollment rules
+## Device enrollment permissions
 
 Cloudflare for Teams allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a device enrollment rule on the Teams Dashboard:
 
-1. Click **Manage** in the **Device enrollment rules** card.
-1. In the rule builder, configure a rule to define who can enroll or revoke devices.
+1. Click **Manage** in the **Device enrollment permissions** card.
+1. In the rule builder, configure one or more rules to define who can enroll or revoke devices.
+1. Set a session duration. Once the session expires, users will be asked to log in when attempting to connect a device. 
 1. Click **Save**.
 
 ## Captive portal detection
