@@ -153,7 +153,7 @@ your project dependencies, and building your site, before deploying it.
 <Aside>
 
 For the complete guide to deploying your first site to Cloudflare Pages, check
-out [our Getting Started guide](/getting-started).
+out [our Get Started guide](/get-started).
 
 </Aside>
 
