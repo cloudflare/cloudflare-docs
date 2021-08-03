@@ -13,7 +13,7 @@ Refer to [Add rules to phase entry point rulesets](https://developers.cloudflare
 
 <Aside type="note" header="Rule execution order">
 
-Rules with `skip` action only apply to rules with `execute` action listed **after** them that execute Managed Ruleset rules. If you add a rule with `skip` action at the end of the rules list of a phase entry point ruleset, nothing will be skipped.
+Rules with `skip` action only apply to rules with `execute` action listed **after** them. If you add a rule with `skip` action at the end of the rules list of a phase entry point ruleset, nothing will be skipped.
 
 </Aside>
 
