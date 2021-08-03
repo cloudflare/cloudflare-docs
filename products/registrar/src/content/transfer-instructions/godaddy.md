@@ -58,7 +58,7 @@ Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose
 ---
 
 ## Step 5: Transfer to Cloudflare
-After your previous registrar approves the transfer, go to your Cloudflare dashboard. From your accounts home, click **Registrar** > **Transfer** and input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
+Go to your Cloudflare dashboard. From your accounts home, click **Registrar** > **Transfer** and input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
 
 If you do not see this screen or do not have an authorization code, please ensure you have gone through all the steps mentioned above before trying to transfer your domain to Cloudflare.
 
