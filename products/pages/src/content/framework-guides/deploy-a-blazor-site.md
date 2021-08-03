@@ -12,7 +12,7 @@ Blazor uses C#, so you will need to [install the .NET SDK](https://dotnet.micros
 
 ## Creating a new Blazor WASM project  
 
-There are two types of Blazor projects, Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. Create a new Blazor WASM application by running:
+There are two types of Blazor projects: Blazor Server applications, which run on the server, and Blazor WASM (WebAssembly), which run in the browser. Since Blazor Server is not static, this guide will use Blazor WASM. Create a new Blazor WASM application by running the following command in your terminal:
 
 ```sh
 $ dotnet new blazorwasm my-blazor-project
@@ -32,7 +32,7 @@ chmod +x dotnet-install.sh
 
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
 $ dotnet new gitignore
@@ -46,7 +46,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:  
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
@@ -60,15 +60,15 @@ You can deploy your site to Cloudflare Pages by going to the dashboard, and crea
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
 
-<Aside>
+<Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
 
-After deploying your site, you will receive a unique subdomain for your project on `pages.dev`. 
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
 Every time you commit new code to your Blazor site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-You have successfully deployed your Blazor site on Cloudflare Pages. To learn more about what you can do with the platform, [refer to the Framework Guides section](/framework-guides).
+By completing this guide, you have successfully deployed your Blazor site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
