@@ -60,7 +60,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `dotnet`, your project dependencies, and building your site, before deploying it.
 
-<Aside>
+<Aside type="note">
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
