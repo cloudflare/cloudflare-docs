@@ -4,7 +4,7 @@ order: 0
 pcx-content-type: landing-page
 ---
 
-# Cloudflare Image Resizing docs
+# Cloudflare Image Resizing documentation
 
 You can transform images on Cloudflare’s edge platform. You can resize, adjust quality, and convert images to WebP or AVIF format on demand. Cloudflare will automatically cache every derived image at the edge, so you only need to store one original image at your origin.
 
