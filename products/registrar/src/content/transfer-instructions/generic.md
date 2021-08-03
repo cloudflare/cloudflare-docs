@@ -50,10 +50,17 @@ Next, your new registrar needs to confirm with your old registrar that the trans
 
 --------
 
-## Step 4: Transfer to Cloudflare
-In the Cloudflare transfer screen, input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
+## Step 4: Add domain to Cloudflare
+Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
+
+---
+
+## Step 5: Transfer to Cloudflare
+Go to your Cloudflare dashboard. From your accounts home, click **Registrar** > **Transfer** and input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
+
+If you do not see this screen or do not have an authorization code, please ensure you have gone through all the steps mentioned above before trying to transfer your domain to Cloudflare.
 
 --------
 
-## Step 5: Approve the transfer
+## Step 6: Approve the transfer
 Your previous registrar will email you to confirm your request to transfer away. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare.
