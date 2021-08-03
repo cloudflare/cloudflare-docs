@@ -12,7 +12,7 @@ You can use Cloudflare Access to require team members to connect to self-hosted 
 **🗺️ This walkthrough covers how to:**
 
 * Create or upload a list of devices in your inventory
-* Deploy Cloudflare WARP, the Cloudflare for Teams agent, to collect device information
+* Deploy the Cloudflare WARP client to collect device information
 * Build a Zero Trust policy that requires users to connect from devices in your inventory
 
 **⏲️Time to complete:**
