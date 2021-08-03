@@ -11,8 +11,8 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 End users will need to log in to Cloudflare for Teams by following these instructions:
 
-1. Click on the Cloudflare Logo in the Menu Bar.
-1. Select the gear icon.
+1. Click on the Cloudflare logo in the menu bar.
+1. Click the gear icon.
 1. Navigate to **Preferences** > **Account**.
 1. Click **Login with Cloudflare for Teams**.
 1. Enter your [team name](/glossary#team-name).
@@ -22,9 +22,9 @@ End users will need to log in to Cloudflare for Teams by following these instruc
 
 End users will need to log in to Cloudflare for Teams by following these instructions:
 
-1. Find the 1.1.1.1 application and tap to launch.
+1. Find the 1.1.1.1 application and tap to launch it.
 1. Tap the menu bar icon.
-1. Tap Account.
+1. Tap **Account**.
 1. Tap **Login with Cloudflare for Teams**.
 1. Enter your [team name](/glossary#team-name).
 1. Complete the authentication steps required by your organization.
