@@ -14,7 +14,9 @@ The available fields when setting an HTTP request header value using an expressi
 * `cf.client_trust_score`
 * `cf.threat_score`
 * `cf.colo.id`
+* `cf.edge.server_ip`
 * `cf.edge.server_port`
+* `cf.edge.client_port`
 * `cf.zone.name`
 * `cf.metal.id`
 * `cf.tls_client_auth.*`
