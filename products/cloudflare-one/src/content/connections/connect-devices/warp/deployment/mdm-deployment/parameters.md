@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 0
 pcx-content-type: reference
 ---
 
@@ -8,6 +8,7 @@ pcx-content-type: reference
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
 ## Required for full Cloudflare One features
+
 For the vast majority of Cloudflare for Teams features to work, you need to specify a team name. Examples of Teams features depending on the team name are [HTTP policies](/policies/filtering/http-policies), [Browser Isolation](/connections/connect-browsers), and [device posture](/identity/devices).
 
 ### `organization`
@@ -71,12 +72,10 @@ This field is only required to enforce DNS policies when deploying the client in
 - `false` [default value] The user is able to turn switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
 - `true`  The user is prevented from turning off the switch.
 
-**Warning**
-<Aside>
 On new deployments, you must also include the `auto_connect` parameter with at least a value of 0. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
-</Aside>
 
-<Aside> 
+<Aside type='note'> 
+
   This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 </Aside>
 

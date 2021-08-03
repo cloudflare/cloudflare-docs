@@ -1,9 +1,13 @@
 ---
-order: 4
+order: 1
 pcx-content-type: reference
 ---
 
 # Download WARP
+
+You can download the WARP client from the Teams Dashboard. To do that, navigate to **Settings** > **Devices** and scroll down to **Download the WARP client**.
+
+Alternatively, download the client from one of the following links after checking requirements:
 
 ## Windows
 <table>
