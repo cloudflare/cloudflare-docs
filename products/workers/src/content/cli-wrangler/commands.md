@@ -268,7 +268,7 @@ Wrangler tail uses cloudflared under the hood. If you are already using cloudfla
 
 <Aside type="warning" header="Legacy issues with existing cloudflared configuration">
 
-For versions before wrangler 1.19.0, `wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844).
+For versions before Wrangler 1.19.0, `wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well-known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844). To update your Wrangler version, refer to the [update documentation](/cli-wrangler/install-update#update).
 
 To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
 
