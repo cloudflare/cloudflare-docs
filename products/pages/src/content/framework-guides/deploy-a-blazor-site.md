@@ -62,7 +62,7 @@ After configuring your site, you can begin your first deploy. You should see Clo
 
 <Aside>
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get Started guide](/get-started).
 
 </Aside>
 
