@@ -32,7 +32,7 @@ Find the "Build & Development settings" panel, which will have the **Build Comma
 
 Once you've found your build directory and build command, you can move your project to Cloudflare Pages.
 
-The [Getting started guide](/getting-started) will show you how to add your GitHub project to Cloudflare Pages.
+The [Getting started guide](/get-started) will show you how to add your GitHub project to Cloudflare Pages.
 
 If you choose to use a custom domain for your Pages, you can set it to the same custom domain as your currently deployed Vercel application. When Pages finishes the initial deploy of your site, you will need to delete the Workers application to start sending requests to Cloudflare Pages.
 
