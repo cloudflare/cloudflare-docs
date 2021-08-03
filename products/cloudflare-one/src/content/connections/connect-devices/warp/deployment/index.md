@@ -1,24 +1,15 @@
 ---
-order: 1
+order: 2
 pcx-content-type: how-to
+title: Deploy WARP
 ---
 
-# Deployment
+# Deploy WARP to your organization
 
-The Cloudflare WARP client can be deployed via a device management platform like JAMF or Intune or through end user self-enrollment.
+Depending on how your organization is structured, you can deploy WARP in one of two ways:
 
-To get started, create a **device enrollment policy** in your Teams dashboard. The device enrollment policy will determine who can enroll a device into your organization. To do so:
+* [Manual deployment](/connections/connect-devices/warp/deployment/manual-deployment). If you are a small organization, asking your users to download the client themselves and type in the required settings is the ideal way to get started with WARP.
 
-1. Set up a [team domain](/glossary#team-domain). You can find your team domain under **Settings > General > Team domain**.
+* [Managed deployment](/connections/connect-devices/warp/deployment/mdm-deployment). Bigger organizations with MDM tools like Intune or JAMF can deploy WARP to their entire fleet of devices from a single operation.
 
-1. On your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team** > **Devices**.
 
-1. Under **Device enrollment**, create a [device enrollment policy](/connections/connect-devices/warp/device-enrollment) to define who can connect a device to your organization.
-
-1. Once your device enrollment policy is set up, configure [Secure Web Gateway policies](/policies/filtering) for your organization. If you are configuring [HTTP policies](/policies/filtering/http-policies), make sure to deploy the [root certificate](/connections/connect-devices/warp/install-cloudflare-cert) to your devices. 
-
-1. As a last step, verify your devices meet the WARP [system requirements](../download-warp) for installation.
-
-You're now ready to follow the deployment instructions for your devices.
-
-<DirectoryListing path="/connections/warp/deployment"/>
