@@ -68,7 +68,7 @@ Here are some common time intervals that may be useful for setting up your Cron 
 
 <Aside header="Testing Cron Triggers and potential delays">
 
-A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, and deleting a Cron Trigger may take minutes for changes to propagate to the edge.
+A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the edge.
 
 </Aside>
 
