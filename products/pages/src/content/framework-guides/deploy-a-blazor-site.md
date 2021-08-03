@@ -46,7 +46,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > going to the Account Home > Pages dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > Account Home > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
