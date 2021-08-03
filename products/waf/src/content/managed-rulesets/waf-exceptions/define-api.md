@@ -33,7 +33,7 @@ Example rule definition:
 }
 ```
 
-Skipping all remaining rules only affects the rules in the current context (account or zone). For example, adding a rule with `skip` action to the account-level phase entry point ruleset has no impact on the rules defined in the zone-level phase entry point ruleset, which will be evaluated.
+Skipping all remaining rules only affects the rules in the current context (account or zone). For example, adding a rule with `skip` action to the account-level phase entry point ruleset has no impact on the rules defined in the zone-level phase entry point ruleset — these zone-level rules will still be evaluated.
 
 ## Skip one or more WAF Managed Rulesets
 
