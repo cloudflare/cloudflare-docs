@@ -36,7 +36,7 @@ Once you have configured your site, you can begin your first deploy. Your custom
 
 <Aside>
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get Started guide](/get-started).
 
 </Aside>
 
