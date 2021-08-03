@@ -11,13 +11,9 @@ pcx-content-type: how-to
 
 Visit the [requirements section](/connections/connect-devices/warp/download-warp) to review the system requirements for macOS and to download the macOS installer.
 
-Next, choose how you want to deploy the WARP Client in your organization:
-* [Automated configuration](#automated-configuration) (Jamf, Intune, Script)
-* [Manual configuration](#manual-configuration), with end users manually configuring the client on their own device
+If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/connections/connect-devices/warp/deployment/manual-deployment).
 
 </Aside>
-
-## Automated configuration (Jamf, Intune, Script)
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
 
@@ -112,9 +108,10 @@ Here is an example `.mobileconfig` file with the accepted arguments:
 
 ```
 
-For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
 
-[Click here](../../../../static/documentation/connections/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
+[Click here to download](../../../../../static/documentation/connections/com.cloudflare.warp.plist) this example `plist`. If you plan to download the `plist` file and place it manually in `/Library/Managed Preferences`, convert the `plist` into into binary format first. To do that:
+
 1. Open a Terminal window.
 2. Run the following command:
 
@@ -122,7 +119,7 @@ For a description of each argument and what it means, see [deployment parameters
  % plutil -convert binary1 com.cloudflare.warp.plist
  ```
 
-[Click here](../../../../static/documentation/connections/CloudflareWARP.mobileconfig) to download this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+[Click here to download](../../../../../static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
 
 ### Example configuration in Jamf
 
@@ -166,53 +163,5 @@ The following sections will walk you through each of these steps.
 1. Navigate to **Scope** to configure which devices in your organization should receive this profile.
 1. Click **Save**.
 
-Jamf is now configured to deploy the Cloudflare WARP Client.
+Jamf is now configured to deploy the Cloudflare WARP client.
 
-## Manual configuration
-
-If you plan to direct your users to manually download and configure the Cloudflare WARP Client application, they can do so in two ways, depending on your organization's Teams configuration:
-* If your organization uses Gateway DNS filtering, users will need to configure a [DoH subdomain](/glossary#doh-subdomain)).
-* If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or Gateway L7 Filtering, users will need to [configure a Cloudflare for Teams device registration](#manually-configure-a-cloudflare-for-teams-device-registration).
-
-### Manually configure a Gateway DoH subdomain
-If your organization uses Gateway DNS filtering, you will need to instruct your users to configure the Gateway [DoH subdomain](/glossary#doh-subdomain) field.
-
-Then ask your users to complete the following steps:
-
-1. Click on the Cloudflare Logo in the Menu Bar.
-1. Select the gear icon.
-1. Navigate to **Preferences**.
-1. Select the **Connect** tab.
-1. Click **Change** next to *Gateway DoH Subdomain*, and enter your DoH Subdomain.
-
-![Preferences UI in the connection tab with the Change button circled](../../../../static/documentation/connections/macOS_GatewayButton.png)
-
-### Manually configure a Cloudflare for Teams device registration
-If your organization uses [Zero Trust policies](/policies/zero-trust) to control device registration, or is using the Gateway L7 Filtering and user or device-specific [Secure Web Gateway policies](/policies/filtering), your users will need to login to Cloudflare for Teams by following these instructions:
-
-1. Click on the Cloudflare Logo in the Menu Bar.
-2. Select the gear icon.
-3. Navigate to **Preferences**.
-4. Select the **Account** tab.
-5. Click **Login with Cloudflare for Teams**.
-
- ![Preferences UI in the Account tab with the Login to Teams button circled](../../../../static/documentation/connections/macOS_TeamsButton.png)
-
-6. Enter your [team name](/glossary#team-name).
-7. Complete the authentication steps required by your organization.
-
-
-## Remove the WARP client application
-
-We include an uninstall script as part of the macOS package that you originally used. Use the following commands to find and run the script:
-
-```sh
-$ cd /Applications/Cloudflare\ WARP.app/Contents/Resources
-$ ./uninstall.sh
-```
-
-<Aside>
-
-You may be prompted to provide your credentials while removing the application.
-
-</Aside>
