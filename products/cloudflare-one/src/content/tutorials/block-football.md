@@ -7,9 +7,9 @@ pcx-content-type: tutorial
 
 # Block sites by host and URL
 
-You can use Cloudflare Gateway and the Cloudflare WARP agent to inspect HTTP traffic in order to block attempts to reach hostnames or to block URL paths without blocking the entire hostname.
+You can use Cloudflare Gateway and the Cloudflare WARP client to inspect HTTP traffic in order to block attempts to reach hostnames or to block URL paths without blocking the entire hostname.
 
-In this mode, the Cloudflare WARP agent runs on user devices and proxies all Internet-bound traffic to Cloudflare's network. Cloudflare's network will then inspect the HTTP traffic to apply policies based on user identity and destination. You can also decide to [exclude some traffic from inspection](/policies/filtering/http-policies#do-not-inspect) while filtering all other traffic.
+In this mode, the Cloudflare WARP client runs on user devices and proxies all Internet-bound traffic to Cloudflare's network. Cloudflare's network will then inspect the HTTP traffic to apply policies based on user identity and destination. You can also decide to [exclude some traffic from inspection](/policies/filtering/http-policies#do-not-inspect) while filtering all other traffic.
 
 **🗺️ This tutorial covers how to:**
 
