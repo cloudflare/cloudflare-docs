@@ -1,7 +1,7 @@
 ---
 order: 2
 pcx-content-type: how-to
-title: "Deploy WARP"
+title: Deploy WARP
 ---
 
 # Deploy WARP to your organization
