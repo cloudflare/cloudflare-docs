@@ -40,7 +40,7 @@ Your Linux distro's package manager may include Zola. If this is the case, you c
 $ pkg install zola
 ```
 
-If your package manager does not include Zola or you would like to download a release directly, see the [**Manual**](/framework-guides/deploy-a-zola-site#manual-installation) section below.
+If your package manager does not include Zola or you would like to download a release directly, refer to the [**Manual**](/framework-guides/deploy-a-zola-site#manual-installation) section below.
 
 ### Manual installation
 
@@ -76,7 +76,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > Account Home > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
