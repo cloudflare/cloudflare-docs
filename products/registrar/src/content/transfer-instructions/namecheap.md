@@ -53,6 +53,8 @@ While still on the **Sharing & Transfer** tab, click the button “Auth Code” 
 ## Step 4: Add domain to Cloudflare
 Login to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
 
+---
+
 ## Step 5: Transfer to Cloudflare
 After your previous registrar approves the transfer, go to your Cloudflare dashboard. From your accounts home, click **Registrar** > **Transfer** and input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
 
@@ -60,5 +62,5 @@ If you do not see this screen or do not have an authorization code, please ensur
 
 --------
 
-## Step 5: Approve the transfer
+## Step 6: Approve the transfer
 Once Cloudflare processes your transfer, Namecheap will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). To approve the transfer, do **not** take any action. The transfer will automatically approve within 5 days.
