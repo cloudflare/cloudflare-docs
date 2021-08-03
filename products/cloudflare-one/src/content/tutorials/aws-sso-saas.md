@@ -11,6 +11,8 @@ In this tutorial we will configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 <Aside>
 
+For this tutorial, you will need:
+    
 * A Cloudflare for Teams account
 * An integrated IdP
 * Admin access to an AWS account
@@ -99,7 +101,7 @@ In this tutorial we will configure AWS SSO with Access for SaaS. Cloudflare Acce
     Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
     1. Users are created in both your identity provider and AWS
     1. Users have matching usernames in your identity provider and AWS.
-    1. Usernames should be email addresses. This is the only format AWS supports with third-party SSO providers.
+    1. Usernames are email addresses. This is the only format AWS supports with third-party SSO providers.
 
     </Aside>
 
