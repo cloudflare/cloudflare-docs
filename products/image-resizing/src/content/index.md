@@ -14,7 +14,7 @@ You can transform images on Cloudflare’s edge platform. You can resize, adjust
 
 ## Availability
 
-Image Resizing is currently available for Business and Enterprise customers. Before you can start using it, ensure you have [enabled Image Resizing](/enable-image-resizing) in the Cloudflare dashboard.
+Image Resizing is currently available for Business and Enterprise customers. To begin, ensure you have [enabled Image Resizing](/enable-image-resizing) in the Cloudflare dashboard.
 
 ## Two ways to use
 
