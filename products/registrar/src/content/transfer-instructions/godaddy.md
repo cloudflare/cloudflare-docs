@@ -53,7 +53,7 @@ It may take up to 24 hours for GoDaddy to email you the code. If you do not rece
 --------
 
 ## Step 4: Add domain to Cloudflare
-Login to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
+Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
 
 ---
 
