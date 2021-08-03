@@ -7,7 +7,7 @@ hidden: true
 
 ## MacOS
 
-The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
+The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally, this plist can be wrapped in a `.mobileconfig`.
 
 Here is an example plist file with the accepted arguments: 
 
@@ -104,9 +104,9 @@ For a description of each argument and what it means, see [deployment parameters
 
 [Click here](../../../../static/documentation/connections/com.cloudflare.warp.plist) to download this example plist. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
 1. Open a Terminal window.
-2. Run the following command:
+1. Run the following command:
 
- ```
+ ```bash
  % plutil -convert binary1 com.cloudflare.warp.plist
  ```
 
@@ -114,9 +114,9 @@ For a description of each argument and what it means, see [deployment parameters
 
 ### Upload the package
 
-1. Login to your `jamfcloud.com` account.
+1. Log in to your `jamfcloud.com` account.
 1. Navigate to **Computer**.
-1. Click the **All Settings** (gear) in the upper right corner.
+1. Click **All Settings** (gear) in the upper right corner.
 1. Click **Computer Management**.
 1. Click **Packages**.
 1. Select **New**.
@@ -143,7 +143,7 @@ For a description of each argument and what it means, see [deployment parameters
 1. Scroll down the options list and click on **Application & Custom Settings**.
 1. Click **Configure**.
 1. In *Preference Domain*, enter `com.cloudflare.warp`.
-1. Upload a valid plist file. You can start with our example above and modify for your organization.
+1. Upload a valid plist file. You can start with our example above and modify it for your organization.
 1. Click **Save**.
 1. Navigate to **Scope** to configure which devices in your organization should receive this profile.
 1. Click **Save**.
@@ -172,18 +172,18 @@ To proceed with the installation, here is an example of the XML code you will ne
 ```
 For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/parameters).
 
-1. Login to your `jamfcloud.com` account.
+1. Log in to your `jamfcloud.com` account.
 1. Navigate to **Devices**.
-1. Click the **Mobile Device Apps**.
+1. Click **Mobile Device Apps**.
 1. Click **+ New**.
 1. Select *App store app or apps purchased in volume*.
 1. Click **Next**.
 1. In the search box, enter: *1.1.1.1: Faster Internet*.
 1. Click **Next**.
-1. Click **Add** in the row for *1.1.1.1: Faster Internet by Cloudflare Inc.*. To verify it's the correct application, click on this [link](https://apps.apple.com/us/app/id1423538627).
+1. Click **Add** in the row for *1.1.1.1: Faster Internet by Cloudflare Inc.*. To verify that it is the correct application, [click on this App Store link](https://apps.apple.com/us/app/id1423538627).
 1. Navigate to **Scope**.
 1. Specify the devices in your organization that should receive the application.
-1. Navigate to **App Configuration** and copypaste the XML from above.
+1. Navigate to **App Configuration** and copy/paste the XML from above.
 1. Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
 1. Click **Save**.
 

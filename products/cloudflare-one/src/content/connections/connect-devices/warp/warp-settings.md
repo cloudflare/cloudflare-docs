@@ -5,9 +5,9 @@ pcx-content-type: reference
 
 # Configure WARP settings
 
-<Aside>
+<Aside type="note">
 
-If you are deploying WARP via MDM, see this list of parameters instead. Any settings you configure on the Teams Dashboard will be overridden by an MDM deployment. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from your MDM deployment.
+If you are deploying WARP via MDM, see the following list of parameters instead. Any settings you configure on the Teams Dashboard will be overridden by an MDM deployment. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from your MDM deployment.
 
 </Aside>
 
@@ -39,6 +39,6 @@ When the toggle is enabled, users have the option to turn off the Gateway with W
 
 ## Enable Proxy
 
-1. Navigate to **Settings > Network**.
+1. Navigate to **Settings** > **Network**.
 1. Scroll down to **L7 Firewall**.
 1. Set the **Proxy** switch to *Enabled*.

@@ -26,11 +26,11 @@ Create a device enrollment rule to define which users in your organization shoul
 
 ### 4. Install the [Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert) on your devices.
 
-Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ### 5. Download and deploy the WARP client to your devices.
 
-See the [different ways](/connections/connect-devices/warp/deploy-warp) you can do that depending on what works best for your organization.
+Choose one of the [different ways](/connections/connect-devices/warp/deploy-warp) to deploy the WARP client, depending on what works best for your organization.
 
 ### 6. Enable the Proxy setting in the Teams Dashboard.
 
@@ -39,7 +39,7 @@ Navigate to **Settings** > **Network** and enable the **Proxy** setting. This wi
 
 ### 7. Checklist.
 
-To begin inspecting DNS and HTTP traffic on your devices, you need to ensure that:
+To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
 
 * Your devices have been enrolled in your account,
 * The [Cloudflare root certificate](install-cloudflare-cert) has been installed on your devices, and

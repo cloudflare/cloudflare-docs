@@ -7,18 +7,18 @@ hidden: true
 
 ## Windows
 
-1. Login to your Microsoft Intune account.
+1. Log in to your Microsoft Intune account.
 1. Navigate to **Apps** > **All Apps**.
 1. Click **+Add**.
 1. As **App type**, select *Line-of-business app* from the drop-down menu.
 1. Click **Select**.
-1. Click **Select app package file** and upload the ```Cloudflare_WARP_Release-x64.msi``` installer you downloaded previously.
+1. Click **Select app package file** and upload the `Cloudflare_WARP_Release-x64.msi` installer you downloaded previously.
 1. Click **OK**.
 1. In the **Name** field, we recommend entering the version number of the package being uploaded.
 1. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
-1. In the **Command-line arguments** field enter a valid set of command line arguments as describe above
+1. In the **Command-line arguments** field, enter a valid set of command-line arguments as described above.
     - Example: `/quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"`
-1. You don't need to fill other optional fields. Once you've entered all the necessary values, click **Next**. 
+1. You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**. 
 1. Add the users or groups who require Cloudflare WARP.
 1. Click **Next**.
 1. Review your configuration.
@@ -70,7 +70,7 @@ See the [deployment parameters](/connections/connect-devices/warp/deployment/par
 
 ## MacOS
 
-The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
+The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally, this plist can be wrapped in a `.mobileconfig`.
 
 Here is an example plist file with the accepted arguments: 
 

@@ -53,7 +53,7 @@ hidden: true
 
 1. Select the *Devices* tab.
 1. Select the devices where this app will be deployed. To select all devices, select the checkbox next to **Type**.
-1. Click save to install the client.
+1. Click **save** to install the client.
 Verify that Cloudflare was installed by selecting the app and selecting the Status tab.
 
 ### Deploy the client to an MDM-managed device group
@@ -61,4 +61,3 @@ Verify that Cloudflare was installed by selecting the app and selecting the Stat
 1. Select the *Device Groups* tab.
 1. Select the groups where this app will be deployed. To select all device groups, select the checkbox next to **Type**.
 1. Click **save** to install the client.
-
