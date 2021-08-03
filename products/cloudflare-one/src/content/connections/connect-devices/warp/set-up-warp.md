@@ -68,4 +68,4 @@ Add your office as a location on Gateway. Gateway will assign a [DoH subdomain](
 
 ### 5. Download and deploy the WARP client to your devices.
 
-See the [different ways](/connections/connect-devices/warp/deploy-warp) you can do that depending on what works best for your organization.
+Choose one of the [different ways](/connections/connect-devices/warp/deploy-warp) to deploy the WARP client, depending on what works best for your organization.
