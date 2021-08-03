@@ -36,7 +36,7 @@ Choose one of the [different ways](/connections/connect-devices/warp/deploy-warp
 
 Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.  
 
-### 7. Checklist.
+### 7. Go through this checklist.
 
 To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
 
