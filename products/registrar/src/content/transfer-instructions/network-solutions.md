@@ -49,10 +49,17 @@ If you do not receive the code, please check the registrant email address listed
 
 --------
 
-## Step 3: Transfer to Cloudflare
-In the Cloudflare transfer screen, input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
+## Step 3: Add domain to Cloudflare
+Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
+
+---
+
+## Step 4: Transfer to Cloudflare
+Go to your Cloudflare dashboard. From your accounts home, click **Registrar** > **Transfer** and input the authorization code. Each domain will have a unique authorization code and you will need to enter each for every domain you want to transfer.
+
+If you do not see this screen or do not have an authorization code, please ensure you have gone through all the steps mentioned above before trying to transfer your domain to Cloudflare.
 
 --------
 
-## Step 4: Approve the transfer
-Once Cloudflare processes your transfer, Network Solutions will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically approve within 5 days.
+## Step 5: Approve the transfer
+Once Cloudflare processes your transfer, Network Solutions will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically be approved within five days.
