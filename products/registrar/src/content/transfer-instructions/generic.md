@@ -51,7 +51,7 @@ Next, your new registrar needs to confirm with your old registrar that the trans
 --------
 
 ## Step 4: Add domain to Cloudflare
-Login to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
+Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login). Choose the account where you want to add the domain. From the accounts home, click **Add a Site** to add the new domain to your Cloudflare account.
 
 ---
 
