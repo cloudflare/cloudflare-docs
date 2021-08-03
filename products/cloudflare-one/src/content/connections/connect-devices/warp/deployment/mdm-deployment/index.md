@@ -18,7 +18,8 @@ The WARP client for Windows allows for an automated install via any management t
  ```txt
  Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"
  ```
- See the [deployment parameters](/connections/connect-devices/warp/deployment/parameters) for a description of each argument.
+ 
+ Refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) for a description of each argument.
 
 * Example command line to **uninstall** the client:
 
