@@ -50,7 +50,7 @@ Once you've configured your site, you can begin your first deploy. You should se
 
 <Aside>
 
-For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, check out [our Get Started guide](/get-started).
 
 </Aside>
 
