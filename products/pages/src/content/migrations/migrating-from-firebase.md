@@ -33,7 +33,7 @@ If you haven't pushed your static site to GitHub before, you should do so before
 
 You can create a new repo by visiting [repo.new](https://repo.new) and following the instructions to push your project up to GitHub.
 
-You can use the ["Getting started" guide](/getting-started) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
+You can use the ["Getting started" guide](/get-started) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
 ## Cleaning up your old application and assigning the domain
 
