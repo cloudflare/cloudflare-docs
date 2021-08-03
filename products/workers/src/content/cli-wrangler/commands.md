@@ -266,9 +266,9 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup) for Cloudflare Tunnel.
 `wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup) that listens for incoming log requests from your Worker.
 
-<Aside type="warning" header="Issues with existing cloudflared configuration">
+<Aside type="warning" header="Legacy issues with existing cloudflared configuration">
 
-`wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844).
+For versions before Wrangler 1.19.0, `wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well-known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844). To update your Wrangler version, refer to the [update documentation](/cli-wrangler/install-update#update).
 
 To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
 
