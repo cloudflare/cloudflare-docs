@@ -8,9 +8,9 @@ Jekyll is an open-source framework for creating websites, based around Markdown 
 
 ## Installing Jekyll
 
-Jekyll is written in Ruby, meaning that you'll need a functioning Ruby installation in order to install Jekyll.
+Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation, like `rbenv`, to install Jekyll.
 
-We recommend using [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on your computer. Follow the [`rbenv` install instructions](https://github.com/rbenv/rbenv#installation), and install a recent version of Ruby using `rbenv`:
+Use [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on your computer. Follow the [`rbenv` install instructions](https://github.com/rbenv/rbenv#installation), and install a recent version of Ruby by running the `rbenv` command in your terminal:
 
 ```sh
 $ rbenv install 2.7.2
@@ -24,13 +24,13 @@ $ gem install jekyll
 
 ## Creating a new project
 
-With Jekyll installed, you can create a new project using `jekyll new`:
+With Jekyll installed, you can create a new project running the `jekyll new` in your terminal:
 
 ```sh
 $ jekyll new my-jekyll-site
 ```
 
-You should create a base `index.html` in your newly created folder so that your site has content:
+Create a base `index.html` in your newly created folder to give your site content:
 
 ```html
 <!DOCTYPE html>
@@ -45,11 +45,11 @@ You should create a base `index.html` in your newly created folder so that your 
 </html>
 ```
 
-Optionally, you can also use a theme with your new Jekyll site if you'd like to start with great styling defaults. For instance, the [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
+Optionally, you can also use a theme with your new Jekyll site if you would like to start with great styling defaults. For example, the [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
 
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
@@ -57,11 +57,11 @@ $ git branch -M main
 $ git push -u origin main
 ```
 
-If you're migrating an existing Jekyll project to Pages, you should confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
+If you are migrating an existing Jekyll project to Pages, confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > Account Home > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
@@ -73,16 +73,17 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 </TableLayout>
 
-Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site, before deploying it.
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site, before deploying it.
 
-<Aside>
+<Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/get-started).
 
 </Aside>
 
-Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-Congrats, you've deployed your Jekyll site on Cloudflare Pages! To learn more about what you can do with the platform, [check out our How-To section](/how-to).
+By completing this guide, you have successfully deployed your Jekyll site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
