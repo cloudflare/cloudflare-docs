@@ -14,19 +14,20 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
-addEventListener('scheduled', event => {
-  event.waitUntil(triggerEvent(event.request))
+addEventListener('scheduled', event =>
+{
+	event.waitUntil(triggerEvent(event.request))
 })
 
-async function triggerEvent(request) {
-    // Fetch some data
-    // Update API
-  return new Response("OK")
+async function triggerEvent(request)
+{
+	// Fetch some data
+	// Update API
+	return new Response("OK")
 }
-    /* 
-    If you're doing this in Wrangler, set the cron syntax (once per hour shown below) by adding this to your wrangler.toml:
-    
-    [triggers]
-    crons = ["0 * * * *"] 
-    */
+/* 
+If you're doing this in Wrangler, set the cron syntax (once per hour shown below) by adding this to your wrangler.toml:
+[triggers]
+crons = ["0 * * * *"] 
+*/
 ```
