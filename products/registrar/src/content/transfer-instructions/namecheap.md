@@ -63,4 +63,4 @@ If you do not see this screen or do not have an authorization code, please ensur
 --------
 
 ## Step 6: Approve the transfer
-Once Cloudflare processes your transfer, Namecheap will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). To approve the transfer, do **not** take any action. The transfer will automatically approve within 5 days.
+Once Cloudflare processes your transfer, Namecheap will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). To approve the transfer, do **not** take any action. The transfer will automatically be approved within five days.

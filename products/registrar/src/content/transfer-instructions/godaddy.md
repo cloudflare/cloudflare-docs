@@ -65,4 +65,4 @@ If you do not see this screen or do not have an authorization code, please ensur
 --------
 
 ## Step 6: Approve the transfer
-Once Cloudflare processes your transfer, GoDaddy will list the domain as “Pending Transfers Out” in the GoDaddy dashboard under **Domain Manager**. You can accelerate the transfer by accepting the transfer in the dashboard. If you do not accept it, the transfer will automatically approve within 5 days.
+Once Cloudflare processes your transfer, GoDaddy will list the domain as “Pending Transfers Out” in the GoDaddy dashboard under **Domain Manager**. You can accelerate the transfer by accepting the transfer in the dashboard. If you do not accept it, the transfer will automatically be approved within five days.

@@ -63,4 +63,4 @@ If you do not see this screen or do not have an authorization code, please ensur
 --------
 
 ## Step 6: Approve the transfer
-Once Cloudflare processes your transfer, Enom will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically approve within 5 days.
+Once Cloudflare processes your transfer, Enom will send an email to the domain’s registrant contact (the same address where the authorization code was emailed). The email will contain a link that you can click to immediately approve and process the transfer. If you do not click the link, the transfer will automatically be approved within five days.
