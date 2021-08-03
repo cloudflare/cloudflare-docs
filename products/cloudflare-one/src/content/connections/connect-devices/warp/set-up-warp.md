@@ -1,7 +1,7 @@
 ---
 order: 0
 pcx-content-type: how-to
-title: First time setup
+title: First-time setup
 ---
 
 # Set up WARP for your organization
@@ -36,13 +36,12 @@ Choose one of the [different ways](/connections/connect-devices/warp/deploy-warp
 
 Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.  
 
-
 ### 7. Checklist.
 
 To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
 
-* Your devices have been enrolled in your account,
-* The [Cloudflare root certificate](install-cloudflare-cert) has been installed on your devices, and
+* Your devices have the WARP client installed and connected.
+* The [Cloudflare root certificate](install-cloudflare-cert) has been installed on your devices.
 * The [proxy setting](warp-settings) has been enabled on the Cloudflare for Teams Dashboard.
 
 ## Gateway with DoH
