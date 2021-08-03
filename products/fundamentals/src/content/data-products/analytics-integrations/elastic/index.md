@@ -9,7 +9,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you haven’t used Cloudflare Logs before, visit our [Logs documentation](https://developers.cloudflare.com/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](https://developers.cloudflare.com/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
 ### Prerequisites
 
