@@ -21,7 +21,7 @@ Rules with `skip` action only apply to rules with `execute` action listed **afte
 
 To skip all the remaining rules in the entry point ruleset, create a rule with `skip` action and include `"ruleset": "current"` in the `action_parameters` object.
 
-Example rule definition:
+Example of rule definition:
 
 ```json
 {
@@ -39,7 +39,7 @@ Skipping all remaining rules only affects the rules in the current context (acco
 
 To skip one or more WAF Managed Rulesets, create a rule with `skip` action containing a `rulesets` field in the `action_parameters` object. The `rulesets` field must contain a list of WAF Managed Ruleset IDs you wish to skip.
 
-Example rule definition:
+Example of rule definition:
 
 ```json
 {
@@ -60,7 +60,7 @@ The Managed Rulesets to skip must belong to the `http_request_firewall_managed` 
 
 To skip one or more rules of WAF Managed Rulesets, create a rule with `skip` action containing a `rules` object in the `action_parameters` object. The `rules` object must contain one or more Managed Ruleset IDs as keys, and a list of rules to skip in those Managed Rulesets as the value of each key.
 
-The following example defines a rule with `skip` action that will skip rules `A` and `B` of WAF Managed Ruleset `1` and rule `X` of WAF Managed Ruleset `2`:
+The following example defines a rule with `skip` action that will skip rules `A` and `B` of WAF Managed Ruleset `1`, and rule `X` of WAF Managed Ruleset `2`:
 
 ```json
 {
