@@ -9,7 +9,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you haven’t used Cloudflare Logs before, visit our [Logs documentation](https://developers.cloudflare.com/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](https://developers.cloudflare.com/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
 This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and the [AWS S3 source collector](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source) to get logs into Sumo Logic. To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](https://developers.cloudflare.com/logs/get-started/enable-destinations/aws-s3). Alternatively, you can use [Logpull](https://developers.cloudflare.com/logs/logpull) to get logs to your Sumo Logic instance directly and skip Task 1.
 
