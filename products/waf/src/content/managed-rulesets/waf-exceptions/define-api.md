@@ -75,4 +75,4 @@ The following example defines a rule with `skip` action that will skip rules `A`
 }
 ```
 
-The rules in the `rules` object must belong in the specified WAF Managed Rulesets, otherwise you will get an error.
+The rules in the `rules` object must belong to the specified WAF Managed Rulesets, otherwise you will get an error.
