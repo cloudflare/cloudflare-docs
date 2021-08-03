@@ -19,7 +19,7 @@ When the toggle is enabled, users will be able to make changes to the WARP clien
 
 ## Device enrollment rules
 
-Cloudflare for Teams allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a device enrollment rule on the Teams dashboard.
+Cloudflare for Teams allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a device enrollment rule on the Teams Dashboard:
 
 1. Click **Manage** in the **Device enrollment rules** card.
 1. In the rule builder, configure a rule to define who can enroll or revoke devices.
@@ -33,7 +33,7 @@ When the toggle is enabled, the WARP client will automatically turn off when it 
 
 ## Mode switch
 
-When the toggle is enabled, users have the option to turn off the Gateway with WARP mode and switch to Gateway with DoH mode. When the toggle is disabled, end users will not be able to switch between WARP modes.
+When the toggle is enabled, users have the option to turn off the [Gateway with WARP](/connections/connect-devices/warp#gateway-with-warp-default) mode and switch to [Gateway with DoH mode](/connections/connect-devices/warp#gateway-with-doh). When the toggle is disabled, end users will not be able to switch between WARP modes.
 
 ---
 
