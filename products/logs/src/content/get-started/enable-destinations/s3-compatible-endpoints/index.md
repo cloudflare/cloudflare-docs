@@ -20,13 +20,42 @@ For more information about Logpush and the current production APIs, see the [Clo
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to S3-compatible destinations via the [Cloudflare dashboard](/get-started/logpush-dashboard/).
+Enable Logpush to an S3-compatible destination via the dashboard.
+
+To enable the Cloudflare Logpush service:
+
+1. Log in to the Cloudflare dashboard.
+
+1. Select the Enterprise domain you want to use with Logpush.
+
+1. Go to **Analytics** > **Logs**.
+
+1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+
+1. Select the data set you want to push to a storage service.
+
+1. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+
+1. Select **S3-Compatible**.
+
+1. Enter or select the following destination information:
+     * **S3 Compatible Bucket Path**
+     * **Bucket region**
+     * **Access Key ID**
+     * **Secret Access Key**
+     * **Endpoint URL**
+
+1. Click **Validate access**.
+
+1. Click **Save and Start Pushing** to finish enabling Logpush.
+
+Once connected, Cloudflare lists the S3-compatible destination as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
 ## Manage via API
 
 To set up S3-compatible endpoints:
 1. Create a job with the appropriate endpoint URL and authentication parameters.
-2. Enable the job to begin pushing logs.
+1. Enable the job to begin pushing logs.
 
 See below for detailed instructions.
 
@@ -36,7 +65,7 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 
 </Aside>
 
-## 1. Create a job
+### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 * `name` (optional) - Use your domain name as the job name.
@@ -83,7 +112,7 @@ Response:
 }
 ```
 
-## 2. Enable (update) a job
+### 2. Enable (update) a job
 
 To enable a  job, make a `PUT` request to the Logpush jobs endpoint. You’ll use the job ID returned from the previous step in the URL, and send `{"enabled": true}` in the request body.
 

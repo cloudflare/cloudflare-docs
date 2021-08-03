@@ -21,7 +21,7 @@ Waiting Rooms also benefit **your visitors** by:
 
 ## How it works
 
-Once you have [created and activated a waiting room](get-started) for a specific application page:
+Once you have [created and activated a waiting room](/get-started) for a specific application page:
 
 - If a page is not experiencing heavy traffic, a visitor accesses the page directly.
 - If page traffic crosses a [user-defined threshold](/reference/configuration-settings#session-duration), a visitor enters a virtual waiting room until it's their turn to access the page:

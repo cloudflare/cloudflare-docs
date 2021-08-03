@@ -224,14 +224,33 @@ async function handleRequest(request) {
   if (url.searchParams.has("quality")) options.cf.image.quality = url.searchParams.get("quality")
 
   // Get URL of the original (full size) image to resize.
-  // You could adjust the URL here, e.g. prefix it with a fixed address of your server,
+  // You could adjust the URL here, e.g., prefix it with a fixed address of your server,
   // so that user-visible URLs are shorter and cleaner.
   const imageURL = url.searchParams.get("image")
+  if (!imageURL) return new Response('Missing "image" value', { status: 400 })
+
+  try {
+    // TODO: Customize validation logic
+    const { hostname, pathname } = new URL(imageURL)
+
+    // Only accept JPEG, PNG, GIF, or WebP types
+    // @see https://developers.cloudflare.com/images/url-format#supported-formats-and-limitations
+    if (!/\.(jpe?g|png|gif|webp)$/i.test(pathname)) {
+      return new Response('Invalid image type', { status: 400 })
+    }
+
+    // Demo: Only accept "example.com" images
+    if (hostname !== 'example.com') {
+      return new Response('Must use "example.com" source images', { status: 403 })
+    }
+  } catch (err) {
+    return new Response('Invalid "image" value', { status: 400 })
+  }
 
   // Build a request that passes through request headers,
   // so that automatic format negotiation can work.
   const imageRequest = new Request(imageURL, {
-    headers: request.headers,
+    headers: request.headers
   })
 
   // Returning fetch() with resizing options will pass through response with the resized image.

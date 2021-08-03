@@ -12,7 +12,7 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 **🗺️ This tutorial covers how to:**
 
 * Create device enrollment rules and connect a device to Teams
-* Connect your private netowrk server to Cloudflare's edge using Cloudflare Tunnels
+* Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
 * Create identity-aware network policies
 
 **⏲️Time to complete:**
