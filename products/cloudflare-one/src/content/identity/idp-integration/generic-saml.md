@@ -9,10 +9,10 @@ Cloudflare for Teams integrates with any identity provider that supports SAML 2.
 
 Most identity providers allow users to create an **application**. In this context, an application is a set of parameters that the identity provider will then pass on to Cloudflare to establish an integration. 
 
-| Minimum requirements for identity providers |
-| ----- |
-| The IdP must conform to SAML 2.0 |
-| The IdP must provide: A Single Sign on URL, an Entity ID, and a signing certificate. |
+Minimum requirements for identity providers:
+
+* The IdP must conform to SAML 2.0 
+* The IdP must provide: A Single Sign on URL, an Entity ID, and a signing certificate
 
 Depending on the identity provider you would like to integrate, the following steps may happen in a different order.
 
