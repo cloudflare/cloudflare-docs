@@ -50,6 +50,8 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 </Aside>
 
+import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+
 ## 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:

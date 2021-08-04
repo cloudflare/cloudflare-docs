@@ -52,6 +52,8 @@ Cloudflare uses Amazon Identity and Access Management (IAM) to gain access to yo
 Logs are written into that bucket as gzipped objects using the S3 Access Control List (ACL)
 *Bucket-owner-full-control* permission.
 
+import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+
 For illustrative purposes, imagine that you want to store logs in the bucket *burritobot*, in the *logs* directory. The S3 URL would then be `s3://burritobot/logs`.
 
 To enable Logpush to Amazon S3:

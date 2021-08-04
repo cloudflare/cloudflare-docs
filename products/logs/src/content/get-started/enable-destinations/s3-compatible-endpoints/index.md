@@ -65,6 +65,8 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 
 </Aside>
 
+import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+
 ### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
