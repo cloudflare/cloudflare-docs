@@ -3,6 +3,8 @@ order: 60
 pcx-content-type: how-to
 ---
 
+import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+
 # Enable Google Cloud Storage
 
 Cloudflare Logpush supports pushing logs directly to Google Cloud Storage via the Cloudflare dashboard or via API.
@@ -44,7 +46,7 @@ Once connected, Cloudflare lists Google Cloud Storage as a connected service und
 
 Cloudflare uses Google Cloud Identity and Access Management (IAM) to gain access to your bucket. The Cloudflare IAM service account needs admin permission for the bucket.
 
-import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+<EnableReadPermissions/>
 
 To enable Logpush to GCS:
 

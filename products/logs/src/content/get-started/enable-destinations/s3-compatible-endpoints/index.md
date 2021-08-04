@@ -3,6 +3,8 @@ order: 56
 pcx-content-type: how-to
 ---
 
+import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+
 # Enable S3-compatible endpoints
 
 Cloudflare Logpush supports pushing logs to S3-compatible destinations via the Cloudflare dashboard or via API, including:
@@ -65,7 +67,7 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 
 </Aside>
 
-import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+<EnableReadPermissions/>
 
 ### 1. Create a job
 

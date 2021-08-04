@@ -4,6 +4,8 @@ order: 65
 pcx-content-type: how-to
 ---
 
+import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+
 # Enable Logpush to Sumo Logic
 
 Cloudflare Logpush supports pushing logs directly to Sumo Logic via the Cloudflare dashboard or via API.
@@ -42,7 +44,7 @@ Once connected, Cloudflare lists Sumo Logic as a connected service under **Logs*
 
 Cloudflare can send logs to a Hosted Collector with "HTTP Logs & Metrics" as the source. Once you've set up a collector, you simply provide the HTTP Source Address (a unique URL) to which logs can be posted.
 
-import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+<EnableReadPermissions/>
 
 To enable Logpush to Sumo Logic:
 
