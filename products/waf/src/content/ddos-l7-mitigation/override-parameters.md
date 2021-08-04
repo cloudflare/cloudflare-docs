@@ -13,12 +13,6 @@ You can override the following rule properties:
 * [Action](#action)
 * [Sensitivity](#sensitivity)
 
-<Aside type='warning'>
-
-Currently, you can only configure overrides for the Cloudflare HTTP DDoS Managed Ruleset via API.
-
-</Aside>
-
 ## Action
 
 API property name: `"action"`.
