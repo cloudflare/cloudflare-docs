@@ -23,16 +23,21 @@ Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
 The Cloudflare HTTP DDoS Managed Ruleset provides users with increased observability into layer 7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of layer 7 DDoS attacks detected for a specific zone.
 
-You can adjust the behavior of the rules in the Managed Ruleset using **overrides**. Use overrides to modify:
+### Ruleset configuration
+
+You can adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
 
 * The performed **action** when an attack is detected
 * The **sensitivity** of attack detection mechanisms
 
 **Note:** Certain actions or sensitivity levels may not be available to all Cloudflare plans.
 
-For more information on the available override parameters, see [Managed Ruleset override parameters](/ddos-l7-mitigation/override-parameters).
+To adjust rule behavior, do one of the following:
 
-To define overrides using the Rulesets API, see [Configure HTTP DDoS Managed Ruleset overrides via API](/ddos-l7-mitigation/configure-api).
+* [Configure the Cloudflare HTTP DDoS Managed Ruleset in the dashboard](/ddos-l7-mitigation/configure-dashboard).
+* [Configure HTTP DDoS Managed Ruleset overrides via API](/ddos-l7-mitigation/configure-api).
+
+For more information on the available configuration parameters, see [Managed Ruleset parameters](/ddos-l7-mitigation/override-parameters).
 
 <Aside type='note' header='Note'>
 
