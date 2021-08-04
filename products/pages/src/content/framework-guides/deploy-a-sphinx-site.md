@@ -4,9 +4,9 @@ pcx-content-type: how-to
 
 # Deploy a Sphinx site
 
-[Sphinx](https://www.sphinx-doc.org/) is a tool that makes it easy to create beautiful documentation, originally created for Python documentation. It has found favour among many for its simplicity and ease of use.
+[Sphinx](https://www.sphinx-doc.org/) is a tool that makes it easy to create documentation and was originally made for the publication of Python documentation. It is well known for its simplicity and ease of use.
 
-In this guide you'll create a new Sphinx project and deploy it using Cloudflare Pages.
+In this guide, you will create a new Sphinx project and deploy it using Cloudflare Pages.
 
 ## Prerequisites
 
@@ -16,15 +16,20 @@ In this guide you'll create a new Sphinx project and deploy it using Cloudflare 
 
   * [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects
 
-***NOTE: If you are already running a version of Python 3.7, please ensure that Python version 3.7 is also installed on your computer before you begin as this is the latest version at the time of writing supported by Cloudflare Pages.***
+<Aside type="note">
 
-The latest version of Python 3.7 (at the time this was written) is 3.7.11:
+If you are already running a version of Python 3.7, ensure that Python version 3.7 is also installed on your computer before you begin this guide. Python 3.7 is the latest version supported by Cloudflare Pages.
+ 
+</Aside>
+
+
+The latest version of Python 3.7 is 3.7.11:
 
 [Python 3.7.11](https://www.python.org/downloads/release/python-3711/)
 
 ### Installing Python
 
-Please refer to the official Python docs on installing for your platform at their relevant pages:
+Refer to the official Python documentation for installation guidance:
 
 - [Windows](https://www.python.org/downloads/windows/)
 - [Linux/UNIX](https://www.python.org/downloads/source/)
@@ -33,9 +38,9 @@ Please refer to the official Python docs on installing for your platform at thei
 
 ### Installing Pipenv
 
-Wonderful, by now you should have Python installed. If you already had Python installed, please be mindful that any other global packages you may have installed could interfere with the following steps to install Pipenv, or your other Python projects which depend on global packages!
+If you already had an earlier version of Python installed before installing version 3.7, other global packages you may have installed could interfere with the following steps to install Pipenv, or your other Python projects which depend on global packages.
 
-[Pipenv](https://pipenv.pypa.io/en/latest/) is a Python based package manager that makes managing virtual environments super simple. If you're not familiar with it yet, don't worry, it's easy to pick up. Cloudflare Pages natively supports the use of Pipenv and by default has the latest version installed.
+[Pipenv](https://pipenv.pypa.io/en/latest/) is a Python-based package manager that makes managing virtual environments simple. This guide will not require you to have prior experience with or knowledge of Pipenv to complete your Sphinx site deployment. Cloudflare Pages natively supports the use of Pipenv and, by default, has the latest version installed.
 
 The quickest way to install Pipenv is by running the command:
 
@@ -43,16 +48,16 @@ The quickest way to install Pipenv is by running the command:
 $ pip install --user pipenv
 ```
 
-This will install Pipenv to your user level directory and will make it accessible via your terminal. You can confirm this by running the following command and seeing the expected output:
+This command will install Pipenv to your user level directory and will make it accessible via your terminal. You can confirm this by running the following command and reviewing the expected output:
 
 ```shell
 $ pipenv --version
 pipenv, version 2021.5.29
 ```
 
-### Create Sphinx Project Directory
+### Creating a Sphinx project directory
 
-From your terminal run the following commands to create a new directory and navigate within it:
+From your terminal, run the following commands to create a new directory and navigate to it:
 
 ```shell
 $ mkdir my-wonderful-new-sphinx-project
@@ -60,7 +65,7 @@ $ cd my-wonderful-new-sphinx-project
 ```
 ### Pipenv with Python 3.7
 
-Pipenv allows you to specify which version of Python to associate with a virtual environment. As was mentioned earlier, we need to ensure the virtual environment for your Sphinx project uses Python 3.7.
+Pipenv allows you to specify which version of Python to associate with a virtual environment. For the purpose of this guide, the virtual environment for your Sphinx project must use Python 3.7.
 
 Use the following command:
 
@@ -95,9 +100,9 @@ Pipfile
 
 ### Installing Sphinx
 
-Just one last step before can install Sphinx, we first have to create the directory we want our project to live in.
+Before installing Sphinx, create the directory you want your project to live in.
 
-We're finally ready to install Sphinx. From your terminal run the following command to install Sphinx:
+From your terminal, run the following command to install Sphinx:
 
 ```shell
 ~/my-wonderful-new-sphinx-project$ pipenv install sphinx
@@ -122,17 +127,17 @@ To activate this project's virtualenv, run pipenv shell.
 Alternatively, run a command inside the virtualenv with pipenv run.
 ```
 
-This will install sphinx into a new virtual environment managed by Pipenv, you should see a directory structure like this:
+This will install Sphinx into a new virtual environment managed by Pipenv. You should see a directory structure like this:
 
 ```shell
-~my-wonderful-new-sphinx-project$
+my-wonderful-new-sphinx-project
 |--Pipfile
 |--Pipfile.lock
 ```
 
 ## Creating a new project
 
-With Sphinx installed you can now run the quickstart command to create a template project for you. This command will only work within the Pipenv environment we created in the previous step. To enter that environment run the following command from your terminal:
+With Sphinx installed, you can now run the quickstart command to create a template project for you. This command will only work within the Pipenv environment you created in the previous step. To enter that environment, run the following command from your terminal:
 
 ```shell
 ~/my-wonderful-new-sphinx-project$ pipenv shell
@@ -159,7 +164,7 @@ $ Project language [en]: <You can accept en here or provide a regional language 
 This will create four new files in your active directory, `source/conf.py`, `index.rst`, `Makefile` and `make.bat`:
 
 ```shell
-~/my-wonderful-new-sphinx-project$
+my-wonderful-new-sphinx-project
 |--Pipfile
 |--Pipfile.lock
 |--source
@@ -171,7 +176,7 @@ This will create four new files in your active directory, `source/conf.py`, `ind
 |--make.bat
 ```
 
-You now have everything you need to start deploying your site to Cloudflare Pages. For learning how to create beautiful documentation with Sphinx please see the official docs [here](https://www.sphinx-doc.org/en/master/usage/quickstart.html).
+You now have everything you need to start deploying your site to Cloudflare Pages. For learning how to create documentation with Sphinx, refer to the official [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/quickstart.html).
 
 ## Creating a GitHub repository
 
@@ -189,7 +194,7 @@ Warning: Permanently added 'github.com,140.82.113.4' (RSA) to the list of known 
 Hi yourgithubusername! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
 
 ```shell
 $ git init
@@ -204,7 +209,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard, and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
@@ -229,18 +234,18 @@ For example:
 </TableLayout>
 
 
-Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `Pipenv`, your project dependencies, and building your site, before deploying it.
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `Pipenv`, your project dependencies, and building your site, before deployment.
 
-<Aside>
+<Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, check out our [Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
 
-Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Sphinx site, Cloudflare Pages will automatically rebuild your project and deploy it.
 
-You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-Congrats, you've deployed your Sphinx site on Cloudflare Pages! To learn more about what you can do with the platform, check out our [How-To section](/how-to).
+By completing this guide, you have successfully deployed your Sphinx site on Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
