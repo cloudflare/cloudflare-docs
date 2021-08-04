@@ -41,7 +41,7 @@ For more information on the available configuration parameters, see [Managed Rul
 
 <Aside type='note' header='Note'>
 
-The Cloudflare HTTP DDoS Managed Ruleset is always enabled. You can only customize its behavior via overrides.
+The Cloudflare HTTP DDoS Managed Ruleset is always enabled — you can only customize its behavior.
 
 </Aside>
 
