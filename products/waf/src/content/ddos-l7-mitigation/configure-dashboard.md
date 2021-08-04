@@ -8,8 +8,10 @@ order: 1
 
 You can customize the **action** and **sensitivity** of the rules in the Cloudflare HTTP DDoS Managed Ruleset in the following ways:
 
-* Configure all the rules in the ruleset
-* Configure one or more rules
+* [Configure all the rules in the ruleset](#configure-all-the-rules-in-the-ruleset)
+* [Configure one or more rules](#configure-one-or-more-rules)
+
+Tag and rule configurations have greater priority than ruleset configurations.
 
 For more information on the available parameters and allowed values, see [Managed Ruleset parameters](/ddos-l7-mitigation/override-parameters).
 
@@ -17,8 +19,8 @@ For more information on the available parameters and allowed values, see [Manage
 
 1. Log in to the Cloudflare dashboard and select your account.
 1. Select your website.
-1. Go to **Security** > **DDoS**.
-1. On the right of the **HTTP DDoS attack protection** Managed Ruleset, click **Configure**.
+1. Go to **Security** > **DDoS Rules**.
+1. Next to **HTTP DDoS attack protection**, click **Configure**.
 1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Managed Ruleset.
 
     ![Configure HTTP DDoS Managed Ruleset](../images/ddos/ddos-configure-ruleset.png)
@@ -29,8 +31,8 @@ For more information on the available parameters and allowed values, see [Manage
 
 1. Log in to the Cloudflare dashboard and select your account.
 1. Select your website.
-1. Go to **Security** > **DDoS**.
-1. Next to the **HTTP DDoS attack protection** Managed Ruleset, click **Configure**.
+1. Go to **Security** > **DDoS Rules**.
+1. Next to **HTTP DDoS attack protection**, click **Configure**.
 1. In **Rule configuration**, click **Browse rules**.
 1. Search for the rules you wish to configure using the available filters. You can search for tags.
 
@@ -38,7 +40,7 @@ For more information on the available parameters and allowed values, see [Manage
 
 1. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the **Set action** and **Set sensitivity** dropdowns displayed before the table. For more information, refer to [Configure rules in bulk in a Managed Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/deploy-zone-dashboard#configure-rules-in-bulk-in-a-managed-ruleset).
+    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. For more information, refer to [Configure rules in bulk in a Managed Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/deploy-zone-dashboard#configure-rules-in-bulk-in-a-managed-ruleset).
 
 1. Click **Next**.
 1. Click **Save**.
