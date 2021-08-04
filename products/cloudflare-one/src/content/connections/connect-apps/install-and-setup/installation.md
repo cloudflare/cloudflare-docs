@@ -15,11 +15,11 @@ Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://g
 
 <TableWrap>
 
-Type   | amd64 / x86-64 | x86 (32-bit) | ARM64|
--------|----------------|--------------|------|
-Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64) |
-.deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) |
-.rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) |
+Type   | amd64 / x86-64 | x86 (32-bit) | ARM  | ARM64 |
+-------|----------------|--------------|------|-------|
+Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64) |
+.deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb) |
+.rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
 
 </TableWrap>
 
