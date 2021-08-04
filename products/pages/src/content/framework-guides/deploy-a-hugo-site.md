@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 Hugo is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
 
-In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will be using the `hugo` CLI to create a new Hugo site.
+In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will use the `hugo` CLI to create a new Hugo site.
 
 ## Installing Hugo
 
@@ -20,7 +20,7 @@ Your Linux distro's package manager may include Hugo. If this is the case, insta
 $ sudo apt-get install hugo
 ```
 
-If your package manager does not include Hugo or you would like to download a release directly, refer to the [**Manual**](/framework-guides/deploy-a-hugo-site#manual-installation) section below.
+If your package manager does not include Hugo or you would like to download a release directly, refer to the [**Manual**](/framework-guides/deploy-a-hugo-site#manual-installation) section.
 
 ### Homebrew (macOS)
 
@@ -146,7 +146,7 @@ Create a new post to give your Hugo site some initial content. Run the `hugo new
 $ hugo new posts/hello-world.md
 ```
 
-Inside of `hello-world.md`, you can add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.
+Inside of `hello-world.md`, add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.
 
 ## Creating a GitHub repository
 
@@ -172,7 +172,7 @@ Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cl
 
 </TableLayout>
 
-After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo`, your project dependencies, and building your site, before deploying it.
+After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
 
 <Aside type="note">
 
