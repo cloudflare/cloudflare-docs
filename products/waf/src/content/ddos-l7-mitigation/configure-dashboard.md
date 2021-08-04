@@ -40,7 +40,5 @@ For more information on the available parameters and allowed values, see [Manage
 
     To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the **Set action** and **Set sensitivity** dropdowns displayed before the table. For more information, refer to [Configure rules in bulk in a Managed Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/deploy-zone-dashboard#configure-rules-in-bulk-in-a-managed-ruleset).
 
-
-
 1. Click **Next**.
 1. Click **Save**.
