@@ -304,7 +304,7 @@ Review the examples below to learn which directives to use with the Cache-Contro
     Cache assets in proxy caches but REQUIRE revalidation by the proxy when served
   </summary>
     <div>
-      <code>Cache-Control: public, no-cache, proxy-revalidate or Cache-Control: public, s-maxage=0</code>
+      <code>Cache-Control: public, no-cache, proxy-revalidate</code> or <code>Cache-Control: public, s-maxage=0</code>
     </div>
 </details>
 
@@ -335,7 +335,7 @@ Review the examples below to learn which directives to use with the Cache-Contro
   <div>
     <code>Cache-Control: public, max-age=3600, stale-if-error=60</code>
 
-  With this configuration, Cloudflare attempts to revalidate the content with the origin server after it has been in cache for 3600 seconds (1 hour). If the server returns an error instead of proper revalidation responses, Cloudflare continues serving the stale resource for a total of 1 minute beyond the expiration of the resource.
+  With this configuration, Cloudflare attempts to revalidate the content with the origin server after it has been in cache for 3600 seconds (one hour). If the server returns an error instead of proper revalidation responses, Cloudflare continues serving the stale resource for a total of one minute beyond the expiration of the resource.
   </div>
 </details>
 
