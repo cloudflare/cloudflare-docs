@@ -3,7 +3,7 @@ order: 60
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../_partials/_enable-read-permissions.md"
 
 # Enable Google Cloud Storage
 

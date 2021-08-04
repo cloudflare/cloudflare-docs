@@ -4,7 +4,7 @@ order: 55
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../_partials/_enable-read-permissions.md"
 
 # Enable Amazon S3
 
