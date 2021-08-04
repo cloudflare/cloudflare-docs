@@ -40,18 +40,22 @@ Every CMS provider is different and will offer different pathways in integrating
 
 ### Contentful
 Contentful supports integration with Cloudflare Pages via its **Webhooks** feature. In your Contentful project settings, go to **Webhooks**, create a new Webhook, and paste in your unique Deploy Hook URL in the **URL** field. Optionally, you can specify events that the Contentful Webhook should forward. By default, Contentful will trigger a Pages deployment on all project activity, which may be a bit too frequent. You can filter for specific events, such as Create, Publish, and many others. 
-![deploy hooks](https://kmf.lol/2021/08/chrome_f3M3RGdA5l.png)
+
+![Configuring Deploy Hooks with Contentful](./contentful.png)
 
 ### Ghost 
 You can configure your Ghost website to trigger Pages deployments by creating a new **Custom Integration**. In your Ghost website’s settings, create a new Custom Integration in the **Integrations** page.
 
 Each custom integration you’ve created can have multiple **webhooks** attached to it. Create a new webhook with the **Add webhook** button and select **Site changed (rebuild)** as the **Event**. Then paste your unique Deploy Hook URL as the **Target URL** value. After creating this webhook, your Cloudflare Pages application will redeploy whenever your Ghost site changes.
-![deploy hooks](https://kmf.lol/2021/08/chrome_4ZV42UvOtd.png)
+
+![Configuring Deploy Hooks with Ghost](./ghost.png)
 
 ### Sanity
 In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below. By default, the Webhook will trigger your Pages Deploy Hook for all datasets inside of your Sanity project. You can filter notifications to  individual datasets, such as production, using the **Dataset** field:
-![deploy hooks](https://kmf.lol/2021/08/chrome_NQcxeDO2mp.png)
+
+![Configuring Deploy Hooks with Sanity](./sanity.png)
 
 ### Wordpress
 You can configure WordPress to trigger a Pages Deploy Hook by installing the free **WP Webhooks** plugin. The plugin includes a number of triggers, such as **Send Data on New Post, Send Data on Post Update** and **Send Data on Post Deletion**, all of which allow you to trigger new Pages deployments as your WordPress data changes. Select a trigger on the sidebar of the plugin settings and then [**Add Webhook URL**](https://wordpress.org/plugins/wp-webhooks/), pasting in your unique Deploy Hook URL.
-![deploy hooks](https://kmf.lol/2021/08/chrome_gUiCCaNe1D.png)
+
+![Configuring Deploy Hooks with WordPress](./wordpress.png)
