@@ -80,7 +80,7 @@ This setting may already be enabled default.
 
 1. Click the menu button in your browser window.
 1. Navigate to **Settings**.
-1. On the left side of the menu, scroll down and click **Aditional settings**.
+1. On the left side of the menu, scroll down and click **Additional settings**.
 1. Navigate to **Privacy and security** > **Security**.
 1. Enable **Use secure DNS**.
 1. Click **With Custom** and choose *Cloudflare (1.1.1.1)* as a service provider from the drop-down menu.
