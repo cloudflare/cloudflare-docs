@@ -33,6 +33,8 @@ Currently, you cannot define a WAF exception in the dashboard to skip one or mor
 
 ## Additional notes
 
+WAF exceptions only apply to rules executing a Managed Ruleset listed after them. If you add a WAF exception at the end of the WAF rules list, nothing will be skipped.
+
 If you define a WAF exception that skips all remaining rules, the expressions of those rules are not evaluated.
 
 If you define a WAF exception that skips a rule of a Managed Ruleset, the expression of the rule that executes the Managed Ruleset is evaluated and the Managed Ruleset rules are executed except for that specific rule, which is bypassed.
