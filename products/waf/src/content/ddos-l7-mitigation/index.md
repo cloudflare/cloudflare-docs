@@ -21,7 +21,7 @@ The Cloudflare HTTP DDoS Managed Ruleset is a set of pre-configured rules used t
 
 Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
-The Cloudflare HTTP DDoS Managed Ruleset provides users with increased observability into layer 7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Security** > **Overview**, will display additional information on the types of layer 7 DDoS attacks detected for a specific zone.
+The Cloudflare HTTP DDoS Managed Ruleset provides users with increased observability into layer 7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of layer 7 DDoS attacks detected for a specific zone.
 
 ### Ruleset configuration
 
