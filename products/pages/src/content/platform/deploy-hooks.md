@@ -22,15 +22,14 @@ To configure your Deploy Hook, you must enter two key parameters:
 
 ![deploy hooks](deploy-hooks-configure.png)
 
-## Using your deploy hook
+## Using your Deploy Hook
 Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy. 
 ![deploy hooks](deploy-hooks-details.png)
 
-Every time a request is sent to your deploy hook, a new build will be triggered. Looking at your deployment log, you’ll notice that any deployment triggered by a deploy hook will specify this in the source column.  
+Every time a request is sent to your Deploy Hook, a new build will be triggered. Looking at your deployment log, you’ll notice that any deployment triggered by a Deploy Hook will specify this in the source column.  
 
 ![deploy hooks](deploy-hooks-deployment-logs.png)
 
-## Security Considerations
 Deploy Hooks are uniquely linked to your project and do not require additional authentication to be used. While this does allow for complete flexibility, it’s crucial that you protect these URLs in the same way you’d safeguard any proprietary information or application secret. 
 
 If you suspect unauthorized usage of a Deploy Hook, you should delete the Deploy Hook and generate a new one in its place.
