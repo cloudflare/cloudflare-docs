@@ -51,15 +51,7 @@ To connect AWS S3 to Sumo Logic:
 
 2. Begin collecting Cloudflare logs data.
 
-## Task 2 - Filter Workers requests
-
-If you have [Cloudflare Workers](https://www.cloudflare.com/products/cloudflare-workers/) enabled and want to filter them out from the logs, do the following:
-
-Under **Processing Rules for Logs** create a **Filter** (processing rule regex on our Cloudflare collector) to exclude any log data where **WorkerSubrequest** is _true_, as illustrated below:
-
-![Sumo Logic Processing Rules for Logs](../../../static/images/sumo-logic/screenshots/exclude_Workers-sumo_logic.png)
-
-## Task 3 - Install the Cloudflare App
+## Task 2 - Install the Cloudflare App
 
 To install the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare):
 
@@ -70,7 +62,7 @@ To install the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo
 
 You should now be able to see the Cloudflare dashboards populated with your Cloudflare log data.
 
-## Task 4 - View the Dashboards
+## Task 3 - View the Dashboards
 
 There are nine dashboards to help you analyze Cloudflare logs. You can also use filters within the dashboards to help narrow the analysis by date and time, device type, country, user agent, client IP, hostname, and more, to further help with debugging and tracing.
 
