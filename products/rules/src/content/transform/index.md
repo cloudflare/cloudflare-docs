@@ -6,7 +6,7 @@ order: 2
 
 # About Transform Rules
 
-Transform Rules allow you to make adjustments to incoming requests at the edge before they go through any other Cloudflare products.
+Transform Rules allow you to adjust the URI path, query string, and HTTP headers of incoming requests at the edge.
 
 There are two types of Transform Rules:
 
