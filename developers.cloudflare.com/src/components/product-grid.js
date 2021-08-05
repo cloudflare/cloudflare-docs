@@ -25,6 +25,7 @@ $["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resourc
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
+$["partners"]             = require("../../../products/partners/src/content/icons/partners.js").pathD
 $["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/railgun.js").pathD
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
@@ -160,6 +161,11 @@ const products = [
     title: "Page Shield",
     path: "page-shield",
     icon: "page-shield",
+  },
+  {
+    title: "Partners",
+    path: "partners",
+    icon: "partners",
   },
   {
     title: "Railgun",

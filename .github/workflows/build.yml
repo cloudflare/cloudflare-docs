@@ -36,6 +36,7 @@ jobs:
       pages: ${{ steps.filter.outputs.pages }}
       railgun: ${{ steps.filter.outputs.railgun }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
+      partners: ${{ steps.filter.outputs.partners }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
       rules: ${{ steps.filter.outputs.rules }}
@@ -109,6 +110,8 @@ jobs:
               - 'products/pages/**'
             page-shield:
               - 'products/page-shield/**'
+            partners:
+              - 'products/partners/**'  
             railgun:
               - 'products/railgun/**'
             randomness-beacon:
@@ -637,6 +640,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/page-shield
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-partners:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.partners == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/partners
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
