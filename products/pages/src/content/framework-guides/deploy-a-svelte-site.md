@@ -54,12 +54,12 @@ Select the new GitHub repository that you created above and, in the configuratio
 
 <TableLayout>
 
-| Configuration option  | Value              |
-| --------------------- | ------------------ |
-| Production branch     | `main`             |
-| Build command         | `npm run build`    |
-| Build directory       | `build`            |
-| Environment Variables | `NODE_VERSION: 14` |
+| Configuration option  | Value                      |
+| --------------------- | -------------------------- |
+| Production branch     | `main`                     |
+| Build command         | `npm run build`            |
+| Build directory       | `.svelte-kit/static/build` |
+| Environment Variables | `NODE_VERSION: 14`         |
 
 </TableLayout>
 
