@@ -4,7 +4,7 @@ order: 65
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
 
 # Enable Logpush to other providers
 
