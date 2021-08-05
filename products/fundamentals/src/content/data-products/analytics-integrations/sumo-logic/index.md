@@ -158,6 +158,11 @@ The default time interval is set to 24 hours. Note that for correct filter calcu
 
 - worker_subrequest
 
+<Aside type="note">
+ 
+If you have [Cloudflare Workers](https://workers.cloudflare.com/) enabled and only want to see requests from end users, use `requestSource` to filter out all Workers subrequests.
+</Aside>
+
 ## Debugging tips
 
 ### Incomplete dashboards
@@ -216,9 +221,7 @@ The available fields are:
 
 - EdgePathingSrc
 
-- EdgePathi
-
-- ngStatus
+- EdgePathingStatus
 
 - EdgeRateLimitAction
 
