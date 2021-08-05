@@ -9,7 +9,7 @@ Define WAF exceptions to skip the execution of WAF Managed Rulesets or some of t
 
 WAF exceptions have priority over [overrides](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
 
-You can [define WAF exceptions via API](/managed-rulesets/waf-exceptions/define-api).
+You can [define WAF exceptions in the dashboard](/managed-rulesets/waf-exceptions/define-dashboard) or [using the Rulesets API](/managed-rulesets/waf-exceptions/define-api).
 
 ---
 
