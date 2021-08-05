@@ -5,12 +5,6 @@ order: 1
 
 # Define WAF exceptions in the dashboard
 
-<Aside type="note">
-
-You cannot define a WAF exception in the dashboard to skip one or more specific WAF Managed Rulesets. To define this type of WAF exception, [use the Rulesets API](/managed-rulesets/waf-exceptions/define-api).
-
-</Aside>
-
 1. Log in to the Cloudflare dashboard, and select your account and website.
 1. Go to **Firewall** > **WAF**.
 1. Click **Add WAF exception**.
