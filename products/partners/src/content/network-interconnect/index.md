@@ -1,7 +1,7 @@
 ---
 title: Network Interconnect
 order: 3
-pcx-content-type: overview
+pcx-content-type: navigation
 ---
 
 # Cloudflare Network Interconnect

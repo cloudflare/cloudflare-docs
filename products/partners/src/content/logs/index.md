@@ -1,7 +1,7 @@
 ---
 title: Logs
 order: 2
-pcx-content-type: overview
+pcx-content-type: navigation
 ---
 
 # Logs

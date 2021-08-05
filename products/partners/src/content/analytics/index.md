@@ -1,7 +1,7 @@
 ---
 title: Analytics
 order: 1
-pcx-content-type: overview
+pcx-content-type: navigation
 ---
 
 # Analytics
