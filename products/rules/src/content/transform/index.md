@@ -29,6 +29,12 @@ To configure Transform Rules in the dashboard, use the **Transform Rules** tab i
 
 ---
 
+## Transform Rules evaluation
+
+Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
+
+All request fields are immutable while evaluating Transform Rules for a request. For example, if a URL Rewrite Rule #1 updates the URI path or the query string, URL Rewrite Rule #2 will not take these previous changes into consideration.
+
 ## Availability
 
 Cloudflare Transform Rules are available to all customers. Keep in mind that support for regular expressions is based on your plan type.
