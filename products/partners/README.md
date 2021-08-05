@@ -1,4 +1,4 @@
-# Cloudflare Partners Rules docs
+# Cloudflare Partners docs
  
 [View docs →](https://developers.cloudflare.com/partners)
  
