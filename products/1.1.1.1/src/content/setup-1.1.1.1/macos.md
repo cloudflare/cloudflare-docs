@@ -38,9 +38,9 @@ There are several browsers compatible with DNS over HTTPS (DoH). This protocol l
 
 ### Google Chrome
 
-<Aside type="note" header="Note">
+<Aside type="note">
 
-This setting may already be enabled on Chrome by default.
+This setting may already be enabled by default.
 
 </Aside>
 
@@ -53,9 +53,9 @@ Your browser infers the DNS over HTTPS provider you want based on your system DN
 
 ### Microsoft Edge
 
-<Aside type="note" header="Note">
+<Aside type="note">
 
-This setting may already be enabled on Chrome by default.
+This setting may already be enabled default.
 
 </Aside>
 
@@ -66,11 +66,12 @@ This setting may already be enabled on Chrome by default.
 
 ### Brave
 
-1. Click the hamburger menu at the top-right corner of your browser window.
+1. Click the menu button in your browser window.
 1. Navigate to **Settings**.
+1. On the left side of the menu, scroll down and click **Aditional settings**.
 1. Navigate to **Privacy and security** > **Security**.
-1. Enable the **Use secure DNS**.
-1. Choose **Cloudflare (1.1.1.1)** as a service provider.
+1. Enable **Use secure DNS**.
+1. Click **With Custom** and choose *Cloudflare (1.1.1.1)* as a service provider from the drop-down menu.
 
 ### Safari
 
