@@ -24,11 +24,11 @@ Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers.
 
 1.1.1.1 is completely free. Setting it up takes minutes and requires no technical skill or special software.
 
-Beyond the regular service, 1.1.1.1 also offers a [version made for Families](#) with additional protection against malware and adult content, and an encrypted service through [DNS over HTTPS (DoH)](/encrypted-dns/dns-over-https) or [DNS over TLS (DoT)](/encrypted-dns/dns-over-tls) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/other-ways-to-use/dns-over-tor).
+Beyond the regular service, 1.1.1.1 also offers a [version made for Families](/1.1.1.1-for-families) with additional protection against malware and adult content, and an encrypted service through [DNS over HTTPS (DoH)](/encrypted-dns/dns-over-https) or [DNS over TLS (DoT)](/encrypted-dns/dns-over-tls) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/other-ways-to-use-1.1.1.1/dns-over-tor).
 
 <ButtonGroup>
-  <Button type="primary" href="#">Set up 1.1.1.1</Button>
-  <Button type="secondary" href="#">Set up 1.1.1.1 for Families</Button>
+  <Button type="primary" href="/setup-1.1.1.1">Set up 1.1.1.1</Button>
+  <Button type="secondary" href="/1.1.1.1-for-families">Set up 1.1.1.1 for Families</Button>
 </ButtonGroup>
 
 </ContentColumn>
