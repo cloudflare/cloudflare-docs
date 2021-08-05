@@ -7,9 +7,7 @@ order: 24
 
 Define WAF exceptions to skip the execution of WAF Managed Rulesets or some of their rules. The WAF exception configuration includes an expression that defines the skip conditions, and the rules or rulesets to skip under those conditions.
 
-WAF exceptions have priority over [overrides](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
-
-You can [define WAF exceptions in the dashboard](/managed-rulesets/waf-exceptions/define-dashboard) or [using the Rulesets API](/managed-rulesets/waf-exceptions/define-api).
+You can [define WAF exceptions in the Cloudflare dashboard](/managed-rulesets/waf-exceptions/define-dashboard) or [using the Rulesets API](/managed-rulesets/waf-exceptions/define-api).
 
 ---
 
@@ -34,6 +32,8 @@ Currently, you cannot define a WAF exception in the dashboard to skip one or mor
 ## Additional notes
 
 WAF exceptions only apply to rules executing a Managed Ruleset listed after them. If you add a WAF exception at the end of the WAF rules list, nothing will be skipped.
+
+WAF exceptions have priority over [overrides](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
 
 If you define a WAF exception that skips all remaining rules, the expressions of those rules are not evaluated.
 
