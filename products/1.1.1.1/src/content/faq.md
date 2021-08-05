@@ -3,7 +3,7 @@ order: 6
 pcx-content: faq
 ---
 
-Frequently Asked Questions
+# Frequently Asked Questions
 
 ## What is 1.1.1.1?
 

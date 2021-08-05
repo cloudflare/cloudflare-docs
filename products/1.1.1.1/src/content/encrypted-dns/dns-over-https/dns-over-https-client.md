@@ -11,7 +11,7 @@ There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1
 
 We have open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-1. Download the cloudflared daemon. You can [find it this web page](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1. Download the cloudflared daemon. You can [find it our Teams' page](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 1. Verify that the `cloudflared` daemon is installed, by entering the following command:
 
     ```sh
@@ -78,7 +78,7 @@ We have open sourced a Golang DoH client you can use to get started. Follow this
 
 The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1, and other services. It includes more advanced features, such as load balancing and local filtering.
 
-1. Install DNSCrypt-Proxy. You can [find the instructions here](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+1. Install DNSCrypt-Proxy. You can [find the instructions in GitHub](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
 1. Verify that the `dnscrypt-proxy` is installed, and at least version 2.0:
 
     ```sh

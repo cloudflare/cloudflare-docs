@@ -30,8 +30,8 @@ Or you can send a record type followed by a domain name. The record types suppor
 * AAAA
 * CAA
 * CNAME
-* DS
 * DNSKEY
+* DS
 * MX
 * NS
 * NSEC

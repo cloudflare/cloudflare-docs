@@ -26,8 +26,8 @@ You can also send a record type followed by a domain name. The record types supp
 * AAAA
 * CAA
 * CNAME
-* DS
 * DNSKEY
+* DS
 * MX
 * NS
 * NSEC

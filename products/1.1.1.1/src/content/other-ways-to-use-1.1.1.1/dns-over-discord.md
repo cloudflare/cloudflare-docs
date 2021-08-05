@@ -29,17 +29,31 @@ _`/dig domain: cloudflare.com`_
 
 Discord has a limit of 25 options in slash commands, so DNS over Discord offers the 25 most common DNS record types to choose from:
 
-<TableWrap>
-
-Supported DNS records|
---------|-------|---------|-------|------|
-AAAA    | A     | CAA     | CERT  | CNAME
-MX      | NS    | SPF     | SRV   | TXT
-DNSKEY  | DS    | LOC     | URI   | HTTPS
-NAPTR   | PTR   | SMIMEA  | SOA   | SSHFP
-SVCB    | TLSA  | HINFO   | CDS   | CDNSKEY
-
-</TableWrap>
+* A
+* AAAA
+* CAA
+* CDNSKEY
+* CDS
+* CERT
+* CNAME
+* DNSKEY
+* DS
+* HINFO
+* HTTPS
+* LOC
+* MX
+* NAPTR
+* NS
+* PTR
+* SMIMEA
+* SOA
+* SPF
+* SRV
+* SSHFP
+* SVCB
+* TLSA
+* TXT
+* URI
 
 To query other DNS record types, or multiple record types at once, use the `/multi-dig` command.
 
@@ -102,21 +116,51 @@ When providing DNS record types for the `/multi-dig` command, Discord will not p
 
 The following DNS record types are supported and considered valid by the bot:
 
-<TableWrap>
-
-Supported DNS records|
-------------|-------|-------|-------|------|
-A           |AAAA   |CAA    |CERT   |CNAME
-MX          |NS     |SPF    |SRV    |TXT
-DNSKEY      |DS     |LOC    |URI    |HTTPS
-NAPTR       |PTR    |SMIMEA |SOA    |SSHFP
-SVCB        |TLSA   |HINFO  |CDS    |CDNSKEY
-AFSDB       |APL    |CSYNC  |DHCID  |DLV
-DNAME       |EUI48  |EUI64  |HIP    |IPSECKEY
-KEY         |KX     |NSEC   |NSEC3  |NSEC3PARAM
-OPENPGPKEY  |RP     |TA     |TKEY   |ZONEMD
-
-</TableWrap>
+* A
+* AAAA
+* AFSDB
+* APL
+* CAA
+* CDNSKEY
+* CDS
+* CERT
+* CNAME
+* CSYNC
+* DHCID
+* DLV
+* DNAME
+* DNSKEY
+* DS
+* EUI48
+* EUI64
+* HINFO
+* HIP
+* HTTPS
+* IPSECKEY
+* KEY
+* KX
+* LOC
+* MX
+* NAPTR
+* NS
+* NSEC
+* NSEC3
+* NSEC3PARAM
+* OPENPGPKEY
+* PTR
+* RP
+* SMIMEA
+* SOA
+* SPF
+* SRV
+* SSHFP
+* SVCB
+* TA
+* TKEY
+* TLSA
+* TXT
+* URI
+* ZONEMD
 
 *Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.*
 
