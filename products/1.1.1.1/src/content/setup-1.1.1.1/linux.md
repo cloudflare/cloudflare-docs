@@ -57,7 +57,7 @@ Follow these steps to configure 1.1.1.1:
     nameserver 2606:4700:4700::1001
     ```
 
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then after lifting the key, type:
+1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, type:
 
 ```
 :wq
