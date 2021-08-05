@@ -30,3 +30,15 @@ When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
 
 </Aside>
+
+## BGP control for advertisements
+
+Use BGP (Border Gateway Protocol) to control the status of your prefix — advertised or withdrawn — from Cloudflare's edge for more flexibility and control over your routes. The BGP controlled advertisement system works by establishing BGP sessions to individual route reflectors, which determine when to send traffic through Cloudflare.
+
+To begin using BGP control, provide Cloudflare with the following information:
+
+- BGP endpoint IP addresses
+- Prefixes you want to use with BGP control
+- You ASH for the BGP session
+
+After you provide the information above, Cloudflare updates their firewall filters to establish the BGP session and provides you with the BGP endpoints to control your prefixes.
