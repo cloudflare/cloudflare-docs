@@ -5,7 +5,7 @@ order: 1
 
 # Define WAF exceptions in the dashboard
 
-1. Log in to the Cloudflare dashboard, and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website.
 1. Go to **Firewall** > **WAF**.
 1. Click **Add WAF exception**.
 1. Enter a name for the exception.
