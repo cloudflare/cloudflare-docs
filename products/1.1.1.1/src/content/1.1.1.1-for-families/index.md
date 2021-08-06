@@ -15,7 +15,7 @@ pcx-content: reference
 
 ## How to choose a protection
 
-The option you choose depends on the IP address configured.
+The protection you get depends on the IP address configured. Choose one of the options on the left menu to read full step-by-step instructions on how to configure 1.1.1.1 for Families.
 
 <details>
 <summary>Protect your home against malware</summary>
