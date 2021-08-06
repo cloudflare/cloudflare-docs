@@ -8,7 +8,7 @@ order: 21
 
 You can enable and configure Managed Rulesets for a zone in the **WAF** tab of the Firewall app.
 
-![Managed Rules tab of Firewall app](../images/waf-managed-rules-tab.png)
+![WAF tab of Firewall app](../images/waf-managed-rules-tab.png)
 
 ## Enable or disable a Managed Ruleset
 
