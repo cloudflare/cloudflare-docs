@@ -29,7 +29,7 @@ jobs:
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
-      images: ${{ steps.filter.outputs.images }}
+      image-resizing: ${{ steps.filter.outputs.image-resizing }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
@@ -37,6 +37,7 @@ jobs:
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
+      partners: ${{ steps.filter.outputs.partners }}
       railgun: ${{ steps.filter.outputs.railgun }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
@@ -95,8 +96,8 @@ jobs:
               - 'products/browser-isolation/**'
             http3:
               - 'products/http3/**'
-            images:
-              - 'products/images/**'
+            image-resizing:
+              - 'products/image-resizing/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
@@ -111,6 +112,8 @@ jobs:
               - 'products/pages/**'
             page-shield:
             - 'products/page-shield/**'
+            partners:
+            - 'products/partners/**'
             railgun:
             - 'products/railgun/**'
             randomness-beacon:
@@ -776,14 +779,14 @@ jobs:
           environment: "production"
           wranglerVersion: '1.13.0'
 
-  deploy-images:
+  deploy-image-resizing:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.images == 'true' }}
+    if: ${{ needs.changes.outputs.image-resizing == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/images
+        working-directory: products/image-resizing
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -800,13 +803,13 @@ jobs:
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/images"
+          workingDirectory: "products/image-resizing"
           wranglerVersion: '1.13.0'
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/images"
+          workingDirectory: "products/image-resizing"
           environment: "production"
           wranglerVersion: '1.13.0'
 
@@ -1045,6 +1048,40 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: 'products/page-shield'
+          environment: 'production'
+          wranglerVersion: '1.13.0'
+
+  deploy-partners:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.partners == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/partners
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: 'products/partners'
+          wranglerVersion: '1.13.0'
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: 'products/partners'
           environment: 'production'
           wranglerVersion: '1.13.0'
 

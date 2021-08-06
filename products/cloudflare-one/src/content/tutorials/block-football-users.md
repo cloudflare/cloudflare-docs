@@ -85,7 +85,7 @@ Your rule will now be visible under the **Device enrollment rules** list.
 To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
-* Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
+* Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert), or
 * Find the certificate in the Teams Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 Next, follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert) to install the certificate on your system.

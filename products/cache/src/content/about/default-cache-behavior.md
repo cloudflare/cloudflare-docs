@@ -1,6 +1,6 @@
 ---
 title: Default cache behavior
-order: 3
+order: 5
 pcx-content-type: concept
 ---
 
@@ -24,129 +24,135 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
   <tbody>
     <tr>
       <td colspan="5" rowspan="1">
-        avif
+        AVIF
       </td>
       <td colspan="5" rowspan="1">
-        bmp
+        BMP
       </td>
       <td colspan="5" rowspan="1">
-        ejs
+        EJS
       </td>
       <td colspan="5" rowspan="1">
-        jpeg
+        JPEG
       </td>
       <td colspan="5" rowspan="1">
-        pdf
+        PDF
       </td>
       <td colspan="5" rowspan="1">
-        ps
+        PS
       </td>
       <td colspan="5" rowspan="1">
-        ttf
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        class
-      </td>
-      <td colspan="5" rowspan="1">
-        eot
-      </td>
-      <td colspan="5" rowspan="1">
-        jpg
-      </td>
-      <td colspan="5" rowspan="1">
-        pict
-      </td>
-      <td colspan="5" rowspan="1">
-        svg
-      </td>
-      <td colspan="5" rowspan="1">
-        webp
+        TTF
       </td>
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        css
+        CLASS
       </td>
       <td colspan="5" rowspan="1">
-        eps
+        EOT
       </td>
       <td colspan="5" rowspan="1">
-        js
+        JPG
       </td>
       <td colspan="5" rowspan="1">
-        pls
+        PICT
       </td>
       <td colspan="5" rowspan="1">
-        svgz
+        SVG
       </td>
       <td colspan="5" rowspan="1">
-        woff
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        csv
-      </td>
-      <td colspan="5" rowspan="1">
-        gif
-      </td>
-      <td colspan="5" rowspan="1">
-        mid
-      </td>
-      <td colspan="5" rowspan="1">
-        png
-      </td>
-      <td colspan="5" rowspan="1">
-        swf
-      </td>
-      <td colspan="5" rowspan="1">
-        woff2
+        WEBP
       </td>
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        doc
+        CSS
       </td>
       <td colspan="5" rowspan="1">
-        ico
+        EPS
       </td>
       <td colspan="5" rowspan="1">
-        midi
+        JS
       </td>
       <td colspan="5" rowspan="1">
-        ppt
+        PLS
       </td>
       <td colspan="5" rowspan="1">
-        tif
+        SVGZ
       </td>
       <td colspan="5" rowspan="1">
-        xls
+        WOFF
       </td>
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        docx
+        CSV
       </td>
       <td colspan="5" rowspan="1">
-        jar
+        GIF
       </td>
       <td colspan="5" rowspan="1">
-        otf
+        MID
       </td>
       <td colspan="5" rowspan="1">
-        pptx
+        PNG
       </td>
       <td colspan="5" rowspan="1">
-        tiff
+        SWF
       </td>
       <td colspan="5" rowspan="1">
-        xlsx
+        WOFF2
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+        DOC
+      </td>
+      <td colspan="5" rowspan="1">
+        ICO
+      </td>
+      <td colspan="5" rowspan="1">
+        MIDI
+      </td>
+      <td colspan="5" rowspan="1">
+        PPT
+      </td>
+      <td colspan="5" rowspan="1">
+        TIF
+      </td>
+      <td colspan="5" rowspan="1">
+        XLS
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+        DOCX
+      </td>
+      <td colspan="5" rowspan="1">
+        JAR
+      </td>
+      <td colspan="5" rowspan="1">
+        OTF
+      </td>
+      <td colspan="5" rowspan="1">
+        PPTX
+      </td>
+      <td colspan="5" rowspan="1">
+        TIFF
+      </td>
+      <td colspan="5" rowspan="1">
+        XLSX
       </td>
     </tr>
   </tbody>
 </table>
+
+<Aside type="note" header="Note">
+
+The Free plan additionally supports APK, EXE, DMG, and BIN file extensions. 
+
+</Aside>
 
 To cache additional content, see [Page Rules](/how-to/create-page-rules) to create a rule to cache everything.
 

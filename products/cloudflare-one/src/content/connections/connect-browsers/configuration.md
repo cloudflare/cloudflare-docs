@@ -11,7 +11,7 @@ Browser Isolation is enabled through Secure Web Gateway HTTP policies. By defaul
 
 1. Download the latest version of the [WARP client](/connections/connect-devices/warp/download-warp).
 
-1. Create a [Device enrollment policy](/connections/connect-devices/warp/device-enrollment).
+1. Create a [Device enrollment rule](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions).
 
 1. Set up an [Isolation policy](/policies/filtering/http-policies/#isolate).
 
