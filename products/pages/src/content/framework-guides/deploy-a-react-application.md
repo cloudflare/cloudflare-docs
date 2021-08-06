@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 React is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
-In this guide, you will create a new React application and deploy it using Cloudflare Pages. You will be using `create-react-app`, a batteries-included tool for generating new React applications.
+In this guide, you will create a new React application and deploy it using Cloudflare Pages. You will use `create-react-app`, a batteries-included tool for generating new React applications.
 
 ## Setting up a new project
 

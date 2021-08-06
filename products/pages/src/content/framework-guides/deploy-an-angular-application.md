@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 Angular is an incredibly popular framework for building reactive and powerful front-end applications.
 
-In this guide, you will create a new Angular application and deploy it using Cloudflare Pages. You will be using Angular CLI, a batteries-included tool for generating new Angular applications.
+In this guide, you will create a new Angular application and deploy it using Cloudflare Pages. You will use the Angular CLI, a batteries-included tool for generating new Angular applications.
 
 ## Setting up a new project
 

@@ -7,7 +7,7 @@ pcx-content-type: how-to
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
 
 In this guide, you will create a new Preact application and deploy it using Cloudflare Pages.
-You will be using [`wmr`](https://github.com/preactjs/wmr), an all-in-one development tool built by the Preact team, to quickly generate an optimized web application.
+You will use [`wmr`](https://github.com/preactjs/wmr), an all-in-one development tool built by the Preact team, to quickly generate an optimized web application.
 
 ## Setting up a new project
 

@@ -7,7 +7,7 @@ pcx-content-type: how-to
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
 
 In this guide, you will create a new Svelte application and deploy it using Cloudflare Pages.
-You will be using [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framework for building web applications of all sizes.
+You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framework for building web applications of all sizes.
 
 <Aside type="warning">
 
