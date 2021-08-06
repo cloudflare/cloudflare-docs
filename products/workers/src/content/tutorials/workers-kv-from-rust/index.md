@@ -313,7 +313,7 @@ $ curl 'localhost:8787/foo'
 
 ## Putting it all together
 
-With all previous steps complete, the final `lib.rs` should look as follows:
+With all previous steps complete, the final `lib.rs` should look as follows (you can also find the full code as an example repository at <https://github.com/fkettelhoit/workers-kv-from-rust>):
 
 ```rust
 ---
