@@ -6,6 +6,11 @@ pcx-content-type: how-to
 
 Jekyll is an open-source framework for creating websites, based around Markdown with Liquid templates. In this guide, you will create a new Jekyll application and deploy it using Cloudflare Pages. You use the `jekyll` CLI to create a new Jekyll site.
 
+<Aside type="note">
+
+If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migration guide](/pages/migrating-jekyll-from-github-pages/).
+
+</Aside>
 ## Installing Jekyll
 
 Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation, like `rbenv`, to install Jekyll.
