@@ -13,7 +13,7 @@ You can customize the **action** and **sensitivity** of the rules in the Cloudfl
 
 Tag and rule configurations have greater priority than ruleset configurations.
 
-For more information on the available parameters and allowed values, see [Managed Ruleset parameters](/ddos-l7-mitigation/override-parameters).
+For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/ddos-l7-mitigation/override-parameters).
 
 ## Configure all the rules in the ruleset
 
