@@ -333,9 +333,15 @@ in the surrounding inline array are acceptable.
 
 ### Durable Object migrations through Wrangler CLI
 
-Ad hoc migrations are performed using extra options on `wrangler publish`. Several options can be passed at once in a single `wrangler publish` call. You can also specify `--old-tag <tag>` and `--new-tag <tag>` if your script has a migration tag associated with it but you still want to do an ad hoc migration.
+<Aside type="warning" header="Deprecation Notice">
+    
+While CLI migrations initially served a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release. This is because this approach makes it easy to forget or lose track of previous migrations, thus making it very difficult to mentally track the current infrastructure state and/or coordinate with teammates.
 
-When an ad hoc migration is performed, any migrations listed in `wrangler.toml` are ignored.
+</Aside>
+
+It is possible to define a migration purely through extra arguments to the `wrangler publish` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored. 
+    
+You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler publish` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value. 
 
 The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
 
