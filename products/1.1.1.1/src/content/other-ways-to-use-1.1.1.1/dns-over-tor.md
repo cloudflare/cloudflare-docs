@@ -4,11 +4,21 @@ pcx-content: how-to
 
 # DNS over Tor
 
-Follow this quick guide to start using the hidden resolver. You can read more about this service in [this blog post](https://blog.cloudflare.com/welcome-hidden-resolver/)
+<Aside>
+
+The hidden resolver is still an experimental service and should not be used in production or for other critical uses.
+
+</Aside>
+
+If you do not want to disclose your IP address to the resolver, you can use our Tor onion service. Resolving DNS queries through the Tor network guarantees a significantly higher level of anonymity than making the requests directly. Not only does doing so prevent the resolver from ever seeing your IP address, but it also prevents your ISP from knowing that you attempted to resolve a domain name.
+
+Read more about this service in [this blog post](https://blog.cloudflare.com/welcome-hidden-resolver/).
 
 ## Setting up a Tor client
 
-The important difference between using all other modes of DNS and this one is that packet routing no longer uses IP addresses, and therefore all connections must be routed through a Tor client. Before anything else, head to the [Tor Project](https://www.torproject.org/download/download.html.en) website to download and install a Tor client. If you use the Tor Browser, it will automatically start a [SOCKS proxy](https://en.wikipedia.org/wiki/SOCKS) at `127.0.0.1:9150`. 
+The important difference between using all other modes of DNS and this one is that packet routing no longer uses IP addresses, and therefore all connections must be routed through a Tor client. 
+
+Before you start, head to the [Tor Project website](https://www.torproject.org/download/download.html.en) to download and install a Tor client. If you use the Tor Browser, it will automatically start a [SOCKS proxy](https://en.wikipedia.org/wiki/SOCKS) at `127.0.0.1:9150`. 
 
 If you use Tor from the command line, create the following configuration file:
 

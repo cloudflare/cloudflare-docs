@@ -4,7 +4,7 @@ pcx-content: how-to
 
 # DNS over Telegram
 
-To perform DNS over Telegram, you will need the Telegram, an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
+To perform DNS over Telegram, you will need Telegram, an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
 
 You will also need to add the 1.1.1.1 bot to your friends list in Telegram before using this functionality:
 

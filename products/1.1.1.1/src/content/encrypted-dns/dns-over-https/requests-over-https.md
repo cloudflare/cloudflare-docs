@@ -3,7 +3,7 @@ order: 1
 pcx-content: reference
 ---
 
-# Making requests to 1.1.1.1 over HTTPS
+# Make API requests to 1.1.1.1 over HTTPS
 
 ## Endpoint
 

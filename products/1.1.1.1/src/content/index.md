@@ -5,6 +5,8 @@ type: overview
 pcx-content: landing-page
 ---
 
+<ContentColumn>
+
 <div class="medium-img">
 
 ![Cloudflare 1.1.1.1](static/1111-fancycolor.gif)
@@ -13,22 +15,14 @@ pcx-content: landing-page
 
 <br/>
 
-<ContentColumn>
-
 1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. [DNS resolvers](https://www.cloudflare.com/learning/dns/what-is-dns/) translate domains like `cloudflare.com` into the IP addresses necessary to reach the website (like 104.16.123.96). 
-
-## Why 1.1.1.1?
 
 Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers.
 1.1.1.1 has been measured to be the [fastest DNS resolver available](https://www.dnsperf.com/#!dns-resolvers) — it is deployed in hundreds of cities worldwide, and has access to the addresses of millions of domain names on the same servers it runs on.
 
-1.1.1.1 is completely free. Setting it up takes minutes and requires no technical skill or special software.
-
 Beyond the regular service, 1.1.1.1 also offers a [version made for Families](/1.1.1.1-for-families) with additional protection against malware and adult content, and an encrypted service through [DNS over HTTPS (DoH)](/encrypted-dns/dns-over-https) or [DNS over TLS (DoT)](/encrypted-dns/dns-over-tls) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/other-ways-to-use-1.1.1.1/dns-over-tor).
 
-<ButtonGroup>
-  <Button type="primary" href="/setup-1.1.1.1">Set up 1.1.1.1</Button>
-  <Button type="secondary" href="/1.1.1.1-for-families">Set up 1.1.1.1 for Families</Button>
-</ButtonGroup>
+1.1.1.1 is completely free. Setting it up takes minutes and requires no special software.
 
 </ContentColumn>
+

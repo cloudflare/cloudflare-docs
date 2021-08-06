@@ -3,23 +3,23 @@ order: 3
 pcx-content: reference
 ---
 
-# DNS over HTTPS client
+# Connect to 1.1.1.1 using DoH clients
 
 There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1 in order to protect your DNS queries from privacy intrusions and tampering.
 
 ## cloudflared
 
-We have open sourced a Golang DoH client you can use to get started. Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
+Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-1. Download the cloudflared daemon. You can [find it our Teams' page](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
-1. Verify that the `cloudflared` daemon is installed, by entering the following command:
+1. [Download the `cloudflared` daemon](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1. Verify that the `cloudflared` daemon is installed by entering the following command:
 
     ```sh
     $ cloudflared --version
     cloudflared version 2020.11.11 (built 2020-11-25-1643 UTC)
     ```
 
-1. Start the DNS proxy on an address and port in your network. If you don not specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so for the initial demo we will use a different port:
+1. Start the DNS proxy on an address and port in your network. If you do not specify an address and port, it will start listening on `localhost:53`. DNS (53) is a privileged port, so for the initial demo we will use a different port:
 
     ```sh
     $ cloudflared proxy-dns --port 5553
@@ -37,7 +37,7 @@ We have open sourced a Golang DoH client you can use to get started. Follow this
     2606:4700::6810:84e5
     ```
 
-1. Set up `cloudflared` as a service so it starts on user login. On many Linux distributions, this can be done with:
+1. Run `cloudflared` as a service so it starts on user login. On many Linux distributions, this can be done with:
 
     ```bash
     $ sudo tee /etc/systemd/system/cloudflared-proxy-dns.service >/dev/null <<EOF
@@ -76,10 +76,10 @@ We have open sourced a Golang DoH client you can use to get started. Follow this
 
 ## DNSCrypt-Proxy
 
-The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1, and other services. It includes more advanced features, such as load balancing and local filtering.
+The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1 and other services. It also includes more advanced features, such as load balancing and local filtering.
 
 1. Install DNSCrypt-Proxy. You can [find the instructions in GitHub](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
-1. Verify that the `dnscrypt-proxy` is installed, and at least version 2.0:
+1. Verify that `dnscrypt-proxy` is installed and the version is 2.0 or later:
 
     ```sh
     $ dnscrypt-proxy -version
