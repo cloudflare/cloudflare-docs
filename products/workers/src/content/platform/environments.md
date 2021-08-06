@@ -338,7 +338,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
     # Override values for `--env production` usage
     [env.production]
     name = "my-worker-production"
-    [vars]
+    [env.production.vars]
     API_TOKEN = "example_production_token"
     STRIPE_TOKEN = "pk_xyz1234"
     ```
