@@ -79,13 +79,16 @@ addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
 
+const { handle } = wasm_bindgen;
+const instance =  wasm_bindgen(wasm);
+
 /**
  * Fetch and log a request
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const { handle } = wasm_bindgen;
-  await wasm_bindgen(wasm);
+  await instance;
+
   return await handle(KV_FROM_RUST, request);
 }
 ```
