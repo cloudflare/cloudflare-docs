@@ -30,6 +30,7 @@ Every time a request is sent to your Deploy Hook, a new build will be triggered.
 
 ![deploy hooks](deploy-hooks-deployment-logs.png)
 
+## Security Considerations
 Deploy Hooks are uniquely linked to your project and do not require additional authentication to be used. While this does allow for complete flexibility, it’s crucial that you protect these URLs in the same way you’d safeguard any proprietary information or application secret. 
 
 If you suspect unauthorized usage of a Deploy Hook, you should delete the Deploy Hook and generate a new one in its place.
