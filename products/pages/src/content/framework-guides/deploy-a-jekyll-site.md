@@ -45,7 +45,7 @@ Create a base `index.html` in your newly created folder to give your site conten
 </html>
 ```
 
-Optionally, you can also use a theme with your new Jekyll site if you would like to start with great styling defaults. For example, the [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
+Optionally, you may use a theme with your new Jekyll site if you would like to start with great styling defaults. For example, the [`minimal-mistakes`](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
 
 ## Creating a GitHub repository
 

@@ -88,7 +88,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 </TableLayout>
 
-Below the configuration, make sure to set the **Environment Variables(advanced)** for specifying the `ZOLA_VERSION`. 
+Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`. 
 
 For example, `ZOLA_VERSION`: `0.13.0`.
 
