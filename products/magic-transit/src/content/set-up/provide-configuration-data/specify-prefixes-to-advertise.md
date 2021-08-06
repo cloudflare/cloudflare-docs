@@ -43,6 +43,6 @@ To begin using BGP control, contact your account team with the following informa
 
 - BGP endpoint IP addresses
 - Prefixes you want to use with BGP control
-- Your ASH for the BGP session
+- Your ASN for the BGP session
 
 After receiving your information, Cloudflare updates firewall filters to establish the BGP session and provides you with the BGP endpoints to control your prefixes.
