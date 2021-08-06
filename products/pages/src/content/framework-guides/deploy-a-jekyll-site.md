@@ -15,7 +15,7 @@ If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migrat
 
 Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation, like `rbenv`, to install Jekyll.
 
-Use [`rbenv`](https://github.com/rbenv/rbenv) to install Ruby on your computer. Follow the [`rbenv` install instructions](https://github.com/rbenv/rbenv#installation), and install a recent version of Ruby by running the `rbenv` command in your terminal:
+To install Ruby on your computer, follow the [`rbenv` installation instructions](https://github.com/rbenv/rbenv#installation) and select a recent version of Ruby by running the `rbenv` command in your terminal:
 
 ```sh
 $ rbenv install 2.7.2
@@ -78,7 +78,7 @@ Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cl
 
 </TableLayout>
 
-After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site, before deploying it.
+After configuring your site, you can begin your first deployment. You should see Cloudflare Pages installing `jekyll`, your project dependencies, and building your site before deploying it.
 
 <Aside type="note">
 
