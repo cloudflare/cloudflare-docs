@@ -17,8 +17,7 @@ For more information on the available parameters and allowed values, see [Manage
 
 ## Configure all the rules in the ruleset
 
-1. Log in to the Cloudflare dashboard and select your account.
-1. Select your website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 1. Go to **Firewall** > **DDoS**.
 1. Next to **HTTP DDoS attack protection**, click **Configure**.
 1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Managed Ruleset.
@@ -29,8 +28,7 @@ For more information on the available parameters and allowed values, see [Manage
 
 ## Configure one or more rules
 
-1. Log in to the Cloudflare dashboard and select your account.
-1. Select your website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 1. Go to **Firewall** > **DDoS**.
 1. Next to **HTTP DDoS attack protection**, click **Configure**.
 1. In **Rule configuration**, click **Browse rules**.
