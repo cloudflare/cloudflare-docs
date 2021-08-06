@@ -33,6 +33,19 @@ These are the action types you can choose from:
 
 **Note.** When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If Always use HTTPS is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
 
+**Order of Execution**
+Policies will be evaluted based on their Action Type and Ordering. Bypass and Service are evaluated first based on their order. Then Block and Allow are evaluated based on their order.
+
+Example:
+Allow A
+Block B
+Service Auth C
+Bypass D
+Allow E
+
+Will execute in the following order:
+Service Auth C->Bypass D->Allow A-Block >B->Allow E
+
 ### Rules
 
 Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need. 
