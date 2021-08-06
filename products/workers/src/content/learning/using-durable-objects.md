@@ -335,7 +335,7 @@ in the surrounding inline array are acceptable.
 
 <Aside type="warning" header="Deprecation Notice">
     
-While CLI migrations initially served a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release. This is because this approach makes it easy to forget or lose track of previous migrations, thus making it very difficult to mentally track the current infrastructure state and/or coordinate with teammates.
+While CLI migrations initially served a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release.
 
 </Aside>
 
