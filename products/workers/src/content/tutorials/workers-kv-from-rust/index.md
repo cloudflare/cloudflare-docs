@@ -264,7 +264,7 @@ The above wrapper only exposes a subset of the options supported by the KV API, 
 
 ## Using the wrapper
 
-You are now ready to use the wrapper to get and put values from and to our KV namespace. The following function is a simple example handler that writes the key `foo` with the value `bar` to KV if a `PUT` request is made to `/foo?value=bar` and reads and returns the value of key `foo` from KV if a `GET` request is made to `/foo` (note that `handle` is now async and that we are using the `Url` and `UrlSearchParams` features that we declared earlier in `Cargo.toml`):
+You are now ready to use the wrapper to get and put values from and to our KV namespace. The following function is a simple example handler that writes the key `foo` with the value `bar` to KV, if a `PUT` request is made to `/foo?value=bar`, and reads and returns the value of key `foo` from KV, if a `GET` request is made to `/foo`. Note that `handle` is now asynchronous, and that we are using the `Url` and `UrlSearchParams` features that we declared earlier in `Cargo.toml`:
 
 ```rust
 ---
@@ -301,7 +301,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-Choose between [`wrangler preview`](/cli-wrangler/commands#preview), [`wrangler dev`](/cli-wrangler/commands#dev) or [`wrangler publish`](/cli-wrangler/commands#publish) to test the Worker. Here is an example invocation using `wrangler dev`:
+You can use [`wrangler dev`](/cli-wrangler/commands#dev) to test the Worker:
 
 ```sh
 $ curl 'localhost:8787/foo'
