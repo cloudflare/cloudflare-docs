@@ -4,7 +4,7 @@ pcx-content-type: how-to
 
 # Deploy a React application
 
-React is a popular framework for building reactive and powerful front end applications, built by the open-source team at Facebook.
+React is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
 In this guide, you will create a new React application and deploy it using Cloudflare Pages. You will be using `create-react-app`, a batteries-included tool for generating new React applications.
 
@@ -28,7 +28,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set u**p builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set u**p builds and deployments** section, provide the following information:
 
 <TableLayout>
 
