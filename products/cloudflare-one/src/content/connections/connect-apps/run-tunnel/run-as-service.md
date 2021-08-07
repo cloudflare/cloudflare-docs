@@ -192,7 +192,7 @@ credentials-file: C:/UUID.json
 
 ### Start the service
 
-To start the service, open the Service Manager, select `Cloudflare Tunnel agent` and open the `General` tab. In the `Start parameters` field, specify the location of the configuration file and place the `tunnel run` command after the path. For example:
+To start the service, open the Service Manager, select `Argo Tunnel agent` and open the `General` tab. In the `Start parameters` field, specify the location of the configuration file and place the `tunnel run` command after the path. For example:
 
 ![DNS tab](../../../static/documentation/connections/start-param-1.png)
 
