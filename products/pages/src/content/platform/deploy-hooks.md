@@ -26,7 +26,7 @@ To configure your Deploy Hook, you must enter two key parameters:
 Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy. 
 ![deploy hooks](deploy-hooks-details.png)
 
-Every time a request is sent to your Deploy Hook, a new build will be triggered. Review your deployment log to note that any deployment triggered by a Deploy Hook will specify this in the source column.  
+Every time a request is sent to your Deploy Hook, a new build will be triggered. Review the **Source** column of your deployment log to see which deployment were triggered by a Deploy Hook.  
 
 ![deploy hooks](deploy-hooks-deployment-logs.png)
 
