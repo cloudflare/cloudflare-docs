@@ -38,3 +38,7 @@ const MyImage = (props) => {
   );
 };
 ```
+
+## Ruby on Rails
+
+[CarrierWave::Cloudflare](https://github.com/resume-io/carrierwave-cloudflare) gem integrates Carrierwave with Cloudflare Image Resizing
