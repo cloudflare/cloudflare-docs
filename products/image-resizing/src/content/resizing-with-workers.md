@@ -198,7 +198,7 @@ if (response.ok) {
 
 ### An example worker
 
-Assuming you [set up a worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`
+Assuming you [set up a Worker](https://developers.cloudflare.com/workers/get-started/guide) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=/uploads/avatar1.jpg`
 
 ```js
 addEventListener("fetch", event => {
@@ -223,29 +223,11 @@ async function handleRequest(request) {
   if (url.searchParams.has("height")) options.cf.image.height = url.searchParams.get("height")
   if (url.searchParams.has("quality")) options.cf.image.quality = url.searchParams.get("quality")
 
-  // Get URL of the original (full size) image to resize.
+  // Get pathname of the original (full size) image to resize.
   // You could adjust the URL here, e.g., prefix it with a fixed address of your server,
-  // so that user-visible URLs are shorter and cleaner.
-  const imageURL = url.searchParams.get("image")
-  if (!imageURL) return new Response('Missing "image" value', { status: 400 })
-
-  try {
-    // TODO: Customize validation logic
-    const { hostname, pathname } = new URL(imageURL)
-
-    // Only accept JPEG, PNG, GIF, or WebP types
-    // @see https://developers.cloudflare.com/images/url-format#supported-formats-and-limitations
-    if (!/\.(jpe?g|png|gif|webp)$/i.test(pathname)) {
-      return new Response('Invalid image type', { status: 400 })
-    }
-
-    // Demo: Only accept "example.com" images
-    if (hostname !== 'example.com') {
-      return new Response('Must use "example.com" source images', { status: 403 })
-    }
-  } catch (err) {
-    return new Response('Invalid "image" value', { status: 400 })
-  }
+  const imagePath = url.searchParams.get("image")
+  const urlPrefix = request.headers.get('origin') || `https://${request.headers.get('host'}`
+  const imageURL = urlPrefix + imagePath
 
   // Build a request that passes through request headers,
   // so that automatic format negotiation can work.
@@ -258,4 +240,4 @@ async function handleRequest(request) {
 }
 ```
 
-When testing image resizing, please deploy the script first. Resizing won’t be active in the on-line editor in the Dashboard.
+When testing image resizing, deploy the script first. Resizing will not be active in the on-line editor in the dashboard.
