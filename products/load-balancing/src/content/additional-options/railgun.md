@@ -24,7 +24,7 @@ Use the same load balancer settings as if Railgun were not in place. For example
 
 ## Set up Railgun behind a load balancer
 
-Though we recommend you put Railgun **in front of** your load balancer, you can also put Railgun **behind** a load balancer.
+Though Railgun's optimal placing is in front of your load balancer, you can also put Railgun behind a load balancer.
 
 Observe the following guidelines to avoid interruptions with site traffic:
 
