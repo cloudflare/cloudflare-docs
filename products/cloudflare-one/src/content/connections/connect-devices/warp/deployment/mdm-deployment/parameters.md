@@ -106,7 +106,7 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 
 **Value:**
 - `https://support.example.com` Use an https:// link to open your companies internal help site.
-- `mailto://yoursupport@example.com`  Use a mailto:// link to open your default mail client.
+- `mailto:yoursupport@example.com`  Use a mailto: link to open your default mail client.
 
 ## Authentication with service tokens
 
