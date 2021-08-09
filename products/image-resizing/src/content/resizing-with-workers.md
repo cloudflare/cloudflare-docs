@@ -7,9 +7,9 @@ pcx-content-type: configuration
 # Resizing with Cloudflare Workers
 
 There are two ways of using image resizing. One is the [default URL scheme](/url-format), which provides an easy, declarative way of specifying image dimensions and other options.
-The other way is to use a JavaScript API in a [Worker](https://developers.cloudflare.com/workers/learning/getting-started). Workers give powerful programmatic control over every image request.
+The other way is to use a JavaScript API in a [Worker](https://developers.cloudflare.com/workers/learning/get-started). Workers give powerful programmatic control over every image request.
 
-* You can use a custom URL scheme, e.g. instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.
+* You can use a custom URL scheme. Instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.
 * Hide the actual location of the original image. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
 * Implement content negotiation to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
@@ -111,7 +111,7 @@ The `fetch()` function accepts parameters in the second argument inside ```{cf: 
 
 </Definitions>
 
-In your worker, where you’d fetch the image using `fetch(request)`, add options like this:
+In your Worker, where you fetch the image using `fetch(request)`, add options like this:
 
 ```js
 fetch(imageURL, {
@@ -125,11 +125,11 @@ fetch(imageURL, {
 })
 ```
 
-These typings are also available in [our Workers TypeScript definitions library](https://github.com/cloudflare/workers-types).
+These typings are also available in [the Workers TypeScript definitions library](https://github.com/cloudflare/workers-types).
 
-### Configuring a worker
+### Configuring a Worker
 
-Create a new script in Workers section of the Dashboard. Scope your worker script to a path dedicated to serving assets, such as `/images/*`, `/assets/*`, etc. Only supported image formats can be resized. Attempt to "resize" any other type of resource (CSS, HTML) will result in an error.
+Log into the [Clouflare dashboard](https://dash.cloudflare.com/), choose your website in the **Acount Home** and navigate to **Workers**. Select **Add route** and scope your Worker script to a path dedicated to serving assets, such as `/images/*`, `/assets/*`, etc. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
 <Aside type="warning" header="Warning">
 
@@ -137,16 +137,16 @@ Do not set up the image resizing worker for the entire zone (`/*`). This will bl
 
 </Aside>
 
-It’s best to keep the path handled by the worker separate from the path to original (unresized) images to avoid request loops caused by the image resizing worker calling itself. For example, store your images in `example.com/originals/` directory, and handle resizing via `example.com/thumbnails/*` path that fetches images from the `/originals/` directory. If source images are stored in a location that is handled by a Worker, you must prevent the worker from creating an infinite loop.
+Keep the path handled by the Worker separate from the path to original (unresized) images to avoid request loops caused by the image resizing worker calling itself. For example, store your images in `example.com/originals/` directory, and handle resizing via `example.com/thumbnails/*` path that fetches images from the `/originals/` directory. If source images are stored in a location that is handled by a Worker, you must prevent the worker from creating an infinite loop.
 
 #### Preventing request loops
 
-To perform resizing and optimizations, the worker must be able to fetch the original, unresized image from your origin server. If the path handled by your Worker overlaps with the path where images are stored on your server, it could cause an infinite loop by the worker trying to request images from itself.
-You must detect which requests have to go straight to the origin server. When `image-resizing` string is present in the `Via` header that’s a request coming from another worker, and should be directed straight to the origin server, like this:
+To perform resizing and optimizations, the Worker must be able to fetch the original, unresized image from your origin server. If the path handled by your Worker overlaps with the path where images are stored on your server, it could cause an infinite loop by the worker trying to request images from itself.
+You must detect which requests have to go straight to the origin server. When `image-resizing` string is present in the `Via` header that is a request coming from another Worker, and should be directed straight to the origin server, like this:
 
 ```js
 addEventListener("fetch", event => {
-  // If this request is coming from image resizing worker,
+  // If this request is coming from image resizing Worker,
   // avoid causing an infinite loop by resizing it again:
   if (/image-resizing/.test(event.request.headers.get("via"))) {
     return fetch(event.request)
@@ -164,11 +164,11 @@ __Note:__ Image resizing is not simulated in the preview of in the Workers dashb
 
 </Aside>
 
-The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of image resizing you must deploy the worker script and use it outside of the editor. We apologize for the inconvenience.
+The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of image resizing, you must deploy the Worker script and use it outside of the editor.
 
 #### Error handling
 
-When an image can’t be resized, e.g. because the image doesn’t exist, or resizing parameters were invalid, the response will have an HTTP status indicating an error (e.g. 400, 404, 502, etc.).
+When an image cannot be resized, e.g. because the image does not exist, or resizing parameters were invalid, the response will have an HTTP status indicating an error (e.g. 400, 404, 502, etc.).
 
 By default, the error will be forwarded to the browser, but you can decide how to handle errors. For example, you can redirect the browser to the original, unresized image instead:
 
@@ -196,7 +196,7 @@ if (response.ok) {
 }
 ```
 
-### An example worker
+### An example Worker
 
 Assuming you [set up a Worker](https://developers.cloudflare.com/workers/get-started/guide) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=/uploads/avatar1.jpg`
 
