@@ -14,7 +14,7 @@ The elements that make up a Zero Trust policy are:
 * **Rules**
 * **Criteria**
 
-### Actions
+## Actions
 
 Actions let you define which *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
 
@@ -22,7 +22,7 @@ The action is the first element you'll be asked to configure when you create a Z
 
 These are the action types you can choose from:
 
-* **​Allow**.  
+* **Allow**.  
     The allow action allows users that meet certain criteria to reach an application behind Access. 
 * **Block**.  
     The block action prevents users from reaching an application behind Access. 
@@ -31,22 +31,13 @@ These are the action types you can choose from:
 * **Service Auth**.  
     Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
 
-**Note.** When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If Always use HTTPS is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
+<Aside type='note'>
 
-**Order of Execution**
-Policies will be evaluted based on their Action Type and Ordering. Bypass and Service are evaluated first based on their order. Then Block and Allow are evaluated based on their order.
+When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If Always use HTTPS is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
 
-Example:
-Allow A
-Block B
-Service Auth C
-Bypass D
-Allow E
+</Aside>
 
-Will execute in the following order:
-Service Auth C->Bypass D->Allow A-Block >B->Allow E
-
-### Rules
+## Rules
 
 Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need. 
 
@@ -56,7 +47,7 @@ These are the rule types you can choose from:
 | ------- | ------- | ------- |
 | The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclude criteria won’t be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
 
-### Criteria
+## Criteria
 
 When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`. 
 
@@ -77,7 +68,7 @@ Here is a list of all the criteria you can apply:
 * **Login Method** - checks the identity provider used at the time of login.
 
 
-### Example scenarios
+## Example scenarios
 
 
 | Action | Rule | Criteria |
@@ -99,3 +90,17 @@ Here is a list of all the criteria you can apply:
 | Block  | Include | `Everyone` |
 
 **Result**: this configuration blocks every request to the application.
+
+## Order of execution
+
+Policies are evaluted based on their action type and ordering. Bypass and Service Auth policies are evaluated first based on their order. Then, Block and Allow policies are evaluated based on their order.
+
+For example, if you have a list of policies that reflects the following:
+
+* Allow A
+* Block B
+* Service Auth C
+* Bypass D
+* Allow E
+
+The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
