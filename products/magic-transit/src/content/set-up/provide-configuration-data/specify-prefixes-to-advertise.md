@@ -33,7 +33,7 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 
 ## Border Gateway Protocol (BGP) control for advertisements
 
-Use BGP to control the status of your prefix — advertised or withdrawn — from Cloudflare's edge for more flexibility and control over your routes. The BGP controlled advertisement system works by establishing BGP sessions to Cloudflare's route reflector devices, which propagate BGP routes globally across all the locations at Cloudflare's edge.
+Use BGP to control the status of your prefix — advertised or withdrawn — from Cloudflare's edge for more flexibility and control over your routes. The BGP controlled advertisement system works by establishing BGP sessions to Cloudflare's routing endpoints, which propagate BGP routes globally across all the locations at Cloudflare's edge.
 
 To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
 
