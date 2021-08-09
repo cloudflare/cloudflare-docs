@@ -18,7 +18,7 @@ For additional guidance and diagrams, refer to [Best practices for Railgun with 
 
 ## Set up Railgun in front of a load balancer
 
-We recommend that you put Railgun **in front of** your load balancer so the load balancer can handle HTTP connections normally. This option provides a much simpler setup because it is difficult to load balancing long-lived TLS connections between the sender and listener.
+We recommend that you put Railgun in front of your load balancer so the load balancer can handle HTTP connections normally. This option provides a much simpler setup because it is difficult to load balancing long-lived TLS connections between the sender and listener.
 
 Use the same load balancer settings as if Railgun were not in place. For example, enable HTTP keep-alive connections and set them to a 90-second timeout, since Railgun is working as an HTTP reverse proxy.
 
