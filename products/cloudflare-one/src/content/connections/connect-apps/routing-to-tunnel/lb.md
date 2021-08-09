@@ -38,3 +38,27 @@ $ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load bal
 ## Optional: Configure additional Cloudflare settings
 
 The application will default to the Cloudflare settings of the hostname in your account that includes the Cloudflare Tunnel Load Balancer records, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
+
+## Known limitations
+
+### Monitors and TCP Tunnel origins
+
+If you have a tunnel to a port or ssh port, you **cannot** run a TCP health check.
+
+Instead, set up a health check endpoint in `cloudflared` — for example, an ingress entry that returns a fixed http status response — and create an **HTTP** [monitors](https://developers.cloudflare.com/load-balancing/understand-basics/monitors) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
+
+### Named Tunnels and replicas
+
+If you see dropped sessions when using Named Tunnels [running as replicas](/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas), you will need to either enable Local Traffic Management or set up each named tunnel as a separate origin.
+
+This issue is caused by how our load balancers identify tunnels. A named tunnel ID will be treated as a single origin (regardless of the number of replicas), meaning that [Session Affinity](https://developers.cloudflare.com/load-balancing/understand-basics/session-affinity) will not be able to distinguish between different replicas and may direct end-user requests to the incorrect origin server.
+
+### Local connection preference
+
+If you notice traffic imbalances across origin servers in different locations, you may have to adjust your load balancer setup. 
+
+Currently, `cloudflared` connections give preference to whichever data center was associated with the end user's first request. This behavior can impact how connections are weighted and traffic is distributed.
+
+The solution depends on the type of tunnel being used:
+- If running Classic Tunnels, put your origins in different pools
+- If running Named Tunnels, set each one up as a different origin
