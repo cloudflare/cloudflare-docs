@@ -45,7 +45,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > Account Home > **Pages** dashboard and selecting **Create a project**.
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**.
 
 You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
 
@@ -77,6 +77,12 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
 Additionally, you will have access to [preview deployments](/platform/preview-deployments), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+
+<Aside type="note">
+
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
+
+</Aside>
 
 
 ## Learn more
