@@ -79,9 +79,9 @@ Type   | 32-bit | 64-bit |
 Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
 
 1. Open PowerShell.
-2. Change to your Downloads directory.
-3. Optional: Rename the executable to `cloudflared.exe`.
-3. Run .\cloudflared.exe --version --- it should output the version of cloudflared. (Note: `cloudflared.exe could be cloudflared-windows-amd64.exe or cloudflared-windows-386.exe if you haven't renamed it`).
+1. Change to your Downloads directory.
+1. (Optional) Rename the executable to `cloudflared.exe`.
+1. Run `.\cloudflared.exe --version`. It should output the version of `cloudflared`. Note that `cloudflared.exe` could be `cloudflared-windows-amd64.exe` or `cloudflared-windows-386.exe` if you haven't renamed it.
 
 <Aside>
 
