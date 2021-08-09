@@ -198,7 +198,7 @@ if (response.ok) {
 
 ### An example worker
 
-Assuming you [set up a worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=/uploads/avatar1.jpg`
+Assuming you [set up a Worker](https://developers.cloudflare.com/workers/get-started/guide) on `https://example.com/image-resizing` to handle URLs like this: `https://example.com/image-resizing?width=80&image=/uploads/avatar1.jpg`
 
 ```js
 addEventListener("fetch", event => {
