@@ -33,5 +33,31 @@ order: 1
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>
+                2021-08-09
+            </td>
+            <td>
+                2021-08-16
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …603649a2
+            </td>
+            <td>
+                100210
+            </td>
+            <td>
+                Laravel - Code Injection - CVE-2021-3129
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
     </tbody>
 </table></TableWrap>
