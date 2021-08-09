@@ -54,7 +54,7 @@ This mode is best suited for organizations that only want to apply DNS filtering
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- | 
-| Yes | No | DNS policies | DNS policies, HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP, device posture |
+| No | Yes | HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP for traffic sent through localhost proxy|
 
 This mode is best suited for organizations that want to filter traffic directed to specific applications. 
 
