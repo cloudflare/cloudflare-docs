@@ -11,6 +11,7 @@ Jekyll is an open-source framework for creating websites, based around Markdown 
 If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migration guide](/pages/migrating-jekyll-from-github-pages/).
 
 </Aside>
+
 ## Installing Jekyll
 
 Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation, like `rbenv`, to install Jekyll.

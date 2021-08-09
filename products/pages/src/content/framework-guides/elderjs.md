@@ -69,7 +69,7 @@ Additionally, you will have access to [preview deployments](/platform/preview-de
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
 

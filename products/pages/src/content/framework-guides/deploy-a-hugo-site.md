@@ -176,7 +176,7 @@ After completing configuration, click the **Save and Deploy** button. You should
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
 

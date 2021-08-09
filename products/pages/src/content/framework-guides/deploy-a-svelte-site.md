@@ -11,7 +11,7 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 
 <Aside type="warning">
 
-**Note:** At the time of publication, SvelteKit is still in beta. However, the Svelte team is confident that the steps below are stable. This guide will be updated as needed, both during and after the beta phase.
+**Note:** At this guide's time of publication, SvelteKit is still in beta. However, the Svelte team is confident that the steps below are stable. This guide will be updated as needed, both during and after the beta phase.
 
 </Aside>
 
@@ -117,7 +117,7 @@ Additionally, you will have access to [preview deployments](/platform/preview-de
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
 
