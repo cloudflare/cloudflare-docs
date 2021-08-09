@@ -35,16 +35,16 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-08-02
+                2021-08-09
             </td>
             <td>
-                2021-08-09
+                2021-08-16
             </td>
             <td>
                 Specials
             </td>
             <td>
-                N/A
+                TBC
             </td>
             <td>
                 100210
