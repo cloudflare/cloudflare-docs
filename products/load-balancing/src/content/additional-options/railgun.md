@@ -8,7 +8,7 @@ title: Railgun
 
 [**Railgun**](https://developers.cloudflare.com/railgun) is a web proxy system that allows dynamic content for a website — such as news sites or personalized content — to be cached while also allowing changes to the site to take effect almost instantly. Railgun is currently available to customers with a Business or Enterprise plan or via one of Cloudflare’s Optimised Partners.
 
-By adding a load balancer to Railgun, you speed up connections between Cloudflare datacenters and DNS origin servers so that uncacheable requests have minimal latency.
+By adding a load balancer to Railgun, you speed up connections between Cloudflare data centers and DNS origin servers so that uncacheable requests have minimal latency.
 
 <Aside type="note">
 
