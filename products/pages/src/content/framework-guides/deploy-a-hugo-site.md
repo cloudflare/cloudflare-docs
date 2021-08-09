@@ -4,9 +4,9 @@ pcx-content-type: how-to
 
 # Deploy a Hugo site
 
-Hugo is a tool for generating static sites, written in Go. It's incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
+Hugo is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
 
-In this guide, you'll create a new Hugo application and deploy it using Cloudflare Pages. We'll be the `hugo` CLI to create a new Hugo site.
+In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will use the `hugo` CLI to create a new Hugo site.
 
 ## Installing Hugo
 
@@ -14,17 +14,17 @@ First, install the Hugo CLI, using the specific instructions for your operating 
 
 ### Linux
 
-Your Linux distro's package manager may include Hugo. If this is the case, you can install it directly using your distro's package manager -- for instance, in Ubuntu:
+Your Linux distro's package manager may include Hugo. If this is the case, install it directly using your distro's package manager -- for instance, in Ubuntu, run the following command:
 
 ```sh
 $ sudo apt-get install hugo
 ```
 
-If your package manager doesn't include Hugo or you'd like to download a release directly, see the "Manual" section below.
+If your package manager does not include Hugo or you would like to download a release directly, refer to the [**Manual**](/framework-guides/deploy-a-hugo-site#manual-installation) section.
 
 ### Homebrew (macOS)
 
-If you use the package manager [Homebrew](https://brew.sh), you can use `brew install` to install Hugo:
+If you use the package manager [Homebrew](https://brew.sh), run the `brew install` command in your terminal to install Hugo:
 
 ```sh
 $ brew install hugo
@@ -32,7 +32,7 @@ $ brew install hugo
 
 ### Windows (Chocolatey)
 
-If you use the package manager [Chocolatey](https://chocolatey.org/), you can use `choco install` to install Hugo:
+If you use the package manager [Chocolatey](https://chocolatey.org/), run the `choco install` command in your terminal to install Hugo:
 
 ```sh
 $ choco install hugo --confirm
@@ -42,17 +42,17 @@ $ choco install hugo --confirm
 
 The Hugo GitHub repository contains pre-built versions of the Hugo command-line tool for various operating systems, which can be found on [the Releases page](https://github.com/gohugoio/hugo/releases).
 
-For more instruction on installing these releases, see [Hugo's install guide](https://gohugo.io/getting-started/installing/).
+For more instruction on installing these releases, refer to [Hugo's install guide](https://gohugo.io/getting-started/installing/).
 
 ## Creating a new project
 
-With Hugo installed, you can create a new project using `hugo new`:
+With Hugo installed, create a new project by running the `hugo new` command in your terminal:
 
 ```sh
 $ hugo new site my-hugo-site
 ```
 
-Hugo sites use _themes_ to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, we'll pick the [Terminal theme](https://themes.gohugo.io/hugo-theme-terminal/) and install it:
+Hugo sites use themes to customize the look and feel of the statically built HTML site. There are a number of themes available at [themes.gohugo.io](https://themes.gohugo.io) -- for now, use the [Terminal theme](https://themes.gohugo.io/hugo-theme-terminal/) by running the following commands in your terminal:
 
 ```sh
 $ cd my-hugo-site
@@ -61,7 +61,7 @@ $ git submodule add https://github.com/panr/hugo-theme-terminal.git themes/termi
 $ git submodule update --init --recursive
 ```
 
-You should also copy the default configuration provided by the theme into the `config.toml` file. Take the following information and customize it per your site's needs:
+You should also copy the default configuration provided by the theme into the `config.toml` file in your project's directory. Take the following information and customize it per your site's needs:
 
 ```toml
 baseurl = "/"
@@ -140,17 +140,17 @@ paginate = 5
 
 ## Creating a post
 
-Finally, you can create a new post to give your Hugo site some initial content. Run the `hugo new` command to generate a new post:
+Create a new post to give your Hugo site some initial content. Run the `hugo new` command in your terminal to generate a new post:
 
 ```sh
 $ hugo new posts/hello-world.md
 ```
 
-Inside of `hello-world.md`, you can add some initial content to flesh out your post. Make sure to remove the `draft` line in your post's frontmatter when you're ready to publish the post: any posts with `draft: true` set will be skipped by Hugo's build process.
+Inside of `hello-world.md`, add some initial content to create your post. Remove the `draft` line in your post's frontmatter when you are ready to publish the post. Any posts with `draft: true` set will be skipped by Hugo's build process.
 
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
 
 ```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
@@ -160,7 +160,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+Deploy your site to Pages by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
@@ -172,15 +172,16 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 </TableLayout>
 
-Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `hugo`, your project dependencies, and building your site, before deploying it.
+After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hugo` and your project dependencies, and building your site, before deploying it.
 
-<Aside>
+<Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/get-started).
 
 </Aside>
 
-Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Using a specific Hugo version
 
@@ -190,4 +191,4 @@ For example, `HUGO_VERSION`: `0.81.0`
 
 ## Learn more
 
-Congrats, you've deployed your Hugo site on Cloudflare Pages! To learn more about what you can do with the platform, [check out our How-To section](/how-to).
+By completing this guide, you have successfully deployed your Hugo site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
