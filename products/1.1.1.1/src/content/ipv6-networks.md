@@ -5,13 +5,19 @@ pcx-content: reference
 
 # Support for IPv6-only networks
 
-IPv4 addresses are eventually going to be substituted by IPv6. In the meantime, networks still need to support both. Networks usually deploy something called a dual-stack network to manage this transition. In dual-stack networks, the network expects only IPv6 addresses but still has a way to translate IPv4 addresses if it sees one. One of the components of a dual-stack network is DNS64. DNS64 allows configuring a DNS resolver to synthesize IPv6 addresses from IPv4 answers. DNS64 only does that when an AAAA record does not exist for a domain.
+While network infrastructure is shifting towards IPv6-only networks, providers still need to support IPv4 addresses. Dual-stack networks are networks in which all nodes have both IPv4 and IPv6 connectivity capabilities, and can therefore understand both IPv4 and IPv6 packets. 
+
+1.1.1.1 supports DNS64, a mechanism that synthesizes AAAA records from A records when no AAAA records exist. DNS64 allows configuring a DNS resolver to synthesize IPv6 addresses from IPv4 answers.
 
 This document explains who should use DNS64 as well as how to configure and test it.
 
-## Who is this for?
+<Aside>
 
-You should only enable DNS64 if you are managing or using an IPv6-only network. While the resolver can synthesize IPv6 addresses, it cannot synthesize their record signatures for domains using DNSSEC, so a DNS client that is able to revalidate signatures would reject these extra records without signatures. A good tradeoff is to use a secure protocol such as DNS over TLS, or DNS over HTTPS between the client and the resolver to prevent tampering.
+You should only enable DNS64 if you are managing or using an IPv6-only network. While the resolver can synthesize IPv6 addresses, it cannot synthesize their record signatures for domains using DNSSEC, so a DNS client that is able to revalidate signatures would reject these extra records without signatures.
+
+A good tradeoff is to use a secure protocol such as DNS over TLS, or DNS over HTTPS between the client and the resolver to prevent tampering.
+
+</Aside>
 
 ## Configure DNS64
 

@@ -2,7 +2,7 @@
 pcx-content: how-to
 ---
 
-# Router setup instructions
+# Router
 
 Follow these steps to configure 1.1.1.1 for Families:
 

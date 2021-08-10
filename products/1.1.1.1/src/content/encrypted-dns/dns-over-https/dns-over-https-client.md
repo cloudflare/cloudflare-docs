@@ -5,7 +5,7 @@ pcx-content: reference
 
 # Connect to 1.1.1.1 using DoH clients
 
-There are several DNS over HTTPS (DoH) clients you can use to connect to 1.1.1.1 in order to protect your DNS queries from privacy intrusions and tampering.
+There are several DoH clients you can use to connect to 1.1.1.1.
 
 ## cloudflared
 
