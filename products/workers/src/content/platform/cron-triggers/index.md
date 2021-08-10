@@ -66,9 +66,15 @@ Here are some common time intervals that may be useful for setting up your Cron 
 
 </Definitions>
 
+<Aside type="note" header="Testing Cron Triggers and potential delays">
+
+A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the edge.
+
+</Aside>
+
 ## Viewing past events
 
-Users can view the execution history of their Cron Triggers on the Past Events section of the [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api).
+Users can review the execution history of their Cron Triggers on the Past Events section of the [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api).
 
 ![workers-past-events](./media/workers-past-events.png)
 
