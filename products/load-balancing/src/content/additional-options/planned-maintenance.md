@@ -7,9 +7,9 @@ pcx-content-type: how-to
 
 When you change application settings or add new assets, you will likely want to make these changes on one origin server at a time. Going server by server reduces the risk of changes and ensures a more consistent user experience.
 
-To take servers out of rotation **gradually** (important for session-based load balancing), [enable origin drain](#gradual-rotation) on your load balancer. This option is only available for [proxied load balancers (orange-clouded)](/understand-basics/proxy-modes).
+To take servers out of rotation gradually (important for session-based load balancing), [enable origin drain](#gradual-rotation) on your load balancer. This option is only available for [proxied load balancers (orange-clouded)](/understand-basics/proxy-modes).
 
-To direct traffic away from origin server **immediately**, [adjust settings on the pool or monitor](#immediate-rotation).
+To direct traffic away from your origin server immediately, [adjust settings on the pool or monitor](#immediate-rotation).
 
 <Aside type="note">
 
@@ -21,7 +21,7 @@ If you want to divert traffic from an origin to prevent it from becoming unhealt
 
 Before disabling any origin server, review the settings for any affected load balancers and pools. 
 
-If a pool falls below it's **Health Threshold**, it will be considered **Unhealthy** and — depending on the load balancer setup and steering policy — a load balancer may begin routing traffic away from that pool.
+If a pool falls below its **Health Threshold**, it will be considered **Unhealthy** and — depending on the load balancer setup and steering policy — a load balancer may begin routing traffic away from that pool.
 
 ## Gradual rotation
 
@@ -31,7 +31,7 @@ Origin drain is only available for [proxied load balancers (orange-clouded)](/un
 
 </Aside>
 
-With [session-based load balancing](/understand-basics/session-affinity), it's important to direct all requests from a particular end user to a specific origin server. Otherwise, information about the user session — such as items in their shopping cart — may be lost and lead to negative business outcomes.
+With [session-based load balancing](/understand-basics/session-affinity), it is important to direct all requests from a particular end user to a specific origin server. Otherwise, information about the user session — such as items in their shopping cart — may be lost and lead to negative business outcomes.
 
 To remove a server from rotation while still preserving session continuity, set up **Origin drain** on a load balancer:
 

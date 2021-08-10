@@ -17,11 +17,11 @@ Before you begin, be sure you have the following:
 - Access to Google Cloud Platform (GCP)
 - Access to AWS
 - Docker image
-- A domain on Cloudflare (on the Free, Pro, or Business plan) with a Load Balancing subscription, configurable in the Traffic app
+- A domain on Cloudflare (on the Free, Pro, or Business plan) with a Load Balancing subscription, configurable in **Traffic** on the dashboard
 
 ## Deploying a containerized web application on Google Kubernetes Engine
 
-We will be using [Google Cloud Shell](https://cloud.google.com/shell/) interface, which comes preinstalled with the gcloud console, docker, and kubectl command-line tools used below. If you use Cloud Shell, you don’t need to install these command-line tools on your workstation.
+You will be using [Google Cloud Shell](https://cloud.google.com/shell/) interface, which comes preinstalled with the gcloud console, docker, and kubectl command-line tools used below. If you use Cloud Shell, you do not need to install these command-line tools on your workstation.
 
 ### Getting started
 
@@ -43,5 +43,5 @@ Set default configuration values by running the following commands:
    - It may take several minutes for the cluster to be created. Once the command is complete, run the following command to see the cluster’s three worker VM instances: `gcloud compute instances list`
 
 1. Deploy the application to the cluster. Use the kubectl command-line tool to deploy and manage applications on a Kubernetes Engine cluster.
-   You can create a simple nginx docker container, for example, using the following command* (camilia-nginx* is the name for the deployment):
+   You can create a simple nginx docker container, for example, using the following command (*camilia-nginx* is the name for the deployment):
    `kubectl run camilia-nginx --image=nginx --port 80`
