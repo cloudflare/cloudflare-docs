@@ -18,7 +18,7 @@ You should already have an existing project deployed on Vercel that you would li
 
 To move your application to Cloudflare Pages, you will need to find your build command and build directory. Cloudflare Pages will use this information to build your application and deploy it.
 
-In your Vercel Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub Repo.
+In your Vercel Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub repository.
 
 ![Selecting a site in the Vercel Dashboard](./vercel-deploy-1.png)
 
