@@ -9,12 +9,6 @@ Cloudflare for Teams offers IT administrators a way to ensure users have access 
 
 You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user’s request is headed to your organization’s account for the SaaS application, and to deny access if the request is headed to an account that does not match the information in the header.
 
-<Aside type='note'>
-
-In addition to adding custom headers for the purposes of tenant control, you can also add custom headers to an [isolate action](/policies/filtering/http-policies#isolate).
-
-</Aside>
-
 Not all SaaS applications support tenant control. Examples of common applications that do support tenant control through the injection of HTTP headers are:
 
 * Microsoft 365
