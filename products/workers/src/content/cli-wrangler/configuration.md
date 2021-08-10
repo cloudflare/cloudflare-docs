@@ -410,7 +410,7 @@ command = "npm install && npm run build"
 format = "service-worker"
 ```
 
-#### `[build]`
+##### `[build]`
 
 <Definitions>
 
@@ -428,7 +428,7 @@ format = "service-worker"
 
 </Definitions>
 
-#### `[build.upload]`
+##### `[build.upload]`
 
 <Definitions>
 
