@@ -15,13 +15,13 @@ pcx-content-type: configuration
 
 ```js
 addEventListener('scheduled', event => {
-    event.waitUntil(triggerEvent(event.request))
+    event.waitUntil(triggerEvent(event.scheduledTime))
 })
 
-async function triggerEvent(request) {
+async function triggerEvent(scheduledTime) {
     // Fetch some data
     // Update API
-    return new Response("OK")
+    console.log("cron processed")
 }
 ```
 
@@ -35,4 +35,11 @@ name = "worker"
 
 [triggers]
 crons = ["0 * * * *"] 
+```
+
+You also can set a different Cron Trigger for each environment in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+
+```toml
+[env.dev.triggers]
+crons = ["0 * * * *"]
 ```
