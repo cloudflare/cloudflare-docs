@@ -1,4 +1,4 @@
-# Cloudflare Spectrum docs
+# Cloudflare Spectrum docs.
 
 [View docs →](https://developers.cloudflare.com/spectrum)
 

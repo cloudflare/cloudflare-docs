@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Analytics
 
-Cloudflare measures the following metrics for every connection:
+Cloudflare measures the following metrics for every connection :
 
 <TableWrap>
 

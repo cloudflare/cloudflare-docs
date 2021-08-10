@@ -1,4 +1,4 @@
-# Cloudflare Rules docs.
+# Cloudflare Rules docs
 
 [View docs →](https://developers.cloudflare.com/rules)
 
