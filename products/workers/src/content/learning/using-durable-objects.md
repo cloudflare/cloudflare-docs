@@ -240,9 +240,10 @@ The easiest way to upload Workers that implement or bind to Durable Objects is t
 $ wrangler generate <worker-name> https://github.com/cloudflare/durable-objects-template
 ```
 
-This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to be able to bundle external dependencies with your code using Rollup or Webpack, or to use CommonJS modules rather than ES modules, you may want to try one of our other starter templates instead:
+This will create a directory for your project with basic configuration and a single JavaScript source file already set up. If you want to use TypeScript, or be able to bundle external dependencies with your code using Rollup or Webpack, or to use CommonJS modules rather than ES modules, you may want to try one of the other starter templates instead:
 
 * [Durable Objects Rollup ES Modules template](https://github.com/cloudflare/durable-objects-rollup-esm)
+* [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm)
 * [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
 
 The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using `wrangler publish`.
