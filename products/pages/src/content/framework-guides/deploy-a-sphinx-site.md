@@ -10,18 +10,17 @@ In this guide, you will create a new Sphinx project and deploy it using Cloudfla
 
 ## Prerequisites
 
-  * Python 3 - Sphinx is based on Python, therefore you must have Python installed
+  * Python 3 - Sphinx is based on Python, therefore you must have Python installed.
 
-  * [pip](https://pypi.org/project/pip/) - The PyPA recommended tool for installing Python packages
+  * [pip](https://pypi.org/project/pip/) - The PyPA recommended tool for installing Python packages.
 
-  * [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects
+  * [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects.
 
 <Aside type="note">
 
 If you are already running a version of Python 3.7, ensure that Python version 3.7 is also installed on your computer before you begin this guide. Python 3.7 is the latest version supported by Cloudflare Pages.
  
 </Aside>
-
 
 The latest version of Python 3.7 is 3.7.11:
 
@@ -55,7 +54,7 @@ $ pipenv --version
 pipenv, version 2021.5.29
 ```
 
-### Creating a Sphinx project directory
+### Installing Sphinx
 
 From your terminal, run the following commands to create a new directory and navigate to it:
 
