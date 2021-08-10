@@ -406,7 +406,11 @@ Once you've pushed your project to GitHub, go to the Pages UI, and create a new 
 
 When your site has been deployed, you'll receive a unique URL to view it in production.
 
-_A note about automatic deployments:_ at launch, Cloudflare Pages does not have support for webhooks. This means that you'll need to trigger a deploy manually from the Cloudflare Pages UI when you make a change to your Sanity dataset. Support for this feature will be available in the future, and this tutorial will be updated accordingly!
+In order to automatically deploy your project when your Sanity.io data changes, you can use [Deploy Hooks](/platform/deploy-hooks). Create a new Deploy Hook URL in your Pages project settings. In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below:
+
+![Creating a deploy hook in Sanity.io](./hooks.png)
+
+Now, when you make a change to your Sanity.io dataset, Sanity will make a request to your unique Deploy Hook URL, which will begin a new Cloudflare Pages deploy. By doing this, your Pages application will remain up-to-date as you add new blog posts, or edit existing ones.
 
 ## Conclusion
 

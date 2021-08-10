@@ -54,7 +54,7 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
 
 <RegionMapping/>
 
-For more details on working with regions and region codes, see [Region Mapping API](../region-mapping-api).
+For more details on working with regions and region codes, refer to [Region Mapping API](/reference/region-mapping-api).
 
 ## Proximity steering
 

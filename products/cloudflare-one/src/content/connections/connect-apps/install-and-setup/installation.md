@@ -76,20 +76,12 @@ Alternatively, you can [download the latest Darwin amd64 release directly](https
 
 Type   | 32-bit | 64-bit |
 -------|----------------|-----|
-ZIP | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
+Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
 
-Once `cloudflared` is installed:
-1. Navigate to the **Downloads** folder.
-2. Right-click on the ZIP folder and select `Extract All` to extract the executable.
-3. Next, open PowerShell.
-4. Navigate to the same Downloads folder.
-5. Run the `cloudflared.exe` executable as an administrator to confirm the installation, replacing the path in the example below with the specifics of your directory:
-
-```bash
-PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
-```
-
-The command above should output the version of `cloudflared` if successfully installed.
+1. Open PowerShell.
+1. Change to your Downloads directory.
+1. (Optional) Rename the executable to `cloudflared.exe`.
+1. Run `.\cloudflared.exe --version`. It should output the version of `cloudflared`. Note that `cloudflared.exe` could be `cloudflared-windows-amd64.exe` or `cloudflared-windows-386.exe` if you haven't renamed it.
 
 <Aside>
 
