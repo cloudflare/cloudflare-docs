@@ -8,7 +8,7 @@ hidden: true
 
 Browser Isolation currently depends on third-party cookies to maintain a short-lived session between your local browser and the remote isolated browser.
 
-Each web browser treats third-party cookies differently, and some browsers (for example Chrome and Firefox) may only present this error while incognito / private browsing mode is active. Depending on how your browser is configured, you may need to enable third-party cookies to access isolated websites.
+Each web browser treats third-party cookies differently, and some browsers (for example, Chrome and Firefox) may only present this error while incognito / private browsing mode is active. Depending on how your browser is configured, you may need to enable third-party cookies to access isolated websites.
 
 Follow these instructions to enable third-party cookies in your browser:
 
