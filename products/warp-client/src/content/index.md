@@ -1,40 +1,25 @@
 ---
-title: Home
+title: Overview
 order: 0
 ---
 
-# Cloudflare WARP client documentation
-
-The Cloudflare WARP client allows individuals or organizations to have a faster, more secure and private experience online. Cloudflare WARP for Teams allows organizations to keep their employees and data safe no matter where their device is.
+# Cloudflare WARP client
 
 <Aside>
+
 For more information on how to use WARP to enhance your Teams experience, please check out the <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp">Cloudflare for Teams documentation</a>.
+
 </Aside>
 
-Cloudflare WARP supports the following services depending on how you configure it:
+The Cloudflare WARP client allows individuals and organizations to have a faster, more secure and more private experience online. With the WARP client, anyone can take advantage of the speed, security, and privacy of the 1.1.1.1 DNS service on their phone. In addition to the 1.1.1.1 mode, the WARP client supports other services that extend performance, security and privacy well beyond DNS.
 
-## 1.1.1.1
+Choose the mode that best fits your needs, and make your Internet faster and more secure today:
 
-1.1.1.1 is the fastest and most private DNS directory you can configure for all your devices. It also allows you to add security to your internet connection, because it gives you the option to send your DNS requests over DNS-over-HTTPS or DNS-over-TLS. This will ensure nobody will be able to eavesdrop on you.
+* [1.1.1.1](/overview#1.1.1.1)
+* [1.1.1.1 with WARP](/overview#1.1.1.1-with-warp)
+* [WARP via Local Proxy](/overview#warp-via-local-proxy)
+* [WARP+](/overview#warp+)
+* [WARP Unilimited](/overview#warp-unlimited)
 
- Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, privacy-first consumer DNS service](https://blog.cloudflare.com/announcing-1111/) and [Introducing 1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/)
 
-## WARP
-
-The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt all of the traffic from your device and send it directly to Cloudflare’s edge, ensuring that no one in between is snooping on what you're doing. If the site you are visiting is already a Cloudflare customer, the content is immediately sent down to your device. If they aren't on our network, we use our global network of data centers to devise the shortest path to whomever you are talking to.
-
- Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/)
-
-  <Aside>
- 
- **WARP** does not provide anonymity. It is not designed to prevent servers you communicate with from identifying you, or to allow you to pretend to be accessing the Internet in a different country than you are currently in.
-
- </Aside>
-
-## WARP+
-
-While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/), WARP+ will route your traffic around congested internet route and improve overall end to end performance.
- 
-## WARP Unlimited
-
-WARP Unlimited is our monthly subscription offering for WARP+. For the time being, WARP Unlimited can only be purchased via your iOS and Android device.
+![WARP illustration](/static/1.1.1.1.png)
