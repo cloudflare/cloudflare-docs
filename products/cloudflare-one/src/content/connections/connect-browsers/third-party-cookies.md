@@ -16,7 +16,7 @@ Follow these instructions to enable third-party cookies in your browser:
 
 1. Open Chrome.
 1. At the top right, click the three-dot menu and go to **Settings**.
-1. Scroll down to Privacy and security, click Cookies and other site data.
+1. Scroll down to **Privacy and security**, click **Cookies and other site data**.
 1. Click **See all cookies and site data** > **Remove all**.
 1. Confirm by clicking **Clear all**.
 
@@ -33,7 +33,7 @@ Follow these instructions to enable third-party cookies in your browser:
 
 1. Open Safari.
 1. Go to **Preferences** > **Privacy**.
-1. Under the Cookies and website data section, un-select both:
+1. Under the **Cookies and website data** section, un-select both:
     * Prevent cross-site tracking
     * Block all cookies
 1. Close the Preferences window.
