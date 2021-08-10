@@ -7,11 +7,11 @@ pcx-content-type: how-to
 
 Cloudflare for Teams offers IT administrators a way to ensure users have access to SaaS applications for corporate use, while at the same time blocking access to their personal accounts. This helps prevent the loss of sensitive or confidential data from a corporate network.
 
-You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user’s request is headed to your organization’s account for the SaaS application, and to deny access if the request is headed to an account that doesn’t match the information in the header.
+You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user’s request is headed to your organization’s account for the SaaS application, and to deny access if the request is headed to an account that does not match the information in the header.
 
-<Aside>
+<Aside type='note'>
 
-In addition to adding custom headers for the purposes of tenant control, you can also add a custom header to an [isolate action](/policies/filtering/http-policies#isolate).
+In addition to adding custom headers for the purposes of tenant control, you can also add custom headers to an [isolate action](/policies/filtering/http-policies#isolate).
 
 </Aside>
 
@@ -36,8 +36,6 @@ This is a walkthrough of how to add custom headers for Microsoft 365. The proced
 1. Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
     * Custom Header Name: Restrict-Access-To-Tenants
     * Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
-
-    
 
 1. Click **Create policy**.
 
