@@ -4,7 +4,7 @@ pcx-content-type: how-to
 hidden: true
 ---
 
-# Enabling third-party cookies
+# Enable third-party cookies
 
 Browser Isolation currently depends on third-party cookies to maintain a short-lived session between your local browser and the remote isolated browser.
 
