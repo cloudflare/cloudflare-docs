@@ -53,7 +53,7 @@ We review these submissions to improve Cloudflare’s categorization.
 
 ## DNS over HTTPS (DoH)
 
-If you have a DoH-compliant client, you can set up 1.1.1.1 for Families to encrypt your traffic over HTTPS. This prevents spoofing and tracking by malicious actors, advertisers, ISPs, and others. For more information on DoH, refer to [the Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
+If you have a DoH-compliant client, you can set up 1.1.1.1 for Families to encrypt your traffic over HTTPS. This prevents spoofing and tracking by malicious actors, advertisers, ISPs, and others. For more information on DoH, refer to the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
 
 To configure an encrypted connection to 1.1.1.1 for Families, select one of the following URLs:
 

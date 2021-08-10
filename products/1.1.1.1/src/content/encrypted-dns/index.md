@@ -12,9 +12,3 @@ To prevent this and secure your connections, 1.1.1.1 supports DNS over TLS (DoT)
 Pick one of these standards to start.
 
 <DirectoryListing path="/encrypted-dns"/>
-
-<Aside type="note">
-
-If you are trying to configure your browser to use DNS over HTTPS, please refer to our documentation regarding how to set up [Windows](/setup-1.1.1.1/windows) and [macOS](/setup-1.1.1.1/macos).
-
-</Aside>

@@ -4,7 +4,7 @@ pcx-content: how-to
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 
-# MacOS
+# macOS
 
 Follow these steps to configure 1.1.1.1 for Families:
 
