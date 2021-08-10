@@ -172,7 +172,7 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 For security purposes, CAs issue intermediate certificates for signing website certificates. Intermediate certificates provide a means for the CA to revoke a single intermediate certificate, thus affecting only a small subset of website certificates.
 
 ## IP address
-The Internet Protocol solves this by assigning IP numbers to every device accessing the Internet.
+IP stands for Internet Protocol, which is the set of rules that makes it possible for devices to communicate over the Internet. With billions of people accessing the Internet every day, unique identifiers are necessary to keep track of who is doing what. The Internet Protocol solves this by assigning IP numbers to every device accessing the Internet. Every assigned number is an IP address.
 
 **Relevant links:** [What is my IP address?](https://www.cloudflare.com/learning/dns/glossary/what-is-my-ip-address/)
 
