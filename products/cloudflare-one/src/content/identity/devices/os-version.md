@@ -16,3 +16,22 @@ To enable the OS version check:
 1. Enter a descriptive name for the check.
 1. Combine the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.
 1. Click **Save**.
+
+## Determine the OS Version
+Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS Version posture check expects.
+
+### On macOS
+1. Open a terminal window
+1. Use the `defaults` command to check for the value of `SystemVersionStampAsString`
+
+```txt
+defaults read loginwindow SystemVersionStampAsString
+```
+
+### On Windows
+1. Open a powershell windows
+1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class
+
+```txt
+(Get-CimInstance Win32_OperatingSystem).version
+```
