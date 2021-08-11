@@ -12,6 +12,12 @@ When device posture checks are configured, users can only connect to a protected
 
 To enable one or more device posture attributes, navigate to **My Team** > **Devices** > **Device posture** on the [Teams Dashboard](https://dash.teams.cloudflare.com) and click **+Add**.
 
+<Aside>
+
+When setting up new device posture checks, we recommend first testing them  without setting any certificate thumbprint or SHA256 checksum values. 
+
+</Aside>
+
 ## Available device posture attributes
 
 <DirectoryListing path="/identity/devices"/>
