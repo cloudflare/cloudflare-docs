@@ -14,7 +14,7 @@ To enable one or more device posture attributes, navigate to **My Team** > **Dev
 
 <Aside>
 
-When setting up new device posture checks, we recommend first testing them  without setting any certificate thumbprint or SHA256 checksum values. 
+When setting up new device posture checks, we recommend first testing them without setting certificate thumbprint or SHA256 checksum values. 
 
 </Aside>
 
