@@ -25,13 +25,13 @@ header: firebase.json
 
 Firebase Hosting does not ask for your build command, so if you are running a standard JavaScript set up, you will probably be using `npm build` or a command specific to the framework or tool you are using (e.g., `ng build`).
 
-Once you have found your build directory and build command, you can move your project to Cloudflare Pages.
+After you have found your build directory and build command, you can move your project to Cloudflare Pages.
 
 ## Creating a new Pages project
 
 If you have not pushed your static site to GitHub before, you should do so before continuing. This will also give you access to features like automatic deployments, and [deployment previews](/platform/preview-deployments).
 
-You can create a new repo by visiting [repo.new](https://repo.new) and following the instructions to push your project up to GitHub.
+You can create a new repository by visiting [repo.new](https://repo.new) and following the instructions to push your project up to GitHub.
 
 Use the [Get started guide](/get-started) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
