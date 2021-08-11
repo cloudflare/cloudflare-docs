@@ -22,6 +22,7 @@ Sitemap: https://developers.cloudflare.com/image-resizing/sitemap.xml
 Sitemap: https://developers.cloudflare.com/load-balancing/sitemap.xml
 Sitemap: https://developers.cloudflare.com/logs/sitemap.xml
 Sitemap: https://developers.cloudflare.com/magic-transit/sitemap.xml
+Sitemap: https://developers.cloudflare.com/magic-firewall/sitemap.xml
 Sitemap: https://developers.cloudflare.com/network-interconnect/sitemap.xml
 Sitemap: https://developers.cloudflare.com/pages/sitemap.xml
 Sitemap: https://developers.cloudflare.com/page-shield/sitemap.xml
