@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # REST API
 
-The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare also supports [deploy hooks](platform/deploy-hooks) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
+The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/platform/deploy-hooks) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
 ## How to use the API
 
