@@ -15,3 +15,15 @@ To enable one or more device posture attributes, navigate to **My Team** > **Dev
 ## Available device posture attributes
 
 <DirectoryListing path="/identity/devices"/>
+
+## Verify device posture checks in the WARP client
+
+On desktop clients, you can always verify which device posture checks are active on your devices. To do that:
+
+1. Open the WARP client.
+1. Go to **Settings** > **Advanced**.
+1. Click on **Device posture information**.
+
+This will show a list of active device posture checks.
+
+   ![Device posture attributes](../../static/documentation/identity/devices/device-posture-client-ui.png)
