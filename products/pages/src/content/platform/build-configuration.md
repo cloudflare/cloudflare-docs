@@ -50,7 +50,7 @@ If you are not using a framework, you may input `exit 0` into the **Build comman
 
 ## Environment variables
 
-If your project makes use of environment variables to build your site, you can provide custom environment variables by going to **Account Home** > **Pages** > **your Pages Project** > **Settings** > **Environment variables**.
+If your project makes use of environment variables to build your site, you can provide custom environment variables by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
 The following system environment variables are injected by default (but can be overridden):
 
