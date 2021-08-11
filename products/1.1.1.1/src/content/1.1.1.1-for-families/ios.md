@@ -4,7 +4,7 @@ pcx-content: tutorial
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 
-# iPhone
+# iOS
 
 ## 1.1.1.1: Faster Internet
 
@@ -27,7 +27,7 @@ You can select between these two options in 1.1.1.1: Faster Internet's settings.
 Your connection to the Internet and your DNS queries are now private and protected. Alternatively, you may want to only encrypt your DNS queries and leave the remaining traffic unencrypted. If this is the case: 
 
 1. Open 1.1.1.1: Faster Internet.
-1. Toggle the WARP button and choose **Switch to DNS only mode**. Alternatively, if the WARP toggle is disconnected, tap the **menu button**.
+1. Toggle the WARP button and choose **Switch to DNS only mode**. If the WARP toggle is disconnected, tap the **menu button**.
 1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1**.
 1. Tap **Advanced** > **Connection options**.
 1. In **DNS settings** > **1.1.1.1 for Families**, select the option you want to use.
