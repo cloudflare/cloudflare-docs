@@ -12,7 +12,7 @@ As a prerequisite, you should have a Cloudflare Workers Sites project, created w
 
 Cloudflare Pages provides built-in defaults for every aspect of serving your site. Currently, you cannot port custom behavior in your Workers script — such as custom caching logic — over to your Cloudflare Pages. If you need that behavior, keep using your Cloudflare Workers application.
 
-If you have not needed to add custom behavior to a Workers Sites template, building a static site with Cloudflare Pages will be easy to do. You will be able to access features like [preview deployments](/platform/preview-deployments) and automatic branch deploys with no extra configuration needed.
+If you did not need to customize a Workers Sites template, migrating your static site to Cloudflare Pages will be easy to do. You will be able to access features like [preview deployments](/platform/preview-deployments) and automatic branch deploys with no extra configuration needed.
 
 ## Removing unnecessary code
 
