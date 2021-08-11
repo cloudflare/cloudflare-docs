@@ -110,7 +110,7 @@ The following limits apply regardless of the plan used.
 | ------------------------------------- | ------ | ------- |
 | [Max object size](#cache-api)         | 512 MB | 512 MB  |
 | [Calls/request](#cache-api)           | 50     | 50      |
-| [Storage limit/request](#cache-api)   | 5 GB   | 5 GB    |
+| [Storage/request](#cache-api)         | 5 GB   | 5 GB    |
 
 </TableWrap>
 
