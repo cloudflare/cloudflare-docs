@@ -18,7 +18,7 @@ To enable the OS version check:
 1. Click **Save**.
 
 ## Determine the OS Version
-Operating system version numbers cna be reported in a few different ways. Below you will find the method required in each OS to match what the OS Version posture check is expecting
+Operating system display version numbers in different ways. This section covers how to retrieve a version number in each OS, in a format matching what the OS Version posture check expects.
 
 ### On macOS
 1. Open a terminal window
