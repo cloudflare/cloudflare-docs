@@ -27,7 +27,7 @@ Try it with one of your projects by replacing `{account_id}`, `{project_name}`, 
 
 ## Examples
 
-The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions on Cloudflare's global network. In the following section are three code examples on how to use the Pages API. To build and deploy these samples, refer to the [Get started guide](https://developers.cloudflare.com/workers/get-started/guide).
+The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions on Cloudflare's global network. The following section includes three code examples on how to use the Pages API. To build and deploy these samples, refer to the [Get started guide](https://developers.cloudflare.com/workers/get-started/guide).
 
 ### Triggering a new build every hour
 
@@ -62,7 +62,7 @@ After you have deployed the JavaScript Worker, set a cron trigger through the Wo
 
 ### Deleting old deployments after a week
 
-Cloudflare Pages hosts and serves all project deployments on preview links. Suppose you want to keep your project private and prevent access to our old deployments. You can use the API to delete deployments after a month, so that they are no longer public online.
+Cloudflare Pages hosts and serves all project deployments on preview links. Suppose you want to keep your project private and prevent access to your old deployments. You can use the API to delete deployments after a month, so that they are no longer public online.
 
 ```js
 const deployments_endpoint =
@@ -80,7 +80,8 @@ async function handleScheduled(request) {
       "content-type": "application/json;charset=UTF-8",
       "X-Auth-Email": email,
       "X-Auth-Key": API_KEY,
-      //Cloudflare recommends you store API keys as secrets using the Workers dashboard or using Wrangler as documented here https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
+      // You should store API keys as secrets using the Workers dashboard or using Wrangler
+      // @see https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
     },
   };
 
