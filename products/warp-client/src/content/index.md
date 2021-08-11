@@ -11,9 +11,7 @@ For more information on how to use WARP to enhance your Teams experience, please
 
 </Aside>
 
-The Cloudflare WARP client allows individuals and organizations to have a faster, more secure and more private experience online. With the WARP client, anyone can take advantage of the speed, security, and privacy of the 1.1.1.1 DNS service on their phone. In addition to the 1.1.1.1 mode, the WARP client supports other services that extend performance, security and privacy well beyond DNS.
-
-Choose the mode that best fits your needs, and make your Internet faster and more secure today:
+The Cloudflare WARP client allows individuals and organizations to have a faster, more secure and more private experience online. Choose the mode that best fits your needs, and make your Internet safer today:
 
 * [1.1.1.1](/overview#1.1.1.1)
 * [1.1.1.1 with WARP](/overview#1.1.1.1-with-warp)
