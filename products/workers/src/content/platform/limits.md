@@ -106,11 +106,11 @@ The following limits apply regardless of the plan used.
 
 <TableWrap>
 
-| Feature                       | Free   | Bundled |
-| ----------------------------- | ------ | ------- |
-| [Max object size](#cache-api) | 512 MB | 512 MB  |
-| [Calls/request](#cache-api)   | 50     | 50      |
-| [Storage limit](#cache-api)   | 5 GB   | 5 GB    |
+| Feature                               | Free   | Bundled |
+| ------------------------------------- | ------ | ------- |
+| [Max object size](#cache-api)         | 512 MB | 512 MB  |
+| [Calls/request](#cache-api)           | 50     | 50      |
+| [Storage/request](#cache-api)         | 5 GB   | 5 GB    |
 
 </TableWrap>
 
