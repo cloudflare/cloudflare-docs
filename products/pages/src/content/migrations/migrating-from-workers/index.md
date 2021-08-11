@@ -32,6 +32,6 @@ If you choose to use a custom domain for your Pages, you can set it to the same 
 
 ## Cleaning up your old application and assigning the domain
 
-After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your project > **Settings** > **Delete**.
+After you have deployed your application, navigate to [Workers](https://dash.cloudflare.com/?to=/:account/workers) and remove your old Workers project by going to your **Workers project** > **Settings** > **Delete**.
 
 With your Workers application removed, requests will go to your Pages application. By completing this guide, you have successfully migrated your Workers Sites project to Cloudflare Pages.
