@@ -10,7 +10,7 @@ Customers with access to the Magic Transit on-demand option can [configure prefi
 
 A common workflow is to enable prefix advertisement during an attack so that you can take advantage of Cloudflare protection and then disable advertisement once the incident is resolved.
 
-To ensure smooth operation in general and simplify the advertisement process during an attack scenario, see [Dynamic advertisement: Best practices](https://developers.cloudflare.com/byoip/dynamic-advertisement/best-practices).
+To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [Dynamic advertisement: Best practices](https://developers.cloudflare.com/byoip/dynamic-advertisement/best-practices).
 
 <Aside type='note' header='Note'>
 

@@ -31,7 +31,7 @@ To accommodate additional header data introduced by encapsulation, the maximum s
 
 Because egress packets are routed via your ISP interface, not Cloudflare, you must set this value at your physical egress interfaces (not the GRE tunnel interfaces).
 
-For instructions, see [Set Maximum Segment Size](/get-started/requirements/#set-maximum-segment-size).
+For instructions, refer to [Set Maximum Segment Size](/get-started/requirements/#set-maximum-segment-size).
 
 </Aside>
 

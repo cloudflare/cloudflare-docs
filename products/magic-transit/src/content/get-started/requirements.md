@@ -24,7 +24,7 @@ Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/
 
 ## Verify Internet Routing Registry entries
 
-Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, see [Verify IRR entries](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
+Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
 
 ## Set maximum segment size
 
