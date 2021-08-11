@@ -73,7 +73,7 @@ Cloudflare always attempts to send traffic over available tunnel routes with the
 
 ## Example
 
-Consider two tunnels and their associated routing priorities. Keep in mind lower route values have priority.
+Consider two tunnels and their associated routing priorities. Remember that lower route values have priority.
 
 - Tunnel 1, route priority 100
 - Tunnel 2, route priority 200
