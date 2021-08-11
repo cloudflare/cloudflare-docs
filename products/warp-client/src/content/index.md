@@ -20,6 +20,3 @@ Choose the mode that best fits your needs, and make your Internet faster and mor
 * [WARP via Local Proxy](/overview#warp-via-local-proxy)
 * [WARP+](/overview#warp+)
 * [WARP Unilimited](/overview#warp-unlimited)
-
-
-![WARP illustration](/static/1.1.1.1.png)
