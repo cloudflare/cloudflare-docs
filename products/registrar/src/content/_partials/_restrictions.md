@@ -1,4 +1,5 @@
-## Restrictions
+**Restrictions**
+
 To transfer to a new registrar, your domain must meet a few requirements:
 
 * ICANN rules prohibit a domain from being transferred if it has been registered or previously transferred within the last 60 days or if the WHOIS Registrant contact information was modified in the last 60 days (even if redacted).
