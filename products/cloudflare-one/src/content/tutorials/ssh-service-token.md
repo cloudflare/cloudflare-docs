@@ -69,7 +69,5 @@ You can use the `Client ID` and `Client Secret` to connect to the resource over 
 The following `cloudflared` command is structured to use the Service Token generated to connect over SSH to the GitLab instance previously configured. The command relies on the [SSH configuration file being set](/tutorials/gitlab#configuring-ssh) to proxy the connection through `cloudflared`.
 
 ```sh
-
-cloudflared access ssh --hostname gitlab-ssh.widgetcorp.tech --id a61c032ee4510f8b7e2749ea0896cc14.access --secret 85dcb2301975e8b8e40deb6097645995aa4bed35c2badf098028652097c69eeb
-
+$ cloudflared access ssh --hostname gitlab-ssh.widgetcorp.tech --id a61c032ee4510f8b7e2749ea0896cc14.access --secret 85dcb2301975e8b8e40deb6097645995aa4bed35c2badf098028652097c69eeb
 ```
