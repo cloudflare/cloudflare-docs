@@ -44,7 +44,7 @@ Only the registrant can enable or disable this lock, typically through the admin
 
 ### 3. Remove WHOIS privacy
 
-In most cases, domains may be transferred even if WHOIS privacy services have been enabled.  However, some Registrars may prohibit the transfer if the WHOIS privacy service has been enabled.  
+In most cases, domains may be transferred even if WHOIS privacy services have been enabled. However, some Registrars may prohibit the transfer if the WHOIS privacy service has been enabled.
 
 
 ### 4. Request an authorization code
@@ -53,7 +53,7 @@ Your new registrar needs to confirm with your old registrar that the transfer fl
 
 <Aside type="note">
 
-This code is often referred to as an authorization code, auth code, authinfo code, or transfer code.  You will need to input that code to complete your transfer to Cloudflare. Cloudflare will use it to confirm the transfer is authentic.
+This code is often referred to as an authorization code, auth code, authinfo code, or transfer code. You will need to input that code to complete your transfer to Cloudflare. Cloudflare will use it to confirm the transfer is authentic.
 
 </Aside>
 
@@ -91,7 +91,7 @@ In the next page, you need to input the authorization code for each domain you a
 
 ### 7. Confirm or input your contact information
 
-In the final stage of the transfer process, you need to input the contact information for your registration. Cloudflare Registrar redacts this information by default, but we are required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information.  Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
+In the final stage of the transfer process, you need to input the contact information for your registration. Cloudflare Registrar redacts this information by default, but we are required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
 
 You can modify the contact information, if needed, in the **Manage** tab [in your acount](/why-choose-cloudflare/whois-redaction#what-is-whois-redaction).
 

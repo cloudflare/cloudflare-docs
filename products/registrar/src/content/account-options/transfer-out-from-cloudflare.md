@@ -1,0 +1,44 @@
+---
+order: 11
+pcx-content: tutorial
+---
+
+# Transfer out from cloudflare
+
+Cloudflare Registrar makes it easy to transfer your domain to another registrar. Follow the instructions below to transfer your domain out from Cloudflare.
+
+<Aside type="warning">
+
+ICANN rules prohibit a domain from being transferred if: 
+* It has been transferred within the last 60 days;
+* It was registered within the last 60 days;
+* Or if the WHOIS registrant information has been modified in the last 60 days (even if redacted).
+
+</Aside>
+
+## Unlocking your domain at Cloudflare
+
+1. Login to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the account / domain you want to transfer.
+1. In the **Overview** app, scroll down to **Domain Registration** and click **Manage domain**. 
+1. Click **Configuration**. In the **Transfer Out** card under **Domain Management**, click **Unlock**.
+
+  ![Domain registration dashboard screenshot](../static/start-transfer-out.png)
+
+1. Click **Confirm and Unlock** to confirm that you really want to unlock your domain.
+1. Copy the auth code generated for your domain and use at your new registrar.
+
+  <div class="medium-img">
+
+  ![Authorization code generation modal](../static/auth-generated.png)
+
+  </div>
+
+If you lose your auth code, return to **Overview** > **Manage domain** > **Configuration**. Click **Continue** next to the **Transfer Out** option to display your auth code again.
+
+## Transfer to a new registrar
+
+1. Go to your new registrar.
+1. You will be asked for the authorization code from Cloudflare (it might be called EPP in some systems). Input the code from the Cloudflare dashboard.
+1. Your new registrar will send the transfer request to the registry for your domain. The registry will then send it to Cloudflare. When we receive the message, you can manually approve the transfer to initiate it immediately.
+1. You will need to confirm the approval. You can also reject it at this stage. If you reject it, we will reapply the registrar lock.
+1. If you do not manually approve the transfer, the transfer will auto-approve on the fifth day after receiving the request. In either case, when your transfer out completes we will remove the domain from your account and you will not be charged for future renewals.
