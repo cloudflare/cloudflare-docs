@@ -9,7 +9,7 @@ Cloudflare supports connecting Cloudflare Pages to your GitHub repositories to l
 
 ## Custom branches
 
-If you have a custom Git workflow that makes use of specific branches for representing your `production` build of your project, you can specify a custom branch when creating (or managing an existing) Cloudflare Pages project.
+If you have a custom Git workflow that makes use of specific branches for representing your production build of your project, you can specify a custom branch when creating (or managing an existing) Cloudflare Pages project.
 
 For example, imagine that you merge new code into the `main` branch. When it is time to deploy your project, you merge a set of commits into the `production` branch. In the Cloudflare Pages dashboard, you can set the default branch to `production`.
 
