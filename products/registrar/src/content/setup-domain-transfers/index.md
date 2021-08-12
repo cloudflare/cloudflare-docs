@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"
 
-# Transferring your domain
+# Transfer your domain to Cloudflare
 
 Domain transfers tell your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
 

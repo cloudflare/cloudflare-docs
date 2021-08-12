@@ -23,7 +23,7 @@ This section contains generic details on how to transfer your domain to Cloudfla
 
 ## Set up a domain transfer
 
-Before beginning you need to perform certain actions in your current registrar in order to be able to transfer your domain to Cloudflare. Here are links for instructions on how to transfer out of some of the most popular registrars:
+Before beginning you need to perform certain actions in your current registrar in order to be able to transfer your domain to Cloudflare. Below, you will find links for instructions on how to transfer out of some of the most popular registrars:
 
 * [Enom](http://enom.help/outgoing)
 * [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
