@@ -31,6 +31,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Image Resizing          | images               | [Test](https://images.cloudflare-docs.workers.dev/images)                             | [Prod](https://developers.cloudflare.com/images)               |
 | Load Balancing          | load-balancing       | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             | [Prod](https://developers.cloudflare.com/load-balancing)       |
 | Logs                    | logs                 | [Test](https://logs.cloudflare-docs.workers.dev/logs)                                 | [Prod](https://developers.cloudflare.com/logs)                 |
+| Magic Firewall          | magic-firewall        | [Test](https://magic-firewall.cloudflare-docs.workers.dev/magic-firewall)            | [Prod](https://developers.cloudflare.com/magic-firewall)        |
 | Magic Transit           | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
 | Network Interconnect    | network-interconnect | [Test](https://network-interconnect.cloudflare-docs.workers.dev/network-interconnect) | [Prod](https://developers.cloudflare.com/network-interconnect) |
 | Pages                   | pages                | [Test](https://pages.cloudflare-docs.workers.dev/pages)                               | [Prod](https://developers.cloudflare.com/pages)                |
