@@ -4,6 +4,8 @@ order: 55
 pcx-content-type: how-to
 ---
 
+import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
+
 # Enable Amazon S3
 
 Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflare dashboard or via API.
@@ -51,6 +53,8 @@ Cloudflare uses Amazon Identity and Access Management (IAM) to gain access to yo
 
 Logs are written into that bucket as gzipped objects using the S3 Access Control List (ACL)
 *Bucket-owner-full-control* permission.
+
+<EnableReadPermissions/>
 
 For illustrative purposes, imagine that you want to store logs in the bucket *burritobot*, in the *logs* directory. The S3 URL would then be `s3://burritobot/logs`.
 

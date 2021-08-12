@@ -1,9 +1,9 @@
 ---
 title: About
-order: 2
+order: 1
 pcx-content-type: navigation
 ---
 
-# Get started with Cache concepts
+# About Cache
 
 <DirectoryListing path="/about"/>

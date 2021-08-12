@@ -21,10 +21,12 @@ $["fundamentals"]         = require("../../../products/fundamentals/src/content/
 $["load-balancing"]       = require("../../../products/load-balancing/src/content/icons/load-balancing.js").pathD
 $["logs"]                 = require("../../../products/logs/src/content/icons/logs.js").pathD
 $["magic-transit"]        = require("../../../products/magic-transit/src/content/icons/magic-transit.js").pathD
+$["magic-firewall"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["magic-wan"]            = require("../../../products/magic-wan/src/content/icons/magic-wan.js").pathD
 $["network-interconnect"] = require("../../../products/network-interconnect/src/content/icons/network-interconnect.js").pathD
 $["pages"]                = require("../../../products/pages/src/content/icons/pages.js").pathD
 $["page-shield"]          = require("../../../products/page-shield/src/content/icons/page-shield.js").pathD
+$["partners"]             = require("../../../products/partners/src/content/icons/partners.js").pathD
 $["railgun"]              = require("../../../products/railgun/src/content/icons/railgun.js").pathD
 $["randomness-beacon"]    = require("../../../products/randomness-beacon/src/content/icons/randomness-beacon.js").pathD
 $["registrar"]            = require("../../../products/registrar/src/content/icons/registrar.js").pathD
@@ -116,8 +118,8 @@ const products = [
   },
   {
     title: "Image Resizing",
-    path: "images",
-    icon: "images",
+    path: "image-resizing",
+    icon: "image-resizing",
   },
   {
     title: "Cloudflare Fundamentals",
@@ -141,6 +143,11 @@ const products = [
     icon: "magic-transit",
   },
   {
+    title: "Magic Firewall",
+    path: "magic-firewall",
+    icon: "magic-firewall",
+  },
+  {
     title: "Magic WAN",
     path: "magic-wan",
     icon: "magic-wan",
@@ -160,6 +167,11 @@ const products = [
     title: "Page Shield",
     path: "page-shield",
     icon: "page-shield",
+  },
+  {
+    title: "Partners",
+    path: "partners",
+    icon: "partners",
   },
   {
     title: "Railgun",
@@ -235,7 +247,7 @@ const products = [
 ]
 
 const ProductGridLink = ({ product }) => (
-  <a className="ProductGrid--link" data-wrap-title={product.wrap} href={product.href || `http://developers.cloudflare.com/${product.path}`}>
+  <a className="ProductGrid--link" data-wrap-title={product.wrap} href={product.href || `https://developers.cloudflare.com/${product.path}`}>
     <svg viewBox="0 0 48 48"><path d={$[product.icon]}/></svg>
     <span>{product.title}</span>
   </a>

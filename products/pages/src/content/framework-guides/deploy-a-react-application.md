@@ -4,13 +4,13 @@ pcx-content-type: how-to
 
 # Deploy a React application
 
-React is an incredibly popular framework for building reactive and powerful frontend applications, built by the open-source team at Facebook.
+React is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
-In this guide, you'll create a new React application and deploy it using Cloudflare Pages. We'll be using `create-react-app`, a batteries-included tool for generating new React applications.
+In this guide, you will create a new React application and deploy it using Cloudflare Pages. You will use `create-react-app`, a batteries-included tool for generating new React applications.
 
 ## Setting up a new project
 
-Create a new project using `npx`, giving it the title `my-react-app`.
+Create a new project using `npx`, giving it the title `my-react-app` in your terminal.
 
 ```sh
 $ npx create-react-app my-react-app
@@ -18,7 +18,7 @@ $ npx create-react-app my-react-app
 
 ## Creating a GitHub repository
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). Once you've created a new repository, you can push your local application to GitHub:
+Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```sh
 $ git remote add origin https://github.com/yourgithubusername/githubrepo
@@ -28,7 +28,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-You can deploy your site to Cloudflare Pages by going to the dashboard and creating a new site. Select your new GitHub repository that you created above, and in the configuration section, provide the following information:
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set u**p builds and deployments** section, provide the following information:
 
 <TableLayout>
 
@@ -40,16 +40,17 @@ You can deploy your site to Cloudflare Pages by going to the dashboard and creat
 
 </TableLayout>
 
-Once you've configured your site, you can begin your first deploy. You should see Cloudflare Pages installing `create-react-app`, your project dependencies, and building your site, before deploying it.
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `create-react-app`, your project dependencies, and building your site, before deploying it.
 
-<Aside>
+<Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, check out [our Getting Started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
 
-Once you've deployed your site, you'll receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You'll also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-Congrats, you've deployed your React site on Cloudflare Pages! To learn more about what you can do with the platform, [check out our How-To section](/how-to).
+By completing this guide, you have successfully deployed your React site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).

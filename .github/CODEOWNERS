@@ -61,6 +61,9 @@ products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
 
+# Magic Firewall
+products/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
+
 # Network Interconnect
 products/network-interconnect @ConzorKingKong @cloudflare/PCX
 

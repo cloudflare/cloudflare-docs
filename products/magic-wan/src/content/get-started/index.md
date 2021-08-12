@@ -24,6 +24,6 @@ After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, t
 
 ## 4. Go live
 
-During this step, provide Cloudflare with the LOA for your prefixes and the exchange GRE tunnel information. During this call, you should also review your Firewall configuration.
+During this step, provide Cloudflare with the LOA for your prefixes and the exchange GRE tunnel information. During this call, you should also [review your Firewall configuration](https://developers.cloudflare.com/magic-transit/magic-firewall).
 
 ## 5. Monitor and tune configuration
