@@ -3,7 +3,7 @@ import React from "react"
 import "../css/components/product-grid.css"
 
 const $ = {}
-$["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
+$["1.1.1.1"]              = require("../../../products/1.1.1.1/src/content/icons/1111.js").pathD
 $["analytics"]            = require("../../../products/analytics/src/content/icons/analytics.js").pathD
 $["api"]                  = require("../../../products/api/src/content/icons/api.js").pathD
 $["api-security"]         = require("../../../products/api-security/src/content/icons/api-security.js").pathD
@@ -13,7 +13,7 @@ $["byoip"]                = require("../../../products/byoip/src/content/icons/b
 $["cache"]                = require("../../../products/cache/src/content/icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("../../../products/cloudflare-one/src/content/icons/cloudflare-teams.js").pathD
 $["cloudflare-one"]       = require("../../../products/cloudflare-one/src/content/icons/cloudflare-teams.js").pathD
-$["distributed-web"]      = require("../../../products/api/src/content/icons/api.js").pathD
+$["distributed-web"]      = require("../../../products/distributed-web/src/content/icons/distributed-web.js").pathD
 $["firewall"]             = require("../../../products/firewall/src/content/icons/firewall.js").pathD
 $["http3"]                = require("../../../products/http3/src/content/icons/http3.js").pathD
 $["images"]               = require("../../../products/images/src/content/icons/images.js").pathD
@@ -49,7 +49,7 @@ const products = [
   {
     title: "API Security",
     path: "api-security",
-    icon: "page-shield",
+    icon: "api-security",
   },
   {
     title: "Analytics",
@@ -59,7 +59,7 @@ const products = [
   {
     title: "Apps",
     href: "https://www.cloudflare.com/apps/docs",
-    icon: "api", // TODO: add `apps` icon to https://github.com/cloudflare/cloudflare-brand-assets
+    icon: "apps",
   },
   {
     title: "Automatic Platform Optimization",
