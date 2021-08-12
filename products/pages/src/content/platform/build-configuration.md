@@ -62,7 +62,7 @@ The following system environment variables are injected by default (but can be o
 
 ## Language support and tools
 
-Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, Go and more. 
+Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go. 
 
 If you need to use a specific version of a language, (e.g., Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
 
