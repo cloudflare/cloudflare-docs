@@ -1,5 +1,5 @@
 ---
-order: 0
+order:
 pcx-content: navigation
 ---
 
