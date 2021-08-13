@@ -50,7 +50,7 @@ If you are not using a framework, you may input `exit 0` into the **Build comman
 
 ## Environment variables
 
-If your project makes use of environment variables to build your site, you can provide custom environment variables via the Pages UI.
+If your project makes use of environment variables to build your site, you can provide custom environment variables by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
 The following system environment variables are injected by default (but can be overridden):
 
@@ -62,7 +62,7 @@ The following system environment variables are injected by default (but can be o
 
 ## Language support and tools
 
-Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go (and many more). 
+Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go. 
 
 If you need to use a specific version of a language, (e.g., Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
 

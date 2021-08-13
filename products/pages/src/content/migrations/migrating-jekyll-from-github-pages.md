@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Migrating a Jekyll-based site from GitHub Pages
 
-This tutorial shows how to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll has been one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
+In this tutorial, you will learn how to to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll is one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
 
 This tutorial will guide you through:
 
@@ -22,6 +22,7 @@ Including build times, this tutorial should take you less than 15 minutes to com
 If you have a Jekyll-based site not deployed on GitHub Pages, refer to [the Jekyll framework guide](/pages/deploy-a-jekyll-site).
 
 </Aside>
+
 ## Before you begin
 
 This tutorial assumes:
@@ -107,11 +108,11 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 <Aside type="note">
 
-If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/getting-started#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/get-started#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
 
 </Aside>
 
-Begin deployment of your site to Cloudflare Pages by going to your Pages dashboard through the account home and select **Create a project**. Choose the existing GitHub repository you use for your GitHub Pages site, and select **Install & Authorize** and **Begin setup** to continue. Next, on the **Set up builds and deployments** page, provide the following information:
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <TableLayout>
 
@@ -127,11 +128,11 @@ After you have configured your site, you can begin your first deploy. You should
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/getting-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/getting-started).
 
 </Aside>
 
-After you have deployed your site, you will receive a unique subdomain for your project on `pages.dev`. Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Migrating your custom domain
 

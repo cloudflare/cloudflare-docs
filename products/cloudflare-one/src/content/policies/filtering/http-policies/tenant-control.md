@@ -49,16 +49,16 @@ This section covers policy configurations for common SaaS applications.
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
-| Application | In | Dropbox | Allow | `X-GooGApps-Allowed-Domains` |
+| Application | In | Google Workspace | Allow | `X-GooGApps-Allowed-Domains` |
 
 ## Microsoft 365
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
-| Application | In | Dropbox | Allow | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
+| Application | In | Microsoft Office365 | Allow | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
 
 ## YouTube
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
-| Application | In | Dropbox | Allow | `YouTube-Restrict` |
+| Application | In | YouTube | Allow | `YouTube-Restrict` |

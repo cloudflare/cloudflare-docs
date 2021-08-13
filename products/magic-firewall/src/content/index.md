@@ -28,5 +28,6 @@ When you or your end users are using other Cloudflare services (eg. CDN, Spectru
 <Aside type="warning" header="Beta">
 
 The Magic Firewall API is currently in beta; contact your account team if you're interested in early access.
-
+  
 </Aside>
+
