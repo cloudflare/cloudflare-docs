@@ -34,7 +34,7 @@ A health check will fail if one of the following conditions are met:
 
 Because we want our health checks to be as accurate as possible, we send them from three separate data centers for each of the options in a pool's **Health Check Regions**. 
 
-<div style="text-align:center;" class="large-img"><img alt="Health checks come from three data centers within each selected region." src="../static/images/load-balancer-health-checks.png"/></div>
+<div class="large-img"><img alt="Health checks come from three data centers within each selected region." src="../static/images/load-balancer-health-checks.png"/></div>
 
 If the majority of data centers for that region pass the health checks, that region is considered healthy. If the majority of regions is healthy, then the origin itself will be considered healthy.
 
