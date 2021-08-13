@@ -17,6 +17,6 @@ Magic Transit is not yet supported on Cloudflare's China Network.
 </Aside>
 
 <ButtonGroup>
-  <Button type="primary" href="/set-up">Set up Magic Transit</Button>
+  <Button type="primary" href="/get-started">Get started</Button>
   <Button type="secondary" href="/about">Learn more</Button>
 </ButtonGroup>

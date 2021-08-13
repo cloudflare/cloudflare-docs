@@ -1,19 +1,19 @@
 ---
-order: 2
+order: 
 pcx-content-type: concept
 ---
 
 # Traffic steering
 
-Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data center(s).
+Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data center.
 
-Magic Transit steers traffic along GRE tunnel routes based on priorities you define. You [assign tunnel route priorities](/set-up/provide-configuration-data/assign-tunnel-route-priorities) during the Magic Transit [onboarding process](/set-up/onboarding/).
+Magic Transit steers traffic along GRE tunnel routes based on priorities you define during the onboarding process.
 
-The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority—Tunnel 3 is secondary.
+The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
 ![Example route priorities](../static/mt-traffic-steering-ecmp-baseline.png)
 
-When there are multiple routes with equal priority and different next-hops—Tunnel 1 versus Tunnel 2, for example—Cloudflare uses equal-cost multi-path (ECMP) routing.
+When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routin. An example of multiple routes with equality priority would  beTunnel 1 versus Tunnel 2.
 
 The use of ECMP routing provides load balancing across tunnels with the same priority.
 
@@ -25,30 +25,51 @@ Using ECMP has a number of consequences:
 
 * Routing to equal-cost paths is probabilistic.
 
-* Packets in the same session (or flow)—with the same source and destination—have the same hash and thus use the same next hop.
+* Packets in the same session (or flow) with the same source and destination have the same hash. The packets also use the same next hop.
 
-* Routing changes in the number of equal-cost next hops—for example, due to dynamic prioritization triggered by health check events—can cause traffic to use different tunnels.
+* Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic prioritization triggered by health check events can cause traffic to use different tunnels.
 
 As a result, ECMP provides load balancing across tunnels with the same priority.
 
-## Examples
+### Examples
 
-This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority:
+This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority.
+
+<details>
+<summary>
+  Normal traffic flow
+</summary>
+  <div class="special-class" markdown="1">
 
 ![ECMP diagram of health network](../static/mt-traffic-steering-ecmp-normal.png)
+</div>
+</details>
 
 When Magic Transit health checks determine that GRE Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
 
-![ECMP diagram of unhealthy Tunnel 2](../static/mt-traffic-steering-ecmp-failure-1.png)
+<details>
+<summary>
+  Failover traffic flow: Scenario 1
+</summary>
+  <div class="special-class" markdown="1">
 
-When Magic Transit determines that GRE Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving GRE Tunnel 3 as the top priority route. In that case, all traffic flows to GRE Tunnel 3:
+![ECMP diagram of unhealthy Tunnel 2](../static/mt-traffic-steering-ecmp-failure-1.png)
+</div>
+</details>
+
+When Magic Transit determines that GRE Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving GRE Tunnel 3 as the top priority route. In that case, all traffic flows to GRE Tunnel 3.
+
+<details>
+<summary>
+  Failover traffic flow: Scenario 2
+</summary>
+  <div class="special-class" markdown="1">
 
 ![ECMP diagram of unhealthy Tunnels 1 and 2](../static/mt-traffic-steering-ecmp-failure-2.png)
+</div>
+</details>
 
-When Magic Transit determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal:
-
-![ECMP diagram of health network](../static/mt-traffic-steering-ecmp-normal.png)
-
+When Magic Transit determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
 ## ECMP and bandwidth utilization
 
 Because ECMP is probabilistic, the algorithm routes roughly the same number of flows through each tunnel. However it does _not_ consider the amount of traffic already sent through a tunnel when deciding where to route the next packet.

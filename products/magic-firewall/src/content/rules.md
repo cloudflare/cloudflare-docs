@@ -10,9 +10,7 @@ You can check for an existing root ruleset from the dashboard or via the [Accoun
 
 To view examples for root rulesets, review the the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
 
-## Add rules
-
-To add a rule:
+## Add a rule
 
 1. From your dashboard, click **Firewall Rulesets**.
 1. Click **Magic Firewall**.
@@ -20,9 +18,7 @@ To add a rule:
 1. Fill out the information for your new rule.
 1. When you are done, click **Add new rule**.
 
-## Update rules
-
-To update a rule:
+## Update a rule
 
 1. From your dashboard, click **Firewall Rulesets**.
 1. Click **Magic Firewall**. A list of firewall rules displays.
@@ -30,8 +26,6 @@ To update a rule:
 1. Update the rule with your changes and click **Edit rule**.
 
 ## Delete an existing rule
-
-To delete an existing rule:
 
 1. Locate the rule you'd like to delete in the list.
 1. From the end of the row, click **Delete**.
