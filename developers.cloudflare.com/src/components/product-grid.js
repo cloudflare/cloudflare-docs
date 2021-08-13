@@ -6,6 +6,7 @@ const $ = {}
 $["1.1.1.1"]              = require("../../../products/1.1.1.1/src/content/icons/1111.js").pathD
 $["analytics"]            = require("../../../products/analytics/src/content/icons/analytics.js").pathD
 $["api"]                  = require("../../../products/api/src/content/icons/api.js").pathD
+$["apps"]                  = require("../../../products/apps.js").pathD
 $["api-security"]         = require("../../../products/api-security/src/content/icons/api-security.js").pathD
 $["automatic-platform-optimization"]   = require("../../../products/automatic-platform-optimization/src/content/icons/automatic-platform-optimization.js").pathD
 $["bots"]                 = require("../../../products/bots/src/content/icons/bots.js").pathD
@@ -119,7 +120,7 @@ const products = [
   {
     title: "Image Resizing",
     path: "image-resizing",
-    icon: "image-resizing",
+    icon: "images",
   },
   {
     title: "Cloudflare Fundamentals",
