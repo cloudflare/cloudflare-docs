@@ -31,6 +31,12 @@ Health checks associated with load balancers are different from <strong>Standalo
   - Use Cloudflare's user agent (see above) to reject HTTP requests that don't come from these ranges.
   - Ensure that your firewall or web server does not block or rate limit Cloudflare health checks.
 
+<Aside>
+
+For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/understand-basics/health-details).
+
+</Aside>
+
 ---
 
 ## Properties
