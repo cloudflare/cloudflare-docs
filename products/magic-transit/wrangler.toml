@@ -10,6 +10,7 @@ zone_id = "351cf9fc660523187714fa772ad5ca49"
 route = "https://developers.cloudflare.com/magic-transit*"
 kv_namespaces = [ 
   { binding = "REDIRECTS", id = "ef0489aa65e14a65b56515aa1b6ba84d" }
+]
 
 [site]
 bucket = ".docs/public/"
