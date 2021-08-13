@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough focuses specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
 
-You will be be adjusting the [environment variables](/platform/build-configuration#environment-variables) in our Pages project's settings. An existing website can be modified at any time, but new projects can be initialized with these settings, too. Either way, altering the project settings will not be reflected until its next deployment.
+You will be be adjusting the [environment variables](/platform/build-configuration#environment-variables) in your Pages project's **Settings**. An existing website can be modified at any time, but new projects can be initialized with these settings, too. Either way, altering the project settings will not be reflected until its next deployment.
 
 <Aside type="warning">
 
@@ -19,7 +19,7 @@ You will be be adjusting the [environment variables](/platform/build-configurati
 
 Every package registry should have a means of issuing new access tokens. Ideally, you should create a new token specifically for Pages, as you would with any other CI/CD platform.
 
-With npm, you can [create and view tokens through its website](https://docs.npmjs.com/creating-and-viewing-access-tokens) or you can use the `npm` CLI. If you have the CLI set up locally and are authenticated, run the following commands:
+With npm, you can [create and view tokens through its website](https://docs.npmjs.com/creating-and-viewing-access-tokens) or you can use the `npm` CLI. If you have the CLI set up locally and are authenticated, run the following commands in your terminal:
 
 ```sh
 # Verify the current npm user is correct
@@ -38,11 +38,11 @@ This will produce a read-only token that looks like a UUID string. Save this val
 
 The following section applies to users with applications that are only using private modules from the npm registry.
 
-Add a new [environment variable](/platform/build-configuration#environment-variables) named `NPM_TOKEN` and paste the [read-only token you created](#registry-access-token) as its value.
+In your Pages project's **Settings** > **Environment variables**, add a new [environment variable](/platform/build-configuration#environment-variables) named `NPM_TOKEN` to the **Production** and **Preview** environments and paste the [read-only token you created](#registry-access-token) as its value.
 
 <Aside type="warning">
 
-**Important:** Add the `NPM_TOKEN` variable to both the "Production" and "Preview" environments.
+**Important:** Add the `NPM_TOKEN` variable to both the **Production** and **Preview** environments.
 
 </Aside>
 
@@ -63,7 +63,7 @@ Here, all packages under the `@foobar` scope are directed towards the GitHub Pac
 
 <Aside>
 
-**Note:** You only need to define an Access Token for the npm registry (see `TOKEN_FOR_NPM` in our example) if it is hosting private packages that your application requires.
+**Note:** You only need to define an Access Token for the npm registry (refer to `TOKEN_FOR_NPM` in our example) if it is hosting private packages that your application requires.
 
 </Aside>
 
