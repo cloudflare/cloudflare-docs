@@ -1,5 +1,5 @@
 ---
-order: 10
+order:
 title: Enabling DNSSEC
 pcx-content: tutorial
 ---

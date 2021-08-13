@@ -1,6 +1,6 @@
 ---
 title: Frequently asked questions
-order: 13
+order: 4
 pcx-content-type: faq
 ---
 
