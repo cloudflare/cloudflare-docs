@@ -1,21 +1,21 @@
 ---
 title: Requirements
-alwaysopen: true
-order: 1
-hidden: false
+order: 
 pcx-content-type: tutorial
 ---
 
 # Requirements
 
-Cloudflare requires that you meet the following Magic Transit onboarding requirements:
+You  must meet the following onboarding requirements before using Magic Transit.
 
 ## Use compatible tunnel endpoint routers
 
-Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. To ensure compatibility with Magic Transit, the routers at your GRE tunnel endpoints must meet these requirements:
+Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. 
+
+The routers at your GRE tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit. 
 
 - Support GRE tunneling.
-- Allow configuration of at least 1 tunnel per Internet service provider (ISP).
+- Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support maximum segment size (MSS) clamping.
 
 ## Draft Letter of Authorization
@@ -24,7 +24,7 @@ Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/
 
 ## Verify Internet Routing Registry entries
 
-To ensure that Magic Transit routes traffic to the correct autonomous systems (AS), verify that your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs). For guidance, see [_Verify IRR entries_](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
+Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
 
 ## Set maximum segment size
 
@@ -32,9 +32,9 @@ To ensure that Magic Transit routes traffic to the correct autonomous systems (A
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-Cloudflare uses GRE tunnels to deliver packets from our edge to your data center(s), while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
+Cloudflare uses GRE tunnels to deliver packets from our edge to your data centers, while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
 
-To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your physical egress interfaces** (not the GRE tunnel interfaces):
+ You must set the MSS value to 1436 bytes at your physical egress interfaces — not the GRE tunnel interfaces — to accommodate the additional header data.
 
 <table>
   <thead>
@@ -88,7 +88,7 @@ The following table lists several commonly used router vendors with links to MSS
 
 ### Verify MSS settings at your origin
 
-To verify that your routers have the correct MSS setting (1436 bytes) at your origin, run the following command on the servers egressing the prefixes you want to add to Magic Transit:
+Run the following command on the servers egressing the prefixes you want to add to Magic Transit to verify that your routers have the correct MSS setting (1436 bytes) at your origin.
 
 ```sh
 $ curl 167.71.125.57:8080

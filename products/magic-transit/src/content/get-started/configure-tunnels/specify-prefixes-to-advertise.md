@@ -1,27 +1,32 @@
 ---
-order: 0
+order: 
 pcx-content-type: how-to
 ---
 
 # Specify prefixes to advertise
 
-List all prefixes and the ASNs from which you want them to originate.
+List all prefixes and the ASNs where they should originate. When specifying prefixes, observe these guidelines:
 
-When specifying prefixes, observe these guidelines:
-
-- Prefixes must support at least 256 hosts (/24 in classless inter-domain routing [CIDR] notation).
+- Prefixes must support at least 256 hosts (/24 in classless inter-domain routing CIDR notation.
 - Internet Routing Registry entries and Letters of Authorization must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
-- If you do not own an ASN, you may use our Cloudflare Customer ASN (AS209242) as the originating AS.
+- If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
 
-For an example prefix configuration, refer to this table:
+<details>
+<summary>
+  Prefix configuration example
+</summary>
+<div class="special-class" markdown="1">
 
 | Prefix          | Originating AS |
 | ----------------| -------------- |
 | 103.21.244.0/23 | AS209242       |
 | 131.0.72.0/22   | AS395747       |
 | 103.21.245.0/24 | AS395747       |
+
+</div>
+</details>
 
 <Aside type='note' header='Note'>
 

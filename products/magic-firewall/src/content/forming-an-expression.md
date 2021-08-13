@@ -1,12 +1,12 @@
 ---
-title: Forming an expression
+title: Form expressions
 order: 4
 pcx-content-type: concept
 ---
 
 # Forming an expression
 
-Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. See the documentation for more details: https://developers.cloudflare.com/firewall/cf-firewall-language
+Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Firewall Rules language](]https://developers.cloudflare.com/firewall/cf-firewall-language).
 
 To start with a simple case, here's how you'd match a source IP:
 
@@ -16,11 +16,11 @@ Expressions can be more complex by joining multiple clauses via a logical operat
 
 ```ip.src == 192.0.2.1 && (tcp.flags.push || tcp.flags.reset)```
 
-# Capabilities
+## Capabilities
 
 You can use Magic Firewall to skip or block packets based on source or destination IP, source or destination port, protocol, packet length, or bit field match.
 
-# Restrictions
+## Restrictions
 
 Wirefilter comparisons support CIDR notation, but only inside sets.  For example:
 
@@ -29,7 +29,7 @@ ip.src == 192.0.2.0/24  # bad
 ip.src in { 192.0.2.0/24 }  # good
 ```
 
-Expressions have a complexity limit. It is most easily reached when there are many joined or nested clauses in the expression.  Here's an example:
+Expressions have a complexity limit that is easily reached when many joined or nested clauses are in the expression.  Here's an example:
 
 ```
 (tcp.dstport == 1000 || tcp.dstport == 1001) && (tcp.dstport == 1002 || tcp.dstport == 1003) && (tcp.dstport == 1004 || tcp.dstport == 1005) && (tcp.dstport == 1006 || tcp.dstport == 1007) && (tcp.dstport == 1008 || tcp.dstport == 1009) && (tcp.dstport == 1010 || tcp.dstport == 1011) && (tcp.dstport == 1012 || tcp.dstport == 1013) && (tcp.dstport == 1014 || tcp.dstport == 1015) && (tcp.dstport == 1016 || tcp.dstport == 1017)

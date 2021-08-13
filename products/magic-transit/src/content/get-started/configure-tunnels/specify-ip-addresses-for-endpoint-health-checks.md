@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 
 pcx-content-type: how-to
 ---
 
@@ -9,12 +9,12 @@ Magic Transit uses endpoint health checks to determine the overall health of you
 
 When choosing which endpoint IP addresses to monitor with health checks, use these guidelines:
 
-- Provide 1 IP address for each of the prefixes to be advertised by Cloudflare.
+- Provide one IP address for each of the prefixes Cloudflare will advertise.
 - Redundant IPs routed via the same ISP and infrastructure are not necessary but are useful when troubleshooting.
 
 Cloudflare pings health check IPs from within the [published Cloudflare IP range](https://www.cloudflare.com/ips/), which is also available via the [Cloudflare API](https://api.cloudflare.com/#cloudflare-ips-properties).
 
-For an example endpoint health check configuration, refer to this table:
+For an example endpoint health check configuration, refer to the table below.
 
 | Prefix          | Endpoint IP address |
 | --------------- | ------------------- |
