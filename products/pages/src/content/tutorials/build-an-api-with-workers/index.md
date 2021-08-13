@@ -397,11 +397,11 @@ export default Post;
 
 Publishing your project with Cloudflare Pages is an easy, two-step process: first, push your project to GitHub, and then in the Cloudflare Pages dashboard, set up a new project based on that GitHub repository. 
 
-Pages will deploy a new version of your site each time you publish, and will even set up preview deployments whenever you open a new pull request.
+Pages will deploy a new version of your site each time you publish and will set up preview deployments whenever you open a new pull request.
 
 To push your project to GitHub, [create a new repository](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose **React** -- Pages will set the correct fields for you automatically.
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose **React** -- Pages will automatically apply the correct build settings for you.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
