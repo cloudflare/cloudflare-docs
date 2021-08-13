@@ -110,13 +110,13 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
    ![First network policy](../static/zero-trust-security/ztna/first-network-policy.png)
 
-1. [Create a network policy](/policies/filtering/network-policies) to block all traffic to the IP range that was routed.
-
-   ![Create network policy](../static/zero-trust-security/ztna/create-network-policy.png)
-
-1. Create a second network policy to allow traffic from specific users to reach that application.
+1. [Create a network policy](/policies/filtering/network-policies) to allow traffic from specific users to reach that application.
 
    ![Second network policy](../static/zero-trust-security/ztna/second-network-policy.png)
+
+1. Create a second network policy to block all traffic to the IP range that was routed.
+
+   ![Create network policy](../static/zero-trust-security/ztna/create-network-policy.png)
 
 1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
 
