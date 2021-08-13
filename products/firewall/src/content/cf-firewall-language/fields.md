@@ -467,6 +467,16 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>ip.geoip.country</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+        </td>
+    </tr>
+    <tr>
         <td><p><code>ip.hdr_len</code><br /><Type>Number</Type></p>
         </td>
         <td>
