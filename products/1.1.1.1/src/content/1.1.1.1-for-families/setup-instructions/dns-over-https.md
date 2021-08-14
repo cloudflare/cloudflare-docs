@@ -1,6 +1,6 @@
 ---
 order: 5
-pcx-content: interim
+pcx-content: how-to
 ---
 # DNS over HTTPS
 
