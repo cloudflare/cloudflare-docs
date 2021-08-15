@@ -23,13 +23,13 @@ const COOKIE_NAME = "__uid"
  * @returns {string|void} value of the cookie if found
  */
 function getCookie(request, key) {
-  const cookie = request.headers.get('Cookie')
+  const cookie = ' '+request.headers.get('Cookie')
   
   // No cookie found
   if (!cookie) return
 
   // Search for the cookie key in the header.
-  const search = `${key}=`
+  const search = ` ${key}=`
   const starts = cookie.indexOf(search)
 
   // The cookie could not be found.
