@@ -36,7 +36,7 @@ When the toggle is enabled, users will be able to make changes to the WARP clien
 
 | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| All systems | WARP with Gateway | All plans | 
+| All systems | Any mode | All plans | 
 
 </div>
 </details>
