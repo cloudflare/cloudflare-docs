@@ -5,12 +5,6 @@ order: 6
 
 # Linux desktop client
 
-## Known Issues
-Thank you for using the intial release of the Linux client for WARP! Here is a list of known issues. Please check back frequently as we keep this updated.
-* Cloudflare for Teams is not yet fully supported
-* 1.1.1.1 Families blocks are not working
-
-
 ## Steps to install
 1. Find the [setup repository](https://pkg.cloudflareclient.com/).
 1. Install the `cloudflare-warp` package depending on your distro:
