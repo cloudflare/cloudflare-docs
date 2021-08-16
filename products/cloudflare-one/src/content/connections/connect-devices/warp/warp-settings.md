@@ -88,9 +88,9 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| macOS, Windows, Linux | WARP with Gateway | All plans | 
+| macOS, Windows, Linux | All plans | 
 
 </div>
 </details>
