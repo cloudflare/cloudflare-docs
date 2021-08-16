@@ -5,6 +5,17 @@ pcx-content-type: how-to
 
 # File Check
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 <Aside type="note">
 
 You can create multiple instances of the File Check for each operating system you need to run it on, or if you need to check for multiple files.
@@ -12,11 +23,6 @@ You can create multiple instances of the File Check for each operating system yo
 </Aside>
 
 The File Check device posture attribute checks for the presence of a file on a device.
-
-| Prerequisites | 
-| ------------- |
-| This check is supported on: Windows, macOS, Linux|
-| This check is not supported on: Chrome, Android, or iOS |
 
 To enable File Check:
 

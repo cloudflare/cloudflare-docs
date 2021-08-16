@@ -5,6 +5,17 @@ pcx-content-type: how-to
  
 # Split Tunnels
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| All systems | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 Split Tunnels mode can be configured to exclude IP addresses or domains from going through WARP. This is commonly used for private routing, including those defined in [RFC 1918](https://tools.ietf.org/html/rfc1918). You can find a list of excluded IP addresses under **Settings** > **Network** > **Split Tunnels**.
  
 You can add or remove items from the Split Tunnels list at any time.
