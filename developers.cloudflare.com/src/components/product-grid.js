@@ -247,16 +247,42 @@ const products = [
   },
 ]
 
+const ProductsQuery = () => {
+
+  const result = useStaticQuery(graphql`
+  query {
+    allTypeProduct {
+      nodes {
+        title
+        path
+        logoSVGContent
+        # icon 
+        wrap
+      }
+    }
+  }
+  `
+  )
+ return result
+
+  // console.log('products', result.allTypeProduct.nodes)
+}
+
+
 const ProductGridLink = ({ product }) => (
   <a className="ProductGrid--link" data-wrap-title={product.wrap} href={product.href || `https://developers.cloudflare.com/${product.path}`}>
     {/* <img src={$[product.icon]} alt={$[product.title] + " icon"} /> */}
     {/* <svg viewBox="0 0 48 48"><path d={$[product.icon]}/></svg> */}
     {/* Need new image format inserted here */}
+    <span dangerouslySetInnerHTML={{__html: product.logoSVGContent}}></span>
     <span>{product.title}</span>
   </a>
 )
 
 const ProductGridColumns = ({ numColumns }) => {
+  const res = ProductsQuery()
+  let products = res.allTypeProduct.nodes
+
   const itemsPerColumn = Math.ceil(products.length / numColumns)
 
   const columns = []

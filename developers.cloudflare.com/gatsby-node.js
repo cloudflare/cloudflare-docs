@@ -1,3 +1,6 @@
+import  {products} from "../developers.cloudflare.com/current-products-list"
+// const products = require("../developers.cloudflare.com/current-products-list.js")
+
 // See: https://www.gatsbyjs.org/docs/node-apis/
 
 // https://www.gatsbyjs.org/docs/add-custom-webpack-config/
@@ -46,6 +49,40 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     })
   }
 }
+
+exports.sourceNodes = ({actions, createContentDigest, createNodeId}) => {
+  console.log('foreach',products)
+  const {  createNode  } = actions
+
+   products.forEach((product) => {
+     if(product.icon !== undefined) {
+        fs.readFile(`../products/${product.icon}/src/content/icons/${product.icon}.svg` , 'utf8',(err, data) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+        let dataStr = data.toString()
+
+        createNode({
+          id: createNodeId(`${product.icon}`),
+          title:product.title,
+          path: product.path,
+          //  pathD: require(`./data/cloudflare-brand-assets/resources/product-icons/${product.icon}`).pathD,
+          //  icon: require(`../products/${product.icon}/src/icons/${product.icon}`),
+          logoSVGContent: dataStr,
+          wrap: product.wrap ? product.wrap : false,
+          internal: {
+             type: 'typeProduct',
+             contentDigest: createContentDigest(product),
+           },
+         })
+      })
+     }
+  })
+}
+
+
+
 
 
 const path = require("path")
