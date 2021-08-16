@@ -11,7 +11,7 @@ pcx-content-type: how-to
 
 | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | Minimum WARP version required | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---------- | ---- |
-| All systems | WARP not required | n/a | All plans | 
+| Windows | WARP not required | n/a | All plans | 
 
 </div>
 </details>
