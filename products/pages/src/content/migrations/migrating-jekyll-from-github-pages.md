@@ -19,7 +19,7 @@ Including build times, this tutorial should take you less than 15 minutes to com
 
 <Aside type="note">
 
-If you have a Jekyll-based site not deployed on GitHub Pages, refer to [the Jekyll framework guide](/pages/deploy-a-jekyll-site).
+If you have a Jekyll-based site not deployed on GitHub Pages, refer to [the Jekyll framework guide](/framework-guides/deploy-a-jekyll-site).
 
 </Aside>
 
