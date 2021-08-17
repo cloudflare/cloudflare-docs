@@ -42,7 +42,7 @@ $ cd my-sanity-project
 $ sanity start
 ```
 
-The Sanity studio is where you can create new records for your dataset. By default, running the studio locally makes it available at `localhost:3333` -- go there now and create your author record. You can also create blog posts here.
+The Sanity studio is where you can create new records for your dataset. By default, running the studio locally makes it available at `localhost:3333`– go there now and create your author record. You can also create blog posts here.
 
 ![Sanity studio preview](./sanity-studio.png)
 
@@ -187,7 +187,7 @@ header: Inspecting the v-for directive
 </div>
 ```
 
-To populate that `posts` array,  the `asyncData` function is used, which is provided by Nuxt to make asynchronous calls (e.g., network requests) to populate the page's data.
+To populate that `posts` array, the `asyncData` function is used, which is provided by Nuxt to make asynchronous calls (e.g., network requests) to populate the page's data.
 
 The `$sanity` object is provided by the Nuxt and Sanity.js integration as a way to make requests to your Sanity dataset. By calling `$sanity.fetch`, and passing a query, you can retrieve specific data from our Sanity dataset, and return it as your page's data.
 
@@ -264,7 +264,7 @@ p { margin: 1rem 0; }
 </style>
 ```
 
-When visiting, for example, `/hello-world`, Nuxt will take the incoming slug `hello-world`, and make a GROQ query to Sanity for any objects with a `_type` of `post`, as well as a slug that matches the value `/hello-world`. From that set, you can get the first object in the array (using the array index operator you'd find in JavaScript -- `[0]`) and set it as `post` in your page data.
+When visiting, for example, `/hello-world`, Nuxt will take the incoming slug `hello-world`, and make a GROQ query to Sanity for any objects with a `_type` of `post`, as well as a slug that matches the value `/hello-world`. From that set, you can get the first object in the array (using the array index operator you would find in JavaScript – `[0]`) and set it as `post` in your page data.
 
 ### Rendering content for a blog post
 
@@ -413,7 +413,7 @@ After you've pushed your project to GitHub, deploy your site to Pages by logging
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
-In order to automatically deploy your project when your Sanity.io data changes, you can use [Deploy Hooks](/platform/deploy-hooks). Create a new Deploy Hook URL in your Pages project > **Settings**. In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below:
+In order to automatically deploy your project when your Sanity.io data changes, you can use [Deploy Hooks](/platform/deploy-hooks). Create a new Deploy Hook URL in your **Pages project** > **Settings**. In your Sanity project's Settings page, find the **Webhooks** section, and add the Deploy Hook URL, as seen below:
 
 ![Creating a deploy hook in Sanity.io](./hooks.png)
 
