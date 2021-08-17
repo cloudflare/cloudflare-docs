@@ -23,7 +23,7 @@ const COOKIE_NAME = "__uid"
  * @returns {string|void} value of the cookie if found
  */
 function getCookie(request, key) {
-  const cookie = ' '+request.headers.get('Cookie')
+  const cookie = ' ' + request.headers.get('Cookie')
   
   // No cookie found
   if (!cookie) return
