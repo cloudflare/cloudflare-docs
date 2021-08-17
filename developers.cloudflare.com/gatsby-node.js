@@ -55,34 +55,29 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 // Source nodes for each svg file inside each individual product folder
 
 exports.sourceNodes = ({actions, createContentDigest, createNodeId}) => {
-  const {  createNode  } = actions
+  const {  createNode  } = actions   
+    products.forEach((product) => {
+    if(product.icon !== undefined) {
+      // Go into each product folder to find the svg for that product
 
-   products.forEach((product) => {
-     if(product.icon !== undefined) {
-       // Go into each product folder to find the svg for that product
+      const data = fs.readFileSync(`../products/${product.icon}/src/content/icons/${product.icon}.svg` , 'utf8')      
 
-        fs.readFile(`../products/${product.icon}/src/content/icons/${product.icon}.svg` , 'utf8',(err, data) => {
-        if (err) {
-          console.error(err)
-          return
-        }
-        
-        let dataStr = data.toString()
+       let dataStr = data.toString()
 
-        createNode({
-          id: createNodeId(`${product.icon}`),
-          title:product.title,
-          path: product.path,
-          logoSVGContent: dataStr,
-          wrap: product.wrap ? product.wrap : false,
-          internal: {
-             type: 'typeProduct',
-             contentDigest: createContentDigest(product),
-           },
-         })
-      })
-     }
-  })
+       createNode({
+         id: createNodeId(product.icon),
+         title:product.title,
+         path: product.path,
+         logoSVGContent: dataStr,
+         wrap: product.wrap ? product.wrap : false,
+         internal: {
+            type: 'Product',
+            contentDigest: createContentDigest(product),
+          },
+        })
+    }
+ })
+
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -142,7 +137,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 // of a GraphQL-queried frontmatter property when
 // there are no md(x) files currently using it.
 // https://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions
-exports.createSchemaCustomization = ({ actions }) => {
+exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
 
   const typeDefs = `
@@ -168,6 +163,13 @@ exports.createSchemaCustomization = ({ actions }) => {
       pathPrefix: String
     }
   `
-
+  // const assetDef = [
+  //   schema.buildObjectType({
+  //     title: 'String',
+  //     path: 'String',
+  //     wrap: 'Boolean',
+  //     logoSVGContent: 'String'
+  //   }),
+  // ];
   createTypes(typeDefs)
 }

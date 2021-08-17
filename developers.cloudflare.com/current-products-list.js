@@ -19,7 +19,8 @@ const products = [
     },
     // {
     //   title: "Apps",
-    //   href: "https://www.cloudflare.com/apps/docs",
+    //   path: "apps",
+    // //   href: "https://www.cloudflare.com/apps/docs",
     //   icon: "apps",
     // },
     {

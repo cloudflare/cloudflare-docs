@@ -9,7 +9,7 @@ const ProductsQuery = () => {
 
   const result = useStaticQuery(graphql`
     query {
-      allTypeProduct {
+      allProduct(sort: { fields: [title], order: ASC }) {
         nodes {
           title
           path
@@ -33,7 +33,7 @@ const ProductGridLink = ({ product }) => (
 
 const ProductGridColumns = ({ numColumns }) => {
   const productsData = ProductsQuery()
-  let products = productsData.allTypeProduct.nodes
+  let products = productsData.allProduct.nodes
 
   const itemsPerColumn = Math.ceil(products.length / numColumns)
 
