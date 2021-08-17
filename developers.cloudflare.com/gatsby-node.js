@@ -1,5 +1,7 @@
-import  {products} from "../developers.cloudflare.com/current-products-list"
-// const products = require("../developers.cloudflare.com/current-products-list.js")
+const path = require("path")
+const {products} = require('./current-products-list')
+const fs = require('fs')
+
 
 // See: https://www.gatsbyjs.org/docs/node-apis/
 
@@ -50,25 +52,27 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
+// Source nodes for each svg file inside each individual product folder
+
 exports.sourceNodes = ({actions, createContentDigest, createNodeId}) => {
-  console.log('foreach',products)
   const {  createNode  } = actions
 
    products.forEach((product) => {
      if(product.icon !== undefined) {
+       // Go into each product folder to find the svg for that product
+
         fs.readFile(`../products/${product.icon}/src/content/icons/${product.icon}.svg` , 'utf8',(err, data) => {
         if (err) {
           console.error(err)
           return
         }
+        
         let dataStr = data.toString()
 
         createNode({
           id: createNodeId(`${product.icon}`),
           title:product.title,
           path: product.path,
-          //  pathD: require(`./data/cloudflare-brand-assets/resources/product-icons/${product.icon}`).pathD,
-          //  icon: require(`../products/${product.icon}/src/icons/${product.icon}`),
           logoSVGContent: dataStr,
           wrap: product.wrap ? product.wrap : false,
           internal: {
@@ -80,12 +84,6 @@ exports.sourceNodes = ({actions, createContentDigest, createNodeId}) => {
      }
   })
 }
-
-
-
-
-
-const path = require("path")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions

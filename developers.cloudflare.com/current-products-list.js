@@ -1,3 +1,6 @@
+// Currently live products that are active on the product grid on https://developers.cloudflare.com
+// Must update this list when adding new product
+
 const products = [
     {
       title: "API",
@@ -14,11 +17,11 @@ const products = [
       path: "analytics",
       icon: "analytics",
     },
-    {
-      title: "Apps",
-      href: "https://www.cloudflare.com/apps/docs",
-      icon: "apps",
-    },
+    // {
+    //   title: "Apps",
+    //   href: "https://www.cloudflare.com/apps/docs",
+    //   icon: "apps",
+    // },
     {
       title: "Automatic Platform Optimization",
       path: "automatic-platform-optimization",
@@ -45,12 +48,12 @@ const products = [
       path: "cache",
       icon: "cache",
     },
-    {
-      title: "Cloudflare for Teams",
-      path: "cloudflare-one",
-      icon: "cloudflare-for-teams",
-      wrap: true,
-    },
+    // {
+    //   title: "Cloudflare for Teams",
+    //   path: "cloudflare-one",
+    //   icon: "cloudflare-for-teams",
+    //   wrap: true,
+    // },
     {
       title: "DNS Resolver",
       path: "1.1.1.1",
@@ -98,11 +101,11 @@ const products = [
       path: "magic-transit",
       icon: "magic-transit",
     },
-    {
-      title: "Magic Firewall",
-      path: "magic-firewall",
-      icon: "magic-firewall",
-    },
+    // {
+    //   title: "Magic Firewall",
+    //   path: "magic-firewall",
+    //   icon: "magic-firewall",
+    // },
     {
       title: "Magic WAN",
       path: "magic-wan",
@@ -205,5 +208,3 @@ const products = [
 module.exports = {
     products
 }
-
-// export default products
