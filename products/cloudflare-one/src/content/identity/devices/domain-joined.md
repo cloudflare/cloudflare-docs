@@ -17,7 +17,7 @@ title: Domain Joined
 </div>
 </details>
 
-The Domain Joined device posture attribute ensures that a user is a member of a specific Windows domain.
+The Domain Joined device posture attribute ensures that a user is a member of a specific Windows Active Directory domain.
 
 To enable the Domain Joined check:
 
