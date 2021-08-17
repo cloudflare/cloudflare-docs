@@ -21,7 +21,7 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 
 | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| macOS, Windows, Linux | WARP with Gateway | All plans | 
+| macOS, Windows, Linux | Any mode | All plans | 
 
 </div>
 </details>
