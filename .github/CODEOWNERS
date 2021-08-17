@@ -1,5 +1,5 @@
 # 1.1.1.1
-products/1.1.1.1/ @cloudflare/PCX
+products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Access
 products/access/ @cloudflare/access-docs @cloudflare/PCX

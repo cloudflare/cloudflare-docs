@@ -1,5 +1,5 @@
 ---
-order: 2
+order:
 pcx-content-type: how-to
 ---
 
@@ -7,17 +7,18 @@ import StaticRoutesApi from "../../_partials/_static-routes-api.md"
 
 # Assign tunnel route priorities
 
-Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data center(s).
+Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data centers.
 
-You must assign a route priority to each GRE tunnel–subnet pair in your GRE configuration, as follows:
+You must assign a route priority to each GRE tunnel–subnet pair in your GRE configuration using the following guidelines:
 
 - Lower values have greater priority.
-- When the priority values for prefix entries match—as illustrated by the 103.21.244.0/24 subnet in the example routing configuration (in boldface)—Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic.
+- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. You can refer to an example of this scenario with the **103.21.244.0/24** subnet in the edge routing configuration example below.
 
-For more on how Cloudflare uses ECMP packet forwarding, see [_Traffic steering_](/about/traffic-steering).
-
-For an example edge routing configuration, refer to this table:
-
+<details>
+<summary>
+    Edge routing configuration example
+</summary>
+<div>
 <table>
   <thead>
     <tr>
@@ -69,6 +70,10 @@ For an example edge routing configuration, refer to this table:
     </tr>
   </tbody>
 </table>
+</div>
+</details>
+
+For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steering](/about/traffic-steering).
 
 ## Create and edit static routes
 

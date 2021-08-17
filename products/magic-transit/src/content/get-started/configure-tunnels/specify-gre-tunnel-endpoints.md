@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 
 type: table
 pcx-content-type: how-to
 ---
@@ -10,25 +10,28 @@ pcx-content-type: how-to
 
 ## Anycast edge IP addresses
 
-Cloudflare will assign 2 Anycast IP addresses shortly after your [onboarding](/set-up/onboarding)  kickoff call. Use these Anycast edge addresses as the GRE tunnel destinations on your data center routers/endpoints.
+Cloudflare will assign two Anycast IP addresses shortly after your onboarding kickoff call. Use these Anycast edge addresses as the GRE tunnel destinations on your data center routers/endpoints.
 
 ## Generic Routing Encapsulation (GRE)
 
-Cloudflare recommends 2 GRE tunnels for each ISP and data center router combination, one per Anycast IP.
+Cloudflare recommends two GRE tunnels for each ISP and data center router combination, one per Anycast IP.
 
-To configure the GRE tunnel(s) between Cloudflare and your data center(s), you must provide the following data for each tunnel:
+To configure the GRE tunnel(s) between Cloudflare and your data centers, you must provide the following data for each tunnel:
 
-* **Customer edge IP address**—A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/)), you do not need to provide edge addresses—Cloudflare will provide them.
-* **Private subnet**—A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
-  * 10.0.0.0–10.255.255.255
-  * 172.16.0.0–172.31.255.255
-  * 192.168.0.0–192.168.255.255
+- **Customer edge IP address**—A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/), you do not need to provide edge addresses because Cloudflare will provide them.
+- **Private subnet**—A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
+  - 10.0.0.0–10.255.255.255
+  - 172.16.0.0–172.31.255.255
+  - 192.168.0.0–192.168.255.255
 * **Private IP addresses**—The private IP address assigned to the **Cloudflare** and **customer** sides of the tunnel
-
-For an example GRE tunnel configuration, refer to this table:
 
 </ContentColumn>
 
+<details>
+<summary>
+    Edge routing configuration example
+</summary>
+<div>
 <table>
   <thead>
     <tr>
@@ -75,19 +78,22 @@ For an example GRE tunnel configuration, refer to this table:
     </tr>
   </tbody>
 </table>
+</div>
+</details>
 
 <ContentColumn>
 
 ## Scoped routes for GRE tunnels
 
-To reduce latency for your GRE tunnel configurations, especially if you operate your own Anycast network, Cloudflare can steer your traffic by scoping it to specific Cloudflare data center regions.
-
-Valid Cloudflare regions include AFR, APAC, EEUR, ENAM, ME, OC, SAM, WEUR, and WNAM.
+To reduce latency for your GRE tunnel configurations, especially if you operate your own Anycast network, Cloudflare can steer your traffic by scoping it to specific Cloudflare data center regions. Valid Cloudflare regions include AFR, APAC, EEUR, ENAM, ME, OC, SAM, WEUR, and WNAM.
 
 To configure scoping for your traffic, you must provide Cloudflare with GRE tunnel data for each Cloudflare region.
 
-For an example of scoping configuration data, see the table below. It lists GRE tunnels and their associated Cloudflare region codes:
-
+<details>
+<summary>
+  Scoping configuration data example
+</summary>
+<div>
 <table>
  <thead>
   <tr>
@@ -114,9 +120,16 @@ For an example of scoping configuration data, see the table below. It lists GRE 
     </tr>
 </tbody>
 </table>
+</div>
+</details>
 
-Cloudflare has nine geographic regions across the world. This table lists region codes and their associated regions:
+Cloudflare has nine geographic regions across the world which are listed below.
 
+<details>
+<summary>
+  Region codes and associated regions
+</summary>
+<div>
 <table>
   <thead>
     <tr>
@@ -172,5 +185,7 @@ Cloudflare has nine geographic regions across the world. This table lists region
     </tr>
   </tbody>
 </table>
+</div>
+</details>
 
 </ContentColumn>

@@ -8,7 +8,7 @@ Jekyll is an open-source framework for creating websites, based around Markdown 
 
 <Aside type="note">
 
-If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migration guide](/pages/migrating-jekyll-from-github-pages/).
+If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migration guide](/migrations/migrating-jekyll-from-github-pages).
 
 </Aside>
 

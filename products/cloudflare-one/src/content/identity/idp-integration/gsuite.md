@@ -3,17 +3,17 @@ order: 12
 pcx-content-type: how-to
 ---
 
-# Google Suite
+# Google Workspace
 
 <Aside header="Note">
 
-You don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+You don't need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
 </Aside>
 
 You can integrate a Google Workspace (formerly Google Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/identity/idp-integration/google), the steps below will allow you to pull group membership information from your Google Workspace account.
 
-Once integrated, users will login with their Google Suite credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
+Once integrated, users will login with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
 1. Log into the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
@@ -107,7 +107,7 @@ Once integrated, users will login with their Google Suite credentials to reach r
 
 1. Under **Login methods**, click **Add new**.
 
-1. Select **Google Suite**.
+1. Select **Google Workspace**.
 
 1. Input the Client ID and Client Secret fields generated previously. Additionally, input the domain of your Google Workspace account. Click **Save**.
 
@@ -122,7 +122,7 @@ Once integrated, users will login with their Google Suite credentials to reach r
 
  ![Group Success](../../static/documentation/identity/gsuite/group-success.png)
 
-1. You can now return to the list of identity providers in the **Authentication** page of the Cloudflare for Teams dashboard. Select Google Suite and click **Test**.
+1. You can now return to the list of identity providers in the **Authentication** page of the Cloudflare for Teams dashboard. Select Google Workspace and click **Test**.
 
  Your user identity and group membership should return.
 

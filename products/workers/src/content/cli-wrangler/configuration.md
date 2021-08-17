@@ -454,14 +454,6 @@ Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets)
 
 An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
-<Aside>
-
-  **Note:** You currently need to opt-in to the [Durable Objects](/learning/using-durable-objects)
-  open beta to be able to use the `modules` format. This restriction will be removed as modules are
-  better supported in the Workers Dashboard.
-
-</Aside>
-
 ```js
 import html from './index.html'
 
