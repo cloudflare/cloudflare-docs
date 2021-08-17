@@ -30,6 +30,6 @@ Sites inside Cloudflare network are able to see this information. If a site is s
 
 Cloudflare WARP is in part powered by 1.1.1.1, the world's fastest DNS resolver. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. WARP however is built to trade some throughput for enhanced privacy by encrypting all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
 
-### WARP Perfomance FAQ
+### WARP Performance FAQ
 
 Cloudflare WARP and the 1.1.1.1 w/ WARP Application go through performance testing that includes battery, network and CPU on a regular basis. In addition, both applications are used by millions of users worldwide that help us stay on top of issues across a wide variety of devices, networks, sites and applications.

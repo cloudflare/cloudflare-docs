@@ -34,7 +34,7 @@ Choose **Self-hosted** on the next page.
 
 ![Add App](../static/zero-trust-security/ssh/add-app.png)
 
-Input a subdomain where your application will be availble to users.
+Input a subdomain where your application will be available to users.
 
 ![Configure](../static/zero-trust-security/ssh/configure-app.png)
 

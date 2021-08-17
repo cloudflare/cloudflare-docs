@@ -95,7 +95,7 @@ $ curl -sX GET https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostn
 
 ## Fallback origin configuration
 
-The “fallback origin” of a zone is the origin hostname to which all custom hostnames requests are sent (unless the hostname is overriden with a *custom_origin_server*). All users may retrieve the fallback origin value, but setting it via API requires additional account permissions.
+The “fallback origin” of a zone is the origin hostname to which all custom hostnames requests are sent (unless the hostname is overridden with a *custom_origin_server*). All users may retrieve the fallback origin value, but setting it via API requires additional account permissions.
 
 ### 1. Error codes
 
