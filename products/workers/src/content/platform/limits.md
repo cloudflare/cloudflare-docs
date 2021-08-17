@@ -245,8 +245,6 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Script size
 
-<!-- TODO(soon): Broken link to Bindings API documentation. -->
-
 A Workers script can be up to 1MB in size after compression.
 
 ### Number of scripts
