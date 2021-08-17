@@ -58,7 +58,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 <WorkerStarter
   title="Sunder Starter (Typescript)"
-  description="A batteries-included starter template using Sunder, TypeScript, esbuild, Jest and Sass. Uses Worker Sites for static assets."
+  description="A complete starter template using Sunder, TypeScript, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
   repo="gzuidhof/sunder-worker-template"
 />
 
