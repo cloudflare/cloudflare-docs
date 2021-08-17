@@ -9,9 +9,9 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | Minimum WARP version required | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---------- | ---- |
-| Windows | WARP not required | n/a | All plans | 
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| Windows | WARP with Gateway | All plans | 
 
 </div>
 </details>
