@@ -15,7 +15,7 @@ Cloudflare’s WHOIS service can be found at https://rdap.cloudflare.com/. Selec
 
 ## What is WHOIS redaction?
 
-WHOIS redaction removes most contact information categorized as personal data from the published WHOIS record for a domain (registrant name, email address, postal address). Fields will read “Data Redacted”. The nameserver, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS: 
+WHOIS redaction removes most contact information categorized as personal data (registrant name, email address, postal address) from the published WHOIS record for a domain. Fields will read “Data Redacted”. The nameserver, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS: 
 
 * Registrant State/Province 
 * Registrant Country.
@@ -28,7 +28,7 @@ Cloudflare still maintains the authoritative, unredacted, record of your WHOIS d
 
 <Aside type="note">
 
-WHOIS redaction is not the same as WHOIS Privacy. WHOIS Privacy replaces your information with proxy contact information. Redaction removes it altogether.
+WHOIS redaction is not the same as WHOIS privacy. WHOIS privacy replaces your information with proxy contact information, while redaction removes it altogether.
 
 </Aside>
 
