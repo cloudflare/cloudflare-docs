@@ -1,5 +1,6 @@
 ---
 type: overview
+order:
 pcx-content-type: reference
 ---
 
@@ -7,7 +8,7 @@ pcx-content-type: reference
 
 <ContentColumn>
 
-Certain fields in Spectrum request and response bodies require an Enterprise plan.  To upgrade your plan, contact your Customer Success Manager or the [Customer Success Team](mailto:success@cloudflare.com).
+Certain fields in Spectrum request and response bodies require an Enterprise plan.  To upgrade your plan, contact your account team.
 
 Spectrum properties requiring an Enterprise plan:
 

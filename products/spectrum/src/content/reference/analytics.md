@@ -1,11 +1,11 @@
 ---
-order: 2
+order: 
 pcx-content-type: reference
 ---
 
 # Analytics
 
-Cloudflare measures the following metrics for every connection:
+Cloudflare measures the following metrics for every connection.
 
 <TableWrap>
 
@@ -21,7 +21,9 @@ duration99th              | 99th percentile connection duration | 1.0           
 
 </TableWrap>
 
-You can slice and dice your analytics by the following dimensions:
+## Additional dimensions
+
+You can divide your analytics further by the following dimensions.
 
 <TableWrap>
 
@@ -34,7 +36,9 @@ ipVersion                 | IP version used by the client   | 4, 6
 
 </TableWrap>
 
-You can also filter the data using the following operators:
+## Operators for filtering
+
+Use the operators below to filter data.
 
 <TableWrap>
 
@@ -49,11 +53,13 @@ Operator                  | Name                            | URL Encoded
 
 </TableWrap>
 
-Filters can be combined using OR and AND boolean logic. AND takes precedence over OR in all the expressions.
-The OR operator is defined using a comma (,) or OR keyword surrounded by whitespace.
-The AND operator is defined using a semicolon (;) or AND keyword surrounded by whitespace.
+Filters can be combined using OR and AND boolean logic. 
 
-## Analytics Request Structure
+- AND takes precedence over OR in all expressions.
+- OR operator is defined using a comma `,` or the OR keyword surrounded by whitespace.
+- AND operator is defined using a semicolon `;` or the AND keyword surrounded by whitespace.
+
+## Analytics request structure
 
 ```txt
 /api/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=METRICS&dimensions=DIMENSIONS&filters=FILTERS&since=FROM_TS&sort=SORT&until=TO_TS&limit=LIMIT
@@ -75,7 +81,7 @@ The AND operator is defined using a semicolon (;) or AND keyword surrounded by w
   - day
   - hour
 
-## Example Analytics Query
+## Analytics query example
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&dimensions=event,appID&since=2018-01-01T16:57:00Z" \
