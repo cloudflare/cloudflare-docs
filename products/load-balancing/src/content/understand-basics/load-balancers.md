@@ -52,28 +52,9 @@ For more background reading on server failover and common configurations, see ou
 
 </Aside>
 
-## Important notes
+## Load balancing and existing DNS records
 
-### Load balancing and existing DNS records
-
-**Adding a Load Balancer does not create a DNS record or SSL certificate.**  To generate an SSL certificate, create a proxied DNS record for the Load Balancer. The Load Balancer record takes precedence over a DNS record for the same host name.
-
-**When you create a load balancer on Cloudflare**, you can either:
-
-- Use a unique hostname with no existing DNS record, or
-- Use a hostname that has an existing DNS record, either as an A, AAAA, or CNAME record.
-
-**If a chosen hostname has an existing DNS record**, the load balancer will supersede the DNS record if the DNS record is an A, AAAA, or canonical name (CNAME) record. It will not supersede other record types.
-
-**If the load balancer is disabled**, preexisting DNS records will be served.
-
-**If there is no preexisting DNS record with the same name**, disabling the load balancer will prevent clients from resolving the host, and requests will fail.
-
-**If a Load Balancer is manually disabled**, traffic is not served to the associated origins or the fallback. If all pools in a Load Balancer are manually disabled or unhealthy, traffic goes to the fallback pool. No health checks run on the fallback pool and it will return the same HTTP status as your origin.
-
-If the pool serving as your fallback pool is also disabled:
-- If Cloudflare proxies your hostname, you will see a 530 HTTP/1016 Origin DNS failure.
-- If Cloudflare does not proxy your hostname, you will see the SOA record.
+For details about DNS records, refer to [DNS records for load balancing](/reference/dns-records).
 
 ## HTTP keep-alive (persistent HTTP connection)
 

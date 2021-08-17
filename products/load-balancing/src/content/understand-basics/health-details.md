@@ -84,3 +84,8 @@ When one or more pools become unhealthy, your load balancer might also show a di
 - **Healthy**: All pools are healthy.
 - **Degraded**: At least one pool is unhealthy, but traffic is not yet going to the [Fallback Pool](#fallback-pools).
 - **Critical**: All pools are unhealthy and traffic is going to the [Fallback Pool](#fallback-pools).
+
+If a load balancer reaches **Critical** health and the pool serving as your fallback pool is also disabled:
+
+- If Cloudflare proxies your hostname, you will see a 530 HTTP/1016 Origin DNS failure.
+- If Cloudflare does not proxy your hostname, you will see the SOA record.
