@@ -10,7 +10,7 @@ pcx-content-type: how-to
 
 First, [install](https://www.getzola.org/documentation/getting-started/installation/) the `zola` CLI, using the specific instructions for your operating system below:
 
-### Homebrew (macOS)
+### macOS (Homebrew)
 
 If you use the package manager [Homebrew](https://brew.sh), run the `brew install` command in your terminal to install Zola:
 
@@ -26,13 +26,15 @@ If you use the package manager [Chocolatey](https://chocolatey.org/), run the `c
 $ choco install zola
 ```
 
+### Windows (Scoop)
+
 If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Zola:
 
 ```sh
 $ scoop install zola
 ```
 
-### Linux
+### Linux (pkg)
 
 Your Linux distro's package manager may include Zola. If this is the case, you can install it directly using your distro's package manager -- for example, using `pkg`, run the following command in your terminal:
 
