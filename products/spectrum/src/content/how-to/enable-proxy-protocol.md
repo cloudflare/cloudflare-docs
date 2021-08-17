@@ -113,7 +113,7 @@ A PROXY Protocol binary header for a IPv6 incoming address has the format:
 
 When using UDP (currently an early access feature), the client source IP and port information can be obtained by using Simple Proxy Protocol, a lightweight protocol developed specifically for UDP.
 
-To enable it, click **Configure**o n a Spectrum application and toggle the setting for Simple Proxy Protocol to **On**.
+To enable it, click **Configure** on a Spectrum application and toggle the setting for Simple Proxy Protocol to **On**.
 
 Simple Proxy Protocol dictates that your origin must also prepend packets meant for the client with the same header, including original client source information. This is done to validate that packets coming in are in fact intended for the client.
 
