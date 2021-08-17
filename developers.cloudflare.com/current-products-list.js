@@ -28,11 +28,6 @@ const products = [
       icon: "automatic-platform-optimization",
       wrap: true,
     },
-    // {
-    //   title: "Cloudflare One",
-    //   path: "cloudflare-one",
-    //   icon: "cloudflare-one",
-    // },
     {
       title: "Bots",
       path: "bots",
@@ -48,12 +43,12 @@ const products = [
       path: "cache",
       icon: "cache",
     },
-    // {
-    //   title: "Cloudflare for Teams",
-    //   path: "cloudflare-one",
-    //   icon: "cloudflare-for-teams",
-    //   wrap: true,
-    // },
+    {
+      title: "Cloudflare for Teams",
+      path: "cloudflare-one",
+      icon: "cloudflare-one",
+      wrap: true,
+    },
     {
       title: "DNS Resolver",
       path: "1.1.1.1",
@@ -75,11 +70,11 @@ const products = [
       path: "http3",
       icon: "http3",
     },
-    // {
-    //   title: "Image Resizing",
-    //   path: "image-resizing",
-    //   icon: "images",
-    // },
+    {
+      title: "Image Resizing",
+      path: "image-resizing",
+      icon: "image-resizing",
+    },
     {
       title: "Cloudflare Fundamentals",
       path: "fundamentals",
