@@ -16,7 +16,7 @@ $ npx create-next-app --example with-static-export my-app
 $ yarn create next-app --example with-static-export my-app
 ```
 
-Once complete, a new `my-app` directory will be created using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
+After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
 
 ## Creating a GitHub repository
 
