@@ -16,4 +16,4 @@ Your registry keeps the authoritative record for your nameservers. Each top-leve
 
 Where do registrars fit in this relationship? Domain registrars communicate your ownership, and subsequent changes, of a domain to the registry for that TLD. Registries trust registrars to only accept changes from the domain owner and to accurately convey that information so that the registry can update their record. While there is one registry for every TLD, hundreds of registrars are able to register a domain.
 
-Beyond this, Cloudflare also offers you services such Domain Name System Security Extensions, custom domain protection, WHOIS redaction and more.
+Beyond this, Cloudflare also offers you services such Domain Name System Security Extensions, custom domain protection, and WHOIS redaction.
