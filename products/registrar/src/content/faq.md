@@ -58,7 +58,7 @@ If you cannot resolve the issue, open a support ticket or contact your account t
 
 ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, Cloudflare will be unable to process your transfer immediately.
 
-You can leave the domain `In Progress` and we will attempt to process the transfer until the 60-day window passes.
+You can leave the domain **In Progress** and Cloudflare will attempt to process the transfer until the 60-day window passes.
 
 ## Why am I not able to start a transfer?
 
