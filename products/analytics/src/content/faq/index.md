@@ -7,7 +7,7 @@ pcx-content-type: faq
 
 ## Web Analytics FAQ
 
-### When I add the beacon to my website and load the webpage, I see an error that includes "is not allowed by Access-Controll-Allow-Origin" (CORS). What's happening?
+### When I add the beacon to my website and load the webpage, I see an error that includes "is not allowed by Access-Control-Allow-Origin" (CORS). What's happening?
 
 This error usually occurs when the hostname of the site loading the analytics does not match the name of the analytics site configured in the dashboard. Double-check that they are identical. 
 

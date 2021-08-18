@@ -99,7 +99,7 @@ Some limits apply to the Stream Connect Beta:
 
 - Up to 1000 live inputs per-account can be created
 - Up to 50 outputs may be configured per live input
-- A maximum recomended bitrate of 12000 kbps
+- A maximum recommended bitrate of 12000 kbps
 
 These limits can be configured. Please reply to your beta invite email for more information.
 

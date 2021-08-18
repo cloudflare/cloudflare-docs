@@ -89,7 +89,7 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 **Description.** 	If switch has been turned off by user the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value, usually just enough time for a user to login to hotel or airport wifi.
 
 **Value:**
-- `0` Allow the switch to stay in the off position indefinitly until the user turns it back on.
+- `0` Allow the switch to stay in the off position indefinitely until the user turns it back on.
 - `1-1440`  Turn switch back on automatically after the specified number of minutes.
 
 <Aside> 
