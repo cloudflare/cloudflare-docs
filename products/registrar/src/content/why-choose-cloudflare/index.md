@@ -14,6 +14,6 @@ When you put your site behind Cloudflare, you change your nameservers at your re
 
 Your registry keeps the authoritative record for your nameservers. Each top-level domain (TLD) has a single registry that is responsible for maintaining those records. For example, `.com` is a TLD. Verisign is the exclusive registry for `.com`. As the TLD’s registry, Verisign stores the contact information and the nameservers for every `.com` domain in the world. As the registrant for a domain, you can tell your domain’s registry which nameservers a DNS resolver should use.
 
-So where do registrars fit in this relationship? Domain registrars communicate your ownership, and subsequent changes, of a domain to the registry for that TLD. Registries trust registrars to only accept changes from the domain owner and to accurately convey that information so that the registry can update their record. While there is one registry for every TLD, hundreds of registrars are able to register a domain.
+Where do registrars fit in this relationship? Domain registrars communicate your ownership, and subsequent changes, of a domain to the registry for that TLD. Registries trust registrars to only accept changes from the domain owner and to accurately convey that information so that the registry can update their record. While there is one registry for every TLD, hundreds of registrars are able to register a domain.
 
 Beyond this, Cloudflare also offers you services such Domain Name System Security Extensions, custom domain protection, WHOIS redaction and more.
