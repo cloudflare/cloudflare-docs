@@ -96,7 +96,7 @@ In the final stage of the transfer process, input the contact information for yo
 You can modify the contact information, if needed, in the **Manage** tab [in your acount](/why-choose-cloudflare/whois-redaction#what-is-whois-redaction).
 
 
-After entering the contact information, you need to agree to the domain registration terms of service by selecting **Confirm transfer**.
+After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
 
 ### 8. Approve the transfer with your previous registrar
