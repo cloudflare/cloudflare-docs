@@ -8,7 +8,7 @@ pcx-content-type: faq
 
 ## After transferring my domain to Cloudflare, my domain’s expiration date changed. Why?
 
-ICANN requires that any transfer also extend the expiration date of your domain by at least one year — that is one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2020, but it expires on March 10, 2021, your new expiration date will be March 10, 2022.
+ICANN requires that any transfer also extends the expiration date of your domain by at least one year — that is one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2020, but it expires on March 10, 2021, your new expiration date will be March 10, 2022.
 
 Whenever a domain is first registered, the registrant purchases control of that domain for some number of years — up to 10 years. For example, a domain registered on October 8, 2020 will have an expiration date of October 8th in some year between 2021 and 2030, depending on the amount of years originally purchased.
 
