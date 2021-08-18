@@ -106,7 +106,7 @@ Once you have requested your transfer, Cloudflare will begin processing it. Your
 
 ## Transfer statuses
 
-You can check on the status of your transfer from the **Overview** page for that domain in the Cloudflare dashboard. Below, you can find a list of the possible transfer statuses.
+You can check on the status of your transfer in **Account Home** > **Overview** for your domain. Below, you can find a list of the possible transfer statuses.
 
 * **Transfer in progress**: your request has been submitted by Cloudflare to your previous registrar. We are now waiting on them to confirm they have received the request. If this status persists for more than one day, please ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
 
