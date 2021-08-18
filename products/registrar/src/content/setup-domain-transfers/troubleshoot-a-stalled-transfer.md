@@ -55,7 +55,7 @@ Some registrars may prohibit transfer requests if you have WHOIS privacy service
 <summary>Restarting your transfer</summary>
 <div>
 
-In the Cloudflare Overview page for your domain, you can find the details of your registration in the column on the right side of the page. In the **Domain Registration** card, click **Cancel and Retry**. Once you initiate the retry, you will need to reenter your auth code and confirm your WHOIS information.
+In **Overview** for your domain, find the details of your registration in the menu on the right side of the page. Under **Domain Registration**, select **Cancel and Retry**. Once you initiate the retry, reenter your auth code and confirm your WHOIS information.
 
 </div>
 </details>
