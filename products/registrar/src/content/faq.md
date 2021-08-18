@@ -20,7 +20,7 @@ You will be billed when you input your authorization code and initiate the trans
 
 ## My domain’s registration wasn’t extended by one year after transferring to Cloudflare
 
-When you transfer your domain to Cloudflare, the Registry will extend your registration by one year. However, in one specific circumstance your transfer could result in you keeping your original expiration date.
+When you transfer your domain to Cloudflare, the registry will extend your registration by one year. However, in one specific circumstance your transfer could result in you keeping your original expiration date.
 
 When a domain expires, the registration enters the auto-renew grace period. During that time, you can renew the domain at your registrar to avoid losing it. If your domain expires at your current registrar, you renew it and then transfer to Cloudflare within 45 days, the registry can restrict the addition of an extra year.
 
@@ -42,7 +42,7 @@ Once successful, you will receive an email from Cloudflare and be able to manage
 
 ## What happens if I entered the wrong auth code?
 
-If you input the incorrect authentication code, please return to the **Domain Registration** page or the **Overview** app for your site. You can use the available input field to reenter your authentication code.
+If you input the incorrect auth code (also referred to as authentication code), please return to the **Domain Registration** page or the **Overview** app for your site. You can use the available input field to reenter your authentication code.
 
 ## Why did my transfer fail?
 
@@ -64,7 +64,7 @@ You can leave the domain **In Progress** and Cloudflare will attempt to process 
 
 If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when initiating a domain transfer.
 
-## Premium Domains
+## Premium domains
 
 Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.
 

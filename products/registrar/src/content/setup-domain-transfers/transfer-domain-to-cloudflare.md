@@ -44,7 +44,7 @@ Only the registrant can enable or disable this lock, typically through the admin
 
 ### 3. Remove WHOIS privacy
 
-In most cases, domains may be transferred even if WHOIS privacy services have been enabled. However, some Registrars may prohibit the transfer if the WHOIS privacy service has been enabled.
+In most cases, domains may be transferred even if WHOIS privacy services have been enabled. However, some registrars may prohibit the transfer if the WHOIS privacy service has been enabled.
 
 
 ### 4. Request an authorization code
@@ -72,7 +72,7 @@ Sites can be unavailable for a few reasons, including:
 
 * The site was registered in the last 60 days.
 * Cloudflare does not yet support the TLD.
-* The domain is designated as a “Premium” domain by the Registry.
+* The domain is designated as a “premium” domain by the registry.
 * The domain has a status that does not allow for a transfer.
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
@@ -101,7 +101,7 @@ After entering the contact information, agree to the domain registration terms o
 
 ### 8. Approve the transfer with your previous registrar
 
-Once you have requested your transfer, Cloudflare will begin processing it. Your previous registrar will email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current Registrar dashboard.
+Once you have requested your transfer, Cloudflare will begin processing it. Your previous registrar will email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current registrar dashboard.
 
 
 ## Transfer statuses

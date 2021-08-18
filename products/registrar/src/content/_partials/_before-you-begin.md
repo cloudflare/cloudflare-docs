@@ -5,5 +5,5 @@
     * [Disabling DNSSEC](https://support.cloudflare.com/hc/articles/360006660072) in the Cloudflare dashboard.
 * If initiating multiple transfers, notify your financial institution to prevent them from flagging these charges as fraudulent.
 * Renew your domain if it is within 15 days of expiration.
-* Unlock your domain at your current Registrar.
-* Do not make any changes to the Registrant contact information. Updating the Registrant contact may result in your current Registrar locking the domain for 60 days.
+* Unlock your domain at your current registrar.
+* Do not make any changes to the Registrant contact information. Updating the Registrant contact may result in your current registrar locking the domain for 60 days.

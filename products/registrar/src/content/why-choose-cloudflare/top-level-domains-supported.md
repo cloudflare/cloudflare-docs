@@ -3,7 +3,7 @@ order:
 pcx-content: reference
 ---
 
-# Top Level Domais supported
+# Top Level Domains supported
 
 Cloudflare supports over 200 top-level domains (TLDs). The full list of supported TLDs [can be found on our TLD policies page](https://www.cloudflare.com/tld-policies/).
 

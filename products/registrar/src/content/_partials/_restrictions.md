@@ -6,6 +6,6 @@ To transfer to a new registrar, your domain must meet a few requirements:
 * Your account at your current registrar must be active. If your domain has expired, you may be able to transfer the domain. If the domain is in the RedemptionPeriod you will likely need to restore the domain first before the transfer can proceed. Note: the transfer of an expired domain may result in an additional year NOT being added during the transfer.
 * Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.
 * Domains that have a status of serverHold, serverTransferProhibited, pendingDelete, pendingTransfer, or RedemptionPeriod may not be transferred.
-* Domains that have a status of clientTransferProhibited (Transfer Lock) will show as available for transfer. However, the Transfer Lock must be removed at your current Registrar before the transfer can begin.
+* Domains that have a status of clientTransferProhibited (Transfer Lock) will show as available for transfer. However, the Transfer Lock must be removed at your current registrar before the transfer can begin.
 
 If your domain is listed as available for transfer in the Cloudflare dashboard, these restrictions have already been checked.
