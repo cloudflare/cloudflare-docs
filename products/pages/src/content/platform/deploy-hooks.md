@@ -55,7 +55,7 @@ In your Sanity project's Settings page, find the **Webhooks** section, and add t
 
 ![Configuring Deploy Hooks with Sanity](./sanity.png)
 
-### Wordpress
+### WordPress
 You can configure WordPress to trigger a Pages Deploy Hook by installing the free **WP Webhooks** plugin. The plugin includes a number of triggers, such as **Send Data on New Post, Send Data on Post Update** and **Send Data on Post Deletion**, all of which allow you to trigger new Pages deployments as your WordPress data changes. Select a trigger on the sidebar of the plugin settings and then [**Add Webhook URL**](https://wordpress.org/plugins/wp-webhooks/), pasting in your unique Deploy Hook URL.
 
 ![Configuring Deploy Hooks with WordPress](./wordpress.png)
