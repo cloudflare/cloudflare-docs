@@ -108,7 +108,7 @@ Once you have requested your transfer, Cloudflare will begin processing it. Your
 
 You can check on the status of your transfer in **Account Home** > **Overview** for your domain. Below, you can find a list of the possible transfer statuses.
 
-* **Transfer in progress**: your request has been submitted by Cloudflare to your previous registrar. We are now waiting on them to confirm they have received the request. If this status persists for more than one day, please ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
+* **Transfer in progress**: Your request has been submitted by Cloudflare to your previous registrar. Cloudflare is now waiting on them to confirm they have received the request. If this status persists for more than a day (24 hours), ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
 
 * **Pending approval**: your current registrar has received the transfer request. They can now wait up to five days to release the domain. If you want to move faster, you can manually approve the transfer for immediate release in the UI of most registrars.
 
