@@ -85,7 +85,7 @@ If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1
 
 ### 6. Input your authorization code
 
-In the next page, you need to input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/setup-domain-transfers/transfer-domain-to-cloudflare#set-up-a-domain-transfer).
+In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/setup-domain-transfers/transfer-domain-to-cloudflare#set-up-a-domain-transfer).
 
 ![Authorization input screenshot](../static/input-field.png)
 
