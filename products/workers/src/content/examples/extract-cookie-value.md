@@ -14,40 +14,21 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
+import { parse } from "cookie"
+// OR
+import { parse } from "worktop/cookie"
+
+// The name of the cookie
 const COOKIE_NAME = "__uid"
 
-/**
- * Returns a cookie value or null.
- * @param {Request} request incoming request
- * @param {string}  key of the cookie to get
- * @returns {string|void} value of the cookie if found
- */
-function getCookie(request, key) {
-  const cookie = request.headers.get('Cookie')
-  
-  // No cookie found
-  if (!cookie) return
-
-  // Search for the cookie key in the header.
-  const search = `${key}=`
-  const starts = cookie.indexOf(search)
-
-  // The cookie could not be found.
-  if (starts === -1) return
-
-  // Parse the cookie value.
-  const value = cookie.substring(starts + search.length, cookie.length)
-  const end = value.indexOf(';')
-
-  return end === -1 ? value : value.substring(0, end)
-}
-
 function handleRequest(request) {
-  const cookie = getCookie(request, COOKIE_NAME)
-  if (cookie) {
+  const cookie = parse(request.headers.get("Cookie") || "")
+
+  if (cookie[COOKIE_NAME] != null) {
     // Respond with the cookie value
-    return new Response(cookie)
+    return new Response(cookie[COOKIE_NAME])
   }
+
   return new Response("No cookie with name: " + COOKIE_NAME)
 }
 
@@ -55,3 +36,9 @@ addEventListener("fetch", event => {
   event.respondWith(handleRequest(event.request))
 })
 ```
+
+<Aside type="note" header="External Dependencies">
+
+This example is set up to depend on [`cookie@0.4.1`](https://www.npmjs.com/package/cookie/v/0.4.1) or [`worktop@0.7.1`](https://www.npmjs.com/package/worktop/v/0.7.1). You may pick either package, as they both work the same way.
+
+</Aside>
