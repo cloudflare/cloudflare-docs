@@ -31,7 +31,7 @@ If you want to delete your domain from Cloudflare, **disable** Auto-Renew first.
 You can renew a domain at any time. To renew a domain registered with Cloudflare:
 
 1. Login to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the account / domain you want to renew.
-1. From the **Overview** app, scroll down to **Domain Registration** and click **Manage domain**.
+1. From **Overview**, scroll down to **Domain Registration** and click **Manage domain**.
 1. In the **Registration** > **Domain Registration** card, click **Add years**.
 1. In **Renew for**, choose a number of years to renew your domain (up to 10 years).
 1. Click **Renew** > **Purchase**.
