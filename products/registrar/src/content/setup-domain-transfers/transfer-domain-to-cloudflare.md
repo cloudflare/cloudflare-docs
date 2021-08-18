@@ -60,7 +60,7 @@ This code is often referred to as an authorization code, auth code, authinfo cod
 
 ### 5. Initiate your transfer
 
-To initiate your transfer, go to the [Registrar section](https://dash.cloudflare.com/?to=/:account/domains/transfer) of your account. Cloudflare will display the zones available for transfer.
+To initiate your transfer, go to the **Account Home** > [**Registrar**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare will display the zones available for transfer.
 
 You will also be presented with the price for each transfer. When you transfer a domain, you are also required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting **x**.
 
