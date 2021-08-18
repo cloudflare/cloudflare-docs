@@ -24,7 +24,7 @@ ICANN rules prohibit a domain from being transferred if:
 
   ![Domain registration dashboard screenshot](../static/start-transfer-out.png)
 
-1. Click **Confirm and Unlock** to confirm that you really want to unlock your domain.
+1. Click **Confirm and Unlock** to confirm that you want to unlock your domain.
 1. Copy the auth code generated for your domain and use at your new registrar.
 
   <div class="medium-img">
