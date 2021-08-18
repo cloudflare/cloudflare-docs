@@ -39,4 +39,4 @@ The first auto-renew attempt will occur approximately 30 days prior to expiratio
 
 You can continue to keep your domain registered with Cloudflare for the time remaining on the expiration date. If you decide you want to keep the domain, you can enable auto renew at any time prior to your expiration.
 
-For more details on renewals, see [Domain renewal](/account-options/renew-domains).
+For more details on renewals, refer to [Domain renewal](/account-options/renew-domains).
