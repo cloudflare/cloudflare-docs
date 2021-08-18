@@ -86,7 +86,7 @@ Not yet, but we plan to support AMP soon.
  
 ### What is the data retention policy for Web Analytics?
 
-1 month, but we are planning to increase the retention in the near future.
+One month, but we are planning to increase the retention in the near future.
 
 ### Does Cloudflare Web Analytics support UTM parameters?
 
