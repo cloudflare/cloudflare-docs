@@ -21,7 +21,7 @@ Cloudflare Registrar offers one-click DNSSEC activation for free to all customer
 
 ![Enable button image](../static/enable-button.png)
 
-Cloudflare will publish those DS details in the form of CDS and CDNSKEY records for a domain delegated to Cloudflare. Our Registrar scans those records at regular intervals. When we notice you have enabled DNSSEC, we gather those details and send them to your domain’s registry.
+Cloudflare will publish those DS details in the form of CDS and CDNSKEY records for a domain delegated to Cloudflare. Our Registrar scans those records at regular intervals. When we notice you have enabled DNSSEC, Cloudflare gathers those details and sends them to your domain’s registry.
 
 This process can take one to two days after you first enable DNSSEC.
 
