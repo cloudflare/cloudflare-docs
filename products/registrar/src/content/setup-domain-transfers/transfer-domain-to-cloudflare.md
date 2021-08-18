@@ -64,7 +64,7 @@ To initiate your transfer, go to the [Registrar section](https://dash.cloudflare
 
 You will also be presented with the price for each transfer. When you transfer a domain, you are also required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting **x**.
 
-If you do not have a payment method on file, you need to add one at this step before proceeding.
+If you do not have a payment method on file, add one at this step before proceeding.
 
 ![Cloudflare checkout screenshot](../static/checkout-page.png)
 
