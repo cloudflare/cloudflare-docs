@@ -9,7 +9,7 @@ You can manage your domain with Cloudflare Registrar in **Overview** on the dash
 
 ## Domain status
 
-When your domain is registered with Cloudflare, you can know more about your domain status in the **Manage Domain** section. Scroll down to **Manage domain** > **Registration** tab. Here, you can review the current expiration date and Auto Renew status for your domain.
+When your domain is registered with Cloudflare, you can review your domain status in **Overview** > **Manage Domain** section in the right-hand menu. Scroll down to **Manage domain** > **Registration** tab. Here, you can review the current expiration date and Auto-Renew status for your domain.
 
 ## Editing WHOIS records
 
