@@ -48,7 +48,7 @@ If you input the incorrect authentication code, please return to the **Domain Re
 
 Domain transfers sometimes fail. We are here to help you address what failed so that you can complete the transfer to Cloudflare.
 
-First, make sure that you entered the auth code for that domain. If you need to reenter it, you can do so from the transfer launch page or the overview page for that site.
+First, make sure that you entered the auth code for that domain. If you need to reenter it, you can do so from the **Transfer Launch** page or the **Overview** for that site.
 
 Second, you can reattempt the transfer from the transfer launch page.
 
