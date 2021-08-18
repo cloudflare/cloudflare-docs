@@ -5,7 +5,7 @@ pcx-content: reference
 
 # Domain management
 
-You can manage your domain with Cloudflare Registrar in the Overview app of the dashboard.
+You can manage your domain with Cloudflare Registrar in **Overview** on the dashboard.
 
 ## Domain status
 
