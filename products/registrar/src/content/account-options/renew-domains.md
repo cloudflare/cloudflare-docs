@@ -22,7 +22,7 @@ If the renewal fails, you will receive an email notification and Cloudflare will
 
 <Aside type="note">
 
-If you want to delete your domain from Cloudflare, you must **disable** Auto Renew first.
+If you want to delete your domain from Cloudflare, **disable** Auto-Renew first.
 
 </Aside>
 
