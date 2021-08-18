@@ -40,5 +40,5 @@ If you lose your auth code, return to **Overview** > **Manage domain** > **Confi
 1. Go to your new registrar.
 1. You will be asked for the authorization code from Cloudflare (it might be called EPP in some systems). Input the code from the Cloudflare dashboard.
 1. Your new registrar will send the transfer request to the registry for your domain. The registry will then send it to Cloudflare. When we receive the message, you can manually approve the transfer to initiate it immediately.
-1. You will need to confirm the approval. You can also reject it at this stage. If you reject it, we will reapply the registrar lock.
+1. You will need to confirm the approval. You can also reject it at this stage. If you reject it, Cloudflare will reapply the registrar lock.
 1. If you do not manually approve the transfer, the transfer will auto-approve on the fifth day after receiving the request. In either case, when your transfer out completes we will remove the domain from your account and you will not be charged for future renewals.
