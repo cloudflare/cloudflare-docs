@@ -79,7 +79,7 @@ You will not be billed at this step. Cloudflare will only bill your card when yo
 
 <Aside type="note">
 
-If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified account email address</a>, you will not be able to transfer domains. Please verify your account email address before proceeding.
+If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified account email address</a>, you will not be able to transfer domains. Verify your account email address before proceeding.
 
 </Aside>
 
