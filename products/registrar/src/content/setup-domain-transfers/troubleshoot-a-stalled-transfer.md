@@ -37,7 +37,7 @@ You will need to restart the transfer and approve the request or contact your cu
 <summary>Auth code invalid</summary>
 <div>
 
-Your auth code has since changed or been deprecated, and we cannot complete the transfer. Please confirm the code with your current registrar again. We strongly recommend that you cut and paste the auth code provided by your current Registrar.
+Your auth code has since changed or been deprecated, and Cloudflare cannot complete the transfer. Confirm the code with your current registrar again. To avoid mistakes, copy and paste the auth code provided by your current Registrar.
 
 </div>
 </details>
