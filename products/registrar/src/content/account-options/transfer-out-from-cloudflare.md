@@ -19,7 +19,7 @@ ICANN rules prohibit a domain from being transferred if:
 ## Unlocking your domain at Cloudflare
 
 1. Login to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the account / domain you want to transfer.
-1. In the **Overview** app, scroll down to **Domain Registration** and click **Manage domain**. 
+1. In **Overview**, scroll down to **Domain Registration** and click **Manage domain**. 
 1. Click **Configuration**. In the **Transfer Out** card under **Domain Management**, click **Unlock**.
 
   ![Domain registration dashboard screenshot](../static/start-transfer-out.png)
