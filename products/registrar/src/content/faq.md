@@ -38,7 +38,7 @@ Once you initiate a domain transfer, your losing registrar has five days to rele
 
 To see the progress of your transfer, select the **Domain Registration** tab in your account or the **Transfer Domains** button, both in your account home page. Once there, you will see a list of domain transfers that are in progress. To accelerate the process, be sure to check with your old registrar how you can approve the transfer out.
 
-Once successful, you will receive an email from Cloudflare and be able to manage the domain in the Overview tab for that site.
+Once successful, you will receive an email from Cloudflare and be able to manage the domain in the dashboard under **Overview** of that site.
 
 ## What happens if I entered the wrong auth code?
 
