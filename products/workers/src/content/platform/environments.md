@@ -410,13 +410,13 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
 Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your Workers script. 
 
-To add environment variables, such as `vars` and `secrets`, go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
+To add environment variables, such as `vars` and `secret`:
 
-Input a **Variable name** and its **value**, which will be made available to your Worker. If this variable is a `secret`, select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard. 
-
-If the variable is not a secret, do not press **Encrypt**. 
-
-To add multiple environment variables, select **Add variable**. When you are finished, select **Save** to implement your changes.
+1. Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
+2. Input a **Variable name** and its **value**, which will be made available to your Worker. 
+3. If your variable is a secret select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard. 
+3. (Optional) To add multiple environment variables, select **Add variable**. 
+5. Select **Save** to implement your changes.
 
 ![env variables dash](env_variables_dash.png)
 
