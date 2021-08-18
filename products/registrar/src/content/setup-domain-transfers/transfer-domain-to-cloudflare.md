@@ -93,8 +93,11 @@ In the next page, input the authorization code for each domain you are transferr
 
 In the final stage of the transfer process, input the contact information for your registration. Cloudflare Registrar redacts this information by default but is required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
 
-You can modify the contact information, if needed, in the **Manage** tab [in your acount](/why-choose-cloudflare/whois-redaction#what-is-whois-redaction).
+You can modify the contact information, if needed: 
 
+1. From your Account Home, select **Registrar**. 
+1. Under the **Manage** tab, select **Edit** in the **Default Contact** card.
+1. Update your information.
 
 After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
@@ -112,4 +115,4 @@ You can check on the status of your transfer in **Account Home** > **Overview** 
 
 * **Pending approval**: Your current registrar has received the transfer request. They can now wait up to five days to release the domain. If you want to move faster, you can manually approve the transfer for immediate release in the dashboard of most registrars.
 
-* **Transfer rejected**: your transfer has been rejected. This can occur if you cancelled the request at your current registrar instead of approving it. If you still wish to transfer, you can select **Retry** and initiate a new transfer request.
+* **Transfer rejected**: your transfer has been rejected. This can occur if you canceled the request at your current registrar instead of approving it. If you still wish to transfer, you can select **Retry** and initiate a new transfer request.
