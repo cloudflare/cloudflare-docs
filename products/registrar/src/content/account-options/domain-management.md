@@ -21,7 +21,7 @@ Cloudflare redacts WHOIS information from your domain by default. However, we do
 
 ## Default Contact Data
 
-The first time you transfer or register a new domain, a Default Contact is created. That contact information may be used for future transfers and registrations. The contact data may be updated at any time in the dashboard. Updating the Default Contact data **will not** update the contact information for any domains in the account. This Default Contact data is only used to prepopulate contact information for new registrations and transfers.
+The first time you transfer or register a new domain, a Default Contact is created. That contact information may be used for future transfers and registrations. The contact data may be updated at any time in the dashboard. Updating the Default Contact data will not update the contact information for any domains in the account. This Default Contact data is only used to prepopulate contact information for new registrations and transfers.
 
 ## Automatic renewal of domain
 
