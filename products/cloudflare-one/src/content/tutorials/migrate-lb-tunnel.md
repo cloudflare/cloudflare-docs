@@ -78,7 +78,7 @@ You can save the configuration file.
 
 ## Run the Tunnel
 
-You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Cloudflare's edge in a connection only avaialble to your account. You can use the Tunnel ID value to treat that connection like the IP address of an origin, without the risk of someone reaching it directly and bypassing Cloudflare.
+You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Cloudflare's edge in a connection only available to your account. You can use the Tunnel ID value to treat that connection like the IP address of an origin, without the risk of someone reaching it directly and bypassing Cloudflare.
 
 Run the following command, replacing `lisbon-app` with the name of your Tunnel.
 

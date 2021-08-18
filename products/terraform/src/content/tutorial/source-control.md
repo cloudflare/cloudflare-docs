@@ -89,7 +89,7 @@ $ git commit -m "Step 2 - Initial commit with webserver definition."
  create mode 100644 cloudflare.tf
 ```
 
-An astute reader may have noticed that we did _not_ commit the `.terraform` directory nor did we commit the `terraform.tfstate` file. The former was not committed because this repository may be used on a different architecture, and the plugins contained in this directory are built for the system on which `terraform init` was run. The latter was not committed as i) it may eventually contain sensitive strings and ii) it is not a good way to keep state in sync, as explained in Hashicorp's documentaion on [Remote State](https://www.terraform.io/docs/language/state/remote.html).
+An astute reader may have noticed that we did _not_ commit the `.terraform` directory nor did we commit the `terraform.tfstate` file. The former was not committed because this repository may be used on a different architecture, and the plugins contained in this directory are built for the system on which `terraform init` was run. The latter was not committed as i) it may eventually contain sensitive strings and ii) it is not a good way to keep state in sync, as explained in Hashicorp's documentation on [Remote State](https://www.terraform.io/docs/language/state/remote.html).
 
 To prevent git from bugging us about these files, let's add them to a new .gitignore file, commit it, and push everything to GitHub:
 
