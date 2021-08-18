@@ -91,7 +91,7 @@ In the next page, input the authorization code for each domain you are transferr
 
 ### 7. Confirm or input your contact information
 
-In the final stage of the transfer process, you need to input the contact information for your registration. Cloudflare Registrar redacts this information by default, but we are required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
+In the final stage of the transfer process, input the contact information for your registration. Cloudflare Registrar redacts this information by default but is required to collect the authentic contact information for this registration. It is important that you provide accurate WHOIS contact information. You may be required to verify the contact information. Failure to provide accurate information and/or failure to verify the information may result in suspension or deletion of your domain.
 
 You can modify the contact information, if needed, in the **Manage** tab [in your acount](/why-choose-cloudflare/whois-redaction#what-is-whois-redaction).
 
