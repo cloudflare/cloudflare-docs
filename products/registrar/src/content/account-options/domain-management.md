@@ -17,7 +17,7 @@ Cloudflare redacts WHOIS information from your domain by default. However, we do
 
 1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account / domain.
 1. From **Overview**, scroll down to **Manage domain** > **Contacts**.
-1. Click **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
+1. Select **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
 
 ## Default Contact Data
 
