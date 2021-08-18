@@ -38,7 +38,7 @@ Log in to the registrar account where the domain is currently registered.
 
 ### 2. Unlock the domain
 
-Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers: registrar lock. You might also see it written as domain lock. In WHOIS it may appear as clientTransferProhibited. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
+Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers: registrar lock. You might also see it written as "domain lock." In WHOIS, it may appear as `clientTransferProhibited`. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
 
 Only the registrant can enable or disable this lock, typically through the administration interface of the registrar. To proceed with a transfer, you must remove this lock if it is enabled.
 
