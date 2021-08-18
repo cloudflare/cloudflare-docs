@@ -52,7 +52,7 @@ First, make sure that you entered the auth code for that domain. If you need to 
 
 Second, you can reattempt the transfer from the transfer launch page.
 
-If you cannot seem to resolve the issue, please open a support ticket and we will help investigate.
+If you cannot resolve the issue, open a support ticket or contact your account team.
 
 ## Why am I not allowed to transfer my domain?
 
