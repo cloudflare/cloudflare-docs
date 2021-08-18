@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 Your previous registrar has five days to release the domain after a successful transfer request. If your transfer has not been completed within that time frame, something has likely gone wrong. To resolve the issue, check the following settings and restart the transfer.
 
-Most issues with a stalled transfer can be solved by checking these details and restarting the transfer from your Cloudflare dashboard.
+Most issues with a stalled transfer can be solved by checking the following details and restarting the transfer from your Cloudflare dashboard.
 
 <details>
 <summary>Registrar lock reapplied</summary>
