@@ -3,8 +3,6 @@ order:
 pcx-content-type: how-to
 ---
 
-import StaticRoutesApi from "../../_partials/_static-routes-api.md"
-
 # Assign tunnel routes
 
 Magic Transit uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/about/tunnels-and-encapsulation) from Cloudflare’s edge to your data centers.
@@ -88,9 +86,25 @@ The minimum advertising prefix is /24, but because Cloudflare uses GRE tunnels a
 
 For example, you can send `x.x.x.0/29` to Datacenter 1 and `x.x.x.8/29` to Datacenter 2. This is helpful when you operate in an environment with constrained IP resources.
 
-## Create and edit static routes
+## Static routes
 
-<StaticRoutesApi/>
+Magic Transit uses the static routes you provide to route traffic through GRE tunnels. A route with a lower **Priority** value is used as the preferred route, and routes with the same priority value use equal-cost multi-path (ECMP) packet forwarding to route traffic.
+
+You can also create and edit static routes using [Magic Transit Static Routes API](https://api.cloudflare.com/#magic-transit-static-routes-properties).
+
+### Create a static route
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
+1. Next to **Static routes configuration**, click **Configure**.
+1. On the **Static Routes** page, click **Create** to add a new route.
+1. Enter the information for your route.
+1. While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
+1. If your test was successful, click **Add routes** when you are done.
+
+### Edit a static route
+
+1. After navigating to the **Static routes configuration** page, click **Edit** next to the route you want to modify.
+1. Enter the updated route information and click **Edit routes** when you are done.
 
 ## Scoped routes for GRE tunnels
 
