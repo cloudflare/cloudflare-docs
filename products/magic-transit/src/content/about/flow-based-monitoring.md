@@ -1,12 +1,12 @@
 ---
 title: Flow-based monitoring
 order:
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Flow-based monitoring
 
-Flow-based monitoring works with [on demand](/on-demand) to detect and notify you about attacks based on traffic flows from your data centers. You can configure your routers to continuously send NetFlow data to Cloudflare where the flow data is ingested and analyzed for volumetric DDoS attacks. When an attack is detected, Cloudflare automatically notifies you by email, webhook, or [PagerDuty](https://support.cloudflare.com/hc/en-us/articles/360047358211-Connecting-PagerDuty-to-Cloudflare) with information about the attack.
+Flow-based monitoring works with [Magic Transit on demand](/on-demand) to detect and notify you about attacks based on traffic flows from your data centers. You can configure your routers to continuously send NetFlow data to Cloudflare where the flow data is ingested and analyzed for volumetric DDoS attacks. When an attack is detected, Cloudflare automatically notifies you by email, webhook, or [PagerDuty](https://support.cloudflare.com/hc/en-us/articles/360047358211-Connecting-PagerDuty-to-Cloudflare) with information about the attack.
 
 You can choose to activate IP advertisement via the Cloudflare dashboard, API, or automatically. After Magic Transit is activated and your traffic is flowing through Cloudflare, you only receive the clean traffic back to your network over your GRE tunnels.
 
@@ -16,7 +16,7 @@ To activate IP advertisement via the API, refer to the [IP Address Management Dy
 
 ## Enable Flow-based monitoring alerts
 
-1. Log in to your Cloudflare dashboard and select **Notifications**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Notifications**.
 1. From **Notifications**, click **Add**.
 1. Locate **Magic Transit** in the list and click **Select** to add a Flow-based Monitoring: Volumetric Attack notification.
 1. Enter a name and description for the notification.
