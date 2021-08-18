@@ -101,7 +101,7 @@ After entering the contact information, agree to the domain registration terms o
 
 ### 8. Approve the transfer with your previous registrar
 
-Once you have requested your transfer, Cloudflare will begin processing it. Your previous registrar will email you to confirm your request to transfer away. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current Registrar dashboard.
+Once you have requested your transfer, Cloudflare will begin processing it. Your previous registrar will email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current Registrar dashboard.
 
 
 ## Transfer statuses
