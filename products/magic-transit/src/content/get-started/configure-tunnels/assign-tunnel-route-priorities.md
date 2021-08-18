@@ -97,9 +97,9 @@ You can also create and edit static routes using [Magic Transit Static Routes AP
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
 1. Next to **Static routes configuration**, click **Configure**.
 1. On the **Static Routes** page, click **Create** to add a new route.
-1. Enter the information for your route and click **Add routes** when you are done.
-
-While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
+1. Enter the information for your route.
+1. While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
+1. If your test was successful, click **Add routes** when you are done.
 
 ### Edit a static route
 
