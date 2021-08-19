@@ -6,12 +6,18 @@ title: Domain Joined
 
 # Domain Joined (beta)
 
-The Domain Joined device posture attribute ensures that a user is a member of a specific Windows domain.
+<details>
+<summary>Feature availability</summary>
+<div>
 
-| Prerequisites | 
-| ------------- |
-| This check is supported on: Windows|
-| This check is not supported on: macOS, Linux, Chrome, Android, or iOS |
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| --- | ----------------- | --------- | ---- |
+| Beta | Windows | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
+The Domain Joined device posture attribute ensures that a user is a member of a specific Windows Active Directory domain.
 
 To enable the Domain Joined check:
 

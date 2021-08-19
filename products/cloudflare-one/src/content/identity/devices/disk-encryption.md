@@ -6,6 +6,17 @@ title: Disk Encryption
 
 # Disk Encryption (beta)
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| --- | ----------------- | --------- | ---- |
+| Beta | macOS, Windows, Linux | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 The Disk Encryption device posture attribute ensures that disks are encrypted on a device.
 
 To enable the Disk Encryption check:

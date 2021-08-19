@@ -5,6 +5,17 @@ pcx-content-type: how-to
 
 # Tanium
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| Any OS supported by Tanium | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/) to determine if a request should be allowed to reach a protected resource.
 
 ## Tanium Configuration
