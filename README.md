@@ -1,4 +1,4 @@
-# Cloudflare Docs
+# Cloudflare® Docs
 
 __[View the docs →](https://developers.cloudflare.com/docs/)__
 
@@ -6,7 +6,7 @@ __[View the docs →](https://developers.cloudflare.com/docs/)__
 
 [Set up local development](https://developers.cloudflare.com/docs-engine/contributing/development-setup)
 
-## For Cloudflare employees
+## For Cloudflare® employees
 
 To get write access to this repo, please reach out to the __Developer Docs__ room in chat.
 
@@ -14,7 +14,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 
 | Product                 | `pathPrefix`         | Test                                                                                  | Prod                                                           |
 | :---------------------- | :------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
-| 1.1.1.1                 | 1.1.1.1              | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1.1.1.1)                           | [Prod](https://developers.cloudflare.com/1.1.1.1)              |
+| 1.1.1.1™                 | 1.1.1.1™              | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1.1.1.1)                           | [Prod](https://developers.cloudflare.com/1.1.1.1)              |
 | Access                  | access               | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)               |
 | Analytics               | analytics            | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       | [Prod](https://developers.cloudflare.com/analytics)            |
 | API                     | api                  | [Test](https://api.cloudflare-docs.workers.dev/api)                                   | [Prod](https://developers.cloudflare.com/api)                  |
@@ -32,10 +32,10 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Load Balancing          | load-balancing       | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             | [Prod](https://developers.cloudflare.com/load-balancing)       |
 | Logs                    | logs                 | [Test](https://logs.cloudflare-docs.workers.dev/logs)                                 | [Prod](https://developers.cloudflare.com/logs)                 |
 | Magic Firewall          | magic-firewall        | [Test](https://magic-firewall.cloudflare-docs.workers.dev/magic-firewall)            | [Prod](https://developers.cloudflare.com/magic-firewall)        |
-| Magic Transit           | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
+| Magic Transit®          | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
 | Network Interconnect    | network-interconnect | [Test](https://network-interconnect.cloudflare-docs.workers.dev/network-interconnect) | [Prod](https://developers.cloudflare.com/network-interconnect) |
 | Pages                   | pages                | [Test](https://pages.cloudflare-docs.workers.dev/pages)                               | [Prod](https://developers.cloudflare.com/pages)                |
-| Railgun                 | railgun              | [Test](https://railgun.cloudflare-docs.workers.dev/railgun)                           | [Prod](https://developers.cloudflare.com/railgun)              |
+| Railgun™                 | railgun              | [Test](https://railgun.cloudflare-docs.workers.dev/railgun)                           | [Prod](https://developers.cloudflare.com/railgun)              |
 | Randomness Beacon       | randomness-beacon    | [Test](https://randomness-beacon.cloudflare-docs.workers.dev/randomness-beacon)       | [Prod](https://developers.cloudflare.com/randomness-beacon)    |
 | Registrar               | registrar            | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       | [Prod](https://developers.cloudflare.com/registrar)            |
 | Rules                   | rules                | [Test](https://rules.cloudflare-docs.workers.dev/rules)                               | [Prod](https://developers.cloudflare.com/rules)                |
@@ -59,7 +59,7 @@ PROD: https://developers.cloudflare.com/$pathPrefix/
 ```
 ### License and Legal Notices
 
-Except as otherwise noted, Cloudflare and any contributors grant you a license to the Cloudflare Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
+Except as otherwise noted, Cloudflare® and any contributors grant you a license to the Cloudflare® Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
 
-Cloudflare products and services referenced in the documentation may be either trademarks or registered trademarks of Cloudflare in the United States and/or other countries. The licenses for this project do not grant you rights to use any Cloudflare names, logos, or trademarks. Cloudflare's general trademark guidelines can be found at [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/).
+Cloudflare products and services referenced in the documentation may be either trademarks or registered trademarks of Cloudflare® in the United States and/or other countries. The licenses for this project do not grant you rights to use any Cloudflare® names, logos, or trademarks. Cloudflare's general trademark guidelines can be found at [https://www.cloudflare.com/trademark/](https://www.cloudflare.com/trademark/).
 Cloudflare and any contributors reserve all other rights, whether under their respective copyrights, patents, or trademarks, whether by implication, estoppel, or otherwise.
