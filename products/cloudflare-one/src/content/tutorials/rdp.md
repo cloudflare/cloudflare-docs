@@ -36,7 +36,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
   ![Add App](../static/zero-trust-security/ssh/add-app.png)
 
-1. Input a subdomain where your application will be availble to users.
+1. Input a subdomain where your application will be available to users.
 
   ![Configure](../static/zero-trust-security/ssh/configure-app.png)
 

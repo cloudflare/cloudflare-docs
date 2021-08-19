@@ -150,7 +150,7 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 
 <Aside type="note" header="Note">
 
-The Free plan additionally supports APK, EXE, DMG, and BIN file extensions. 
+The Free plan additionally supports APK, EXE, DMG, BIN, ISO, ZIP, RAR, ZST, TAR, BZ2, 7z, GZ, MP4, MKV, AVI, WEBM, MP3, OGG, and FLAC file extensions. 
 
 </Aside>
 

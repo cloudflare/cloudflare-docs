@@ -8,11 +8,15 @@ Next.js is an open-source React framework for creating websites and apps. In thi
 
 ## Creating a new project
 
-Create a new project using `npx` by running the following command in your terminal:
+Create a new project using `npx` or `yarn` by running either of the following commands in your terminal:
 
 ```sh
-$ npx create-next-app
+$ npx create-next-app --example with-static-export my-app
+# or
+$ yarn create next-app --example with-static-export my-app
 ```
+
+After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
 
 ## Creating a GitHub repository
 
@@ -32,23 +36,13 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 | Configuration option | Value           |
 | -------------------- | ----------------|
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `out`           |
+| Production branch    | `main`           |
+| Build command        | `npm run export` |
+| Build directory      | `out`            |
 
 </TableLayout>
 
-Your `build` command in `package.json` should build and export your Next.js application, like this: 
-
-```json
-{
-  "scripts": {
-    "build": "next build && next export"
-  }
-}
-```
-
-After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site, before deploying it.
+After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
 
 <Aside type="note">
 
@@ -56,7 +50,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 </Aside>
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
