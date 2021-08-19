@@ -27,6 +27,7 @@
   align-items: center;
   justify-content: flex-start;
   color: inherit;
+  min-height: 64px;
 }
 
 .ProductGrid--link span {
