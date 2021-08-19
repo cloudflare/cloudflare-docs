@@ -76,7 +76,7 @@ To update [Wrangler](https://github.com/cloudflare/wrangler), follow the below i
 **Updating Wrangler with NPM:**
 
 ```sh
-$ npm uninstall -g @cloudflare/wrangler && npm install -g @cloudflare/wrangler
+$ npm update -g @cloudflare/wrangler
 ```
 
 **Updating Wrangler with Cargo:**

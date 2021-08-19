@@ -56,6 +56,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   repo="cloudflare/worker-template-router"
 />
 
+<WorkerStarter
+  title="Sunder Starter (Typescript)"
+  description="A complete starter template using Sunder, TypeScript, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
+  repo="gzuidhof/sunder-worker-template"
+/>
+
 --------------------------------
 
 ## Frameworks

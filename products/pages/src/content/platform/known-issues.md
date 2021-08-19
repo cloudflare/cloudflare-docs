@@ -12,7 +12,7 @@ Here are some known bugs and issues that we're aware of with Cloudflare Pages:
 - pages.dev subdomains currently can't be changed. If you need to change your pages.dev subdomain, delete your project and create a new one.
 - Hugo builds automatically run an old version. To run the latest version of Hugo (for instance, 0.80.0), you'll need to set an environment variable. Set `HUGO_VERSION` to `0.80.0` or the Hugo version of your choice.
 - By default, we use Node 10 in the Pages build environment. If you need to use a newer Node version, see our [Build configuration page](https://developers.cloudflare.com/pages/platform/build-configuration) for configuration options.
-- For users migrating from Netifly, Cloudflare does not support Netlify's Forms and Serverless Functions features. Cloudflare Pages does not directly support HTTP header customization, but it can be done through Workers. Refer to the ["Add custom HTTP headers"](/how-to/add-custom-http-headers) guide for more information.
+- For users migrating from Netlify, Cloudflare does not support Netlify's Forms and Serverless Functions features. Cloudflare Pages does not directly support HTTP header customization, but it can be done through Workers. Refer to the ["Add custom HTTP headers"](/how-to/add-custom-http-headers) guide for more information.
 - It is currently not possible to add a custom domain with a wildcard, e.g. *.domain.com.
 - Cloudflare Pages is not supported with Cloudflare Apps; you may see a 1014 error if you use both in a deployment.
 

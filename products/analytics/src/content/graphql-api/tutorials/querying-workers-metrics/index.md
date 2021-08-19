@@ -33,7 +33,7 @@ PAYLOAD='{ "query":
               cpuTimeP99
             }
             dimensions{
-              datetimeMinute
+              datetime
               scriptName
               status
             }

@@ -33,5 +33,31 @@ order: 1
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td>
+                2021-08-16
+            </td>
+            <td>
+                2021-08-23
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …090d53ee
+            </td>
+            <td>
+                100045
+            </td>
+            <td>
+                Improve rule coverage
+            </td>
+            <td>
+                Disabled
+            </td>
+            <td>
+                Disabled
+            </td>
+        </tr>
     </tbody>
 </table></TableWrap>

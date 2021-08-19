@@ -92,7 +92,7 @@ When a *Do Not Inspect* rule is created for a given hostname, application, or ap
 
 </Aside>
 
-*Do Not Inspect* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occuring on both encrypted and plaintext traffic.
+*Do Not Inspect* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
 
 The *Do Not Inspect* action is only available when matching against the host criteria.
 

@@ -18,6 +18,8 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 
 With purge by single-file, cached resources are immediately removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
 
+The single-file purge rate limit for the Free subscription is 1000 urls/min. The rate limit is subject to change.
+
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain:
 - [Custom cache keys](/about/cache-keys)
 - [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)

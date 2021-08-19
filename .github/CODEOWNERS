@@ -1,5 +1,5 @@
 # 1.1.1.1
-products/1.1.1.1/ @cloudflare/PCX
+products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Access
 products/access/ @cloudflare/access-docs @cloudflare/PCX
@@ -60,6 +60,9 @@ products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
+
+# Magic Firewall
+products/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
 
 # Network Interconnect
 products/network-interconnect @ConzorKingKong @cloudflare/PCX

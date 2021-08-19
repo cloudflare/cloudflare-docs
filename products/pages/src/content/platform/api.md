@@ -5,13 +5,13 @@ pcx-content-type: concept
 
 # REST API
 
-The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. We plan to support prebuilt deployments and hooks soon. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
+The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/platform/deploy-hooks) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
 ## How to use the API
 
 ### Get an API Key
 
-Navigate to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and copy your "Global API Key".
+Go to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and copy your **Global API Key**.
 
 ### Make requests
 
@@ -23,15 +23,15 @@ curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{ac
 --header 'X-Auth-Key: {auth_key}' \
 ```
 
-Try it out with one of your projects by replacing `{account_id}`, `{project_name}`, `{email}`, and `{auth_key}`. You can find your `account_id` in the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers).
+Try it with one of your projects by replacing `{account_id}`, `{project_name}`, `{email}`, and `{auth_key}`. You can find your `account_id` in the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers).
 
 ## Examples
 
-The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions across the world on Cloudflare's network. Here are three code examples for useful ways to use the Pages API. To build and deploy these samples, refer to the [Getting Started guide](https://developers.cloudflare.com/workers/get-started/guide).
+The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions on Cloudflare's global network. The following section includes three code examples on how to use the Pages API. To build and deploy these samples, refer to the [Get started guide](https://developers.cloudflare.com/workers/get-started/guide).
 
 ### Triggering a new build every hour
 
-Suppose we have a CMS that pulls data from live sources to compile a static output. We can keep the static content as fresh as possible by triggering new builds periodically using the API.
+Suppose we have a CMS that pulls data from live sources to compile a static output. You can keep the static content as recent as possible by triggering new builds periodically using the API.
 
 ```js
 const endpoint =
@@ -58,11 +58,11 @@ async function handleScheduled(request) {
 }
 ```
 
-Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
+After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
 ### Deleting old deployments after a week
 
-Cloudflare Pages hosts and serves all project deployments on preview links. Suppose we want to keep our project private and prevent access to our old deployments. We can use the API to delete deployments after a month, so that they are no longer public online.
+Cloudflare Pages hosts and serves all project deployments on preview links. Suppose you want to keep your project private and prevent access to your old deployments. You can use the API to delete deployments after a month, so that they are no longer public online.
 
 ```js
 const deployments_endpoint =
@@ -80,7 +80,8 @@ async function handleScheduled(request) {
       "content-type": "application/json;charset=UTF-8",
       "X-Auth-Email": email,
       "X-Auth-Key": API_KEY,
-      //We recommend you store API keys as secrets using the Workers dashboard or using Wrangler as documented here https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
+      // You should store API keys as secrets using the Workers dashboard or using Wrangler
+      // @see https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
     },
   };
 
@@ -112,11 +113,11 @@ async function handleScheduled(request) {
 }
 ```
 
-Once you have deployed the JS worker, you can set a cron trigger through the Workers Dashboard UI to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
+After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](https://developers.cloudflare.com/workers/platform/cron-triggers) for more details.
 
 ### Sharing project information
 
-Imagine we are working on a development team using Pages to build our websites. We would want an easy way to share deployment preview links and build status without having to share Cloudflare accounts. Using the API, we can easily share project information, including deployment status and preview links, and serve this content as HTML from a Cloudflare Worker.
+Imagine you are working on a development team using Pages to build your websites. You would want an easy way to share deployment preview links and build status without having to share Cloudflare accounts. Using the API, you can easily share project information, including deployment status and preview links, and serve this content as HTML from a Cloudflare Worker.
 
 ```js
 const deployments_endpoint =
@@ -178,7 +179,7 @@ async function handleRequest(request) {
 }
 ```
 
-## See also
+## Additional information
 
 - [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
 - [Workers Getting Started Guide](https://developers.cloudflare.com/workers/get-started/guide)

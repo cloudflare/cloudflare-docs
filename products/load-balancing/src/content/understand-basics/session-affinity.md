@@ -52,17 +52,7 @@ On a specific load balancer:
 
 ### Origin Drain
 
-Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. Enable Origin Drain by entering a value in the **Origin drain duration TTL** field, after enabling Session Affinity. **Origin drain duration TTL** is the time (in seconds) it takes to drain all active connections. Traffic drains from any disabled origin or from all origins within a disabled pool.
-
-![Session affinity configuration with origin drain](../static/images/session-affinity-3.png)
-
-To check the status of a disabled origin’s drain, use the added **Drain Time** column in the Manage Load Balancer table. **Drain Time** shows the time remaining for a drain in progress. You can edit the **Origin drain duration TTL** field value while an origin drains. Entering a value shorter than the remaining TTL for drains in progress servers current connections to those origins.
-
-![Manage Load Balancer table with draining in progress](../static/images/session-affinity-4.png)
-
-When a drain is **Complete**, there are no longer any connections to that origin.
-
-![Manage Load Balancer table with draining complete](../static/images/session-affinity-5.png)
+Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. For more details on origin drain, refer to [Performing planned maintenance](/additional-options/planned-maintenance#gradual-rotation).
 
 ---
 

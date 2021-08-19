@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 ## Creating redirects
 
-To use redirects on Cloudflare Pages, declare your redirects in a `_redirects` plain text file in the output folder of your project. The [build output folder](https://developers.cloudflare.com/pages/platform/build-configuration) is project-specific so the `_redirects` file should not always be in the root directory of the repo. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
+To use redirects on Cloudflare Pages, declare your redirects in a `_redirects` plain text file in the output folder of your project. The [build output folder](/platform/build-configuration) is project-specific so the `_redirects` file should not always be in the root directory of the repository. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
 
 Only one redirect can be defined per line and must follow this format:
 
@@ -37,7 +37,7 @@ filename: _redirects
 
 A project is limited to 100 total redirects. Each redirect declaration has a 1000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied. If the same `source` URL has multiple redirects, the topmost redirect is applied.
 
-We currently offer limited support for advanced redirects. More support will be added in the future.
+Cloudflare currently offers limited support for advanced redirects. More support will be added in the future.
 
 <TableWrap>
 
@@ -55,6 +55,6 @@ We currently offer limited support for advanced redirects. More support will be 
 </TableWrap>
 
 
-## See also
+## Additional information
 
 - [Transform Rules](https://developers.cloudflare.com/rules/transform)

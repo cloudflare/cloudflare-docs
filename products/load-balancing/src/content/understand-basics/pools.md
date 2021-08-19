@@ -9,6 +9,12 @@ pcx-content-type: concept
 
 A Cloudflare Load Balancing pool represents a group of origin servers, each identified by their IP address or hostname. You can configure multiple pools, as well as failover priority (Pool A-> Pool B-> Pool C). If you're familiar with DNS terminology, think of a pool as a “record set,” except we only return addresses that are considered healthy. You can attach health checks to individual pools to tailor monitoring for collections of origin servers.
 
+<Aside>
+
+For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/understand-basics/health-details).
+
+</Aside>
+
 ---
 
 ## Important notes
@@ -24,8 +30,6 @@ When working with pools, note the following:
 **Dynamic Steering uses Round Trip Time (RTT) profiles to determine pool priority**. If there is no RTT data for a pool in a region or colocation center, Load Balancing will use pool order to determine failover priority.
 
 **Geo Steering directs traffic to pools based on the client’s region or point of presence.** If there is no Geo Steering configuration for a region or pool, the load balancer will use pool order to determine failover priority.
-
-**If Health Check Regions for a pool is set to All Data Centers (Enterprise)**, pool health is determined by a majority of data centers.
 
 ---
 
