@@ -97,7 +97,7 @@ In the final stage of the transfer process, input the contact information for yo
 
 You can modify the contact information, if needed: 
 
-1. From your Account Home, select **Registrar**. 
+1. From your **Account Home**, select **Registrar**. 
 1. Under the **Manage** tab, select **Edit** in the **Default Contact** card.
 1. Update your information.
 

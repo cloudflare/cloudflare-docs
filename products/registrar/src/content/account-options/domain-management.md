@@ -9,14 +9,14 @@ You can manage your domain with Cloudflare Registrar in **Overview** on the dash
 
 ## Domain status
 
-When your domain is registered with Cloudflare, you can review your domain status in **Overview** > **Manage Domain** section in the right-hand menu. Scroll down to **Manage domain** > **Registration** tab. Here, you can review the current expiration date and Auto-Renew status for your domain.
+When your domain is registered with Cloudflare, you can review your domain status in **Overview** > **Manage Domain** in the right-hand menu. Scroll down to **Manage domain** > **Registration** tab. Here, you can review the current expiration date and Auto-Renew status for your domain.
 
 ## Editing WHOIS records
 
 Cloudflare redacts WHOIS information from your domain by default. However, we do store the authentic WHOIS record for your domain. You may edit the WHOIS contact data for any domain. To do that: 
 
-1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account / domain.
-1. From **Overview**, scroll down to **Manage domain** > **Contacts**.
+1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
+1. From **Overview**, scroll down to **Manage domain** in the right-hand menu > **Contacts**.
 1. Select **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
 
 ## Default Contact Data
@@ -33,7 +33,7 @@ If you decide you no longer need the domain, disable auto-renew for your account
 
 <Aside type="note" header="Note">
 
-The first auto-renew attempt will occur approximately 30 days prior to expiration. If you wish to disable auto-renew, please do so at least 30 days prior.
+The first auto-renew attempt will occur approximately 30 days prior to expiration. If you wish to disable auto-renew, do so at least 30 days prior.
 
 </Aside>
 

@@ -1,4 +1,4 @@
-## Before transferring a domain to Cloudflare:
+## Before transferring a domain to Cloudflare
 
 * Ensure you have created [an account that includes your domain](https://support.cloudflare.com/hc/articles/201720164) and [changed your DNS nameservers](https://support.cloudflare.com/hc/articles/205195708) to Cloudflare.
 * Disable DNSSEC by:

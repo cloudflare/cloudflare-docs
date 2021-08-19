@@ -42,7 +42,7 @@ Once successful, you will receive an email from Cloudflare and be able to manage
 
 ## What happens if I entered the wrong auth code?
 
-If you input the incorrect auth code (also referred to as authentication code), please return to the **Domain Registration** page or the **Overview** app for your site. You can use the available input field to reenter your authentication code.
+If you input the incorrect auth code (also referred to as authentication code and authorization code), return to the **Domain Registration** page or the **Overview** for your site. You can use the available input field to reenter your authentication code.
 
 ## Why did my transfer fail?
 
