@@ -119,13 +119,13 @@ Run the tunnel to proxy incoming traffic from the Tunnel to any number of servic
 $ cloudflared tunnel --config path/config.yaml run <UUID or NAME>
 ```
 
-You can also run the tunnel without a configuration file. To do that, append the necessary [flags](link) after the run command and before the name or UUID. Running your tunnel this way will route all traffic to the given URL.
+You can also run the tunnel without a configuration file. To do that, append the necessary [flags](/connections/connect-apps/configuration/config#arguments) after the run command and before the name or UUID. Running your tunnel this way will route all traffic to the given URL.
 
 ```sh
 $ cloudflared tunnel run --url localhost:3000 <NAME or UUID>
 ```
 
-Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, see [Run as a service](link).
+Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, see [Run as a service](/connections/connect-apps/run-tunnel/run-as-service).
 
 ## 8. Check the tunnel
 
