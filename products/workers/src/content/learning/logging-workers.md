@@ -11,12 +11,13 @@ The Workers platform captures all `console.log`'s and uncaught exceptions, in ad
 
 ## Adding custom logs
 
-Here is an example of a Worker with a `console.log` inside the request handler.
+You can add custom logs to your Worker with console.log. Any console.log's you add will show up in both the dashboard and wrangler tail. Here is an example of a Worker with a custom log inside the request handler.
 
 ```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
+
 /**
  * Respond with hello worker text
  * @param {Request} request
@@ -83,6 +84,8 @@ You can customize how `wrangler tail` works to fit your needs: see [the docs](/c
 ## Accessing production logs with the dashboard
 
 You can also view the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, from free to enterprise plans.
+
+![Cloudflare dashboard showing Workers logs](./media/workers-logging-dashboard.png)
 
 A few things worth mentioning:
 
