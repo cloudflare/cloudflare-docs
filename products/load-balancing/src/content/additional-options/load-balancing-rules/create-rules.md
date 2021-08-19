@@ -8,7 +8,7 @@ pcx-content-type: how-to
 
 ## Overview
 
-Create and manage [Load Balancing rules](/understand-basics/load-balancing-rules) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow in the **Traffic** app.
+Create and manage [Load Balancing rules](../load-balancing-rules) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow in the **Traffic** app.
 
 ---
 
@@ -27,8 +27,6 @@ Create and manage [Load Balancing rules](/understand-basics/load-balancing-rules
 1. Log in to your Cloudflare Account and select a domain.
 
 1. Select **Traffic** > **Load Balancing**.
-
-  ![Load Balancing tab in the Traffic app](../../static/images/load-balancing-tab.png)
 
 1. Edit an existing load balancer or [create a new load balancer](/create-load-balancer-ui).
 
@@ -92,11 +90,11 @@ Create and manage [Load Balancing rules](/understand-basics/load-balancing-rules
 
 ---
 
-1. In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](/understand-basics/load-balancing-rules/reference).
+1. In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](../reference).
 
   ![Screenshot, Create Custom Rule dialog, choose Field](../../static/images/create-custom-rule-field.png)
 
-1. In the **Operator** drop-down list, choose an operator. For more details, see [Operators](/understand-basics/load-balancing-rules/reference#operators).
+1. In the **Operator** drop-down list, choose an operator. For more details, see [Operators](../reference#operators).
 
 1. Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
 
@@ -124,8 +122,6 @@ To save a new load balancer rule, make sure to save both the rule **and** the ov
 
 1. After you create your rule, select **Save and Deploy** or **Save as Draft**.
 
-1. Select **Next** and review your changes:
-
-    ![Screenshot, Edit Load Balancer, Review](../../static/images/edit-load-balancer-review.png)
+1. Select **Next** and review your changes.
 
 1. Select **Save**.
