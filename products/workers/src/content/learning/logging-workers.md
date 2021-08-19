@@ -11,7 +11,7 @@ The Workers platform captures all `console.log`'s and uncaught exceptions, in ad
 
 ## Adding custom logs
 
-You can add custom logs to your Worker with console.log. Any console.log's you add will show up in both the dashboard and wrangler tail. Here is an example of a Worker with a custom log inside the request handler.
+Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
 
 ```js
 addEventListener('fetch', event => {
