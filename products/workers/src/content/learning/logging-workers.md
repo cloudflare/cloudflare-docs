@@ -46,7 +46,7 @@ After you deploy the above code, run `wrangler tail` in your terminal, and then 
 
 ## Accessing production logs with `wrangler tail`
 
-With your Workers application deployed, you may want to inspect incoming traffic. This can be useful for situations where a user is running into issues or errors that they cannot reproduce. `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time access to information about incoming requests.
+With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that you cannot easily reproduce. In these instances, `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
 To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
 
@@ -83,7 +83,7 @@ You can customize how `wrangler tail` works to fit your needs: see [the docs](/c
 
 ## Accessing production logs with the dashboard
 
-You can also view the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, from free to enterprise plans.
+You can also view the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
 
 ![Cloudflare dashboard showing Workers logs](./media/workers-logging-dashboard.png)
 
@@ -114,7 +114,7 @@ When a Worker running in production has an error that prevents it from returning
 
 </TableWrap>
 
-Other 11xx errors generally indicate a problem with the Workers runtime itself — refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
+Other `11xx` errors generally indicate a problem with the Workers runtime itself. Please refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
 ### Identifying errors: Workers Metrics
 
@@ -124,7 +124,7 @@ You can find out whether your application is experiencing any downtime, or retur
 
 ### Debugging exceptions
 
-After you have identified your Workers application is returning exceptions, use `wrangler tail` to inspect, and fix the exceptions.
+After you have identified your Workers application is returning exceptions, use `wrangler tail` to inspect and fix the exceptions.
 
 <!-- TODO: include example -->
 
@@ -134,7 +134,7 @@ Exceptions will show up under the `exceptions` field in the JSON returned by `wr
 
 A Worker can make HTTP requests to any HTTP service on the public internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
-When logging using this strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
+When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
 ```js
 addEventListener("fetch", event => {
@@ -144,8 +144,7 @@ addEventListener("fetch", event => {
 async function handleEvent(event) {
   // ...
 
-  // Without event.waitUntil(), our fetch() to our logging service may
-  // or may not complete.
+  // Without event.waitUntil(), the `postLog` function may or may not complete.
   event.waitUntil(postLog(stack))
   return fetch(event.request)
 }
@@ -160,12 +159,11 @@ function postLog(data) {
 
 ### Go to Origin on Error
 
-By using [`event.passThroughOnException`](/runtime-apis/fetch-event#methods), your Workers application will pass requests to your origin if it throws an exception. This allows you to add logging, tracking, or other features with Workers, without degrading your website’s functionality.
+By using [`event.passThroughOnException`](/runtime-apis/fetch-event#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your website’s functionality.
 
 ```js
 addEventListener("fetch", event => {
   event.passThroughOnException()
-
   event.respondWith(handleRequest(event.request))
 })
 
