@@ -6,6 +6,6 @@ pcx-content-type: navigation
 
 # Basics of Cloudflare load balancers
 
-This sections comprises a set of concepts and functionalities to help you understand the power of Cloudflare Load Balancing in planning your traffic management. Click on the links below to learn more:
+Review the following topics to learn more about the basic concepts and components involved in Cloudflare Load Balancing.
 
 <DirectoryListing path="/understand-basics"/>
