@@ -156,7 +156,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 ### vars
 
-The `vars` key defines a table of environment variables](/platform/environment-variables) provided to your Worker script. All values are plaintext values.
+The `vars` key defines a table of [environment variables](/platform/environment-variables) provided to your Worker script. All values are plaintext values.
 
 Usage:
 
