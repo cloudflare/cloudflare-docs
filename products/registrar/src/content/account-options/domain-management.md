@@ -29,7 +29,7 @@ Cloudflare Registrar enrolls your domain to auto-renew by default. Unlike other 
 
 There is no guarantee that the renewal will succeed. Renewals may fail for various reasons, including billing failures and registry downtime. While we will make several attempts to renew, we strongly recommend you frequently review your account to ensure your domains have been renewed.
 
-If you decide you no longer need the domain, disable auto-renew for your account. Once disabled, your domain will not renew upon expiration.
+If you decide you no longer need the domain, [disable auto-renew for your account](/account-options/renew-domains#set—up-automatic-renewals). Once disabled, your domain will not renew upon expiration.
 
 <Aside type="note" header="Note">
 
