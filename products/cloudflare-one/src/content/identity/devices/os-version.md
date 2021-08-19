@@ -6,6 +6,17 @@ title: OS Version
 
 # OS Version (beta)
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| --- | ----------------- | --------- | ---- |
+| Beta | macOS, Windows | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than a given value.
 
 To enable the OS version check:
