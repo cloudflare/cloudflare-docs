@@ -8,7 +8,7 @@ pcx-content-type: how-to
 
 Follow this step-by-step guide to getting your first tunnel up and running. 
 
-​​<Aside>
+​​<Aside type='note'>
 
 Before you start
 1. Add a website to Cloudflare
