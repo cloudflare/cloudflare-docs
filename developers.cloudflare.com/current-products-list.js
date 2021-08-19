@@ -51,20 +51,26 @@ const products = [
     wrap: true,
   },
   {
-    title: "DNS Resolver",
-    path: "1.1.1.1",
-    icon: "1.1.1.1",
-  },
-  {
     title: "Distributed Web Gateway",
     path: "distributed-web",
     icon: "distributed-web",
     wrap: true,
   },
   {
+    title: "DNS Resolver",
+    path: "1.1.1.1",
+    icon: "1.1.1.1",
+  },
+  {
     title: "Firewall Rules",
     path: "firewall",
     icon: "firewall",
+  },
+  {
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true,
   },
   {
     title: "HTTP/3",
@@ -77,12 +83,6 @@ const products = [
     icon: "image-resizing",
   },
   {
-    title: "Cloudflare Fundamentals",
-    path: "fundamentals",
-    icon: "fundamentals",
-    wrap: true,
-  },
-  {
     title: "Load Balancing",
     path: "load-balancing",
     icon: "load-balancing",
@@ -93,14 +93,14 @@ const products = [
     icon: "logs",
   },
   {
-    title: "Magic Transit",
-    path: "magic-transit",
-    icon: "magic-transit",
-  },
-  {
     title: "Magic Firewall",
     path: "magic-firewall",
     icon: "magic-firewall",
+  },
+  {
+    title: "Magic Transit",
+    path: "magic-transit",
+    icon: "magic-transit",
   },
   {
     title: "Magic WAN",
