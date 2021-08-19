@@ -106,7 +106,7 @@ zone_id = "09876543210987654321"
 route = "example.com/*"
 ```
 
-To deploy this worker, run the `wrangler publish` command like the example below:
+To deploy this Worker, run the `wrangler publish` command in your terminal:
 
 ```sh
 ~/my-worker $ wrangler publish
@@ -198,7 +198,7 @@ With this configuration, Wrangler will behave in the following manner:
 ✨  Successfully published your script to example.com/*
 ```
 
-Any defined environment variables (the [`vars`](/cli-wrangler/configuration#vars) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/platform/environment-variables) (the [`vars`](/cli-wrangler/configuration#vars) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
@@ -244,7 +244,7 @@ With this configuration, Wrangler will behave in the following manner:
 
 ### workers.dev as a first-class target
 
-If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each owning its own set of environment variables, secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
+If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each owning its own set of environment variables](/platform/environment-variables), secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
 
 ```toml
 ---
@@ -309,126 +309,6 @@ name = "my-worker-staging"
 Your default `wrangler build`, `wrangler preview`, and `wrangler publish` commands will all build with `webpack.dev.js`. Any commands tied to the staging environment will also use this configuration; for example, `wrangler build -e staging`, `wrangler preview -e staging`, and `wrangler publish -e staging`.
 
 The build commands `wrangler build -e production`, `wrangler preview -e production`, and `wrangler publish -e production` would all use your `webpack.config.js` file.
-
---------------------------------
-
-## Environment variables
-
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
-
-### Adding environment variables via wrangler
-
-* Environment variables are defined via the `[vars]` config in your `wranger.toml` file and are always plaintext values.
-
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
-
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
-
-    # Define top-level environment variables
-    # under the `[vars]` block using
-    # the `key = "value"` format
-    [vars]
-    API_TOKEN = "example_dev_token"
-    STRIPE_TOKEN = "pk_xyz1234_test"
-
-    # Override values for `--env production` usage
-    [env.production]
-    name = "my-worker-production"
-    [env.production.vars]
-    API_TOKEN = "example_production_token"
-    STRIPE_TOKEN = "pk_xyz1234"
-    ```
-
-    These environment variables can then be accessed within your Worker script as global variables. They will be plaintext strings.
-
-    ```js
-    // Worker code:
-    console.log(API_TOKEN);
-    //=> (default) "example_dev_token"
-    //=> (env.production) "example_production_token"
-
-    console.log(STRIPE_TOKEN);
-    //=> (default) "pk_xyz1234_test"
-    //=> (env.production) "pk_xyz1234"
-    ```
-
-* KV namespaces are defined via the [`kv_namespaces`](/cli-wrangler/configuration#kv_namespaces) config in your `wrangler.toml` and are always provided as [KV runtime instances](/runtime-apis/kv).
-
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
-
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
-
-    [[kv_namespaces]]
-    binding = "Customers"
-    preview_id = "<PREVIEW KV NAMESPACEID>"
-    id = "<DEV KV NAMESPACEID>"
-
-    [env.production]
-    name = "my-worker-production"
-    [[kv_namespaces]]
-    binding = "Customers"
-    id = "<PRODUCTION KV NAMESPACEID>"
-    ```
-
-* Secrets are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
-
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
-
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
-
-    # [secrets]
-    # SPARKPOST_KEY
-    # GTOKEN_PRIVKEY
-    # GTOKEN_KID
-    ```
-
-<Aside type="warning">
-
-\* __Warning:__ Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/cli-wrangler/commands#secret) instead.
-
-</Aside>
-
-### Adding environment variables via the dashboard
-
-Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your Workers script. 
-
-To add environment variables, such as `vars` and `secret`:
-
-1. Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
-2. Input a **Variable name** and its **value**, which will be made available to your Worker. 
-3. If your variable is a secret select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard. 
-3. (Optional) To add multiple environment variables, select **Add variable**. 
-5. Select **Save** to implement your changes.
-
-![env variables dash](env_variables_dash.png)
-
-To add KV namespace bindings, go to your **Workers script** > **Settings** > **Add binding** under **KV Namespace Bindings**.
-
-Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker script. Next, select a **KV namespace** from the dropdown. Select **Add binding** to add multiple bindings. When you are finished, select **Save** to implement your changes.
-
-![kv namespace bindings](kv_namespace_bindings.png)
-
-Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference. 
-
-![env vars secret](envvarssecret-detail-page.jpeg)
 
 --------------------------------
 
