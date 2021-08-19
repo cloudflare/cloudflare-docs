@@ -28,8 +28,6 @@ Create and manage [Load Balancing rules](../load-balancing-rules) in the **Custo
 
 1. Select **Traffic** > **Load Balancing**.
 
-  ![Load Balancing tab in the Traffic app](../../static/images/load-balancing-tab.png)
-
 1. Edit an existing load balancer or [create a new load balancer](/create-load-balancer-ui).
 
 1. From the Load Balancer workflow, select **Custom Rules**.
@@ -124,8 +122,6 @@ To save a new load balancer rule, make sure to save both the rule **and** the ov
 
 1. After you create your rule, select **Save and Deploy** or **Save as Draft**.
 
-1. Select **Next** and review your changes:
-
-    ![Screenshot, Edit Load Balancer, Review](../../static/images/edit-load-balancer-review.png)
+1. Select **Next** and review your changes.
 
 1. Select **Save**.
