@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 You can access logs and exceptions for your Workers from the dashboard and via `wrangler tail`.
 
-The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or the dashboard.
+The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
 ## Adding custom logs
 
@@ -33,7 +33,7 @@ async function handleRequest(request) {
 }
 ```
 
-If you deploy that, run `wrangler tail`, and then access the Worker, it will display:
+After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. It will display:
 
 ```sh
 ☁  logging-example [master] ⚡  wrangler tail --format=pretty
@@ -45,7 +45,7 @@ If you deploy that, run `wrangler tail`, and then access the Worker, it will dis
 
 ## Accessing production logs with `wrangler tail`
 
-With your Workers application deployed, you may want to inspect incoming traffic. This can be useful for situations where a user is running into issues or errors that you can’t reproduce. `wrangler tail` allows developers to “tail” their Workers application’s logs, giving you real-time access to information about incoming requests.
+With your Workers application deployed, you may want to inspect incoming traffic. This can be useful for situations where a user is running into issues or errors that they cannot reproduce. `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time access to information about incoming requests.
 
 To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
 
@@ -82,13 +82,13 @@ You can customize how `wrangler tail` works to fit your needs: see [the docs](/c
 
 ## Accessing production logs with the dashboard
 
-You can also view the production logs associated with any Worker from the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). Click on any Worker and then click "Logs." Logging is available for all customers, including those on the free plan.
+You can also view the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, from free to enterprise plans.
 
 A few things worth mentioning:
 
-- These logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
+- Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 - Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
-- Logs from any [Durable Objects](/learning/using-durable-objects) your Worker is using will show up here.
+- Logs from any [Durable Objects](/learning/using-durable-objects) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
 --------------------------------
@@ -111,27 +111,27 @@ When a Worker running in production has an error that prevents it from returning
 
 </TableWrap>
 
-Other 11xx errors generally indicate a problem with the Workers runtime itself — please check our [status page](https://www.cloudflarestatus.com) if you see one.
+Other 11xx errors generally indicate a problem with the Workers runtime itself — refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
-### Identifying error: Workers Metrics
+### Identifying errors: Workers Metrics
 
-Additionally, you can find out whether your application is experiencing any downtime, or returning any errors by navigating to Workers Metrics in the dashboard.
+You can find out whether your application is experiencing any downtime, or returning any errors by navigating from *Account Home** > to **Workers** > your **Worker script** > **Metrics** in the dashboard.
 
 <!-- TODO: include screenshots -->
 
 ### Debugging exceptions
 
-Once you’ve identified your Workers application is returning exceptions, you can use `wrangler tail` to inspect, and fix the exceptions.
+After you have identified your Workers application is returning exceptions, use `wrangler tail` to inspect, and fix the exceptions.
 
 <!-- TODO: include example -->
 
-Exceptions will show up under the `exceptions` field in the JSON returned by `wrangler tail`. Once you’ve identified the exception that is causing errors, you may redeploy your code with a fix, and continue trailing the logs to confirm that it is indeed fixed.
+Exceptions will show up under the `exceptions` field in the JSON returned by `wrangler tail`. After you have identified the exception that is causing errors, redeploy your code with a fix, and continue tailing the logs to confirm that it is fixed.
 
 ### Setup a logging service
 
 A Worker can make HTTP requests to any HTTP service on the public internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
-When logging using this strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, you can pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
+When logging using this strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
 ```js
 addEventListener("fetch", event => {
@@ -157,7 +157,7 @@ function postLog(data) {
 
 ### Go to Origin on Error
 
-By using `event.passThroughOnException`, your Workers application will pass requests to your origin if it throws an exception. This allows you to add logging, tracking, or other features with Workers, without degrading your website’s functionality.
+By using [`event.passThroughOnException`](/runtime-apis/fetch-event#methods), your Workers application will pass requests to your origin if it throws an exception. This allows you to add logging, tracking, or other features with Workers, without degrading your website’s functionality.
 
 ```js
 addEventListener("fetch", event => {
