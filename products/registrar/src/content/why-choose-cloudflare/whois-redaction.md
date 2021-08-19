@@ -23,8 +23,8 @@ WHOIS redaction removes most contact information categorized as personal data (r
 Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. To access it:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account / domain.
-1. Click **Registrar**.
-1. Under the Manage tab, click **Edit** to update your information.
+1. Select **Registrar**.
+1. Under **Manage** > **Default Contact**, select **Edit** to update your information.
 
 <Aside type="note">
 

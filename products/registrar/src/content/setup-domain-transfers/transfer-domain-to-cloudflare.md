@@ -13,8 +13,6 @@ This section contains generic details on how to transfer your domain to Cloudfla
 
 <BeforeYouBegin/>
 
----
-
 <Restrictions />
 
 <EmailForward/>
@@ -23,7 +21,7 @@ This section contains generic details on how to transfer your domain to Cloudfla
 
 ## Set up a domain transfer
 
-To begin, complete the following steps in your current registrar to transfer your domain to Cloudflare. Below, you will find links for instructions on transfer instructions from some of the most popular registrars:
+To begin, complete the following steps in your current registrar to transfer your domain to Cloudflare. Below, you will find links for detailed transfer instructions from some of the most popular registrars:
 
 * [Enom](http://enom.help/outgoing)
 * [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
@@ -58,9 +56,9 @@ This code is often referred to as an authorization code, auth code, authinfo cod
 </Aside>
 
 
-### 5. Initiate your transfer
+### 5. Initiate your transfer to Cloudflare
 
-To initiate your transfer, go to the **Account Home** > [**Registrar**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare will display the zones available for transfer.
+Go to the **Account Home** > [**Registrar**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare will display the zones available for transfer.
 
 You will be presented with the price for each transfer. When you transfer a domain, you are required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting **x**.
 
@@ -87,7 +85,11 @@ If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1
 
 In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/setup-domain-transfers/transfer-domain-to-cloudflare#set-up-a-domain-transfer).
 
+<div class="medium-img">
+
 ![Authorization input screenshot](../static/input-field.png)
+
+</div>
 
 ### 7. Confirm or input your contact information
 

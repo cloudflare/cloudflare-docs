@@ -1,4 +1,4 @@
-**Restrictions**
+## Restrictions
 
 To transfer to a new registrar, your domain must meet a few requirements:
 
