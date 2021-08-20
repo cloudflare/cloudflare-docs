@@ -6,6 +6,9 @@ pcx-content-type: how-to
 import PoolDefinition from "../_partials/_pools-definition.md"
 import PoolCreate from "../_partials/_pools-create.md"
 import MonitorDefinition from "../_partials/_monitor-definition.md"
+import MonitorCreate from "../_partials/_monitor-create.md"
+import MonitorPrepareServers from "../_partials/_monitor-prepare-server.md"
+import MonitorExample from "../_partials/_monitor-example.md"
 
 
 # Get started
@@ -22,7 +25,43 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 ---
 
-## Step 1 — Create an origin pool
+## Step 1 — Create a monitor
+
+<MonitorDefinition/>
+
+<details>
+<summary>Create a monitor in the dashboard</summary>
+<div>
+
+<strong>Set up the monitor</strong>
+
+<MonitorCreate/>
+
+<strong>Prepare your servers</strong>
+
+<MonitorPrepareServers/>
+
+</div>
+</details>
+
+<details>
+<summary>Create a monitor with the API</summary>
+<div>
+
+<strong>Set up the monitor</strong>
+
+TBD
+
+<strong>Prepare your servers</strong>
+
+<MonitorPrepareServers/>
+
+</div>
+</details>
+
+<MonitorExample/>
+
+## Step 2 — Create an origin pool
 
 <PoolDefinition/>
 
@@ -46,23 +85,9 @@ TBD
 
 </details>
 
-## Step 2 — Create a monitor
-
-<MonitorDefinition/>
-
-<details>
-<summary>Create a monitor</summary>
-<div>
-
-TBD
-
-</div>
-
-</details>
-
 ## Step 3 — Confirm pool health
 
-Before directing any traffic to your pools, you want to make sure that your pools and monitors are set up correctly.
+Before directing any traffic to your pools, you want to make sure that your pools and monitors are set up correctly. The status of your health check will be *unknown* until the results of the first check are available.
 
 If you notice that healthy pools are being marked unhealthy:
 
