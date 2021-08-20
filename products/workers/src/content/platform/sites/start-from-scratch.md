@@ -36,7 +36,9 @@ Configure `route` to match your `*.workers.dev` subdomain:
 
   ```toml
   route = "your-workers-subdomain.workers.dev/*"
-Or
+  ```
+  
+  Or
 
   **Personal Domain**: Add your `zone_id` and a `route`.
 
