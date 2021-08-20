@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Logging from Workers
 
-You can access logs and exceptions for your Workers using the dashboard or `wrangler tail`.
+You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/cli-wrangler/commands#tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
@@ -46,7 +46,7 @@ After you deploy the above code, run `wrangler tail` in your terminal, and then 
 
 ## View logs using `wrangler tail`
 
-With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that you cannot easily reproduce. In these instances, `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time insight into their application's incoming requests.
+With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
 To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
 
@@ -79,11 +79,11 @@ $ wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/page-data/app-data.json"
 ```
 
-You can customize how `wrangler tail` works to fit your needs: see [the docs](/cli-wrangler/commands#tail) for available configuration options.
+You can customize how `wrangler tail` works to fit your needs: refer to [the `wrangler tail` documentation](/cli-wrangler/commands#tail) for available configuration options.
 
 ## View logs from the dashboard
 
-You can also view the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
+You can review the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
 
 ![Cloudflare dashboard showing Workers logs](./media/workers-logging-dashboard.png)
 
@@ -114,11 +114,11 @@ When a Worker running in production has an error that prevents it from returning
 
 </TableWrap>
 
-Other `11xx` errors generally indicate a problem with the Workers runtime itself. Please refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
+Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
 ### Identifying errors: Workers Metrics
 
-You can find out whether your application is experiencing any downtime, or returning any errors by navigating from *Account Home** > to **Workers** > your **Worker script** > **Metrics** in the dashboard.
+You can find out whether your application is experiencing any downtime, or returning any errors by navigating from **Account Home** > to **Workers** > your **Worker script** > **Metrics** in the dashboard.
 
 <!-- TODO: include screenshots -->
 
@@ -130,9 +130,9 @@ After you have identified your Workers application is returning exceptions, use 
 
 Exceptions will show up under the `exceptions` field in the JSON returned by `wrangler tail`. After you have identified the exception that is causing errors, redeploy your code with a fix, and continue tailing the logs to confirm that it is fixed.
 
-### Setup a logging service
+### Set up a logging service
 
-A Worker can make HTTP requests to any HTTP service on the public internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
+A Worker can make HTTP requests to any HTTP service on the public Internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
 When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
@@ -157,9 +157,9 @@ function postLog(data) {
 }
 ```
 
-### Go to Origin on Error
+### Go to origin on error
 
-By using [`event.passThroughOnException`](/runtime-apis/fetch-event#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your website’s functionality.
+By using [`event.passThroughOnException`](/runtime-apis/fetch-event#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 ```js
 addEventListener("fetch", event => {
