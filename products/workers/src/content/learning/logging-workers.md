@@ -34,7 +34,7 @@ async function handleRequest(request) {
 }
 ```
 
-After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. It will display:
+After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. Your terminal will display:
 
 ```sh
 ☁  logging-example [master] ⚡  wrangler tail --format=pretty
