@@ -1,5 +1,5 @@
 ---
-order: 
+order: 7
 pcx-content-type: concept
 ---
 
@@ -7,73 +7,53 @@ pcx-content-type: concept
 
 In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
 
-## Adding environment variables via wrangler
+## Environment variables via wrangler
 
-* Environment variables are defined via the `[vars]` configuration in your `wranger.toml` file and are always plaintext values.
+### Adding environment variables via wrangler
 
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
+Environment variables are defined via the `[vars]` configuration in your `wranger.toml` file and are always plaintext values.
 
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+type = "javascript"
 
-    # Define top-level environment variables
-    # under the `[vars]` block using
-    # the `key = "value"` format
-    [vars]
-    API_TOKEN = "example_dev_token"
-    STRIPE_TOKEN = "pk_xyz1234_test"
+account_id = "<YOUR ACCOUNTID>"
+workers_dev = true
 
-    # Override values for `--env production` usage
-    [env.production]
-    name = "my-worker-production"
-    [env.production.vars]
-    API_TOKEN = "example_production_token"
-    STRIPE_TOKEN = "pk_xyz1234"
-    ```
+# Define top-level environment variables
+# under the `[vars]` block using
+# the `key = "value"` format
+[vars]
+API_TOKEN = "example_dev_token"
+STRIPE_TOKEN = "pk_xyz1234_test"
 
-    These environment variables can then be accessed within your Worker script as global variables. They will be plaintext strings.
+# Override values for `--env production` usage
+[env.production]
+name = "my-worker-production"
+[env.production.vars]
+API_TOKEN = "example_production_token"
+STRIPE_TOKEN = "pk_xyz1234"
+```
 
-    ```js
-    // Worker code:
-    console.log(API_TOKEN);
-    //=> (default) "example_dev_token"
-    //=> (env.production) "example_production_token"
+These environment variables can then be accessed within your Worker script as global variables. They will be plaintext strings.
 
-    console.log(STRIPE_TOKEN);
-    //=> (default) "pk_xyz1234_test"
-    //=> (env.production) "pk_xyz1234"
-    ```
+```js
+// Worker code:
+console.log(API_TOKEN);
+//=> (default) "example_dev_token"
+//=> (env.production) "example_production_token"
 
-* KV namespaces are defined via the [`kv_namespaces`](/cli-wrangler/configuration#kv_namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/runtime-apis/kv).
+console.log(STRIPE_TOKEN);
+//=> (default) "pk_xyz1234_test"
+//=> (env.production) "pk_xyz1234"
+```
 
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
+### Adding secrets via wrangler
 
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
-
-    [[kv_namespaces]]
-    binding = "Customers"
-    preview_id = "<PREVIEW KV NAMESPACEID>"
-    id = "<DEV KV NAMESPACEID>"
-
-    [env.production]
-    name = "my-worker-production"
-    [[kv_namespaces]]
-    binding = "Customers"
-    id = "<PRODUCTION KV NAMESPACEID>"
-    ```
-
-* Secrets are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
+Secrets are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
 
     ```toml
     ---
@@ -97,7 +77,35 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
 </Aside>
 
-## Adding environment variables via the dashboard
+### Adding KV namespaces via wrangler
+
+KV namespaces are defined via the [`kv_namespaces`](/cli-wrangler/configuration#kv_namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/runtime-apis/kv).
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+type = "javascript"
+
+account_id = "<YOUR ACCOUNTID>"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "Customers"
+preview_id = "<PREVIEW KV NAMESPACEID>"
+id = "<DEV KV NAMESPACEID>"
+
+[env.production]
+name = "my-worker-production"
+[[kv_namespaces]]
+binding = "Customers"
+id = "<PRODUCTION KV NAMESPACEID>"
+```
+
+## Environment variables via the dashboard
+
+### Adding environment variables via the dashboard
 
 Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**. 
 
@@ -105,11 +113,19 @@ To add environment variables, such as `vars` and `secret`:
 
 1. Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
 2. Input a **Variable name** and its **value**, which will be made available to your Worker. 
-3. If your variable is a secret select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard. 
+3. If your variable is a secret, select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard. 
 3. (Optional) To add multiple environment variables, select **Add variable**. 
 5. Select **Save** to implement your changes.
 
 ![env variables dash](env_variables_dash.png)
+
+<Aside type="warning" header="Plaintext strings and secrets">
+
+Do not select **Encrypt** when adding environment variables if your variable is not a secret. Skip step 3 if your variable's value is a plaintext string and does not need to be encrypted. 
+
+</Aside>
+
+### Adding KV namespace bindings via the dashboard
 
 To add KV namespace bindings:
 
