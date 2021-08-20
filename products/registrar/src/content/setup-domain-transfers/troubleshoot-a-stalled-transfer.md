@@ -37,7 +37,7 @@ You will need to restart the transfer and approve the request or contact your cu
 <summary>Auth code invalid</summary>
 <div>
 
-Your auth code (also referred to as authentication code and authorization code) has since changed or been deprecated, and Cloudflare cannot complete the transfer. Confirm the code with your current registrar again. To avoid mistakes, copy and paste the auth code provided by your current registrar.
+Your auth code (also referred to as authentication code and authorization code) has since changed or been deprecated, and Cloudflare cannot complete the transfer. Confirm the code with your current registrar again. To avoid mistakes, copy and paste the authorization code provided by your current registrar.
 
 </div>
 </details>
@@ -55,7 +55,7 @@ Some registrars may prohibit transfer requests if you have WHOIS privacy service
 <summary>Restarting your transfer</summary>
 <div>
 
-In **Overview** for your domain, find the details of your registration in the menu on the right side of the page. Under **Domain Registration**, select **Cancel and Retry**. Once you initiate the retry, reenter your auth code and confirm your WHOIS information.
+In **Overview** for your domain, find the details of your registration in the menu on the right side of the page. Under **Domain Registration**, select **Cancel and Retry**. Once you initiate the retry, reenter your authorization code and confirm your WHOIS information.
 
 </div>
 </details>
