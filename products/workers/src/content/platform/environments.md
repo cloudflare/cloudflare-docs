@@ -244,7 +244,7 @@ With this configuration, Wrangler will behave in the following manner:
 
 ### workers.dev as a first-class target
 
-If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each owning its own set of environment variables](/platform/environment-variables), secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
+If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each given its own set of [environment variables](/platform/environment-variables), secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
 
 ```toml
 ---
