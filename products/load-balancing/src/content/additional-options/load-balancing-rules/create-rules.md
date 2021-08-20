@@ -1,12 +1,9 @@
 ---
-title: Create rules
-order: 40
+order: 15
 pcx-content-type: how-to
 ---
 
-# Create rules for Cloudflare load balancers
-
-## Overview
+# Create custom rules
 
 Create and manage [Load Balancing rules](../load-balancing-rules) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow in the **Traffic** app.
 

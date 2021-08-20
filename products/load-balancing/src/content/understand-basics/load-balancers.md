@@ -1,11 +1,9 @@
 ---
-order: 11
+order: 2
 pcx-content-type: concept
 ---
 
 # Load balancers
-
-## Overview
 
 A Cloudflare load balancer is identified by the DNS hostname whose traffic you want to balance (`www.example.com`). The load balancer defines which origin server pools to use, the order in which they should be used, and how to geographically distribute traffic among pools.
 
