@@ -1053,6 +1053,13 @@ jobs:
           workingDirectory: 'products/pages'
           environment: 'production'
           wranglerVersion: '1.13.0'
+      - name: Google Chat Notification
+        uses: signalnerve/google-chat-notification@master
+        with:
+          name: Build
+          url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: ${{ failure() }}
   
   deploy-page-shield:
     runs-on: ubuntu-latest
@@ -1593,3 +1600,10 @@ jobs:
           workingDirectory: "products/workers"
           environment: "production"
           wranglerVersion: '1.13.0'
+      - name: Google Chat Notification
+        uses: signalnerve/google-chat-notification@master
+        with:
+          name: Build
+          url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: ${{ failure() }}
