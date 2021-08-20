@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Logging from Workers
 
-You can access logs and exceptions for your Workers from the dashboard and via `wrangler tail`.
+You can access logs and exceptions for your Workers using the dashboard or `wrangler tail`.
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
@@ -24,7 +24,7 @@ addEventListener('fetch', event => {
  */
 async function handleRequest(request) {
   const { cf } = request
-  const { city, country  } = cf
+  const { city, country } = cf
 
   console.log(`Request came from city: ${city} in country: ${country}`);
 
@@ -44,7 +44,7 @@ After you deploy the above code, run `wrangler tail` in your terminal, and then 
  | [Info] Request came from city: Pacifica in country: US
 ```
 
-## Accessing production logs with `wrangler tail`
+## View logs using `wrangler tail`
 
 With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that you cannot easily reproduce. In these instances, `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
@@ -81,7 +81,7 @@ $ wrangler tail | jq .event.request.url
 
 You can customize how `wrangler tail` works to fit your needs: see [the docs](/cli-wrangler/commands#tail) for available configuration options.
 
-## Accessing production logs with the dashboard
+## View logs from the dashboard
 
 You can also view the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
 
