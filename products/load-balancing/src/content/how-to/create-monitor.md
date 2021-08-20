@@ -6,14 +6,12 @@ pcx-content-type: how-to
 import MonitorDefinition from "../_partials/_monitor-definition.md"
 import MonitorCreate from "../_partials/_monitor-create.md"
 import MonitorPrepareServers from "../_partials/_monitor-prepare-server.md"
-import MonitorExample from "../_partials/_monitor-example.md"
 
 # Create a monitor
 
 <MonitorDefinition/>
 
-<MonitorExample/>
-
+For more details about monitors, refer to [Monitors](/understand-basics/monitors).
 ---
 
 ## Via the dashboard

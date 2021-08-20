@@ -9,6 +9,8 @@ import MonitorDefinition from "../_partials/_monitor-definition.md"
 import MonitorCreate from "../_partials/_monitor-create.md"
 import MonitorPrepareServers from "../_partials/_monitor-prepare-server.md"
 import MonitorExample from "../_partials/_monitor-example.md"
+import LBDefinition from "../_partials/_load-balancer-definition.md"
+import LBCreate from "../_partials/_load-balancer-create.md"
 
 
 # Get started
@@ -30,7 +32,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 <MonitorDefinition/>
 
 <details>
-<summary>Create a monitor in the dashboard</summary>
+<summary>Create a monitor (dashboard)</summary>
 <div>
 
 <strong>Set up the monitor</strong>
@@ -45,7 +47,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 </details>
 
 <details>
-<summary>Create a monitor with the API</summary>
+<summary>Create a monitor (API)</summary>
 <div>
 
 <strong>Set up the monitor</strong>
@@ -66,7 +68,7 @@ TBD
 <PoolDefinition/>
 
 <details>
-<summary>Create a pool in the dashboard</summary>
+<summary>Create a pool (dashboard)</summary>
 <div>
 
 <PoolCreate/>
@@ -76,7 +78,7 @@ TBD
 </details>
 
 <details>
-<summary>Create a pool with the API</summary>
+<summary>Create a pool (API)</summary>
 <div>
 
 TBD
@@ -93,3 +95,59 @@ If you notice that healthy pools are being marked unhealthy:
 
 - Review [how origins and pools become unhealthy](/understand-basics/health-details).
 - Refer to our [Troubleshooting FAQ](https://support.cloudflare.com/hc/articles/4407016052493).
+
+## Step 4 — Create a load balancer on a test subdomain
+
+<LBDefinition/>
+
+Just as in the previous step, you want to make sure your load balancer is functioning as you expected before using it with live traffic.
+
+For example, if you had `test.example.com` as a testing subdomain, you could either:
+
+- Create a load balancer with a **Hostname** of `test.example.com`.
+- Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a CNAME record on `test.example.com` that points to `lb.example.com`.
+
+Either option would use your load balancer to distribute requests going to `test.example.com`.
+
+<details>
+<summary>Create a load balancer (dashboard)</summary>
+<div>
+
+<LBCreate/>
+
+</div>
+
+</details>
+
+<details>
+<summary>Create a load balancer (API)</summary>
+<div>
+
+TBD
+
+</div>
+
+</details>
+
+## Step 5 — Review load balancing analytics
+
+As you send sample requests to your test domain, review our [load balancing analytics](/reference/load-balancing-analytics) to make sure your load balancer is distributing requests like you were expecting.
+
+## Step 6 — Deploy your load balancer on live traffic
+
+Now that you have set up your load balancer and verified everything is working correctly, you can put the load balancer on a live domain or subdomain.
+
+As before, you could either:
+
+- Edit the **Hostname** of your existing load balancer
+- Update the CNAME record sending traffic to your load balancer
+
+<Aside type="note">
+
+If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, [set up a Page Rule](https://support.cloudflare.com/hc/articles/206190798) using the **Resolve Override** setting.
+
+</Aside>
+
+## Step 7 — Continue reviewing load balancing analytics
+
+Repeat [Step 5](#step-5--review-load-balancing-analytics) to ensure your load balancer is acting as expected.
