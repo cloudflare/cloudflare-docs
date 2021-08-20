@@ -6,9 +6,9 @@ pcx-content-type: tutorial
 
 # Integrate Microsoft MCAS with Teams
 
-Many security teams rely on Microsoft MCAS, Microsoft's CASB solution, to identify and block threats on the Internet, as well as allow or block access to cloud applications. This tutorial covers how to integrate MCAS with Cloudflare for Teams, and create Gateway HTTP policies to ensure visibility and control over data.
+Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Microsoft's CASB solution, to identify and block threats on the Internet, as well as allow or block access to cloud applications. This tutorial covers how to integrate MCAS with Cloudflare for Teams, and create Gateway HTTP policies to ensure visibility and control over data.
 
-Microsoft provides an MCAS API endpoint to allow queries to see which applications have been marked as blocked or allowed. With a MCAS API call, you can manage a URL category that contains the blocked URLs returned by the API query, and use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
+Microsoft provides an MCAS API endpoint to allow queries to see which applications have been marked as blocked or allowed. With an MCAS API call, you can manage a URL category that contains the blocked URLs returned by the API query, and use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
 
 
 **⏲️ Time to complete:**
@@ -42,7 +42,7 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
     curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>" > mcas.txt
     ```
 
-1. Remove the leading `.`, for example by running sed from the CLI: 
+1. Remove the leading `.`, for example by running `sed` from the CLI: 
 
     ```txt
     sed -i 's/^.//' mcas.txt
@@ -66,7 +66,7 @@ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=all
 1. In the Teams Dashboard, navigate to **My Team** > **Lists**
 1. Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues. 
 1. Add a name for the list, specify "Hostnames" as the list type, and give it a description.
-1. Drag and drop your MCAS output file created via the API call, or you can click Select a file.
+1. Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
 1. Click **Create**. You will see the list of hostnames that have been added to the list.
 1. Save the list.
 
@@ -76,7 +76,7 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 ## Creating an HTTP policy
 
-1. Navigate to Gateway > Policies > HTTP policies.
+1. Navigate to **Gateway** > **Policies** > **HTTP policies**.
 1. Click **Create a policy**.
 
     ![List of hostnames](../static/secure-web-gateway/microsoft-mcas/mcas-policy.png)

@@ -43,7 +43,7 @@ Instances of `cloudflared` do not automatically update on Windows. You will need
 
 A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.com/r/cloudflare/cloudflared).
 
-## Updating `cloudflared`
+## Update `cloudflared`
 
 You can update cloudflared by running the following command.
 
