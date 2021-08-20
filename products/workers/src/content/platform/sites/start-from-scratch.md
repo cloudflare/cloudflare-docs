@@ -44,7 +44,7 @@ Configure `route` to match your `*.workers.dev` subdomain:
 
   ```toml
   zone_id = "42ef.."
-  route = "example.com/*"
+  route = "https://example.com/*"
   ```
 
   <Aside>
