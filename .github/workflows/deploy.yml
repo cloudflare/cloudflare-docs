@@ -1054,7 +1054,7 @@ jobs:
           environment: 'production'
           wranglerVersion: '1.13.0'
       - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
+        uses: signalnerve/google-chat-notification@master
         with:
           name: Build
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
@@ -1601,7 +1601,7 @@ jobs:
           environment: "production"
           wranglerVersion: '1.13.0'
       - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
+        uses: signalnerve/google-chat-notification@master
         with:
           name: Build
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
