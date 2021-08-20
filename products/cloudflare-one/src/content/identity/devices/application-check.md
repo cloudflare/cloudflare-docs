@@ -24,11 +24,6 @@ You can create multiple instances of the Application Check for each operating sy
 
 The Application Check device posture attribute checks that a specific application process is running on a device.
 
-| Prerequisites | 
-| ------------- |
-| This check is supported on: Windows, macOS, Linux|
-| This check is not supported on: Chrome, Android, or iOS |
-
 To enable Application Check:
 
 1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
