@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Tenant",
   pathPrefix: "/tenant",
   productIconKey: "tenant",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/tenant",
+  logoSVGContent: fs.readFileSync('../src/content/icons/tenant.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare homepage",

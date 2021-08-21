@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "WAF",
   pathPrefix: "/waf",
   productIconKey: "waf",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/waf",
+  logoSVGContent: fs.readFileSync('../src/content/icons/waf.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare WAF homepage",

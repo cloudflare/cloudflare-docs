@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Page Shield",
   pathPrefix: "/page-shield",
   productIconKey: "page-shield",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/page-shield",
+  logoSVGContent: fs.readFileSync('../src/content/icons/page-shield.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare homepage",

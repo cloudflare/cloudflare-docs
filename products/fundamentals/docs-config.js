@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Cloudflare Fundamentals",
   pathPrefix: "/fundamentals",
   productIconKey: "fundamentals",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/fundamentals",
+  logoSVGContent: fs.readFileSync('../src/content/icons/fundamentals.svg' , 'utf8'),
   externalLinks: [
     {
       title: "How does Cloudflare work?",

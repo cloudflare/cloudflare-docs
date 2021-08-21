@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Terraform",
   pathPrefix: "/terraform",
   productIconKey: "terraform",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/terraform",
+  logoSVGContent: fs.readFileSync('../src/content/icons/terraform.svg' , 'utf8'),
   externalLinks: [
     {
       title: "GitHub @cloudflare/terraform-provider-cloudflare",

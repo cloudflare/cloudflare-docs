@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Magic Firewall",
   pathPrefix: "/magic-firewall",
   productIconKey: "firewall",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/magic-firewall",
+  logoSVGContent: fs.readFileSync('../src/content/icons/magic-firewall.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Magic Transit home",

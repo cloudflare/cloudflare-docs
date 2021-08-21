@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Randomness Beacon",
   pathPrefix: "/randomness-beacon",
   productIconKey: "randomness-beacon",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/randomness-beacon",
+  logoSVGContent: fs.readFileSync('../src/content/icons/randomness-beacon.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare homepage",
