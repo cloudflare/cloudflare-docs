@@ -4,7 +4,7 @@ pcx-content-type: how-to
 
 # Deploy an Eleventy site
 
-Eleventy is a simpler static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
+[Eleventy](https://www.11ty.dev/) is a simple static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
 
 ## Installing Eleventy
 
@@ -16,7 +16,7 @@ $ npm install -g @11ty/eleventy
 
 ## Creating a new project
 
-There are a lot of [starter projects](https://www.11ty.dev/docs/starter/) available on the Eleventy website. As an example, use the `eleventy-base-blog` project by running the following commands in your terminal.
+There are a lot of [starter projects](https://www.11ty.dev/docs/starter/) available on the Eleventy website. As an example, use the `eleventy-base-blog` project by running the following commands in your terminal:
 
 ```sh
 git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
