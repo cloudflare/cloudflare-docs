@@ -44,7 +44,7 @@ order: 1
                 Specials
             </td>
             <td>
-                …TBD
+                …6aa0bef8
             </td>
             <td>
                 100201
@@ -70,7 +70,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 …TBD
+                 …c12cf9c8
             </td>
             <td>
                 100202
@@ -96,7 +96,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 …TBD
+                 …f6cbb163
             </td>
             <td>
                 100203
@@ -122,7 +122,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 …TBD
+                 …047f06b4
             </td>
             <td>
                 100204
