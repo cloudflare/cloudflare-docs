@@ -3,14 +3,17 @@ order: 2
 pcx-content-type: how-to
 ---
 
-import PoolDefinition from "../_partials/_pools-definition.md"
-import PoolCreate from "../_partials/_pools-create.md"
+import PoolDefinition from "../_partials/_pool-definition.md"
+import PoolCreate from "../_partials/_pool-create.md"
+import PoolCreateAPI from "../_partials/_pool-create-api.md"
 import MonitorDefinition from "../_partials/_monitor-definition.md"
 import MonitorCreate from "../_partials/_monitor-create.md"
+import MonitorCreateAPI from "../_partials/_monitor-create-api.md"
 import MonitorPrepareServers from "../_partials/_monitor-prepare-server.md"
 import MonitorExample from "../_partials/_monitor-example.md"
 import LBDefinition from "../_partials/_load-balancer-definition.md"
 import LBCreate from "../_partials/_load-balancer-create.md"
+import LBCreateAPI from "../_partials/_load-balancer-create-api.md"
 
 
 # Get started
@@ -52,7 +55,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 <strong>Set up the monitor</strong>
 
-TBD
+<MonitorCreateAPI/>
 
 <strong>Prepare your servers</strong>
 
@@ -81,7 +84,7 @@ TBD
 <summary>Create a pool (API)</summary>
 <div>
 
-TBD
+<PoolCreateAPI/>
 
 </div>
 
@@ -91,6 +94,32 @@ TBD
 
 Before directing any traffic to your pools, you want to make sure that your pools and monitors are set up correctly. The status of your health check will be *unknown* until the results of the first check are available.
 
+<details>
+<summary>Confirm pool health (dashboard)</summary>
+<div>
+
+1. Navigate to **Traffic** > **Load Balancing**.
+1. Click **Manage Pools**.
+1. For pools and individual origins, review the values in the **Health** and **Origin Health** columns.
+
+For more information on pool and origin health statuses, refer to [How a pool becomes unhealthy](understand-basics/health-details#how-a-pool-becomes-unhealthy).
+
+</div>
+
+</details>
+
+<details>
+<summary>Confirm pool health (API)</summary>
+<div>
+
+To fetch the latest health status of all pools, use the [List Pools](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) command, paying attention to the `healthy` value for pools and origins.
+
+For troubleshooting a specific pool's health, use the [Pool Health Details](https://api.cloudflare.com/#account-load-balancer-pools-pool-health-details) command.
+
+</div>
+
+</details>
+
 If you notice that healthy pools are being marked unhealthy:
 
 - Review [how origins and pools become unhealthy](/understand-basics/health-details).
@@ -99,15 +128,6 @@ If you notice that healthy pools are being marked unhealthy:
 ## Step 4 — Create a load balancer on a test subdomain
 
 <LBDefinition/>
-
-Just as in the previous step, you want to make sure your load balancer is functioning as you expected before using it with live traffic.
-
-For example, if you had `test.example.com` as a testing subdomain, you could either:
-
-- Create a load balancer with a **Hostname** of `test.example.com`.
-- Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a CNAME record on `test.example.com` that points to `lb.example.com`.
-
-Either option would use your load balancer to distribute requests going to `test.example.com`.
 
 <details>
 <summary>Create a load balancer (dashboard)</summary>
@@ -123,11 +143,22 @@ Either option would use your load balancer to distribute requests going to `test
 <summary>Create a load balancer (API)</summary>
 <div>
 
-TBD
+<LBCreateAPI/>
 
 </div>
 
 </details>
+
+### Route traffic to your load balancer
+
+Just as in the previous step, you want to make sure your load balancer is functioning as you expected before using it with live traffic.
+
+For example, if you had `test.example.com` as a testing subdomain, you could either:
+
+- Create a load balancer with a **Hostname** of `test.example.com`.
+- Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a CNAME record on `test.example.com` that points to `lb.example.com`.
+
+Either option would use your load balancer to distribute requests going to `test.example.com`.
 
 ## Step 5 — Review load balancing analytics
 

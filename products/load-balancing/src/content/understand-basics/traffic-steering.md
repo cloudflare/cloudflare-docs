@@ -56,6 +56,34 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
 
 For more details on working with regions and region codes, refer to [Region Mapping API](/reference/region-mapping-api).
 
+### Via the API
+
+Use the `regions_pool` property of the [Update Load Balancers](https://api.cloudflare.com/#load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the appropriate region code followed by a list of origin servers to use for that region. In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
+
+**Request example**
+
+```json
+---
+header: Request
+---
+// PUT /zones/:zone_id/load_balancers
+{
+  "description": "Load Balancer for www.example.com",
+  "name": "www.example.com",
+  "ttl": 30,
+  "proxied": true,
+  "fallback_pool": "ff02c959d17f7bb2b1184a202e3c0af7",
+  "default_pools": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+  "region_pools": {
+    "WNAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+    "ENAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+    "EU": ["ff02c959d17f7bb2b1184a202e3c0af7", "17b5962d775c646f3f9725cbc7a53df4"]
+  }
+}
+```
+
+If you only define `WNAM`, then traffic from the East Coast will be routed to the `default_pools`. You can test this using a client in each of those locations.
+
 ## Proximity steering
 
 Choose **Proximity Steering** to route visitors or internal services to the closest physical data center.

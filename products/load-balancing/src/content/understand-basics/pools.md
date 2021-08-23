@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: concept
 ---
 
-import PoolDefinition from "../_partials/_pools-definition.md"
+import PoolDefinition from "../_partials/_pool-definition.md"
 
 # Pools
 
