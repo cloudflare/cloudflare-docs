@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Cache",
   pathPrefix: "/cache",
   productIconKey: "cache",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/cache",
+  logoSVGContent: fs.readFileSync('../src/content/icons/cache.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare CDN",

@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Network Interconnect",
   pathPrefix: "/network-interconnect",
   productIconKey: "network-interconnect",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/network-interconnect",
+  logoSVGContent: fs.readFileSync('../src/content/icons/network-interconnect.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Blog announcement",

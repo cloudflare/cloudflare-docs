@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "HTTP/3",
   pathPrefix: "/http3",
   productIconKey: "http3",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/http3",
+  logoSVGContent: fs.readFileSync('../src/content/icons/http3.svg' , 'utf8'),
   externalLinks: [
     {
       title: "HTTP/3 posts on the Cloudflare blog",

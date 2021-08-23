@@ -1,9 +1,14 @@
+
+const fs = require('fs')
+
 module.exports = {
   product: "Cloudflare for Teams", // TODO: change to "Cloudflare One"
   pathPrefix: "/cloudflare-one",
   productIconKey: "cloudflare-for-teams", // TODO: change to "cloudflare-one"
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/cloudflare-one",
+  logoSVGContent: fs.readFileSync('../src/content/icons/cloudflare-one.svg' , 'utf8'),
+
   externalLinks: [
     {
       title: "Blog: Introducing Cloudflare One",

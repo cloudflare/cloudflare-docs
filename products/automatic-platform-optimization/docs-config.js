@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "Automatic Platform Optimization",
   pathPrefix: "/automatic-platform-optimization",
   productIconKey: "automatic-platform-optimization",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/automatic-platform-optimization",
+  logoSVGContent: fs.readFileSync('../src/content/icons/automatic-platform-optimization.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare homepage",

@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 module.exports = {
   product: "WARP Client",
   pathPrefix: "/warp-client",
   productIconKey: "warp-client",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/warp-client",
+  logoSVGContent: fs.readFileSync('../src/content/icons/warp-client.svg' , 'utf8'),
   externalLinks: [
     {
       title: "Blog announcement",
