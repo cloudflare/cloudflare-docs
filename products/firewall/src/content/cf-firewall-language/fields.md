@@ -118,6 +118,16 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
       </td>
    </tr>
+   <tr>
+      <td valign="top"><code>http.request.timestamp.msec</code><br /><Type>Integer</Type></td>
+      <td>
+         <p>Represents the millisecond when Cloudflare received the request, between 0 and 999.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">857</code>
+         </p>
+      </td>
+   </tr>
    <tr id="field-http-request-uri">
       <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
       <td>
