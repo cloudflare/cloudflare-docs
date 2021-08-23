@@ -35,28 +35,106 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-08-16
+                2021-08-23
             </td>
             <td>
-                2021-08-23
+                2021-08-31
             </td>
             <td>
                 Specials
             </td>
             <td>
-                …090d53ee
+                …6aa0bef8
             </td>
             <td>
-                100045
+                100201
             </td>
             <td>
-                Improve rule coverage
+                Improve rule performance
             </td>
             <td>
-                Disabled
+                Block
             </td>
             <td>
-                Disabled
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-08-23
+            </td>
+            <td>
+                2021-08-31
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                 …c12cf9c8
+            </td>
+            <td>
+                100202
+            </td>
+            <td>
+                Improve rule performance
+            </td>
+            <td>
+                Block
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-08-23
+            </td>
+            <td>
+                2021-08-31
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                 …f6cbb163
+            </td>
+            <td>
+                100203
+            </td>
+            <td>
+                Improve rule performance
+            </td>
+            <td>
+                Block
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-08-23
+            </td>
+            <td>
+                2021-08-31
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                 …047f06b4
+            </td>
+            <td>
+                100204
+            </td>
+            <td>
+                Improve rule performance
+            </td>
+            <td>
+                Block
+            </td>
+            <td>
+                Block
             </td>
         </tr>
     </tbody>
