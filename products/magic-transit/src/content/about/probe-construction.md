@@ -61,7 +61,7 @@ Applying a penalty instead of removing the route altogether preserves redundancy
 
 ### Cloudflare data centers and tunnels
 
-In the event a Cloudflare data center is down, Cloudflare's edge network does not advertise your prefixes, and your packets are routed to the next closest data center. If tunnels are down on Cloudflare's side, traffic is routed based on your original GRE route priorities to prevent "blackholing traffic," which occurs when traffic is routed to a null route and dropped from the network.
+In the event a Cloudflare data center is down, Cloudflare's edge network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare's edge network and dashboard, refer to [Cloudflare System Status](https://www.cloudflarestatus.com/).
 
 ## Recovery
 
