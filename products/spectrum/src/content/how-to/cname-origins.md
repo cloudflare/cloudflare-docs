@@ -1,18 +1,19 @@
 ---
+order:
 pcx-content-type: tutorial
 ---
 
-# CNAME origins
+# Create CNAME records
 
-The API supports specifying an origin by hostname. This is useful for cases where you might setup Spectrum in front of a load balancer like an AWS ELB that offers a hostname instead of a static IP.
+The API supports specifying an origin by hostname, which is useful when setting up Spectrum in front of a load balancer, like an AWS ELB that offers a hostname instead of a static IP.
 
-<Aside>
+<Aside type="note" header="Note">
 
-This feature requires an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the [Customer Success Team](mailto:success@cloudflare.com).
+This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
 
 </Aside>
 
-## Step 1: Create a CNAME Record
+## 1. Create a CNAME Record
 
 You will need to create a record on your Cloudflare hosted zone that points to your origin's hostname. This is required to resolve to your hostname origin.
 
@@ -37,9 +38,9 @@ curl 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/dns_records'  \
 }
 ```
 
-## Step 2: Create the Spectrum Application
+## 2. Create the Spectrum Application
 
-You will then need to create the Spectrum application that will point to the domain name. Below is an example curl and the associated data being posted to the API.
+Next, create the Spectrum application that will point to the domain name. Below is an example curl and the associated data being posted to the API.
 
 **API Example:**
 

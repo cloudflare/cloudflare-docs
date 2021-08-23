@@ -1,10 +1,9 @@
 ---
+order:
 pcx-content-type: reference
 ---
 
 # Event logs
-
-## Overview
 
 Spectrum logs the entire lifecycle of every client that connects through it. These event logs are available through Logpush as a separate category (dataset type `spectrum_events`); they are not part of HTTP log events.
 
