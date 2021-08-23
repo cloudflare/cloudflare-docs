@@ -1,9 +1,9 @@
 ---
-order: 4
+order: 
 pcx-content-type: configuration
 ---
 
-# Proxy protocol
+# Enable Proxy protocol
 
 Because Cloudflare intercepts packets before forwarding them to your server, if you were to look up the client IP, you would see Cloudflare's IP rather than the true client IP.
 
@@ -11,15 +11,18 @@ Some services you run may require knowledge of the true client IP. In those case
 
 <Aside>
 
-This feature requires an Enterprise plan.  If you would like to upgrade, please contact your customer success manager or the [Customer Success Team](mailto:success@cloudflare.com).
+This feature requires an Enterprise plan. If you would like to upgrade, contact your account team.
 
 </Aside>
 
-## Enabling Proxy Protocol v1 for TCP
+## Enable Proxy Protocol v1 for TCP
 
-To enable PROXY Protocol v1 for a TCP application on Cloudflare, go to the [Spectrum tab in the Cloudflare dashboard](https://dash.cloudflare.com), click the configure icon next to the application you would like to add PROXY Protocol to, and use the Proxy Protocol pull down to select 'PROXY Protocol v1'.
+1. Log in to the Cloudflare dashboard
+1. Click **Spectrum**.
+1. Locate the application that will use the PROXY protocol and click **Configure**.
+1. From the dropdown, select **PROXY Protocol v1**.
 
-When TCP applications are configured to use 'PROXY Protocol v1', Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header (see below).
+When TCP applications are configured to use **PROXY Protocol v1**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header.
 
 ### The Proxy Protocol v1 Header
 
@@ -37,11 +40,14 @@ An example PROXY Protocol line for an IPv6 address would look like:
 
 ## Enabling Proxy Protocol v2 for TCP/UDP
 
-To enable PROXY Protocol v2 for a TCP or UDP application on Cloudflare, go to the [Spectrum tab in the Cloudflare dashboard](https://dash.cloudflare.com), click the configure icon next to the application you would like to add PROXY Protocol to, and use the Proxy Protocol pull down to select 'PROXY Protocol v2'.
+1. Log in to the Cloudflare dashboard
+1. Click **Spectrum**.
+1. Locate the application that will use the PROXY protocol and click **Configure**.
+1. From the dropdown, select **PROXY Protocol v2**.
 
-When TCP applications are configured to use 'PROXY Protocol v2', Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
+When TCP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
 
-When UDP applications are configured to use 'PROXY Protocol v2', Cloudflare will prepend the first UDP datagram on a stream with a PROXY Protcol binary header.
+When UDP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend the first UDP datagram on a stream with a PROXY Protcol binary header.
 
 ### The Proxy Protocol v2 Header
 
@@ -103,73 +109,12 @@ A PROXY Protocol binary header for a IPv6 incoming address has the format:
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ```
 
-## Enabling Simple Proxy Protocol for UDP
+## Enable Simple Proxy Protocol for UDP
 
 When using UDP (currently an early access feature), the client source IP and port information can be obtained by using Simple Proxy Protocol, a lightweight protocol developed specifically for UDP.
 
-To enable it, click configure on a Spectrum application and toggle the setting for Simple Proxy Protocol to 'on'.
+To enable it, click **Configure** on a Spectrum application and toggle the setting for Simple Proxy Protocol to **On**.
 
 Simple Proxy Protocol dictates that your origin must also prepend packets meant for the client with the same header, including original client source information. This is done to validate that packets coming in are in fact intended for the client.
 
-### Simple Proxy Protocol Header
-
-The client source IP and port is encoded in a fixed-length, 38-octet long header and prepended to the payload of each proxied UDP datagram in the format described below.
-
-```txt
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|          Magic Number         |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
-|                                                               |
-+                                                               +
-|                                                               |
-+                         Client Address                        +
-|                                                               |
-+                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                               |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
-|                                                               |
-+                                                               +
-|                                                               |
-+                         Proxy Address                         +
-|                                                               |
-+                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                               |         Client Port           |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|           Proxy Port          |          Payload...           |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-```
-
-The contents of the header are:
-
-#### Magic Number
-16-bit fixed value set to 0x56EC for SPP. This field should be used to identify the SPP protocol, and its SPP 38-byte header.
-
-#### Client Address
-128-bit address of the originator of the proxied UDP datagram, i.e. the client. An IPv6 address if the client used IPv6 addressing, or an IPv4-mapped IPv6 address (see [RFC 4291](https://tools.ietf.org/html/rfc4291)) in case of an IPv4 client.
-
-#### Proxy address
-128-bit address of the recipient of the proxied UDP datagram, i.e. the proxy. Contents should be interpreted in the same way as the Client Address.
-
-#### Client port
-16-bit source port number of the proxied UDP datagram. In other words, the UDP port number from which the client sent the datagram.
-
-#### Proxy port
-16-bit destination port number of the proxied UDP datagram. In other words, the UDP port number on which the proxy received the datagram.
-
-#### Payload
-Data following the header carried by the datagram.
-Magic number, addresses, and port numbers are encoded in network byte order.
-
-A corresponding C structure describing the header is:
-
-```c
-struct {
-    uint16_t magic;
-    uint8_t  client_addr[16];
-    uint8_t  proxy_addr[16];
-    uint16_t client_port;
-    uint16_t proxy_port;
-};
-```
+For more information about Simple Proxy Protocol headers, refer to [Simple Proxy Protocol headers](/reference/simple-proxy-protocol-header).
