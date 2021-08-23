@@ -13,19 +13,19 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-In this tutorial, you’ll build a todo list application in HTML, CSS and JavaScript, with a twist: the data for the application will be stored in [Workers KV](/runtime-apis/kv).
+In this tutorial, you will build a todo list application in HTML, CSS and JavaScript, and the data for the application will be stored in [Workers KV](/runtime-apis/kv).
 
 ![Preview](./media/finished.png)
 
-Before starting this project, you should have some experience with HTML, CSS, and JavaScript. If you’re new to writing web apps, Workers is a great place to get started. Building with Workers is a super easy to focus on writing code, and actually shipping projects! In particular, the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
+Before starting this project, you should have some experience with HTML, CSS, and JavaScript. If you are new to writing web applications, Workers is a great place to get started. Building with Workers makes it easy to focus on writing code, and ship finished products. In particular, the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
-If you’d like to see the finished code for this project, find the project [on GitHub](https://github.com/signalnerve/cloudflare-workers-todos), and check out the [live demo](https://todos.signalnerve.workers.dev/) to see what you’ll be building!
+If you would like to see the finished code for this project, find the project [on GitHub](https://github.com/signalnerve/cloudflare-workers-todos), and review the [live demo](https://todos.signalnerve.workers.dev/) to see what you will be building.
 
 ## Generate
 
-Cloudflare’s command-line tool for managing Worker projects, Wrangler, has great support for templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you’ll use the default JavaScript template to generate a Workers project.
+Cloudflare’s command-line tool for managing Worker projects, Wrangler, support various templates — pre-built collections of code that make it easy to start writing Workers. In this tutorial, you will use the default JavaScript template to generate a Workers project.
 
-In the command line, generate your Worker project, passing in a project name (e.g. “todos”):
+In the command line, generate your Worker project, passing in a project name (e.g., “todos”):
 
 ```sh
 ---
@@ -35,11 +35,11 @@ $ wrangler generate todos
 $ cd todos
 ```
 
-Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/examples), there’s a ton of options to help you get started.
+Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from the [Template Gallery](/examples), there are various options to help you get started.
 
 Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry-point to your Cloudflare Workers application.
 
-All Cloudflare Workers applications start by listening for `fetch` events, which are fired when a client makes a request to a Workers route. When that request occurs, you can construct responses and return them to the user. This tutorial will walk you through understanding how the request/response pattern works, and how we can use it to build fully-featured applications.
+All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. When that request occurs, you can construct responses and return them to the user. This tutorial will walk you through understanding how the request/response pattern works, and how you can use it to build fully-featured applications.
 
 ```js
 ---
@@ -58,25 +58,25 @@ async function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, we can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit status code of 200. When a `fetch` event comes into the worker, the script uses `event.respondWith` to return that new response back to the client. This means that your Cloudflare Worker script will serve new responses directly from Cloudflare’s cloud network: instead of continuing to the origin, where a standard server would accept requests, and return responses, Cloudflare Workers allows you to respond quickly and efficiently by constructing responses directly on the edge.
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit status code of 200. When a `fetch` event comes into the Worker, the script uses `event.respondWith` to return that new response back to the client. This means that your Cloudflare Worker script will serve new responses directly from Cloudflare’s cloud network. Instead of continuing to the origin, where a standard server would accept requests, and return responses, Cloudflare Workers allows you to respond quickly and efficiently by constructing responses directly on [Cloudflare's Edge Network](https://www.cloudflare.com/network).
 
 ## Build
 
-The code provided by the default Wrangler template generates a simple text response and returns it to the client. In this tutorial, you‘ll build off of that approach, by reading data from KV, and using it to populate an HTML response to send to the client.
+The code provided by the default Wrangler template generates a simple text response and returns it to the client. In this tutorial, you will build off of that approach, by reading data from KV, and using it to populate an HTML response to send to the client.
 
-The work needed to create this application can be roughly split into three tasks:
+The work needed to create this application is split into three tasks:
 
 1. Write data to KV
 2. Rendering data from KV
 3. Adding todos from the UI
 
-For the remainder of this tutorial, we‘ll walk through each step in this process, iterating on your application, and finally, publishing it at your own URL!
+For the remainder of this tutorial, you will complete each task, iterating on your application, and finally, publishing it at your own URL.
 
 ### Writing data to KV
 
-To begin, we should understand how to populate our todo list with actual data. To do this, we‘ll make use of Cloudflare‘s Workers KV — it’s a simple key-value store that you can access inside of your Worker script to read and write data.
+To begin, you need to understand how to populate your todo list with actual data. To do this, use Cloudflare‘s Workers KV — a key-value store that you can access inside of your Worker script to read and write data.
 
-To get started with KV, we need to set up a “namespace”. All of our cached data will be stored inside that namespace, and given just a bit of configuration, we can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID.
+To get started with KV, set up a “namespace”. All of your cached data will be stored inside that namespace, and with configuration, you can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID.
 
 ```sh
 ---
@@ -96,9 +96,9 @@ kv_namespaces = [
 ]
 ```
 
-The defined namespace, `TODOS`, will now be available inside of your codebase. With that, it’s time to understand the KV API. A KV namespace has three primary methods you can use to interface with your cache: `get`, `put`, and `delete`. Pretty straightforward!
+The defined namespace, `TODOS`, will now be available inside of your codebase. With that, it is time to understand the KV API. A KV namespace has three primary methods you can use to interface with your cache: `get`, `put`, and `delete`.
 
-Let’s start storing data by defining an initial set of data, which we’ll put inside of the cache using the `put` method. I’ve opted to define an object, `defaultData`, instead of a simple array of todos: we may want to store metadata and other information inside of this cache object later on. Given that data object, I’ll use `JSON.stringify` to put a simple string into the cache:
+Start storing data by defining an initial set of data, which you will put inside of the cache using the `put` method. The following example defines an object, `defaultData`, instead of a simple array of todos. You may want to store metadata and other information inside of this cache object later on. Given that data object, you will use `JSON.stringify` to put a simple string into the cache:
 
 ```js
 ---
@@ -120,9 +120,9 @@ async function handleRequest(request) {
 }
 ```
 
-The Worker KV data store is eventually consistent: writing to the cache means that it will become available eventually, but it’s possible to attempt to read a value back from the cache immediately after writing it, only to find that the cache hasn’t been updated yet.
+The Worker KV data store is eventually consistent: writing to the cache means that it will become available eventually, but it is possible to attempt to read a value back from the cache immediately after writing it, only to find that the cache has not been updated yet.
 
-Given the presence of data in the cache, and the assumption that our cache is eventually consistent, we should adjust this code slightly: first, we should actually read from the cache, parsing the value back out, and using it as the data source if exists. If it doesn’t, we’ll refer to `defaultData`, setting it as the data source for now (remember, it should be set in the future… eventually), while also setting it in the cache for future use. After breaking out the code into a few functions for simplicity, the result looks like this:
+Given the presence of data in the cache, and the assumption that your cache is eventually consistent, you should adjust this code slightly: first, you should actually read from the cache, parsing the value back out, and using it as if the data source exists. If it does not, you will refer to `defaultData`, setting it as the data source for now (remember, it should be set in the future), while also setting it in the cache for future use. After breaking out the code into a few functions for simplicity, the result looks like this:
 
 ```js
 ---
@@ -157,9 +157,9 @@ async function getTodos(request) {
 
 ### Rendering data from KV
 
-Given the presence of data in our code, which is the cached data object for our application, we should actually take this data and make it available on screen.
+Given the presence of data in your code, which is the cached data object for your application, take this data and make it available on screen.
 
-In our Workers script, we’ll make a new variable, html, and use it to build up a static HTML template that we can serve to the client. In `handleRequest`, we can construct a new `Response` (with a `Content-Type` header of `text/html`), and serve it to the client:
+In your Workers script, make a new variable, `html`, and use it to build up a static HTML template that you can serve to the client. In `handleRequest`, construct a new `Response` (with a `Content-Type` header of `text/html`), and serve it to the client:
 
 ```js
 ---
@@ -186,7 +186,7 @@ async function handleRequest(request) {
 }
 ```
 
-We have a static HTML site being rendered, and now we can begin populating it with data! In the body, we’ll add a `div` tag with an id of `todos`:
+You have a static HTML site being rendered, and now you can begin populating it with data. In the body, add a `div` tag with an id of `todos`:
 
 ```js
 ---
@@ -208,7 +208,7 @@ const html = `<!DOCTYPE html>
 `
 ```
 
-Given that body, we can also add a script after the body that takes a `todos` array, loops through it, and for each todo in the array, creates a `div` element and appends it to the list of todos:
+Add a script after the body that takes a `todos` array, and loops through it, and for each todo in the array, creates a `div` element and appends it to the list of todos:
 
 ```js
 ---
@@ -239,9 +239,9 @@ const html = `<!DOCTYPE html>
 `
 ```
 
-Our static page can take in `window.todos`, and render HTML based on it, but we haven’t actually passed in any data from KV. To do this, we’ll need to make a couple changes.
+Your static page can take in `window.todos`, and render HTML based on it, but you have not actually passed in any data from KV. To do this, you will need to make a couple changes.
 
-First, our `html` variable will change to a function. The function will take in an argument, `todos`, which will populate the `window.todos` variable in the above code sample:
+First, your `html` variable will change to a function. The function will take in an argument, `todos`, which will populate the `window.todos` variable in the above code sample:
 
 ```js
 ---
@@ -261,7 +261,7 @@ const html = todos => `
 `
 ```
 
-In `handleRequest`, we can use the retrieved KV data to call the `html` function, and generate a `Response` based on it:
+In `handleRequest`, use the retrieved KV data to call the `html` function, and generate a `Response` based on it:
 
 ```js
 ---
@@ -279,9 +279,9 @@ async function handleRequest(request) {
 
 ### Adding todos from the UI
 
-At this point, we’ve built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on it. That static page reads the data, and generates a todo list based on that data. Of course, the piece we’re missing is creating todos, from inside the UI. We know that we can add todos using the KV API — we could simply update the cache by saying `TODOS.put(newData)`, but how do we update it from inside the UI?
+At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data, and generates a todo list based on that data. The remaining piece is creating todos, from inside the UI. You know that you can add todos using the KV API — you could update the cache by saying `TODOS.put(newData)`, and now you will learn how to update it from inside the UI.
 
-To implement this, we’ll add a second handler in our Workers script, designed to watch for `PUT` requests to `/`. When a body is received at that URL, the worker will send the new todo data to our KV store.
+To implement this, you will add a second handler in our Workers script, designed to watch for `PUT` requests to `/`. When a body is received at that URL, the worker will send the new todo data to our KV store.
 
 Add this new functionality in `handleRequest`: if the request method is a PUT, it will take the request body and update the cache.
 
@@ -317,9 +317,9 @@ async function handleRequest(request) {
 }
 ```
 
-The script is pretty straightforward – we check that the request is a `PUT`, and wrap the remainder of the code in a `try/catch` block. First, we parse the body of the request coming in, ensuring that it is JSON, before we update the cache with the new data, and return it to the user. If anything goes wrong, we simply return a 500. If the route is hit with an HTTP method other than `PUT` — that is, `POST`, `DELETE`, or anything else — we return a 404.
+The script is pretty straightforward – you check that the request is a `PUT`, and wrap the remainder of the code in a `try/catch` block. First, you parse the body of the request coming in, ensuring that it is JSON, before you update the cache with the new data, and return it to the user. If anything goes wrong, simply return a 500. If the route is hit with an HTTP method other than `PUT` — that is, `POST`, `DELETE`, or anything else — return a 404.
 
-With this script, we can now add some “dynamic” functionality to our HTML page to actually hit this route. First, we’ll create an input for our todo “name”, and a button for “submitting” the todo.
+With this script, you can now add some “dynamic” functionality to your HTML page to actually hit this route. First, create an input for your todo “name”, and a button for “submitting” the todo.
 
 ```js
 ---
@@ -374,7 +374,7 @@ const html = todos => `
 `
 ```
 
-This code updates the cache, but what about our local UI? Remember that the KV cache is eventually consistent — even if we were to update our worker to read from the cache and return it, we have no guarantees it’ll actually be up-to-date. Instead, let’s just update the list of todos locally, by taking our original code for rendering the todo list, making it a re-usable function called `populateTodos`, and calling it when the page loads and when the cache request has finished:
+This code updates the cache. Remember that the KV cache is eventually consistent — even if you were to update your Worker to read from the cache and return it, you have no guarantees it will actually be up-to-date. Instead, update the list of todos locally, by taking our original code for rendering the todo list, making it a re-usable function called `populateTodos`, and calling it when the page loads and when the cache request has finished:
 
 ```js
 ---
@@ -420,15 +420,15 @@ const html = todos => `
 `
 ```
 
-With the client-side code in place, deploying the new version of the function should put all these pieces together. The result is an actual dynamic todo list!
+With the client-side code in place, deploying the new version of the function should put all these pieces together. The result is an actual dynamic todo list.
 
 ### Updating todos from the UI
 
-For the final piece of our (very) basic todo list, we need to be able to update todos — specifically, marking them as completed.
+For the final piece of our todo list, you need to be able to update todos — specifically, marking them as completed.
 
-Luckily, a great deal of the infrastructure for this work is already in place. We can currently update the todo list data in our cache, as evidenced by our `createTodo` function. Performing updates on a todo, in fact, is much more of a client-side task than a Worker-side one!
+Luckily, a great deal of the infrastructure for this work is already in place. You can currently update the todo list data in our cache, as evidenced by our `createTodo` function. Performing updates on a todo, in fact, is much more of a client-side task than a Worker-side one.
 
-To start, the `populateTodos` function can be updated to generate a `div` for each todo. In addition, we’ll move the name of the todo into a child element of that `div`:
+To start, the `populateTodos` function can be updated to generate a `div` for each todo. In addition, you will move the name of the todo into a child element of that `div`:
 
 ```js
 ---
@@ -455,9 +455,9 @@ const html = todos => `
 `
 ```
 
-So far, we’ve designed the client-side part of this code to take an array of todos in, and given that array, render out a list of simple HTML elements. There’s a number of things that we’ve been doing that we haven’t quite had a use for, yet: specifically, the inclusion of IDs, and updating the completed value on a todo. Luckily, these things work well together, in order to support actually updating todos in the UI.
+So far, you have designed the client-side part of this code to take an array of todos in, and given that array, render out a list of simple HTML elements. There’s a number of things that you have been doing that you have not quite had a use for, yet: specifically, the inclusion of IDs, and updating the completed value on a todo. Luckily, these things work well together, in order to support actually updating todos in the UI.
 
-To start, it would be useful to signify the ID of each todo in the HTML. By doing this, we can then refer to the element later, in order to correspond it to the todo in the JavaScript part of our code. Data attributes, and the corresponding `dataset` method in JavaScript, are a perfect way to implement this. When we generate our `div` element for each todo, we can attach a data attribute called todo to each `div`:
+To start, it would be useful to signify the ID of each todo in the HTML. By doing this, you can then refer to the element later, in order to correspond it to the todo in the JavaScript part of our code. Data attributes, and the corresponding `dataset` method in JavaScript, are a perfect way to implement this. When you generate your `div` element for each todo, you can attach a data attribute called todo to each `div`:
 
 ```js
 ---
@@ -489,7 +489,7 @@ Inside our HTML, each `div` for a todo now has an attached data attribute, which
 <div data-todo="2"></div>
 ```
 
-Now we can generate a checkbox for each todo element. This checkbox will default to unchecked for new todos, of course, but we can mark it as checked as the element is rendered in the window:
+Now you can generate a checkbox for each todo element. This checkbox will default to unchecked for new todos, but you can mark it as checked as the element is rendered in the window:
 
 ```js
 ---
@@ -520,7 +520,7 @@ const html = todos => `
 `
 ```
 
-The checkbox is set up to correctly reflect the value of completed on each todo, but it doesn’t yet update when we actually check the box! To do this, we’ll add an event listener on the `click` event, calling `completeTodo`. Inside the function, we’ll inspect the checkbox element, finding its parent (the todo div), and using the `todo` data attribute on it to find the corresponding todo in our data. Given that todo, we can toggle the value of completed, update our data, and re-render the UI:
+The checkbox is set up to correctly reflect the value of completed on each todo, but it does not yet update when you actually check the box. To do this, add an event listener on the `click` event, calling `completeTodo`. Inside the function, inspect the checkbox element, finding its parent (the todo div), and using the `todo` data attribute on it to find the corresponding todo in our data. Given that todo, you can toggle the value of completed, update our data, and re-render the UI:
 
 ```js
 ---
@@ -557,9 +557,9 @@ The final result of our code is a system that checks the todos variable, updates
 
 ## Conclusions and next steps
 
-With this, we’ve created a pretty remarkable project: an almost entirely static HTML/JS application, transparently powered by Cloudflare KV and Workers, served at the edge. There’s a number of additions to be made to this application, whether you want to implement a better design (I’ll leave this as an exercise for readers to implement — you can see a live version at [todos.signalnerve.workers.dev](https://todos.signalnerve.workers.dev/), or improvements to security, speed, etc.
+By completing this tutorial, you have created a pretty remarkable project: an almost entirely static HTML/JS application, transparently powered by Cloudflare KV and Workers, served on Cloudflare's edge network. There is a number of additions that can be made to this application, whether you want to implement a better design (you can refer to a live version at [todos.signalnerve.workers.dev](https://todos.signalnerve.workers.dev/)), or improvements to security, speed, etc.
 
-One interesting and fairly trivial addition is implementing per-user caching. Of course, right now, the cache key is simply “data”: anyone visiting the site will share a todo list with any other user. Because we have the request information inside of our worker, it’s easy to make this data user-specific. For instance, implementing per-user caching by generating the cache key based on the requesting IP:
+Another addition is implementing per-user caching. Right now, the cache key is simply “data”: anyone visiting the site will share a todo list with any other user. Because you have the request information inside of your Worker, it is easy to make this data user-specific. For instance, implementing per-user caching by generating the cache key based on the requesting IP:
 
 ```js
 ---
@@ -597,9 +597,9 @@ async function updateTodos(request) {
 }
 ```
 
-One more deploy of our Workers project, and we have a full todo list application, with per-user functionality, served at the edge!
+One more deployment of your Workers project, and you have a full todo list application, with per-user functionality, served on Cloudflare's edge network.
 
-The final version of our Workers script looks like this:
+The final version of your Workers script should look like this:
 
 ```js
 ---
