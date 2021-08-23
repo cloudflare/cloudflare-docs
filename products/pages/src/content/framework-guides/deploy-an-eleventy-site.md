@@ -19,9 +19,9 @@ $ npm install -g @11ty/eleventy
 There are a lot of [starter projects](https://www.11ty.dev/docs/starter/) available on the Eleventy website. As an example, use the `eleventy-base-blog` project by running the following commands in your terminal:
 
 ```sh
-git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
-cd my-blog-name
-npm install
+$ git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
+$ cd my-blog-name
+$ npm install
 ```
 
 ## Creating a GitHub repository
