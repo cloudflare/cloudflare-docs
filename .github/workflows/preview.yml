@@ -145,7 +145,7 @@ jobs:
           MESSAGE="[Previewer] Preview up to commit \`${SHA::7}\` available at the following URIs:%0A"
           while read tile; do
             if [ $tile == "developers.cloudflare.com" ]; then
-              CURR_URL="https://developers-cloudflare-com.${SUBDOMAIN}"
+              CURR_URL="https://pr-${PR}.developers-cloudflare-com.${SUBDOMAIN}"
               MESSAGE="${MESSAGE}- ${CURR_URL}%0A"
             else
               CURR_URL=${BASE_URL}
