@@ -59,6 +59,10 @@ The values for failure penalties are intentionally extreme so that they always e
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
 
+### Cloudflare data centers and tunnels
+
+In the event a Cloudflare data center is down, Cloudflare's edge network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare's edge network and dashboard, refer to [Cloudflare System Status](https://www.cloudflarestatus.com/).
+
 ## Recovery
 
 Once a tunnel is in the **Down** state, edge servers continue to emit probes every 60 seconds. When a probe returns **Healthy**, the edge server that received the healthy packet immediately sends two more probes. If the two probes return **Healthy**, Magic Transit sets the tunnel status to **Degraded**.
