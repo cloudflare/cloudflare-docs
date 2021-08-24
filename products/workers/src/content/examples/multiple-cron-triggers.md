@@ -15,7 +15,7 @@ pcx-content-type: configuration
 
 ```js
 addEventListener('scheduled', event => {
-    event.waitUntil(triggerEvent(event.cron))
+  event.waitUntil(triggerEvent(event.cron))
 })
 
 async function triggerEvent(event.cron) {
