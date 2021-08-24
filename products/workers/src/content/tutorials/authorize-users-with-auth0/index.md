@@ -35,7 +35,7 @@ Inside of your application’s settings, the client ID and client secret are key
 
 ## Generate a new project
 
-Using wrangler’s `generate` command, begin building a new application using a Workers template. For this tutorial, you will modify the default template for [Workers Sites](/platform/sites), which deploys a static HTML application:
+Using wrangler’s `generate` command, begin building a new application using a Workers template. For this tutorial you will modify the default template for [Workers Sites](/platform/sites), which deploys a static HTML application:
 
 ```sh
 ---
@@ -50,10 +50,10 @@ Before implementing an “authorizer" in your application, which will verify tha
 
 1. A user makes a request to the Workers application.
 2. If the user is not logged in, they are redirected to the login page.
-3. After logging in, the user is redirected back to the Workers application, passing a login `code` as a query param.
+3. After logging in, the user is redirected back to the Workers application with a login `code` query parameter.
 4. The Workers application takes the login `code` parameter and exchanges it with Auth0 for authorization tokens.
 
-In a traditional application that is attached to a database, the authorization tokens Auth0 returns are often persisted in a database. This will allow users to return to the application and continue to use it, without the need for re-authorization. With a Workers application, you have access to a quick and easy-to-use data storage solution that lives right next to your serverless application: Workers KV. Using Workers KV, you will store authorization tokens and tie them to a user using an authorization cookie.
+In a traditional application that is attached to a database, the authorization tokens Auth0 returns are often persisted in a database. This will allow users to return to the application and continue to use it without the need for re-authorization. With a Workers application, you have access to a quick and easy-to-use data storage solution that lives right next to your serverless application: Workers KV. Using Workers KV, you will store authorization tokens and tie them to a user using an authorization cookie.
 
 [![Auth0 Flow](./media/auth0-flow.png)](https://auth0.com/docs/flows/concepts/auth-code)
 
@@ -98,9 +98,9 @@ export const authorize = async event => {
 
 The `auth0` object wraps several secrets, which are encrypted values that can be defined and used by your script. In the [**Publish** section](/authorize-users-with-auth0#publish) of this tutorial, you will define these secrets using the [`wrangler secret`](/cli-wrangler/commands#secret) command.
 
-The `generateStateParam` function will be used to prevent [Cross-Site Request Forgery attacks](https://auth0.com/docs/protocols/oauth2/mitigate-csrf-attacks). For now, you will return a string “stub”, but later in the tutorial, `generateStateParam` will generate a random “state” parameter that you will store in Workers KV to verify incoming authorization requests.
+The `generateStateParam` function will be used to prevent [Cross-Site Request Forgery attacks](https://auth0.com/docs/protocols/oauth2/mitigate-csrf-attacks). For now, you will return a string “stub” but later in the tutorial, `generateStateParam` will generate a random “state” parameter that you will store in Workers KV to verify incoming authorization requests.
 
-The `verify` function, which you will stub out in your first pass through this file, will check for an authorization key and look up a corresponding value in Workers KV. For now, you will simply return an object with an `accessToken` string, to simulate an authorized request.
+The `verify` function, which you will stub out in your first pass through this file, will check for an authorization key and look up a corresponding value in Workers KV. For now, you will simply return an object with an `accessToken` string to simulate an authorized request.
 
 The `authorize` function, which should be exported from `./auth0.js`, will wait for the response from the `verify` function, and return an array that can be used to determine how the application should proceed.
 
@@ -161,7 +161,7 @@ async function handleEvent(event) {
 }
 ```
 
-If a user is not authorized, redirect them to Auth0’s login page, by calling `Response.redirect`, passing in the `redirectUrl`:
+If a user is not authorized, redirect them to Auth0’s login page by calling `Response.redirect` and passing in the `redirectUrl`:
 
 ```js
 ---
@@ -184,7 +184,7 @@ async function handleEvent(event) {
 }
 ```
 
-When a user logs in via Auth0’s login form, they will be redirected back to the callback URL specified by our application. In the next section, you will handle that redirect, and get a user access token as part of the "login" code flow.
+When a user logs in via Auth0’s login form, they will be redirected back to the callback URL specified by our application. In the next section, you will handle that redirect and get a user access token as part of the "login" code flow.
 
 ![Auth0 Login Form](./media/auth0-login.png)
 
@@ -355,7 +355,7 @@ const persistAuth = async exchange => {
 }
 ```
 
-Inside of `validateToken`, examine fields inside of the decoded token, ensuring that:
+Inside of `validateToken` examine fields inside of the decoded token, ensuring that:
 
 - The `iss` field matches the `AUTH0_DOMAIN` secret
 - The `aud` field matches the `AUTH0_CLIENT_ID` secret
@@ -496,7 +496,7 @@ Generate this piece of state using `csprng.xyz`, a Cloudflare API service for ge
 }
 ```
 
-To persist this random data, use KV, persisting it for one day (86,400 seconds) before discarding it (note that this matches the `expires_at` time of the Auth0-provided `code` parameter). Replace the stubbed `generateStateParam` function in `workers-site/auth0.js`
+The application will use Workers KV to persist this random data for one day (86,400 seconds), which is configured via the `expirationTtl` option. After one day, KV will automatically discard the `state-${state}` key. Replace the stubbed `generateStateParam` function in `workers-site/auth0.js`
 
 ```js
 ---
@@ -512,7 +512,7 @@ const generateStateParam = async () => {
 
 ## Verifying the token and retrieving user info
 
-With our application persisting authentication data in Workers KV and associating it to the current user via a cookie, you are now prepared to fill out the `verify` function defined earlier in the tutorial. This function will look at the `Cookie` header, and look up the authentication information that you persisted in Workers KV.
+With our application persisting authentication data in Workers KV and associating it to the current user via a cookie, you are now prepared to fill out the `verify` function defined earlier in the tutorial. This function will look at the `Cookie` header and try to locate the authentication information that you persisted in Workers KV.
 
 To begin, install the NPM package [`cookie`](https://www.npmjs.com/package/cookie), which you will use to simplify parsing the `Cookie` header in the `request`:
 
@@ -625,7 +625,7 @@ export const authorize = async event => {
 }
 ```
 
-By implementing this function, you have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to see your Workers Site content. To configure your deployment and publish the application, you can go to the [**Publish** section](/authorize-users-with-auth0#publish), but in the next few portions of the tutorial, you will focus on some of the more interesting aspects of this project: using user information in your application, via “edge state hydration”, logging out our users, and some improvements and customizations that can be done to this application to make it ready for production usage.
+By implementing this function, you have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to see your Workers Site content. To configure your deployment and publish the application, you can go to the [**Publish** section](/authorize-users-with-auth0#publish), but in the next few portions of the tutorial you will focus on some of the more interesting aspects of this project; for example, accessing user information within your application, “edge state hydration”, logging out users, and making the application more production-ready with some improvements and customizations.
 
 ### Improvements and customizations
 
@@ -633,7 +633,7 @@ This tutorial introduces concepts for implementing authentication in Workers usi
 
 ### Using user data in our application
 
-In the previous section of the tutorial, you made a request to Auth0’s `/userinfo` endpoint, which provides information such as name and email address for use in our application. Using Workers’ [HTML Rewriter](/runtime-apis/html-rewriter), you can embed the `userInfo` object that you received from Auth0 directly into your site, by creating an instance of the `HTMLRewriter` class, and attaching a handler `hydrateState` to any found `head` tags that pass through the rewriter. The `hydrateState` handler will add a new `script` tag with an ID of `edge_state`, which you can parse and utilize in any front-end JavaScript code you will deploy with your application. Instead of simply returning `response` in `handleEvent`, replace it with the HTML rewriter code, and return a transformed version of `response`:
+In the previous section of the tutorial, you made a request to Auth0’s `/userinfo` endpoint, which provides information such as name and email address for use in our application. Using Workers’ [HTML Rewriter](/runtime-apis/html-rewriter), you can embed the `userInfo` object that you received from Auth0 directly into your site by creating an instance of the `HTMLRewriter` class and attaching a `hydrateState` handler to any found `head` tags that pass through the rewriter. The `hydrateState` handler will add a new `script` tag with an ID of `edge_state`, which you can parse and utilize in any front-end JavaScript code you will deploy with your application. Instead of simply returning `response` in `handleEvent`, replace it with the HTML rewriter code and return a transformed version of `response`:
 
 ```js
 ---
@@ -674,7 +674,7 @@ For a more detailed example of this functionality, refer to the [source code](ht
 
 ### Logging out users
 
-While a user’s authentication cookie expires after a day, you may want to offer the ability for a user to log out manually. This is quite simple to implement — instead of letting the cookie expire automatically, your Workers application should pass a `Set-cookie` header that nulls out the `cookieKey` you previously defined. Create a `logout` function in `workers-site/auth0.js`, and import it in `workers-site/index.js`, calling it when a user requests `/logout`:
+While a user’s authentication cookie expires after a day, you may want to offer the ability for a user to log out manually. This is quite simple to implement — instead of letting the cookie expire automatically, your Workers application should pass a `Set-cookie` header that nulls out the `cookieKey` you previously defined. Create a `logout` function in `workers-site/auth0.js` and import it in `workers-site/index.js`, calling it when a user requests `/logout`:
 
 ```js
 ---
@@ -801,7 +801,7 @@ Given an example configuration and deployment of `https://my-auth.signalnerve.co
 
 Associating a configured zone from your Cloudflare account is covered in the section [“Configure for deploying to a registered domain”](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Get started](/get-started/guide). In the [**Publish** section](/authorize-users-with-auth0#publish) of this guide, you will learn how to configure the file `wrangler.toml` to deploy to `*.workers.dev` — make sure you review [Get started](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
 
-In particular, you will need to ensure that you have `zone_id` and `route` keys in your `wrangler.toml`, and `workers_dev` disabled. You may also choose to entirely remove the `[site]` block from your `wrangler.toml` file, which will stop `wrangler` from uploading the contents of your project’s `public` folder to Workers KV:
+In particular, you will need to ensure that the `zone_id` and `route` keys are defined in your `wrangler.toml` and that the `workers_dev` key is disabled. You may also choose to entirely remove the `[site]` block from your `wrangler.toml` file, which will stop `wrangler` from uploading the contents of your project’s `public` folder to Workers KV:
 
 ```toml
 ---
@@ -887,7 +887,7 @@ For each key, you can find the corresponding value in your Auth0 application set
 
 Due to an issue with Wrangler’s publishing feature, you will need to publish your project before you are able to set these secrets. To do this successfully, add a line stubbing out each of the above secrets in `auth0.js`:
 
-</aside>
+</Aside>
 
 ```js
 ---
@@ -982,7 +982,7 @@ $ wrangler publish
 Wrangler will compile your code, upload the associated Workers Sites folder (`public`, by default), and begin handling requests sent to your `*.workers.dev` application, or to your zone. To confirm everything works as expected, you should:
 
 1. Visit your application (e.g., [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
-2. Log in with an email/password, or if you have enabled Google, Twitter, or other identity providers, the identity provider of your choice.
+2. Log in with an email/password or the social identity provider of your choice, if enabled.
 3. Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
 4. If you see your site, you have successfully authorized users to your Workers application, using Auth0.
 
@@ -992,7 +992,7 @@ Wrangler will compile your code, upload the associated Workers Sites folder (`pu
 
 By completing this tutorial, you have successfully built an application that authorizes and authenticates users on the edge using Cloudflare Workers. To see the final version of the project we built in this tutorial, refer to the example GitHub repository: [signalnerve/workers-auth0-example](https://github.com/signalnerve/workers-auth0-example/).
 
-There is a lot more that you can build with Workers, such as, serving static and JAMstack-style apps using Workers Sites, or transforming HTML responses using HTMLRewriter. Below are some more tutorials for you to review and experiment with.
+There is a lot more that you can build with Workers, such as serving static and JAMstack-style apps using Workers Sites, or transforming HTML responses using HTMLRewriter. Below are some more tutorials for you to review and experiment with.
 
 - [Build a Slack bot](/tutorials/build-a-slackbot)
 - [Deploy a React app using Workers Sites](/tutorials/deploy-a-react-app-with-create-react-app)
