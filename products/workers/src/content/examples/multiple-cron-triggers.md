@@ -17,6 +17,7 @@ pcx-content-type: configuration
 addEventListener('scheduled', event => {
     event.waitUntil(triggerEvent(event.cron))
 })
+
 async function triggerEvent(event.cron) {
     // Write code for updating your API 
     switch (event.cron) {
