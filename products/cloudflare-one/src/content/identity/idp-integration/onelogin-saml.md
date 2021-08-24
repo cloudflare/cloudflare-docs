@@ -1,12 +1,13 @@
 ---
 order: 3
+pcx-content-type: how-to
 ---
 
 # SAML | OneLogin
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 
-## Set up neLogin (SAML)
+## Set up OneLogin (SAML)
 
 To set up OneLogin (SAML) as your identity provider:
 
@@ -49,18 +50,15 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO](../../static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1. On the **Teams dashboard**, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select SAML.
+1. Under **Login methods**, click **Add new**.
 
-1. Input the details from your OneLogin account in the fields.
+1. Select SAML.
+
+1. Input the details from your OneLogin account in the fields. We suggest that you name the attributes the same in both OneLogin and Cloudflare.
 
     If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
-
-    <Aside>
-    We suggest that you name the attributes the same in both OneLogin and Cloudflare.
-
-    </Aside>
 
 1. Click **Save**.
 
@@ -73,10 +71,10 @@ OneLogin SAML allows administrators to upload metadata files from the service pr
 
 To add a metadata file to your OneLogin SAML configuration:
 
-1. Download your unique SAML metadata file at the following URL, replacing `your-team-name` with your [team name](/glossary#team-name):
+1. Download your unique SAML metadata file at the following URL, replacing `<your-team-name>` with your [team name](/glossary#team-name):
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
     The link returns a web page with your SAML SP data in XML format.

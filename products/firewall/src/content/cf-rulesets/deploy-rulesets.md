@@ -1,52 +1,89 @@
 ---
-title: Deploy rulesets
+pcx-content-type: how-to
+type: overview
 order: 740
 ---
 
-# Deploy rulesets from your root ruleset
+# Deploy rulesets
 
-<Aside type='warning' header='Important'>
+Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
-This feature is part of an early access experience for selected customers.
+A rule that executes a ruleset consists of:
+
+* The **ID of the ruleset** you want to execute.
+* An **expression**.
+* An **action**. Set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
+
+<Aside type='note'>
+
+To apply a rule to every request in a phase at the **zone** level, set the rule expression to `true`.
 
 </Aside>
 
-To deploy a managed ruleset from your root ruleset, use the [Rulesets API](/cf-rulesets/rulesets-api).
+## Example
 
-## Before you begin
-
-* [Create a root ruleset](/cf-rulesets/configure-root-ruleset/) if you do not already have one.
-* [Fetch](/cf-rulesets/view-rulesets/) the `id` parameters for your root ruleset and the rulesets  you want to deploy.
-
-## Add a rule to the root ruleset
-
-To deploy a managed or custom ruleset, use the [update ruleset](/cf-rulesets/rulesets-api/put) operation to add a rule to your root ruleset. This rule executes the ruleset. Use a separate rule for each managed ruleset you want to deploy.
-
-Each rule in the root ruleset consists of the ID for the managed ruleset, an expression, and an action.
-
-* The expression specifies the hosts the ruleset applies to.
-  * Fields: `cf.zone.name` is the only valid field for rule expressions in the root ruleset.
-  * Operators: The following operators are valid: `equals`, `not equals`, `contains`, `does not contain`, `is in`, `is not in`.
-* The `execute` action deploys the managed ruleset when a request satisfies the expression.
-* The ID of the ruleset you want to deploy.
-
-The following request adds a rule to a root ruleset. The rule executes a managed ruleset for requests where `cf.zone.name` matches `example.com`.
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`) by adding a rule that executes the Managed Ruleset.
 
 ```json
-
+---
+header: Request
+---
 curl -X PUT \
-     "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{root-ruleset-id}"
---data {
-  "rules": [{
+-H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Key: REDACTED" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-d '{
+  "rules": [
+    {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\""
       "action_parameters": {
-        "id": "{managed-ruleset-id}"
+        "id": "{cloudflare-managed-ruleset-id}"
+      },
+      "expression": "true",
+      "description": "Execute Cloudflare Managed Ruleset on my zone ruleset"
+    }
+  ]
+}'
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "{zone-level-phase-ruleset-id}",
+    "name": "Zone-level Ruleset 1",
+    "description": "",
+    "kind": "zone",
+    "version": "latest",
+    "rules": [
+      {
+        "id": "{rule-id}",
+        "version": "1",
+        "action": "execute",
+        "action_parameters": {
+          "id": "{cloudflare-managed-ruleset-id}",
+          "version": "3"
+        },
+        "expression": "true",
+        "description": "Execute Cloudflare Managed Ruleset on my zone ruleset",
+        "last_updated": "2021-03-18T18:08:14.003361Z",
+        "ref": "{ruleset-ref}",
+        "enabled": true
       }
-    }]
+    ],
+    "last_updated": "2021-03-18T18:08:14.003361Z",
+    "phase": "http_request_firewall_managed"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-Refer to [work with custom rulesets](/cf-rulesets/custom-rulesets) and [work with managed rulesets](/cf-rulesets/managed-rulesets) for more information on working with custom and managed rulesets.
+See [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information.
 
-For examples of deploying rulesets, see [workflow examples](/cf-rulesets/common-use-cases).
+For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
+
+For examples of deploying rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).

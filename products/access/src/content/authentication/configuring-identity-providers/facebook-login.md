@@ -76,7 +76,7 @@ Use these steps to set up Facebook as your identity provider.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret"
+        "client_secret": "<your client secret>"
     },
     "type": "facebook",
     "name": "my example idp"

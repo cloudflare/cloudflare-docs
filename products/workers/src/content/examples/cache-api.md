@@ -3,9 +3,10 @@ order: 1000
 type: example
 summary: Use the Cache API to store responses in Cloudflare's cache.
 tags:
-  - API
+  - Cache API
   - Middleware
   - Caching
+pcx-content-type: configuration
 ---
 
 # Using the Cache API

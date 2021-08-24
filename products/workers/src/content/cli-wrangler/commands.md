@@ -1,5 +1,6 @@
 ---
 order: 2
+pcx-content-type: configuration
 ---
 
 # Commands
@@ -140,6 +141,8 @@ To use this command, the following fields are required in your `wrangler.toml`:
 
 From here, you have two options, you can choose to publish to your own domain or you can choose to publish to [&lt;your-worker&gt;.&lt;your-subdomain&gt;.workers.dev](https://workers.dev).
 
+When you publish changes to an existing Worker script, all new requests will automatically route to the updated version of the Worker without downtime. Any inflight requests will continue running on the previous version until completion. Once all inflight requests have finished complete, the previous Worker version will be purged and will no longer handle requests.
+
 ### Publishing to workers.dev
 
 If you want to publish to [workers.dev](https://workers.dev), you will first need to have a subdomain registered. You can register a subdomain by executing the [subdomain](#subdomain) command.
@@ -184,7 +187,7 @@ If you would like to be able to publish your code to multiple places, please see
 
 ## dev
 
-`wrangler dev` starts a server on `localhost` that executes your Worker on incoming HTTP requests. It can forward the requests to Cloudflare's servers, one of your zones, or any host you specify. This is a great way to easily test your Worker while developing.
+`wrangler dev` is a command that establishes a connection between `localhost` and an edge server that operates your Worker in development. A cloudflared tunnel forwards all requests to the edge server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
 
 ```sh
 $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
@@ -238,27 +241,35 @@ If you are using [kv_namespaces](/cli-wrangler/configuration#kv_namespaces) with
 Starts a log tailing session for a deployed Worker.
 
 ```sh
-$ wrangler tail [--port $PORT] [--metrics-port $PORT]
+$ wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
 ```
 
 <Definitions>
 
-- `--port $PORT` <Type>int</Type>
-  - The port for your local log server
-
-- `--metrics-port $PORT` <Type>int</Type>
-  - The port for serving [metrics information](https://developers.cloudflare.com/argo-tunnel/reference/arguments/#metrics) about the tunnel
+- `--format $FORMAT` <Type>json|pretty</Type>
+  - The format of the log entries.
+- `--status $STATUS`
+  - Filter by invocation status [possible values: ok, error, canceled]
+- `--header $HEADER`
+  - Filter by HTTP header
+- `--method $METHOD`
+  - Filter by HTTP method
+- `--sampling-rate $RATE` 
+  - Adds a percentage of requests to log sampling rate
+- `--search $SEARCH`
+  - Filter by a text match in `console.log` messages
 
 </Definitions>
 
 After starting `wrangler tail` in a directory with a project, you will receive a live feed of console and exception logs for each request your Worker receives.
 
-Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (i.e. the directory with your `wrangler.toml`).
+Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (i.e., the directory with your `wrangler.toml`).
 
-### Dependencies
+<Aside type="warning" header="Legacy issues with existing cloudflared configuration">
 
-Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/argo-tunnel/quickstart/) for Argo Tunnel.
-`wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) that listens for incoming log requests from your Worker.
+`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/cli-wrangler/install-update#update) to avoid any issues.
+
+</Aside>
 
 --------------------------------
 

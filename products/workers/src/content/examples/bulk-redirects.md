@@ -3,8 +3,8 @@ order: 1000
 type: example
 summary: Redirect requests to certain URLs based on a mapped object to the request's URL.
 tags:
-  - Security
-  - Proxy
+  - Middleware
+pcx-content-type: configuration
 ---
 
 # Bulk redirects

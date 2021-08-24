@@ -4,12 +4,11 @@ type: example
 summary: Access custom Cloudflare properties and control how Cloudflare features are applied to every request.
 demo: https://accessing-the-cloudflare-object.workers-sites-examples.workers.dev
 tags:
-  - API
-  - JSON
   - Originless
+pcx-content-type: configuration
 ---
 
-# Accessing the Cloudflare object
+# Accessing the `cf` object
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>

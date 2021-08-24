@@ -1,5 +1,6 @@
 ---
 title: Querying Workers Metrics with GraphQL
+pcx-content-type: interim
 ---
 
 # Querying Workers Metrics with GraphQL
@@ -32,7 +33,7 @@ PAYLOAD='{ "query":
               cpuTimeP99
             }
             dimensions{
-              datetimeMinute
+              datetime
               scriptName
               status
             }

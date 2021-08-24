@@ -5,6 +5,8 @@ summary: Cache POST requests using the Cache API.
 tags:
   - Middleware
   - Caching
+  - Cache API
+pcx-content-type: configuration
 ---
 
 # Cache POST requests

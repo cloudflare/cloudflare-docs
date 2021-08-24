@@ -1,5 +1,6 @@
 ---
-order: 9
+order: 11
+pcx-content-type: concept
 ---
 
 # Security model

@@ -1,8 +1,12 @@
+---
+pcx-content-type: configuration
+---
+
 # Durable Objects
 
 <Aside type="warning" header="Beta">
 
-Durable Objects are currently in closed beta. If you are interested in using them, [request a beta invite](https://www.cloudflare.com/cloudflare-workers-durable-objects-beta).
+Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
 
 </Aside>
 
@@ -41,12 +45,8 @@ export class DurableObject {
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
-- <Code>state.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
-
-  - Notifies the runtime to wait for the completion of asynchronous tasks that may complete after a response has already been sent. See [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil) for a detailed reference.
-
 - `env`
-  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using ES Modules syntax, these same "bindings" appear as global variables within the script. Durable Object namespaces, though, always use ES Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
+  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using Modules syntax, these same "bindings" appear as global variables within the script. Scripts that export Durable Object classes always use the Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
 </Definitions>
 
@@ -64,7 +64,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-- <Code>get(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
+- <Code>get(keys<ParamType>Array&lt;string></ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
 
@@ -80,13 +80,13 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   - Deletes the key and associated value. Returns true if the key existed or false if it didn't.
 
-- <Code>delete(keys<ParamType>Array&lt;String></ParamType>)</Code> <Type>Promise&lt;number></Type>
+- <Code>delete(keys<ParamType>Array&lt;string></ParamType>)</Code> <Type>Promise&lt;number></Type>
 
   - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
 
 - <Code>list()</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
-  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your actor before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
+  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options, because it will all be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
 
 - <Code>list(options<ParamType>Object</ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
@@ -207,11 +207,9 @@ This method derives a unique object ID from the given name string. It will alway
 
 <Aside header="Name-derived IDs require global lookups at creation">
 
-The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same object at the same time. In order to guarantee that only one instance of the object is created worldwide, the system must check whether the object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds.
+The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same object at the same time. In order to guarantee that only one instance of the object is created worldwide, the system must check whether the object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds. After this check, the object will be instantiated near where it was first requested.
 
-After the object has been accessed the first time, information will be cached around the world so that subsequent lookups can be faster.
-
-**Beta note:** We are still working on caching and automatic migration of objects. During the beta period, each named object is located in a random location in either North America or Europe. Thus, different named objects may have variable latency characteristics. This will improve soon.
+After the object has been accessed the first time, location information will be cached around the world so that subsequent lookups can be faster.
 
 </Aside>
 

@@ -1,5 +1,6 @@
 ---
 order: 11
+pcx-content-type: how-to
 ---
 
 # OneLogin OIDC
@@ -30,7 +31,7 @@ To set up OneLogin as your identity provider:
 1. In the **Redirect URI** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
     
 1. Click **Save**.
@@ -53,12 +54,17 @@ To set up OneLogin as your identity provider:
     ![OneLogin OIDC Add Application SSO page](../../static/documentation/identity/onelogin/onelogin-oidc-7.png)
 
 1. Click **Show client secret**.
+
 1. Copy both the **Client ID** and **Client Secret**.
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
+1. Under **Login methods**, click **Add new**.
+
+1. Select Centrify as your IdP.
+
 1. Paste in your copied **Client ID** and **Client secret**.
+
 1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
@@ -69,7 +75,7 @@ To test that your connection is working, navigate to **Authentication > Login me
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "onelogin_account": "https://mycompany.onelogin.com",
     },
     "type": "onelogin",

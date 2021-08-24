@@ -1,10 +1,13 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Google
 
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration will allow any user with a Google account to login (if the [Zero Trust policy](/policies/zero-trust) allows them to reach the resource). Unlike the instructions for [Google Workspace](/identity/idp-integration/gsuite), the steps below will not allow you to pull group membership information from a Google Workspace account.
+
+Please note that you don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
 1. Visit the Google Cloud Platform console. Create a new project.
 
@@ -59,7 +62,7 @@ You can integrate Google authentication with Cloudflare Access without a Google 
 1. Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
  ![Team Domain](../../static/documentation/identity/google/auth-domain.png)
@@ -68,23 +71,15 @@ You can integrate Google authentication with Cloudflare Access without a Google 
 
  ![Secret Field](../../static/documentation/identity/google/oauth-created.png)
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click *+ Add*.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **Google** on the next page.
-
- ![Add IdP](../../static/documentation/identity/google/add-idp.png)
-
-1. Select **Google**.
-
- ![Add Google](../../static/documentation/identity/google/add-google.png)
 
 1. Input the Client ID and Client Secret fields generated previously.
 
 1. Click **Save**.
-
-![Add Google Suite](../../static/documentation/identity/google/input-client.png)
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Google.
 
@@ -98,7 +93,7 @@ Your user identity should return.
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
     },
     "type": "google",
     "name": "my example idp"

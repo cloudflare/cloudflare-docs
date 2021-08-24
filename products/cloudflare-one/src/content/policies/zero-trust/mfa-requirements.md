@@ -1,10 +1,11 @@
 ---
 order: 5
+pcx-content-type: how-to
 ---
 
 # Enforce MFA
 
-With zero-trust policies, you can require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
+With Zero Trust policies, you can require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
 
 This feature is only available if you are using the following identity providers:
 
@@ -43,7 +44,7 @@ Cloudflare Access will reject the user, even if they successfully login to the i
 
 ## Adding authentication methods into the JWT
 
-When users authenticate with their identity provider, the identity provider thenshares their username with Cloudflare Access. Cloudflare Access then writes that value into the [JSON Web Token (JWT)](/glossary#jwt) generated for the user.
+When users authenticate with their identity provider, the identity provider then shares their username with Cloudflare Access. Cloudflare Access then writes that value into the [JSON Web Token (JWT)](/glossary#json-web-token) generated for the user.
 
 Certain identity providers can also share the multifactor authentication (MFA) method presented by the user to login. Cloudflare Access can add these values into the JWT and force. For example, if the user authenticated with their password and a physical hard key, the identity provider can send a confirmation to Cloudflare Access. 
 

@@ -5,8 +5,8 @@ summary: Return JSON directly from a Worker script, useful for building APIs and
 demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
-  - API
   - Originless
+pcx-content-type: configuration
 ---
 
 # Return JSON

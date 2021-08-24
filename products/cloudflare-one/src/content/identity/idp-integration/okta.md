@@ -1,5 +1,6 @@
 ---
 order: 12
+pcx-content-type: how-to
 ---
 
 # Okta
@@ -29,7 +30,7 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 1. You can name the application to be any value. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
-    https://your-team-name.cloudflareaccess.com/cdn-cgi/access/callback
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
  ![Create New App](../../static/documentation/identity/okta/add-uri.png)
@@ -42,9 +43,9 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
  ![Scroll Down](../../static/documentation/identity/okta/scroll-down.png)
 
-1. Click **Edit** and edit the Groups claim filter to `Starts with` and the value `.*`.
+1. Click **Edit** and edit the Groups claim filter to Matches regex and the value `.*`.
 
- ![Scroll Down](../../static/documentation/identity/okta/edit-groups.png)
+ ![Scroll Down](../../static/documentation/identity/okta/okta-edit.png)
 
 1. Next, click the **Assignments** tab.
 
@@ -58,17 +59,19 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
  ![Credentials](../../static/documentation/identity/okta/credentials.png)
 
-1. On the Teams dashboard, navigate to **Access > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select Okta as your IdP.
+1. Under **Login methods**, click **Add new**.
 
-![Choose Okta](../../static/documentation/identity/okta/choose-okta.png)
+1. Select **Okta** as your IdP.
 
-14. Input the ID, secret, and the Okta account URL. Click **Save**.
+1. Input the ID, secret, and the Okta account URL.
 
-![Input](../../static/documentation/identity/okta/input-credentials.png)
+1. (optional) [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. This will prevent your Okta groups from failing if you have more than 100 groups.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Okta.
+1. Click **Save**.
+
+To test that your connection is working, navigate to **Settings > Authentication > Login methods** and click **Test** next to Okta.
 
 ## Example API Configuration
 
@@ -76,7 +79,7 @@ To test that your connection is working, navigate to **Authentication > Login me
 {
     "config": {
         "client_id": "<your client id>",
-        "client_secret": "<your client secret",
+        "client_secret": "<your client secret>",
         "okta_account": "https://dev-abc123.oktapreview.com",
     },
     "type": "okta",

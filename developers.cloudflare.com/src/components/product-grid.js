@@ -6,23 +6,31 @@ const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
 $["analytics"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/analytics.js").pathD
 $["api"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/api.js").pathD
+$["api-security"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
+$["automatic-platform-optimization"]   = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/automatic-platform-optimization.js").pathD
 $["bots"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/bots.js").pathD
 $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/byoip.js").pathD
+$["cache"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
-$["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
-$["internet"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/internet.js").pathD
+$["image-resizing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
+$["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
+$["magic-firewall"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
+$["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-wan.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
+$["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
+$["partners"]             = require("../../../products/partners/src/content/icons/partners.js").pathD
 $["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/railgun.js").pathD
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
+$["rules"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/rules.js").pathD
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
@@ -41,6 +49,11 @@ const products = [
     icon: "api",
   },
   {
+    title: "API Security",
+    path: "api-security",
+    icon: "page-shield",
+  },
+  {
     title: "Analytics",
     path: "analytics",
     icon: "analytics",
@@ -49,6 +62,12 @@ const products = [
     title: "Apps",
     href: "https://www.cloudflare.com/apps/docs",
     icon: "api", // TODO: add `apps` icon to https://github.com/cloudflare/cloudflare-brand-assets
+  },
+  {
+    title: "Automatic Platform Optimization",
+    path: "automatic-platform-optimization",
+    icon: "automatic-platform-optimization",
+    wrap: true,
   },
   // {
   //   title: "Cloudflare One",
@@ -64,6 +83,11 @@ const products = [
     title: "BYOIP",
     path: "byoip",
     icon: "byoip",
+  },
+  {
+    title: "Cache",
+    path: "cache",
+    icon: "cache",
   },
   {
     title: "Cloudflare for Teams",
@@ -94,13 +118,14 @@ const products = [
   },
   {
     title: "Image Resizing",
-    path: "images",
-    icon: "images",
+    path: "image-resizing",
+    icon: "image-resizing",
   },
   {
-    title: "Internet",
-    path: "internet",
-    icon: "internet",
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true
   },
   {
     title: "Load Balancing",
@@ -118,6 +143,16 @@ const products = [
     icon: "magic-transit",
   },
   {
+    title: "Magic Firewall",
+    path: "magic-firewall",
+    icon: "magic-firewall",
+  },
+  {
+    title: "Magic WAN",
+    path: "magic-wan",
+    icon: "magic-wan",
+  },
+  {
     title: "Network Interconnect",
     path: "network-interconnect",
     icon: "network-interconnect",
@@ -129,8 +164,18 @@ const products = [
     icon: "pages",
   },
   {
+    title: "Page Shield",
+    path: "page-shield",
+    icon: "page-shield",
+  },
+  {
+    title: "Partners",
+    path: "partners",
+    icon: "partners",
+  },
+  {
     title: "Railgun",
-    href: "https://www.cloudflare.com/docs/railgun/",
+    path: "railgun",
     icon: "railgun",
   },
   {
@@ -143,6 +188,11 @@ const products = [
     title: "Registrar",
     path: "registrar",
     icon: "registrar",
+  },
+  {
+    title: "Rules",
+    path: "rules",
+    icon: "rules",
   },
   {
     title: "Spectrum",
@@ -197,7 +247,7 @@ const products = [
 ]
 
 const ProductGridLink = ({ product }) => (
-  <a className="ProductGrid--link" data-wrap-title={product.wrap} href={product.href || `http://developers.cloudflare.com/${product.path}`}>
+  <a className="ProductGrid--link" data-wrap-title={product.wrap} href={product.href || `https://developers.cloudflare.com/${product.path}`}>
     <svg viewBox="0 0 48 48"><path d={$[product.icon]}/></svg>
     <span>{product.title}</span>
   </a>

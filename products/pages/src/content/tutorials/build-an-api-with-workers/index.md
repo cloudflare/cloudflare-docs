@@ -1,20 +1,24 @@
+---
+pcx-content-type: tutorial
+---
+
 # Build an API for your frontend using Cloudflare Workers
 
 ## Introduction
 
-In this tutorial, we'll build an API on Cloudflare Workers that can be used by your Pages application. Workers serves as a great companion to your frontend applications on Cloudflare Pages. In this tutorial, we'll build a simple JSON API that returns blog posts that can be retrieved and rendered in a front-end application.
+In this tutorial, you will build an API on [Cloudflare Workers](https://www.cloudflare.com/learning/serverless/glossary/serverless-and-cloudflare-workers/) that can be used by your Pages application. Workers serve as a great companion to your front-end applications on Cloudflare Pages. In this tutorial, you will build a simple JSON API that returns blog posts that can be retrieved and rendered in a frontend application.
 
-This tutorial contains two, separate applications: the backend, a serverless API deployed on Cloudflare Workers, and the frontend, built with React and deployed using Cloudflare Pages.
+This tutorial contains two, separate applications: the backend, a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) API deployed on Cloudflare Workers, and the front end, built with React and deployed using Cloudflare Pages.
 
-If you're interested in a more comprehensive approach to building applications like this, you may benefit from moving from a serverless API for your content to a headless CMS — see our headless CMS tutorial to learn more!
+If you are interested in a more comprehensive approach to building applications like this, you may benefit from moving from a serverless API for your content to a headless CMS — refer to the [headless CMS tutorial] to learn more.
 
 ## Deploying a serverless API
 
 ### Generating a new project
 
-Let's begin by creating a new Cloudflare Workers project. If you haven't used Cloudflare Workers, or installed Wrangler, the command-line tool for managing and publishing Workers projects, you should check out the Quick Start guide in the Workers documentation. Once you've configured Wrangler and authenticated it with your Cloudflare account, you can return here to generate your API codebase.
+Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the command-line tool for managing and publishing Workers projects, refer to the [Get started guide](https://developers.cloudflare.com/workers/get-started/guide) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, return here to generate your API codebase.
 
-We'll use the Workers TypeScript template to generate our project. Don't worry if you don't know TypeScript -- we won't be writing any complicated types, and if you're using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` to create a new project using the template:
+You will use the Workers TypeScript template to generate our project. Don't worry if you do not know TypeScript — you will not be writing any complicated types, and if you are using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` in your terminal to create a new project using the template:
 
 ```sh
 ---
@@ -25,9 +29,9 @@ $ wrangler generate serverless-api https://github.com/cloudflare/worker-typescri
 
 ### Adding a router
 
-Our Workers application will serve as a backend API to return blog post data using JSON to our static application. This means that it should have two routes: `/api/posts`, which will return a list of blog posts, and `/api/posts/:id`, which will be used to retrieve a specific blog post based on ID.
+Your Workers application will serve as a backend API to return blog post data using JSON to our static application. This means that it should have two routes: `/api/posts`, which will return a list of blog posts, and `/api/posts/:id`, which will be used to retrieve a specific blog post based on ID.
 
-While you can manually parse incoming URLs, it's much easier to use a routing library to consistently handle incoming requests. We'll install and use [itty-router](https://github.com/kwhitley/itty-router), an open-source routing library with support for Cloudflare Workers:
+While you can manually parse incoming URLs, it is much easier to use a routing library to consistently handle incoming requests. Install and use [itty-router](https://github.com/kwhitley/itty-router), an open-source routing library with support for Cloudflare Workers by running the following command in your terminal:
 
 ```sh
 ---
@@ -37,7 +41,7 @@ $ npm install itty-router
 ---
 ```
 
-With `itty-router` installed, we can open up `handler.ts` and set up our router. Begin by importing the `itty-router` package and setting up a new instance of the `Router` class:
+With `itty-router` installed, you can open up `handler.ts` and set up your router. Begin by importing the `itty-router` package and setting up a new instance of the `Router` class:
 
 ```ts
 ---
@@ -58,15 +62,15 @@ router
 export const handleRequest = request => router.handle(request)
 ```
 
-The above routing configuration defines three routes: `/api/posts`, `/api/posts/:id`, and a _wildcard_ route, which will be called if the incoming request doesn't match the first two routes.
+The above routing configuration defines three routes: `/api/posts`, `/api/posts/:id`, and a wildcard route, which will be called if the incoming request does not match the first two routes.
 
 Create two files, `handlers/posts.ts` and `handlers/post.ts`, which will contain the handler code for our two API routes.
 
 ### Implementing API routes
 
-In `handlers/posts.ts`, we'll return an array of posts as a JSON array. If you've never worked with JSON APIs before, all you need to know is that a serverless API returning JSON needs to define a `Content-type` header, which should be set to `application/json`. Any JSON data coming back as part of the response body should be turned into a JSON string using `JSON.stringify`.
+In `handlers/posts.ts`, you will return an array of posts as a JSON array. If you have never worked with JSON APIs before, all you need to know is that a serverless API returning JSON needs to define a `Content-type` header, which should be set to `application/json`. Any JSON data coming back as part of the response body should be turned into a JSON string using `JSON.stringify`.
 
-In the below sample, we'll stub out the `posts` array, and later, we'll come back and fill it in with real data:
+In the below sample, you will stub out the `posts` array, and later, you will come back and fill it in with real data:
 
 ```ts
 ---
@@ -83,9 +87,9 @@ const Posts = () => {
 export default Posts
 ```
 
-`Posts` is a simple function with no arguments that returns a JSON response. When an application makes a GET request to `/api/posts`, they'll receive a JSON-encoded array back, which they can use to render a list of blog posts.
+`Posts` is a simple function with no arguments that returns a JSON response. When an application makes a GET request to `/api/posts`, they will receive a JSON-encoded array back, which they can use to render a list of blog posts.
 
-We'll define something similar for `handlers/post.ts`, which returns a single blog post. Importantly, we'll use the request argument that `itty-router` passes to handlers, using it to retrieve the `:id` parameter that we defined in `handler.ts`. Again, we'll stub out the `post` data, but you can already begin to see in the below sample how to retrieve the `:id` param inside of a handler:
+You will define something similar for `handlers/post.ts`, which returns a single blog post. Importantly, you will use the request argument that `itty-router` passes to handlers, using it to retrieve the `:id` parameter that we defined in `handler.ts`. Again, you will stub out the `post` data, but you can already begin to see in the below sample how to retrieve the `:id` param inside of a handler:
 
 ```ts
 ---
@@ -107,7 +111,7 @@ export default Post
 
 ### Defining a static data class
 
-Until now, we've used empty stub data to return data in our API routes. To make this application meaningful, we'll define a static data class, called `PostsStore`, to simulate how you might retrieve data from a database or other data source. In `posts_store.ts`:
+Until now, you have used empty stub data to return data in our API routes. To make this application meaningful, define a static data class, called `PostsStore`, to simulate how you might retrieve data from a database or other data source. In `posts_store.ts`:
 
 ```ts
 ---
@@ -139,9 +143,9 @@ export default class PostsStore {
 }
 ```
 
-We're still referring to static content, but by building a `PostsStore` class, we can abstract the retrieval of posts and easily imagine a future where this class talks to a database, key-value store, or however you prefer to store your data.
+You are still referring to static content, but by building a `PostsStore` class, you can abstract the retrieval of posts and easily imagine a future where this class talks to a database, key-value store, or however you prefer to store your data.
 
-With `PostsStore` set up, we can import it and use it in our handlers:
+With `PostsStore` set up, you can import it and use it in our handlers:
 
 ```ts
 ---
@@ -181,7 +185,7 @@ export default Post
 
 ### Adding CORS headers
 
-Before we're ready to deploy, we'll make one more change to our handlers, adding [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to allow our frontend application to make requests to the API. In our handlers, we'll update the `headers` variable accordingly:
+Before you are ready to deploy, you will make one more change to our handlers, adding [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to allow your frontend application to make requests to the API. In your handlers, you will update the `headers` variable accordingly:
 
 ```ts
 ---
@@ -227,7 +231,7 @@ export default Post
 
 ### Publishing the API
 
-With our API configured, we're ready to publish! Run `wrangler publish`, and when you've successfully deployed your application, you should be able to make requests to your API to see data returned in the console:
+With your API configured, you are ready to publish. Run `wrangler publish` in your terminal, and when you have successfully deployed your application, you should be able to make requests to your API to see data returned in the console:
 
 ```sh
 ---
@@ -237,9 +241,9 @@ $ curl serverless-api.signalnerve.workers.dev/api/posts
 $ curl serverless-api.signalnerve.workers.dev/api/posts/1
 ```
 
-## Deploying a new React application to pages
+## Deploying a new React application to Pages
 
-With our serverless API deployed, we can now build the frontend of our application with React. First, we'll generate the application, and then we'll define the functionality by adding routing, and rendering blog posts from the API. Once we're happy with the implementation locally, we'll use Cloudflare Pages to deploy it in just a matter of minutes!
+With your serverless API deployed, we can now build the frontend of our application with React. First, you will generate the application, and then you will define the functionality by adding routing, and rendering blog posts from the API. Once you are happy with the implementation locally, you will use Cloudflare Pages to deploy it in just a matter of minutes.
 
 ### Generating a new React application
 
@@ -297,7 +301,7 @@ function App() {
   return (
     <Router>
       <Posts path="/" />
-      <Post path="/:id" />
+      <Post path="/posts/:id" />
     </Router>
   );
 }
@@ -305,7 +309,7 @@ function App() {
 export default App;
 ```
 
-Create a new folder called `components`, and inside of it, create two files: `posts.js`, and `post.js`. These components will load the blog posts from our API, and render them. Let's begin with `posts.js`:
+Create a new folder called `components`, and inside of it, create two files: `posts.js`, and `post.js`. These components will load the blog posts from our API, and render them. Begin with `posts.js`:
 
 ```js
 ---
@@ -355,7 +359,7 @@ filename: "src/components/post.js"
 import React, { useEffect, useState } from "react";
 import { Link } from "@reach/router";
 
-const Posts = ({ id }) => {
+const Post = ({ id }) => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
@@ -386,26 +390,28 @@ const Posts = ({ id }) => {
   );
 };
 
-export default Posts;
+export default Post;
 ```
 
 ### Publishing with Cloudflare Pages
 
-Publishing your project with Cloudflare Pages is an easy, two-step process: first, push your project to GitHub, and then in the Cloudflare Pages UI, set up a new project based on that GitHub repository. Pages will deploy a new version of your site each time you publish, and will even set up preview deployments whenever you open a new pull request.
+Publishing your project with Cloudflare Pages is an easy, two-step process: first, push your project to GitHub, and then in the Cloudflare Pages dashboard, set up a new project based on that GitHub repository. 
 
-To push your project to GitHub, [create a new repo](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
+Pages will deploy a new version of your site each time you publish and will set up preview deployments whenever you open a new pull request.
 
-Once you've pushed your project to GitHub, go to the Pages UI, and create a new project. When asked for your project's build configuration, just choose "React" -- Pages will set the correct fields for you automatically.
+To push your project to GitHub, [create a new repository](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
-When your site has been deployed, you'll receive a unique URL to view it in production.
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose **React** -- Pages will automatically apply the correct build settings for you.
 
-Congrats, you've deployed your own blog, powered by Cloudflare Workers and Cloudflare Pages.
+When your site has been deployed, you will receive a unique URL to view it in production.
+
+You have now deployed your own blog, powered by Cloudflare Workers and Cloudflare Pages.
 
 ## Custom domains
 
-Cloudflare Workers and Pages both provide first-class support for custom domains. This means that you can deploy your Pages application to a custom domain, as you would for any normal website, and _also_ deploy your API (`/api/posts` and `/api/posts/:id`) "over" your Pages application, by specifying a route in your `wrangler.toml`.
+Cloudflare Workers and Pages both provide first-class support for custom domains. This means that you can deploy your Pages application to a custom domain, as you would for any normal website, and also deploy your API (`/api/posts` and `/api/posts/:id`) "over" your Pages application, by specifying a route in your `wrangler.toml` file.
 
-For instance, given the example domain "myblog.com", you could set up your API application's `wrangler.toml` with the following config:
+For example, given the example domain `myblog.com`, you could set up your API application's `wrangler.toml` with the following config:
 
 ```toml
 ---
@@ -416,13 +422,15 @@ route = "*myblog.com/api*"
 zone_id = "$zoneId"
 ```
 
-Now, when you run `wrangler publish`, your API will be published and served on `myblog.com`, but _only_ when you visit a route matching `/api*` -- this means that your basic routes (`/`, `/posts/:id`, etc.) will be sent to your frontend Pages application, but any API routes will be intercepted and handled by your Workers application.
+Now, when you run `wrangler publish`, your API will be published and served on `myblog.com`, but only when you visit a route matching `/api*` -- this means that your basic routes (`/`, `/posts/:id`, etc.) will be sent to your front-end Pages application, but any API routes will be intercepted and handled by your Workers application.
 
 ## Conclusion
 
-In this tutorial, you built a full blog application by combining a frontend deployed with Cloudflare Pages, and a serverless API built with Cloudflare Workers. You can find the source code for both codebases on GitHub:
+In this tutorial, you built a full blog application by combining a front end deployed with Cloudflare Pages, and a serverless API built with Cloudflare Workers. You can find the source code for both codebases on GitHub:
 
 - Blog frontend: https://github.com/signalnerve/blog-frontend
 - Serverless API: https://github.com/signalnerve/serverless-api
 
-If you enjoyed this tutorial, check out our headless CMS tutorial!
+If you enjoyed this tutorial, refer to the [headless CMS tutorial] to learn how to build a blog using Nuxt.js and Sanity.io.
+
+[headless CMS tutorial]:/tutorials/build-a-blog-using-nuxt-and-sanity

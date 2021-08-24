@@ -3,11 +3,11 @@ order: 1000
 type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
-  - Middleware
-  - Originless
+  - Debugging
+pcx-content-type: configuration
 ---
 
-# Logging headers
+# Logging headers to console
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>
@@ -15,7 +15,6 @@ tags:
 
 ```js
 async function handleRequest(request) {
-  let requestHeaders = JSON.stringify([...request.headers])
   console.log(new Map(request.headers))
 
   return new Response("Hello world")
@@ -88,7 +87,7 @@ This works because:
 
 The Map trick works great for simple calls to `console.log()`, but if we need to actually stringify our headers, we quickly find out that stringifying a Map yields nothing more than `[object Map]`, which isn’t very helpful.
 
-The JSON stringifier can’t help us, either: even though our Map stores its data in an enumerable property, that property is [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)-keyed, and `JSON.stringify()` [ignores Symbol-keyed properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#Description) — we end up with an empty `{}` again.
+The JSON stringifier can’t help us, either: even though our Map stores its data in an enumerable property, that property is [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)-keyed, and `JSON.stringify()` [ignores Symbol-keyed properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#symbols_and_json.stringify) — we end up with an empty `{}` again.
 
 Instead, we can take advantage of the iterability of the Headers object in a new way by applying the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) (`...`) to it.
 

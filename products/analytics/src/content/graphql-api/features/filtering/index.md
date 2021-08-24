@@ -1,6 +1,6 @@
 ---
-title: Filtering
 order: 10
+pcx-content-type: reference
 ---
 
 # Filtering
@@ -102,12 +102,13 @@ The `like` operator is available for string comparisons and supports the `%` cha
 
 ```graphql
 {
-  myQuery(
-    filter: {
-      clientCountry: "UK" # all objects having client country equal to "UK"
-      datetime_gt: "2018-01-01 10:00:00" # all object having datetime greater than "2018-01-01 10:00:00"
+  viewer {
+    zones(filter: {zoneTag: $zoneTag}) {
+      httpRequestsAdaptiveGroups(filter: {datetime_gt: "2021-06-10T00:00:00Z", clientCountryName: "GB"}, limit: 1) {
+        count
+      }
     }
-  )
+  }
 }
 ```
 
@@ -118,7 +119,7 @@ The following GraphQL example shows how to filter a specific node. The SQL equiv
 ##### GraphQL {#001}
 
 ```graphql
-httpRequests1hGroups(filter: {datetime: "2018-01-01 10:00:00"}) {
+httpRequestsAdaptiveGroups(filter: {datetime: "2018-01-01T10:00:00Z"}) {
     ...
 }
 ```
@@ -126,8 +127,7 @@ httpRequests1hGroups(filter: {datetime: "2018-01-01 10:00:00"}) {
 ##### SQL {#002}
 
 ```sql
-WHERE datetime="2018-01-01 10:00:00"
-  AND ((clientCountryName = "UK") OR (clientCountryName = "US"))
+WHERE datetime="2018-01-01T10:00:00Z"
 ```
 
 #### Filter on multiple fields
@@ -137,7 +137,7 @@ The following GraphQL example shows how to apply a filter to a multiple fields, 
 ##### GraphQL {#003}
 
 ```graphql
-httpRequests1hGroups(filter: {datetime_gt: "2018-01-01 10:00:00", datetime_lt: "2018-01-01 11:00:00"}) {
+httpRequests1hGroups(filter: {datetime_gt: "2018-01-01T10:00:00Z", datetime_lt: "2018-01-01T11:00:00Z"}) {
     ...
 }
 ```
@@ -145,19 +145,20 @@ httpRequests1hGroups(filter: {datetime_gt: "2018-01-01 10:00:00", datetime_lt: "
 ##### SQL {#004}
 
 ```sql
-WHERE (datetime > "2018-01-01 10:00:00") AND (datetime < "2018-01-01 10:00:00")
+WHERE (datetime > "2018-01-01T10:00:00Z") AND (datetime < "2018-01-01T10:00:00Z")
 ```
 
 #### Filter using the `OR` operator
 
-The following GraphQL example demonstrates using the `OR` operator in a filter. This `OR` operator filters for the value `US` or `UK` in the `clientCountryName` field.
+The following GraphQL example demonstrates using the `OR` operator in a filter. This `OR` operator filters for the value `US` or `GB` in the `clientCountryName` field.
 
 ##### GraphQL {#005}
 
 ```graphql
-httpRequests1hGroups(filter: {
-    datetime: "2018-01-01 10:00:00",
-    OR:[{clientCountryName: "US"}, {clientCountryName: "UK"}]) {
+httpRequestsAdaptiveGroups(
+        filter: {
+          datetime: "2018-01-01T10:00:00Z",
+          OR:[{clientCountryName: "US"}, {clientCountryName: "GB"}]) {
     ...
 }
 ```
@@ -165,8 +166,8 @@ httpRequests1hGroups(filter: {
 ##### SQL {#006}
 
 ```sql
-WHERE datetime="2018-01-01 10:00:00"
-  AND ((clientCountryName = "UK") OR (clientCountryName = "US"))
+WHERE datetime="2018-01-01T10:00:00Z"
+  AND ((clientCountryName = "US") OR (clientCountryName = "GB"))
 ```
 
 ### Subqueries (advanced filters)

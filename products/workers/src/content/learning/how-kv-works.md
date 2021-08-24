@@ -1,5 +1,6 @@
 ---
-order: 5
+order: 6
+pcx-content-type: concept
 ---
 
 # How KV works

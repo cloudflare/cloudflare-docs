@@ -1,5 +1,6 @@
 ---
-order: 11
+order: 13
+pcx-content-type: concept
 ---
 
 # Integrations

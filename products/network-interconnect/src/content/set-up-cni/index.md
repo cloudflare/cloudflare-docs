@@ -1,18 +1,18 @@
 ---
-title: Set up CNI
+title: CNI Setup
 order: 2
+pcx-content-type: navigation
 ---
 
-# Set up Cloudflare Network Interconnect
+# Cloudflare Network Interconnect Setup
 
-To ensure smooth integration, Cloudflare Network Interconnect setup uses the onboarding process described in these articles:
+Cloudflare Network Interconnect setup requires a few steps: onboarding, configuring the cross-connection, configuring the Cloudflare Border Gateway Protocol (BGP), and go live. The entire process from onboarding to go live typically takes 10-15 days.
 
-- _[Onboarding](/set-up-cni/onboarding)_ outlines the onboarding process, from scoping to going live, which typically takes about 10–15 business days.
+# Onboarding
 
-- _[Configuration data](/set-up-cni/configuration-data)_ defines customer data required to enable Cloudflare Network Interconnect for your organization. The configuration details will depend on which type of cross-connect you choose:
+During onboarding, Cloudflare works closely with your organization to accomplish the onboarding tasks.
 
-  - [private network interconnect](/set-up-cni/configuration-data/#private-network-interconnect)
-
-  - [virtual partner network interconnect](/set-up-cni/configuration-data/#virtual-partner-network-interconnect)
-
-  - [Internet exchange point](/set-up-cni/configuration-data/#internet-exchange-point)
+* [Scope your configuration](/set-up-cni/scope-config) (Kickoff call)
+* [Configure the network cross-connect](/set-up-cni/configure-cross-connect) (Duration: 1-2 weeks)
+* [Configure Cloudflare Border Gateway Protocol (BGP) and Generic Route Encapsulation (GRE)](/set-up-cni/configure-bgp) (Duration: ~1 week)
+* [Go live](/set-up-cni/configure-bgp#go-live) (Duration: 1-2 days)

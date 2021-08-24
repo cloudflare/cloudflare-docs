@@ -1,6 +1,6 @@
 ---
-title: Use curl to query the Analytics API
 order: 60
+pcx-content-type: interim
 ---
 
 # Use curl to query the Analytics API
@@ -33,8 +33,8 @@ Email="user@domain.com"
 back_seconds=60*60*24  # 24 hours
 end_epoch=$(date +'%s')
 let start_epoch=$end_epoch-$back_seconds
-start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%m:%SZ')
-end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%m:%SZ')
+start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%M:%SZ')
+end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%M:%SZ')
  
 PAYLOAD='{ "query":
   "query {
@@ -67,5 +67,5 @@ PAYLOAD="$PAYLOAD
 
 # Run query to GraphQL API endpoint
 
-curl -s -X POST -H "Content-Type: application/json" -H "X-Auth-Email: $Email" -H  X-Auth-Key: $global_key --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
+curl -s -X POST -H "Content-Type: application/json" -H "X-Auth-Email: $Email" -H  "X-Auth-Key: $global_key" --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
 ```

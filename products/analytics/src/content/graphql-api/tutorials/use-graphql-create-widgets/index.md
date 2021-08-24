@@ -1,18 +1,20 @@
 ---
-title: Use GraphQL to create widgets
 order: 45
+pcx-content-type: interim
 ---
 
 # Use GraphQL to create widgets
 
 This article presents examples of queries you can use to populate your own dashboard.
 
-* [Timeseries graph](#timeseries-graph)
-* [Activity log](#activity-log)
-* [Top N cards - source](#top-n-cards---source)
-* [Top N cards - destination](#top-n-cards---destination)
-* [TCP flags](#tcp-flags)
-* [Executive summary](#executive-summary)
+- [Use GraphQL to create widgets](#use-graphql-to-create-widgets)
+  - [Parameters and filters](#parameters-and-filters)
+  - [Timeseries graph](#timeseries-graph)
+  - [Activity log](#activity-log)
+  - [Top N cards - source](#top-n-cards---source)
+  - [Top N cards - destination](#top-n-cards---destination)
+  - [TCP Flags](#tcp-flags)
+  - [Executive summary](#executive-summary)
 
 Use this workflow to build and test queries:
 
