@@ -6,7 +6,8 @@ pcx-content-type: how-to
 
 # Set up your first tunnel
 
-Follow this step-by-step guide to getting your first tunnel up and running. Before you start, make sure you:
+Follow this step-by-step guide to get your first tunnel up and running. Before you start, make sure you:
+
 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 1. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 

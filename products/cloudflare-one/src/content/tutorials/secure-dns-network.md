@@ -77,6 +77,6 @@ The default toggle presented will be `Router`. Follow the instructions on the pa
 
 ## Review events
 
-Once configured, you can review DNS queries made from your network in the Gateway overview page.
+Once configured, you can review DNS queries made from your network in the **Analytics** > **Gateway** page.
 
-![Gateway Overview](../static/secure-web-gateway/secure-dns-network/gateway-overview.png)
+![Gateway Analytics](../static/secure-web-gateway/secure-dns-network/gateway-analytics.png)
