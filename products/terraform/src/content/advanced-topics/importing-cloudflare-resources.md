@@ -57,7 +57,8 @@ As mentioned, to start managing existing Cloudflare resources in Terraform, e.g.
 1. The Terraform configuration of that resource (defined in a .tf file)
 2. An accompanying Terraform state file of that resources state (defined in a .tfstate file)
 
-### 1. Generate Terraform Configuration with Cf-Terraforming
+### 1. Generate Terraform configuration with cf-terraforming
+
 If you don't have a Terraform configuration file defined, all you need is the provider blocked defined as follows:
 
 ```tf
@@ -69,7 +70,7 @@ provider 'cloudflare' {
 
 Remember to keep your credentials saved in environment variables or terraform autovars that aren't checked into your source files!
 
-We start by making a call to Cf-Terraforming to enumerate the Terraform configuration for the DNS records for the zone we want to manage with Terraform.
+We start by making a call to cf-terraforming to enumerate the Terraform configuration for the DNS records for the zone we want to manage with Terraform.
 
 Note: The below command assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
 ```
@@ -201,7 +202,7 @@ Plan: 4 to add, 0 to change, 0 to destroy.
 
 In order to fix that we will need to import the real state of those resources from Cloudflare into the Terraform state file (.tfstate) via Terraform import.
 
-### iii. Import resources into Terraform state
+### 2. Import resources into Terraform state
 
 Soon cf-terraforming will also allow you to import tfstate for the same resources you imported the configuration. For now, we use the standard Terraform `import` call to get the proper Terraform state imported. Below we import them one-by-one, specifying the name of the resource and the `zoneName/resourceID` returned by api.cloudflare.com.
 
