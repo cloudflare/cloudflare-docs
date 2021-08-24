@@ -28,7 +28,7 @@ Visit the Cloudflare for Teams dashboard. Open the `Policies` page in the Gatewa
 
 Click **Create a policy**. In the policy builder, name the policy and optionally provide a description.
 
-Choose `Domain` in the Selector, `matches regex`, in the Operator, and input the following value:
+Choose `Domain` in the Selector, `matches regex` in the Operator, and input the following value:
 
 ```
 [.]fail
