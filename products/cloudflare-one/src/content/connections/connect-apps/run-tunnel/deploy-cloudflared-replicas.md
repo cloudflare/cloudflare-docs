@@ -13,13 +13,13 @@ To deploy multiple `cloudflared` replicas:
 
 1. Run the following command:
 
-  ```sh
+  ```bash
   $ cloudflared tunnel create <NAME>
   ```
 
 1. Next, run your newly created Named Tunnel.
 
- ```sh
+ ```bash
  $ cloudflared tunnel run <NAME>
  ```
 
@@ -27,7 +27,7 @@ To deploy multiple `cloudflared` replicas:
 
 1. In a separate window, run the same command to initialize another `cloudflared` instance:
 
- ```sh
+ ```bash
  $ cloudflared tunnel run <NAME>
  ```
 
@@ -35,7 +35,7 @@ To deploy multiple `cloudflared` replicas:
 
 1. Next, run `tunnel info` to show each `cloudflared` running your tunnel:
 
- ```sh
+ ```bash
  $ cloudflared tunnel info <NAME>
  ```
 

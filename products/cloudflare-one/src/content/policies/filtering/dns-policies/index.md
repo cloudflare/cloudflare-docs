@@ -1,6 +1,7 @@
 ---
 order: 2
 pcx-content-type: concept
+hidden: true
 ---
 
 # DNS policies

@@ -39,26 +39,52 @@ Your Allow policy is now displayed in the list of HTTP rules. When an end user a
 
 This section covers policy configurations for common SaaS applications. 
 
-## Dropbox
+### Microsoft 365
 
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | Dropbox | Allow | `X-Dropbox-allowed-Team-Ids` |
-
-## G Suite
-
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | Google Workspace | Allow | `X-GooGApps-Allowed-Domains` |
-
-## Microsoft 365
+<TableWrap>
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | Microsoft Office365 | Allow | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
 
-## YouTube
+</TableWrap>
+
+### Slack
+
+<TableWrap>
+
+| Selector | Operator | Value | Action | Header name |
+| -- | -- | -- | -- | -- |
+| Application | In | Slack | Allow | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` | 
+
+</TableWrap>
+
+### G Suite
+
+<TableWrap>
+
+| Selector | Operator | Value | Action | Header name |
+| -- | -- | -- | -- | -- |
+| Application | In | Google Workspace | Allow | `X-GooGApps-Allowed-Domains` |
+
+</TableWrap>
+
+### Dropbox
+
+<TableWrap>
+
+| Selector | Operator | Value | Action | Header name |
+| -- | -- | -- | -- | -- |
+| Application | In | Dropbox | Allow | `X-Dropbox-allowed-Team-Ids` |
+
+</TableWrap>
+
+### YouTube
+
+<TableWrap>
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | YouTube | Allow | `YouTube-Restrict` |
+
+</TableWrap>

@@ -114,10 +114,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Zero Trust policies](/policies/zero-trust).
 
-<Aside>
-
-If you closed the Add Relying Trust wizard, use Explorer to find the <strong>Relying Party Trusts</strong> folder, select the newly created RPT file, and click <strong>Edit Claim Rules</strong> the <strong>Action\*/</strong> sidebar.
-</Aside>
+If you closed the Add Relying Trust wizard, use Explorer to find the **Relying Party Trusts** folder, select the newly created RPT file, and click **Edit Claim Rules** in the **Action** sidebar.
 
 To create Claim Rules:
 

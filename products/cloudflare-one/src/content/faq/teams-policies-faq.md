@@ -20,7 +20,7 @@ Wildcard-based policies in Cloudflare Access only cover the level where they are
 
 ## Can I use regular expressions to build policies?
 
-You can use wildcards when setting up Zero Trust policies. Wildcards are useful when specifying application paths you want to protect. For more information, see our guide for [Using wildcards in subdomains and path](/applications/configure-apps/app-paths#using-wildcards-in-subdomains-and-paths).
+You can use wildcards when setting up Zero Trust policies. Wildcards are useful when specifying application paths you want to protect. For more information, see our guide for [Using wildcards in subdomains and path](/policies/zero-trust/app-paths#using-wildcards-in-subdomains-and-paths).
 
 Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. For example, if you want to match multiple domains, you could use the pipe symbol (`|`) as an OR operator. In Gateway, you do not need to use an escape character (`\`) before the pipe symbol. Let's say you want to block requests to two hosts if either appears in a request header. A regex for such a rule would look like this:
 
