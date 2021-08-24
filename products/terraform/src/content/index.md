@@ -4,8 +4,6 @@ order: 0
 pcx-content-type: landing-page
 ---
 
-<ContentColumn>
-
 # Cloudflare Terraform
 
 Configure Cloudflare using HashiCorp's “Infrastructure as Code” tool, Terraform.
@@ -23,5 +21,3 @@ See [Installing Terraform](/installing/).
 ## Issues
 
 Report Terraform config issues via [GitHub](https://github.com/cloudflare/terraform-provider-cloudflare/issues/new/choose).
-
-</ContentColumn>
