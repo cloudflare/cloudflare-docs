@@ -5,7 +5,13 @@ order: 5
 
 # DDoS L3/4 Attack Mitigation
 
-Cloudflare provides protection against DDoS L3/4 attacks through several mitigation systems and rules. The L3/4 DDoS Managed Ruleset contains a subset of these rules. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
+<Aside type="warning">
+
+The Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
+
+</Aside>
+
+Cloudflare provides protection against DDoS L3/4 attacks through several mitigation systems and rules. The L3/4 DDoS Managed Ruleset contains a subset of these rules, and you can adjust rule behavior according to your requirements.
 
 ---
 
@@ -21,7 +27,7 @@ The Cloudflare L3/4 DDoS Managed Ruleset is always enabled — you can only cust
 
 <Aside type="warning">
 
-The custom configuration of the Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers. Currently, you can only configure this Managed Ruleset via API.
+Currently, you can only configure the Cloudflare L3/4 DDoS Managed Ruleset via API.
 
 </Aside>
 
@@ -40,4 +46,4 @@ By default, your specific configurations (or overrides) apply to all requests, s
 
 ## Availability
 
-The L3/4 DDoS protection provided by Cloudflare is available to all customers. The custom configuration of the Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
+The Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
