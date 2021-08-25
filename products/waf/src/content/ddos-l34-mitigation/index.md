@@ -3,7 +3,7 @@ pcx-content-type: concept
 order: 5
 ---
 
-# DDoS L3/4 Attack Mitigation
+# L3/4 DDoS Attack Mitigation
 
 <Aside type="warning">
 
@@ -11,7 +11,7 @@ The Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic T
 
 </Aside>
 
-Cloudflare provides protection against DDoS L3/4 attacks through several mitigation systems and rules. The L3/4 DDoS Managed Ruleset contains a subset of these rules, and you can adjust rule behavior according to your requirements.
+Cloudflare provides protection against L3/4 DDoS attacks through several mitigation systems and rules. The L3/4 DDoS Managed Ruleset contains a subset of these rules, and you can adjust rule behavior according to your requirements.
 
 ---
 
