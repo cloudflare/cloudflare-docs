@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: how-to
 ---
 
-# Tunnel modes
+# Run a tunnel
 
 | Before you start |
 |---|
