@@ -28,7 +28,7 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 
 * All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
 * All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
-* The rule with ID `{rule-id}` will use the `block` action.
+* The rule with ID `{mr-rule-id}` will use the `block` action.
 
 ```json
 curl -X PUT \
@@ -53,7 +53,7 @@ curl -X PUT \
           ],
           "rules": [
             {
-              "id": "{rule-id}",
+              "id": "{mr-rule-id}",
               "action": "block"
             }
           ]
@@ -77,7 +77,7 @@ The response returns the created (or updated) phase ruleset.
     "version": "1",
     "rules": [
       {
-        "id": "{overridden-rule-id}",
+        "id": "{rule-id}",
         "version": "1",
         "action": "execute",
         "action_parameters": {
@@ -93,7 +93,7 @@ The response returns the created (or updated) phase ruleset.
             ],
             "rules": [
               {
-                "id": "{rule-id}",
+                "id": "{mr-rule-id}",
                 "action": "block"
               }
             ],
@@ -102,7 +102,7 @@ The response returns the created (or updated) phase ruleset.
         },
         "expression": "true",
         "last_updated": "2021-06-16T04:14:47.977741Z",
-        "ref": "{overridden-rule-ref}",
+        "ref": "{rule-ref}",
         "enabled": true
       }
     ],
