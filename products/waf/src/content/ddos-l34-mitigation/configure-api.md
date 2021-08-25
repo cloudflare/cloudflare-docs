@@ -32,7 +32,7 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * All rules tagged with the tag `{tag-name}` will have their sensitivity set to `low`.
 * The rule with ID `{rule-id}` will use the `block` action.
 
-The overrides apply to all packets matching the rule expression: `ip.dst == 93.184.216.34`.
+The overrides apply to all packets matching the rule expression: `ip.dst in { 1.1.1.0/24 }`.
 
 ```json
 curl -X PUT \
@@ -44,7 +44,7 @@ curl -X PUT \
   "rules": [
     {
       "action": "execute",
-      "expression": "ip.dst == 93.184.216.34",
+      "expression": "ip.dst in { 1.1.1.0/24 }",
       "action_parameters": {
         "id": "{l34-managed-ruleset-id}",
         "overrides": {
@@ -102,7 +102,7 @@ The response returns the created (or updated) phase entry point ruleset.
             "sensitivity_level": "medium"
           }
         },
-        "expression": "ip.dst == 93.184.216.34",
+        "expression": "ip.dst in { 1.1.1.0/24 }",
         "last_updated": "2021-08-16T04:14:47.977741Z",
         "ref": "{overridden-rule-ref}",
         "enabled": true
