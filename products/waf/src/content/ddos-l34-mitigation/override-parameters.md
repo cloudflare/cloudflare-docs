@@ -27,7 +27,7 @@ The action performed for requests that match specific rules of Cloudflare's DDoS
 
 - **DDoS Dynamic**
     - API value: _N/A_ (internal rule action that you cannot use in overrides).
-    - Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be one of the above or an undisclosed mitigation action.
+    - Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be _Block_ or an undisclosed mitigation action.
 
 </Definitions>
 
@@ -39,9 +39,9 @@ Defines how sensitive a rule is. Affects the thresholds used to determine if an 
 
 The available sensitivity levels are:
 
-UI value          | API value
-------------------|----------
-_High_            | `"default"`
-_Medium_          | `"medium"`
-_Low_             | `"low"`
-_Essentially Off_ | `"eoff"`
+Sensitivity     | API value
+----------------|----------
+High            | `"default"`
+Medium          | `"medium"`
+Low             | `"low"`
+Essentially Off | `"eoff"`
