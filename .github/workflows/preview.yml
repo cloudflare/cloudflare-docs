@@ -37,11 +37,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
-
-      - name: Feed files into node scrips
-        run: |
-          echo The current working directory is: $PWD
-          echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js
       - name: Get PR number
         env:
           PRNUMBER: ${{ steps.filter.outputs.products == 'true' && format(github.event.number) || '0' }}
@@ -105,6 +100,7 @@ jobs:
               [env.preview]
               name = \"pr-$prnumber\"
               type = \"webpack\"
+              route = \"https://pr-$prnumber.cloudflare-docs.workers.dev/*\"
               account_id = \"b54f07a6c269ecca2fa60f1ae4920c99\"
               workers_dev = \"true\" " >> wrangler.toml 
               wrangler publish -e $ENVIRONMENT
@@ -119,7 +115,6 @@ jobs:
               [env.preview]
               name = \"pr-$prnumber-$tile\"
               type = \"webpack\"
-              route = \"https://pr-$prnumber.cloudflare-docs.workers.dev/$tile*\"
               account_id = \"b54f07a6c269ecca2fa60f1ae4920c99\"
               workers_dev = \"true\" " >> wrangler.toml 
               wrangler publish -e $ENVIRONMENT
@@ -146,7 +141,7 @@ jobs:
               CURR_URL=${BASE_URL}
               MESSAGE="${MESSAGE}- ${CURR_URL}%0A"
             else
-              CURR_URL=${BASE_URL}
+              CURR_URL="https://pr-${PR}-${tile}.${SUBDOMAIN}"
               MESSAGE="${MESSAGE}- ${CURR_URL}/${tile}%0A"
             fi
           done < <(echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js)

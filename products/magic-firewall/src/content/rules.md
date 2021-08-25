@@ -4,7 +4,7 @@ order:  2
 pcx-content-type: how-to
 ---
 
-# Rules.
+# Rules
 
 You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](https://api.cloudflare.com/#account-rulesets-properties). If you are a new Magic Transit customer, you may not have a root ruleset created for your account.
 

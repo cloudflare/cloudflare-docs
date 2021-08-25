@@ -8,7 +8,7 @@ order: 2
 
 Transform Rules allow you to adjust the URI path, query string, and HTTP headers of incoming requests at the edge.
 
-There are two types of Transform Rules:
+There are two types of Transform Rules :
 
 * URL Rewrite Rules:
 
