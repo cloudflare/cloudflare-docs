@@ -27,7 +27,7 @@ The Cloudflare HTTP DDoS Managed Ruleset is always enabled — you cannot disabl
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Managed Ruleset. These overrides are the following:
 
 * All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
-* All rules tagged with the category `{category-name}` will have a sensitivity level of `low`.
+* All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
 * The rule with ID `{rule-id}` will use the `block` action.
 
 ```json
@@ -87,7 +87,7 @@ The response returns the created (or updated) phase ruleset.
             "action": "challenge",
             "categories": [
               {
-                "category": "{category-name}",
+                "category": "{tag-name}",
                 "sensitivity_level": "low"
               }
             ],
