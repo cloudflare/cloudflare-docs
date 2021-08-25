@@ -23,7 +23,7 @@ The action performed for packets that match specific rules of Cloudflare's DDoS 
 
 - **Block**
     - API value: `"block"`.
-    - Blocks IP packets that match the rule expression.
+    - Blocks IP packets that match the rule expression given the sensitivity levels.
 
 - **DDoS Dynamic**
     - API value: _N/A_ (internal rule action that you cannot use in overrides).
