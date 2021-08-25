@@ -5,13 +5,13 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
-
-<TutorialsBeforeYouStart/>
-
 # Use Workers KV directly from Rust
 
 In this tutorial, you will learn how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
+
+import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+
+<TutorialsBeforeYouStart/>
 
 ## Basic Project Scaffolding
 
@@ -93,7 +93,7 @@ async function handleRequest(request) {
 }
 ```
 
-Note that the signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JS side. This tutorial will try to do as much as possible in Rust and pass the request directly to the wasm handler, which will then construct and return a response. To do this, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features (the `Url` and `UrlSearchParams` features will be used later in this tutorial):
+Note that the signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side. This tutorial will try to do as much as possible in Rust and pass the request directly to the wasm handler, which will then construct and return a response. To do this, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features (the `Url` and `UrlSearchParams` features will be used later in this tutorial):
 
 ```toml
 ---
@@ -146,7 +146,7 @@ pub fn handle(kv: JsValue, req: JsValue) -> Result<Response, JsValue> {
 
 ## Bind to KV using `wasm_bindgen`
 
-You are now ready to create a type binding using `wasm_bindgen` to access the KV object. Since the KV API returns JS promises, you must first add `wasm-bindgen-futures` and `js-sys` as dependencies:
+You are now ready to create a type binding using `wasm_bindgen` to access the KV object. Since the KV API returns JavaScript promises, you must first add `wasm-bindgen-futures` and `js-sys` as dependencies:
 
 ```toml
 ---
@@ -264,7 +264,7 @@ The above wrapper only exposes a subset of the options supported by the KV API, 
 
 ## Using the wrapper
 
-You are now ready to use the wrapper to get and put values from and to our KV namespace. The following function is a simple example handler that writes the key `foo` with the value `bar` to KV, if a `PUT` request is made to `/foo?value=bar`, and reads and returns the value of key `foo` from KV, if a `GET` request is made to `/foo`. Note that `handle` is now asynchronous, and that we are using the `Url` and `UrlSearchParams` features that we declared earlier in `Cargo.toml`:
+You are now ready to use the wrapper to get and put values from and to our KV namespace. The following function is a simple example handler that writes the key `foo` with the value `bar` to KV, if a `PUT` request is made to `/foo?value=bar`, and reads and returns the value of key `foo` from KV, if a `GET` request is made to `/foo`. Note that `handle` is now asynchronous, and that you will be using the `Url` and `UrlSearchParams` features that you declared earlier in `Cargo.toml`:
 
 ```rust
 ---

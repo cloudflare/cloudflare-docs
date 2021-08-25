@@ -1,6 +1,6 @@
 ---
-title: Assign tunel properties
-order: 5
+title: Create static routes
+order: 
 pcx-content-type: how-to
 ---
 
