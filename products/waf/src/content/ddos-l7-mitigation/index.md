@@ -3,9 +3,9 @@ pcx-content-type: concept
 order: 4
 ---
 
-# DDoS L7 Attack Mitigation
+# L7 DDoS Attack Mitigation
 
-Cloudflare provides protection against DDoS L7 attacks through several mitigation systems and rules. The HTTP DDoS Managed Ruleset contains a subset of these rules. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
+Cloudflare provides protection against layer 7 DDoS attacks through several mitigation systems and rules. The HTTP DDoS Managed Ruleset contains a subset of these rules. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
 
 ---
 
@@ -21,7 +21,7 @@ The Cloudflare HTTP DDoS Managed Ruleset is a set of pre-configured rules used t
 
 Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
-The Cloudflare HTTP DDoS Managed Ruleset provides users with increased observability into layer 7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of layer 7 DDoS attacks detected for a specific zone.
+The Cloudflare HTTP DDoS Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
 
 ### Ruleset configuration
 
