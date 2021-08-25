@@ -1,6 +1,6 @@
 ---
 title: Always Online
-order: 2
+order: 
 pcx-content-type: concept
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Create Edge Cache TTL page rules
-order: 10
+order: 
 pcx-content-type: tutorial
 ---
 

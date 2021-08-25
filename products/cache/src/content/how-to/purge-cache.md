@@ -1,6 +1,6 @@
 ---
 title: Purge cache
-order: 12
+order: 
 pcx-content-type: concept
 ---
 
