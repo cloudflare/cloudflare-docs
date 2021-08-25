@@ -3,7 +3,7 @@ order: 3
 pcx-content-type: how-to
 ---
 
-# Install the Cloudflare root certificate
+# Install the Cloudflare certificate
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
@@ -25,21 +25,8 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 
 ## Add the certificate to your system
 
-<Aside header='Setting up certificate authorities (CAs) in Firefox'>
-
-If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox). 
-
-</Aside>
-
 ### MacOS
 
-On MacOS, you can choose to install the Cloudflare root certificate with three different methods:
-
-* [Keychain](#keychain)
-* [Base Operating System](#base-operating-system)
-* [Python](#python-on-mac)
-
-#### Keychain
 You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
 
 | Keychain   | Impact                  |
@@ -96,43 +83,6 @@ You can install the Cloudflare certificate on your terminal, too.
 sudo cat Cloudflare_CA.crt >> /usr/local/etc/openssl/cert.pem
  ```
 
-#### Python on Mac
-
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
-
-1. Install the `certifi` package.
-
- ```bash
- pip install certifi
- ```
-
-1. Identify the CA store by running:
-
- ```bash
-python -m certifi
- ```
-
-1. This will output:
-
- ```
- ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
- ```
-
-1. Append the Cloudflare certificate to this CA Store by running:
-
- ```bash
- cat Cloudflare_CA.crt >> $(python -m certifi)
- ```
-
-1. If needed, configure system variables to point to this CA Store by running:
-
- ```
- export CERT_PATH=$(python -m certifi)
- export SSL_CERT_FILE=${CERT_PATH}
- export REQUESTS_CA_BUNDLE=${CERT_PATH}
- ```
-
-
 ### iOS
 
 1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
@@ -173,13 +123,6 @@ The root certificate is now installed and ready to be used.
 
 ### Windows
 
-On Windows machines, you can choose to install the Cloudflare root certificate with three different methods:
-* [Standard](#standard)
-* [GIT](#git)
-* [Python](#python-on-windows)
-
-#### Standard 
-
 Windows offers two options to install the certificate, each having a different impact on which users will be affected by trusting the root certificate.
 
 | Store Location      | Impact                  |
@@ -214,70 +157,6 @@ Windows offers two options to install the certificate, each having a different i
 ![Windows cert install complete](../../../static/documentation/connections/windows_cert_install_finished.png)
 
 The root certificate is now installed and ready to be used.
-
-#### GIT
-
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
-1. Open Powershell.
-1. Run the following command:
-
- ```git
- git config -l
-  ```
-1. This will output:
-
- ```
- core.symlinks=false
- core.autocrlf=true
- core.fscache=true
- color.diff=auto
- color.status=auto
- color.branch=auto
- color.interactive=true
- help.format=html
- rebase.autosquash=true
- http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
- http.sslbackend=openssl
- diff.astextplain.textconv=astextplain
- filter.lfs.clean=git-lfs clean -- %f
- filter.lfs.smudge=git-lfs smudge -- %f
- filter.lfs.process=git-lfs filter-process
- filter.lfs.required=true
- credential.helper=manager
- ```
-1. The `http.sslcainfo` defines the CA Certificate store. Update this to append the Cloudflare certificate to the CA bundle by running this command:
-
- <Aside>
- You need to be an administrator to run this command.
- </Aside>
-
- ```git
- gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
- ```
-
-#### Python on Windows
-
-The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation). 
-
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
-
-1. Run the following command to update the bundle to include the Cloudflare certificate:
-
- ```
- gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
- ```
-
-#### npm on Windows
-
-To use npm on Windows:
-
-1. Install the Cloudflare certificate through Windows Certificate Manager (See Standard above)
-1. Open Powershell
-1. Run the following command
-
-```
-npm config set cafile Cert:\CurrentUser\Root
-```
 
 ### Android
 
@@ -355,13 +234,125 @@ The root certificate is now installed and ready to be used.
 
 ![Name the certificate with anything](../../../static/documentation/connections/chromeOS8_cert.png)
 
-<Aside>
+## Adding to Applications
 
-Common dev tools provide the option to trust root certificates. To trust the Cloudflare root certificate, run the following command and update it with the location for your Cloudflare root certificate:
+Some packages, development tools, and other applications provide options to trust root certificates that will allow for the traffic inspection features of Gateway to work without breaking the application.
+
+All of the applications below first require downloading the Cloudflare certificate with the instructions above. On Mac, the default path is `/Library/Keychains/System.keychain Cloudflare_CA.crt`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
+
+### Firefox
+
+If your organization is using Firefox, the browser may need additional configuration to recognize the Cloudflare certificate. There are several ways you can add your Cloudflare certificate to Firefox. For more detailed instructions, see this [Mozilla support article](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox).
+
+### Python
+
+#### Python on Windows
+
+The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation). 
+
+1. Run the following command to update the bundle to include the Cloudflare certificate:
+
+```
+gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
+```
+
+#### Python on Mac
+
+1. Install the `certifi` package.
+
+```bash
+pip install certifi
+```
+
+1. Identify the CA store by running:
+
+```bash
+python -m certifi
+```
+
+1. This will output:
+
+```
+~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
+```
+
+1. Append the Cloudflare certificate to this CA Store by running:
+
+```bash
+cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
+```
+
+1. If needed, configure system variables to point to this CA Store by running:
+
+```
+export CERT_PATH=$(python -m certifi)
+export SSL_CERT_FILE=${CERT_PATH}
+export REQUESTS_CA_BUNDLE=${CERT_PATH}
+```
+
+### Git
+
+#### Git on Windows
+
+1. Open Powershell.
+
+1. Run the following command:
+
+ ```git
+ git config -l
+  ```
+
+1. This will output:
 
  ```
-  pip install --cert=/usr/local/share/ca-certificates/mycert.pem
+ core.symlinks=false
+ core.autocrlf=true
+ core.fscache=true
+ color.diff=auto
+ color.status=auto
+ color.branch=auto
+ color.interactive=true
+ help.format=html
+ rebase.autosquash=true
+ http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+ http.sslbackend=openssl
+ diff.astextplain.textconv=astextplain
+ filter.lfs.clean=git-lfs clean -- %f
+ filter.lfs.smudge=git-lfs smudge -- %f
+ filter.lfs.process=git-lfs filter-process
+ filter.lfs.required=true
+ credential.helper=manager
  ```
-If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate.
+1. The `http.sslcainfo` defines the CA Certificate store. Update this to append the Cloudflare certificate to the CA bundle by running this command:
 
-</Aside>
+ ```git
+ gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
+ ```
+
+ #### Git on Mac
+
+ 1. Configure Git to trust the Cloudflare certificate with the following command.
+
+ ```
+ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
+```
+
+### npm
+
+The command below will set the `cafile` configuration to use the Cloudflare certificate.
+
+```
+npm config set cafile [PATH_TO_CLOUDFLARE_CERT]
+```
+
+### Google Cloud SDK
+
+The command below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
+
+```
+gcloud config set core/custom_ca_certs_file [PATH_TO_CLOUDFLARE_CERT]
+```
+
+### AWS CLI
+
+If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
