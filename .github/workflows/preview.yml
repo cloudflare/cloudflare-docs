@@ -117,7 +117,7 @@ jobs:
               fi
               echo "
               [env.preview]
-              name = \"pr-$prnumber\"
+              name = \"pr-$prnumber-$tile\"
               type = \"webpack\"
               route = \"https://pr-$prnumber.cloudflare-docs.workers.dev/$tile*\"
               account_id = \"b54f07a6c269ecca2fa60f1ae4920c99\"
