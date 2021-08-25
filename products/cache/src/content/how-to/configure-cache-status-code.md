@@ -1,6 +1,5 @@
 ---
 title: Configure cache by status code
-order:
 pcx-content-type: how-to
 ---
 

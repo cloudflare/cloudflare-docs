@@ -1,6 +1,5 @@
 ---
 title: Default cache behavior
-order: 
 pcx-content-type: concept
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: Activate Polish
-order: 
 pcx-content-type: concept
 ---
 

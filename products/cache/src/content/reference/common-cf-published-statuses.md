@@ -1,6 +1,5 @@
 ---
 title: Common Cf-Polished statuses
-order: 
 pcx-content-type: navigation
 ---
 

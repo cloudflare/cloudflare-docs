@@ -1,6 +1,5 @@
 ---
 title: Development Mode
-order: 
 pcx-content-type: how-to
 ---
 
