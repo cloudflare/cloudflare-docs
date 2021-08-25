@@ -19,8 +19,6 @@ Cloudflare provides protection against L3/4 DDoS attacks through several mitigat
 
 The Cloudflare L3/4 DDoS Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at levels 3 and 4 of the OSI model. Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
-This Managed Ruleset provides users with increased observability into L3/4 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Network Analytics dashboard, available from your Cloudflare account home, will display additional information on the types of layer 3/4 DDoS attacks detected for your account.
-
 The Cloudflare L3/4 DDoS Managed Ruleset is always enabled — you can only customize its behavior.
 
 ### Ruleset configuration
