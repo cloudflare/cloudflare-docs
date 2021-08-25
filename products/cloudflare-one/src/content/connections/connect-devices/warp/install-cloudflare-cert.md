@@ -267,6 +267,18 @@ The command to install the certificate with Python on Windows automatically incl
  gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
  ```
 
+#### npm on Windows
+
+To use npm on Windows:
+
+1. Install the Cloudflare certificate through Windows Certificate Manager (See Standard above)
+1. Open Powershell
+1. Run the following command
+
+```
+npm config set cafile Cert:\CurrentUser\Root
+```
+
 ### Android
 
 1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
