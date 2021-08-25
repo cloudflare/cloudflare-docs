@@ -23,3 +23,5 @@ You can use the following fields in override expressions for the L3/4 DDoS Manag
 * `tcp.flags.urg`
 * `udp.srcport`
 * `udp.dstport`
+
+Refer to [Fields](https://developers.cloudflare.com/firewall/cf-firewall-language/fields) in the Firewall Rules language documentation for more information.
