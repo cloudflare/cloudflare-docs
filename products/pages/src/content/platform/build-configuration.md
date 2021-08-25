@@ -21,30 +21,31 @@ If you are not using a framework, you may input `exit 0` into the **Build comman
 
 <TableWrap>
 
-| Framework/tool               | Build command                       | Build output directory      |
-| ---------------------------- | ----------------------------------- | --------------------------- |
-| Angular (Angular CLI)        | `ng build`                          | `dist`                      |
-| Brunch                       | `brunch build --production`         | `public`                    |
-| Docusaurus                   | `npm run build`                     | `build`                     |
-| Eleventy                     | `eleventy`                          | `_site`                     |
-| Ember.js                     | `ember build`                       | `dist`                      |
-| Expo                         | `expo build:web`                    | `web-build`                 |
-| Gatsby                       | `gatsby build`                      | `public`                    |
-| GitBook                      | `gitbook build`                     | `_book`                     |
-| Gridsome                     | `gridsome build`                    | `dist`                      |
-| Hugo                         | `hugo`                              | `public`                    |
-| Jekyll                       | `jekyll build`                      | `_site`                     |
-| Mkdocs                       | `mkdocs build`                      | `site`                      |
-| Next.js (Static HTML Export) | `next build && next export`         | `out`                       |
-| Nuxt.js                      | `nuxt generate`                     | `dist`                      |
-| Pelican                      | `pelican $content [-s settings.py]` | `output`                    |
-| React (create-react-app)     | `npm run build`                     | `build`                     |
-| React Static                 | `react-static build`                | `dist`                      |
-| Slate                        | `./deploy.sh`                       | `build`                     |
-| Svelte                       | `npm run build`                     | `public`                    |
-| Umi                          | `umi build`                         | `dist`                      |
-| Vue                          | `npm run build`                     | `public`                    |
-| VuePress                     | `vuepress build $directory`         | `$directory/.vuepress/dist` |
+| Framework/tool               | Build command                        | Build directory             |
+| ---------------------------- | ------------------------------------ | --------------------------- |
+| Angular (Angular CLI)        | `ng build`                           | `dist`                      |
+| Brunch                       | `brunch build --production`          | `public`                    |
+| Docusaurus                   | `npm run build`                      | `build`                     |
+| Eleventy                     | `eleventy`                           | `_site`                     |
+| Ember.js                     | `ember build`                        | `dist`                      |
+| Expo                         | `expo build:web`                     | `web-build`                 |
+| Gatsby                       | `gatsby build`                       | `public`                    |
+| GitBook                      | `gitbook build`                      | `_book`                     |
+| Gridsome                     | `gridsome build`                     | `dist`                      |
+| Hugo                         | `hugo`                               | `public`                    |
+| Jekyll                       | `jekyll build`                       | `_site`                     |
+| Jigsaw                       | `vendor/bin/jigsaw build production` | `build_production`          |
+| Mkdocs                       | `mkdocs build`                       | `site`                      |
+| Next.js (Static HTML Export) | `next build && next export`          | `out`                       |
+| Nuxt.js                      | `nuxt generate`                      | `dist`                      |
+| Pelican                      | `pelican $content [-s settings.py]`  | `output`                    |
+| React (create-react-app)     | `npm run build`                      | `build`                     |
+| React Static                 | `react-static build`                 | `dist`                      |
+| Slate                        | `./deploy.sh`                        | `build`                     |
+| Svelte                       | `npm run build`                      | `public`                    |
+| Umi                          | `umi build`                          | `dist`                      |
+| Vue                          | `npm run build`                      | `public`                    |
+| VuePress                     | `vuepress build $directory`          | `$directory/.vuepress/dist` |
 
 </TableWrap>
 
