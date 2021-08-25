@@ -1,15 +1,9 @@
 ---
 pcx-content-type: concept
-order: 4
+order: 5
 ---
 
 # DDoS L3/4 Attack Mitigation
-
-<Aside type="note">
-
-This feature is available in early access to Magic Transit and Spectrum Enterprise customers.
-
-</Aside>
 
 Cloudflare provides protection against DDoS L3/4 attacks through several mitigation systems and rules. The L3/4 DDoS Managed Ruleset contains a subset of these rules. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
 
@@ -21,17 +15,13 @@ The Cloudflare L3/4 DDoS Managed Ruleset is a set of pre-configured rules used t
 
 This Managed Ruleset provides users with increased observability into L3/4 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Network Analytics dashboard, available from your Cloudflare account home, will display additional information on the types of layer 3/4 DDoS attacks detected for your account.
 
-<Aside type='note'>
-
 The Cloudflare L3/4 DDoS Managed Ruleset is always enabled — you can only customize its behavior.
-
-</Aside>
 
 ### Ruleset configuration
 
 <Aside type="warning">
 
-Currently, you can only configure the Cloudflare L3/4 DDoS Managed Ruleset via API.
+The custom configuration of the Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers. Currently, you can only configure this Managed Ruleset via API.
 
 </Aside>
 
@@ -44,14 +34,10 @@ Adjust the behavior of the rules in the Managed Ruleset by modifying the followi
 
 To adjust rule behavior, [configure overrides via API](/ddos-l34-mitigation/configure-api).
 
-<Aside type="note">
-
 You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/ddos-l34-mitigation/override-parameters) for more information.
 
-</Aside>
-
-By default, your specific configurations (or overrides) apply to all requests, since the default override expression is `true`. Specify a different override expression to match a subset of incoming requests for which you want to apply a specific configuration. Refer to [Available expression fields](/ddos-l34-mitigation/fields) for more information on the available fields for override expressions.
+By default, your specific configurations (or overrides) apply to all requests, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming requests for which you want to apply the override. Refer to [Available expression fields](/ddos-l34-mitigation/fields) for more information on the available fields for expressions of L3/4 DDoS Managed Ruleset overrides.
 
 ## Availability
 
-The Cloudflare L3/4 DDoS feature is available in early access to Magic Transit and Spectrum Enterprise customers.
+The L3/4 DDoS protection provided by Cloudflare is available to all customers. The custom configuration of the Cloudflare L3/4 DDoS Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
