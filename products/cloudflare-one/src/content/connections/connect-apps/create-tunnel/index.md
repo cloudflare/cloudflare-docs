@@ -1,6 +1,7 @@
 ---
 order: 3
 pcx-content-type: how-to
+hidden: true
 ---
 
 # Create a Tunnel

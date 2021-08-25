@@ -1,7 +1,6 @@
 ---
-order: 11
+order: 1
 pcx-content-type: reference
-hidden: true
 ---
 
 # Ingress rules

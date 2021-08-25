@@ -27,23 +27,6 @@ Replace the path in the example with the specifics of your Downloads directory:
 PS C:\Users\Administrator\Downloads\cloudflared-stable-windows-amd64> .\cloudflared.exe --version
 ```
 
-### Build from source
-
-You can also build the latest version of `cloudflared` from source with the following steps:
-
-```bash
-$ git clone https://github.com/cloudflare/cloudflared.git
-$ cd cloudflared
-$ make cloudflared
-$ go install github.com/cloudflare/cloudflared/cmd/cloudflared
-```
-
-Depending on where you installed `cloudflared`, you can move it to a known path as well.
-
-```bash
-mv /root/cloudflared/cloudflared /usr/bin/cloudflared
-```
-
 </div>
 </details>
 
@@ -84,7 +67,12 @@ Use the rpm package manager to install `cloudflared` on compatible machines. `am
 wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm
 ```
 
-### Build from source
+</div>
+</details>
+
+<details>
+<summary>Build from source</summary>
+<div>
 
 You can also build the latest version of `cloudflared` from source with the following steps.
 
@@ -166,6 +154,14 @@ $ cloudflared tunnel route ip show
 ## 6. Run the tunnel 
 
 Run the tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. 
+
+**If you’re connecting an application**
+
+```bash
+$ cloudflared tunnel route ip add <IP/CIDR>/<UUID or NAME>
+```
+
+**If you’re connecting a network**
 
 ```bash
 $ cloudflared tunnel --config path/config.yaml run <UUID or NAME>
