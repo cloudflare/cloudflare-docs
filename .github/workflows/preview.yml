@@ -42,19 +42,10 @@ jobs:
         run: |
           echo The current working directory is: $PWD
           echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js
-          
-      - name: Define MYHOME folder
-        run: |
-          echo "MYHOME=$(echo $HOME)" >> $GITHUB_ENV
-          echo $MYHOME
       - name: Get PR number
         env:
           PRNUMBER: ${{ steps.filter.outputs.products == 'true' && format(github.event.number) || '0' }}
         run: echo "pr_number=${{ env.PRNUMBER }}" >> $GITHUB_ENV
-      - name: RETURN VALUES FROM files
-        if: ${{ env.pr_number != '0' }}
-        run: |
-          node ./get-products-from-file-paths.js
       - name: Checkout changes
         if: ${{ env.pr_number != '0' }}
         uses: actions/checkout@v2
@@ -110,7 +101,13 @@ jobs:
                 cp wrangler.toml ${GITHUB_WORKSPACE}/
                 COPIED=true
               fi
-              wrangler publish
+              echo "
+              [env.preview]
+              name = \"pr-$prnumber\"
+              type = \"webpack\"
+              account_id = \"b54f07a6c269ecca2fa60f1ae4920c99\"
+              workers_dev = \"true\" " >> wrangler.toml 
+              wrangler publish -e $ENVIRONMENT
               popd
             else
               pushd products/$tile
@@ -122,6 +119,7 @@ jobs:
               [env.preview]
               name = \"pr-$prnumber\"
               type = \"webpack\"
+              route = \"https://pr-$prnumber.cloudflare-docs.workers.dev/$tile*\"
               account_id = \"b54f07a6c269ecca2fa60f1ae4920c99\"
               workers_dev = \"true\" " >> wrangler.toml 
               wrangler publish -e $ENVIRONMENT
@@ -145,7 +143,7 @@ jobs:
           MESSAGE="[Previewer] Preview up to commit \`${SHA::7}\` available at the following URIs:%0A"
           while read tile; do
             if [ $tile == "developers.cloudflare.com" ]; then
-              CURR_URL="https://developers-cloudflare-com.${SUBDOMAIN}"
+              CURR_URL=${BASE_URL}
               MESSAGE="${MESSAGE}- ${CURR_URL}%0A"
             else
               CURR_URL=${BASE_URL}
