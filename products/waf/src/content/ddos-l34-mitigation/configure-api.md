@@ -20,6 +20,8 @@ When configuring the Cloudflare HTTP L3/4 Managed Ruleset, use overrides to defi
 
 The Cloudflare HTTP L3/4 Managed Ruleset is always enabled. You cannot disable its rules using an override with `"enabled": false`.
 
+You can only define overrides for the Cloudflare HTTP L3/4 Managed Ruleset at the account level.
+
 </Aside>
 
 ## Example
@@ -30,16 +32,19 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * All rules tagged with the tag `{tag-name}` will have their sensitivity set to `low`.
 * The rule with ID `{rule-id}` will use the `block` action.
 
+The overrides apply to all requests matching the rule expression: `ip.dst == 93.184.216.34`.
+
 ```json
 curl -X PUT \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED"
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/ddos_l4/entrypoint" \
 -d '{
-  "description": "Execute Cloudflare HTTP L3/4 Managed Ruleset on my account-level phase entry point ruleset",
+  "description": "Define overrides for the Cloudflare HTTP L3/4 Managed Ruleset",
   "rules": [
     {
       "action": "execute",
+      "expression": "ip.dst == 93.184.216.34",
       "action_parameters": {
         "id": "{l34-managed-ruleset-id}",
         "overrides": {
@@ -57,8 +62,7 @@ curl -X PUT \
             }
           ]
         }
-      },
-      "expression": "true",
+      }
     }
   ]
 }'
