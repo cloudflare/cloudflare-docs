@@ -17,15 +17,18 @@ In this tutorial, you will build a todo list application using HTML, CSS and Jav
 
 ![Preview](./media/finished.png)
 
-Before starting this project, you should have some experience with HTML, CSS, and JavaScript. If you are new to writing web applications, Workers is a great platform to get started. Building with Workers makes it easy to focus on writing code and ship finished products. In particular, the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
+Before starting this project, you should have some experience with HTML, CSS, and JavaScript. If you are new to writing web applications, Workers is a great platform to get started. You will learn:
 
-If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/signalnerve/cloudflare-workers-todos) and review the [live demo](https://todos.signalnerve.workers.dev/) to see what you will be building.
+1. How building with Workers makes it easy to focus on writing code and ship finished products. 
+2. How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
+
+If you would like to see the finished code for this project, find to the [project on GitHub](https://github.com/signalnerve/cloudflare-workers-todos) and review the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
 
 ## Generate
 
-Cloudflare offers a collection pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare’s command-line tool for managing Worker projects, integrates with all templates so that it's even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to generate a Workers project.
+Cloudflare offers a collection pre-built examples for getting started with Workers. These are often referred to as templates, each of which emphasizes a particular use case or language. Wrangler, Cloudflare’s command-line tool for managing Worker projects, integrates with all templates so that it is even easier to start writing Workers. In this tutorial, you will use the default JavaScript template to generate a Workers project.
 
-In the command line, generate a Worker project with your desired project name; for example, “todos”:
+In your terminal, generate a Worker project with your desired project name; for example, “todos”:
 
 ```sh
 ---
@@ -39,7 +42,7 @@ Wrangler templates are just Git repositories, so if you want to create your own 
 
 Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry-point to your Cloudflare Workers application.
 
-All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. When that request occurs, you can construct responses and return them to the user. This tutorial will walk you through understanding how the request/response pattern works and how you can use it to build fully-featured applications.
+All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. When that request occurs, your constructed response will return to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully-featured applications.
 
 ```js
 ---
@@ -58,7 +61,7 @@ async function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's Edge Network](https://www.cloudflare.com/network). If you compare this with more traditional architectures, where an origin server would accept requests and return responses, Cloudflare Workers allows you to do the same work without managing hardware and much closer to the client, resulting in reduced cost and latencies.
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network). If you compare this with more traditional architectures, where an origin server would accept requests and return responses, Cloudflare Workers allows you to do the same work without managing hardware and closer the client, resulting in reduced cost and latencies.
 
 ## Build
 
@@ -74,9 +77,9 @@ For the remainder of this tutorial you will complete each task, iterating on you
 
 ### Writing data to KV
 
-To begin, you need to understand how to populate your todo list with actual data. To do this, use Cloudflare‘s Workers KV — a key-value store that you can access inside of your Worker script to read and write data.
+To begin, you need to understand how to populate your todo list with actual data. To do this, use Cloudflare Workers KV — a key-value store that you can access inside of your Worker script to read and write data.
 
-To get started with KV, set up a “namespace”. All of your cached data will be stored inside that namespace and, with configuration, you can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID.
+To get started with KV, set up a “namespace”. All of your cached data will be stored inside that namespace and, with configuration, you can access that namespace inside the script with a predefined variable. Use Wrangler to create a new namespace and get the associated namespace ID by ryunning the following command in your terminal:
 
 ```sh
 ---
@@ -120,7 +123,7 @@ async function handleRequest(request) {
 }
 ```
 
-Workers KV is an eventually consistent, global datastore. In other words, any writes within a region are immediately reflected within that same region, but will not be immediately available in other regions. However, those writes will _eventually_ be available everywhere and, at that point, Workers KV guarantees that data within each region will regions will be _consistent_.
+Workers KV is an eventually consistent, global datastore. In other words, any writes within a region are immediately reflected within that same region, but will not be immediately available in other regions. However, those writes will eventually be available everywhere and, at that point, Workers KV guarantees that data within each region will regions will be consistent.
 
 Given the presence of data in the cache and the assumption that your cache is eventually consistent, this code needs a slight adjustment: the application should check the cache and use its value, if the key existed. If it does not, you will use `defaultData` as the data source for now (remember, it should be set in the future) and write it to the cache for future use. After breaking out the code into a few functions for simplicity, the result looks like this:
 
@@ -279,7 +282,7 @@ async function handleRequest(request) {
 
 ### Adding todos from the UI
 
-At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining piece is creating todos from inside the UI. You know that you can add todos using the KV API — you could update the cache by saying `TODOS.put(newData)`.
+At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining task is creating todos from inside the UI. You know that you can add todos using the KV API — you could update the cache by saying `TODOS.put(newData)`.
 
 To update a todo item, you will add a second handler in our Workers script, designed to watch for `PUT` requests to `/`. When a request body is received at that URL, the worker will send the new todo data to our KV store.
 
@@ -339,7 +342,7 @@ const html = todos => `
 `
 ```
 
-Given that input and button, we can add a corresponding JavaScript function to watch for clicks on the button — once the button is clicked, the browser will `PUT` to `/` and submit the todo.
+Given that input and button, add a corresponding JavaScript function to watch for clicks on the button — once the button is clicked, the browser will `PUT` to `/` and submit the todo.
 
 ```js
 ---
@@ -482,7 +485,7 @@ const html = todos => `
 `
 ```
 
-Inside our HTML, each `div` for a todo now has an attached data attribute, which looks like:
+Inside your HTML, each `div` for a todo now has an attached data attribute, which looks like:
 
 ```html
 <div data-todo="1"></div>
