@@ -8,7 +8,7 @@ order: 2
 
 Configure the Cloudflare HTTP L3/4 Managed Ruleset by defining overrides at the account level using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
 
-Each account has the Cloudflare HTTP L3/4 Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l4` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
+Each account has the Cloudflare HTTP L3/4 Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l4` phase entry point ruleset explicitly. You only have to create a rule in the phase entry point to deploy the Managed Ruleset if you need to configure overrides.
 
 ## Configure an override for the HTTP L3/4 Managed Ruleset
 
