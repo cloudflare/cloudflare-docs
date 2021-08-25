@@ -32,7 +32,7 @@ The following `PUT` example creates a new phase ruleset (or updates the existing
 * All rules tagged with the tag `{tag-name}` will have their sensitivity set to `low`.
 * The rule with ID `{rule-id}` will use the `block` action.
 
-The overrides apply to all requests matching the rule expression: `ip.dst == 93.184.216.34`.
+The overrides apply to all packets matching the rule expression: `ip.dst == 93.184.216.34`.
 
 ```json
 curl -X PUT \

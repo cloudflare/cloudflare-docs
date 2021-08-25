@@ -42,7 +42,7 @@ To adjust rule behavior, [configure overrides via API](/ddos-l34-mitigation/conf
 
 You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/ddos-l34-mitigation/override-parameters) for more information.
 
-By default, your specific configurations (or overrides) apply to all requests, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming requests for which you want to apply the override. Refer to [Available expression fields](/ddos-l34-mitigation/fields) for more information on the available fields for expressions of L3/4 DDoS Managed Ruleset overrides.
+By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/ddos-l34-mitigation/fields) for more information on the available fields for expressions of L3/4 DDoS Managed Ruleset overrides.
 
 ## Availability
 

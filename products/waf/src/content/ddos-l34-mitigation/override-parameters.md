@@ -17,13 +17,13 @@ The available parameters are the following:
 
 API property name: `"action"`.
 
-The action performed for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
+The action performed for packets that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
 
 <Definitions>
 
 - **Block**
     - API value: `"block"`.
-    - Blocks HTTP requests that match the rule expression.
+    - Blocks IP packets that match the rule expression.
 
 - **DDoS Dynamic**
     - API value: _N/A_ (internal rule action that you cannot use in overrides).
