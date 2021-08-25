@@ -75,7 +75,7 @@ The response returns the created (or updated) phase entry point ruleset.
   "result": {
     "id": "{root-ruleset-id}",
     "name": "default",
-    "description": "Execute Cloudflare HTTP L3/4 Managed Ruleset on my account-level phase entry point ruleset",
+    "description": "Define overrides for the Cloudflare HTTP L3/4 Managed Ruleset",
     "kind": "root",
     "version": "1",
     "rules": [
@@ -102,14 +102,14 @@ The response returns the created (or updated) phase entry point ruleset.
             "sensitivity_level": "medium"
           }
         },
-        "expression": "true",
-        "last_updated": "2021-06-16T04:14:47.977741Z",
+        "expression": "ip.dst == 93.184.216.34",
+        "last_updated": "2021-08-16T04:14:47.977741Z",
         "ref": "{overridden-rule-ref}",
         "enabled": true
       }
     ],
-    "last_updated": "2021-06-16T04:14:47.977741Z",
-    "phase": "ddos_l7"
+    "last_updated": "2021-08-16T04:14:47.977741Z",
+    "phase": "ddos_l4"
   }
 }
 ```
