@@ -8,7 +8,7 @@ type: overview
 
 <Aside type='note'>
 
-This feature is only available for customers on an Enterprise plan.
+This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
 </Aside>
 
