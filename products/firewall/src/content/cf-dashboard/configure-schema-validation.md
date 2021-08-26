@@ -6,7 +6,7 @@ type: overview
 
 # Configure Schema Validation
 
-<Aside type='warning'>
+<Aside type='note'>
 
 This feature is only available for customers on an Enterprise plan.
 
