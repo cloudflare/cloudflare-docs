@@ -5,15 +5,15 @@ pcx-content-type: reference
 
 # Configuration file
 
-<Aside>
+<Aside type="note">
 
-If you’re running [quick tunnels](/connections/connect-apps/tunnel-useful-terms#quick-tunnels), you don’t need a configuration file.
+If you are running [quick tunnels](/connections/connect-apps/tunnel-useful-terms#quick-tunnels), you do not need a configuration file.
 
 </Aside>
 
-The [configuration file](/connections/connect-apps/tunnel-useful-terms#configuration-file) is a `.yaml` file that functions as the operating manual for cloudflared. By creating a configuration file, you can have fine-grained control over how an instance of `cloudflared` will operate.
+The [configuration file](/connections/connect-apps/tunnel-useful-terms#configuration-file) is a `.yaml` file that functions as the operating manual for `cloudflared`. By creating a configuration file, you can have fine-grained control over how an instance of `cloudflared` will operate.
 
-In the absence of a configuration file, cloudflared will proxy outbound traffic through port 8080.  
+In the absence of a configuration file, `cloudflared` will proxy outbound traffic through port 8080.  
 
 ## File structure
 
@@ -44,7 +44,7 @@ By configuring ingress rules in the configuration file, you can specify which lo
 
 ## Creating a configuration file
 
-Before you run a tunnel, ensure you have created a configuration file for cloudflared to know what configuration to follow when routing traffic through the tunnel. When routing a tunnel, you can either reference an existing configuration file, or create a new one in your .cloudflared directory using any text editor.
+Before you run a tunnel, ensure you have created a configuration file for `cloudflared` to know what configuration to follow when routing traffic through the tunnel. When routing a tunnel, you can either reference an existing configuration file, or create a new one in your `.cloudflared` directory using any text editor.
 
 For example, to create a configuration file in the [default directory](#storing-a-configuration-file) with vim:
 
@@ -59,7 +59,7 @@ Your file has now been created in your default directory.
 `cloudflared` will examine default directories for config files. 
 
 * On Windows the default directory is `%USERPROFILE%\.cloudflared`.
-* On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared` and `/usr/local/etc/cloudflared`, in that order.
+* On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared`, and `/usr/local/etc/cloudflared`, in that order.
 
 If needed, you can use `--config` to point to a non-standard YAML file location:
 

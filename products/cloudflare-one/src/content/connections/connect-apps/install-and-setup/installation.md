@@ -31,7 +31,7 @@ Download and install `cloudflared` via Homebrew:
 $ brew install cloudflare/cloudflare/cloudflared
 ```
 
-Alternatively, you can [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
+Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
 
 ## Windows
 

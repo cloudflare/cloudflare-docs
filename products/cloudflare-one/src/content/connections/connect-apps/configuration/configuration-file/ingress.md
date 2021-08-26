@@ -10,7 +10,7 @@ You can configure ingress rules to proxy traffic from multiple hostnames to mult
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
 By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/config), you can specify which local services a request should be proxied to.
 
-You can define ingress rules inside of the configuration file.
+You can define ingress rules in the configuration file.
 
 ## Requirements
 
@@ -18,7 +18,7 @@ Configuration files that contain ingress rules must always include a catch-all r
 
 In the following example, `- service: http_status:404` serves as the catch-all rule for the file.
 
-The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command and the path to the credentials file can be excluded if it is located at the default filepath.
+The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command, and the path to the credentials file can be excluded if it is located at the default file path.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -34,13 +34,13 @@ ingress:
 
 ## Matching traffic
 
-When `cloudflared` gets an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both.
+When `cloudflared` receives an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both.
 
-If a rule doesn't specify a hostname, all hostnames will be matched. If a rule doesn't specify a path, all paths will be matched.
+If a rule does not specify a hostname, all hostnames will be matched. If a rule does not specify a path, all paths will be matched.
 
 The last rule you list in the config file must be a catch-all rule that matches all traffic.
 
-This is an example config file that specifies several different rules:
+This is an example config file that specifies several rules:
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -89,23 +89,23 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 
 | Service | Description | Example `service` value |
 |--|--|--|--|
-| HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |
-| HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead | `unix:/home/production/echo.sock` |
+| HTTP/S | Incoming HTTP requests are proxied directly to your local service. | `https://localhost:8000` |
+| HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead. | `unix:/home/production/echo.sock` |
 | TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
 | SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
 | RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
 | kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
-| Hello World | Test server for validating your Cloudflare Tunnel setup | `hello_world` |
-| HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
+| Hello World | Test server for validating your Cloudflare Tunnel setup. | `hello_world` |
+| HTTP status | Responds to all requests with the given HTTP status. | `http_status:404` |
 
 ## Single-service configuration
 
-If you need to proxy traffic to only one local service, you can do so using the config file. As an alternative, you can set up single-service configurations using command line flags.
+If you need to proxy traffic to only one local service, you can do so using the config file. As an alternative, you can set up single-service configurations using command-line flags.
 
 This is an example of a single service configured on the command line:
 
 ```bash
-cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
+$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 ```
 
 ## Validating your configuration
@@ -237,7 +237,7 @@ Timeout after which an idle keepalive connection can be discarded.
 
 Default: `""`
 
-Sets the HTTP Host header on requests sent to the local service.
+Sets the HTTP `Host` header on requests sent to the local service.
 
 <div id="originServerName">
 
@@ -255,7 +255,7 @@ Hostname that `cloudflared` should expect from your origin server certificate.
 
 Default: `""`
 
-Path to the CA for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
+Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
 
 <div id="noTLSVerify">
 
@@ -282,7 +282,7 @@ Disables chunked transfer encoding. Useful if you are running a WSGI server.
 
 Default: `127.0.0.1`
 
-`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying e.g. SSH or RDP.
+`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures the listen address for that proxy.
 
 <div id="proxyPort">
@@ -292,7 +292,7 @@ This configures the listen address for that proxy.
 
 Default: `0`
 
-`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying e.g. SSH or RDP.
+`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures the listen port for that proxy. If set to zero, an unused port will randomly be chosen.
 
 <div id="proxyType">
@@ -302,8 +302,8 @@ This configures the listen port for that proxy. If set to zero, an unused port w
 
 Default: `""`
 
-`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying e.g. SSH or RDP.
-This configures what type of proxy will be started. Valid options are
+`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
+This configures what type of proxy will be started. Valid options are:
 
  - "" for the regular proxy
- - "socks" for a SOCKS5 proxy. See this [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
+ - "socks" for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.

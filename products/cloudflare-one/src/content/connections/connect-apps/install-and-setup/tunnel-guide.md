@@ -155,13 +155,13 @@ $ cloudflared tunnel route ip show
 
 Run the tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. 
 
-**If you’re connecting an application**
+**If you are connecting an application**
 
 ```bash
 $ cloudflared tunnel route ip add <IP/CIDR>/<UUID or NAME>
 ```
 
-**If you’re connecting a network**
+**If you are connecting a network**
 
 ```bash
 $ cloudflared tunnel --config path/config.yaml run <UUID or NAME>
