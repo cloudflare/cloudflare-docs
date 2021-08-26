@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: reference
 ---
 
-# Download `cloudflared`
+# Downloads
 
 Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 

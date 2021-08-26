@@ -30,8 +30,4 @@ This file is created when you run `cloudflared tunnel create <NAME>`. It stores 
 Ingress rules let users specify which local services traffic should be proxied to. If a rule doesn't specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.  
 
 ## Quick tunnels
-If you want to try out tunnels or quickly establish a one-time connection between a resource and Cloudflare’s edge, you can deploy “quick” tunnels. These are tunnels that do not require a configuration file, and that do not have any availability or stability guarantees. Launch this command to run a quick tunnel:
-
-```sh
-$ cloudflared tunnel --url local-service:8080
-```
+Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost port 8080. If you have a web service running at that address, users who visit the subdomain generated will be able to visit your web service through Cloudflare’s network. Reference the [TryCloudflare](/connections/connect-apps/do-more-with-tunnels/trycloudflare) for more information on how to run quick tunnels.

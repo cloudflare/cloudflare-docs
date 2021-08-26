@@ -130,7 +130,7 @@ Matched rule #3
 	service: https://localhost:8000
 ```
 
-## Origin configurations
+## Advanced configurations
 
 You can define the way that `cloudflare` sends requests to each service by specifying additional configuration options. The following example sets a 30-second connection timeout for all services except for one.
 
