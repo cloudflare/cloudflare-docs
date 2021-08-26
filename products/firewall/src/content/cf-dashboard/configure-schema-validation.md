@@ -6,13 +6,13 @@ type: overview
 
 # Configure Schema Validation
 
-<Aside type='warning'>
+<Aside type='note'>
 
 This feature is only available for customers on an Enterprise plan.
 
 </Aside>
 
-Use the **API Shield** interface to configure API Schema Validation which validates requests according to the API Schema you provide.
+Use the **API Shield** interface to configure [API Schema Validation](/cf-firewall-rules/api-shield#schema-validation), which validates requests according to the API Schema you provide.
 
 Before you can configure Schema Validation for an API, you must obtain its API Schema file. API Shield supports API Schemas using OpenAPI Specification v3. The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
 
@@ -62,13 +62,13 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
 1. Enable the toggle in the **Schema Validation** card.
 
-1. Upload the API Schema file in **Upload API Schema** by selecting a file or dragging a file to the file upload area (dashed rectangle). 
+1. Upload the API Schema file in **Upload API Schema** by selecting a file or dragging a file to the file upload area (dashed rectangle).
 
 1. Click **Deploy** to validate the content of the schema file and deploy the Schema Validation rule.
 
-    <Aside type='note'>
+    <Aside type='warning'>
 
-    If you get a validation error, make sure you are using one of the supported file formats.
+    If you get a validation error, make sure you are using one of the supported file formats. Also, each endpoint and method pair must have a [unique Operation ID](/cf-firewall-rules/api-shield#operation-ids).
 
     </Aside>
 
@@ -83,11 +83,11 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 1. In the **Fallthrough action** dropdown, select the action to perform for incoming requests addressed at other (non-protected) API endpoints.
 
     <Aside type='warning'>
-    
+
     Currently, request body validations are not supported.
 
     </Aside>
 
-1. Click **Done**. 
+1. Click **Done**.
 
 The API Shield wizard closes and the **API Shield** card displays with your new API Shield in the list.
