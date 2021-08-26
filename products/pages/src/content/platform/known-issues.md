@@ -15,5 +15,6 @@ Here are some known bugs and issues that we're aware of with Cloudflare Pages:
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms and Serverless Functions features. Cloudflare Pages does not directly support HTTP header customization, but it can be done through Workers. Refer to the ["Add custom HTTP headers"](/how-to/add-custom-http-headers) guide for more information.
 - It is currently not possible to add a custom domain with a wildcard, e.g. *.domain.com.
 - Cloudflare Pages is not supported with Cloudflare Apps; you may see a 1014 error if you use both in a deployment.
+- Setting "Minimal TLS" by dashboard won't take effect. Cloudflare Pages is taking precedence and internally set as minimal 1.0 TLS. Solution is by using Cloudflare Worker to respond with it
 
 If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-help channel.
