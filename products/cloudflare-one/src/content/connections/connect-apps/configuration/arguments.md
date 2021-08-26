@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 - [`config`](#config)
 - [`ingress`](#ingress)
-- [`originRequest`](#originRequest)
+- [`originRequest`](#originrequest)
 - [`autoupdate-freq`](#autoupdate-freq)
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
@@ -24,41 +24,41 @@ pcx-content-type: reference
 - [`help`](#help)
 - [`version`](#version)
 
-### `config`
+## `config`
 
 | Syntax | Default |
 |--|--|
 | `config value` | `~/.cloudflared/config.yml` |
 
-Specifies a config file in YAML format.
+Specifies the path to a config file in YAML format.
 
-### `ingress`
+## `ingress`
 
 This property configures which local services `cloudflared` will proxy incoming requests to.
-See the [Ingress Rules docs](/connections/connect-apps/configuration/ingress) for details.
+Refer to the [Ingress Rules docs](/connections/connect-apps/configuration/ingress) for details.
 
-### `originRequest`
+## `originRequest`
 
 This property configures how `cloudflared` will send requests to your local services.
-See the [Origin Configuration docs](/connections/connect-apps/configuration/ingress#origin-configurations) for details.
+Refer to the [Origin Configuration docs](/connections/connect-apps/configuration/ingress#origin-configurations) for details.
 
-### `autoupdate-freq`
+## `autoupdate-freq`
 
 | Syntax | Default |
 |--|--|
 | `autoupdate-freq` | `24h` |
 
-Autoupdate frequency. See also [`no-autoupdate`](#no-autoupdate).
+Autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
 
-### `no-autoupdate`
+## `no-autoupdate`
 
 | Syntax | Default |
 |--|--|
 | `no-autoupdate` | `false` |
 
-Disables periodic check for updates, restarting the server with the new version. See also [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare edge. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
+Disables periodic check for updates, restarting the server with the new version. See also: [`autoupdate-freq`](#autoupdate-freq). Restarts are performed by spawning a new process that connects to the Cloudflare edge. On successful connection, the old process will gracefully shut down after handling all outstanding requests.
 
-### `origincert`
+## `origincert`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -66,7 +66,7 @@ Disables periodic check for updates, restarting the server with the new version.
 
 Specifies the Tunnel certificate for one of your zones, authorizing the client to serve as an origin for that zone. A certificate is required to use Cloudflare Tunnel. You can obtain a certificate by using the login command or by visiting `https://dash.cloudflare.com/argotunnel`.
 
-### `no-tls-verify`
+## `no-tls-verify`
 
 | Syntax | Default |
 |--|--|
@@ -75,7 +75,7 @@ Specifies the Tunnel certificate for one of your zones, authorizing the client t
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
 
-### `grace-period`
+## `grace-period`
 
 | Syntax | Default |
 |--|--|
@@ -83,7 +83,7 @@ The connection from your machine to Cloudflare's Edge is still encrypted and ver
 
 When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shutdown. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
 
-### `metrics`
+## `metrics`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -91,7 +91,7 @@ When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wa
 
 Address to query for usage metrics.
 
-### `metrics-update-freq`
+## `metrics-update-freq`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -99,15 +99,15 @@ Address to query for usage metrics.
 
 Frequency to update tunnel metrics.
 
-### `tag`
+## `tag`
 
 | Syntax | Environment Variable |
 |--|--|
 | `tag: {KEY=VALUE,...}` | `TUNNEL_TAG` |
 
-Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags may be specified by delimiting them with commas e.g. `KEY1=VALUE1`,`KEY2=VALUE2`.
+Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags may be specified by delimiting them with commas e.g. `KEY1=VALUE1, KEY2=VALUE2`.
 
-### `loglevel`
+## `loglevel`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -115,7 +115,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 
 Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 
-### `transport-loglevel`
+## `transport-loglevel`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -124,7 +124,7 @@ Specifies the verbosity of logging. The default `info` is not noisy, but you may
 Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks.
 
-### `retries`
+## `retries`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -132,7 +132,7 @@ Any value below `warn` is noisy and should only be used to debug low-level perfo
 
 Maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default) so increasing this value significantly is not recommended.
 
-### `pidfile`
+## `pidfile`
 
 | Syntax | Environment Variable |
 |--|--|
@@ -140,7 +140,7 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 
 Write the application's PID to this file after the first successful connection. Mainly useful for scripting and service integration.
 
-### `protocol`
+## `protocol`
 
 | Syntax | Default | Environment Variable |
 |--|--|--|
@@ -148,7 +148,7 @@ Write the application's PID to this file after the first successful connection. 
 
 Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `http2` protocol. 
 
-### `logfile`
+## `logfile`
 
 | Syntax | Environment Variable |
 |--|--|
