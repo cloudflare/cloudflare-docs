@@ -10,8 +10,8 @@ Configure the Cloudflare L3/4 DDoS Managed Ruleset to change the action applied 
 
 The available parameters are the following:
 
-* [Action](#action)
-* [Sensitivity](#sensitivity)
+* Action
+* Sensitivity
 
 ## Action
 
