@@ -1,6 +1,5 @@
 ---
 title: Wildcard matching
-order: 23
 pcx-content-type: navigation
 ---
 
