@@ -25,7 +25,7 @@ Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/do
 
 ## macOS
 
-You can [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
+You can download with Homebrew via `brew install cloudflare/cloudflare/cloudflared` or you can [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
 
 ## Windows
 
