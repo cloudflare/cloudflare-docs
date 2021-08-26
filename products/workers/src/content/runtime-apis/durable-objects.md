@@ -47,13 +47,13 @@ export class DurableObject {
 
 - <Code>state.blockConcurrencyWhile(callback<ParamType>Function()</ParamType>)</Code> <Type>Promise</Type>
 
-  - Executes `callback()` (which may be `async`) while blocking any other events from being delivered to the object until the callback completes. This allows you to execute some code which performs I/O (such as a `fetch()`) with the guarantee that the object's state won't unexpectedly change as a result of concurrent events. All events that weren't explicitly initiated as part of the callback itself will be blocked. This includes not only new incoming requests, but also responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
+  - Executes `callback()` (which may be `async`) while blocking any other events from being delivered to the object until the callback completes. This allows you to execute some code that performs I/O (such as a `fetch()`) with the guarantee that the object's state will not unexpectedly change as a result of concurrent events. All events that were not explicitly initiated as part of the callback itself will be blocked. This includes not only new incoming requests, but also responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
     
     `state.blockConcurrencyWhile()` is especially useful inside the constructor of your object, to perform initialization that must occur before any requests are delivered.
     
     If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, wrap the body of your callback in a `try`/`catch` block to ensure it cannot throw an exception.
     
-    The value returend by the callback becomes the value returned by `blockConcurrencyWhile()` itself.
+    The value returned by the callback becomes the value returned by `blockConcurrencyWhile()` itself.
 
 - `env`
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using Modules syntax, these same "bindings" appear as global variables within the script. Scripts that export Durable Object classes always use the Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
@@ -104,7 +104,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     - <Code>allowUnconfirmed<ParamType>boolean</ParamType></Code>
 
-      - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. In the unlikely event that the write fails, the system will reset the object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can be allowed to continue executing in parallel with a write being performed, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the object's actions unless the write actually succeeds. However, this does mean that after any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes, and may prefer to permit network traffic immediately. In this case, `allowUnconfirmed` may be set to `true` to opt out of the default behavior. [See this blog post for an in-depth discussion.](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+      - By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. In the unlikely event that the write fails, the system will reset the object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can be allowed to continue executing in parallel with a write being performed, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the object's actions unless the write actually succeeds. However, this does mean that after any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes, and may prefer to permit network traffic immediately. In this case, `allowUnconfirmed` may be set to `true` to opt out of the default behavior. [Refer to this blog post for an in-depth discussion.](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 
     - <Code>noCache<ParamType>boolean</ParamType></Code>
 
@@ -112,13 +112,13 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Definitions>
 
-    <Aside header="Automatic write coalescing">
+    <Aside type="note" header="Automatic write coalescing">
     
     If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. That is, even in the case of a machine failure, either all of the puts will have been stored to disk, or none of them will have.
     
     </Aside>
 
-    <Aside header="Write buffer behavior">
+    <Aside type="note" header="Write buffer behavior">
     
     `put()` returns a `Promise`, but most applications can simply discard this promise without `await`ing it. The `Promise` usually completes immediately anyway, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such apps should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the app, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
     
@@ -188,7 +188,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
   
-    <Aside header="Deprecated">
+    <Aside type="note" header="Deprecated">
 
     Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless `allowConcurrency: true` is used). Hence, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.
 

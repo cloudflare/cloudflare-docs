@@ -60,7 +60,7 @@ export class DurableObjectExample {
 
 A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
 
-<Aside>
+<Aside type="note">
 
 HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or just plain Workers. We'll see how to send such a request in a bit. Durable Objects use HTTP for familiarity, but we plan to introduce other protocols in the future.
 
@@ -89,17 +89,17 @@ export class DurableObjectExample {
 
 The Durable Objects storage API employs several techniques to help you avoid subtle-yet-common storage bugs:
 
-- Each individual storage operation is strictly ordered with respect to all others. Even if the operation completes asynchronously (requiring you to `await` a promise), the results will always be accuate as of the time the operation was invoked.
+- Each individual storage operation is strictly ordered with respect to all others. Even if the operation completes asynchronously (requiring you to `await` a promise), the results will always be accurate as of the time the operation was invoked.
 
-- A Durable Object can process multiple concurrent requests. However, when a storage operation is in progress (such as, when you are `await`ing the result of a `get()`), delivery of concurrent events will be paused. This ensures that the state of the object cannot unexpectedly change while a read operation is in-flight, which would otherwise make it very hard to keep in-memory state properly synchronized with on-disk state. If desired, his behavior can be bypassed using the option `allowConcurrency: true`.
+- A Durable Object can process multiple concurrent requests. However, when a storage operation is in progress (such as, when you are `await`ing the result of a `get()`), delivery of concurrent events will be paused. This ensures that the state of the object cannot unexpectedly change while a read operation is in-flight, which would otherwise make it very hard to keep in-memory state properly synchronized with on-disk state. If desired, this behavior can be bypassed using the option `allowConcurrency: true`.
 
-- If multiple writes operations are performed consecutively – without `await`ing anything in the meantime – then they will automatically be coalesced and applied atomically. This means that, even in the case of a machine failure, either all of the operations will have been stored to disk, or none of them will have been.
+- If multiple write operations are performed consecutively – without `await`ing anything in the meantime – then they will automatically be coalesced and applied atomically. This means that, even in the case of a machine failure, either all of the operations will have been stored to disk, or none of them will have been.
 
-- Write operations are queued to a write buffer, allowing calls like `put()` and `delete()` to complete "immediately" from the application's point of view. However, when the application initiates an outgoing network message (such as responding to a request, or invoking `fetch()`), the network request will be held until all previous writes are confirmed to be durable. This ensures that an application cannot accidentally confirm a write prematurely. If desired, his behavior can be bypassed using the option `allowUnconfirmed: true`.
+- Write operations are queued to a write buffer, allowing calls like `put()` and `delete()` to complete immediately from the application's point of view. However, when the application initiates an outgoing network message (such as responding to a request, or invoking `fetch()`), the network request will be held until all previous writes are confirmed to be durable. This ensures that an application cannot accidentally confirm a write prematurely. If desired, this behavior can be bypassed using the option `allowUnconfirmed: true`.
 
-- The storage API implements an in-memory caching layer to improve performance. Reads that hit cache will return instantly, without even context-switching to another thread. When reading or writing a value where caching is not worthwhile, you may use the option `noCache: true` to avoid it – but this option only affects performance, it won't change behavior.
+- The storage API implements an in-memory caching layer to improve performance. Reads that hit cache will return instantly, without even context-switching to another thread. When reading or writing a value where caching is not worthwhile, you may use the option `noCache: true` to avoid it – but this option only affects performance, it will not change behavior.
 
-For more discussion about these features, please see the blog post: [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+For more discussion about these features, refer to the [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post.
 
 ### In-memory state in a Durable Object
 
@@ -115,7 +115,7 @@ export class Counter {
         // initialization completes.
         this.state.blockConcurrencyWhile(async () => {
             let stored = await this.state.storage.get("value");
-            // after initialization, future reads don't need to access storage!
+            // After initialization, future reads do not need to access storage.
             this.value = stored || 0;
         })
     }
@@ -128,9 +128,9 @@ export class Counter {
 }
 ```
 
-<Aside header="Built-in Caching">
+<Aside type="note" header="Built-in Caching">
 
-The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. So, instead of writing initialization code like above, you could simply `get("value")` whenever you need it, and rely on the built-in cache to make this fast. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. We recommend writing your code in the way that's easiest for you.
+The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. So, instead of writing initialization code like above, you could simply `get("value")` whenever you need it, and rely on the built-in cache to make this fast. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 </Aside>
 
