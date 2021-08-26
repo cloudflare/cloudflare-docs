@@ -70,7 +70,7 @@ API Shield supports API Schemas using OpenAPI Specification v3. The accepted fil
 
 To configure Schema Validation for one or more hosts using the dashboard, check [Configure Schema Validation](/cf-dashboard/configure-schema-validation).
 
-<Aside type='warning' header="Important">
+<Aside type='warning' header='Important'>
 
 Currently, API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 
