@@ -26,15 +26,16 @@ Whether you are exposing an application or a network on the Internet, it is comm
 | Key | Value |
 | --- | ----- |
 | `tunnel:` | The tunnel UUID |
-| `credentials-file:` | The path to your tunnel’s credential file |
+| `credentials-file:` | The path to your tunnel’s credentials file |
 
 Adding these keys to the configuration file is equivalent to running the `cloudflared tunnel --config /config/file/path/config.yaml run <NAME>` command. Leave these keys out if you plan on having more than one tunnel referencing the same configuration file.
 
-If you’re [exposing a network](), you need to add the `warp-routing` key:
+If you’re [exposing a private network](/connections/connect-apps/configuration/private-networks), you need to add the `warp-routing` key:
 
 | Key | Value |
 | --- | ----- |
 | `tunnel:` | The tunnel UUID |
+| `credentials-file:` | The path to your tunnel’s credentials file |
 | `warp-routing:` | `enabled:true` |
 
 ### Ingress rules
@@ -55,7 +56,7 @@ Your file has now been created in your default directory.
 
 ## Storing a configuration file
 
-By default, cloudflared will examine default directories for config files. 
+`cloudflared` will examine default directories for config files. 
 
 * On Windows the default directory is `%USERPROFILE%\.cloudflared`.
 * On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared` and `/usr/local/etc/cloudflared`, in that order.
@@ -74,7 +75,7 @@ url: http://localhost:8000
 logfile: /var/log/cloudflared.log
 ```
 
-Flags that don't expect any value (such as --hello-world) should be specified as boolean true in the YAML:
+Flags that don't expect any value (such as `--hello-world`) should be specified as boolean true in the YAML:
 
 ```text
 hello-world: true
