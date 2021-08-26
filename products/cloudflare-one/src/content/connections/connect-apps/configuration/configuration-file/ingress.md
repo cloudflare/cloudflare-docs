@@ -116,7 +116,7 @@ To validate the ingress rules in your configuration file, run:
 $ cloudflared tunnel ingress validate
 ```
 
-This will ensure that the set of ingress rules specified in your config file is **valid**.
+This will ensure that the set of ingress rules specified in your config file is valid.
 
 ## Testing your configuration
 
@@ -132,7 +132,7 @@ Matched rule #3
 
 ## Advanced configurations
 
-You can define the way that `cloudflare` sends requests to each service by specifying additional configuration options. The following example sets a 30-second connection timeout for all services except for one.
+You can define the way that `cloudflared` sends requests to each service by specifying additional configuration options. The following example sets a 30-second connection timeout for all services except for one.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -175,13 +175,12 @@ You can use the following configuration options inside of an ingress rule.
 - [proxyPort](#proxyport)
 - [proxyType](#proxyyype)
 
-
 ### connectTimeout
 
 Default: `30s`
 
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to
-establish TLS, which is controlled by [tlsTimeout]({{< ref "#tlsTimeout" >}}).
+establish TLS, which is controlled by [tlsTimeout](#tlstimeout).
 
 ### tlsTimeout
 
@@ -264,5 +263,5 @@ Default: `""`
 `cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures what type of proxy will be started. Valid options are:
 
- - "" for the regular proxy
- - "socks" for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
+ - `""` for the regular proxy
+ - `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
