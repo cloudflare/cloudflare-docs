@@ -12,7 +12,7 @@ This feature is only available for customers on an Enterprise plan.
 
 </Aside>
 
-Use the **API Shield** interface to configure API Schema Validation which validates requests according to the API Schema you provide.
+Use the **API Shield** interface to configure [API Schema Validation](/cf-firewall-rules/api-shield#schema-validation) which validates requests according to the API Schema you provide.
 
 Before you can configure Schema Validation for an API, you must obtain its API Schema file. API Shield supports API Schemas using OpenAPI Specification v3. The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
 
