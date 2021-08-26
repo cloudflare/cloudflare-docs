@@ -31,7 +31,7 @@ If you would like to complete the issuance process before asking your customer t
 
 For your customers that already have HTTPS on their custom domain, e.g., they’re self-hosted or you’ve manually provisioned, and cannot tolerate a couple minutes of downtime during cutover, additional “pre-validation” methods are available.
 
-The three validation methods below can be used to obtain a certificate in advance of setting the CNAME to your `$CNAME_TARGET`.
+The validation methods below can be used to obtain a certificate in advance of setting the CNAME to your `$CNAME_TARGET`.
 
 ### 1. TXT record
 
