@@ -23,6 +23,8 @@ To add a Cloudflare Tunnel connection to a Cloudflare Load Balancer pool:
 2. Create or edit an existing Origin Pool. Add the Tunnel subdomain as an Origin Address.
 3. Click **Save**.
 
+If adding a Monitor to your Cloudflare Load Balancer pool, add a host header in the 'Advanced Healthcheck Settings' section.  The Monitor will not work without the host header if using a tunnel config file that defines the `ingress` field like the example [cloudflared.yaml](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90) in this repo.  The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`
+
 ## Route traffic from the command line
 
 You can add Cloudflare Tunnel to an existing load Balancer pool directly from `cloudflared`. The result is the same as creation from the dashboard above.
