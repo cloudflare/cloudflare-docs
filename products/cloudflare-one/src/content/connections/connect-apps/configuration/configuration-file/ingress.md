@@ -63,7 +63,7 @@ ingress:
 
 ## Supported protocols
 
-In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](/applications/non-http).
+In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and Unix sockets. See a [list of supported protocols](/applications/non-http).
 
 You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Cloudflare Tunnel protocol.
 
@@ -90,7 +90,7 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | Service | Description | Example `service` value |
 |--|--|--|--|
 | HTTP/S | Incoming HTTP requests are proxied directly to your local service. | `https://localhost:8000` |
-| HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead. | `unix:/home/production/echo.sock` |
+| HTTP/S over Unix socket | Just like HTTP/S, but using a Unix socket instead. | `unix:/home/production/echo.sock` |
 | TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
 | SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
 | RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
@@ -160,145 +160,104 @@ ingress:
 
 You can use the following configuration options inside of an ingress rule.
 
-- [connectTimeout](#connectTimeout)
-- [tlsTimeout](#tlsTimeout)
-- [tcpKeepAlive](#tcpKeepAlive)
-- [noHappyEyeballs](#noHappyEyeballs)
-- [keepAliveConnections](#keepAliveConnections)
-- [keepAliveTimeout](#keepAliveTimeout)
-- [httpHostHeader](#httpHostHeader)
-- [originServerName](#originServerName)
-- [caPool](#caPool)
-- [noTLSVerify](#noTLSVerify)
-- [disableChunkedEncoding](#disableChunkedEncoding)
-- [proxyAddress](#proxyAddress)
-- [proxyPort](#proxyPort)
-- [proxyType](#proxyType)
+- [connectTimeout](#connecttimeout)
+- [tlsTimeout](#tlstimeout)
+- [tcpKeepAlive](#tcpkeepalive)
+- [noHappyEyeballs](#nohappyeyeballs)
+- [keepAliveConnections](#keepaliveconnections)
+- [keepAliveTimeout](#keepalivetimeout)
+- [httpHostHeader](#httphostheader)
+- [originServerName](#originservername)
+- [caPool](#capool)
+- [noTLSVerify](#notlsverify)
+- [disableChunkedEncoding](#disablechunkedencoding)
+- [proxyAddress](#proxyaddress)
+- [proxyPort](#proxyport)
+- [proxyType](#proxyyype)
 
-<div id="connectTimeout">
 
 ### connectTimeout
-</div>
 
 Default: `30s`
 
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to
 establish TLS, which is controlled by [tlsTimeout]({{< ref "#tlsTimeout" >}}).
 
-<div id="tlsTimeout">
-
 ### tlsTimeout
-</div>
 
 Default: `10s`
 
 Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server.
 
-<div id="tcpKeepAlive">
-
 ### tcpKeepAlive
-</div>
 
 Default: `30s`
 
 The timeout after which a TCP keepalive packet is sent on a connection between Tunnel and the origin server.
 
-<div id="noHappyEyeballs">
-
 ### noHappyEyeballs
-</div>
 
 Default: `false`
 
 Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local network has misconfigured one of the protocols.
 
-<div id="keepAliveConnections">
-
 ### keepAliveConnections
-</div>
 
 Default: `100`
 
 Maximum number of idle keepalive connections between Tunnel and your origin. This does not restrict the total number of concurrent connections.
 
-<div id="keepAliveTimeout">
-
 ### keepAliveTimeout
-</div>
-
+	
 Default: `1m30s`
 
 Timeout after which an idle keepalive connection can be discarded.
 
-<div id="httpHostHeader">
-
 ### httpHostHeader
-</div>
 
 Default: `""`
 
 Sets the HTTP `Host` header on requests sent to the local service.
 
-<div id="originServerName">
-
 ### originServerName
-</div>
 
 Default: `""`
 
 Hostname that `cloudflared` should expect from your origin server certificate.
 
-<div id="caPool">
-
 ### caPool
-</div>
 
 Default: `""`
 
 Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
 
-<div id="noTLSVerify">
-
 ### noTLSVerify
-</div>
 
 Default: `false`
 
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 
-<div id="disableChunkedEncoding">
-
 ### disableChunkedEncoding
-</div>
 
 Default: `false`
 
 Disables chunked transfer encoding. Useful if you are running a WSGI server.
 
-<div id="proxyAddress">
-
 ### proxyAddress
-</div>
 
 Default: `127.0.0.1`
 
 `cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures the listen address for that proxy.
 
-<div id="proxyPort">
-
 ### proxyPort
-</div>
 
 Default: `0`
 
 `cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures the listen port for that proxy. If set to zero, an unused port will randomly be chosen.
 
-<div id="proxyType">
-
 ### proxyType
-</div>
 
 Default: `""`
 
