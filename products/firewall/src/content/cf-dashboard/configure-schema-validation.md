@@ -16,6 +16,12 @@ Use the **API Shield** interface to configure API Schema Validation which valida
 
 Before you can configure Schema Validation for an API, you must obtain its API Schema file. API Shield supports API Schemas using OpenAPI Specification v3. The accepted file formats are YAML (files with a `.yml` or `.yaml` file extension) and JSON (files with a `.json` file extension).
 
+<Aside type="warning">
+
+Cloudflare Schema Validation requires unique Operation IDs for each endpoint/method defined in the schema. If there are Operation IDs missing, the schema will be rejected. Operation ID is used to keep track of changes to the same endpoints when updating schemas, and also to label logs in Firewall Events with the right endpoint/method. Cloudflare supports Operation IDs with a maximum size of 32 characters.
+
+</Aside>
+
 ## Create an API Shield with Schema Validation
 
 To configure Schema Validation in the Cloudflare dashboard, follow these steps:
