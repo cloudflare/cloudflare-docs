@@ -1,6 +1,5 @@
 ---
 title: Set caching levels
-order: 14
 pcx-content-type: concept
 ---
 

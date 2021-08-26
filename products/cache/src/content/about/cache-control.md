@@ -1,6 +1,5 @@
 ---
 title: Origin Cache-Control
-order: 7
 pcx-content-type: concept
 ---
 
@@ -52,14 +51,16 @@ When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to c
 - `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.
 - `no-cache` — Indicates the response cannot be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using the origin to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
 
+Ensure the HTTP `Expires` header is set in your origin server to use Greenwich Mean Time (GMT) as stipulated in [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3 "3.3.1 Full Date").
+
 ### Revalidation
 
 Revalidation determines how the cache should behave when a resource expires, and the directives below affect the revalidation behavior.
 
 - `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
 - `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
-- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the `stale-while-revalidate` and `stale-if-error` directive are ignored.
-- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information.
+- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](https://developers.cloudflare.com/workers/platform/limits#cache-api).
+- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](https://developers.cloudflare.com/workers/platform/limits#cache-api).
 
 The `stale-if-error` directive is ignored if [Always Online](/about/always-online) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
 

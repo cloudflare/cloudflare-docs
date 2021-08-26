@@ -1,6 +1,5 @@
 ---
 title: Set Browser Cache TTL
-order: 13
 pcx-content-type: concept
 ---
 
