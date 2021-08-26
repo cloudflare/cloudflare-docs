@@ -68,7 +68,7 @@ To configure Schema Validation in the Cloudflare dashboard, follow these steps:
 
     <Aside type='warning'>
 
-    If you get a validation error, make sure you are using one of the supported file formats. Also, each endpoint/method must have a [unique Operation ID](/cf-firewall-rules/api-shield#operation-ids).
+    If you get a validation error, make sure you are using one of the supported file formats. Also, each endpoint and method pair must have a [unique Operation ID](/cf-firewall-rules/api-shield#operation-ids).
 
     </Aside>
 
