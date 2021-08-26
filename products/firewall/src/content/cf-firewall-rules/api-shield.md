@@ -58,7 +58,7 @@ When using Yubikeys, the browser may prompt for unlocking the key due to a probl
 
 <Aside type='note'>
 
-This feature is only available for customers on an Enterprise plan.
+This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
 </Aside>
 
