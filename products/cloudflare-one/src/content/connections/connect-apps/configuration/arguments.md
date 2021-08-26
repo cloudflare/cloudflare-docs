@@ -81,7 +81,7 @@ The connection from your machine to Cloudflare's Edge is still encrypted and ver
 |--|--|
 | `grace-period` | `30s` |
 
-When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shutdown. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
+When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
 
 ## `metrics`
 
@@ -113,7 +113,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 |--|--|--|
 | `loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
 
-Specifies the verbosity of logging. The default `info` is not noisy, but you may wish to run with `warn` in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
+Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 
 ## `transport-loglevel`
 
@@ -122,7 +122,7 @@ Specifies the verbosity of logging. The default `info` is not noisy, but you may
 | `transport-loglevel` | `warn` | `TUNNEL_PROTO_LOGLEVEL` |
 
 Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
-Any value below `warn` is noisy and should only be used to debug low-level performance issues and protocol quirks.
+Any value below `warn` produces substantial output and should only be used to debug low-level performance issues and protocol quirks.
 
 ## `retries`
 
@@ -130,7 +130,7 @@ Any value below `warn` is noisy and should only be used to debug low-level perfo
 |--|--|--|
 | `retries value` | `5` | `TUNNEL_RETRIES` |
 
-Maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default) so increasing this value significantly is not recommended.
+Maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default), so it is not recommended that you increase this value significantly.
 
 ## `pidfile`
 
@@ -138,7 +138,7 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 |--|--|
 | `pidfile value` | `TUNNEL_PIDFILE` |
 
-Write the application's PID to this file after the first successful connection. Mainly useful for scripting and service integration.
+Write the application's process identifier (PID) to this file after the first successful connection. Mainly useful for scripting and service integration.
 
 ## `protocol`
 
