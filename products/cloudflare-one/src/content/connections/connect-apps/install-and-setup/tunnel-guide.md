@@ -101,7 +101,7 @@ $ cloudflared tunnel login
 Running this command will:
 
 * Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname. 
-* Generate a [cert.pem file](/connections/connect-apps/tunnel-useful-terms#cert-pem) in the `.cloudflared` default directory. Selecting your hostname will automatically generate the `cert.pem` file, whcih contains account-wide credentials.
+* Generate a [cert.pem file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem) in the `.cloudflared` default directory. Selecting your hostname will automatically generate the `cert.pem` file, whcih contains account-wide credentials.
 
 ## 3. Create a tunnel and give it a name
 
@@ -124,7 +124,7 @@ $ cloudflared tunnel list
 
 ## 4. Create a configuration file
 
-Create a [configuration file](/connections/connect-apps/tunnel-useful-terms#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+Create a [configuration file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
 Add the following fields to the file:
 
