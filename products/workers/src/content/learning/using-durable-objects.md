@@ -60,9 +60,9 @@ export class DurableObjectExample {
 
 A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
 
-<Aside>
+<Aside type="note">
 
-HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code -- possibly other Durable Objects, or just plain Workers. We'll see how to send such a request in a bit. Durable Objects use HTTP for familiarity, but we plan to introduce other protocols in the future.
+HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or just plain Workers. We'll see how to send such a request in a bit. Durable Objects use HTTP for familiarity, but we plan to introduce other protocols in the future.
 
 </Aside>
 
@@ -87,43 +87,19 @@ export class DurableObjectExample {
 }
 ```
 
-Each individual storage operation behaves like a database transaction. More complex use cases can wrap multiple storage statements in a transaction. For example, this Durable Object puts a key if and only if its current value matches the provided "If-Match" header value:
+The Durable Objects storage API employs several techniques to help you avoid subtle-yet-common storage bugs:
 
-```js
-export class DurableObjectExample {
-    constructor(state, env) {
-        this.state = state;
-    }
+- Each individual storage operation is strictly ordered with respect to all others. Even if the operation completes asynchronously (requiring you to `await` a promise), the results will always be accurate as of the time the operation was invoked.
 
-    async fetch(request) {
-        let key = new URL(request.url).host
-        let ifMatch = request.headers.get('If-Match');
-        let newValue = await request.text();
-        let changedValue = false;
-        await this.state.storage.transaction(async txn => {
-            let currentValue = await txn.get(key);
-            if (currentValue != ifMatch && ifMatch != '*') {
-                txn.rollback();
-                return;
-            }
-            changedValue = true;
-            await txn.put(key, newValue);
-        });
-        return new Response("Changed: " + changedValue);
-    }
+- A Durable Object can process multiple concurrent requests. However, when a storage operation is in progress (such as, when you are `await`ing the result of a `get()`), delivery of concurrent events will be paused. This ensures that the state of the object cannot unexpectedly change while a read operation is in-flight, which would otherwise make it very hard to keep in-memory state properly synchronized with on-disk state. If desired, this behavior can be bypassed using the option [`allowConcurrency: true`](http://localhost:8000/runtime-apis/durable-objects#methods).
 
-}
-```
+- If multiple write operations are performed consecutively – without `await`ing anything in the meantime – then they will automatically be coalesced and applied atomically. This means that, even in the case of a machine failure, either all of the operations will have been stored to disk, or none of them will have been.
 
-Transactions operate at a [serializable isolation level](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).  This means transactions can fail if they conflict with a concurrent transaction being run by the same Durable Object.
+- Write operations are queued to a write buffer, allowing calls like `put()` and `delete()` to complete immediately from the application's point of view. However, when the application initiates an outgoing network message (such as responding to a request, or invoking `fetch()`), the network request will be held until all previous writes are confirmed to be durable. This ensures that an application cannot accidentally confirm a write prematurely. If desired, this behavior can be bypassed using the option [`allowUnconfirmed: true`](http://localhost:8000/runtime-apis/durable-objects#methods).
 
-Transactions are transparently and automatically retried once by rerunning the provided function before returning an error.  To avoid transaction conflicts, don't use transactions when you don't need them, don't hold transactions open any longer than necessary, and limit the number of key-value pairs operated on by each transaction.
+- The storage API implements an in-memory caching layer to improve performance. Reads that hit cache will return instantly, without even context-switching to another thread. When reading or writing a value where caching is not worthwhile, you may use the option [`noCache: true`](http://localhost:8000/runtime-apis/durable-objects#methods) to avoid it – but this option only affects performance, it will not change behavior.
 
-<Aside>
-
-Since each Durable Object is single-threaded, technically it is not necessary to use transactions to achieve transactional semantics. With careful use of promises, you could serialize operations in your live object so that there's no possibility of concurrent storage operations. We provide the transactional interface as a convenience for those who don't want to do their own synchronization.
-
-</Aside>
+For more discussion about these features, refer to the [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post.
 
 ### In-memory state in a Durable Object
 
@@ -135,30 +111,31 @@ This is shown in the [Counter example](#example---counter) below, which is parti
 export class Counter {
     constructor(state, env) {
         this.state = state;
-    }
-
-    async initialize() {
-        let stored = await this.state.storage.get("value");
-        // after initialization, future reads don't need to access storage!
-        this.value = stored || 0;
+        // `blockConcurrencyWhile()` ensures no requests are delivered until
+        // initialization completes.
+        this.state.blockConcurrencyWhile(async () => {
+            let stored = await this.state.storage.get("value");
+            // After initialization, future reads do not need to access storage.
+            this.value = stored || 0;
+        })
     }
 
     // Handle HTTP requests from clients.
     async fetch(request) {
-        // Make sure we're fully initialized from storage.
-        if (!this.initializePromise) {
-            this.initializePromise = this.initialize();
-        }
-        await this.initializePromise;
-        // this.value will retain its state until this object is evicted from memory
         ...
     }
 }
 ```
 
+<Aside type="note" header="Built-in Caching">
+
+The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. So, instead of writing initialization code like above, you could simply `get("value")` whenever you need it, and rely on the built-in cache to make this fast. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+
+</Aside>
+
 ### WebSockets in Durable Objects
 
-As part of Durable Objects, we've made it possible for Workers to act as WebSocket endpoints -- including as a client or as a server. Previously, Workers could proxy WebSocket connections on to a back-end server, but could not speak the protocol directly.
+As part of Durable Objects, we've made it possible for Workers to act as WebSocket endpoints – including as a client or as a server. Previously, Workers could proxy WebSocket connections on to a back-end server, but could not speak the protocol directly.
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
@@ -351,7 +328,7 @@ Currently, Durable Objects do not migrate between locations after initial creati
 
 Using Durable Objects will often add response latency, as the request must be forwarded to the point-of-presence where the object is located.
 
-While Durable Objects already perform well for many kinds of tasks, we have lots of performance tuning to do. Expect performance (latency, throughput, overhead, etc.) to improve over the beta period -- and if you observe a performance problem, please tell us about it!
+While Durable Objects already perform well for many kinds of tasks, we have lots of performance tuning to do. Expect performance (latency, throughput, overhead, etc.) to improve over the beta period – and if you observe a performance problem, please tell us about it!
 
 ## Example - Counter
 
@@ -380,29 +357,16 @@ async function handleRequest(request, env) {
 export class Counter {
     constructor(state, env) {
         this.state = state;
-    }
-
-    async initialize() {
-        let stored = await this.state.storage.get("value");
-        this.value = stored || 0;
+        // `blockConcurrencyWhile()` ensures no requests are delivered until
+        // initialization completes.
+        this.state.blockConcurrencyWhile(async () => {
+            let stored = await this.state.storage.get("value");
+            this.value = stored || 0;
+        })
     }
 
     // Handle HTTP requests from clients.
     async fetch(request) {
-        // Make sure we're fully initialized from storage.
-        if (!this.initializePromise) {
-            this.initializePromise = this.initialize().catch((err) => {
-                // If anything throws during initialization then we need to be
-                // sure that a future request will retry initialize().
-                // Note that the concurrency involved in resetting this shared
-                // promise on an error can be tricky to get right -- we don't
-                // recommend customizing it.
-                this.initializePromise = undefined;
-                throw err
-            });
-        }
-        await this.initializePromise;
-
         // Apply requested action.
         let url = new URL(request.url);
         let currentValue = this.value;
