@@ -71,7 +71,7 @@ The work needed to create this application is split into three tasks:
 
 1. Write data to KV
 2. Rendering data from KV
-3. Adding todos from the UI
+3. Adding todos from the application UI
 
 For the remainder of this tutorial you will complete each task, iterating on your application, and then publish it to your own domain.
 
@@ -161,9 +161,9 @@ async function getTodos(request) {
 
 ### Rendering data from KV
 
-Given the presence of data in your code, which is the cached data object for your application, take this data and make it available on screen.
+Given the presence of data in your code, which is the cached data object for our application, you should take this data and render it in a user interface.
 
-In your Workers script, make a new `html` variable and use it to build up a static HTML template that you can serve to the client. In `handleRequest`, construct a new `Response` with a `Content-Type: text/html` header and serve it to the client:
+To do this, make a new `html` variable in your Workers script and use it to build up a static HTML template that you can serve to the client. In `handleRequest`, construct a new `Response` with a `Content-Type: text/html` header and serve it to the client:
 
 ```js
 ---
@@ -283,7 +283,7 @@ async function handleRequest(request) {
 
 ### Adding todos from the UI
 
-At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining task is creating todos from inside the UI. You know that you can add todos using the KV API — you could update the cache by saying `TODOS.put(newData)`.
+At this point, you have built a Cloudflare Worker that takes data from Cloudflare KV and renders a static page based on that Worker. That static page reads data and generates a todo list based on that data. The remaining task is creating todos from inside the application UI. You know that you can add todos using the KV API — update the cache by running `TODOS.put(newData)`.
 
 To update a todo item, you will add a second handler in our Workers script, designed to watch for `PUT` requests to `/`. When a request body is received at that URL, the worker will send the new todo data to our KV store.
 
@@ -426,7 +426,7 @@ const html = todos => `
 
 With the client-side code in place, deploying the new version of the function should put all these pieces together. The result is an actual dynamic todo list.
 
-### Updating todos from the UI
+### Updating todos from the application UI
 
 For the final piece of our todo list, you need to be able to update todos — specifically, marking them as completed.
 
