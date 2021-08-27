@@ -155,3 +155,10 @@ Specify the protocol used to establish a connection between `cloudflared` and th
 | `logfile value` | `TUNNEL_LOGFILE` |
 
 Save application log to this file. Mainly useful for reporting issues.
+
+## `region`
+
+Allows you to choose the regions to which connections are established. Omit or leave empty to connect to the global region. Set `--region=us` to route all connections through us region 1 and us region 2.
+
+
+
