@@ -7,7 +7,7 @@ pcx-content-type: tutorial
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
 
-# Build a To-Do list JAMstack app
+# Build a To-Do list JAMstack application
 
 <TutorialsBeforeYouStart/>
 
