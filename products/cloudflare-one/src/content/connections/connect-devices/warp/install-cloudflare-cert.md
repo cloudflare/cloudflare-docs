@@ -323,6 +323,7 @@ export REQUESTS_CA_BUNDLE=${CERT_PATH}
  filter.lfs.required=true
  credential.helper=manager
  ```
+ 
 1. The `http.sslcainfo` defines the CA Certificate store. Update this to append the Cloudflare certificate to the CA bundle by running this command:
 
  ```git
