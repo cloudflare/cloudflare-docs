@@ -130,6 +130,7 @@ Given the presence of data in the cache and the assumption that your cache is ev
 ```js
 ---
 filename: index.js
+lines: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 ---
 const defaultData = {
   todos: [
