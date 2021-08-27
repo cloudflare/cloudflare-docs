@@ -29,7 +29,7 @@ To start from scratch to create a Workers Site, follow these steps:
   $ wrangler dev
   ```
 
-5. Decide where you’d like to publish your site to: [a workers.dev subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or your [personal domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare.
+5. Decide where you would like to publish your site to: [a workers.dev subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or your [personal domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare.
 
   Then, update your `wrangler.toml`:
 
