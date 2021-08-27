@@ -28,7 +28,11 @@ Whether you are exposing an application or a network on the Internet, it is comm
 | `tunnel:` | The tunnel UUID |
 | `credentials-file:` | The path to your tunnel’s credentials file |
 
+<Aside type='note'>
+
 Adding these keys to the configuration file is equivalent to running the `cloudflared tunnel --config /config/file/path/config.yaml run <NAME>` command. Leave these keys out if you plan on having more than one tunnel referencing the same configuration file.
+
+</Aside>
 
 If you’re [exposing a private network](/connections/connect-apps/configuration/private-networks), you need to add the `warp-routing` key:
 
@@ -44,19 +48,23 @@ By configuring ingress rules in the configuration file, you can specify which lo
 
 ## Creating a configuration file
 
-Before you run a tunnel, ensure you have created a configuration file for `cloudflared` to know what configuration to follow when routing traffic through the tunnel. When routing a tunnel, you can either reference an existing configuration file, or create a new one in your `.cloudflared` directory using any text editor.
+Before you run a tunnel, ensure you have created a configuration file for `cloudflared` to know what configuration to follow when routing traffic through the tunnel. When running a tunnel, you can either reference an existing configuration file, or create a new one in your `.cloudflared` directory using any text editor.
 
 For example, to create a configuration file in the [default directory](#storing-a-configuration-file) with vim:
 
-1. First, `cd` into your system's default directory.
-1. Next, open vim and type in the necessary [keys and values](#keys-and-values).
-1. Name and save your file by typing `:wq file-name.yaml`.
+1. `cd` into your system's default directory for `cloudflared`.
+1. Open vim and type in the necessary [keys and values](#keys-and-values).
+1. Name and save your file by typing `:wq file-name.yaml` and exit vim.
 
-Your file has now been created in your default directory.
+Your file has now been created in your default directory. Confirm that the configuration file has been successfully created by running:
+
+```sh
+$ cat config.yml 
+```
 
 ## Storing a configuration file
 
-`cloudflared` will examine default directories for config files. 
+It is important to note that `cloudflared` will automatically look for the configuration file in default directories. 
 
 * On Windows the default directory is `%USERPROFILE%\.cloudflared`.
 * On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared`, and `/usr/local/etc/cloudflared`, in that order.
@@ -65,18 +73,4 @@ If needed, you can use `--config` to point to a non-standard YAML file location:
 
 ```sh
 $ cloudflared tunnel --config tunnels/config.yml run
-```
-
-An example `config.yml` for the above command could look like:
-
-```text
-hostname: tunnel.yourdomain.com
-url: http://localhost:8000
-logfile: /var/log/cloudflared.log
-```
-
-Flags that don't expect any value (such as `--hello-world`) should be specified as boolean true in the YAML:
-
-```text
-hello-world: true
 ```
