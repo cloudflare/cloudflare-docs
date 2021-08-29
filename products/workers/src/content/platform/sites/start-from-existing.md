@@ -45,10 +45,10 @@ Once you have a site generated, follow these steps:
 4. You can preview your site by running:
 
   ```sh
-  $ wrangler preview --watch
+  $ wrangler dev
   ```
 
-5. Decide where you’d like to publish your site to: [a workers.dev subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or your [personal domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare.
+5. Decide where you would like to publish your site to: [a workers.dev subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or your [personal domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare.
 
   Then, update your `wrangler.toml`:
 

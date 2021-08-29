@@ -105,9 +105,9 @@ $ tree wp-static
 
 To preview and deploy our application, we need to fill out `wrangler.toml` — the configuration file for this project. Most of the file has been pre-filled, but you need to specify your `account_id` and where you want to deploy your application. Fill out the [`account_id`](/get-started/guide#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
 
-Using Wrangler’s preview feature, we can quickly upload a version of our site to the Cloudflare Workers preview service, and make sure that the static export looks like we’d expect. Running `wrangler preview` will upload your static site and preview it in a browser window.
+Using Wrangler’s preview feature, you can quickly upload a version of your site to the Cloudflare Workers preview service and check that the static export looks as expected. Running `wrangler dev` will upload your static site and preview it in a browser window.
 
-When your site looks correct in Wrangler’s preview, you can move onto publishing your project to a domain. For a guide on how to do this, check out [Getting started](/get-started/guide#6-configure-your-project-for-deployment).
+When your site looks correct in Wrangler’s preview, you can move onto publishing your project to a domain. For a guide on how to do this, check out [Get started](/get-started/guide#6-configure-your-project-for-deployment).
 
 [![Demo site](./media/wordpress--demo.png)](https://wp-static.signalnerve.workers.dev)
 
