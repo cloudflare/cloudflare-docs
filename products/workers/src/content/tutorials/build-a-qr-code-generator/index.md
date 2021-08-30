@@ -184,7 +184,7 @@ async function generate(request) {
 
 ### Testing in an application UI
 
-The serverless function will work if a user sends a `POST` request to a route, but it would be great to _also_ be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `500` response is returned. The new version of `handleRequest` should return a new `Response` with a static HTML body, instead of the `500` error:
+The serverless function will work if a user sends a `POST` request to a route, but it would be great to _also_ be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `handleRequest` should return a new `Response` with a static HTML body, instead of the `405` error:
 
 ```js
 ---
