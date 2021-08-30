@@ -21,10 +21,10 @@ The descriptions below detail the fields available for `gateway_dns`.
 | Location |Name of the location the DNS query is coming from. Location is created by the customer. | string |`7bdc7a9c-81d3-4816-8e56-de1acad3dec5` |
 | MatchedCategoryIDs|ID or IDs of category that the domain was matched with the policy  | array[int] | `[7,12,28,122,129,163]`  |
 | Policy | Name of the policy that was applied (if any) | string |`7bdc7a9c-81d3-4816-8e56-de1acad3dec5` |
-| Protocol |The protocol used for the DNS query by the client, for example UDP, TCP, DoH, DoT, WARP | string |udp |
+| Protocol |The protocol used for the DNS query by the client, for example UDP, TCP, DoH, DoT, WARP | string | `udp` |
 | QueryCategoryIDs  |ID or IDs of category that the domain belongs to | array[int] |`[7,12,28,122,129,163]`  |
-| QueryName  | The query name | string |`outblew.com` |
-| QueryNameReversed | The query name in reverse  | string |`com.outblew` |
+| QueryName  | The query name | string |`example.com` |
+| QueryNameReversed | The query name in reverse  | string |`com.example` |
 | QuerySize  | The size of the DNS query in bytes  | int |`151` |
 | QueryType  |The type of DNS query, for example, A, AAAA, MX, TXT, etc.  | string | `A`  |
 | RData  |The rdata objects, for example, `type` or `data`  | array[object]|`{"type":"5","data":"dns-packet-placeholder..."}`|
