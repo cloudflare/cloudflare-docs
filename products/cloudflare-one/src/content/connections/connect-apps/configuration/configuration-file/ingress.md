@@ -8,7 +8,7 @@ pcx-content-type: reference
 You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Tunnel.
 
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
-By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/config), you can specify which local services a request should be proxied to.
+By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/configuration-file), you can specify which local services a request should be proxied to.
 
 You can define ingress rules in the configuration file.
 
