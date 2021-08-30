@@ -7,15 +7,16 @@ title: Gateway DNS
 # Gateway DNS
 
 The descriptions below detail the fields available for `gateway_dns`.
+
 <TableWrap>
 
 | Field | Value | Type | Example values |
 |----|----|----|----|
-| ColoID | The ID of the data center that received the DNS query | int | `46`, `72`, `397`, etc. |
+| ColoID | The ID of the data center that received the DNS query | int | `46`, `72`, `397` |
 | ColoName |The name of the data center that received the DNS query | string |`SJC`, `MIA`, `IAD` |
-| Datetime | The date and time the corresponding DNS query was made | int or string|`2021-07-27T00:01:07Z` |
+| Datetime | The date and time the corresponding DNS query was made | int or string |`2021-07-27T00:01:07Z` |
 | DeviceID | UUID of the device where the HTTP request originated from | string |`dad71818-0429-11ec-a0dc-000000000000` |
-| DstIP  | The destination IP address the DNS query was made to  | string |`192.237.000.000` |
+| DstIP  | The destination IP address the DNS query was made to  | string |`104.16.132.2290` |
 | DstPort | The destination port used at the edge. The port changes based on the protocol used by the DNS query.| int |`0`  |
 | Email | Email used to authenticate the client |string |`user@sample.com`|
 | Location |Name of the location the DNS query is coming from. Location is created by the customer. | string |`7bdc7a9c-81d3-4816-8e56-000000000000` 
@@ -26,10 +27,10 @@ The descriptions below detail the fields available for `gateway_dns`.
 | QueryName  | The query name | string |`example.com` |
 | QueryNameReversed | The query name in reverse  | string |`com.example` |
 | QuerySize  | The size of the DNS query in bytes  | int |`151` |
-| QueryType  |The type of DNS query, for example, A, AAAA, MX, TXT, etc.  | string | `A`  |
+| QueryType  |The type of DNS query, for example, A, AAAA, MX, or TXT.  | string | `A`  |
 | RData  |The rdata objects, for example, `type` or `data`  | array[object]|`{"type":"5","data":"dns-packet-placeholder..."}`|
-| ResolverDecision  | Result of the DNS query. | int |`overrideForSafeSearch`  |
-| SrcIP  | The source IP address making the DNS query | string |`192.124.000.000` |
+| ResolverDecision  | Result of the DNS query | int |`overrideForSafeSearch`  |
+| SrcIP  | The source IP address making the DNS query | string |`104.16.132.229` |
 | SrcPort | The port used by the client when the DNS query was sent | int |`0`  |
 | UserID | User identity where the HTTP request originated from | string |`00000000-0000-0000-0000-000000000000` |
 
