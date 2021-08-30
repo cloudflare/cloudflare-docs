@@ -1,7 +1,6 @@
 ---
-order: 11
+order: 1
 pcx-content-type: reference
-hidden: true
 ---
 
 # Ingress rules
@@ -9,9 +8,9 @@ hidden: true
 You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Tunnel.
 
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
-By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/config), you can specify which local services a request should be proxied to.
+By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/configuration-file), you can specify which local services a request should be proxied to.
 
-You can define ingress rules inside of the configuration file.
+You can define ingress rules in the configuration file.
 
 ## Requirements
 
@@ -19,7 +18,7 @@ Configuration files that contain ingress rules must always include a catch-all r
 
 In the following example, `- service: http_status:404` serves as the catch-all rule for the file.
 
-The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command and the path to the credentials file can be excluded if it is located at the default filepath.
+The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command, and the path to the credentials file can be excluded if it is located at the default file path.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -35,13 +34,13 @@ ingress:
 
 ## Matching traffic
 
-When `cloudflared` gets an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both.
+When `cloudflared` receives an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both.
 
-If a rule doesn't specify a hostname, all hostnames will be matched. If a rule doesn't specify a path, all paths will be matched.
+If a rule does not specify a hostname, all hostnames will be matched. If a rule does not specify a path, all paths will be matched.
 
 The last rule you list in the config file must be a catch-all rule that matches all traffic.
 
-This is an example config file that specifies several different rules:
+This is an example config file that specifies several rules:
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -64,7 +63,7 @@ ingress:
 
 ## Supported protocols
 
-In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and unix sockets. See a [list of supported protocols](/applications/non-http).
+In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and Unix sockets. See a [list of supported protocols](/applications/non-http).
 
 You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Cloudflare Tunnel protocol.
 
@@ -90,23 +89,23 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 
 | Service | Description | Example `service` value |
 |--|--|--|--|
-| HTTP/S | Incoming HTTP requests are proxied directly to your local service | `https://localhost:8000` |
-| HTTP/S over unix socket | Just like HTTP/S, but using a unix socket instead | `unix:/home/production/echo.sock` |
+| HTTP/S | Incoming HTTP requests are proxied directly to your local service. | `https://localhost:8000` |
+| HTTP/S over Unix socket | Just like HTTP/S, but using a Unix socket instead. | `unix:/home/production/echo.sock` |
 | TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
 | SSH | SSH connections are proxied to your local service. [Learn more](/tutorials/ssh). | `ssh://localhost:22` |
 | RDP | RDP connections are proxied to your local service. [Learn more](/tutorials/rdp). | `rdp://localhost:3389` |
 | kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
-| Hello World | Test server for validating your Cloudflare Tunnel setup | `hello_world` |
-| HTTP status | Responds to all requests with the given HTTP status | `http_status:404` |
+| Hello World | Test server for validating your Cloudflare Tunnel setup. | `hello_world` |
+| HTTP status | Responds to all requests with the given HTTP status. | `http_status:404` |
 
 ## Single-service configuration
 
-If you need to proxy traffic to only one local service, you can do so using the config file. As an alternative, you can set up single-service configurations using command line flags.
+If you need to proxy traffic to only one local service, you can do so using the config file. As an alternative, you can set up single-service configurations using command-line flags.
 
 This is an example of a single service configured on the command line:
 
 ```bash
-cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
+$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 ```
 
 ## Validating your configuration
@@ -117,7 +116,7 @@ To validate the ingress rules in your configuration file, run:
 $ cloudflared tunnel ingress validate
 ```
 
-This will ensure that the set of ingress rules specified in your config file is **valid**.
+This will ensure that the set of ingress rules specified in your config file is valid.
 
 ## Testing your configuration
 
@@ -131,9 +130,9 @@ Matched rule #3
 	service: https://localhost:8000
 ```
 
-## Origin configurations
+## Advanced configurations
 
-You can define the way that `cloudflare` sends requests to each service by specifying additional configuration options. The following example sets a 30-second connection timeout for all services except for one.
+You can define the way that `cloudflared` sends requests to each service by specifying additional configuration options. The following example sets a 30-second connection timeout for all services except for one.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -161,150 +160,108 @@ ingress:
 
 You can use the following configuration options inside of an ingress rule.
 
-- [connectTimeout](#connectTimeout)
-- [tlsTimeout](#tlsTimeout)
-- [tcpKeepAlive](#tcpKeepAlive)
-- [noHappyEyeballs](#noHappyEyeballs)
-- [keepAliveConnections](#keepAliveConnections)
-- [keepAliveTimeout](#keepAliveTimeout)
-- [httpHostHeader](#httpHostHeader)
-- [originServerName](#originServerName)
-- [caPool](#caPool)
-- [noTLSVerify](#noTLSVerify)
-- [disableChunkedEncoding](#disableChunkedEncoding)
-- [proxyAddress](#proxyAddress)
-- [proxyPort](#proxyPort)
-- [proxyType](#proxyType)
-
-<div id="connectTimeout">
+- [connectTimeout](#connecttimeout)
+- [tlsTimeout](#tlstimeout)
+- [tcpKeepAlive](#tcpkeepalive)
+- [noHappyEyeballs](#nohappyeyeballs)
+- [keepAliveConnections](#keepaliveconnections)
+- [keepAliveTimeout](#keepalivetimeout)
+- [httpHostHeader](#httphostheader)
+- [originServerName](#originservername)
+- [caPool](#capool)
+- [noTLSVerify](#notlsverify)
+- [disableChunkedEncoding](#disablechunkedencoding)
+- [proxyAddress](#proxyaddress)
+- [proxyPort](#proxyport)
+- [proxyType](#proxyyype)
 
 ### connectTimeout
-</div>
 
 Default: `30s`
 
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to
-establish TLS, which is controlled by [tlsTimeout]({{< ref "#tlsTimeout" >}}).
-
-<div id="tlsTimeout">
+establish TLS, which is controlled by [tlsTimeout](#tlstimeout).
 
 ### tlsTimeout
-</div>
 
 Default: `10s`
 
 Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server.
 
-<div id="tcpKeepAlive">
-
 ### tcpKeepAlive
-</div>
 
 Default: `30s`
 
 The timeout after which a TCP keepalive packet is sent on a connection between Tunnel and the origin server.
 
-<div id="noHappyEyeballs">
-
 ### noHappyEyeballs
-</div>
 
 Default: `false`
 
 Disable the "happy eyeballs" algorithm for IPv4/IPv6 fallback if your local network has misconfigured one of the protocols.
 
-<div id="keepAliveConnections">
-
 ### keepAliveConnections
-</div>
 
 Default: `100`
 
 Maximum number of idle keepalive connections between Tunnel and your origin. This does not restrict the total number of concurrent connections.
 
-<div id="keepAliveTimeout">
-
 ### keepAliveTimeout
-</div>
-
+	
 Default: `1m30s`
 
 Timeout after which an idle keepalive connection can be discarded.
 
-<div id="httpHostHeader">
-
 ### httpHostHeader
-</div>
 
 Default: `""`
 
-Sets the HTTP Host header on requests sent to the local service.
-
-<div id="originServerName">
+Sets the HTTP `Host` header on requests sent to the local service.
 
 ### originServerName
-</div>
 
 Default: `""`
 
 Hostname that `cloudflared` should expect from your origin server certificate.
 
-<div id="caPool">
-
 ### caPool
-</div>
 
 Default: `""`
 
-Path to the CA for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
-
-<div id="noTLSVerify">
+Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
 
 ### noTLSVerify
-</div>
 
 Default: `false`
 
 Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 
-<div id="disableChunkedEncoding">
-
 ### disableChunkedEncoding
-</div>
 
 Default: `false`
 
 Disables chunked transfer encoding. Useful if you are running a WSGI server.
 
-<div id="proxyAddress">
-
 ### proxyAddress
-</div>
 
 Default: `127.0.0.1`
 
-`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying e.g. SSH or RDP.
+`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures the listen address for that proxy.
 
-<div id="proxyPort">
-
 ### proxyPort
-</div>
 
 Default: `0`
 
-`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying e.g. SSH or RDP.
+`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures the listen port for that proxy. If set to zero, an unused port will randomly be chosen.
 
-<div id="proxyType">
-
 ### proxyType
-</div>
 
 Default: `""`
 
-`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying e.g. SSH or RDP.
-This configures what type of proxy will be started. Valid options are
+`cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
+This configures what type of proxy will be started. Valid options are:
 
- - "" for the regular proxy
- - "socks" for a SOCKS5 proxy. See this [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
+ - `""` for the regular proxy
+ - `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
