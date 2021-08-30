@@ -8,7 +8,7 @@ The `Request` interface represents an HTTP request, and is part of the Fetch API
 
 ## Background
 
-The most common way you’ll encounter a `Request` object is as a property of an incoming `FetchEvent`.
+The most common way you will encounter a `Request` object is as a property of an incoming `FetchEvent`.
 
 ```js
 ---
@@ -39,11 +39,11 @@ addEventListener("fetch", event => {
 })
 ```
 
-The global `fetch` method itself invokes the `Request` constructor, thus the [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to `fetch`.
+The global `fetch` method itself invokes the `Request` constructor. The [`RequestInit`](#requestinit) and [`RequestInitCfProperties`](#requestinitcfproperties) types defined below also describe the valid parameters that can be passed to `fetch`.
 
 <Aside header="Learn more">
 
-Read [Understanding the FetchEvent Lifecycle](/learning/fetch-event-lifecycle) for a deeper understanding of these fundamental Workers concepts.
+Review [Understanding the FetchEvent Lifecycle](/learning/fetch-event-lifecycle) for a deeper understanding of these fundamental Workers concepts.
 
 </Aside>
 
@@ -119,11 +119,11 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 - `cacheTtl` <Type>number</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two page rules: [“Edge Cache TTL”](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [“Cache Level” (to “Cache Everything”)](https://support.cloudflare.com/hc/en-us/articles/200172266).
+  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two page rules: [“Edge Cache TTL”](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [“Cache Level” (to “Cache Everything”)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. 
 
 - `cacheTtlByStatus` <Type>{ [key: string]: number }</Type> <PropMeta>optional</PropMeta>
 
-  - This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`.
+  - This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all.
 
 - `minify` <Type>{ javascript?: boolean; css?: boolean; html?: boolean; }</Type> <PropMeta>optional</PropMeta>
 
