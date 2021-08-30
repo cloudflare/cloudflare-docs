@@ -113,3 +113,5 @@ fetch(request, {
 ```
 
 This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/runtime-apis/request#requestinitcfproperties).
+
+</ContentColumn>
