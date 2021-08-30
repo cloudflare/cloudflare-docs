@@ -430,7 +430,7 @@ With the client-side code in place, deploying the new version of the function sh
 
 For the final piece of our todo list, you need to be able to update todos — specifically, marking them as completed.
 
-Luckily, a great deal of the infrastructure for this work is already in place. You can currently update the todo list data in our cache, as evidenced by our `createTodo` function. Performing updates on a todo, in fact, is much more of a client-side task than a Worker-side one.
+Luckily, a great deal of the infrastructure for this work is already in place. You can update the todo list data in the cache, as evidenced by our `createTodo` function. Performing updates on a todo, in fact, is much more of a client-side task than a Worker-side one.
 
 To start, the `populateTodos` function can be updated to generate a `div` for each todo. In addition, you will move the name of the todo into a child element of that `div`:
 
@@ -461,7 +461,7 @@ const html = todos => `
 
 So far, you have designed the client-side part of this code to handle an array of todos and render a list of simple HTML elements. There is a number of things that you have been doing that you have not quite had a use for yet – specifically, the inclusion of IDs and updating the todo's completed state. Luckily, these things work well together to actually support updating todos in the application UI.
 
-To start, it would be useful to signify the ID of each todo in the HTML. By doing this, you can then refer to the element later in order to correspond it to the todo in the JavaScript part of our code. Data attributes and the corresponding `dataset` method in JavaScript are a perfect way to implement this. When you generate your `div` element for each todo, you can attach a data attribute called todo to each `div`:
+To start, it would be useful to attach the ID of each todo in the HTML. By doing this, you can then refer to the element later in order to correspond it to the todo in the JavaScript part of our code. Data attributes and the corresponding `dataset` method in JavaScript are a perfect way to implement this. When you generate your `div` element for each todo, you can attach a data attribute called todo to each `div`:
 
 ```js
 ---
@@ -565,7 +565,7 @@ By completing this tutorial, you have created a pretty remarkable project. You h
 
 There is room for improvement, too, if you feel so inclined. For example, you may want to implement a better design (you can refer to a live version available at [todos.signalnerve.workers.dev](https://todos.signalnerve.workers.dev/)), or make additional improvements to security, speed, etc.
 
-You may also want to add user-specific caching. Right now, the cache key is always “data” – this means that any visitor to the site will share a same todo list with other visitors. Within your Worker, you could use values from the client request to create and maintain user-specific lists. For example, you may generate a cache key based on the requesting IP:
+You may also want to add user-specific caching. Right now, the cache key is always “data” – this means that any visitor to the site will share the same todo list with other visitors. Within your Worker, you could use values from the client request to create and maintain user-specific lists. For example, you may generate a cache key based on the requesting IP:
 
 ```js
 ---
@@ -605,7 +605,7 @@ async function updateTodos(request) {
 
 After making these changes and deploying the Worker one more time, your todo list application now includes per-user functionality while still taking full advantage of Cloudflare's edge network.
 
-The final version of your Workers script should look like this:
+The final version of your Worker script should look like this:
 
 ```js
 ---
