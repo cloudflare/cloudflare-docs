@@ -8,14 +8,14 @@ pcx-content-type: landing-page
 
 The Hypertext Transfer Protocol (HTTP) is used by clients such as web browsers to talk to servers in order to load websites. The performance of HTTP is an important factor when it comes to loading web pages quickly and efficiently.
 
-HTTP is a well established protocol that has several versions, with each adding
-features that improve performance over the older one. HTTP/1.1 and HTTP/2 are
+HTTP is a well established protocol that has several versions, and each version
+adds features that improve performance over the older one. HTTP/1.1 and HTTP/2 are
 widely deployed on the Internet today and rely on TCP and optionally TLS.
 
 [HTTP/3](https://blog.cloudflare.com/http3-the-past-present-and-future/) is the
 latest version that runs over the new transport protocol
 [QUIC](https://blog.cloudflare.com/the-road-to-quic/). [QUIC version 1](https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/)
-is published as RFC 9000 and is supported by Cloudflare, HTTP/3 connections using
+is published as RFC 9000 and is supported by Cloudflare. HTTP/3 connections using
 this version are identified with the label "h3".
 
 Prior to RFC publication, the [standardization activity](https://blog.cloudflare.com/http-3-from-root-to-tip/)
@@ -49,6 +49,6 @@ The following clients support HTTP/3:
 
 <Aside>
 
-__Note:__ Cloudflare supports multiple draft versions of HTTP/3 and QUIC. When using a client, please check that it supports one of the versions  listed in the [release notes](/release).
+__Note:__ Cloudflare supports multiple draft versions of HTTP/3 and QUIC. When using a client, verify that it supports one of the versions listed in the [release notes](/release).
 
 </Aside>
