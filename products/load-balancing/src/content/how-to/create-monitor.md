@@ -13,6 +13,7 @@ import MonitorCreateAPI from "../_partials/_monitor-create-api.md"
 <MonitorDefinition/>
 
 For more details about monitors, refer to [Monitors](/understand-basics/monitors).
+
 ---
 
 ## Via the dashboard

@@ -78,7 +78,7 @@ For step-by-step guidance, refer to [Create a load balancer](/how-to/create-load
 
 ## Properties
 
-For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in our API documentation.
+For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in the Cloudflare API documentation.
 
 ---
 

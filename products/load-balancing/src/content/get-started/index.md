@@ -92,7 +92,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 ## Step 3 — Confirm pool health
 
-Before directing any traffic to your pools, you want to make sure that your pools and monitors are set up correctly. The status of your health check will be *unknown* until the results of the first check are available.
+Before directing any traffic to your pools, make sure that your pools and monitors are set up correctly. The status of your health check will be *unknown* until the results of the first check are available.
 
 <details>
 <summary>Confirm pool health (dashboard)</summary>
