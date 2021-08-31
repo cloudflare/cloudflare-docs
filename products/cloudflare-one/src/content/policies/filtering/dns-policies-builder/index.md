@@ -55,7 +55,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Hostname | Is | `1.2.3.4` | Override |
+| Hostname | Is | `1.2.3.4` | Override |
 
 ### SafeSearch
 
@@ -65,7 +65,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Domain | Is | `google.com` | SafeSearch |
+| Domain | Is | `google.com` | SafeSearch |
 
 #### Test SafeSearch
 
@@ -109,14 +109,15 @@ Build expressions to determine the set of elements you want to impact with your 
 
 Gateway matches DNS traffic against the following selectors, or criteria:
 
-* [DNS Content Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-content-categories)
-* DNS DoH Subdomain
-* DNS Domain
-* DNS Host
-* DNS Query Rtype
+* [Content Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-content-categories)
+* DOH Subdomain
+* Domain
+* Host
+* Query Rtype
 * DNS Resolver IP
-* [DNS Security Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-security-categories)
-* DNS Src IP
+* Resolved IP
+* [Security Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-security-categories)
+* Source IP
 * Location
 * User Email
 * User Group Emails
@@ -128,12 +129,13 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 | Selector | Description |
 | -------- | ----------- |
-| DNS Subdomain | Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`. |
-| DNS Domain | Use this selector to match against a domain and all subdomains—for example, if you want to block example.com and all subdomains of example.com. |
-| DNS Host | Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com. |
-| DNS Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against — for example, you can choose to block A records for a domain but not MX records. |
-| DNS Resolver IP | Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. |
-| DNS Src IP | Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway. |
+| DOH Subdomain | Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`. |
+| Domain | Use this selector to match against a domain and all subdomains—for example, if you want to block example.com and all subdomains of example.com. |
+| Host | Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com. |
+| Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against — for example, you can choose to block A records for a domain but not MX records. |
+| DNS Resolver IP | Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. | 
+| Resolved IP | Use this selector to filter based on the IP addresses that the query resolves to. |
+| Source IP | Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway. |
 | Location | Use this selector to apply DNS policies to a specific location or set of locations. |
 
 </TableWrap>
@@ -173,7 +175,7 @@ To block a domain and all subdomains, you can create the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Domain | Is | `example.com` | Block |
+| Domain | Is | `example.com` | Block |
 
 ## Blocking a top-level domain
 
@@ -181,7 +183,7 @@ Just like you can choose to block a domain and all subdomains, you can block an 
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Domain | Matches Regex | `[.]net` | Block |
+| Domain | Matches Regex | `[.]net` | Block |
 
 Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the Internet.
 
