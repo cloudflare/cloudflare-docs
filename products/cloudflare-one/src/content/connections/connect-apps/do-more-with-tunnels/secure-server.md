@@ -10,7 +10,7 @@ Make sure you follow our [guide](/connections/connect-apps/install-and-setup/tun
 
 </Aside>
 
-Once you can successfully run a Tunnel to proxy incoming traffic to any number of services running locally on your origin, you can lock down your origin to block out potentially malicious incoming traffic. By disallowing all ingress traffic and allowing only egress traffic, you can avoid “poking holes” on your server's firewall while exposing only the services you specified in the Tunnel's `config.yml` to the outside world.
+Once you can successfully run a tunnel to proxy incoming traffic to any number of services running locally on your origin, you can lock down your origin to block out potentially malicious incoming traffic. By disallowing all ingress traffic and allowing only egress traffic, you can avoid “poking holes” on your server's firewall while exposing only the services you specified in the tunnel's `config.yml` to the outside world.
 
 ## Cloud VM instance-level firewall
 If you host your services on a Virtual Machine (VM) instance by a Cloud provider such as Google Cloud Platform (GCP), you may set up instance-level firewall rules to disallow all ingress traffic and allow only egress traffic. For example, on GCP, you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall defaults to “Block” unless a rule explicitly allows certain traffic.
@@ -55,7 +55,7 @@ $ sudo iptables -A INPUT -j DROP
 $ sudo iptables -L
 ```
 
-Run your Tunnel and check that all the services specified in `config.yml` should still be accessible to the outside world via the Tunnel, but not via the external IP address of the server. 
+Run your tunnel and check that all the services specified in `config.yml` should still be accessible to the outside world via the tunnel, but not via the external IP address of the server. 
 
 You can also:
 * [Secure your application with Cloudflare Access](/applications/configure-apps/self-hosted-apps)
