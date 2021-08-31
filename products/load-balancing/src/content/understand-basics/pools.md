@@ -1,11 +1,15 @@
 ---
-order: 13
+order: 0
 pcx-content-type: concept
 ---
 
+import PoolDefinition from "../_partials/_pool-definition.md"
+
 # Pools
 
-A Cloudflare Load Balancing pool represents a group of origin servers, each identified by their IP address or hostname. You can configure multiple pools, as well as failover priority (Pool A-> Pool B-> Pool C). If you're familiar with DNS terminology, think of a pool as a “record set,” except we only return addresses that are considered healthy. You can attach health checks to individual pools to tailor monitoring for collections of origin servers.
+<PoolDefinition/>
+
+If you are familiar with DNS terminology, think of a pool as a “record set,” except Cloudflare only returns addresses that are considered healthy. You can attach health checks to individual pools for customized monitoring.
 
 <Aside>
 
@@ -51,6 +55,12 @@ If you need an origin `Host` header override, add it when [creating](/create-loa
 - Publicly resolves to the origin address
 
 For details about how origin and monitor `Host` headers interact, see [Host header prioritization](/understand-basics/monitors#host-header-prioritization).
+
+---
+
+## Create pools
+
+For step-by-step guidance, refer to [Create pools](/how-to/create-pool).
 
 ---
 
