@@ -22,4 +22,12 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 ## Caching and performance
 
-Pages includes good caching defaults. That means that every time you deploy an asset to Pages, it remains cached on the Cloudflare CDN until your next deploy. As much as possible, Pages sets `ETag` and `If-None-Match` headers to allow clients to also cache content in their browsers — for more details on these behaviors, refer to the MDN [HTTP Caching page](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching). Pages will also serve Gzip and Brotli responses whenever possible.
+Pages includes good caching defaults. That means that every time you deploy an asset to Pages, it remains cached on the Cloudflare CDN until your next deploy. 
+
+<Aside type="note" header="Purging the cache">
+
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this quickly by clicking <a href="https://developers.cloudflare.com/cache/how-to/purge-cache#purge-everything">Purge Everything</a> in the "Caching" tab of your zone to ensure the latest build gets served."
+
+</Aside>
+
+As much as possible, Pages sets `ETag` and `If-None-Match` headers to allow clients to also cache content in their browsers — for more details on these behaviors, refer to the MDN [HTTP Caching page](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching). Pages will also serve Gzip and Brotli responses whenever possible.
