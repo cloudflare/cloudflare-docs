@@ -48,11 +48,11 @@ export class DurableObject {
 - <Code>state.blockConcurrencyWhile(callback<ParamType>Function()</ParamType>)</Code> <Type>Promise</Type>
 
   - Executes `callback()` (which may be `async`) while blocking any other events from being delivered to the object until the callback completes. This allows you to execute some code that performs I/O (such as a `fetch()`) with the guarantee that the object's state will not unexpectedly change as a result of concurrent events. All events that were not explicitly initiated as part of the callback itself will be blocked. This includes not only new incoming requests, but also responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
-    
+
     `state.blockConcurrencyWhile()` is especially useful inside the constructor of your object, to perform initialization that must occur before any requests are delivered.
-    
+
     If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, wrap the body of your callback in a `try`/`catch` block to ensure it cannot throw an exception.
-    
+
     The value returned by the callback becomes the value returned by `blockConcurrencyWhile()` itself.
 
 - `env`
@@ -91,7 +91,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 - <Code>get(keys<ParamType>Array&lt;string></ParamType>, options<ParamType>Object</ParamType>)</Code> <Type>Promise&lt;Map&lt;string, any>></Type>
 
   - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
-  
+
     __Supported options:__ Same as `get(key, options)`, above.
 
 - <Code>put(key<ParamType>string</ParamType>, value<ParamType>any</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise</Type>
@@ -113,15 +113,15 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
     </Definitions>
 
     <Aside type="note" header="Automatic write coalescing">
-    
+
     If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. That is, even in the case of a machine failure, either all of the puts will have been stored to disk, or none of them will have.
-    
+
     </Aside>
 
     <Aside type="note" header="Write buffer behavior">
-    
+
     `put()` returns a `Promise`, but most applications can simply discard this promise without `await`ing it. The `Promise` usually completes immediately anyway, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such apps should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the app, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
-    
+
     </Aside>
 
 - <Code>put(entries<ParamType>Object</ParamType>)</Code> <Type>Promise</Type>
@@ -187,7 +187,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 - <Code>transaction(closure<ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
-  
+
     <Aside type="note" header="Deprecated">
 
     Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless `allowConcurrency: true` is used). Hence, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.
@@ -251,6 +251,10 @@ let id = OBJECT_NAMESPACE.newUniqueId({jurisdiction: "eu"})
 ```
 
 Creates a new object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with ids created by `newUniqueId()` and are not currently compatible with ids created by `idFromName(name)`.
+
+<Aside header="ID logging">
+Note that object IDs will be logged outside of the EU even if you specify a jurisdiction.
+</Aside>
 
 Note that objects that are constrained to a jurisdiction may still be accessed by your Workers from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
 
