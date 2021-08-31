@@ -84,6 +84,7 @@ order: 1
             <td>
                 Block
             </td>
+        </tr>
         <tr>
             <td>
                 2021-08-31
