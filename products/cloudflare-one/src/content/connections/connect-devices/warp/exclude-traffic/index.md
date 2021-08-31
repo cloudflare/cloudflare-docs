@@ -5,7 +5,7 @@ pcx-content-type: concept
  
 # Exclude or include network traffic with WARP
 
-When the WARP client is deployed, all DNS requests and/or network traffic on the device are processed by Cloudflare by default. However, under certain circumstances, you may need to exclude DNS requests and/or explicitly exclude or include network traffic depending on your needs.
+When the WARP client is deployed, all DNS requests and/or network traffic on the device are processed by Cloudflare by default. However, under certain circumstances, you may need to exclude DNS requests and/or explicitly exclude or include network traffic.
 
 To do that, there are three settings you can configure:
 
