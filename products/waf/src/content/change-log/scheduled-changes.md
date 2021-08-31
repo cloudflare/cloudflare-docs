@@ -44,7 +44,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 …TBC
+                 …cfd0fac1
             </td>
             <td>
                 100135A
@@ -70,7 +70,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 …TBC
+                 …de5e2367
             </td>
             <td>
                 100135C
@@ -96,7 +96,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 …TBC
+                 …901dddd0
             </td>
             <td>
                 100139D
