@@ -7,9 +7,9 @@ You can create a pool within the [load balancer workflow](/how-to/create-load-ba
     - A name (must be unique)
     - The origin server address 
     - A [**Weight**](/understand-basics/weighted-load-balancing)
-    - (optional) A [hostname](/understand-basics/pools#per-origin-host-header-override) by clicking **Add host header**
+    - (Optional) A [hostname](/understand-basics/pools#per-origin-host-header-override) by clicking **Add host header**
 1. Repeat this process for additional origins in the pool.
-1. (optional) Set up coordinates for [Proximity Steering](/understand-basics/traffic-steering#proximity-steering) on the pool.
+1. (Optional) Set up coordinates for [Proximity Steering](/understand-basics/traffic-steering#proximity-steering) on the pool.
 1. On the origin pool, update the following information:
     - **Health Threshold**: Number of healthy origins for the pool as a whole to be considered *Healthy* and receive traffic based on pool order in a load balancer
     - **Monitor**: Attach a [monitor](/how-to/create-monitor)
