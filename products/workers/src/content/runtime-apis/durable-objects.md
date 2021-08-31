@@ -43,7 +43,7 @@ export class DurableObject {
   - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
 
 - `state.waitUntil(<Type>Promise</Type>)`
-  - While waitUntil is available within a Durable Object, it has no effect. Async I/O, like Promises, made from within a Durable Objects always keep the Durable Object alive until they complete, excepting failure scenarios.
+  - While `waitUntil` is available within a Durable Object, it has no effect. Asynchronous I/O, like Promises, made from within a Durable Objects always keep the Durable Object alive until they complete, excepting failure scenarios.
 
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
