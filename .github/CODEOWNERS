@@ -47,7 +47,7 @@ products/firewall/ @cloudflare/firewall @cloudflare/PCX
 products/fundamentals/ @cloudflare/PCX
 
 # HTTP/3
-products/http3/ @ConzorKingKong @cloudflare/PCX
+products/http3/ @ConzorKingKong @cloudflare/PCX @cloudflare/protocols
 
 # Image Resizing
 products/images/ @kornel @cloudflare/PCX
@@ -86,7 +86,7 @@ products/registrar/ @cloudflare/PCX
 products/rules/ @cloudflare/PCX
 
 # Spectrum
-products/spectrum/ @ConzorKingKong @cloudflare/PCX
+products/spectrum/ @ConzorKingKong @cloudflare/PCX @cloudflare/protocols
 
 # SSL
 products/ssl/ @ConzorKingKong @cloudflare/PCX
