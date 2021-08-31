@@ -55,7 +55,7 @@ Policies with Override actions allow you to respond to all DNS queries for a giv
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Hostname | Is | `1.2.3.4` | Override |
+| Hostname | Is | `1.2.3.4` | Override |
 
 ### SafeSearch
 
@@ -65,7 +65,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Domain | Is | `google.com` | SafeSearch |
+| Domain | Is | `google.com` | SafeSearch |
 
 #### Test SafeSearch
 
@@ -175,7 +175,7 @@ To block a domain and all subdomains, you can create the following policy:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Domain | Is | `example.com` | Block |
+| Domain | Is | `example.com` | Block |
 
 ## Blocking a top-level domain
 
@@ -183,7 +183,7 @@ Just like you can choose to block a domain and all subdomains, you can block an 
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
-| DNS Domain | Matches Regex | `[.]net` | Block |
+| Domain | Matches Regex | `[.]net` | Block |
 
 Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the Internet.
 
