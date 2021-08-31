@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 ---
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
 
 # Deploy a Zola site
 
@@ -65,6 +66,8 @@ You can leave this one blank for now.
 2. Do you want to enable Sass compilation? [Y/n]: Y
 3. Do you want to enable syntax highlighting? [y/N]: y
 4. Do you want to build a search index of the content? [y/N]: y
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

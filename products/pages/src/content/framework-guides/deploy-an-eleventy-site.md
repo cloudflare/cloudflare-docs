@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 ---
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md"
 
 # Deploy an Eleventy site
 
@@ -23,6 +24,7 @@ $ git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
 $ cd my-blog-name
 $ npm install
 ```
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

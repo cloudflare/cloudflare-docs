@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 ---
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
 
 # Deploy a Blazor Site  
   
@@ -29,6 +30,8 @@ chmod +x dotnet-install.sh
 ./dotnet5/dotnet --version
 ./dotnet5/dotnet publish -c Release -o output
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

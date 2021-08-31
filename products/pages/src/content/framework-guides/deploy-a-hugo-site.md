@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 ---
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
 
 # Deploy a Hugo site
 
@@ -43,6 +44,9 @@ $ choco install hugo --confirm
 The Hugo GitHub repository contains pre-built versions of the Hugo command-line tool for various operating systems, which can be found on [the Releases page](https://github.com/gohugoio/hugo/releases).
 
 For more instruction on installing these releases, refer to [Hugo's install guide](https://gohugo.io/getting-started/installing/).
+
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a new project
 

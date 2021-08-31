@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 ---
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
 
 # Deploy a Vue application
 
@@ -16,6 +17,7 @@ First, install the Vue CLI using NPM, and then run `vue create` in your terminal
 $ npm install -g @vue/cli
 $ vue create my-vue-app
 ```
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 
