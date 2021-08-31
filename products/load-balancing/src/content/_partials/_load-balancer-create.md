@@ -2,7 +2,7 @@
 1. Click **Create Load Balancer**.
 1. On the **Hostname** page:
     - Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/reference/dns-records).
-    - Toggle the orange cloud icon to update the [proxy mode](/understand-basics/proxy-modes), which affects how traffic is routed, which IP addresses are advertised, and more.
+    - Toggle the orange cloud icon to update the [proxy mode](/understand-basics/proxy-modes), which affects how traffic is routed and which IP addresses are advertised.
     - If you want [session-based load balancing](/understand-basics/session-affinity), toggle the **Session Affinity** switch.
 
 1. Click **Next**.

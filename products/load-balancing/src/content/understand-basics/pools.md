@@ -9,7 +9,7 @@ import PoolDefinition from "../_partials/_pool-definition.md"
 
 <PoolDefinition/>
 
-If you're familiar with DNS terminology, think of a pool as a “record set,” except we only return addresses that are considered healthy. You can attach health checks to individual pools for customized monitoring.
+If you are familiar with DNS terminology, think of a pool as a “record set,” except Cloudflare only returns addresses that are considered healthy. You can attach health checks to individual pools for customized monitoring.
 
 <Aside>
 

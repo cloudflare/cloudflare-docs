@@ -123,7 +123,7 @@ For troubleshooting a specific pool's health, use the [Pool Health Details](http
 If you notice that healthy pools are being marked unhealthy:
 
 - Review [how origins and pools become unhealthy](/understand-basics/health-details).
-- Refer to our [Troubleshooting FAQ](https://support.cloudflare.com/hc/articles/4407016052493).
+- Refer to the [Troubleshooting FAQ](https://support.cloudflare.com/hc/articles/4407016052493).
 
 ## Step 4 — Create a load balancer on a test subdomain
 
@@ -151,7 +151,7 @@ If you notice that healthy pools are being marked unhealthy:
 
 ### Route traffic to your load balancer
 
-Just as in the previous step, you want to make sure your load balancer is functioning as you expected before using it with live traffic.
+Just as in the previous step, make sure your load balancer is functioning as you expected before using it with live traffic.
 
 For example, if you had `test.example.com` as a testing subdomain, you could either:
 
@@ -162,7 +162,7 @@ Either option would use your load balancer to distribute requests going to `test
 
 ## Step 5 — Review load balancing analytics
 
-As you send sample requests to your test domain, review our [load balancing analytics](/reference/load-balancing-analytics) to make sure your load balancer is distributing requests like you were expecting.
+As you send sample requests to your test domain, review the [load balancing analytics](/reference/load-balancing-analytics) page to make sure your load balancer is distributing requests like you were expecting.
 
 ## Step 6 — Deploy your load balancer on live traffic
 
