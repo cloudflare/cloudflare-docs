@@ -29,6 +29,8 @@ Use the `matched-data-cli` tool to decrypt a payload in the command line.
 
     Replace `<PRIVATE_KEY>` with your private key and `<ENCRYPTED_PAYLOAD>` with the encrypted payload.
 
+    Note: The first `printf` command will make your private key visible in your command history.
+
 1. Run the following command to decrypt the payload:
 
     ```sh
