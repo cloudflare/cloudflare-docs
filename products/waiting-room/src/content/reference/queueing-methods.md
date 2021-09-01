@@ -26,13 +26,11 @@ Use this method when you want to reward visitors who get in the queue first and 
 
 ## Random
 
-Your waiting room chooses visitors at random to exit the waiting room and enter your application.
+When your application has open spots, your waiting room chooses visitors at random to exit the waiting room and enter your application.
 
 ![Random queueing method diagram](../static/random-queueing-method.png)
 
-More technically, your waiting room selects a random group of visitors at every refresh interval (currently 20 seconds). If there are open spots in your application, these users are allowed to enter.
-
-Use this method when you want to distribute products or services more equitably. Because they have more chances to be selected, earlier users do have a better chance of exiting the waiting room before the estimated wait time.
+Use this method when you want to distribute products or services more equitably. Because they have more chances to be selected, earlier users have a better chance of exiting the waiting room before the estimated wait time.
 
 ## Changing queueing methods
 
