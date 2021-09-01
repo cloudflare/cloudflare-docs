@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 With Deploy Hooks, you can trigger deployments using event sources beyond commits in your source repository. Each event source may obtain its own unique URL, which will receive HTTP POST requests in order to initiate new deployments. This feature allows you to integrate Pages with new or existing workflows. For example, you may:
 
-- Automatically deploy new builds whenever content in a Headless CMS system changes
+- Automatically deploy new builds whenever content in a Headless CMS changes
 - Implement a fully customized CI/CD pipeline, deploying only under desired conditions 
 - Schedule a CRON trigger to update your website on a fixed timeline
 
@@ -23,7 +23,8 @@ To configure your Deploy Hook, you must enter two key parameters:
 ![deploy hooks](deploy-hooks-configure.png)
 
 ## Using your Deploy Hook
-Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy. 
+Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy.
+
 ![deploy hooks](deploy-hooks-details.png)
 
 Every time a request is sent to your Deploy Hook, a new build will be triggered. Review the **Source** column of your deployment log to see which deployment were triggered by a Deploy Hook.  

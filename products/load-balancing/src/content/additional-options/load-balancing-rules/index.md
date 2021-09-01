@@ -10,7 +10,7 @@ Use load balancing rules to customize the behavior of your [load balancer](/unde
 
 ## More details
 
-You can [create Load Balancing rules](create-rules) whenever you create or edit a load balancer in **Traffic** > **Load Balancing**.
+You can [create Load Balancing rules](/additional-options/create-rules) whenever you create or edit a load balancer in **Traffic** > **Load Balancing**.
 
 As with Cloudflare [Firewall rules](https://developers.cloudflare.com/firewall/cf-firewall-rules), each Load Balancing rule is a combination of two elements: an [expression](expressions) and an [action](actions). Expressions define the criteria for an HTTP request to trigger an action. The action tells Cloudflare how to handle the request.
 
