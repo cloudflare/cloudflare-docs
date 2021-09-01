@@ -19,9 +19,9 @@ To enable a waiting room:
 
 ## Queue activation
 
-By default, an active waiting room only puts visitors in a queue when traffic reaches the thresholds defined in `Total active users` and `New users per minute`. 
+By default, an active waiting room only puts visitors in a queue when traffic reaches the thresholds defined in **Total active users** and **New users per minute**. 
 
-However, if you want all visitors to be queued — in preparation for a product release or other time-based event — use the `Queue All` option on a waiting room. So long as the waiting room is active and `Queue All` is enabled, no traffic will reach your application.
+However, if you want all visitors to be queued — in preparation for a product release or other time-based event — use the **Queue All** option on a waiting room. So long as the waiting room is active and **Queue All** is enabled, no traffic will reach your application.
 
 ### Queue visitors when necessary
 
