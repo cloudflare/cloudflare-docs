@@ -1,7 +1,7 @@
 module.exports = {
   product: "DDoS Protection",
   pathPrefix: "/ddos-protection",
-  productIconKey: "ddos-protection",
+  productIconKey: "waf",
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/ddos-protection",
   externalLinks: [
