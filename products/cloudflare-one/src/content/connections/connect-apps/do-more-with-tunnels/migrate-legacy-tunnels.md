@@ -4,11 +4,11 @@ pcx-content-type: how-to
 title: Migrate legacy tunnels
 ---
 
-# Migrate Legacy Tunnels to Named Tunnels
+# Migrate legacy tunnels to named tunnels
 
 <Aside type='note' header='Before you start'>
 
-* Download the latest version of `cloudflared`
+* [Download](/connections/connect-apps/install-and-setup/installation) the latest version of `cloudflared`
 * Obtain a new origin certificate by running `cloudflared login`. While named tunnels are scoped to an account, for legacy reasons the login page requires selecting a zone.
 
 </Aside>
