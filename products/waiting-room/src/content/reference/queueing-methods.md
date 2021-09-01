@@ -20,7 +20,7 @@ Your waiting room orders visitors according to when they entered the waiting roo
 
 ![FIFO diagram](../static/fifo-queueing-method.png)
 
-More technically, each user receives a [cookie](/reference/waiting-room-cookie) that contains a timestamp of when their request first hit an actively queueing waiting room. Cloudflare uses that timestamp to order visitors and provide the estimated wait time.
+Technically, each user receives a [cookie](/reference/waiting-room-cookie) that contains a timestamp of when their request first hit an actively queueing waiting room. Cloudflare uses that timestamp to order visitors and provide the estimated wait time.
 
 Use this method when you want to reward visitors who get in the queue first and wait longer, such as for sneaker drops, memorabilia sales, etc.
 
@@ -30,7 +30,7 @@ When your application has open spots, your waiting room chooses visitors at rand
 
 ![Random queueing method diagram](../static/random-queueing-method.png)
 
-Use this method when you want to distribute products or services more equitably. Because they have more chances to be selected, earlier users have a better chance of exiting the waiting room before the estimated wait time.
+Use this method when you want to distribute products or services more equitably. Earlier users have a better chance of exiting the waiting room before the estimated wait time because they have more chances to be selected.
 
 ## Changing queueing methods
 
