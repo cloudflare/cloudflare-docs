@@ -212,7 +212,7 @@ const html = `<!DOCTYPE html>
 `
 ```
 
-Add a `<script>` after the body that takes a `todos` array. For each `todo` in the array, create a `div` element and appends it to the `todos` HTML element:
+Add a `<script>` element at the end of the body content that takes a `todos` array. For each `todo` in the array, create a `div` element and appends it to the `todos` HTML element:
 
 ```js
 ---
