@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Universal SSL
 
-Cloudflare issues — and renews — free, publicly trusted SSL certificates to all Cloudflare domains. 
+Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all Cloudflare domains.
 
 When you proxy your traffic through Cloudflare, this process happens **automatically and within 24 hours of domain activation**. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
 
