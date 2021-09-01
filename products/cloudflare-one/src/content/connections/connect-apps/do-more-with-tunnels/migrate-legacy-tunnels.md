@@ -1,0 +1,52 @@
+---
+order: 1
+pcx-content-type: how-to
+title: Migrate legacy tunnels
+---
+
+# Migrate Legacy Tunnels to Named Tunnels
+
+<Aside type='note' header='Before you start'>
+
+* Download the latest version of `cloudflared`
+* Obtain a new origin certificate by running `cloudflared login`. While named tunnels are scoped to an account, for legacy reasons the login page requires selecting a zone.
+
+</Aside>
+
+Originally, a Cloudflare Tunnel connection corresponded to a DNS record in your account. Requests to that hostname hit Cloudflare’s network first and our edge sends those requests over the tunnel to your origin. However, fitting an outbound-only connection into a reverse proxy creates some ergonomic and stability hurdles. The original Cloudflare Tunnel architecture attempted to both manage DNS records and create connections. When connections became disrupted, Tunnel would recreate the entire deployment. Additionally, Argo Tunnel connections could not be treated like regular origin servers in Cloudflare’s control plane and had to be managed directly from the server-side software.
+
+Today, Cloudflare Tunnel’s architecture distinguishes between the persistent objects (DNS records, `cloudflared`) from the ephemeral objects (the connections). To do that, it assigns permanent names and UUIDs to tunnels, which makes them more stable and easier to use. Since the name and UUID for a tunnel do not change, your DNS record never needs to be cleaned up or recreated when Cloudflare Tunnel restarts. In the event of a restart, the enrolled instance of `cloudflared` connects back to that UUID address.
+
+To migrate your legacy tunnels to the named tunnels architecture:
+
+1. [Create a Tunnel](/connections/connect-apps/install-and-setup/tunnel-guide).
+
+1. [Route traffic](/connections/connect-apps/routing-to-tunnel) to your tunnel to create routes that your tunnel will serve.
+
+    * If your legacy tunnel was serving `tunnel.example.com`, you can follow the [DNS Record routing](/connections/connect-apps/routing-to-tunnel/dns) section to configure your named tunnel to serve `tunnel.example.com`.
+    * If you used to run legacy tunnel with the `--lb-pool` flag, follow the [Load Balancers routing](/connections/connect-apps/routing-to-tunnel/lb) section to set up your named tunnel as a load balancer origin.
+
+1. After configuring DNS/LB records for each zone you want to serve, follow the [Configure a Tunnel](/connections/connect-apps/configuration/configuration-file) instructions to create a config file with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if you used to run:
+
+    ```bash
+   $ cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000
+    ```
+
+    You can have an equivalent ingress rule:
+
+        ```text
+        ingress:
+        - hostname: tunnel.example.com
+        service: https://localhost:3000
+        - service: http_status:404
+        Note that the last rule is the catch-all rule and is required.
+    ```
+
+1. Next, [run your tunnel](/connections/connect-apps/run-tunnel).
+
+## Make sure everything works
+
+Once your migration is done, validate your new named tunnel by:
+
+1. Making sure the resource behind the tunnel is accessible
+1. Running `cloudflared tunnel info <NAME-or-UUID>` to confirm that the named tunnel exists
