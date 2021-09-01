@@ -19,12 +19,25 @@ Today, Cloudflare Tunnel’s architecture distinguishes between the persistent o
 
 To migrate your legacy tunnels to the named tunnels architecture:
 
-1. [Create a Tunnel](/connections/connect-apps/install-and-setup/tunnel-guide).
+1. [Create a Tunnel](/connections/connect-apps/install-and-setup/tunnel-guide#3-create-a-tunnel-and-give-it-a-name).
+
+    ```bash
+   $ cloudflared tunnel create <TUNNEL-NAME>
+    ```
 
 1. [Route traffic](/connections/connect-apps/routing-to-tunnel) to your tunnel to create routes that your tunnel will serve.
 
-    * If your legacy tunnel was serving `tunnel.example.com`, you can follow the [DNS Record routing](/connections/connect-apps/routing-to-tunnel/dns) section to configure your named tunnel to serve `tunnel.example.com`.
-    * If you used to run legacy tunnel with the `--lb-pool` flag, follow the [Load Balancers routing](/connections/connect-apps/routing-to-tunnel/lb) section to set up your named tunnel as a load balancer origin.
+    * If your legacy tunnel was serving `tunnel.example.com`, run this command to configure your named tunnel to also serve `tunnel.example.com`. For more information, refer to the [DNS Record routing](/connections/connect-apps/routing-to-tunnel/dns) section.
+
+   ```bash
+   $ cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
+   ```
+
+    * If you used to run your legacy tunnel with the `--lb-pool` flag, run this command to set up your named tunnel as a load balancer origin. For more information, refer to the [Load Balancers routing](/connections/connect-apps/routing-to-tunnel/lb) section.
+
+   ```bash
+   $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
+   ```
 
 1. After configuring DNS/LB records for each zone you want to serve, follow the [Configure a Tunnel](/connections/connect-apps/configuration/configuration-file) instructions to create a config file with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if you used to run:
 
