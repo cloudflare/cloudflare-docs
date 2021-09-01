@@ -1,6 +1,6 @@
 ---
 title: Interact with Cache in Workers
-pcx-content-type:
+pcx-content-type: concept
 ---
 
 # Interact with Cache in Workers
