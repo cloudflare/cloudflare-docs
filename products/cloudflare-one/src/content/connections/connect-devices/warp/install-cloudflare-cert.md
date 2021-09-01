@@ -8,9 +8,14 @@ pcx-content-type: how-to
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
-First, download the Cloudflare certificate [from this location](../../../static/documentation/connections/Cloudflare_CA.crt).
+
+First, download the Cloudflare certificate. The certificate is available both as a `.pem` and as a `.crt` file. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
+
+* [Download certificate (.crt)](../../../static/documentation/connections/Cloudflare_CA.crt)
+* [Download certificate (.pem)](../../../static/documentation/connections/Cloudflare_CA.pem)
 
 ### Verify the certificate fingerprint
+
 To verify your download, check that the certificate's thumbprint matches:
 
 #### SHA1
@@ -39,7 +44,7 @@ Installing the certificate in the Login keychain will result in only the logged 
 
 To install the certificate in **Keychain Access**:
 
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
 2. Double-click on the `.crt` file.
 
@@ -69,7 +74,7 @@ The root certificate is now installed and ready to be used.
 
 You can install the Cloudflare certificate on your terminal, too.
 
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+1. Download the Cloudflare certificate.
 1. Open Terminal.
 1. Launch the following command:
 
@@ -85,7 +90,7 @@ sudo cat Cloudflare_CA.crt >> /usr/local/etc/openssl/cert.pem
 
 ### iOS
 
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
  The device will show a message: *This website is trying to open Settings to how you a configuration profile. Do you want to allow this?*
 
@@ -130,9 +135,10 @@ Windows offers two options to install the certificate, each having a different i
 | Current User Store  | The logged in user      |
 | Local Machine Store | All users on the system |
 
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
 2. Right-click on the certificate file.
+
 3. Click **Open**.  
  If you see a Security Warning window, click **Open**.
 
@@ -160,7 +166,7 @@ The root certificate is now installed and ready to be used.
 
 ### Android
 
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
 2. Navigate to the **Settings** menu.
 
@@ -202,7 +208,7 @@ The root certificate is now installed and ready to be used.
 
 ### ChromeOS
 
-1. Download the Cloudflare certificate [here](../../../static/documentation/connections/Cloudflare_CA.crt).
+1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
 2. Navigate to your **ChromeOS Settings**.
 
@@ -252,7 +258,7 @@ The command to install the certificate with Python on Windows automatically incl
 
 1. Run the following command to update the bundle to include the Cloudflare certificate:
 
-```
+```bash
 gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
 ```
 
