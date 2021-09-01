@@ -21,7 +21,7 @@ If you would like to skip straight to the code, the final version of the codebas
 
 ## Generate
 
-Cloudflare’s command-line tool for managing Worker projects, Wrangler, supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
 
 In the command line, run the `wrangler generate` command to create your Worker project using Wrangler’s [worker-template](https://github.com/cloudflare/worker-template). Pass the project name “qr-code-generator”:
 
