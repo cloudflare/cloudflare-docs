@@ -12,7 +12,7 @@ Cloudflare offers options to customize the appearance of your waiting room:
 * [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
-* [Support mobile app traffic](/how-to/mobile-traffic): Toggle to also enable a JSON response with a user's status in the waiting room.
+* [Support mobile app traffic](/additional-options/mobile-traffic): Toggle to also enable a JSON response with a user's status in the waiting room.
 
 ## Default waiting room
 

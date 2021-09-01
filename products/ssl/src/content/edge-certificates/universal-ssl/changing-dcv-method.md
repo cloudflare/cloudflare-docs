@@ -149,6 +149,12 @@ curl -sX GET \
 
 The status: `active` means that the certificate has been deployed to Cloudflare’s edge network, and will be served as soon as HTTP traffic is proxied to Cloudflare.
 
+---
+
+## Update DCV method for an active certificate
+
+You cannot update the DCV method for an active certificate. To update the DCV method for a subdomain, wait until the DCV expires and then change the DCV method.
+
 --------
 
 ## API documentation

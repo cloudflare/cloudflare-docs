@@ -50,7 +50,7 @@ Since a waiting room [requires cookies](/reference/waiting-room-cookie), your mo
 
 To receive a JSON response, you first need to enable that option on your waiting room:
 
-- **Via the dashboard**: When [customizing a waiting room](/how-to/customize-waiting-room), toggle **JSON Response** to **On**.
+- **Via the dashboard**: When [customizing a waiting room](/additional-options/customize-waiting-room), toggle **JSON Response** to **On**.
 - **Via the API**: When [creating a waiting room](https://api.cloudflare.com/#waiting-room-create-waiting-room), set `json_response_enabled` to `true`.
 
 ## Step 3 — Get JSON data
