@@ -37,7 +37,7 @@ Wrangler templates are Git repositories. If you want to create your own template
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `qr-code-generator` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
-All Cloudflare Workers applications start by listening for `fetch` events. `fetch` events are triggered when a client makes a request to a Workers route. After a request is received by the Worker, your constructed response will return to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully-featured applications.
+All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully-featured applications.
 
 ```js
 ---
@@ -64,7 +64,7 @@ When a Worker receives a `fetch` event, the script must use `event.respondWith` 
 
 Any project you publish to Cloudflare Workers can make use of modern Javascript tooling like ES modules, NPM packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing serverless functions, you can use Workers to [build full applications](/tutorials/build-a-slackbot) using the same tooling and process as what you will be building in this tutorial.
 
-The QR code generator you will build in this tutorial will be a serverless function that runs at a single route and receives requests. Given text sent inside of that request (such as URLs, or strings), the function will encode the text into a QR code, and serve the QR code as a PNG response.
+The QR code generator you will build in this tutorial will be a serverless function that runs on a single route and receives requests. Each request will contain a text message (a URL, for example), which the function will encode into a QR code. The function will then respond with the QR code in a PNG image format.
 
 ### Handling requests
 
@@ -82,7 +82,7 @@ function handleRequest(request) {
 }
 ```
 
-If an incoming request is not a `POST`, the function returns `undefined`. Since your focus is only about incoming `POST` requests, return a new `Response` with a [405 status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405) if the incoming request is not a `POST`:
+Currently, if an incoming request is not a `POST`, the function will return `undefined`. However, a Worker always needs to return a `Response`. Since the function should only accept incoming `POST` requests, return a new `Response` with a [`405` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405) if the incoming request is not a `POST`:
 
 ```js
 ---
@@ -140,7 +140,7 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-To use the `qr-image` package, configure the `type` to `"webpack"`. This will tell Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. (Learn more about [`type` configuration](/cli-wrangler/configuration).)
+To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. (Learn more about [`type` configuration](/cli-wrangler/configuration).)
 
 ```toml
 ---
@@ -184,7 +184,7 @@ async function generate(request) {
 
 ### Testing in an application UI
 
-The serverless function will work if a user sends a `POST` request to a route, but it would be great to _also_ be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `handleRequest` should return a new `Response` with a static HTML body, instead of the `405` error:
+The serverless function will work if a user sends a `POST` request to a route, but it would be great to _also_ be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `handleRequest` should return a new `Response` with a static HTML document instead of the `405` error:
 
 ```js
 ---
