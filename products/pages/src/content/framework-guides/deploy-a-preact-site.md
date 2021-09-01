@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
 ---
+
 import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
 
 # Deploy a Preact site
@@ -18,6 +19,8 @@ Create a new project by running the [`npm init`](https://docs.npmjs.com/cli/v6/c
 $ npm init wmr your-project-name
 $ cd your-project-name
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 
