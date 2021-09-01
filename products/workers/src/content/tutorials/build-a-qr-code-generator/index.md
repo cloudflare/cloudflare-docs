@@ -17,7 +17,7 @@ In this tutorial, you will build and publish a serverless function that generate
 
 This guide will teach you how to build and publish serverless functions. This guide does not assume prior experience with serverless functions or Cloudflare Workers.
 
-If you would like to skip straight to the code, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take code provided in the example repository, customize it, and deploy it for use in your own projects.
+If you would like to skip straight to the code, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
 
 ## Generate
 
@@ -58,11 +58,11 @@ function handleRequest(request) {
 
 In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit `200` status code. 
 
-When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests, and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
+When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
 
 ## Build
 
-Any project you publish to Cloudflare Workers can make use of modern Javascript tooling like ES modules, NPM packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing serverless functions, you can use Workers to [build full applications](/tutorials/build-a-slackbot) using the same tooling and process as what you will be building in this tutorial.
+Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, NPM packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. In addition to writing serverless functions, you can use Workers to [build full applications](/tutorials/build-a-slackbot) using the same tooling and process as in this tutorial.
 
 The QR code generator you will build in this tutorial will be a serverless function that runs on a single route and receives requests. Each request will contain a text message (a URL, for example), which the function will encode into a QR code. The function will then respond with the QR code in a PNG image format.
 
@@ -97,7 +97,7 @@ function handleRequest(request) {
 }
 ```
 
-At this point, you have established the the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the “Hello worker!” response into a new function, `generate`, which will ultimately contain the bulk of our function’s logic:
+At this point, you have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the “Hello worker!” response into a new function, `generate`, which will ultimately contain the bulk of our function’s logic:
 
 ```js
 ---
@@ -131,7 +131,7 @@ function handleRequest(request) {
 
 ### Building a QR Code
 
-All projects deployed to Cloudflare Workers support NPM packages. This support makes it easy to rapidly build out functionality in your serverless functions. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text, and encode it into a QR code. The package supports generating the QR codes in a number of file formats (such as PNG, the default, and SVG), and configuring other aspects of the generated QR code. In the command line, install and save `qr-image` to your project’s `package.json`:
+All projects deployed to Cloudflare Workers support NPM packages. This support makes it easy to rapidly build out functionality in your serverless functions. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text and encode it into a QR code. The package supports generating the QR codes in a number of file formats (such as PNG, the default, and SVG), and configuring other aspects of the generated QR code. In the command line, install and save `qr-image` to your project’s `package.json`:
 
 ```sh
 ---
@@ -167,7 +167,7 @@ async function generate(request) {
 }
 ```
 
-By default, the QR code is generated as a PNG. Construct a new instance of `Response`, passing in the PNG data as the body, and a `Content-Type` header of `image/png`: this will allow browsers to properly parse the data coming back from your serverless function as an image:
+By default, the QR code is generated as a PNG. Construct a new instance of `Response`, passing in the PNG data as the body, and a `Content-Type` header of `image/png` — this will allow browsers to properly parse the data coming back from your serverless function as an image:
 
 ```js
 ---
