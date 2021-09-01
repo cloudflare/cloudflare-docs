@@ -10,7 +10,7 @@ The **queueing method** determines the order that visitors exit an active waitin
 
 <Aside type="note">
 
-Only certain customers can use queue methods besides First In First Out (FIFO). For more details, see our <a href="/plans">Plans</a> page.
+Only certain customers can use queue methods besides First In First Out (FIFO). For more details, refer to <a href="/plans">Plans</a> page.
 
 </Aside>
 
@@ -20,7 +20,7 @@ Your waiting room orders visitors according to when they entered the waiting roo
 
 ![FIFO diagram](../static/fifo-queueing-method.png)
 
-More technically, each user receives a [cookie](/reference/waiting-room-cookie) that contains a timestamp of when their request first hit an actively queueing waiting room. We use that timestamp to order visitors and provide the estimated wait time.
+More technically, each user receives a [cookie](/reference/waiting-room-cookie) that contains a timestamp of when their request first hit an actively queueing waiting room. Cloudflare uses that timestamp to order visitors and provide the estimated wait time.
 
 Use this method when you want to reward visitors who get in the queue first and wait longer, such as for sneaker drops, memorabilia sales, etc.
 
