@@ -16,6 +16,8 @@ The DDoS Protection Managed Rulesets provide comprehensive protection against a 
 * Traffic that causes an increase in origin errors
 * And more
 
+For more information, refer to [Available Managed Rulesets](/managed-rulesets).
+
 ## How does it work?
 
 To detect and mitigate DDoS attacks, Cloudflare’s [Autonomous Edge](https://blog.cloudflare.com/deep-dive-cloudflare-autonomous-edge-ddos-protection/) analyzes traffic samples such as HTTP request metadata, HTTP response metrics, and IP packet samples. The analysis is done “out-of-path”, which allows Cloudflare to asynchronously detect DDoS attacks without causing latency or impacting performance.
