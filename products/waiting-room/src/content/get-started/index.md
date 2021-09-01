@@ -1,6 +1,6 @@
 ---
 title: Get started
-order: 2
+order: 1
 pcx-content-type: tutorial
 ---
 
@@ -32,7 +32,7 @@ You can direct visitors to your high-traffic page:
 - Directly (via URL)
 - Indirectly (via a [Page Rule redirect](https://support.cloudflare.com/hc/articles/200172286))
 
-### Queue method
+### Queue activation
 
 When you [activate your waiting room](#step-3--activate-your-waiting-room), choose whether:
 - [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event
@@ -40,7 +40,7 @@ When you [activate your waiting room](#step-3--activate-your-waiting-room), choo
 
 ### Appearance (optional)
 
-Some customers can [customize the design](/how-to/customize-waiting-room) of their waiting room by editing the page HTML and CSS.
+Some customers can [customize the design](/additional-options/customize-waiting-room) of their waiting room by editing the page HTML and CSS.
 
 If you have this ability, think about how you want the page to appear.
 
@@ -52,7 +52,7 @@ Create your waiting room by:
 
 ## Step 3 — Activate your waiting room
 
-Depending on your [queue method](#queue-method), you may deploy your waiting room differently.
+Depending on your [queue activation](#queue-activation), you may deploy your waiting room differently.
 
 ### Queue some visitors
 
@@ -78,6 +78,6 @@ For more details on waiting room activation (including API parameters), see [Con
 ## Step 4 — Next steps
 
 After you have created and deployed your first waiting room, you might also want to:
-- [Test your waiting room](/how-to/test-waiting-room) before it goes live.
+- [Test your waiting room](/additional-options/test-waiting-room) before it goes live.
 - [Monitor your traffic](/how-to/monitor-waiting-room) in real time.
 - [Troubleshoot](/troubleshooting) potential issues.
