@@ -22,7 +22,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
 1. [Create a Tunnel](/connections/connect-apps/install-and-setup/tunnel-guide#3-create-a-tunnel-and-give-it-a-name).
 
     ```bash
-   $ cloudflared tunnel create <TUNNEL-NAME>
+    $ cloudflared tunnel create <TUNNEL-NAME>
     ```
 
 1. [Route traffic](/connections/connect-apps/routing-to-tunnel) to your tunnel to create routes that your tunnel will serve.
