@@ -477,9 +477,14 @@ const html = todos => `
       var todoContainer = document.querySelector("#todos")
       todoContainer.innerHTML = null
       window.todos.forEach(todo => {
-        // Create div
+        var el = document.createElement("div")
         el.dataset.todo = todo.id
-        // Create span, add todo.name, etc
+        
+        var name = document.createElement("span")
+        name.textContent = todo.name
+        
+        el.appendChild(name)
+        todoContainer.appendChild(el)
       })
     }
   </script>
