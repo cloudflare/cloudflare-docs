@@ -137,7 +137,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 // of a GraphQL-queried frontmatter property when
 // there are no md(x) files currently using it.
 // https://www.gatsbyjs.org/docs/schema-customization/#creating-type-definitions
-exports.createSchemaCustomization = ({ actions, schema }) => {
+exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
@@ -163,13 +163,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       pathPrefix: String
     }
   `
-  // const assetDef = [
-  //   schema.buildObjectType({
-  //     title: 'String',
-  //     path: 'String',
-  //     wrap: 'Boolean',
-  //     logoSVGContent: 'String'
-  //   }),
-  // ];
+
   createTypes(typeDefs)
 }
