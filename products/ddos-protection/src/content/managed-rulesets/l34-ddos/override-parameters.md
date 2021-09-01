@@ -4,9 +4,9 @@ pcx-content-type: reference
 order: 3
 ---
 
-# L3/4 DDoS Managed Ruleset parameters
+# L3/4 DDoS Protection Managed Ruleset parameters
 
-Configure the Cloudflare L3/4 DDoS Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. To customize these parameters, [define overrides via Rulesets API](/ddos-l34-mitigation/configure-api).
+Configure the L3/4 DDoS Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. To customize these parameters, [define overrides via Rulesets API](/managed-rulesets/l34-ddos/configure-api).
 
 The available parameters are the following:
 

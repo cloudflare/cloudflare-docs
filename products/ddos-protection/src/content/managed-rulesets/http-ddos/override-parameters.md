@@ -4,9 +4,9 @@ pcx-content-type: reference
 order: 3
 ---
 
-# HTTP DDoS Managed Ruleset parameters
+# HTTP DDoS Protection Managed Ruleset parameters
 
-Configure the Cloudflare HTTP DDoS Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/ddos-l7-mitigation/configure-dashboard) or [define overrides via Rulesets API](/ddos-l7-mitigation/configure-api).
+Configure the HTTP DDoS Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/managed-rulesets/http-ddos/configure-dashboard) or [define overrides via Rulesets API](/managed-rulesets/http-ddos/configure-api).
 
 The available parameters are the following:
 

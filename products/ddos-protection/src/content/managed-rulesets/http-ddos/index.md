@@ -1,17 +1,12 @@
 ---
+title: HTTP DDoS Protection Managed Ruleset
 pcx-content-type: concept
 order: 4
 ---
 
-# L7 DDoS Attack Mitigation
+# HTTP DDoS Protection Managed Ruleset
 
-Cloudflare provides protection against layer 7 DDoS attacks through several mitigation systems and rules. The HTTP DDoS Managed Ruleset contains a subset of these rules. This Managed Ruleset is enabled by default for all customers, regardless of their Cloudflare plan, and provides protection against a broad range of DDoS attack vectors.
-
----
-
-## The Cloudflare HTTP DDoS Managed Ruleset
-
-The Cloudflare HTTP DDoS Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at the application layer on the edge, like the following:
+The Cloudflare HTTP DDoS Protection Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at the application layer on the edge, like the following:
 
 * Requests causing large amounts of origin errors
 * Excessive traffic hitting origin
@@ -21,9 +16,11 @@ The Cloudflare HTTP DDoS Managed Ruleset is a set of pre-configured rules used t
 
 Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
-The Cloudflare HTTP DDoS Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
+The HTTP DDoS Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
 
-### Ruleset configuration
+---
+
+## Ruleset configuration
 
 You can adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
 
@@ -34,17 +31,17 @@ You can adjust the behavior of the rules in the Managed Ruleset by modifying the
 
 To adjust rule behavior, do one of the following:
 
-* [Configure the Cloudflare HTTP DDoS Managed Ruleset in the dashboard](/ddos-l7-mitigation/configure-dashboard).
-* [Configure HTTP DDoS Managed Ruleset overrides via API](/ddos-l7-mitigation/configure-api).
+* [Configure the HTTP DDoS Protection Managed Ruleset in the dashboard](/managed-rulesets/http-ddos/configure-dashboard).
+* [Configure HTTP DDoS Protection Managed Ruleset overrides via API](/managed-rulesets/http-ddos/configure-api).
 
-For more information on the available configuration parameters, see [Managed Ruleset parameters](/ddos-l7-mitigation/override-parameters).
+For more information on the available configuration parameters, see [Managed Ruleset parameters](/managed-rulesets/http-ddos/override-parameters).
 
 <Aside type='note' header='Note'>
 
-The Cloudflare HTTP DDoS Managed Ruleset is always enabled — you can only customize its behavior.
+The HTTP DDoS Protection Managed Ruleset is always enabled — you can only customize its behavior.
 
 </Aside>
 
 ## Availability
 
-The Cloudflare HTTP DDoS feature is available to all customers.
+The HTTP DDoS Protection Managed Ruleset is available to all customers.
