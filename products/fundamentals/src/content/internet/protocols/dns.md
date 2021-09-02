@@ -56,7 +56,7 @@ Web-enabled applications like browsers use something called a Stub Resolver to i
 
 ## The DNS Namespace
 
-The hierarchy of DNS namespace is well defined: DNS names consist of labels that are separated by dots. Thus `www.example.com.` consists of 4 labels `www` (leaf) `example` (domain) `com` (TLD) and `.` i.e. the root. Resolvers search by starting at the longest match of the labels, i.e., if it only knows about the root then, it starts the search there. If they know about .com they start there.
+The hierarchy of DNS namespace is well defined: DNS names consist of labels that are separated by dots. Thus `www.example.com.` consists of 4 labels `www` (leaf) `example` (domain) `com` (TLD) and `.` (i.e., the root). Resolvers search by starting at the longest match of the labels, i.e., if it only knows about the root then, it starts the search there. If resolvers know about `.com`, they start there.
 
 There are thirteen rootservers maintained by 12 different organizations. The root zone is maintained by IANA, which is a part of ICANN, and is published by Verisign which operates two of the root servers. The contents of the root zone is a list of the authoritative servers for each TLD, but not much else. Thus, if a root DNS server receives a query for `www.example.com` it will answer with what is called a referral to `.com` resolvers. The answer from the root server contains a set of records called NS (Name Server). These records list the nameservers which should have more information about the requested zone, i.e., the “.com” servers.
 
