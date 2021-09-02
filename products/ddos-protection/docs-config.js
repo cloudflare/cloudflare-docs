@@ -4,7 +4,6 @@ module.exports = {
   productLogoPathD: require('./src/content/icons/ddos-protection').pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/ddos-protection",
-//  logoSVGContent: fs.readFileSync(`../src/content/icons/ddos-protection.svg`, 'utf8'),
   externalLinks: [
     {
       title: "Cloudflare DDoS Protection homepage",
