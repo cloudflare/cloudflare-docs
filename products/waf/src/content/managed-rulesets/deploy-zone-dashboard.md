@@ -6,13 +6,13 @@ order: 21
 
 # Deploy Managed Rulesets for a zone in the dashboard
 
-You can enable and configure Managed Rulesets for a zone in the **Managed Rules** tab of the Firewall app.
+You can enable and configure Managed Rulesets for a zone in the **WAF** tab of the Firewall app.
 
-![Managed Rules tab of Firewall app](../images/waf-managed-rules-tab.png)
+![WAF tab of Firewall app](../images/waf-managed-rules-tab.png)
 
 ## Enable or disable a Managed Ruleset
 
-When you enable a Managed Ruleset in the **Managed Rules** tab under Firewall, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase entry point ruleset.
+When you enable a Managed Ruleset in the **WAF** tab under Firewall, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase entry point ruleset.
 
 <Aside type="note">
 
@@ -34,7 +34,7 @@ Some Managed Rulesets may not allow custom configuration, depending on your Clou
 
 To configure rule field values for all the rules in a Managed Ruleset:
 
-1. Navigate to **Firewall** > **Managed Rules**.
+1. Go to **Firewall** > **WAF**.
 
 1. On the right of the Managed Ruleset you want to configure, click **Configure**.
 
@@ -54,11 +54,11 @@ Use the available filters in the Browse Managed Ruleset interface.
 
 To view the rules of a Managed Ruleset:
 
-1. Open the **Firewall Rules** tab of the **Firewall** tile.
+1. Go to **Firewall** > **WAF**.
 
 1. On the right of the Managed Ruleset you want to browse, click **Configure**.
 
-1. Click **Browse Rules**.
+1. Click **Browse rules**.
 
     The Browse Managed Ruleset interface displays.
 
@@ -120,7 +120,7 @@ Do the following:
 
 ## Phases of deployed Managed Rulesets
 
-When you enable a Managed Ruleset under **Web Application Firewall (WAF)**, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Check the specific Managed Ruleset documentation for details.
 
