@@ -55,7 +55,7 @@ When Magic Transit identifies a route that is not healthy, it applies the these 
 - Degraded: Add 500,000 to priority.
 - Down: Add 1,000,000 to priority.
 
-The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configuure-tunnels/assign-tunnel-route-priorities).
+The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configure-tunnels/assign-tunnel-route-priorities).
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
 

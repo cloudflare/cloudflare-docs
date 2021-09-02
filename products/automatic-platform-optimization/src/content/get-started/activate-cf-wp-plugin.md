@@ -35,7 +35,7 @@ We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 T
 
 ## Activate APO
 
-To create the connection between WordPress and Cloudflare, you'll create an API token from your Cloudflare dashboard and add it to WordPress. To setup APO on a subdomain, see [Subdomains and subdirectories](/reference/subdomains-subdirectories).
+To create the connection between WordPress and Cloudflare, you'll create an API token from your Cloudflare dashboard and add it to WordPress. To setup APO on a subdomain, see [Subdomains and subdirectories](/reference/subdomain-subdirectories).
 
 ## Create the API token from Cloudflare
 

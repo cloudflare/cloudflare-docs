@@ -66,8 +66,15 @@ The endpoint above [fetches all settings](https://api.cloudflare.com/#waiting-ro
     "new_users_per_minute": 200,
     "total_active_users": 300,
     "session_duration": 1,
+    "disable_session_renewal": false,
+    "json_response_enabled": false,
+    "queueing_method": "random",
+    "cookie_attributes": {
+      "samesite": "auto",
+      "secure": "auto"
+    },
+    "custom_page_html": "{{#waitTimeKnown}} {{waitTime}} mins {{/waitTimeKnown}} {{^waitTimeKnown}} Queue all enabled {{/waitTimeKnown}}"
   }
-}
 ```
 
 The value of `suspended` indicates whether a waiting room is activated or suspended:

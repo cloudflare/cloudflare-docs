@@ -95,14 +95,7 @@ The following script within the `<body>` section after `<main>` fetches the wait
 
 ### Available variables
 
-When you create a waiting room with custom HTML, you can use the following variables:
-- **waitTime**: An `integer` showing the user's estimated wait time in minutes.
-- **waitTimeFormatted**: An English `string` showing a user's estimated wait time:
-  - If `waitTime` is between 0 and 59, string will be `X minutes`
-  - If `waitTime` is between 60 - 119, string will be `More than 1 hour`
-  - If `waitTime` is more than 1440, string will be `More than a day`
-- **waitTimeKnown**: A `boolean` value. Not available when the queue is full or **queue all** is enabled.
-- **queueIsFull**: A `boolean` value. Changes to `True` when the queue is longer than 24 hours.
+When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
 
 ### Multiple-language support
 
@@ -113,7 +106,7 @@ Customize your waiting room to display in any language supported by the UTF-8 ch
 To preview the appearance of a waiting room:
 
 1. In your application, go to **Traffic** > **Waiting Rooms**.
-1. Either [create a waiting room](../create-via-dashboard) or [edit an existing one](../edit-delete-waiting-room).
+1. Either [create a waiting room](/how-to/create-via-dashboard) or [edit an existing one](/how-to/edit-delete-waiting-room).
 1. Go to the **Review** step.
 1. Click **Preview Waiting Room**:
 
