@@ -1,5 +1,4 @@
 ---
-title: L3/4 DDoS Protection Managed Ruleset
 pcx-content-type: concept
 order: 5
 ---

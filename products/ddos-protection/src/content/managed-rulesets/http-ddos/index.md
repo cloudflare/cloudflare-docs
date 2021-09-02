@@ -1,5 +1,4 @@
 ---
-title: HTTP DDoS Protection Managed Ruleset
 pcx-content-type: concept
 order: 4
 ---
