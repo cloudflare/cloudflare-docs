@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Create custom rules
 
-Create and manage [Load Balancing rules](../load-balancing-rules) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow found in **Traffic** in the dashboard.
+Create and manage [Load Balancing rules](../) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow found in **Traffic** in the dashboard.
 
 ---
 

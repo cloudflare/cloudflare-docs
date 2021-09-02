@@ -52,10 +52,18 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
               "description":"Waiting room for webshop",
               "host":"shop.example.com",
               "path":"/shop",
+              "queue_all": true,
               "new_users_per_minute":200,
               "total_active_users":300,
-              "session_duration":1
-              }'
+              "session_duration":1,
+              "disable_session_renewal": false,
+              "json_response_enabled": false,
+              "queueing_method": "FIFO",
+              "cookie_attributes": {
+                "samesite": "auto",
+                "secure": "auto"
+              },
+            }'
 ```
 
 The response for the request above is:
@@ -74,9 +82,17 @@ The response for the request above is:
       "description": "Waiting room for webshop",
       "host": "shop.example.com",
       "path": "/shop",
+      "queue_all": true,
       "new_users_per_minute": 200,
       "total_active_users": 300,
-      "session_duration": 1
+      "session_duration": 1,
+      "disable_session_renewal": false,
+      "json_response_enabled": false,
+      "queueing_method": "FIFO",
+      "cookie_attributes": {
+        "samesite": "auto",
+        "secure": "auto"
+      },
     }
   ]
 }
@@ -113,6 +129,13 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
       "new_users_per_minute": 200,
       "total_active_users": 300,
       "session_duration": 1,
+      "disable_session_renewal": false,
+      "json_response_enabled": false,
+      "queueing_method": "FIFO",
+      "cookie_attributes": {
+        "samesite": "auto",
+        "secure": "auto"
+      },
       "custom_page_html": "<p>Include custom HTML here</p>",
       "created_on": "2014-01-01T05:20:00.12345Z",
       "modified_on": "2014-01-01T05:20:00.12345Z"
