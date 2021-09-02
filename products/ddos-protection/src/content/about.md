@@ -24,6 +24,8 @@ To detect and mitigate DDoS attacks, Cloudflare’s [Autonomous Edge](https://bl
 
 Once attack traffic matches a rule, Cloudflare's systems will track that traffic and generate a real-time signature to surgically match against the attack pattern and mitigate the attack without impacting legitimate traffic. The fingerprint is propagated as a mitigation rule to the most optimal location in the Cloudflare edge for cost-efficient mitigation.
 
+![Diagram explaining how DDoS protection works at Cloudflare](images/ddos-diagram.png)
+
 ## Under the hood
 
 The Cloudflare Autonomous Edge is powered by the denial-of-service daemon (`dosd`), which is a home-grown software-defined system. `dosd` instances run in every single server in every one of Cloudflare’s data centers around the world and are able to detect and mitigate DDoS attacks autonomously without requiring any centralized consensus.
