@@ -28,4 +28,4 @@ If you modify cached assets, the new asset is not displayed to repeat visitors b
 1. Click **Caching**.
 1. Under **Browser Cache TTL**, click the drop-down menu to select the desired cache expiration time.
 
-The **Respect Existing Headers** option tells Cloudflare to honor the settings in the `Cache-Control headers` from your origin web server.
+The **Respect Existing Headers** option tells Cloudflare to honor the settings in the `Cache-Control` headers from your origin web server.
