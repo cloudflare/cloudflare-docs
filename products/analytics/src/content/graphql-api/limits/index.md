@@ -15,7 +15,7 @@ Use the table below to identify which data nodes are included in your customer p
 
 <Aside type="info" header="Info">
 
-Access to Network Analytics <b>ipFlows</b> nodes is only available to Enterprise customers using Cloudflare <a href="https://www.cloudflare.com/magic-transit/">Magic Transit</a> or <a href="https://developers.cloudflare.com/spectrum/byoip/">BYOIP for Spectrum</a>
+Access to Network Analytics <b>ipFlows</b> nodes is only available to Enterprise customers using Cloudflare <a href="https://www.cloudflare.com/magic-transit/">Magic Transit</a> or <a href="https://developers.cloudflare.com/spectrum/about/byoip">BYOIP for Spectrum</a>
 </Aside>
 
 <TableWrap>

@@ -29,18 +29,7 @@ This tutorial assumes you have previously [planned out](/get-started) and [creat
 
 ### Integrate waiting room variables
 
-To utilize a waiting room, you need to create a new template in your mobile app to receive the JSON response.
-
-Use the following variables to display information about a waiting room:
-
-- `inWaitingRoom`: Boolean indicating if the user is in the Waiting Room (always true).
-- `waitTime`: Integer indicating the current estimated time in minutes the user will wait in the Waiting Room. Only valid if `waitTimeKnown` is true.
-- `waitTimeKnown`: Boolean indicating if `waitTime` is accurate. If false, `waitTime` is not available.
-- `waitTimeFormatted`: String displaying the `waitTime` for users, formatted in English. If `waitTimeKnown` is false, `waitTimeFormatted` will display "unavailable".
-- `queueIsFull`: Boolean indicating if the Waiting Room's queue is currently full and not accepting new users at the moment.
-- `queueAll`: Boolean indicating if all users will be queued in the Waiting Room and no one will be let into the origin website.
-- `lastUpdated`: String displaying the timestamp as an ISO 8601 string of the user's last attempt to leave the waiting room and access the origin website. The user is able to make another attempt after `refreshIntervalSeconds` past this time. If the user makes a request too soon, it will be ignored and `lastUpdated` will not change.
-- `refreshIntervalSeconds`: Integer indicating the number of seconds after `lastUpdated` until the user can attempt to leave the waiting room and access the origin website.
+To utilize a waiting room, you need to create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
 
 ### Allow cookies
 
