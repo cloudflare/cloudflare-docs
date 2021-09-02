@@ -43,7 +43,7 @@ export class DurableObject {
   - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
 
 - `state.waitUntil`
-  - While `waitUntil` is available within a Durable Object, it has no effect. Please refer to [Durable Object Lifespan](#durable-object-lifespan) for more information.
+  - While `waitUntil` is available within a Durable Object, it has no effect. Refer to [Durable Object Lifespan](#durable-object-lifespan) for more information.
 
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
