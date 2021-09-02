@@ -11,7 +11,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
 ### Adding environment variables via wrangler
 
-Environment variables are defined via the `[vars]` configuration in your `wranger.toml` file and are always plaintext values.
+Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
 
 ```toml
 ---
