@@ -42,6 +42,9 @@ export class DurableObject {
 - `state.id` <Type>DurableObjectId</Type>
   - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
 
+- `state.waitUntil`
+  - While `waitUntil` is available within a Durable Object, it has no effect. Refer to [Durable Object Lifespan](#durable-object-lifespan) for more information.
+
 - `state.storage`
   - Contains methods for accessing persistent storage via the transactional storage API. See [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
@@ -59,6 +62,63 @@ export class DurableObject {
   - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers not using Modules syntax, these same "bindings" appear as global variables within the script. Scripts that export Durable Object classes always use the Modules syntax, and have bindings delivered to the constructor rather than placed in global variables.
 
 </Definitions>
+
+
+### Durable Object Lifespan
+
+A Durable Object remains active until all asynchronous I/O, including Promises, within the Durable Object has resolved. This is true for all HTTP and/or WebSocket connections, except for failure scenarios, which may include unhandled runtime exceptions or exceeding the [CPU limit](/platform/limits#durable-objects).
+
+From a Workers perspective, this is similar to enqueuing tasks with [`FetchEvent.waitUntil`](/runtime-apis/fetch-event). For example, in order to send a POST request without delaying a `Response`, a Worker script may include the following code:
+
+```js
+---
+filename: worker.mjs
+highlight: [5]
+---
+export default {
+  fetch(req, env, ctx)  {
+    // Send a non-blocking POST request.
+    // ~> Completes before the Worker exits.
+    ctx.waitUntil(
+      fetch('https://.../logs', {
+        method: 'POST',
+        body: JSON.stringify({
+          url: req.url,
+          // ...
+        })
+      })
+    );
+
+    return new Response('OK');
+  }
+}
+```
+
+The same functionality can be achieved in a Durable Object, simply by omitting the `await` for the POST request. The request will complete before the Durable Object exits:
+
+```js
+---
+filename: durable.mjs
+highlight: [6]
+---
+export class Example {
+  fetch(req) {
+    // NOTE: Omits `await` intentionally.
+    // ~> Does not block `Response` output
+    // ~> Will still wait for POST to complete
+    fetch('https://.../logs', {
+      method: 'POST',
+      body: JSON.stringify({
+        url: req.url,
+        // ...
+      })
+    });
+
+    return new Response('OK');
+  }
+}
+```
+
 
 ### Transactional Storage API
 
