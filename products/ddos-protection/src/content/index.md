@@ -13,5 +13,5 @@ The Autonomous Edge includes multiple dynamic mitigation rules that are exposed 
 <ButtonGroup>
   <Button type="primary" href="/about">Learn more</Button>
   <Button type="secondary" href="/managed-rulesets">Available Managed Rulesets</Button>
-  <Button type="secondary" href="/changelog">Managed Rulesets change log</Button>
+{/*  <Button type="secondary" href="/managed-rulesets/changelog">Managed Rulesets change log</Button> */}
 </ButtonGroup>
