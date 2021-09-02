@@ -481,7 +481,9 @@ export default async request => {
 }
 ```
 
-One additional parameter passed into the response is `response_type`. By default, responses to slash commands are ephemeral, meaning that they are only seen by the user who writes the slash command. Passing a `response_type` of `in_channel`, as seen above, will cause the response to appear for all users in the channel. If you would like the messages to remain private, removing that line will cause `response_type` to default to `ephemeral`.
+One additional parameter passed into the response is `response_type`. By default, responses to slash commands are ephemeral, meaning that they are only seen by the user who writes the slash command. Passing a `response_type` of `in_channel`, as seen above, will cause the response to appear for all users in the channel. 
+
+If you would like the messages to remain private, remove the `response_type` line. This will cause `response_type` to default to `ephemeral`.
 
 #### Handling errors
 
@@ -731,4 +733,4 @@ Publishing your Workers application should now cause issue updates to start appe
 
 In this tutorial, you built and published a Cloudflare Workers application that can respond to GitHub webhook events, and allow GitHub API lookups within Slack. If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/signalnerve/workers-slack-bot).
 
-If you want to get started building your own projects, refer to the quick-start templates provided in the [Template Gallery](/examples).
+If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).
