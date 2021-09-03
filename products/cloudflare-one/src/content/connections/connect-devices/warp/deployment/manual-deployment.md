@@ -7,6 +7,8 @@ pcx-content-type: how-to
 
 If you plan to direct your users to manually download and configure the WARP client, users will need to connect the client to your organization's Cloudflare for Teams instance.
 
+Before you start, you will need to [download and install the Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert).
+
 ## On desktop
 
 End users will need to log in to Cloudflare for Teams by following these instructions:
