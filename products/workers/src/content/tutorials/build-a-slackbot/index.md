@@ -19,7 +19,7 @@ In this tutorial, you will build a [Slack](https://slackhq.com) bot using [Cloud
 
 This tutorial is recommended for people who are familiar with writing web applications. If you have built an application with tools like [Node](https://nodejs.org) and [Express](https://expressjs.com), this project will feel very familiar to you. If you are new to writing web applications or have wanted to build something like a Slack bot in the past, but were intimidated by deployment or configuration, Workers will be an easy way for you to focus on writing code and shipping projects.
 
-If you would like to see the code, or how the bot works in an actual Slack channel, before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/signalnerve/workers-slack-bot). From GitHub, you can add your own Slack API keys, and deploy it to your own Slack channels for testing.
+If you would like to see the code, or how the bot works in an actual Slack channel, before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/signalnerve/workers-slack-bot). From GitHub, you can add your own Slack API keys and deploy it to your own Slack channels for testing.
 
 ## Set up Slack
 
@@ -31,7 +31,7 @@ To post messages from your Cloudflare Worker into a Slack channel, you will need
 
 ![Create a Slack App](./media/create-a-slack-app.png)
 
-Slack applications have many features. You will make use of two of them, Incoming Webhooks, and Slash Commands, to build your Worker-powered Slack bot.
+Slack applications have many features. You will make use of two of them, Incoming Webhooks and Slash Commands, to build your Worker-powered Slack bot.
 
 #### Incoming Webhook
 
@@ -42,13 +42,13 @@ Incoming Webhooks are URLs that you can use to send messages to your Slack chann
 3. On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be DMed directly by our Slack bot when the webhook is called.) 
 4. Authorize the new webhook URL.
 
-After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page. You will now be able to view your new webhook URL. You will add this into our Workers code later. Next, you will add the second component to your Slack bot, a Slash Command.
+After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page and will be able to view your new webhook URL. You will add this into our Workers code later. Next, you will add the second component to your Slack bot: a Slash Command.
 
 ![Slack Incoming Webhook](./media/slack-incoming-webhook.png)
 
 #### Slash Command
 
-A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send an HTTP POST request to our application, sending the text `cloudflare/wrangler#1`, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler/issues/1).
+A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send the text `cloudflare/wrangler#1` in a HTTP POST request to our application, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler/issues/1).
 
 1. On the Slack sidebar, select **Slash Commands**.
 2. Create your first slash command. 
@@ -142,7 +142,7 @@ The router template includes a class, `Router`, that is included to help develop
 
 ### Handling requests
 
-Inside of `index.js`, import the `Router` class, and use it to update the `handleRequest` function:
+Inside of `index.js`, import the `Router` class and use it to update the `handleRequest` function:
 
 ```js
 ---
