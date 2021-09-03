@@ -9,7 +9,7 @@ You can integrate a Google Workspace (formerly Google Suite) account with Cloudf
 
 Once integrated, users will login with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-Please note that you don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+Please note that you don't need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
 1. Log into the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
