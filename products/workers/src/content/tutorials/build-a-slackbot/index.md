@@ -375,10 +375,10 @@ After you have gotten a response back from GitHub’s API, the final step is to 
 
 You can see four different pieces in the above screenshot:
 
-1. The first line (bolded) _links to the issue_, and shows the _issue title_
-2. The following lines (including code snippets) are the _issue body_
-3. The last line of text shows the _issue status_, the _issue creator_ (with a link to the user’s GitHub profile), and the _creation date_ for the issue
-4. The _profile picture of the issue creator_, on the right-hand side
+1. The first line (bolded) links to the issue, and shows the issue title
+2. The following lines (including code snippets) are the issue body
+3. The last line of text shows the issue status, the issue creator_(with a link to the user’s GitHub profile), and the creation date for the issue
+4. The profile picture of the issue creator, on the right-hand side
 
 The previously mentioned [Block Kit](https://api.slack.com/block-kit) framework will help take the issue data (in the structure lined out in [GitHub’s REST API documentation](https://developer.github.com/v3/issues/)) and format it into something like the above screenshot.
 
