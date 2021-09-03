@@ -1,4 +1,4 @@
-## Before you continue 
+## Before you continue
 
 All of the framework guides assume you already have a fundamental understanding of [git](https://git-scm.com/). If you are new to git, refer to this [summarized git handbook](https://guides.github.com/introduction/git-handbook/) on how to set up git on your local machine. 
 
