@@ -3,15 +3,9 @@ order: 2
 pcx-content-type: navigation
 ---
 
-# Tutorial
+# Tutorials
 
-<Aside>
-
-This tutorial assumes that you have [installed Terraform](/installing).
-
-</Aside>
-
-Each example builds on the last, so you should start from the top. Here are the topics and resources covered per tutorial step:
+Before you begin, make sure Terraform is installed. Each tutorial builds on the previous, so we recommend completing the tutorials in the order shown below.
 
 ## [1 – Hello World](/tutorial/hello-world/)
 
