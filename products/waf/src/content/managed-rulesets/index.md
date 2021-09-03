@@ -55,7 +55,7 @@ The following rulesets run in the response phase:
   <tbody>
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Sensitive Data Detection (Beta)</td>
-      <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of files or specific sensitive data — for example, financial and personally identifiable information.</td>
+      <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of files or specific sensitive data — for example, financial and personally identifiable information. Available in **Firewall** > **Data**.</td>
     </tr>
   </tbody>
 </table></TableWrap>
