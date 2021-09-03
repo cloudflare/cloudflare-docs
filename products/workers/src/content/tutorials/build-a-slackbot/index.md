@@ -19,7 +19,7 @@ In this tutorial, you will build a [Slack](https://slackhq.com) bot using [Cloud
 
 This tutorial is recommended for people who are familiar with writing web applications. If you have built an application with tools like [Node](https://nodejs.org) and [Express](https://expressjs.com), this project will feel very familiar to you. If you are new to writing web applications or have wanted to build something like a Slack bot in the past, but were intimidated by deployment or configuration, Workers will be an easy way for you to focus on writing code and shipping projects.
 
-If you would like to see the code, or how the bot works in an actual Slack channel, before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/signalnerve/workers-slack-bot). From GitHub, you can add your own Slack API keys and deploy it to your own Slack channels for testing.
+If you would like to see the code or how the bot works in an actual Slack channel before proceeding with this tutorial, you can access the final version of the codebase [on GitHub](https://github.com/signalnerve/workers-slack-bot). From GitHub, you can add your own Slack API keys and deploy it to your own Slack channels for testing.
 
 ## Set up Slack
 
@@ -38,11 +38,11 @@ Slack applications have many features. You will make use of two of them, Incomin
 Incoming Webhooks are URLs that you can use to send messages to your Slack channels. Your incoming webhook will be paired with GitHub’s webhook support to send messages to a Slack channel whenever there are updates to issues in a given repository. You will see the code in more detail as you build your application. First, create a Slack webhook:
 
 1. On the sidebar of Slack's UI, select **Incoming Webhooks**. 
-2. In **Webhook URLs for your Workspace** > select **Add New Webhook to Workspace**. 
-3. On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be DMed directly by our Slack bot when the webhook is called.) 
+2. In **Webhook URLs for your Workspace**, select **Add New Webhook to Workspace**. 
+3. On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be messaged directly by our Slack bot when the webhook is called.) 
 4. Authorize the new webhook URL.
 
-After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page and will be able to view your new webhook URL. You will add this into our Workers code later. Next, you will add the second component to your Slack bot: a Slash Command.
+After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page and can view your new webhook URL. You will add this into our Workers code later. Next, you will add the second component to your Slack bot: a Slash Command.
 
 ![Slack Incoming Webhook](./media/slack-incoming-webhook.png)
 
@@ -59,7 +59,7 @@ For our example, you will use the command `/issue`. The request URL should be th
 
 ### Configure your GitHub Webhooks
 
-Your Cloudflare Workers application will be able to handle incoming requests from Slack. It should also be able to receive events directly from GitHub. If a Github issue is created or updated, you can make use of GitHub webhooks to send that event to your Workers application, and post a corresponding message in Slack.
+Your Cloudflare Workers application will be able to handle incoming requests from Slack. It should also be able to receive events directly from GitHub. If a Github issue is created or updated, you can make use of GitHub webhooks to send that event to your Workers application and post a corresponding message in Slack.
 
 To configure a webhook:
 
@@ -71,9 +71,9 @@ If you have a repository like `https://github.com/user/repo`, you can access the
 
 For example, if your Worker will be hosted at `https://myworkerurl.com`, the Payload URL should be `https://myworkerurl.com/webhook`. 
 
-3. Select *application/json* in the **Content type** dropdown menu.
+3. In the **Content type** dropdown, select **application/json**.
 
-The **Content type** for your payload can either be a URL-encoded payload (`application/x-www-form-urlencoded`), or JSON (`application/json`). For the purpose of this tutorial and to make parsing the payload sent to our application, select JSON.
+The **Content type** for your payload can either be a URL-encoded payload (`application/x-www-form-urlencoded`) or JSON (`application/json`). For the purpose of this tutorial and to make parsing the payload sent to our application, select JSON.
 
 4. In **Which events would you like to trigger this webhook?**, select **Let me select individual events**.
 
@@ -87,7 +87,7 @@ There are many different event types that can be enabled for your webhook. Selec
 
 ![Create a GitHub Webhook](./media/new-github-webhook.png)
 
-When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as-is.  You will later return to your repository to actually create, edit, and close some issues to ensure that the the webhook is working once your application is deployed.
+When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is.  You will later return to your repository to create, edit, and close some issues to ensure that the the webhook is working once your application is deployed.
 
 ## Generate
 
@@ -172,7 +172,7 @@ async function handleRequest(request) {
 
 First, import the `Router` class from `router.js`. 
 
-In `handleRequest`, instantiate a new instance of `Router`, setting it to the variable `r`. The `Router` class makes use of a few functions to allow you to quickly and easily set up request handling. The `post` method, as you might expect, takes in a path string, and a function handler, to say “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
+In `handleRequest`, instantiate a new instance of `Router`, setting it to the variable `r`. The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
 
 There are two `POST` routes to handle: `/lookup` and `/webhook`. These new routes will point to corresponding functions, `lookup` and `webhook` — the two function handlers that you will set up soon.
 
@@ -664,7 +664,7 @@ The constant `SLACK_WEBHOOK_URL` represents the Slack Webhook URL that you creat
 
 <Aside type="warning">
 
-This webhook allows developers to post directly to your Slack channel, so it should be kept secret. 
+Since this webhook allows developers to post directly to your Slack channel, keep it secret. 
 
 </Aside>
 
