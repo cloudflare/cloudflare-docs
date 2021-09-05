@@ -197,6 +197,10 @@ All plans have access to:
 
   - ASN of the incoming request, e.g. `395747`.
 
+- `asOrganization` <Type>string</Type>
+
+  - The organisation which owns the ASN of the incoming request, e.g. `Google Cloud`.
+
 - `colo` <Type>string</Type>
 
   - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
