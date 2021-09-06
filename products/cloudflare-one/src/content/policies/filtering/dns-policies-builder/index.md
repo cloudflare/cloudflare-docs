@@ -187,17 +187,27 @@ Just like you can choose to block a domain and all subdomains, you can block an 
 
 Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the Internet.
 
+## Using the `resolved_ips` field in the API 
+
+* Block queries that resolve to IP `1.2.3.3` or in CIDR `1.2.3.4/30`:
+
+  ```txt
+  any(dns.resolved_ips[*] in {1.2.3.3 1.2.3.4/30})
+  ```
+
+* Block queries that resolve to the explicit IP `93.184.216.34`:
+
+  ```txt
+  any(dns.resolved_ips[*] == 93.184.216.34)`
+  ```
+
+* Block queries that resolve to an IP in an IP List, where `22509276-1c53-4a46-933a-9ff5e5e7b2ec` is the UUID for your IP List:
+
+  ```txt
+  any(dns.resolved_ips[*] in $225092761c534a46933a9ff5e5e7b2ec)`
+  ```
+
 ## Custom block page
 
 When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, see the dedicated documentation on [customizing the block page](/policies/filtering/configuring-block-page).
 
-## Examples
-
-* Block queries that resolve to IP `1.2.3.3` or in CIDR `1.2.3.4/30`:<br/>
-  `any(dns.resolved_ips[*] in {1.2.3.3 1.2.3.4/30})`
-
-* Block queries that resolve to the explicit IP `93.184.216.34`:<br/>
-  `any(dns.resolved_ips[*] == 93.184.216.34)`
-
-* Block queries that resolve to an IP in an IP List, where `22509276-1c53-4a46-933a-9ff5e5e7b2ec` is the UUID for your IP List:<br/>
-  `any(dns.resolved_ips[*] in $225092761c534a46933a9ff5e5e7b2ec)`
