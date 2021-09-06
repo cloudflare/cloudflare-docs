@@ -68,7 +68,7 @@ Safari is more susceptible to presenting this error. See [workaround](/connectio
 
 This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
 
-1. In the Google Admin console, navigate to **Security > API controls**.
+1. In the Google Admin console, navigate to **Security** > **API controls**.
 1. Check the *Trust internal, domain-owned apps* option.
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
