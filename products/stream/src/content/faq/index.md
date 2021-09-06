@@ -64,6 +64,12 @@ Opera           | Supported since Opera version 75+
 
 </TableWrap>
 
+<Aside type="note" header="Note">
+
+Chromium is not supported as it lacks an H.264 video decoder. 
+
+</Aside>
+
 <TableWrap>
 
 Mobile Platform   | Version
