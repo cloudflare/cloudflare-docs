@@ -15,7 +15,7 @@ Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://g
 
 Download and install `cloudflared` via the [Cloudflare Package Repository](https://pkg.cloudflare.com/).
 
-Alternatively, downoload the latest release directly.
+Alternatively, download the latest release directly.
 
 <TableWrap>
 
