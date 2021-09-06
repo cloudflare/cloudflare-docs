@@ -66,7 +66,7 @@ Opera           | Supported since Opera version 75+
 
 <Aside type="note" header="Note">
 
-Chromium is not supported as it lacks an H.264 video decoder. 
+Cloudflare Stream is not available on Chromium, as Chromium does not support H.264 videos.
 
 </Aside>
 
