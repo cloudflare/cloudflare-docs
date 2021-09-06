@@ -66,12 +66,10 @@ Safari is more susceptible to presenting this error. See [workaround](/connectio
 
 <div class="small-img"><img alt="Google Error 400" src="../static/documentation/faq/google-error-400.png"/></div>
 
-This is due to a Google policy change requiring you to flag your applications as trusted in the GSuite Admin console:
-1. In the Google Admin console, navigate to **Security > Settings > API Permissions**.
-1. Locate the domain you would like to mark as trusted.
-1. Click on the three-dots menu to the right.
-1. Select **Trust**.
+This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
 
+1. In the Google Admin console, navigate to **Security** > **API controls**.
+1. Check the *Trust internal, domain-owned apps* option.
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
