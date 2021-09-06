@@ -13,6 +13,10 @@ Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://g
 
 ## Linux
 
+Download and install `cloudflared` via the [Cloudflare Package Repository](https://pkg.cloudflare.com/).
+
+Alternatively, download the latest release directly.
+
 <TableWrap>
 
 Type   | amd64 / x86-64 | x86 (32-bit) | ARM  | ARM64 |
