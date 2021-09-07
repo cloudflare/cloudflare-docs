@@ -4,7 +4,7 @@ pcx-content-type: best-practices
 
 # Provider customization
 
-Terraform communicates with cloud and edge provider APIs such as Cloudflare through modules known as "providers." These providers are [installed automatically](/tutorial/hello-world/#2-initializing-terraform-and-the-cloudflare-provider) when you run `terraform init` in a directory that has a `.tf` file containing a provider. Typically, the only required parameters to the provider are those required to authenticate. In many cases, however, you may want to customize the provider to your needs. Below we examine some of the [optional settings](https://www.terraform.io/docs/providers/cloudflare/#argument-reference) that can be passed to the Cloudflare Provider.
+Terraform communicates with cloud and edge provider APIs such as Cloudflare through modules known as "providers." These providers are [installed automatically](/tutorial/initialize-terraform/#2-initialize-terraform-and-the-cloudflare-provider) when you run `terraform init` in a directory that has a `.tf` file containing a provider. Typically, the only required parameters to the provider are those required to authenticate. In many cases, however, you may want to customize the provider to your needs. Below we examine some of the [optional settings](https://www.terraform.io/docs/providers/cloudflare/#argument-reference) that can be passed to the Cloudflare Provider.
 
 ## Adjust the default Cloudflare provider settings
 
