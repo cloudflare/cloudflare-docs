@@ -1,0 +1,50 @@
+---
+updated: 2021-04-27
+category: 🔐 Zero Trust
+pcx-content-type: tutorial
+---
+
+# Configure a Google Workspace account for Access for SaaS
+
+This tutorial covers how to use Cloudflare as a single sign on provider by setting up Access for SaaS.
+
+**⏲️ Time to complete:** 15 minutes
+
+1. In your Google Workspace account, create an SSO third-party identity provider.
+
+    ![SSO profile on Google Workspace](../static/zero-trust-security/google-workspace-saas/sso-profile.png)
+
+1. Check the **Setup SSO with a third party identity provider** option.
+1. On the Teams Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
+1. Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
+    * Entity ID: `google.com`
+    * Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
+    * Name ID: `Email`
+1. Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
+
+    | Google Workspace value | Cloudflare value |
+    | ----- | ---- |
+    | Sign-in page URL | SSO Endpoint |
+    | Sign-out page URL | SSO Endpoint |
+    | Verification Certificate | Public Key |
+
+6. Next, you can choose to check **Use a domain specific issuer**. If you check this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
+
+## Create and upload a certificate file
+
+1. Paste the **Public Key** in VIM or another code editor.
+1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+1. Set the file extension as `.crt` and save.
+
+Once the certificate file has been created, upload it to your Google Workspace account.
+
+## Test the integration
+
+You can now test the integration by going to `https://google.com/a/<yourdomain>`.
+
+## Troubleshooting
+
+`Error: “G Suite - This account cannot be accessed because the login credentials could not be verified.”`
+
+If you see this error, it is likely that the Public Key and Private Key do not match. Double-check that your certificate file matches your Public Key.
+
