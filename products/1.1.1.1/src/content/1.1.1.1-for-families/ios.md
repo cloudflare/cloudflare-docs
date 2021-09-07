@@ -35,7 +35,7 @@ Your connection to the Internet and your DNS queries are now private and protect
 
 You are now using encryption only for your DNS queries.
 
-## Configure 1.1.1.1 for Families manually
+## Manually configure 1.1.1.1 for Families
 
 <Aside type="note">
 
