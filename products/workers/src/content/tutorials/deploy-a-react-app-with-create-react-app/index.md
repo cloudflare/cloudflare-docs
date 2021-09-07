@@ -22,7 +22,7 @@ If you just want to review the code used in this tutorial, the final version of 
 
 ## Prerequisites
 
-You will be using [create-react-app](https://github.com/facebook/create-react-app) to create the example project for this tutorial. No experience with React is needed, and you can easily take what you learn in this tutorial and apply it to other frameworks, such as [Vue](https://vuejs.org) or [Angular](https://angular.io), and even static site frameworks like [Gatsby](https://gatsbyjs.org), and [Hugo](https://gohugo.io).
+You will be using [create-react-app](https://github.com/facebook/create-react-app) to create the example project for this tutorial. No experience with React is needed, and you can take what you learn in this tutorial and apply it to other frameworks, such as [Vue](https://vuejs.org) or [Angular](https://angular.io), and even static site frameworks like [Gatsby](https://gatsbyjs.org) and [Hugo](https://gohugo.io).
 
 ## Create a static site
 
@@ -51,7 +51,7 @@ $ wrangler init --site
 
 The `init --site` command will provide the scaffolding necessary to deploy your React application. For the majority of static sites, you should not need to change the Workers script. By default, the script will look at an incoming request, and will serve a corresponding asset from [Workers KV](https://www.cloudflare.com/products/workers-kv/) based on that route. 
 
-For example, if my static site is deployed at `mystaticsite.com`, requesting `mystaticsite.com/about.html` will look for a file in KV called `about.html`, and serve it back to the client. In addition, if the asset being returned from KV is cacheable, it will automatically be cached with Cloudflare’s CDN, making subsequent requests even faster.
+For example, if you deploy a static site at `mystaticsite.com`, requesting `mystaticsite.com/about.html` will look for a file in KV called `about.html`, and serve it back to the client. In addition, if the asset being returned from KV is cacheable, it will automatically be cached with Cloudflare’s CDN, making subsequent requests even faster.
 
 To serve a single page application, update `workers-site/index.js` with the following code to so that all html requests are pointed at your root `index.html` file.
 
@@ -66,9 +66,9 @@ async function handleEvent(event) {
 
 ## Configure and publish
 
-To prepare your application for deployment, open up the newly-created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [Configuring your project section of Get started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
+To prepare your application for deployment, open the newly-created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [Configuring your project section of Get started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
 
-The `bucket` key in your `wrangler.toml` indicates the build folder that Sites will deploy to Workers. While many front-end application and static site generators use the folder `public`, `create-react-app` uses the folder `build`. Change the `bucket` key in `wrangler.toml` to `build`:
+The `bucket` key in your `wrangler.toml` file indicates the build folder that Sites will deploy to Workers. While many front-end application and static site generators use the folder `public`, `create-react-app` uses the folder `build`. Change the `bucket` key in `wrangler.toml` to `build`:
 
 ```toml
 ---
@@ -82,7 +82,7 @@ bucket = "./build"
 entry-point = "workers-site"
 ```
 
-With a configured `wrangler.toml` file, it is time to build your project, and publish it to Workers. Run `npm run build` to tell `create-react-app` to build your site, and `wrangler publish` to deploy it to Workers:
+With a configured `wrangler.toml` file, it is time to build your project and publish it to Workers. Run `npm run build` to tell `create-react-app` to build your site, and `wrangler publish` to deploy it to Workers:
 
 ```sh
 ---
@@ -98,7 +98,7 @@ After deploying your project, open up your browser to review your static site.
 
 ## How it works
 
-The Workers Site feature is designed to work with as little as configuration as possible. Since the process for deploying static sites is fairly consistent, regardless of framework or language, you should not need to spend a lot of time configuring your project or writing any additional code to serve your site on Workers.
+The Workers Site feature is designed to work with as little configuration as possible. Since the process for deploying static sites is fairly consistent, regardless of framework or language, you should not need to spend a lot of time configuring your project or writing any additional code to serve your site on Workers.
 
 If you are interested in how Workers serves static sites, this section will lightly document how the underlying script works, and what it does each time a user makes a request to your site.
 
@@ -119,6 +119,6 @@ After fetching assets from [Workers KV](/runtime-apis/kv), the static site templ
 
 ## Resources
 
-In this tutorial, you built and published a static site to Workers. If you would like to see the full source code for this application, the final version of the codebase is available as a [repository on GitHub](https://github.com/signalnerve/react-workers-template).
+In this tutorial, you built and published a static site to Workers. If you would like to see the full source code for this application, the final version of the codebase is available [in a GitHub repository](https://github.com/signalnerve/react-workers-template).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).
