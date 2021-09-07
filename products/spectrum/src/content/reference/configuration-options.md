@@ -15,7 +15,7 @@ Some of these features require an Enterprise plan. If you would like to upgrade,
 
 ## IP addresses
 
-When a Spectrum application is created, it is assigned a unique IPv4 and IPv6 address. The addresses are not static, and they may change over time. The best way to look up the current addresses is by using DNS. The DNS name of the Spectrum application will always return the IPs currently dedicated to the application.
+When a Spectrum application is created, it is assigned a unique IPv4 and IPv6 address, or you can provision the application to be IPv6 only. The addresses are not static, and they may change over time. The best way to look up the current addresses is by using DNS. The DNS name of the Spectrum application will always return the IPs currently dedicated to the application.
 
 The addresses are Anycasted from all Cloudflare data centers, with the exception of data centers in China.
 
