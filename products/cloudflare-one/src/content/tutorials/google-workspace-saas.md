@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Configure a Google Workspace account for Access for SaaS
 
-This tutorial covers how to use Cloudflare as a single sign on provider by setting up Access for SaaS.
+This tutorial covers how to secure your Google Workspace account with Access for SaaS. This will allow you to configure Zero Trust policies for your Workspace account.
 
 **⏲️ Time to complete:** 15 minutes
 
