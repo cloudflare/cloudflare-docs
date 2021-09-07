@@ -10,11 +10,17 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
 
 **⏲️ Time to complete:** 15 minutes
 
+
+## Create an SSO provider in Google Workspace
+
 1. In your Google Workspace account, create an SSO third-party identity provider.
 
     ![SSO profile on Google Workspace](../static/zero-trust-security/google-workspace-saas/sso-profile.png)
 
 1. Check the **Setup SSO with a third party identity provider** option.
+
+## Create an application on the Teams Dashboard
+
 1. On the Teams Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 1. Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
     * Entity ID: `google.com`
@@ -22,7 +28,7 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
     * Name ID: `Email`
 
     ![Add fields to Teams application](../static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
-    
+
 1. Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
 
     | Google Workspace value | Cloudflare value |
@@ -31,7 +37,7 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
     | Sign-out page URL | SSO Endpoint |
     | Verification Certificate | Public Key |
 
-6. Next, you can choose to check **Use a domain specific issuer**. If you check this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
+1. Next, you can choose to check **Use a domain specific issuer**. If you check this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
 
 ## Create and upload a certificate file
 
