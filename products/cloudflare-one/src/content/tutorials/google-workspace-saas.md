@@ -20,6 +20,9 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
     * Entity ID: `google.com`
     * Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
     * Name ID: `Email`
+
+    ![Add fields to Teams application](../static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
+    
 1. Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
 
     | Google Workspace value | Cloudflare value |
