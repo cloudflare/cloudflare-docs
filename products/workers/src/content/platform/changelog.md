@@ -12,7 +12,7 @@
 ## 7/30/2021
 
 - Fixed a hang in Durable Objects when reading more than 16MB of data at once (for example, with a large `list()` operation).
-- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. See the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
+- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
 
 ## 7/23/2021
 
