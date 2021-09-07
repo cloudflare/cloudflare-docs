@@ -109,22 +109,6 @@ Build expressions to determine the set of elements you want to impact with your 
 
 Gateway matches DNS traffic against the following selectors, or criteria:
 
-* [Content Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-content-categories)
-* DOH Subdomain
-* Domain
-* Host
-* Query Rtype
-* DNS Resolver IP
-* Resolved IP
-* [Security Categories](/policies/filtering/dns-policies-builder/dns-categories#dns-security-categories)
-* Source IP
-* Location
-* User Email
-* User Group Emails
-* User Group IDs
-* User Group Names
-* User Name
-
 <TableWrap>
 
 | Selector | Description |
@@ -155,6 +139,28 @@ These selectors require Gateway with WARP mode to be enabled in the Cloudflare f
 </TableWrap>
 
 For more detailed information on DNS categories, see the [DNS categories page](/policies/filtering/dns-policies-builder/dns-categories).
+
+### Selectors - API Examples
+
+You can use the [Cloudflare API](https://api.cloudflare.com/) to build DNS filtering policies. Examples of certain selectors are provided below.
+
+* Block queries that resolve to IP `1.2.3.3` or in CIDR `1.2.3.4/30`:
+
+  ```txt
+  any(dns.resolved_ips[*] in {1.2.3.3 1.2.3.4/30})
+  ```
+
+* Block queries that resolve to the explicit IP `93.184.216.34`:
+
+  ```txt
+  any(dns.resolved_ips[*] == 93.184.216.34)`
+  ```
+
+* Block queries that resolve to an IP in an IP List, where `22509276-1c53-4a46-933a-9ff5e5e7b2ec` is the UUID for your IP List:
+
+  ```txt
+  any(dns.resolved_ips[*] in $225092761c534a46933a9ff5e5e7b2ec)`
+  ```
 
 ### Operators
 
