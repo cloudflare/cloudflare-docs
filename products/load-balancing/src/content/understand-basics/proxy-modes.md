@@ -27,7 +27,7 @@ In comparison to [DNS-only load balancing](#dns-only-load-balancing-gray-clouded
 - Offers faster failover and more accurate routing, which can otherwise be affected by DNS caching.
 - Integrates with other Cloudflare features such as caching, Workers, WAF, etc.
 - Reduces authoritative queries against Cloudflare, which can potentially save money for customers with usage-based billing.
-- Supports customized [Session affinity](/understand-basics/session-affinity) and [origin drain](/understand-basics/session-affinity#origin-drain).
+- Supports customized [session affinity](/understand-basics/session-affinity) and [origin drain](/understand-basics/session-affinity#origin-drain).
 - More accurately geo-locates traffic, using data center associated with the user making the request instead of the data center associated with a user's recursive resolver.
 
 ---
@@ -47,7 +47,7 @@ In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded
 - Performs slower failover and less accurate routing, because it has to rely on DNS resolvers and cache settings.
 - Cannot integrate with other Cloudflare features such as caching, Workers, WAF, etc.
 - Increases authoritative queries against Cloudflare, which can potentially cost more for customers with usage-based billing.
-- Supports standard [Session affinity](/understand-basics/session-affinity).
+- Supports standard [session affinity](/understand-basics/session-affinity).
 - Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/understand-basics/traffic-steering#dynamic-steering).
 
 ---
@@ -60,6 +60,6 @@ Cloudflare currently only supports layer 4 load balancing as part of [Cloudflare
 
 <Aside type="note">
 
-Since Spectrum operates at the TCP level, it does not have the information to support features like [Session Affinity](/understand-basics/session-affinity), [custom rules](/understand-basics/load-balancing-rules), or caching.
+Since Spectrum operates at the TCP level, it does not have the information to support features like [session affinity](/understand-basics/session-affinity), [custom rules](/understand-basics/load-balancing-rules), or caching.
 
 </Aside>
