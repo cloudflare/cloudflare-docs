@@ -37,6 +37,6 @@ Some devices use separate fields for all eight parts of IPv6 addresses and canno
 
 ## Test DNS64
 
-After your configuration, visit an IPv4 only address to check if you can reach it — for example https://ipv4.google.com.
+After your configuration, visit an IPv4 only address to check if you can reach it. For example, you can visit https://ipv4.google.com.
 
-Visit http://test-ipv6.com/ to test if it can detect your IPv6 address. If you receive a 10/10 that means your IPv6 is configured correctly.
+Visit http://test-ipv6.com/ to test if it can detect your IPv6 address. If you receive a `10/10`, your IPv6 is configured correctly.
