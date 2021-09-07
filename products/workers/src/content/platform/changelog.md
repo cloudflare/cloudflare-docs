@@ -28,7 +28,7 @@
 
 ## 7/13/2021
 
-- The preview service now prints a warning in the devtools console when a script uses Response/Request.clone() but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
+- The preview service now prints a warning in the devtools console when a script uses `Response/Request.clone()` but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
 
 ## 7/1/2021
 
