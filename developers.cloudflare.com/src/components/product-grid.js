@@ -31,6 +31,7 @@ $["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resourc
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
 $["rules"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/rules.js").pathD
+$["ruleset-engine"]       = require("../../../products/ruleset-engine/src/content/icons/ruleset-engine").pathD
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
@@ -193,6 +194,11 @@ const products = [
     title: "Rules",
     path: "rules",
     icon: "rules",
+  },
+  {
+    title: "Ruleset Engine",
+    path: "ruleset-engine",
+    icon: "ruleset-engine",
   },
   {
     title: "Spectrum",

@@ -30,6 +30,7 @@ Sitemap: https://developers.cloudflare.com/railgun/sitemap.xml
 Sitemap: https://developers.cloudflare.com/randomness-beacon/sitemap.xml
 Sitemap: https://developers.cloudflare.com/registrar/sitemap.xml
 Sitemap: https://developers.cloudflare.com/rules/sitemap.xml
+Sitemap: https://developers.cloudflare.com/ruleset-engine/sitemap.xml
 Sitemap: https://developers.cloudflare.com/spectrum/sitemap.xml
 Sitemap: https://developers.cloudflare.com/ssl/sitemap.xml
 Sitemap: https://developers.cloudflare.com/stream/sitemap.xml
