@@ -23,7 +23,7 @@
 - Workers can now make up to 1000 subrequests to Durable Objects from a within a single request invocation, up from the prior limit of 50.
 - Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything odd or report your issue in the [Workers Discord](https://discord.gg/cloudflaredev).
 - Durable Object constructors may now initiate I/O, such as `fetch()` calls.
-- Added Durable Objects state.blockConcurrencyWhile() API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
+- Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
 - In Durable Objects, the callback passed to storage.transaction() can now return a value, which will be propagated as the return value of the transaction() call.
 
 ## 7/13/2021
