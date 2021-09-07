@@ -21,7 +21,7 @@ The Custom Rules interface allows you to:
 * Edit and delete rules
 * Enable or disable rules
 
-![Custom Rules tab](../../images/custom-rules/custom-rules-tab.png)
+![Custom Rules tab](../images/custom-rules/custom-rules-tab.png)
 
 ## Manage Custom Rules
 

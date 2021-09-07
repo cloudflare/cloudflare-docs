@@ -28,7 +28,7 @@ To create a new Rate Limiting rule:
 
 1. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Rate Limiting rule page](../../../images/custom-rules/rate-limiting-create.png)
+    ![Create Rate Limiting rule page](../../images/custom-rules/rate-limiting-create.png)
 
 1. Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

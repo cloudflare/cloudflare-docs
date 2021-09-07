@@ -27,7 +27,7 @@ Currently, phases at the account level are only available in Enterprise plans.
 
 The following diagram outlines the request handling process where requests go through the available phases:
 
-![Requests going through the available phases](../images/rulesets-phases.png)
+![Requests going through the available phases](./images/rulesets-phases.png)
 
 Phases have an **entry point** ruleset at the account and zone levels. An entry point ruleset contains a list of ordered rules that run in the phase. You can define rules in an entry point ruleset that execute a different ruleset.
 
@@ -78,7 +78,7 @@ A **rule** defines a filter and an action to perform on the incoming requests th
 
 For example, consider the following ruleset with four rules (R1, R2, R3, and R4). For a given incoming request, the expression of the first two rules matches the request properties. Therefore, the action for these rules runs (_Execute_ and _Log_, respectively). The action of the first rule executes a Managed Ruleset, which means that every rule in the Managed Ruleset is evaluated. The action of the second rule logs an event associated with the current phase. There is no match for the expressions of rules 3 and 4, so their actions do not run. Since no rule blocks the request, it proceeds to the next phase.
 
-![Rules execution example](../images/rulesets-rules-example.png)
+![Rules execution example](./images/rulesets-rules-example.png)
 
 Rules can have additional features through specific Cloudflare products. You may have additional fields available for rule expressions, perform additional actions, or configure additional behavior in a given phase.
 
