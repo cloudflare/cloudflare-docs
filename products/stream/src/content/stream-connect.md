@@ -1,13 +1,7 @@
 ---
 order: 5
 ---
-# Stream Connect (Beta)
-
-<Aside>
-
-Note: Stream Connect is currently in closed beta and will be available to all users in coming weeks. [Request an invite](https://docs.google.com/forms/d/1rpRFKDTZTnh0LxysM2_Rky5pYt_rs9pUdSoJr_Ix2pk/edit).
-
-</Aside>
+# Stream Connect
 
 Stream Connect allows you to retransmit your RTMPS feed to one or more outputs that support RTMP or RTMPS. To learn more about the vision and benefits, checkout the [Stream Connect blog post](https://blog.cloudflare.com/restream-with-stream-connect/). 
 
