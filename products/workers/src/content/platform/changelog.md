@@ -2,7 +2,7 @@
 
 ## 9/3/2021
 
-- The crypto.randomUUID() method can be used to generate a new random version 4 UUID.
+- The `crypto.randomUUID()` method can be used to generate a new random version 4 UUID.
 - Durable Objects are now scheduled more evenly around a colo.
 
 ## 8/5/2021
