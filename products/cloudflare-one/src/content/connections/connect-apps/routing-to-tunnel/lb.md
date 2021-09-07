@@ -61,4 +61,4 @@ Currently, `cloudflared` connections give preference to whichever data center wa
 
 The solution depends on the type of tunnel being used:
 - If running Classic Tunnels, put your origins in different pools
-- If running Named Tunnels, set each tunnel up as a different origin
+- If running Named Tunnels (using a shared ID), set each tunnel up as a different origin
