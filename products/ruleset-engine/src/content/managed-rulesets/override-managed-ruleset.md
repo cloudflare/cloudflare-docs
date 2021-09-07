@@ -21,7 +21,7 @@ You can override a ruleset at three levels:
 
 To apply an override for a Managed Ruleset:
 
-* Call the [Update ruleset](/cf-rulesets/rulesets-api/update) method on your account-level phase entry point.
+* Call the [Update ruleset](/rulesets-api/update) method on your account-level phase entry point.
 * Specify the `overrides` in the `action_parameters` of the rule that executes your Managed Ruleset.
 
 ```json
@@ -128,4 +128,4 @@ curl -X PUT \
 </div>
 </details>
 
-For additional examples of configuring overrides, see [Workflow examples](/cf-rulesets/common-use-cases).
+For additional examples of configuring overrides, see [Workflow examples](/common-use-cases).

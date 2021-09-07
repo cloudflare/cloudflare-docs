@@ -30,7 +30,7 @@ Include the rule definition in the request body. The rule will be added to the e
 
 ## Example
 
-The following example adds a rule to ruleset `{ruleset-id}` of zone `{zone-id}`. The ruleset ID was previously obtained using the [List rulesets](/cf-rulesets/rulesets-api/view#list-existing-rulesets) method, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `{ruleset-id}` of zone `{zone-id}`. The ruleset ID was previously obtained using the [List rulesets](/rulesets-api/view#list-existing-rulesets) method, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 ```json
 ---

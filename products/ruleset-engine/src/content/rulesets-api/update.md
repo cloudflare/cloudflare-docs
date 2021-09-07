@@ -167,7 +167,7 @@ header: Response
 }
 ```
 
-For more information on deploying rulesets, check [Deploy rulesets](/cf-rulesets/deploy-rulesets).
+For more information on deploying rulesets, check [Deploy rulesets](/deploy-rulesets).
 
 ## Example - Update ruleset description
 
@@ -175,7 +175,7 @@ You can use this API method to update the description of an existing ruleset or 
 
 <Aside type='warning' header='Important'>
 
-You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/cf-rulesets/managed-rulesets/override-managed-ruleset) to customize the ruleset behavior.
+You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/managed-rulesets/override-managed-ruleset) to customize the ruleset behavior.
 
 </Aside>
 

@@ -6,7 +6,7 @@ order: 740
 
 # Deploy rulesets
 
-Use the [Rulesets API](/cf-rulesets/rulesets-api) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
+Use the [Rulesets API](/rulesets-api) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
 A rule that executes a ruleset consists of:
 
@@ -82,8 +82,8 @@ header: Response
 }
 ```
 
-See [Work with Managed Rulesets](/cf-rulesets/managed-rulesets) and [Work with custom rulesets](/cf-rulesets/custom-rulesets) for more information.
+See [Work with Managed Rulesets](/managed-rulesets) and [Work with custom rulesets](/custom-rulesets) for more information.
 
-For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/cf-rulesets/rulesets-api/update).
+For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/rulesets-api/update).
 
-For examples of deploying rulesets, see [Workflow examples](/cf-rulesets/common-use-cases).
+For examples of deploying rulesets, see [Workflow examples](/common-use-cases).

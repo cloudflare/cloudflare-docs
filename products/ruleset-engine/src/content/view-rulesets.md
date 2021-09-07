@@ -277,4 +277,4 @@ Each rule in a Managed Ruleset can have associated tags or categories, listed in
 
 ---
 
-For more information on the available API methods for viewing rulesets, check [List and view rulesets](/cf-rulesets/rulesets-api/view).
+For more information on the available API methods for viewing rulesets, check [List and view rulesets](/rulesets-api/view).
