@@ -21,7 +21,7 @@ You can select between these two options in 1.1.1.1: Faster & Safer Internet's s
 1. Launch 1.1.1.1: Faster & Safer Internet and accept the Terms of Service.
 1. Toggle the **WARP** button to **Connected**.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
-1. Tap the **menu button**.
+1. Tap the menu button.
 1. Select **Advanced** > **Connection options**.
 1. In **DNS settings** > **1.1.1.1 for Families**, select the option you want to use.
 
