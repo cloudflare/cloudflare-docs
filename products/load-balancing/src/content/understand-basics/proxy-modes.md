@@ -3,7 +3,7 @@ order: 15
 pcx-content-type: reference
 ---
 
-# Types of load balancers
+# Proxy status
 
 You can load balance your traffic at different levels of the networking stack, including:
 - [Layer 7 or HTTP/HTTPS traffic](#layer-7-load-balancing-orange-clouded) (most common)
@@ -12,7 +12,7 @@ You can load balance your traffic at different levels of the networking stack, i
 
 ---
 
-## Layer 7 load balancing (orange-clouded)
+## Orange-clouded (layer 7 load balancing)
 
 Layer 7 load balancers direct traffic to specific servers based on information present in each HTTP/HTTPS request (HTTP headers, URI, cookies, type of data, etc.).
 
@@ -32,7 +32,7 @@ In comparison to [DNS-only load balancing](#dns-only-load-balancing-gray-clouded
 
 ---
 
-## DNS-only load balancing (gray-clouded)
+## Gray-clouded (DNS-only load balancing)
 
 DNS-only load balancers route traffic by returning specific IP addresses in response to a client's DNS query.
 
