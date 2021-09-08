@@ -28,10 +28,6 @@ Cloudflare provides the following Managed Rulesets in the WAF:
       <td>Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.</td>
     </tr>
     <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Data Loss Prevention (Beta)</td>
-      <td>Created by Cloudflare to address common data loss threats. These rules run on the response phase and monitor download of files or specific sensitive data — for example, financial and personally identifiable information.</td>
-    </tr>
-    <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/ddos-l7-mitigation#the-cloudflare-http-ddos-managed-ruleset'>Cloudflare HTTP DDoS Managed Ruleset (Beta)</a></td>
       <td>Created by Cloudflare to give users more control over how and when Cloudflare's automated mitigation systems will handle layer 7 DDoS attacks. The rules in this Managed Ruleset are always enabled. However, you can define overrides to modify the rule actions and the sensitivity of the various rules.</td>
     </tr>
@@ -46,3 +42,20 @@ You can configure the ruleset by overriding the threat score threshold in the fi
 You can also activate or deactivate scoring rules by overriding the paranoia level categories.
 
 </Aside>
+
+The following rulesets run in the response phase:
+
+<TableWrap><table style="table-layout:fixed; width:100%;">
+  <thead>
+    <tr>
+      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
+      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Sensitive Data Detection (Beta)</td>
+      <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in **Firewall** > **Data**.</td>
+    </tr>
+  </tbody>
+</table></TableWrap>
