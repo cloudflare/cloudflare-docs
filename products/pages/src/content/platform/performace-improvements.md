@@ -13,7 +13,7 @@ By default, the Polish option is turned off for projects, it does come with two 
 
 ### Lossless 
 
-Lossless image option reduces the size of image files without impacting the visual quality. In this option, metadata is removed from PNG, GIF and JPEG but the lossless compression is done on GIF and PNG
+Lossless image option reduces the size of image files without impacting the visual quality. In this option, metadata is removed from PNG, GIF and JPEG but the lossless compression is done on GIF and PNG.
 
 
 ### Lossy 
