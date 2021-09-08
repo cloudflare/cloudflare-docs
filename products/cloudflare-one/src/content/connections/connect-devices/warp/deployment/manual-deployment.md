@@ -25,10 +25,11 @@ End users will need to log in to Cloudflare for Teams by following these instruc
 End users will need to log in to Cloudflare for Teams by following these instructions:
 
 1. Open a terminal window.
-1. Type `warp-cli teams-enroll <your team name>`.
+1. Run `warp-cli teams-enroll <your team name>` to enroll into Teams using your organization's [team name](/glossary#team-name).
 1. Complete the authentication steps required by your organization in the browser window that opens.
 1. Return to your terminal window and run `warp-cli enable-always-on` to toggle WARP to always stay connected.
-1. For more information on all available Linux commands run `warp-cli --help` for a complete list.
+
+For more information on all available Linux commands, run `warp-cli --help`.
 
 ## On iOS, Android and ChromeOS
 
