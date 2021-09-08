@@ -22,7 +22,7 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 ## Caching and performance
 
-Pages includes good caching defaults. That means that every time you deploy an asset to Pages, it remains cached on the Cloudflare CDN until your next deploy. 
+Pages includes good caching defaults. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment. 
 
 <Aside type="note" header="Purging the cache">
 
