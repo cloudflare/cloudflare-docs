@@ -92,7 +92,7 @@ $ npm run build
 $ wrangler publish
 ```
 
-After deploying your project, open up your browser to review your static site.
+After deploying your project, open your browser to review your static site.
 
 ![Result](./media/demo.png)
 
