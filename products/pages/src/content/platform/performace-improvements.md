@@ -18,7 +18,7 @@ Lossless image option reduces the size of image files without impacting the visu
 
 ### Lossy 
 
-This polish option, reduces the file size of JPEG images using lossy compression which may reduce image quality 
+This polish option, reduces the file size of JPEG images using lossy compression which may reduce image quality.
 
 
 ### Serving WebP images 
