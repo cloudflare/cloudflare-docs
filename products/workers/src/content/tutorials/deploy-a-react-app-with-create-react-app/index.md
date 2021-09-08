@@ -14,7 +14,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-In this tutorial, you will use [Wrangler](https://github.com/cloudflare/wrangler) and [Cloudflare Workers](https://workers.cloudflare.com) to deploy and serve a static site. With the rise of architectures like [JAMStack](https://jamstack.org/), static sites have become a simple, streamlined way to combine highly-available static assets with performant backend code, especially when deployed with serverless. With Workers, your application will be distributed to over 200+ locations around the world, and served directly from Cloudflare’s CDN at the server closest to your users.
+In this tutorial, you will use [Wrangler](https://github.com/cloudflare/wrangler) and [Cloudflare Workers](https://workers.cloudflare.com) to deploy and serve a static site. With the rise of architectures like [JAMStack](https://jamstack.org/), static sites have become a simple, streamlined way to combine highly-available static assets with performant backend code, especially when deployed in a serverless model. With Workers, your application will be distributed to over 200+ locations around the world, and served directly from Cloudflare’s CDN at the server closest to your users.
 
 <YouTube id="6YC3MgVwCGA"/>
 
@@ -100,7 +100,7 @@ After deploying your project, open up your browser to review your static site.
 
 The Workers Site feature is designed to work with as little configuration as possible. Since the process for deploying static sites is fairly consistent, regardless of framework or language, you should not need to spend a lot of time configuring your project or writing any additional code to serve your site on Workers.
 
-If you are interested in how Workers serves static sites, this section will lightly document how the underlying script works, and what it does each time a user makes a request to your site.
+If you are interested in how Workers serves static sites, this section will briefly document how the underlying script works and what it does each time a user makes a request to your site.
 
 Like all Workers scripts, the static site feature begins by listening for incoming `fetch` events to your application — these are incoming requests from a client, such as a browser or a phone:
 
@@ -113,7 +113,7 @@ addEventListener("fetch", event => {
 })
 ```
 
-When the script receives an incoming [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), it looks at the `pathname`, such as `/workers`, and looks up an associated file uploaded to Workers KV. If that file is found, a new [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) is generated, with a matching [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) in the `Content-Type` header of the response — for example, if the path `/workers.jpg` is requested, a new response is returned with the header `Content-type: image/jpg`.
+When the script receives an incoming [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), it looks at the `pathname`, such as `/workers`, and looks up an associated file uploaded to Workers KV. If that file is found, a new [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) is generated, with a matching [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) in the `Content-Type` header of the response — for example, if the path `/workers.jpg` is requested, a new response is returned with the header `Content-type: image/jpeg`.
 
 After fetching assets from [Workers KV](/runtime-apis/kv), the static site template will cache them in Cloudflare’s powerful CDN. When subsequent users request `/index.html`, Cloudflare’s CDN will transparently serve a cached version.
 
