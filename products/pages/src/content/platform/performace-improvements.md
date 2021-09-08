@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 ## Polish 
 
-Polish improves image loading time by optimizing image hosted on your “domain.pages.dev”. It reduces image file size by removing metadata(date and time, camera manufacturer, model, etc.) by compressing images where possible,  smaller images mean faster load time for images and web apps. 
+Polish improves image loading time by optimizing image hosted on your “domain.pages.dev”. It reduces image file size by removing metadata (date and time, camera manufacturer, model, etc.) by compressing images where possible, smaller images mean faster load time for images and web apps.
 
 By default, the Polish option is turned off for projects, it does come with two other options that have different performance effects on images, namely Lossy and lossless.
 
