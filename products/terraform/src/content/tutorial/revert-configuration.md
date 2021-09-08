@@ -6,9 +6,9 @@ pcx-content-type: tutorial
 
 # Revert configuration
 
-Sometimes when you deploy configuration changes, you later determine they need to be rolled back. For examplle, you could be performance testing a new configuration and want to revert to your previous configuration when done testing, or maybe you mistyped an IP address and brought your entire site down.
+Sometimes, you may have to roll back configuration changes. For example, you might want to run performance tests on a new configuration or maybe you mistyped an IP address and brought your entire site down.
 
-Either way, to revert your configuration, check out the desired branch and ask Terraform to move your Cloudflare settings back in time. If you accidentally brought your site down, consider establishing a good strategy for peer reviewing pull requests rather than merging directly to `master` as done in the tutorials for brevity.
+To revert your configuration, check out the desired branch and ask Terraform to move your Cloudflare settings back in time. If you accidentally brought your site down, consider establishing a good strategy for peer reviewing pull requests rather than merging directly to `master` as done in the tutorials for brevity.
 
 ## 1. Review your configuration history
 
@@ -288,4 +288,4 @@ cloudflare_page_rule.redirect-to-new-db-page: Destruction complete after 1s
 Apply complete! Resources: 0 added, 0 changed, 2 destroyed.
 ```
 
-Two resources destroyed, as expected and you have rolled back to the previous version.
+Two resources destroyed were (as expected) and you have rolled back to the previous version.

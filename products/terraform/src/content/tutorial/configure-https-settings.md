@@ -12,7 +12,7 @@ You will use a new git branch for the changes and then merge it into master befo
 
 ## 1. Create a new branch and append the new zone settings
 
-In this step, modify the Terraform configuration to enable the following settings: [TLS 1.3](https://www.cloudflare.com/learning-resources/tls-1-3/), [Always Use HTTPS](https://blog.cloudflare.com/how-to-make-your-site-https-only/), [Strict SSL mode](https://blog.cloudflare.com/introducing-strict-ssl-protecting-against-a-man-in-the-middle-attack-on-origin-traffic/), and the [Cloudflare WAF](https://www.cloudflare.com/waf/). Strict mode requires a valid SSL certificate on your origin, so be sure to use the [Cloudflare Origin CA](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/) to generate one.
+In this step, modify the Terraform configuration to enable the following settings: [TLS 1.3](https://support.cloudflare.com/hc/articles/227172348), [Always Use HTTPS](https://blog.cloudflare.com/how-to-make-your-site-https-only/), [Strict SSL mode](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#strict), and the [Cloudflare WAF](https://developers.cloudflare.com/waf/). Strict mode requires a valid SSL certificate on your origin, so be sure to use the [Cloudflare Origin CA](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) to generate one.
 
 ```sh
 $ git checkout -b step3-https
@@ -35,7 +35,7 @@ EOF
 
 ## 2. Preview and merge the changes
 
-Take a look at what Terraform is proposing before applying it. The `terraform plan` output is filtered to ignore the values that will be "computed" — in this case, settings that will keep their default values.
+Review what Terraform is proposing before applying changes. The `terraform plan` output is filtered to ignore the values that will be "computed" — in this case, settings that will keep their default values.
 
 ```sh
 $ terraform plan | grep -v "<computed>"

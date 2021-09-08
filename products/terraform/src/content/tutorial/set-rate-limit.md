@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Set up rate limiting
 
-As your site gains more attention, you could disocver attempts to brute force your login page at https://www.example.com/login from your serve access logs. In this tutorial, you will learn how to stop those attemps with Cloudflare's [rate limiting product](https://www.cloudflare.com/rate-limiting/).
+As your site gains more attention, you could discover attempts to brute force your login page at `https://www.example.com/login` from your serve access logs. In this tutorial, you will learn how to stop those attempts with Cloudflare's [rate limiting product](https://support.cloudflare.com/hc/articles/115001635128).
 
 ## 1. Create a new branch and append the rate limiting settings
 
@@ -73,7 +73,7 @@ The `threshold` is an integer count of how many times an event — defined by th
 14:   }
 ```
 
-The `match` block tells Cloudflare's edge what to watch for, such as HTTP or HTTPS POST requests to https://www.example.com/login. Cloudflare further restricts the match to HTTP `401` (Unauthorized) or `403` (Forbidden) response codes returned from the origin.
+The `match` block tells Cloudflare's edge what to watch for, such as HTTP or HTTPS POST requests to `https://www.example.com/login`. Cloudflare further restricts the match to HTTP `401` (Unauthorized) or `403` (Forbidden) response codes returned from the origin.
 
 ```
 15:   action {
@@ -89,7 +89,7 @@ The `match` block tells Cloudflare's edge what to watch for, such as HTTP or HTT
 25: }
 ```
 
-After matching traffic, set the action the edge should take. When testing, set the `mode` to `simulate` and review logs before taking enforcement action (see below). The `timeout` field indicates that the action should be enforced for 300 seconds (five minutes), and the `response` block indicates what should be sent back to the caller that tripped the rate limit.
+After matching traffic, set the action the edge should take. When testing, set the `mode` to `simulate` and review logs before taking enforcement action (see below). The `timeout` field indicates that the action should be enforced for 300 seconds (five minutes) and the `response` block indicates what should be sent back to the caller that tripped the rate limit.
 
 ## 2. Preview and merge the changes
 

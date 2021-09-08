@@ -6,9 +6,9 @@ pcx-content-type: tutorial
 
 # Add exceptions with Page Rules
 
-In [step 3](/tutorial/configure-https-settings), you configured zone settings that apply to all of example.com. In this tutorial, you will add an exception to these settings using [Page Rules](https://www.cloudflare.com/features-page-rules/).
+In [step 3](/tutorial/configure-https-settings), you configured zone settings that apply to all of example.com. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
-Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: https://www.example.com/expensive-db-call. Additionally, you will add a redirect from the previous URL used to host this page.
+Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
 ## 1. Create a new branch and append the page rule
 
