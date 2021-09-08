@@ -100,7 +100,7 @@ After deploying your project, open your browser to review your static site.
 
 The Workers Site feature is designed to work with as little configuration as possible. Since the process for deploying static sites is fairly consistent, regardless of framework or language, you should not need to spend a lot of time configuring your project or writing any additional code to serve your site on Workers.
 
-If you are interested in how Workers serves static sites, this section will briefly document how the underlying script works and what it does each time a user makes a request to your site.
+If you are interested in how a Workers Site operates, this section will briefly document how the underlying script works and what it does each time a user makes a request to your site.
 
 Like all Workers scripts, the static site feature begins by listening for incoming `fetch` events to your application — these are incoming requests from a client, such as a browser or a phone:
 
