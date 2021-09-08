@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 790
+order: 3
 ---
 
 # Custom Rules (Beta)
@@ -19,7 +19,7 @@ Use Custom Rules in the **Firewall** app to define the following rule types:
 
 * [**Custom Firewall rules**](/custom-rules/custom-firewall) — Control incoming traffic by filtering requests. Perform actions like _Block_ or _JS Challenge_ on incoming requests according to rules you define.
 
-Custom Rules are built upon the [Ruleset Engine](/cf-rulesets) which you can use to define rules and actions in several Cloudflare products.
+Custom Rules are built upon the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) which you can use to define rules and actions in several Cloudflare products.
 
 ---
 
@@ -27,8 +27,8 @@ Custom Rules are built upon the [Ruleset Engine](/cf-rulesets) which you can use
 
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
-* [Firewall Rules](/cf-firewall-rules), available in the **Firewall Rules** tab
+* [Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules), available in the **Firewall Rules** tab
 * [Custom Firewall rules](/custom-rules/custom-firewall), available in the **Custom Rules** tab
 * [Rate Limiting rules](/custom-rules/rate-limiting), available in the **Custom Rules** tab
-* [Managed Rulesets](https://developers.cloudflare.com/waf/managed-rulesets), available in the **WAF** tab
+* [Managed Rulesets](/managed-rulesets), available in the **WAF** tab
 * [Legacy Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128), available in the **Tools** tab

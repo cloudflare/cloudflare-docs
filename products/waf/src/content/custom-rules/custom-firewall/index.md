@@ -13,9 +13,9 @@ This feature is only available for selected customers on an Enterprise plan. Con
 
 </Aside>
 
-Like other rules evaluated by Cloudflare's [Ruleset Engine](/cf-rulesets), Custom Firewall rules have an **expression** and an **action**:
+Like other rules evaluated by Cloudflare's [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/), Custom Firewall rules have an **expression** and an **action**:
 
-* The **expression** specifies the criteria you are matching traffic on — the same as in [Firewall Rules](/cf-firewall-rules).
+* The **expression** specifies the criteria you are matching traffic on — the same as in [Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules).
 * The **action** specifies what to perform when there is a match for the rule.
 
 ---
@@ -24,4 +24,4 @@ Like other rules evaluated by Cloudflare's [Ruleset Engine](/cf-rulesets), Custo
 
 To create Custom Firewall rules using the Cloudflare dashboard, see [Create Custom Firewall rules in the dashboard](/custom-rules/custom-firewall/create-dashboard).
 
-You can also create Custom Firewall rules using the [Rulesets API](/rulesets-api). See [Create Custom Firewall rules via API](/custom-rules/custom-firewall/create-api) for more information.
+You can also create Custom Firewall rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). See [Create Custom Firewall rules via API](/custom-rules/custom-firewall/create-api) for more information.
