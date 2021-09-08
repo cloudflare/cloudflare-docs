@@ -346,7 +346,7 @@ export REQUESTS_CA_BUNDLE=${CERT_PATH}
 
 ### npm
 
-The command below will set the `cafile` configuration to use the Cloudflare certificate.
+The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](../../../static/documentation/connections/Cloudflare_CA.pem) file type.
 
 ```
 npm config set cafile [PATH_TO_CLOUDFLARE_CERT]
