@@ -22,7 +22,7 @@ There are several Cloudflare products that provide you with Managed Rulesets. Ch
 
 ## Get started
 
-To view available Managed Rulesets, see [View rulesets](/view-rulesets).
+To view available Managed Rulesets, see [View rulesets](/basic-operations/view-rulesets).
 
 To deploy a Managed Ruleset to a phase, see [Deploy a Managed Ruleset](/managed-rulesets/deploy-managed-ruleset).
 

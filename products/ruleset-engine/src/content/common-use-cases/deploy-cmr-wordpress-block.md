@@ -9,7 +9,7 @@ order: 771
 
 Follow the steps below to create a rule that executes a Managed Ruleset and defines an override for rules with a specific tag.
 
-1. [Add a rule](/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
+1. [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
 1. [Configure a tag override](/managed-rulesets/override-managed-ruleset) that sets a specified action for all rules with a given tag.
 
 The example below uses the [Update ruleset](/rulesets-api/update) operation to perform the two steps in a single `PUT` request.

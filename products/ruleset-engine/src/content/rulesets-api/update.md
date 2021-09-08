@@ -167,7 +167,7 @@ header: Response
 }
 ```
 
-For more information on deploying rulesets, check [Deploy rulesets](/deploy-rulesets).
+For more information on deploying rulesets, check [Deploy rulesets](/basic-operations/deploy-rulesets).
 
 ## Example - Update ruleset description
 

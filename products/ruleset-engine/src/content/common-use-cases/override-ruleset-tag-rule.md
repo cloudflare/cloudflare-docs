@@ -8,7 +8,7 @@ order: 774
 
 Customize the execution of Managed Rulesets with a combination of ruleset overrides, tag overrides, and rule overrides in your phase entry point ruleset.
 
-1. [Add a rule](/deploy-rulesets) to a phase entry point ruleset to execute a Managed Ruleset.
+1. [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset to execute a Managed Ruleset.
 1. [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. [Configure a tag override](/managed-rulesets/override-managed-ruleset) that sets an action for rules with a given tag.
 1. [Configure a rule override](/managed-rulesets/override-managed-ruleset) that sets an action for the rules you want to execute.

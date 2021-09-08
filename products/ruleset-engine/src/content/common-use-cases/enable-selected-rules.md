@@ -9,7 +9,7 @@ order: 773
 
 Use a ruleset override and a rule override in a phase entry point ruleset to execute only selected rules in a Managed Ruleset.
 
-1. [Add a rule](/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
+1. [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
 1. [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
 1. [Configure a rule override](/managed-rulesets/override-managed-ruleset) to set an action for the rules you want to execute.
 
