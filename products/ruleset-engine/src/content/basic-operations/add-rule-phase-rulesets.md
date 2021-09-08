@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 type: overview
-order: 720
+order: 2
 ---
 
 # Add rules to phase entry point rulesets
@@ -171,4 +171,4 @@ header: Response
 
 ## Next steps
 
-To deploy a ruleset in a phase, add a rule that executes that ruleset to the entry point ruleset. For more information, see [Deploy rulesets](/deploy-rulesets).
+To deploy a ruleset in a phase, add a rule that executes that ruleset to the entry point ruleset. For more information, see [Deploy rulesets](/basic-operations/deploy-rulesets).

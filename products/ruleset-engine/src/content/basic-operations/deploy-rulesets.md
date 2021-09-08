@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 type: overview
-order: 740
+order: 3
 ---
 
 # Deploy rulesets
