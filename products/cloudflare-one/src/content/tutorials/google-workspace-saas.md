@@ -17,7 +17,7 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
 
     ![SSO profile on Google Workspace](../static/zero-trust-security/google-workspace-saas/sso-profile.png)
 
-1. Check the **Setup SSO with a third party identity provider** option.
+1. Select **Setup SSO with a third party identity provider**.
 
 ## Create an application on the Teams Dashboard
 
@@ -37,7 +37,7 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
     | Sign-out page URL | SSO Endpoint |
     | Verification Certificate | Public Key |
 
-1. Next, you can choose to check **Use a domain specific issuer**. If you check this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
+1. Next, you can select **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
 
 ## Create and upload a certificate file
 
@@ -55,5 +55,5 @@ You can now test the integration by going to `https://google.com/a/<yourdomain>`
 
 `Error: “G Suite - This account cannot be accessed because the login credentials could not be verified.”`
 
-If you see this error, it is likely that the Public Key and Private Key do not match. Double-check that your certificate file matches your Public Key.
+If you see this error, it is likely that the Public Key and Private Key do not match. Confirm your certificate file matches your Public Key.
 
