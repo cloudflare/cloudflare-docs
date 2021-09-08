@@ -1,18 +1,18 @@
 ---
-title: 6 – Making some exceptions
+title: 6 – Add exceptions with Page Rules
 order: 6
 pcx-content-type: tutorial
 ---
 
-# Making some exceptions
+# Add exceptions with Page Rules
 
-In [step 3](/tutorial/zone-settings) we configured zone settings that apply to all of example.com. In this step we're going to add an exception to these settings by using [Page Rules](https://www.cloudflare.com/features-page-rules/).
+In [step 3](/tutorial/configure-https-settings), you configured zone settings that apply to all of example.com. In this tutorial, you will add an exception to these settings using [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
-Specifically, we're going to turn increase the security level for a URL we know is expensive to render (and cannot be cached): https://www.example.com/expensive-db-call. Additionally, we're going to add a redirect from the previous URL we used to host this page.
+Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
 ## 1. Create a new branch and append the page rule
 
-As usual we'll create a new branch and append our configuration.
+Create a new branch and append the configuration.
 
 ```sh
 $ git checkout -b step6-pagerule
@@ -46,7 +46,7 @@ EOF
 
 ## 2. Preview and merge the changes
 
-You know the drill: preview the changes Terraform is going to make and then merge them into the master branch.
+Preview the changes Terraform will make and then merge them into the master branch.
 
 ```sh
 $ terraform plan
@@ -128,14 +128,14 @@ Fast-forward
 
 ## 3. Apply and verify the changes
 
-First we'll test requesting the (now missing) old location of the expensive-to-render page.
+First, test request the (now missing) old location of the expensive-to-render page.
 
 ```sh
 $ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
 < HTTP/1.1 404 Not Found
 ```
 
-As expected, it can't be found. Let's apply the Page Rules, including the redirect that should fix this error.
+As expected, the location cannot be found. Apply the Page Rules, including the redirect that should fix this error.
 
 ```sh
 $ terraform apply --auto-approve
@@ -178,7 +178,7 @@ cloudflare_page_rule.increase-security-on-expensive-page: Creation complete afte
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-With the Page Rules in place, let's try that call again, along with the I'm Under Attack Mode test:
+With the Page Rules in place, try that call again along with the I'm Under Attack Mode test:
 
 ```sh
 $ curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
@@ -189,4 +189,4 @@ $ curl -vso /dev/null https://www.upinatoms.com/expensive-db-call 2>&1 | grep "<
 < HTTP/1.1 503 Service Temporarily Unavailable
 ```
 
-Great, they work as expected! In the first case the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case it initially responds with a `503` (as is consistent with the "I Am Under Attack" mode).
+The call works as expected. In the first case, the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare edge initially responds with a `503` which is consistent with the "I Am Under Attack" mode.
