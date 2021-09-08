@@ -66,7 +66,7 @@ To start, you will need to configure a GitHub Webhook to post to your Worker whe
 
 --------------------------------
 
-## Parsing the Response
+## Parsing the response
 
 With your local environment setup, you will now parse the repository update with your Worker. If you experience any difficulty, refer to the finished [index.js](https://github.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
 
@@ -198,7 +198,7 @@ zone_id = ""
 
 --------------------------------
 
-## Sending a Text with Twilio
+## Sending a text with Twilio
 
 Finally, you will send a text message to you about your repository activity using Twilio. You will need a Twilio account and a phone number that can receive text messages. [Refer to the Twilio guide to get set up](https://www.twilio.com/sms/api). (If you are new to Twilio, they have [an interactive game](https://www.twilio.com/quest) where you can learn how to use their platform and get some free credits for beginners to the service.)
 
