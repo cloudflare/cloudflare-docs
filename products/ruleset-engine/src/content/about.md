@@ -83,9 +83,11 @@ For example, consider the following ruleset with four rules (R1, R2, R3, and R4)
 
 Rules can have additional features through specific Cloudflare products. You may have additional fields available for rule expressions, perform additional actions, or configure additional behavior in a given phase.
 
+---
+
 ## Get started
 
-To view existing rulesets and their properties, see [View rulesets](/view-rulesets).
+To view existing rulesets and their properties, see [View rulesets](/basic-operations/view-rulesets).
 
 For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/managed-rulesets).
 
