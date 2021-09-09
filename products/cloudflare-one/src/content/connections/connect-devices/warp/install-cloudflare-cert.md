@@ -336,9 +336,9 @@ gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\ca
  gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
  ```
 
- #### Git on Mac
+#### Git on Mac
 
- 1. Configure Git to trust the Cloudflare certificate with the following command.
+1. Configure Git to trust the Cloudflare certificate with the following command.
 
  ```
  git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
