@@ -1,5 +1,6 @@
 ---
 title: Overview
+pcx-content-type: landing-page
 order: 0
 ---
 
