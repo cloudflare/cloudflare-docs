@@ -72,7 +72,7 @@ Decoding the `odohtarget` stamp above using [the online DNS stamp calculator](ht
 
 ## Application integration
 
-If you’re an application developer and want to integrate ODoH into your app, you can do so using any of the following core protocol libraries:
+If you are an application developer and want to integrate ODoH into your app, use any of the following core protocol libraries:
 
 * [odoh-rs](https://github.com/cloudflare/odoh-rs) (Rust)
 * [odoh-go](https://github.com/cloudflare/odoh-go) (Go)
