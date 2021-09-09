@@ -5,12 +5,6 @@ order: 3
 
 # Custom Rules (Beta)
 
-<Aside type='warning' header='Important'>
-
-This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
-
-</Aside>
-
 Custom Rules allow you to protect your website and your APIs from malicious or excessive incoming traffic.
 
 Use Custom Rules in the **Firewall** app to define the following rule types:
@@ -20,6 +14,12 @@ Use Custom Rules in the **Firewall** app to define the following rule types:
 * [**Custom Firewall rules**](/custom-rules/custom-firewall) — Control incoming traffic by filtering requests. Perform actions like _Block_ or _JS Challenge_ on incoming requests according to rules you define.
 
 Custom Rules are built upon the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) which you can use to define rules and actions in several Cloudflare products.
+
+<Aside type='warning'>
+
+Custom Rules are only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
+
+</Aside>
 
 ---
 
