@@ -39,7 +39,7 @@ Parameters | Description
 -----------|------------
 `network.trr.odoh.configs_uri` | URI for the ODoH target configuration. e.g., `https://odoh.cloudflare-dns.com/.well-known/odohconfigs`.
 `network.trr.odoh.enabled` | Boolean to enable ODoH support, which must be set to true.
-`network.trr.odoh.proxy_uri` | URI of the proxy. e.g., https://example.com/proxy.
+`network.trr.odoh.proxy_uri` | URI of the proxy. e.g., `https://example.com/proxy`.
 `network.trr.odoh.target_host` | Host of the ODoH target server. e.g., `https://odoh.cloudflare-dns.com`.
 `network.trr.odoh.target_path` | Path for the ODoH target queries. e.g., /dns-query
 
