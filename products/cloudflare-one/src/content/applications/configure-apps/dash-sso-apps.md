@@ -39,6 +39,8 @@ Ask your account team to approve your SSO domain.
 
 Once your account team has approved your SSO domain, you will see an **SSO App** in the [Teams dashboard](https://dash.teams.cloudflare.com/) (under **Access** > **Applications**). This application automatically has a rule to *allow email domain* and uses your IdP as the authentication provider.
 
+If you have multiple IdPs, manage your allowed providers in the **Authentication** tab of the **SSO App**.
+
 For help creating additional policies (IP access lists, etc.), refer to [Zero Trust policies](/policies/zero-trust).
 
 ### Step 5 — Test your application
@@ -47,7 +49,7 @@ To test your SSO application:
 
 1. Log into the [Teams dashboard](https://dash.teams.cloudflare.com/).
 1. Navigate to **Settings** > **Authentication**.
-1. Find your **Cloudflare dashboard SSO** application.
+1. In the **Cloudflare dashboard SSO** section, find your email domain.
 1. Click **Test** and verify that your authentication works properly.
 
 ### Step 6 — Enable your SSO application
@@ -58,5 +60,5 @@ To enable your SSO application:
 
 1. Log into the [Teams dashboard](https://dash.teams.cloudflare.com/).
 1. Navigate to **Settings** > **Authentication**.
-1. Find your **Cloudflare dashboard SSO** application.
+1. In the **Cloudflare dashboard SSO** section, find your email domain.
 1. Set the toggle value to **Enabled**.
