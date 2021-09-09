@@ -28,7 +28,7 @@ URLs have a limit of 16KB.
 
 Request headers observe a total limit of 32KB, but each header is limited to 16KB. 
 
-Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(403) Request entity too large` error.
+Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
 Cloudflare Enterprise customers may contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500MB.
 
