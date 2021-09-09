@@ -64,7 +64,9 @@ Click the **Settings** button to copy the AUD tag from your **Access** app on yo
     
 ## Updating your Access signing keys
     
-Cloudflare Access uses a certificate to sign responses between your Identity Provider, Cloudflare and the Access JWT. The signing key can be used to validate the Access JWT. If you want your Identity Provider to verify signed responses, then you will need to provide the public key from your Access account. The public key can be found at <your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs. By default, the signing key used by Access rotates every 6 weeks. This means you will need to programmatically or manually update keys as they rotate. Previous keys are valid for seven (7) days after rotation to allow time for rotation.
+Cloudflare Access uses a certificate to sign responses between your identity provider, Cloudflare and the Access JWT. The signing key can be used to validate the Access JWT. If you want your identity provider to verify signed responses, you will need to provide the public key from your Access account. The public key can be found at [your team domain](/glossary#team-domain).
+
+By default, the signing key used by Access rotates every 6 weeks. This means you will need to programmatically or manually update keys as they rotate. Previous keys are valid for 7 days after rotation to allow time for rotation.
 
 If you would like to enforce a longer or shorter key rotation interval. This can be configured using the following API.
 
