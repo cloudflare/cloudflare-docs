@@ -81,6 +81,6 @@ There are currently no known libraries in Swift or Java.
 
 ## Server setup instructions
 
-Running an ODoH server — either a proxy or target - is more involved. A turnkey proxy and target is available in [odoh-server-go](https://github.com/cloudflare/odoh-server-go), a sample server that can be used to run a proxy or a target for ODoH. Up to date deployment instructions on a variety of platforms, including bare metals, are available in the [project’s README](https://github.com/cloudflare/odoh-server-go#deployment).
+Running an ODoH server — either a proxy or target - is more involved. A turnkey proxy and target is available in [odoh-server-go](https://github.com/cloudflare/odoh-server-go), which provides a sample server that can be used to run a proxy or a target for ODoH. Up to date deployment instructions on a variety of platforms, including commodity servers, are available in the [project’s README](https://github.com/cloudflare/odoh-server-go#deployment).
 
 Dedicated ODoH target is also available in [doh-server](https://github.com/jedisct1/doh-server), a fast and secure DoH (DNS-over-HTTPS) and ODoH (Oblivious DoH) server. Similarly, installation and deployment instructions can be found in the [project’s README](https://github.com/jedisct1/doh-server).
