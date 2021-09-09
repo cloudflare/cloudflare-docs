@@ -31,7 +31,7 @@ Every Auth0 account contains applications, which allow developers to create logi
 
 ![Creating an Auth0 application](./media/creating-an-application.png)
 
-Inside of your application’s settings, the client ID and client secret are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the [**Publish** section](/authorize-users-with-auth0#publish) of this tutorial, you will later fill in these values with the final deployed URL of our application.
+Inside of your application’s settings, the client ID and client secret are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the [**Publish** section](/tutorials/authorize-users-with-auth0#publish) of this tutorial, you will later fill in these values with the final deployed URL of our application.
 
 ## Generate a new project
 
@@ -96,7 +96,7 @@ export const authorize = async event => {
 }
 ```
 
-The `auth0` object wraps several secrets, which are encrypted values that can be defined and used by your script. In the [**Publish** section](/authorize-users-with-auth0#publish) of this tutorial, you will define these secrets using the [`wrangler secret`](/cli-wrangler/commands#secret) command.
+The `auth0` object wraps several secrets, which are encrypted values that can be defined and used by your script. In the [**Publish** section](/tutorials/authorize-users-with-auth0#publish) of this tutorial, you will define these secrets using the [`wrangler secret`](/cli-wrangler/commands#secret) command.
 
 The `generateStateParam` function will be used to prevent [Cross-Site Request Forgery attacks](https://auth0.com/docs/protocols/oauth2/mitigate-csrf-attacks). For now, you will return a string “stub” but later in the tutorial, `generateStateParam` will generate a random “state” parameter that you will store in Workers KV to verify incoming authorization requests.
 
@@ -625,7 +625,7 @@ export const authorize = async event => {
 }
 ```
 
-By implementing this function, you have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to see your Workers Site content. To configure your deployment and publish the application, you can go to the [**Publish** section](/authorize-users-with-auth0#publish), but in the next few portions of the tutorial you will focus on some of the more interesting aspects of this project; for example, accessing user information within your application, “edge state hydration”, logging out users, and making the application more production-ready with some improvements and customizations.
+By implementing this function, you have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to see your Workers Site content. To configure your deployment and publish the application, you can go to the [**Publish** section](/tutorials/authorize-users-with-auth0#publish), but in the next few portions of the tutorial you will focus on some of the more interesting aspects of this project; for example, accessing user information within your application, “edge state hydration”, logging out users, and making the application more production-ready with some improvements and customizations.
 
 ### Improvements and customizations
 
@@ -768,7 +768,7 @@ export const logout = event => {
 
 While this tutorial assumes that you are deploying a Workers Sites application, you may want to put this authorization logic in front of an existing domain. This concept, known as deploying to an “origin”, is in contrast to the “originless” deploy, where your Workers deployment is the final destination for any requests from users of your application.
 
-The next section of this tutorial, [**Publish**](/authorize-users-with-auth0#publish), assumes deployment to Workers’ built-in deployment target, `workers.dev`, but if you want to handle deploying to an existing domain, known commonly as a “zone”, you will need to take the following steps:
+The next section of this tutorial, [**Publish**](/tutorials/authorize-users-with-auth0#publish), assumes deployment to Workers’ built-in deployment target, `workers.dev`, but if you want to handle deploying to an existing domain, known commonly as a “zone”, you will need to take the following steps:
 
 1. Update the `handleEvent` function to make a request to your origin.
 
@@ -799,7 +799,7 @@ Given an example configuration and deployment of `https://my-auth.signalnerve.co
 
 2. Configure your `wrangler.toml` file to associate your Workers script with a zone.
 
-Associating a configured zone from your Cloudflare account is covered in the section [“Configure for deploying to a registered domain”](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Get started](/get-started/guide). In the [**Publish** section](/authorize-users-with-auth0#publish) of this guide, you will learn how to configure the file `wrangler.toml` to deploy to `*.workers.dev` — make sure you review [Get started](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
+Associating a configured zone from your Cloudflare account is covered in the section [“Configure for deploying to a registered domain”](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Get started](/get-started/guide). In the [**Publish** section](/tutorials/authorize-users-with-auth0#publish) of this guide, you will learn how to configure the file `wrangler.toml` to deploy to `*.workers.dev` — make sure you review [Get started](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
 
 In particular, you will need to ensure that the `zone_id` and `route` keys are defined in your `wrangler.toml` and that the `workers_dev` key is disabled. You may also choose to entirely remove the `[site]` block from your `wrangler.toml` file, which will stop `wrangler` from uploading the contents of your project’s `public` folder to Workers KV:
 
