@@ -68,9 +68,9 @@ Cloudflare Access uses a certificate to sign responses between your identity pro
 
 By default, the signing key used by Access rotates every 6 weeks. This means you will need to programmatically or manually update keys as they rotate. Previous keys are valid for 7 days after rotation to allow time for rotation.
 
-You can enforce a longer or shorter key rotation interval using the following API. For security or testing purposes, keys can be manually rotated using the following API.
+You can enforce a longer or shorter key rotation interval using the following API. For security or testing purposes, keys can be manually rotated using the ]following API](https://api.cloudflare.com/#access-keys-configuration-update-access-keys-configuration).
 
-Keys can also be manually rotated using the following API. This can be done for testing or security purposes.
+Keys can also be manually rotated using the [following API](https://api.cloudflare.com/#access-keys-configuration-rotate-access-keys). This can be done for testing or security purposes.
 
 
 ### Golang example
