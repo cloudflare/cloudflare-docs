@@ -45,7 +45,7 @@ Parameters | Description
 
 </TableWrap>
 
-Instructions for configuring these parameters can be found [in Mozilla’s website](https://support.mozilla.org/en-US/kb/about-config-editor-firefox). ODoH is not yet currently enabled for other browsers.
+Instructions for configuring these parameters can be found on [Mozilla’s website](https://support.mozilla.org/en-US/kb/about-config-editor-firefox). ODoH is not yet currently enabled for other browsers.
 
 ### System resolver
 
