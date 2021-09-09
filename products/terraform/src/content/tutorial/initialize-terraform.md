@@ -1,18 +1,18 @@
 ---
-title: 1 – Hello World
+title: 1 –  Initialize Terraform
 order: 1
 pcx-content-type: tutorial
 ---
 
-# Hello World
+# Introduction to Terraform init
 
-Let’s say you have a web server for your domain that’s accessible on 203.0.113.10. You just signed up your domain, example.com, on Cloudflare and want to manage everything in Terraform.
+This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain that is accessible on 203.0.113.10 and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform. 
 
-This tutorial step shows you how to get started. Before you do so, make sure you’ve [installed Terraform](/installing). You will need to [create an API Token](https://developers.cloudflare.com/api/tokens/create) with permissions to edit resources for this tutorial.
+Before you begin, ensure you [installed Terraform](/installing). You will also need to [create an API Token](https://developers.cloudflare.com/api/tokens/create) with permissions to edit resources for this tutorial.
 
-## 1. Defining your first Terraform config file
+## 1. Define your first Terraform config file
 
-First we’ll create a initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As you configuration gets more complex you’ll want to split the config into separate files and modules, but for now we’ll proceed with a single file:
+Create an initial Terraform config file. Any files ending in `.tf` will be processed by Terraform. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
 
 ```bash
 $ cat > cloudflare.tf <<'EOF'
@@ -48,9 +48,9 @@ resource "cloudflare_record" "www" {
 EOF
 ```
 
-## 2. Initializing Terraform and the Cloudflare provider
+## 2. Initialize Terraform and the Cloudflare provider
 
-Now that you’ve created your basic configuration in HCL, let’s initialize Terraform and ask it to apply the configuration to Cloudflare.
+After creating your basic configuration in HCL, initialize Terraform and ask it to apply the configuration to Cloudflare.
 
 ```sh
 $ terraform init
@@ -80,7 +80,7 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-When you run terraform init, any plugins required, such as the Cloudflare Terraform provider, are automatically downloaded and saved locally to a .terraform directory:
+When you run `terraform init`, any plugins required, such as the Cloudflare Terraform provider, are automatically downloaded and saved locally to a .terraform directory.
 
 ```sh
 $ find .terraform/
@@ -91,8 +91,8 @@ $ find .terraform/
 .terraform/plugins/darwin_amd64/terraform-provider-cloudflare_v1.0.0_x4
 ```
 
-## 3. Reviewing the execution plan
-With the Cloudflare provider installed, let’s ask Terraform what changes it’s planning to make to your Cloudflare account so it matches the configuration you previously defined:
+## 3. Review the execution plan
+After installing the Cloudflare provider, review the proposed changes to your Cloudflare account so they match the configuration you previously defined.
 
 ```sh
 $ terraform plan
@@ -134,11 +134,13 @@ can’t guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-As you can see in the above “execution plan”, Terraform is going to create a new DNS record, as requested. Values that you’ve explicitly specified are displayed, e.g., the value of the A record—203.0.113.10—while values that are derived based on other API calls, e.g., looking up the `metadata`, or returned after the object is created, are displayed as `<computed>`.
+In the “execution plan”, Terraform will create a new DNS record as requested. Values that you explicitly specified are displayed, such as the the value of the A record — 203.0.113.10. Values display as `<computed>` when they are derived based on other API calls, for example, looking up the `metadata`, or if the values are returned after the object is created. 
 
-## 4. Applying your changes
+## 4. Apply your changes
 
-The plan command is important, as it allows you to preview the changes for accuracy before actually making them. Once you’re comfortable with the execution plan, it’s time to apply it:
+The plan command is important because it allows you to preview the changes for accuracy before actually making them. After you review the execution plan, apply your changes.
+
+You can use `--auto-approve` on the command line for a briefer output. Without this flag, Terraform will display the output of the Terraform plan and then ask for confirmation before applying it.
 
 ```sh
 $ terraform apply --auto-approve
@@ -160,15 +162,12 @@ cloudflare_record.www: Creation complete after 1s (ID: c38d3103767284e7cd14d5dad
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
-Note that I specified --auto-approve on the command line for briefer output; without this flag, Terraform will show you the output of terraform plan and then ask for confirmation before applying it.
+## 5. Verify the results
 
-## 5. Verifying the results
+[Log in to the Cloudflare Dashboard](https://dash.cloudflare.com/login) and select the DNS tab. You should see the record created by Terraform.
 
-Logging back into the Cloudflare Dashboard and selecting the DNS tab, I can see the record that was created by Terraform:
 
-![New DNS Record](../static/new-dns-record.png)
-
-If you’d like to see the full results returned from the API call (including the default values that you didn’t specify but let Terraform compute), you can run terraform show:
+To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, you can run `terraform show`.
 
 ```sh
 $ terraform show

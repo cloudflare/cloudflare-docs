@@ -1,18 +1,18 @@
 ---
-title: 5 – Sharing the load
+title: 5 – Improve performance
 order: 5
 pcx-content-type: tutorial
 ---
 
-# Sharing the load
+# Improve performance and reliability
 
-Thanks to the rate limiting set up in the [previous step](/tutorial/rate-limit), our login page is protected against credential brute force attacks. Now it's time to focus on performance and reliability. Imagine organic traffic has grown, and is increasingly global. It's time to spread these requests over multiple data centers.
+Now that rate limiting is set up, your login page is now protected against credential brute for attacks.
 
-In this tutorial step, we'll add a second origin for some basic round robining, and then use the [Cloudflare Load Balancing](https://www.cloudflare.com/load-balancing/) product to fail traffic over as needed. We'll then enhance our load balancing configuration through the use of "geo steering" to serve results from an origin server that is geographically closest to your end users.
+In this tutorial, you will add a second origin for some basic round robining, and then use the [Cloudflare Load Balancing](https://developers.cloudflare.com/load-balancing/) product to fail traffic over as needed. You will also enhance your load balancing configuration through the use of "geo steering" to serve results from an origin server that is geographically closest to your end users.
 
 ## 1. Add another DNS record for www
 
-To get started, we'll add a DNS record for a second web server, which is located in Asia. The IP address for this server is 198.51.100.15.
+To get started, add a DNS record for a second web server, which is located in Asia. The IP address for this server is 198.51.100.15.
 
 ```sh
 $ git checkout -b step5-loadbalance
@@ -29,11 +29,11 @@ resource "cloudflare_record" "www-asia" {
 EOF
 ```
 
-Note that while the name of the _resource_ is different as Terraform resources of the same type must be uniquely named, the DNS name, i.e., what your customers will type in their browser, is the same: "www".
+Note that while the name of the `resource` is different because Terraform resources of the same type must be uniquely named, the DNS name, or what your customers will type in their browser, is the same: `www`.
 
 ## 2. Preview and merge the changes
 
-Below we'll check the `terraform plan`, merge and apply the changes.
+Check the `terraform plan` and then merge and apply the changes.
 
 ```sh
 $ terraform plan | grep -v "<computed>"
@@ -86,7 +86,7 @@ Fast-forward
 
 ## 3. Apply and verify the changes
 
-Let's add the second DNS record for www.example.com:
+Add the second DNS record for www.example.com.
 
 ```sh
 $ terraform apply --auto-approve
@@ -111,7 +111,7 @@ cloudflare_record.www-asia: Creation complete after 1s (ID: fda39d8c9bf909132e82
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
-With the second DNS record in place, let's try making some requests to see where the traffic is served from:
+With the second DNS record in place, make some requests to see where the traffic is served from.
 
 ```sh
 $ for curl https://www.example.com
@@ -127,24 +127,25 @@ $ curl https://www.example.com
 Hello, this is 203.0.113.10!
 ```
 
-As you can see above, there is no discernible pattern for which origin receives the request. When Cloudflare connects to an origin with multiple DNS records, one of the IP addresses is selected at random. If both of these IPs are in the same data center and sessions can be shared (i.e., it doesn't matter if the same user hops between origin servers), this may work fine. However, for anything more complicated such as origins in different geographies or active health checks, you're going to want to use Cloudflare's Load Balancing product.
+As noted above, there is no discernible pattern for which origin receives the request. When Cloudflare connects to an origin with multiple DNS records, one of the IP addresses is selected at random. If both IPs are in the same data center and sessions can be shared (i.e., it doesn't matter if the same user hops between origin servers), this may work fine. However, for anything more complicated, such as origins in different geographies or active health checks, you will want to use Cloudflare's Load Balancing product.
 
-## 3. Switch to using Cloudflare's Load Balancing product
+## 4. Switch to using Cloudflare's Load Balancing product
 
 <Aside>
 
-Before proceeding, make sure that your account is enabled for Load Balancing. If you're on an Enterprise plan, you should ask your Customer Success Manager to do this; otherwise, you can subscribe to Load Balancing within the Cloudflare Dashboard.
+Before proceeding, ensure Load Balancing is enabled for your account. If you are on an Enterprise plan, contact your Customer Success Manager to enable Load Balancing' otherwise, you can subscribe to Load Balancing within the Cloudflare Dashboard.
+
 </Aside>
 
-As described in the [load balancing tutorial](https://support.cloudflare.com/hc/en-us/articles/115000081911-Tutorial-How-to-Set-Up-Load-Balancing-Intelligent-Failover-on-Cloudflare) on the Cloudflare Support site, you will need to do three things:
+As described in the [Load Balancing tutorial](https://developers.cloudflare.com/load-balancing/get-started), you will need to complete three tasks:
 
-1. Create a monitor to run health checks against your origin servers
-2. Create a pool of one or more origin servers that will receive load balanced traffic
-3. Create a load balancer with an external hostname, e.g., www.example.com, and one or more pools
+1. Create a monitor to run health checks against your origin servers.
+2. Create a pool of one or more origin servers that will receive load balanced traffic.
+3. Create a load balancer with an external hostname, e.g., `www.example.com`, and one or more pools.
 
 ### i. Define and create the health check ("monitor")
 
-To monitor our origins we're going to create a basic health check that makes a GET request to each origin on the URL https://www.example.com. If the origin returns the `200/OK` status code within 5 seconds, we'll consider it healthy. If it fails to do so three (3) times in a row, we'll consider it unhealthy. This health check will be run once per minute  from several regions, and send an email notification to you@example.com if any failures are detected.
+To monitor the origins, create a basic health check that makes a GET request to each origin on the URL `https://www.example.com`. If the origin returns the `200/OK` status code within five seconds, it is considered healthy. If it fails to do so three times in a row, it is considered unhealthy. This health check will be run once per minute from several regions and send an email notification to you@example.com if any failures are detected.
 
 ```sh
 $ git checkout step5-loadbalance
@@ -167,9 +168,9 @@ EOF
 
 ### ii. Define and create the pool of origins
 
-We will call our pool "www-servers" and add two origins to it: `www-us` (203.0.113.10) and `www-asia` (198.51.100.15). For now, we'll skip any sort of [geo routing](https://support.cloudflare.com/hc/en-us/articles/115000540888-Load-Balancing-Geographic-Regions).
+In this exammple, the pool will be called "www-servers" with two origins added to it: `www-us` (203.0.113.10) and `www-asia` (198.51.100.15). For now, skip any sort of [geo routing](https://support.cloudflare.com/hc/en-us/articles/115000540888-Load-Balancing-Geographic-Regions).
 
-Note that we reference the monitor we added in the last step. When applying this confirmation, Terraform will figure out that it first needs to create the monitor so that it can look up the ID and provide to the pool we wish to create.
+Note the reference to the monitor added in the last step. When applying this confirmation, Terraform will figure out that it first needs to create the monitor before looking up the ID and providing it to the pool you wish to create.
 
 ```sh
 $ cat >> cloudflare.tf <<'EOF'
@@ -194,7 +195,7 @@ EOF
 
 ### iii. Define and create the load balancer
 
-Note that when you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://support.cloudflare.com/hc/en-us/articles/115004954407-How-Does-a-Load-Balancer-Interact-with-Existing-DNS-Records-). For example, when we create the "www.example.com" LB below, it will supersede the two www DNS records that you have previously defined. One benefit of leaving this DNS records in place is that if you temporarily disable load balancing, connections to this hostname will still be possible as shown in Step #2 above.
+When you create a load balancer (LB), it will [replace any existing DNS records with the same name](https://developers.cloudflare.com/load-balancing/reference/dns-records). For example, if you create the `www.example.com` LB below, it will supersede the two www DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in step #2 above.
 
 ```sh
 $ cat >> cloudflare.tf <<'EOF'
@@ -211,7 +212,7 @@ EOF
 
 ### iv. Preview and merge the changes
 
-As usual, we take a look at the proposed plan before we apply any changes:
+As usual, review proposed plan before applying any changes.
 
 ```sh
 $ terraform plan
@@ -296,7 +297,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-The plan looks good so let's go ahead, merge it in, and apply it.
+The plan looks good, so you can merge it in and apply it.
 
 ```sh
 $ git add cloudflare.tf
@@ -367,7 +368,7 @@ Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 ### v. Test the changes
 
-With load balancing in place, let's run those `curl` requests again to see where the traffic is served from:
+With load balancing in place, run thee `curl` requests again to see where the traffic is served from.
 
 ```sh
 $ for i in {1..4}; do curl https://www.example.com && sleep 5; done
@@ -380,4 +381,4 @@ Hello, this is 198.51.100.15!
 Hello, this is 203.0.113.10!
 ```
 
-Great, we're now seeing each request load balanced evenly across the two origins we defined.
+You should now see each request load balanced evenly across the two origins we defined.

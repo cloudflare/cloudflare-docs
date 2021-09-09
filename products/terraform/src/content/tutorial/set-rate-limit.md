@@ -1,16 +1,16 @@
 ---
-title: 4 – Woah, slow down there
+title: 4 – Set up rate limiting
 order: 4
 pcx-content-type: tutorial
 ---
 
-# Woah, slow down there
+# Set up rate limiting
 
-With our zone settings locked down, and our site starting to get some more attention, it's unfortunately begun attracting some of the less scrupulous characters on the internet. Our server access logs show attempts to brute force our login page at https://www.example.com/login. Let's see what we can do with Cloudflare's [rate limiting product](https://www.cloudflare.com/rate-limiting/) to put a stop to these efforts.
+As your site gains more attention, you could discover attempts to brute force your login page at `https://www.example.com/login` from your serve access logs. In this tutorial, you will learn how to stop those attempts with Cloudflare's [rate limiting product](https://support.cloudflare.com/hc/articles/115001635128).
 
 ## 1. Create a new branch and append the rate limiting settings
 
-After creating a new branch we specify the rate limiting rule:
+After creating a new branch, specify the rate limiting rule.
 
 ```
 $ git checkout -b step4-ratelimit
@@ -48,7 +48,7 @@ resource "cloudflare_rate_limit" "login-limit" {
 EOF
 ```
 
-This rule is a bit more complex than the zone settings rule, so let's break it down:
+This rule is a bit more complex than the zone settings rule and will be broken down.
 
 ```
 00: resource "cloudflare_rate_limit" "login-limit" {
@@ -58,7 +58,7 @@ This rule is a bit more complex than the zone settings rule, so let's break it d
 04:   period    = 60
 ```
 
-The `threshold` is an integer count of how many times an event (defined by the `match` block below) has to be detected in the `period` before the rule takes action. The `period` is measured in seconds, so the above rule says to take action if the match fires 5 times in 60 seconds.
+The `threshold` is an integer count of how many times an event — defined by the `match` block below — has to be detected in the `period` before the rule takes action. The `period` is measured in seconds, so the above rule says to take action if the match fires five times in 60 seconds.
 
 ```
 05:   match {
@@ -73,7 +73,7 @@ The `threshold` is an integer count of how many times an event (defined by the `
 14:   }
 ```
 
-The `match` block tells the Cloudflare edge what to be on the lookout for, i.e., HTTP or HTTPS POST requests to https://www.example.com/login. We further restrict the match to HTTP `401` (Unauthorized) or `403` (Forbidden) response codes returned from the origin.
+The `match` block tells Cloudflare's edge what to watch for, such as HTTP or HTTPS POST requests to `https://www.example.com/login`. Cloudflare further restricts the match to HTTP `401` (Unauthorized) or `403` (Forbidden) response codes returned from the origin.
 
 ```
 15:   action {
@@ -89,11 +89,11 @@ The `match` block tells the Cloudflare edge what to be on the lookout for, i.e.,
 25: }
 ```
 
-After matching traffic, we set the action for our edge to take. When testing, it's a good idea to set the `mode` to `simulate` and review logs before taking enforcement action (see below). The `timeout` field here indicates that we want to enforce this action for 300 seconds (5 minutes) and the `response` block indicates what should be sent back to the caller that tripped the rate limit.
+After matching traffic, set the action the edge should take. When testing, set the `mode` to `simulate` and review logs before taking enforcement action (see below). The `timeout` field indicates that the action should be enforced for 300 seconds (five minutes) and the `response` block indicates what should be sent back to the caller that tripped the rate limit.
 
 ## 2. Preview and merge the changes
 
-As usual, we take a look at the proposed plan before we apply any changes:
+Review the proposed plan before applying any changes.
 
 ```
 $ terraform plan
@@ -150,7 +150,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-The plan looks good so let's go ahead, merge it in, and apply it.
+The plan looks good, so you can merge it in and apply it.
 
 ```
 $ git add cloudflare.tf
@@ -201,7 +201,7 @@ cloudflare_rate_limit.login-limit: Creation complete after 1s (ID: 8d518c5d6e634
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
-Note that if you haven't purchased rate limiting yet, you will see the following error when attempting to apply the new rule:
+If you have not purchased rate limiting, you will see the following error when attempting to apply the new rule.
 ```
 Error: Error applying plan:
 
@@ -214,7 +214,7 @@ Error: Error applying plan:
 
 ## 3. Update the rule to ban (not just simulate)
 
-After confirming that the rule is triggering as planned in logs (but not yet enforcing), it's time to switch from `simulate` to `ban`:
+After confirming that the rule is triggering but not yet enforcing in logs, switch from `simulate` to `ban`.
 
 ```
 $ git checkout step4-ratelimit
@@ -265,7 +265,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-## 4. Merge and deploy the updated rule, then push config to GitHub
+## 4. Merge and deploy the updated rule, then push the config to GitHub
 
 ```
 $ git add cloudflare.tf
@@ -304,9 +304,9 @@ $ git push
 ...
 ```
 
-## 5. Confirm the rule is working as expected
+## 5. Confirm the rule works as expected
 
-This step is optional, but it's a good way to demonstrate that the rule is working as expected (note the final `429` response):
+(Optional) This step is a good way to demonstrate that the rule works as expected. Note the final `429` response.
 
 ```
 $ for i in {1..6}; do curl -XPOST -d '{"username": "foo", "password": "bar"}' -vso /dev/null https://www.example.com/login 2>&1 | grep "< HTTP"; sleep 1; done

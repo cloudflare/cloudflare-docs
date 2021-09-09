@@ -1,20 +1,18 @@
 ---
-title: 7 – On final thought...
+title: 7 – Revert configuration
 order: 7
 pcx-content-type: tutorial
 ---
 
-# On final thought, let’s roll some of that back
+# Revert configuration
 
-We've come a long way! Now it's time to tear it all down. Well, maybe just part of it.
+Sometimes, you may have to roll back configuration changes. For example, you might want to run performance tests on a new configuration or maybe you mistyped an IP address and brought your entire site down.
 
-Sometimes when you deploy configuration changes you later determine that they need to be rolled back. You could be performance testing a new configuration and want to revert to your previous configuration when done testing. Or maybe you fat-fingered an IP address and brought your entire site down (#hugops).
+To revert your configuration, check out the desired branch and ask Terraform to move your Cloudflare settings back in time. If you accidentally brought your site down, consider establishing a good strategy for peer reviewing pull requests rather than merging directly to `master` as done in the tutorials for brevity.
 
-Either way, if you've determined you want to revert your configuration, all you need to do is check the desired branch out and ask Terraform to move your Cloudflare settings back in time. And note that if you accidentally brought your site down you should consider establishing a good strategy for peer reviewing pull requests (rather than merging directly to `master`, as I do here for brevity)!
+## 1. Review your configuration history
 
-## 1. Reviewing your configuration history
-
-Before we figure out how far back in time we want to rollback, let's take a look at our (git) versioned history.
+Before determining how far back to revert, review the versioned history.
 
 ```sh
 $ git log
@@ -67,11 +65,11 @@ Date:   Sun Apr 8 19:52:13 2018 -0700
     Step 2 - Initial commit with webserver definition.
 ```
 
-Another nice benefit of storing your Cloudflare configuration in git is that you can see who made the change, as well as who reviewed and approved the change (assuming you're peer reviewing pull requests).
+Another benefit of storing your Cloudflare configuration in Git is that you can see who made the change. You can also see who reviewed and approved the change if you peer review pull requests).
 
 ## 2. Examining specific historical changes
 
-To begin with, let's see what the last change we made was.
+Check when last change was made.
 
 ```sh
 $ git show
@@ -114,7 +112,7 @@ index 0b39450..ef11d8a 100644
 +}
 ```
 
-Now let's look at the past few changes:
+Review the past few changes.
 
 ```sh
 $ git log -p -3
@@ -196,11 +194,11 @@ index 9f25a0c..b92cb6f 100644
 +}
 ```
 
-## 3. Redeploying the previous configuration
+## 3. Redeploy the previous configuration
 
-Imagine that shortly after we deployed the Page Rules from [step 6](/tutorial/page-rules), we got a call from the Product team that manages this page: "The URL was only being used by one customer and is no longer needed, let's drop the security setting and redirect."
+Assume that shortly after you deployed the Page Rules from [step 6](/tutorial/add-page-rules), you are told the URL is no longer needed, and the security setting and redirect should be dropped.
 
-While you could always edit the config file directly and delete those entries, it's easier to let `git` do it for us. To begin with, let's ask git to revert the last commit (without rewriting history).
+While you can always edit the config file directly and delete those entries, you can use `git` to do that for you. First, tell git to revert the last commit without rewriting history.
 
 ### i. Revert the branch to the previous commit
 
@@ -227,7 +225,7 @@ Date:   Wed Apr 18 22:04:52 2018 -0700
 
 ### ii. Preview the changes
 
-As expected, Terraform is indicating it will remove the two Page Rules we created in the previous step.
+As expected, Terraform is indicating it will remove the two Page Rules created in the previous step.
 
 ```sh
 $ terraform plan
@@ -269,7 +267,7 @@ can't guarantee that exactly these actions will be performed if
 
 ### iii. Apply the changes
 
-The changes look good, so let's ask Terraform to roll our Cloudflare configuration back.
+The changes look good, and Terraform can revert the Cloudflare configuration.
 
 ```sh
 $ terraform apply --auto-approve
@@ -290,4 +288,4 @@ cloudflare_page_rule.redirect-to-new-db-page: Destruction complete after 1s
 Apply complete! Resources: 0 added, 0 changed, 2 destroyed.
 ```
 
-Two resources destroyed, as expected. We've rolled back to the previous version.
+Two resources destroyed were (as expected) and you have rolled back to the previous version.
