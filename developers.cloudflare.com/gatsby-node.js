@@ -62,13 +62,13 @@ exports.sourceNodes = ({actions, createContentDigest, createNodeId}) => {
 
       const data = fs.readFileSync(`../products/${product.icon}/src/content/icons/${product.icon}.svg` , 'utf8')      
 
-       let dataStr = data.toString()
+       const logoSVGContent = data.toString()
 
        createNode({
          id: createNodeId(product.icon),
          title:product.title,
          path: product.path,
-         logoSVGContent: dataStr,
+         logoSVGContent,
          wrap: product.wrap ? product.wrap : false,
          internal: {
             type: 'Product',
