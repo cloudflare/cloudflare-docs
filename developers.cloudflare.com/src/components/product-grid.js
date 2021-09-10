@@ -5,7 +5,7 @@ import "../css/components/product-grid.css"
 
 // Query to get all the products that are sourced from the current-products-list.js file
 
-const ProductsQuery = () => {
+const useProducts = () => {
 
   const result = useStaticQuery(graphql`
     query {
