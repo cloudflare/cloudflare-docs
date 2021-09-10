@@ -37,4 +37,26 @@ $ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load bal
 
 ## Optional: Configure additional Cloudflare settings
 
-The application will default to the Cloudflare settings of the hostname in your account that includes the Cloudflare Tunnel Load Balancer records, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
+The application defaults to Cloudflare settings of the hostname associated with the Cloudflare Tunnel Load Balancer records, including [cache rules](https://developers.cloudflare.com/cache/best-practices/customize-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
+
+## Known limitations
+
+### Monitors and TCP Tunnel origins
+
+If you have a tunnel to a port or ssh port, you **should not** run a TCP health check.
+
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/connections/connect-apps/configuration/configuration-file/ingress) that returns a fixed http status response — and create an **HTTP** [monitor](https://developers.cloudflare.com/load-balancing/understand-basics/monitors) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
+
+### Named Tunnels and replicas
+
+A load balancer maintains [session affinity](https://developers.cloudflare.com/load-balancing/understand-basics/session-affinity) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas). 
+
+To maintain session affinity for individual service instances running behind tunnel replicas, use different Named Tunnel IDs.
+
+### Local connection preference
+
+If you notice traffic imbalances across origin servers in different locations, you may have to adjust your load balancer setup. 
+
+`cloudflared` connections give preference to tunnels that terminate in the same data center (local connections). This behavior can impact how connections are weighted and traffic is distributed.
+
+The solution depends on the type of tunnel being used. If running Classic Tunnels, put your origins in different pools. If running [Named Tunnels replicas](/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas) (using a shared ID), switch to separate Named Tunnels as distinct origins.
