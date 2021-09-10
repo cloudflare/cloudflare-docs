@@ -18,7 +18,7 @@ Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytic
     <tbody>
         <tr>
             <td>2021-09-01</td>
-            <td>Improved to report debugging information for Core Web Vitals</td>
+            <td>Improved to report debugging information for Core Web Vitals.</td>
         </tr>   
         <tr>
             <td>2021-05-28</td>
