@@ -21,7 +21,7 @@ To log into Cloudflare for Teams directly, go to the [Teams dashboard](https://d
 
 To log in through the Cloudflare dashboard:
 
-1. Log into your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 1. Select an account and an application.
 1. Navigate to **Access**.
 1. Select **Launch Teams**.
@@ -37,7 +37,7 @@ Ask your account team to approve your SSO domain.
 
 ### Step 4 — Customize your SSO application
 
-Once your account team has approved your SSO domain, you will see an **SSO App** in the [Teams dashboard](https://dash.teams.cloudflare.com/) (under **Access** > **Applications**). This application automatically has a rule to *allow email domain* and uses your IdP as the authentication provider.
+Once your account team has approved your SSO domain, you will see an **SSO App** in the [Teams dashboard](https://dash.teams.cloudflare.com/) (under **Access** > **Applications**). This application automatically has a rule to `allow email domain` and uses your IdP as the authentication provider.
 
 If you have multiple IdPs, manage your allowed providers in the **Authentication** tab of the **SSO App**.
 
