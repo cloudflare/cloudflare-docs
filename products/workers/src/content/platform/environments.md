@@ -66,21 +66,6 @@ name = "your-worker-dev"
 route = "your-custom-route"
 ```
 
-The layout of an example `[env.dev]` environment is displayed below:
-
-```toml
----
-filename: wrangler.toml
----
-name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
-
-[env.dev]
-name = "your-worker-dev"
-route = "your-custom-route"
-```
-
 --------------------------------
 
 ## Examples
