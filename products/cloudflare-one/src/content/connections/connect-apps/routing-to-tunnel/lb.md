@@ -13,15 +13,17 @@ pcx-content-type: how-to
 
 ## Route traffic from the dashboard
 
-When you create a Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created Tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
+When you create a tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
 
 Unlike publicly routable IP addresses, the subdomain will only proxy traffic for a DNS record or a Load Balancer pool in the same Cloudflare account. If someone discovers your subdomain UUID, they will not be able to create a DNS record in another account or system to proxy traffic to the address.
 
 To add a Cloudflare Tunnel connection to a Cloudflare Load Balancer pool:
 
 1. Navigate to the Load Balancer page in the Cloudflare dashboard.
-2. Create or edit an existing Origin Pool. Add the Tunnel subdomain as an Origin Address.
+2. Create or edit an existing Origin Pool. Add the tunnel subdomain as an Origin Address.
 3. Click **Save**.
+
+If you want to add a Monitor to your Cloudflare Load Balancer pool, you need to add a host header in the **Advanced Healthcheck Settings** section. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The Monitor will not work without the host header if you are using a config file that defines the `ingress` field like the example [cloudflared.yaml](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90) in this repo. 
 
 ## Route traffic from the command line
 
@@ -37,7 +39,7 @@ $ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load bal
 
 ## Optional: Configure additional Cloudflare settings
 
-The application defaults to Cloudflare settings of the hostname associated with the Cloudflare Tunnel Load Balancer records, including [cache rules](https://developers.cloudflare.com/cache/best-practices/customize-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
+The application will default to the Cloudflare settings of the hostname in your account that includes the Cloudflare Tunnel Load Balancer records, including [cache rules](https://support.cloudflare.com/hc/en-us/articles/202775670-Customizing-Cloudflare-s-cache) and [firewall policies](https://developers.cloudflare.com/firewall/). You can changes these settings for your hostname in Cloudflare's dashboard.
 
 ## Known limitations
 
