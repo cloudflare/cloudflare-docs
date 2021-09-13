@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 3
+order: 2
 ---
 
 # Custom Rules (Beta)
@@ -9,9 +9,9 @@ Custom Rules allow you to protect your website and your APIs from malicious or e
 
 Use Custom Rules in the **Firewall** app to define the following rule types:
 
-* [**Rate Limiting rules**](/custom-rules/rate-limiting) — Check for excessive incoming traffic and apply mitigation actions.
-
 * [**Custom Firewall rules**](/custom-rules/custom-firewall) — Control incoming traffic by filtering requests. Perform actions like _Block_ or _JS Challenge_ on incoming requests according to rules you define.
+
+* [**Rate Limiting rules**](/custom-rules/rate-limiting) — Check for excessive incoming traffic and apply mitigation actions.
 
 Custom Rules are built upon the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) which you can use to define rules and actions in several Cloudflare products.
 
