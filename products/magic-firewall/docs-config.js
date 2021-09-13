@@ -1,36 +1,41 @@
-const fs = require('fs')
+const fs = require("fs");
+const productIconKey = "firewall";
 
 module.exports = {
   product: "Magic Firewall",
   pathPrefix: "/magic-firewall",
-  productIconKey: "firewall",
+  productIconKey,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/magic-firewall",
-  logoSVGContent: fs.readFileSync('../src/content/icons/magic-firewall.svg' , 'utf8'),
+  logoSVGContent: fs.readFileSync(
+    path.join(__dirname, `../src/content/icons/${productIconKey}.svg`),
+    "utf8"
+  ),
   externalLinks: [
     {
       title: "Magic Transit home",
-      url: "https://www.cloudflare.com/magic-transit/"
+      url: "https://www.cloudflare.com/magic-transit/",
     },
     {
       title: "Blog: Magic WAN & Magic Firewall",
-      url: "https://blog.cloudflare.com/introducing-magic-firewall/"
+      url: "https://blog.cloudflare.com/introducing-magic-firewall/",
     },
     {
       title: "Cloudflare homepage",
-      url: "https://cloudflare.com"
-    }
+      url: "https://cloudflare.com",
+    },
   ],
   search: {
     indexName: "developers-cloudflare",
     apiKey: "b23088ab4d346409f9d3ece6606344c3",
-    algoliaOptions: { 'facetFilters': '["project:magic-firewall"]'}
+    algoliaOptions: { facetFilters: '["project:magic-firewall"]' },
   },
   siteMetadata: {
     title: "Cloudflare Magic Firewall docs",
-    description: "Magic Firewall a network-level firewall delivered through Cloudflare to secure your enterprise.",
+    description:
+      "Magic Firewall a network-level firewall delivered through Cloudflare to secure your enterprise.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/magic-firewall",
-    image: "https://www.cloudflare.com/img/cf-twitter-card.png"
-  }
-}
+    image: "https://www.cloudflare.com/img/cf-twitter-card.png",
+  },
+};

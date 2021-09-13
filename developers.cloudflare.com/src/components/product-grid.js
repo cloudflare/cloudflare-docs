@@ -15,6 +15,7 @@ const useProducts = () => {
           path
           logoSVGContent
           wrap
+          href
         }
       }
     }
@@ -280,7 +281,8 @@ const ProductGridLink = ({ product }) => (
 )
 
 const ProductGridColumns = ({ numColumns }) => {
-  const productsData = ProductsQuery()
+  // TODO: uncomment this useProducts when ready for step 2 of using new svg icons
+  // const productsData = useProducts()
   // TODO: uncomment products to use new way of displaying SVG
   // let products = productsData.allProduct.nodes
 
