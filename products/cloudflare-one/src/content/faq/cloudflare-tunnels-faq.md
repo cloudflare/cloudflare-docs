@@ -7,6 +7,29 @@ pcx-content-type: faq
 
 # Tunnels
 
+If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:
+
+* Take note of any specific error messages and/or problematic behaviors.
+
+* Take note of any options you specified, either on the CLI or in your configuration file, when starting your tunnel.
+
+* Set [`log-level`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+
+* Set [`transport-log`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#transport-loglevel) level to `debug`.
+
+* Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#logfile) either on the command line or in your configuration file.
+
+`logfile: /var/log/cloudflared.log` (Unix)
+`Windows Path to log`
+`
+* Include your full `config.yml` file for the affected tunnel.
+
+* Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+
+* Gather any relevant error/access logs from your server.
+
+------------------------------------
+
 ## ​Can I create a Tunnel for an apex domain?
 
 Yes. With [Named Tunnels](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) you can create a CNAME at the apex that points to the named tunnel.
