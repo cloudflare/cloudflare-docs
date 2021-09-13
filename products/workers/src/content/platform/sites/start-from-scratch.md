@@ -46,9 +46,9 @@ To start from scratch to create a Workers Site, follow these steps:
   route = "https://example.com/*"
   ```
 
-  <Aside>
+  <Aside type="note">
 
-  __Note:__ Check out documentation on [Routes](/platform/routes) to configure `route` properly.
+Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
 
   </Aside>
   
