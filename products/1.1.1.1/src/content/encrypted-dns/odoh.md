@@ -5,7 +5,7 @@ pcx-content: reference
 
 # Oblivious DNS over HTTPS
 
-Oblivious DNS over HTTPS (or ODoH) is an emerging DNS protocol that separates client IP addresses from their DNS queries. This is done by routing the DNS queries over a proxy, so that the DNS resolver cannot link client IPs with their queries. You can learn more about it in [this blog post](https://blog.cloudflare.com/oblivious-dns/). To follow the progress of ODoH, [check out this IETF draft](https://datatracker.ietf.org/doc/draft-pauly-dprive-oblivious-doh/).
+Oblivious DNS over HTTPS (or ODoH) is an emerging DNS protocol that separates client IP addresses from their DNS queries. This is done by routing the DNS queries over an HTTP relay, or proxy, so that the DNS resolver cannot link client IPs with their queries. You can learn more about it in [this blog post](https://blog.cloudflare.com/oblivious-dns/). To follow the progress of ODoH, [check out this IETF draft](https://datatracker.ietf.org/doc/draft-pauly-dprive-oblivious-doh/).
 
 Please note that this protocol and all related implementations are currently **experimental** and subject to change. Use at your own risk.
 
