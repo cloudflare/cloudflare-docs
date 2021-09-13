@@ -13,17 +13,17 @@ pcx-content-type: how-to
 
 ## Route traffic from the dashboard
 
-When you create a Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created Tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
+When you create a tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can treat that subdomain as if it were an origin target in the Cloudflare dashboard.
 
 Unlike publicly routable IP addresses, the subdomain will only proxy traffic for a DNS record or a Load Balancer pool in the same Cloudflare account. If someone discovers your subdomain UUID, they will not be able to create a DNS record in another account or system to proxy traffic to the address.
 
 To add a Cloudflare Tunnel connection to a Cloudflare Load Balancer pool:
 
 1. Navigate to the Load Balancer page in the Cloudflare dashboard.
-2. Create or edit an existing Origin Pool. Add the Tunnel subdomain as an Origin Address.
+2. Create or edit an existing Origin Pool. Add the tunnel subdomain as an Origin Address.
 3. Click **Save**.
 
-If adding a Monitor to your Cloudflare Load Balancer pool, add a host header in the 'Advanced Healthcheck Settings' section.  The Monitor will not work without the host header if using a tunnel config file that defines the `ingress` field like the example [cloudflared.yaml](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90) in this repo.  The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`
+If you want to add a Monitor to your Cloudflare Load Balancer pool, you need to add a host header in the **Advanced Healthcheck Settings** section. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The Monitor will not work without the host header if you are using a config file that defines the `ingress` field like the example [cloudflared.yaml](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90) in this repo. 
 
 ## Route traffic from the command line
 
