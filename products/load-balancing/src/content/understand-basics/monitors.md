@@ -1,13 +1,17 @@
 ---
-order: 18
+order: 1
 pcx-content-type: concept
 ---
 
+import MonitorDefinition from "../_partials/_monitor-definition.md"
+
 # Monitors
 
-Cloudflare health checks track the health of pools. They are configured through monitors, which define what type of health check to run and how frequently to run them. Cloudflare monitors your servers from each of our data centers.
+<MonitorDefinition/>
 
-Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs. You can create, attach, and configure health checks from either the Load Balancing dashboard or the Cloudflare API.
+![Dynamic load balancing involves pools, origins, monitors, and health checks](../static/images/load-balancer-components.png)
+
+Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
 
 <Aside type="note">
 
@@ -81,9 +85,9 @@ For a list of origins that override a monitor's `Host` header:
 
 ---
 
-## Managing monitors via the Load Balancing dashboard
+## Create monitors
 
-Use the **Create Load Balancer** or **Edit Load Balancer** panels in the Load Balancing dashboard to manage health check monitors. For step-by-step guidance, see _[Create, attach, and configuring monitors](/create-load-balancer-ui#3-create-attach-and-configure-monitors)_.
+For step-by-step guidance, refer to [Create monitors](/how-to/create-monitor).
 
 ---
 

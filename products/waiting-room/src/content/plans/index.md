@@ -1,6 +1,6 @@
 ---
 title: Plans
-order: 1
+order: 2
 pcx-content-type: reference
 type: overview
 ---
@@ -26,16 +26,16 @@ The features available for a waiting room depend on your plan type.
             <td>Custom</td>
         </tr>
         <tr>
-            <td><a href='/how-to/customize-waiting-room'>Customized templates</a></td>
+            <td><a href='/additional-options/customize-waiting-room'>Customized templates</a></td>
             <td>No</td>
             <td>No</td>
             <td>Yes</td>
         </tr>
          <tr>
-            <td><a href='/about'>Queueing method</a></td>
+            <td><a href='/reference/queueing-methods'>Queueing method</a></td>
             <td>First In First Out (FIFO)</td>
             <td>First In First Out (FIFO)</td>
-            <td>First In First Out (FIFO)</td>
+            <td>First In First Out (FIFO) or Random</td>
         </tr>
         <tr>
             <td><a href='/reference/configuration-settings'>Disable session renewal</a></td>
@@ -44,7 +44,7 @@ The features available for a waiting room depend on your plan type.
             <td>Yes</td>
         </tr>
         <tr>
-            <td><a href='/how-to/mobile-traffic'>Mobile app traffic</a></td>
+            <td><a href='/additional-options/mobile-traffic'>Mobile app traffic</a></td>
             <td>No</td>
             <td>No</td>
             <td>Yes</td>

@@ -11,7 +11,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
 ### Adding environment variables via wrangler
 
-Environment variables are defined via the `[vars]` configuration in your `wranger.toml` file and are always plaintext values.
+Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
 
 ```toml
 ---
@@ -55,21 +55,21 @@ console.log(STRIPE_TOKEN);
 
 Secrets are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
 
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+type = "javascript"
 
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
+account_id = "<YOUR ACCOUNTID>"
+workers_dev = true
 
-    # [secrets]
-    # SPARKPOST_KEY
-    # GTOKEN_PRIVKEY
-    # GTOKEN_KID
-    ```
+# [secrets]
+# SPARKPOST_KEY
+# GTOKEN_PRIVKEY
+# GTOKEN_KID
+```
 
 <Aside type="warning">
 

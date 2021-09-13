@@ -64,6 +64,12 @@ Opera           | Supported since Opera version 75+
 
 </TableWrap>
 
+<Aside type="note" header="Note">
+
+Cloudflare Stream is not available on Chromium, as Chromium does not support H.264 videos.
+
+</Aside>
+
 <TableWrap>
 
 Mobile Platform   | Version

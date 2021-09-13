@@ -137,3 +137,8 @@ $ cloudflared tunnel run
 2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
 Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
 ```
+
+## How does tunnel ownership work?
+
+Tunnel ownership is bound to the Cloudflare account for which the `cert.pem` file was issued upon tunnel creation. If a user in a Cloudflare account creates a tunnel, any other user in the same account who has access to the `cert.pem` file for the tunnel can delete, list, or otherwise manage that tunnel.
+

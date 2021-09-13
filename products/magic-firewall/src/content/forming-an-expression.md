@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 # Forming an expression
 
-Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Firewall Rules language](]https://developers.cloudflare.com/firewall/cf-firewall-language).
+Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language).
 
 To start with a simple case, here's how you'd match a source IP:
 

@@ -22,4 +22,4 @@ By default, non-Enterprise customers have **one** Load Balancing rule **per doma
 
 ## Limitations
 
-At the moment, you cannot use load balancing rules with [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/load-balancer).
+At the moment, you cannot use load balancing rules with [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/about/load-balancer).

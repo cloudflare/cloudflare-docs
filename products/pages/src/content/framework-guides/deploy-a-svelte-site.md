@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Svelte site
 
 [Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
@@ -25,6 +27,8 @@ $ cd my-svelte-app
 ```
 
 During `init`, SvelteKit will prompt you for customization choices. Your answers will not affect the rest of this tutorial. Choose the option that is ideal for your project.
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

@@ -1,8 +1,10 @@
 ---
 title: Best practices
-order: 3
+order: 
 pcx-content-type: best-practices
 ---
+
+import ChangeQueueMethod from "../_partials/_change-queueing-method.md"
 
 # Best practices for waiting rooms
 
@@ -22,8 +24,12 @@ Additionally, if you have multiple waiting rooms, the waiting room with the most
 
 ### Waiting room template
 
-If you want to provide your users with updated information or expectations when they are queueing, we recommend that you update your [waiting room template](/how-to/customize-waiting-room). All changes will be visible to your users in close to real time.
+If you want to provide your users with updated information or expectations when they are queueing, Cloudflare recommends that you update your [waiting room template](/additional-options/customize-waiting-room). All changes will be visible to your users in close to real time.
 
 ### Configuration settings
 
 When users are actively queueing, only make changes to your [configuration settings](/reference/configuration-settings) when necessary. These changes may impact the estimated wait time shown to end users, which might lead to user confusion.
+
+### Queueing method
+
+<ChangeQueueMethod/>
