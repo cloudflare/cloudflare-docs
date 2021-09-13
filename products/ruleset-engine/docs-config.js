@@ -12,8 +12,8 @@ module.exports = {
     ],
     search: {
       indexName: "developers-cloudflare",
-      apiKey: "",
-      algoliaOptions: { 'facetFilters': ''}
+      apiKey: "b23088ab4d346409f9d3ece6606344c3",
+      algoliaOptions: { 'facetFilters': '["project:ruleset-engine"]'}
     },
     siteMetadata: {
       title: "Cloudflare Ruleset Engine docs",
