@@ -48,7 +48,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
   <Aside type="note">
 
-Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
+    Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
 
   </Aside>
   
@@ -57,6 +57,7 @@ Refer to the documentation on [Routes](/platform/routes) to configure `route` pr
   Learn more about [configuring your project](/get-started/guide#7-configure-your-project-for-deployment).
 
 6. Run:
+
   ```sh
   $ wrangler publish
   ```
