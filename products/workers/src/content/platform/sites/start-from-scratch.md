@@ -31,14 +31,14 @@ To start from scratch to create a Workers Site, follow these steps:
 
 5. Choose whether you would like to publish your site to: [a `*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or your [personal domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) registered with Cloudflare. Then, update your `wrangler.toml` file accordingly:
 
-  **`*.workers.dev`**: Make sure `workers_dev` is set to true. This is the default.
+  **`*.workers.dev`**: Enable the `workers_dev` configuration.
 Configure `route` to match your `*.workers.dev` subdomain: 
 
   ```toml
-  route = "your-workers-subdomain.workers.dev/*"
+  workers_dev = true
   ```
   
-  Or
+  And/Or
 
   **Personal Domain**: Add your `zone_id` and a `route`.
 
