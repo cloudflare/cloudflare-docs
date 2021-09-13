@@ -6,7 +6,7 @@ order: 2
 
 # Configure the L3/4 DDoS Managed Ruleset via API
 
-Configure the Cloudflare L3/4 DDoS Managed Ruleset by defining overrides at the account level using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
+Configure the Cloudflare L3/4 DDoS Managed Ruleset by defining overrides at the account level using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
 
 Each account has the Cloudflare L3/4 DDoS Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l4` phase entry point ruleset explicitly. You only have to create a rule in the phase entry point to deploy the Managed Ruleset if you need to configure overrides.
 
@@ -114,4 +114,4 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
+For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).
