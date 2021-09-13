@@ -133,14 +133,14 @@ Add the following fields to the file:
 ```txt
 url: http://localhost:8000
 tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```
 
 **If you are connecting a network**
 
 ```txt
 tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```
 
 Confirm that the configuration file has been successfully created by running:
