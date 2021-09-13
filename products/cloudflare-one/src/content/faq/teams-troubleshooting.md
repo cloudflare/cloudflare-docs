@@ -71,6 +71,19 @@ This is due to a Google policy change requiring you to set your Google Admin con
 1. In the Google Admin console, navigate to **Security** > **API controls**.
 1. Check the *Trust internal, domain-owned apps* option.
 
+## I see an error: x509: certificate signed by unknown authority.
+
+This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
+* Add the certificate to the system certificate pool.
+* Use the `--origin-ca-pool` flag and specify the path to the certificate.
+* Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
+
+## I see an error 1033 when attempting to run a tunnel.
+
+An error 1033 indicates your tunnel is not connected to Cloudflare's edge, and therefore cannot correctly route traffic to an origin. Make sure you completed step 5 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#5-start-routing-traffic) and assigned a CNAME record to points traffic to your tunnel. Alternatively, check [this guide](/connections/connect-apps/routing-to-tunnel/lb) to route traffic to your tunnel using load balancers. 
+
+To see a list of active tunnels and their connections, run `cloudflared tunnel list` .
+
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
 These mobile applications may use [certificate pinning](/glossary#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
@@ -104,13 +117,3 @@ There are a few different possible root causes behind the `websocket: bad handsh
 * WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 * Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
 * Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
-
-## I see an error: x509: certificate signed by unknown authority
-
-This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. There are three ways to solve this:
-
-* Add the certificate to the system certificate pool.
-* Use the `--origin-ca-pool` flag and specify the path to the certificate.
-* Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
-
-
