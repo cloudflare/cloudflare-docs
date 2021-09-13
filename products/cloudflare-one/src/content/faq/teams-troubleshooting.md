@@ -82,7 +82,7 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge, and therefore cannot correctly route traffic to an origin. Make sure you completed step 5 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#5-start-routing-traffic) and assigned a CNAME record to points traffic to your tunnel. Alternatively, check [this guide](/connections/connect-apps/routing-to-tunnel/lb) to route traffic to your tunnel using load balancers. 
 
-To see a list of active tunnels and their connections, run `cloudflared tunnel list` .
+To see a list of active tunnels and their connections, run `cloudflared tunnel list`.
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
