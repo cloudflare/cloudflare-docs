@@ -91,11 +91,15 @@ $ wrangler login [--scopes-list] [--scopes $SCOPES]
 
 All of the arguments and flags to this command are optional:
 
+<Definitions>
+
 - `--scopes-list` <PropMeta>optional</PropMeta>
   - List all the available OAuth scopes with descriptions.
 - `--scopes $SCOPES`:<PropMeta>optional</PropMeta>
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     e.g. `$ wrangler login --scopes account:read user:read`. 
+
+</Definitions>
 
 `wrangler login` uses all the available scopes by default if no flags are provided. 
 
@@ -116,7 +120,7 @@ the configuration file regardless of your authorization method. Please visit the
 
 ## config
 
-An interactive command that will authenticate Wrangler by prompting you for a Cloudflare API Token or Global API key.
+An interactive command that will authenticate Wrangler by prompting you for a Cloudflare API Token or Global API key, instead of OAuth tokens.
 
 ```sh
 $ wrangler config [--api-key]
@@ -129,7 +133,7 @@ $ wrangler config [--api-key]
 
 </Definitions>
 
-You can also use `wrangler login` or environment variables to authenticate.
+You can also use environment variables to authenticate, or `wrangler login` to authorize with OAuth tokens.
 
 --------------------------------
 
