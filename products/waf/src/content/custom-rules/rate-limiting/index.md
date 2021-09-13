@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 1
+order: 2
 ---
 
 # Rate Limiting rules
