@@ -77,7 +77,7 @@ curl -X DELETE https://api.cloudflare.com/client/v4/accounts/$account_tag/images
 
 ```
 
-If the upload is successful, you can expect a JSON response body similar to this:
+If the delete is successful, you can expect a JSON response body similar to this:
 
 ```json
 {

@@ -26,10 +26,10 @@ To start from scratch to create a Workers Site, follow these steps:
 4. You can preview your site by running:
 
   ```sh
-  $ wrangler preview --watch
+  $ wrangler dev
   ```
 
-5. Choose whether you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Then update your `wrangler.toml` file accordingly:
+5. Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Then update your `wrangler.toml` file accordingly:
 
   **`*.workers.dev`**: Enable the `workers_dev` configuration.
 

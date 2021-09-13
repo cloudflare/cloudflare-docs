@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: reference
 ---
 
-# Download `cloudflared`
+# Downloads
 
 Cloudflare Tunnel requires the installation of a lightweight server-side daemon, `cloudflared`, to connect your infrastructure to Cloudflare. `cloudflared` is an [open source project](https://github.com/cloudflare/cloudflared) maintained by Cloudflare.
 
@@ -12,6 +12,10 @@ Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/rele
 Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
 
 ## Linux
+
+Download and install `cloudflared` via the [Cloudflare Package Repository](https://pkg.cloudflare.com/).
+
+Alternatively, download the latest release directly.
 
 <TableWrap>
 
@@ -25,7 +29,13 @@ Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/do
 
 ## macOS
 
-You can [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
+Download and install `cloudflared` via Homebrew:
+
+```sh
+$ brew install cloudflare/cloudflare/cloudflared
+```
+
+Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
 
 ## Windows
 

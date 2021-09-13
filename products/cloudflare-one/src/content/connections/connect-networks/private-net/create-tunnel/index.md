@@ -13,8 +13,8 @@ pcx-content-type: how-to
 
 To create a Tunnel, run the following command:
 
-```sh
-cloudflared tunnel create <NAME>
+```bash
+$ cloudflared tunnel create <NAME>
 ```
 
 Replace `<NAME>` with the name you want to give to the Tunnel. The name assigned can be any string and does not need to relate to a hostname or your account name.
@@ -31,8 +31,8 @@ You can also view and manage the Tunnels generated. Click [here](/connections/co
 
 To map the Tunnel to a range of IPs, run the following command:
 
-```sh
-cloudflared tunnel route ip add <CIDR> <NAME>
+```bash
+$ cloudflared tunnel route ip add <CIDR> <NAME>
 ```
 
 Replace `<CIDR>` with the range of IPs that this Tunnel represents, for example `10.1.2.40/29`. The IP addresses used can include RFC 1918 ranges. The `<NAME>` value should be the name of a Tunnel already created.
@@ -44,7 +44,7 @@ This command will tell Cloudflare to send traffic from users in your organizatio
 Confirm the routes enrolled with the following command:
 
 ```bash
-cloudflared tunnel route ip show
+$ cloudflared tunnel route ip show
 ```
 
 ![IP List](../../../../static/secure-origin-connections/warp-to-tunnel/ip-list.png)
@@ -52,7 +52,7 @@ cloudflared tunnel route ip show
 You can test the routing configuration with the following command as well:
 
 ```bash
-cloudflared tunnel route ip get 100.64.0.1
+$ cloudflared tunnel route ip get 100.64.0.1
 ```
 
 ## Configure the Tunnel

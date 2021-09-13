@@ -17,7 +17,7 @@ The Cloudflare WARP client allows individuals and organizations to have a faster
 * **1.1.1.1 with WARP**
 * **WARP via Local Proxy**
 * **WARP+**
-* **WARP Unilimited**
+* **WARP Unlimited**
 
 Scroll down for a description of each mode.
 

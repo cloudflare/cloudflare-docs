@@ -55,9 +55,13 @@ When Magic Transit identifies a route that is not healthy, it applies the these 
 - Degraded: Add 500,000 to priority.
 - Down: Add 1,000,000 to priority.
 
-The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configuure-tunnels/assign-tunnel-route-priorities).
+The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configure-tunnels/assign-tunnel-route-priorities).
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
+
+### Cloudflare data centers and tunnels
+
+In the event a Cloudflare data center is down, Cloudflare's edge network does not advertise your prefixes, and your packets are routed to the next closest data center. To check the system status for Cloudflare's edge network and dashboard, refer to [Cloudflare System Status](https://www.cloudflarestatus.com/).
 
 ## Recovery
 

@@ -1,6 +1,5 @@
 ---
 title: Edge and Browser Cache TTL
-order: 6
 pcx-content-type: concept
 ---
 

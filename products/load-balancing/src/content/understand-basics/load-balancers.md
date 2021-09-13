@@ -1,13 +1,13 @@
 ---
-order: 11
+order: 2
 pcx-content-type: concept
 ---
 
+import LBDefinition from "../_partials/_load-balancer-definition.md"
+
 # Load balancers
 
-## Overview
-
-A Cloudflare load balancer is identified by the DNS hostname whose traffic you want to balance (`www.example.com`). The load balancer defines which origin server pools to use, the order in which they should be used, and how to geographically distribute traffic among pools.
+<LBDefinition/>
 
 <Aside type="note">
 
@@ -70,9 +70,15 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ---
 
+## Create load balancers
+
+For step-by-step guidance, refer to [Create a load balancer](/how-to/create-load-balancer).
+
+---
+
 ## Properties
 
-For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in our API documentation.
+For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in the Cloudflare API documentation.
 
 ---
 

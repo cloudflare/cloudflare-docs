@@ -39,6 +39,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Randomness Beacon       | randomness-beacon    | [Test](https://randomness-beacon.cloudflare-docs.workers.dev/randomness-beacon)       | [Prod](https://developers.cloudflare.com/randomness-beacon)    |
 | Registrar               | registrar            | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       | [Prod](https://developers.cloudflare.com/registrar)            |
 | Rules                   | rules                | [Test](https://rules.cloudflare-docs.workers.dev/rules)                               | [Prod](https://developers.cloudflare.com/rules)                |
+| Ruleset Engine          | ruleset-engine       | [Test](https://ruleset-engine.cloudflare-docs.workers.dev/ruleset-engine)             | [Prod](https://developers.cloudflare.com/ruleset-engine)       |
 | Spectrum                | spectrum             | [Test](https://spectrum.cloudflare-docs.workers.dev/spectrum)                         | [Prod](https://developers.cloudflare.com/spectrum)             |
 | SSL                     | ssl                  | [Test](https://ssl.cloudflare-docs.workers.dev/ssl)                                   | [Prod](https://developers.cloudflare.com/ssl)                  |
 | Stream                  | stream               | [Test](https://stream.cloudflare-docs.workers.dev/stream)                             | [Prod](https://developers.cloudflare.com/stream)               |

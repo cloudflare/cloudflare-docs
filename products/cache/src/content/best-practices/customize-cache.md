@@ -1,6 +1,5 @@
 ---
 title: Customize cache
-order: 19
 pcx-content-type: concept
 ---
 

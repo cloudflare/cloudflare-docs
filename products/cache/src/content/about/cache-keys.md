@@ -1,6 +1,5 @@
 ---
 title: Cache keys
-order: 3
 pcx-content-type: concept
 ---
 
