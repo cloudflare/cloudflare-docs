@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 2
+order: 3
 ---
 
 # Available Managed Rulesets
