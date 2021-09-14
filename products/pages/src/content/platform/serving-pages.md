@@ -32,6 +32,6 @@ If Page Rules or other cache settings are used on your custom domain, that may l
 
 For browser caching, Pages always sends `Etag` headers for `200 OK` responses, which the browser then returns in an `If-None-Match` header on subsequent requests for that asset. Pages compares the `If-None-Match` header from the request with the `Etag` it's planning to send, and if they match, Pages instead responds with a `304 Not Modified` that tells the browser it's safe to use what is stored in local cache.
 
-Pages currently returns `200` responses for HTTP range requests, however, the team is working on adding support for `206` and other responses.
+Pages currently returns `200` responses for HTTP range requests; however, the team is working on adding spec-compliant `206` partial responses.
 
 Pages will also serve Gzip and Brotli responses whenever possible.
