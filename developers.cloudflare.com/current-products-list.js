@@ -150,6 +150,11 @@ const products = [
     icon: "rules",
   },
   {
+    title: "Ruleset Engine",
+    path: "ruleset-engine",
+    icon: "ruleset-engine",
+  },
+  {
     title: "Spectrum",
     path: "spectrum",
     icon: "spectrum",
