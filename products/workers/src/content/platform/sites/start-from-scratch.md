@@ -31,30 +31,30 @@ To start from scratch to create a Workers Site, follow these steps:
 
 5. Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Then update your `wrangler.toml` file accordingly:
 
-  **`*.workers.dev`**: Enable the `workers_dev` configuration.
+    **`*.workers.dev`**: Enable the `workers_dev` configuration.
 
-  ```toml
-  workers_dev = true
-  ```
+    ```toml
+    workers_dev = true
+    ```
   
-  And/Or
+    And/Or
 
-  **Personal Domain**: Add your `zone_id` and a `route`.
+    **Personal Domain**: Add your `zone_id` and a `route`.
 
-  ```toml
-  zone_id = "42ef.."
-  route = "https://example.com/*"
-  ```
+    ```toml
+    zone_id = "42ef.."
+    route = "https://example.com/*"
+    ```
 
-  <Aside type="note">
+    <Aside type="note">
 
-Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
+    Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
 
-  </Aside>
+    </Aside>
   
-  If you enable `workers_dev` and supply configuration for a personal domain, your Worker will deploy to both locations.
+    If you enable `workers_dev` and supply configuration for a personal domain, your Worker will deploy to both locations.
 
-  Learn more about [configuring your project](/get-started/guide#7-configure-your-project-for-deployment).
+    Learn more about [configuring your project](/get-started/guide#7-configure-your-project-for-deployment).
 
 6. Run:
 
