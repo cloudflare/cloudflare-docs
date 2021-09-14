@@ -24,7 +24,7 @@ You can learn more about [how Cloudflare handles compression by reviewing this s
 
 ## Polish 
 
-Polish improves image loading time by optimizing images hosted on your [domain].pages.dev. It reduces image file size by removing metadata (date and time, camera manufacturer, model, etc.) by compressing images where possible; smaller images mean faster load time for images and web apps. 
+Polish improves image loading time by optimizing images hosted on your `*.pages.dev`site. It reduces image file size by removing metadata (date and time, camera manufacturer, model, etc.) by compressing images where possible. Smaller images result in faster load time for images and web applications. 
  
 There are two options for configuration with different performance effects on images -- Lossless and Lossy.
 
