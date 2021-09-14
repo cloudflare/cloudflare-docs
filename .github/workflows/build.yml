@@ -41,6 +41,7 @@ jobs:
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
       rules: ${{ steps.filter.outputs.rules }}
+      ruleset-engine: ${{ steps.filter.outputs.ruleset-engine }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -123,6 +124,8 @@ jobs:
               - 'products/registrar/**'
             rules:
               - 'products/rules/**'
+            ruleset-engine:
+              - 'products/ruleset-engine/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -757,6 +760,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/rules
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-ruleset-engine:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ruleset-engine == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/ruleset-engine
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

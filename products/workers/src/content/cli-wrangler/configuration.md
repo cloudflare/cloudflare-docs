@@ -96,7 +96,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 <Aside>
 
-  **Note:** We will continue to support `rust` and `webpack` project types, but we recommend using the `javascript` project type and specifying a custom [`build`](#build) section.
+  **Note:** Cloudflare will continue to support `rust` and `webpack` project types, but recommends using the `javascript` project type and specifying a custom [`build`](#build) section.
 
 </Aside>
 
@@ -156,7 +156,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 ### vars
 
-The `vars` key defines a table of [environment variables](/platform/environments#environment-variables) provided to your Worker script. All values are plaintext values.
+The `vars` key defines a table of [environment variables](/platform/environment-variables) provided to your Worker script. All values are plaintext values.
 
 Usage:
 

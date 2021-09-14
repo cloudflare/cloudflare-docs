@@ -1,6 +1,7 @@
 ---
 order: 0
 pcx-content-type: how-to
+hidden: true
 ---
 
 # Private networks

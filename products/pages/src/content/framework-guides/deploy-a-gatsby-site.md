@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Gatsby site
 
 Gatsby is an open-source React framework for creating websites and apps. In this guide, you will create a new Gatsby application and deploy it using Cloudflare Pages. You will be using the `gatsby` CLI to create a new Gatsby site.
@@ -21,6 +23,8 @@ With Gatsby installed, you can create a new project using `gatsby new`. The `new
 ```sh
 $ gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lumen
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

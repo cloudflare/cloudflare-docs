@@ -1,6 +1,5 @@
 ---
 title: CDN-Cache-Control
-order: 4
 pcx-content-type: concept
 ---
 

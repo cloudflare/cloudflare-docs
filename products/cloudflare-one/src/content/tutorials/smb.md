@@ -60,7 +60,7 @@ Run the following command to connect the drive to Cloudflare, replacing the `smb
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
-## Connect the machine hosting the file share to Cloudflare
+## Connect a local machine to access the file share
 
 1. Make sure `cloudflared` is installed on the client desktop that will connect to the drive. `cloudflared` will need to be installed on each user device that will connect.
 

@@ -9,7 +9,7 @@ BYOIP supports prefix delegations. A prefix delegation is when the prefix owner 
 
 The effect of a delegation depends on the service you are using with the prefix. Currently BYOIP + CDN and BYOIP + Spectrum support prefix delegations. See below to learn more about prefix delegations with Spectrum and CDN.
 
-**Spectrum**: If Account A delegates use of part or all of a prefix to Account B, via a delegation, Account B can also use the [Spectrum API](https://developers.cloudflare.com/spectrum/byoip/) with the IPs it was delegated access to.
+**Spectrum**: If Account A delegates use of part or all of a prefix to Account B, via a delegation, Account B can also use the [Spectrum API](https://developers.cloudflare.com/spectrum/about/byoip) with the IPs it was delegated access to.
 
 Example: Account A is the primary owner of prefix 1.2.3.4/24. Account A delegates the use of 1.2.3.4/32 to Account B. Account B may now use the Spectrum API to create a Spectrum app with 1.2.3.4/32.
 

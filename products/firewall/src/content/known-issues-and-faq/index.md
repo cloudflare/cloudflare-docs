@@ -53,13 +53,7 @@ See [_How do I create an exception to exclude certain requests from being blocke
 
 ### Bots currently detected
 
-The table below lists known bots that Firewall Rules currently detects. When traffic comes from any of these bots, the _cf.client.bot_ field is set to true.
-
-<Aside type='note' header='Note'>
-
-Cloudflare plans to expand its list of known bots in the near future.
-
-</Aside>
+The table below lists a **sample** of known bots that Firewall Rules currently detects. When traffic comes from these bots and others not listed, the _cf.client.bot_ field is set to true.
 
 <TableWrap>
 <table style="width: 100%">

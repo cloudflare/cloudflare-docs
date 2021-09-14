@@ -5,11 +5,11 @@ order: 2
 
 # Define WAF exceptions via API
 
-To define a WAF exception via API, create a rule with `skip` action in a [phase entry point ruleset](https://developers.cloudflare.com/firewall/cf-rulesets#phases) of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
+To define a WAF exception via API, create a rule with `skip` action in a [phase entry point ruleset](https://developers.cloudflare.com/ruleset-engine/#phases) of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
 
 To configure the WAF exception, define the `action_parameters` object according to the [exception type](/managed-rulesets/waf-exceptions#types-of-waf-exceptions).
 
-Refer to [Add rules to phase entry point rulesets](https://developers.cloudflare.com/firewall/cf-rulesets/add-rule-phase-rulesets) for more information on adding rules using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
+Refer to [Add rules to phase entry point rulesets](https://developers.cloudflare.com/ruleset-engine/add-rule-phase-rulesets) for more information on adding rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
 
 <Aside type="note" header="Rule execution order">
 

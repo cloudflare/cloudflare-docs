@@ -15,6 +15,12 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 ![Firewall Rules order and priority](../images/firewall-rules-order-and-priority-1.png)
 
+<Aside type="warning">
+
+You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](https://developers.cloudflare.com/waf/).
+
+</Aside>
+
 By default, Cloudflare evaluates firewall rules in **list order**, where rules are evaluated in the order they appear in the Firewall Rules **Rules List**. List ordering is convenient when working with small numbers of rules because you can manage their order by dragging and dropping them into position. However, as the number of rules grows, managing rules in list order becomes difficult. This is where priority order comes into play.
 
 When **priority ordering** is enabled, Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. If a request matches two rules with the same priority, action precedence is used to resolve the tie. Priority ordering makes it a lot easier to manage large numbers of firewall rules, and once the number of rules passes 200, Cloudflare requires it.

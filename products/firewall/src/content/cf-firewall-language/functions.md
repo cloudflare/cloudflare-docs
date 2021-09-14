@@ -63,7 +63,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <Aside type='warning'>
 
-    **Warning:** You can only use the `ends_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+    **Warning:** You can only use the `ends_with()` function in [rulesets](https://developers.cloudflare.com/ruleset-engine/) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
 
@@ -130,7 +130,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <Aside type='warning'>
 
-    **Warning:** You can only use the `starts_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+    **Warning:** You can only use the `starts_with()` function in [rulesets](https://developers.cloudflare.com/ruleset-engine/) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
 

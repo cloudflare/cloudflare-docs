@@ -6,7 +6,7 @@ order: 2
 
 # Configure the HTTP DDoS Managed Ruleset via API
 
-Configure the Cloudflare HTTP DDoS Managed Ruleset by defining overrides using the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api).
+Configure the Cloudflare HTTP DDoS Managed Ruleset by defining overrides using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
 
 Each zone has the Cloudflare HTTP DDoS Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l7` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
 
@@ -27,8 +27,8 @@ The Cloudflare HTTP DDoS Managed Ruleset is always enabled — you cannot disabl
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Managed Ruleset. These overrides are the following:
 
 * All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
-* All rules tagged with the category `{category-name}` will have a sensitivity level of `low`.
-* The rule with ID `{rule-id}` will use the `block` action.
+* All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
+* The rule with ID `{mr-rule-id}` will use the `block` action.
 
 ```json
 curl -X PUT \
@@ -53,7 +53,7 @@ curl -X PUT \
           ],
           "rules": [
             {
-              "id": "{rule-id}",
+              "id": "{mr-rule-id}",
               "action": "block"
             }
           ]
@@ -77,7 +77,7 @@ The response returns the created (or updated) phase ruleset.
     "version": "1",
     "rules": [
       {
-        "id": "{overridden-rule-id}",
+        "id": "{rule-id}",
         "version": "1",
         "action": "execute",
         "action_parameters": {
@@ -87,13 +87,13 @@ The response returns the created (or updated) phase ruleset.
             "action": "challenge",
             "categories": [
               {
-                "category": "{category-name}",
+                "category": "{tag-name}",
                 "sensitivity_level": "low"
               }
             ],
             "rules": [
               {
-                "id": "{rule-id}",
+                "id": "{mr-rule-id}",
                 "action": "block"
               }
             ],
@@ -102,7 +102,7 @@ The response returns the created (or updated) phase ruleset.
         },
         "expression": "true",
         "last_updated": "2021-06-16T04:14:47.977741Z",
-        "ref": "{overridden-rule-ref}",
+        "ref": "{rule-ref}",
         "enabled": true
       }
     ],
@@ -112,4 +112,4 @@ The response returns the created (or updated) phase ruleset.
 }
 ```
 
-For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
+For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).

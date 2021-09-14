@@ -270,6 +270,7 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 `wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/cli-wrangler/install-update#update) to avoid any issues.
 
 </Aside>
+
 --------------------------------
 
 ## preview

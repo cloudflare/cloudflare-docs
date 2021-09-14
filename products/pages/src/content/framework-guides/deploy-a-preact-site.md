@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Preact site
 
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
@@ -17,6 +19,8 @@ Create a new project by running the [`npm init`](https://docs.npmjs.com/cli/v6/c
 $ npm init wmr your-project-name
 $ cd your-project-name
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

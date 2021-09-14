@@ -56,14 +56,9 @@ To set up OneLogin (SAML) as your identity provider:
 
 1. Select SAML.
 
-1. Input the details from your OneLogin account in the fields.
+1. Input the details from your OneLogin account in the fields. We suggest that you name the attributes the same in both OneLogin and Cloudflare.
 
     If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
-
-    <Aside>
-    We suggest that you name the attributes the same in both OneLogin and Cloudflare.
-
-    </Aside>
 
 1. Click **Save**.
 
