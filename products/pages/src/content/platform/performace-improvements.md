@@ -38,7 +38,10 @@ Lossless image option reduces the size of image files without impacting the visu
 
 This Polish option reduces the file size of JPEG images using lossy compression which may reduce image quality.
 
-> Making the decision on what form of optimization to use is mostly based on use case. There are a lot of resources to show [the differnce between lossy and lossless image compression](https://imagify.io/blog/lossless-vs-lossy-image-compression/).
+<Aside heading="Status Code">
+Making the decision on what form of optimization to use is mostly based on your individual use case. You can review the variety of resources to learn more about [the difference between Lossy and Lossless image compression on Imagify's blog](https://imagify.io/blog/lossless-vs-lossy-image-compression/).
+
+<Aside/>
 
 ### Serving WebP images 
 
