@@ -49,7 +49,7 @@ Whether you choose _Lossy_ or _Lossless_, you also have the option of enabling W
 
 <Aside heading="Status Code">
 
-**Note: ** Large Jpeg images are converted to progressive images. Visitors will see increasingly detailed images as file is downloaded. 
+Large JPEG images are converted to progressive images with WebP enabled. Visitors will see increasingly detailed images as the file is downloaded. 
 
 </Aside>
 
