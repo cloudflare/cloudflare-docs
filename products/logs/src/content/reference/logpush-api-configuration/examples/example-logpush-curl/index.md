@@ -14,7 +14,7 @@ Before getting started, review:
 
 <Aside type="note">
 
-The examples below are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_TAG>` instead of `/zone/<ZONE_ID>`.
+The examples below are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`.
 
 </Aside>
 
