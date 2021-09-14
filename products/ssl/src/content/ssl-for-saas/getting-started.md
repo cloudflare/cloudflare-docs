@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: tutorial
 ---
 
-# Getting started
+# Get started
 
 --------
 
