@@ -22,7 +22,7 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 ## Caching and performance
 
-Pages includes highly performant caching defaults, so you should avoid setting Page Rules or custom caching on your site. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment. 
+Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment. Therefore, you should avoid setting Page Rules or custom caching on your site. 
 
 <Aside type="note" header="Purging the cache">
 
