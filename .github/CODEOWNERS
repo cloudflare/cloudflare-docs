@@ -85,6 +85,9 @@ products/registrar/ @cloudflare/PCX
 # Rules
 products/rules/ @cloudflare/PCX
 
+# Ruleset Engine
+products/ruleset-engine/ @cloudflare/PCX
+
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
 
