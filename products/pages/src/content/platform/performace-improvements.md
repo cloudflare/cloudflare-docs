@@ -9,7 +9,7 @@ Cloudflare Pages now includes performance improvements to serve pages of your pr
  
 **Note: ** If you have a custom domain tied to your Pages project, configuring your performance settings in the Speed tab will override the performance settings configured in Pages. 
 
-## Brotli compression.
+## Brotli compression
 
 Cloudflare applies Brotli compression to help speed up page load times for your visitors.  Brotli compression is selected as the preferred content encoding method if multiple compression methods are supported by the client. If the client does not indicate that Brotli is supported, the gzip compression will be applied. 
 
