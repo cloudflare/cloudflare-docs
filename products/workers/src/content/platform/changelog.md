@@ -1,8 +1,34 @@
 # Changelog
 
+## 9/3/2021
+
+- The `crypto.randomUUID()` method can be used to generate a new random version 4 UUID.
+- Durable Objects are now scheduled more evenly around a colocation (colo).
+
+## 8/5/2021
+
+- No user-facing changes. Just bug fixes & internal maintenance.
+
+## 7/30/2021
+
+- Fixed a hang in Durable Objects when reading more than 16MB of data at once (for example, with a large `list()` operation).
+- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
+
+## 7/23/2021
+
+- Performance and stability improvements.
+
+## 7/16/2021
+
+- Workers can now make up to 1000 subrequests to Durable Objects from a within a single request invocation, up from the prior limit of 50.
+- Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything unusal or report your issue in the [Workers Discord](https://discord.gg/cloudflaredev).
+- Durable Object constructors may now initiate I/O, such as `fetch()` calls.
+- Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
+- In Durable Objects, the callback passed to `storage.transaction()` can now return a value, which will be propagated as the return value of the `transaction()` call.
+
 ## 7/13/2021
 
-- The preview service now prints a warning in the devtools console when a script uses Response/Request.clone() but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
+- The preview service now prints a warning in the devtools console when a script uses `Response/Request.clone()` but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
 
 ## 7/1/2021
 

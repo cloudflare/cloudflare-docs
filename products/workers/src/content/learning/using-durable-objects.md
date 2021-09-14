@@ -175,7 +175,7 @@ export default {
 
     // Construct the stub for the Durable Object using the ID. A "stub" is a
     // client object used to send messages to the Durable Object.
-    let stub = await env.EXAMPLE_CLASS.get(id);
+    let stub = env.EXAMPLE_CLASS.get(id);
 
     // Forward the request to the Durable Object. Note that `stub.fetch()` has
     // the same signature as the global `fetch()` function, except that the

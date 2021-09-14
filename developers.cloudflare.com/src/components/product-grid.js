@@ -16,7 +16,7 @@ $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resourc
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
-$["image-resizing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
+$["image-resizing"]       = require("../../../products/image-resizing/src/content/icons/image-resizing").pathD
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
@@ -31,6 +31,7 @@ $["railgun"]              = require("@cloudflare/cloudflare-brand-assets/resourc
 $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/randomness-beacon.js").pathD
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
 $["rules"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/rules.js").pathD
+$["ruleset-engine"]       = require("../../../products/ruleset-engine/src/content/icons/ruleset-engine").pathD
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
@@ -193,6 +194,11 @@ const products = [
     title: "Rules",
     path: "rules",
     icon: "rules",
+  },
+  {
+    title: "Ruleset Engine",
+    path: "ruleset-engine",
+    icon: "ruleset-engine",
   },
   {
     title: "Spectrum",

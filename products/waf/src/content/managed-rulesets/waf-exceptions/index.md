@@ -33,7 +33,7 @@ Currently, you cannot define a WAF exception in the dashboard to skip one or mor
 
 WAF exceptions only apply to rules executing a Managed Ruleset listed after them. If you add a WAF exception at the end of the WAF rules list, nothing will be skipped.
 
-WAF exceptions have priority over [overrides](https://developers.cloudflare.com/firewall/cf-rulesets/managed-rulesets/override-managed-ruleset).
+WAF exceptions have priority over [overrides](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).
 
 If you define a WAF exception that skips all remaining rules, the expressions of those rules are not evaluated.
 

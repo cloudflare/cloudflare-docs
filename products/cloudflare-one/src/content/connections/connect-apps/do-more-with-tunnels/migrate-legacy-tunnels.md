@@ -47,12 +47,12 @@ To migrate your legacy tunnels to the named tunnels architecture:
 
     You can have an equivalent ingress rule:
 
-        ```text
-        ingress:
-        - hostname: tunnel.example.com
-        service: https://localhost:3000
-        - service: http_status:404
-        Note that the last rule is the catch-all rule and is required.
+    ```yml
+    ingress:
+    - hostname: tunnel.example.com
+      service: https://localhost:3000
+    - service: http_status:404
+    # Note that the last rule is the catch-all rule and is required.
     ```
 
 1. Next, [run your tunnel](/connections/connect-apps/run-tunnel).

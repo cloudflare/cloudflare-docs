@@ -27,13 +27,12 @@ To install the Cloudflare root certificate, follow the steps found [here](/conne
 </div>
 
 We present an HTTP error page in the following cases:
-1. ​**An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
+1. **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
   * The server certificate issuer is unknown or is not trusted by the service.
   * The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
   * There is at least one expired certificate in the certificate chain for the server certificate
-​
 1. **Common certificate errors occur**. For example,  in the event of a certificate common name mismatch.
-1. **​Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
+1. **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
 
 If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
 * Operating System (Windows 10, macOS 10.x, iOS 14.x)
@@ -52,11 +51,11 @@ You may not see analytics on the Overview page for the following reasons:
 * **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
 * **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
-## ​I see a "No Browsers Available" alert.
+## I see a "No Browsers Available" alert.
 
 If you encounter this error please [file feedback](https://developers.cloudflare.com/cloudflare-one/connections/connect-browsers/known-limitations#submitting-feedback) via the WARP client and we will investigate.
 
-## ​I see a "Maximum Sessions Reached" alert.
+## I see a "Maximum Sessions Reached" alert.
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
@@ -70,6 +69,22 @@ This is due to a Google policy change requiring you to set your Google Admin con
 
 1. In the Google Admin console, navigate to **Security** > **API controls**.
 1. Check the *Trust internal, domain-owned apps* option.
+
+## I see an error: x509: certificate signed by unknown authority.
+
+This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
+* Add the certificate to the system certificate pool.
+* Use the `--origin-ca-pool` flag and specify the path to the certificate.
+* Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
+
+## I see an error 1033 when attempting to run a tunnel.
+
+An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
+
+1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/connections/connect-apps/routing-to-tunnel/lb) to route traffic to your tunnel using load balancers. 
+1. Make sure you run your tunnel (step 6 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#6-run-the-tunnel).
+
+For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
@@ -104,10 +119,3 @@ There are a few different possible root causes behind the `websocket: bad handsh
 * WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 * Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
 * Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
-
-## I see an error: x509: certificate signed by unknown authority
-
-This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
-1. Add the certificate to the system certificate pool.
-1. Use the `--origin-ca-pool` flag and specify the path to the certificate.
-1. Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.

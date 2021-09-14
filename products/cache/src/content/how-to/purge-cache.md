@@ -184,3 +184,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
 -H "X-Auth-Email: user@example.com" 
 -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 ```
+
+## Purge varied images
+
+Purging varied images purges all content variants for that URL. This behavior occurs so that if an image changes, you can easily update the cache with a single purge request instead of trying to determine the potential number of out-of-date variants. The behavior is true regardless of purge type used, such as single file, tag, or hostname.
