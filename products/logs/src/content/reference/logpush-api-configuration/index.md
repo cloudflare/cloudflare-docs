@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 ## Endpoints
 
-The table below summarizes the job operations available. The examples are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_TAG>` instead of `/zone/<ZONE_ID>`. For more information visit the [Log fields](/reference/log-fields) page.
+The table below summarizes the job operations available. All the examples in this page are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_TAG>` instead of `/zone/<ZONE_ID>`. For more information visit the [Log fields](/reference/log-fields) page.
 
 The `<zone_id>` argument is the zone id (hexadecimal string). The `<account_tag>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 The `<job>` argument is the numeric job id. The `<dataset>` argument indicates the log category (such as `http_requests`, `spectrum_events`, or `firewall_events`).
