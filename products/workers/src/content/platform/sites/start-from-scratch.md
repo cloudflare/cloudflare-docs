@@ -48,7 +48,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
   <Aside type="note">
 
-    Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
+Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
 
   </Aside>
   
