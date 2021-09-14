@@ -5,6 +5,7 @@ module.exports = {
   product: "Image Resizing",
   pathPrefix: "/image-resizing",
   productIconKey,
+  productLogoPathD: require('./src/content/icons/image-resizing').pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/image-resizing",
   logoSVGContent: fs.readFileSync(
