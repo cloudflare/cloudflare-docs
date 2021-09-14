@@ -7,7 +7,11 @@ pcx-content-type: concept
 
 Cloudflare Pages now includes performance improvements to serve pages of your projects by removing the overhead on media assets and offering compressions. 
  
-**Note: ** If you have a custom domain tied to your Pages project, configuring your performance settings in the Speed tab will override the performance settings configured in Pages. 
+<Aside type="note">
+
+If you have a custom domain tied to your Pages project, configuring your performance settings in **Speed** on the Cloudflare dashbaord will override the performance settings configured in Pages. 
+
+</Aside>
 
 ## Brotli compression
 
