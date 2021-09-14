@@ -141,7 +141,7 @@ Allows you to choose the regions to which connections are established. Omit or l
 |--|--|
 | `logfile value` | `TUNNEL_LOGFILE` |
 
-Save application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, see [this guide](/faq/cloudflare-tunnels-faq).
+Save application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/faq/cloudflare-tunnels-faq).
 
 ## `loglevel`
 
