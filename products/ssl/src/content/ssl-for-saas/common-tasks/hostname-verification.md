@@ -3,7 +3,7 @@ order: 4
 pcx-content-type: reference
 ---
 
-# Hostname verification
+# Verify hostnames
 
 Cloudflare verifies ownership of each new hostname before traffic is allowed to proxy.   There are four methods to verify ownership: TXT record, HTTP token, CNAME, or Apex.
 

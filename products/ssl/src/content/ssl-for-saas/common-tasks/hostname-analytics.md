@@ -1,6 +1,6 @@
 ---
-order: 1
+order: 5
 pcx-content-type: reference
 ---
 
-# Custom hostname analytics
+# Use hostname analytics

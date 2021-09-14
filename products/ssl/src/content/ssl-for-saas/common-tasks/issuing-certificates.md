@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: concept
 ---
 
-# Issuing certificates
+# Issue certificates
 
 Cloudflare issues two certificates for each Custom Hostname that you request issuance for (and none for those that you provide your own certificate, as described in the Certificate Upload section).
 
