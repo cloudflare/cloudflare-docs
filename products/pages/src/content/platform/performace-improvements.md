@@ -42,7 +42,7 @@ This Polish option reduces the file size of JPEG images using lossy compression 
 
 ### Serving WebP images 
 
-Whether you are choosing Lossy or Lossless, you also have the option of enabling WebP for your images. If the client requesting the image supports the WebP image codec, Cloudflare will serve a WebP version of the image if offering a performance advantage over the existing format. 
+Whether you choose _Lossy_ or _Lossless_, you also have the option of enabling WebP for your images. If the client requesting the image supports the WebP image codec, Cloudflare will serve a WebP version of the image if offering a performance advantage over the existing format. 
 
 <Aside heading="Status Code">
 
