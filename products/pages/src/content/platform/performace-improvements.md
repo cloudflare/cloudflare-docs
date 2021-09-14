@@ -6,7 +6,7 @@ pcx-content-type: concept
 # Performance Improvements
 
 Cloudflare Pages now includes performance improvements to serve pages of your projects by removing the overhead on media assets and offering compressions. 
-
+ 
 <Aside type="note">
 
 If you have a custom domain tied to your Pages project, configuring your performance settings in **Speed** on the Cloudflare dashbaord will override the performance settings configured in Pages. 
@@ -19,13 +19,13 @@ Cloudflare applies [Brotli](https://www.brotli.pro/) compression to help speed u
 
 The Brotli compression option is automatically turned on for all Pages sites and cannot be turned off in the **Pages** dashboard.
 However, if your project is tied to a custom domain, you may adjust your Brotli settings in **Speed** > **Optimization** > moving the **Brotli** toggle to **Off*.
-
+ 
 You can learn more about [how Cloudflare handles compression by reviewing this support article](https://support.cloudflare.com/hc/en-us/articles/200168396-What-will-Cloudflare-compress-).
 
 ## Polish 
 
 Polish improves image loading time by optimizing images hosted on your `*.pages.dev`site. It reduces image file size by removing metadata (date and time, camera manufacturer, model, etc.) by compressing images where possible. Smaller images result in faster load time for images and web applications. 
-
+ 
 There are two options for configuration with different performance effects on images -- _Lossless_ and _Lossy_. You can choose between these two options by going to **Speed** > **Optimization** > **Polish**.
 
 
@@ -39,7 +39,7 @@ Lossless image option reduces the size of image files without impacting the visu
 This Polish option reduces the file size of JPEG images using lossy compression which may reduce image quality.
 
 <Aside heading="Status Code">
-
+ 
 Making the decision on what form of optimization to use is mostly based on your individual use case. You can review the variety of resources to learn more about [the difference between Lossy and Lossless image compression on Imagify's blog](https://imagify.io/blog/lossless-vs-lossy-image-compression/).
 
 <Aside/>
