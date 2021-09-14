@@ -35,4 +35,4 @@ With custom hostname analytics, you can also share site information with your cu
 - Whether their site has a large percentage of bot traffic.
 - How fast their site is.
 
-Build custom dashboards to share this information using [any dataset](https://developers.cloudflare.com/analytics/graphql-api/features/data-sets) with a `clientRequestHTTPHost` field.
+Build custom dashboards to share this information by specifying an individual custom hostname in `clientRequestHTTPHost` field of [any dataset](https://developers.cloudflare.com/analytics/graphql-api/features/data-sets) that includes this field.
