@@ -26,7 +26,7 @@ Pages includes good caching defaults, so you should avoid setting Page Rules or 
 
 <Aside type="note" header="Purging the cache">
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this quickly by clicking <a href="https://developers.cloudflare.com/cache/how-to/purge-cache#purge-everything">Purge Everything</a> in the "Caching" tab of your zone to ensure the latest build gets served."
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="https://developers.cloudflare.com/cache/how-to/purge-cache#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served."
 
 </Aside>
 
