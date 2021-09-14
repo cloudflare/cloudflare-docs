@@ -38,11 +38,11 @@ Lossless image option reduces the size of image files without impacting the visu
 
 This Polish option reduces the file size of JPEG images using lossy compression which may reduce image quality.
 
-<Aside heading="Status Code">
+<Aside heading="Note">
  
 Making the decision on what form of optimization to use is mostly based on your individual use case. You can review the variety of resources to learn more about [the difference between Lossy and Lossless image compression on Imagify's blog](https://imagify.io/blog/lossless-vs-lossy-image-compression/).
 
-<Aside/>
+</Aside>
 
 ### Serving WebP images 
 
@@ -55,4 +55,5 @@ Large JPEG images are converted to progressive images with WebP enabled. Visitor
 </Aside>
 
 ### How to turn on Polish
-By default, all new projects will have Polish enabled with the Lossy and WebP setting. Navigate to the Settings, then General to update or add your configuration. 
+
+By default, all new projects will have Polish enabled with the Lossy and WebP setting.  Navigate to the Settings, then General to update or add your configuration. 
