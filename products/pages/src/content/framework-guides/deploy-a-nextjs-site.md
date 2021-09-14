@@ -15,7 +15,7 @@ Create a new project using `npx` or `yarn` by running either of the following co
 ```sh
 $ npx create-next-app --example with-static-export my-app
 # or
-$ yarn create next-app --example with-static-export my-app
+$ yarn create-next-app --example with-static-export my-app
 ```
 
 After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
