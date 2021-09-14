@@ -7,29 +7,6 @@ pcx-content-type: faq
 
 # Tunnels
 
-If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:
-
-* Take note of any specific error messages and/or problematic behaviors.
-
-* Take note of any options you specified, either on the CLI or in your configuration file, when starting your tunnel.
-
-* Set [`log-level`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
-
-* Set [`transport-log`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#transport-loglevel) level to `debug`.
-
-* Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#logfile) either on the command line or in your configuration file.
-
-`logfile: /var/log/cloudflared.log` (Unix)
-`Windows Path to log`
-`
-* Include your full `config.yml` file for the affected tunnel.
-
-* Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
-
-* Gather any relevant error/access logs from your server.
-
-------------------------------------
-
 ## ​Can I create a Tunnel for an apex domain?
 
 Yes. With [Named Tunnels](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) you can create a CNAME at the apex that points to the named tunnel.
@@ -155,6 +132,7 @@ When the encryption mode is set to **Off (not secure)**, you may encounter conne
 
 ### Check location of credentials file
 If you encouter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
+
 ```sh
 $ cloudflared tunnel run
 2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
@@ -165,3 +143,22 @@ Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d
 
 Tunnel ownership is bound to the Cloudflare account for which the `cert.pem` file was issued upon tunnel creation. If a user in a Cloudflare account creates a tunnel, any other user in the same account who has access to the `cert.pem` file for the tunnel can delete, list, or otherwise manage that tunnel.
 
+## I need help. How do I contact support?
+
+If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:
+
+* Take note of any specific error messages and/or problematic behaviors.
+
+* Take note of any options you specified, either on the CLI or in your configuration file, when starting your tunnel.
+
+* Set [`log-level`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+
+* Set [`transport-log`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#transport-loglevel) level to `debug`.
+
+* Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#logfile) either on the command line or in your configuration file.
+
+* Include your full `config.yml` file for the affected tunnel.
+
+* Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+
+* Gather any relevant error/access logs from your server.
