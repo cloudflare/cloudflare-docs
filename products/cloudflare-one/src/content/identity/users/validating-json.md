@@ -50,25 +50,20 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
 ## Programmatic verification
 
-<Aside>
+Before you start, click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the _Edit Access Policy_ dialog box:
 
-<b>Before you start</b>
+* Certificate URL: `https://<Your Team Domain>/cdn-cgi/access/certs`
 
-Click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the _Edit Access Policy_ dialog box:
+* JWT Issuer: `https://<Your Team Domain>`
 
- Certificate URL: `https://<Your Team Domain>/cdn-cgi/access/certs`
-
- JWT Issuer: `https://<Your Team Domain>`
-
-</Aside>
     
-## Updating your Access signing keys
+### Updating your Access signing keys
     
 Cloudflare Access uses a certificate to sign responses between your identity provider, Cloudflare and the Access JWT. The signing key can be used to validate the Access JWT. If you want your identity provider to verify signed responses, you will need to provide the public key from your Access account. The public key can be found at [your team domain](/glossary#team-domain).
 
 By default, the signing key used by Access rotates every 6 weeks. This means you will need to programmatically or manually update keys as they rotate. Previous keys are valid for 7 days after rotation to allow time for rotation.
 
-You can enforce a longer or shorter key rotation interval using the following API. For security or testing purposes, keys can be manually rotated using the ]following API](https://api.cloudflare.com/#access-keys-configuration-update-access-keys-configuration).
+For security or testing purposes, keys can be manually rotated using the [following API](https://api.cloudflare.com/#access-keys-configuration-update-access-keys-configuration).
 
 Keys can also be manually rotated using the [following API](https://api.cloudflare.com/#access-keys-configuration-rotate-access-keys). This can be done for testing or security purposes.
 
