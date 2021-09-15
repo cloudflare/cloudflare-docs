@@ -56,4 +56,4 @@ Large JPEG images are converted to progressive images with WebP enabled. Visitor
 
 ### How to turn on Polish
 
-By default, all new projects will have Polish enabled with the Lossy and WebP setting.  Navigate to the Settings, then General to update or add your configuration. 
+By default, all new projects will have Polish enabled with the _Lossy_ and the **WebP** setting.  To update your configuration, log into the Cloudflare dashboard and go to **Speed** > **Optimization** > **Polish**.
