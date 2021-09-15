@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Performance Improvements
 
-Cloudflare Pages now includes performance improvements to serve pages of your projects by removing the overhead on media assets and offering compressions. 
+Cloudflare Pages now includes performance improvements by removing the overhead on media assets and offering image compression. 
  
 <Aside type="note">
 
