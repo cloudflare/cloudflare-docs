@@ -12,6 +12,12 @@ Before getting started, review:
 * [Logpush API configuration](/reference/logpush-api-configuration)
 * [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)
 
+<Aside type="note">
+
+The examples below are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`.
+
+</Aside>
+
 ## Step 1 - Get ownership challenge
 
 ```bash
