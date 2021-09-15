@@ -34,4 +34,4 @@ Soon! We will be introducing AVIF support in the near future.
 
 ## What is the difference between Cloudflare Images and Image Resizing products?
 
-Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization and delivery. Image Resizing only offers resizing and optimization.
+Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization, and delivery. Image Resizing only offers resizing and optimization.
