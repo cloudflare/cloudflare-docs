@@ -822,7 +822,7 @@ jobs:
           environment: "production"
           wranglerVersion: "1.13.0"
 
-deploy-images:
+  deploy-images:
     runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.images == 'true' }}
