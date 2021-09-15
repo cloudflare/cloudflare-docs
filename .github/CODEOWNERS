@@ -50,7 +50,10 @@ products/fundamentals/ @cloudflare/PCX
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
 # Image Resizing
-products/images/ @kornel @cloudflare/PCX
+products/image-resizing/ @kornelski @cloudflare/PCX
+
+# Cloudflare Images
+products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 
 # Load Balancing
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
