@@ -5,6 +5,7 @@ summary: Inspects the incoming request's TLS version and blocks if under TLSv1.2
 tags:
   - Security
   - Middleware
+pcx-content-type: configuration
 ---
 
 # Block on TLS

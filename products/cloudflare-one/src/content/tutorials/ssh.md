@@ -34,7 +34,7 @@ Choose **Self-hosted** on the next page.
 
 ![Add App](../static/zero-trust-security/ssh/add-app.png)
 
-Input a subdomain that will become the hostname where your application will be availble to users.
+Input a subdomain that will become the hostname where your application will be available to users.
 
 ![Configure](../static/zero-trust-security/ssh/configure-app.png)
 
@@ -55,8 +55,8 @@ Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare 
 For example, `cloudflared` can be installed on Debian and its derivatives with these commands:
 
 ```sh
-$ sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-$ sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+$ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+$ sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
 ## Authenticate `cloudflared`

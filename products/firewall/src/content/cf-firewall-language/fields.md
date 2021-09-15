@@ -25,7 +25,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 - The Cloudflare Firewall Rules language does not support the `slice` operator.
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
@@ -87,6 +87,22 @@ The Cloudflare Firewall Rules language supports these standard fields:
          </p>
          <p>Example value:
          <br /><code class="InlineCode">GET</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>http.request.cookies</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+      <td>
+         <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
+         </p>
+         <p>Cookie values are not pre-processed and retain the case used in the request.</p>
+         <p><em>Decoding:</em> Cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{'{"app": ["test"]}'}</code>
          </p>
       </td>
    </tr>
@@ -289,7 +305,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
 
 Dynamic fields represent computed or derived values, typically related to threat intelligence about an HTTP request.
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) enabled.
 
@@ -327,6 +343,15 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
           <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
+        </td>
+    </tr>
+    <tr>
+        <td><code>cf.edge.server_ip</code><br /><Type>IP Address</Type></td>
+        <td>
+          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          </p>
+          <p>This field is only meaningful for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>.
+          </p>
         </td>
     </tr>
     <tr>
@@ -439,6 +464,16 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
          The destination address as specified in the IP packet. <br />
          Example value:
          <code class="InlineCode">192.0.2.2</code>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>ip.geoip.country</code><br /><Type>String</Type></p>
+        </td>
+        <td>
+         Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
+         Example value:
+         <code class="InlineCode">GB</code>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
     <tr>
@@ -601,7 +636,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
 
 ## URI argument and value fields
 
-The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
 The Cloudflare Firewall Rules language supports these URI argument and value fields:
 
@@ -694,7 +729,7 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
 
 ## HTTP header fields
 
-The Firewall Rules language includes fields that represent properties of HTTP request headers. Many of these return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Firewall Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
 
 The Cloudflare Firewall Rules language supports these HTTP header fields:
 
@@ -703,7 +738,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       <td><strong>Field Name</strong></td>
       <td style="width: 50%;"><strong>Description</strong></td>
    </tr>
-   <tr>
+   <tr id="field-http-request-headers">
       <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents HTTP request headers as a Map (or associative array).
@@ -788,13 +823,21 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
 
 ## HTTP body fields
 
-<Aside type='warning' header='Important'>
+<Aside type='note'>
 
 Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
-The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return arrays containing the respective values. Those that do require the `[*]` index operator, which returns an array of values for each field.
+The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+
+<Aside type="warning">
+
+The value of `http.request.body.*` fields has a maximum size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+
+The maximum body size applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
+
+</Aside>
 
 The Cloudflare Firewall Rules language supports these HTTP body fields:
 
@@ -896,3 +939,7 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
     </tr>
   </tbody>
 </table>
+
+---
+
+_GeoIP is the registered trademark of MaxMind, Inc._

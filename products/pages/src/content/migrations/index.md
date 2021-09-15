@@ -7,6 +7,6 @@ pcx-content-type: navigation
 
 import ContentTable from "../components/content-table"
 
-# Migrations
+# Migration guides
 
 <ContentTable path="migrations" />

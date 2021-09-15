@@ -12,7 +12,7 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 **🗺️ This tutorial covers how to:**
 
 * Create device enrollment rules and connect a device to Teams
-* Connect your private netowrk server to Cloudflare's edge using Cloudflare Tunnels
+* Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
 * Create identity-aware network policies
 
 **⏲️Time to complete:**
@@ -22,7 +22,7 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 <Aside header="Prerequisites">
 
 * A Teams account setup
-* The [WARP client](/connections/connect-devices/warp) installed on a device
+* The [WARP client](/connections/connect-devices/warp) installed on a device and enrolled in a Cloudflare for Teams instance
 * Admin access to server with Internet access
 
 </Aside>
@@ -33,7 +33,7 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 The first step is to enroll your devices into the WARP client. The WARP client is responsible for forwarding your traffic to Cloudflare and eventually to your private network.
 
-1. Define [device enrollment rules](/connections/connect-devices/warp/device-enrollment) under **My Team > Devices > Manage enrollment rules**.
+1. Define [device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) under **Settings > Devices > Device enrollment permissions > Manage**.
 
  In this example, we require that users have a hard key inserted and are connecting from the United States.
 
@@ -72,9 +72,9 @@ Next, you will need to configure your private network server to connect to Cloud
 
  ```txt
  tunnel: <YOUR TUNNEL ID>
- credentials-file: /root/.cloudflared<YOUR TUNNEL ID>.json
+ credentials-file: /root/.cloudflared/<YOUR TUNNEL ID>.json
  warp-routing:
- enabled: true
+   enabled: true
  ```
  
  <Aside>
@@ -110,17 +110,17 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
    ![First network policy](../static/zero-trust-security/ztna/first-network-policy.png)
 
-1. [Create a network policy](/policies/filtering/network-policies) to block all traffic to the IP range that was routed.
-
-   ![Create network policy](../static/zero-trust-security/ztna/create-network-policy.png)
-
-1. Create a second network policy to allow traffic from specific users to reach that application.
+1. [Create a network policy](/policies/filtering/network-policies) to allow traffic from specific users to reach that application.
 
    ![Second network policy](../static/zero-trust-security/ztna/second-network-policy.png)
 
-1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Gateway > Settings > Split Tunnels - WARP**.
+1. Create a second network policy to block all traffic to the IP range that was routed.
 
-   ![Split Tunnels](../static/zero-trust-security/ztna/split-tunnels.png)
+   ![Create network policy](../static/zero-trust-security/ztna/create-network-policy.png)
+
+1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
+
+   ![Split Tunnel](../static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/policies/filtering/network-policies).
 

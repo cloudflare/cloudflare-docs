@@ -3,11 +3,11 @@ order: 0
 pcx-content-type: how-to
 ---
 
-# Connect applications
+# Connect resources
 
 You can connect applications, servers, and other resources to Cloudflare's network using [Cloudflare Tunnel](/glossary#cloudflare-tunnel). When connected, Cloudflare can apply [Zero Trust policies](/policies/zero-trust) to determine who can reach the resource.
 
-![Tunnel Diagram](../../static/documentation/connections/connect-apps/tun-diagram.png)
+![Tunnel Diagram](../../static/documentation/connections/connect-apps/handshake.jpg)
 
 Cloudflare Tunnel runs a lightweight [daemon](/glossary#daemon) ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your service and the Cloudflare edge. When Cloudflare receives a request for your chosen hostname, it proxies the request through those connections to `cloudflared`. In turn, `cloudflared` proxies the request to your applications.
 
@@ -26,12 +26,12 @@ Once `cloudflared` has been installed and authenticated, the process to get your
 2. [Route traffic to your Tunnel](/connections/connect-apps/routing-to-tunnel)
 3. [Run your Tunnel](/connections/connect-apps/run-tunnel)
 
-Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3 is executed whenever the Tunnel is to be started, normally by the owner of the Tunnel (whom may be different from the administrator).
+Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3 is executed whenever the Tunnel is to be started, normally by the owner of the Tunnel (whom may be different from the administrator). After running the Tunnel, you may [secure your server](/connections/connect-apps/secure-server) from all ingress traffic.
 
 Be sure to check out our [Tutorials](/tutorials), where you can also find
 best practices for managing Tunnels as an administrator.
 
-## Traffic encryption between Cloudflare Tunnel and HTTPs origin servers
+## Traffic encryption with Tunnel
 
 `cloudflared` performs its own SSL termination that is distinct from the origin.
 

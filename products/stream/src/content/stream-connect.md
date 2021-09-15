@@ -1,13 +1,7 @@
 ---
 order: 5
 ---
-# Stream Connect (Beta)
-
-<Aside>
-
-Note: Stream Connect is currently in closed beta and will be available to all users in coming weeks. [Request an invite](https://docs.google.com/forms/d/1rpRFKDTZTnh0LxysM2_Rky5pYt_rs9pUdSoJr_Ix2pk/edit).
-
-</Aside>
+# Stream Connect
 
 Stream Connect allows you to retransmit your RTMPS feed to one or more outputs that support RTMP or RTMPS. To learn more about the vision and benefits, checkout the [Stream Connect blog post](https://blog.cloudflare.com/restream-with-stream-connect/). 
 
@@ -99,7 +93,7 @@ Some limits apply to the Stream Connect Beta:
 
 - Up to 1000 live inputs per-account can be created
 - Up to 50 outputs may be configured per live input
-- A maximum recomended bitrate of 12000 kbps
+- A maximum recommended bitrate of 12000 kbps
 
 These limits can be configured. Please reply to your beta invite email for more information.
 

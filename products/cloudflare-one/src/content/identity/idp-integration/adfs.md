@@ -114,10 +114,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Zero Trust policies](/policies/zero-trust).
 
-<Aside>
-
-If you closed the Add Relying Trust wizard, use Explorer to find the <strong>Relying Party Trusts</strong> folder, select the newly created RPT file, and click <strong>Edit Claim Rules</strong> the <strong>Action\*/</strong> sidebar.
-</Aside>
+If you closed the Add Relying Trust wizard, use Explorer to find the **Relying Party Trusts** folder, select the newly created RPT file, and click **Edit Claim Rules** in the **Action** sidebar.
 
 To create Claim Rules:
 
@@ -203,12 +200,9 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 
 To enable Cloudflare for Teams to accept the claims and assertions sent from ADFS, follow these steps:
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
-1. Click *+ Add* under **Login Methods**, and select **SAML**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. Under **Login methods**, click **Add new**.
 1. The **Add a SAML identity provider** card displays.
-
-    ![Cloudflare Access Login Methods](../../static/documentation/identity/adfs/adfs-19-b.png)
-
 1. Enter an IdP **Name**.
 1. Under **Single Sign On URL** enter:
 

@@ -16,7 +16,10 @@ order: 1
                 Ruleset
             </th>
             <th>
-                Rule
+                Rule ID
+            </th>
+            <th>
+                Legacy Rule ID
             </th>
             <th>
                 Description

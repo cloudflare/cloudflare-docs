@@ -5,6 +5,7 @@ summary: Fetch and modify response properties which are immutable by creating a 
 tags:
   - Middleware
   - Headers
+pcx-content-type: configuration
 ---
 
 # Modify response

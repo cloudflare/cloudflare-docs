@@ -4,6 +4,7 @@ type: example
 summary: Send a GET request and read in JSON from the response. Use to fetch external data.
 tags:
   - Originless
+pcx-content-type: configuration
 ---
 
 # Fetch JSON
@@ -34,13 +35,13 @@ async function gatherResponse(response) {
     return JSON.stringify(await response.json())
   }
   else if (contentType.includes("application/text")) {
-    return await response.text()
+    return response.text()
   }
   else if (contentType.includes("text/html")) {
-    return await response.text()
+    return response.text()
   }
   else {
-    return await response.text()
+    return response.text()
   }
 }
 

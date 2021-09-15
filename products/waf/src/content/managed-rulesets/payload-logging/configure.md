@@ -1,14 +1,14 @@
 ---
-title: Configure payload logging
+title: Configure payload logging in the dashboard
 pcx-content-type: how-to
 order: 1
 ---
 
-# Configure payload logging in the dashboard
+# Configure payload logging for a Managed Ruleset in the dashboard
 
 Configure payload logging for a ruleset in the ruleset configuration page.
 
-1. Open **Firewall** > **Managed Rules**.
+1. Open **Firewall** > **WAF**.
 
 1. Click **Configure** next to the Managed Ruleset you want to configure.
 

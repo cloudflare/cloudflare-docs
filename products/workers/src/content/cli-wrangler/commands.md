@@ -241,45 +241,33 @@ If you are using [kv_namespaces](/cli-wrangler/configuration#kv_namespaces) with
 Starts a log tailing session for a deployed Worker.
 
 ```sh
-$ wrangler tail [--format $FORMAT] [--port $PORT] [--metrics-port $PORT]
+$ wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
 ```
 
 <Definitions>
 
 - `--format $FORMAT` <Type>json|pretty</Type>
   - The format of the log entries.
-
-- `--port $PORT` <Type>int</Type>
-  - The port for your local log server.
-
-- `--metrics-port $PORT` <Type>int</Type>
-  - The port for serving [metrics information](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config#metrics) about the tunnel.
+- `--status $STATUS`
+  - Filter by invocation status [possible values: ok, error, canceled]
+- `--header $HEADER`
+  - Filter by HTTP header
+- `--method $METHOD`
+  - Filter by HTTP method
+- `--sampling-rate $RATE` 
+  - Adds a percentage of requests to log sampling rate
+- `--search $SEARCH`
+  - Filter by a text match in `console.log` messages
 
 </Definitions>
 
 After starting `wrangler tail` in a directory with a project, you will receive a live feed of console and exception logs for each request your Worker receives.
 
-Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (i.e. the directory with your `wrangler.toml`).
+Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (i.e., the directory with your `wrangler.toml`).
 
-### Dependencies
+<Aside type="warning" header="Legacy issues with existing cloudflared configuration">
 
-Wrangler tail uses cloudflared under the hood. If you are already using cloudflared, be sure you have installed the latest version. Otherwise, follow the [getting started guide](https://developers.cloudflare.com/argo-tunnel/quickstart/) for Argo Tunnel.
-`wrangler tail` will register a tailing session for your Worker, and start a server on `localhost` with a [tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) that listens for incoming log requests from your Worker.
-
-<Aside type="warning" header="Issues with existing cloudflared configuration">
-
-`wrangler tail` will not work with existing `cloudflared` configuration on a local machine. This is a well known issue, [tracked in this Github issue](https://github.com/cloudflare/wrangler/issues/1844).
-
-To apply a temporary fix, rename your `cloudflared` config to allow `wrangler tail` to work correctly. 
-
-```sh
-# Move config file when using `wrangler tail`. 
-# This will temporarily disable `cloudflared`. 
-$ mv ~/.cloudflared/config.yml ~/.cloudflared/config.yml.disabled
-
-# Move file back when you need to use `cloudflared`.
-$ mv ~/.cloudflared/config.yml.disabled ~/.cloudflared/config.yml
-```
+`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Cloudflare recommends [updating to the latest wrangler version](/cli-wrangler/install-update#update) to avoid any issues.
 
 </Aside>
 

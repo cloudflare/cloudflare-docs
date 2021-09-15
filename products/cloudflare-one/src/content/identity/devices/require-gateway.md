@@ -1,36 +1,51 @@
 ---
-order: 2
+order: 1
+title: Gateway
 pcx-content-type: how-to
 ---
 
-#  Require Gateway
+# Require Gateway
 
-With Access, you can require that all traffic to specific applications is monitored by Cloudflare Gateway. With Gateway protecting and filtering all requests to your applications, you will be able to see all user traffic and activity in each of these applications, broken down by user and device.
+<details>
+<summary>Feature availability</summary>
+<div>
 
-Alternatively, you can require users to run WARP (Cloudflare's secure and modern VPN) in order to access an application. This ensures that all user traffic is encrypted and routed through Cloudflare.
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| All systems | WARP with Gateway | All plans | 
 
-You can choose to require Gateway or WARP by configuring dedicated actions within your [Zero Trust policies](/policies/zero-trust).
+</div>
+</details>
 
-The first step you need to take in order to require Gateway or WARP is to add a device posture integration.
+With Require Gateway you can allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/identity/devices/require-warp), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 
-To do that:
+The process involves two steps:
+
+1. Setting up **Require Gateway** as a device posture check.
+1. Adding the check to new or existing [Zero Trust policies](/policies/zero-trust) to enforce the check for one or more of your applications.
+
+## Set up a device posture check
 
 1. On your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
-1. Select **Gateway** if you’d like to require all traffic to flow through your Gateway instance. Select **WARP** if you’d like to require all traffic to flow through Cloudflare’s VPN.
 
-![Device Posture](../../static/documentation/identity/devices/device-posture.png)
+    ![Device Posture](../../static/documentation/identity/devices/device-posture.png)
 
-You are now ready to start requiring Gateway or WARP for your Access applications.
+1. Select **Gateway**. 
+
+1. Click **Save**.
+
+
+You are now ready to start requiring Gateway for your Access applications.
+
+## Add the check to a Zero Trust policy
 
 1. On the Teams dashboard, navigate to **Access > Applications**.
 
-1. Locate the application for which you want to require Gateway or WARP.
+1. Locate the application for which you want to require Gateway.
 
 1. Click **Edit**.
 
-1. To have an existing policy require Gateway or WARP, click **Edit** for that specific policy. Then, and add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*.
-
- To create a new policy requiring Gateway or WARP, click **Add a rule**. Then, add an **Include** or **Require** rule with the option *Gateway* selected. If you'd like to require WARP instead, select *WARP*. 
+1. To have an existing policy require Gateway, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option *Gateway* selected.
 
 1. Click **Save rule**.
 

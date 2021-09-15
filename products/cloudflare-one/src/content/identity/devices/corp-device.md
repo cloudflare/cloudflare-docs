@@ -5,6 +5,17 @@ pcx-content-type: how-to
 
 # Device serial numbers
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 Cloudflare for Teams allows you to build Zero Trust rules based on device serial numbers. You can create these rules so that access to applications is granted only to users connecting from company devices.
 
 To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/policies/lists) functionality in the Teams Dashboard.
@@ -17,11 +28,9 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
 </Aside>
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Lists**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Lists**.
 
-1. Click **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's API endpoint.
-
-   ![Add List](../../static/zero-trust-security/corp-device/list-start.png)
+1. Click **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's API endpoint.
 
 1. Give your list a descriptive name, as this name will appear when configuring your Access policies.
 
@@ -37,7 +46,7 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
   Once saved, the serial number list will appear in your list view.
 
-   ![Saved List](../../static/zero-trust-security/corp-device/list-save-list.png)
+   ![List](../../static/zero-trust-security/corp-device/list-saved.png)
 
 Now you can create or update an existing Access policy to require that any device requesting access belongs to your list of serial numbers.
 
@@ -62,5 +71,4 @@ To do that:
   ![Add Require](../../static/zero-trust-security/corp-device/add-require.png)
 
 Once saved, any device attempting to reach the application will need to connect from a device that uses Cloudflare WARP and presents a serial number in the list created.
-
 

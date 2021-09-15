@@ -4,6 +4,7 @@ type: example
 summary: Send a request to a remote server, read HTML from the response, and serve that HTML.
 tags:
   - Originless
+pcx-content-type: configuration
 ---
 
 # Fetch HTML
@@ -32,13 +33,13 @@ async function gatherResponse(response) {
     return JSON.stringify(await response.json())
   }
   else if (contentType.includes("application/text")) {
-    return await response.text()
+    return response.text()
   }
   else if (contentType.includes("text/html")) {
-    return await response.text()
+    return response.text()
   }
   else {
-    return await response.text()
+    return response.text()
   }
 }
 

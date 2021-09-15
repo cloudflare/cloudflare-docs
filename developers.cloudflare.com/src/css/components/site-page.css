@@ -1,7 +1,7 @@
 /* TODO: move to @cloudflare/cloudflare-docs-engine/src/css/docs/components/docs-page.css */
 [is-site-page] .DocsPage {
   --docs-sidebar-width: 0;
-  --docs-content-gap: 1em;
+  --docs-content-gap: 3.7em;
 }
 
 html[is-site-page] .DocsContent {

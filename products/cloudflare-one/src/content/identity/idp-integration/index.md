@@ -16,29 +16,25 @@ Cloudflare Access supports social identity providers that do not require adminis
 
 ## Set up IdPs on the Teams dashboard
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Configuration > Authentication**.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
 
-2. In the **Login methods** card, click *+Add*.
+1. In the **Login methods** card, click **Add new**.
 
-![Login methods](../../static/documentation/identity/login-methods-auth.png)
+1. Select the identity provider you want to add. You can add multiple providers of the same type.
 
-3. Select the identity provider you want to add. You can add multiple providers of the same type.
-
-4. Fill in the necessary fields to set up your identity provider.
+1. Fill in the necessary fields to set up your identity provider.
 
 Each identity provider will have different required fields for you to fill in. If you need help, step-by-step instructions can be expanded below the input form.
 
-![IdP Setup Fields](../../static/documentation/identity/idp-setup-card.png)
-
 If you do not see your identity provider listed, but they support SAML or OAuth, these providers can typically still be enabled. If they support SAML select the SAML option. If they support OAuth select the **OpenID Connect** option.
 
-4. Once you have filled in the necessary fields, click **Save**.
+1. Once you have filled in the necessary fields, click **Save**.
 
 Your IdP will now be listed in the **Login methods** card.
 
 ## Test IdPs on the Teams dashboard
 
-To test if an IdP is correctly configured, navigate to **Configuration** > **Authentication**. Next, click **Test** next to the IdP you'd like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
+To test if an IdP is correctly configured, navigate to **Settings** > **Authentication**. Next, click **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected
 

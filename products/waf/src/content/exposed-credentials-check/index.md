@@ -1,20 +1,20 @@
 ---
 pcx-content-type: concept
-order: 3
+order: 4
 ---
 
 # Automated exposed credentials check (Beta)
 
-<Aside type='warning'>
+<Aside type='note'>
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is available to all paid plans.
 
 </Aside>
 
 Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
 
 Cloudflare offers you automated checks for exposed credentials using Cloudflare Web Application Firewall (WAF).
- 
+
 The WAF provides two mechanisms for this check:
 
 * The **Exposed Credentials Check Managed Ruleset**, which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
@@ -66,7 +66,6 @@ The Managed Ruleset contains an additional rule that blocks HTTP requests alread
 
 You can turn the Managed Ruleset on/off and customize the action performed by each rule when there is a match. Check [Configure exposed credentials check in the dashboard](/exposed-credentials-check/configure-dashboard) for more information.
 
-
 ## Exposed credentials checks in custom rules
 
 <Aside type='warning'>
@@ -79,7 +78,7 @@ You can also check for exposed credentials in custom rules. One common use case 
 
 To check for exposed credentials in a custom rule, include the exposed credentials check in the rule definition and specify how to obtain the username and password values from the HTTP request.
 
-Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to include exposed credentials check in a custom rule. For more information, see [Create a custom rule checking for exposed credentials](/exposed-credentials-check/configure-api#create-a-custom-rule-checking-for-exposed-credentials).
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to include exposed credentials check in a custom rule. For more information, see [Create a custom rule checking for exposed credentials](/exposed-credentials-check/configure-api#create-a-custom-rule-checking-for-exposed-credentials).
 
 <Aside type='note' header='Note'>
 
@@ -89,4 +88,4 @@ Rules that check for exposed credentials run before Rate Limiting Rules.
 
 ## Availability
 
-Exposed credentials checking is available in Beta to customers on an Enterprise plan, where it is enabled by default.
+Exposed credentials checking is available in Beta to all paid plans.

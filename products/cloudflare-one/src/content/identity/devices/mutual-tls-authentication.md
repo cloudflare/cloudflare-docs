@@ -1,9 +1,20 @@
 ---
-order: 2
+order: 4
 pcx-content-type: how-to
 ---
 
 # Mutual TLS
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| All sytems | WARP not required | Enterprise plans | 
+
+</div>
+</details>
 
 <Aside type='warning' header='Important'>
 
@@ -30,7 +41,7 @@ The mTLS certificate is used **only** to verify the client certificate. It does 
 
 To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
 
-1. Navigate to **Configuration > Service Auth > Mutual TLS**.
+1. Navigate to **Access > Service Auth > Mutual TLS**.
 
 2. Click **Add mTLS Certificate**.
 
@@ -224,7 +235,9 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 1. Get the serial number from the client certificate generated earlier. Add that serial number, or any others you intend to revoke, in hex format in a text file. This example uses a file named `serials.txt`.
 
 2. Create the CRL with the following command.
+
 ```bash
 cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
-You will need to add this to your server or enforce the revocation in a Cloudflare Worker.
 ```
+
+You will need to add this to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)

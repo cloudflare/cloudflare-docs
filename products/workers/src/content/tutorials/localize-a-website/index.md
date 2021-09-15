@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-The [`HTMLRewriter`](/runtime-apis/html-rewriter) class (currently in beta) built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML at the edge, giving developers the ability to efficiently and transparently customize their Workers applications.
+The [`HTMLRewriter`](/runtime-apis/html-rewriter) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML at the Cloudflare edge network, giving developers the ability to efficiently and transparently customize their Workers applications.
 
 In this tutorial, we’ll build an example internationalization and localization engine (commonly referred to as “i18n” and “l10n”) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
@@ -155,7 +155,7 @@ class ElementHandler {
 }
 ```
 
-To check that everything looks like you’d expect, it could be a good time to use the preview functionality built into Wrangler. Call `wrangler preview --watch` to open up a live preview of your project, refreshed after every code change that you make.
+To check that everything looks as expected, use the preview functionality built into Wrangler. Call `wrangler dev` to open up a live preview of your project. `wrangler dev` is refreshed after every code change that you make.
 
 We can expand on this simple translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into our `ElementHandler`, we can retrieve a translated string in our user’s home language, provided that it’s defined in `strings`.
 

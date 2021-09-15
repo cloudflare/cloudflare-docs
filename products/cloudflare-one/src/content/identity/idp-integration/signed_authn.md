@@ -15,9 +15,9 @@ Cloudflare Access supports this requirement in the form of Signed AuthN requests
 
 To set up Signed AuthN requests:
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click *+ Add*.
+1. Under **Login methods**, click **Add new**.
 
 1. Choose **SAML** on the next page.
 
@@ -29,10 +29,7 @@ To set up Signed AuthN requests:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/public-cert
     ```
 
-    <Aside>
     Ensure that your IdP validation uses the most recent certificate. Cloudflare Access routinely rotates the public key as a security measure.
-
-    </Aside>
 
     Cloudflare Access uses a certificate that includes the following 2 distinguished name fields:
 

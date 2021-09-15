@@ -1,30 +1,50 @@
 ---
-title: Overview
+title: Getting Started
 order: 0
 pcx-content-type: landing-page
 ---
 
-# Cloudflare Image Resizing docs
+# Getting Started
 
-<ContentColumn>
+Cloudflare Images lets you set up an image pipeline in minutes. Build a scalable image pipeline to store, resize, optimize and deliver images in a fast and secure manner.
 
-You can transform images on Cloudflare’s edge platform. You can resize, adjust quality, and convert images to WebP or AVIF format on demand. We’ll automatically cache every derived image at the edge, so you only need to store one original image at your origin.
+To get started with Cloudflare Images, visit the images dashboard in your Cloudflare account or [sign up](https://dash.cloudflare.com/sign-up/images).
 
-- Quickly and easily adapt images to your site’s layout and your visitors’ screen sizes without maintaining a server-side image processing pipeline on your servers.
+Photos you upload to Cloudflare Images are not attached to any domain in your Cloudflare account and you do not need a domain on Cloudflare to use the Cloudflare Images product.
 
-- Image processing [integrates well with Workers](/resizing-with-workers), which enables advanced integrations such as custom URL schemes, content negotiation and responsive images based on Client Hints.
+## Making Your First API Request
 
-## Two ways to use
+Once you have an Images subscription, to make your first request to the Images API, you must obtain these pieces of information:
 
-You can use Cloudflare Image Resizing with either a pre-defined [URL format](/url-format) or with [Cloudflare Workers](/resizing-with-workers), for advanced use-cases.
+- Your Cloudflare Account ID
+- Your API Key or Bearer Token
 
-<ButtonGroup>
-  <Button type="primary" href="/url-format">Learn the URL format</Button>
-  <Button type="secondary" href="/resizing-with-workers">View the Workers docs</Button>
-</ButtonGroup>
+Once you have this information, we are ready to upload our first image to Cloudflare Images using the API:
 
-## Availability
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/:account_tag/images/v1 \
+  --header 'Authorization: Bearer :token' \
+  --form file=@./triceratops.jpeg
+```
 
-Image Resizing is available today for Business and Enterprise Customers. To enable it, login to the Cloudflare Dashboard and navigate to the Speed Tab. There you’ll find the section for Image Resizing which you can enable with one click.
+A successful response will look similar to this:
 
-</ContentColumn>
+```json
+{
+  "result": {
+    "id": "083eb7b2-5392-4565-b69e-aff66acddd00",
+    "filename": "triceratops.jpeg",
+    "uploaded": "2021-09-14T05:52:14.767Z",
+    "requireSignedURLs": false,
+    "variants": [
+      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/test",
+      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public"
+    ]
+  },
+  "result_info": null,
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```

@@ -105,13 +105,15 @@ addEventListener('fetch', (event) => {
   event.respondWith(handleRequest(event.request))
 })
 
+const { parse } = wasm_bindgen;
+const instance =  wasm_bindgen(wasm);
+
 /**
  * Fetch and log a request
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const { parse } = wasm_bindgen
-  await wasm_bindgen(wasm)
+  await instance;
   const output = parse()
   let res = new Response(output, { status: 200 })
   res.headers.set('Content-type', 'text/html')
@@ -119,7 +121,7 @@ async function handleRequest(request) {
 }
 ```
 
-If `wrangler preview --watch` is running, you'll see the output of your Rust program in your browser a few seconds after you save in your editor. Wrangler watches your project for changes then compiles your Rust to WebAssembly and outputs compiler errors.
+If `wrangler dev` is running, you will see the output of your Rust program in your browser a few seconds after you save it in your editor. Wrangler watches your project for changes then compiles your Rust to WebAssembly and outputs compiler errors.
 
 ## Publish
 

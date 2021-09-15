@@ -9,7 +9,7 @@ With API Tokens it is possible to be able to generate new tokens on the fly via 
 
 ## Generating the initial token
 
-Before you can create Tokens via the API you need to generate the intial Token which will have the ability to do so via the Cloudflare Dashboard. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select `Create Token` and select the `Create Additional Tokens` Template. This template will contain the user permission for creating API Tokens. This allows you to mimic the exact behavior presented in the UI from the API.
+Before you can create Tokens via the API you need to generate the initial Token which will have the ability to do so via the Cloudflare Dashboard. From the [API Tokens management screen](https://dash.cloudflare.com/profile/api-tokens), select `Create Token` and select the `Create Additional Tokens` Template. This template will contain the user permission for creating API Tokens. This allows you to mimic the exact behavior presented in the UI from the API.
 
 <Aside type="note">
 
@@ -17,7 +17,7 @@ It is highly recommended when using this template to not grant other permissions
 
 </Aside>
 
-Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](./restrictions) for more information.
+Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](/tokens/advanced/restrictions) for more information.
 
 ## Creating API tokens with the API
 
@@ -99,7 +99,7 @@ The last piece to defining a policy is what Permission Groups should be applied.
 
 ### Define the restrictions
 
-Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](./restrictions).
+Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/tokens/advanced/restrictions).
 
 When defining TTLs you can set the time at which a token becomes active, `not_before` and the time when it expires, `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 
