@@ -3,9 +3,10 @@ title: Getting Started
 order: 0
 pcx-content-type: landing-page
 ---
+
 # Getting Started
 
-Cloudflare Images lets you set up an image pipeline in minutes. Build a scalable image pipeline to store, resize, optimize and deliver images in a fast and secure manner. 
+Cloudflare Images lets you set up an image pipeline in minutes. Build a scalable image pipeline to store, resize, optimize and deliver images in a fast and secure manner.
 
 To get started with Cloudflare Images, visit the images dashboard in your Cloudflare account or [sign up](https://dash.cloudflare.com/sign-up/images).
 
