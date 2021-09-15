@@ -15,16 +15,20 @@ Cloudflare Analytics builds the following data sets from sampled data:
 
 <TableWrap>
 
-| Data set                  | Nodes                                                                          |
-| :-------------------------| :----------------------------------------------------------------------------- |
-| Firewall Activity Log     | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                  |
-| Firewall Analytics        | `firewallEventsAdaptiveGroups`                                                 |
-| Firewall Rule Preview     | `firewallRulePreviewGroups`                                                    |
-| Network Analytics         | `ipFlows1mGroups` `ipFlows1hGroups` `ipFlows1dGroups` `ipFlows1mAttacksGroups` |
-| Workers Metrics           | `workersInvocationsAdaptive`                                                   |
-| Magic Firewall Analytics  | `magicFirewallSamplesAdaptiveGroups`                                           |
+| Data set                  | Nodes                                                                              |
+| :-------------------------| :--------------------------------------------------------------------------------- |
+| Firewall Activity Log     | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                      |
+| Firewall Analytics        | `firewallEventsAdaptiveGroups`                                                     |
+| Firewall Rule Preview     | `firewallRulePreviewGroups`                                                        |
+| Network Analytics         | `ipFlows1mGroups`* `ipFlows1hGroups`* `ipFlows1dGroups`* `ipFlows1mAttacksGroups`* |
+| Network Analytics v2 for Magic Transit customers | `magicTransitNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsAdaptiveGroups` `flowtrackdNetworkAnalyticsAdaptiveGroups` `magicFirewallNetworkAnalyticsAdaptiveGroups` |
+| Network Analytics v2 for Spectrum customers (Enterprise plans only) | `spectrumNetworkAnalyticsAdaptiveGroups` `dosdNetworkAnalyticsAdaptiveGroups` `dosdAttackAnalyticsAdaptiveGroups` |
+| Workers Metrics           | `workersInvocationsAdaptive`                                                       |
+| Magic Firewall Analytics  | `magicFirewallSamplesAdaptiveGroups`                                               |
 
 </TableWrap>
+
+<sup>*</sup> These nodes are deprecated. Refer to <a href="/graphql-api/features/data-sets#deprecated-data-nodes">Data Sets</a> for more information.
 
 The presence of sampled data is called out in the Cloudflare dashboard and in the description of the data set in the API.
 
@@ -45,9 +49,10 @@ The following data nodes are based on fixed sampling, where the sample rate does
 <TableWrap>
 
 | Data set | Rate | Notes |
-| :-- | --: | :-- |
+| :------- | ---: | :---- |
 | Firewall Rules Preview<br /><p><b>Nodes:</b><br />`firewallRulePreviewGroups`</p> | 1% | Use with caution. A 1% sample rate does not provide accurate estimates for data sets smaller than a certain threshold, a scenario the Cloudflare Dashboard calls out explicitly but the API does not. |
-| Network Analytics<br /><p><b>Nodes:</b><br />`ipFlows1mGroups`<br />`ipFlows1hGroups`<br />`ipFlows1dGroups`<br />`ipFlows1mAttacksGroups`</p> | 0.012% | Sampling rate is in terms of packet count (1 of every 8,192 packets).                                                                                                                                 |
+| Network Analytics<br /><p><b>Nodes:</b><br />`ipFlows1mGroups`<br />`ipFlows1hGroups`<br />`ipFlows1dGroups`<br />`ipFlows1mAttacksGroups`</p> | 0.012% | Sampling rate is in terms of packet count (1 of every 8,192 packets). |
+| Network Analytics v2<br /><p><b>Nodes:</b><br />`dosdNetworkAnalyticsAdaptiveGroups`<br />`dosdAttackAnalyticsAdaptiveGroups`<br />`flowtrackdNetworkAnalyticsAdaptiveGroups`<br />`magicFirewallNetworkAnalyticsAdaptiveGroups`<br />`magicTransitNetworkAnalyticsAdaptiveGroups`<br />`spectrumNetworkAnalyticsAdaptiveGroups`</p> | 0.1% | Sampling rate is in terms of packet count (1 of every 1,000 packets). |
 
 </TableWrap>
 
