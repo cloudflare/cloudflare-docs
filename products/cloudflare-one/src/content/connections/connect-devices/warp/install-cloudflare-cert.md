@@ -363,3 +363,8 @@ The command below will set the Google Cloud SDK to use the Cloudflare certificat
 ### AWS CLI
 
 If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+
+
+## IntelliJ IDEA
+
+Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
