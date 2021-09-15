@@ -18,7 +18,7 @@ module.exports = {
   siteMetadata: {
     title: "Cloudflare Images docs",
     description:
-      " Build a scalable image pipeline to store, resize, optimize and deliver images in a fast and secure manner.",
+      "Build a scalable image pipeline to store, resize, optimize and deliver images in a fast and secure manner.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/images",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",
