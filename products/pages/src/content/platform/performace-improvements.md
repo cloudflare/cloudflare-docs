@@ -9,7 +9,7 @@ Cloudflare Pages now includes performance improvements by removing the overhead 
  
 <Aside type="note">
 
-If you have a custom domain tied to your Pages project, configuring your performance settings in **Speed** on the Cloudflare dashbaord will override the performance settings configured in Pages. 
+If you have a custom domain set up in your Pages project, configuring your performance settings in **Speed** on the Cloudflare dashboard will override the performance settings configured in Pages. 
 
 </Aside>
 
