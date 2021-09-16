@@ -230,7 +230,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-You must use [Wrangler version 1.19 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
+You must use [Wrangler version 1.19.3 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
 </Aside>
 
@@ -299,7 +299,7 @@ Migrations can be performed in two different ways: through the `[[migrations]]` 
 
 ### Durable Object migrations in `wrangler.toml`
 
-The migration list (added in `wrangler 1.19.0`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
+The migration list (added in `wrangler 1.19.3`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
 
 All migrations are applied at deployment. This is true for all migrations, whether initiated through `wrangler.toml` configurations or `wrangler publish` command arguments. Each migration can only be applied once per [environment](/platform/environments). 
 
