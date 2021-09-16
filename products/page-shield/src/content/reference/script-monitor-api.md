@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 You can change the Script Monitor status and fetch a list of currently monitored scripts using the [Script Monitor API](https://api.cloudflare.com/#script-monitor-properties).
 
-For authentication instructions, see [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
 ## Endpoints
 

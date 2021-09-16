@@ -34,6 +34,6 @@ For more background on Script Monitor, check out our [introductory blog post](ht
 
 ## Get started
 
-To get started with Script Monitor, refer to our [setup guide](../get-started).
+To get started with Script Monitor, refer to the Script Monitor [setup guide](../get-started).
 
 To manage Script Monitor using an API, refer to the [Script Monitor API](/reference/script-monitor-api).
