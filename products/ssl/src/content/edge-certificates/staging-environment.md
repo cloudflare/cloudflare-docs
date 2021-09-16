@@ -13,7 +13,7 @@ Use your certificate staging environment to test new custom (modern) certificate
 
 <Aside type="note">
 
-Staging environments are only to Enterprise customers as part of an open beta. For access, reach out to your Account team.
+Staging environments are available only to Enterprise customers as part of an open beta. For access, reach out to your Account team.
 
 </Aside>
 
@@ -42,7 +42,7 @@ You should confirm whether:
 
 ### Step 3 — Push certificate to production
 
-Asssuming there are no issues, you will want to push your custom (modern) certificate to your production environment:
+Asssuming there are no issues, push your custom (modern) certificate to your production environment:
 
 1. Navigate to **SSL/TLS** > **Staging Certificates**.
 1. Click a custom certificate.
