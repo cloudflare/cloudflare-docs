@@ -1,6 +1,6 @@
 ---
 title: Get started
-order: 0
+order: 2
 pcx-content-type: how-to
 ---
 
