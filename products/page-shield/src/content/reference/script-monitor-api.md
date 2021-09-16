@@ -1,6 +1,5 @@
 ---
-title: Using the API
-order: 4
+order: 1
 pcx-content-type: reference
 ---
 
