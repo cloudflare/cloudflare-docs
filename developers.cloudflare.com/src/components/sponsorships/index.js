@@ -21,6 +21,7 @@ import reactIMG from "./logos/react.svg"
 import reduxIMG from "./logos/redux.svg"
 import revealjsIMG from "./logos/revealjs.svg"
 import select2IMG from "./logos/select2.svg"
+import staticallyIMG from "./logos/statically.svg"
 import threejsIMG from "./logos/threejs.svg"
 import unpkgIMG from "./logos/unpkg.svg"
 import uppyIMG from "./logos/uppy.svg"
@@ -210,6 +211,13 @@ const sponsorships = [{
     logo: bootstrapIMG,
     siteURL: "https://getbootstrap.com/",
     sourceURL: "https://github.com/twbs/bootstrap"
+  },
+  {
+    title: "Statically",
+    description: "A fast and free Content Delivery Network for open source projects.",
+    logo: staticallyIMG,
+    siteURL: "https://statically.io/",
+    sourceURL: "https://github.com/staticallyio/statically"
   }
 ]
 
