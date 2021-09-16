@@ -9,6 +9,8 @@ Customers wishing to utilize their own SSL certificates may upload the certifica
 
 Currently the Business and Enterprise plan each include one Custom Certificate, and Enterprise customers may purchase additional slots as needed by speaking with their Customer Success Manager.
 
+If you have first-level hostnames — for example, `www.example.com` — not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/edge-certificates/universal-ssl), if enabled.
+
 ## Keyless SSL
 
 Typically, customers will upload both the SSL certificate and the private key. Those that wish to [retain their private keys on their own infrastructure may wish to use Keyless SSL](/keyless-ssl).

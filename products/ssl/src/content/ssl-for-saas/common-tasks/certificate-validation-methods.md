@@ -146,11 +146,11 @@ $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 
 The addresses listed above will receive an email from `support@certvalidate.cloudflare.com` that looks like this:
 
-![Certificate Validation Email](../static/certvalidate-email.png)
+![Certificate Validation Email](../../static/certvalidate-email.png)
 
 They can either click on the “Review Certificate Request” button or on the https://certvalidate.cloudflare.com hyperlink. Doing so will bring your customer to a page like the one shown below. Here they should check the ”I approve..” box and then click the “Approve Certificate” button.
 
-![Certificate Validation Approval](../static/certvalidate-approve.png)
+![Certificate Validation Approval](../../static/certvalidate-approve.png)
 
 As soon as the domain owner has clicked the link in this email and clicked “Approve” on the validation page, the certificate will automatically transition from Pending Validation to Pending Issuance to Pending Deployment and finally Active.
 
@@ -227,7 +227,7 @@ $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
        -d '{"hostname":"http-preval.example.com", "ssl":{"method":"http","type":"dv"}}'
 ```
 
-### 4. CNAME (manual)
+### CNAME (manual)
 
 The last DCV method available is via a CNAME record. First, make a request using `"method":"cname"`:
 
