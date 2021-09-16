@@ -26,9 +26,7 @@ Future versions of Script Monitor should improve notification and detection capa
 
 ## Who has access to Script Monitor?
 
-Script Monitor is currently in closed beta testing for Business and Enterprise customers.
-
-If you are interested in joining the closed beta, complete the [signup form](https://www.cloudflare.com/waf/page-shield/).
+Script Monitor is currently available to customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
 ## Learn more
 
