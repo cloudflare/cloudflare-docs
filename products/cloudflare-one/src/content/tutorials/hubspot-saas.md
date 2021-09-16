@@ -34,11 +34,10 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 1. Add any desired [Zero Trust policies](/policies/zero-trust) to your application.
 1. Copy SSO endpoint and Access Entity ID
 
-## Create and upload a certificate file
+## Create the certificate
 
-1. Paste the **Public Key** in VIM or another code editor.
 1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-1. Set the file extension as `.crt` and save.
+1. Paste the certificate contents into the Certificate field
 
 ## Finalize Hubspot configuration
 
