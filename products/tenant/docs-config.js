@@ -1,5 +1,6 @@
 const fs = require('fs');
 const productIconKey = "tenant";
+const path = require("path");
 
 module.exports = {
   product: "Tenant",

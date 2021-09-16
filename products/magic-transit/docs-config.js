@@ -1,5 +1,6 @@
 const fs = require("fs");
 const productIconKey = "magic-transit";
+const path = require("path");
 
 module.exports = {
   product: "Magic Transit",
@@ -8,7 +9,7 @@ module.exports = {
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/magic-transit",
   logoSVGContent: fs.readFileSync(
-    path.join(__dirname, `../src/content/icons/${productIconKey}.svg`),
+    path.join(__dirname, `src/content/icons/${productIconKey}.svg`),
     "utf8"
   ),
   externalLinks: [

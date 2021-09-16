@@ -1,5 +1,6 @@
 const fs = require("fs");
-const productIconKey = "images";
+const productIconKey = "image-resizing";
+const path = require("path");
 
 module.exports = {
   product: "Image Resizing",
@@ -9,7 +10,7 @@ module.exports = {
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/image-resizing",
   logoSVGContent: fs.readFileSync(
-    path.join(__dirname, `../src/content/icons/${productIconKey}.svg`),
+    path.join(__dirname, `src/content/icons/${productIconKey}.svg`),
     "utf8"
   ),
   externalLinks: [
