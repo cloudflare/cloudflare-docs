@@ -11,7 +11,15 @@ Custom Certificates can be uploaded in the Cloudflare Dashboard or using the Clo
 
 ## Certificate packs
 
-Certificates uploaded to Cloudflare will be automatically grouped together into a [Certificate Pack](https://support.cloudflare.com/hc/en-us/articles/216532638-FAQ-Custom-Certificate-Packs-SHA-2-and-SHA-1-) before being deployed to the global edge. A Certificate Pack is a group of certificates that share the same set of hostnames, e.g., `example.com` and `*.example.com`, but use different signature algorithms. Each pack can include up to three certificates, with one from each of the following signature algorithms: `SHA-2/RSA`, `SHA-2/ECDSA`, and `SHA-1/RSA`.
+Certificates uploaded to Cloudflare will be automatically grouped together into a Certificate Pack before being deployed to the global edge. 
+
+A Certificate Pack is a group of certificates that share the same set of hostnames — for example, `example.com` and `*.example.com` — but use different signature algorithms. Each pack can include up to three certificates, with one from each of the following signature algorithms: `SHA-2/RSA`, `SHA-2/ECDSA`, and `SHA-1/RSA`. Each pack only counts as one SSL certificate against your custom certificate quota.
+
+<Aside type="note">
+
+You cannot delete the primary certificate if secondary certificates are present in the pack.
+
+</Aside>
 
 --------
 
