@@ -117,8 +117,7 @@ header: Response
       "added_at": "2021-08-18T10:51:10.09615Z",
       "first_seen_at": "2021-08-18T10:51:08Z",
       "last_seen_at": "2021-09-02T09:57:54Z",
-      "host": "example.net",
-      "domain_reported_malicious": true
+      "host": "example.net"
     },
     {
       "script_id": "83c8da2267394ce8465b74c299658fea",
@@ -126,8 +125,7 @@ header: Response
       "added_at": "2021-08-17T13:16:03.419619Z",
       "first_seen_at": "2021-08-17T13:15:23Z",
       "last_seen_at": "2021-08-18T09:05:20Z",
-      "host": "example.net",
-      "domain_reported_malicious": true
+      "host": "example.net"
     },
     // (...)
   ],
