@@ -1,5 +1,5 @@
 ---
-title: Use the API
+title: Using the API
 order: 4
 pcx-content-type: reference
 ---
@@ -20,15 +20,19 @@ The Cloudflare API base URL is:
 https://api.cloudflare.com/client/v4
 ```
 
-The `{:zone_identifier}` argument is the zone ID (an hexadecimal string). You can find this value in the Cloudflare dashboard or using the [API's `/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
+The `{:zone_identifier}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 
 The following table summarizes the available operations.
 
 | Operation | Method + URL stub | Notes |
 |-----------|-------------------|-------|
-| [Get Script Monitor settings](https://api.cloudflare.com/#script-monitor-get-script-monitor-settings) | `GET zones/{:zone_identifier}/script_monitor` | Fetch the current Script Monitor status (enabled/disabled). |
-| [Update Script Monitor settings](https://api.cloudflare.com/#script-monitor-update-script-monitor-settings) | `PUT zones/{:zone_identifier}/script_monitor` | Updates the Script Monitor status (enabled/disabled). |
-| [List Script Monitor scripts](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts) | `GET zones/{:zone_identifier}/script_monitor/scripts | Fetch a list of currently monitored scripts.` |
+| [Get Script Monitor settings][1] | `GET zones/{:zone_identifier}/script_monitor` | Fetch the current Script Monitor status (enabled/disabled). |
+| [Update Script Monitor settings][2] | `PUT zones/{:zone_identifier}/script_monitor` | Updates the Script Monitor status (enabled/disabled). |
+| [List Script Monitor scripts][3] | `GET zones/{:zone_identifier}/script_monitor/scripts` | Fetch a list of currently monitored scripts. |
+
+[1]: https://api.cloudflare.com/#script-monitor-get-script-monitor-settings
+[2]: https://api.cloudflare.com/#script-monitor-update-script-monitor-settings
+[3]: https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts
 
 ## Common API calls
 
@@ -142,4 +146,4 @@ header: Response
 }
 ```
 
-For details on the available paging and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts).
+For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts).
