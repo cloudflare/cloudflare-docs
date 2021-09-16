@@ -16,5 +16,5 @@ For an authoritative or full domain — domains that changed their [domain names
 For non-authoritative or partial domains (domains on a CNAME setup), Universal SSL will be:
 - Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
 - Validated:
-    - Immediately if you add [Domain Control Validation (DCV)](../changing-dcv-method) records to your authoritative DNS.
+    - Immediately if you add [Domain Control Validation (DCV)](/edge-certificates/domain-validation-methods) records to your authoritative DNS.
     - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).

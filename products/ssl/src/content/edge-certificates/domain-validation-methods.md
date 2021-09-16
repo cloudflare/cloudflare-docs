@@ -3,28 +3,29 @@ order: 2
 pcx-content-type: how-to
 ---
 
-# Change DCV method
+# Domain control validation
 
---------
+Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as domain control validation (DCV).
 
-## What is Domain Control Validation (DCV)?
+Cloudflare supports several methods of DCV, including:
 
-Before a publicly trusted Certificate Authority will issue a certificate for a hostname, the requester must prove they have control over that hostname.
-*(Domain and hostname are used interchangeably in this context)*
-
-There are several methods that are used to complete this process, the primary ones that Cloudflare works with are:
-
+* [Automatic](#domains-without-pre-validation) (for domains that do not require pre-validation)
 * HTTP Token
 * CNAME DNS Record
 * TXT DNS Record
 
---------
+----
 
-## Completing DCV for a domain using Cloudflare
+## Domains without pre-validation
 
-When signing up with Cloudflare by updating your registrar to use Cloudflare nameservers, Cloudflare is able to automatically handle DCV on your behalf.
+If your domain can tolerate a couple minutes of downtime
 
-For domains using a CNAME setup, this process is not as straightforward.
+If your domain uses Cloudflare for its authoritative DNS — meaning you changed your namesevers at your registrar — Cloudflare handles DCV for your domain automatically.
+
+---
+
+
+
 
 **Changing DCV Methods for a Certificate Order is primarily a topic for CNAME setup zones.**
 
@@ -39,7 +40,7 @@ The process of certificates being issued once DNS is changed is reported to be v
 
 Using the Client API, we can change the validation method used to allow the certificates to be issued before cutting over live traffic.
 
---------
+
 
 ## Apex validation
 
@@ -153,7 +154,7 @@ The status: `active` means that the certificate has been deployed to Cloudflare�
 
 ## Update DCV method for an active certificate
 
-You cannot update the DCV method for an active certificate. To update the DCV method for a subdomain, wait until the DCV expires and then change the DCV method.
+You cannot update the DCV method for an active certificate. To update the DCV method for a domain, wait until the DCV expires and then change the DCV method.
 
 --------
 
