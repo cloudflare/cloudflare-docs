@@ -63,25 +63,43 @@ header: Response
 
 ### Enable Page Monitor
 
+This example enables Page Monitor in the specified zone.
+
 ```bash
 ---
 header: Request
 ---
-curl -X PUT "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/script_monitor" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: REDACTED" \
-     -H "Content-Type: application/json"
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/{:zone_identifier}/script_monitor" \
+  -H "X-Auth-Email: user@example.com" \
+  -H "X-Auth-Key: REDACTED" \
+  -H "Content-Type: application/json" \
+  -d '{ "enabled": true }'
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "enabled": true,
+    "updated_at": "2021-09-14T11:50:40.756996Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 
 ### Fetch list of monitored scripts
 
-The following example fetches a list of monitored scripts on hostname `cloudflare.com`, obtaining the first page with 15 items per page.
+This example fetches a list of scripts monitored by Page Monitor on hostname `example.net`, requesting the first page with 15 items per page.
 
 ```bash
 ---
 header: Request
 ---
-curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_identifier}/script_monitor/scripts?hosts=cloudflare.com&page=1&per_page=15" \
+curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_identifier}/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
   -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   -H "Content-Type: application/json"
@@ -99,7 +117,7 @@ header: Response
       "added_at": "2021-08-18T10:51:10.09615Z",
       "first_seen_at": "2021-08-18T10:51:08Z",
       "last_seen_at": "2021-09-02T09:57:54Z",
-      "host": "cloudflare.com",
+      "host": "example.net",
       "domain_reported_malicious": true
     },
     {
@@ -108,7 +126,7 @@ header: Response
       "added_at": "2021-08-17T13:16:03.419619Z",
       "first_seen_at": "2021-08-17T13:15:23Z",
       "last_seen_at": "2021-08-18T09:05:20Z",
-      "host": "cloudflare.com",
+      "host": "example.net",
       "domain_reported_malicious": true
     },
     // (...)
