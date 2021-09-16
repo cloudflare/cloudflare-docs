@@ -36,9 +36,9 @@ The following table summarizes the available operations.
 
 ## Common API calls
 
-### Get Page Monitor status
+### Get Script Monitor status
 
-This example obtains the current status of Page Monitor (enabled/disabled)
+This example obtains the current status of Script Monitor (enabled/disabled).
 
 ```bash
 ---
@@ -65,9 +65,9 @@ header: Response
 }
 ```
 
-### Enable Page Monitor
+### Enable Script Monitor
 
-This example enables Page Monitor in the specified zone.
+This example enables Script Monitor in the specified zone.
 
 ```bash
 ---
@@ -97,7 +97,7 @@ header: Response
 
 ### Fetch list of monitored scripts
 
-This example fetches a list of scripts monitored by Page Monitor on hostname `example.net`, requesting the first page with 15 items per page.
+This example fetches a list of scripts monitored by Script Monitor on hostname `example.net`, requesting the first page with 15 items per page.
 
 ```bash
 ---
