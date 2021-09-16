@@ -209,6 +209,10 @@ All plans have access to:
 
   - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
 
+- `isEUCountry` <Type>string | null</Type>
+
+  - If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property will be omitted.
+
 - `httpProtocol` <Type>string</Type>
 
   - HTTP Protocol, e.g. `"HTTP/2"`.
