@@ -16,3 +16,17 @@ Typically, customers will upload both the SSL certificate and the private key. T
 ## Geo Key Manager (private key restriction)
 
 By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. Customers that wish to restrict where these keys may be used can elect to specify a ‘Private Key Restriction’ during upload.
+
+## Certificate packs
+
+Certificates uploaded to Cloudflare will be automatically grouped together into a Certificate Pack before being deployed to the global edge. 
+
+A Certificate Pack is a group of certificates that share the same set of hostnames — for example, `example.com` and `*.example.com` — but use different signature algorithms. Each pack can include up to three certificates, with one from each of the following signature algorithms: `SHA-2/RSA`, `SHA-2/ECDSA`, and `SHA-1/RSA`. Each pack only counts as one SSL certificate against your custom certificate quota.
+
+<Aside type="note">
+
+You cannot delete the primary certificate if secondary certificates are present in the pack.
+
+</Aside>
+
+--------
