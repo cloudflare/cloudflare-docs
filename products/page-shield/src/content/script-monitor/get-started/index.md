@@ -12,7 +12,7 @@ To enable Script Monitor:
 1. In your dashboard, go to **Firewall** > **Page Shield**.
 1. For **Script Monitor**, select **On**.
 
-For more guidance on using the Script Monitor dashboard, see [Monitor scripts](../use-dashboard)
+For more guidance on using the Script Monitor dashboard, refer to [Monitor scripts](../use-dashboard).
 
 ## Configure alerts
 
