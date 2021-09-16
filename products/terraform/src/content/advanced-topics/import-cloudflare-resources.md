@@ -27,28 +27,7 @@ You can use `cf-terraforming` or `cf-terraforming -h` to view the help file, but
   * Specifying an account will generate configuration for all resources from all zones in that account.
 4. The Cloudflare resources to generate config
 
-The list of supported resources currently are:
-
-* [access_application](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_application)
-* [access_policy](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_policy)
-* [access_rule](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_rule)
-* [account_member](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/account_member)
-* [custom_pages](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/custom_pages)
-* [filter](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/filter)
-* [firewall_rule](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/firewall_rule)
-* [load_balancer](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer)
-* [load_balancer_monitor](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_monitor)
-* [load_balancer_pool](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_pool)
-* [page_rule](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/page_rule)
-* [rate_limit](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit)
-* [record](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record)
-* [spectrum_application](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/spectrum_application)
-* [waf_rule](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/waf_rule)
-* [worker_route](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_route)
-* [worker_script](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_script)
-* [zone](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone)
-* [zone_lockdown](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone_lockdown)
-* [zone_settings_override](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zone_settings_override)
+The list of supported resources is available in the [Terraform README](https://github.com/cloudflare/cf-terraforming#supported-resources).
 
 ## Import existing Cloudflare resources
 
@@ -76,7 +55,7 @@ Start by making a call to Cf-Terraforming to enumerate the Terraform configurati
 
 The command below assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
 ```
-$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a record > importing-example.tf
+$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
 ```
 
 </Aside>
