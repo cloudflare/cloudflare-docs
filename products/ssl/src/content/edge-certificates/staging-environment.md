@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Staging environment (Beta)
 
-Use your certificate staging environment to test new custom certificates before pushing them to your production environment. This process helps you solve potential certificate problems **before** there's an incident, such as when:
+Use your certificate staging environment to test new custom (modern) certificates before pushing them to your production environment. This process helps you solve potential certificate problems **before** there's an incident, such as when:
 
 - You make a mistake when uploading a new custom certificate.
 - You misunderstand the order of your certificates.
@@ -13,7 +13,7 @@ Use your certificate staging environment to test new custom certificates before 
 
 <Aside type="note">
 
-Staging environments are only available to certain customers and support specific types of certificates. For more details, refer to [Limitations](#limitations).
+Staging environments are only to Enterprise customers as part of an open beta. For access, reach out to your Account team.
 
 </Aside>
 
@@ -23,22 +23,16 @@ Staging environments are only available to certain customers and support specifi
 
 ### Step 1 — Upload certificate
 
-To upload custom certificates to your staging environment:
+To upload custom (modern) certificates to your staging environment:
 
 1. Navigate to **SSL/TLS** > **Staging Certificates**.
 1. Click **Upload Custom Staging Certificate**.
-1. Upload your custom certificate ([detailed instructions](/edge-certificates/custom-certificates/uploading)).
+1. Upload your custom (modern) certificate ([detailed instructions](/edge-certificates/custom-certificates/uploading)).
 1. Your certificate will appear in the dashboard with a status of **Staging Deployment**. If you refresh the page, its status should go to **Staging Active**.
-
-<Aside type="note">
-
-This dashboard shows all active, custom certificates associated with your domain, whether in **Production** or **Staging**.
-
-</Aside>
 
 ### Step 2 — Test certificate
 
-Test your custom certificate by sending `curl` requests to the IP addresses listed in the dashboard card at **SSL/TLS** > **Staging Certificates**.
+Test your custom (modern) certificate by sending `curl` requests to the IP addresses listed in the dashboard card at **SSL/TLS** > **Staging Certificates**.
 
 You should confirm whether:
 
@@ -48,7 +42,7 @@ You should confirm whether:
 
 ### Step 3 — Push certificate to production
 
-Asssuming there are no issues, you will want to push your custom certificate to your production environment:
+Asssuming there are no issues, you will want to push your custom (modern) certificate to your production environment:
 
 1. Navigate to **SSL/TLS** > **Staging Certificates**.
 1. Click a custom certificate.
@@ -58,7 +52,7 @@ If there were issues with your certificate, you can keep it in your staging envi
 
 ### Step 4 (optional) — Push certificate back to staging
 
-If you roll out a custom certificate to production and encounter issues, you can push that certificate back to your staging environment for additional testing:
+If you roll out a custom (modern) certificate to production and encounter issues, you can push that certificate back to your staging environment for additional testing:
 
 1. Navigate to **SSL/TLS** > **Edge Certificates**.
 1. Click a custom certificate.
@@ -76,5 +70,5 @@ Currently, staging environments are only available to Enterprise customers parti
 
 At the moment, staging environments have limited functionality:
 
-- Only custom certificates
+- Only custom (modern) certificates
 - Only accessed via the dashboard
