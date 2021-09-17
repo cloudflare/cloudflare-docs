@@ -31,13 +31,20 @@ Your new connected PagerDuty will appear in the **Connected notification service
 
 ## Webhooks to external services
 
-There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Here are some of the most popular services you can connect to your Cloudflare account:
+There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Below we have a list of some of the most popular services you can connect to your Cloudflare account, as well as the information you need to connect to them:
 
-* [Jira](https://developer.atlassian.com/server/jira/platform/webhooks/) 
-* [Slack](https://api.slack.com/messaging/webhooks)
-* [Google Chat](https://developers.google.com/chat/how-tos/webhooks)
-* [DataDog](https://docs.datadoghq.com/developers/guide/calling-on-datadog-s-api-with-the-webhooks-integration/)
-* [OpsGenie](https://docs.opsgenie.com/docs/integration-api)
+<TableWrap>
+
+Service | Secret | URL
+---------- | ----------|-------
+[Google Chat](https://developers.google.com/chat/how-tos/webhooks) | Parsed from URL | URL variable found in chat channel
+[Slack](https://api.slack.com/messaging/webhooks) | Parsed from URL | URL variable found in slack channel
+[DataDog](https://docs.datadoghq.com/api/latest/events/#post-an-event) | API Key (required) | URL variable found in [Datadog account](https://app.datadoghq.com/account/settings#api) | https://api.datadoghq.com/api/v1/events
+[Discord](https://discord.com/developers/docs/resources/webhook#execute-webhook) | Parsed from URL | URL variable found in Discord channel
+[OpsGenie](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration) | API Key for REST API | URL variable found in [OpsGenie account](https://api.opsgenie.com/v2/alerts)
+[Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector) | Token [(refer to Splunk documentation)](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in) | 1. Only supports services/collector, services/collector/raw, services/collector/event. <br/> 2. If SSL is enabled on the token, only supports port 443; otherwise 8088. <br/> 3. Needs SSL enabled on the server.
+
+</TableWrap>
 
 After configuring the external service you want to connect to, set up webhooks in your Cloudflare dashboard:
 
