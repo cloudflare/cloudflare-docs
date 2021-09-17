@@ -54,7 +54,7 @@ async function handleRequest(request) {
 }
 ```
 
-This is a basic example where our request handler calls an async function `sleepBetween`. The function iterates from 0 to 100, but after each iteration, it calls `timer(100)`, which will sleep for 100 milliseconds. Now we have a nice slow function we can use to test out the profiler.
+This is a basic example where our request handler calls an async function `sleepBetween`. The function iterates from 0 to 100, but after each iteration, it calls `timer(100)`, which will sleep for 100 milliseconds. Now there is a nice slow function you can use to test out the profiler.
 
 ### Profiling our Worker
 
@@ -77,10 +77,10 @@ Clicking inspect opens up the DevTools. Currently, Wrangler only supports the Co
 
 With the DevTools open, click the Profile tab and then click "start." Now open a new tab with your Worker running locally `http://127.0.0.1:8787`. Accessing the Worker causes it to run again, this time captured by the DevTools. When it finishes loading, go back to our DevTools window and click "stop."
 
-There are three ways to view CPU profile data: tree (top down), heavy (bottom up) and chart. If you click on "Chart," it brings us to a flame chart where we can see every function call and how long it took.
+There are three ways to view CPU profile data: tree (top down), heavy (bottom up) and chart. If you click on "Chart," it brings us to a flame chart where you can see every function call and how long it took.
 
 To find slow functions, look for the last long function in a stack. Since each function's total run time is determined by the runtime of all the functions it calls. We want to find the one with the longest self runtime, or the last big one before it finishes or splits into smaller calls. For more information on using the DevTools, check out their [official docs](https://developer.chrome.com/docs/devtools/).
 
 ![CPU Flame chart](./media/devtools-chart.png)
 
-Here we can see that `sleepBetween` is our culprit. Another quick way of spotting the slowest function in a Worker is to use the Heavy view. This lets you sort by self run time or total run time. Sorting by self run time and ignoring any items in parenthesis will get you your answer.
+Here you can see that `sleepBetween` is our culprit. Another quick way of spotting the slowest function in a Worker is to use the Heavy view. This lets you sort by self run time or total run time. Sorting by self run time and ignoring any items in parenthesis will get you your answer.
