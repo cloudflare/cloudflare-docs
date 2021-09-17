@@ -28,7 +28,7 @@ Available options include:
 
 - `secure`: Configures the `Secure` attribute on the waiting room cookie, which requires the request to be made over `https`:
 
-    - **auto** (default): Meant to be as flexible as possible, defaulting to **always** but becoming **never** if you have enabled [**Always Use HTTPS**](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156).
+    - **auto** (default): Meant to be as flexible as possible, defaulting to **never** but becoming **always** if you have enabled [**Always Use HTTPS**](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156).
     - **always**: Cookies can only be sent using `https` requests.
     - **never**: Cookies can be sent using `http` or `https` requests.
 
