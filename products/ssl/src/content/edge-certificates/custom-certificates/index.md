@@ -30,5 +30,3 @@ A Certificate Pack is a group of certificates that share the same set of hostnam
 You cannot delete the primary certificate if secondary certificates are present in the pack.
 
 </Aside>
-
---------
