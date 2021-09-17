@@ -4,7 +4,13 @@ pcx-content-type: interim
 
 # Export GraphQL data to CSV
 
-This tutorial shows how to create a Python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like Splunk can easily ingest and visualize it.
+<Aside type="warning">
+
+Note: This tutorial uses Network Analytics v2 nodes. For more information on migrating from Network Analytics v1 to Network Analytics v2, refer to the [migration guide](/graphql-api/migration-guides/network-analytics-v2).
+
+</Aside>
+
+This tutorial shows how to create a Python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like [Splunk](https://www.splunk.com) can easily ingest and visualize it.
 
 This example queries the `ipFlows1mAttacksGroups` [data set](/graphql-api/features/data-sets), which aggregates Network Analytics attack activity into 1-minute intervals.
 
@@ -71,7 +77,7 @@ header: Query the Network Analytics GraphQL API
 ---
 def get_cf_graphql():
     headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
-    # This variable replacement requires Python3.6 or higher
+    # This variable replacement requires Python 3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
           $accountTag: string, 
@@ -183,7 +189,7 @@ def get_date(num_days):
  
 def get_cf_graphql():
     headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
-    # This variable replacement requires Python3.6 or higher
+    # This variable replacement requires Python 3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
           $accountTag: string, 
