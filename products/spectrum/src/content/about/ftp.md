@@ -35,7 +35,7 @@ Configuring Spectrum to protect your FTP server requires creating a set of Spect
 
 ### Protecting the Control Port
 
-The control plane runs on port 21 by default. There is nothing special that needs to be configurreplace 198.51.100.1 with the IP of the origin server.
+The control plane runs on port 21 by default, and there is nothing special that needs to be to protect this part of the FTP server. In the example below, replace 198.51.100.1 with the IP of the origin server.
 
 ![Control plane port](../img/ftp/ftp-control-plane-app.png)
 

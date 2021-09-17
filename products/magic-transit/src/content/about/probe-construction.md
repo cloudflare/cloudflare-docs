@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 # Probe construction
 
-A tunnel health check probe contains an ICMP (Internet Control Message Protocol) reply packet that originates from an IP address on the origin side of the GRE tunnel and whose destination address is a public Cloudflare IP.
+A tunnel health check probe contains an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp) reply packet that originates from an IP address on the origin side of the GRE tunnel and whose destination address is a public Cloudflare IP.
 
 Cloudflare encapsulates the ICMP reply packet and sends the probe across the GRE tunnel to the origin. When the probe reaches the origin router, the router decapsulates the ICMP reply and forwards it to the specified destination IP. The probe is successful when Cloudflare receives the reply.
 

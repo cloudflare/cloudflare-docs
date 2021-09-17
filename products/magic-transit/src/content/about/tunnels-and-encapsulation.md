@@ -19,7 +19,7 @@ Egress packets are routed by your ISP interface, not Cloudflare.
 
 ## Encapsulation
 
-Magic Transit encapsulates IP packets destined for your network and transmits them across the GRE tunnels to your tunnel endpoint router, which decapsulates the packets and sends them to your internal network.
+Magic Transit [encapsulates IP packets](https://www.cloudflare.com/learning/network-layer/what-is-tunneling/) destined for your network and transmits them across the GRE tunnels to your tunnel endpoint router, which decapsulates the packets and sends them to your internal network.
 
 In the diagram below, Magic Transit encapsulates packets at the Cloudflare edge and transmits them to a customer’s — Acme for example — tunnel endpoint router.
 
