@@ -15,14 +15,14 @@ pcx-content-type: reference
 - [`metrics`](#metrics)
 - [`metrics-update-freq`](#metrics-update-freq)
 - [`tag`](#tag)
-- [`loglevel`](#loglevel)
-- [`transport-loglevel`](#transport-loglevel)
 - [`retries`](#retries)
 - [`pidfile`](#pidfile)
 - [`protocol`](#protocol)
-- [`logfile`](#logfile)
 - [`help`](#help)
 - [`version`](#version)
+- [`logfile`](#logfile)
+- [`loglevel`](#loglevel)
+- [`transport-loglevel`](#transport-loglevel)
 
 ## `config`
 
@@ -107,23 +107,6 @@ Frequency to update tunnel metrics.
 
 Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags may be specified by delimiting them with commas e.g. `KEY1=VALUE1, KEY2=VALUE2`.
 
-## `loglevel`
-
-| Syntax | Default | Environment Variable |
-|--|--|--|
-| `loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
-
-Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
-
-## `transport-loglevel`
-
-| Syntax | Default | Environment Variable |
-|--|--|--|
-| `transport-loglevel` | `warn` | `TUNNEL_PROTO_LOGLEVEL` |
-
-Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
-Any value below `warn` produces substantial output and should only be used to debug low-level performance issues and protocol quirks.
-
 ## `retries`
 
 | Syntax | Default | Environment Variable |
@@ -146,7 +129,11 @@ Write the application's process identifier (PID) to this file after the first su
 |--|--|--|
 | `protocol` | `auto` | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `http2` protocol. 
+Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `http2` protocol.
+
+## `region`
+
+Allows you to choose the regions to which connections are established. Omit or leave empty to connect to the global region. Set `--region=us` to route all connections through us region 1 and us region 2.
 
 ## `logfile`
 
@@ -154,11 +141,21 @@ Specify the protocol used to establish a connection between `cloudflared` and th
 |--|--|
 | `logfile value` | `TUNNEL_LOGFILE` |
 
-Save application log to this file. Mainly useful for reporting issues.
+Save application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/faq/cloudflare-tunnels-faq).
 
-## `region`
+## `loglevel`
 
-Allows you to choose the regions to which connections are established. Omit or leave empty to connect to the global region. Set `--region=us` to route all connections through us region 1 and us region 2.
+| Syntax | Default | Environment Variable |
+|--|--|--|
+| `loglevel value` | `info` | `TUNNEL_LOGLEVEL` |
 
+Specifies the verbosity of logging. The default `info` level does not produce much output, but you may wish to use the `warn` level in production. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
 
+## `transport-loglevel`
 
+| Syntax | Default | Environment Variable |
+|--|--|--|
+| `transport-loglevel` | `warn` | `TUNNEL_PROTO_LOGLEVEL` |
+
+Specifies the verbosity of logs for the transport between `cloudflared` and the Cloudflare edge. Available levels are: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`.
+Any value below `warn` produces substantial output and should only be used to debug low-level performance issues and protocol quirks.

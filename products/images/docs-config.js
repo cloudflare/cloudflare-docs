@@ -3,9 +3,10 @@ const productIconKey = "images";
 const path = require("path");
 
 module.exports = {
-  product: "Image Resizing",
+  product: "Cloudflare Images",
   pathPrefix: "/images",
   productIconKey,
+  productLogoPathD: require("./src/content/icons/images").pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/images",
   logoSVGContent: fs.readFileSync(
@@ -24,8 +25,9 @@ module.exports = {
     algoliaOptions: { facetFilters: '["project:images"]' },
   },
   siteMetadata: {
-    title: "Cloudflare Image Resizing docs",
-    description: "Run your image optimization logic at the edge.",
+    title: "Cloudflare Images docs",
+    description:
+      "Build a scalable image pipeline to store, resize, optimize, and deliver images in a fast and secure manner.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/images",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",

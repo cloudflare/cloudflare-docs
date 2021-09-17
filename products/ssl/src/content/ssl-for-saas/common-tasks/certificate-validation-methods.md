@@ -3,11 +3,9 @@ order: 3
 pcx-content-type: interim
 ---
 
-# Certificate validation methods
+# Validate certificates
 
-## Recommended
-
-### 1. HTTP
+## HTTP (Recommended)
 
 By far the easiest method for validating hostnames and issuing certificates is using “HTTP” validation. With this method, the only thing that your end-customers need to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
 
@@ -33,7 +31,7 @@ For your customers that already have HTTPS on their custom domain, e.g., they’
 
 The validation methods below can be used to obtain a certificate in advance of setting the CNAME to your `$CNAME_TARGET`.
 
-### 1. TXT record
+### TXT record
 
 This validation method allows your customer to add a TXT record to prove control of their hostname. To do so you should create a new custom hostname using `"method":"txt"` (rather than `"method":"http"`).
 
@@ -91,7 +89,7 @@ $ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
        -d '{"hostname":"another.example.com", "ssl":{"method":"txt","type":"dv"}}'
 ```
 
-### 2. Email
+### Email
 
 Email based validation will send an approval email to the contacts listed for a given domain in WHOIS, along with the following addresses: `admin@`, `administrator@`, `hostmaster@`, `postmaster@`, and `webmaster@`.
 
@@ -148,15 +146,15 @@ $ curl -sX GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_host
 
 The addresses listed above will receive an email from `support@certvalidate.cloudflare.com` that looks like this:
 
-![Certificate Validation Email](../static/certvalidate-email.png)
+![Certificate Validation Email](../../static/certvalidate-email.png)
 
 They can either click on the “Review Certificate Request” button or on the https://certvalidate.cloudflare.com hyperlink. Doing so will bring your customer to a page like the one shown below. Here they should check the ”I approve..” box and then click the “Approve Certificate” button.
 
-![Certificate Validation Approval](../static/certvalidate-approve.png)
+![Certificate Validation Approval](../../static/certvalidate-approve.png)
 
 As soon as the domain owner has clicked the link in this email and clicked “Approve” on the validation page, the certificate will automatically transition from Pending Validation to Pending Issuance to Pending Deployment and finally Active.
 
-### 3. HTTP (manual)
+### HTTP (manual)
 
 If you would like to serve the DCV tokens described above from your own origin, you can follow the instructions below. This technique is typically used by organizations that already have a large deployed base of custom domains with HTTPS support. By serving the token from your origin, you can complete validation and issuance *before* proxying your `$CNAME_TARGET` and domain through Cloudflare.
 
@@ -229,7 +227,7 @@ $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
        -d '{"hostname":"http-preval.example.com", "ssl":{"method":"http","type":"dv"}}'
 ```
 
-### 4. CNAME (manual)
+### CNAME (manual)
 
 The last DCV method available is via a CNAME record. First, make a request using `"method":"cname"`:
 

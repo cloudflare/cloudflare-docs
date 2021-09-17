@@ -16,6 +16,8 @@ jobs:
 
   changes:
     name: "Check for docs changes"
+    needs: preview
+    if: ${{ needs.preview.outputs.result == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
