@@ -110,7 +110,7 @@ jobs:
             magic-wan:
               - 'products/magic-wan/**'
             network-error-logging:
-              - 'products/network-error-logging/**  
+              - 'products/network-error-logging/**'
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
