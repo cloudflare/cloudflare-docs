@@ -3,7 +3,7 @@ title: How to
 pcx-content-type: how-to
 ---
 
-import Beta from "../../_partials/_beta.md"
+import Beta from "../_partials/_beta.md"
 
 # View Reports
 
