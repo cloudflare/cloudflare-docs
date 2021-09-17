@@ -157,11 +157,7 @@ Now assign a CNAME record that points traffic to your tunnel subdomain. This rec
 $ cloudflared tunnel route dns <UUID or NAME> <hostname>
 ```
 
-You can confirm that the route has been successfully established by running:
 
-```bash
-$ cloudflared tunnel route ip show 
-```
 
 ## 6. Run the tunnel 
 
@@ -175,8 +171,20 @@ $ cloudflared tunnel run <UUID or NAME>
 
 **If you are connecting a network**
 
+Add the IP/CIDR you would like to be routed through the tunnel.
+
 ```bash
-$ cloudflared tunnel route ip add <IP/CIDR>/<UUID or NAME>
+$ cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>
+```
+
+You can confirm that the route has been successfully established by running:
+
+```bash
+$ cloudflared tunnel route ip show 
+```
+
+```bash
+$ cloudflared tunnel run <UUID or NAME>
 ```
 
 If you want to run the tunnel with a configuration file that is not in the [default directory](/connections/connect-apps/configuration/configuration-file#storing-a-configuration-file), you can use the `--config` flag and specify a path.
