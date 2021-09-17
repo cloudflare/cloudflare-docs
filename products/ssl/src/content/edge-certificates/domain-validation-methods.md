@@ -9,14 +9,18 @@ Before a Certificate Authority will issue a certificate for a domain, the reques
 
 Cloudflare supports several methods of DCV, including:
 
-* [Automatic](#domains-without-pre-validation) (for domains that do not require pre-validation)
+* [Automatic](#automatic-validation) (for domains that do not require pre-validation)
 * HTTP Token
 * CNAME DNS Record
 * TXT DNS Record
 
 ----
 
-## Domains without pre-validation
+## Automatic validation
+
+If you changed your authoritative nameservers to Cloudflare, DCV happens automatically and within 24 hours.
+
+For authoritative 
 
 If your domain can tolerate a couple minutes of downtime
 
