@@ -1,0 +1,1 @@
+If you would like to serve DCV tokens from your own origin to a Certificate Authority, you can follow the instructions below. By serving the token from your origin, you can complete validation and issuance *before* proxying anything through Cloudflare.

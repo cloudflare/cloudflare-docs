@@ -3,158 +3,99 @@ order: 2
 pcx-content-type: how-to
 ---
 
+import CnameCertValidation from "../_partials/_cname-cert-verification.md"
+import EmailValidation from "../_partials/_email-validation.md"
+import TXTValidation from "../_partials/_txt-validation.md"
+import HTTPValidation from "../_partials/_http-validation.md"
+import GenericProcess from "../_partials/_generic-validation-process.md"
+import EmailSteps from "../_partials/_email-validation-steps.md"
+
 # Domain control validation
 
 Before a Certificate Authority will issue a certificate for a domain, the requestor must prove they have control over that domain. This process is known as domain control validation (DCV).
 
-Cloudflare supports several methods of DCV, including:
-
-* [Automatic](#automatic-validation)
-* HTTP Token
-* CNAME DNS Record
-* TXT DNS Record
-
 ----
 
-## Automatic validation
+## Automatic DCV
 
-If you changed your authoritative nameservers to Cloudflare, DCV happens automatically and within 24 hours.
+### Full setup
 
----
+If you are using a **Universal** or **Advanced** certificate and you changed your authoritative nameservers to Cloudflare (full setup), Cloudflare handles automatically DCV on your behalf using a TXT record.
 
+### CNAME (partial) setup
 
-
-
-**Changing DCV Methods for a Certificate Order is primarily a topic for CNAME setup zones.**
-
-With Universal SSL under a CNAME setup, by default, Cloudflare will place an HTTP token to complete DCV.  This token is available for the Certificate Authority as soon as:
+If you are using a **Universal** or **Advanced** certificate and your domain uses a partial setup (CNAME setup) — meaning Cloudflare does not provide your authoritative DNS — Cloudflare will place an HTTP token to complete DCV. This token is available for the Certificate Authority as soon as:
 
 * Hostname has a CNAME to Cloudflare from the domain’s authoritative DNS.
 * Hostname is Orange-Clouded in Cloudflare’s DNS settings.
 
-This means that by default the above items must be complete for a given hostname before certificates are issued.
+<details>
+<summary>Detailed explanation</summary>
+<div>
 
-The process of certificates being issued once DNS is changed is reported to be very fast, however you may require firm reassurance that your certificates are ready prior to making the switch to avoid any potential downtime.
+<CnameCertValidation/>
 
-Using the Client API, we can change the validation method used to allow the certificates to be issued before cutting over live traffic.
+</div>
 
+</details>
 
+Though this process happens relatively quickly, your application may experience a brief period of downtime. If you want to pre-validate your certificate — either to avoid downtime or prevent any issuance errors — refer to [Manual DCV](#manual-dcv).
 
-## Apex validation
+### Exceptions
 
-Even though the proxy service isn’t expected to be provided for this hostname unless switching to a Full DNS configuration with Cloudflare, completing the process above for the apex of a domain will allow us to complete DCV for all subdomains.
+Advanced certificates covering multiple hostnames cannot be validated automatically and require [Manual DCV](#manual-dcv) through Cloudflare.
 
-As a matter of best practice, it’s best to validate against the apex, even if you don’t intend on proxying traffic for the apex in your CNAME setup.
+You also may want to set up manual DCV to avoid potential downtime or issuance errors.
 
-Otherwise, each subdomain needs to be validated manually.
+For [custom certificates](/edge-certificates/custom-certificates), Cloudflare is not involved in the DCV process and you cannot use the Cloudflare dashboard or API.
 
-### 1. Check validation method
+---
 
-To begin, find the `cert_pack_uuid` of the order that you would like to change validation method for.
+## Manual DCV
 
-```bash
-curl -sX GET \
-"https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verification/" \
--H 'X-Auth-Email: YOUR_EMAIL' \
--H 'X-Auth-Key: API_KEY'
+Manual DCV is typically associated with either CNAME (partial) setups — meaning Cloudflare does not provide your authoritative DNS. 
 
-{
-    "result": [
-        {
-            "certificate_status": "pending_validation",
-            "cert_pack_uuid": "4228d4df-b9c7-47bb-8903-ff76452458b1",
-            "validation_method": "http",
-            "validation_type": "dv",
-            "verification_info": {
-                "http_url": "http://example.com/.well-known/pki-validation/ca3-15cd5a33b4fd469784851d8c021e3ee3.txt",
-                "http_body": "ca3-d4db80cdcb40496ab71a66a0ab985306"
-            },
-            "hostname": "example.com"
-        },
-    ],
-    "success": true,
-    "errors": [],
-    "messages": []
-}
+It's best to do this validation against the apex (`cloudflare.com`), even if you don’t intend on proxying traffic for the apex. Otherwise, each subdomain needs to be validated manually.
 
-```
+### Options
 
-This shows us the pending order created, and the HTTP DCV information required to complete validation is in the `verification_info` element.
+#### TXT record
 
-From here you can change the validation method to CNAME or TXT records.
+<TextValidation/>
 
-Let’s continue by changing the DCV method to CNAME.
+<GenericProcess/>
 
-### 2. Change validation method
-This endpoint will modify the validation method of a selected certificate order. Note the `validation_method` value set in the request body.
+- API: `txt_name` and `txt_value`
+- Dashboard (on the certificate): **Certificate validation TXT name** and **Certificate validation TXT value**
 
-```bash
-curl -X PATCH "https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verification/<cert_pack_uuid>" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: API_KEY" \
-     -H "Content-Type: application/json" \
-     --data '{"validation_method":"cname"}'
+At your authoritative DNS provider, create a TXT record named the **name** and containing the **value**. Once this TXT is in place, validation and certificate issuance will automatically complete.
 
-{
-    "result": {
-        "certificate_status": "pending_validation",
-        "cert_pack_uuid": "4228d4df-b9c7-47bb-8903-ff76452458b1",
-        "validation_method": "cname",
-        "validation_type": "dv",
-        "verification_info": {
-            "cname": "_ca3-e82a555f7fe04fb394d2b14c7eb24946.example.com",
-            "cname_target": "dcv.digicert.com"
-        },
-        "status": "pending_validation",
-        "hostname": "example.com"
-    },
-    "success": true,
-    "errors": [],
-    "messages": []
-}
-```
+#### Email
 
-You can then take and set the values from `verification_info` for a CNAME record in your authoritative DNS. This can be validated by performing this type of manual DNS lookup using `dig`.
+<EmailValidation/>
 
-```bash
-$ dig _ca3-e82a555f7fe04fb394d2b14c7eb24946.example.com cname +short
-dcv.digicert.com.
-```
+<GenericProcess/>
 
-### 3. Verify status is now active
-Once that is validated by the Certificate Authority, the “Get Validation Method” endpoint will show the order as
+- API: `emails`
+- Dashboard (on the certificate): **Certificate validation email recipients**
 
-```bash
-curl -sX GET \
-"https://api.cloudflare.com/client/v4/zones/:zone_id/ssl/verification/" \
--H 'X-Auth-Email: YOUR_EMAIL' \
--H 'X-Auth-Key: API_KEY'
+<EmailSteps/>
 
-{
-    "result": [
-        {
-            "certificate_status": "active",
-            "cert_pack_uuid": "4228d4df-b9c7-47bb-8903-ff76452458b1",
-            "validation_method": "http",
-            "validation_type": "dv",
-            "hostname": "example.com"
-        }
-    ],
-    "success": true,
-    "errors": [],
-    "messages": []
-}
-```
+#### HTTP (manual)
 
-The status: `active` means that the certificate has been deployed to Cloudflare’s edge network, and will be served as soon as HTTP traffic is proxied to Cloudflare.
+<Aside type="warning">
+
+Advanced certificates with wildcards or using [multiple SANs](https://developers.cloudflare.com/fundamentals/glossary#subject-alternative-name-san) require TXT or email validation.
+
+</Aside>
+
+<HTTPValidation/>
 
 ---
 
 ## Update DCV method for an active certificate
 
 You cannot update the DCV method for an active certificate. To update the DCV method for a domain, wait until the DCV expires and then change the DCV method.
-
---------
 
 ## API documentation
 
