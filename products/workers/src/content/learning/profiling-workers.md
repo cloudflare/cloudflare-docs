@@ -9,11 +9,13 @@ For long-running or complex Workers, you need to understand where your code is s
 
 That's why we're launching a beta version of wrangler inspect. We're beginning to integrate the Workers platform with the Chrome Developer Tools, and starting today, you can use `wrangler dev --inspect` to get a CPU profile of your Worker.
 
+<YouTube id="5gMKKcBTU-o"/>
+
 To do this, first, make sure you're on Wrangler version v1.19.3 or later.
 
 ## Profiling an example project
 
-Let's create a brand new Worker with:
+You can reate a brand new Worker with:
 
 ```sh
 wrangler generate my-worker
@@ -59,7 +61,7 @@ This is a basic example where our request handler calls an async function `sleep
 With this function saved, go to your terminal and run `wrangler dev --inspect`. You'll see some new instructions for configuring Chrome DevTools.
 
 ```sh
-☁  my-worker [master] ⚡  wrangler dev --inspect
+$ ☁  my-worker [master] ⚡  wrangler dev --inspect
 💁  watching "./"
 🕵️  Open chrome://inspect, click 'Configure', and add localhost:9230
 👂  Listening on http://127.0.0.1:8787
