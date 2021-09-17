@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: how-to
 ---
 
-# Uploading
+# Uploading custom certificates
 
 Custom Certificates can be uploaded in the Cloudflare Dashboard or using the Cloudflare API.
 
