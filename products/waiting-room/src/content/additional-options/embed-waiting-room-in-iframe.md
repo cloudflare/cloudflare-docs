@@ -37,10 +37,7 @@ Available options include:
 If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a Waiting Room](https://api.cloudflare.com/#waiting-room-create-waiting-room) (only available via the API):
 
 - `samesite`: `none`
-- `secure`: 
-
-    - If you have [**Always Use HTTPS**](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) enabled, set to `auto`.
-    - If you have **Always Use HTTPS** disabled, set to `always`.
+- `secure`: If you have [**Always Use HTTPS**](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) enabled, set to `auto`. If you have it disabled, set to `always`.
 
 ### Example
 
