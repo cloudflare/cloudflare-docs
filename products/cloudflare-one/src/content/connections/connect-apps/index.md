@@ -1,55 +1,29 @@
 ---
 order: 0
-pcx-content-type: how-to
+pcx-content-type: concept
 ---
 
 # Connect resources
 
-You can connect applications, servers, and other resources to Cloudflare's network using [Cloudflare Tunnel](/glossary#cloudflare-tunnel). When connected, Cloudflare can apply [Zero Trust policies](/policies/zero-trust) to determine who can reach the resource.
+Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates outbound-only connections to Cloudflare’s edge. Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/tutorials/ssh), [remote desktops](/tutorials/rdp), and other protocols safely to Cloudflare. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+
+## How it works
+
+Cloudflared establishes outbound connections (tunnels) between your resources and the Cloudflare edge. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many `cloudflared` processes (connectors) as needed. These processes will establish connections to the Cloudflare edge and send traffic to the nearest Cloudflare data center.
 
 ![Tunnel Diagram](../../static/documentation/connections/connect-apps/handshake.jpg)
 
-Cloudflare Tunnel runs a lightweight [daemon](/glossary#daemon) ([`cloudflared`](/glossary#cloudflared)) in your infrastructure that establishes outbound connections (Tunnels) between your service and the Cloudflare edge. When Cloudflare receives a request for your chosen hostname, it proxies the request through those connections to `cloudflared`. In turn, `cloudflared` proxies the request to your applications.
+## Working with Cloudflare Tunnel
 
-This forces any requests to access your applications to go through Cloudflare. This way, you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation, and authenticated with Access if you’ve enabled those features for your account. 
+Most interactions with Cloudflare Tunnel require the use of a CLI — for example, to create and configure tunnels, and to run a tunnel or route traffic through it. To get started, visit the Cloudflare for Teams Dashboard and navigate to Access. Under Access, you’ll find a home for Tunnels. When visiting the page for the first time, you will find a step-by-step tutorial outlining how to create your first tunnel.
 
-Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/tutorials/ssh), [remote desktops](/tutorials/rdp), and other protocols. Additionally, a single connector, the `cloudflared` daemon, can connect multiple applications of different types.
+Once your first tunnel is connected to Cloudflare, you’ll be able to use this page to check your tunnel status, as well as view a comprehensive list of active or inactive tunnels. 
 
-In order to create and manage Tunnels, you'll first need to:
+![Tunnel UI](../../static/documentation/connections/connect-apps/tunnel-blog.png)
 
-1. [Download and install `cloudflared`](/connections/connect-apps/install-and-setup/installation) on your machine
-2. [Authenticate `cloudflared`](/connections/connect-apps/install-and-setup/setup)
 
-Once `cloudflared` has been installed and authenticated, the process to get your first Tunnel up and running includes 3 high-level steps:
+## Getting started
 
-1. [Create a Tunnel](/connections/connect-apps/create-tunnel)
-2. [Route traffic to your Tunnel](/connections/connect-apps/routing-to-tunnel)
-3. [Run your Tunnel](/connections/connect-apps/run-tunnel)
+Follow our [step-by-step guide](/connections/connect-apps/install-and-setup/tunnel-guide) on how to get your first tunnel up and running. The guide covers how to download, install and authenticate `cloudflared`, create your first tunnel, route traffic through it, and ultimately run your tunnel.
 
-Steps 1-2 are executed once per Tunnel, normally by an administrator, and Step 3 is executed whenever the Tunnel is to be started, normally by the owner of the Tunnel (whom may be different from the administrator). After running the Tunnel, you may [secure your server](/connections/connect-apps/secure-server) from all ingress traffic.
-
-Be sure to check out our [Tutorials](/tutorials), where you can also find
-best practices for managing Tunnels as an administrator.
-
-## Traffic encryption with Tunnel
-
-`cloudflared` performs its own SSL termination that is distinct from the origin.
-
-The data in transit between the Cloudflare network and the instance of `cloudflared` is encrypted according to the stages below:
-
-**`cloudflared` to Cloudflare**
-
-* When `cloudflared` reaches out to the Cloudflare network, the daemon validates a TLS server name for `cftunnel.com`.
-* The certificate is issued from a Cloudflare-managed root CA.
-
-Details for this flow are available in the `cloudflared` [repository](https://github.com/cloudflare/cloudflared/blob/2020.2.0/tlsconfig/certreloader.go#L124).
-
-**`cloudflared` to origin**
-
-* `cloudflared` trusts the system's certificate pool. If you need to add an additional CA, you can do so by setting the `--origin-ca-pool` flag.
-* On Windows systems, the system certificate pool is not supported by the Go standard library used by `cloudflared`. As a result, Windows users will always need to set the `--origin-ca-pool` flag.
-* `cloudflared` uses the Go HTTP client to connect to the origin. The daemon connects to the URL specified with the `--url` flag, which determines the TLS server name.
-* When the Cloudflare network proxies a request through `cloudflared` to the origin, `cloudflared` converts this stream to an HTTP/1.1 [request](https://github.com/cloudflare/cloudflared/blob/2020.2.0/origin/tunnel.go#L591).
-* `cloudflared` then issues the request and [receives](https://github.com/cloudflare/cloudflared/blob/2020.2.0/origin/tunnel.go#L642) an HTTP/1.1 response from the origin, in plaintext, which is encrypted and sent back to the Cloudflare network.
-
-Details for this flow are available in the `cloudflared` [repository](https://github.com/cloudflare/cloudflared/blob/2020.2.0/cmd/cloudflared/tunnel/configuration.go#L204).
+You can familiarize yourself with Cloudflare Tunnel concepts and terminology by checking out the [Useful Terms page](/connections/connect-apps/install-and-setup/tunnel-useful-terms). For a list of common tunnel commands, refer to the [Useful Commands page](/connections/connect-apps/install-and-setup/tunnel-useful-commands).
