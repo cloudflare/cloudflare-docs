@@ -86,7 +86,7 @@ def get_cf_graphql():
             accounts(
               filter: {{ accountTag: $accountTag }}
             ) {{
-              ipFlows1mAttacksGroups(
+              dosdNetworkAnalyticsAdaptiveGroups(
                 filter: $filter, 
                 limit: 10000, 
                 orderBy: [min_datetimeMinute_ASC]
@@ -100,8 +100,8 @@ def get_cf_graphql():
                   attackType
                 }}, 
                 avg {{
-                  bitsPerSecond, 
-                  packetsPerSecond
+                  attackPackets, 
+                  attackBits
                 }}, 
                 min {{
                   datetimeMinute, 
@@ -147,7 +147,7 @@ def convert_to_csv():
     # Parse JSON response in Pandas
     network_analytics = pd.read_json(raw_data)['data']['viewer']['accounts']
     # Flatten nested JSON data first
-    network_analytics_normalized = pd.json_normalize(network_analytics, 'ipFlows1mAttacksGroups')
+    network_analytics_normalized = pd.json_normalize(network_analytics, 'dosdAttackAnalyticsAdaptiveGroups')
     # Only select the columns we're interested in
     network_analytics_abridged = network_analytics_normalized[['dimensions.attackId','min.datetimeMinute','max.datetimeMinute','dimensions.attackMitigationType', 'dimensions.attackType','dimensions.attackDestinationIP','max.packetsPerSecond']] # Selecting only the data we want
     # Rename the columns to visually friendly names
