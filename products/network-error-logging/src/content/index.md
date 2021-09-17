@@ -4,7 +4,7 @@ pcx-content-type: overview
 order: 0
 ---
 
-# Network Error Logging
+# Network Error Logging (Beta)
 
 Network Error Logging (NEL) is a browser-based reporting system that allows users to report their own failures to an external endpoint. You can use Network Error Logging to gain insight into connectivity issues on the Internet to learn when and where an incident is happening, who is impacted, and how they are being impacted. 
 

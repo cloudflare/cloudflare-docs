@@ -3,6 +3,8 @@ title: How to
 pcx-content-type: how-to
 ---
 
+import Beta from "../../_partials/_beta.md"
+
 # View Reports
 
 Use NEL reports to view information such as:
@@ -10,6 +12,8 @@ Use NEL reports to view information such as:
 - The country a request failed from
 - The last mile network a request failed from
 - The Cloudflare data center the request was most likely meant for
+
+<Beta/>
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
 1. Click **Analytics** > **Origin Reachability**.
