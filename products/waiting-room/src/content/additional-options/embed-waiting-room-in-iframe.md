@@ -42,6 +42,8 @@ If you are embedding a waiting room in an iFrame, specify the following values o
     - If you have [**Always Use HTTPS**](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) enabled, set to `auto`.
     - If you have **Always Use HTTPS** disabled, set to `always`.
 
+### Example
+
 <details>
 <summary>Request</summary>
 <div>
