@@ -9,7 +9,7 @@ For long-running or complex Workers, you need to understand where your code is s
 
 That's why we're launching a beta version of `wrangler inspect`. We're beginning to integrate the Workers platform with the Chrome Developer Tools, and starting today, you can use `wrangler dev --inspect` to get a CPU profile of your Worker.
 
-<YouTube id="5gMKKcBTU-o"/>
+<StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
 To do this, first, make sure you're on Wrangler version v1.19.3 or later.
 
