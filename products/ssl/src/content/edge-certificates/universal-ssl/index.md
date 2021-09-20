@@ -7,9 +7,9 @@ pcx-content-type: concept
 
 Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all Cloudflare domains.
 
-When you proxy your traffic through Cloudflare, this process happens **automatically and within 24 hours of domain activation**. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
+When you change your authoritative nameservers to point to Cloudflare, this process happens **automatically and within 24 hours of domain activation**. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
 
-When you **do not proxy** your traffic through Cloudflare (a CNAME setup), you will need to perform the additional steps described in [Enable Universal SSL](enable-universal-ssl#non-authoritative-partial-domains).
+If you **do not** use Cloudflare for your authoritative nameservers (a CNAME setup), you will need to perform the additional steps described in [Enable Universal SSL](enable-universal-ssl#non-authoritative-partial-domains).
 
 <ButtonGroup>
     <Button type='primary' href='enable-universal-ssl'>Get started</Button>
