@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content: navigation
+pcx-content-type: navigation
 ---
 
 # Account options

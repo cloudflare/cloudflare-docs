@@ -10,11 +10,19 @@ pcx-content-type: how-to
 Certificates are parsed and checked for validity before being accepted. Each certificate uploaded must:
 
 * Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
+<<<<<<< HEAD
 * Not have a [key file password](../remove-key-file-password)
 * Not be expiring in less than 14 days from time of upload
 * Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded
 * Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA)
 * Be publicly trusted by a major browser, unless the `User Defined` bundling method is used
+=======
+* Not have a [key file password](../remove-key-file-password).
+* Not be expiring in less than 14 days from time of upload.
+* Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
+* Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
+* Be publicly trusted by a major browser, unless the `User Defined` bundling method is used.
+>>>>>>> production
 * Be one of the following certificate types:
 
 	* Unified Communications Certificates (UCC)
@@ -30,7 +38,11 @@ Certificates are parsed and checked for validity before being accepted. Each cer
 
 To upload a custom SSL certificate in the dashboard:
 
+<<<<<<< HEAD
 1. Log in to the Cloudflare dashboard and select your account.
+=======
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+>>>>>>> production
 1. Select your application.
 1. Navigate to **SSL/TLS**.
 1. In **Edge Certificates**, click **Upload Custom SSL Certificate**.
@@ -45,6 +57,7 @@ To upload a custom SSL certificate in the dashboard:
 1. Choose the appropriate [**Bundle Method**](../bundling-methodologies).
 1. Select a value for [**Private Key Restriction**](/edge-certificates/custom-certificates#geo-key-manager-private-key-restriction).
 1. Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support:
+<<<<<<< HEAD
 
 	- **Modern (recommended)**: SNI only
 	- **Legacy**: Supports non-SNI
@@ -53,6 +66,16 @@ To upload a custom SSL certificate in the dashboard:
 
 If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
+=======
+
+	- **Modern (recommended)**: SNI only
+	- **Legacy**: Supports non-SNI
+
+1. Click **Upload Custom Certificate**.
+
+If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
+
+>>>>>>> production
 ---
 
 ### Using the API
@@ -133,8 +156,12 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
 ### Using the dashboard
 
 To update a certificate:
+<<<<<<< HEAD
 
 1. Log in to the Cloudflare dashboard and select your account.
+=======
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+>>>>>>> production
 1. Select your application.
 1. Navigate to **SSL/TLS**.
 1. In **Edge Certificates**, locate a custom certificate.
@@ -143,10 +170,18 @@ To update a certificate:
 
 <Aside type="note">
 
+<<<<<<< HEAD
 Delete and re-add a Custom SSL certificate in order to update the **Private Key Restriction** setting.
+=======
+To update the **Private Key Restriction** setting of a certificate, delete and re-add the certificate.
+>>>>>>> production
 
 </Aside>
 
 ### Using the API
+<<<<<<< HEAD
 
 Use a [PATCH](https://api.cloudflare.com/#custom-ssl-for-a-zone-edit-ssl-configuration) command.
+=======
+Use a [PATCH](https://api.cloudflare.com/#custom-ssl-for-a-zone-edit-ssl-configuration) command.
+>>>>>>> production

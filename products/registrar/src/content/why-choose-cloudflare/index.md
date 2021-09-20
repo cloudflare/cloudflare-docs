@@ -1,7 +1,7 @@
 ---
-order: 1
 title: Why choose Cloudflare
-pcx-content: concept
+order: 1
+pcx-content-type: concept
 ---
 
 # Domain registration

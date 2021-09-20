@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content: tutorial
+pcx-content-type: tutorial
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"

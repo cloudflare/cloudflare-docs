@@ -3,9 +3,11 @@ order: 2
 pcx-content-type: concept
 ---
 
-# Certificate transparency monitoring
+import CertTransparencyDefinition from "../../_partials/_cert-transparency-monitoring-definition.md"
 
-[Certificate Transparency Monitoring](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/) sends you emails when certificates are issued for your domain. This feature is in **public beta** and is opt-in.
+# Certificate Transparency Monitoring
+
+<CertTransparencyDefinition/>
 
 <Aside type="note">
 
@@ -22,6 +24,12 @@ Every website must have a certificate to be trusted by major browsers. A certifi
 If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you an email whenever your domain is recognized in a CT log. Usually, these certificates are legitimate and do not require further action. We send emails so you can double-check for yourself. If you use a shared certificate, you may receive emails for domains or subdomains that do not belong to you.
 
 In rare cases, you may believe a certificate is illegitimate. This is when you should [take action](#how-to-take-action).
+
+<Aside type="note">
+
+For even more details, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/).
+
+</Aside>
 
 --------
 
