@@ -1,6 +1,6 @@
 ---
 order: 6
-pcx-content: how-to
+pcx-content-type: how-to
 ---
 
 # Create a Notification

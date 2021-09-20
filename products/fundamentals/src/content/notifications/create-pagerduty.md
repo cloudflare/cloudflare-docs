@@ -1,6 +1,6 @@
 ---
 order: 7
-pcx-content: how-to
+pcx-content-type: how-to
 ---
 
 # Configure PagerDuty

@@ -1,6 +1,6 @@
 ---
 order: 9
-pcx-content: how-to
+pcx-content-type: how-to
 ---
 
 # Edit a Notification

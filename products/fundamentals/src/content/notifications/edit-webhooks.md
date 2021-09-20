@@ -1,6 +1,6 @@
 ---
 order: 11
-pcx-content: how-to
+pcx-content-type: how-to
 ---
 
 # Edit webhooks

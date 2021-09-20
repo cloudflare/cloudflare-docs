@@ -1,6 +1,6 @@
 ---
 order: 10
-pcx-content: how-to
+pcx-content-type: how-to
 ---
 
 # Edit a PagerDuty connected service
