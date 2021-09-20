@@ -1,7 +1,7 @@
 ---
 title: Create ruleset
 pcx-content-type: reference
-alwaysopen: true
+type: overview
 order: 784
 ---
 
@@ -9,21 +9,13 @@ order: 784
 
 Creates a ruleset of a given kind in the specified phase. Allows you to create phase entry point rulesets.
 
-Use one of the following endpoints when creating a ruleset:
+| Operation | Method + URL stub |
+|-----------|-------------------|
+| [Create account ruleset][cr-account] | `POST accounts/{account-id}/rulesets` |
+| [Create zone ruleset][cr-zone] | `POST zones/{zone-id}/rulesets` |
 
-```bash
----
-header: Account-level endpoint
----
-POST accounts/{account-id}/rulesets
-```
-
-```bash
----
-header: Zone-level endpoint
----
-POST zones/{zone-id}/rulesets
-```
+[cr-account]: https://api.cloudflare.com/#account-rulesets-create-account-ruleset
+[cr-zone]: https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset
 
 The following parameters are required:
 
@@ -72,7 +64,9 @@ The following parameters are required:
 
 Use the `rules` parameter to supply a list of rules for the ruleset. For an object definition, refer to [Rulesets API: JSON Object](/rulesets-api/json-object).
 
-## Example - Create a custom ruleset
+## Examples
+
+### Create a custom ruleset
 
 This example creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
@@ -127,9 +121,15 @@ header: Response
 }
 ```
 
-## Example - Create a zone-level phase entry point ruleset
+### Create a zone-level phase entry point ruleset
 
 This example creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
+
+<Aside type="note">
+
+You do not have to use this method to create a phase entry point ruleset — Cloudflare automatically creates the entry point ruleset when you add a rule to it, if it does not exist. Refer to [Add rules to phase entry point rulesets](/basic-operations/add-rule-phase-rulesets) for more information.
+
+</Aside>
 
 ```json
 ---
