@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Browser Isolation
 
-Just like how you can use Gateway to allow or block traffic based on content categories or security threats, you can define Isolation policies to dynamically isolate websites based on identity, security threats or content. To build Browser Isolation policies, navigate to **Policies > HTTP policies** on the Teams Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
+Just like how you can use Gateway to allow or block traffic based on content categories or security threats, you can define Isolation policies to dynamically isolate websites based on identity, security threats or content. To build Browser Isolation policies, navigate to **Policies** > **HTTP policies** on the Teams Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
 
 ![Browser isolation policy](../../static/documentation/policies/bi-policy.png)
 
