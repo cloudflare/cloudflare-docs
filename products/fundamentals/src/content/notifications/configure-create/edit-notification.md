@@ -1,7 +1,7 @@
 ---
-order: 1
 title: Edit Notifications and webhooks
-pcx-content: how-to
+order: 1
+pcx-content-type: how-to
 ---
 
 # Edit a Notification
