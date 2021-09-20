@@ -34,6 +34,7 @@ jobs:
       magic-firewall: ${{ steps.filter.outputs.magic-firewall }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
       magic-wan: ${{ steps.filter.outputs.magic-wan }}
+      network-error-logging: ${{ steps.filter.outputs.network-error-logging }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       railgun: ${{ steps.filter.outputs.railgun }}
@@ -111,6 +112,8 @@ jobs:
               - 'products/magic-transit/**'
             magic-wan:
               - 'products/magic-wan/**'
+            network-error-logging:
+              - 'products/network-error-logging/**'
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
@@ -630,6 +633,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/magic-wan
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-network-error-logging:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.network-error-logging == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/network-error-logging
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
