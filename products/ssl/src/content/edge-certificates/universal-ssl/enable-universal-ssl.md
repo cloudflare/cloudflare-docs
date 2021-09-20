@@ -28,7 +28,7 @@ For non-authoritative or partial domains (domains on a CNAME setup), Universal S
 
 Some customers may need to manage their own SSL certificates or rely on specific Certificate Authorities.
 
-If you disable your domain's Universal SSL certificate, we remove that certificate from our network and will not order or renew any additional Universal SSL certificates.
+If you disable your domain's Universal SSL certificate, Cloudflare removes that certificate from our network and will not order or renew any additional Universal SSL certificates.
 
 ### Potential errors
 
