@@ -35,8 +35,8 @@ jobs:
       logs: ${{ steps.filter.outputs.logs }}
       magic-firewall: ${{ steps.filter.outputs.magic-firewall }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
-      magic-wan: ${{ steps.filter.outputs.network-error-logging }}
-      network-error-logging: ${{ steps.filter.outputs.magic-wan }}
+      magic-wan: ${{ steps.filter.outputs.magic-wan }}
+      network-error-logging: ${{ steps.filter.outputs.network-error-logging }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
