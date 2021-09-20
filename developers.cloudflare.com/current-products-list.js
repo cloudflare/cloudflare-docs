@@ -1,6 +1,5 @@
 // Currently live products that are active on the product grid on https://developers.cloudflare.com
 // Must update this list when adding new product
-
 const products = [
   {
     title: "API",
@@ -78,6 +77,11 @@ const products = [
     icon: "http3",
   },
   {
+    title: "Images",
+    path: "images",
+    icon: "images",
+  },
+  {
     title: "Image Resizing",
     path: "image-resizing",
     icon: "image-resizing",
@@ -106,6 +110,11 @@ const products = [
     title: "Magic WAN",
     path: "magic-wan",
     icon: "magic-wan",
+  },
+  {
+    title: "Network Error Logging",
+    path: "network-error-logging",
+    icon: "network-error-logging",
   },
   {
     title: "Network Interconnect",
