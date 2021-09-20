@@ -1,7 +1,7 @@
 ---
 title: Overview
 order: 0
-pcx-content: landing-page
+pcx-content-type: landing-page
 ---
 
 # Cloudflare Registrar

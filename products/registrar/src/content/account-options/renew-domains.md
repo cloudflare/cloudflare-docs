@@ -1,7 +1,7 @@
 ---
+title: Domain renewal
 order:
 pcx-content-type: tutorial
-title: Domain renewal
 ---
 
 # Renew domains with Cloudflare Registrar
