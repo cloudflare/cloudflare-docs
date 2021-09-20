@@ -1,5 +1,5 @@
 ---
-updated: 2021-09-15
+updated: 2021-09-20
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
 ---
