@@ -35,7 +35,8 @@ jobs:
       logs: ${{ steps.filter.outputs.logs }}
       magic-firewall: ${{ steps.filter.outputs.magic-firewall }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
-      magic-wan: ${{ steps.filter.outputs.magic-wan }}
+      magic-wan: ${{ steps.filter.outputs.network-error-logging }}
+      network-error-logging: ${{ steps.filter.outputs.magic-wan }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
@@ -113,6 +114,8 @@ jobs:
               - 'products/magic-transit/**'
             magic-wan:
               - 'products/magic-wan/**'
+            network-error-logging:
+              - 'products/network-error-logging/**'  
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
@@ -1025,6 +1028,40 @@ jobs:
           workingDirectory: "products/magic-wan"
           environment: "production"
           wranglerVersion: "1.13.0"
+
+  deploy-network-error-logging:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.network-error-logging == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/network-error-logging
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/network-error-logging"
+          wranglerVersion: '1.13.0'
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/network-error-logging"
+          environment: "production"
+          wranglerVersion: '1.13.0'
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
