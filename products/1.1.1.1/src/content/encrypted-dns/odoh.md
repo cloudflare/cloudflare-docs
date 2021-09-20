@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Oblivious DNS over HTTPS
 
-Oblivious DNS over HTTPS (or ODoH) is an emerging DNS protocol that separates client IP addresses from their DNS queries. This is done by routing the DNS queries over a proxy, so that the DNS resolver cannot link client IPs with their queries. You can learn more about it in [this blog post](https://blog.cloudflare.com/oblivious-dns/). To follow the progress of ODoH, [check out this IETF draft](https://datatracker.ietf.org/doc/draft-pauly-dprive-oblivious-doh/).
+Oblivious DNS over HTTPS (or ODoH) is an emerging DNS protocol that separates client IP addresses from their DNS queries. This is done by routing the DNS queries over an HTTP relay, or proxy, so that the DNS resolver cannot link client IPs with their queries. You can learn more about it in [this blog post](https://blog.cloudflare.com/oblivious-dns/). To follow the progress of ODoH, [check out this IETF draft](https://datatracker.ietf.org/doc/draft-pauly-dprive-oblivious-doh/).
 
 Please note that this protocol and all related implementations are currently **experimental** and subject to change. Use at your own risk.
 
@@ -13,7 +13,7 @@ Please note that this protocol and all related implementations are currently **e
 
 ### Command line tools
 
-Using ODoH with 1.1.1.1 (via odoh.cloudflare-dns.com) is simple. For a quick test, you can use the [odoh-client-rs](https://github.com/cloudflare/odoh-client-rs) and [odoh-client-go](https://github.com/cloudflare/odoh-client-go) tools, which are applications for sending ODoH queries from the terminal. For example, the example below shows how to use the odoh-client-go to send an ODoH query directly to 1.1.1.1 (without a proxy):
+Using ODoH with 1.1.1.1 (via odoh.cloudflare-dns.com) is simple. For a quick test, you can use the [odoh-client-rs](https://github.com/cloudflare/odoh-client-rs) and [odoh-client-go](https://github.com/cloudflare/odoh-client-go) tools, which are applications for sending ODoH queries from the terminal. For example, the example below shows how to use the odoh-client-go to send an ODoH query directly to 1.1.1.1 (without traversing a proxy):
 
 ```sh
 ./odoh-client odoh --target odoh.cloudflare-dns.com --domain example.com       
@@ -37,15 +37,15 @@ Firefox Nightly currently supports ODoH. It can be configured with the following
 
 Parameters | Description
 -----------|------------
-`network.trr.odoh.configs_uri` | URI for the ODoH target configuration. e.g., https://odoh.cloudflare-dns.com/.well-known/odohconfigs.
+`network.trr.odoh.configs_uri` | URI for the ODoH target configuration. e.g., `https://odoh.cloudflare-dns.com/.well-known/odohconfigs`.
 `network.trr.odoh.enabled` | Boolean to enable ODoH support, which must be set to true.
-`network.trr.odoh.proxy_uri` | URI of the proxy. e.g., https://example.com/proxy.
-`network.trr.odoh.target_host` | Host of the ODoH target server. e.g., https://odoh.cloudflare-dns.com.
+`network.trr.odoh.proxy_uri` | URI of the proxy. e.g., `https://example.com/proxy`.
+`network.trr.odoh.target_host` | Host of the ODoH target server. e.g., `https://odoh.cloudflare-dns.com`.
 `network.trr.odoh.target_path` | Path for the ODoH target queries. e.g., /dns-query
 
 </TableWrap>
 
-Instructions for configuring these parameters can be found [in Mozilla’s website](https://support.mozilla.org/en-US/kb/about-config-editor-firefox). ODoH is not yet currently enabled for other browsers.
+Instructions for configuring these parameters can be found on [Mozilla’s website](https://support.mozilla.org/en-US/kb/about-config-editor-firefox). ODoH is not yet currently enabled for other browsers.
 
 ### System resolver
 
@@ -66,13 +66,13 @@ routes = [
 ]
 ```
 
-You may encode the `odohrelay` stamp using [this online DNS stamp calculator](https://dnscrypt.info/stamps). The relay must specify the URI for proxying ODoH requests, including the scheme, host (and port, if applicable), and path.  
+You may encode the `odohrelay` stamp using [this online DNS stamp calculator](https://dnscrypt.info/stamps). The relay must specify the URI for proxying ODoH queries, including the scheme, host (and port, if applicable), and path.  
 
 Decoding the `odohtarget` stamp above using [the online DNS stamp calculator](https://dnscrypt.info/stamps) yields `https://odoh.cloudflare-dns.com/dns-query` as the target URI.
 
 ## Application integration
 
-If you’re an application developer and want to integrate ODoH into your app, you can do so using any of the following core protocol libraries:
+If you are an application developer and want to integrate ODoH into your app, use any of the following core protocol libraries:
 
 * [odoh-rs](https://github.com/cloudflare/odoh-rs) (Rust)
 * [odoh-go](https://github.com/cloudflare/odoh-go) (Go)
@@ -81,6 +81,6 @@ There are currently no known libraries in Swift or Java.
 
 ## Server setup instructions
 
-Running an ODoH server — either a proxy or target - is more involved. A turnkey proxy and target is available in [odoh-server-go](https://github.com/cloudflare/odoh-server-go), a sample server that can be used to run a proxy or a target for ODoH. Up to date deployment instructions on a variety of platforms, including bare metals, are available in the [project’s README](https://github.com/cloudflare/odoh-server-go#deployment).
+Running an ODoH server — either a proxy or target - is more involved. A turnkey proxy and target is available in [odoh-server-go](https://github.com/cloudflare/odoh-server-go), which provides a sample server that can be used to run a proxy or a target for ODoH. Deployment instructions on a variety of platforms, including commodity servers, are available in the [project’s README](https://github.com/cloudflare/odoh-server-go#deployment).
 
 Dedicated ODoH target is also available in [doh-server](https://github.com/jedisct1/doh-server), a fast and secure DoH (DNS-over-HTTPS) and ODoH (Oblivious DoH) server. Similarly, installation and deployment instructions can be found in the [project’s README](https://github.com/jedisct1/doh-server).
