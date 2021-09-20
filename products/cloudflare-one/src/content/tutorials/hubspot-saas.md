@@ -37,7 +37,7 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 ## Create the certificate
 
 1. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-1. Paste the certificate contents into the Certificate field
+1. Paste the certificate contents into the Certificate field.
 
 ## Finalize Hubspot configuration
 
