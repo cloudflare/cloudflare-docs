@@ -11,7 +11,7 @@ Just like how you can use Gateway to allow or block traffic based on content cat
 
 ## Isolate
 
-When an HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
+When an HTTP policy applies the Isolate action, the user's web browser is transparently served an HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
 
 If you'd like to isolate **all security threats**, you can set up a policy with the following configuration:
 
@@ -45,7 +45,7 @@ You can choose to disable isolation for certain destinations or categories. The 
 
 Malware and zero-day threats are not the only security challenges administrators face with web browsers. The mass adoption of SaaS products has made the web browser the primary tool used to access data. Lack of control over both the application and the browser has left administrators little control over their data once it is delivered to an endpoint.
 
-All following settings can be applied to websites through Applications, Lists, Domain and Hostname expressions.
+All the following settings can be applied to websites through Applications, Lists, Domain and Hostname expressions.
 
 ### Disable copy / paste
 
