@@ -10,7 +10,7 @@ You cannot upload a custom certificate with a password-protected key file.
 The process for removing the password depends on your operating system. The following examples remove the password from `example.com.key`.
 
 <details>
-<summary>On Linux:</summary>
+<summary>Linux</summary>
 <div>
 
 1. Open a command console.
@@ -34,7 +34,7 @@ The process for removing the password depends on your operating system. The foll
 </details>
 
 <details>
-<summary>On Windows:</summary>
+<summary>Windows</summary>
 <div>
 
 1. Go to https://indy.fulgan.com/SSL/ and download the latest version of OpenSSL for your x86 or x86_64 operating system.

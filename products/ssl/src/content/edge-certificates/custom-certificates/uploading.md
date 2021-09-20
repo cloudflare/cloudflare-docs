@@ -30,7 +30,7 @@ Certificates are parsed and checked for validity before being accepted. Each cer
 
 To upload a custom SSL certificate in the dashboard:
 
-1. Log in to the Cloudflare dashboard and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 1. Select your application.
 1. Navigate to **SSL/TLS**.
 1. In **Edge Certificates**, click **Upload Custom SSL Certificate**.
@@ -133,7 +133,7 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
 ### Using the dashboard
 
 To update a certificate:
-1. Log in to the Cloudflare dashboard and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 1. Select your application.
 1. Navigate to **SSL/TLS**.
 1. In **Edge Certificates**, locate a custom certificate.
