@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content: how-to
+pcx-content-type: how-to
 ---
 
 # Azure

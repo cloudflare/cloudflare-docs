@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # WHOIS redaction

@@ -50,6 +50,7 @@ $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resourc
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
 $["magic-firewall"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-wan.js").pathD
+$["network-error-logging"] = require("../../../products/network-error-logging/src/content/icons/network-error-logging.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
@@ -185,6 +186,12 @@ const products = [
     path: "magic-wan",
     icon: "magic-wan",
   },
+  {
+    title: "Network Error Logging",
+    path: "network-error-logging",
+    icon: "network-error-logging",
+    wrap: true,
+  }, 
   {
     title: "Network Interconnect",
     path: "network-interconnect",

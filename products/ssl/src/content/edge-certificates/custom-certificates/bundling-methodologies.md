@@ -3,7 +3,7 @@ order: 3
 pcx-content-type: reference
 ---
 
-# Bundling methodologies
+# Bundle methodologies
 
 When an SSL certificate is deployed to the Cloudflare edge, it may be augmented with intermediate and root certificates to assist the user agent in finding a chain to a publicly trusted root. You can control the mechanics of how certificates are bundled by specifying a bundling methodology.
 
