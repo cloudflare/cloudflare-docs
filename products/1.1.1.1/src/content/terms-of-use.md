@@ -1,6 +1,6 @@
 ---
 order: 8
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # Terms of Use
