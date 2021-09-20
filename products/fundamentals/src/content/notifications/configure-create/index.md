@@ -1,6 +1,6 @@
 ---
 order: 6
-pcx-content: navigation
+pcx-content-type: navigation
 ---
 
 # Configuring and creating notifications
