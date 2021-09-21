@@ -15,7 +15,7 @@ The table below lists the actions available in Firewall Rules. These actions are
 
 For example, the _Allow_ action takes precedence over the _Block_ action. In a case where a request matches a rule with the _Allow_ action and another with the _Block_ action, precedence resolves the tie, and Cloudflare allows the request.
 
-There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlike other actions, _Log_ and _Bypass_ do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ or _Bypass_ action, the second action will be triggered instead, even though _Log_/_Bypass_ has precedence. Although Firewall Rules would not trigger the _Log_ action in this case, Firewall Analytics would still record the hit as an “additional match.”
+There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlike other actions, _Log_ and _Bypass_ do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ or _Bypass_ action, the second action will be triggered instead, even though _Log_/_Bypass_ has precedence.
 
 <TableWrap>
   <table style="width: 100%">
