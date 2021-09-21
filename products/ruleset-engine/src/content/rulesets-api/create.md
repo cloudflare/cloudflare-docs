@@ -13,8 +13,8 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Create account ruleset][cr-account] | `POST accounts/{account-id}/rulesets` |
-| [Create zone ruleset][cr-zone] | `POST zones/{zone-id}/rulesets` |
+| [Create account ruleset][cr-account] | `POST /accounts/{account-id}/rulesets` |
+| [Create zone ruleset][cr-zone] | `POST /zones/{zone-id}/rulesets` |
 
 [cr-account]: https://api.cloudflare.com/#account-rulesets-create-account-ruleset
 [cr-zone]: https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset
