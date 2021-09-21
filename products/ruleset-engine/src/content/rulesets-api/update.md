@@ -1,44 +1,26 @@
 ---
 pcx-content-type: reference
-alwaysopen: true
 order: 785
+type: overview
 ---
 
 # Update and deploy rulesets
 
 You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
 
-To update a ruleset at the account or zone level, use one of the following API endpoints:
+Use one of the following API endpoints:
 
-```bash
----
-header: Account-level endpoint
----
-PUT /accounts/{account-id}/rulesets/{ruleset-id}
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [Update account ruleset][ur-account] | `PUT /accounts/{account-id}/rulesets/{ruleset-id}` |
+| [Update zone ruleset][ur-zone] | `PUT /zones/{zone-id}/rulesets/{ruleset-id}` |
+| [Update account entry point ruleset][uep-account] | `PUT /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint` |
+| [Update zone entry point ruleset][uep-zone] | `PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint` |
 
-```bash
----
-header: Zone-level endpoint
----
-PUT /zones/{zone-id}/rulesets/{ruleset-id}
-```
-
-Alternatively, you can use one of the following endpoints when updating a phase entry point ruleset:
-
-```bash
----
-header: Account-level phase endpoint
----
-PUT /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint
-```
-
-```bash
----
-header: Zone-level phase endpoint
----
-PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
-```
+[ur-account]: https://api.cloudflare.com/#account-rulesets-update-account-ruleset
+[ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset
+[uep-account]: https://api.cloudflare.com/#account-rulesets-update-entrypoint-ruleset
+[uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-entrypoint-ruleset
 
 <Aside type='warning' header='Important'>
 
@@ -50,12 +32,13 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{
@@ -71,10 +54,14 @@ curl -X PUT \
 }'
 ```
 
+</div>
+</details>
+
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -103,18 +90,22 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 ## Example - Deploy a ruleset
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
 The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -d '{
@@ -131,10 +122,14 @@ curl -X PUT \
 }'
 ```
 
+</div>
+</details>
+
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{phase-ruleset-id}",
@@ -167,6 +162,9 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 For more information on deploying rulesets, check [Deploy rulesets](/basic-operations/deploy-rulesets).
 
 ## Example - Update ruleset description
@@ -179,12 +177,13 @@ You cannot update the description or the rules in a Managed Ruleset. You can onl
 
 </Aside>
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
 -d '{ 
@@ -192,10 +191,16 @@ curl -X PUT \
 }'
 ```
 
+</div>
+</details>
+
+The response includes the complete ruleset definition, including all the rules.
+
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -215,4 +220,5 @@ header: Response
 }
 ```
 
-The response includes the complete ruleset definition, including all the rules.
+</div>
+</details>
