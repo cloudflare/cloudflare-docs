@@ -24,7 +24,7 @@ PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
 
 ```bash
-https://api.cloudflare.com/client/v4/
+https://api.cloudflare.com/client/v4
 ```
 
 For authentication instructions, see [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.

@@ -1,13 +1,15 @@
 ---
 title: Create ruleset
 pcx-content-type: reference
-type: overview
 order: 784
+type: overview
 ---
 
 # Create ruleset
 
 Creates a ruleset of a given kind in the specified phase. Allows you to create phase entry point rulesets.
+
+Use one of the following API endpoints:
 
 | Operation | Method + URL stub |
 |-----------|-------------------|
@@ -64,18 +66,17 @@ The following parameters are required:
 
 Use the `rules` parameter to supply a list of rules for the ruleset. For an object definition, refer to [Rulesets API: JSON Object](/rulesets-api/json-object).
 
-## Examples
+## Example - Create a custom ruleset
 
-### Create a custom ruleset
+This example request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
-This example creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
+<details open>
+<summary>Request</summary>
+<div>
 
 ```json
----
-header: Request
----
 curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
 -d '{
@@ -92,10 +93,14 @@ curl -X POST \
 }'
 ```
 
+</div>
+</details>
+
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -121,9 +126,12 @@ header: Response
 }
 ```
 
-### Create a zone-level phase entry point ruleset
+</div>
+</details>
 
-This example creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
+## Example - Create a zone-level phase entry point ruleset
+
+This example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
 
 <Aside type="note">
 
@@ -131,12 +139,13 @@ You do not have to use this method to create a phase entry point ruleset — Clo
 
 </Aside>
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
 -d '{
@@ -156,10 +165,14 @@ curl -X POST \
 }'
 ```
 
+</div>
+</details>
+
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -187,3 +200,6 @@ header: Response
   "messages": []
 }
 ```
+
+</div>
+</details>
