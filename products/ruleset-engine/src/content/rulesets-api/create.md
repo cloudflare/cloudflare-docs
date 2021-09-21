@@ -68,7 +68,7 @@ Use the `rules` parameter to supply a list of rules for the ruleset. For an obje
 
 ## Example - Create a custom ruleset
 
-This example request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
+The following example request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
 <details open>
 <summary>Request</summary>
@@ -131,7 +131,7 @@ curl -X POST \
 
 ## Example - Create a zone-level phase entry point ruleset
 
-This example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
+The following example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
 
 <Aside type="note">
 
