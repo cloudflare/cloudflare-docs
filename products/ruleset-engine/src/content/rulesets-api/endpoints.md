@@ -41,7 +41,7 @@ To retrieve a list of zones you have access to, use the [List Zones](https://api
 
 </Aside>
 
-The Cloudflare Rulesets API supports the operations outlined below. Visit the associated links for examples.
+The Cloudflare Rulesets API supports the operations outlined below. Visit the associated links for API endpoints and examples.
 
 ## List and view rulesets
 
