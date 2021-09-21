@@ -6,7 +6,7 @@ pcx-content-type: reference
 
 Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
   
-    </Aside>
+ </Aside>
     
 # Fetching bulk analytics
 
