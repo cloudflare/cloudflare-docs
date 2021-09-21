@@ -10,7 +10,7 @@ You can use the API to update **basic properties** of a ruleset (currently only 
 
 Use one of the following API endpoints:
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | [Update account ruleset][ur-account] | `PUT /accounts/{account-id}/rulesets/{ruleset-id}` |
 | [Update zone ruleset][ur-zone] | `PUT /zones/{zone-id}/rulesets/{ruleset-id}` |

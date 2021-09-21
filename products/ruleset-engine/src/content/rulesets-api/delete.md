@@ -17,7 +17,7 @@ Deletes all the versions of an existing ruleset at the account or zone level.
 
 Use one of the following API endpoints:
 
-| Operation                            | Method + URL stub                                     |
+| Operation                            | Method + Endpoint                                     |
 |--------------------------------------|-------------------------------------------------------|
 | [Delete account ruleset][dr-account] | `DELETE /accounts/{account-id}/rulesets/{ruleset-id}` |
 | [Delete zone ruleset][dr-zone]       | `DELETE /zones/{zone-id}/rulesets/{ruleset-id}`       |
@@ -55,7 +55,7 @@ Deletes a specific version of a ruleset.
 
 Use one of the following API endpoints:
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | [Delete a version of an account ruleset][drv-account] | `DELETE /accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}` |
 | [Delete a version of a zone ruleset][drv-zone] | `DELETE /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}` |

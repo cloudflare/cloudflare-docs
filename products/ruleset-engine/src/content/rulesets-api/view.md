@@ -19,7 +19,7 @@ Returns the list of existing rulesets at the account level or at the zone level.
 
 Use one of the following API endpoints:
 
-| Operation                           | Method + URL stub                     |
+| Operation                           | Method + Endpoint                     |
 |-------------------------------------|---------------------------------------|
 | [List account rulesets][lr-account] | `GET /accounts/{account-id}/rulesets` |
 | [List zone rulesets][lr-zone]       | `GET /zones/{zone-id}/rulesets`       |
@@ -87,7 +87,7 @@ Returns the properties of the most recent version of the ruleset with the specif
 
 Use one of the following API endpoints:
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | [Get an account ruleset][gr-account] | `GET /accounts/{account-id}/rulesets/{ruleset-id}` |
 | [Get a zone ruleset][gr-zone] | `GET /zones/{zone-id}/rulesets/{ruleset-id}` |
@@ -168,7 +168,7 @@ Returns a list of all the versions of a ruleset.
 
 Use one of the following API endpoints:
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | [List versions of an account ruleset][lv-account] | `GET /accounts/{account-id}/rulesets/{ruleset-id}/versions` |
 | List versions of a zone ruleset | `GET /zones/{zone-id}/rulesets/{ruleset-id}/versions` |
@@ -242,7 +242,7 @@ Returns the configuration of a specific version of a ruleset, including its rule
 
 Use one of the following API endpoints:
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | [Get an account ruleset version][grv-account] | `GET /account/{account-id}/rulesets/{ruleset-id}/versions/{version-number}` |
 | [Get a zone ruleset version][grv-zone] | `GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}`
@@ -320,7 +320,7 @@ When you view a specific version of a Managed Ruleset, each rule listed in the r
 
 Returns a list of all the rules in a Managed Ruleset with a specific tag.
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | List rules in ruleset by tag | `GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_tag/{tag-name}` |
 

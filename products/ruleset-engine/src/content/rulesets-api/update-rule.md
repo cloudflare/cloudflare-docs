@@ -11,7 +11,7 @@ Applies one or more changes to an existing rule in a ruleset at the account or z
 
 Use one of the following API endpoints:
 
-| Operation | Method + URL stub |
+| Operation | Method + Endpoint |
 |-----------|-------------------|
 | [Patch an individual rule][ur-account] (account) | `PATCH /accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id}` |
 | Patch an individual rule (zone) | `PATCH /zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id}` |
