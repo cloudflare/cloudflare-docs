@@ -5,6 +5,12 @@ pcx-content-type: how-to
 
 # Install the Cloudflare certificate
 
+<Aside type='note'>
+ 
+This procedure is only required to enable specific Cloudflare for Teams features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
+ 
+</Aside
+
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
