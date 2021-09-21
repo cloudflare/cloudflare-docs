@@ -229,9 +229,9 @@ Once you have an endpoint that returns the tokenized upload URL from the `locati
 
 ### Testing your Direct Creator Upload Endpoint
 
-Once you have built your endpoint which calls Stream and returns the tokenized URL in the location header, you can test it with this [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the demo codepen, paste your end point URL in the "Upload endpoint" field and then try to upload a video. 
+Once you have built your endpoint which calls Stream and returns the tokenized URL in the location header, you can test it with this [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the demo codepen, paste your end point URL in the `Upload endpoint` field and then try to upload a video. 
 
-When using Direct Creator Uploads, the "Upload endpoint" field in the demo should contain the url to your endpoint; not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which *returns* the videodelivery.net URL. 
+When using Direct Creator Uploads, the `Upload endpoint` field in the demo should contain the url to your endpoint, not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which *returns* the videodelivery.net URL. 
 
 Please note that if you are developing on localhost, your test using the codepen may fail. Before testing, it is best to push your endpoint to a server with an IP and/or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
 
