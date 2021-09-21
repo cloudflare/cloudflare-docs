@@ -9,7 +9,7 @@ order: 220
 
 Actions tell Cloudflare how to handle HTTP requests that have matched a firewall rule expression.
 
-## Supported Actions
+## Supported actions
 
 The table below lists the actions available in Firewall Rules. These actions are listed in order of precedence. If the same request matches two different rules which have the same priority, precedence determines the action to take.
 
@@ -145,7 +145,7 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
   </table>
 </TableWrap>
 
-## Choosing Actions in the Rule Builder
+## Choosing actions in the Rule Builder
 
 Choosing an action in the Cloudflare Expression Builder is simple. After naming a rule and building your expression, pick the appropriate option from the **Choose an action** drop-down list. In this example, the chosen action is _Block_:
 
