@@ -114,7 +114,7 @@ $ wrangler logout
 ```
 
 This command only invalidates OAuth tokens acquired through `wrangler login`. However, it will try to delete
-the configuration file regardless of your authorization method. Please visit the Dashboard if you wish to delete your API token.
+the configuration file regardless of your authorization method.  Log in to the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
 
 --------------------------------
 
