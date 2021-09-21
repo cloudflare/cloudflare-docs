@@ -9,6 +9,12 @@ import SSLModeErrors from "../_partials/_ssl-mode-errors.md"
 
 The modes listed below control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server, and how SSL certificates presented by your origin will be validated.
 
+<Aside type="note">
+
+For more details about how encryption modes fit into the bigger picture of SSL/TLS protection, refer to [Get started](/get-started).
+
+</Aside>
+
 ---
 
 ## Off
