@@ -10,7 +10,13 @@ import RegionMapping from "../_partials/_region-mapping.md"
 
 Load Balancing provides several traffic steering modes, which allow customers to optimize how load balancers route traffic.
 
-Configure traffic steering from the Load Balancing dashboard — in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel — or via the Cloudflare API. Available steering options include standard failover (**Off**), Dynamic steering, Geo steering, and Random.
+Configure traffic steering from the Load Balancing dashboard — in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel — or via the Cloudflare API.
+
+<Aside type="note">
+
+Without purchasing **Traffic Steering**, non-Enterprise customers only have access to **Off** and **Random** for their steering options.
+
+</Aside>
 
 ---
 
