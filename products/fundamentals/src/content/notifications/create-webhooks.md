@@ -16,7 +16,7 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
 
 Service | Secret | URL
 ------- | ------ | ----
-[Google Chat](https://developers.google.com/chat/how-tos/webhooks) | The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user. | URL varies depending on the Google Chat channel' address.
+[Google Chat](https://developers.google.com/chat/how-tos/webhooks) | The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user. | URL varies depending on the Google Chat channel's address.
 [Slack](https://api.slack.com/messaging/webhooks) | The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user. | URL varies depending on the Slack channel's address.
 [DataDog](https://docs.datadoghq.com/api/latest/events/#post-an-event) | The secret is required and has to be entered by the user. This is what DataDog [refers to as `API Key`](https://app.datadoghq.com/account/settings#api). | `https://api.datadoghq.com/api/v1/events`
 [Discord](https://discord.com/developers/docs/resources/webhook#execute-webhook) | The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user. | URL varies depending on the Discord channel's address.
