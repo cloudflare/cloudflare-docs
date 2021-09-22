@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Create a Notification
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account / domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 1. Go to **Notifications**.
 1. Click **Add**.
 1. Click **Select** on the Notification you want to enable. The list of Notifications available depends on the [type of account you have](/notifications/notification-available).
