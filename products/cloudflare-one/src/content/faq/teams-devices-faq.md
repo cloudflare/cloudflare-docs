@@ -32,25 +32,25 @@ Deploying new software can come with unexpected issues. This section covers the 
 
 Installing and trusting the [Cloudflare root cert](/connections/connect-devices/warp/install-cloudflare-cert) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
 
-In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, or NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each. 
+In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each. 
 
 If you ever see an error like *Certificate not trusted* or *Not trusted identity* or *SSL Error*, it is likely related to our root certificates.
 
-As a last resort, please add the application to a Do Not Decrypt policy in Gateway.
+As a last resort, add the application to a **Do Not Decrypt** policy in Gateway.
 
-### Some applications are not compatible with TLS decryption. Have you set up a Do Not Inspect policy for them?
+### Have you set up a Do Not Inspect policy for applications not compatible with TLS decryption?
 
 You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Decrypt applications](/policies/filtering/http-policies/application-app-types#do-not-decrypt-applications). 
 
-### Do you, your ISP or your country have policies in place that would block the WARP client?
+### Do you, your ISP, or your country have policies in place that would block the WARP client?
 
 Check that you don't have policies or firewall rules in place that block communication to the transport mechanisms or IP addresses required for WARP. Check the requirements at [this page](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/firewall).
 
-In particular, note that Microsoft Intune’s default security policy creates a Firewall rule that will block WARP by default. Please see the page linked above for instructions on which IP addresses you need to add.
+In particular, Microsoft Intune’s default security policy creates a Firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
 
-Note that some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. If you suspect your country may be blocking this traffic, please work with your ISP to verify.
+Some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. If you suspect your country may be blocking this traffic, please work with your ISP to verify.
 
-### Are you running another VPN, Firewall or security product that may be trying to inspect traffic, interfere with routing or enforce DNS policy?
+### Are you running another VPN, firewall, or security product that may be trying to inspect traffic, interfere with routing or enforce DNS policy?
 
 Running VPNs or firewalls alongside the WARP client may interfere with some of its functionalities. Please refer to the following documentation on how to use WARP alongside a VPN, or on how to exclude traffic from the WARP client:
 
@@ -60,13 +60,13 @@ Running VPNs or firewalls alongside the WARP client may interfere with some of i
 
 The most common places we see interference with WARP from these products are:
 
-* **Who has control of the routing table.** In the default configuration of WARP where exclude-split tunnel rules are in place, WARP needs control over the default route. Third party VPNs need to be set to only include just routes to your internal resource.
+* **Control of the routing table:** In the default configuration of WARP where exclude-split tunnel rules are in place, WARP needs control over the default route. Third-party VPNs need to be set to only include routes to your internal resource.
 
-* **Who has control of DNS.** WARP Must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
+* **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
 
 * If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/connections/connect-devices/warp/exclude-traffic/split-tunnels) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
 
-### As a last resort, does our consumer application work or does your configuration work on a clean machine?
+### As a last resort, does WARP or your configuration work on a clean machine?
 
 A good first step is to verify that our consumer application works in your environment. This will rule out any issues with policies created in the Teams configuration that could be impacting your connection. You can download the WARP consumer application at `https://1.1.1.1/`.
 
