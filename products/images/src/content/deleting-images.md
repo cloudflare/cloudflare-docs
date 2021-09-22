@@ -1,5 +1,4 @@
 ---
-title: Deleting Images
 order: 4  
 ---
 

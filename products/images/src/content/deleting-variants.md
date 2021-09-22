@@ -1,5 +1,4 @@
 ---
-title: Deleting Variants
 order: 5 
 ---
 
@@ -7,7 +6,12 @@ order: 5
 
 You can delete variants via API by using a simple cURL command. 
 
-**Please note;** Deleting a variant is a global action that will afect other images that contain that vartiant.
+<Aside type="warning">
+
+Deleting a variant is a global action that will affect other images that contain that variant.
+
+</Aside>
+
 
 ```bash
 curl -X DELETE api.cloudflare.com/client/v4/account/:account_id/images/v1/variants/:variant_name
