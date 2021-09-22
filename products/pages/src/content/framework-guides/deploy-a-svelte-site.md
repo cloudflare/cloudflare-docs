@@ -79,7 +79,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 By default, SvelteKit prepares our project with the assumption that it will deployed to a Node.js server. This is not appropriate for this tutorial, but luckily SvelteKit is flexible and has a ready-made "adapter" for your needs. A few, easy changes have to be made.
 
-First, install the [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) package instead:
+First, install the [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static) package:
 
 ```sh
 $ npm install @sveltejs/adapter-static@next --save-dev
@@ -88,16 +88,15 @@ $ npm install @sveltejs/adapter-static@next --save-dev
 Then, in the `svelte.config.js` file, update the adapter selection:
 
 ```diff
-import preprocess from 'svelte-preprocess';
 ++ import adapter from '@sveltejs/adapter-static';
-
+++
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// ... truncated ...
-	kit: {
-++		adapter: adapter(),
-		// ... truncated ...
-	}
+  kit: {
+++  adapter: adapter(),
+    // ... truncated ...
+    target: '#svelte'  
+  }
 };
 
 export default config;
