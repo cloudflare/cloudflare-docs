@@ -13,7 +13,7 @@ pcx-content-type: how-to
 1. Add a way to be notified, like an email address. Professional and Business plans will have access to other options such as configuring PagerDuty or accessing webhooks.
 1. Click **Create**.
 
-This will take you back to your list of Notifications, where the new Notification will appear as **Enabled**.
+The browser will navigate back to the list of Notifications, where the new Notification will appear as **Enabled**.
 
 ## PagerDuty
 
@@ -21,4 +21,4 @@ Professional plans or higher can configure PagerDuty to receive notifications ab
 
 ## Webhooks to external services
 
-There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Learn [how to link some of the most popular services](/notifications/create-webhooks) to your Cloudflare account.
+There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Learn [how to link some of the most popular services](/notifications/configure-webhooks) to your Cloudflare account.

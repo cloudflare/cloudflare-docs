@@ -11,7 +11,7 @@ You can only edit the name of webhooks and/or delete them.
 1. Go to **Notifications**.
 1. Click **Destinations** on the left side of your dashboard.
 1. In the **Webhooks** card, click **Edit** on the webhook you want to edit.
-1. Change the webhook name as you see fit and click **Save**.
+1. Update the webhook's name and click **Save**.
 
 <Aside type="note" header="Note">
 
