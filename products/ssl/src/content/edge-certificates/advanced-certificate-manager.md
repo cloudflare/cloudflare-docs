@@ -20,6 +20,12 @@ For example, use Advanced Certificate Manager to cover more than one level of su
   <Button type="secondary" href="#create-a-certificate-in-the-dashboard">Create in dashboard</Button>
 </ButtonGroup>
 
+<Aside type="note" header="Note">
+
+Advanced certificates supercede legacy [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
+
+</Aside>
+
 ---
 
 ## Features of Advanced Certificate Manager
