@@ -21,4 +21,4 @@ Professional plans or higher can configure PagerDuty to receive notifications ab
 
 ## Webhooks to external services
 
-There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Refer to the document on [how to link some of the most popular services](/notifications/create-webhooks) to your Cloudflare account.
+There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Learn [how to link some of the most popular services](/notifications/create-webhooks) to your Cloudflare account.
