@@ -28,20 +28,3 @@ You will receive a response similar to this:
 }
 ``` 
  
-To delete a variant you need to make the call via API and specify the name of the variant at the end of the api URL. See below:
-
-```bash
-curl -X DELETE api.cloudflare.com/client/v4/account/:account_id/images/v1/variants/:variant_name
---header 'Authorization: Bearer :token'
-```
-
-You will receive a response similar to this:
-
-```json
-{
-  "result": {},
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-``` 
