@@ -68,6 +68,4 @@ The most common places we see interference with WARP from these products are:
 
 ### As a last resort, does WARP or your configuration work on a clean machine?
 
-A good first step is to verify that our consumer application works in your environment. This will rule out any issues with policies created in the Teams configuration that could be impacting your connection. You can download the WARP consumer application at `https://1.1.1.1/`.
-
-Once you have verified WARP works, if you are still running into problems, it is always best to start with a clean install of Windows, macOS, Linux, ChromeOS, or Android and verify the client works in Teams mode. Once you have verified your Teams configuration, turn on additional corporate policies one by one or run third-party security tools or VPNs alongside WARP.
+To eliminate issues related to a particular Cloudflare for Teams configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
