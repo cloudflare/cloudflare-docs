@@ -22,7 +22,7 @@ For example, use Advanced Certificate Manager to cover more than one level of su
 
 <Aside type="note" header="Note">
 
-Advanced certificates supercede [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
+Advanced certificates supercede legacy [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
 
 </Aside>
 
