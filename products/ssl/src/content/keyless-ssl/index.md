@@ -3,9 +3,11 @@ order: 5
 pcx-content-type: landing-page
 ---
 
+import KeylessSSLDefinition from "../_partials/_keyless-ssl-definition.md"
+
 # Keyless SSL
 
-Cloudflare’s [Keyless SSL](https://www.cloudflare.com/keyless-ssl/) allows security-conscious clients to benefit from Cloudflare without exposing their TLS private keys.
+<KeylessSSLDefinition/>
 
 Prior to configuring Keyless SSL, we suggest you read our [technical ‘deep dive’ on how the technology works](https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/), and where your infrastructure sits within the scope of the TLS handshake.
 

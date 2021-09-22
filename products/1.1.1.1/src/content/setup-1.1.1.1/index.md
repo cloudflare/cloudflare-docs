@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content: concept
+pcx-content-type: concept
 ---
 
 # Set up 1.1.1.1

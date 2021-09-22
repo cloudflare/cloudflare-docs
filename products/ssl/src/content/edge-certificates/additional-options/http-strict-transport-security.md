@@ -4,9 +4,11 @@ pcx-content-type: interim
 type: overview
 ---
 
+import HSTSDefinition from "../../_partials/_hsts-definition.md"
+
 # HTTP Strict Transport Security (HSTS)
 
-HSTS protects HTTPS web servers from downgrade attacks. These attacks redirect web browsers from an HTTPS web server to an attacker-controlled server, allowing bad actors to compromise user data and cookies.
+<HSTSDefinition/>
 
 HSTS adds an HTTP header that directs [compliant web browsers](/ssl-tls/browser-compatibility) to:
 - Transform HTTP links to HTTPS links

@@ -1,6 +1,6 @@
 ---
 order: 6
-pcx-content: faq
+pcx-content-type: faq
 ---
 
 # FAQ

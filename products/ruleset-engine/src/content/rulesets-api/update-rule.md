@@ -1,29 +1,22 @@
 ---
 title: Update a rule in a ruleset
 pcx-content-type: reference
-alwaysopen: true
 order: 786
+type: overview
 ---
 
 # Update a rule in a ruleset
 
-Applies one or more changes to an existing rule in a ruleset.
+Applies one or more changes to an existing rule in a ruleset at the account or zone level.
 
-Use one of the following API endpoints to update a single rule in a ruleset:
+Use one of the following API endpoints:
 
-```bash
----
-header: Account-level endpoint
----
-PATCH /accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id}
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [Patch an individual rule][ur-account] (account) | `PATCH /accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id}` |
+| Patch an individual rule (zone) | `PATCH /zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id}` |
 
-```bash
----
-header: Zone-level endpoint
----
-PATCH /zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id}
-```
+[ur-account]: https://api.cloudflare.com/#account-rulesets-patch-an-individual-rule
 
 You can update the definition of the rule, changing its fields, or change the order of the rule in the ruleset. Invoking this method creates a new version of the ruleset.
 
@@ -31,12 +24,13 @@ You can update the definition of the rule, changing its fields, or change the or
 
 To update the definition of a rule, include the new rule definition in the request body. You must include all the rule fields that you want to be part of the new rule definition, even if you are not changing their values.
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X PATCH \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
 -d '{
@@ -46,12 +40,16 @@ curl -X PATCH \
 }'
 ```
 
+</div>
+</details>
+
 The response includes the complete ruleset after updating the rule.
 
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -89,6 +87,9 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 ## Change the order of a rule in a ruleset
 
 To reorder a rule in a list of ruleset rules, include a `position` field in the request, containing one of the following arguments:
@@ -125,8 +126,11 @@ The following examples build upon the following (abbreviated) ruleset:
 The following request with the `position` field places rule `{rule-id-2}` as the first rule:
 
 ```json
+---
+header: Request
+---
 curl -X PATCH \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-2}" \
 -d '{
@@ -144,8 +148,11 @@ In this case, the new rule order would be:
 The following request with the `position` field places rule `{rule-id-2}` after rule 3:
 
 ```json
+---
+header: Request
+---
 curl -X PATCH \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-2}" \
 -d '{
@@ -164,8 +171,11 @@ In this case, the new rule order would be:
 The following request with the `position` field places rule `{rule-id-1}` in position 3, becoming the third rule in the ruleset:
 
 ```json
+---
+header: Request
+---
 curl -X PATCH \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
 -d '{
