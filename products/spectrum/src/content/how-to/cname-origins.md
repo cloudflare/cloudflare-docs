@@ -13,7 +13,7 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 </Aside>
 
-## 1. Create a CNAME Record
+## 1. Create a [CNAME Record](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/)
 
 You will need to create a record on your Cloudflare hosted zone that points to your origin's hostname. This is required to resolve to your hostname origin.
 

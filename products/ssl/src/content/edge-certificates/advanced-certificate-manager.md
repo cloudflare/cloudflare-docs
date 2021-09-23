@@ -4,17 +4,27 @@ type: overview
 pcx-content-type: interim
 ---
 
+import ACMDefinition from "../_partials/_acm-definition.md"
+
 # Advanced Certificate Manager
 
 Advanced Certificate Manager is a flexible and customizable way to issue and manage certificates in Cloudflare.
 
-Use Advanced Certificate Manager when you want something more customizable than [Universal SSL](../universal-ssl) but still want the convenience of SSL certificate issuance and renewal. For example, use Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
+<ACMDefinition/>
+
+For example, use Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 
 <ButtonGroup>
   <Button type="primary" href="#features-of-advanced-certificate-manager">Features</Button>
   <Button type="secondary" href="#common-api-commands">Common API commands</Button>
   <Button type="secondary" href="#create-a-certificate-in-the-dashboard">Create in dashboard</Button>
 </ButtonGroup>
+
+<Aside type="note" header="Note">
+
+Advanced certificates supercede legacy [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
+
+</Aside>
 
 ---
 

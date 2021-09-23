@@ -1,8 +1,8 @@
 ---
-order: 0
 title: Overview
+order: 0
 type: overview
-pcx-content: landing-page
+pcx-content-type: landing-page
 ---
 
 <ContentColumn>

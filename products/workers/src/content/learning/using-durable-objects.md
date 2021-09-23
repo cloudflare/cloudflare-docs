@@ -207,7 +207,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-You must use [Wrangler version 1.17 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
+You must use [Wrangler version 1.19.3 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
 </Aside>
 
@@ -223,11 +223,7 @@ This will create a directory for your project with basic configuration and a sin
 * [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm)
 * [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
 
-The following sections will cover how to customize the configuration, but if you'd like you can immediately publish the generated project using this command:
-
-```sh
-$ wrangler publish --new-class Counter
-```
+The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using `wrangler publish`.
 
 ### Specifying the main module
 
@@ -243,39 +239,104 @@ bindings = [
   { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
 ]
 ```
+
 The `[durable_objects]` section has 1 subsection:
 
 - `bindings` - An array of tables, each table can contain the below fields.
-  - `name` - Required, The binding name to use within your worker.
+  - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
-  - `script_name` - Optional, Defaults to the current project's script.
+  - `script_name` - Optional, Defaults to the current environment's script.
 
-### Publishing Durable Object classes
+### Configuring Durable Object classes with migrations
 
-Normally when you want to publish a Worker using Wrangler, you just run `wrangler publish`. However, when you export a new Durable Objects class from your script, you must tell the Workers platform about it
-before you can create and access Durable Objects associated with that class. This process is called a "migration", and is currently performed by providing extra options to `wrangler publish`.
+When you make changes to your list of Durable Objects classes, you must initiate a migration process. A migration is informing the Workers platform of the changes and provide it with instructions on how to deal with those changes.
 
-To allow creation of Durable Objects associated with an exported class, specify `--new-class`:
+Migrations can also be used for transferring stored data between two Durable Object classes:
+* Rename migrations are used to transfer stored objects between two Durable Object classes in the same script.
+* Transfer migrations are used to transfer stored objects between two Durable Object classes in different scripts.
 
-```sh
-$ wrangler publish --new-class DurableObjectExample
-```
-
-Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
-
-If you want to delete the Durable Objects associated with an exported class, remove the corresponding binding from wrangler.toml, then use `--delete-class`:
-
-```sh
-$ wrangler publish --delete-class DurableObjectExample
-```
+The destination class (the class that stored objects are being transferred to) for a rename or transfer migration must be exported by the deployed script.
 
 <Aside type="warning" header="Important">
 
-Running a `--delete-class` migration will delete all Durable Objects associated with the deleted class, including all of their stored data. Don't do this without first ensuring that you aren't relying on the Durable Objects anymore and have copied any important data to some other location.
+After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data. 
+
+After a migration, any existing bindings to the original Durable Object class (e.g., from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 </Aside>
 
-These are basic examples -- you can use multiple of these options in a single `wrangler publish` call if you'd like, one class per option. Future versions of Wrangler will also include migration directives for renaming a class or transferring a class from one file to another.
+Migrations can also be used to delete a Durable Object class and its stored objects.
+
+<Aside type="warning" header="Important">
+
+Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting. 
+
+</Aside>
+
+Migrations can be performed in two different ways: through the `[[migrations]]` configurations key in your `wrangler.toml` file or through additional CLI arguments during a `wrangler publish` command. Migrations specified in `wrangler.toml` have the additional requirement of a migration tag, which is defined by the **tag** property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+
+### Durable Object migrations in `wrangler.toml`
+
+The migration list (added in `wrangler 1.19.3`) is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
+
+All migrations are applied at deployment. This is true for all migrations, whether initiated through `wrangler.toml` configurations or `wrangler publish` command arguments. Each migration can only be applied once per [environment](/platform/environments). 
+
+To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+```
+
+Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity. For example, you may want to rename the `DurableObjectExample` class to `UpdatedName` and delete an outdated `DeprecatedClass` entirely.
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+
+[[migrations]]
+tag = "v2"
+renamed_classes = [{from: "DurableObjectExample", to: "UpdatedName" }] # Array of rename directives
+deleted_classes = ["DeprecatedClass"] # Array of deleted class names
+```
+
+<Aside type="note">
+
+Note that `.toml` files do not allow line breaks in inline tables (the `{key: "value"}` syntax), but line breaks
+in the surrounding inline array are acceptable.
+
+</Aside>
+
+### Durable Object migrations through Wrangler CLI
+
+<Aside type="warning" header="Deprecation Notice">
+    
+While CLI migrations initially served a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release.
+
+</Aside>
+
+It is possible to define a migration purely through extra arguments to the `wrangler publish` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored. 
+    
+You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler publish` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value. 
+
+The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
+
+```sh
+--old-tag <tag name> # Optional if your script does not have a migration tag set yet.
+--new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
+
+# Each of the migration directives can be specified multiple times if you are
+# creating/deleting/renaming/transferring multiple classes at once.
+--new-class <class name>
+--delete-class <class name>
+--rename-class <from class> <to class>
+--transfer-class <from script> <from class> <to class>
+```
+
+
+### Test your Durable Objects project
 
 At this point, we're done! If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you'll see that your request was stored in a Durable Object:
 
@@ -402,7 +463,7 @@ While using Wrangler is strongly recommended, if you would really rather not use
 
 ## Troubleshooting
 
-### Debugging 
+### Debugging
 `wrangler dev` does not currently support Durable Objects.
 
 To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.

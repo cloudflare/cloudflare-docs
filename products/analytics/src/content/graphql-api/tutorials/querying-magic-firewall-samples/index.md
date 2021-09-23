@@ -6,7 +6,7 @@ pcx-content-type: interim
 
 In this example, we're going to use the GraphQL Analytics API to query for Magic Firewall Samples over a specified time period.
 
-The following API call will request Magic Firewall Samples over a one hour period, and output the requested fields. Be sure to replace CLOUDFLARE_ZONE_ID, CLOUDFLARE_EMAIL, and CLOUDFLARE_API_KEY with your zone tag and API credentials, and adjust the datetime_geg and datetime_leq values to your liking.
+The following API call will request Magic Firewall Samples over a one hour period, and output the requested fields. Be sure to replace CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_EMAIL, and CLOUDFLARE_API_KEY with your zone tag and API credentials, and adjust the datetime_geg and datetime_leq values to your liking.
 
 ## API Call
 
