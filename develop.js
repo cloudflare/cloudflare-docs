@@ -6,14 +6,14 @@ const product = args[0];
 concurrently(
   [
     {
-      command: `node watch.js ${product}`,
-      name: "WATCH",
-      prefixColor: "magenta",
-    },
-    {
       command: `products/${product}/node_modules/cloudflare-docs-engine/bin/commands.sh develop`,
       name: "GATSBY",
       prefixColor: "cyan",
+    },
+    {
+      command: `node watch.js ${product}`,
+      name: "WATCH",
+      prefixColor: "magenta",
     },
   ],
   {

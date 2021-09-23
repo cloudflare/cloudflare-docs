@@ -10,21 +10,30 @@ if (!product) {
   process.exit(1);
 }
 
-console.log(`Watching: products/${product}/src/content/`);
+console.log(`Watching: products/${product}`);
+
+const copyFile = (path) => {
+  const newPath = path.substring(path.indexOf(`products/${product}/`));
+  console.log(`${path} changed. Updating: .docs/${newPath}`);
+  fs.copyFile(
+    `products/${product}/${path}`,
+    `products/${product}/.docs/${newPath}`,
+    () => {
+      console.log("File updated.");
+    }
+  );
+};
 
 chokidar
-  .watch(`src/content/`, {
+  .watch(`.`, {
     persistent: true,
     cwd: `products/${product}/`,
+    ignored: [".docs", "node_modules"],
+    ignoreInitial: true,
+  })
+  .on("add", (path) => {
+    copyFile(path);
   })
   .on("change", (path) => {
-    const newPath = path.substring(path.indexOf(`products/${product}/`));
-    console.log(`${path} changed. Updating: .docs/${newPath}`);
-    fs.copyFile(
-      `products/${product}/${path}`,
-      `products/${product}/.docs/${newPath}`,
-      () => {
-        console.log("File updated.");
-      }
-    );
+    copyFile(path);
   });
