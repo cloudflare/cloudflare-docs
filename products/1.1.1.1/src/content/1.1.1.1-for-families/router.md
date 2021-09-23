@@ -48,15 +48,15 @@ Follow these steps to configure 1.1.1.1 for Families:
 1. For **IPv4**, replace the existing addresses with:
 
   ```txt
-  1.1.1.2
-  1.0.0.2
+  1.1.1.3
+  1.0.0.3
   ```
   
  1. For **IPv6**, replace the existing addresses with:
   
    ```txt
-  2606:4700:4700::1112
-  2606:4700:4700::1002
+  2606:4700:4700::1113
+  2606:4700:4700::1003
   ```
 
 1. Save the updated settings.
