@@ -68,6 +68,18 @@ __Note:__ Timers are only available inside of [the Request Context](/runtime-api
 
 </Aside>
 
+### EventTarget and Event
+
+The EventTarget and Event API allow objects to publish and subscribe to events.
+
+[Go to the docs](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+
+### AbortController and AbortSignal
+
+The AbortController and AbortSignal APIs provide a common model for canceling async operations.
+
+[Go to the docs](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
+
 ### Fetch global
 
 <Definitions>
