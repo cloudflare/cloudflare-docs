@@ -22,7 +22,7 @@ Domain transfers sometimes fail. Your account team can help you address what fai
 If you cannot solve the issue, open a support ticket or contact your account team.
 
 
-## Why did my domain's expiration date changes after transferring it to Cloudflare?
+## Why did my domain's expiration date changed after transferring it to Cloudflare?
 
 ICANN requires that any transfer also extends the expiration date of your domain by at least one year — that is one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2020, but it expires on March 10, 2021, your new expiration date will be March 10, 2022.
 
@@ -33,7 +33,7 @@ Transferring a domain adds time to the current expiration date. Time purchased i
 
 ## What happens to my name servers when I transfer my domain to Cloudflare?
 
-Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Active domains on Cloudflare use nameservers assigned by Cloudflare. When you transfer your registration, your nameservers will not be modified.
+Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Active domains on Cloudflare use name servers assigned by Cloudflare. When you transfer your registration, your name servers will not be modified.
 
 
 ## How can I see the status of my domain transfer?
