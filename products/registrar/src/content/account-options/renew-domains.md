@@ -1,5 +1,5 @@
 ---
-title: Domain renewal
+title: Renew domains
 pcx-content-type: how-to
 ---
 

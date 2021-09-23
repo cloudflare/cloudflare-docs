@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content-type: tutorial
+pcx-content-type: how-to
 ---
 
 # Transfer out from cloudflare
