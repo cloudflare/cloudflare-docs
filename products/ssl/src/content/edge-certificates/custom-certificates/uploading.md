@@ -3,6 +3,8 @@ order: 1
 pcx-content-type: how-to
 ---
 
+import CAADefinition from "../../_partials/_caa-records-definition.md"
+
 # Manage custom certificates
 
 ## Certificate requirements
@@ -49,9 +51,8 @@ To upload a custom SSL certificate in the dashboard:
 	- **Modern (recommended)**: SNI only
 	- **Legacy**: Supports non-SNI
 
-1. Click **Upload Custom Certificate**.
-
-If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
+1. Click **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
+1. (optional) [Add a CAA DNS record](../caa-records).
 
 ---
 
@@ -127,6 +128,12 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
      -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
      -H "Content-Type: application/json" -d "$request_body"
 ```
+
+#### Step 3 (optional) — Add a CAA record
+
+<CAADefinition/>
+
+For more guidance, refer to [Create a CAA record](../caa-records).
 
 ## Update a certificate
 
