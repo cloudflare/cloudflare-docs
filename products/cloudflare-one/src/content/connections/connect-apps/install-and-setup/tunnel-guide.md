@@ -110,8 +110,8 @@ $ cloudflared tunnel create <NAME>
 ```
 
 Running this command will:
-* Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet. 
-* Generate a [credentials file](/connections/connect-apps/tunnel-useful-terms#credentials-file). 
+* Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet. 
+* Generate a [credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file). 
 * Create a subdomain of `.cfargotunnel.com`.
 
 From the output of the command, take note of the tunnel’s UUID and the path to your tunnel’s credentials file.
@@ -190,7 +190,7 @@ $ cloudflared tunnel run <UUID or NAME>
 If you want to run the tunnel with a configuration file that is not in the [default directory](/connections/connect-apps/configuration/configuration-file#storing-a-configuration-file), you can use the `--config` flag and specify a path.
 
 ```bash
-$ cloudflared tunnel run --config path/config.yaml <UUID or NAME>
+$ cloudflared tunnel --config path/config.yaml run <UUID or NAME>
 ```
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/connections/connect-apps/run-tunnel/run-as-service).

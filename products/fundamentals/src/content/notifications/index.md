@@ -12,18 +12,14 @@ Cloudflare Notifications help you stay up to date with your Cloudflare account. 
 
 The available Notification features vary according to your plan:
 * Free plans can set up email-based Notifications. 
-* Professional and higher plans can also access PagerDuty. 
-* Business and higher plans can also use webhooks.
+* Business and higher plans can also [access PagerDuty](/notifications/create-pagerduty). 
+* Professional and higher plans can also [use webhooks](/notifications/configure-webhooks).
 
 ## Where to find the Notifications section
 
 Notifications are available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging in to your account, click **Notifications** on the top right of the menu in your account home page. Here you can create notifications for different scenarios, edit notifications previously set up, and enable or disable notifications.
 
 ![Where to find the Notifications section](../static/images/notifications/where-to-find.png)
-
-Other features vary according to your plan: 
-* Professional and higher plans can also connect a **PagerDuty** instance to send notifications to.
-* Business and higher plans also have access to **Webhooks**, to connect their Cloudflare account to external services such as Google Chat and Slack. 
 
 ## What to do when receiving Notifications
 
