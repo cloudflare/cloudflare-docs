@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Temporary authentication
 
-With Cloudflare Access, you can require that users obtain approval before they can access a specific application. For any Temporary Authentication policy, a user will need to request access at the start of each session and every time their temporary session expires.
+With Cloudflare Access, you can require that users obtain approval before they can access a specific application. For any temporary authentication policy, a user will need to request access at the start of each session and every time their temporary session expires.
 
 ## How it works
 
