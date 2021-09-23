@@ -9,9 +9,11 @@ import CAADefinition from "../../_partials/_caa-records-definition.md"
 
 <CAADefinition/>
 
+For additional security, set up [Certificate Transparency Monitoring](/edge-certificates/additional-options/certificate-transparency-monitoring) as well.
+
 <Aside type="note" header="note">
 
-For additional security, set up [Certificate Transparency Monitoring](/edge-certificates/additional-options/certificate-transparency-monitoring) as well.
+For more technical details about CAA records, refer to the [introductory blog post](https://blog.cloudflare.com/caa-of-the-wild/).
 
 </Aside>
 
