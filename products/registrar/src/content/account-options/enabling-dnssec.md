@@ -1,6 +1,5 @@
 ---
 title: Enabling DNSSEC
-order:
 pcx-content-type: tutorial
 ---
 
