@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # Encrypt DNS traffic
