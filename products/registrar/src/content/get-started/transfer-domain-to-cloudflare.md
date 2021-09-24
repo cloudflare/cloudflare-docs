@@ -1,15 +1,18 @@
 ---
-order:
-pcx-content-type: how-to
+pcx-content-type: tutorial
 ---
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"
 import Restrictions from "../_partials/_restrictions.md"
 import EmailForward from "../_partials/_email-forward.md"
 
-# How to transfer your domain to Cloudflare
+# Transfer your domain to Cloudflare
 
-This section contains generic details on how to transfer your domain to Cloudflare from most registrars.
+Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
+
+Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some action steps at your new and previous registrar. Each registrar handles transfers a bit differently, but in general, they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
+
+This section contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
 <BeforeYouBegin/>
 
@@ -30,7 +33,7 @@ To begin, complete the following steps in your current registrar to transfer you
 * [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
 
 
-### 1. Login to your registrar account
+### 1. Log in to your registrar account
 
 Log in to the registrar account where the domain is currently registered.
 
@@ -83,7 +86,7 @@ If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1
 
 ### 6. Input your authorization code
 
-In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/setup-domain-transfers/transfer-domain-to-cloudflare#set-up-a-domain-transfer).
+In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/get-started/transfer-domain-to-cloudflare#set-up-a-domain-transfer).
 
 <div class="medium-img">
 

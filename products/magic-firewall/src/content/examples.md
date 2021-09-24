@@ -61,3 +61,31 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
     ]
 }'
 ```
+
+## Using an IP List
+
+Magic Firewall supports [using lists in expressions](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/use-lists-in-expressions) for the `ip.src` and `ip.dst` fields.  The supported lists are:
+ * `$cf.anonymizer` - Anonymizer proxies
+ * `$cf.botnetcc` - Botnet command and control channel
+ * `$cf.malware` - Sources of malware
+
+
+```
+curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
+-H 'Content-Type: application/json' \
+-H 'X-Auth-Email: user@example.com' \
+-H 'X-Auth-Key: 00000000000' \
+--data '{
+    "name": "Example ruleset",
+    "kind": "root",
+    "phase": "magic_transit",
+    "description": "Example ruleset description",
+    "rules": [
+      {
+        "action": "block",
+        "expression": "ip.src in $cf.anonymizer",
+        "description": "Block traffic from an anonymizer proxy"
+      }
+    ]
+}'
+```

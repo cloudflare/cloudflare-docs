@@ -1,7 +1,7 @@
 ---
 title: Overview
 order: 0
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # Cloudflare Registrar
@@ -12,5 +12,5 @@ Manage your domain with Cloudflare Registrar and add an additional layer of secu
 
 <ButtonGroup>
   <Button type="primary" href="/why-choose-cloudflare">Learn more</Button>
-  <Button type="secondary" href="/setup-domain-transfers">Setup domain transfer</Button>
+  <Button type="secondary" href="/get-started/transfer-domain-to-cloudflare">Setup domain transfer</Button>
 </ButtonGroup>

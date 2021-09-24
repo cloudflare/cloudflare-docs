@@ -1,31 +1,6 @@
 import React from "react"
-import {useStaticQuery, graphql} from "gatsby"
 
 import "../css/components/product-grid.css"
-
-// Query to get all the products that are sourced from the current-products-list.js file
-
-const useProducts = () => {
-
-  const result = useStaticQuery(graphql`
-    query {
-      allProduct(sort: { fields: [title], order: ASC }) {
-        nodes {
-          title
-          path
-          logoSVGContent
-          wrap
-          href
-        }
-      }
-    }
-    `
-    )
- return result
-}
-
-
-// Current implementation of displaying icons - to be deleted in later PR
 
 const $ = {}
 $["1.1.1.1"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/1.1.1.1.js").pathD
@@ -293,19 +268,12 @@ const products = [
 
 const ProductGridLink = ({ product }) => (
   <a className="ProductGrid--link" data-wrap-title={product.wrap} href={product.href || `https://developers.cloudflare.com/${product.path}`}>
-    {/* TODO: Old way of dispplaying icons - to be deleted in later PR */}
-        <svg viewBox="0 0 48 48"><path d={$[product.icon]}/></svg>
-    {/* <div dangerouslySetInnerHTML={{__html: product.logoSVGContent}} /> */}
+    <svg viewBox="0 0 48 48"><path d={$[product.icon]}/></svg>
     <span>{product.title}</span>
   </a>
 )
 
 const ProductGridColumns = ({ numColumns }) => {
-  // TODO: uncomment this useProducts when ready for step 2 of using new svg icons
-  // const productsData = useProducts()
-  // TODO: uncomment products to use new way of displaying SVG
-  // let products = productsData.allProduct.nodes
-
   const itemsPerColumn = Math.ceil(products.length / numColumns)
 
   const columns = []

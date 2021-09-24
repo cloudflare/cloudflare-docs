@@ -1,9 +1,8 @@
 ---
-order:
-pcx-content-type: tutorial
+pcx-content-type: how-to
 ---
 
-# Transfer out from cloudflare
+# Transfer out from Cloudflare
 
 Cloudflare Registrar makes it easy to transfer your domain to another registrar. Follow the instructions below to transfer your domain out from Cloudflare.
 
