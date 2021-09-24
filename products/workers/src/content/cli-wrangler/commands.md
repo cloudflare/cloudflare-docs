@@ -479,7 +479,7 @@ whose title is a concatenation of your Worker’s name (from `wrangler.toml`) an
 $ wrangler kv:namespace create "MY_KV"
 🌀  Creating namespace with title "my-site-MY_KV"
 ✨  Success!
-Add the following to your wrangler.toml:
+Add the following to your configuration file:
 kv_namespaces = [
   { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
 ]
