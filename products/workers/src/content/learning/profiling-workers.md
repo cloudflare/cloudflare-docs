@@ -15,7 +15,7 @@ To do this, first, make sure you're on Wrangler version v1.19.3 or later. Here i
 
 ## Profiling an example project
 
-You can reate a brand new Worker with:
+You can create a new Workers project with the `wrangler generate` command:
 
 ```sh
 $ wrangler generate my-worker
@@ -54,7 +54,7 @@ async function handleRequest(request) {
 }
 ```
 
-This is a basic example where our request handler calls an async function `sleepBetween`. The function iterates from 0 to 100, but after each iteration, it calls `timer(100)`, which will sleep for 100 milliseconds. Now there is a nice slow function you can use to test out the profiler.
+This is a basic example where our request handler calls an async function `sleepBetween`. The function iterates from 0 to 100, but after each iteration, it calls `timer(100)`, which will sleep for 100 milliseconds. This function will simulate slow code, which you can use to test out the profiler.
 
 ### Profiling our Worker
 
@@ -67,11 +67,17 @@ $ wrangler dev --inspect
 👂  Listening on http://127.0.0.1:8787
 ```
 
-Open a new tab in Chrome, type in `chrome://inspect` and hit enter. Click on "Configure" and add our new localhost port, `localhost:9230`. Now you should see the Wrangler inspect process showing up under "Remote Target."
+Open a new tab in Chrome, type in `chrome://inspect` and hit enter. Click on "Configure" and add `localhost:9230`. Now you should see the Wrangler inspect process showing up under "Remote Target."
 
 ![Chrome Inspect](./media/chrome-inspect.png)
 
-Clicking inspect opens up the DevTools. Currently, Wrangler only supports the Console, Sources and Profiler tabs.
+Clicking inspect opens up the DevTools.
+
+<Aside>
+
+Currently, Wrangler only supports the Console, Sources and Profiler tabs.
+
+</Aside>
 
 ### Capturing a CPU profile
 
