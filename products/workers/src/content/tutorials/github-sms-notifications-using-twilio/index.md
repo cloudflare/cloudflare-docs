@@ -54,7 +54,7 @@ To start, you will need to configure a GitHub Webhook to post to your Worker whe
 
 2. Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/get-started/guide#6-preview-your-project) file and then [running `wrangler publish` in your command line](/get-started/guide#8-publish-your-project) to generate a live URL for your Worker.
 
-3. In the **Content type** dropdown, select **application/json**.
+3. In the **Content type** dropdown, select _application/json_.
 
 4. In the **Secret** field, input a secret key of your choice.
 
