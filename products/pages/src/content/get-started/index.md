@@ -103,6 +103,23 @@ To ensure a custom domain is added successfully, you must go through the [Adding
 
 </Aside>
 
+### Deleting a custom domain
+
+The Cloudflare dashboard has a list of services that your pages project can leverage on, such as Analytics, speed, and, SSL/TLS. When trying to remove your project from Cloudfalre you will not be able to just delete the project from the pages dashboard, if your DNS is handled by Cloudflare. You will have to delete custom domains before deleting the project from Pages dashboard. 
+
+The dashboard for your site is reachable from the drop down menu at top right of the page.
+
+
+![drop down menu](./images/drop-down-menu.png)
+
+
+On the dashboard overview page you have to scroll down to the advanced action option
+and click on **remove site from Cloudflare** this will bring up a modal and if you confirm, your site will be deleted from Cloudflare.
+
+![advanced-option](./images/advanced-option.png)
+
+Now if you return to the pages dashboard and go to **settings** > **delete project**. You can now remove your project from Cloudflare pages. 
+
 ## Advanced project settings
 
 In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your GitHub configuration, or updating your build command or build directory.
