@@ -11,17 +11,17 @@ That's why we're launching a beta version of `wrangler inspect`. We're beginning
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
-To do this, first, make sure you're on Wrangler version v1.19.3 or later. Here is a guide to [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update)
+To run `wrangler inspect`, first, make sure you are on Wrangler version v1.19.3 or later. If you need to update your version, refer to the guide on [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update).
 
 ## Profiling an example project
 
-You can create a new Workers project with the `wrangler generate` command:
+Create a new Workers project with the `wrangler generate` command:
 
 ```sh
 $ wrangler generate my-worker
 ```
 
-Open `index.js` in your IDE and replace the contents with:
+Open the `index.js` file in your project's directory and replace the contents with:
 
 ```javascript
 addEventListener("fetch", (event) => {
@@ -58,7 +58,7 @@ This is a basic example where our request handler calls an async function `sleep
 
 ### Profiling our Worker
 
-With this function saved, go to your terminal and run `wrangler dev --inspect`. You'll see some new instructions for configuring Chrome DevTools.
+With this function saved, go to your terminal and run `wrangler dev --inspect`. You will see additional instructions for configuring Chrome DevTools.
 
 ```sh
 $ wrangler dev --inspect
@@ -67,13 +67,13 @@ $ wrangler dev --inspect
 👂  Listening on http://127.0.0.1:8787
 ```
 
-Open a new tab in Chrome, type in `chrome://inspect` and hit enter. Click on "Configure" and add `localhost:9230`. Now you should see the Wrangler inspect process showing up under "Remote Target."
+Open a new tab in Chrome, type in `chrome://inspect` and hit enter. Select **Configure** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
 
 ![Chrome Inspect](./media/chrome-inspect.png)
 
-Clicking inspect opens up the DevTools.
+Selecting **Inspect** opens up the DevTools.
 
-<Aside>
+<Aside type="note">
 
 Currently, Wrangler only supports the Console, Sources and Profiler tabs.
 
@@ -81,18 +81,18 @@ Currently, Wrangler only supports the Console, Sources and Profiler tabs.
 
 ### Capturing a CPU profile
 
-With the DevTools open, click the Profile tab and then click "start." Now open a new tab with your Worker running locally `http://127.0.0.1:8787`. Accessing the Worker causes it to run again, this time captured by the DevTools. When it finishes loading, go back to our DevTools window and click "stop."
+With the DevTools open, select the **Profile** tab > **Start**. Open a new tab with your Worker running locally `http://127.0.0.1:8787`. Accessing the Worker causes it to run again, this time captured by the DevTools. When it finishes loading, go back to our DevTools window and select **Stop**.
 
 There are three ways to view the CPU profiling data:
 
-1. "Tree" - a top-down view of all functions called. Starting with top level functions and nesting subsequent calls under each one.
-2. "Heavy" - a bottom up view of all functions called. Starting with the final functions in the stack and nesting parent calls under each one.
-3. "Chart" - a flame chart which will show all function calls and how much time was spent in each function execution.
+1. **Tree** - a top-down view of all functions called. Starting with top-level functions and nesting subsequent calls under each one.
+2. **Heavy** - a bottom-up view of all functions called. Starting with the final functions in the stack and nesting parent calls under each one.
+3. **Chart** - a flame chart that will show all function calls and how much time was spent in each function execution.
 
-To find slow functions, enter the "Chart" view and search for the last long function in a stack.
+To find slow functions, enter the **Chart** view and search for the last long function in a stack.
 
 ![CPU Flame chart](./media/devtools-chart.png)
 
-A function's total run time is determined by the runtime of all the functions it calls. You will want to find the one with the longest self runtime, or the last big one before it finishes or splits into smaller calls. For more information on using the DevTools, check out their [official docs](https://developer.chrome.com/docs/devtools/).
+A function's total runtime is determined by the runtime of all the functions it calls. You will want to find the function with the longest self runtime, or the last big runtime before it finishes or splits into smaller calls. For more information on using the DevTools, refer to the [official Chrome documentation](https://developer.chrome.com/docs/devtools/).
 
-Here you can see that `sleepBetween` is our culprit. Another quick way of spotting the slowest function in a Worker is to use the Heavy view. This lets you sort by self run time or total run time. Sorting by self run time and ignoring any items in parenthesis will get you your answer.
+In the example image above, `sleepBetween`has the longest runtime. Another way to find the slowest function in a Worker is to use the **Heavy** view. With **Heavy** view, you can sort by self runtime or total runtime. Sorting by self runtime and ignoring any items in parenthesis will help you determine the function with the slowest runtime.
