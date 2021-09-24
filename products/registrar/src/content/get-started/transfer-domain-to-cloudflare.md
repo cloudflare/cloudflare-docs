@@ -9,11 +9,11 @@ import EmailForward from "../_partials/_email-forward.md"
 
 # How to transfer your domain to Cloudflare
 
-Transferring your domain to Cloudflare tell your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
+Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
 
 Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some action steps at your new and previous registrar. Each registrar handles transfers a bit differently, but in general, they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
 
-This section contains generic details on how to transfer your domain to Cloudflare from most registrars.
+This section contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
 <BeforeYouBegin/>
 
