@@ -93,4 +93,4 @@ A function's total runtime is determined by the runtime of all the functions it 
 
 In the example image above, `sleepBetween` has the longest runtime.
 
-You can also arrive at this conclusion through the **Heavy** view, which allows you to sort by "Self Time" or "Total Time". When you sort by "Self Time" and ignore any items in parenthesis, you can identify the function with the slowest runtime.
+You can also arrive at this conclusion through the **Heavy** view, which allows you to sort by "Self Time" or "Total Time". When you sort by "Self Time" and ignore any items in parenthesis, you can identify the functions with the longest execution time.
