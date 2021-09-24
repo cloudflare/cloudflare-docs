@@ -1,10 +1,9 @@
 ---
 title: Form expressions
-order: 4
 pcx-content-type: concept
 ---
 
-# Forming an expression
+# Form an expression
 
 Rules are written as using the Cloudflare Firewall Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language).
 
@@ -35,4 +34,4 @@ Expressions have a complexity limit that is easily reached when many joined or n
 (tcp.dstport == 1000 || tcp.dstport == 1001) && (tcp.dstport == 1002 || tcp.dstport == 1003) && (tcp.dstport == 1004 || tcp.dstport == 1005) && (tcp.dstport == 1006 || tcp.dstport == 1007) && (tcp.dstport == 1008 || tcp.dstport == 1009) && (tcp.dstport == 1010 || tcp.dstport == 1011) && (tcp.dstport == 1012 || tcp.dstport == 1013) && (tcp.dstport == 1014 || tcp.dstport == 1015) && (tcp.dstport == 1016 || tcp.dstport == 1017)
 ```
 
-If the limit is reached, the response will have a 400 status code and an error message of "ruleset exceeds complexity constraints".  Split the expression into multiple rules and try again.
+If the limit is reached, the response will have a 400 status code and an error message of "ruleset exceeds complexity constraints."  Split the expression into multiple rules and try again.

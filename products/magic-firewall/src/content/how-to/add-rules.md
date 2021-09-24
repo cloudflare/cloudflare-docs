@@ -1,6 +1,5 @@
 ---
-title: Rules
-order:  2
+title: Add rules
 pcx-content-type: how-to
 ---
 
