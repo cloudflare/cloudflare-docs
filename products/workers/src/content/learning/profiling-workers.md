@@ -28,10 +28,6 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
-/**
- * Respond with hello worker text
- * @param {Request} request
- */
 const timer = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function sleepBetween() {
