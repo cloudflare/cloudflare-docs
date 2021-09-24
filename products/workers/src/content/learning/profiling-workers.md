@@ -5,9 +5,9 @@ pcx-content-type: concept
 
 # Profiling Workers
 
-For long-running or complex Workers, you need to understand where your code is spending the most time.
+For long-running or complex Workers, `wrangler inspect`(beta) will help you understand where your code is spending the most time.
 
-That's why we're launching a beta version of `wrangler inspect`. We're beginning to integrate the Workers platform with the Chrome Developer Tools, and starting today, you can use `wrangler dev --inspect` to get a CPU profile of your Worker.
+As part of the Workers platform's integration with Chrome Developer Tools, you can use `wrangler dev --inspect` to get a CPU profile of your Worker.
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
@@ -54,7 +54,7 @@ async function handleRequest(request) {
 }
 ```
 
-This is a basic example where our request handler calls an async function `sleepBetween`. The function iterates from 0 to 100, but after each iteration, it calls `timer(100)`, which will sleep for 100 milliseconds. This function will simulate slow code, which you can use to test out the profiler.
+This is a basic example where the Worker's request handler calls an async function `sleepBetween`. The function iterates from 0 to 100, but after each iteration, it calls `timer(100)`, which will sleep for 100 milliseconds. This function will simulate slow code, which you can use to test out the profiler.
 
 ### Profiling our Worker
 
