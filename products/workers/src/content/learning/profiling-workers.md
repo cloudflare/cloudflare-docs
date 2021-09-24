@@ -11,7 +11,7 @@ That's why we're launching a beta version of `wrangler inspect`. We're beginning
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
-To do this, first, make sure you're on Wrangler version v1.19.3 or later.
+To do this, first, make sure you're on Wrangler version v1.19.3 or later. Here is a guide to [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update)
 
 ## Profiling an example project
 
@@ -61,7 +61,7 @@ This is a basic example where our request handler calls an async function `sleep
 With this function saved, go to your terminal and run `wrangler dev --inspect`. You'll see some new instructions for configuring Chrome DevTools.
 
 ```sh
-$ ☁  my-worker [master] ⚡  wrangler dev --inspect
+$ wrangler dev --inspect
 💁  watching "./"
 🕵️  Open chrome://inspect, click 'Configure', and add localhost:9230
 👂  Listening on http://127.0.0.1:8787
@@ -77,10 +77,16 @@ Clicking inspect opens up the DevTools. Currently, Wrangler only supports the Co
 
 With the DevTools open, click the Profile tab and then click "start." Now open a new tab with your Worker running locally `http://127.0.0.1:8787`. Accessing the Worker causes it to run again, this time captured by the DevTools. When it finishes loading, go back to our DevTools window and click "stop."
 
-There are three ways to view CPU profile data: tree (top down), heavy (bottom up) and chart. If you click on "Chart," it brings us to a flame chart where you can see every function call and how long it took.
+There are three ways to view the CPU profiling data:
 
-To find slow functions, look for the last long function in a stack. Since each function's total run time is determined by the runtime of all the functions it calls. We want to find the one with the longest self runtime, or the last big one before it finishes or splits into smaller calls. For more information on using the DevTools, check out their [official docs](https://developer.chrome.com/docs/devtools/).
+1. "Tree" - a top-down view of all functions called. Starting with top level functions and nesting subsequent calls under each one.
+2. "Heavy" - a bottom up view of all functions called. Starting with the final functions in the stack and nesting parent calls under each one.
+3. "Chart" - a flame chart which will show all function calls and how much time was spent in each function execution.
+
+To find slow functions, enter the "Chart" view and search for the last long function in a stack.
 
 ![CPU Flame chart](./media/devtools-chart.png)
+
+A function's total run time is determined by the runtime of all the functions it calls. You will want to find the one with the longest self runtime, or the last big one before it finishes or splits into smaller calls. For more information on using the DevTools, check out their [official docs](https://developer.chrome.com/docs/devtools/).
 
 Here you can see that `sleepBetween` is our culprit. Another quick way of spotting the slowest function in a Worker is to use the Heavy view. This lets you sort by self run time or total run time. Sorting by self run time and ignoring any items in parenthesis will get you your answer.
