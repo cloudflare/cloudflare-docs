@@ -23,7 +23,7 @@ Once your first tunnel is connected to Cloudflare, you’ll be able to quickly s
 
 ### Tunnel status
 
-For status, a tunnel can be defined as: 
+A tunnel's status depends on the health of its connections:
 
 * **Active**: This means your tunnel is running and has a healthy connection to the Cloudflare Network.
 * **Inactive**: This means your tunnel is not running and is not connected to Cloudflare.
