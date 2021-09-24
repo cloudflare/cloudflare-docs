@@ -77,7 +77,7 @@ Currently, Wrangler only supports the Console, Sources and Profiler tabs.
 
 ### Capturing a CPU profile
 
-With the DevTools open, select the **Profile** tab > **Start**. Open a new tab with your Worker running locally `http://127.0.0.1:8787`. Accessing the Worker causes it to run again, this time captured by the DevTools. When it finishes loading, go back to our DevTools window and select **Stop**.
+With the DevTools open, select the **Profile** tab > **Start**. Open a new tab with your Worker running locally `http://127.0.0.1:8787`. Visiting this address will invoke the Worker again, allowing DevTools to capture execution information. When it finishes loading, go back to our DevTools window and select **Stop**.
 
 There are three ways to view the CPU profiling data:
 
@@ -91,4 +91,6 @@ To find slow functions, enter the **Chart** view and search for the last long fu
 
 A function's total runtime is determined by the runtime of all the functions it calls. You will want to find the function with the longest self runtime, or the last big runtime before it finishes or splits into smaller calls. For more information on using the DevTools, refer to the [official Chrome documentation](https://developer.chrome.com/docs/devtools/).
 
-In the example image above, `sleepBetween`has the longest runtime. Another way to find the slowest function in a Worker is to use the **Heavy** view. With **Heavy** view, you can sort by self runtime or total runtime. Sorting by self runtime and ignoring any items in parenthesis will help you determine the function with the slowest runtime.
+In the example image above, `sleepBetween` has the longest runtime. 
+
+You can also arrive at this conclusion through the **Heavy** view, which allows you to sort by "self runtime" or "total runtime". When you sort by "self runtime" and ignore any items in parenthesis, you can identify the function with the slowest runtime.
