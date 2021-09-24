@@ -1,17 +1,9 @@
-const fs = require("fs");
-const productIconKey = "network-error-logging";
-const path = require("path");
-
 module.exports = {
   product: "Network Error Logging",
   pathPrefix: "/network-error-logging",
   productLogoPathD: require('./src/content/icons/network-error-logging').pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/network-error-logging",
-  logoSVGContent: fs.readFileSync(
-    path.join(__dirname, `src/content/icons/${productIconKey}.svg`),
-    "utf8"
-  ),
   externalLinks: [
     {
       title: "Cloudflare homepage",
