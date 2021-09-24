@@ -105,7 +105,7 @@ order: 1
                 SQLi - Tautology - URI
             </td>
             <td>
-                Block
+                N/A
             </td>
             <td>
                 Block
