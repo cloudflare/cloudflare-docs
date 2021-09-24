@@ -8,11 +8,13 @@ pcx-content-type: faq
 
 Below you will find answers to our most commonly asked questions on Cloudflare Registrar, namely about billing, domain transfers, and how to troubleshoot common issues you may come across. If you cannot find the answer you are looking for, heading over to our [community page](https://community.cloudflare.com/) is always a good idea.
 
-* [Domain transfers](#why-did-my-transfer-fail)
-* [Domain registrations](#can-i-register-a-premium-domain)
-* [Billing](#when-will-i-be-billed)
+* [Domain transfers](#domain-transfers)
+* [Domain registrations](#domain-registrations)
+* [Billing](#billing)
 
-## Why did my transfer fail?
+## Domain transfers
+
+### Why did my transfer fail?
 
 Domain transfers sometimes fail. Your account team can help you address what failed so that you can complete the transfer to Cloudflare.
 
@@ -29,11 +31,11 @@ Whenever a domain is first registered, the registrant purchases control of that 
 
 Transferring a domain adds time to the current expiration date. Time purchased is never lost. When you transfer your domain to Cloudflare, you are purchasing an additional year of registration on top of your current expiration.
 
-## What happens to my name servers when I transfer my domain to Cloudflare?
+### What happens to my name servers when I transfer my domain to Cloudflare?
 
 Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Active domains on Cloudflare use name servers assigned by Cloudflare. When you transfer your registration, your name servers will not be modified.
 
-## How can I see the status of my domain transfer?
+### How can I see the status of my domain transfer?
 
 Once you initiate a domain transfer, your previous registrar has five days to release the domain. In most cases, they will send you an email to confirm you want to transfer. If you actively acknowledge that email (through a link or the registrar's dashboard), they can process it immediately.
 
@@ -41,27 +43,29 @@ To see the progress of your transfer, log into the Cloudflare dashboard and sele
 
 Once successful, you will receive an email from Cloudflare and be able to manage the domain in the dashboard under **Overview** of that site.
 
-## Why am I not allowed to transfer my domain?
+### Why am I not allowed to transfer my domain?
 
 ICANN prohibits domain transfers within 60 days of a change to the WHOIS data or registrar of a domain. If you modified your contact information, transferred registrars, or registered your domain in the last 60 days, Cloudflare will be unable to process your transfer immediately.
 
 You can leave the domain **In Progress** and Cloudflare will attempt to process the transfer until the 60-day window passes.
 
-## Why am I not able to start a transfer?
+### Why am I not able to start a transfer?
 
 If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified email address</a>, you might experience issues when initiating a domain transfer.
 
-## What happens if I enter the wrong auth code?
+### What happens if I enter the wrong auth code?
 
 If you enter an incorrect auth code (also referred to as authentication code or authorization code), return to the **Domain Registration** page or the **Overview** for your site. You can use the available input field to reenter your authentication code.
 
 ---
 
-## Can I register a premium domain?
+## Domain registrations
+
+### Can I register a premium domain?
 
 Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.
 
-## My domain’s registration was not extended by one year after transferring to Cloudflare
+### My domain’s registration was not extended by one year after transferring to Cloudflare
 
 When you transfer your domain to Cloudflare, the registry will extend your registration by one year. However, in one specific circumstance your transfer could result in you keeping your original expiration date.
 
@@ -71,7 +75,7 @@ Say you have `example.com` registered and it expires on December 10, 2021. You d
 
 If a year is not added to your registration, you have effectively paid twice for the same added year. Per ICANN rules, you are entitled to request a refund at your previous registrar.
 
-## What Happens When a Domain Expires?
+### What Happens When a Domain Expires?
 
 Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. The redemption period lasts for 30 days.  During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. Contact your account team for assistance. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
 
@@ -85,6 +89,8 @@ In summary, here is what will happen after a domain expires:
 
 ---
 
-## When will I be billed?
+## Billing
+
+### When will I be billed?
 
 You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
