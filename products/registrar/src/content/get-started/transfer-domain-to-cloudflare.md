@@ -1,5 +1,4 @@
 ---
-order:
 pcx-content-type: tutorial
 ---
 
@@ -7,7 +6,7 @@ import BeforeYouBegin from "../_partials/_before-you-begin.md"
 import Restrictions from "../_partials/_restrictions.md"
 import EmailForward from "../_partials/_email-forward.md"
 
-# How to transfer your domain to Cloudflare
+# Transfer your domain to Cloudflare
 
 Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
 
@@ -34,7 +33,7 @@ To begin, complete the following steps in your current registrar to transfer you
 * [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
 
 
-### 1. Login to your registrar account
+### 1. Log in to your registrar account
 
 Log in to the registrar account where the domain is currently registered.
 
