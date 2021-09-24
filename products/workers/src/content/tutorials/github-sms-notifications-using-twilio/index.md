@@ -52,7 +52,7 @@ To start, you will need to configure a GitHub Webhook to post to your Worker whe
 
 1. Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
 
-2. Set the Payload URL to the `/webhook` path on your Worker URL. . You can find your worker URL by populating [your account id in the `wrangler.toml`](/get-started/guide#6-preview-your-project) file and then [running `wrangler publish` in your command line](/get-started/guide#8-publish-your-project) to generate a live URL for your Worker.
+2. Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/get-started/guide#6-preview-your-project) file and then [running `wrangler publish` in your command line](/get-started/guide#8-publish-your-project) to generate a live URL for your Worker.
 
 3. In the **Content type** dropdown, select **application/json**.
 
@@ -68,7 +68,7 @@ To start, you will need to configure a GitHub Webhook to post to your Worker whe
 
 ## Parsing the response
 
-With your local environment setup, you will now parse the repository update with your Worker. If you experience any difficulty, refer to the finished [index.js](https://github.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
+With your local environment set up, you will now parse the repository update with your Worker. If you experience any difficulty, refer to the finished [index.js](https://github.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
 
 Your generated `index.js` should look like this below:
 
