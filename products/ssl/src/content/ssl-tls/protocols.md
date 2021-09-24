@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: reference
 ---
 
-# Protocols
+# TLS protocols
 
 Cloudflare supports the following TLS protocols:
 
