@@ -40,22 +40,19 @@ The basic steps for setting up a development are as follows.
   ~/my-docs-site $ npm run bootstrap
   ```
 
-7. Run the local development server:
+5. `cd` back into the root directory and run `npm install`:
 
   ```sh
-  ~/my-docs-site $ npm run develop
+  ~/my-docs-site $ cd ../..
+  ~/my-docs-site $ npm install
+  ```
+
+7. Run the local development server from the root directory and pass the product directory as an argument like so:
+
+  ```sh
+  ~/my-docs-site $ npm run develop -- docs-engine
   ```
 
 8. Open up `localhost:8000` in your browser to see your docs site.
 
 At this point, you can make changes to the Markdown files inside the content directory (e.g. `my-docs-site/src/content`) to build or improve your docs site.
-
-<Aside header="Note">
-
-Unfortunately, for now you’ll need to stop and restart `npm run develop` every time you make changes if you make them in `src/content`.
-
-This is an issue we’re working on and can be tracked [in this GitHub issue](https://github.com/cloudflare/cloudflare-docs-engine/issues/279).
-
-As noted in the issue there are workarounds. The current recommended approach is to make your changes inside `.docs/src/content` instead. When you’re ready to commit your work, run `npm run savechanges` (inside the project directory) and that will copy the contents of `.docs/src/content` into `src/content` so you can see your changes.
-
-</Aside>
