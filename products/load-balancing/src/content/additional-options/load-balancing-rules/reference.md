@@ -66,7 +66,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 
 For the most up to date list of these fields, [create a load balancing rule](../create-rules) in the UI.
 
-For more details about the field type or properties, look for each field in our [Firewall rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-language/fields).
+For more details about the field type or properties, refer to our [Firewall rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-language/fields).
 
 ## Unproxied traffic
 
@@ -130,7 +130,7 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-Load Balancing expressions also support grouping symbols, which allow you to organize expressions, enforce operator precedence, and nest expressions. For examples and usage, see [_Grouping symbols_](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#grouping-symbols) in the Firewall Rules documentation.
+Load Balancing expressions also support grouping symbols, which allow you to organize expressions, enforce operator precedence, and nest expressions. For examples and usage, refer to [Grouping symbols](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#grouping-symbols) in the Firewall Rules documentation.
 
 ### Comparison operators
 
@@ -225,7 +225,7 @@ Logical operators combine two or more expressions into a single compound express
 <expression> <logical operator> <expression>
 ```
 
-Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence. For more on how Cloudflare evaluates logical operators in expressions, see [_Order of precedence_](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#order-of-precedence) in the Firewall Rules documentation.
+Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence. For more on how Cloudflare evaluates logical operators in expressions, refer to [Order of precedence](https://developers.cloudflare.com/firewall/cf-firewall-language/operators#order-of-precedence) in the Firewall Rules documentation.
 
 Load Balancing expressions support these logical operators:
 

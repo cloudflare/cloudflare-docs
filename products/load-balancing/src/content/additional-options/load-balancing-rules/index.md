@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 # Custom rules
 
-Use load balancing rules to customize the behavior of your [load balancer](/understand-basics/load-balancers). For example, create a rule that selects an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
+Use load balancing rules to customize the behavior of your load balancer. For example, create a rule that selects an origin pool based on the URI path of an HTTP request.
 
 ## More details
 
