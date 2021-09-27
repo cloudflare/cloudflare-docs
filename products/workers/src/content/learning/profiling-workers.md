@@ -63,7 +63,7 @@ $ wrangler dev --inspect
 👂  Listening on http://127.0.0.1:8787
 ```
 
-Open a new tab in Chrome, type `chrome://inspect` in the Chrome address bar and press **Enter** on your keyboard. Select **Configure** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
+Open a new tab in Chrome, type `chrome://inspect` in the Chrome address bar and press **Enter** or **return** on your keyboard to go to Chrome's DevTools. Select **Configure...** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
 
 ![Chrome Inspect](./media/chrome-inspect.png)
 
