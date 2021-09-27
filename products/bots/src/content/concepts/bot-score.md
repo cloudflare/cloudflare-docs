@@ -1,0 +1,27 @@
+---
+order: 0
+pcx-content-type: concept
+---
+
+# Bot scores
+
+A bot score is an indicator of certainty given to individual requests. For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
+
+<Aside type="note" header="Note:">
+
+Granular bot scores are only available to Enterprise customers who have purchased Bot Management. All other customers can only access this information through [bot groupings](#bot-groupings) in Bot Analytics.
+
+</Aside>
+
+## Bot groupings
+
+Customers with a Pro plan or higher can automatically see bot traffic divided into groups by going to **Firewall** > **Bots**.
+
+- **Automated**: Bot scores of 1
+- **Likely automated**: Bots scores of 2 through 29
+- **Likely human**: Bot scores of 30 through 99
+- **Verified bot**: Non-malicious automated traffic (used to power search engines and other applications)
+
+## Comparison to Threat Score
+
+Bot Score is different from Threat Score. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by relying on bot scores and avoiding IP reputation entirely.
