@@ -6,15 +6,11 @@ pcx-content-type: reference
 
 # Load Balancing expressions
 
-## Overview
-
 [Load Balancing rules](/additional-options/load-balancing-rules) use two kinds of expressions:
 
 - [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (_equals_ or _less than_, for example).
 
 - [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
-
-The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
 ---
 
