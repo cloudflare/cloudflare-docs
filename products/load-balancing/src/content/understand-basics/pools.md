@@ -19,22 +19,6 @@ For more details about how origins and pools become unhealthy, refer to [Origin 
 
 ---
 
-## Important notes
-
-When working with pools, note the following:
-
-**When adding origin servers to a pool, you can identify the origin by hostname or IP address**.
-
-**The order of pools in the load balancer determines the standard failover priority**. When the number of healthy origins in a pool drops below the configured threshold, Load Balancing routes traffic to the next available pool.
-
-**By default, pools are ordered by date created**. You can reorder them from the Load Balancing dashboard and via Cloudflare API (use the Update Pools command to set a new `origins` array).
-
-**Dynamic Steering uses Round Trip Time (RTT) profiles to determine pool priority**. If there is no RTT data for a pool in a region or colocation center, Load Balancing will use pool order to determine failover priority.
-
-**Geo Steering directs traffic to pools based on the client’s region or point of presence.** If there is no Geo Steering configuration for a region or pool, the load balancer will use pool order to determine failover priority.
-
----
-
 ## Properties
 
 For an up-to-date list of pool properties, refer to [Pool properties](https://api.cloudflare.com/#load-balancer-pools-properties) in our API documentation.
