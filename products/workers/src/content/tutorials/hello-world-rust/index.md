@@ -30,15 +30,15 @@ Wrangler templates are Git repositories. If you want to create your own template
 
 ## Workers Playground
 
-You can test how your Workers function will look when it is deployed by using the `preview` command:
+You can test how your Workers function will look when it is deployed by using the `dev` command:
 
 ```sh
-rustwasm-markdown-parser $ wrangler preview --watch
+rustwasm-markdown-parser $ wrangler dev --watch
 ```
 
-Using the `preview` command will open a browser tab with your Cloudflare Workers function loaded in the Cloudflare preview UI.
+Using the `dev` command will open a browser tab with your Cloudflare Workers function loaded.
 
-The `--watch` flag for `preview` tells Wrangler to watch your Worker project for changes and update the preview tab live with the latest URL. Leave Wrangler running in `--watch` mode for now as you continue the tutorial.
+The `--watch` flag for `dev` tells Wrangler to watch your Worker project for changes and update the preview tab live with the latest URL. Leave Wrangler running in `--watch` mode for now as you continue the tutorial.
 
 ## Building
 
@@ -98,7 +98,7 @@ pub fn parse() -> String {
 }
 ```
 
-Update your `worker/worker.js` to use the new code you have written:
+Ugit pdate your `worker/worker.js` to use the new code you have written:
 
 ```javascript
 addEventListener('fetch', (event) => {
