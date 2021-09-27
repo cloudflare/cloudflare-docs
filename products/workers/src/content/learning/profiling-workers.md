@@ -11,7 +11,7 @@ As part of the Workers platform's integration with Chrome Developer Tools, you c
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
-`wrangler inspect` will only work on Wrangler version v1.19.3 or later. Check your version before continuing and if you need to update your version, refer to the guide on [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update).
+`wrangler inspect` will only work on Wrangler version v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update).
 
 ## Profiling an example project
 
@@ -54,7 +54,7 @@ This is a basic example where the Worker's request handler calls an async functi
 
 ### Profiling our Worker
 
-With your `index.js` file updates and saved, go to your terminal and run `wrangler dev --inspect`. You will see additional instructions for configuring Chrome DevTools.
+With your `index.js` file updated and saved, go to your terminal and run `wrangler dev --inspect`. You will see additional instructions for configuring Chrome DevTools.
 
 ```sh
 $ wrangler dev --inspect
@@ -63,7 +63,7 @@ $ wrangler dev --inspect
 👂  Listening on http://127.0.0.1:8787
 ```
 
-Open a new tab in Chrome, type `chrome://inspect` in the Chrome address bar and press **Enter** or **return** on your keyboard to go to Chrome's DevTools. Select **Configure...** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
+Open a new tab in Chrome and enter `chrome://inspect` in the Chrome address bar to open Chrome's DevTools. Select **Configure...** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
 
 ![Chrome Inspect](./media/chrome-inspect.png)
 
