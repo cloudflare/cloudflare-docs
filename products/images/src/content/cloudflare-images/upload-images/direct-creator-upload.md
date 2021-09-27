@@ -1,6 +1,6 @@
 ---
-title: Direct Creator Upload
 order: 2
+pcx-content-type: how-to
 ---
 
 # Direct Creator Upload

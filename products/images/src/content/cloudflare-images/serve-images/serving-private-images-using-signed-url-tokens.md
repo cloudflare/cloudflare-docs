@@ -1,9 +1,9 @@
 ---
-title: Serving Private Images using Signed URL Tokens
 order: 4
+pcx-content-type: how-to
 ---
 
-# Serving Private Images using Signed URL Tokens
+# Serve private images using signed URL tokens
 
 If an image is marked to require a signed URL, it cannot be accessed without a token _unless_ it is being requested for a Variant that is set to always allow public access.
 

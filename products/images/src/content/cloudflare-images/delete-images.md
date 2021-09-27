@@ -1,8 +1,9 @@
 ---
-order: 4  
+order: 4
+pcx-content-type: how-to
 ---
 
-# Deleting Images
+# Delete Images
 
 If you want to remove an image from the Cloudflare Images storage, you have two options:
 
@@ -25,5 +26,4 @@ You will receive a response similar to this:
   "errors": [],
   "messages": []
 }
-``` 
- 
+```
