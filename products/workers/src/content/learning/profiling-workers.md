@@ -89,8 +89,8 @@ To find slow functions, enter the **Chart** view and search for the last long fu
 
 ![CPU Flame chart](./media/devtools-chart.png)
 
-A function's total runtime is determined by the runtime of all the functions it calls. You will want to find the function with the longest "Self Time", or the last big runtime before it finishes or splits into smaller calls. For more information on using the DevTools, refer to the [official Chrome documentation](https://developer.chrome.com/docs/devtools/).
+A function's total runtime is determined by the runtime of all the functions it calls. You will want to find the function with the longest **Self Time**, or the last big runtime before it finishes or splits into smaller calls. For more information on using the DevTools, refer to the [official Chrome documentation](https://developer.chrome.com/docs/devtools/).
 
 In the example image above, `sleepBetween` has the longest runtime.
 
-You can also arrive at this conclusion through the **Heavy** view, which allows you to sort by "Self Time" or "Total Time". When you sort by "Self Time" and ignore any items in parenthesis, you can identify the functions with the longest execution time.
+You can also arrive at this conclusion through the **Heavy** view, which allows you to sort by **Self Time** or **Total Time**. When you sort by **Self Time** and ignore any items in parenthesis, you can identify the functions with the longest execution time.
