@@ -4,7 +4,7 @@ pcx-content-type: how-to
 title: Require Purpose Justification
 ---
 
-# Require Purpose Justification After Login
+# Require Purpose Justification after login
 
 Cloudflare Access allows security and IT teams to present users with a purpose justification screen directly after they log into an Access application. This allows organizations to audit not only for *who* is accessing their resources, but also for *why* they are requesting access.
 
