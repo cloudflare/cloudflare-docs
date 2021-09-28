@@ -165,7 +165,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           npm run build
@@ -182,7 +182,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -201,7 +201,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -220,7 +220,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -239,7 +239,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -258,7 +258,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -277,7 +277,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -296,7 +296,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -315,7 +315,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -334,7 +334,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -353,7 +353,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -372,7 +372,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -391,7 +391,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -410,7 +410,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -429,7 +429,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -448,7 +448,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -466,7 +466,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -485,7 +485,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -504,7 +504,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -523,7 +523,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -542,7 +542,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -561,7 +561,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -580,7 +580,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -599,7 +599,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -618,7 +618,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -637,7 +637,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -656,7 +656,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -675,7 +675,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -694,7 +694,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -713,7 +713,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -732,7 +732,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -751,7 +751,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -770,7 +770,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -789,7 +789,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -808,7 +808,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -827,7 +827,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -846,7 +846,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -865,7 +865,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -884,7 +884,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -903,7 +903,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -922,7 +922,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -941,7 +941,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -960,7 +960,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -979,7 +979,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -998,7 +998,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
@@ -1017,7 +1017,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14.2.0
+          node-version: "12"
       - run: |
           npm install
           mkdir .docs
