@@ -232,7 +232,7 @@ $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
 The last DCV method available is via a CNAME record. First, make a request using `"method":"cname"`:
 
 ```bash
-$ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
+$ curl -sXPOST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
        -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
        -H "Content-Type: application/json" \
        -d '{"hostname":"cname.example.com", "ssl":{"method":"cname","type":"dv"}}'
