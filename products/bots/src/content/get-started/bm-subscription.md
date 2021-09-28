@@ -20,12 +20,16 @@ This Enterprise product provides the most flexibility to customers by:
 
 ## Enable Bot Management for Enterprise
 
-Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall Rules that will block or challenge traffic based on bot score. Others use Bot Analytics or perform custom actions using our Workers platform.
+Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall rules, but others use Bot Analytics or perform custom actions using our Workers platform.
 
 ### Before you begin
 
 - Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
-- 
+- Review the following concepts:
+
+  - [Bot score](/concepts/bot-score): Learn how Cloudflare scores bot requests.
+  - [Challenge Solve Rate (CSR)](/concepts/challenge-solve-rate): Learn how to evaluate the effectiveness of Firewall rules.
+  - [Bot tags](/concepts/cloudflare-bot-tags): Learn more about *why* Cloudflare classified a request a certain way.
 
 ### Step 1 — Configure Bot Management
 
@@ -65,7 +69,7 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 Based on your analysis of **automated** traffic, create a [Firewall Rule](https://developers.cloudflare.com/firewall/cf-firewall-rules) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
-<Example></Example>
+<Example>
 <table style='table-layout:fixed; width:100%'>
   <thead>
   <tr>
@@ -106,7 +110,7 @@ You can adjust your Firewall Rules at any point. Set aside time to review [Bot A
 
 <StaticResourcesBM/>
 
-For more details, see [Static resource protection](/about/static-resources).
+For more details, see [Static resource protection](/reference/static-resources).
 
 ### Verified bots
 

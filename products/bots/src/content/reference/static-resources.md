@@ -4,7 +4,7 @@ pcx-content-type: reference
 
 ---
 
-import StaticResourcesBM from "../../_partials/_static-resources-bm.md"
+import StaticResourcesBM from "../_partials/_static-resources-bm.md"
 
 # Static resource protection
 

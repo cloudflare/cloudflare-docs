@@ -1,11 +1,15 @@
 ---
-order: 0
+order: 1
 pcx-content-type: concept
 ---
+
+import BMBotDetectionEngines from "../_partials/_bm-bot-detection-engines.md"
 
 # Bot scores
 
 A bot score is an indicator of certainty given to individual requests. For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
+
+Bot scores are available to be used in Firewall fields and with Workers to customize application behavior. For more details, refer to [Bot Management variables](/reference/bot-management-variables). 
 
 <Aside type="note" header="Note:">
 
@@ -21,6 +25,16 @@ Customers with a Pro plan or higher can automatically see bot traffic divided in
 - **Likely automated**: Bots scores of 2 through 29
 - **Likely human**: Bot scores of 30 through 99
 - **Verified bot**: Non-malicious automated traffic (used to power search engines and other applications)
+
+## How Cloudflare generates bot scores
+
+<Aside type="note" header="Note:">
+
+The following detection engines only apply to Enterprise Bot Management. For specific details about the engines included in your plan, refer to [Plans](/plans).
+
+</Aside>
+
+<BMBotDetectionEngines/>
 
 ## Comparison to Threat Score
 
