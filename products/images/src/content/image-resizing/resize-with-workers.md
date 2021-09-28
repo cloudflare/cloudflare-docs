@@ -4,7 +4,7 @@ order: 4
 pcx-content-type: configuration
 ---
 
-# Resizing with Cloudflare Workers
+# Resize with Cloudflare Workers
 
 There are two ways of using Image Resizing. One is the [default URL scheme](/image-resizing/url-format), which provides an easy, declarative way of specifying image dimensions and other options. The other way is to use a JavaScript API in a [Worker](https://developers.cloudflare.com/workers/learning/getting-started). Workers give powerful programmatic control over every image request.
 
@@ -128,7 +128,7 @@ fetch(imageURL, {
 
 These typings are also available in [our Workers TypeScript definitions library](https://github.com/cloudflare/workers-types).
 
-## Configuring a worker
+## Configure a worker
 
 Create a new script in the Workers section of the Cloudflare Dashboard. Scope your worker script to a path dedicated to serving assets, such as `/images/*`, `/assets/*`, etc. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
@@ -140,7 +140,7 @@ Do not set up the Image Resizing worker for the entire zone (`/*`). This will bl
 
 It is best to keep the path handled by the Worker separate from the path to original (unresized) images to avoid request loops caused by the image resizing worker calling itself. For example, store your images in `example.com/originals/` directory, and handle resizing via `example.com/thumbnails/*` path that fetches images from the `/originals/` directory. If source images are stored in a location that is handled by a Worker, you must prevent the Worker from creating an infinite loop.
 
-### Preventing request loops
+### Prevent request loops
 
 To perform resizing and optimizations, the Worker must be able to fetch the original, unresized image from your origin server. If the path handled by your Worker overlaps with the path where images are stored on your server, it could cause an infinite loop by the Worker trying to request images from itself.
 

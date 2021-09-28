@@ -3,7 +3,7 @@ order: 6
 pcx-content-type: interim
 ---
 
-# Controlling origin access
+# Control origin access
 
 You can serve resized images without giving access to the original image. Images can be hosted on another server outside of your zone, and the true source of the image can be entirely hidden. The origin server may require authentication to disclose the original image, without needing visitors to be aware of it. Access to the full-size image may be prevented by making it impossible to manipulate resizing parameters.
 
@@ -70,7 +70,7 @@ async function handleRequest(request) {
 }
 ```
 
-## Avoiding image dimensions in URLs
+## Avoid image dimensions in URLs
 
 You do not have to include actual pixel dimensions in the URL. You can embed sizes in the Worker script, and select the size in some other way, e.g. by naming a preset in the URL:
 
