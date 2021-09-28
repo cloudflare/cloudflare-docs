@@ -39,9 +39,9 @@ Cloudflare currently supports the transfer of `.uk`, `co.uk`, `org.uk`, and `me.
 
 ## Possible reasons a transfer may fail or be rejected:
 
-1. The domain is locked or suspended.
-1. The nameservers were updated after the checkout process.
-1. The IPS tag update was made more than seven days after the checkout process. 
+* The domain is locked or suspended.
+* The nameservers were updated after the checkout process.
+* The IPS tag update was made more than seven days after the checkout process. 
 
 ## Transferring a .UK domain to another Registrar
 
