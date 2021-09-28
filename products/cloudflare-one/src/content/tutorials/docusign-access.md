@@ -12,7 +12,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 * Access for SaaS requires that you have Single Sign-On available in your DocuSign plan.
 * A domain you own.
-* See Docusign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
+* See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
 * A [SAML IdP](/identity/idp-integration/generic-saml) configured with SAML Attributes configured.
 
 **⏲️ Time to complete:** 10 minutes
@@ -23,10 +23,10 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1. Select Add an Application.
 1. Select SaaS.
 1. Use the following configuration:
-    * Set the **Application** to *Docusign*.
+    * Set the **Application** to *DocuSign*.
     * Put placeholder values in **EntityID** and **Assertion Consumer Service URL** (e.g. `https://example.com`). We’ll come back and update these.
     * Set **Name ID Format** to: *Unique ID*.
-1. Docusign requires SAML attributes to do Just In Time user provisioning.
+1. DocuSign requires SAML attributes to do Just In Time user provisioning.
     * Ensure you are collecting SAML attributes from your IdP:
 
     ![DocuSign SAML Attributes](../static/zero-trust-security/docusign/saml-attributes.png)
@@ -57,7 +57,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
     * **Identity Provider Issuer**: Entity ID.
     * **Identity Provider Login URL**: Assertion Consumer Service URL.
 1. Save the Identity Provider.
-1. Upload your certificate to the *Docusign Identity Provider* menu.
+1. Upload your certificate to the *DocuSign Identity Provider* menu.
 1. Configure your SAML Attribute mappings. The Attribute Names should match the values in **IdP Value** in your Access application.
 
     ![DocuSign Custom Attributes mapping](../static/zero-trust-security/docusign/custom-attribute-mapping.png)
@@ -70,7 +70,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 ## Finalize your Cloudflare configuration
 
-1. Go back to your Docusign application under **Access** > **Applications**.
+1. Go back to your DocuSign application under **Access** > **Applications**.
 1. Click **Edit**.
 1. Use the following mappings:
     * EntityID->Service Provider Issuer URL.
