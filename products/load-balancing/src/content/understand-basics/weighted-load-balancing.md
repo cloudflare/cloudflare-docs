@@ -1,35 +1,39 @@
 ---
 order: 14
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 # Weighted load balancing
 
-## Overview
-
-Use weighted load balancing to send specific percentages of traffic to available origins within a pool. If an origin becomes unhealthy, traffic will be rebalanced to available origins according to their respective weights.
+Use weighted load balancing to send specific percentages of traffic to available origins within a [pool](../pools). If an origin becomes unhealthy, traffic will be rebalanced to available origins according to their respective weights.
 
 ---
 
-## Important notes
+## Traffic percentages
 
-When working with origin weights, note the following:
+By default, all origins within a pool have a weight of **1**. Since the weight of each origin is equal, each pool will receive the same percentage of traffic.
 
-- **The value of each origin weight must be between 0 and 1**, and the weight must be expressed in increments of 0.01 (a weight of 0.015 is not valid).
-- **The default weight is 1**.
-- **The percentage of traffic to send to a pool** is calculated as follows:
+If you want to customize the percentage of traffic sent to an origin, set the **Weight** to a number between 0 and 1 (expressed in increments of .01). Cloudflare will then send traffic to that pool based on the following formula:
 
-  _Percent traffic to send to pool = origin weight for pool ÷ sum of available weights_
+`% of traffic to origin`  = `origin weight` ÷ `sum of all weights in the pool`
 
-- **Two pools with the same origin weights will receive the same traffic distribution**.
-- **If you do not enter weights, all origins will default to a weight of 1**, distributing traffic equally among the active origins.
-- **When enabled, session affinity can affect traffic distribution**, since established sessions are not reset when origin weights are modified.
+According to this formula, an origin with a weight of **0** should not receive any traffic sent to that pool(though the origin will still receive health checks).
 
-No traffic is sent to a Load Balancer origin of 0 weight except under the following conditions:
+You can also see this value in the **Percent** field when creating or editing a pool in the dashboard.
 
-- The origin is used in multiple pools and has multiple weights assigned.  Check the origin in the Cloudflare Traffic App or via the List Pools API to confirm.
-- Health Checks are still sent at the expected interval for a 0-weight origin.
-- Grey-clouded Load Balancers support weights; however, DNS resolvers may cache resolved IPs for clients.
+<Aside type="note" header="Note:">
+
+If an origin is used in multiple pools and has multiple weights assigned, the total traffic sent to that pool will differ from the percentage specified in each individual pool.
+
+</Aside>
+
+---
+
+## Limitations
+
+When enabled, [session affinity](../session-affinity) can affect traffic distribution since established sessions are not reset when origin weights are modified.
+
+When using [DNS-only load balancing](../proxy-status#gray-clouded-dns-only-load-balancing), DNS resolves may cache resolved IPs for clients and affect traffic distribution.
 
 ---
 
@@ -45,87 +49,12 @@ A significant amount of traffic is required for the distribution to converge on 
 
 ---
 
-## Configuring weights from the Load Balancing dashboard
+## Adjust weights
+
+### Via the dashboard
 
 Configure origin weights when you [create a load balancer](/create-load-balancer-ui) or from the **Load Balancing** dashboard in the **Traffic** app.
 
----
+### Via the API
 
-## Configuring weights via the Cloudflare API
-
-To configure the weight of an origin server with the Cloudflare API, include the `weight` property when using the Update Pools command.
-
-The example below uses the Update Pools command—`POST /user/load_balancers/pools`—to create a pool named _examplepool_ and set weights for each of three origins.
-
-**Request (curl)**
-
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/user/load_balancers/pools" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
-     -H "Content-Type: application/json" \
---data '{
-   "description":"Primary data center - Provider XYZ",
-   "name":"primary-dc-1",
-   "enabled":true,
-   "minimum_origins":2,
-   "monitor":"f1aba936b94213e5b8dca0c0dbf1f9cc",
-   "origins":[
-      {
-        "name": "server-a",
-        "address": "0.0.1.0",
-        "weight": 0.25
-       },
-       {
-         "name": "server-b",
-         "address": "0.0.2.0",
-         "weight": 0.25
-       },
-       {
-         "name": "server-c",
-         "address": "0.0.3.0",
-         "weight": 0.50
-       }
-   ]
-}'
-```
-
-**Response**
-
-```json
-{
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": {
-    "id": "17b5962d775c646f3f9725cbc7a53df4",
-    "created_on": "2014-01-01T05:20:00.12345Z",
-    "modified_on": "2014-01-01T05:20:00.12345Z",
-    "description": "Primary data center - Provider XYZ",
-    "name": "primary-dc-1",
-    "enabled": true,
-    "minimum_origins": 2,
-    "monitor": "f1aba936b94213e5b8dca0c0dbf1f9cc",
-    "check_regions": [
-      "WEU",
-      "ENAM"
-    ],
- "origins":[
-      {
-        "name": "server-a",
-        "address": "0.0.1.0",
-        "weight": 0.25
-       },
-       {
-         "name": "server-b",
-         "address": "0.0.2.0",
-         "weight": 0.25
-       },
-       {
-         "name": "server-c",
-         "address": "0.0.3.0",
-         "weight": 0.50
-       }
-   ]
-}
-```
+To configure the weight of an origin server with the Cloudflare API, include the `weight` property when using the [Update Pools command](https://api.cloudflare.com/#account-load-balancer-pools-update-pool).

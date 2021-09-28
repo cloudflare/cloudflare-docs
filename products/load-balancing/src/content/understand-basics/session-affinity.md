@@ -1,6 +1,6 @@
 ---
 order: 16
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 # Session affinity
@@ -19,9 +19,9 @@ Cloudflare only supports cookie-based session affinity. Other methods, such as T
 
 Session Affinity automatically directs requests from the same client to the same origin web server:
 
-- **When a client makes its first request**, Cloudflare sets a `CFLib` cookie on the client that tracks the associated origin web server.
-- **Subsequent requests by the same client are forwarded to that origin** for the duration of the cookie and as long as the origin server remains healthy.
-- **If the cookie expires or the origin server is unhealthy**, Cloudflare sets a new cookie tracking the new failover origin.
+1. When a client makes its first request, Cloudflare sets a `CFLib` cookie on the client (to track the associated origin web server).
+1. Subsequent requests by the same client are forwarded to that origin for the duration of the cookie and as long as the origin server remains healthy.
+1. If the cookie expires or the origin server becomes unhealthy, Cloudflare sets a new cookie tracking the new failover origin.
 
 All sessions default to 23 hours unless you set a custom session *Time to live* (TTL).
 

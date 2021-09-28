@@ -11,7 +11,7 @@ You can create a monitor within the [load balancer workflow](/how-to/create-load
 1. For additional settings, select **Advanced health check settings**:
      
      - **Interval**:
-        - By increasing the default, you may increase load on your servers.
+        - By increasing the default, you can improve failover time, but you may also increase load on your servers.
         - Minimum time in seconds is 60 (Pro), 10 (Business), and 5 (Enterprise).
      - **Timeout** and **Retries**: 
         - The health check will return unhealthy if it exceeds the duration specified in **Timeout** (and exceeds this duration more times than the specified number of **Retries**).
@@ -27,3 +27,9 @@ You can create a monitor within the [load balancer workflow](/how-to/create-load
         - Useful if your servers are expecting specific incoming headers.
 
 1. Select **Save**.
+
+<Aside type="note" header="Note:">
+
+To increase confidence in pool status, increase the `consecutive_up` and `consecutive_down` fields when [creating a monitor with the API](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To become healthy or unhealthy, monitored origins must pass this health check the consecutive number of times specified in these parameters.
+
+</Aside>
