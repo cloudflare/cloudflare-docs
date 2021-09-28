@@ -6,7 +6,7 @@ const product = args[0];
 concurrently(
   [
     {
-      command: `products/${product}/node_modules/cloudflare-docs-engine/bin/commands.sh develop`,
+      command: `bash products/${product}/node_modules/cloudflare-docs-engine/bin/commands.sh develop`,
       name: "GATSBY",
       prefixColor: "cyan",
     },
@@ -21,7 +21,7 @@ concurrently(
   }
 ).then(
   () => {
-    console.log("success");
+    process.exit(1);
   },
   async () => {
     console.log(
