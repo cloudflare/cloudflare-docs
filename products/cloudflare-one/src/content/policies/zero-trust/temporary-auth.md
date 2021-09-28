@@ -9,7 +9,7 @@ With Cloudflare Access, you can require that users obtain approval before they c
 
 ## How it works
 
-Administrators can set up an Access policy to require approval before a user is granted access to an application. The administrator will receive an email notification to review and approve/deny the request. Unlike a typical Access policy, the user will have to request access at the end of each session. This allows administrators to define which users should have persistent access and those that must request access.
+Administrators can set up an Access policy to require approval before a user is granted access to an application. The administrator will receive an email notification to review and approve/deny the request. Unlike a typical Access policy, the user will have to request access at the end of each session. This allows administrators to define which users should have persistent access and those that must request temporary access.
 
 ## Pre-requisites
 
