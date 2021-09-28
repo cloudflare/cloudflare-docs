@@ -27,3 +27,4 @@ If you do meet the [criteria](#who-is-affected), change your DCV method to [TXT]
 
 ## Why is this change happening?
 
+The Certificate Authority/Browser forum [voted to](https://cabforum.org/2021/06/03/ballot-sc45-wildcard-domain-validation/) not allow HTTP-based validation to prove ownership related issue wildcard certificates. As a result of that decision, [Digicert](https://knowledge.digicert.com/alerts/domain-authentication-changes-in-2021.html) will be implementing the change on November 15th.
