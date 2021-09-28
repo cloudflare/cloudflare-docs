@@ -7,13 +7,13 @@ pcx-content-type: reference
 
 # Load Balancing actions
 
-Add `actions` to customize how your load balancer responds to certain HTTP requests.
+Add **actions** to customize how your load balancer responds to certain HTTP requests.
 
 Each load balancing rule includes one or more actions.
 
 ## Supported Actions
 
-This table lists the actions available for Load Balancing rules. For a walkthrough, see [Create Load Balancing rules](../create-rules).
+This table lists the actions available for Load Balancing rules. For a walkthrough, refer to [Create Load Balancing rules](../create-rules).
 
 <table style='width:100%'>
   <thead>
