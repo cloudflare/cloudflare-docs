@@ -22,6 +22,12 @@ There are several methods that are used to complete this process, the primary on
 
 ## Completing DCV for a domain using Cloudflare
 
+<Aside type="warning">
+
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/reference/dcv-update).
+
+</Aside>
+
 When signing up with Cloudflare by updating your registrar to use Cloudflare nameservers, Cloudflare is able to automatically handle DCV on your behalf.
 
 For domains using a CNAME setup, this process is not as straightforward.
