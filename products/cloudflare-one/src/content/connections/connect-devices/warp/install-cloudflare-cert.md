@@ -5,6 +5,12 @@ pcx-content-type: how-to
 
 # Install the Cloudflare certificate
 
+<Aside type='note'>
+ 
+This procedure is only required to enable specific Cloudflare for Teams features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
+ 
+</Aside>
+
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
@@ -266,35 +272,35 @@ gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\ca
 
 1. Install the `certifi` package.
 
-```bash
-pip install certifi
-```
+ ```bash
+ pip install certifi
+ ```
 
 1. Identify the CA store by running:
 
-```bash
-python -m certifi
-```
+ ```bash
+ python -m certifi
+ ```
 
 1. This will output:
 
-```
-~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
-```
+ ```
+ ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
+ ```
 
 1. Append the Cloudflare certificate to this CA Store by running:
 
-```bash
-cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
-```
+ ```bash
+ cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
+ ```
 
 1. If needed, configure system variables to point to this CA Store by running:
 
-```
-export CERT_PATH=$(python -m certifi)
-export SSL_CERT_FILE=${CERT_PATH}
-export REQUESTS_CA_BUNDLE=${CERT_PATH}
-```
+ ```
+ export CERT_PATH=$(python -m certifi)
+ export SSL_CERT_FILE=${CERT_PATH}
+ export REQUESTS_CA_BUNDLE=${CERT_PATH}
+ ```
 
 ### Git
 
@@ -306,7 +312,7 @@ export REQUESTS_CA_BUNDLE=${CERT_PATH}
 
  ```git
  git config -l
-  ```
+ ```
 
 1. This will output:
 
@@ -336,30 +342,35 @@ export REQUESTS_CA_BUNDLE=${CERT_PATH}
  gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
  ```
 
- #### Git on Mac
+#### Git on Mac
 
- 1. Configure Git to trust the Cloudflare certificate with the following command.
+1. Configure Git to trust the Cloudflare certificate with the following command.
 
  ```
  git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
-```
+ ```
 
 ### npm
 
-The command below will set the `cafile` configuration to use the Cloudflare certificate.
+The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](../../../static/documentation/connections/Cloudflare_CA.pem) file type.
 
-```
-npm config set cafile [PATH_TO_CLOUDFLARE_CERT]
-```
+ ```
+ npm config set cafile [PATH_TO_CLOUDFLARE_CERT]
+ ```
 
 ### Google Cloud SDK
 
 The command below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
 
-```
-gcloud config set core/custom_ca_certs_file [PATH_TO_CLOUDFLARE_CERT]
-```
+ ```
+ gcloud config set core/custom_ca_certs_file [PATH_TO_CLOUDFLARE_CERT]
+ ```
 
 ### AWS CLI
 
 If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+
+
+## IntelliJ IDEA
+
+Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)

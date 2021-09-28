@@ -82,17 +82,45 @@ $ wrangler build [--env $ENVIRONMENT_NAME]
 
 ## login
 
+Authorize Wrangler with your Cloudflare login. This will prompt you with a Cloudflare account login page and a permissions consent page. 
+This command is the alternative to `wrangler config` and it uses OAuth tokens.
+
 ```sh
-$ wrangler login
+$ wrangler login [--scopes-list] [--scopes $SCOPES]
 ```
 
-Authenticate Wrangler with your Cloudflare login. This will prompt you with a Cloudflare account login page and is the alternative to `wrangler config`.
+All of the arguments and flags to this command are optional:
+
+<Definitions>
+
+- `--scopes-list` <PropMeta>optional</PropMeta>
+  - List all the available OAuth scopes with descriptions.
+- `--scopes $SCOPES`:<PropMeta>optional</PropMeta>
+  - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
+    e.g. `$ wrangler login --scopes account:read user:read`. 
+
+</Definitions>
+
+`wrangler login` uses all the available scopes by default if no flags are provided. 
+
+--------------------------------
+
+## logout
+
+Remove authorization from Wrangler. This command will invalidate your current OAuth token and delete the configuration file, if present. 
+
+```sh
+$ wrangler logout
+```
+
+This command only invalidates OAuth tokens acquired through `wrangler login`. However, it will try to delete
+the configuration file regardless of your authorization method.  Log in to the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
 
 --------------------------------
 
 ## config
 
-An interactive command that will authenticate Wrangler by prompting you for a Cloudflare API Token or Global API key.
+An interactive command that will authenticate Wrangler by prompting you for a Cloudflare API Token or Global API key, instead of OAuth tokens.
 
 ```sh
 $ wrangler config [--api-key]
@@ -105,7 +133,7 @@ $ wrangler config [--api-key]
 
 </Definitions>
 
-You can also use `wrangler login` or environment variables to authenticate.
+You can also use environment variables to authenticate, or `wrangler login` to authorize with OAuth tokens.
 
 --------------------------------
 
@@ -1001,6 +1029,7 @@ SUBCOMMANDS:
     subdomain       👷  Configure your workers.dev subdomain
     whoami          🕵️  Retrieve your user info and test your auth config
     tail            🦚  Aggregate logs from production worker
-    login           🔓 Authenticate Wrangler with your Cloudflare username and password
+    login           🔓  Authorize Wrangler with your Cloudflare username and password
+    logout          ⚙️  Remove authorization from Wrangler.
     help            Prints this message or the help of the given subcommand(s)
 ```

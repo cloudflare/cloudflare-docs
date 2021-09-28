@@ -110,8 +110,8 @@ $ cloudflared tunnel create <NAME>
 ```
 
 Running this command will:
-* Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet. 
-* Generate a [credentials file](/connections/connect-apps/tunnel-useful-terms#credentials-file). 
+* Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet. 
+* Generate a [credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file). 
 * Create a subdomain of `.cfargotunnel.com`.
 
 From the output of the command, take note of the tunnel’s UUID and the path to your tunnel’s credentials file.
@@ -133,14 +133,14 @@ Add the following fields to the file:
 ```txt
 url: http://localhost:8000
 tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```
 
 **If you are connecting a network**
 
 ```txt
 tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```
 
 Confirm that the configuration file has been successfully created by running:
@@ -157,11 +157,7 @@ Now assign a CNAME record that points traffic to your tunnel subdomain. This rec
 $ cloudflared tunnel route dns <UUID or NAME> <hostname>
 ```
 
-You can confirm that the route has been successfully established by running:
 
-```bash
-$ cloudflared tunnel route ip show 
-```
 
 ## 6. Run the tunnel 
 
@@ -175,14 +171,26 @@ $ cloudflared tunnel run <UUID or NAME>
 
 **If you are connecting a network**
 
+Add the IP/CIDR you would like to be routed through the tunnel.
+
 ```bash
-$ cloudflared tunnel route ip add <IP/CIDR>/<UUID or NAME>
+$ cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>
+```
+
+You can confirm that the route has been successfully established by running:
+
+```bash
+$ cloudflared tunnel route ip show 
+```
+
+```bash
+$ cloudflared tunnel run <UUID or NAME>
 ```
 
 If you want to run the tunnel with a configuration file that is not in the [default directory](/connections/connect-apps/configuration/configuration-file#storing-a-configuration-file), you can use the `--config` flag and specify a path.
 
 ```bash
-$ cloudflared tunnel run --config path/config.yaml <UUID or NAME>
+$ cloudflared tunnel --config path/config.yaml run <UUID or NAME>
 ```
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/connections/connect-apps/run-tunnel/run-as-service).

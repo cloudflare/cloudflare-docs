@@ -1,7 +1,7 @@
 ---
 order: 5
 title: Types of Notifications
-pcx-content: concept
+pcx-content-type: concept
 ---
 
 import SSLTroubleshoot from "../_partials/_troubleshoot-ssl"

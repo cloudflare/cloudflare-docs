@@ -10,7 +10,6 @@ const getProduct = (name) => {
 
 const products = [
   "1.1.1.1",
-  "access",
   "analytics",
   "api",
   "byoip",

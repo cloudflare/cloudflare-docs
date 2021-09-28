@@ -289,7 +289,7 @@ These methods are only available on an instance of a `Request` object or through
 
 - `arrayBuffer()` <Type>Promise&lt;ArrayBuffer></Type>
 
-  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer) representation of the request body.
+  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
 - `formData()` <Type>Promise&lt;FormData></Type>
 

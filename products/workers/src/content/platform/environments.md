@@ -66,21 +66,6 @@ name = "your-worker-dev"
 route = "your-custom-route"
 ```
 
-The layout of an example `[env.dev]` environment is displayed below:
-
-```toml
----
-filename: wrangler.toml
----
-name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
-
-[env.dev]
-name = "your-worker-dev"
-route = "your-custom-route"
-```
-
 --------------------------------
 
 ## Examples
@@ -333,7 +318,7 @@ workers_dev = true
 type = "rust"
 ```
 
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env production` setting.
+With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env staging` setting.
 
 ### Same name for multiple environments
 

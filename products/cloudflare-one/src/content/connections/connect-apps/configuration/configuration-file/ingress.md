@@ -34,6 +34,12 @@ ingress:
 
 ## Matching traffic
 
+<Aside type='note'>
+
+You can use wildcards to match traffic to multiple subdomains or paths. For example, if you set the `hostname` key to `*.example.com`, both `test.example.com` and `try.example.com` will route traffic to your origin.
+
+</Aside>
+
 When `cloudflared` receives an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both.
 
 If a rule does not specify a hostname, all hostnames will be matched. If a rule does not specify a path, all paths will be matched.
