@@ -31,6 +31,8 @@ To log in through the Cloudflare dashboard:
 
 Configure an IdP following [our detailed instructions](/identity/idp-integration).
 
+Once you configure your IdP, make sure you also [test your IdP](/identity/idp-integration#test-idps-on-the-teams-dashboard).
+
 ### Step 3 — Contact your account team
 
 Ask your account team to approve your SSO domain.
@@ -43,22 +45,19 @@ If you have multiple IdPs, manage your allowed providers in the **Authentication
 
 You likely will not have to make additional policies (IP access lists, etc.), but if you do refer to [Zero Trust policies](/policies/zero-trust).
 
-### Step 5 — Test your application
+### Step 5 — Test and enable your application
 
-To test your SSO application:
-
-1. Log into the [Teams dashboard](https://dash.teams.cloudflare.com/).
-1. Navigate to **Settings** > **Authentication**.
-1. In the **Cloudflare dashboard SSO** section, find your email domain.
-1. Click **Test** and verify that your authentication works properly.
-
-### Step 6 — Enable your SSO application
-
-Once you have customized and tested your SSO application, you can enable it to enforce SSO authentication.
-
-To enable your SSO application:
+To test and enable your SSO application:
 
 1. Log into the [Teams dashboard](https://dash.teams.cloudflare.com/).
 1. Navigate to **Settings** > **Authentication**.
 1. In the **Cloudflare dashboard SSO** section, find your email domain.
 1. Set the toggle value to **Enabled**.
+1. **Do not** log out or close your browser window. Instead, open a different browser or an incognito window.
+1. Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com) and log in with your domain's email address.
+1. If you can login successfully, you have successfully set up your SSO application.
+1. If you cannot login successfully:
+
+    1. Return to the the [Teams dashboard](https://dash.teams.cloudflare.com/).
+    1. For **Cloudflare dashboard SSO**, set you email domain to **Disabled**.
+    1. [Re-configure your IdP](/identity/idp-integration).
