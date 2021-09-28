@@ -9,7 +9,7 @@ When your application needs specialized routing (CNAME setup or custom hosts lik
 
 <Aside type="warning" header="Important">
 
-Headers set on an origin override headers set on a monitor.
+If you set a header override on an individual origin, it will take precedence over a header override set on a monitor.
 
 </Aside>
 
@@ -19,7 +19,7 @@ To balance traffic across multiple hosts, add `Host` headers to individual origi
 
 For example, you might have a pool with origins hosted in multiple AppEngine projects or Amazon S3 buckets. You also might want to set up specific failover origins within a pool.
 
-Since these examples require specific hostnames per origin, your load balancer could not properly route traffic _without_ a `Host` header override.
+Since these examples require specific hostnames per origin, your load balancer will not properly route traffic _without_ a `Host` header override.
 
 If you need an origin `Host` header override, add it when [creating](/how-to/create-pool) or editing a pool. For security reasons, this header must meet one of the following criteria:
 
@@ -29,7 +29,7 @@ If you need an origin `Host` header override, add it when [creating](/how-to/cre
 
 ## Host header prioritization
 
-When a load balancer runs health checks, headers set on an origin override headers set on a monitor.
+If you set a header override on an individual origin, it will take precedence over a header override set on a monitor during health checks.
 
 For example, you might have a load balancer for `www.example.com` with the following setup:
 
