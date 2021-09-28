@@ -94,3 +94,7 @@ In summary, here is what will happen after a domain expires:
 ### When will I be billed?
 
 You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
+
+### Is there a fee to transfer a .UK domain?
+
+No, there is no fee to transfer a `.uk` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.
