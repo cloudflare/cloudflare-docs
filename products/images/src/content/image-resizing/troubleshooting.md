@@ -18,7 +18,7 @@ When resizing fails, the response body contains an error message explaining the 
 
 * 9401 — Missing or invalid required arguments in `{cf:image{…}}` options, e.g. `width` is not a number.
 * 9402 — Download of the original image failed, e.g. because the image was too large or the connection was interrupted.
-* 9403 — [Request loop](/resizing-with-workers#preventing-request-loops). The service was asked to resize an already-resized image, or the Worker has fetched its own URL.
+* 9403 — [Request loop](/image-resizing/resizing-with-workers#preventing-request-loops). The service was asked to resize an already-resized image, or the Worker has fetched its own URL.
 * 9406 & 9419 — Invalid image URL specified (e.g. contains spaces, unescaped Unicode, or non-HTTP/S URL).
 * 9407 — Origin domain name lookup error.
 * 9404 — Origin returned 404 HTTP status code. The image doesn’t exist on the origin server, or a wrong URL was given to resize.

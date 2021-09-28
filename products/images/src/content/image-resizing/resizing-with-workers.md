@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 # Resizing with Cloudflare Workers
 
-There are two ways of using image resizing. One is the [default URL scheme](/url-format), which provides an easy, declarative way of specifying image dimensions and other options.
+There are two ways of using image resizing. One is the [default URL scheme](/image-resizing/url-format), which provides an easy, declarative way of specifying image dimensions and other options.
 The other way is to use a JavaScript API in a [Worker](https://developers.cloudflare.com/workers/learning/getting-started). Workers give powerful programmatic control over every image request.
 
 * You can use a custom URL scheme, e.g. instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.

@@ -130,7 +130,7 @@ The service supports ICC color profiles in JPEG and PNG images. JPEG metadata ca
 
 ## Recommended image sizes
 
-Ideally, images sizes should match exactly the size they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200" …>`, then images should be resized to `width=200`. If the exact size is not known ahead of time, use [responsive images technique](/responsive-images).
+Ideally, images sizes should match exactly the size they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200" …>`, then images should be resized to `width=200`. If the exact size is not known ahead of time, use [responsive images technique](/image-resizing/responsive-images).
 
 If you can’t use the `<img srcset>` markup, and have to hardcode specific maximum sizes, we recommend:
 

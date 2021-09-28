@@ -7,7 +7,7 @@ pcx-content-type: interim
 
 You can serve resized images without giving access to the original image. Images can be hosted on another server outside of your zone, and the true source of the image can be entirely hidden. The origin server may require authentication to disclose the original image, without needing visitors to be aware of it. Access to the full-size image may be prevented by making it impossible to manipulate resizing parameters.
 
-All these behaviors are completely customizable, because they are handled by custom code of a script running [on the edge in a Cloudflare Worker](/resizing-with-workers).
+All these behaviors are completely customizable, because they are handled by custom code of a script running [on the edge in a Cloudflare Worker](/image-resizing/resizing-with-workers).
 
 ```js
 addEventListener("fetch", event => {
@@ -25,9 +25,9 @@ This code will be run for every request, but the source code won’t be accessib
 
 The examples below are only suggestions, and don’t have to be followed exactly. You can compute image URLs and resizing options any way you like.
 
-<Aside type="warning">
+<Aside type="warning" header="Warning">
 
-__Warning:__ When testing image resizing, please deploy the script, and test it from a regular web browser window. The preview in the Dashboard doesn’t simulate image resizing.
+When testing image resizing, please deploy the script, and test it from a regular web browser window. The preview in the Dashboard doesn’t simulate image resizing.
 
 </Aside>
 
