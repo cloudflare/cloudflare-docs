@@ -127,3 +127,13 @@ To create a new advanced certificate in the dashboard:
     - Validation method
     - Certificate Validity Period
 1. Select **Save**.
+
+## Domain control validation (DCV)
+
+For more information about DCV, refer to [DCV methods](/edge-certificates/universal-ssl/changing-dcv-method).
+
+<Aside type="warning">
+
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/reference/dcv-update).
+
+</Aside>

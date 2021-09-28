@@ -9,22 +9,26 @@ After November 15, 2021, you will no longer be able to use HTTP Domain Control V
 
 After October 21, 2021, you will also no longer be able to issue new wildcard certificates using HTTP DCV.
 
-## Who is affected?
-
-Affected customers are those using [Advanced certificates](/edge-certificates/advanced-certificate-manager) or [SSL for SaaS](/ssl-for-saas) who meet all of the following criteria:
-
-- Use HTTP DCV validation
-- Have wildcard certificates or certificates with multiple SANs
-- Have a CNAME (partial) setup
+## What is affected?
 
 If you are affected by this change, you should have also received an email from Cloudflare.
 
-## What do I need to do?
+### Advanced certificates
 
-If your application is using a full setup or already use another method of DCV, you do not need to make any changes.
+This change affects customers using [Advanced certificates](/edge-certificates/advanced-certificate-manager) for wildcard certificates or certificates with multiple SANs.
 
-If you do meet the [criteria](#who-is-affected), change your DCV method to [TXT](/ssl-for-saas/common-tasks/certificate-validation-methods#txt-record) or [Email](/ssl-for-saas/common-tasks/certificate-validation-methods#email).
+If your application is using a full setup or already use another method of DCV, you do not need to make any changes. Cloudflare will complete TXT DCV on your behalf
+
+If your application is using a partial (CNAME) setup and also uses HTTP DCV validation, you will need to [change your DCV method](/edge-certificates/universal-ssl/changing-dcv-method) to either TXT or Email.
+
+### SSL for SaaS
+
+This change also affects [SSL for SaaS customers](/ssl-for-saas) who use HTTP DCV validation for wildcard certificates.
+
+Update your DCV method to [TXT](/ssl-for-saas/common-tasks/certificate-validation-methods#txt-record) and provide the TXT validation tokens to your customers so they can add it to their DNS.
+
+If you do not make a change, Cloudflare will automatically change your DCV method to TXT and send your customer tokens to you 30 days before the certificates expire.
 
 ## Why is this change happening?
 
-The Certificate Authority/Browser forum [voted to](https://cabforum.org/2021/06/03/ballot-sc45-wildcard-domain-validation/) not allow HTTP-based validation to prove ownership related issue wildcard certificates. As a result of that decision, [Digicert](https://knowledge.digicert.com/alerts/domain-authentication-changes-in-2021.html) will be implementing the change on November 15th.
+The Certificate Authority/Browser forum [voted to](https://cabforum.org/2021/06/03/ballot-sc45-wildcard-domain-validation/) not allow HTTP-based validation to prove ownership related issue wildcard certificates. As a result of that decision, [Digicert and other CAs](https://knowledge.digicert.com/alerts/domain-authentication-changes-in-2021.html) will be implementing the change on November 15th.

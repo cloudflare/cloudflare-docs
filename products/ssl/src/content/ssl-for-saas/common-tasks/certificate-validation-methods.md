@@ -5,6 +5,12 @@ pcx-content-type: interim
 
 # Validate certificates
 
+<Aside type="warning">
+
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/reference/dcv-update).
+
+</Aside>
+
 ## HTTP (Recommended)
 
 By far the easiest method for validating hostnames and issuing certificates is using “HTTP” validation. With this method, the only thing that your end-customers need to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
