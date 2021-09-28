@@ -4,7 +4,13 @@ pcx-content-type: interim
 
 # Export GraphQL data to CSV
 
-This tutorial shows how to create a Python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like Splunk can easily ingest and visualize it.
+<Aside type="warning">
+
+This tutorial uses Network Analytics v2 nodes. For more information on migrating from Network Analytics v1 to Network Analytics v2, refer to the [migration guide](/graphql-api/migration-guides/network-analytics-v2).
+
+</Aside>
+
+This tutorial shows how to create a Python script that queries the GraphQL API for Network Analytics data and then converts that data to comma-separated values (CSV) so that tools like [Splunk](https://www.splunk.com) can easily ingest and visualize it.
 
 This example queries the `dosdAttackAnalyticsAdaptiveGroups` [data set](/graphql-api/features/data-sets).
 
@@ -45,7 +51,7 @@ historical_days = 7
 
 ## Calculate the date and time _n_ days ago
 
-The `get_datetime()` function takes a number of days (`num_days`), subtracts that value from now, and returns the datetime `num_days` ago.
+The `get_datetime()` function takes a number of days (`num_days`), subtracts that value from now, and returns a `datetime` value corresponding to `num_days` ago.
 
 ```python
 ---
@@ -76,7 +82,7 @@ def get_cf_graphql():
         'X-Auth-Email': api_email,
         'Authorization': f'Bearer {api_token}',
     }
-    # This variable replacement requires Python3.6 or higher
+    # This variable replacement requires Python 3.6 or higher
     payload = '''{ \
       "query": \
         "query ipFlowEventLog( \
@@ -132,7 +138,7 @@ def convert_to_csv():
     # Flatten nested JSON data first
     network_analytics_normalized = pd.json_normalize(
         network_analytics, 'dosdAttackAnalyticsAdaptiveGroups')
-    # Only select the columns we're interested in
+    # Only select the columns we are interested in
     network_analytics_abridged = network_analytics_normalized[
         [
             'dimensions.attackId',
@@ -203,7 +209,7 @@ def get_cf_graphql():
         'X-Auth-Email': api_email,
         'Authorization': f'Bearer {api_token}',
     }
-    # This variable replacement requires Python3.6 or higher
+    # This variable replacement requires Python 3.6 or higher
     payload = '''{ \
       "query": \
         "query ipFlowEventLog( \
@@ -249,7 +255,7 @@ def convert_to_csv():
     # Flatten nested JSON data first
     network_analytics_normalized = pd.json_normalize(
         network_analytics, 'dosdAttackAnalyticsAdaptiveGroups')
-    # Only select the columns we're interested in
+    # Only select the columns we are interested in
     network_analytics_abridged = network_analytics_normalized[
         [
             'dimensions.attackId',
