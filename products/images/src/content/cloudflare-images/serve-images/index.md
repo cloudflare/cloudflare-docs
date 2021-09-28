@@ -13,7 +13,7 @@ To serve images uploaded to Cloudflare Images, you need three pieces of informat
 
 Assuming you have at least one image uploaded to Images, you will find the basic URL format on your Images Dashboard:
 
-![Serving images with Cloudflare Images](./image-delivery-url.png)
+![Serving images with Cloudflare Images](../../static/image-delivery-url.png)
 
 A typical Image Delivery URL looks like this:
 

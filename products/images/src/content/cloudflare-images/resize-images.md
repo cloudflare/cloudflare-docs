@@ -9,7 +9,7 @@ Cloudflare Images supports Variants that specify how you would like to resize im
 
 Each variant has properties including the width and height of resized images.
 
-![Configure variants in Cloudflare Images](./variants.png)
+![Configure variants in Cloudflare Images](../static/variants.png)
 
 The fit property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
 

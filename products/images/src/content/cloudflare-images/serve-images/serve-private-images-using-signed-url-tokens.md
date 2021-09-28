@@ -9,7 +9,7 @@ If an image is marked to require a signed URL, it cannot be accessed without a t
 
 To get started, get the default Key from your Images Dashboard:
 
-![Screenshot of the keys page on the Cloudflare Images dashboard](./keys.png)
+![Screenshot of the keys page on the Cloudflare Images dashboard](../../static/keys.png)
 
 Next, use the key to generate an expiring tokenized URL. Here is an example Worker script that takes in a regular URL without a signed token and returns a tokenized URL that expires after 1 day:
 
