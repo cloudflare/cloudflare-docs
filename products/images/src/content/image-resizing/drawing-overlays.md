@@ -36,27 +36,25 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 
 <Definitions>
 
-- `url`
+- **`url`**
   - Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing of watermarks or non-rectangular overlays we recommend using PNG or WebP images.
 
-- `width` and __`height`__
+- **`width`** and **`height`**
   - Maximum size of the overlay image, in pixels. It must be an integer.
 
-- `fit` and __`gravity`__
+- **`fit`** and **`gravity`**
   - Affects interpretation of `width` and `height`. Same as [for the main image](/image-resizing/resizing-with-workers/#fetch-options).
 
-- `opacity`
+- **`opacity`**
   - Floating-point number between `0` (transparent) and `1` (opaque). For example, `opacity: 0.5` makes overlay semitransparent.
 
-- `repeat`
+- **`repeat`**
   - If set to `true`, the overlay image will be tiled to cover the entire area. This is useful for stock-photo-like watermarks.
+  - If set to `"x"`, the overlay image will be tiled horizontally only (form a line).
+  - If set to `"y"`, the overlay image will be tiled vertically only (form a line).
 
-    If set to `"x"`, the overlay image will be tiled horizontally only (form a line).
-
-    If set to `"y"`, the overlay image will be tiled vertically only (form a line).
-
-- `top`, __`left`__, __`bottom`__, __`right`__
-  - Position of the overlay image relative to a given edge. Each property is an offset in pixels. `0` aligns exactly to the edge. For example, `left: 10` positions left side of the overlay 10 pixels from the left edge of the image it’s drawn over. `bottom: 0` aligns bottom of the overlay with bottom of the background image.
+- **`top`**, **`left`**, **`bottom`**, **`right`**
+  - Position of the overlay image relative to a given edge. Each property is an offset in pixels. `0` aligns exactly to the edge. For example, `left: 10` positions left side of the overlay 10 pixels from the left edge of the image it is drawn over. `bottom: 0` aligns bottom of the overlay with bottom of the background image.
 
     Setting both `left` & `right`, or both `top` & `bottom` is an error.
 
