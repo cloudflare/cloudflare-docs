@@ -35,13 +35,13 @@ Configure an IdP following [our detailed instructions](/identity/idp-integration
 
 Ask your account team to approve your SSO domain.
 
-### Step 4 — Customize your SSO application
+### Step 4 (optional) — Customize your SSO application
 
 Once your account team has approved your SSO domain, you will see an **SSO App** in the [Teams dashboard](https://dash.teams.cloudflare.com/) (under **Access** > **Applications**). This application automatically has a rule to `allow email domain` and uses your IdP as the authentication provider.
 
 If you have multiple IdPs, manage your allowed providers in the **Authentication** tab of the **SSO App**.
 
-For help creating additional policies (IP access lists, etc.), refer to [Zero Trust policies](/policies/zero-trust).
+You likely will not have to make additional policies (IP access lists, etc.), but if you do refer to [Zero Trust policies](/policies/zero-trust).
 
 ### Step 5 — Test your application
 
