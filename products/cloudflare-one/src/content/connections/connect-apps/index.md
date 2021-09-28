@@ -17,7 +17,7 @@ Cloudflared establishes outbound connections (tunnels) between your resources an
 
 Most interactions with Cloudflare Tunnel require the use of a CLI — for example, creating and configuring tunnels, and running a tunnel or routing traffic through it. To get started, visit the [Cloudflare for Teams Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Tunnels**. When visiting the page for the first time, a step-by-step tutorial will help you create your first tunnel.
 
-Once your first tunnel is connected to Cloudflare, use this page to check your [tunnel status](#tunnel-status) and view a comprehensive list of active or inactive tunnels. You’ll also be able to filter tunnels by name, status, uptime, or creation date, and use the search bar to retrieve tunnels by name.  
+Once your first tunnel is connected to Cloudflare, use this page to check your [tunnel status](#tunnel-status) and view a comprehensive list of active or inactive tunnels. You’ll also be able to filter tunnels by name, status, uptime, or creation date, and use the search bar to retrieve tunnels by name. 
 
 ![Tunnel UI](../../static/documentation/connections/connect-apps/tunnel-blog.png)
 
@@ -25,7 +25,7 @@ Once your first tunnel is connected to Cloudflare, use this page to check your [
 
 A tunnel's status depends on the health of its connections:
 
-* **Active**: This means your tunnel is running and has a healthy connection to the Cloudflare Network.
+* **Active**: This means your tunnel is running and has a healthy connection to the Cloudflare network.
 * **Inactive**: This means your tunnel is not running and is not connected to Cloudflare.
 * **Degraded**: This means one or more of your four long-lived TCP connections to Cloudflare have been disconnected, but traffic is still being served to your origin.
 
