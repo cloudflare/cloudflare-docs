@@ -16,7 +16,7 @@ When you create a tunnel, Cloudflare generates a subdomain of `cfargotunnel.com`
 
 Unlike publicly routable IP addresses, the subdomain will only proxy traffic for a DNS record in the same Cloudflare account. If someone discovers your subdomain UUID, they will not be able to create a DNS record in another account or system to proxy traffic to the address.
 
-## Create a DNS record
+### Create a DNS record
 
 To create a DNS record for your tunnel:
 
