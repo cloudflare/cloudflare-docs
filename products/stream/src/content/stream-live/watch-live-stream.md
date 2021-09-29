@@ -94,15 +94,14 @@ The response will contain the HLS/DASH URL that can be used to play the current 
   "errors": [],
   "messages": []
 }
-````
+```
 
 ## Replaying recordings
+
 Live streams are automatically recorded. To get a list of recorded streams for a given input id, make the same `GET` request as you would to get the live video and filter for videos where the state property is set to `ready`: 
 
-```txt
+```bash
 GET https://dash.cloudflare.com/api/v4/accounts/{account}/stream/live_inputs/{live-input-id}/videos
-
-GET https://api.cloudflare.com/client/api/v4/accounts/{account}/stream/live_inputs/{live-input-uid}/video
 ```
 
 This is what a response looks like:
