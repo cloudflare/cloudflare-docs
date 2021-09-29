@@ -10,7 +10,7 @@ Vary for Images is enabled through Cloudflare’s API by creating a variants rul
 ## Create a variants rule 
 
 ```json
-curl -X POST 
+curl -X PATCH 
 "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0 c353/cache/variants" \ 
 -H "X-Auth-Email: user@example.com" \ 
 -H "X-Auth-Key: 3xamp1ek3y1234" \ 
