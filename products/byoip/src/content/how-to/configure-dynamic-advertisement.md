@@ -16,7 +16,7 @@ To prevent issues and simplify the advertisement process during an attack scenar
 To configure IP prefix assignment from your Cloudflare account home, use the **Status** drop-down list in the **IP Prefixes** dialog, as outlined below.
 
 1. Log in to your Cloudflare dashboard.
-1. From **Account Home**, **IP Prefixes**. The **IP Prefixes** page displays.
+1. On **Account Home**, select **IP Prefixes**.
 1. To edit a prefix, click the **Edit** at the end of the entry.
 1. From **Edit IP Prefixes**, under **Status**, select *Advertised* or *Withdrawn*.
 1. Click **Save** to commit your changes.
