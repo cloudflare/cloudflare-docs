@@ -12,17 +12,9 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 * **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205065067-Setting-up-Multi-User-accounts-on-Cloudflare#12345682).
 
-* **Get a list of the Prefix IDs you want to manage.** Maintaining a list of Cloudflare IDs for each prefix simplifies management via the Cloudflare API because most dynamic advertisement operations require them.
-
-To obtain Prefix IDs, review [obtain prefix IDs](/how-to/configure-dynamic-advertisement#obtain-prefix-ids) from the dashboard or use the [list prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
+* **Get a list of the Prefix IDs you want to manage.** Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. To obtain Prefix IDs, review [obtain prefix IDs](/how-to/configure-dynamic-advertisement#obtain-prefix-ids) from the dashboard or use the [list prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
 
 ## Enable prefix advertisement
-
-<Aside>
-
-Be sure to enable prefix advertisement with Cloudflare before you withdraw the advertisement from your data center. Withdrawing the advertisement from your data center without first enabling it with Cloudflare can result in dropped traffic because the traffic will not have access to a valid route.
-
-</Aside>
 
 To avoid latency and the possibility of dropped routes, enable prefix advertisement from Cloudflare **before** you withdraw the advertisement from your data center.
 

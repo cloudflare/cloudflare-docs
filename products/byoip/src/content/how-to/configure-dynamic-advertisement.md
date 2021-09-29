@@ -21,7 +21,7 @@ To configure IP prefix assignment from your Cloudflare account home, use the **S
 1. From **Edit IP Prefixes**, under **Status**, select *Advertised* or *Withdrawn*.
 1. Click **Save** to commit your changes.
 
-After saving your changes, it takes between two to seven minutes to enable advertisement and approximately 15 minutes to disable (withdraw) advertisement.
+After saving your changes, it takes between 2 to 7 minutes to enable advertisement and approximately 15 minutes to disable (withdraw) advertisement.
 
 ## Configure dynamic advertisement via the API
 
