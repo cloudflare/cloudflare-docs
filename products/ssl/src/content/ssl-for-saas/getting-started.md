@@ -92,7 +92,7 @@ Once your account has been provisioned, you are ready to issue certificates.
 
 Once you issue certificates, Cloudflare will initiate the domain validation process using the method you specified.
 
-With a CNAME in place, the entire process—from validation to issuance to edge deployment—completes in approximately 90 seconds.
+With a CNAME in place, the entire process — from validation to issuance to edge deployment — completes in approximately 90 seconds.
 
 ### Monitor certificate status
 
