@@ -3,6 +3,8 @@ order: 3
 pcx-content-type: reference
 ---
 
+import CustomOriginDefinition from "../../_partials/_custom-origin-server-definition.md"
+
 # Hostname specific behavior
 
 --------
@@ -28,20 +30,9 @@ Rate limiting rules can match Custom Hostnames on a per-path or per-hostname bas
 
 ### Custom origin server
 
-If your zone has been granted the Custom Origin Server entitlement, you have the option of specifying a per-hostname origin via the API or UI. In the API example below we PATCH an existing custom hostname to use a custom origin server rather than the default proxy fallback. You can also [specify a `custom_origin_server` during issuance](/ssl-for-saas/issuing-certificates/).
+<CustomOriginDefinition/>
 
-```bash
-$ curl -sX PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
-     -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
-     -H "Content-Type: application/json" \
-     -d '{"ssl":{"method":"http","type":"dv"},"custom_origin_server":"origin2.example.com"}'
-```
-
-The `custom_origin_server` value must be a valid hostname that's been added to your DNS zone as an A, AAAA, or CNAME record; you cannot use an IP address.
-
-This value can also be set in the UI, where the same validation rules apply:
-
-![Custom Origin Server — Example](../../static/ssl-saas-customorigin.png)
+For more details, refer to [Custom origins](custom-origin).
 
 ### Supported protocols
 
