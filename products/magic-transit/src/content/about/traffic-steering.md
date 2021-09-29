@@ -13,7 +13,7 @@ The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top pr
 
 ![Example route priorities](../static/mt-traffic-steering-ecmp-baseline.png)
 
-When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routin. An example of multiple routes with equality priority would  beTunnel 1 versus Tunnel 2.
+When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
 
 The use of ECMP routing provides load balancing across tunnels with the same priority.
 
