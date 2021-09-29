@@ -18,7 +18,7 @@ To use a custom origin server, you need to meet the following requirements:
 
 ## Use a custom origin
 
-To use a custom origin, select that option when [creating a new custom hostname](/ssl-for-saas/common-tasks/create-custom-hostname) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+To use a custom origin, select that option when [creating a new custom hostname](/ssl-for-saas/common-tasks/issuing-certificates) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
 
 ## SNI rewrites
 
@@ -45,7 +45,7 @@ SNI rewrites allow you to choose how your custom hostname populates the SNI valu
 
 ### Set an SNI rewrite
 
-To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/ssl-for-saas/common-tasks/create-custom-hostname).
+To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/ssl-for-saas/common-tasks/issuing-certificates).
 
 To set an SNI rewrite via the API, set the `custom_origin_sni` parameter when [creating a custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname):
 
