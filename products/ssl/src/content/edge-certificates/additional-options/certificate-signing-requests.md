@@ -13,17 +13,25 @@ A CSR contains information about your domain: your Organization Name and Address
 
 <Aside type="note">
 
-Account-level CSRs are only available to Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/edge-certificates/advanced-certificate-manager). 
+At the moment, CSRs are only available to Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/edge-certificates/advanced-certificate-manager).
 
 </Aside>
 
-## Generate a CSR
+## Types of CSRs
+
+You can create two types of CSRs:
+
+- **Zone-level**: Meant only for sign certificates associated with the current zone.
+- **Account-level**: Meant for organizations that issue certificates across multiple domains. 
+
+## Create and use a CSR
 
 To create a CSR:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and an application.
 1. Navigate to **SSL/TLS** > **Edge Certificates**.
 1. On **Certificate Signing Request (CSR)**, click **Generate**.
+1. Choose a **Scope** (only [certain customers](#types-of-csrs) can choose **Account**.
 1. Enter relevant information on the form and click **Create**.
 
 To use a CSR:
