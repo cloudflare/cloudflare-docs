@@ -1,5 +1,5 @@
 ---
-title: Best practices
+title: IRR entries
 order: 6
 pcx-content-type: best-practices
 ---
@@ -10,9 +10,7 @@ To add or update an IRR entry, use one of the routing registries listed in the [
 
 Suggested registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
 
-## Best practices
-
-When updating IRR entries, use these best practices:
+## Updating IRR entries
 
 *   If you own your own subnet, use the RIPE and APNIC routing registries. These registries allow you to verify subnet ownership.
 *   If you lease your subnet, follow these guidelines:
@@ -21,7 +19,7 @@ When updating IRR entries, use these best practices:
 
 ### IRR Entry instructions
 
-Each routing registry has its own set of IRR entry instructions. This table provides links to those instructions:
+Each routing registry has its own set of IRR entry instructions. This table provides links to those instructions.
 
 <TableWrap><table>
 <thead>
