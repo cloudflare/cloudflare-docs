@@ -1,10 +1,13 @@
 ---
-title: FAQ
-order: 6
+order: 3
 pcx-content-type: faq
 ---
 
 # FAQ
+
+## What is the difference between Cloudflare Images and Image Resizing products?
+
+Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization, and delivery. Image Resizing only offers resizing and optimization.
 
 ## How much does Cloudflare Images cost?
 
@@ -31,7 +34,3 @@ Cloudflare Images supports most common file formats as input files. These includ
 ## Can Cloudflare Images convert my images to AVIF?
 
 Soon! We will be introducing AVIF support in the near future.
-
-## What is the difference between Cloudflare Images and Image Resizing products?
-
-Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization, and delivery. Image Resizing only offers resizing and optimization.
