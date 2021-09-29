@@ -1,5 +1,5 @@
 module.exports = {
-  product: "Cloudflare Images",
+  product: "Images",
   pathPrefix: "/images",
   productLogoPathD: require("./src/content/icons/images").pathD,
   contentRepo: "cloudflare/cloudflare-docs",
@@ -16,9 +16,9 @@ module.exports = {
     algoliaOptions: { facetFilters: '["project:images"]' },
   },
   siteMetadata: {
-    title: "Cloudflare Images docs",
+    title: "Images docs",
     description:
-      "Build a scalable image pipeline to store, resize, optimize, and deliver images in a fast and secure manner.",
+      "Optimize and serve images in a fast and secure manner.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/images",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",

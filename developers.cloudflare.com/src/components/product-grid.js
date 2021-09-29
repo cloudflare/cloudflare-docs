@@ -18,7 +18,6 @@ $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resourc
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
 $["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
-$["image-resizing"]       = require("../../../products/image-resizing/src/content/icons/image-resizing").pathD
 $["images"]               = require("../../../products/images/src/content/icons/images").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
@@ -127,12 +126,7 @@ const products = [
     icon: "http3",
   },
   {
-    title: "Image Resizing",
-    path: "image-resizing",
-    icon: "image-resizing",
-  },
-  {
-    title: "Cloudflare Images",
+    title: "Images",
     path: "images",
     icon: "images",
   },
