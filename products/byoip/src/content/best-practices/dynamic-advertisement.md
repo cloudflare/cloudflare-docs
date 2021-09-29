@@ -10,7 +10,7 @@ pcx-content-type: best-practices
 
 To prevent issues and simplify the advertisement process during an attack scenario, complete the following tasks.
 
-* **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205065067-Setting-up-Multi-User-accounts-on-Cloudflare#12345682).
+* **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](https://support.cloudflare.com/hc/articles/205065067#12345682).
 
 * **Get a list of the Prefix IDs you want to manage.** Maintaining a list of Cloudflare IDs for each prefix simplifies management via the Cloudflare API because most dynamic advertisement operations require them.
 
