@@ -12,31 +12,34 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 
 This Enterprise product provides the most flexibility to customers by:
 
-- Generating a bot score of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
+- Generating a [bot score](/concepts/bot-score) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
 - Allowing customers to take action on this score with Firewall Rules or Workers.
 - Allowing customers to view this score in Bot Analytics or Logs.
-
-The bot score is an indicator of certainty. For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
 
 ---
 
 ## Enable Bot Management for Enterprise
 
-Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall Rules that will block or challenge traffic based on bot score. Others use Bot Analytics or perform custom actions using our Workers platform.
+Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write Firewall rules, but others use Bot Analytics or perform custom actions using our Workers platform.
 
-### 1. Contact your account team
+### Before you begin
 
-To enable Bot Management, contact your account team. After you have purchased Bot Management, you can access it by going to **Firewall** > **Bots**.
+- Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
+- Review the following concepts:
 
-### 2. Configure Bot Management
+  - [Bot score](/concepts/bot-score): Learn how Cloudflare scores bot requests.
+  - [Challenge Solve Rate (CSR)](/concepts/challenge-solve-rate): Learn how to evaluate the effectiveness of Firewall rules.
+  - [Bot tags](/concepts/cloudflare-bot-tags): Learn more about *why* Cloudflare classified a request a certain way.
 
-Decide whether you want to enable [JavaScript detections](../../about/javascript-detections) to help identify bots.
+### Step 1 — Configure Bot Management
+
+Decide whether you want to enable [JavaScript detections](/reference/javascript-detections) to help identify bots.
 
 To enable this feature, go to **Firewall** > **Bots**.
 
-### 3. Monitor domain traffic
+### Step 2 — Monitor domain traffic
 
-Before deploying Bot Management on live traffic, use [Bot Analytics](../../bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic.
+Before deploying Bot Management on live traffic, use [Bot Analytics](/bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic.
 
 Go to **Firewall** > **Bots** and examine the following traffic segments:
 - **Automated traffic**: Bot scores of 1
@@ -50,6 +53,7 @@ Use the slider tool to identify **other traffic groups**. For example, you may f
 ![Bot score distribution](../images/bot-score-distribution.png)
 
 At the end of your analysis, you should:
+
 - Have a range of scores you can confidently block or challenge
 - Understand nuances in your traffic that may require special attention
 
@@ -61,10 +65,11 @@ New customers should give Bot Analytics a few days to gather data. You should on
 
 </Aside>
 
-### 4. Create a Firewall Rule for automated traffic
+### Step 3 — Create a Firewall Rule for automated traffic
 
 Based on your analysis of **automated** traffic, create a [Firewall Rule](https://developers.cloudflare.com/firewall/cf-firewall-rules) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
+<Example>
 <table style='table-layout:fixed; width:100%'>
   <thead>
   <tr>
@@ -79,49 +84,33 @@ Based on your analysis of **automated** traffic, create a [Firewall Rule](https:
     </tr>
   </tbody>
 </table>
+</Example>
 
-### 5. Create additional Firewall Rules
+### Step 4 — Create additional Firewall Rules
 
-Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, see our [Firewall Rules documentation](https://developers.cloudflare.com/firewall/recipes/challenge-bad-bots).
+Create Firewall Rules that address **likely automated** traffic and **other traffic groups**. For suggested bot thresholds and other considerations, see our [Firewall Rules documentation](https://developers.cloudflare.com/firewall/recipes/challenge-bad-bots) or [Bot Management variables](/reference/bot-management-variables).
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
+
 - If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
 - If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-- If your Firewall Rule has a **Challenge Solve Rate (CSR)** higher than 3%, consider lowering your challenge threshold.
+- If your Firewall Rule has a [**Challenge Solve Rate (CSR)**](/concepts/challenge-solve-rate) higher than 3%, consider lowering your challenge threshold.
 
 The best approach is to start small and slowly increase your threshold to prevent widespread issues.
 
-### 6. Continue monitoring domain traffic
+### Step 5 — Continue monitoring domain traffic
 
-You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](../../bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
+You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
 
 ---
 
-## Bot Management variables
-
-Bot Management provides access to several [new variables](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#dynamic-fields) within the Firewall expression builder.
-
-- **Bot Score**: An integer used to isolate bot requests which ranges from 1-99. Lower scores usually indicate automated traffic, while higher scores indicate human traffic. Most traffic scored below 30 comes from bots.
-- **Verified Bot**: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](https://developers.cloudflare.com/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).
-- **Serves Static Resource**: An identifier that matches [file extensions](../../about/static-resources) for many types of static resources. Use this variable if you send emails that retrieve static images.
-
-These variables are also available as part of the [request.cf](https://developers.cloudflare.com/workers/reference/apis/request/#the-cf-object) object via [Cloudflare Workers](https://developers.cloudflare.com/workers/):
-
-- request.cf.botManagement.score
-- request.cf.botManagement.verifiedBot
-- request.cf.botManagement.staticResource
-
 ## Other considerations
-
-### Comparison to Threat Score
-
-Bot Score is different from Threat Score. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by blocking or challenging bot scores lower than 30 and avoiding IP reputation entirely.
 
 ### Static resources
 
 <StaticResourcesBM/>
 
-For more details, see [Static resource protection](/about/static-resources).
+For more details, see [Static resource protection](/reference/static-resources).
 
 ### Verified bots
 
@@ -129,7 +118,3 @@ Some automated traffic is good! To allow good bots like Google or Bing, use the 
 
 ### Mobile traffic
 To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your Firewall Rules.
-
-## Analytics
-
-For more on analytics, see [Bot Analytics](/bot-analytics/bm-subscription/).

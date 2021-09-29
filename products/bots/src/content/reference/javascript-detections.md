@@ -1,12 +1,9 @@
 ---
-title: JavaScript detections
-order: 4
+order: 
 type: overview
-pcx-content-type: configuration
+pcx-content-type: reference
 ---
-# JavaScript detections for bots
-
-## Overview
+# JavaScript detections
 
 Cloudflare's bot products include JavaScript detections via a lightweight, invisible code injection that honors Cloudflare’s [strict privacy standards](https://www.cloudflare.com/privacypolicy/). A small amount of JavaScript is injected into client devices using [Google’s Picasso fingerprinting technique](https://research.google/pubs/pub45581/). Picasso results are factored into bot scores and help Cloudflare classify traffic as automated or human.
 
