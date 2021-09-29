@@ -1,6 +1,7 @@
 ---
-order: 4
+title: Verify IRR entries
 pcx-content-type: reference
+
 ---
 
 # Verify IRR entries
@@ -9,21 +10,21 @@ Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefix
 
 Each IRR entry record must include the following information:
 
-- **Route:** each IP prefix that Cloudflare advertises for you.
-- **Origin AS:** your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
-- **Source:** the name of the routing registry—for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
+- **Route:** Each IP prefix Cloudflare advertises for you.
+- **Origin ASN:** Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
+- **Source:** The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
 
-[Add or update IRR entries](/irr-records/best-practices-for-irr-entry-updates) when they meet any of these criteria:
+## Add or update IRR entries
+
+[Add or update IRR entries](/best-practices/irr-entries) when they meet any of these criteria:
 
 - The entry is missing.
-- The entry is incomplete or inaccurate—for example, when the route object does not show the correct origin.
-- The entry is complete but requires updating—for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
+- The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
+- The entry is complete but requires updating — for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
 
-<Aside>
+### Verify IRR entries for exact prefixes
 
-It is strongly preferred that verify IRR entries for the exact prefixes you'll be onboarding with Cloudflare. However, IRR entries for less specific prefixes are acceptable as long as you understand and accept the following risk: if you modify your IRR entries in the future (eg. by changing your ASN) and the IRR entry for the supernet no longer matches the prefix/origin mapping in your Magic Transit configuration, the prefix will have reduced reachability due to networks Cloudflare peers with automatically filtering the prefix. Having more-specific IRR entries helps minimize (but not entirely remove) this risk.
-
-</Aside>
+You are strongly encouraged to verify IRR entries for the exact prefixes you'll be onboarding with Cloudflare. However, IRR entries for less specific prefixes are acceptable as long as you understand and accept the following risk: if you modify your IRR entries in the future (for example, by changing your ASN) and the IRR entry for the supernet no longer matches the prefix/origin mapping in your Magic Transit configuration, the prefix will have reduced reachability due to networks Cloudflare peers with automatically filtering the prefix. Having more-specific IRR entries helps minimize (but not entirely remove) this risk.
 
 ## IRR entry verification methods
 
@@ -92,10 +93,10 @@ last-modified:  2018-03-16T16:58:06Z
 source:         APNIC
 ```
 
-<Aside>
+<Aside type="note" header="Note:">
 
-__Note:__ WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
+WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
-For more, see [best practices for IRR entry updates](/irr-records/best-practices-for-irr-entry-updates).
+For more information, see [best practices for IRR entry updates](/best-practices/irr-entries).
 
 </Aside>
