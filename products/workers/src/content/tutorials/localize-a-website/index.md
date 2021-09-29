@@ -52,7 +52,7 @@ With the static HTML for this project updated, you can focus on the Workers scri
 
 The `HTMLRewriter` class provided in the Workers runtime allows developers to parse HTML and write simple JavaScript to query and transform every element of the page.
 
-The example website in this tutorial is a basic single-page HTML project that lives in `./public`, with some text elements: an `h1` element with the text “Example Site”, and a number of `p` elements with different text:
+The example website in this tutorial is a basic single-page HTML project that lives in `./public`, with different text elements. This includes an `h1` element with the text “Example Site”, and a number of `p` elements with different text:
 
 ![Demo Code](./media/code-example.png)
 
@@ -75,13 +75,13 @@ filename: public/index.html
 </div>
 ```
 
-Using `HTMLRewriter`, you will take this page (for example, `./public/index.html`) and parse the HTML. When you find a `data-i18n-key`, you will look up an internal `strings` object, using `data-i18n-key` to find a matching key, and retrieve the string translation. With `HTMLRewriter`, it is  easy to query elements, for example, to find a data attribute. However, as the name suggests, you can also rewrite elements: taking a translated string and directly inserting it into the HTML.
+Using `HTMLRewriter`, you will take this page (`./public/index.html`) and parse the HTML. When you find a `data-i18n-key`, look up an internal `strings` object, using `data-i18n-key` to find a matching key, and retrieve the string translation. With `HTMLRewriter`, it is easy to query elements to accomplish tasks like finding a data attribute. However, as the name suggests, you can also rewrite elements by taking a translated string and directly inserting it into the HTML.
 
-Finally, to introduce one more feature into this project: based on the `Accept-Language` header, which exists on incoming requests, you can set the translation language per-request, allowing users from around the world to see a locally-relevant and translated page.
+Another feature of this project is based on the `Accept-Language` header, which exists on incoming requests. You can set the translation language per-request, allowing users from around the world to see a locally-relevant and translated page.
 
 ## Using the HTML Rewriter API
 
-To start, let us look at `workers-site/index.js`: your Workers application in this tutorial will live entirely in this file, so it is important to be familiar with it.
+Begin with the `workers-site/index.js` file. Your Workers application in this tutorial will live entirely in this file.
 
 Inside of this file, the default code for running a [Workers Site](/platform/sites) has been provided. The crucial part of the generated code lives in the `handleEvent` function. The`getAssetFromKV` function retrieves a website asset uploaded from your local `./public` folder, makes it live on Workers KV, and returns it to the user. For now, ignore `getAssetFromKV` (though if you would like to learn more, refer to [the documentation](/platform/sites/start-from-worker).
 
