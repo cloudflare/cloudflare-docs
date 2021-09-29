@@ -5,13 +5,13 @@ pcx-content-type: concept
 
 # Profiling Workers
 
-For long-running or complex Workers, `wrangler inspect`(beta) will help you understand what part of your code takes the longest time to execute.
+For long-running or complex Workers, `wrangler inspect` (beta) will help you understand which parts of your code require the most time to execute.
 
 As part of the Workers platform's integration with Chrome Developer Tools, you can use `wrangler dev --inspect` to get a CPU profile of your Worker.
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
-`wrangler inspect` will only work on Wrangler version v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update).
+`wrangler inspect` is only available in Wrangler v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update).
 
 ## Profiling an example project
 
@@ -77,7 +77,7 @@ Currently, Wrangler only supports the **Console**, **Sources** and **Profiler** 
 
 ### Capturing a CPU profile
 
-With the DevTools open, select the **Profile** tab > **Start**. Open a new tab with your Worker running locally `http://127.0.0.1:8787`. Visiting this address will invoke the Worker again, and allow DevTools to capture execution information. When it finishes loading, go back to the DevTools window and select **Stop**.
+With the DevTools open, select the **Profile** tab > **Start**. Open a new tab with your Worker running locally `http://127.0.0.1:8787`. Visiting this address will invoke the Worker again and allow DevTools to capture execution information. When it finishes loading, go back to the DevTools window and select **Stop**.
 
 There are three ways to view the CPU profiling data:
 
