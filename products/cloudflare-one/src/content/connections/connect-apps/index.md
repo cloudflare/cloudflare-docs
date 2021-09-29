@@ -27,7 +27,6 @@ A tunnel's status depends on the health of its connections:
 
 * **Active**: This means your tunnel is running and has a healthy connection to the Cloudflare network.
 * **Inactive**: This means your tunnel is not running and is not connected to Cloudflare.
-* **Degraded**: This means one or more of your four long-lived TCP connections to Cloudflare have been disconnected, but traffic is still being served to your origin.
 
 ## Getting started
 
