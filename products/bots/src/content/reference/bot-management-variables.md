@@ -13,6 +13,6 @@ Bot Management provides access to several [new variables](https://developers.clo
 
 These variables are also available as part of the [request.cf](https://developers.cloudflare.com/workers/reference/apis/request/#the-cf-object) object via [Cloudflare Workers](https://developers.cloudflare.com/workers/):
 
-- request.cf.botManagement.score
-- request.cf.botManagement.verifiedBot
-- request.cf.botManagement.staticResource
+- `request.cf.botManagement.score`
+- `request.cf.botManagement.verifiedBot`
+- `request.cf.botManagement.staticResource`
