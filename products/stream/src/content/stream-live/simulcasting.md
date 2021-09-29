@@ -5,7 +5,7 @@ pcx-content-type: tutorial
 
 # Simulcasting
 
-Simulcasting lets you redistribute your live stream to 3rd party platforms such as YouTube and Facebook. To begin simulcasting, select an input and add one or more Outputs:
+Simulcasting lets you forward your live stream to third-party platforms such as YouTube Live and Facebook Live. To begin simulcasting, select an input and add one or more Outputs:
 
 ![Begin simulcasting](./simulcasting.png)
 
@@ -35,15 +35,15 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT
 }
 ```
 
-## Listing or deleting outputs
+## Managing outputs
 
-To get a list of outputs, call the /outputs endpoint:
+To get a list of outputs, call the `/outputs` endpoint:
 
 ```bash
 curl -H "Authorization: Bearer $TOKEN" \ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs
 ```
 
-To delete an output, make a DELETE request to the /output endpoint with the output id:
+To delete an output, make a `DELETE` request to the /output endpoint with the output id:
 
 ```bash
 curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs/$OUTPUT_UID
