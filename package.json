@@ -1,0 +1,20 @@
+{
+  "name": "cloudflare-docs",
+  "version": "1.0.0",
+  "description": "Cloudflare Developer Docs",
+  "scripts": {
+    "develop": "node develop.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloudflare/cloudflare-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cloudflare/cloudflare-docs/issues"
+  },
+  "homepage": "https://github.com/cloudflare/cloudflare-docs#readme",
+  "devDependencies": {
+    "chokidar": "^3.5.2",
+    "concurrently": "^6.2.1"
+  }
+}
