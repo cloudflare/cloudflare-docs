@@ -13,11 +13,11 @@ Once you have [set up your SSL for SaaS application](/ssl-for-saas/getting-start
 
 <IssueCertsPreamble/>
 
-### Via the dashboard
+## Via the dashboard
 
 <CreateCustomHostname/>
 
-### Via the API
+## Via the API
 
 <CreateCustomHostnameAPI/>
 

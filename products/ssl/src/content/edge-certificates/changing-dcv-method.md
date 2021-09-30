@@ -65,7 +65,7 @@ Though this process happens relatively quickly, your application may experience 
 <GenericProcess/>
 
 - API: `txt_name` and `txt_value`
-- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**
+- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
 
 At your authoritative DNS provider, create a TXT record named the **name** and containing the **value**. Once this TXT is in place, validation and certificate issuance will automatically complete.
 
@@ -76,13 +76,13 @@ At your authoritative DNS provider, create a TXT record named the **name** and c
 <GenericValidationProcess/>
 
 - API: `emails`
-- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the value for **Certificate validation email recipients**
+- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the value for **Certificate validation email recipients**.
 
 <EmailValidationProcess/>
 
 ### Verify DCV status
 
-To verify the DCV status of a domain, either view the certificate in the dashboard or use the [Verification Status endpoing](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
+To verify the DCV status of a domain, either view the certificate in the dashboard or use the [Verification Status endpoint](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
 
 A status of `active` means that the certificate has been deployed to Cloudflare’s edge network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 
