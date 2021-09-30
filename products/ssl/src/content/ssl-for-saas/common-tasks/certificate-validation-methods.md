@@ -3,11 +3,15 @@ order: 3
 pcx-content-type: interim
 ---
 
+import DCVDefinition from "../../_partials/_dcv-definition.md"
+
 # Validate certificates
+
+<DCVDefinition/>
 
 <Aside type="warning">
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/reference/dcv-update).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl-tls/dcv-update).
 
 </Aside>
 
@@ -233,40 +237,3 @@ $ curl -sXPATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hos
        -d '{"hostname":"http-preval.example.com", "ssl":{"method":"http","type":"dv"}}'
 ```
 
-### CNAME (manual)
-
-The last DCV method available is via a CNAME record. First, make a request using `"method":"cname"`:
-
-```bash
-$ curl -sXPOST "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}" \
-       -H "Content-Type: application/json" \
-       -d '{"hostname":"cname.example.com", "ssl":{"method":"cname","type":"dv"}}'
-
-{
-  "result": {
-    "id": "51027a6e-9ca2-4d66-9d46-262411936b4d",
-    "hostname": "cname.example.com",
-    "ssl": {
-      "id": "473c09bd-9408-4b74-b051-655e9b66c86b",
-      "type": "dv",
-      "method": "cname",
-      "status": "pending_validation",
-      "cname": "_ca3-fbc2086e83a647d4822fefa68f26fc55.cname.example.com",
-      "cname_target": "dcv.digicert.com",
-      "bundle_method": "ubiquitous",
-      "wildcard": false,
-      "certificate_authority": "digicert"
-    },
-    "custom_metadata": null,
-    "created_at": "2019-12-09T19:14:28.898621Z"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-Next, you will need to add the CNAME record that is provided in the results, ie `name: _ca3-fbc2086e83a647d4822fefa68f26fc55.cname.example.com` and `cname_target:dcv.digicert.com`, at the Authoritative DNS provider for the hostname. This CNAME record information can also be located in the Custom Hostname section of the SSL dashboard.
-
-The certificate should validate relatively soon after its added. If you’d like to check immediately simply send a `PATCH` with the same payload.
