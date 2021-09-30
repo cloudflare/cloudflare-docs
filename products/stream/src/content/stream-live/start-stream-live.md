@@ -31,7 +31,7 @@ Within seconds of you pushing your live stream to Cloudflare Stream, you should 
 
 ## Using the API
 
-To start a live stream programmatically, simply make a `POST` request to the `/live_inputs` endpoint:
+To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint:
 
 ```bash
 curl -X POST \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs \--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
@@ -70,7 +70,7 @@ You can update live inputs by making a `PUT` request:
 curl -X PUT \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/:input_id \--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
 ```
 
-You can delete live inputs by making a `DELETE` request:
+Delete a live input by making a `DELETE` request:
 
 ```bash
 curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/:input_id
@@ -80,14 +80,14 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 
 ### Requirements
 
-* Stream Live requires input GOP duration (keyframe interval) to be between four to 10 seconds.
+* Stream Live requires input GOP duration (keyframe interval) to be between 4 to 10 seconds.
 * Closed GOPs required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoder software such as OBS.
-* Stream Live only supports H264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
+* Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
 
 ### Known limitations (will be solved in coming weeks without any changes required from you): 
 
 * MP4 download from videos created from live streaming is not yet available.
 * Watermarks cannot yet be used with live videos.
-* Live videos does not yet work on older iOS versions (iOS 10 launched 2016 and below).
-* GOP duration (keyframe interval) should to be constant during a broadcast.
-* Hardware video encoding on Apple devices not yet supported. When using encoder software such as OBS, x264 software encoding is required.
+* The live videos feature does not yet work on older iOS versions: iOS 10, launched in 2016, and below.
+* GOP duration (keyframe interval) should be constant during a broadcast.
+* Hardware video encoding on Apple devices is not yet supported. When using encoder software such as OBS, x264 software encoding is required.

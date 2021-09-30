@@ -53,9 +53,9 @@ Cloudflare Stream supports video file uploads for any FPS, however videos will b
 
 If the frame rate is variable we will drop frames (e.g. if there are more than 1 frames within 1/30 seconds, we will drop the extra frames within that period).
 
-### What browsers does stream work on?
+### What browsers does Stream work on?
 
-The Stream player can be successfully embedded on the following platforms:
+You can embed the Stream player on the following platforms:
 
 <TableWrap>
 
@@ -88,7 +88,7 @@ Safari on iOS    | Supported on iOS 13.4+. Speed selector supported when not in 
 
 ### What are the recommended upload settings for video uploads?
 
-If you're producing a brand new file for Cloudflare Stream, we recommend you use the following settings:
+If you are producing a brand new file for Cloudflare Stream, we recommend you use the following settings:
 
  - MP4 containers, AAC audio codec, H264 video codec, 30 or below frames per second
  - moov atom should be at the front of the file (Fast Start)
@@ -113,7 +113,7 @@ Resolution  |  Recommended bitrate
 
 ## Stream Live
 
-### Do I need a separate Stream Live subscription in order to use Stream Live?
+### Do I need a separate Stream Live subscription to use Stream Live?
 
 As long as you have a Cloudflare Stream subscription, you can use all the features of Stream Live. You do not need to add another subscription.
 
@@ -130,9 +130,9 @@ All Stream Live videos are automatically recorded. There is no additional cost f
 
 Some limits apply to the Stream Live Beta:
 
-* Up to 1000 live inputs per-account can be created.
-* Up to 50 outputs may be configured per live input.
-* A maximum recommended bitrate of 12000 kbps.
+* You can create up to 1000 live inputs per account.
+* You can configure up to 50 outputs per live input.
+* You should use a maximum recommended bitrate of 12000 kbps.
 
 If your use case requires the limits to be increased, please contact support.
 

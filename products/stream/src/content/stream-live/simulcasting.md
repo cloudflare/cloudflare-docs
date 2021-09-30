@@ -43,10 +43,10 @@ To get a list of outputs, call the `/outputs` endpoint:
 curl -H "Authorization: Bearer $TOKEN" \ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs
 ```
 
-To delete an output, make a `DELETE` request to the /output endpoint with the output id:
+To delete an output, make a `DELETE` request to the `/outputs` endpoint with the output id:
 
 ```bash
 curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/$INPUT_UID/outputs/$OUTPUT_UID
 ```
 
-Note that if the associated live input is already retransmitting to this output when delete is called, that output will be disconnected within 30 seconds.
+If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.
