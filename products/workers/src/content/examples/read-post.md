@@ -58,7 +58,7 @@ async function readRequestBody(request) {
   else {
     // Perhaps some other type of data was submitted in the form
     // like an image, or some other binary data. 
-    return "a file". 
+    return 'a file';
   }
 }
 
