@@ -23,17 +23,32 @@ The available Rate Limiting rule parameters are the following:
     - Use one of the following values: `block`, `challenge`, `js_challenge`, or `log`.
 
 - `characteristics` <Type>Array&lt;String&gt;</Type>
+
     - Set of parameters defining how Cloudflare tracks the request rate for the rule.
     - Use one or more of the following characteristics:
+
         - `cf.colo.id` (mandatory in the API; implicitly included when using the dashboard)
+        - `cf.unique_visitor_id`
         - `ip.src`
         - `ip.geoip.country`
         - `ip.geoip.asnum`
         - `http.request.headers["<header_name>"]`
+        - `http.request.cookies["<cookie_name>"]`
+        - `http.request.uri.args["<query_parameter_name>"]`
+
+    - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same Rate Limiting rule.
+
+    - When using `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
+
+    - <Aside type="note">
+
+      Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Understanding Cloudflare Cookies](https://support.cloudflare.com/hc/articles/200170156) for details.
+
+      </Aside>
 
 - `period` <Type>Number</Type>
     - The period of time to consider (in seconds) when evaluating the request rate.
-    - Use one of the following values: `10`, `60` (one minute), `600` (ten minutes), or `3600` (one hour).
+    - Use one of the following values: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (ten minutes), or `3600` (one hour).
 
 - `requests_per_period` <Type>Number</Type>
     - The number of requests over the period of time that will trigger the rule.
@@ -50,3 +65,10 @@ The available Rate Limiting rule parameters are the following:
     - The value must be the same as the `expression` value or `""` when action is `challenge` or `js_challenge`.
 
 </Definitions>
+
+## Recommendations
+
+If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting rule characteristic, make sure you follow these recommendations:
+
+* Create a [Custom Firewall rule](/custom-rules/custom-firewall) that blocks requests with more than one value for the cookie.
+* Validate the cookie value at the origin before performing any demanding server operations.
