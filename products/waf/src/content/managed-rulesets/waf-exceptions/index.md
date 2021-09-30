@@ -23,12 +23,6 @@ You define WAF exceptions in a given context — zone level or account level —
 
 Define the exception expression using the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language). If there is a match for the expressions of several WAF exceptions, the WAF will consider the exception with the highest priority.
 
-<Aside type="note">
-
-Currently, you cannot define a WAF exception in the dashboard to skip one or more specific WAF Managed Rulesets. To define this type of WAF exception, [create the exception via API](/managed-rulesets/waf-exceptions/define-api).
-
-</Aside>
-
 ## Additional notes
 
 WAF exceptions only apply to rules executing a Managed Ruleset listed after them. If you add a WAF exception at the end of the WAF rules list, nothing will be skipped.
