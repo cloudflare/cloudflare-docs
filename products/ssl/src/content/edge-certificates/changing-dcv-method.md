@@ -56,7 +56,7 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 
 </details>
 
-Though this process happens relatively quickly, your application may experience a brief period of downtime. If you want to pre-validate your certificate — either to avoid downtime or prevent any issuance errors — explore [TXT](#txt) or [Email](#email) validation.
+Though this process happens relatively quickly, your application may experience a brief period of downtime. If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT](#txt) or [Email](#email) validation.
 
 #### TXT
 
@@ -65,7 +65,7 @@ Though this process happens relatively quickly, your application may experience 
 <GenericProcess/>
 
 - API: `txt_name` and `txt_value`
-- Dashboard (on the certificate): **Certificate validation TXT name** and **Certificate validation TXT value**
+- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**
 
 At your authoritative DNS provider, create a TXT record named the **name** and containing the **value**. Once this TXT is in place, validation and certificate issuance will automatically complete.
 
@@ -76,7 +76,7 @@ At your authoritative DNS provider, create a TXT record named the **name** and c
 <GenericValidationProcess/>
 
 - API: `emails`
-- Dashboard (on the certificate): **Certificate validation email recipients**
+- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the value for **Certificate validation email recipients**
 
 <EmailValidationProcess/>
 
