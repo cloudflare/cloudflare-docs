@@ -18,7 +18,7 @@ Cloudflare recommends ordering your rules from most specific to least specific.
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): `<scheme>://<hostname><:port>/<path>?<query_string>`
 
-A URL with four segments look similar to the example below.
+A URL with five segments look similar to the example below.
 
 `https://www.example.com:443/image.png?parameter1=value1`
 
