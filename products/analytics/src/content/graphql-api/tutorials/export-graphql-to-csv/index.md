@@ -70,7 +70,7 @@ Note that the braces used in the GraphQL query are doubled to escape them in Pyt
 header: Query the Network Analytics GraphQL API
 ---
 def get_cf_graphql():
-    headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
+    headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization': f'Bearer {api_token}'}
     # This variable replacement requires Python3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
@@ -182,7 +182,7 @@ def get_date(num_days):
     return today - timedelta(days=num_days)
  
 def get_cf_graphql():
-    headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization: Bearer': api_token}
+    headers = {'content-type': 'application/json', 'X-Auth-Email': api_email, 'Authorization': f'Bearer {api_token}'}
     # This variable replacement requires Python3.6 or higher
     payload = f'''{{"query":
         "query ipFlowEventLog(
