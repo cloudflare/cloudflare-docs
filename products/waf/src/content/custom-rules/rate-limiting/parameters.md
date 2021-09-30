@@ -55,7 +55,7 @@ The available Rate Limiting rule parameters are the following:
 
 - `mitigation_timeout` <Type>Number</Type>
     - Once the request rate is reached, the Rate Limiting rule blocks further requests for the period of time defined in this field (in seconds).
-    - Use one of the following values: `10`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
+    - Use one of the following values: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
     - The value must be `0` when action is `challenge` or `js_challenge`.
 
 - `mitigation_expression` <Type>String</Type> <PropMeta>optional</PropMeta>
