@@ -134,6 +134,6 @@ For more information about DCV, refer to [DCV methods](/edge-certificates/univer
 
 <Aside type="warning">
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/reference/dcv-update).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl-tls/dcv-update).
 
 </Aside>
