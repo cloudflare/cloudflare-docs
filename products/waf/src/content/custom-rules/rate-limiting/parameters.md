@@ -38,7 +38,9 @@ The available Rate Limiting rule parameters are the following:
 
     - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same Rate Limiting rule.
 
-    - When using `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
+    - If you use `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
+
+    - If you use `http.request.cookies["<cookie_name>"]`, refer to [Recommendations](#recommendations) for additional validations you should implement.
 
     - <Aside type="note">
 
@@ -68,7 +70,7 @@ The available Rate Limiting rule parameters are the following:
 
 ## Recommendations
 
-If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting rule characteristic, make sure you follow these recommendations:
+If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting rule characteristic, follow these recommendations:
 
 * Create a [Custom Firewall rule](/custom-rules/custom-firewall) that blocks requests with more than one value for the cookie.
 * Validate the cookie value at the origin before performing any demanding server operations.
