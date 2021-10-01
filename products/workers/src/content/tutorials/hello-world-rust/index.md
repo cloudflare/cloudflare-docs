@@ -33,12 +33,10 @@ Wrangler templates are Git repositories. If you want to create your own template
 You can test how your Workers function will look when it is deployed by using the `dev` command:
 
 ```sh
-rustwasm-markdown-parser $ wrangler dev --watch
+rustwasm-markdown-parser $ wrangler dev
 ```
 
 Using the `dev` command will open a browser tab with your Cloudflare Workers function loaded.
-
-The `--watch` flag for `dev` tells Wrangler to watch your Worker project for changes and update the preview tab live with the latest URL. Leave Wrangler running in `--watch` mode for now as you continue the tutorial.
 
 ## Building
 
