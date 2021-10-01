@@ -38,13 +38,13 @@ theme: dark
 ~/i18n-example $
 ```
 
-The `--site` flag tells Wrangler that you want to build a [Workers Sites](/platform/sites) project. This means that there will be both a site component, the static HTML that you want to serve to the user, and a Workers script. Inside the Workers script, you can customize the HTML response using `HTMLRewriter`.
+The `--site` flag tells Wrangler that you want to build a [Workers Sites](/platform/sites) project. This means that there will be both a Workers script and a static site component, which includes any HTML and page assets that you want to serve to the user. Inside the Workers script, you can customize the HTML response using `HTMLRewriter`.
 
 The newly generated `i18n-example` project will contain two folders: `public`, which is our static HTML, and `workers-site`:
 
 <pre class="CodeBlock CodeBlock-scrolls-horizontally" language="sh"><code><u><b class="CodeBlock--token-directory">~/i18n-example</b> <b class="CodeBlock--token-prompt">$</b> </u>ls<br/><u><b class="CodeBlock--token-value">public    workers-site  wrangler.toml</b></u></code></pre>
 
-Inside of `public`, you should replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: you can download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP link) of the code for this project and copy the `public` folder to your own project to get started.
+Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: you can download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP link) of the code for this project and copy the `public` folder to your own project to get started.
 
 With the static HTML for this project updated, you can focus on the Workers script inside of the `workers-site` folder, at `index.js`.
 
@@ -52,7 +52,7 @@ With the static HTML for this project updated, you can focus on the Workers scri
 
 The `HTMLRewriter` class provided in the Workers runtime allows developers to parse HTML and write simple JavaScript to query and transform every element of the page.
 
-The example website in this tutorial is a basic single-page HTML project that lives in `./public`, with different text elements. This includes an `h1` element with the text “Example Site”, and a number of `p` elements with different text:
+The example website in this tutorial is a basic single-page HTML project that lives in the `public` directory. It includes an `h1` element with the text “Example Site” and a number of `p` elements with different text:
 
 ![Demo Code](./media/code-example.png)
 
@@ -75,7 +75,7 @@ filename: public/index.html
 </div>
 ```
 
-Using `HTMLRewriter`, you will take this page (`./public/index.html`) and parse the HTML. When you find a `data-i18n-key`, look up an internal `strings` object, using `data-i18n-key` to find a matching key, and retrieve the string translation. With `HTMLRewriter`, it is easy to query elements to accomplish tasks like finding a data attribute. However, as the name suggests, you can also rewrite elements by taking a translated string and directly inserting it into the HTML.
+Using `HTMLRewriter`, you will parse the HTML within the `./public/index.html` page. When a `data-i18n-key` attribute is found, you should use the attribute's value to retrieve a matching translation from the `strings` object. With `HTMLRewriter`, it is easy to query elements to accomplish tasks like finding a data attribute. However, as the name suggests, you can also rewrite elements by taking a translated string and directly inserting it into the HTML.
 
 Another feature of this project is based on the `Accept-Language` header, which exists on incoming requests. You can set the translation language per-request, allowing users from around the world to see a locally-relevant and translated page.
 
@@ -83,9 +83,9 @@ Another feature of this project is based on the `Accept-Language` header, which 
 
 Begin with the `workers-site/index.js` file. Your Workers application in this tutorial will live entirely in this file.
 
-Inside of this file, the default code for running a [Workers Site](/platform/sites) has been provided. The crucial part of the generated code lives in the `handleEvent` function. The`getAssetFromKV` function retrieves a website asset uploaded from your local `./public` folder, makes it live on Workers KV, and returns it to the user. For now, ignore `getAssetFromKV` (though if you would like to learn more, refer to [the documentation](/platform/sites/start-from-worker).
+Inside of this file, the default code for running a [Workers Site](/platform/sites) has been provided. The crucial part of the generated code lives in the `handleEvent` function. The `getAssetFromKV` function retrieves a website asset uploaded from your local `./public` folder, makes it live on Workers KV, and returns it to the user. For now, ignore `getAssetFromKV` (though if you would like to learn more, refer to [the documentation](/platform/sites/start-from-worker).
 
-To implement translations on the site, take the HTML response retrieved from KV and pass it into a new instance of `HTMLRewriter`. When instantiating `HTMLRewriter`, you can attach handlers using the `on` function. For this tutorial, you will use the `[data-i18n-key]` selector (refer to the [documentation](/runtime-apis/html-rewriter) for more advanced usage) to parse all elements that require translation with a single class, `ElementHandler`. With the created instance of `HTMLRewriter`, the `transform` function takes a `response` and can be returned to the client:
+To implement translations on the site, take the HTML response retrieved from KV and pass it into a new instance of `HTMLRewriter`. When instantiating `HTMLRewriter`, you can attach handlers using the `on` function. For this tutorial, you will use the `[data-i18n-key]` selector (refer to the [documentation](/runtime-apis/html-rewriter) for more advanced usage) to locate all elements with the `data-i18n-key` attribute, which signifies their need for translation. Any matching element will be passed to an instance of your `ElementHandler` class, which will contain the translation logic. With the created instance of `HTMLRewriter`, the `transform` function takes a `response` and can be returned to the client:
 
 ```js
 ---
@@ -114,7 +114,7 @@ class ElementHandler {
 }
 ```
 
-With `i18nKey` defined, you can use it to search for a corresponding translated string. You will now set up `strings`, an object with key-value pairs corresponding to the `data-i18n-key` value. For now, you will define a single example string, `headline`, with a (possibly badly translated) German `string`, “Beispielseite” (“Example Site”), and retrieve it in the `element` function:
+With `i18nKey` defined, you can use it to search for a corresponding translated string. You will now set up a `strings` object with key-value pairs corresponding to the `data-i18n-key` value. For now, you will define a single example string, `headline`, with a (possibly badly translated) German `string`, “Beispielseite” (“Example Site”), and retrieve it in the `element` function:
 
 ```js
 ---
@@ -161,7 +161,7 @@ You can expand on this simple translation functionality to provide country-speci
 
 To implement this: 
 
-1. Update the `strings` object, adding a second layer of key-value pairs, and allowing strings to be looked up in the format `strings[country][key]`. 
+1. Update the `strings` object, adding a second layer of key-value pairs and allowing strings to be looked up in the format `strings[country][key]`. 
 2. Pass a `countryStrings` object into our `ElementHandler`, so that it can be used during the parsing process. 
 3. Grab the `Accept-Language` header from an incoming request, parse it, and pass the parsed language to `ElementHandler`.
 
@@ -253,7 +253,7 @@ async function handleEvent(event) {
 
 ## Publish
 
-Your simple i18n tool built on Cloudflare Workers is complete, and it is time to deploy it to your domain.
+Your simple i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
 
 To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/get-started/guide#6a-obtaining-your-account-id-and-zone-id). Set this ID at the top part of your project’s `wrangler.toml` file:
 
@@ -267,7 +267,7 @@ account_id = "6de123.."
 workers_dot_dev = true
 ```
 
-The `[site]` section at the bottom of `wrangler.toml` tells Wrangler how to deploy your Workers Site. The `bucket` key tells Wrangler where to find your static assets: by default set to the `public` folder, where you placed your HTML code at the beginning of this tutorial. The `entry-point` key indicates where your Workers script is located, and like `bucket`, the default of `workers-site` should already be correctly configured for your application.
+The `[site]` section at the bottom of `wrangler.toml` tells Wrangler how to deploy your Workers Site. The `bucket` key tells Wrangler where to find your static assets: by default set to the `public` folder, where you placed your HTML code at the beginning of this tutorial. The `entry-point` key indicates where your Workers script is located and, like `bucket`, the default of `workers-site` should already be correctly configured for your application.
 
 The final version of your project’s `wrangler.toml` file should look like:
 
@@ -299,6 +299,6 @@ theme: dark
 
 ## Resources
 
-In this tutorial, you built and published an i18n tool using `HTMLRewriter`. If you would like to see the full source code for this application, refer to the [reposotiry on GitHub](https://github.com/signalnerve/i18n-example-workers).
+In this tutorial, you built and published an i18n tool using `HTMLRewriter`. To review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/i18n-example-workers).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).
