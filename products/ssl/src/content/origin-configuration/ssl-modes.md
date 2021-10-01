@@ -9,6 +9,8 @@ import SSLModeErrors from "../_partials/_ssl-mode-errors.md"
 
 The modes listed below control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server, and how SSL certificates presented by your origin will be validated.
 
+If possible, Cloudflare strongly recommends using [**Full**](#full) or [**Full (strict)**](#full-strict) modes to prevent malicious connections to your origin.
+
 <Aside type="note">
 
 For more details about how encryption modes fit into the bigger picture of SSL/TLS protection, refer to [Get started](/get-started).
@@ -79,6 +81,8 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/origin-configuration/origin-ca), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](https://support.cloudflare.com/hc/articles/115003011431#525error).
 
+To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156).
+
 <SSLModeErrors/>
 
 ### Limitations
@@ -108,6 +112,8 @@ Your origin needs to be able to support an SSL certificate that is:
 ### Required setup
 
 Before enabling **Full (strict)** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate matching the requirements above. Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).
+
+To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156).
 
 ### Limitations
 
