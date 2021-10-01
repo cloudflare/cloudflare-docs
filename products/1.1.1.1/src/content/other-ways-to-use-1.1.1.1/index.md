@@ -1,6 +1,6 @@
 ---
 order: 5
-pcx-content-type: reference
+pcx-content-type: navigation
 ---
 
 # Other ways to use 1.1.1.1
