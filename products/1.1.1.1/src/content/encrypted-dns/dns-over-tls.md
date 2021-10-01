@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content-type: navigation
+pcx-content-type: concept
 ---
 
 # DNS over TLS

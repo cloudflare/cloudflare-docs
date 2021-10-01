@@ -7,7 +7,7 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 # Linux
 
-Follow these steps to configure 1.1.1.1 for Families:
+Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
 
 ## Block malware
 

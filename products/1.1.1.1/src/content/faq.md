@@ -5,6 +5,8 @@ pcx-content-type: faq
 
 # FAQ
 
+Below you will find answers to our most commonly asked questions on 1.1.1.1 DNS resolver. If you cannot find the answer you are looking for, visit our [community page](https://community.cloudflare.com/).
+
 ## What is 1.1.1.1?
 
 1.1.1.1 is Cloudflare's fast and secure DNS resolver. When you request to visit an application like `cloudflare.com`, your computer needs to know which server to connect you to so that it can load the application. Computers don’t know how to do this name to address translation, so they ask a specialized server to do it for them.

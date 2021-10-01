@@ -1,11 +1,11 @@
 ---
 order:
-pcx-content-type: how-to
+pcx-content-type: tutorial
 ---
 
 # DNS in Google Sheets
 
-1.1.1.1 works directly inside Google Sheets. If you want or need to find out some DNS records, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
+1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
 function NSLookup(type, domain) {
