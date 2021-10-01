@@ -5,7 +5,7 @@ pcx-content-type: tutorial
 
 # DNS in Google Sheets
 
-1.1.1.1 works directly inside Google Sheets. To get started, you first need to create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
+1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
 function NSLookup(type, domain) {

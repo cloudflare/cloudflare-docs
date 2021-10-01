@@ -5,7 +5,7 @@ pcx-content-type: faq
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions on 1.1.1.1 DNS resolver. If you cannot find the answer you are looking for, heading over to our [community page](https://community.cloudflare.com/) is always a good idea.
+Below you will find answers to our most commonly asked questions on 1.1.1.1 DNS resolver. If you cannot find the answer you are looking for, visit our [community page](https://community.cloudflare.com/).
 
 ## What is 1.1.1.1?
 
