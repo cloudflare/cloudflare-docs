@@ -96,7 +96,7 @@ pub fn parse() -> String {
 }
 ```
 
-Ugit pdate your `worker/worker.js` to use the new code you have written:
+Update your `worker/worker.js` to use the new code you have written:
 
 ```javascript
 addEventListener('fetch', (event) => {
