@@ -7,7 +7,7 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 # Linux
 
-Follow these steps to configure 1.1.1.1:
+Follow these steps to configure 1.1.1.1 in Ubuntu and Debian:
 
 ## Ubuntu
 
