@@ -1,11 +1,11 @@
 ---
 order:
-pcx-content-type: how-to
+pcx-content-type: tutorial
 ---
 
 # DNS over Tor
 
-<Aside>
+<Aside type='warning'>
 
 The hidden resolver is still an experimental service and should not be used in production or for other critical uses.
 
