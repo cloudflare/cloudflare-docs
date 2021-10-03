@@ -21,6 +21,7 @@ You will receive a response similar to this:
 ```json
 {
   "result": {},
+  "result_info": null,
   "success": true,
   "errors": [],
   "messages": []
