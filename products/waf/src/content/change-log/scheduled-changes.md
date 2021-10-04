@@ -44,7 +44,7 @@ order: 1
                 Wordpress
             </td>
             <td>
-                 …TBC
+                 …521e1eff
             </td>
             <td>
                 WP0036
