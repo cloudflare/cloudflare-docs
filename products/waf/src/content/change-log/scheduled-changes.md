@@ -47,7 +47,7 @@ order: 1
                  …TBC
             </td>
             <td>
-                WP00036
+                WP0036
             </td>
             <td>
                 Wordpress - Broken Access Control
