@@ -35,74 +35,22 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-09-27
+                2021-10-04
             </td>
             <td>
-                2021-10-04
+                2021-10-11
             </td>
             <td>
                 Specials
             </td>
             <td>
-                 …cfd0fac1
+                 …TBC
             </td>
             <td>
-                100135A
+                WP00036
             </td>
             <td>
-                XSS - JavaScript Events - Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-09-27
-            </td>
-            <td>
-                2021-10-04
-            </td>
-            <td>
-                Specials
-            </td>
-            <td>
-                 …6342f462
-            </td>
-            <td>
-                100135B
-            </td>
-            <td>
-                XSS - JavaScript Events - Improve Rule Coverage
-            </td>
-            <td>
-                Block
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2021-09-27
-            </td>
-            <td>
-                2021-10-04
-            </td>
-            <td>
-                Specials
-            </td>
-            <td>
-                 …b3de2e0a
-            </td>
-            <td>
-                100410
-            </td>
-            <td>
-                SQLi - Tautology - URI
+                Wordpress - Broken Access Control
             </td>
             <td>
                 N/A
