@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: reference
+pcx-content-type: navigation
 ---
 
 import CustomOriginDefinition from "../../_partials/_custom-origin-server-definition.md"
