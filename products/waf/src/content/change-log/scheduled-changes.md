@@ -41,7 +41,7 @@ order: 1
                 2021-10-11
             </td>
             <td>
-                Specials
+                Wordpress
             </td>
             <td>
                  …TBC
