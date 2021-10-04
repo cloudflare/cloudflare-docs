@@ -15,6 +15,8 @@ import CreateCustomHostnameAPI from "../_partials/_create-custom-hostname-api.md
 
 Before you can start creating custom hostnames, you need to have access to [SSL for SaaS](/ssl-for-saas#availability).
 
+If you have not used the Cloudflare API previously, you might want to review our [API Quickstart](https://developers.cloudflare.com/api/).
+
 ---
 
 ## Step 1 — Create fallback origin and CNAME target

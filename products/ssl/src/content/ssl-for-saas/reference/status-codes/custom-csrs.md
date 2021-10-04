@@ -42,8 +42,8 @@ HTTP Status Code|API Error Code|Error Message
 401|1003|Failed to verify JWT token
 401|1004|Failed to get claims from JWT token
 401|1005|JWT token does not have required claims
-403|1403|No quota has been allocated for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/.
-403|1404|Access to generating CSRs has not been granted for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, please fill out this form and someone from our sales team will contact you: https://www.cloudflare.com/plans/enterprise/contact/
+403|1403|No quota has been allocated for this zone. If you are already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, fill out [this form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will contact you.
+403|1404|Access to generating CSRs has not been granted for this zone. If you're already a paid SSL for SaaS customer, please contact your Customer Success Manager for additional provisioning. If you're not yet enrolled, fill out [this form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will contact you.
 404|1419|The custom CSR was not found.
 409|1420|The custom CSR is associated with an active certificate pack. You will need to delete all associated active certificate packs before you can delete the custom CSR.
 500|1500|Internal Server Error
