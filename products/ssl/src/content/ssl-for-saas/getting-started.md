@@ -3,6 +3,10 @@ order: 0
 pcx-content-type: tutorial
 ---
 
+import IssueCertsPreamble from "../_partials/_issue-certs-preamble.md"
+import CreateCustomHostname from "../_partials/_create-custom-hostname.md"
+import CreateCustomHostnameAPI from "../_partials/_create-custom-hostname-api.md"
+
 # Get started
 
 --------
@@ -58,28 +62,51 @@ Additionally, you can retrieve a list of user’s zones and their associated IDs
 
 ## Issuing your first certificate
 
-Once your account has been provisioned, you are ready to issue certificates. The call below will provision a request for certificates to be issued for `app.customer.com`, which represents your end customer.
+Once your account has been provisioned, you are ready to issue certificates.
 
-In this example, HTTP based validation is used ("method":"http") to issue this certificate. This requires HTTP traffic to be proxied through Cloudflare’s edge already, i.e., the CNAME from `app.customer.com` must be [in place for your zone](#setting-cname-at-customer-domain)). If the CNAME is not yet in place, Cloudflare will ask its CA partner to retry until the request can be completed; see the [Validation Backoff Schedule](/ssl-for-saas/validation-backoff-schedule/) for specific timings.
+<IssueCertsPreamble/>
 
-```bash
-$ curl -XPOST "https://api.cloudflare.com/client/v4/zones/:zone_id/custom_hostnames"\
-       -H "X-Auth-Email: {email}" -H "X-Auth-Key: {key}"\
-       -H "Content-Type: application/json"\
-       -d '{"hostname":"app.customer.com", "ssl":{"method":"http","type":"dv"}}'
+
+<details>
+<summary>Using the dashboard</summary>
+<div>
+
+<CreateCustomHostname/>
+
+</div>
+</details>
+
+<details>
+<summary>Using the API</summary>
+<div>
+
+<CreateCustomHostnameAPI/>
+
+</div>
+</details>
+
+
+---
+
+## Monitor and view certificates
+
+Once you issue certificates, Cloudflare will initiate the domain validation process using the method you specified.
+
+With a CNAME in place, the entire process — from validation to issuance to edge deployment — completes in approximately 90 seconds.
+
+### Monitor certificate status
+
+For help tracking a certificate's status, refer to [Monitor certificates](/ssl-for-saas/common-tasks/issuing-certificates).
+
+### View certificates
+
+Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge. 
+
+To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/certificate-validation-methods)).
+
+```sh
+$ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
 ```
-
-Note that it’s possible to serve these HTTP records from your own web servers, in advance of placing the CNAME. The payload returned includes the path where the CA will look for the challenge along with the body that should be returned.
-
-Alternatively, you may also issue certificates to custom hostnames via the dashboard: 
-1. Navigate to **SSL/TLS** > **Custom Hostnames** and click **Add Custom Hostname**.
-1. Add your customer's hostname `app.customer.com` and set the relevant options, including:
-    - Choosing the [Validation method](../certificate-validation-methods).
-    - Whether you want to **Enable wildcard**, which adds a `*.<custom-hostname>` SAN to the custom hostname certificate. For more details, see [Hostname priority](/ssl-tls/certificate-and-hostname-priority#hostname-priority).
-1. Click **Add Custom Hostname**.
-1. You will be brought back to the previous screen, which will show “Pending” before it changes to “Active” within 5 minutes. If you see an error stating “custom hostname does not CNAME to this zone”, you need to [set the DNS record at the customer's domain](#setting-cname-at-customer-domain).
-
-Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge. With a CNAME in place, the entire process—from validation to issuance to edge deployment—completes in approximately 90 seconds.
 
 --------
 

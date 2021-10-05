@@ -6,15 +6,11 @@ pcx-content-type: reference
 
 # Load Balancing expressions
 
-## Overview
-
-[Load Balancing rules](/additional-options/load-balancing-rules) uses two kinds of expressions:
+[Load Balancing rules](/additional-options/load-balancing-rules) use two kinds of expressions:
 
 - [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (_equals_ or _less than_, for example).
 
 - [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
-
-The **Create Custom Rule** dialog in the **Traffic** app provides two interfaces for creating expressions: the [Expression Builder](#expression-builder) and the [Expression Editor](#expression-editor).
 
 ---
 
@@ -40,7 +36,7 @@ In general, simple expressions use this pattern:
 <field> <operator> <value>
 ```
 
-For more, see [_Supported fields and operators_](/additional-options/load-balancing-rules/reference).
+For more details, refer to [Supported fields and operators](/additional-options/load-balancing-rules/reference).
 
 ---
 
@@ -63,7 +59,7 @@ In general, compound expressions use this pattern:
 
 A compound expression can be an operand of a logical operator. This allows multiple operators to construct a compound expression from many individual expressions.
 
-For more, see [_Supported fields and operators_](/additional-options/load-balancing-rules/reference).
+For more details, refer to [Supported fields and operators](/additional-options/load-balancing-rules/reference).
 
 ---
 
@@ -88,7 +84,7 @@ The **Expression Preview** displays the expression in text:
 and (http.request.uri.query contains "webserver")
 ```
 
-For a walkthrough, see [_Creating Load Balancing rules_](/additional-options/load-balancing-rules/create-rules).
+For a walkthrough, refer to [Creating Load Balancing rules](/additional-options/load-balancing-rules/create-rules).
 
 ### Expression Editor
 
@@ -112,4 +108,4 @@ For example, you might create a list of known office IP addresses and use it in 
 
 Cloudflare stores your lists at the account level and sends to the edge, so you can view, manage, and incorporate them into firewall rules for any of your zones.
 
-For more, see [Rules Lists](https://developers.cloudflare.com/firewall/cf-firewall-rules/rules-lists) in the Firewall Rules documentation.
+For more details, refer to [Rules Lists](https://developers.cloudflare.com/firewall/cf-firewall-rules/rules-lists) in the Firewall Rules documentation.

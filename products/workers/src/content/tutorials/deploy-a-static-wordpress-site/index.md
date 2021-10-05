@@ -124,7 +124,7 @@ There are some features available in WordPress sites that will not be supported 
 Deploying your WordPress site to Workers has benefits for your site’s performance, security, and cost. With a static version of your site being served, you can do a number of things with your live WordPress installation:
 
 - Move your WordPress install to a private URL or subdomain, and serve the static version of your site by deploying the Workers application to your domain. See [Deploying to a Domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) to learn more!
-- Run your WordPress instance locally, or put your now-hidden WP instance behind something like [Cloudflare Access](https://www.cloudflare.com/products/cloudflare-access/) to only give access to your contributors. This has a dramatic effect on the number of attack vectors for your WordPress site and its content.
+- Run your WordPress instance locally, or put your now-hidden WP instance behind something like [Cloudflare Access](https://www.cloudflare.com/teams/access/) to only give access to your contributors. This has a dramatic effect on the number of attack vectors for your WordPress site and its content.
 - Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now much smaller, you can often get away with hosting it on a cheaper plan, or moving to shared hosting. Your Cloudflare Workers plan is priced per-request, and because you can host up to thirty sites on your account, serving a high number of static WordPress sites can be an order of magnitude cheaper on Workers.
 
 We’re super excited about the future of Workers and WordPress, and we’d love to hear about what you’re building with them!

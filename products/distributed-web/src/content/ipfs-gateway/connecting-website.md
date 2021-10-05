@@ -142,12 +142,8 @@ Cloudflare's gateway doesn't have an SSL certificate for `your.website`. The
 good news is that Cloudflare can fix that.
 
 Cloudflare will issue you a free SSL certificate for `your.website`, which
-allows users to load `https://your.website`. All you have to do is go to
-[cloudflare-ipfs.com](https://cloudflare-ipfs.com) and scroll to the bottom,
-where it says "Connecting Your Website." Enter your domain into the text box and
-click `Submit`. When you click `Submit` the certificate issuance will
-begin. When it’s done, a message will appear indicating that the process has
-been completed and your certificate is in place. These certificates will
+allows users to load `https://your.website`. All you have to do is send an email
+to [ask-research@cloudflare.com](mailto:ask-research@cloudflare.com?subject=%5BDistributed%20Web%20Gateway%5D%20Create%IPFS%20certificate). These certificates will
 auto-renew, so once you’ve completed this step, you’ll never need to worry about
 certificates again.
 

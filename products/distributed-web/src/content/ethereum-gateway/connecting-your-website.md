@@ -27,10 +27,7 @@ next to this record will automatically turn grey. Because you’ve CNAME’d to
 our gateway, you’ll automatically receive Cloudflare's enterprise-level
 performance and security enhancements, but you won’t be able to control those
 settings yourself.
-3. Navigate to the 'Ethereum' tab of <https://cloudflare.com/distributed-web-gateway>
-and enter your website domain name into the text box at the bottom of the page.
-4. You should receive a message indicating that the domain name setup completed
-successfully.
+3. Send an email to [ask-research@cloudflare.com](mailto:ask-research@cloudflare.com?subject=%5BDistributed%20Web%20Gateway%5D%20Create%20Ethereum%20certificate).
 
 Following these instructions will CNAME your domain to the Cloudflare Ethereum
 Gateway, which will allow you to access the Ethereum network via your domain

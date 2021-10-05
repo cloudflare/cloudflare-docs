@@ -1,9 +1,6 @@
 # 1.1.1.1
 products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
-# Access
-products/access/ @cloudflare/access-docs @cloudflare/PCX
-
 # Analytics
 products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
 
