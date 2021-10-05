@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content-type: concept
+pcx-content-type: how-to
 ---
 
 import IssueCertsPreamble from "../../_partials/_issue-certs-preamble.md"

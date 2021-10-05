@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: how-to
+pcx-content-type: configuration
 ---
 
 import DCVDefinition from "../../_partials/_dcv-definition.md"

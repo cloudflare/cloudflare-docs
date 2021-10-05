@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content-type: reference
+pcx-content-type: configuration
 ---
 
 # Verify hostnames
