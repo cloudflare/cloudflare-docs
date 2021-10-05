@@ -1,20 +1,21 @@
+const path = require("path")
+const { products } = require("./current-products-list")
+const fs = require("fs")
+
 // See: https://www.gatsbyjs.org/docs/node-apis/
 
 // https://www.gatsbyjs.org/docs/add-custom-webpack-config/
-exports.onCreateWebpackConfig = ({
-  getConfig,
-  actions,
-  plugins,
-}) => {
+exports.onCreateWebpackConfig = ({ getConfig, actions, plugins }) => {
   const config = getConfig()
 
   // Hides "[HMR] ..." logs in devtools
   if (config.entry.commons) {
-    config.entry.commons = config.entry.commons.map(path => (
+    config.entry.commons = config.entry.commons.map(path =>
       // Add query param to entry added by Gatsby CLI https://git.io/JvAC5
-      path.indexOf('/webpack-hot-middleware/client.js?') > -1 ?
-        path + '&quiet=true' : path
-    ))
+      path.indexOf("/webpack-hot-middleware/client.js?") > -1
+        ? path + "&quiet=true"
+        : path
+    )
   }
 
   actions.replaceWebpackConfig(config)
@@ -24,12 +25,11 @@ exports.onCreateWebpackConfig = ({
       // Hides React Devtools advertisement in devtools
       // https://tinyurl.com/hide-react-devtools-advert
       plugins.define({
-        __REACT_DEVTOOLS_GLOBAL_HOOK__: "({ isDisabled: true })"
-      })
-    ]
+        __REACT_DEVTOOLS_GLOBAL_HOOK__: "({ isDisabled: true })",
+      }),
+    ],
   })
 }
-
 
 const { createFilePath } = require("gatsby-source-filesystem")
 
@@ -42,13 +42,41 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: "slug",
       node,
-      value
+      value,
     })
   }
 }
 
+// Source nodes for each svg file inside each individual product folder
 
-const path = require("path")
+exports.sourceNodes = ({ actions, createContentDigest, createNodeId }) => {
+  const { createNode } = actions
+  products.forEach(product => {
+    if (product.icon !== undefined) {
+      // Go into each product folder to find the svg for that product
+
+      const data = fs.readFileSync(
+        path.join(__dirname, '..', `products/${product.icon}/src/content/icons`, `${product.icon}.svg`),
+        "utf8"
+      )
+
+      const logoSVGContent = data.toString()
+
+      createNode({
+        id: createNodeId(product.icon),
+        href: product.href,
+        title: product.title,
+        path: product.path,
+        logoSVGContent,
+        wrap: product.wrap ? product.wrap : false,
+        internal: {
+          type: "Product",
+          contentDigest: createContentDigest(product),
+        },
+      })
+    }
+  })
+}
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
@@ -97,7 +125,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: node.fields.slug,
       component: path.resolve("./src/components/mdx-custom-renderer.js"),
-      context: node
+      context: node,
     })
   })
 }
