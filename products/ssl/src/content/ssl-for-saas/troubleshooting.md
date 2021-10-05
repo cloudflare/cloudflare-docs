@@ -11,7 +11,7 @@ pcx-content-type: reference
 
 ### High-risk domains
 
-Occasionally, a domain will be flagged as “high risk” by Cloudflare’s CA partners. Typically this is done only for a) domains with an Alexa ranking of 1-1,000 and b) domains that have been flagged for phishing or malware by Google’s Safe Browsing service.
+Occasionally, a domain will be flagged as “high risk” by Cloudflare’s CA partners. Typically this is done only for domains with an Alexa ranking of 1-1,000 and domains that have been flagged for phishing or malware by Google’s Safe Browsing service.
 
 If a domain is flagged by the CA, you need to contact Support before validation can finish. The API call will return indicating the failure, along with a link to where the ticket can be filed.
 
@@ -68,8 +68,8 @@ Cloudflare returns a 1016 error when the custom hostname cannot be routed or pro
 
 There are two main causes of error 1016:
 
-1. Custom Hostname ownership verification is not complete. To check, run an API call to [search for a certificate by hostname](https://developers.cloudflare.com/ssl/ssl-for-saas/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
-2. Fallback Origin is not [correctly set](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
+1. Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](https://developers.cloudflare.com/ssl/ssl-for-saas/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
+1. Fallback Origin is not [correctly set](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
 
 --------
 

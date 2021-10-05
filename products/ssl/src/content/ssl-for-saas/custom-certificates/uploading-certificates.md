@@ -5,19 +5,19 @@ pcx-content-type: how-to
 
 import CustomCertExample from "../../_partials/_custom-cert-file-example.md"
 
-# Managing custom certificates
+# Manage custom certificates
 
 For use cases and limitations, refer to [custom certificates](../custom-certificates).
 
-## Upload
+## Upload certificates
 
-### Using the dashboard
+### With the dashboard
 
 To upload a custom certificate in the dashboard, follow the steps for [issuing new certificates](/ssl-for-saas/common-tasks/issuing-certificates#via-the-dashboard), but change the **Certificate type** to **Custom certificate**.
 
 For more details on bundle method, refer to [Bundle Methodologies](/edge-certificates/custom-certificates/bundling-methodologies)
 
-### Using the API
+### With the API
 
 The call below will upload a certificate for use with `app.example.com`. 
 
@@ -53,6 +53,6 @@ The serial number returned is unique to the issuer, but not globally unique. Add
 
 ## Move to a Cloudflare certificate
 
-If you want to go from maintaining a custom certificate to using one issued by Cloudflare, you can migrate that certificate with zero downtime.
+If you want to switch from maintaining a custom certificate to using one issued by Cloudflare, you can migrate that certificate with zero downtime.
 
 Send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) to your custom hostname with a value for the DCV `method`. As soon as the [certificate is validated](/ssl-for-saas/common-tasks/certificate-validation-methods) and the [hostname is verified](/ssl-for-saas/common-tasks/hostname-verification), Cloudflare will remove the old custom certificate and begin serving the new one.

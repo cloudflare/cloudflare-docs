@@ -9,7 +9,7 @@ pcx-content-type: reference
 
 ## DigiCert
 
-These codes are rooted on the `/v4/zones/:zone_id/custom_hostnames` API endpoint. They will be reported in the validation_errors attribute of the ssl attribute for a custom_hostname resource.
+These codes are rooted on the `/v4/zones/:zone_id/custom_hostnames` API endpoint. They will be reported in the `validation_errors` attribute of the ssl attribute for a `custom_hostname` resource.
 
 HTTP Status Code|Error|Status|Reason
 ----------------|-----|------|------

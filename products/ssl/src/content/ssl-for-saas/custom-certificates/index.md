@@ -15,7 +15,7 @@ This situation commonly occurs when your customers use Extended Validation (EV) 
 
 ## Limitations
 
-If you use custom certificates, you are responsible for the entire certificate lifecycle (initial upload, renewal, subsequent upload)ß.
+If you use custom certificates, you are responsible for the entire certificate lifecycle (initial upload, renewal, subsequent upload).
 
 Cloudflare also only accepts publicly trusted certificates of these types:
 
@@ -23,4 +23,4 @@ Cloudflare also only accepts publicly trusted certificates of these types:
 * `SHA1WithRSA`
 * `ECDSAWithSHA256`
 
-If you attempt to upload another type of certificate (or one that has been self-signed certificate), it will be rejected.
+If you attempt to upload another type of certificate or a certificate that has been self-signed, it will be rejected.
