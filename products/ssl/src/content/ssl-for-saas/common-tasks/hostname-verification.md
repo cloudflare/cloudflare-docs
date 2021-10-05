@@ -5,7 +5,13 @@ pcx-content-type: reference
 
 # Verify hostnames
 
-Cloudflare verifies ownership of each new hostname before traffic is allowed to proxy.   There are four methods to verify ownership: TXT record, HTTP token, CNAME, or Apex.
+Cloudflare verifies ownership of each new hostname before traffic is allowed to proxy. There are four methods to verify ownership: TXT record, HTTP token, CNAME, or Apex.
+
+<Aside type="note" header="Note:">
+
+If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/ssl-for-saas/getting-started#step-5--have-customer-create-a-cname-record).
+
+</Aside>
 
 ## CNAME
 
