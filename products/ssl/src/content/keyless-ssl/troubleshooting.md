@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content-type: interim
+pcx-content-type: faq
 ---
 
 # Troubleshooting
