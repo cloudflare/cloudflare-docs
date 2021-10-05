@@ -10,7 +10,7 @@ Cloudflare Waiting Room protects websites from surges in legitimate traffic that
 
 ## Benefits
 
-Cloudflare Waiting Room benefits **your origin server** by preventing surges in legitimate traffic that may overload your origin.
+Waiting rooms protect **your origin server** by preventing surges in legitimate traffic that may overload your origin.
 
 Waiting Rooms also benefit **your visitors** by:
 - Keeping your application online and preventing them from reaching error pages.
