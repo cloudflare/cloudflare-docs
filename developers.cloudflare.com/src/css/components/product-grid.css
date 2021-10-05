@@ -19,7 +19,7 @@
 .ProductGrid--link {
   color: inherit;
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: 8px 12px;
   margin-bottom: 6px;
   text-decoration: none;
   text-align: left;
@@ -27,13 +27,13 @@
   align-items: center;
   justify-content: flex-start;
   color: inherit;
+  min-height: 64px;
 }
 
 .ProductGrid--link span {
   white-space: nowrap;
   font-weight: 600;
-  letter-spacing: -.03em;
-  line-height: 1;
+  line-height: 1.25;
 }
 
 .ProductGrid--link[data-wrap-title="true"] span {
@@ -56,19 +56,22 @@
 
 .ProductGrid--link svg {
   flex-shrink: 0;
-  fill: #6d767b;
-  width: 48px;
-  height: 48px;
-  margin: 0 7px 0 0;
+  width: 40px;
+  height: 40px;
+  margin: 0 8px 0 0;
   display: inline-block;
   vertical-align: middle;
+}
+
+.ProductGrid--link svg path {
+  fill: #6d767b;
 }
 
 [theme="dark"] .ProductGrid--link span {
   font-weight: 500;
 }
 
-[theme="dark"] .ProductGrid--link svg {
+[theme="dark"] .ProductGrid--link svg path {
   fill: #888f96;
 }
 
@@ -92,11 +95,6 @@
   .ProductGrid {
     font: 18px;
   }
-
-  .ProductGrid--link svg {
-    width: 36px;
-    height: 36px;
-  }
 }
 
 @media (max-width: 977px) and (min-width: 600px) {
@@ -118,10 +116,5 @@
 
   .ProductGrid--column {
     padding: 0;
-  }
-
-  .ProductGrid--link svg {
-    width: 48px;
-    height: 48px;
   }
 }
