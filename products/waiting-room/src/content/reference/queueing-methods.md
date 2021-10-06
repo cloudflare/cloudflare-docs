@@ -34,7 +34,7 @@ Use this method when you want to distribute products or services more equitably.
 
 ## Event-specific queueing methods
 
-The following queueing methods are commonly used when you [create an event](/additional-options/create-events). Additionally, these queueing methods are only available when using the API.
+The following queueing methods can only be used when you [create an event](/additional-options/create-events). Additionally, these queueing methods are only available when using the API.
 
 <Aside type="note" header="Note:">
 
