@@ -51,7 +51,7 @@ $ wrangler generate public-api
 $ wrangler generate private-api
 ```
 
-Adjacent to your API projects, create a new package `handlers`, which can be imported into each project:
+Next to your API projects, create a new package `handlers`, which can be imported into each project:
 
 ```sh
 ---
