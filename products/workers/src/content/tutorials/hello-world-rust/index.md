@@ -9,8 +9,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 # Hello World in Rust
 
-In this tutorial, you will learn how to generate, build, preview, configure, and publish
-a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
+In this tutorial, you will learn how to generate, build, preview, configure, and publish a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
 
 <TutorialsBeforeYouStart/>
 
@@ -50,8 +49,7 @@ Add the following content to your `Cargo.toml` file:
 pulldown-cmark = "0.4.0"
 ```
 
-Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Change
-your `src/lib.rs` to look like this:
+Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Change your `src/lib.rs` to look like this:
 
 ```rust
 ---
