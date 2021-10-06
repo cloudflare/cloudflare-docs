@@ -19,7 +19,7 @@ Only certain customers can support scheduled events with their waiting rooms. Fo
 
 At the moment, you can only create an event using the API.
 
-To create an event, make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#unique-properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+To create an event, make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
 If you are using a [custom template](../customize-waiting-room#custom-waiting-room), you may want to add [relevant variables](https://api.cloudflare.com/#waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
 
@@ -29,7 +29,7 @@ If you need to create overlapping events, use different waiting rooms.
 
 </Aside>
 
-### Unique properties
+### Properties
 
 Though most properties are identical to those on a [regular waiting room](https://api.cloudflare.com/#waiting-room-properties), there are a few unique to [creating an event](https://api.cloudflare.com/#waiting-room-create-event):
 
@@ -45,9 +45,9 @@ Though most properties are identical to those on a [regular waiting room](https:
 
 Set up a "lottery" system to reward all users who enter into the queue prior to your event start time. 
 
-Users who reach your application **during the prequeue period** are [randomly assigned](/reference/queueing-methods#random) a place in line when the event starts. If the event uses [FIFO ordering](/reference/queueing-methods#first-in-first-out-fifo), users who reach your application after the prequeue period are assigned places after users from the prequeue.
+Users who reach your application **during the prequeue period** are [randomly assigned](/reference/queueing-methods#random) a place in line when the event starts. If the event uses [FIFO ordering](/reference/queueing-methods#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
 
-To set up a "lottery", include the [following parameters](#unique-properties) in your API request:
+To set up a "lottery", include the [following parameters](#properties) in your API request:
 
 - `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least **5 minutes before** `event_start_time`.
 - `shuffle_at_event_start`: If **true** and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`
@@ -61,8 +61,6 @@ This command shows you the event's configuration as if it were active, meaning t
 ## Edit an event
 
 To edit an event, use a [PATCH request](https://api.cloudflare.com/#waiting-room-patch-event).
-
-By default, you cannot change the [queueing method](/reference/queueing-methods) **within five minutes** of the `prequeue_start_time` or the `event_start_time`. You have to update these values first and then update the queueing method.
 
 ## Disable events
 
