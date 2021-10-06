@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Create scheduled events
 
-When you want to customize the behavior of a waiting room — updating the queuing method, total active users, or any [other property](/reference/configuration-settings) — for a specific period of time, set up a scheduled event.
+When you want to customize the behavior of a waiting room for a specific period of time — queuing method, total active users, or any [other property](/reference/configuration-settings) — set up a scheduled event.
 
 Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
@@ -17,15 +17,11 @@ Only certain customers can support scheduled events with their waiting rooms. Fo
 
 ## Create an event
 
-At the moment, you can only create an event [using the API](https://api.cloudflare.com/#waiting-room-create-event).
+At the moment, you can only create an event [using the API](https://api.cloudflare.com/#waiting-room-create-event). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-Any properties set on the event will override the default property on the waiting room for the duration of the event.
+If you create an event, you also have access to additional fields for [creating a custom template](../customize-waiting-room#custom-waiting-room).
 
-<Aside type="note">
-
-A waiting room cannot support overlapping events.
-
-</Aside>
+A waiting room cannot support multiple events happening at the same time. To create overlapping events, use multiple waiting rooms.
 
 ### Unique properties
 
@@ -33,23 +29,38 @@ Though most properties are identical to those on a [regular waiting room](https:
 
 - `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
 - `event_end_time` (required): ISO 8601 timestamp that marks the end of the event.
-- `shuffle_at_event_start`: If `true` and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`. Commonly used to ensure fairness if your event is using a [**FIFO** queueing method](/reference/queueing-methods#first-in-first-out-fifo).
-- `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least 5 minutes before `event_start_time`.
-- `suspended`: If `true`, the event is ignored and traffic is handled based on the regular configuration.
+- `shuffle_at_event_start`: If **true** and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`. Commonly used to ensure fairness if your event is using a [**FIFO** queueing method](#set-up-a-lottery).
+- `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least **5 minutes before** `event_start_time`.
+- `suspended`: If **true**, the event is ignored and traffic is handled based on the waiting room's normal configuration.
+
+## Set up a "lottery"
+
+Set up a "lottery" system to reward all users who enter into the queue prior to your event start time. 
+
+Users who reach your application **during the prequeue** period are [randomly assigned](/reference/queueing-methods#random) a place in line when the event starts. Users who reach your application **after the prequeue period** but still during the event are assigned places based on [FIFO ordering](/reference/queueing-methods##first-in-first-out-fifo), meaning they will be behind anyone from the prequeue.
+
+To set up a "lottery", include the [following parameters](#unique-properties) in your API request:
+
+- `prequeue_start_time`
+- `shuffle_at_event_start`
 
 ## Preview an event configuration
 
-Since properties set on an event will override the default property of a waiting room for the duration of an event, you can also use the API to [preview an event configuration](https://api.cloudflare.com/#waiting-room-preview-active-event-details).
+Since properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](https://api.cloudflare.com/#waiting-room-preview-active-event-details) before it begins.
 
 This command shows you the event's configuration as if it were active, meaning that inherited fields from the waiting room will display as their current values.
-
-Use this command to review your event before it reaches its **Start Time**.
 
 ## Edit an event
 
 To edit an event, use a [PATCH request](https://api.cloudflare.com/#waiting-room-patch-event).
 
-By default, you cannot change the [**queueing method**](/reference/queueing-methods) within five minutes of the `prequeue_start_time` or the `event_start_time`. You have to update these values first and then update the queueing method.
+By default, you cannot change the [queueing method](/reference/queueing-methods) **within five minutes** of the `prequeue_start_time` or the `event_start_time`. You have to update these values first and then update the queueing method.
+
+## Disable events
+
+You can disable an event by setting the `suspended` parameter to `true`.
+
+Additionally, events will not become active if a waiting room itself is **Disabled** or if the waiting room has been set to **Queue All**. 
 
 ## Other API commands
 

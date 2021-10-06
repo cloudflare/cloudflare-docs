@@ -35,7 +35,7 @@ The features available for a waiting room depend on your plan type.
             <td><a href='/reference/queueing-methods'>Queueing method</a></td>
             <td>First In First Out (FIFO)</td>
             <td>First In First Out (FIFO)</td>
-            <td>First In First Out (FIFO), Random, or Lottery (with scheduled events)</td>
+            <td>First In First Out (FIFO) or Random</td>
         </tr>
         <tr>
             <td><a href='/reference/configuration-settings'>Disable session renewal</a></td>
@@ -49,6 +49,7 @@ The features available for a waiting room depend on your plan type.
             <td>No</td>
             <td>Yes</td>
         </tr>
+        <tr>
             <td><a href='/additional-options/create-events'>Scheduled events</a></td>
             <td>No</td>
             <td>No</td>

@@ -22,7 +22,7 @@ Your waiting room orders visitors according to when they entered the waiting roo
 
 Technically, each user receives a [cookie](/reference/waiting-room-cookie) that contains a timestamp of when their request first hit an actively queueing waiting room. Cloudflare uses that timestamp to order visitors and provide the estimated wait time.
 
-Use this method when you want to reward visitors who get in the queue first and wait longer, such as for sneaker drops, memorabilia sales, etc.
+Use this method when you want to reward visitors who get in the queue first and wait longer.
 
 ## Random
 
