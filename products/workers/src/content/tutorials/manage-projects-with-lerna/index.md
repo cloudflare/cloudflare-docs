@@ -40,7 +40,7 @@ $ wrangler generate my-site --site
 $ git clone https://github.com/cloudflare/worker-template.git
 ```
 
-This approach to managing your Workers projects can become incredibly powerful when you begin to share dependencies between the projects. Imagine that your codebase has a pre-defined set of API handlers that you want to reuse between our public and private APIs, in the packages `public-api` and `private-api`:
+This approach to managing your Workers projects can become incredibly powerful when you begin to share dependencies between projects. Imagine that your codebase has a pre-defined set of API handlers that you want to reuse between your public and private APIs, in the packages `public-api` and `private-api`:
 
 ```sh
 ---
@@ -71,7 +71,7 @@ filename: packages/public-api/package.json
 }
 ```
 
-Using the `bootstrap` command, link the packages together and use them inside of your code:
+Link the packages together using the `bootstrap` command and use them inside of your code:
 
 ```sh
 ---
@@ -94,7 +94,7 @@ const handler = request => {
 
 After adding an identical `dependency` to `private-api/package.json`, run `lerna bootstrap` again, and begin sharing code between your projects.
 
-When you are ready to deploy your codebases, coordinate deploying them simultaneously by defining scripts in each package’s `package.json` file, that can be read by `lerna run`:
+When you are ready to deploy your codebases, define a script in each package’s `package.json` file (for example, `publish`), so that you can later deploy both codebases in a coordinated manner using the command `lerna run <SCRIPT_NAME>`:
 
 ```json
 ---
