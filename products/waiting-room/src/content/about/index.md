@@ -49,5 +49,5 @@ Access to certain features depends on a customer's [plan type](plans).
 ## Get started
 
 To learn how to use Cloudflare Waiting Rooms, check out:
-- The [setup guide](../get-started)
-- Various [how-to guides](../how-to)
+- The [setup guide](/get-started)
+- Various [how-to guides](/how-to)

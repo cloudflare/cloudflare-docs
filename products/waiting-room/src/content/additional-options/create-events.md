@@ -1,5 +1,5 @@
 ---
-order:
+order: 3
 pcx-content-type: how-to
 ---
 
@@ -17,11 +17,19 @@ Only certain customers can support scheduled events with their waiting rooms. Fo
 
 ## Create an event
 
-At the moment, you can only create an event [using the API](https://api.cloudflare.com/#waiting-room-create-event). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+At the moment, you can only create an event using the API.
 
-If you create an event, you also have access to additional fields for [creating a custom template](../customize-waiting-room#custom-waiting-room).
+To create an event:
 
-A waiting room cannot support multiple events happening at the same time. To create overlapping events, use multiple waiting rooms.
+1. (optional) Depending on the type of event, update the [queueing method](/reference/queueing-methods#event-specific-queueing-methods) for your waiting room.
+1. Make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#unique-properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+1. (optional) Update your custom template with [additional fields](../customize-waiting-room#custom-waiting-room).
+
+<Aside type="note">
+
+If you need to create overlapping events, use different waiting rooms.
+
+</Aside>
 
 ### Unique properties
 
