@@ -24,7 +24,7 @@ In the command line, generate your Workers project by passing in a project name 
 ~ $ wrangler generate rustwasm-markdown-parser https://github.com/cloudflare/rustwasm-worker-template/
 ```
 
-This creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
+This command creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
 
 Wrangler templates are Git repositories. If you want to create your own templates, or use one from the [Template Gallery](/examples), there is a variety of options to help you get started.
 
@@ -41,7 +41,7 @@ Using the `dev` command will establish a connection between localhost and an edg
 ## Building
 
 Begin building your project by pulling in a dependency from the `crates.io` ecosystem called `pulldown-cmark`.
-Add this to your `Cargo.toml` file:
+Add the following content to your `Cargo.toml` file:
 
 ```toml
 ## Cargo.toml
@@ -96,7 +96,7 @@ pub fn parse() -> String {
 }
 ```
 
-Update your `worker/worker.js` to use the new code you have written:
+Update your `worker/worker.js` to use the new code:
 
 ```javascript
 addEventListener('fetch', (event) => {
