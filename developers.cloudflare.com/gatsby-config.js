@@ -152,6 +152,14 @@ module.exports = {
         icon: "src/images/cloudflare-icon.png"
       }
     },
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-PKQFGQB",
+        dataLayerName: "cfDataLayer",
+        selfHostedOrigin: "https://tr.www.cloudflare.com"
+      },
+    },
     // Consider enabling for PWA + offline functionality
     // https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
