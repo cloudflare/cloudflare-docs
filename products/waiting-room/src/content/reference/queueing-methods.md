@@ -50,7 +50,7 @@ Use this setup when you only want to use your waiting room for events — where 
 
 ### Reject
 
-Prevent any traffic from reaching your application by setting its `queueing_method` to **reject**. If **Queue All** is enabled or an event is prequeueing, users will be queued in the waiting room (but never reach your application).
+Prevent any traffic from reaching your application by setting its `queueing_method` to **reject**. If **Queue All** is enabled or an event is prequeueing, users will **still be rejected** and see a static web page that does not refresh.
 
 Use this setup for event-only endpoints or to perform application maintenance.
 
