@@ -11,7 +11,7 @@ Any properties set on the event will override the default property on the waitin
 
 <Aside type="note">
 
-Only certain customers can support scheduled events with their waiting rooms. For more details, see our <a href="/plans">Plans</a> page.
+Only some customers can support scheduled events with their waiting rooms. For more details, see our <a href="/plans">Plans</a> page.
 
 </Aside>
 
