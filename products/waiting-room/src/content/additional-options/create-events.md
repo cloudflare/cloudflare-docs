@@ -49,8 +49,8 @@ Users who reach your application **during the prequeue period** are [randomly as
 
 To set up a "lottery", include the [following parameters](#properties) in your API request:
 
-- `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least **5 minutes before** `event_start_time`.
-- `shuffle_at_event_start`: If **true** and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`
+- `prequeue_start_time`
+- `shuffle_at_event_start`
 
 ## Preview an event configuration
 
