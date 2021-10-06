@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Create scheduled events
 
-When you want to customize the behavior of a waiting room for a specific period of time — queuing method, total active users, or any [other property](/reference/configuration-settings) — set up a scheduled event.
+When you want to customize the behavior of a waiting room for a specific period of time — such as changing the queueing method or increasing the total active users — set up a **scheduled event**.
 
 Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
