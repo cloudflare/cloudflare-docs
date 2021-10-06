@@ -51,7 +51,7 @@ $ wrangler generate public-api
 $ wrangler generate private-api
 ```
 
-Adjacent to your API projects, you can create a new package `handlers`, which can be imported into each project:
+Adjacent to your API projects, create a new package `handlers`, which can be imported into each project:
 
 ```sh
 ---
@@ -71,7 +71,7 @@ filename: packages/public-api/package.json
 }
 ```
 
-Using the `bootstrap` command, you can link the packages together and use them inside of your code:
+Using the `bootstrap` command, link the packages together and use them inside of your code:
 
 ```sh
 ---
@@ -92,9 +92,9 @@ const handler = request => {
 }
 ```
 
-After adding an identical `dependency` to `private-api/package.json`, you can run `lerna bootstrap` again, and begin sharing code between your projects.
+After adding an identical `dependency` to `private-api/package.json`, run `lerna bootstrap` again, and begin sharing code between your projects.
 
-When you are ready to deploy your codebases, you can coordinate deploying them simultaneously by defining scripts in each package’s `package.json` file, that can be read by `lerna run`:
+When you are ready to deploy your codebases, coordinate deploying them simultaneously by defining scripts in each package’s `package.json` file, that can be read by `lerna run`:
 
 ```json
 ---
