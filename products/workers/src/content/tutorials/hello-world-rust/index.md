@@ -36,7 +36,7 @@ You can test how your Workers function will execute when it is deployed by using
 rustwasm-markdown-parser $ wrangler dev
 ```
 
-Using the `dev` command will open a browser tab with your Cloudflare Workers function loaded.
+Using the `dev` command will establish a connection between localhost and an edge server that operates your Worker in development.
 
 ## Building
 
