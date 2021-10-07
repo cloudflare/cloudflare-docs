@@ -15,6 +15,7 @@ You can create a monitor within the [load balancer workflow](/how-to/create-load
         - Minimum time in seconds is 60 (Pro), 10 (Business), and 5 (Enterprise).
      - **Timeout** and **Retries**: 
         - The health check will return unhealthy if it exceeds the duration specified in **Timeout** (and exceeds this duration more times than the specified number of **Retries**).
+    - **Expected Code(s)**: The expected HTTP response codes listed individually (200, 302) or as a range (2xx, 3xx).
     - **Response Body**:
         - Looks for a case-insensitive substring in the response body.
         - Make sure that the value is relatively static and within the first 100,000 KB of the HTML page.
