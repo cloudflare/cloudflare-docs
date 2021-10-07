@@ -49,9 +49,9 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 <ValidatePatch/>
 
-### CNAME
+### CNAME (manual)
 
-You can also complete DCV with a special CNAME record.
+You can also complete DCV with a special CNAME record. This method is only available for custom hostnames.
 
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
 
