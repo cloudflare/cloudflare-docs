@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-Using [`lerna`](https://github.com/lerna/lerna), a tool for managing multiple JavaScript codebases inside a single "monorepo", developers can work with multiple Wrangler projects and share dependencies between them. If your codebase is already managed with `lerna`, you can also add a new Wrangler project into your existing monorepo without disrupting your workflow.
+Using [`lerna`](https://github.com/lerna/lerna), a tool for managing multiple JavaScript codebases inside a single monorepo, developers can work with multiple Wrangler projects and share dependencies between them. If your codebase is already managed with `lerna`, you can also add a new Wrangler project into your existing monorepo without disrupting your workflow.
 
 Begin by installing `lerna`, and creating a new project in the folder `workers-monorepo`:
 
@@ -40,7 +40,7 @@ $ wrangler generate my-site --site
 $ git clone https://github.com/cloudflare/worker-template.git
 ```
 
-This approach to managing your Workers projects can become incredibly powerful when you begin to share dependencies between the projects. Imagine that your codebase has a pre-defined set of API handlers that you want to re-use between our public and private APIs, in the packages `public-api` and `private-api`:
+This approach to managing your Workers projects can become incredibly powerful when you begin to share dependencies between projects. Imagine that your codebase has a pre-defined set of API handlers that you want to reuse between your public and private APIs, in the packages `public-api` and `private-api`:
 
 ```sh
 ---
@@ -51,7 +51,7 @@ $ wrangler generate public-api
 $ wrangler generate private-api
 ```
 
-Adjacent to your API projects, you can create a new package `handlers`, which can be imported into each project:
+Next to your API projects, create a new package `handlers`, which can be imported into each project:
 
 ```sh
 ---
@@ -71,7 +71,7 @@ filename: packages/public-api/package.json
 }
 ```
 
-Using the `bootstrap` command, you can link the packages together and use them inside of your code:
+Link the packages together using the `bootstrap` command and use them inside of your code:
 
 ```sh
 ---
@@ -92,9 +92,9 @@ const handler = request => {
 }
 ```
 
-After adding an identical `dependency` to `private-api/package.json`, you can run `lerna bootstrap` again, and begin sharing code between your projects.
+After adding an identical `dependency` to `private-api/package.json`, run `lerna bootstrap` again, and begin sharing code between your projects.
 
-When you’re ready to deploy your codebases, you can coordinate deploying them simultaneously by defining scripts in each package’s `package.json` file, that can be read by `lerna run`:
+When you are ready to deploy your codebases, define a script in each package’s `package.json` file (for example, `publish`), so that you can later deploy both codebases in a coordinated manner using the command `lerna run <SCRIPT_NAME>`:
 
 ```json
 ---
@@ -144,4 +144,4 @@ lerna success - public-api
 lerna success - private-api
 ```
 
-If you’d like to explore an example repository, check out the accompanying open-source codebase on [GitHub](https://github.com/signalnerve/lerna-wrangler-monorepo-example) for this tutorial.
+If you would like to review an example repository, refer to the accompanying open-source codebase on [GitHub](https://github.com/signalnerve/lerna-wrangler-monorepo-example) for this tutorial.

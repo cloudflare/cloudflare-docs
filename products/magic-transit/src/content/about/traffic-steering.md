@@ -82,7 +82,7 @@ Magic Transit supports a "weight" field that you can apply to a tunnel so that a
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
-Keep in mind that ECMP balances flows probabilistically, the use of weights is only approximate.
+Keep in mind that because ECMP balances flows probabilistically, the use of weights is only approximate.
 
 For more on Magic Transit tunnel weights, contact your Cloudflare customer service manager.
 

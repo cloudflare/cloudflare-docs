@@ -12,5 +12,5 @@ As part of that, we are proud to be the first Internet performance and security 
 
 <ButtonGroup>
   <Button type="primary" href="/get-started">Get started</Button>
-  <Button type="secondary" href="https://www.cloudflare.com/learning/ssl/what-is-ssl/">Learn more</Button>
+  <Button type="secondary" href="https://www.cloudflare.com/learning/ssl/what-is-ssl/" target="_blank">Learn more</Button>
 </ButtonGroup>

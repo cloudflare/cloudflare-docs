@@ -13,7 +13,11 @@ Custom certificates require that you [upload the certificate](uploading), [manua
 
 Currently the Business and Enterprise plan each include one Custom Certificate, and Enterprise customers may purchase additional slots as needed by speaking with their Customer Success Manager.
 
-If you have first-level hostnames — for example, `www.example.com` — not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/edge-certificates/universal-ssl), if enabled.
+If you have first-level hostnames not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/edge-certificates/universal-ssl), if enabled.
+
+## Certificate Signing Requests (CSRs)
+
+As part of this custom certificate process, you may also want to [generate a Certificate Signing Request (CSR)](/edge-certificates/additional-options/certificate-signing-requests) so you can maintain control of your private key on Cloudflare.
 
 ## Keyless SSL
 
@@ -21,7 +25,7 @@ Typically, customers will upload both the SSL certificate and the private key. T
 
 ## Geo Key Manager (private key restriction)
 
-By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. Customers that wish to restrict where these keys may be used can elect to specify a [Private Key Restriction](https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/) during upload.
+By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. Customers who wish to restrict where these keys may be used can elect to specify a [Private Key Restriction](https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/) during upload.
 
 ## Certificate packs
 
