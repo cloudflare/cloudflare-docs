@@ -62,13 +62,39 @@ This means Access won’t be enforced on the set of IP addresses you’ve specif
 
 To do so, set up an additional *Allow* rule like the following:
 
-
 | Action | Rule | Criteria | Value |
 | ------ | ---- | -------- | ----- | 
 | Allow  | Include | Emails ending in | `@contractors.com`, `@company.com` |
 
 This ensures that everyone connecting from outside your specified IP range will be prompted to authenticate.
 
+## Requiring multiple conditions
+
+When setting up a Require rule for an Access policy, keep in mind that any values you add to the rule will be concatenated by an `and` operator. For example, let's say you want to grant access to an application to both the full-time employees and the contractors on your team in a specific country. If you set up a rule with the following configuration: 
+
+| Action | Rule | Criteria | Value |
+| ------ | ---- | -------- | ----- | 
+| Allow  | Include | Country | `Portugal` |
+| - | Require | Emails ending in | `@cloudflare.com`, `@contractors.com` |
+
+the policy will only grant access to people reaching the application from Portugal, and who have **both** an email ending in `@cloudflare.com` and in `@contractors.com`. Therefore, nobody will have access to the application. 
+
+Instead, you can address this need by using [Access groups](/identity/users/groups). First, you can set up a group for one of the user groups you want to include in your application:
+
+| Name | Rule | Criteria | Value |
+| ---- | ---- | -------- | ----- | 
+| Full-time employees | Include | Emails ending in | `@cloudflare.com` |
+| - | Include | Country | `Portugal` |
+
+Next, you can create a policy for your application that references the group and adds a require rule for the other user group:
+
+| Action | Rule | Criteria | Value |
+| ------ | ---- | -------- | ----- | 
+| Allow  | Include | Country | `Portugal` |
+| - | Require | Full-time employees | - |
+| - | Require | Emails ending in | `@contractors.com` |
+
 ## Service Auth
+
 Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
 
