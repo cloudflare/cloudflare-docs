@@ -7,6 +7,12 @@ pcx-content-type: concept
 
 The **SSL/TLS Recommender** helps you choose which [Encryption mode](/origin-configuration/ssl-modes) is best for your application.
 
+<Aside type="note">
+
+For more background, refer to the [introductory blog post](https://blog.cloudflare.com/ssl-tls-recommender).
+
+</Aside>
+
 ## Enable SSL/TLS recommendations
 
 To enable SSL/TLS recommendations:
