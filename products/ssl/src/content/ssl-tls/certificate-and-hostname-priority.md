@@ -13,7 +13,7 @@ When a new certificate is created, Cloudflare first deploys the certificate and 
 
 For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) apply to that hostname:
 
-1. **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for that specific subdomain.
+1. **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for requests to `www.example.com`.
 1. **Certificate priority**: If the hostname is the same, certain types of certificates take precedence over others.
 
     | Priority | Certificate Type|
@@ -33,7 +33,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
 Cloudflare uses the following order to determine the certificate and settings used during a TLS handshake:
 
 1. **SNI match**: Certificates and settings that match the SNI hostname *exactly* take precedence.
-1. **SNI wildcard match**: If there is not an exact match, Cloudflare uses certificates and settings that match an SNI wildcard.
+1. **SNI wildcard match**: If there is not an exact match between the hostname and SNI hostname, Cloudflare uses certificates and settings that match an SNI wildcard.
 1. **IP address**: If no SNI is presented, Cloudflare uses certificate based on the IP address (the hostname can support TLS handshakes made without SNI).
 
 ### Hostname priority
