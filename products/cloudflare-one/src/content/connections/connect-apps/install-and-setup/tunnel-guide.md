@@ -175,7 +175,7 @@ $ cloudflared tunnel route ip show
 
 ## 6. Run the tunnel 
 
-Run the tunnel to proxy incoming traffic from the Tunnel to any number of services running locally on your origin. 
+Run the tunnel to proxy incoming traffic from the tunnel to any number of services running locally on your origin. 
 
 ```bash
 $ cloudflared tunnel run <UUID or NAME>
