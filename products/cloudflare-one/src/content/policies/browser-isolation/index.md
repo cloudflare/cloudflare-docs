@@ -50,9 +50,36 @@ All the following settings can be applied to websites through Applications, List
 ### Disable copy / paste
 
 * **Behavior**. Prohibits users from copying and pasting content between a remote web page and their local machine.
-* **Use Cases**. Protect sensitive content in self-hosted or SaaS applications from data loss.
+* **Use Case**. [Protect sensitive content in self-hosted or SaaS applications from data loss](https://blog.cloudflare.com/data-protection-browser/).
 
 ### Disable printing
 
 * **Behavior**. Prohibits users from printing remote web pages to their local machine.
-* **Use Cases**. Protect sensitive content in self-hosted or SaaS applications from data loss.
+* **Use Case**. [Protect sensitive content in self-hosted or SaaS applications from data loss](https://blog.cloudflare.com/data-protection-browser/).
+
+### Disable keyboard
+
+<Aside>
+Mouse input remains available (to allow users to navigate a website by following hyperlinks and scrolling). This does not prevent user input into third party virtual keyboards within a remote webpage.
+</Aside>
+
+* **Behavior**. Prohibits users from performing keyboard input into the remote page.
+* **Use Case**. Prevent users inputting sensitive information into unknown/untrusted websites.
+
+### Disable upload
+
+<Aside>
+This option does not prevent files being uploaded to websites from third party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website use HTTP Policies to block by Upload Mime Type.
+</Aside>
+
+* **Behavior**. Prohibits users from uploading files from their local machine into a remote web page.
+* **Use Case**. Protect sensitive data from being exfiltrated to unknown/untrusted websites.
+
+### Disable download
+
+<Aside>
+This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser use HTTP Policies to block by Download Mime Type.
+</Aside>
+
+* **Behavior**. Prohibits users from exporting files from the remote browser to their local machine.
+* **Use Cases**. Protect users from downloading files from unknown/untrusted sources, and protect sensitive content in self-hosted or SaaS applications from data loss.
