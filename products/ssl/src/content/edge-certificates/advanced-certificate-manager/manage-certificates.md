@@ -12,6 +12,7 @@ import CipherSuitesDefinition from "../../_partials/_cipher-suites-definition.md
 ### Using the dashboard
 
 To create a new advanced certificate in the dashboard:
+
 1. Log into your Cloudflare account and select a domain.
 1. Select **SSL/TLS** > **Edge Certificates**.
 1. Select **Order Advanced Certificate**.
@@ -32,6 +33,29 @@ Selecting Let’s Encrypt as a CA limits a certificate to txt validation_method,
 ### Using the API
 
 To create a new certificate, send a [POST request](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+
+---
+
+## Delete a certificate
+
+### Using the dashboard
+
+To delete an advanced certificate in the dashboard:
+
+1. Log into your Cloudflare account and select a domain.
+1. Select **SSL/TLS** > **Edge Certificates**.
+1. Click a certificate.
+1. Click **Delete Certificate**.
+
+### Using the API
+
+To delete a certificate, send a [DELETE request](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+
+---
+
+## Restart validation
+
+To restart validation for a certificate in a `validation_timed_out` status, sending a [PATCH request](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
 
 ---
 
