@@ -3,7 +3,7 @@ pcx-content-type: concept
 order: 3
 ---
 
-# Available Managed Rulesets
+# Managed Rulesets
 
 Cloudflare provides the following Managed Rulesets in the WAF:
 
