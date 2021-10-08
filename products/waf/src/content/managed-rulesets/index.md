@@ -10,8 +10,8 @@ Cloudflare provides the following Managed Rulesets in the WAF:
 <TableWrap><table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
-      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
-      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+      <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
+      <th style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -48,8 +48,8 @@ The following rulesets run in the response phase:
 <TableWrap><table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
-      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
-      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+      <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
+      <th style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></th>
     </tr>
   </thead>
   <tbody>
