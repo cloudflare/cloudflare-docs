@@ -117,11 +117,3 @@ Do the following:
     </Aside>
 
 1. Click **Save**.
-
-## Phases of deployed Managed Rulesets
-
-When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
-
-Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Check the specific Managed Ruleset documentation for details.
-
-For more information on phases, see [Phases](https://developers.cloudflare.com/ruleset-engine/#phases).
