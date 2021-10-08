@@ -60,7 +60,7 @@ $ cat config.yml
 
 It is important to note that `cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory). 
 
-You can store your configuration file in any directory of your choice. If you do store it in a non-standard directory, you will need to use the `--config` flag when running your tunnel, and specify the path to your config file:
+You can store your configuration file in any directory of your choice. If you do store it in a non-standard directory, you will need to use the `--config` flag when running your tunnel and specify the path to your config file:
 
 ```sh
 $ cloudflared tunnel --config tunnels/config.yml run <NAME or UUID>
