@@ -3,15 +3,15 @@ pcx-content-type: concept
 order: 3
 ---
 
-# Available Managed Rulesets
+# Managed Rulesets
 
 Cloudflare provides the following Managed Rulesets in the WAF:
 
 <TableWrap><table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
-      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
-      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+      <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
+      <th style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -48,8 +48,8 @@ The following rulesets run in the response phase:
 <TableWrap><table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
-      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
-      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+      <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
+      <th style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -59,3 +59,11 @@ The following rulesets run in the response phase:
     </tr>
   </tbody>
 </table></TableWrap>
+
+## Phases of deployed Managed Rulesets
+
+When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+
+Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Check the specific Managed Ruleset documentation for details.
+
+For more information on phases, see [Phases](https://developers.cloudflare.com/ruleset-engine/#phases).
