@@ -107,7 +107,9 @@ Policies created using the URL selector are case-sensitive.
 </Aside>
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
+
 * **Host**
+* **Domain**
 * **URL**
 * **URL Query**
 * **URL Path**
@@ -117,6 +119,12 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
 * **Applications**
+
+<Aside type="note" header="Host or Domain?">
+
+The `Host` selector matches the exact entry input by a customer in the value field or list. The `Domain` selector matches the exact entry and all subdomains in the value field or list.
+
+</Aside>
 
 ## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
