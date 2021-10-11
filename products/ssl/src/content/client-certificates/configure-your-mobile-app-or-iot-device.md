@@ -15,7 +15,7 @@ To keep this example simple, the API is implemented as a Cloudflare Worker (borr
 
 Temperatures are stored in [Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works) using the source IP address as a key, but you can easily use a [value from the client certificate](https://developers.cloudflare.com/access/service-auth/mtls-headers/), such as the fingerprint.
 
-The example API code below saves a temperature and timestamp into KV when a POST is made, and returns the most recent 5 temperatures when a GET request is made.
+The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
 ```js
 const defaultData = { temperatures: [] }
@@ -382,7 +382,7 @@ def main():
     print("Response status code: %d" % r.status_code)
 ```
 
-When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent, and the script sends the contents of `/etc/ssl/certs/sensor.pem` and then, as required to complete the SSL/TLS handshake, demonstrates it has possession of `/etc/ssl/private/sensor-key.pem`.
+When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent and the script sends the contents of `/etc/ssl/certs/sensor.pem`. Then, as required to complete the SSL/TLS handshake, the script demonstrates it has possession of `/etc/ssl/private/sensor-key.pem`.
 
 Without the client certificate, the Cloudflare rejects the request:
 
