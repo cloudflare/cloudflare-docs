@@ -19,6 +19,16 @@ For more details about how encryption modes fit into the bigger picture of SSL/T
 
 ---
 
+## Update your encryption mode
+
+To change your encryption mode:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1. Navigate to **SSL/TLS**.
+1. Choose a new encryption mode.
+
+---
+
 ## Off
 
 Setting your encryption mode to **Off (not recommended)** redirects any HTTPS request to plaintext HTTP.
@@ -142,13 +152,3 @@ The setup is the same as [**Full (strict)** mode](#full-strict), but you select 
 ### Limitations
 
 <SSLModeErrors/>
-
----
-
-## Update your encryption mode
-
-To change your encryption mode:
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-1. Navigate to **SSL/TLS**.
-1. Choose a new encryption mode.
