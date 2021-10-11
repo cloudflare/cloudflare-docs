@@ -160,7 +160,7 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to the **Firewall**.
 1. Click **Create firewall rule** and enter a descriptive name for it (e.g., Splunk).
-1. Under **When incoming requests match...** use the **Field**, **Operator** and **Value** dropdowns to create a rule. After finishing each row click **And** to create the next row of rules. Refer to the table below for the values you should input:
+1. Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, click **And** to create the next row of rules. Refer to the table below for the values you should input:
 
   <TableWrap>
 
