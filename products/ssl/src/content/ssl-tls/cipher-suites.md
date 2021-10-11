@@ -62,7 +62,7 @@ To reset to the default cipher suites, send an empty array in the `value` field.
 
 Cloudflare will [present the cipher suites to your origin](/origin-configuration/cipher-suites/) and your server will select whichever cipher suite it prefers.
 
-However, if you wanted to ensure that your origin server supports the same cipher suites that Cloudflare supports at our edge, use the following nginx configuration. If you are terminating TLS on your origin using something other than nginx, please refer to that application’s documentation.
+However, if you want to ensure that your origin server supports the same cipher suites that Cloudflare supports at our edge, use the following NGINX configuration. If you are terminating TLS on your origin using a different method, refer to that application’s documentation.
 
 ```txt
 ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;

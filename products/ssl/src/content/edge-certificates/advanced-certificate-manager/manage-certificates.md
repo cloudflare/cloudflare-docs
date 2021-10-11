@@ -14,19 +14,19 @@ import CipherSuitesDefinition from "../../_partials/_cipher-suites-definition.md
 To create a new advanced certificate in the dashboard:
 
 1. Log into your Cloudflare account and select a domain.
-1. Select **SSL/TLS** > **Edge Certificates**.
-1. Select **Order Advanced Certificate**.
+1. Navigate to **SSL/TLS** > **Edge Certificates**.
+1. Click **Order Advanced Certificate**.
 1. If Cloudflare does not have your billing information, you will need to enter that information.
 1. Enter the following information:
     - Certificate Authority
     - Certificate Hostnames
     - Validation method
     - Certificate Validity Period
-1. Select **Save**.
+1. Click **Save**.
 
 <Aside type='warning' header='Important'>
 
-Selecting Let’s Encrypt as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, such as `example.com`, `*.example.com`).
+Selecting **Let’s Encrypt** as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, such as `example.com`, `*.example.com`).
 
 </Aside>
 
@@ -55,7 +55,7 @@ To delete a certificate, send a [DELETE request](https://api.cloudflare.com/#cer
 
 ## Restart validation
 
-To restart validation for a certificate in a `validation_timed_out` status, sending a [PATCH request](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
+To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
 
 ---
 
