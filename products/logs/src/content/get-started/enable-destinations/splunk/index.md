@@ -154,7 +154,6 @@ Response:
 
 Refer to the [Logpush FAQ](../../../faq#logpush-faq) for troubleshooting information.
 
-
 ### 3. Create WAF rule for Splunk HEC endpoint (optional)
 
 If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see a captcha challenge when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF rule that allows Cloudflare to bypass the HEC endpoint.
