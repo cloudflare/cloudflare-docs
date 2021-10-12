@@ -40,9 +40,9 @@ The WARP client can be configured in three modes.
 | ------------- | -------------- | ---------------- | 
 | Yes | Yes | DNS policies, HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP, device posture |
 
-### Gateway with DoH
-
 This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.  
+
+### Gateway with DoH
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- | 
