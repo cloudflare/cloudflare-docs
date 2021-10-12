@@ -53,7 +53,7 @@ These changes can be enabled via `compatibility_flags`, but aren't yet scheduled
 ### `FormData` parsing supports `File`
 
 <table><tbody>
-  <tr><td><strong>Default as of</strong></td><td>TBD</td></tr>
+  <tr><td><strong>Default as of</strong></td><td>2021-11-03</td></tr>
   <tr><td><strong>Flag to enable early</strong></td><td><code>formdata_parser_supports_files</code></td></tr>
   <tr><td><strong>Flag to disable</strong></td><td><code>formdata_parser_converts_files_to_strings</code></td></tr>
 </tbody></table>
@@ -65,7 +65,7 @@ Originally, the Workers Runtime's implementation of the `FormData` API incorrect
 ### `fetch()` improperly interprets unknown protocols as HTTP
 
 <table><tbody>
-  <tr><td><strong>Default as of</strong></td><td>TBD</td></tr>
+  <tr><td><strong>Default as of</strong></td><td>2021-11-10</td></tr>
   <tr><td><strong>Flag to enable early</strong></td><td><code>fetch_refuses_unknown_protocols</code></td></tr>
   <tr><td><strong>Flag to disable</strong></td><td><code>fetch_treats_unknown_protocols_as_http</code></td></tr>
 </tbody></table>
