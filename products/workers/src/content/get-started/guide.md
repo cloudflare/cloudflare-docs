@@ -103,7 +103,7 @@ Refer to the [Quick Starts](/get-started/quickstarts) page to see a complete lis
 For example, to build a Workers project in TypeScript, run:
 
 ```sh
-~/ $ wrangler generate my-typescript-worker https://github.com/EverlastingBugstopper/worker-typescript-template
+~/ $ wrangler generate my-typescript-worker https://github.com/cloudflare/worker-typescript-template
 ```
 
 To start a project from your own code — rather than a starter — use [`wrangler init`](/cli-wrangler/commands#init).
