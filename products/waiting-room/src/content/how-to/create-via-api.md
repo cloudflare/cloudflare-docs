@@ -43,7 +43,7 @@ The following parameters are optional:
 
 The following example API request configures a waiting room.
 
-```shell
+```json
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: xxxxxxxx" \
@@ -52,15 +52,23 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
               "description":"Waiting room for webshop",
               "host":"shop.example.com",
               "path":"/shop",
+              "queue_all": true,
               "new_users_per_minute":200,
               "total_active_users":300,
-              "session_duration":1
-              }'
+              "session_duration":1,
+              "disable_session_renewal": false,
+              "json_response_enabled": false,
+              "queueing_method": "FIFO",
+              "cookie_attributes": {
+                "samesite": "auto",
+                "secure": "auto"
+              },
+            }'
 ```
 
 The response for the request above is:
 
-```shell
+```json
 {
   "success": true,
   "errors": [],
@@ -74,9 +82,17 @@ The response for the request above is:
       "description": "Waiting room for webshop",
       "host": "shop.example.com",
       "path": "/shop",
+      "queue_all": true,
       "new_users_per_minute": 200,
       "total_active_users": 300,
-      "session_duration": 1
+      "session_duration": 1,
+      "disable_session_renewal": false,
+      "json_response_enabled": false,
+      "queueing_method": "FIFO",
+      "cookie_attributes": {
+        "samesite": "auto",
+        "secure": "auto"
+      },
     }
   ]
 }
@@ -86,7 +102,7 @@ The response for the request above is:
 
 You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
-In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/how-to/customize-waiting-room):
+In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/additional-options/customize-waiting-room):
 
 ```shell
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"
@@ -113,6 +129,13 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
       "new_users_per_minute": 200,
       "total_active_users": 300,
       "session_duration": 1,
+      "disable_session_renewal": false,
+      "json_response_enabled": false,
+      "queueing_method": "FIFO",
+      "cookie_attributes": {
+        "samesite": "auto",
+        "secure": "auto"
+      },
       "custom_page_html": "<p>Include custom HTML here</p>",
       "created_on": "2014-01-01T05:20:00.12345Z",
       "modified_on": "2014-01-01T05:20:00.12345Z"

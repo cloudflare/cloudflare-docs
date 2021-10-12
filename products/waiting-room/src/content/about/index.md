@@ -1,6 +1,6 @@
 ---
 title: About
-order: 1
+order: 2
 pcx-content-type: concept
 ---
 
@@ -10,14 +10,14 @@ Cloudflare Waiting Room protects websites from surges in legitimate traffic that
 
 ## Benefits
 
-Cloudflare Waiting Room benefits **your origin server** by preventing surges in legitimate traffic that may overload your origin.
+Waiting rooms protect **your origin server** by preventing surges in legitimate traffic that may overload your origin.
 
 Waiting Rooms also benefit **your visitors** by:
 - Keeping your application online and preventing them from reaching error pages.
 - Showing estimated wait times that are continuously updated.
 - Opening up new spots more quickly by tracking dynamic inflow and [outflow](/reference/configuration-settings#session-duration).
 - Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
-- Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
+- Appearing in your own [branding and style](/additional-options/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
 
 ## How it works
 
@@ -49,5 +49,5 @@ Access to certain features depends on a customer's [plan type](plans).
 ## Get started
 
 To learn how to use Cloudflare Waiting Rooms, check out:
-- The [setup guide](../get-started)
-- Various [how-to guides](../how-to)
+- The [setup guide](/get-started)
+- Various [how-to guides](/how-to)

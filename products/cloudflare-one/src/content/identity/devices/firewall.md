@@ -6,6 +6,17 @@ title: Firewall
 
 # Firewall (beta)
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| --- | ----------------- | --------- | ---- |
+| Beta | macOS, Windows | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 The Firewall device posture attribute ensures that a firewall is running on a device.
 
 To enable the Firewall check:

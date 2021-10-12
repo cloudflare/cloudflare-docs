@@ -133,6 +133,10 @@ recommended course.
 
 ## Make It All Secure
 
+> To improve our service, the IPFS gateway has moved to a Private Beta.
+> During this period, we are not offering self-provisioning of SSL cerificates.
+> You [can register](https://forms.gle/3c2xAzawnDcqWzgN7) to get notified once this service opens up.
+
 Now your content is on IPFS and your website is connected to Cloudflare's
 gateway. There's just one more step to make this secure. If you've followed all
 the steps until now, you'll notice that your website works fine when loaded over
@@ -142,12 +146,7 @@ Cloudflare's gateway doesn't have an SSL certificate for `your.website`. The
 good news is that Cloudflare can fix that.
 
 Cloudflare will issue you a free SSL certificate for `your.website`, which
-allows users to load `https://your.website`. All you have to do is go to
-[cloudflare-ipfs.com](https://cloudflare-ipfs.com) and scroll to the bottom,
-where it says "Connecting Your Website." Enter your domain into the text box and
-click `Submit`. When you click `Submit` the certificate issuance will
-begin. When it’s done, a message will appear indicating that the process has
-been completed and your certificate is in place. These certificates will
+allows users to load `https://your.website`. These certificates will
 auto-renew, so once you’ve completed this step, you’ll never need to worry about
 certificates again.
 

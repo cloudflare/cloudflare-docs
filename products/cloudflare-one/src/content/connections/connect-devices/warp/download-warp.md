@@ -35,7 +35,9 @@ Alternatively, download the client from one of the following links after checkin
   </tbody>
 </table>
 
-__[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi)__
+__[Windows Release Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release)__
+
+__[Windows Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows/distribution_groups/beta)__
 
 ## macOS
 <table>
@@ -63,7 +65,39 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
   </tbody>
 </table>
 
-__[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.zip)__
+__[macOS Release Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release)__
+
+__[macOS Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos/distribution_groups/beta)__
+
+## Linux
+<table>
+  <tbody>
+    <tr>
+      <td><strong>OS Ver</strong></td>
+      <td>CentOS 8, RHEL, Ubuntu, Debian</td>
+    </tr>
+    <tr>
+      <td><strong>OS Type</strong></td>
+      <td>64bit only</td>
+    </tr>
+    <tr>
+      <td><strong>HD Space</strong></td>
+      <td>75MB</td>
+    </tr>
+    <tr>
+      <td><strong>Memory</strong></td>
+      <td>35MB</td>
+    </tr>
+    <tr>
+      <td><strong>Network Types</strong></td>
+      <td>WIFI or LAN</td>
+    </tr>
+  </tbody>
+</table>
+
+__[Package Download](https://pkg.cloudflareclient.com/packages/cloudflare-warp)__
+
+__[APT/YUM Repository Setup](https://pkg.cloudflareclient.com/install)__
 
 ## iOS
 <table>

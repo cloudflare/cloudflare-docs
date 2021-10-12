@@ -1,6 +1,5 @@
 ---
 title: Create custom cache keys
-order: 13
 pcx-content-type: how-to
 ---
 

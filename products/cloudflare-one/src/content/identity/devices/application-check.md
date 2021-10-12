@@ -5,6 +5,17 @@ pcx-content-type: how-to
 
 # Application Check
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 <Aside type="note">
 
 You can create multiple instances of the Application Check for each operating system you need to run it on, or if you need to check for multiple applications.
@@ -12,11 +23,6 @@ You can create multiple instances of the Application Check for each operating sy
 </Aside>
 
 The Application Check device posture attribute checks that a specific application process is running on a device.
-
-| Prerequisites | 
-| ------------- |
-| This check is supported on: Windows, macOS, Linux|
-| This check is not supported on: Chrome, Android, or iOS |
 
 To enable Application Check:
 

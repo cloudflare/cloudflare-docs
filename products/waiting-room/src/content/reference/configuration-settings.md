@@ -83,7 +83,7 @@ You can customize a variety of options for your waiting rooms.
       <td>Disable session renewal</td>
       <td><code>disable_session_renewal</code></td>
       <td>No</td>
-      <td>Available via API only (and only to Enterprise customers with purchase). If true, users only have <code>session duration</code> minutes to browse your site. If false, a user's session cookie is renewed on every request.</td>
+      <td>Only available to Enterprise customers with purchase. If true, users only have <code>session duration</code> minutes to browse your site. If false, a user's session cookie is renewed on every request.</td>
       <td></td>
     </tr>
   </tbody>

@@ -1,11 +1,11 @@
 ---
 title: How to
-order: 8
+order: 2
 pcx-content-type: navigation
 ---
 
-# Cache tasks
+# How to
 
-Review the tasks you can complete depending on the type of cache behavior you want to modify.
+Learn how to complete different tasks to customize your cache behavior.
 
 <DirectoryListing path="/how-to"/>

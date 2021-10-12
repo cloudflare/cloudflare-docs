@@ -38,7 +38,7 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>High Sierra+</td>
+      <td>High Sierra+ (10.13+)</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>

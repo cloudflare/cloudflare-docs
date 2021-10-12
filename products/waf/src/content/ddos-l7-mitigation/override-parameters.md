@@ -1,23 +1,17 @@
 ---
-title: Managed Ruleset override parameters
+title: Managed Ruleset parameters
 pcx-content-type: reference
 order: 3
 ---
 
-# HTTP DDoS Managed Ruleset override parameters
+# HTTP DDoS Managed Ruleset parameters
 
-Configure overrides for the Cloudflare HTTP DDoS Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. Define these overrides at the account level or at the zone level.
+Configure the Cloudflare HTTP DDoS Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/ddos-l7-mitigation/configure-dashboard) or [define overrides via Rulesets API](/ddos-l7-mitigation/configure-api).
 
-You can override the following rule properties:
+The available parameters are the following:
 
 * [Action](#action)
 * [Sensitivity](#sensitivity)
-
-<Aside type='warning'>
-
-Currently, you can only configure overrides for the Cloudflare HTTP DDoS Managed Ruleset via API.
-
-</Aside>
 
 ## Action
 
@@ -55,9 +49,9 @@ The action that the WAF will perform for requests that match specific rules of C
 
 <Aside type='warning' header='Important'>
 
-You cannot set the rule action to _Log_ using overrides for rules with the `gatebot` category or any rule whose `id` starts with `GB`.
+You cannot configure the rule action to _Log_ for rules with the `gatebot` tag or any rule whose `id` starts with `GB`.
 
-However, you can use the _Log_ action in global override. In this case, any rule with the `gatebot` category or whose `id` starts with `GB` will ignore the override and use the default action as defined in the Managed Ruleset.
+However, you can use the _Log_ action in the global ruleset configuration. In this case, any rule with the `gatebot` tag or whose `id` starts with `GB` will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset.
 
 </Aside>
 

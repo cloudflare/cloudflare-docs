@@ -1,6 +1,5 @@
 ---
 title: Purge cache
-order: 9
 pcx-content-type: concept
 ---
 
@@ -17,6 +16,8 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 ## Purge by single-file (by URL)
 
 With purge by single-file, cached resources are immediately removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
+
+The single-file purge rate limit for the Free subscription is 1000 urls/min. The rate limit is subject to change.
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain:
 - [Custom cache keys](/about/cache-keys)
@@ -183,3 +184,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
 -H "X-Auth-Email: user@example.com" 
 -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 ```
+
+## Purge varied images
+
+Purging varied images purges all content variants for that URL. This behavior occurs so that if an image changes, you can easily update the cache with a single purge request instead of trying to determine the potential number of out-of-date variants. The behavior is true regardless of purge type used, such as single file, tag, or hostname.

@@ -6,6 +6,17 @@ pcx-content-type: how-to
 
 # Require WARP
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| All systems | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 <Aside type="note">
 
 This device posture attribute will check for all versions of WARP, including the consumer version. 

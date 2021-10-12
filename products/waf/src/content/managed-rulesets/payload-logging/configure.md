@@ -8,7 +8,7 @@ order: 1
 
 Configure payload logging for a ruleset in the ruleset configuration page.
 
-1. Open **Firewall** > **Managed Rules**.
+1. Open **Firewall** > **WAF**.
 
 1. Click **Configure** next to the Managed Ruleset you want to configure.
 

@@ -67,7 +67,7 @@ $ cloudflared tunnel create ssh-pool
 
 You can now configure your Tunnel. The example configuration file below uses the UUID value of the Tunnel, adds the path to the credentials file, and sets an optional logging location.
 
-In the `ingress` section, input the hostname of the application created in the Cloudflare for Teams dashboard. Placing the service in bastion mode will allow any connections that reach `cloudflared` to connect onward to resources avaialble to `cloudflared`, similar to a jump host.
+In the `ingress` section, input the hostname of the application created in the Cloudflare for Teams dashboard. Placing the service in bastion mode will allow any connections that reach `cloudflared` to connect onward to resources available to `cloudflared`, similar to a jump host.
 
 ![Bastion](../static/zero-trust-security/ssh-slc/bastion-mode.png)
 

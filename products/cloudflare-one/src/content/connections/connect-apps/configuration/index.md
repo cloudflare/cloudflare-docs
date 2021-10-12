@@ -3,7 +3,7 @@ order: 4
 pcx-content-type: navigation
 ---
 
-# Configure a Tunnel
+# Configure tunnels
 
 `cloudflared` uses a configuration file to determine how it proxies traffic to services. This section covers:
 

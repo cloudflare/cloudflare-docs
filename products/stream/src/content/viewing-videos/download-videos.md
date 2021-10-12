@@ -1,13 +1,7 @@
 ---
 order: 5
 ---
-# Download videos (Beta)
-
-<Aside>
-
-Note: MP4 downloads are currently in open beta and available to all Stream customers
-
-</Aside>
+# Download videos
 
 When you upload a video to Stream, it can be streamed using HLS/DASH. However, for certain use-cases (such as offline viewing), you may want to download the MP4. You can enable MP4 support on a per video basis by following the steps below:
 

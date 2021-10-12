@@ -1,6 +1,7 @@
 ---
 order: 1
 pcx-content-type: reference
+hidden: true
 ---
 
 # Configuration file
@@ -209,19 +210,3 @@ Specify the protocol used to establish a connection between `cloudflared` and th
 | `logfile value` | `TUNNEL_LOGFILE` |
 
 Save application log to this file. Mainly useful for reporting issues.
-
-### `help`
-
-| Syntax |
-|--|
-| `help` |
-
-Shows help text.
-
-### `version`
-
-| Syntax |
-|--|
-| `version` |
-
-Prints the version number and build date.

@@ -1,7 +1,7 @@
 ---
 title: Traffic steering
 order: 12
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 import RegionMapping from "../_partials/_region-mapping.md"
@@ -10,7 +10,13 @@ import RegionMapping from "../_partials/_region-mapping.md"
 
 Load Balancing provides several traffic steering modes, which allow customers to optimize how load balancers route traffic.
 
-Configure traffic steering from the Load Balancing dashboard — in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel — or via the Cloudflare API. Available steering options include standard failover (**Off**), Dynamic steering, Geo steering, and Random.
+Configure traffic steering from the Load Balancing dashboard — in either the **Create a Load Balancer** wizard or the **Edit Load Balancer** panel — or via the Cloudflare API.
+
+<Aside type="note">
+
+Without purchasing **Traffic Steering**, non-Enterprise customers only have access to **Off** and **Random** for their steering options.
+
+</Aside>
 
 ---
 
@@ -54,7 +60,35 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
 
 <RegionMapping/>
 
-For more details on working with regions and region codes, see [Region Mapping API](../region-mapping-api).
+For more details on working with regions and region codes, refer to [Region Mapping API](/reference/region-mapping-api).
+
+### Via the API
+
+Use the `regions_pool` property of the [Update Load Balancers](https://api.cloudflare.com/#load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the appropriate region code followed by a list of origin servers to use for that region. In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
+
+**Request example**
+
+```json
+---
+header: Request
+---
+// PUT /zones/:zone_id/load_balancers
+{
+  "description": "Load Balancer for www.example.com",
+  "name": "www.example.com",
+  "ttl": 30,
+  "proxied": true,
+  "fallback_pool": "ff02c959d17f7bb2b1184a202e3c0af7",
+  "default_pools": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+  "region_pools": {
+    "WNAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+    "ENAM": ["17b5962d775c646f3f9725cbc7a53df4", "ff02c959d17f7bb2b1184a202e3c0af7"],
+    "EU": ["ff02c959d17f7bb2b1184a202e3c0af7", "17b5962d775c646f3f9725cbc7a53df4"]
+  }
+}
+```
+
+If you only define `WNAM`, then traffic from the East Coast will be routed to the `default_pools`. You can test this using a client in each of those locations.
 
 ## Proximity steering
 

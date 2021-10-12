@@ -10,28 +10,28 @@ The descriptions below detail the fields available for `gateway_dns`.
 
 <TableWrap>
 
-| Field | Value | Type |
-| -- | -- | -- |
-| ColoID | The ID of the colo that received the DNS query | int |
-| ColoName | The name of the colo that received the DNS query | string |
-| Datetime | The date and time the corresponding DNS request was made | int or string |
-| DeviceID | UUID of the device where the HTTP request originated from | string |
-| DstIP | The destination IP address the DNS query was made to | string |
-| DstPort | The destination port used at the edge. The port changes based on the protocol used by the DNS query. | int |
-| Email | Email used to authenticate the client | string |
-| Location | Name of the location the DNS request is coming from. Location is created by the customer. | string |
-| MatchedCategoryIDs | ID or IDs of category that the domain was matched with the policy | array[int] |
-| Policy | Name of the policy that was applied (if any) | string |
-| Protocol | The protocol used for the DNS query by the client i.e. UDP, TCP, DoH, DoT, WARP | string |
-| QueryCategoryIDs | ID or IDs of category that the domain belongs to | array[int] |
-| QueryName | Query name | string |
-| QueryNameReversed | Query name in reverse | string |
-| QuerySize | The size of the DNS request in bytes | int |
-| QueryType | The type of DNS query e.g. A, AAAA, MX, TXT etc | string |
-| RData | The rdata objects e.g. type and data | array[object] |
-| ResolverDecision | Result of the DNS query i.e. Allowed, Blocked etc | int |
-| SrcIP | The source IP address making the DNS query | string |
-| SrcPort | The port used by the client when they sent the DNS request | int |
-| UserID | User identity where the HTTP request originated from | string |
+| Field | Value | Type | Example values |
+|----|----|----|----|
+| ColoID | The ID of the data center that received the DNS query | int | `46`, `72`, `397` |
+| ColoName |The name of the data center that received the DNS query | string |`SJC`, `MIA`, `IAD` |
+| Datetime | The date and time the corresponding DNS query was made | int or string |`2021-07-27T00:01:07Z` |
+| DeviceID | UUID of the device where the HTTP request originated from | string |`dad71818-0429-11ec-a0dc-000000000000` |
+| DstIP  | The destination IP address the DNS query was made to  | string |`104.16.132.2290` |
+| DstPort | The destination port used at the edge. The port changes based on the protocol used by the DNS query.| int |`0`  |
+| Email | Email used to authenticate the client |string |`user@sample.com`|
+| Location |Name of the location the DNS query is coming from. Location is created by the customer. | string |`7bdc7a9c-81d3-4816-8e56-000000000000` 
+| MatchedCategoryIDs|ID or IDs of category that the domain was matched with the policy  | array[int] | `[7,12,28,122,129,163]`  |
+| Policy | Name of the policy that was applied (if any) | string |`7bdc7a9c-81d3-4816-8e56-de1acad3dec5` |
+| Protocol |The protocol used for the DNS query by the client, for example UDP, TCP, DoH, DoT, WARP | string | `udp` |
+| QueryCategoryIDs  |ID or IDs of category that the domain belongs to | array[int] |`[7,12,28,122,129,163]`  |
+| QueryName  | The query name | string |`example.com` |
+| QueryNameReversed | The query name in reverse  | string |`com.example` |
+| QuerySize  | The size of the DNS query in bytes  | int |`151` |
+| QueryType  |The type of DNS query, for example, A, AAAA, MX, or TXT.  | string | `A`  |
+| RData  |The rdata objects, for example, `type` or `data`  | array[object]|`{"type":"5","data":"dns-packet-placeholder..."}`|
+| ResolverDecision  | Result of the DNS query | int |`overrideForSafeSearch`  |
+| SrcIP  | The source IP address making the DNS query | string |`104.16.132.229` |
+| SrcPort | The port used by the client when the DNS query was sent | int |`0`  |
+| UserID | User identity where the HTTP request originated from | string |`00000000-0000-0000-0000-000000000000` |
 
 </TableWrap>

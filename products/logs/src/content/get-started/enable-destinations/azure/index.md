@@ -4,6 +4,8 @@ order: 62
 pcx-content-type: how-to
 ---
 
+import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
+
 # Enable Logpush to Microsoft Azure
 
 Cloudflare Logpush supports pushing logs directly to Microsoft Azure via the Cloudflare dashboard or via API.
@@ -44,6 +46,8 @@ Once connected, Cloudflare lists Microsoft Azure as a connected service under **
 ## Manage via API
 
 Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You'll need to provide *Write* permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
+
+<EnableReadPermissions/>
 
 To enable Logpush to Azure:
 

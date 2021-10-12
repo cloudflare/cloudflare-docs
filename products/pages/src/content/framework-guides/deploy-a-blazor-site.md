@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Blazor Site  
   
 [Blazor](https://blazor.net) is an SPA framework that can use C# code, rather than JavaScript in the browser. In this guide, you will build a site using Blazor, and deploy it using Cloudflare Pages.  
@@ -29,6 +31,8 @@ chmod +x dotnet-install.sh
 ./dotnet5/dotnet --version
 ./dotnet5/dotnet publish -c Release -o output
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

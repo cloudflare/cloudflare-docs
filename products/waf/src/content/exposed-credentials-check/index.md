@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 3
+order: 4
 ---
 
 # Automated exposed credentials check (Beta)
@@ -78,7 +78,7 @@ You can also check for exposed credentials in custom rules. One common use case 
 
 To check for exposed credentials in a custom rule, include the exposed credentials check in the rule definition and specify how to obtain the username and password values from the HTTP request.
 
-Use the [Rulesets API](https://developers.cloudflare.com/firewall/cf-rulesets/rulesets-api) to include exposed credentials check in a custom rule. For more information, see [Create a custom rule checking for exposed credentials](/exposed-credentials-check/configure-api#create-a-custom-rule-checking-for-exposed-credentials).
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to include exposed credentials check in a custom rule. For more information, see [Create a custom rule checking for exposed credentials](/exposed-credentials-check/configure-api#create-a-custom-rule-checking-for-exposed-credentials).
 
 <Aside type='note' header='Note'>
 

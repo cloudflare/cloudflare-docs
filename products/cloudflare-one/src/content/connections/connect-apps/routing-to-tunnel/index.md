@@ -3,7 +3,7 @@ order: 4
 pcx-content-type: concept
 ---
 
-# Route to a Tunnel
+# Route traffic
 
 Cloudflare can route traffic to your Cloudflare Tunnel connection using a [DNS record](/connections/connect-apps/routing-to-tunnel/dns) or Cloudflare’s [Load Balancer](/connections/connect-apps/routing-to-tunnel/lb) product.
 

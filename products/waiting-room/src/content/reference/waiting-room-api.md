@@ -1,6 +1,5 @@
 ---
 title: Common API calls
-order: 5
 pcx-content-type: reference
 ---
 

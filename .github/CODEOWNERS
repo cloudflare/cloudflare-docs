@@ -1,8 +1,5 @@
 # 1.1.1.1
-products/1.1.1.1/ @cloudflare/PCX
-
-# Access
-products/access/ @cloudflare/access-docs @cloudflare/PCX
+products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Analytics
 products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
@@ -50,7 +47,10 @@ products/fundamentals/ @cloudflare/PCX
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
 # Image Resizing
-products/images/ @kornel @cloudflare/PCX
+products/image-resizing/ @kornelski @cloudflare/PCX
+
+# Cloudflare Images
+products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 
 # Load Balancing
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
@@ -60,6 +60,9 @@ products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
+
+# Magic Firewall
+products/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
 
 # Network Interconnect
 products/network-interconnect @ConzorKingKong @cloudflare/PCX
@@ -81,6 +84,9 @@ products/registrar/ @cloudflare/PCX
 
 # Rules
 products/rules/ @cloudflare/PCX
+
+# Ruleset Engine
+products/ruleset-engine/ @cloudflare/PCX
 
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX

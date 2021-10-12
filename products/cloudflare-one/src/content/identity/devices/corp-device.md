@@ -5,6 +5,17 @@ pcx-content-type: how-to
 
 # Device serial numbers
 
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | WARP with Gateway | All plans | 
+
+</div>
+</details>
+
 Cloudflare for Teams allows you to build Zero Trust rules based on device serial numbers. You can create these rules so that access to applications is granted only to users connecting from company devices.
 
 To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/policies/lists) functionality in the Teams Dashboard.
@@ -21,8 +32,6 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
 1. Click **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's API endpoint.
 
-   ![Add List](../../static/zero-trust-security/corp-device/list-start.png)
-
 1. Give your list a descriptive name, as this name will appear when configuring your Access policies.
 
    ![Create List](../../static/zero-trust-security/corp-device/list-create.png)
@@ -37,7 +46,7 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
   Once saved, the serial number list will appear in your list view.
 
-   ![Saved List](../../static/zero-trust-security/corp-device/list-save-list.png)
+   ![List](../../static/zero-trust-security/corp-device/list-saved.png)
 
 Now you can create or update an existing Access policy to require that any device requesting access belongs to your list of serial numbers.
 

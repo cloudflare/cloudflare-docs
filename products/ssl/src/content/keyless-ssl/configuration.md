@@ -34,7 +34,7 @@ You need to create a public DNS record for your key server. If you are using Clo
 
 </Aside>
 
-1. Use `openssl rand 24 -hex` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`
+1. Use `openssl rand -hex 24` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`
 2. Add this record via your DNS provider’s interface as an ‘A’ record pointing to the IP address of your Keyless SSL server
 3. Use this hostname as the server hostname during initialization of your Keyless SSL server
 

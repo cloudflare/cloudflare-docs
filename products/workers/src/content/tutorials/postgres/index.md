@@ -1,7 +1,7 @@
 ---
 updated: 2021-06-10
 difficulty: Intermediate
-content_type: "💾 Storage"
+content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 

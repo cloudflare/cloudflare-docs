@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: how-to
 ---
 
-# Run a Tunnel
+# Run a tunnel
 
 | Before you start |
 |---|
