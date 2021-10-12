@@ -19,7 +19,7 @@ Make sure that you have:
 
 ## 1. Create, assign, and initialize a new partition
 
-The first step we’ll take is creating an HSM partition, which can be thought of as an independent logical HSM within your IBM Cloud HSM device.
+The first step is creating an HSM partition, which can be thought of as an independent logical HSM within your IBM Cloud HSM device.
 
 ```txt
 vm$ ssh admin@hsm
@@ -36,7 +36,7 @@ vm$ ssh admin@hsm
 Command Result : 0 (Success)
 ```
 
-Next, the partition needs to be assigned to the client, i.e., your key server.
+Next, the partition needs to be assigned to the client, in this case your key server.
 
 ```bash
 [cloudflare-hsm.softlayer.com] lunash:>client assignpartition -client cloudflare-vm.softlayer.com -partition KeylessSSL
@@ -120,15 +120,15 @@ Using "CKM_ECDSA_SHA256" Mechanism
 
 ## 3. Obtain and upload signed certificates from your Certificate Authority (CA)
 
-Provide the CSRs created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration/#uploading-keyless-ssl-certificates).
+Provide the CSRs created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration#step-2--upload-keyless-ssl-certificates).
 
 --------
 
 ## 4. Modify your gokeyless config file and restart the service
 
-Lastly, we need to modify the configuration file that the key server will read on startup. Be sure to change the `object=mykey` and `pin-value=username:password` values to match the key label you provided and CU user you created.
+Lastly, we need to modify the configuration file that the key server will read on startup. Change the `object=mykey` and `pin-value=username:password` values to match the key label you provided and CU user you created.
 
-Open  `/etc/keyless/gokeyless.yaml` and immediately after:
+Open `/etc/keyless/gokeyless.yaml` and immediately after:
 
 ```yaml
 private_key_stores:

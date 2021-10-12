@@ -7,7 +7,7 @@ pcx-content-type: tutorial
 
 <Aside type='note' header='Note'>
 
-In this example it is assumed that you have already configured the nShield Connect device, and generated or imported your private keys.
+This example assumes you have already configured the nShield Connect device and generated or imported your private keys.
 
 </Aside>
 
