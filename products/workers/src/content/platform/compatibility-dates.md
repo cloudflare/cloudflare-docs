@@ -74,6 +74,16 @@ Originally, if the `fetch()` function was passed a URL specifying any protocol o
 
 Note that Cloudflare Workers supports a non-standard extension to `fetch()` to make it support WebSockets. However, when making an HTTP request that is intended to initiate a WebSocket handshake, you should still use `http:` or `https:` as the protocol, **not** `ws:` nor `wss:`. The `ws:` and `wss:` URL schemes are intended to be used together with the `new WebSocket()` constructor, which exclusively supports WebSocket. Our extension to `fetch()` is designed to support HTTP and WebSocket in the same request (the response may or may not choose to initiate a WebSocket), and so all requests are considered to be HTTP.
 
+### Durable Object `stub.fetch()` requires a full URL
+
+<table><tbody>
+  <tr><td><strong>Default as of</strong></td><td>2021-11-10</td></tr>
+  <tr><td><strong>Flag to enable early</strong></td><td><code>durable_object_fetch_requires_full_url</code></td></tr>
+  <tr><td><strong>Flag to disable</strong></td><td><code>durable_object_fetch_allows_relative_url</code></td></tr>
+</tbody></table>
+
+Originally, when making a request to a Durable Object by calling `stub.fetch(url)`, we accepted a relative URL as input. The URL would be interpreted relative to the dummy URL `http://fake-host`, and the resulting absolute URL was delivered to the destination object's `fetch()` handler. This was a mistake; we intended to require full URLs. This flag makes full URLs required.
+
 ### `HTMLRewriter` handling of `<esi:include>`
 
 <table><tbody>
