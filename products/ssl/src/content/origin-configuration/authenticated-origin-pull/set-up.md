@@ -20,6 +20,7 @@ Authenticated Origin Pull does not work when your [**SSL/TLS encryption mode**](
 ### Certificate value
 
 Cloudflare uses the following CA to sign certificates for the Authenticated Origin Pull service:
+
 <details>
 <summary>Certificate value</summary>
 <div>
@@ -100,6 +101,7 @@ To enable Authenticated Origin Pull globally on a zone:
     </div>
     
     </details>
+
 1. Enable **Authenticated Origin Pulls**:
 
     - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
@@ -138,15 +140,15 @@ For hostname:
 
 1. [Upload the new certificate](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
-2. [Enable Authenticated Origin Pull for that specific hostname](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
+1. [Enable Authenticated Origin Pull for that specific hostname](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
 
 For global:
 
 1. [Upload the new certificate](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate).
 
-2. [Check whether new certificate is Active](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-get-certificate-details).
+1. [Check whether new certificate is Active](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-get-certificate-details).
 
-3. Once certificate is active, then [delete the old certificate](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-delete-certificate).
+1. Once certificate is active, then [delete the old certificate](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-delete-certificate).
 
 --------
 
@@ -154,7 +156,7 @@ For global:
 
 1. Upload a certificate following steps in [Zone-Level Authenticated Origin Pull](#zone-level--customer-certificates)
 
-2. Upload multiple certificates following the steps in [Per-Hostname Authenticated Origin Pull](#per-hostname--customer-certificates)
+1. Upload multiple certificates following the steps in [Per-Hostname Authenticated Origin Pull](#per-hostname--customer-certificates)
 
   <Aside type='note' header='Note'>
 

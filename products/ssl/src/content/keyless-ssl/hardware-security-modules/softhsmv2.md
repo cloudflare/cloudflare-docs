@@ -41,7 +41,7 @@ $ source ~/.profile
 
 --------
 
-## 2. Create a token and private keys and generate CSRs
+## 2. Create a token and private keys, and generate CSRs
 
 Next, we create a token in slot 0 called `test-token` and secure it with a PIN of `1234`. In this slot we’ll store the RSA keys for our SSL certificates for `keyless-softhsm.example.com`.
 
