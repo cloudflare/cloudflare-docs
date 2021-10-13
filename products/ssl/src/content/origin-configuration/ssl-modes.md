@@ -154,7 +154,3 @@ The setup is the same as [**Full (strict)** mode](#full-strict), but you select 
 ### Limitations
 
 <SSLModeErrors/>
-
-## ERR_SSL_VERSION_OR_CIPHER_MISMATCH
-
-If you are experiencing `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` errors, refer to this [community thread](https://community.cloudflare.com/t/community-tip-fixing-err-ssl-version-or-cipher-mismatch-in-google-chrome/42162).
