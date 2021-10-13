@@ -107,8 +107,7 @@ To ensure a custom domain is added successfully, you must go through the [Adding
 
 If your DNS is handled by Cloudflare, you must delete any custom domain associated with your Pages project before removing your project from the **Pages** dashboard. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists.
 
-The dashboard for your site is reachable from the drop down menu at top right of the page.
-
+Log in to the Cloudflare dashboard and use the **Account Home** or drop-down menu to select your website.
 
 ![drop down menu](./images/drop-down-menu.png)
 
