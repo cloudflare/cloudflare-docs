@@ -118,7 +118,7 @@ After you select your website, you will be directed to **Overview** on the dashb
 
 ![advanced-option](./images/advanced-option.png)
 
-Now if you return to the pages dashboard and go to **settings** > **delete project**. You can now remove your project from Cloudflare pages. 
+Go back to the **Account Home** or use the drop-down menu at the top of the dashboard and select **Pages**. You can now remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
 
 ## Advanced project settings
 
