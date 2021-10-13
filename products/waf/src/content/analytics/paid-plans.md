@@ -26,7 +26,7 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 ## Events summary
 
-The **Events summary** section provides the number of Firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, **ASN**).
+The **Events summary** section provides the number of Firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
 
 ![Filter Firewall Analytics by action](../images/analytics-events-summary.png)
 
@@ -40,7 +40,7 @@ You can adjust the scope of Firewall Analytics to one of the displayed services 
 
 ## Top events by source
 
-In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, **Firewall Rules**.
+In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall Rules**.
 
 You can adjust the scope of Firewall Analytics to one of the listed source values by clicking **Filter** or **Exclude** when hovering the value.
 
@@ -74,7 +74,7 @@ Only available on Enterprise plans.
 
 </Aside>
 
-In **Denial-of-service attacks mitigated** you have visibility over mitigated layer 4 denial-of-service SYN attacks towards your zones in the past 7 days.
+In **Denial-of-service attacks mitigated** you have visibility over mitigated Layer 4 denial-of-service SYN attacks towards your zones in the past seven days.
 
 ![Denial-of-service attacks mitigated](../images/analytics-dos-attacks-mitigated.png)
 

@@ -16,7 +16,7 @@ Users on a Free plan can view summarized Firewall events by date in the **Activi
 * **Events by service**: Lists the Firewall activity per Cloudflare security feature (for example, WAF, Firewall Rules, API Shield).
 * **Top events by source**: Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
 * **Activity log**: Summarizes Firewall events by date to show the action taken and the applied Cloudflare security product.
-* **Denial-of-service attacks mitigated**: Counts automatically mitigated layer 4 attacks blocked by Cloudflare over the last 7 days.
+* **Denial-of-service attacks mitigated**: Counts automatically mitigated Layer 4 attacks blocked by Cloudflare over the last seven days.
 
 Firewall Analytics captures all traffic actioned or flagged by a Cloudflare security product, including features such as [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086).
 
