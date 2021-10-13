@@ -111,9 +111,10 @@ Log in to the Cloudflare dashboard and use the **Account Home** or drop-down men
 
 ![drop down menu](./images/drop-down-menu.png)
 
-
-On the dashboard overview page you have to scroll down to the advanced action option
-and click on **remove site from Cloudflare** this will bring up a modal and if you confirm, your site will be deleted from Cloudflare.
+After you select your website, you will be directed to **Overview** on the dashboard. On **Overview**:
+1. Scroll down to **Advanced Actions**.
+2. Select **Remove Site from Cloudflare**.
+3. To delete your website from Cloudflare, select **Confirm**.
 
 ![advanced-option](./images/advanced-option.png)
 
