@@ -244,6 +244,12 @@ Once you have filled in your `account_id`, you are ready to preview your code. R
 
 This command will build your project, run it locally, and return a URL for you to visit to preview the Worker.
 
+<Aside type="note">
+
+__Note:__ Before running `wrangler dev`, make sure you've created a subdomain. If not, follow the instructions in Step 1 to get a dev subdomain like `*.workers.dev`.
+  
+</Aside>
+
 <Aside header="A note about building">
 
 Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/cli-wrangler/commands).
