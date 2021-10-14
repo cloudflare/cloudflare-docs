@@ -52,7 +52,7 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 
 </TableWrap>
 
-<sup>*</sup> These nodes are deprecated. Refer to <a href="/graphql-api/features/data-sets#deprecated-data-nodes">Data Sets</a> for more information.
+<p><sup>*</sup> <em>These nodes are deprecated. Refer to <a href="/graphql-api/features/data-sets#deprecated-data-nodes">Data Sets</a> for more information.</em></p>
 
 ### Query settings for account limits
 
