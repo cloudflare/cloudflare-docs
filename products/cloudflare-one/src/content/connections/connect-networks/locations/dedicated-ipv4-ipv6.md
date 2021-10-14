@@ -13,7 +13,7 @@ For queries over IPv4, the default destination addresses are anycast IP addresse
 
 By default, DNS queries forwarded to a dedicated destination IPv4 or IPv6 address are correlated to an account and the DNS filtering policy applied. Follow these steps if you would like to restrict which IPv4 and IPv6 networks can send queries to your dedicated addresses:
 
-1. [Create a location](/connections/connect-networks/configuring-a-location) and take note of the destination address. Enterprise customers can obtain a dedicated IPv4 address for a location.
+1. [Create a location](/connections/connect-networks/locations/configuring-a-location) and take note of the destination address. Enterprise customers can obtain a dedicated IPv4 address for a location.
 1. [Create an IP list](/policies/lists) with the IPv4 and/or IPv6 addresses that your organization will source queries from.
 1. Create your DNS policies with an added condition to match where the query came from using the “Source IP” selector.
 

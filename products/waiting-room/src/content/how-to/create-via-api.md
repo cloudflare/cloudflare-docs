@@ -43,7 +43,7 @@ The following parameters are optional:
 
 The following example API request configures a waiting room.
 
-```shell
+```json
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: xxxxxxxx" \
@@ -68,7 +68,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 
 The response for the request above is:
 
-```shell
+```json
 {
   "success": true,
   "errors": [],

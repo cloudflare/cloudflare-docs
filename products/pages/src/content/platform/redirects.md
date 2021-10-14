@@ -35,7 +35,7 @@ filename: _redirects
 /notrailing/ /nottrailing 301
 ```
 
-A project is limited to 100 total redirects. Each redirect declaration has a 1000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied. If the same `source` URL has multiple redirects, the topmost redirect is applied.
+A project is limited to 100 total redirects. Each redirect declaration has a 1000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
 
 Cloudflare currently offers limited support for advanced redirects. More support will be added in the future.
 

@@ -31,7 +31,7 @@ There are a number of VNC versions, deployments and instances. This tutorial foc
 
 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 1. [Enable Cloudflare for Teams on your account](/setup)
-1. [Connect your identity provider to Cloudflare for Teams](/identity/sso-integration)
+1. [Connect your identity provider to Cloudflare for Teams](/identity/idp-integration)
 
 ## Configure VNC on your virtual machine
 

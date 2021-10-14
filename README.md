@@ -15,7 +15,6 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Product                 | `pathPrefix`         | Test                                                                                  | Prod                                                           |
 | :---------------------- | :------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
 | 1.1.1.1                 | 1.1.1.1              | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1.1.1.1)                           | [Prod](https://developers.cloudflare.com/1.1.1.1)              |
-| Access                  | access               | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)               |
 | Analytics               | analytics            | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       | [Prod](https://developers.cloudflare.com/analytics)            |
 | API                     | api                  | [Test](https://api.cloudflare-docs.workers.dev/api)                                   | [Prod](https://developers.cloudflare.com/api)                  |
 | Automatic Platform Optimization | automatic-platform-optimization | [Test](https://automatic-platform-optimization.cloudflare-docs.workers.dev/automatic-platform-optimization) | [Prod](https://developers.cloudflare.com/automatic-platform-optimization) |

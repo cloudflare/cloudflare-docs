@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # Set up 1.1.1.1 for Families

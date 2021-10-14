@@ -100,6 +100,8 @@ jobs:
               fi
               echo "
               [env.preview]
+              # Opt into backwards-incompatible changes through September 17, 2021.
+              compatibility_date = "2021-09-17"
               name = \"pr-$prnumber\"
               type = \"webpack\"
               route = \"https://pr-$prnumber.cloudflare-docs.workers.dev/*\"
@@ -115,6 +117,8 @@ jobs:
               fi
               echo "
               [env.preview]
+              # Opt into backwards-incompatible changes through September 17, 2021.
+              compatibility_date = "2021-09-17"
               name = \"pr-$prnumber-$tile\"
               type = \"webpack\"
               account_id = \"b54f07a6c269ecca2fa60f1ae4920c99\"

@@ -9,33 +9,49 @@ Create and manage [Load Balancing rules](../) in the **Custom Rules** page, whic
 
 ---
 
-## Before you begin
+## Prerequisites
 
-- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to more or less fields for your load balancing rules. For more details, see [Supported fields and expressions](../reference). 
+- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to different fields for your load balancing rules. For more details, see [Supported fields and expressions](../reference). 
 
 ---
 
 ## Workflow
 
----
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account and application.
 
-### 1. Create a new Load Balancing rule
-
-1. Log in to your Cloudflare Account and select a domain.
-
-1. Select **Traffic** > **Load Balancing**.
+1. Navigate to **Traffic** > **Load Balancing**.
 
 1. Edit an existing load balancer or [create a new load balancer](/create-load-balancer-ui).
 
-1. From the Load Balancer workflow, select **Custom Rules**.
+1. From the Load Balancer workflow, click **Custom Rules**.
 
-1. Select **Create Custom Rule**.
+1. Click **Create Custom Rule**.
 
----
+1. In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](../reference).
 
-### 2. Build a Load Balancing expression
+1. In the **Operator** drop-down list, choose an operator. For more details, see [Operators](../reference#operators).
 
----
+1. Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
+
+1. [Optional] To create a compound expression using logical operators, click **And** or **Or**.
+
+1. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, see [Actions](../actions).
+
+1. (Optional) Click **Add another override**.
+
+1. After you create your rule, click **Save and Deploy** or **Save as Draft**.
+
+1. Click **Next** and review your changes.
+
+1. Click **Save**.
+
+<Aside type='warning' header='Warning'>
+
+To save a new load balancer rule, make sure to save both the rule **and** the overall load balancer configuration.
+
+</Aside>
+
+## Example configuration
 
 <Example>
 
@@ -84,41 +100,3 @@ Create and manage [Load Balancing rules](../) in the **Custom Rules** page, whic
     </tbody>
   </table>
 </Example>
-
----
-
-1. In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](../reference).
-
-  ![Screenshot, Create Custom Rule dialog, choose Field](../../static/images/create-custom-rule-field.png)
-
-1. In the **Operator** drop-down list, choose an operator. For more details, see [Operators](../reference#operators).
-
-1. Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
-
-  ![Screenshot, Create Custom Rule dialog, choose Value](../../static/images/create-custom-rule-value.png)
-
-1. [Optional] To create a compound expression using logical operators, select **And** or **Or**.
-
-  ![Screenshot, Create Custom Rule dialog, add logical operator](../../static/images/create-custom-rule-compound-expression.png)
-
-1. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, see [Actions](../actions).
-
- ![Add an action to complete your load balancing rule](../../static/images/lb-rule-action.png)
-
-1. [Optional] Select **Add another override**.
-
----
-
-### 3. Save a Load Balancing rule and configuration
-
-<Aside type='warning' header='Warning'>
-
-To save a new load balancer rule, make sure to save both the rule **and** the overall load balancer configuration.
-
-</Aside>
-
-1. After you create your rule, select **Save and Deploy** or **Save as Draft**.
-
-1. Select **Next** and review your changes.
-
-1. Select **Save**.

@@ -82,17 +82,45 @@ $ wrangler build [--env $ENVIRONMENT_NAME]
 
 ## login
 
+Authorize Wrangler with your Cloudflare login. This will prompt you with a Cloudflare account login page and a permissions consent page. 
+This command is the alternative to `wrangler config` and it uses OAuth tokens.
+
 ```sh
-$ wrangler login
+$ wrangler login [--scopes-list] [--scopes $SCOPES]
 ```
 
-Authenticate Wrangler with your Cloudflare login. This will prompt you with a Cloudflare account login page and is the alternative to `wrangler config`.
+All of the arguments and flags to this command are optional:
+
+<Definitions>
+
+- `--scopes-list` <PropMeta>optional</PropMeta>
+  - List all the available OAuth scopes with descriptions.
+- `--scopes $SCOPES`:<PropMeta>optional</PropMeta>
+  - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
+    e.g. `$ wrangler login --scopes account:read user:read`. 
+
+</Definitions>
+
+`wrangler login` uses all the available scopes by default if no flags are provided. 
+
+--------------------------------
+
+## logout
+
+Remove authorization from Wrangler. This command will invalidate your current OAuth token and delete the configuration file, if present. 
+
+```sh
+$ wrangler logout
+```
+
+This command only invalidates OAuth tokens acquired through `wrangler login`. However, it will try to delete
+the configuration file regardless of your authorization method.  Log in to the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
 
 --------------------------------
 
 ## config
 
-An interactive command that will authenticate Wrangler by prompting you for a Cloudflare API Token or Global API key.
+An interactive command that will authenticate Wrangler by prompting you for a Cloudflare API Token or Global API key, instead of OAuth tokens.
 
 ```sh
 $ wrangler config [--api-key]
@@ -105,7 +133,7 @@ $ wrangler config [--api-key]
 
 </Definitions>
 
-You can also use `wrangler login` or environment variables to authenticate.
+You can also use environment variables to authenticate, or `wrangler login` to authorize with OAuth tokens.
 
 --------------------------------
 
@@ -230,9 +258,6 @@ $ wrangler dev
 
 From here you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see console.log messages and exceptions appearing in your terminal. If either of these things _don’t_ happen, or you think the output is incorrect, please [file an issue](https://github.com/cloudflare/wrangler).
 
-### kv_namespaces
-
-If you are using [kv_namespaces](/cli-wrangler/configuration#kv_namespaces) with `wrangler dev`, you will need to specify a `preview_id` in your `wrangler.toml` before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should make sure that you are not writing things to KV that would break your production Worker.
 
 --------------------------------
 
@@ -302,6 +327,11 @@ Default values indicated by <Type>=value</Type>.
 ### kv_namespaces
 
 If you are using [kv_namespaces](/cli-wrangler/configuration#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your `wrangler.toml` before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should make sure that you are not writing things to KV that would break your production Worker.
+
+To create a `preview_id` run:
+``` 
+wrangler kv:namespace create --preview "NAMESPACE"
+```
 
 ### Previewing on Windows Subsystem for Linux (WSL 1/2)
 
@@ -451,7 +481,7 @@ whose title is a concatenation of your Worker’s name (from `wrangler.toml`) an
 $ wrangler kv:namespace create "MY_KV"
 🌀  Creating namespace with title "my-site-MY_KV"
 ✨  Success!
-Add the following to your wrangler.toml:
+Add the following to your configuration file:
 kv_namespaces = [
   { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
 ]
@@ -1001,6 +1031,7 @@ SUBCOMMANDS:
     subdomain       👷  Configure your workers.dev subdomain
     whoami          🕵️  Retrieve your user info and test your auth config
     tail            🦚  Aggregate logs from production worker
-    login           🔓 Authenticate Wrangler with your Cloudflare username and password
+    login           🔓  Authorize Wrangler with your Cloudflare username and password
+    logout          ⚙️  Remove authorization from Wrangler.
     help            Prints this message or the help of the given subcommand(s)
 ```

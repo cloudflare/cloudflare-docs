@@ -209,6 +209,10 @@ All plans have access to:
 
   - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
 
+- `isEUCountry` <Type>string | null</Type>
+
+  - If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property will be omitted.
+
 - `httpProtocol` <Type>string</Type>
 
   - HTTP Protocol, e.g. `"HTTP/2"`.
@@ -289,7 +293,7 @@ These methods are only available on an instance of a `Request` object or through
 
 - `arrayBuffer()` <Type>Promise&lt;ArrayBuffer></Type>
 
-  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer) representation of the request body.
+  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
 - `formData()` <Type>Promise&lt;FormData></Type>
 

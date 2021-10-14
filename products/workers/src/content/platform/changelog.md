@@ -1,5 +1,15 @@
 # Changelog
 
+## 9/24/2021
+
+- The `AbortController` and `AbortSignal` objects are now available.
+- The Web Platform `queueMicrotask` API is now available.
+- It is now possible to use new `EventTarget()` and to create custom `EventTarget` subclasses.
+- The `once` option is now supported on `addEventTarget` to register event handlers that will be invoked only once.
+- Per the HTML specification, a listener passed in to the `addEventListener` function is allowed to either be a function or an object with a `handleEvent` member function. Previously, Workers only supported the function option, now it supports both.
+- The `Event` object now supports most standard methods and properties.
+- V8 updated from 9.3 to 9.4.
+
 ## 9/3/2021
 
 - The `crypto.randomUUID()` method can be used to generate a new random version 4 UUID.

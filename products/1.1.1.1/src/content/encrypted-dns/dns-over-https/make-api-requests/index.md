@@ -1,7 +1,7 @@
 ---
-order: 1
-pcx-content: reference
 title: Make API requests to 1.1.1.1
+order: 1
+pcx-content-type: reference
 ---
 
 # Make API requests to 1.1.1.1 over DoH

@@ -1,8 +1,8 @@
 ---
 title: List and view rulesets
 pcx-content-type: reference
-alwaysopen: true
 order: 783
+type: overview
 ---
 
 # List and view rulesets
@@ -17,19 +17,15 @@ order: 783
 
 Returns the list of existing rulesets at the account level or at the zone level.
 
-```bash
----
-header: Account-level endpoint
----
-GET /accounts/{account-id}/rulesets
-```
+Use one of the following API endpoints:
 
-```bash
----
-header: Zone-level endpoint
----
-GET /zones/{zone-id}/rulesets
-```
+| Operation                           | Method + Endpoint                     |
+|-------------------------------------|---------------------------------------|
+| [List account rulesets][lr-account] | `GET /accounts/{account-id}/rulesets` |
+| [List zone rulesets][lr-zone]       | `GET /zones/{zone-id}/rulesets`       |
+
+[lr-account]: https://api.cloudflare.com/#account-rulesets-list-account-rulesets
+[lr-zone]: https://api.cloudflare.com/#zone-rulesets-list-zone-rulesets
 
 The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
@@ -45,20 +41,25 @@ The result does not include the list of rules in the ruleset. Check [View a spec
 
 ### Example
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```bash
----
-header: Request
----
 curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
 ```
 
+</div>
+</details>
+
+<details open>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": [
     {
@@ -77,69 +78,59 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 ## View a specific ruleset
 
-Returns the properties of the most recent version of a specific ruleset.
+Returns the properties of the most recent version of the ruleset with the specified ruleset ID.
 
-```bash
----
-header: Account-level endpoint
----
-GET /accounts/{account-id}/rulesets/{ruleset-id}
-```
+Use one of the following API endpoints:
 
-```bash
----
-header: Zone-level endpoint
----
-GET /zones/{zone-id}/rulesets/{ruleset-id}
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [Get an account ruleset][gr-account] | `GET /accounts/{account-id}/rulesets/{ruleset-id}` |
+| [Get a zone ruleset][gr-zone] | `GET /zones/{zone-id}/rulesets/{ruleset-id}` |
+| [Get account entry point ruleset][gep-account] | `GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint` |
+| [Get zone entry point ruleset][gep-zone] | `GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint` |
+
+[gr-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset
+[gr-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset
+[gep-account]: https://api.cloudflare.com/#account-rulesets-get-entrypoint-ruleset
+[gep-zone]: https://api.cloudflare.com/#zone-rulesets-get-entrypoint-ruleset
 
 <Aside type='warning' header='Important'>
 
-Note: You can only use the zone-level endpoint for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
+Note: You can only use the _Get a zone ruleset_ operation for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
 
 </Aside>
 
-You can also use the following specific endpoints for viewing the ruleset of a phase entry point:
-
-```bash
----
-header: Account-level phase endpoint
----
-GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint
-```
-
-```bash
----
-header: Zone-level phase endpoint
----
-GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
-```
-
-Returns the ruleset with the specified Ruleset ID.
-
-The API returns a 404 HTTP Status Code under these conditions:
+The API returns a `404 Not Found` HTTP status code under these conditions:
 
 * When a ruleset cannot be found.
 * When the specified ruleset is not a Managed Ruleset the calling account is entitled to execute.
 
 ### Example
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```bash
----
-header: Request
----
 curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}"
 ```
 
+</div>
+</details>
+
+<details open>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -168,62 +159,53 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 ## List all versions of a ruleset
 
 Returns a list of all the versions of a ruleset.
 
-For Managed Rulesets, this method returns a list with one item with the information about the most recent version of the ruleset.
+Use one of the following API endpoints:
 
-```bash
----
-header: Account-level endpoint
----
-GET /accounts/{account-id}/rulesets/{ruleset-id}/versions
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [List versions of an account ruleset][lv-account] | `GET /accounts/{account-id}/rulesets/{ruleset-id}/versions` |
+| List versions of a zone ruleset | `GET /zones/{zone-id}/rulesets/{ruleset-id}/versions` |
+| [List versions of an account entry point ruleset][lvep-account] | `GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions`|
+| [List versions of a zone entry point ruleset][lvep-zone] | `GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions` |
 
-```bash
----
-header: Zone-level endpoint
----
-GET /zones/{zone-id}/rulesets/{ruleset-id}/versions
-```
+[lv-account]: https://api.cloudflare.com/#account-rulesets-list-versions-of-an-account-ruleset
+[lvep-account]: https://api.cloudflare.com/#account-rulesets-list-versions-of-an-entrypoint-ruleset
+[lvep-zone]: https://api.cloudflare.com/#zone-rulesets-list-versions-of-an-entrypoint-ruleset
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
-You can also use the following specific endpoints to obtain all the versions of a phase entry point:
-
-```bash
----
-header: Account-level phase endpoint
----
-GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions
-```
-
-```bash
----
-header: Zone-level phase endpoint
----
-GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions
-```
+For Managed Rulesets, this method returns a list with one item with the information about the most recent version of the ruleset.
 
 When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 
 ### Example
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```bash
----
-header: Request
----
 curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/versions"
 ```
 
+</div>
+</details>
+
+<details open>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": [
     {
@@ -251,60 +233,52 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 ## View a specific version of a ruleset
 
 Returns the configuration of a specific version of a ruleset, including its rules.
 
+Use one of the following API endpoints:
+
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [Get an account ruleset version][grv-account] | `GET /account/{account-id}/rulesets/{ruleset-id}/versions/{version-number}` |
+| [Get a zone ruleset version][grv-zone] | `GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}`
+| [Get account entry point ruleset version][gepv-account] | `GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}` |
+| [Get zone entry point ruleset version][gepv-zone] | `GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}` |
+
+[grv-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset-version
+[grv-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset-version
+[gepv-account]: https://api.cloudflare.com/#account-rulesets-get-an-entrypoint-ruleset-version
+[gepv-zone]: https://api.cloudflare.com/#zone-rulesets-get-an-entrypoint-ruleset-version
+
 You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a Managed Ruleset.
 
-```bash
----
-header: Account-level endpoint
----
-GET /account/{account-id}/rulesets/{ruleset-id}/versions/{version-number}
-```
-
-```bash
----
-header: Zone-level endpoint
----
-GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}
-```
-
-You can also use the following endpoints for viewing a specific version of a phase entry point:
-
-```bash
----
-header: Account-level phase endpoint
----
-GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
-```
-
-```bash
----
-header: Zone-level phase endpoint
----
-GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}
-```
-
-When the specified phase entry point ruleset does not exist, this API method returns a 404 HTTP Status Code.
+When the specified phase entry point ruleset does not exist, this API method returns a `404 Not Found` HTTP status code.
 
 ### Example
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```bash
----
-header: Request
----
 curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}"
 ```
 
+</div>
+</details>
+
+<details open>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -333,6 +307,9 @@ header: Response
 }
 ```
 
+</div>
+</details>
+
 <Aside type='note' header='Note'>
 
 When you view a specific version of a Managed Ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
@@ -343,26 +320,31 @@ When you view a specific version of a Managed Ruleset, each rule listed in the r
 
 Returns a list of all the rules in a Managed Ruleset with a specific tag.
 
-```bash
-GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_tag/{tag-name}
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| List rules in ruleset by tag | `GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_tag/{tag-name}` |
 
 ### Example
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```bash
----
-header: Request
----
 curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
+  -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_tag/wordpress"
 ```
 
+</div>
+</details>
+
+<details open>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{managed-ruleset-id}",
@@ -412,3 +394,6 @@ header: Response
   "messages": []
 }
 ```
+
+</div>
+</details>

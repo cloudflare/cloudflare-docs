@@ -155,7 +155,7 @@ The `get` options object also accepts a `cacheTtl` parameter:
 
 The `cacheTtl` parameter must be an integer that is greater than or equal to 60. It defines the length of time in seconds that a KV result is cached in the edge location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely, but is not recommended if your data is updated often and you need to see updates shortly after they're written, because writes that happen from other edge locations won't be visible until the cached value expires.
 
-The effective Cache TTL of an already cached item can be reduced by getting it again it with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60.
+The effective Cache TTL of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60.
 
 #### Metadata
 

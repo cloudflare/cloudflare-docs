@@ -11,7 +11,7 @@ process.stdin.on("end", () => {
     let splittedStr = product.split("/");
     const productName = splittedStr[1];
 
-    if (!changedProducts.has(splittedStr[0] === "developers.cloudflare.com")) {
+    if (splittedStr[0] === "developers.cloudflare.com" && !changedProducts.has(splittedStr[0])) {
       changedProducts.add("developers.cloudflare.com");
     }
 

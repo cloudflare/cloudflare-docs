@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content: reference
+pcx-content-type: how-to
 ---
 
 # Configure DoH on your browser

@@ -1,6 +1,5 @@
 ---
-order:
-pcx-content: reference
+pcx-content-type: how-to
 ---
 
 # Domain management

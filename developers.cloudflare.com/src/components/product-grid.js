@@ -15,14 +15,17 @@ $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resourc
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
-$["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
-$["image-resizing"]       = require("../../../products/image-resizing/src/content/icons/image-resizing").pathD
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
+$["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
+$["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
+$["image-resizing"]       = require("../../../products/image-resizing/src/content/icons/image-resizing").pathD
+$["images"]               = require("../../../products/images/src/content/icons/images").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
 $["magic-firewall"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-wan.js").pathD
+$["network-error-logging"] = require("../../../products/network-error-logging/src/content/icons/network-error-logging.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
@@ -97,6 +100,12 @@ const products = [
     wrap: true,
   },
   {
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
@@ -123,10 +132,9 @@ const products = [
     icon: "image-resizing",
   },
   {
-    title: "Cloudflare Fundamentals",
-    path: "fundamentals",
-    icon: "fundamentals",
-    wrap: true
+    title: "Cloudflare Images",
+    path: "images",
+    icon: "images",
   },
   {
     title: "Load Balancing",
@@ -153,6 +161,12 @@ const products = [
     path: "magic-wan",
     icon: "magic-wan",
   },
+  {
+    title: "Network Error Logging",
+    path: "network-error-logging",
+    icon: "network-error-logging",
+    wrap: true,
+  }, 
   {
     title: "Network Interconnect",
     path: "network-interconnect",

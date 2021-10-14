@@ -1,6 +1,6 @@
 ---
 order: 7
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # Privacy

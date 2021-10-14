@@ -1,28 +1,21 @@
 ---
 pcx-content-type: reference
-alwaysopen: true
 order: 786
+type: overview
 ---
 
 # Add rule to ruleset
 
 Adds a single rule to an existing ruleset. Use this endpoint to add a rule without having to include all the existing ruleset rules in the request.
 
-Use one of the following API endpoints to add a rule to a ruleset:
+Use one of the following API endpoints:
 
-```bash
----
-header: Account-level endpoint
----
-POST /accounts/{account-id}/rulesets/{ruleset-id}/rules
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [Add an individual rule][ar-account] (account) | `POST /accounts/{account-id}/rulesets/{ruleset-id}/rules` |
+| Add an individual rule (zone) | `POST /zones/{zone-id}/rulesets/{ruleset-id}/rules` |
 
-```bash
----
-header: Zone-level endpoint
----
-POST /zones/{zone-id}/rulesets/{ruleset-id}/rules
-```
+[ar-account]: https://api.cloudflare.com/#account-rulesets-add-an-individual-rule
 
 Invoking this method creates a new version of the ruleset.
 
@@ -32,12 +25,13 @@ Include the rule definition in the request body. The rule will be added to the e
 
 The following example adds a rule to ruleset `{ruleset-id}` of zone `{zone-id}`. The ruleset ID was previously obtained using the [List rulesets](/rulesets-api/view#list-existing-rulesets) method, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
+-H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/rules" \
 -d '{
@@ -47,12 +41,16 @@ curl -X POST \
 }'
 ```
 
+</div>
+</details>
+
 The response includes the complete ruleset after adding the rule.
 
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -89,3 +87,6 @@ header: Response
   "messages": []
 }
 ```
+
+</div>
+</details>

@@ -5,34 +5,36 @@ pcx-content-type: reference
 
 # Certificate and hostname priority
 
-This article describes how Cloudflare deploys and serves SSL certificates at the edge. There are two stages that determine which certificate is received by the client.
+When a new certificate is created, Cloudflare first deploys the certificate and then serves it.
 
---------
+---
 
 ## Certificate deployment
 
-For any given hostname, Cloudflare uses the following logical order to determine the certificate deployed to Cloudflare’s edge along with the TLS settings configured by the Cloudflare zone that owns the certificate:
+For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) apply to that hostname:
 
-- Cloudflare deploys a certificate for any given hostname based on hostname specificity.
-- Cloudflare deploys the highest priority certificate (see table below)  in case the hostnames are the same between different certificates.
-- Cloudflare deploys the most recent certificate in case two certificates of the same type and hostname exist.
+1. **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for requests to `www.example.com`.
+1. **Certificate priority**: If the hostname is the same, certain types of certificates take precedence over others.
 
-| Priority | Certificate Type|
-| --- | --- |
-| 1 | [Custom Legacy](/edge-certificates/custom-certificates/)|
-| 2 | [Custom SNI-Only](/edge-certificates/custom-certificates/)|
-| 3 | [Custom Hostname (SSL for SaaS)](/ssl-for-saas/)|
-| 4 | [Dedicated](https://support.cloudflare.com/hc/articles/228009108) or Advanced|
-| 5 | [Universal](/universal-ssl/)|
+    | Priority | Certificate Type|
+    | --- | --- |
+    | 1 | [Custom Legacy](/edge-certificates/custom-certificates/)|
+    | 2 | [Custom SNI-Only](/edge-certificates/custom-certificates/)|
+    | 3 | [Custom Hostname (SSL for SaaS)](/ssl-for-saas/)|
+    | 4 | [Advanced](/edge-certificates/advanced-certificate-manager) or [Dedicated](https://support.cloudflare.com/hc/articles/228009108)|
+    | 5 | [Universal](/edge-certificates/universal-ssl/)|
 
---------
+1. **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
+
+---
 
 ## Certificate presentation
 
-Cloudflare uses the following logical order to determine the certificate and settings used during a TLS handshake:
-- Use the certificate and settings where the hostname exactly matches the SNI hostname,
-- Use the certificate and settings where the hostname instead matches an SNI wildcard, or
-- If no SNI is presented, Cloudflare determines the certificate based on the IP address if support for TLS handshakes made without SNI is enabled for the zone.
+Cloudflare uses the following order to determine the certificate and settings used during a TLS handshake:
+
+1. **SNI match**: Certificates and settings that match the SNI hostname *exactly* take precedence.
+1. **SNI wildcard match**: If there is not an exact match between the hostname and SNI hostname, Cloudflare uses certificates and settings that match an SNI wildcard.
+1. **IP address**: If no SNI is presented, Cloudflare uses certificate based on the IP address (the hostname can support TLS handshakes made without SNI).
 
 ### Hostname priority
 

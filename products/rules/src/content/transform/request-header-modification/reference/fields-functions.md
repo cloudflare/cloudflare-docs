@@ -19,6 +19,7 @@ The available fields when setting an HTTP request header value using an expressi
 * `cf.edge.client_port`
 * `cf.zone.name`
 * `cf.metal.id`
+* `cf.ray_id`
 * `cf.tls_client_auth.*`
 * `http.cookie`
 * `http.host`

@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # Support for IPv6-only networks

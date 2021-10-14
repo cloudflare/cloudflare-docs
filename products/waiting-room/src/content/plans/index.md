@@ -49,6 +49,12 @@ The features available for a waiting room depend on your plan type.
             <td>No</td>
             <td>Yes</td>
         </tr>
+        <tr>
+            <td><a href='/additional-options/create-events'>Scheduled events</a></td>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
    </tbody>
 </table>
 
