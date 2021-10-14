@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 5
+order: 7
 ---
 
 # L3/4 DDoS Attack Mitigation

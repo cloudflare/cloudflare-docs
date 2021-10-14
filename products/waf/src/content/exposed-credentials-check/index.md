@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 4
+order: 5
 ---
 
 # Automated exposed credentials check (Beta)
