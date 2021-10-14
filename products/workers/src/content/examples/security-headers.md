@@ -55,7 +55,7 @@ const DEFAULT_SECURITY_HEADERS = {
     'Cross-Origin-Opener-Policy': 'same-site; report-to="default";',
     "Cross-Origin-Resource-Policy": "same-site",
     "Cache-Control": "no-cache, no-store, must-revalidate, private",
-    "Set-Cookie": "__Host-ID=123; Secure; HttpOnly; SameSite=None; Path=/",
+    "Set-Cookie": "__Host-ID=123; Secure; HttpOnly; SameSite=strict; Path=/",
     /*
     Feature-Policy will be renamed into Permissions-Policy and will be deprectated.
     Using both will give a warning and the Permissions-Policy will be used instead.
