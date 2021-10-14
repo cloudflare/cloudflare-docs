@@ -17,7 +17,7 @@ import ValidatePatch from "../../_partials/_ssl-for-saas-validate-patch.md"
 
 ## DCV methods
 
-If you want to pre-validate your customer's certificate before they set a CNAME record — either to avoid downtime or prevent any issuance errors — explore [TXT](#txt), [Email](#email), or [HTTP (manual)](#http-manual) validation.
+If you want to pre-validate your customer's certificate before they set a CNAME record — either to avoid downtime or prevent any issuance errors — explore [TXT](#txt), [Email](#email), or [HTTP (manual)](#http-manual), or [CNAME](#cname) validation.
 
 If you create custom hostnames with wildcards, use [TXT](#txt) or [Email](#email) validation.
 
@@ -46,6 +46,16 @@ Ask your customer to create a TXT record named the **name** and containing the *
 - Dashboard: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
 
 <EmailValidationProcess/>
+
+<ValidatePatch/>
+
+### CNAME (manual)
+
+You can also complete DCV with a special CNAME record. This method is only available for custom hostnames.
+
+Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
+
+In the response, you will see two properties inside of the `ssl` object: `cname` and `cname_target` (you can also see these values in the dashboard by clicking that specific hostname certificate). Provide these values to your customer so they can add a CNAME record at their authoritative DNS provider.
 
 <ValidatePatch/>
 

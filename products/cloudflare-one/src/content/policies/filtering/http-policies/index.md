@@ -54,35 +54,11 @@ Rules with Block actions block outbound traffic from reaching destinations you s
 
 ### Isolate
 
-When an HTTP policy applies the Isolate action, the user's web browser is transparently served a HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
-
-If you'd like to isolate **all security threats**, you can set up a policy with the following configuration:
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Security Threats | In | All security threats | Isolate
-
-If instead you need to isolate **specific hostnames**, you can list the domains you'd like to isolate traffic to:
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | In | `example.com`, `example.net` | Isolate
-
-<Aside type='note' header='Isolate identity providers for applications'>
-
-Existing cookies and sessions from non-isolated browsing are not sent to the remote browser. Websites that implement single sign on using third-party cookies will also need to be isolated.
-
-For example, example.com authenticates using Google Workspace you will also need to isolate the top level <a href="https://support.google.com/a/answer/9012184">Google Workspace URLs</a>.
-
-</Aside>
+For more information on this action, refer to the documentation on [Browser Isolation policies](/policies/browser-isolation).
 
 ### Do Not Isolate
 
-You can choose to disable isolation for certain destinations or categories. The following configuration disables isolation for traffic directed to `example.com`:
-
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | In | `example.com` | Do Not Isolate |
+For more information on this action, refer to the documentation on [Browser Isolation policies](/policies/browser-isolation).
 
 ### Do Not Inspect
 
@@ -107,7 +83,9 @@ Policies created using the URL selector are case-sensitive.
 </Aside>
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
+
 * **Host**
+* **Domain**
 * **URL**
 * **URL Query**
 * **URL Path**
@@ -117,6 +95,12 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 * **Uploaded and Downloaded Mime Type**
 * **Content categories**
 * **Applications**
+
+<Aside type="note" header="Host or Domain?">
+
+The `Host` selector matches the exact entry input by a customer in the value field or list. The `Domain` selector matches the exact entry and all subdomains in the value field or list.
+
+</Aside>
 
 ## Operators
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:

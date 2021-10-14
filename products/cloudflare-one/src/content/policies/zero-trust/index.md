@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 1
 pcx-content-type: concept
 title: Zero Trust
 ---

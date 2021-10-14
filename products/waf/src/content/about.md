@@ -1,16 +1,10 @@
 ---
 title: About
 pcx-content-type: concept
-order: 1
+order: 2
 ---
 
 # About Cloudflare Web Application Firewall
-
-<Aside type='note'>
-
-The Cloudflare WAF announced in March 2021 is available for selected customers on our paid plans.
-
-</Aside>
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web requests and filters undesired traffic based on sets of rules called rulesets. The matching engine that powers the WAF rules supports the wirefilter syntax, the same syntax used for specifying Firewall Rules.
 

@@ -11,11 +11,23 @@ The modes listed below control the scheme (`http://` or `https://`) that Cloudfl
 
 If possible, Cloudflare strongly recommends using [**Full**](#full) or [**Full (strict)**](#full-strict) modes to prevent malicious connections to your origin.
 
-<Aside type="note">
-
 For more details about how encryption modes fit into the bigger picture of SSL/TLS protection, refer to [Get started](/get-started).
 
+<Aside type="note" header="Tip:">
+
+If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](../ssl-tls-recommender).
+
 </Aside>
+
+---
+
+## Update your encryption mode
+
+To change your encryption mode:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+1. Navigate to **SSL/TLS**.
+1. Choose a new encryption mode.
 
 ---
 
@@ -142,5 +154,3 @@ The setup is the same as [**Full (strict)** mode](#full-strict), but you select 
 ### Limitations
 
 <SSLModeErrors/>
-
----

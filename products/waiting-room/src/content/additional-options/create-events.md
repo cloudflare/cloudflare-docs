@@ -41,6 +41,14 @@ Though most properties are identical to those on a [regular waiting room](https:
 - `description`: A text description providing more detail about the event.
 - `suspended`: If **true**, the event is ignored and traffic is handled based on the waiting room's normal configuration.
 
+### Queueing methods
+
+When setting up events, you may want to also adjust the default queueing methods for your waiting room.
+
+Set the waiting room's queueing method to [**Passthrough**](/reference/queueing-methods#passthrough) when you want to allow traffic normally, but then restrict traffic during a scheduled event.
+
+Set the waiting room's queueing method to [**Reject**](/reference/queueing-methods#reject) when you want to block all traffic normally, but then allow traffic during special events like signups or ticket sales.
+
 ## Set up a "lottery"
 
 Set up a "lottery" system to reward all users who enter into the queue prior to your event start time. 

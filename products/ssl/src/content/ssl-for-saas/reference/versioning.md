@@ -77,7 +77,7 @@ Before your migration, you should:
     - Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
     - Via a CSV file (provided by your SE)
     - Via the Cloudflare dashboard:
-    ![Review SSL migration status in the dashboard](..//static/ssl-migration-status.png)
+    ![Review SSL migration status in the dashboard](../../static/ssl-migration-status.png)
 1. Approve the migration. Your Cloudflare account team will work with you to schedule a migration window for each of your SSL for SaaS zones.
 
 ## During the migration

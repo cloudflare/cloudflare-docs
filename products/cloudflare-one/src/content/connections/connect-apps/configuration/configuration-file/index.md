@@ -53,7 +53,7 @@ For example, to create a configuration file in the [default directory](#storing-
 Your file has now been created in your default directory. Confirm that the configuration file has been successfully created by running:
 
 ```sh
-$ cat config.yml 
+$ cat config.yaml 
 ```
 
 ## Storing a configuration file
@@ -63,5 +63,5 @@ $ cat config.yml
 Whenever you run a tunnel with a configuration file, even if you store it in the default directory, it is recommended that you use the `--config` flag to specify the path and filename for your configuration file:
 
 ```sh
-$ cloudflared tunnel --config tunnels/config.yml run <NAME or UUID>
+$ cloudflared tunnel --config tunnels/config.yaml run
 ```

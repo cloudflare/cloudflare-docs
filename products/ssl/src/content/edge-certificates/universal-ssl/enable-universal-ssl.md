@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: how-to
 ---
 
-# How to
+# Manage universal certificates
 
 ## Enable Universal SSL
 

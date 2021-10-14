@@ -101,6 +101,10 @@ When you create a waiting room with custom HTML, you can have access to several 
 
 Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
 
+### Resource hosting
+
+If you are using images or other resources for your customized waiting room, **do not** host those assets on the hostname covered by your waiting room. Otherwise, any requests for these assets will not be able to pass through the waiting room.
+
 ## Preview waiting room
 
 To preview the appearance of a waiting room:
