@@ -201,7 +201,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td><code>ethertype</code></td>
     </tr>
     <tr>
-      <td><code>bits /8</code></td>
+      <td><code>bits</code><br/>(divided by 8)</td>
       <td><code>ipTotalLength</code></td>
       <td><code>ipTotalLength</code></td>
       <td></td>
@@ -285,4 +285,4 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
 
 </TableWrap>
 
-<p><sup>*</sup> <em>The <code class="InlineCode">attackId</code> field value may be different between NAv1 and NAv2 for the same attack.</em></p>
+_* The `attackId` field value may be different between NAv1 and NAv2 for the same attack._

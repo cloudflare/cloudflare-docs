@@ -28,7 +28,7 @@ Cloudflare Analytics builds the following data sets from sampled data:
 
 </TableWrap>
 
-<p><sup>*</sup> <em>These nodes are deprecated. Refer to <a href="/graphql-api/features/data-sets#deprecated-data-nodes">Data Sets</a> for more information.</em></p>
+_* These nodes are deprecated. Refer to [Data Sets](/graphql-api/features/data-sets#deprecated-data-nodes) for more information._
 
 The presence of sampled data is called out in the Cloudflare dashboard and in the description of the data set in the API.
 
