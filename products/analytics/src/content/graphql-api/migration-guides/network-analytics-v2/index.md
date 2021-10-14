@@ -10,7 +10,7 @@ In early 2020, Cloudflare released the first version of the Network Analytics da
 
 ## Before you start
 
-Learn more about the [new concepts introduced in Network Analytics v2](/graphql-api/migration-guides/network-analytics-v2/about).
+Learn more about the [concepts introduced in Network Analytics v2](/graphql-api/migration-guides/network-analytics-v2/about).
 
 ## Feature comparison
 
