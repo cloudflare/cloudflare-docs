@@ -1,5 +1,7 @@
 ---
 type: overview
+pcx-content-type: reference
+order: 4
 ---
 
 # NAv1 to NAv2 schema map
@@ -283,4 +285,4 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
 
 </TableWrap>
 
-<sup>*</sup> The <code class="InlineCode">attackId</code> field value may be different between NAv1 and NAv2 for the same attack.
+<p><sup>*</sup> <em>The <code class="InlineCode">attackId</code> field value may be different between NAv1 and NAv2 for the same attack.</em></p>
