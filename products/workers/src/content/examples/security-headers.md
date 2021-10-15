@@ -71,7 +71,6 @@ const DEFAULT_SECURITY_HEADERS = {
 }
 
 const BLOCKED_HEADERS = [
-    "Public-Key-Pins",
     "X-Powered-By",
     "X-AspNet-Version",
 ]
