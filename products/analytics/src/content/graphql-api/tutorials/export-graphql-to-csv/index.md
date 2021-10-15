@@ -5,40 +5,37 @@ pcx-content-type: interim
 # Export GraphQL data to CSV
 
 This tutorial shows how to create a Python script to query the GraphQL API for
-Network Analytics data and convert the response to comma-separated values (CSV).
-Produced CSV could be easily ingested by tools like Splunk for further
+Network Analytics data and convert the response to comma-separated values (CSV) file.
+You could easily use that file with tools like Splunk for further
 visualization and usage.
 
-Therefore, this example queries the `ipFlows1mAttacksGroups` [data set][1],
-which containes minutely aggregates of Network Analytics attack activity.
+This example queries the `ipFlows1mAttacksGroups` [data set][1],
+which contains per-minute aggregates of Network Analytics attack activity.
+
+---
+
+## Prerequisites
+
+- Require Python 3.6 or higher
+- Account is entitled to access **Network Analytics**
+- You have an API Token with `Account Analytics:read` permission
+
+---
 
 ## Set up a script with authentication
 
-<Aside type='note' header='Note'>
+<Aside type="note" header="Note:">
 
-There are two ways to authentificate the request to GraphQL API:
+To authenticate your request to GraphQL API, use an `Authorization` header that contains a 
+[pre-generated API Token][2] prefixed with `Bearer `:
 
-1. with `Authorization` header, that should contain a pre-generated API Token
-   prefixed with `Bearer `, ie:
-   ```
-   Authorization: Bearer <api-token>
-   ```
-2. with `X-Auth-Email` and `X-Auth-Key` headers.
-
-This tutorial assumes that you already have a Cloudflare Token and will show you
-how to use it to authentificate the request to the GraphQL API.
-
-If you do not have one, please check how to [_configure_][2] an API token.
-
-The query we use in the tutorial requires an API Token with `Account
-Analytics:read` permission. It also requires that account you're interested in
-entitled to access Network Analytics.
-
-The scripts below require python3.6 or higher.
+```txt
+Authorization: Bearer <api-token>
+```
 
 </Aside>
 
-The first step is to set up the script and define the variables for further
+The first step is to set up the script and define the variables for further 
 authentication with the GraphQL API using a Cloudflare API token. The script
 also provides variables to set the range of data to export.
 
@@ -91,22 +88,16 @@ The `get_cf_graphql()` function assembles and sends a request to the GraphQL
 API. The headers will include the data for authentication.
 
 The payload contains the GraphQL query. In this query, we would like to get a
-list of the next fields for a given account and time range:
+list of the following fields for a given account and time range:
 
 * attack ID
 * attack type
 * start time
 * end time
 * mitigation type
-* avg, max rate of packets per second
+* max rate of packets per second (average)
 
-To get started with GraphQL queries, please see [_Querying basics_][3].
-
-Please note: the braces used in the GraphQL query are doubled to escape them in
-Python.
-
-Keep also in mind, that GraphQL requires a query to be a single-line text,
-therefore we should remove all newline symbols before sending it.
+To get started with GraphQL queries, please see [Querying basics][3].
 
 ```python
 ---
@@ -168,14 +159,22 @@ def get_cf_graphql():
     return r.text
 ```
 
+### Formatting notes
+
+The braces used in the GraphQL query are doubled to escape them in
+Python.
+
+GraphQL requires a query to be a single-line text,
+therefore we should remove all newline symbols before sending our query.
+
 ## Convert the data to CSV
 
 Use a tool such as the open-source [pandas][4] library (`pd`) to convert a
 response from the GraphQL API (JSON) to CSV.
 
 In this example, the `convert_to_csv()` function does a bit of JSON processing
-before conversion—normalizing the data, selecting only the desired data, and
-renaming the columns so that they are user-friendly.
+before conversion: normalizing the data, selecting only the desired data, and
+renaming the columns to be more user-friendly.
 
 The result is output to file in the directory specified by `file_dir`.
 
@@ -216,7 +215,7 @@ raw_data = get_cf_graphql()
 convert_to_csv()
 ```
 
-## The final script
+## Final script
 
 ```python
 ---
