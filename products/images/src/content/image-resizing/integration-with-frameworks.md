@@ -1,14 +1,14 @@
 ---
 title: Integration with frameworks
 order: 9
-pcx-content-type: interim
+pcx-content-type: configuration
 ---
 
 # Integration with frameworks
 
 ## Next.js
 
-Image Resizing can be used automatically with Next.js' [`next/image` component](https://nextjs.org/docs/api-reference/next/image). With a [custom loader](https://nextjs.org/docs/api-reference/next/image#loader) which applies Cloudflare Image Resizing, `next/image` will set an optimal width and quality for a given client.
+Image Resizing can be used automatically with Next.js' `next/image` [component](https://nextjs.org/docs/api-reference/next/image). With a [custom loader](https://nextjs.org/docs/api-reference/next/image#loader) which applies Cloudflare Image Resizing, `next/image` will set an optimal width and quality for a given client.
 
 ```javascript
 import Image from "next/image";
