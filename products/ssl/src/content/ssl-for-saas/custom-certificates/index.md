@@ -3,11 +3,15 @@ order: 4
 pcx-content-type: concept
 ---
 
+import PlanLimitation from "../../_partials/_ssl-for-saas-plan-limitation.md"
+
 # Custom certificates
 
 If your customers need to provide their own key material, you may want to [upload a custom certificate](uploading-certificates). Cloudflare will automatically bundle the certificate with a certificate chain [optimized for maximum browser compatibility](/edge-certificates/custom-certificates/bundling-methodologies#compatible).
 
 As part of this process, you may also want to [generate a Certificate Signing Request (CSR)](certificate-signing-requests) for your customer so they do not have to manage the private key on their own.
+
+<PlanLimitation/>
 
 ## Use cases
 
