@@ -193,6 +193,39 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
+      <td valign="top"><code>ip.src.lat</code><br /><Type>String</Type></td>
+      <td>
+         <p>Represents the latitude associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">37.78044</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>ip.src.lon</code><br /><Type>String</Type></td>
+      <td>
+         <p>Represents the longitude associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">-122.39055</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>ip.src.city</code><br /><Type>String</Type></td>
+      <td>
+         <p>Represents the city associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">San Francisco</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr>
       <td valign="top"><code>ip.geoip.asnum</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
