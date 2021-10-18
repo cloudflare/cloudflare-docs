@@ -9,7 +9,7 @@ Cloudflare Images lets you set up an image pipeline in minutes. Build a scalable
 
 To get started with Cloudflare Images, visit the Images dashboard in your Cloudflare account or [sign up](https://dash.cloudflare.com/sign-up/images).
 
-Photos you upload to Cloudflare Images are not attached to any domain in your Cloudflare account and you do not need a domain on Cloudflare to use the Cloudflare Images product.
+Images you upload to Cloudflare Images are not attached to any domain in your Cloudflare account and you do not need a domain on Cloudflare to use the Cloudflare Images product.
 
 ## Making Your First API Request
 
