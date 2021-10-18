@@ -2,9 +2,9 @@
 
 ## 10/14/2021
 
-- request.signal will always return an AbortSignal.
+- `request.signal` will always return an `AbortSignal`.
 - Cloudflare Workers’ integration with Chrome DevTools profiling now more accurately reports the line numbers and time elapsed. Previously, the line numbers were shown as one line later then the actual code, and the time shown would be proportional but much longer than the actual time used.
-- Upgrade to v8 9.5. See [V8 release v9.5 · V8](https://v8.dev/blog/v8-release-95) for more details.
+- Upgrade to v8 9.5. Refer to [V8 release v9.5 · V8](https://v8.dev/blog/v8-release-95) for more details.
 
 ## 9/24/2021
 
