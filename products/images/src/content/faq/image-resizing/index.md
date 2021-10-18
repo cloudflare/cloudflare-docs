@@ -2,7 +2,7 @@
 pcx-content-type: faq
 ---
 
-# Cloudflare Images FAQ
+# Cloudflare Image Resizing FAQ
 
 ## What is the difference between Cloudflare Images and Image Resizing products?
 
@@ -65,20 +65,4 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 
 ## How much does Cloudflare Images cost?
 
-Refer to our [Cloudflare Images](https://www.cloudflare.com/en-gb/products/cloudflare-images/) page for up-to-date information on pricing.
-
-## Do I get charged for creating and storing variants?
-
-No, you only get billed for the number of original images. There is no extra cost for generating variants. You can configure upto 20 variants.
-
-## Is there a limit on the file size for uploaded images?
-
-Yes, the uploaded image file must be less than or equal to 10 MB.
-
-## Which file formats does Cloudflare Images support?
-
-Cloudflare Images supports most common file formats as input files. These include JPGs, GIFs, PNGs and WebP.
-
-## Can Cloudflare Images convert my images to AVIF?
-
-Soon! We will be introducing AVIF support in the near future.
+Refer to our [Plans page](https://www.cloudflare.com/plans/) page for up-to-date information on pricing.
