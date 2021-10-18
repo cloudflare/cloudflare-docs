@@ -4,9 +4,9 @@ order: 0
 pcx-content-type: landing-page
 ---
 
-# Cloudflare Images
+# Cloudflare image solutions
 
-Optimize and serve images in a fast and secure manner.
+Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored for your different needs.
 
 With Cloudflare Images you have an option of building a scalable image pipeline on Cloudflare servers, to store, resize, optimize and deliver images in a fast and secure manner.
 
