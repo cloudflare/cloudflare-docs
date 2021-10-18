@@ -5,9 +5,12 @@ pcx-content-type: navigation
 
 # FAQs
 
+* [Cloudflare Images](#cloudflare-images-faq)
+* [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)
+
 ## Cloudflare Images FAQ
 
-## What is the difference between Cloudflare Images and Image Resizing products?
+### What is the difference between Cloudflare Images and Image Resizing products?
 
 Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, optimization, and delivery. Image Resizing (IR) only offers resizing and optimization:
 
@@ -92,7 +95,7 @@ Soon! We will be introducing custom domain support in the near future.
 
 ---
 
-## Image Resizing
+## Cloudflare Image Resizing FAQ
 
 ### How much does Cloudflare Image Resizing cost?
 
