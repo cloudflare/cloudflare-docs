@@ -48,7 +48,9 @@ sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:5
 
 ## Add the certificate to your system
 
-### MacOS
+### macOS
+
+#### Using Keychain\ Access.app
 
 You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
 
@@ -88,22 +90,29 @@ To install the certificate in **Keychain Access**:
 
 The root certificate is now installed and ready to be used.
 
-#### Base Operating System
+#### Using the command line
 
 You can install the Cloudflare certificate on your terminal, too.
 
-1. Download the Cloudflare certificate.
+1. Download the Cloudflare certificates in .crt and .pem formats and verify their fingerprints.
 1. Open Terminal.
-1. Launch the following command:
+1. Run the following command:
 
  ```bash
- sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
  ```
 
-1. Update the OpenSSL CA Store to include the Cloudflare certificate:
+#### Base Operating System
+1. Update the macOS LibreSSL CA Store to include the Cloudflare root certificate
+
+macOS ships with LibreSSL, a fork of OpenSSL which does not allow the CAPath to be modified by setting
+SSL_CERT_FILE or SSL_CERT_DIR using environment variables. To have macOS-supplied versions of utilities
+such as python3 or ruby trust the Cloudflare root certificate, add it to /private/etc/ssl/cert.pem:
 
  ```bash
-sudo cat Cloudflare_CA.crt >> /usr/local/etc/openssl/cert.pem
+sudo cp /private/etc/ssl/cert.pem /private/etc/ssl/cert.pem.orig
+sudo cp <Cloudflare_CA.pem> /private/etc/ssl/certs/Cloudflare_CA.pem
+sudo sh -c "cat /private/etc/ssl/certs/Cloudflare_CA.pem >> /private/etc/ssl/cert.pem"
  ```
 
 ### iOS
