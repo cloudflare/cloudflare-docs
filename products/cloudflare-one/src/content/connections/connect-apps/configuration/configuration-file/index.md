@@ -28,12 +28,6 @@ Whether you are exposing an application or a network on the Internet, it is comm
 | `tunnel:` | The tunnel UUID |
 | `credentials-file:` | The path to your tunnel’s credentials file |
 
-<Aside type='note'>
-
-Adding these keys to the configuration file is equivalent to running the `cloudflared tunnel --config /config/file/path/config.yaml run <NAME>` command. Leave these keys out if you plan on having more than one tunnel referencing the same configuration file.
-
-</Aside>
-
 If you’re [exposing a private network](/connections/connect-apps/configuration/private-networks), you need to add the `warp-routing` key:
 
 | Key | Value |
@@ -64,12 +58,9 @@ $ cat config.yaml
 
 ## Storing a configuration file
 
-It is important to note that `cloudflared` will automatically look for the configuration file in default directories. 
+`cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory). However, you can store your configuration file in any directory of your choice.
 
-* On Windows the default directory is `%USERPROFILE%\.cloudflared`.
-* On Unix-like systems, the default directories are `~/.cloudflared`, `/etc/cloudflared`, and `/usr/local/etc/cloudflared`, in that order.
-
-If needed, you can use `--config` to point to a non-standard YAML file location:
+Whenever you run a tunnel with a configuration file, even if you store it in the default directory, it is recommended that you use the `--config` flag to specify the path and filename for your configuration file:
 
 ```sh
 $ cloudflared tunnel --config tunnels/config.yaml run
