@@ -26,7 +26,7 @@ jobs:
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}      
-      image-optimization: ${{ steps.filter.outputs.image-optimization }}
+      images: ${{ steps.filter.outputs.images }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-firewall: ${{ steps.filter.outputs.magic-firewall }}
@@ -94,8 +94,8 @@ jobs:
               - 'products/browser-isolation/**'
             http3:
               - 'products/http3/**'            
-            image-optimization:
-              - 'products/image-optimization/**'
+            images:
+              - 'products/images/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
@@ -486,14 +486,14 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
   
-  build-image-optimization:
+  build-images:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.image-optimization == 'true' }}
+    if: ${{ needs.changes.outputs.images == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/image-optimization
+        working-directory: products/images
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
