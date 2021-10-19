@@ -79,7 +79,7 @@ order: 1
                 SQLi - Equation
             </td>
             <td>
-                Simulate
+                N/A
             </td>
             <td>
                 Block
