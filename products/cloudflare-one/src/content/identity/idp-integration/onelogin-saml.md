@@ -13,9 +13,6 @@ To set up OneLogin (SAML) as your identity provider:
 
 1. Log in to your OneLogin admin portal.
 1. Select  **Apps > Add Apps**.
-
-    ![OneLogin SAML Add Apps](../../static/documentation/identity/onelogin/onelogin-saml-1.png)
-
 1. Under **Find Applications**, search for **Cloudflare Access**.
 1. Select the result sponsored by **Cloudflare, Inc**.
 
@@ -23,17 +20,9 @@ To set up OneLogin (SAML) as your identity provider:
 
     You can customize the name or logo.
 
-1. Select **Save**.
-
-    You can change this information at any time.
-
-    ![OneLogin SAML Add Cloudflare Access app](../../static/documentation/identity/onelogin/onelogin-saml-3.png)
-
+1. Select **Save**. You can change this information at any time.
 1. Select the **Configuration** tab.
 1. In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/glossary#team-domain).
-
-    ![OneLogin SAML Application Configuration](../../static/documentation/identity/onelogin/onelogin-saml-4.png)
-
 1. Select the **Parameters** tab, click **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
     ![OneLogin SAML Application Parameters](../../static/documentation/identity/onelogin/onelogin-saml-5.png)
