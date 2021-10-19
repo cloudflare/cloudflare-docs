@@ -20,7 +20,7 @@ Cloudflare API Shield follows a positive security model.
 
 <Aside type='note'>
 
-Mutual TLS is available to all Cloudflare plans.
+Mutual TLS using a Cloudflare-managed certificate authority (CA) is available to all Cloudflare plans.
 
 </Aside>
 
