@@ -53,7 +53,7 @@ order: 1
                 SQLi - AND/OR Digit Operator Digit
             </td>
             <td>
-                Simulate
+                N/A
             </td>
             <td>
                 Block
