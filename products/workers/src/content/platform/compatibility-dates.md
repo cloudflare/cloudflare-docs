@@ -44,8 +44,6 @@ Most developers will not need to use `compatibility_flags`; instead, we recommen
 
 Newest changes are listed first.
 
-_At this time, compatibility dates are new and no changes have yet been scheduled to become default._
-
 ### Durable Object `stub.fetch()` requires a full URL
 
 <table><tbody>
