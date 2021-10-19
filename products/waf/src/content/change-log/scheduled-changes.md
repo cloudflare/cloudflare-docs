@@ -35,25 +35,103 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-10-04
+                2021-10-19
             </td>
             <td>
-                2021-10-11
+                2021-10-25
             </td>
             <td>
-                Wordpress
+                Specials
             </td>
             <td>
-                 …521e1eff
+                 17739e16939f264a63cf6062b4dd2e7a
             </td>
             <td>
-                WP0036
+                100008E2
             </td>
             <td>
-                Wordpress - Broken Access Control
+                SQLi - AND/OR Digit Operator Digit
+            </td>
+            <td>
+                Simulate
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                 b77b15c1e2eb308cb7372d41efbf1167
+            </td>
+            <td>
+                100009CB2
+            </td>
+            <td>
+                SQLi - Equation
+            </td>
+            <td>
+                Simulate
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                 102487af182ffccc5e51f07760bda7af
+            </td>
+            <td>
+                100008D
+            </td>
+            <td>
+                SQLi - Benchmark Function
             </td>
             <td>
                 N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                 45895e438d7b7f68cd38e913eac04cfd
+            </td>
+            <td>
+                100009B3
+            </td>
+            <td>
+                SQLi - ORDER/GROUP BY
+            </td>
+            <td>
+                Simulate
             </td>
             <td>
                 Block
