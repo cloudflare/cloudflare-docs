@@ -131,7 +131,7 @@ order: 1
                 SQLi - ORDER/GROUP BY
             </td>
             <td>
-                Simulate
+                N/A
             </td>
             <td>
                 Block
