@@ -4,7 +4,7 @@ order: 0
 pcx-content-type: landing-page
 ---
 
-# Cloudflare image solutions
+# Cloudflare Image Optimization
 
 Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored for your different needs.
 
