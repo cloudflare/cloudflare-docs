@@ -71,7 +71,7 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 
 ### How much does Cloudflare Images cost?
 
-Refer to our [Cloudflare Images](https://www.cloudflare.com/en-gb/products/cloudflare-images/) page for up-to-date information on pricing.
+Refer to our [Cloudflare Images](https://www.cloudflare.com/products/cloudflare-images/) page for up-to-date information on pricing.
 
 ### Do I get charged for creating and storing variants?
 
