@@ -9,19 +9,13 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1. In your Okta dashboard, click **Admin**.
 
- ![Okta Applications](../../static/documentation/identity/okta/click-admin.png)
-
 1. Select the **Applications** tab in the Admin dashboard.
 
  ![Admin Dash](../../static/documentation/identity/okta/select-admin.png)
 
 1. Click **Add Application** on the next page.
 
- ![Add App](../../static/documentation/identity/okta/add-app.png)
-
 1. Click **Create New App** in the top right corner.
-
- ![Create New App](../../static/documentation/identity/okta/create-new-app.png)
 
 1. Choose `Web` as the Platform and toggle **OpenID Connect**. Click **Create**.
 
@@ -40,8 +34,6 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
  ![Create New App](../../static/documentation/identity/okta/app-view.png)
 
 1. Scroll down to the `OpenID ConnectID Token`.
-
- ![Scroll Down](../../static/documentation/identity/okta/scroll-down.png)
 
 1. Click **Edit** and edit the Groups claim filter to Matches regex and the value `.*`.
 

@@ -21,15 +21,15 @@ If you have not used the Cloudflare API previously, review our [API Quickstart](
 
 ## Step 1 — Create fallback origin and CNAME target
 
-The fallback origin is where Cloudflare will route traffic sent to your custom hostnames.
+The fallback origin is where Cloudflare will route traffic sent to your custom hostnames (must be proxied).
 
 The CNAME target — optional, but highly encouraged — provides a friendly and more flexible place for customers to [route their traffic](#step-5--have-customer-create-a-cname-record).
 
 1. Create a [new application](https://support.cloudflare.com/hc/articles/201720164) and select the **Free** plan.
 1. Navigate to **DNS**.
 1. Create two DNS records:
-    - An A or AAAA record pointing to the IP address of your **fallback origin** (where Cloudflare wil send custom hostname traffic).
-    - A CNAME record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+    - A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare wil send custom hostname traffic).
+    - A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
     <Example>
 

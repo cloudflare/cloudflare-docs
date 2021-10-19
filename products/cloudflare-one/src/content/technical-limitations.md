@@ -32,8 +32,9 @@ All values are per organization.
 | Team Domain max length (characters) | <= 63 |
 | Lists: total number of lists | 100 |
 | Locations | 250 |
-| HTTP rule limit | 1000 |
-| DNS rule limit | 1000 |
+| Number of HTTP policies per account | 500 |
+| Number of DNS policies per account | 500 |
+| Number of network policies per account | 500 |
 | HTTP Logpush jobs | 5 |
 | DNS Logpush jobs | 5 |
 

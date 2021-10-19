@@ -50,7 +50,7 @@ $ sudo -u keyless softhsm2-util --init-token --slot 0 --label test-token --pin 1
 The token has been initialized.
 ```
 
-Using cfssl, [we generate the private keys and Certificate Signing Requests](https://github.com/cloudflare/cfssl) (CSRs), the latter of which will be sent to a Certificate Authority (CA) for signing.
+Using cfssl, we generate the [private keys and Certificate Signing Requests (CSRs)](https://github.com/cloudflare/cfssl), the latter of which will be sent to a Certificate Authority (CA) for signing.
 
 ```bash
 $ cat <<EOF | tee csr.json
@@ -84,7 +84,7 @@ $ cfssl genkey csr.json | cfssljson -bare certificate
 
 ## 3. Convert and import the key
 
-Now that the key has been generated, it’s time to load it into the slot we created. Before doing so, we need to convert from PKCS#1 to PKCS#8 format. During import we specify the token and PIN from token initialization and provide a unique hexadecimal ID and label to the key.
+Now that the key has been generated, it’s time to load it into the slot we created. Before doing so, we need to convert from PKCS#1 to PKCS#8 format. During import, we specify the token and PIN from token initialization and provide a unique hexadecimal ID and label to the key.
 
 ```bash
 $ openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in certificate-key.pem -out certificate-key.p8

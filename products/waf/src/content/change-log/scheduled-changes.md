@@ -35,22 +35,100 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-10-04
+                2021-10-19
             </td>
             <td>
-                2021-10-11
+                2021-10-25
             </td>
             <td>
-                Wordpress
+                Specials
             </td>
             <td>
-                 …521e1eff
+                …88d80772
             </td>
             <td>
-                WP0036
+                100008E2
             </td>
             <td>
-                Wordpress - Broken Access Control
+                SQLi - AND/OR Digit Operator Digit
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …a72a6b3a
+            </td>
+            <td>
+                100009CB2
+            </td>
+            <td>
+                SQLi - Equation
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …2ebc44ad
+            </td>
+            <td>
+                100008D
+            </td>
+            <td>
+                SQLi - Benchmark Function
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …1c8e7f7f
+            </td>
+            <td>
+                100009B3
+            </td>
+            <td>
+                SQLi - ORDER/GROUP BY
             </td>
             <td>
                 N/A

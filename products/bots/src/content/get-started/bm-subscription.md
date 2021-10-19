@@ -100,7 +100,7 @@ The best approach is to start small and slowly increase your threshold to preven
 
 ### Step 5 — Continue monitoring domain traffic
 
-You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
+You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bot-analytics/bm-subscription) and [Firewall Events](https://developers.cloudflare.com/waf/analytics) to see if your rules need additional tuning.
 
 ---
 

@@ -16,14 +16,14 @@ This example imports an existing key pair, but you may prefer to [generate your 
 ## Before you start
 
 Make sure you have:
-- Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) 
-- Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html)
+- Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
+- Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
 
 ---
 
 ## 1. Import the public and private key to the HSM
 
-Before importing the public key, you’ll need to extract it from the certificate provided by your CA. Place the contents of your private key in `privkey.pem` and then run the following (replacing certificate.pem with your actual certificate) to populate `pubkey.pm`.
+Before importing the public key, extract it from the certificate provided by your CA. Place the contents of your private key in `privkey.pem` and then run the following (replacing certificate.pem with your actual certificate) to populate `pubkey.pm`.
 
 ```txt
 keyserver$ openssl x509 -pubkey -noout -in certificate.pem > pubkey.pem
@@ -40,7 +40,7 @@ Symmetric Key Created.  Key Handle: 658
 ...
 ```
 
-Referencing the key handle returned above, import the private and public key, and then log out of the HSM:
+Referencing the key handle returned above, import the private and public key and then log out of the HSM:
 
 ```txt
 Command: importPrivateKey -f privkey.pem -l mykey -id 1 -w 658
@@ -65,7 +65,8 @@ Command: exit
 --------
 
 ## 2. Modify the gokeyless config file and restart the service
-Now that the keys are in place, we need to modify the configuration file that the key server will read on startup. Be sure to change the `object=mykey` and `pin-value=username:password` values to match the key label you provided and CU user you created.
+
+Now that the keys are in place, we need to modify the configuration file that the key server will read on startup. Change the `object=mykey` and `pin-value=username:password` values to match the key label you provided and CU user you created.
 
 Open  `/etc/keyless/gokeyless.yaml` and immediately after:
 
