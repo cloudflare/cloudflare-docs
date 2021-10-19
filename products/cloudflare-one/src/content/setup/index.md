@@ -1,63 +1,54 @@
 ---
-order: 1
-pcx-content-type: getting-started
+order: 2
+pcx-content-type: how-to
 ---
 
 # Get started
 
-<Aside>
+Welcome to Cloudflare for Teams. This guide covers the main steps you need to take in order to fully set up your Teams environment.
 
-Before you start using Cloudflare for Teams, create a Cloudflare account. To do that, navigate to the [Cloudflare dashboard](https://dash.teams.cloudflare.com/) and create a new account with your email address and a password.
+## Pre-requisites
 
-</Aside>
+* A Cloudflare account
 
-Setting up Cloudflare for Teams takes only a couple of minutes. You will need to complete these three steps:
+## Start from the Cloudflare Dashboard
 
-1. Choose a [team name](/glossary#team-name).
-1. Choose a [plan](https://www.cloudflare.com/en-gb/teams-pricing/).
-1. Adding your payment details (also required for customers on the Free plan).
- 
-Let's walk through the setup flow!
+1. On your Account Home in the Cloudflare Dashboard, click on the Teams icon.
 
-1. Once you've created your Cloudflare account, navigate to [the sign-up link](https://dash.cloudflare.com/sign-up/teams).
-1. Log in with your Cloudflare credentials.
-1. Click on the Teams icon.
+    ![Cloudflare Dashboard Account Home](../static/documentation/quickstart/cloudflare-dashboard.png)
 
- ![Start Onboarding](../static/documentation/quickstart/step-000.png)
+2. On the onboarding screen, choose a [team name](/glossary#team-name).
 
-1. On the Welcome page, click **Next**.
+3. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Teams Free plan**, please note this step is still needed, but you won’t be charged.
 
- ![Start Onboarding](../static/documentation/quickstart/step-0.png)
+4. Welcome to the Cloudflare for Teams dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Teams.
 
-1. Choose your [team name](/glossary#team-name). This name will be used to generate a [team domain](/glossary#team-domain) that will be shared across the applications you'll protect behind Cloudflare for Teams.
+    ![Cloudflare for Teams Dashboard Home](../static/documentation/quickstart/quickstart.png)
 
- ![Choose team name](../static/documentation/quickstart/step-2.png)
+## Install the WARP client on your devices
 
-1. Click **Next**.
+If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next step you need to take:
 
-1. Choose a payment plan.
+1. **Set up a login method.** Configure [One-time PIN](/identity/one-time-pin) or connect a [third-party identity provider](/identity/idp-integration) on the Teams Dashboard. This is the login method your users will utilize when authenticating to add a new device to your Teams setup.
 
-1. Click **Next**. We'll show you a summary of the payment plan you've selected; you now have the opportunity to go back and choose a different plan or click **Proceed to payment**.
+1. **Next, define [device enrollment permissions](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions)**. Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Teams setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
- ![Enter payment details](../static/documentation/quickstart/step-4.png)
+1. **Install the [Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert) on your devices.** Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
-1. As a last step, enter your payment details and click **Purchase**. For Free customers, credit cards will not be charged.
+1. **Download and deploy the WARP client to your devices**. Choose one of the [different ways](/connections/connect-devices/warp/deployment) to deploy the WARP client, depending on what works best for your organization.
 
- ![Enter payment details](../static/documentation/quickstart/step-5.png)
+1. **Log in to your organization's Cloudflare for Teams instance from your devices**. On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
-1. Welcome to the Cloudflare for Teams dashboard! Your account has been created. You can now explore a list of one-click actions we've designed to help you kickstart your experience with Teams.
- 
- For example, if you've purchased one of the Teams bundle plans, you can:
+1. **Enable the Proxy setting in the Teams Dashboard.** Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.  
 
- * [Add your first location](/connections/connect-networks)
- * [Add your first application](/applications/configure-apps)
- * [Customize your login page](/identity/login-page)
+Your devices are now connected to Cloudflare for Teams through the WARP client, and you can start enforcing security measures on your traffic and access requests.
 
- And so much more. Happy exploring!
+## Check your Teams environment
 
- ![Enter payment details](../static/documentation/quickstart/quickstart.png)
+Now that your environment is set up, you can control your network activity by checking out our analytics pages.
 
+1. **View your Devices in Teams.** Navigate to **My Team** > **Devices** to find a list of your enrolled devices, when they were last seen, and the WARP client version they are running. 
+1. **View your Users in Teams.** Navigate to **My Team** > **Users** to check who is currently an active user in your Teams environment, revoke users, and check information such as last login, location, and devices they use. 
+1. **View Logs.** Navigate to the **Logs** section for an overview of events in your network. Deep-dive into which access requests were made, and check which queries were filtered by Gateway and the action that was enforced on each of them.
 
-## Tutorials
-
-Once you've created your account, you can start exploring Cloudflare for Teams. We recommend reviewing the Cloudflare for Teams [Tutorials](/tutorials) section to begin adding new features.
+You can also check the [Cloudflare for Teams Health Page](https://help.teams.cloudflare.com/) for a comprehensive overview of what filtering options you have enabled for your traffic.
