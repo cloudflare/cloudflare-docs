@@ -105,18 +105,14 @@ To ensure a custom domain is added successfully, you must go through the [Adding
 
 ### Deleting a custom domain
 
-If your DNS is handled by Cloudflare, you must delete any custom domain associated with your Pages project before removing your project from the **Pages** dashboard. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists.
+To delete a Pages project with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists.
 
-Log in to the Cloudflare dashboard and use the **Account Home** or drop-down menu to select your website.
+Log in to the Cloudflare dashboard > **Account Home** > select your website > **DNS**.
 
-![drop down menu](./images/drop-down-menu.png)
-
-After you select your website, you will be directed to **Overview** on the dashboard. On **Overview**:
-1. Scroll down to **Advanced Actions**.
-2. Select **Remove Site from Cloudflare**.
-3. To delete your website from Cloudflare, select **Confirm**.
-
-![advanced-option](./images/advanced-option.png)
+In **DNS**:
+1. Locate your Pages Project's CNAME record.
+2. Select **Edit**.
+3. Select **Delete**.
 
 Go back to the **Account Home** or use the drop-down menu at the top of the dashboard and select **Pages**. You can now remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
 
