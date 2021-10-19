@@ -372,7 +372,17 @@ The command below will set the `cafile` configuration to use the Cloudflare cert
 
 ### Google Cloud SDK
 
-The command below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
+The commands below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
+
+```
+curl -O https://curl.se/ca/cacert.pem
+
+cat cacert.pem >> ca.pem
+
+cat Cloudflare_CA.pem >> ca.pem
+
+gcloud config set core/custom_ca_certs_file /Users/mgusev/ca.pem
+```
 
  ```
  gcloud config set core/custom_ca_certs_file [PATH_TO_CLOUDFLARE_CERT]
