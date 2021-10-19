@@ -122,9 +122,7 @@ To export the certificate:
 
     ![Certificate Export Wizard](../../static/documentation/identity/adfs/adfs-17.png)
 
-1. Click **Next**.
-
-    The **Export File Format** window displays.
+1. Click **Next**. The **Export File Format** window displays.
 
     ![Export File Format](../../static/documentation/identity/adfs/adfs-18.png)
 

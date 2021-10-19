@@ -14,8 +14,8 @@ Use these steps to set up Facebook as your identity provider.
 
    The **Create a New App ID** card displays.
 1. Enter the **Display Name** and **Contact Email**.
-1. Click **Create App ID**. The Create a New App ID window displays.
-1. Enter the Captcha code to proceed.
+1. Click **Create App ID**. The **Create a New App ID** window displays.
+1. Enter the CAPTCHA code to proceed.
 1. Click **Submit**.
 1. On the **Facebook Login** card, click **Set Up**.
 
@@ -23,7 +23,7 @@ Use these steps to set up Facebook as your identity provider.
 
     A Quickstart card displays offering platform choices.
 
-1. Click **Web**. The *Web* tab displays.
+1. Click **Web**. The **Web** tab displays.
 1. Enter your **Site URL**.
 1. Click **Save**.
 1. Click **Continue**. Ignore any JavaScript page that suggests that you install it on your site.
