@@ -21,7 +21,7 @@ Welcome to Cloudflare for Teams. This guide covers the main steps you need to ta
 
 3. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Teams Free plan**, please note this step is still needed, but you won’t be charged.
 
-4. Welcome to the Cloudflare for Teams dashboard! Your account has been created. You can now explore a list of one-click actions we've designed to help you kickstart your experience with Teams.
+4. Welcome to the Cloudflare for Teams dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Teams.
 
     ![Cloudflare for Teams Dashboard Home](../static/documentation/quickstart/quickstart.png)
 
