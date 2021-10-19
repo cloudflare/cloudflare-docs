@@ -44,7 +44,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 17739e16939f264a63cf6062b4dd2e7a
+                …88d80772
             </td>
             <td>
                 100008E2
@@ -70,7 +70,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 b77b15c1e2eb308cb7372d41efbf1167
+                …a72a6b3a
             </td>
             <td>
                 100009CB2
@@ -96,7 +96,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 102487af182ffccc5e51f07760bda7af
+                …2ebc44ad
             </td>
             <td>
                 100008D
@@ -122,7 +122,7 @@ order: 1
                 Specials
             </td>
             <td>
-                 45895e438d7b7f68cd38e913eac04cfd
+                …1c8e7f7f
             </td>
             <td>
                 100009B3
