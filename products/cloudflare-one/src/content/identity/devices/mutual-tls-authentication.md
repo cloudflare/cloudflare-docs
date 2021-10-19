@@ -16,9 +16,9 @@ pcx-content-type: how-to
 </div>
 </details>
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
-Adding mTLS to your application is only available on the [**Cloudflare enterprise plan**](https://www.cloudflare.com/en-gb/plans/enterprise/). For more information, please contact your Cloudflare customer success manager.
+Adding mTLS to your application using your own certificate authority (CA) is only available on the Cloudflare enterprise plan.
 
 </Aside>
 
