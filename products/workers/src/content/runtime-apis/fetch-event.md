@@ -86,6 +86,7 @@ export default {
 
     - See [`passThroughOnException`](#passThroughOnException).
 
+</Definitions>
 
 ### Bindings
 
