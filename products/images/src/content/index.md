@@ -13,10 +13,3 @@ With Cloudflare Images you have an option of building a scalable image pipeline 
 With Image Resizing you can use Cloudflare’s edge platform to resize, adjust quality, and convert images to WebP or AVIF format on demand, independently of where they are stored.
 
 For more information about the differences between each product, refer to the [Frequently Asked Questions section](/faq).
-
-Choose one to get started:
-
-<ButtonGroup>
-  <Button type="primary" href="/cloudflare-images">Cloudflare Images</Button>
-  <Button type="secondary" href="/image-resizing">Cloudflare Image Resizing</Button>
-</ButtonGroup>
