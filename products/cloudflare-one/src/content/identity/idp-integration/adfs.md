@@ -82,7 +82,7 @@ If you closed the Add Relying Trust wizard, use Explorer to find the **Relying P
 
 To create Claim Rules:
 
-1. In the **Edit Claim Rules for CF Login** window, click  **Add Rule…**. The **Choose Rule Type** step displays.
+1. In the **Edit Claim Rules for CF Login** window, click  **Add Rule**. The **Choose Rule Type** step displays.
 1. In the **Claim rule template** field, select **Send LDAP Attributes as Claims** from the drop-down list.
 1. Click **Next**. The **Edit Rule — Send Email** step displays.
 
