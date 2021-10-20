@@ -55,11 +55,11 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
 - **`gravity`**
 
-  - When cropping with `fit: "cover"` and `fit: "crop"`, this defines the side or point that should be left uncropped.
+  - When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should be left uncropped.
 
     There are three ways of specifying gravity:
 
-    - A string `"left"`, `"right"`, `"top"`, `"bottom"` or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
+    - A string `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
     - `"auto"`, which selects focal point based on saliency detection (using maximum symmetric surround algorithm).
     - An object `{x, y}` containing focal point coordinates in the original image expressed as <em>fractions</em> ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
 
@@ -102,10 +102,10 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
     </Definitions>
 
 - **`background`**
-  - Background color to add underneath the image. Applies only to images with transparency (e.g. PNG). Accepts any CSS color (`#RRGGBB`, `rgba(…)`, etc.).
+  - Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
 
 - **`rotate`**
-  - Number of degrees (`90`, `180`, `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
+  - Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
 
 - **`sharpen`**
   - Strength of sharpening filter to apply to the image. Floating-point number between `0` (no sharpening, default) and `10` (maximum). `1.0` is a recommended value for downscaled images.
@@ -128,9 +128,9 @@ fetch(imageURL, {
 
 These typings are also available in [our Workers TypeScript definitions library](https://github.com/cloudflare/workers-types).
 
-## Configure a worker
+## Configure a Worker
 
-Create a new script in the Workers section of the Cloudflare Dashboard. Scope your worker script to a path dedicated to serving assets, such as `/images/*`, `/assets/*`, etc. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
+Create a new script in the Workers section of the Cloudflare Dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
 <Aside type="warning" header="Warning">
 
@@ -144,7 +144,7 @@ It is best to keep the path handled by the Worker separate from the path to orig
 
 To perform resizing and optimizations, the Worker must be able to fetch the original, unresized image from your origin server. If the path handled by your Worker overlaps with the path where images are stored on your server, it could cause an infinite loop by the Worker trying to request images from itself.
 
-You must detect which requests have to go straight to the origin server. When the `image-resizing` string is present in the `Via` header, that is a request coming from another Worker, and should be directed straight to the origin server:
+You must detect which requests must go directly to the origin server. When the `image-resizing` string is present in the `Via` header, it means that it is a request coming from another Worker and should be directed to the origin server:
 
 ```js
 addEventListener("fetch", event => {
@@ -166,11 +166,11 @@ Image Resizing is not simulated in the preview of in the Workers dashboard edito
 
 </Aside>
 
-The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of Image Resizing you must deploy the worker script and use it outside of the editor.
+The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of Image Resizing you must deploy the Worker script and use it outside of the editor.
 
 ## Error handling
 
-When an image cannot be resized, e.g. because the image does not exist, or resizing parameters were invalid, the response will have an HTTP status indicating an error (e.g. 400, 404, 502, etc.).
+When an image cannot be resized — for example, because the image does not exist or the resizing parameters were invalid — the response will have an HTTP status indicating an error (for example, 400, 404, or 502).
 
 By default, the error will be forwarded to the browser, but you can decide how to handle errors. For example, you can redirect the browser to the original, unresized image instead:
 
@@ -200,7 +200,7 @@ if (response.ok) {
 
 ## An example worker
 
-Assuming you [set up a worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
+Assuming you [set up a Worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
 
 ```js
 addEventListener("fetch", event => {
