@@ -49,7 +49,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
       - The image will shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
 
     - **`pad`**
-      - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). Use of this mode is not recommended, as the same effect can be more efficiently achieved with the `contain` mode and the CSS `object-fit: contain` property.
+      - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
 
     </Definitions>
 
