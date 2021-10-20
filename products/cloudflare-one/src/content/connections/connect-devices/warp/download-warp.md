@@ -133,4 +133,4 @@ __[APT/YUM Repository Setup](https://pkg.cloudflareclient.com/install)__
   </tbody>
 </table>
 
-Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, please [see this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify your device is supported.
+Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, please [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.
