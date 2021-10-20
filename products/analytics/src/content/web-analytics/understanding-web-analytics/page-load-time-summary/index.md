@@ -14,3 +14,10 @@ pcx-content-type: reference
 * Load Event (`loadEventEnd` - `loadEventStart`) - An event triggered by the browser when a document and its resources finish loading. The Load Event duration may be a useful metric if you have additional functions or any logic for the load event.
 
 ![Web Analytics page load time](../../../static/images/dash-web_analytics-page_load_time.png)
+
+## Data collected for Paint Timings
+
+Cloudflare need to collect some information to make Analytics work:
+
+* **First Paint**. The time between navigation and when the browser renders the first pixels to the screen.
+* **First Contentful Paint**. Time when the browser renders the first bit of content from the DOM.
