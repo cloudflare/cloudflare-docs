@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Changes to HTTP DCV
 
-After October 21, 2021, you will also no longer be able to issue new wildcard certificates using HTTP DCV or use HTTP Domain Control Validation (DCV) to validate wildcard certificates up for renewal.
+After October 21, 2021, you will also no longer be able to issue new wildcard certificates or validate existing certificates up for renewal using HTTP Domain Control Validation (DCV).
 
 ## What is affected?
 
