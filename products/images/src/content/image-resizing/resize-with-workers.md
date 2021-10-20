@@ -40,7 +40,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
       - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
 
     - **`contain`**
-      - Resizes to the maximum size that fits within the given `width` and `height`. If only a single dimension is given (e.g. only `width`), the image will be shrunk or enlarged to exactly match that dimension. Aspect ratio is always preserved.
+      - Resizes to the maximum size that fits within the given `width` and `height`. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension. Aspect ratio is always preserved.
 
     - **`cover`**
       - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
