@@ -25,7 +25,7 @@ addEventListener("fetch", event => {
 })
 ```
 
-### Supported `FetchEvent` Properties
+### Supported `FetchEvent` properties
 
 <Definitions>
 
@@ -90,10 +90,10 @@ export default {
 
 ### Bindings
 
-When deploying a Module Worker, any [bindings](/platform/environment-variables) **will not** be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#patameters) – see `env`.
+When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env`.
 
 
-## Lifecycle Methods
+## Lifecycle methods
 
 When responding to a HTTP request, the fetch handler may use any of the following methods to augment or control how the request is handled.
 
@@ -101,7 +101,7 @@ When responding to a HTTP request, the fetch handler may use any of the followin
 
 <Aside type="warning" header="Service Worker Only">
 
-The `respondWith` method is only applicable to the **Service Worker** format.
+The `respondWith` method is only applicable to the Service Worker format.
 
 With the Module Worker format, return a `Response` from the handler directly.
 
