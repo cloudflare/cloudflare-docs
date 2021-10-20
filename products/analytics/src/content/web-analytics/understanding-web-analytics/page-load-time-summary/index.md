@@ -17,7 +17,7 @@ pcx-content-type: reference
 
 ## Data collected for Paint Timings
 
-Cloudflare need to collect some information to make Analytics work:
+Cloudflare need to collect some information to make Web Analytics work, and additional data is collected for Paint Timings:
 
 * **First Paint**. The time between navigation and when the browser renders the first pixels to the screen.
 * **First Contentful Paint**. Time when the browser renders the first bit of content from the DOM.
