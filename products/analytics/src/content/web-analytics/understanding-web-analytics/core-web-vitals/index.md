@@ -48,7 +48,7 @@ Web Analytics uses its lightweight JavaScript beacon to collect the information 
 
 * **Element**. A CSS selector representing the DOM node. With this string, you can use `document.querySelector(<element_name>)` in the dev console of your browser to find out which DOM node has a negative impact on your scores/values.
 * **Path**. The URL path at the time the Core Web Vitals are captured.
-* **Value**. The metric value for each Core Web Vitals. This value is in milliseconds for LCP or FID and a score for CLS (Cumulative Layout Shift).
+* **Value**. [The metric value](https://web.dev/cls/#layout-shift-score) for each Core Web Vitals. This value is in milliseconds for LCP or FID and a score for CLS (Cumulative Layout Shift).
 
 ### Additional data collected for Largest Contentful Paint
 
