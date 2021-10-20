@@ -110,11 +110,21 @@ To delete a Pages project with a custom domain, you must first delete the CNAME 
 Log in to the Cloudflare dashboard > **Account Home** > select your website > **DNS**.
 
 In **DNS**:
-1. Locate your Pages Project's CNAME record.
+1. Locate your Pages project's CNAME record.
 2. Select **Edit**.
 3. Select **Delete**.
 
-Go back to the **Account Home** or use the drop-down menu at the top of the dashboard and select **Pages**. You can now remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
+After you delete your custom domain, your Pages project can be found by searching the `*.pages.dev` subdomain you chose when creating your project. 
+
+### Deleting a project
+
+For projects with a custom domain, you can only delete your project after the DNS record is deleted.
+For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
+
+To delete your Pages project:
+1. Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
+2. Select **Pages**. 
+3. Remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
 
 ## Advanced project settings
 
