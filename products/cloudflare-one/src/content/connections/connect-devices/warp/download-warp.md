@@ -122,3 +122,15 @@ __[APT/YUM Repository Setup](https://pkg.cloudflareclient.com/install)__
 </table>
 
 [Download from the Google Play store](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) or search for “1.1.1.1: Faster & Safer Internet”.
+
+## ChromeOS
+<table>
+  <tbody>
+    <tr>
+      <td><strong>OS Ver</strong></td>
+      <td>Chromebooks manufactured after 2019</td>
+    </tr>
+  </tbody>
+</table>
+
+Chromebooks are supported by our Android app. All Chromebooks made after 2019 should fully support our Android app. If you have a Chromebook made before 2019, please [refer to this list](https://sites.google.com/a/chromium.org/dev/chromium-os/chrome-os-systems-supporting-android-apps) to verify that your device is supported.
