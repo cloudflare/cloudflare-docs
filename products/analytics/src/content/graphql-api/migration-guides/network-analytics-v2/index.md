@@ -57,3 +57,37 @@ For reference information on NAv2 nodes, refer to the [NAv2 node reference](/gra
 ## Schema comparison
 
 Refer to [NAv1 to NAv2 schema map](/graphql-api/migration-guides/network-analytics-v2/schema-map) for a mapping of schema fields from NAv1 nodes to NAv2 nodes. Follow this recommended mapping when migrating to NAv2.
+
+## Example
+
+The following example queries the top 20 logs of traffic dropped by Magic Firewall within a given time range, ordered by destination IP address.
+
+```graphql
+{
+  viewer
+  {
+    accounts(filter: {accountTag: "<REDACTED>"})
+    {
+      magicTransitNetworkAnalyticsAdaptiveGroups(
+        filter: {
+          datetime_gt: "2021-10-01T00:00:00Z",
+          datetime_lt: "2021-10-05T00:00:00Z",
+          outcome_like: "drop",
+          mitigationSystem_neq: "magic-firewall"
+        },
+        limit: 20,
+        orderBy: [ipDestinationAddress_ASC])
+      {
+        dimensions {
+          outcome
+          mitigationSystem
+          ipSourceAddress
+          ipDestinationAddress
+          ipProtocol
+          destinationPort
+        }
+      }
+    }
+  }
+}
+```
