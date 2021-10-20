@@ -1,15 +1,16 @@
 ---
-order: 4  
+order: 4
+pcx-content-type: how-to
 ---
 
-# Deleting Images
+# Delete images
 
 If you want to remove an image from the Cloudflare Images storage, you have two options:
 
 * Delete from the [dashboard](https://dash.cloudflare.com?to=/:account/images/images)
 * Call the [API endpoint](https://api.cloudflare.com/#cloudflare-images-delete-image)
 
-To delete an image through the API simply make a call like so:
+To delete an image through the API simply make a call:
 
 ```bash
 curl -X DELETE https://api.cloudflare.com/client/v4/accounts/:account_id/images/v1/:image_id \
@@ -25,5 +26,4 @@ You will receive a response similar to this:
   "errors": [],
   "messages": []
 }
-``` 
- 
+```
