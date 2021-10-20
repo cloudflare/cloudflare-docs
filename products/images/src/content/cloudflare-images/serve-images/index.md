@@ -3,7 +3,7 @@ order: 3
 pcx-content-type: how-to
 ---
 
-# Serve Images
+# Serve images
 
 To serve images uploaded to Cloudflare Images, you need three pieces of information:
 

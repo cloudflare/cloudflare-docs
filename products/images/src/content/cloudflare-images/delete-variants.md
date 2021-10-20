@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: how-to
 ---
 
-# Delete Variants
+# Delete variants
 
 You can delete variants via API with a simple cURL command. 
 

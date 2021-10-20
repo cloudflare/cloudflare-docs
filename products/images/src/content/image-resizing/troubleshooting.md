@@ -9,7 +9,7 @@ pcx-content-type: interim
 
 Does the response have a `Cf-Resized` header? If **not**, then resizing has not been attempted. Possible causes:
 
-  * There’s another Worker running on the same request. Resizing is "forgotten" as soon as one Worker calls another. Do not use Workers scoped to the entire domain `/*`.
+  * There is another Worker running on the same request. Resizing is "forgotten" as soon as one Worker calls another. Do not use Workers scoped to the entire domain `/*`.
   * Preview in the Editor in Cloudflare Dashboard does not simulate image resizing. You must deploy the Worker and test from another browser tab instead.
 
 ## Error responses from resizing

@@ -56,7 +56,7 @@ At least one option must be specified. Options are comma-separated (spaces are n
     <Definitions>
 
     - **`fit=scale-down`**
-      - Image will be shrunk in size to fully fit within the given `width` or `height`, but wwill not be enlarged.
+      - Image will be shrunk in size to fully fit within the given `width` or `height`, but will not be enlarged.
 
     - **`fit=contain`**
       - Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio.
@@ -81,12 +81,12 @@ At least one option must be specified. Options are comma-separated (spaces are n
       - The point will be guessed by looking for areas that stand out the most from image background.
 
     - **`gravity=side`** and **`gravity=XxY`**
-      - If a side (`left`, `right`, `top`, `bottom`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x`, e.g. `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+      - If a side (`left`, `right`, `top`, `bottom`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x`. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
 
     </Definitions>
 
 - **`quality=x`** or **`q=x`**
-  - Specifies quality for images in JPEG, WebP and AVIF formats. The quality is in 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
+  - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
 
 - **`format=auto`** or **`f=auto`**
   - Allows serving of the WebP format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
@@ -132,9 +132,9 @@ Cloudflare Image resizing can:
 
 ## Recommended image sizes
 
-Ideally, images sizes should match exactly the size they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200" …>`, then images should be resized to `width=200`. If the exact size is not known ahead of time, use the [responsive images technique](/image-resizing/responsive-images).
+Ideally, image sizes should match exactly the size they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200" …>`, then images should be resized to `width=200`. If the exact size is not known ahead of time, use the [responsive images technique](/image-resizing/responsive-images).
 
-If you cannot use the `<img srcset>` markup, and have to hardcode specific maximum sizes, here are the sizes we recommend:
+If you cannot use the `<img srcset>` markup, and have to hardcode specific maximum sizes, Cloudflare recommends the following sizes:
 
 * Maximum of 1920 pixels for desktop browsers.
 * Maximum of 960 pixels for tablets.
@@ -148,7 +148,7 @@ Here is an example of markup to configure a maximum size for your image:
 
 The `fit=scale-down` option ensures that the image will not be enlarged unnecessarily.
 
-You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](https://support.cloudflare.com/hc/en-us/articles/229373388-Cache-Content-by-Device-Type-Mobile-Tablet-Desktop-).
+You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](https://support.cloudflare.com/hc/articles/229373388).
 
 ## Image optimization and interaction with Polish
 

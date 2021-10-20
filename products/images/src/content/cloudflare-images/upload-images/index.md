@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: interim
 ---
 
-# Upload Images
+# Upload images
 
 Cloudflare Images allows developers to upload images that cover a wide range of use cases.
 

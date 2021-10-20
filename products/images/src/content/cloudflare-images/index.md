@@ -11,7 +11,7 @@ To get started with Cloudflare Images, visit the Images dashboard in your Cloudf
 
 Images you upload to Cloudflare Images are not attached to any domain in your Cloudflare account and you do not need a domain on Cloudflare to use the Cloudflare Images product.
 
-## Making Your First API Request
+## Making your first API request
 
 Once you have an Images subscription, to make your first request to the Images API, you must obtain these pieces of information:
 

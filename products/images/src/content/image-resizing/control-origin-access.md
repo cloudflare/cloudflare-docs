@@ -27,7 +27,7 @@ The examples below are only suggestions, and do not have to be followed exactly.
 
 <Aside type="warning" header="Warning">
 
-When testing Image Resizing, please deploy the script, and test it from a regular web browser window. The preview in the Dashboard does not simulate Image Resizing.
+When testing Image Resizing, make sure you deploy the script and test it from a regular web browser window. The preview in the Dashboard does not simulate Image Resizing.
 
 </Aside>
 
@@ -72,7 +72,7 @@ async function handleRequest(request) {
 
 ## Avoid image dimensions in URLs
 
-You do not have to include actual pixel dimensions in the URL. You can embed sizes in the Worker script, and select the size in some other way, e.g. by naming a preset in the URL:
+You do not have to include actual pixel dimensions in the URL. You can embed sizes in the Worker script, and select the size in some other way — for example, by naming a preset in the URL:
 
 ```js
 async function handleRequest(request) {
@@ -105,4 +105,4 @@ async function handleRequest(request) {
 
 We do not support cookies or HTTP authorization in requests to the origin server (cookies and unsupported headers will be stripped). This is because private/personalized requests cannot be cached, but we have to cache resized images to ensure good performance.
 
-You can perform per-request access control in the Worker. If the images are personalized at the origin server, put the personalization options in the image URL.
+You can perform per-request access control in the Worker. If the images are personalized at the origin server, include the personalization options in the image URL.

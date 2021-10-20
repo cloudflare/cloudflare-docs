@@ -4,11 +4,11 @@ order: 5
 pcx-content-type: configuration
 ---
 
-# Draw overlays & watermarks
+# Draw overlays and watermarks
 
 You can draw additional images on top of a resized image, with transparency and blending effects. This enables adding of watermarks, logos, signatures, vignettes, and other effects to resized images.
 
-This feature is available only in [Workers](/image-resizing/resizing-with-workers). To draw overlay images, add an array of drawing commands to options of `fetch()` requests. The drawing options are nested in `options.cf.image.draw`, like this:
+This feature is available only in [Workers](/image-resizing/resizing-with-workers). To draw overlay images, add an array of drawing commands to options of `fetch()` requests. The drawing options are nested in `options.cf.image.draw`, like in the following example:
 
 ```js
 fetch(imageURL, {
@@ -32,7 +32,7 @@ fetch(imageURL, {
 
 ## Draw options
 
-The `draw` property is an array. Overlays are drawn in the order they appear in the array (last array entry is the topmost layer). Each item in the `draw` array is an object, which can have the following properties:
+The `draw` property is an array. Overlays are drawn in the order they appear in the array (the last array entry is the topmost layer). Each item in the `draw` array is an object, which can have the following properties:
 
 <Definitions>
 

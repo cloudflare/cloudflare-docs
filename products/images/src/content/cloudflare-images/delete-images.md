@@ -3,7 +3,7 @@ order: 4
 pcx-content-type: how-to
 ---
 
-# Delete Images
+# Delete images
 
 If you want to remove an image from the Cloudflare Images storage, you have two options:
 

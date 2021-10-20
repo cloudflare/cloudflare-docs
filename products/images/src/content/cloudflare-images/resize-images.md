@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: reference
 ---
 
-# Resize Images
+# Resize images
 
 Cloudflare Images supports Variants that specify how you would like to resize images for different use cases. You can configure up to 20 variants.
 
