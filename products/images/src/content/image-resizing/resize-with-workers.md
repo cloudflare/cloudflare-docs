@@ -10,9 +10,9 @@ There are two ways of using Image Resizing. One is the [default URL scheme](/ima
 
 Here are a few examples of the flexibility Workers give you:
 
-* Use a custom URL scheme. Instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.
-* Hide the actual location of the original image. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
-* Implement content negotiation to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
+* **Use a custom URL scheme**. Instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.
+* **Hide the actual location of the original image**. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
+* **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
 The resizing feature is accessed via the [options](https://developers.cloudflare.com/workers/runtime-apis/request#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](https://developers.cloudflare.com/workers/runtime-apis/fetch).
 
