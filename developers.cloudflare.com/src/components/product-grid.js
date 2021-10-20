@@ -104,6 +104,12 @@ const products = [
     wrap: true
   },
   {
+    title: "Cloudflare Image Optimization",
+    path: "images",
+    icon: "images",
+    wrap: true,
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
@@ -123,12 +129,6 @@ const products = [
     title: "HTTP/3",
     path: "http3",
     icon: "http3",
-  },
-  {
-    title: "Cloudflare Image Optimization",
-    path: "images",
-    icon: "images",
-    wrap: true,
   },
   {
     title: "Load Balancing",
