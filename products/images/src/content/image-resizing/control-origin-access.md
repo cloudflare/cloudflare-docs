@@ -3,11 +3,11 @@ order: 6
 pcx-content-type: interim
 ---
 
-# Controlling origin access
+# Control origin access
 
 You can serve resized images without giving access to the original image. Images can be hosted on another server outside of your zone, and the true source of the image can be entirely hidden. The origin server may require authentication to disclose the original image, without needing visitors to be aware of it. Access to the full-size image may be prevented by making it impossible to manipulate resizing parameters.
 
-All these behaviors are completely customizable, because they are handled by custom code of a script running [on the edge in a Cloudflare Worker](/resizing-with-workers).
+All these behaviors are completely customizable, because they are handled by custom code of a script running [on the edge in a Cloudflare Worker](/image-resizing/resize-with-workers).
 
 ```js
 addEventListener("fetch", event => {
@@ -21,13 +21,13 @@ async function handleRequest(request) {
 }
 ```
 
-This code will be run for every request, but the source code won’t be accessible to website visitors. This allows the the code to perform security checks and contain secrets required to access the images in a controlled manner.
+This code will be run for every request, but the source code will not be accessible to website visitors. This allows the code to perform security checks and contain secrets required to access the images in a controlled manner.
 
-The examples below are only suggestions, and don’t have to be followed exactly. You can compute image URLs and resizing options any way you like.
+The examples below are only suggestions, and do not have to be followed exactly. You can compute image URLs and resizing options in many other ways.
 
-<Aside type="warning">
+<Aside type="warning" header="Warning">
 
-__Warning:__ When testing image resizing, please deploy the script, and test it from a regular web browser window. The preview in the Dashboard doesn’t simulate image resizing.
+When testing Image Resizing, make sure you deploy the script and test it from a regular web browser window. The preview in the Dashboard does not simulate Image Resizing.
 
 </Aside>
 
@@ -42,7 +42,7 @@ async function handleRequest(request) {
   // Append the request path such as "/assets/image1.jpg" to the hiddenImageOrigin.
   // You could also process the path to add or remove directories, modify filenames, etc.
   const imageURL = hiddenImageOrigin + requestURL.path
-  // This will fetch image from the given URL, but to the website visitors this
+  // This will fetch image from the given URL, but to the website's visitors this
   // will appear as a response to the original request. Visitor’s browser will
   // not see this URL.
   return fetch(imageURL, {cf:{image:resizingOptions}})
@@ -61,7 +61,7 @@ async function handleRequest(request) {
   const resizingOptions = {
     width: requestURL.searchParams.get("width"),
   }
-  // If someone tried to manipulate your image URLs to reveal higher-resolution images,
+  // If someone tries to manipulate your image URLs to reveal higher-resolution images,
   // you can catch that and refuse to serve the request (or enforce a smaller size, etc.)
   if (resizingOptions.width > 1000) {
     throw Error("We don’t allow viewing images larger than 1000 pixels wide")
@@ -70,16 +70,16 @@ async function handleRequest(request) {
 }
 ```
 
-## Avoiding image dimensions in URLs
+## Avoid image dimensions in URLs
 
-And you don’t have to include actual pixel dimensions in the URL. You can embed sizes in the Worker script, and select the size in some other way, e.g. by naming a preset in the URL:
+You do not have to include actual pixel dimensions in the URL. You can embed sizes in the Worker script, and select the size in some other way — for example, by naming a preset in the URL:
 
 ```js
 async function handleRequest(request) {
   const requestURL = new URL(request.url)
   const resizingOptions = {}
 
-  // The regex selects the first path component after "images"
+  // The regex selects the first path component after the "images"
   // prefix, and the rest of the path (e.g. "/images/first/rest")
   const match = requestURL.path.match(/images\/([^/]+)\/(.+)/)
 
@@ -103,6 +103,6 @@ async function handleRequest(request) {
 
 ## Origin cache is shared
 
-We do not support cookies or HTTP authorization in requests to the origin server (cookies and unsupported headers will be stripped). This is because private/personalized requests can’t be cached, but we have to cache resized images to ensure good performance.
+We do not support cookies or HTTP authorization in requests to the origin server (cookies and unsupported headers will be stripped). This is because private/personalized requests cannot be cached, but we have to cache resized images to ensure good performance.
 
-You can perform per-request access control in the Worker. If the images are personalized at the origin server, put the personalization options in the image URL.
+You can perform per-request access control in the Worker. If the images are personalized at the origin server, include the personalization options in the image URL.

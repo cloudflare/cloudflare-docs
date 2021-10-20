@@ -1,6 +1,6 @@
 ---
-title: Making an image private
 order: 3
+pcx-content-type: how-to
 ---
 
 # Making an image private
@@ -17,4 +17,4 @@ curl --request POST \
    }'
 ```
 
-If an image is marked to require signed URLs, it can only be accessed using a signed URL token or using a Variant with _“Always allow public access”_ property checked.
+If an image is marked to require signed URLs, it can only be accessed using a signed URL token or using a Variant with `Always allow public access` property checked.

@@ -11,11 +11,11 @@ To use Image Resizing you first need to enable it via the Speed app of your Clou
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 1. Click the **account** for the domain you want to use with Image Resizing.
 1. Select the **domain** where you will be using Image Resizing.
-1. Click on the **Speed** app.
+1. Click the **Speed** app.
 
-  <div class="large-img">
+  <div class="full-img">
 
-  ![Image Resizing options in Cloudflare's dashboard](static/image-resizing.png)
+  ![Image Resizing options in Cloudflare's dashboard](../static/image-resizing.png)
 
   </div>
 

@@ -1,50 +1,15 @@
 ---
-title: Getting Started
+title: Overview
 order: 0
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
-# Getting Started
+# Cloudflare Image Optimization
 
-Cloudflare Images lets you set up an image pipeline in minutes. Build a scalable image pipeline to store, resize, optimize and deliver images in a fast and secure manner.
+Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored to your different needs.
 
-To get started with Cloudflare Images, visit the images dashboard in your Cloudflare account or [sign up](https://dash.cloudflare.com/sign-up/images).
+With Cloudflare Images you can build a scalable image pipeline on Cloudflare servers, to store, resize, optimize, and deliver images in a fast and secure manner.
 
-Photos you upload to Cloudflare Images are not attached to any domain in your Cloudflare account and you do not need a domain on Cloudflare to use the Cloudflare Images product.
+With Image Resizing you can use Cloudflare’s edge platform to resize, adjust quality, and convert images to WebP or AVIF format on demand, independently of where they are stored.
 
-## Making Your First API Request
-
-Once you have an Images subscription, to make your first request to the Images API, you must obtain these pieces of information:
-
-- Your Cloudflare Account ID
-- Your API Key or Bearer Token
-
-Once you have this information, we are ready to upload our first image to Cloudflare Images using the API:
-
-```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/:account_tag/images/v1 \
-  --header 'Authorization: Bearer :token' \
-  --form file=@./triceratops.jpeg
-```
-
-A successful response will look similar to this:
-
-```json
-{
-  "result": {
-    "id": "083eb7b2-5392-4565-b69e-aff66acddd00",
-    "filename": "triceratops.jpeg",
-    "uploaded": "2021-09-14T05:52:14.767Z",
-    "requireSignedURLs": false,
-    "variants": [
-      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/test",
-      "https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public"
-    ]
-  },
-  "result_info": null,
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
+For more information about the differences between each product, refer to the [Frequently Asked Questions section](/faq).

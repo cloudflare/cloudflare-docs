@@ -1,12 +1,13 @@
 ---
-order: 5 
+order: 5
+pcx-content-type: how-to
 ---
 
-# Deleting Variants
+# Delete variants
 
-You can delete variants via API by using a simple cURL command. 
+You can delete variants via API with a simple cURL command. 
 
-<Aside type="warning">
+<Aside type="warning" header="Warning">
 
 Deleting a variant is a global action that will affect other images that contain that variant.
 
@@ -28,6 +29,3 @@ You will receive a response similar to this:
   "messages": []
 }
 ```
-
-
- 
