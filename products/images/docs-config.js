@@ -18,7 +18,7 @@ module.exports = {
   siteMetadata: {
     title: "Cloudflare Image Optimization docs",
     description:
-      "Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored for your different needs.",
+      "Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored to your different needs.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/images",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",

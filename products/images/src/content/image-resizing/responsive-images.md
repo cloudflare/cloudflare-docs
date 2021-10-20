@@ -11,26 +11,25 @@ The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HT
 
 There are two different ways to use `srcset`:
 
-1. For an image with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
-
-1. Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for "hero" images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
+* For an image with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
+* Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for "hero" images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
 
 ## `srcset` for high-DPI displays
 
-For high-DPI display we need two versions of every image. One for `1x` density suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops) and one for `2x` high-density displays used by almost all mobile phones, high-end laptops and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
+For high-DPI display you need two versions of every image. One for `1x` density suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops) and one for `2x` high-density displays used by almost all mobile phones, high-end laptops and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
 
-Assuming we have an image `product.jpg` in the `assets` folder, and we want to display it at size of `960px`, the code is as follows:
+Assuming you have an image `product.jpg` in the `assets` folder, and you want to display it at size of `960px`, the code is as follows:
 
 ```html
 <img src="/cdn-cgi/image/fit=contain,width=960/assets/product.jpg"
      srcset="/cdn-cgi/image/fit=contain,width=1920/assets/product.jpg 2x">
 ```
 
-If we breakout the URL path used in this example, the `src` attribute is for images with the usual "1x" density. `/cdn-cgi/image/` is a special path for resizing images. This is followed by `width=960` which resizes the image to have a width of 960 pixels. Then, we have `/assets/product.jpg` which is a URL to the source image on the server.
+In the URL path used in this example, the `src` attribute is for images with the usual "1x" density. `/cdn-cgi/image/` is a special path for resizing images. This is followed by `width=960` which resizes the image to have a width of 960 pixels. `/assets/product.jpg` is a URL to the source image on the server.
 
-The `srcset` attribute adds another, high-DPI image. The browser will automatically select between the images in the `src` and `srcset`. In this case we specify `width=1920` (two times 960 pixels) and add `2x` at the end, which informs the browser that this is a double-density image. It will be displayed at the same size as a 960 pixel image, but with double the number of pixels which will make it look twice as sharp on high-DPI displays.
+The `srcset` attribute adds another, high-DPI image. The browser will automatically select between the images in the `src` and `srcset`. In this case, specifying `width=1920` (two times 960 pixels) and adding `2x` at the end, informs the browser that this is a double-density image. It will be displayed at the same size as a 960 pixel image, but with double the number of pixels which will make it look twice as sharp on high-DPI displays.
 
-Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images we use with `srcset` must be high resolution, so that they are only scaled down for "1x" displays and displayed as-is or also scaled down for "2x" displays.
+Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for "1x" displays and displayed as-is or also scaled down for "2x" displays.
 
 ## `srcset` for responsive images
 
@@ -89,6 +88,6 @@ HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US
 
 If you want to use WebP images, but do not need resizing, you have two options:
 
-1. You can enable the Polish feature with automatic WebP conversion. This will convert all images on the site.
+* You can enable the Polish feature with automatic WebP conversion. This will convert all images on the site.
 
-2. Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. E.g. `https://example.com/assets/hero.jpg`to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`
+* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. E.g. `https://example.com/assets/hero.jpg`to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`

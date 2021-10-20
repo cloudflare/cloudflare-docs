@@ -6,7 +6,7 @@ pcx-content-type: overview
 
 # Cloudflare Image Optimization
 
-Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored for your different needs.
+Choose between Cloudflare Images and Cloudflare Image Resizing, two products tailored to your different needs.
 
 With Cloudflare Images you can build a scalable image pipeline on Cloudflare servers, to store, resize, optimize, and deliver images in a fast and secure manner.
 
