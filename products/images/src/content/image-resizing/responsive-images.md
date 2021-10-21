@@ -84,7 +84,7 @@ In this example, `sizes` says that for screens smaller than 640 pixels the image
 
 `srcset` is useful for pixel-based formats such as PNG, JPEG, and WebP. It is unnecessary for vector-based SVG images.
 
-HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/…` URLs in `src` or `srcset`.
+HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/format=auto,…` URLs in `src` or `srcset`.
 
 If you want to use WebP images, but do not need resizing, you have two options:
 

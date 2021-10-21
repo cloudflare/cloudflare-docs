@@ -9,6 +9,7 @@ pcx-content-type: interim
 
 Does the response have a `Cf-Resized` header? If **not**, then resizing has not been attempted. Possible causes:
 
+  * Image Resizing feature is not enabled in the Cloudflare Dashboard.
   * There is another Worker running on the same request. Resizing is "forgotten" as soon as one Worker calls another. Do not use Workers scoped to the entire domain `/*`.
   * Preview in the Editor in Cloudflare Dashboard does not simulate image resizing. You must deploy the Worker and test from another browser tab instead.
 
@@ -36,7 +37,7 @@ When resizing fails, the response body contains an error message explaining the 
 
 ## Limits
 
-Maximum image size is 100 megapixels (e.g. 10000&times;10000 pixels large). Maximum file size is 70 MB.
+Maximum image size is 100 megapixels (e.g. 10000&times;10000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
 
 ## Authorization and cookies are not supported
 
@@ -46,9 +47,9 @@ You can use unguessable URLs for images (e.g. with long random IDs) and/or handl
 
 ## Caching and purging
 
-Changes to image dimensions or other resizing options should always take effect immediately — no purging necessary.
+Changes to image dimensions or other resizing options always take effect immediately — no purging necessary.
 
-Image requests consists of two parts: running Worker code, and image processing. The Worker code is always executed and uncached. Results of image processing are cached for one hour or longer if origin server's `Cache-Control` header allows.
+Image requests consists of two parts: running Worker code, and image processing. The Worker code is always executed and uncached. Results of image processing are cached for one hour or longer if origin server's `Cache-Control` header allows. Source image is cached using regular caching rules. Resizing follows redirects internally, so the redirects are cached too.
 
 Because responses from Workers themselves are not cached at the edge, purging of *Worker URLs* does nothing. Resized image variants are cached together under their source’s URL. When purging, use the (full-size) source image’s URL, rather than URLs of the Worker that requested resizing.
 

@@ -19,7 +19,7 @@ Here is a breakdown of each part of the URL:
   - Your domain name on Cloudflare. Unlike other third-party image resizing services, we do not use a separate domain name for an API. Every Cloudflare zone with image resizing enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
 
 - `/cdn-cgi/image/`
-  - A fixed prefix that identifies that this is a special path handled by Cloudflare.
+  - A fixed prefix that identifies that this is a special path handled by Cloudflare's built-in Worker.
 
 - `options`
   - A comma-separated list of options such as `width`, `height`, and `quality`.
@@ -89,16 +89,19 @@ At least one option must be specified. Options are comma-separated (spaces are n
   - Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
 
 - **`format=auto`** or **`f=auto`**
-  - Allows serving of the WebP format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
+  - Allows serving of the WebP or AVIF format to browsers that support it. If this option is not specified, a standard format like JPEG or PNG will be used.
 
 - **`anim=false`**
-  - Reduces animations to still images. This setting is recommended to avoid large animGIF files, or flashing images.
+  - Reduces animations to still images. This setting is recommended to avoid large animated GIF files, or flashing images.
 
 - **`sharpen=x`**
   - Specifies strength of sharpening filter. The value is a floating-point number between `0` (no sharpening) and `10` (maximum). `1` is a recommended value.
 
+- **`blur=x`**
+  - Blur radius between `1` (slight blur) and `250` (maximum). Please beware that you can't use this option to reliably obscure image content, because savvy users can modify image's URL and remove the blur option. Use Workers to control which options can be set.
+
 - **`onerror=redirect`**
-  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a change the source images is very large. This option is ignored if the image is from another domain, but you can use with subdomains.
+  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a change the source images is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
 
 - **`metadata`**
   - Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
@@ -124,11 +127,13 @@ At least one option must be specified. Options are comma-separated (spaces are n
 
 Cloudflare Image resizing can:
 
+* Read JPEG, PNG, GIF (including animations), and WebP images. SVG is not supported (this format is inherently scalable, and doesn't need resizing).
 * Generate JPEG and PNG images, and optionally AVIF or WebP.
 * Save animations as GIF or animated WebP.
-* Read JPEG, PNG, GIF (including animations), and WebP images.
 * Support ICC color profiles in JPEG and PNG images. 
 * Preserve JPEG metadata. Metadata of other formats is discarded.
+
+AVIF format is supported on a best-effort basis. Images that can't be compressed as AVIF will be served as WebP instead.
 
 ## Recommended image sizes
 
@@ -152,7 +157,7 @@ You can detect device type by enabling the `CF-Device-Type` header [via Page Rul
 
 ## Image optimization and interaction with Polish
 
-Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish.
+Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use `format=auto` option to allow use of WebP and AVIF formats.
 
 ## Caching
 
