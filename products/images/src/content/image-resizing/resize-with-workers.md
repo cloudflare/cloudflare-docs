@@ -177,7 +177,7 @@ By default, the error will be forwarded to the browser, but you can decide how t
 ```js
 const response = await fetch(imageURL, options)
 
-if (response.ok) {
+if (response.ok || response.redirected) { // fetch() may respond with status 304
   return response
 } else {
   return response.redirect(imageURL, 307)
@@ -190,7 +190,7 @@ You can also replace failed images with a placeholder image:
 
 ```js
 const response = await fetch(imageURL, options)
-if (response.ok) {
+if (response.ok || response.redirected) {
   return response
 } else {
   // Change to a URL on your server
