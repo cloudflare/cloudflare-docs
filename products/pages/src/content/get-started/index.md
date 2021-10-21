@@ -114,11 +114,17 @@ In **DNS**:
 2. Select **Edit**.
 3. Select **Delete**.
 
-After you delete your custom domain, your Pages project is only be accessible through the `*.pages.dev` subdomain you chose when creating your project. 
+Next, in the **Pages** dashboard:
+1. Select **your Pages project**.
+2. Go to **Custom domains**.
+3. Select the **three dot icon** next to your custom domain > **Remove domain**.
+
+After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project. 
 
 ### Deleting a project
 
 For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](#deleting-a-custom-domain) for instructions.
+
 For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
 
 To delete your Pages project:
