@@ -46,6 +46,11 @@ pcx-content-type: reference
             <td>Yes (Digicert or Let's Encrypt)</td>
         </tr>
         <tr>
+            <td><strong>Wildcard custom hostnames</strong></td>
+            <td style="text-align:center">No</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
             <td><strong>Apex proxing/BYOIP</strong></td>
             <td style="text-align:center">No</td>
             <td>Yes (with additional purchase)</td>
