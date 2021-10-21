@@ -42,7 +42,7 @@ If you are unfamiliar with HTML5 forms, you can refer to the Mozilla Developer N
 
 To pass data inside of the form, you can use `input` tags. `input` tags have a `type`, which specifies how the `input` should render, and what kind of data it contains. When an `input` has a `name` attribute, the `form` will submit that data to the provided `action` URL, matching that `name` attribute. 
 
-<Aside>
+<Aside type="note">
 
 The `id` attribute, while not required for the `input` to be submitted as part of the `form`, [may be required to ensure accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML#meaningful_text_labels). If the `input` element is nested inside the `label`, the `id` is not required. If the `input` element is not nested inside the `label`, the `id` on the `input` is required along with the `for` (or `htmlFor` in React) property to ensure differently abled readers will get built-in accessibility features.
 
