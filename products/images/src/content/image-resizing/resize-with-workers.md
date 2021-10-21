@@ -74,7 +74,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 - **`format`**
   - Output format to generate. It can be:
 
-    - **`avif`** — generate images in AVIF format.
+    - **`avif`** — generate images in AVIF format if possible (with WebP as a fallback).
     - **`webp`** — generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
     - **`json`** — instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
 
@@ -83,7 +83,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
     To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
 
 - **`anim`**
-  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes.
+  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It's also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
 
 - **`metadata`**
   - What EXIF data should be preserved in the output image. Note that EXIF rotation and embedded color profiles are always applied ("baked in" into the image), and are not affected by this option. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
@@ -109,6 +109,9 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
 - **`sharpen`**
   - Strength of sharpening filter to apply to the image. Floating-point number between `0` (no sharpening, default) and `10` (maximum). `1.0` is a recommended value for downscaled images.
+
+- **`blur`**
+  - Radius of a blur filter (approximate gaussian). Maximum supported radius is 250.
 
 </Definitions>
 
@@ -225,6 +228,14 @@ async function handleRequest(request) {
   if (url.searchParams.has("height")) options.cf.image.height = url.searchParams.get("height")
   if (url.searchParams.has("quality")) options.cf.image.quality = url.searchParams.get("quality")
 
+  // Your Worker is responsible for automatic format negotiation. Check the Accept header.
+  const accept = request.headers.get("Accept");
+  if (/image\/avif/.test(accept)) {
+    options.cf.image.format = 'avif';
+  } else if (/image\/webp/.test(accept)) {
+    options.cf.image.format = 'webp';
+  }
+
   // Get URL of the original (full size) image to resize.
   // You could adjust the URL here, e.g., prefix it with a fixed address of your server,
   // so that user-visible URLs are shorter and cleaner.
@@ -235,10 +246,10 @@ async function handleRequest(request) {
     // TODO: Customize validation logic
     const { hostname, pathname } = new URL(imageURL)
 
-    // Only accept JPEG, PNG, GIF, or WebP types
+    // Optionally, only allow URLs with JPEG, PNG, GIF, or WebP file extensions
     // @see https://developers.cloudflare.com/images/url-format#supported-formats-and-limitations
     if (!/\.(jpe?g|png|gif|webp)$/i.test(pathname)) {
-      return new Response('Invalid image type', { status: 400 })
+      return new Response('Disallowed file extension', { status: 400 })
     }
 
     // Demo: Only accept "example.com" images
@@ -249,8 +260,7 @@ async function handleRequest(request) {
     return new Response('Invalid "image" value', { status: 400 })
   }
 
-  // Build a request that passes through request headers,
-  // so that automatic format negotiation can work.
+  // Build a request that passes through request headers
   const imageRequest = new Request(imageURL, {
     headers: request.headers
   })
