@@ -15,7 +15,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 Cloudflare Workers excels as a performant serverless functions platform. This makes it a great fit for handling form submissions from your front-end applications, particularly when you need to send those submissions to an external API or database.
 
-In this tutorial, you will use Workers and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a great, free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions, and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable "base" (Airtable's term for a spreadsheet) for later reference.
+In this tutorial, you will use Workers and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a great, free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions, and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
 
 ![Example GIF of complete Airtable and serverless function integration](./example.gif)
 
@@ -36,7 +36,7 @@ To review the basics of HTML5 forms, a `form` element generally contains an `act
 
 <Aside type="note">
 
-If you are unfamiliar with HTML5 forms, you can refer to the Mozilla Developer Network's ["Web Forms - Working with user data"](https://developer.mozilla.org/en-US/docs/Learn/Forms) for a beginner's guide.
+If you are unfamiliar with HTML5 forms, you can refer to the Mozilla Developer Network's ["Web Forms - Working with user data"](https://developer.mozilla.org/en-US/docs/Learn/Forms) for a beginner guide.
 
 </Aside>
 
