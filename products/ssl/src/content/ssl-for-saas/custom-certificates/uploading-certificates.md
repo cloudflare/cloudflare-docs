@@ -7,7 +7,7 @@ import CustomCertExample from "../../_partials/_custom-cert-file-example.md"
 
 # Manage custom certificates
 
-For use cases and limitations, refer to [custom certificates](../custom-certificates).
+For use cases and limitations, refer to [custom certificates](/ssl-for-saas/custom-certificates).
 
 ## Upload certificates
 
