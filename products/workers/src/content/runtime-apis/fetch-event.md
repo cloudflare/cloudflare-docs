@@ -6,9 +6,9 @@ pcx-content-type: configuration
 
 ## Background
 
-In Workers, any incoming HTTP requests are referred to as "fetch" events. A Worker will respond to the HTTP request with the handler method that was assigned to the "fetch" event.
+In Workers, any incoming HTTP requests are referred to as `"fetch"` events. A Worker will respond to the HTTP request with the handler method that was assigned to the `"fetch"` event.
 
-Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-module-worker) formats are able to handle "fetch" events, but with significant differences in their authoring syntax.
+Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-module-worker) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
 
 
 ## Syntax: Service Worker
@@ -58,7 +58,7 @@ When a Worker is deployed using the Service Worker syntax, any [bindings](/platf
 
 In the Module Worker format, events are handled by defining and exporting an object with method handlers corresponding to event names.
 
-While an incoming HTTP request is still given the "fetch" name, a Module Worker does not surface the `FetchEvent` interface. Instead, Module Workers receive the [`Request`](/runtime-apis/request) and must reply with a [`Response`](/runtime-apis/response) directly.
+While an incoming HTTP request is still given the `"fetch"` name, a Module Worker does not surface the `FetchEvent` interface. Instead, Module Workers receive the [`Request`](/runtime-apis/request) and must reply with a [`Response`](/runtime-apis/response) directly.
 
 ```js
 export default {
@@ -109,7 +109,7 @@ With the Module Worker format, return a `Response` from the handler directly.
 
 Intercepts the request and allows the Worker to send a custom response.
 
-If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it's possible to add multiple "fetch" event handlers within a Worker.
+If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it is possible to add multiple `"fetch"` event handlers within a Worker.
 
 If no `fetch` event handler calls `respondWith`, then the runtime forwards the request to the origin as if the Worker did not. However, if there is no origin – or the Worker itself is your origin server, which is always true for `*.workers.dev` domains – then you must call `respondWith` for a valid response.
 
@@ -131,7 +131,7 @@ addEventListener("fetch", event => {
 
 ### `waitUntil`
 
-Extends the lifetime of the "fetch" event. Accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/runtime-apis/cache#put) or handling logging.
+The `waitUntil` command extends the lifetime of the `"fetch"` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/runtime-apis/cache#put) or handling logging.
 
 With the Service Worker format, `waitUntil` is available within the `event` because it is a native `FetchEvent` property.
 
@@ -202,7 +202,7 @@ export default {
 
 ### `passThroughOnException`
 
-Prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will ["fail open"](https://community.microfocus.com/t5/Security-Blog/Security-Fundamentals-Part-1-Fail-Open-vs-Fail-Closed/ba-p/283747), which will proxy the request to the origin server as though the Worker was never invoked.
+The `passThroughOnException` command prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will ["fail open"](https://community.microfocus.com/t5/Security-Blog/Security-Fundamentals-Part-1-Fail-Open-vs-Fail-Closed/ba-p/283747), which will proxy the request to the origin server as though the Worker was never invoked.
 
 To prevent JavaScript errors from causing entire requests to fail on uncaught exceptions, `passThroughOnException()` causes the Workers runtime to yield control to the origin server.
 
