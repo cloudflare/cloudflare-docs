@@ -51,9 +51,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Available optimizations</summary>
 <div>
 
-**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](../../cloudflare-images/resize-images).
+**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](/cloudflare-images/resize-images).
 
-**IR** - For more information on Image Resizing optimizations refer to [URL format options](../../image-resizing/url-format#options).
+**IR** - For more information on Image Resizing optimizations refer to [URL format options](/image-resizing/url-format#options).
 
 </div>
 </details>
