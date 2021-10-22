@@ -133,7 +133,7 @@ Cloudflare Image resizing can:
 * Support ICC color profiles in JPEG and PNG images. 
 * Preserve JPEG metadata. Metadata of other formats is discarded.
 
-AVIF format is supported on a best-effort basis. Images that can't be compressed as AVIF will be served as WebP instead.
+AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
 
 ## Recommended image sizes
 
