@@ -46,9 +46,6 @@ products/fundamentals/ @cloudflare/PCX
 # HTTP/3
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
-# Image Resizing
-products/image-resizing/ @kornelski @cloudflare/PCX
-
 # Cloudflare Images
 products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 
