@@ -21,6 +21,10 @@ The action performed for packets that match specific rules of Cloudflare's DDoS 
 
 <Definitions>
 
+- **Log**
+    - API value: `"log"`.
+    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting layer 3/4 DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+
 - **Block**
     - API value: `"block"`.
     - Blocks IP packets that match the rule expression given the sensitivity levels.
