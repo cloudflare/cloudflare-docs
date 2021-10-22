@@ -83,7 +83,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
     To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
 
 - **`anim`**
-  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It's also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
+  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
 
 - **`metadata`**
   - What EXIF data should be preserved in the output image. Note that EXIF rotation and embedded color profiles are always applied ("baked in" into the image), and are not affected by this option. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
