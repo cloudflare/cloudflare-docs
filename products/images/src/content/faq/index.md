@@ -83,7 +83,7 @@ Yes, the uploaded image file must be less than or equal to 10 MB.
 
 ### Which file formats does Cloudflare Images support?
 
-Cloudflare Images supports common Web-compatible file formats as input files: JPEG, PNG, GIF (including animations), and WebP.
+Cloudflare Images supports common web-compatible file formats as input files: JPEG, PNG, GIF (including animations), and WebP.
 
 ### Can Cloudflare Images convert my images to AVIF?
 
